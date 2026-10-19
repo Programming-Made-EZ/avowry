@@ -1,0 +1,64 @@
+module Orders
+
+# Domain types. Core types: Text, Int, Decimal, Bool, Id, List<T>, Option<T>.
+type LineItem
+  sku: Text
+  quantity: Int
+
+# Leaf phrases. Each one is a self-describing name, its contract, and its specs.
+# The specs are the truth; the name is the summary.
+
+phrase "ensure {items: List<LineItem>} is not empty"
+  fails with EmptyOrder
+  spec "rejects an empty list"
+    given items = []
+    when called
+    then fails with EmptyOrder
+  native csharp
+    if (items.Count == 0) Fail("EmptyOrder");
+
+phrase "ensure every quantity in {items: List<LineItem>} is positive"
+  fails with InvalidQuantity
+  spec "rejects a zero quantity"
+    given items = [{ sku: "A", quantity: 0 }]
+    when called
+    then fails with InvalidQuantity
+  native csharp
+    if (items.Any(i => i.Quantity <= 0)) Fail("InvalidQuantity");
+
+phrase "total quantity of {items: List<LineItem>}" -> Int
+  spec "sums quantities across line items"
+    given items = [{ sku: "A", quantity: 2 }, { sku: "B", quantity: 3 }]
+    when called
+    then returns 5
+  native csharp
+    return items.Sum(i => i.Quantity);
+
+# Composite. Reads as its own summary; no native code at this level.
+
+endpoint CreateOrder : POST /orders
+  input
+    customerId: Id
+    items: List<LineItem>
+  output
+    totalQuantity: Int
+  steps
+    ensure input.items is not empty
+    ensure every quantity in input.items is positive
+    let total = total quantity of input.items
+    respond with { totalQuantity: total }
+
+  spec "accepts a valid order"
+    given input { customerId: "c-1", items: [{ sku: "A", quantity: 2 }, { sku: "B", quantity: 3 }] }
+    when handled
+    then responds { totalQuantity: 5 }
+
+  spec "rejects an order with no items"
+    given input { customerId: "c-1", items: [] }
+    when handled
+    then fails with EmptyOrder
+
+  spec "rejects an order with a zero quantity"
+    given input { customerId: "c-1", items: [{ sku: "A", quantity: 0 }] }
+    when handled
+    then fails with InvalidQuantity

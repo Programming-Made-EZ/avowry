@@ -1,0 +1,31 @@
+using Phrase.Acceptance.Tests.Support;
+
+namespace Phrase.Acceptance.Tests;
+
+// Feature: Reference C# target
+//   reference/csharp is the hand-written output the C# provider should emit for orders.phrase.
+//   Keeping it green proves two things before any compiler exists:
+//   the target design is valid, and the acceptance harness can tell pass from fail.
+public class ReferenceTarget
+{
+    [Fact]
+    public async Task Reference_output_builds_and_every_spec_passes()
+    {
+        // Given the hand-written reference output for orders.phrase, copied to a fresh workspace
+        var expectedSpecCount = Fixture.CountSpecs(Fixture.Read("orders.phrase"));
+        using var workspace = TempWorkspace.Create();
+        workspace.CopyFrom(RepoPaths.Find("reference", "csharp"));
+
+        // When its specs project is tested
+        var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
+
+        // Then it builds
+        Assert.True(result.Built, result.Log);
+
+        // And one test runs per spec in orders.phrase
+        Assert.Equal(expectedSpecCount, result.Total);
+
+        // And every test passes
+        Assert.Equal(0, result.Failed);
+    }
+}

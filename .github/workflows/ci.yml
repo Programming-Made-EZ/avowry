@@ -1,0 +1,30 @@
+name: ci
+
+# Trunk-based: every push to main and every short-lived PR runs the full suite.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore Phrase.sln
+
+      - name: Build
+        run: dotnet build Phrase.sln --no-restore -c Release
+
+      # Pending acceptance tests are the outer TDD loop. They are compiled (so they
+      # cannot rot) but excluded from the gate until they go green.
+      - name: Test
+        run: dotnet test Phrase.sln --no-build -c Release --filter "Status!=Pending" --logger "console;verbosity=normal"

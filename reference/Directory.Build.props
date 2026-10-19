@@ -1,0 +1,3 @@
+<Project>
+  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->
+</Project>
