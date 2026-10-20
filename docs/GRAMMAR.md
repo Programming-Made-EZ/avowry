@@ -47,10 +47,13 @@ type_ref        = Ident , [ "<" , type_ref , { "," , type_ref } , ">" ] ;
 
 (* ---------- phrases ---------- *)
 phrase_decl     = "phrase" , template , [ "->" , type_ref ] , NEWLINE ,
-                  INDENT , [ effects_clause ] , [ fails_clause ] , { spec } , impl , DEDENT ;
-template        = '"' , template_part , { template_part } , '"' ;
+                  INDENT , phrase_clause , { phrase_clause } , DEDENT ;
+phrase_clause   = effects_clause | fails_clause | spec | native_block | steps_block ;
+                  (* any order; at most one effects, one fails with, one native per target;
+                     native blocks OR steps, not both; at least one of them *)
+template        = '"' , template_part , { template_part } , '"' ;   (* >= 1 word *)
 template_part   = word | hole ;
-hole            = "{" , ident , ":" , type_ref , "}" ;
+hole            = "{" , ident , ":" , type_ref , "}" ;              (* names unique *)
 
 effects_clause  = "effects" , ( "none" | Ident , { "," , Ident } ) , NEWLINE ;
 fails_clause    = "fails with" , Ident , { "," , Ident } , NEWLINE ;
@@ -61,15 +64,16 @@ native_block    = "native" , target , NEWLINE , RAW , NEWLINE ;   (* RAW: see se
 target          = "csharp" | "typescript" | "python" ;
 
 (* ---------- endpoints ---------- *)
-endpoint_decl   = "endpoint" , Ident , ":" , http_verb , route , NEWLINE , INDENT ,
-                  "input" , NEWLINE , field_block ,
-                  [ "output" , NEWLINE , field_block ] ,
-                  steps_block ,
-                  { spec } ,
-                  DEDENT ;
+endpoint_decl   = "endpoint" , Ident , ":" , http_verb , route , NEWLINE ,
+                  INDENT , endpoint_section , { endpoint_section } , DEDENT ;
+endpoint_section = "input" , NEWLINE , field_block      (* required, once *)
+                 | "output" , NEWLINE , field_block     (* optional, once *)
+                 | steps_block                          (* required, once *)
+                 | spec ;                               (* any order *)
 field_block     = INDENT , field_line , { field_line } , DEDENT ;
 http_verb       = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" ;
-route           = "/" , { route_char } ;
+route           = "/" , [ segment , { "/" , segment } , [ "/" ] ] ;
+segment         = name | number | "{" , ident , "}" ;    (* /orders/{orderId}/lines *)
 
 (* ---------- steps ---------- *)
 steps_block     = "steps" , NEWLINE , INDENT , step_line , { step_line } , DEDENT ;
@@ -79,18 +83,21 @@ let_step        = "let" , ident , "=" , phrase_call ;
 respond_step    = "respond with" , record ;
 fail_step       = "fail with" , Ident ;
 phrase_call     = call_part , { call_part } ;           (* resolved, see section 4 *)
-call_part       = word | expr ;
+call_part       = word | argument ;
+word            = name ;                                (* a bare lowercase name, no '.' after it *)
+argument        = path_with_dot | literal | record | list ;
+path_with_dot   = ident , "." , ident , { "." , ident } ;
 
 (* ---------- expressions ---------- *)
 expr            = path | literal | record | list ;
 path            = ident , { "." , ident } ;
 literal         = string | number | "true" | "false" | "none" ;
-record          = "{" , [ ident , ":" , expr , { "," , ident , ":" , expr } ] , "}" ;
-list            = "[" , [ expr , { "," , expr } ] , "]" ;
+record          = "{" , [ ident , ":" , expr , { "," , ident , ":" , expr } , [ "," ] ] , "}" ;
+list            = "[" , [ expr , { "," , expr } , [ "," ] ] , "]" ;   (* trailing commas allowed *)
 
 (* ---------- specs ---------- *)
 spec            = "spec" , string , NEWLINE , INDENT ,
-                  given_line , { and_line } ,
+                  [ given_line , { and_line } ] ,        (* no givens: phrase with no holes *)
                   when_line ,
                   then_line , { and_line } ,
                   DEDENT ;
@@ -109,8 +116,8 @@ and_line        = "and" , ( binding | outcome ) , NEWLINE ;
 
 A step that is not `let`, `respond with`, or `fail with` is a **phrase call**. The compiler resolves it against every phrase template in scope:
 
-1. Split the template into **words** and **holes**. Split the step into **words** and **expressions**.
-2. A hole matches exactly **one expression**: a path (`input.items`), a literal, a record, or a list. Expressions never contain spaces outside brackets, so matching is a linear scan with no backtracking.
+1. Split the template into **words** and **holes**. The parser has already split the step into **words** (bare names) and **arguments** (dotted paths, literals, records, lists).
+2. A hole matches exactly **one argument**, or **one bare word that names a variable in scope** (a `let`, or a hole of the enclosing composite phrase). So `respond with { totalQuantity: total }` and `ensure items is not empty` inside a composite both work. Arguments never contain spaces outside brackets, so matching is a linear scan with no backtracking.
 3. Words match case-insensitively; whitespace is normalized.
 4. **Exactly one** template must match. Zero matches is error `PH001 unknown phrase` (with the closest templates suggested). Two or more is error `PH002 ambiguous phrase`.
 5. The matched expressions are type-checked against the hole types.
@@ -139,6 +146,13 @@ result:    call total-quantity-of(items = input.items) : Int
 | `compute` / noun phrase | Pure calculation returning a value. |
 | `save` / `publish` | Effects. Must be declared in `effects`. |
 
+### Template rules (enforced by the parser)
+
+- At least one word. A template made only of holes would match every call.
+- Hole names are lowercase and unique within the template.
+- No `#` (it would read as a comment when the template is re-lexed).
+- Must not start with a step keyword (`let`, `native`, `respond with`, `fail with`), because no step could ever call it.
+
 ### Lexer diagnostics
 
 | Code | Meaning |
@@ -153,6 +167,25 @@ result:    call total-quantity-of(items = input.items) : Int
 | `PH107` | Unknown string escape |
 | `PH108` | `{` or `[` never closed |
 | `PH109` | `}` or `]` with no matching opener |
+
+### Parser diagnostics
+
+| Code | Meaning |
+|---|---|
+| `PH200` | Syntax error: expected X, found Y |
+| `PH201` | Top-level line is not `module`, `type`, `phrase` or `endpoint` |
+| `PH202` | Module declaration missing, not first, or repeated |
+| `PH203` | Required part missing: type fields, phrase implementation, endpoint `input`/`steps`, spec `when`/`then` |
+| `PH204` | Clause or section repeated (`fails with`, `input`, `when`, `native <same target>`, ...) |
+| `PH205` | Invalid template (see template rules) |
+| `PH206` | Duplicate hole name in a template |
+| `PH207` | Unknown native target |
+| `PH208` | Phrase has both native blocks and steps |
+| `PH209` | Unknown HTTP verb |
+| `PH210` | Spec clauses out of order, or `and` with nothing to continue |
+| `PH211` | Unexpected indented block |
+
+The parser skips a bad line together with its indented children and keeps going, so one error never hides the declarations after it.
 
 The lexer always returns a complete token stream with balanced `INDENT`/`DEDENT`, even with errors, so later stages can keep reporting.
 
@@ -178,7 +211,7 @@ Each generated target symbol carries its source phrase (C#: `[Phrase("...")]` at
 
 ## 7. Out of scope for v0.1
 
-- Composite phrases with `steps` (grammar supports them; first provider will not)
+- Emitting composite phrases with `steps` (the parser supports them; the first provider will not)
 - Effects other than `none`
 - Content-hash pinning and the generation cache (`phrase.lock`)
 - The `phrase index` command (one line per phrase: template, return type, effects, failures)

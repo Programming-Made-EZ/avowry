@@ -1,0 +1,274 @@
+using Phrase.Compiler.Syntax;
+using static Phrase.Compiler.Tests.Syntax.Parsed;
+
+namespace Phrase.Compiler.Tests.Syntax;
+
+// Feature: Phrase declarations
+//   A phrase is a template (its name), an optional return type, its contract,
+//   its specs, and an implementation: native blocks (leaf) or steps (composite).
+public class ParserPhraseTests
+{
+    private static PhraseDecl SinglePhrase(string body) => Assert.Single(Clean(InModule(body)).Phrases);
+
+    [Fact]
+    public void A_template_splits_into_words_and_typed_holes()
+    {
+        // Given a leaf phrase with one hole
+        var phrase = SinglePhrase("""
+            phrase "ensure {items: List<LineItem>} is not empty"
+              native csharp
+                if (items.Count == 0) Fail("EmptyOrder");
+            """);
+
+        // When its template is read
+        var parts = phrase.Template.Parts;
+
+        // Then it is a word, a hole, and three words
+        Assert.Equal("ensure {items: List<LineItem>} is not empty", Print(phrase.Template));
+        Assert.IsType<TemplateWord>(parts[0]);
+        Assert.Equal("items", Assert.IsType<TemplateHole>(parts[1]).Name);
+    }
+
+    [Fact]
+    public void Template_parts_point_into_the_string()
+    {
+        // Given a phrase whose template starts at column 8
+        var phrase = SinglePhrase("""
+            phrase "total of {items: List<LineItem>}"
+              native csharp
+                return 0;
+            """);
+
+        // When the parts are read
+        var parts = phrase.Template.Parts;
+
+        // Then positions are inside the quotes
+        Assert.Equal(new Position(2, 9), parts[0].At);  // "total"
+        Assert.Equal(new Position(2, 18), parts[2].At); // "{items..."
+    }
+
+    [Fact]
+    public void A_return_type_follows_the_arrow()
+    {
+        // Given a phrase that returns a value
+        var phrase = SinglePhrase("""
+            phrase "total quantity of {items: List<LineItem>}" -> Int
+              native csharp
+                return items.Sum(i => i.Quantity);
+            """);
+
+        // When it is parsed
+        // Then the return type is captured
+        Assert.Equal("Int", Print(phrase.Returns!));
+    }
+
+    [Fact]
+    public void A_phrase_without_an_arrow_returns_nothing()
+    {
+        // Given a guard phrase
+        var phrase = SinglePhrase("""
+            phrase "ensure {items: List<LineItem>} is not empty"
+              native csharp
+                return;
+            """);
+
+        // When it is parsed
+        // Then there is no return type
+        Assert.Null(phrase.Returns);
+    }
+
+    [Fact]
+    public void Failures_and_effects_are_lists_of_type_names()
+    {
+        // Given a phrase declaring two failures and two effects
+        var phrase = SinglePhrase("""
+            phrase "save {order: Order}"
+              effects Db, Bus
+              fails with Conflict, Timeout
+              native csharp
+                return;
+            """);
+
+        // When it is parsed
+        // Then both lists are captured in order
+        Assert.Equal(["Db", "Bus"], phrase.Effects);
+        Assert.Equal(["Conflict", "Timeout"], phrase.Failures);
+    }
+
+    [Fact]
+    public void Effects_none_is_an_empty_list()
+    {
+        // Given a phrase that declares it has no effects
+        var phrase = SinglePhrase("""
+            phrase "double {n: Int}" -> Int
+              effects none
+              native csharp
+                return n * 2;
+            """);
+
+        // When it is parsed
+        // Then it has no effects
+        Assert.Empty(phrase.Effects);
+    }
+
+    [Fact]
+    public void Each_native_block_records_its_target_and_code()
+    {
+        // Given a phrase implemented for two targets
+        var phrase = SinglePhrase("""
+            phrase "double {n: Int}" -> Int
+              native csharp
+                return n * 2;
+              native typescript
+                return n * 2
+            """);
+
+        // When it is parsed
+        // Then both bodies are kept, keyed by target
+        Assert.Equal(
+            [("csharp", "return n * 2;"), ("typescript", "return n * 2")],
+            phrase.Natives.Select(n => (n.Target, n.Code)));
+        Assert.Null(phrase.Steps);
+    }
+
+    [Fact]
+    public void A_composite_phrase_has_steps_instead_of_native_code()
+    {
+        // Given a phrase built from other phrases
+        var phrase = SinglePhrase("""
+            phrase "validate {items: List<LineItem>}"
+              steps
+                ensure items is not empty
+                ensure every quantity in items is positive
+            """);
+
+        // When it is parsed
+        // Then its steps are kept and it has no natives
+        Assert.Empty(phrase.Natives);
+        Assert.Equal(
+            "(call ensure items is not empty) (call ensure every quantity in items is positive)",
+            Print(phrase.Steps!));
+    }
+
+    [Fact]
+    public void A_phrase_with_no_implementation_is_PH203()
+    {
+        // Given a phrase with only a contract
+        var source = InModule("""
+            phrase "ensure {items: List<LineItem>} is not empty"
+              fails with EmptyOrder
+            """);
+
+        // When it is parsed
+        // Then the missing implementation is reported
+        Assert.Equal(["PH203"], Codes(source));
+    }
+
+    [Fact]
+    public void A_phrase_with_both_native_code_and_steps_is_PH208()
+    {
+        // Given a phrase with both kinds of implementation
+        var source = InModule("""
+            phrase "double {n: Int}" -> Int
+              native csharp
+                return n * 2;
+              steps
+                fail with Nope
+            """);
+
+        // When it is parsed
+        // Then the conflict is reported
+        Assert.Equal(["PH208"], Codes(source));
+    }
+
+    [Fact]
+    public void Two_native_blocks_for_the_same_target_is_PH204()
+    {
+        // Given two csharp bodies
+        var source = InModule("""
+            phrase "double {n: Int}" -> Int
+              native csharp
+                return n * 2;
+              native csharp
+                return n + n;
+            """);
+
+        // When it is parsed
+        // Then the duplicate is reported
+        Assert.Equal(["PH204"], Codes(source));
+    }
+
+    [Fact]
+    public void An_unknown_native_target_is_PH207()
+    {
+        // Given a body for a target with no provider
+        var source = InModule("""
+            phrase "double {n: Int}" -> Int
+              native cobol
+                MULTIPLY N BY 2.
+            """);
+
+        // When it is parsed
+        // Then the target is reported
+        Assert.Equal(["PH207"], Codes(source));
+    }
+
+    [Fact]
+    public void A_second_fails_with_clause_is_PH204()
+    {
+        // Given a phrase that splits its failures over two lines
+        var source = InModule("""
+            phrase "save {order: Order}"
+              fails with Conflict
+              fails with Timeout
+              native csharp
+                return;
+            """);
+
+        // When it is parsed
+        // Then the second clause is reported
+        Assert.Equal(["PH204"], Codes(source));
+    }
+
+    [Theory]
+    [InlineData("{a: Int} {b: Int}", "PH205")]                 // no words: every call would match
+    [InlineData("ensure {items List<LineItem>} ok", "PH205")]  // hole missing its colon
+    [InlineData("ensure {items: List<LineItem> ok", "PH205")]  // hole never closed
+    [InlineData("ensure {Items: Int} ok", "PH205")]            // hole names are lowercase
+    [InlineData("total of #1", "PH205")]                       // '#' would be read as a comment
+    [InlineData("let total be {n: Int}", "PH205")]             // starts with a step keyword
+    [InlineData("respond with {n: Int}", "PH205")]
+    [InlineData("fail with {n: Int}", "PH205")]
+    [InlineData("native {n: Int}", "PH205")]
+    [InlineData("add {n: Int} to {n: Int}", "PH206")]          // duplicate hole name
+    public void Invalid_templates_are_reported(string template, string code)
+    {
+        // Given a phrase with a malformed template
+        var source = InModule($"phrase \"{template}\"\n  native csharp\n    return;\n");
+
+        // When it is parsed
+        // Then the template is rejected with a specific code
+        Assert.Equal([code], Codes(source));
+    }
+
+    [Fact]
+    public void An_unknown_clause_in_a_phrase_is_PH200()
+    {
+        // Given a phrase with a line that is not a phrase clause
+        var source = InModule("""
+            phrase "double {n: Int}" -> Int
+              returns twice n
+              native csharp
+                return n * 2;
+            """);
+
+        // When it is parsed
+        var result = Parser.Parse(source);
+
+        // Then the line is reported
+        Assert.Equal(["PH200"], result.Diagnostics.Select(d => d.Code));
+
+        // And the phrase is still kept with its native block
+        Assert.Single(Assert.Single(result.File.Phrases).Natives);
+    }
+}
