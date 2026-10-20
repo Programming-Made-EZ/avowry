@@ -153,6 +153,19 @@ result:    call total-quantity-of(items = input.items) : Int
 - No `#` (it would read as a comment when the template is re-lexed).
 - Must not start with a step keyword (`let`, `native`, `respond with`, `fail with`), because no step could ever call it.
 
+### Resolver diagnostics
+
+`PH001` unknown phrase, `PH002` ambiguous phrase, `PH010` duplicate wording, plus `PH300` to `PH335` for types, scope, flow and specs. The full table, with the matching and type-checking rules, is in [HANDOFF.md](../HANDOFF.md) until the resolver lands; it moves here then.
+
+Rules fixed by the resolver tests:
+
+- **Duplicate wording** (PH010) compares the word sequence with holes ignored entirely.
+- **Types check against an expected type.** `"text"` fits `Text` or `Id`; whole numbers fit `Int` or `Decimal`; `2.5` fits only `Decimal`; `none` fits only `Option<T>`; a `T` also fits `Option<T>`; records need their exact field set.
+- **Results are never silently discarded:** calling a value-returning phrase as a statement is PH321; use `let`.
+- **Flow is linear:** an endpoint with an output must end with `respond with` or `fail with`; anything after either is unreachable.
+- **Specs use literal data only** and have exactly one outcome.
+- **Endpoint request and response shapes** are record types named `<Endpoint>.Input` and `<Endpoint>.Output`.
+
 ### Lexer diagnostics
 
 | Code | Meaning |
