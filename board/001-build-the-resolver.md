@@ -1,0 +1,29 @@
+# Build the resolver
+
+- **Story:** As an engineer (or an LLM) writing Phrase, I want every step bound to exactly one phrase and every value and spec checked, so that mistakes are caught at compile time with messages precise enough to fix without reading the compiler.
+- **Acceptance criteria:**
+  - Given the 83 resolver tests in `tests/Phrase.Compiler.Tests/Semantics`, When the resolver is implemented, Then they all pass and none is marked `Pending`
+  - Given `orders.phrase`, When it is resolved, Then there are no diagnostics and the model matches `ResolverFixtureTests`
+  - Given a step with a typo, When it is resolved, Then `PH001` quotes the closest template
+  - Given any source, even one with syntax errors, When it is resolved, Then the resolver never throws
+  - Given `PhraseCompiler.Compile` on `orders.phrase`, When it runs, Then it gets past the resolver and stops at the C# emitter
+  - Given the CI gate, When it runs, Then it is green with zero warnings
+
+## Context
+
+- Read first: `HANDOFF.md` (working agreement, suggested order and design, every diagnostic), then `README.md` and `docs/GRAMMAR.md`.
+- Production code goes in `src/Phrase.Compiler/Semantics/Resolver.cs` (currently a stub). The output model in `Semantics/Model.cs` is already designed; change it only for a reason recorded in the reply.
+- The tests are the spec. If one looks wrong, say so in the reply rather than quietly editing it.
+- Work one test class at a time in the order `HANDOFF.md` gives, and remove a class's `Pending` trait in the same increment that turns it green.
+- No feature flag: this is compiler internals with no user-facing surface yet. The architect may overrule.
+- Stage explicit paths only, and never stage `.mob/`.
+- Toolchain: .NET 8 SDK.
+
+## Done when
+
+The facilitator runs each command from the repo root; the card is done when all of them exit 0.
+
+```
+python -c "import pathlib,sys; sys.exit(sum('Trait(\"Status\", \"Pending\")' in p.read_text(encoding='utf-8') for p in pathlib.Path('tests/Phrase.Compiler.Tests/Semantics').glob('*.cs')))"
+dotnet test Phrase.sln --filter "Status!=Pending"
+```

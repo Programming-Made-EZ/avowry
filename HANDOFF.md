@@ -15,6 +15,18 @@ Welcome. This repo is **Phrase**, a language for LLM-maintained codebases where 
 
 The resolver's output, `ModuleModel` in [Semantics/Model.cs](src/Phrase.Compiler/Semantics/Model.cs), is already designed. It is the IR the C# provider will consume. You implement [Semantics/Resolver.cs](src/Phrase.Compiler/Semantics/Resolver.cs) to produce it.
 
+## Running it with the cross-CLI mob
+
+The card for this work is [board/001-build-the-resolver.md](board/001-build-the-resolver.md). From the facilitator's folder:
+
+```bash
+python facilitator.py --card <repo>/board/001-build-the-resolver.md --repo <repo> --dry-run   # preview every prompt
+python facilitator.py --card <repo>/board/001-build-the-resolver.md --repo <repo>             # run it (no commits)
+python facilitator.py --card <repo>/board/001-build-the-resolver.md --repo <repo> --ship      # also commit and push each increment
+```
+
+The mob's whiteboard and prompts go to `.mob/001-build-the-resolver/` (git-ignored). The card's "Done when" commands decide when to stop.
+
 ## Working agreement
 
 - **Trunk-based.** Commit to `main` in small steps; CI runs on every push and must stay green.
