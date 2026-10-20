@@ -14,12 +14,16 @@ Programs compile through a language-neutral IR to target **providers** (C# first
 
 ## 2. Lexical structure
 
-- **Indentation-sensitive.** Two spaces per level. The lexer emits `INDENT` and `DEDENT` tokens (Python style). Tabs are an error.
-- **Comments** start with `#` and run to end of line. Not allowed inside `native` blocks (those are passed through raw).
-- **Identifiers:** `Ident` = `[A-Z][A-Za-z0-9]*` (types, modules, endpoints, failure codes). `ident` = `[a-z][A-Za-z0-9]*` (fields, holes, variables).
-- **Words** (inside phrase templates and steps): `[a-z][a-z0-9'-]*`. Words are case-insensitive for matching.
-- **Strings:** double-quoted, `\"` and `\\` escapes.
-- **Numbers:** `-?[0-9]+(\.[0-9]+)?`.
+- **Indentation-sensitive.** Exactly two spaces per level; an indent must open exactly one level. The lexer emits `INDENT` and `DEDENT` tokens (Python style). Tabs in indentation are an error.
+- **Blank and comment-only lines** are skipped and never change layout.
+- **Implicit line joining.** Inside `{ }` or `[ ]`, newlines and indentation are ignored, so long records and lists can span lines.
+- **Comments** start with `#` (outside strings) and run to end of line. `native` blocks are passed through raw, so `#` there is target code.
+- **Names** (lexer token `Name`): a lowercase letter, then letters or digits; `-` and `'` join the word only when a letter or digit follows (`first-class`, `don't`, but `x->` is `x` then `->`). The parser treats a `Name` as an `ident` (fields, holes, variables) or a `word` (templates, steps) by position. Words match case-insensitively.
+- **Type names** (lexer token `TypeName`, grammar `Ident`): `[A-Z][A-Za-z0-9]*`. Types, modules, endpoints, failure codes, HTTP verbs.
+- **Strings:** double-quoted, single line, `\"` and `\\` escapes only. A phrase template is lexed as one string; the parser splits its words and holes.
+- **Numbers:** `-?[0-9]+(\.[0-9]+)?`. A `-` followed by a digit starts a number; there is no arithmetic.
+- **Symbols:** `: , . = { } [ ] < > / ->`.
+- **Native blocks.** A logical line that is exactly `native <target>` captures every following line indented deeper than it (blank lines included) as one `RAW` token, with the block's base indentation (header + 2) removed and trailing blank lines dropped. The block ends at the first non-blank line at or left of the header's indentation.
 
 ### Core keywords
 
@@ -53,7 +57,7 @@ fails_clause    = "fails with" , Ident , { "," , Ident } , NEWLINE ;
 
 impl            = native_block , { native_block }      (* one per target *)
                 | steps_block ;                         (* composite phrase *)
-native_block    = "native" , target , NEWLINE , INDENT , raw_line , { raw_line } , DEDENT ;
+native_block    = "native" , target , NEWLINE , RAW , NEWLINE ;   (* RAW: see section 2 *)
 target          = "csharp" | "typescript" | "python" ;
 
 (* ---------- endpoints ---------- *)
@@ -134,6 +138,23 @@ result:    call total-quantity-of(items = input.items) : Int
 | `load` | Read that must succeed; fails if missing. |
 | `compute` / noun phrase | Pure calculation returning a value. |
 | `save` / `publish` | Effects. Must be declared in `effects`. |
+
+### Lexer diagnostics
+
+| Code | Meaning |
+|---|---|
+| `PH100` | Tab used in indentation |
+| `PH101` | Dedent to a level that matches no open block |
+| `PH102` | Indent that opens more (or less) than one 2-space level |
+| `PH103` | String not closed before end of line |
+| `PH104` | Character Phrase does not use (e.g. `+`) |
+| `PH105` | Native block line under-indented (deeper than header, shallower than base) |
+| `PH106` | Native block has no body |
+| `PH107` | Unknown string escape |
+| `PH108` | `{` or `[` never closed |
+| `PH109` | `}` or `]` with no matching opener |
+
+The lexer always returns a complete token stream with balanced `INDENT`/`DEDENT`, even with errors, so later stages can keep reporting.
 
 ## 5. Semantics in brief
 

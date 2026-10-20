@@ -10,8 +10,9 @@ A programming language for LLMs where **names are descriptions** and **specs are
 
 ```
 docs/GRAMMAR.md                    v0.1 grammar, resolution, lints, vocabulary
-src/Phrase.Compiler                PhraseCompiler.Compile(source, provider) (stub)
+src/Phrase.Compiler                Lexer (done); PhraseCompiler.Compile (stub)
 src/Phrase.Providers.CSharp        CSharpProvider (stub)
+tests/Phrase.Compiler.Tests        inner-loop unit tests (lexer: 51)
 tests/Phrase.Acceptance.Tests      outer-loop acceptance tests + harness
 reference/csharp                   hand-written target output (FastEndpoints + xUnit)
 .github/workflows/ci.yml           trunk CI: build, test, Pending excluded
@@ -30,6 +31,7 @@ dotnet test Phrase.sln --filter "Status!=Pending"     # what CI gates on
 |---|---|---|
 | `ReferenceTarget.Reference_output_builds_and_every_spec_passes` | Green | Proves the target design compiles, all 6 specs pass, and the harness detects failures |
 | `CompileEndpointToCSharp.Generated_csharp_builds_and_every_spec_passes` | Red (Pending) | Fails with `NotImplementedException` until the compiler exists |
+| `Phrase.Compiler.Tests` (lexer) | Green, 51 tests | Layout, tokens, native blocks, PH100 to PH109, the full fixture, and 2,000 fuzzed mutations |
 
 The acceptance test counts specs in the `.phrase` source independently of the compiler, so a compiler that silently drops specs cannot pass.
 
@@ -37,7 +39,7 @@ The acceptance test counts specs in the `.phrase` source independently of the co
 
 Build inward, one unit-test suite per stage, each with Given/When/Then comments:
 
-1. **Lexer**: indentation to `INDENT`/`DEDENT`, comments, strings, raw `native` blocks
+1. ~~**Lexer**: indentation to `INDENT`/`DEDENT`, comments, strings, raw `native` blocks~~ (done)
 2. **Parser**: AST for `module`, `type`, `phrase`, `endpoint`, `spec`
 3. **Resolver**: phrase-call matching (PH001 unknown, PH002 ambiguous), hole type checks, PH010 duplicate skeletons
 4. **IR**: the phrase graph the provider consumes (this is when `ITargetProvider.Emit(ir)` gets its signature)
