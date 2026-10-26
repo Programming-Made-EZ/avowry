@@ -112,9 +112,9 @@ within the last hour) takes a driver out of rotation, until its next successful 
 
 | Driver | Rung | Clean cycles toward next rung | Last verdict / date | Notes |
 |---|---|---|---|---|
-| Codex | 1 | 1/3 | 2026-10-25 clean: card 001 cycle 1 (declarations), 16 tests re-run green, Copilot sign-off | Entry rung; first clean cycle |
-| Copilot | 1 | 0/3 | 2026-10-25 reviewed cycle 1: APPROVE with evidence | Has not yet authored a cycle here |
-| Grok | 1 | 0/3 | none | New to this mob |
+| Codex | 1 | 1/3 | 2026-10-25 cycles 2-3 NOT clean: Grok review CHANGES (throws, missed PH312, option coercion); count unchanged | Cycle 1 clean (Copilot sign-off) |
+| Copilot | 1 | 0/3 | 2026-10-25 authored a47ed6a (specs + fixture, gate 221+1 re-run by facilitator); awaiting independent review | Reviewed cycle 1: APPROVE |
+| Grok | 1 | 0/3 | 2026-10-25 reviewed 59d8a9c+84b5737: CHANGES with red-check evidence (good review) | Drives hardening cycles next |
 | agy | 1 | 0/3 | none | New to this mob; model gemini-4-argon-high (3.1 Pro not offered) |
 | Claude (last resort) | 1 | 0/3 | none | CLI not signed in as of 2026-10-25 |
 

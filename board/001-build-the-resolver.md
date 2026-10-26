@@ -9,6 +9,19 @@
   - Given `PhraseCompiler.Compile` on `orders.phrase`, When it runs, Then it gets past the resolver and stops at the C# emitter
   - Given the CI gate, When it runs, Then it is green with zero warnings
 
+## Review findings to fix before Done (Grok review of 59d8a9c and 84b5737, 2026-10-25, verdict CHANGES)
+
+Fix each red-first in a new `tests/Phrase.Compiler.Tests/Semantics/ResolverHardeningTests.cs` (Given/When/Then comments):
+
+- Never throw: a composite whose holes repeat (`add {n: Int} to {n: Int}`, parser reports PH206) throws at `Holes.ToDictionary`; a call throws at `Holes.Single`. Both must degrade to diagnostics or `PType.Error`.
+- A bare word naming a variable skips the type check (`Bool` variable accepted by an `Int` hole). It must report PH312 like the path form.
+- `none` fits only `Option<T>`; it is currently accepted for a `Text` hole.
+- A record literal where the expected type is not a record must report PH312 (lists already do).
+- `3` must fit `Option<Decimal>`, `"c-1"` must fit `Option<Id>` (a value of type T fits Option<T>, with literal widening).
+- A failed `let` must still bind its variable as `PType.Error`, so one mistake gives one diagnostic.
+- `PhraseCompiler.Compile` must run the resolver and throw `CompilationFailedException` on diagnostics, then stop at the emitter.
+- `docs/GRAMMAR.md` lists every resolver diagnostic (PH001, PH002, PH010, PH300-PH335) and any rule the mob changed.
+
 ## Context
 
 - Read first: `HANDOFF.md` (working agreement, suggested order and design, every diagnostic), then `README.md` and `docs/GRAMMAR.md`.
@@ -25,5 +38,7 @@ The facilitator runs each command from the repo root; the card is done when all 
 
 ```
 python -c "import pathlib,sys; sys.exit(sum('Trait(\"Status\", \"Pending\")' in p.read_text(encoding='utf-8') for p in pathlib.Path('tests/Phrase.Compiler.Tests/Semantics').glob('*.cs')))"
+python -c "import pathlib,sys; sys.exit(0 if pathlib.Path('tests/Phrase.Compiler.Tests/Semantics/ResolverHardeningTests.cs').exists() else 1)"
+python -c "import pathlib,sys; sys.exit(0 if 'PH335' in pathlib.Path('docs/GRAMMAR.md').read_text(encoding='utf-8') and 'Resolver' in pathlib.Path('src/Phrase.Compiler/PhraseCompiler.cs').read_text(encoding='utf-8') else 1)"
 dotnet test Phrase.sln --filter "Status!=Pending"
 ```
