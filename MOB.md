@@ -7,17 +7,13 @@
 
 ## Who did what
 
-- **Codex:** 50 turns (checkpoint x3, fix x7, green x5, ready x5, red x8, refactor x4, ship x2, slice x8, teamsignoff x8)
-- **Copilot:** 30 turns (checkpoint x16, directions x4, ready x3, teamsignoff x7)
-- **Grok:** 36 turns (directions x24, fix x2, red x2, teamsignoff x8)
-- **agy:** 25 turns (checkpoint x17, teamsignoff x8)
+- **Codex:** 51 turns (checkpoint x3, fix x8, green x5, ready x5, red x8, refactor x4, ship x2, slice x8, teamsignoff x8)
+- **Copilot:** 31 turns (checkpoint x17, directions x4, ready x3, teamsignoff x7)
+- **Grok:** 37 turns (directions x25, fix x2, red x2, teamsignoff x8)
+- **agy:** 26 turns (checkpoint x18, teamsignoff x8)
 
 ## Recent turns
 
-- Turn 124: Codex (member, teamsignoff): FLAG: ProfileArguments passes the prompt file path as Copilot’s literal -p value, so Copilot receives a pathname instead of the task prompt.
-- Turn 125: Grok (member, teamsignoff): FLAG: copilot --help defines -p/--prompt as <text>, but return $" -p \"{promptPath}\" -s --allow-all-tools --trust-folder"; passes a temp pathname as that text.
-- Turn 126: agy (member, teamsignoff): FLAG: return $" -p \"{promptPath}\" -s --allow-all-tools --trust-folder"; in [Program.cs](file:///C:/home/<user>) passes a leaked global temp file path…
-- Turn 127: Codex (product-manager, ready): READY — The card has a valid Connextra story, sound Given/When/Then ZOMBIES acceptance criteria, and all referenced project guidance and sources…
 - Turn 128: Codex (architect, slice): CONFIRMED — This remains a thin vertical bug-fix slice: the Phrase.Bench CLI invokes real model CLIs, scores their replies, and persists a…
 - Turn 129: Grok (navigator, directions): gave 3 directions
 - Turn 130: Codex (driver, red): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
@@ -32,11 +28,16 @@
 - Turn 139: Codex (driver, red): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 140: Copilot (observer, checkpoint): FLAG: tools/Phrase.Bench/Program.cs was modified in the red checkpoint, violating the no-production-code-during-red rule.
 - Turn 141: agy (observer, checkpoint): FLAG: git status --short shows MM tools/Phrase.Bench/Program.cs (staged production changes remain in the index) and M bench/results/self-check/history.jsonl during the…
+- Turn 142: Grok (navigator, directions): gave 4 directions
+- Turn 143: Codex (driver, fix): changed tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs
+- Turn 144: Copilot (observer, checkpoint): FLAG: criterion not met: python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]…
+- Turn 145: agy (observer, checkpoint): signed off
 
 ## Flags, checks and decisions on this card
 
 - **Baseline (before any work): not done**: 3 of 6 checks pass
 - **Cycle 1 roles**: driver Codex; navigator Grok; observers Copilot, agy
+- **Flag raised at after red**: - copilot: FLAG: tools/Phrase.Bench/Program.cs was modified in the red checkpoint, violating the no-production-code-during-red rule.
 
 ## Decider outcomes (latest)
 
@@ -54,10 +55,9 @@
 
 - 2a32cf4 No Co-Authored-By trailers (Steve's standing coding rule): agreement bullet and commit-msg hook
 - 1d13572 Pre-commit check: the published MOB.md must hold no secrets or home paths (public repo)
-- a4ab305 Isolate benchmark self-check results
 
 ## What's next
 
-- Running. Latest: turn 141 by agy (checkpoint). Next: the next stage of the current cycle.
+- Running. Latest: turn 145 by agy (checkpoint). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 06:40 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 06:43 UTC. Summary only: no prompts, replies, code or secrets are published._
