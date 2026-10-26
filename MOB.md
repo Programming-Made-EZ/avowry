@@ -2,7 +2,7 @@
 
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 3)
+**Project:** Phrase &nbsp;|&nbsp; **State:** running
 **Card in progress:** Loop: pick the next eligible card from the board (063)
 
 ## Who did what
@@ -19,9 +19,9 @@
 
 ## Decider outcomes (latest)
 
-- Decider D21: Steve's async and events input, refined into cards 059 to 061 (passed)
 - Decider D22: atomic runs (land or discard) and Bishop's Law applied, Steve's retro input (passed)
 - Decider D23: Steve's "it should be a loop": the loop runner in mob-defaults, cards 063 to 070 (passed)
+- Decider D24: amendment to D23 (Steve's correction: the loop never ends; discovery instead of stop; allotment pacing) (passed)
 
 ## Board
 
@@ -31,11 +31,13 @@
 
 ## Latest commits
 
+- 97636a1 Tooling cards: absolute Phrase paths and Given/When/Then criteria (run 063 stopped at the Ready check); seed
+- d190f0b Loop: no separate discovery step (Steve's simplification); 071 withdrawn, folded into 067; D24 amended
+- 222482c Loop cards: continuous, never ends (Steve); discovery 071 and budget pacing 072; 067/068 amended; D24
 - 51ddf45 Board: the loop runner cards 063-070 (Steve: it should be a loop; D23); 018 Done
-- 8962dc5 Fix spec resolution diagnostics
 
 ## What's next
 
-- Stopped before the card was done. Next: look at the last flag or check above, then run again.
+- Running. Latest: turn 1 by Codex (ready). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 21:31 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 21:43 UTC. Summary only: no prompts, replies, code or secrets are published._
