@@ -5,13 +5,12 @@
 
 ## Who did what
 
-- **Codex:** 17 turns (advance x1, green x3, ready x4, refactor x4, ship x4, slice x1)
+- **Codex:** 18 turns (advance x1, green x4, ready x4, refactor x4, ship x4, slice x1)
 - **Copilot:** 2 turns (red x1, signoff x1)
 - **Grok:** 1 turns (red x1)
 
 ## Recent turns
 
-- Turn 3: Copilot (qa-engineer, red): no file changes
 - Turn 4: Codex (product-manager, ready): Implemented the first coherent increment in [facilitator.py](C:\Users\<user>): - Emits allow-listed start and end events for each real seat process.
 - Turn 5: Codex (backend-dev, refactor): changed facilitator.py
 - Turn 6: Codex (devops-engineer, ship): Shipping stopped: the required dashboard acceptance suite is not green.
@@ -29,6 +28,7 @@
 - Turn 18: Codex (backend-dev, green): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 - Turn 19: Codex (backend-dev, refactor): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 - Turn 20: Codex (devops-engineer, ship): Shipment stopped because the required acceptance gate is red.
+- Turn 21: Codex (backend-dev, green): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 
 ## Flags, checks and decisions on this card
 
@@ -52,10 +52,9 @@
 - ffbbbaa Balance, not removal (Steve's clarification): agreement wording revised; Steve's diagnosis and P6 logged; defect
 - 7e43d31 Steve's course correction: product first, ~20% process budget, lighter Decider, headline number; board re-ranked
 - d77b0f9 Seed: the approved process retro after the dashboard card, its data plan and interim flow numbers
-- 9c4947a Board: card 036 states who decides dashboard hosting (team for Phrase-only, Steve for other mobs on a public URL
 
 ## What's next
 
-- Running. Latest: turn 20 by Codex (ship). Next: the next stage of the current cycle.
+- Running. Latest: turn 21 by Codex (green). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 16:33 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 16:40 UTC. Summary only: no prompts, replies, code or secrets are published._
