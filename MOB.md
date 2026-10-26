@@ -7,19 +7,13 @@
 
 ## Who did what
 
-- **Codex:** 48 turns (checkpoint x3, fix x7, green x5, ready x5, red x7, refactor x4, ship x2, slice x7, teamsignoff x8)
-- **Copilot:** 28 turns (checkpoint x15, directions x4, ready x2, teamsignoff x7)
-- **Grok:** 35 turns (directions x23, fix x2, red x2, teamsignoff x8)
-- **agy:** 24 turns (checkpoint x16, teamsignoff x8)
+- **Codex:** 50 turns (checkpoint x3, fix x7, green x5, ready x5, red x8, refactor x4, ship x2, slice x8, teamsignoff x8)
+- **Copilot:** 30 turns (checkpoint x16, directions x4, ready x3, teamsignoff x7)
+- **Grok:** 36 turns (directions x24, fix x2, red x2, teamsignoff x8)
+- **agy:** 25 turns (checkpoint x17, teamsignoff x8)
 
 ## Recent turns
 
-- Turn 118: Codex (member, teamsignoff): FLAG: bench/results/self-check/history.jsonl contains 24 newly appended duplicate self-check fixture rows and must not ship with this increment.
-- Turn 119: Grok (member, teamsignoff): FLAG: bench/results/self-check/history.jsonl adds 24 lines and all 24 duplicate existing self-check fixture rows, so that file must not ship with this increment.
-- Turn 120: Copilot (member, teamsignoff): signed off
-- Turn 121: agy (member, teamsignoff): FLAG: bench/results/self-check/history.jsonl is dirty with 24 newly appended duplicate self-check-v1 fixture rows that must not be committed with this increment.
-- Turn 122: Grok (navigator, directions): gave 3 directions
-- Turn 123: Codex (driver, fix): changed tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 124: Codex (member, teamsignoff): FLAG: ProfileArguments passes the prompt file path as Copilot’s literal -p value, so Copilot receives a pathname instead of the task prompt.
 - Turn 125: Grok (member, teamsignoff): FLAG: copilot --help defines -p/--prompt as <text>, but return $" -p \"{promptPath}\" -s --allow-all-tools --trust-folder"; passes a temp pathname as that text.
 - Turn 126: agy (member, teamsignoff): FLAG: return $" -p \"{promptPath}\" -s --allow-all-tools --trust-folder"; in [Program.cs](file:///C:/home/<user>) passes a leaked global temp file path…
@@ -32,14 +26,17 @@
 - Turn 133: Grok (navigator, directions): gave 3 directions
 - Turn 134: Codex (driver, fix): changed tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 135: Copilot (observer, checkpoint): FLAG: tools/Phrase.Bench/Program.cs was edited during the red step, violating the rule that only the test may change.
+- Turn 136: Copilot (product-manager, ready): READY — The card has a valid Connextra story, complete Given/When/Then ZOMBIES acceptance criteria, and the referenced guidelines and sources exist.
+- Turn 137: Codex (architect, slice): CONFIRMED — This is a thin vertical bug-fix slice spanning real CLI invocation, scoring, persisted results, and documented interpretation.
+- Turn 138: Grok (navigator, directions): gave 3 directions
+- Turn 139: Codex (driver, red): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
+- Turn 140: Copilot (observer, checkpoint): FLAG: tools/Phrase.Bench/Program.cs was modified in the red checkpoint, violating the no-production-code-during-red rule.
+- Turn 141: agy (observer, checkpoint): FLAG: git status --short shows MM tools/Phrase.Bench/Program.cs (staged production changes remain in the index) and M bench/results/self-check/history.jsonl during the…
 
 ## Flags, checks and decisions on this card
 
-- **Baseline (before any work): not done**: 4 of 6 checks pass
+- **Baseline (before any work): not done**: 3 of 6 checks pass
 - **Cycle 1 roles**: driver Codex; navigator Grok; observers Copilot, agy
-- **Flag raised at after red**: - copilot: FLAG: Criterion Many/Interface not met: the benchmark check failed because model coverage isn’t complete and bench/README.md is still too short or absent.
-- **Flag unresolved at after red**: - copilot: FLAG: tools/Phrase.Bench/Program.cs was edited during the red step, violating the rule that only the test may change.
-- **Experiment E1 metrics**: turns: 7, cycles: 1, flags: 2, fixrounds: 1, esttokens: 67593, seconds: 392.7 (tokens are estimated from prompt and reply size)
 
 ## Decider outcomes (latest)
 
@@ -58,10 +55,9 @@
 - 2a32cf4 No Co-Authored-By trailers (Steve's standing coding rule): agreement bullet and commit-msg hook
 - 1d13572 Pre-commit check: the published MOB.md must hold no secrets or home paths (public repo)
 - a4ab305 Isolate benchmark self-check results
-- ce1eb04 Live mob dashboard: tooling card 036 and experiment E2, ranked via Decider D7 (amended after Copilot's ABSOLUTEL
 
 ## What's next
 
-- Running. Latest: turn 135 by Copilot (checkpoint). Next: the next stage of the current cycle.
+- Running. Latest: turn 141 by agy (checkpoint). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 06:35 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 06:40 UTC. Summary only: no prompts, replies, code or secrets are published._
