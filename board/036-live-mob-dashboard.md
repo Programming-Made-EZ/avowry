@@ -1,6 +1,6 @@
 # Live mob dashboard: see every seat's status from a phone
 
-- **Status:** Ready, 2nd in Ready (rank: see `board/MILESTONE-usable-v1.md`); do not interrupt the running mobbing trial on the baseline-fix card
+- **Status:** Ready, next up; build starts under the standard mode (experiment E2)
 - **Type:** tooling, run as process/tooling experiment E2 (`docs/experiments/E2-live-dashboard.md`)
 - **Lives:** the card is on Phrase's board because mob-defaults has no board; **the code lives in mob-defaults** (`facilitator.py` plus `templates/`), not in phrase-lang
 - **North star:** `VISION.md` (the mob's own effectiveness; LLMs as customers include the mob's operators)
@@ -17,6 +17,35 @@
   - Freshness: Given an event, When it happens, Then it is visible on the local dashboard within 90 seconds at the 95th percentile, measured over at least 30 events, and the figure is given to Steve with the hosting options
   - Gate: Given any hosting that is reachable from outside the laptop, When it is about to be used, Then Steve has given his explicit one-word OK on that one option, presented with the allow-list test results and the options' exposure (a privacy exposure under the escalation safety carve-out); until then the dashboard runs locally only
 
+## Contract (what the acceptance tests check)
+
+The acceptance tests are `tests/acceptance_dashboard.py` in mob-defaults. They were written by the facilitator from this contract, not by the
+implementers, and went through three rounds of "break the check" review by all four seats (sandboxed Decider runner); each round found
+loopholes that were closed (fabricated pids, kill-by-name, fixed-timeout stalls, canned snapshots, caught network calls, a loose
+Content-Security-Policy). Do not edit them: the Done-when records their hash.
+
+- **Events.** `facilitator.py` appends one JSON line per seat-turn event to `.mob/<card>/events.jsonl`: `ts`, `seat`, `role`, `play`,
+  `event` in `start | end | stall | stopped`, `pid` (the seat process's own pid); `end` also carries `ok`, `tokens_est`, `seconds`. Nothing
+  else, and never prompt or reply text.
+- **Stall.** `--stall-seconds N` (default 600). A seat is stalled only when it shows NO output change AND NO CPU change for N seconds
+  (a fixed timeout is wrong: a seat that talks for longer, or is silent but burning CPU, is healthy). On a stall: a `stall` event, then
+  only that process and its children are stopped by their own PIDs (never by name or pattern), then a `stopped` event, and the turn
+  fails over as usual. Detection within N plus a few seconds.
+- **Snapshot.** `python status.py --repo R --card-id ID --project NAME --out DIR [--paused]` writes `DIR/NAME.json` from an allow-list
+  (project, state, card_title, stage, task_force, seats, recent_events, flags, milestones, last_commit, gate_status, generated_at),
+  derived from the event stream. `python status.py --index DIR` writes `DIR/index.json` listing every project. Paused mobs show `paused`.
+- **Page.** `dashboard/index.html`: one static, phone-friendly page for all mobs, refreshing at most every 30 seconds, marking old
+  snapshots stale, with a strict Content-Security-Policy (only this origin), relative `status/` fetches only. `dashboard/serve.py` serves
+  it on 127.0.0.1 only.
+- **Nothing is published.** No network calls, no `git push`, no external resources, anywhere in this card's code.
+- **Residual risk (recorded, accepted):** an implementation could fabricate an event stream using real fake-seat pids, but it cannot
+  pass the stall tests without really monitoring and stopping the seat process.
+
+## Where it runs
+
+The code lives in mob-defaults. The run uses `--repo C:\Users\ringe\mob-crosscli` (the card file stays on this board) and
+`--summary-repo` pointing at phrase-lang, so the public `MOB.md` page keeps updating here.
+
 ## Design (architect, ratified by Decider D7)
 
 - **Build order:** (1) per-seat event stream plus stall detection in `facilitator.py`; (2) `status.json` snapshot per project derived from the stream; (3) one static dashboard page reading the snapshots.
@@ -29,8 +58,21 @@
 
 ## Task force
 
-Assembled at pull time by the facilitator (a Decider proposal; see `TEAM_WORKING_AGREEMENT.md`).
+Assembled by the facilitator (a Decider proposal; the same break-the-check votes also covered the roster).
+
+- Tooling engineer [author]: Codex | why: implements the event stream, the stall watcher, `status.py` and the page
+- Safety reviewer [reviewer]: Copilot | why: independent review of the process-stopping logic (own PID only) and the allow-list
+- Acceptance designer: Grok | why: keeps the tests honest and checks nothing was gamed or weakened
+- Security reviewer: agy | why: no network, no exposure, the Content-Security-Policy, the loopback-only server
+- Agile coach: Claude (session) | why: records the E2 flow numbers and checks role fit at retro
 
 ## Done when
 
-The facilitator writes concrete, red-first commands at pull time, including negative checks (the allow-list test fails on a seeded prompt string; the stall test fails if a healthy seat is stopped; no check may be satisfiable by fixtures).
+Run from the mob-defaults repo root. Written red-first; the acceptance tests and the fake CLI are hash-locked so they cannot be edited
+to pass. All of these must exit 0.
+
+```
+python -m unittest tests.acceptance_dashboard
+python -c "import hashlib,sys; want={'tests/acceptance_dashboard.py':'3b7cfd260f5296f987ce54d2a27b89d66adfbbee98d470b062d1c02bde00d9d0','tests/fakes/fake_cli.py':'a0faf7155127a93df2f1bcbe06ae05a4ccbbfb360ec38a691a6e774378623a27','tests/test_card_mode.py':'0519e819ae652027cd7038be9778190d8996c9e1f2479d5bb78abbc0d272cb93'}; bad=[f for f,h in want.items() if hashlib.sha256(open(f,'rb').read()).hexdigest()!=h]; print('tampered:',bad) if bad else None; sys.exit(1 if bad else 0)"
+python -m unittest discover -s tests
+```
