@@ -5,13 +5,12 @@
 
 ## Who did what
 
-- **Codex:** 25 turns (advance x1, green x6, ready x4, refactor x7, ship x6, slice x1)
+- **Codex:** 26 turns (advance x1, green x6, ready x4, refactor x7, ship x7, slice x1)
 - **Copilot:** 2 turns (red x1, signoff x1)
 - **Grok:** 1 turns (red x1)
 
 ## Recent turns
 
-- Turn 11: Codex (backend-dev, refactor): changed facilitator.py, status.py, tests/test_status.py
 - Turn 12: Codex (devops-engineer, ship): Shipment stopped: the required acceptance gate is red.
 - Turn 13: Copilot (qa-engineer, signoff): SIGNED OFF — The red-first proof is in the mob log: python -m unittest tests.acceptancedashboard failed before any production code change, with the…
 - Turn 14: Codex (product-manager, advance): Still In Progress.
@@ -29,6 +28,7 @@
 - Turn 26: Codex (devops-engineer, ship): Shipment stopped because the required acceptance gate is red.
 - Turn 27: Codex (backend-dev, green): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 - Turn 28: Codex (backend-dev, refactor): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
+- Turn 29: Codex (devops-engineer, ship): Shipment stopped because the required acceptance gate is red.
 
 ## Flags, checks and decisions on this card
 
@@ -52,6 +52,6 @@
 
 ## What's next
 
-- Running. Latest: turn 28 by Codex (refactor). Next: the next stage of the current cycle.
+- Running. Latest: turn 29 by Codex (ship). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 18:04 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 18:10 UTC. Summary only: no prompts, replies, code or secrets are published._
