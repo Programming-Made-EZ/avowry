@@ -69,6 +69,9 @@ an assignee (model or seat) and a one-line why. There is no minimum or maximum r
   each test as sensitive as before.
 - **Trunk-based development.** Each green increment ships to main as soon as the gate is green; no
   long-lived branches. The gate (tests, zero warnings, any CI) passes before anything deploys.
+- **No `Co-Authored-By` trailers on commits** (Steve's standing coding rule). This covers drivers, the facilitator and
+  the MOB.md publisher. A `commit-msg` hook (`.githooks/commit-msg`, enabled with `git config core.hooksPath .githooks`)
+  rejects them. Pushed history is not rewritten.
 - **Vertical slices.** Every slice has a user-observable acceptance criterion.
 - **Independent review before shipping**, by a non-author with a fresh context (see Driver rotation).
 - **Stage explicit paths only.** Never stage the mob's scratch directory (`.mob/`).
