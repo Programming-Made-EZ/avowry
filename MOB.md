@@ -2,19 +2,20 @@
 
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** running
+**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 3)
 **Card in progress:** Loop: pick the next eligible card from the board (063)
 
 ## Who did what
 
-- Nothing has run yet.
+- **Codex:** 1 turns (ready x1)
 
 ## Recent turns
 
+- Turn 1: Codex (product-manager, ready): NOT READY — The Connextra story is sound, but the done checks are not expressed as Given/When/Then acceptance criteria.
 
 ## Flags, checks and decisions on this card
 
-- None yet.
+- **Stopped**: The PM did not find the card ready. Groom it, then run again.
 
 ## Decider outcomes (latest)
 
@@ -35,6 +36,6 @@
 
 ## What's next
 
-- Starting up.
+- Stopped before the card was done. Next: look at the last flag or check above, then run again.
 
 _Updated 2026-10-26 21:31 UTC. Summary only: no prompts, replies, code or secrets are published._
