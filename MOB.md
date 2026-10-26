@@ -1,65 +1,40 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 1)
-**Card in progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
+**Project:** Phrase &nbsp;|&nbsp; **State:** running
+**Card in progress:** Live mob dashboard: see every seat's status from a phone (036)
 
 ## Who did what
 
-- **Codex:** 92 turns (advance x2, checkpoint x3, fix x8, green x15, ready x6, red x8, refactor x16, ship x14, slice x12, teamsignoff x8)
-- **Copilot:** 45 turns (advance x2, checkpoint x17, directions x4, green x2, ready x5, red x4, signoff x4, teamsignoff x7)
-- **Grok:** 38 turns (directions x25, fix x2, ready x1, red x2, teamsignoff x8)
-- **agy:** 26 turns (checkpoint x18, teamsignoff x8)
+- Nothing has run yet.
 
 ## Recent turns
 
-- Turn 184: Codex (backend-dev, refactor): changed bench/results/self-check/history.jsonl, bench/results/self-check/self-check-v1.json, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
-- Turn 185: Codex (devops-engineer, ship): Stopped due to push-launch failure, as instructed. - Local tests: 251/251 passed.
-- Turn 186: Copilot (qa-engineer, signoff): SIGNED OFF — The red-first path held: the benchmark acceptance tests were observed failing before the fix, then the harness changes were validated…
-- Turn 187: Codex (product-manager, advance): STILL IN PROGRESS — Delivered the repaired benchmark harness, trustworthy four-model baseline, self-check isolation, documentation, model-specific…
-- Turn 188: Codex (product-manager, ready): READY — The card has a valid Connextra story, sound Given/When/Then ZOMBIES acceptance criteria, and its referenced project guidelines and sources…
-- Turn 189: Codex (architect, slice): CONFIRMED — This remains a thin vertical bug-fix slice spanning real model invocation, reply scoring, persisted results, and baseline documentation.
-- Turn 190: Copilot (qa-engineer, red): changed bench/results/self-check/history.jsonl, bench/results/self-check/self-check-v1.json
-- Turn 191: Copilot (backend-dev, green): changed MOB.md, bench/results/agy-gemini-4-argon-medium.json, bench/results/history.jsonl, bench/results/self-check/history.jsonl, bench/results/self-check/self-check-v1.json, tools/Phrase.Bench/Program.cs
-- Turn 192: Codex (backend-dev, refactor): changed bench/results/agy-gemini-4-argon-medium.json, bench/results/history.jsonl, bench/results/self-check/history.jsonl, bench/results/self-check/self-check-v1.json, tools/Phrase.Bench/Program.cs
-- Turn 193: Codex (devops-engineer, ship): SHIPPED — Commit e5d7619 (Keep benchmark self-check results isolated).
-- Turn 194: Codex (backend-dev, green): changed bench/results/history.jsonl
-- Turn 195: Codex (backend-dev, refactor): changed bench/results/history.jsonl
-- Turn 196: Codex (devops-engineer, ship): SHIPPED — Commit b062170 (Restore complete benchmark baseline history). - Local gates: 16/16 benchmark tests and 251/251 full-suite tests passed.
-- Turn 197: Codex (backend-dev, green): changed bench/results/history.jsonl, bench/results/self-check/history.jsonl
-- Turn 198: Codex (backend-dev, refactor): changed bench/results/history.jsonl, bench/results/self-check/history.jsonl
-- Turn 199: Codex (devops-engineer, ship): SHIPPED — Commit 4853748 (Record reply heads in benchmark baseline). - Local gates: 16/16 benchmark tests and 251/251 full-suite tests passed.
-- Turn 200: Copilot (qa-engineer, signoff): I’m reading the benchmark harness and the relevant acceptance checks to fix the invalid baseline at the CLI boundary and verify the red-to-green path.
-- Turn 201: Copilot (product-manager, advance): ADVANCE — I’ve moved the benchmark-baseline card to Done, recorded the actual baseline trust issues as fixed at the harness boundary, and kept the…
 
 ## Flags, checks and decisions on this card
 
-- **Baseline (before any work): not done**: 7 of 10 checks pass
-- **After cycle 1: not done**: 7 of 10 checks pass
-- **After cycle 2: not done**: 7 of 10 checks pass
-- **After cycle 3: not done**: 8 of 10 checks pass
-- **Not done**: Not done after 3 cycles. The next run picks up from here.
+- None yet.
 
 ## Decider outcomes (latest)
 
-- Decider D6: rank retro-016 cards: 033 (generics) and 034 (behavioral holes) after 023 and before 008; 035 (failure-code holes, Decider first) after 021; fold two… (passed)
-- Decider D7: file the live mob dashboard as tooling card 036 (experiment E2) at 2nd in Ready after the baseline fix; code in mob-defaults; one dashboard for all… (passed)
 - Decider D8: pause experiment E1 (true mobbing) on card 032 after 8 runs; finish 032 in the standard driver-plus-review mode with a whole-team sign-off before the… (passed)
+- Decider D11: declare card 032 Done as a zero-shot baseline repair; milestone M2 'Measured' is NOT declared reached (aligned with the bootstrap exit: reached when… (passed)
+- Decider D12: experiment E1 (true mobbing) stays OPEN and opt-in under the bootstrap-phase rule: not the default practice, no TWA rule, tooling kept behind… (passed)
 
 ## Board
 
-- **In progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
-- **Next in Ready:** next up: Live mob dashboard (tooling, experiment E2; code in mob-defaults) (036); 2nd in Ready: Keyword model ADR: what a keyword is (022); 3rd in Ready: Make GRAMMAR.md say what the resolver does (013)
-- **Done:** Resolver malformed-input hardening (002); LLM benchmark harness v0 (016)
+- **In progress:** Live mob dashboard: see every seat's status from a phone (036)
+- **Next in Ready:** next up: Benchmark: docs in the prompt, and cold runs (037); 2nd in Ready: Keyword model ADR: what a keyword is (022); 3rd in Ready: Make GRAMMAR.md say what the resolver does (013)
+- **Done:** Resolver malformed-input hardening (002); LLM benchmark harness v0 (016); Benchmark baseline is invalid: fix the harness, store a trustworthy baseline (032)
 
 ## Latest commits
 
-- 4853748 Record reply heads in benchmark baseline
-- b062170 Restore complete benchmark baseline history
-- e5d7619 Keep benchmark self-check results isolated
-- 84a4369 Exclude empty-reply models from benchmark baseline
+- 0d5022a Board: card 036 (live mob dashboard) gets its contract, task force and a hash-locked Done-when
+- d956bd3 Agreement: run every Decider with the sandboxed runner
+- da40c05 Retro 032: add the voter-write-access incident
+- 82c7fa0 Retro seed: a Decider voter ran with full write access and edited the repo; runner fix planned
 
 ## What's next
 
-- Stopped before the card was done. Next: look at the last flag or check above, then run again.
+- Starting up.
 
-_Updated 2026-10-26 11:30 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 13:35 UTC. Summary only: no prompts, replies, code or secrets are published._
