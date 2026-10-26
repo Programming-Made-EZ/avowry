@@ -29,11 +29,11 @@ jobs:
       - name: Test
         run: dotnet test Phrase.sln --no-build -c Release --filter "Status!=Pending" --logger "console;verbosity=normal"
 
-  # Detects the Usable v1 milestone (board/MILESTONE-usable-v1.md). Non-blocking until card 012 makes it a gate.
+  # Detects the Usable v1 milestone (board/MILESTONE-usable-v1.md). Green while the milestone is pending, with a notice
+  # "Usable v1 not reached: X of 6 criteria"; red only if a bar in board/usable-v1-ratchet.json regresses.
   usable-v1:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
 
@@ -41,12 +41,5 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Usable v1 acceptance test
-        id: usable
-        run: dotnet test Phrase.sln -c Release --filter "Milestone=UsableV1" --logger "console;verbosity=normal"
-
-      - name: Report
-        if: steps.usable.outcome == 'success'
-        run: |
-          echo "USABLE v1 REACHED"
-          echo "USABLE v1 REACHED: demo app at demo/tasks (see its README)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Usable v1 report
+        run: python3 scripts/usable-v1-report.py

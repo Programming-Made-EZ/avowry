@@ -1,0 +1,4 @@
+{
+  "_comment": "Bars of the Usable v1 milestone that have passed and must keep passing. A bar is added here in the same commit as the card that makes its real test pass (never earlier). The usable-v1 CI job is green while the milestone is pending and goes red only if a bar listed here regresses.",
+  "must_pass": []
+}
