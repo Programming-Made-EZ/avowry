@@ -5,16 +5,13 @@
 
 ## Who did what
 
-- **Codex:** 63 turns (checkpoint x3, fix x8, green x8, ready x5, red x8, refactor x8, ship x6, slice x9, teamsignoff x8)
-- **Copilot:** 36 turns (advance x1, checkpoint x17, directions x4, green x1, ready x4, red x1, signoff x1, teamsignoff x7)
+- **Codex:** 64 turns (checkpoint x3, fix x8, green x8, ready x5, red x8, refactor x8, ship x6, slice x10, teamsignoff x8)
+- **Copilot:** 38 turns (advance x1, checkpoint x17, directions x4, green x1, ready x5, red x2, signoff x1, teamsignoff x7)
 - **Grok:** 37 turns (directions x25, fix x2, red x2, teamsignoff x8)
 - **agy:** 26 turns (checkpoint x18, teamsignoff x8)
 
 ## Recent turns
 
-- Turn 145: agy (observer, checkpoint): signed off
-- Turn 146: Copilot (product-manager, ready): READY — The card has a valid Connextra story, complete Given/When/Then ZOMBIES acceptance criteria, correct rank 3, and the referenced guidelines and…
-- Turn 147: Codex (architect, slice): CONFIRMED — This remains a thin vertical bug-fix slice: real model CLI invocation flows through extraction, scoring, result persistence, and baseline…
 - Turn 148: Copilot (qa-engineer, red): changed tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs
 - Turn 149: Codex (backend-dev, green): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 150: Codex (backend-dev, refactor): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
@@ -30,14 +27,13 @@
 - Turn 160: Codex (devops-engineer, ship): Shipped successfully.
 - Turn 161: Copilot (qa-engineer, signoff): SIGN-OFF — The red-to-green path was proven: the fenced/narrated Phrase acceptance test failed first, the fix was then validated green, and the…
 - Turn 162: Copilot (product-manager, advance): DONE — Delivered the trustworthy four-model benchmark baseline: fenced/narrated Phrase extraction is scored correctly, self-check rows are isolated…
+- Turn 163: Copilot (product-manager, ready): READY — The card is ready: it has a clear Connextra story and sound Given/When/Then acceptance criteria, the referenced project guidelines and source…
+- Turn 164: Codex (architect, slice): CONFIRMED — This is a thin vertical bug-fix slice spanning real CLI invocation, reply parsing/scoring, result persistence, and user-facing benchmark…
+- Turn 165: Copilot (qa-engineer, red): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 
 ## Flags, checks and decisions on this card
 
-- **Baseline (before any work): not done**: 3 of 6 checks pass
-- **After cycle 1: not done**: 4 of 6 checks pass
-- **After cycle 2: not done**: 5 of 6 checks pass
-- **After cycle 3: not done**: 5 of 6 checks pass
-- **After cycle 4: DONE**: 6 of 6 checks pass
+- **Baseline (before any work): not done**: 6 of 8 checks pass
 
 ## Decider outcomes (latest)
 
@@ -53,13 +49,13 @@
 
 ## Latest commits
 
+- 9142d84 Bootstrap phase (Steve's standing rule): no metric-based rejections until a baseline is established; exit criter
 - 0a0e965 Board: card 032 reopened after the whole-team sign-off (agy empty replies; copilot missing a task); two new Done
 - 08ed7bb Store trustworthy four-model benchmark baseline
 - 140ec7a usable-v1 CI job: green while pending ('not reached: X of 6 criteria'), red only on a ratcheted regression
-- e0f1dfa Handle locked benchmark scratch cleanup
 
 ## What's next
 
-- Running. Latest: turn 162 by Copilot (advance). Next: the next stage of the current cycle.
+- Running. Latest: turn 165 by Copilot (red). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 08:36 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 08:45 UTC. Summary only: no prompts, replies, code or secrets are published._
