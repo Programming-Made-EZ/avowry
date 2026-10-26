@@ -1,0 +1,36 @@
+# Loop: bounded retry, park and split on failure
+
+- **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Type:** tooling (thin slice; the code lives in mob-defaults; authored by the driver rotation and reviewed by a non-author under D15, with the smoke run)
+- **Milestone:** process: the loop runner (retro seed P1: no turn ends with nothing running)
+- **Source:** Steve, 2026-10-26 (mob-defaults is his product): "it should be a loop." The continuous loop must live in the tooling, not in the facilitator's chat turns; three idle gaps today all came from the loop depending on a chat turn (retro seed P1). Team design: Decider D23 (Codex Yes, Grok Yes, Copilot Support-it with changes; agy no response).
+- **Depends on:** 065
+- **Story:** As the mob (and Steve), I want the loop to live in `loop.py` in mob-defaults, so that the work keeps going without a chat turn and stalls cannot come from an idle facilitator.
+- **One observable behaviour:** A card that hits the cap or fails is retried once, then parked with a split proposal, and the loop moves on to the next independent card without spinning.
+- **Done checks (at most 3, each failing on partial work):**
+  1. Exit 1 is retried once; a second identical failure signature parks the card and writes a split proposal to a sandboxed Decider; no third attempt starts
+  2. Exits 2 and 3 are not retried (the card is parked); exit 4 gets one Decider on the flag text then one retry; exit 5 and a Safety flag halt the loop with no retry
+  3. A parked card is skipped until its file hash changes; only the dependent chain behind it waits
+
+## Context
+
+- the team's retry/split policy (D23): one retry, then split; escalate only for product direction, an unresolved Decider conflict, or the safety carve-out.
+- Design (D23): `loop.py` is a thin supervisor over card mode; state in the gitignored `.mob/loop/`; Claude supervises and reviews, it is not the engine. Safety rules apply in full (delete guard, no kill by name, no Co-Authored-By, never stage `.mob/`, sandboxed Deciders, spend ceilings per card and per day).
+- Read first: the mob-defaults `README.md`, `TEAM_WORKING_AGREEMENT.md`, `facilitator.py` (card mode, exit codes), `mob_summary.py`, `status.py`, `delete_guard.py`, `decider.py`, and cards 062 and 036.
+- Tests first with the fake CLIs; the loop is smoke-tested before it touches a real card.
+
+## Task force
+
+- Tooling author [author]: Codex | why: next in the rotation for tooling (D15)
+- Reviewer [reviewer]: Copilot | why: non-author review of the diff (D15)
+- Safety reviewer: Grok | why: checks deletes, kills, locks and spend against the Safety rules
+- Facilitator: Claude | why: runs the smoke run and reviews; any takeover is logged
+
+## Done when
+
+Run from the mob-defaults repo root (the mob has no board of its own; this card lives on Phrase's board):
+
+```
+python -m unittest tests.test_loop_policy
+python -m unittest discover -s tests
+```

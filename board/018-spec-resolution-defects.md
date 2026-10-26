@@ -1,6 +1,6 @@
 # Spec resolution defects from the independent review (code only)
 
-- **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Status:** Done 2026-10-26 (fix 8962dc5; two runs; the first stopped at the cycle cap on an environment fault, the .NET 8 runtime missing from the mob shell, not on size)
 - **Type:** bug (exempt from the hypothesis rule); code only. The docs criterion (one diagnostics table) moved to card 053 under the thin-slice rule (D18).
 - **Source:** Grok independent review of a47ed6a (Copilot) and 8ba3699 (agy), 2026-10-25, verdict CHANGES.
 - **Depends on:** none
