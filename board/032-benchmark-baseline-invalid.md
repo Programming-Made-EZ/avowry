@@ -27,11 +27,11 @@
 
 ## Task force
 
-Assembled via Decider D5 (kickoff proposal by the facilitator; the same vote covered the card). Experiment E1: every member signs off before the commit.
+Assembled via Decider D5 (kickoff proposal by the facilitator; the same vote covered the card). Experiment E1 (true mobbing) ran on this card for 8 runs and was paused by Decider D8; the card finishes in the standard driver-plus-review mode, and the final increment is still signed off by every member before the ship.
 
-- Benchmark engineer: Codex | why: owns the runner's model invocations and reply parsing
+- Benchmark engineer [author]: Codex | why: owns the runner's model invocations and reply parsing
 - Eval designer: Grok | why: keeps scoring fair and the baseline honest (Goodhart guard), and navigates
-- Skeptical QA: Copilot | why: checks the rows, not the claims, and signs off as a whole-team member
+- Skeptical QA [reviewer]: Copilot | why: checks the rows, not the claims, and signs off as a whole-team member
 - Security reviewer: agy | why: model CLIs run in scratch copies, and results must hold no secrets or file paths
 - Agile coach: Claude (session) | why: records the E1 metrics and checks role fit at retro
 
