@@ -1,6 +1,6 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 3)
+**Project:** Phrase &nbsp;|&nbsp; **State:** running
 **Card in progress:** Live mob dashboard: see every seat's status from a phone (036)
 
 ## Who did what
@@ -39,6 +39,6 @@
 
 ## What's next
 
-- Stopped before the card was done. Next: look at the last flag or check above, then run again.
+- Running. Latest: turn 4 by Codex (ready). Next: the next stage of the current cycle.
 
 _Updated 2026-10-26 13:38 UTC. Summary only: no prompts, replies, code or secrets are published._
