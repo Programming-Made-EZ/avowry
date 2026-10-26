@@ -201,6 +201,42 @@ public class BenchmarkHarnessAcceptance
     }
 
     [Fact]
+    public async Task run_extracts_phrase_from_case_insensitive_markdown_fence_and_narration()
+    {
+        // Given a quoted model reply with mixed narration and a case-insensitive fenced Phrase block
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var modelOutput = Path.Combine(workspace.Root, "model-output.txt");
+        await File.WriteAllTextAsync(modelOutput, """
+            Here is the program I meant.
+
+            ```PHRASE
+            module Greeting
+
+            phrase "say hello"
+              native csharp
+                return;
+            ```
+
+            That should compile cleanly.
+            """);
+        var modelCommand = PrintFileCommand(modelOutput);
+
+        // When the benchmark CLI runs the fake model through its real process boundary
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "fenced-case-v1", modelCommand);
+
+        // Then the phrase is extracted from the fenced block and scored without PH diagnostics
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Contains("fenced-case-v1: passed", stdout);
+        using var result = await ReadModelResult(suiteDirectory, "fenced-case-v1");
+        Assert.True(result.RootElement.GetProperty("passed").GetBoolean());
+        Assert.Equal("completed", result.RootElement.GetProperty("status").GetString());
+        Assert.DoesNotContain(
+            result.RootElement.GetProperty("diagnostics").EnumerateArray(),
+            diagnostic => diagnostic.GetString()!.StartsWith("PH10", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public async Task run_records_no_phrase_found_when_the_reply_contains_no_phrase()
     {
         // Given a one-task suite and model output containing narration without Phrase

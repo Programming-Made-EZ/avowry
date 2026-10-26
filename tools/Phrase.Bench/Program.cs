@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Phrase.Compiler;
 
 const int MaximumAttempts = 3;
@@ -280,21 +281,14 @@ static BenchmarkScore ScoreReply(string output)
 
 static string ExtractPhrase(string output)
 {
-    const string fence = "```";
-    var opening = output.IndexOf(fence + "phrase", StringComparison.Ordinal);
-    if (opening < 0)
+    var match = Regex.Match(
+        output,
+        @"```+\s*phrase\b[^\r\n]*\r?\n(?<body>[\s\S]*?)```+",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+    if (!match.Success)
         return output;
 
-    var lineEnd = output.IndexOf('\n', opening);
-    if (lineEnd < 0)
-        return output;
-
-    var bodyStart = lineEnd + 1;
-    var closing = output.IndexOf(fence, bodyStart, StringComparison.Ordinal);
-    if (closing < 0)
-        return output;
-
-    return output[bodyStart..closing].TrimEnd('\r', '\n');
+    return match.Groups["body"].Value.TrimEnd('\r', '\n');
 }
 
 static bool ContainsPhrase(string source)
