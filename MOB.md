@@ -1,16 +1,17 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** running
+**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 3)
 **Card in progress:** Live mob dashboard: see every seat's status from a phone (036)
 
 ## Who did what
 
-- **Codex:** 2 turns (ready x2)
+- **Codex:** 3 turns (ready x3)
 
 ## Recent turns
 
 - Turn 1: Codex (product-manager, ready): NOT READY — The Connextra story and Given/When/Then acceptance criteria are sound, but the referenced docs/experiments/E2-live-dashboard.md…
 - Turn 2: Codex (product-manager, ready): NOT READY — The story and Gherkin acceptance criteria are sound, but docs/experiments/E2-live-dashboard.md, VISION.md, and board/MILESTONES.md still…
+- Turn 3: Codex (product-manager, ready): NOT READY — The Connextra story and Gherkin acceptance criteria are sound, but docs/experiments/E2-live-dashboard.md, VISION.md, and…
 
 ## Flags, checks and decisions on this card
 
@@ -37,6 +38,6 @@
 
 ## What's next
 
-- Running. Latest: turn 2 by Codex (ready). Next: the next stage of the current cycle.
+- Stopped before the card was done. Next: look at the last flag or check above, then run again.
 
-_Updated 2026-10-26 13:36 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 13:37 UTC. Summary only: no prompts, replies, code or secrets are published._
