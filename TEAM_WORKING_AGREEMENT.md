@@ -14,29 +14,6 @@ at every Decider that touches the product, and the board and milestones are asse
 the product's purpose or direction is answered by VISION.md first; it escalates to Steve only if VISION.md does not
 settle it.
 
-## Product emphasis, with process improvement alongside (Steve, 2026-10-26)
-
-Steve: "We still need the process and process improvements. I do want an emphasis on product development as well though." This is
-**balance, not removal**. His diagnosis of what went wrong: "it just seemed like we weren't getting very far because there were a lot of
-mistakes and new patches to fix those." The real cost was rework (mistakes, then patches, then more mistakes), not the process itself.
-
-- **Product cards drive the loop.** The milestone's path is at the top of Ready, in dependency order. Process improvements **ride
-  alongside**: apply each retro's picks on the next product card, so process work does not block product. A process fix that is
-  needed to UNBLOCK product (stalls, the cycle-cap problem) is done now.
-- **Process improvement continues at every retro:** the retros and their four categories, TFDD, the trust ladder, the safety guards, the
-  bootstrap phase, the measurements and the flow numbers all stay. **At least one pick per retro**; take more when they are small and
-  clearly worth it, and record the rest as seeds.
-- **About 20% is a guideline and a signal to watch at retro, NOT a quota or a cap** (Goodhart): measure the share of effort in process
-  and tooling (lines and commits in tooling repos, retros, agreements and decisions versus product code and tests) and discuss it; never
-  steer to the number.
-- **Count rework.** The flow numbers include a defect and rework table: every stop, reopen, revert and incident, classified by root cause
-  (facilitator or tooling bug, Done check too weak, harness or data capture, model misbehavior, safety slip, run shape). The largest class
-  gets a root-cause analysis (five whys) and the CAUSE is fixed, not another symptom.
-- **Tooling meets the product's standard** (proposal P6, to be decided at the retro): a change to the facilitator, prompts or the harness is
-  test-first, reviewed by a non-author model, and smoke-tested on a toy card before it touches a real one.
-- **Headline number.** Every report and every MOB.md update starts with `Usable v1: X of 6 criteria · next card: <title>`.
-- **The lean Decider** (see below) stays.
-
 ## Task-Force Driven Development (TFDD)
 
 Steve: "we'll call this Task-Force Driven Development. where a task force is assembled."
@@ -153,16 +130,18 @@ conflicting opinions from the models. However there is also the decider protocol
   data, spending money, security or privacy exposure, and external commitments. Phrase specifics: publishing a package
   or release (an external commitment) and any spend beyond the prepaid driver allotments.
 
-### Decider protocol (for genuine disagreements and the big calls)
+### Decider protocol (the default for every team decision)
 
-Steve, 2026-10-26 (a course correction: "a lot of wheels turning and not much traction"): the Decider is used **only** for genuine
-disagreements, one-way doors, keep/revert calls, declaring a milestone, and changes to the benchmark suite.
-**Rosters, rankings and routine Done calls are made by the facilitator or PM and logged** (a line with the reason in MOB.md or the
-decisions log). **Any seat may challenge a logged call, and a challenge triggers a Decider.** (Until then almost every decision ran
-through a vote; that was too heavy and is retired.)
+Steve: "any decision should probably go through this process." The Decider settles conflicts, and it is also how
+the team decides things in the first place.
 
-**Not a Decider:** the driver's moment-to-moment implementation choices inside an increment (independent review covers them; a reviewer
-objection becomes a proposal if it is a genuine disagreement), and the routine calls above.
+**What goes through it:** the task force (at kickoff and every mid-card addition), card refinement and acceptance
+criteria, PM ranking and re-ranking, design and architecture choices, keeping or reverting a feature on benchmark
+data, declaring a card Done, milestones and their targets, retro picks and process experiments, trust-ladder
+promotions and demotions, benchmark suite changes, and whether anything escalates to Steve.
+
+**Not a Decider:** the driver's moment-to-moment implementation choices inside an increment. Those are covered by
+independent review, and any reviewer objection becomes a Decider proposal.
 
 1. **Proposal.** The PM, facilitator or a role owner states ONE concrete proposal.
 2. **Simultaneous vote.** The task force votes at the same time, in parallel, each choosing **Yes**,
@@ -172,7 +151,8 @@ objection becomes a proposal if it is a genuine disagreement), and the routine c
 4. **Result.** An "absolutely no" from any seat, or outliers still unresolved after the amendment, means the
    proposal **fails**. Otherwise it passes. One round, no long debate.
 5. **Record.** Every run goes in MOB.md as `Decider D<n>: <proposal>`, with votes and `Result: passed|failed`. The
-   facilitator collapses an all-Yes result to a single line. A failed proposal is logged and may be raised again at
+   facilitator collapses an all-Yes result to a single line, for example
+   `- Decider D4: rank card 016 second, all Yes, passed`. A failed proposal is logged and may be raised again at
    the next retro.
 6. **Keep it lean.** Votes are short and collected in parallel so the Decider does not drain the driver allotments.
 
@@ -181,11 +161,11 @@ objection becomes a proposal if it is a genuine disagreement), and the routine c
   parsed in one place; the real tree and HEAD are verified unchanged afterwards. (A voter once ran with write access in the real tree
   and edited source files; "read-only" in the prompt is a promise, the sandbox is the mechanism.)
 
-**The task force is a logged call, not a vote.** The initial task force is assembled by the facilitator or PM and logged. A role added
-mid-card is also a logged call by the facilitator or PM (the role, its assignee and why); it is added to the card's `## Task force` with
-where it joined and who decided (`| joined: cycle 2 | by: facilitator`). Any seat may challenge it; a challenge triggers a Decider
-(`| decider: D3`). Card mode accepts a mid-card role that names who decided it (`by:`) or cites a passed Decider record, and refuses one
-with neither.
+**The task force is a Decider.** The initial task force is a Decider proposal from the facilitator or PM, so any seat
+can object to a missing or padded role. A role proposed mid-card needs a Decider too: the proposer states the role, its
+assignee and why it is needed; if it passes, the role is added to the card's `## Task force` with where it joined and
+a pointer to the record (`| joined: cycle 2 | decider: D3`). Card mode refuses a mid-card role that carries no
+`decider:` reference or whose Decider record is missing or did not pass.
 
 ### Milestones and hypothesis-driven work (standing rule, Steve, 2026-10-25)
 
@@ -278,14 +258,14 @@ are created."
 - **The task force is living, not frozen at kickoff** (Steve: "also during the building if the team identifies a
   new role is needed then that gets added"; then: "I think decider protocol is needed to decide if a new role is
   required"). Any member can flag mid-card that a role is needed (a security question surfaces, the work turns out
-  to need a technical writer or a perf engineer) and states the role, its assignee and why.
-  The facilitator or PM decides and logs it; it is added to the card's `## Task force` with where it joined and who decided
-  (`| joined: cycle 2 | by: facilitator`); a challenge by any seat triggers a Decider (`| decider: D3`). The new role then reviews the relevant work done so far, not only what comes
-  next. Card mode accepts a role that names who decided it (`by:`) or cites a passed Decider, and refuses one with neither.
+  to need a technical writer or a perf engineer) and states one Decider proposal: the role, its assignee and why.
+  If it passes, the role is added to the card's `## Task force` with where it joined and the Decider reference
+  (`| joined: cycle 2 | decider: D3`). The new role then reviews the relevant work done so far, not only what comes
+  next. Card mode refuses a role with no passed Decider on record.
 - **Retro reviews every mid-card addition:** why wasn't it caught at assembly? If the miss is likely to recur, the
   role is added to the menu in the template. A failed proposal can be raised again at retro.
 - **Detector:** card mode checks only that a task force is declared, that every listed role has an assignee and a
-  why, that no seat is both `[author]` and `[reviewer]`, and that each mid-card role names who decided it (`by:`) or cites a passed Decider. It never
+  why, that no seat is both `[author]` and `[reviewer]`, and that each mid-card role cites a passed Decider. It never
   checks role names or counts. Template:
   `templates/TASK_FORCE.md` in mob-defaults.
 
