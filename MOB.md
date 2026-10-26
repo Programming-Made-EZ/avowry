@@ -7,15 +7,11 @@
 
 ## Who did what
 
-- **Codex:** 24 turns (advance x3, green x6, ready x1, refactor x6, ship x6, signoff x1, slice x1)
-- **Copilot:** 4 turns (red x2, signoff x2)
+- **Codex:** 26 turns (advance x3, green x6, ready x2, refactor x6, ship x6, signoff x1, slice x2)
+- **Copilot:** 6 turns (red x3, signoff x3)
 
 ## Recent turns
 
-- Turn 11: Codex (backend-dev, refactor): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
-- Turn 12: Codex (devops-engineer, ship): SHIP BLOCKED — required local gate failed.
-- Turn 13: Copilot (qa-engineer, signoff): I’m validating the stored mob state against the actual repo and will either complete the remaining defect fixes or sign off with the precise QA…
-- Turn 13: Codex (qa-engineer, signoff): READY — The card has a sound Connextra story, testable Given/When/Then acceptance criteria, and all referenced guidance, source, and test files exist.
 - Turn 14: Codex (product-manager, advance): Still In Progress — delivered fixes for PH334 endpoint naming, PH332 nested paths, duplicate PH331 reporting, and unknown-hole PH331 wording; all…
 - Turn 14: Codex (product-manager, advance): CONFIRMED — This is a thin vertical bug-fix slice: Phrase source enters the public Resolver.Resolve(string) boundary and returns user-visible…
 - Turn 15: Copilot (qa-engineer, red): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
@@ -30,14 +26,14 @@
 - Turn 24: Codex (devops-engineer, ship): SHIP BLOCKED — full local gate failed due to missing Microsoft.AspNetCore.App 8.0 runtime.
 - Turn 25: Copilot (qa-engineer, signoff): QA sign-off: process was honest and red-first.
 - Turn 26: Codex (product-manager, advance): Spec-resolution fixes were delivered and shipped in commit 8962dc5: accurate PH334 endpoint naming, recursive PH332 literal-data enforcement, single…
+- Turn 27: Codex (product-manager, ready): READY — The card has a sound Connextra story, testable Given/When/Then criteria, and the referenced project guidelines and source/test files exist.
+- Turn 28: Codex (architect, slice): CONFIRMED — This remains a thin vertical bug-fix slice through Phrase source to user-visible diagnostics at the public Resolver.Resolve(string)…
+- Turn 29: Copilot (qa-engineer, red): no file changes
+- Turn 30: Copilot (qa-engineer, signoff): QA sign-off recorded in MOB.md.
 
 ## Flags, checks and decisions on this card
 
-- **Baseline (before any work): not done**: 2 of 3 checks pass
-- **After cycle 1: not done**: 2 of 3 checks pass
-- **After cycle 2: not done**: 2 of 3 checks pass
-- **After cycle 3: not done**: 2 of 3 checks pass
-- **Not done**: Not done after 3 cycles. The next run picks up from here.
+- **Baseline (before any work): DONE**: 3 of 3 checks pass
 
 ## Decider outcomes (latest)
 
@@ -56,10 +52,9 @@
 - 8962dc5 Fix spec resolution diagnostics
 - f0cfccb Atomic runs experiment (D22): Bishop's Law applied, Depends on lines, card 062; D21 async decision record
 - 7558677 Board: async and events (Steve's input, D21): ADR 059, catalogue tasks 060, spike 061; keyword seeds
-- 254ad71 Steve's direction: consumer-observable outcomes (VISION ruling 5, GRAMMAR rule 6); cards 054-058; D20
 
 ## What's next
 
-- Running. Latest: turn 26 by Codex (advance). Next: the next stage of the current cycle.
+- Running. Latest: turn 30 by Copilot (signoff). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 21:20 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 21:25 UTC. Summary only: no prompts, replies, code or secrets are published._
