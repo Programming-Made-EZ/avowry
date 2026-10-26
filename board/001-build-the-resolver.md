@@ -13,6 +13,7 @@
 
 Fix each red-first in a new `tests/Phrase.Compiler.Tests/Semantics/ResolverHardeningTests.cs` (Given/When/Then comments):
 
+- Still open after 45813e1 (repeated holes fixed): bare-word PH312, `none`, record literal, Option coercion, failed `let`, and moving the diagnostic table from HANDOFF.md into GRAMMAR.md. Name each test with a marker (`Bare_word`, `None_`, `Record_literal`, `Option`, `Failed_let`) so the Done-when check can see it.
 - Never throw: a composite whose holes repeat (`add {n: Int} to {n: Int}`, parser reports PH206) throws at `Holes.ToDictionary`; a call throws at `Holes.Single`. Both must degrade to diagnostics or `PType.Error`.
 - A bare word naming a variable skips the type check (`Bool` variable accepted by an `Int` hole). It must report PH312 like the path form.
 - `none` fits only `Option<T>`; it is currently accepted for a `Text` hole.
@@ -39,6 +40,8 @@ The facilitator runs each command from the repo root; the card is done when all 
 ```
 python -c "import pathlib,sys; sys.exit(sum('Trait(\"Status\", \"Pending\")' in p.read_text(encoding='utf-8') for p in pathlib.Path('tests/Phrase.Compiler.Tests/Semantics').glob('*.cs')))"
 python -c "import pathlib,sys; sys.exit(0 if pathlib.Path('tests/Phrase.Compiler.Tests/Semantics/ResolverHardeningTests.cs').exists() else 1)"
-python -c "import pathlib,sys; sys.exit(0 if 'PH335' in pathlib.Path('docs/GRAMMAR.md').read_text(encoding='utf-8') and 'Resolver' in pathlib.Path('src/Phrase.Compiler/PhraseCompiler.cs').read_text(encoding='utf-8') else 1)"
+python -c "import pathlib,sys; t=pathlib.Path('tests/Phrase.Compiler.Tests/Semantics/ResolverHardeningTests.cs').read_text(encoding='utf-8').lower(); sys.exit(sum(k not in t for k in ['bare_word','none_','record_literal','option','failed_let']))"
+python -c "import pathlib,sys; g=pathlib.Path('docs/GRAMMAR.md').read_text(encoding='utf-8'); sys.exit(1 if 'until the resolver lands' in g or 'PH335' not in g else 0)"
+python -c "import pathlib,sys; sys.exit(1 if 'NotImplementedException' in pathlib.Path('src/Phrase.Compiler/PhraseCompiler.cs').read_text(encoding='utf-8') and 'Resolver' not in pathlib.Path('src/Phrase.Compiler/PhraseCompiler.cs').read_text(encoding='utf-8') else 0)"
 dotnet test Phrase.sln --filter "Status!=Pending"
 ```
