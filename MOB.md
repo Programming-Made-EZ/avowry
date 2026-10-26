@@ -1,17 +1,16 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** running
+**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 1)
 **Card in progress:** Live mob dashboard: see every seat's status from a phone (036)
 
 ## Who did what
 
-- **Codex:** 29 turns (advance x1, green x7, ready x4, refactor x8, ship x8, slice x1)
+- **Codex:** 30 turns (advance x2, green x7, ready x4, refactor x8, ship x8, slice x1)
 - **Copilot:** 2 turns (red x1, signoff x1)
 - **Grok:** 2 turns (red x1, signoff x1)
 
 ## Recent turns
 
-- Turn 16: Codex (architect, slice): CONFIRMED — This is a thin vertical slice: an operator can open one local, phone-friendly dashboard and observe mob status end to end.
 - Turn 17: Grok (qa-engineer, red): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_status.py
 - Turn 18: Codex (backend-dev, green): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 - Turn 19: Codex (backend-dev, refactor): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
@@ -29,6 +28,7 @@
 - Turn 31: Codex (backend-dev, refactor): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 - Turn 32: Codex (devops-engineer, ship): Shipment stopped: the required acceptance gate is red.
 - Turn 33: Grok (qa-engineer, signoff): I'll read the QA sign-off brief and follow it exactly.The brief is long.
+- Turn 34: Codex (product-manager, advance): Delivered but unshipped: - Per-seat start/end event stream with token/time estimates. - Output-and-CPU-aware stall detection with PID-scoped stopping.
 
 ## Flags, checks and decisions on this card
 
@@ -58,6 +58,6 @@
 
 ## What's next
 
-- Running. Latest: turn 33 by Grok (signoff). Next: the next stage of the current cycle.
+- Stopped before the card was done. Next: look at the last flag or check above, then run again.
 
 _Updated 2026-10-26 18:52 UTC. Summary only: no prompts, replies, code or secrets are published._
