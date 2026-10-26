@@ -9,6 +9,8 @@ const int MaximumAttempts = 3;
 const int EmptyReplyMaximumAttempts = 2;
 const string SelfCheckModel = "self-check-v1";
 const string SelfCheckModelCommand = "__phrase_bench_builtin_fake__";
+const string AgyModel = "gemini-4-argon-high";
+const string AgySkipPermissionsOption = "--dangerously-skip-permissions";
 
 if (args.Length == 0)
 {
@@ -241,7 +243,14 @@ static async Task<string> RunModel(
     var useDirectArguments = profile.Equals("agy", StringComparison.Ordinal)
         && !Path.HasExtension(command);
     using var process = useDirectArguments
-        ? StartModelWithArguments(command, workingDirectory, "--print", prompt.TrimEnd())
+        ? StartModelWithArguments(
+            command,
+            workingDirectory,
+            "-p",
+            prompt.TrimEnd(),
+            "--model",
+            AgyModel,
+            AgySkipPermissionsOption)
         : StartModelViaShell(command + ProfileArguments(model, workingDirectory, prompt), workingDirectory);
     await process.StandardInput.WriteAsync(prompt);
     process.StandardInput.Close();
@@ -279,7 +288,7 @@ static string ProfileArguments(string model, string workingDirectory, string pro
     if (profile.Equals("copilot", StringComparison.Ordinal))
         return $" -p {QuoteForShell(prompt.TrimEnd())} -s --allow-all-tools --trust-folder";
     if (profile.Equals("agy", StringComparison.Ordinal))
-        return $" --print {QuoteForShell(prompt.TrimEnd())}";
+        return $" -p {QuoteForShell(prompt.TrimEnd())} --model {AgyModel} {AgySkipPermissionsOption}";
     return "";
 }
 

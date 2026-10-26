@@ -89,7 +89,7 @@ public class BenchmarkHarnessAcceptance
             ["codex-probe"] = ["exec", "--skip-git-repo-check"],
             ["grok-probe"] = ["--max-turns", "10", "--prompt-file"],
             ["copilot-probe"] = ["-p", "-s", "--allow-all-tools", "--trust-folder"],
-            ["agy-probe"] = ["--print"],
+            ["agy-probe"] = ["-p", "--model", "gemini-4-argon-high", "--dangerously-skip-permissions"],
         };
         var missingTokens = new List<string>();
         var recordedLines = new List<string>();
