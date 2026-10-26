@@ -113,6 +113,28 @@ public class BenchmarkHarnessAcceptance
         Assert.Equal("unavailable", historyResult.RootElement.GetProperty("status").GetString());
     }
 
+    [Fact]
+    public async Task run_records_a_timed_out_model_as_unavailable()
+    {
+        // Given a model command that does not finish within its configured timeout
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var modelCommand = OperatingSystem.IsWindows()
+            ? "more > nul && ping -n 6 127.0.0.1 > nul"
+            : "cat > /dev/null; sleep 5";
+
+        // When the benchmark CLI times out that model
+        var (exitCode, stdout, stderr) = await RunBenchmark(
+            suiteDirectory, "slow-v1", modelCommand, "--timeout-ms", "100");
+
+        // Then it records the timeout and returns success so another model can run
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Contains("slow-v1: unavailable", stdout);
+        using var result = await ReadModelResult(suiteDirectory, "slow-v1");
+        Assert.Equal("unavailable", result.RootElement.GetProperty("status").GetString());
+        Assert.Contains("timed out", result.RootElement.GetProperty("error").GetString());
+    }
+
     private static string CopySuiteTo(string workspaceRoot)
     {
         var suiteDirectory = Path.Combine(workspaceRoot, "bench");
@@ -130,7 +152,7 @@ public class BenchmarkHarnessAcceptance
             Path.Combine(suiteDirectory, "results", $"{model}.json")));
 
     private static async Task<(int ExitCode, string Stdout, string Stderr)> RunBenchmark(
-        string suiteDirectory, string model, string modelCommand)
+        string suiteDirectory, string model, string modelCommand, params string[] additionalArguments)
     {
         var runner = RepoPaths.Find("tools", "Phrase.Bench", "Phrase.Bench.csproj");
         var startInfo = new System.Diagnostics.ProcessStartInfo("dotnet")
@@ -143,6 +165,8 @@ public class BenchmarkHarnessAcceptance
             "run", "--project", runner, "--", "run", "--suite", Path.Combine(suiteDirectory, "suite.json"),
             "--model", model, "--model-command", modelCommand,
         })
+            startInfo.ArgumentList.Add(argument);
+        foreach (var argument in additionalArguments)
             startInfo.ArgumentList.Add(argument);
         using var process = System.Diagnostics.Process.Start(startInfo)!;
         var stdout = await process.StandardOutput.ReadToEndAsync();

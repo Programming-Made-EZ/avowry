@@ -25,6 +25,10 @@ if (!options.TryGetValue("suite", out var suitePath) ||
     return 1;
 }
 
+var timeout = options.TryGetValue("timeout-ms", out var timeoutValue)
+    ? TimeSpan.FromMilliseconds(int.Parse(timeoutValue))
+    : TimeSpan.FromMinutes(5);
+
 suitePath = Path.GetFullPath(suitePath);
 var suiteDirectory = Path.GetDirectoryName(suitePath)!;
 var suite = JsonSerializer.Deserialize<Suite>(File.ReadAllText(suitePath), Serialization.Options)
@@ -46,14 +50,7 @@ try
     do
     {
         attempts++;
-        using var process = StartModel(modelCommand, scratchDirectory);
-        await process.StandardInput.WriteAsync(attemptPrompt);
-        process.StandardInput.Close();
-        var output = await process.StandardOutput.ReadToEndAsync();
-        var error = await process.StandardError.ReadToEndAsync();
-        await process.WaitForExitAsync();
-        if (process.ExitCode != 0)
-            throw new InvalidOperationException($"Model '{model}' exited {process.ExitCode}: {error}");
+        var output = await RunModel(model, modelCommand, scratchDirectory, attemptPrompt, timeout);
 
         tokensIn += EstimateTokens(attemptPrompt);
         tokensOut += EstimateTokens(output);
@@ -72,7 +69,7 @@ try
     Console.WriteLine($"{model}: {(score.Passed ? "passed" : "failed")} {task.Id}");
     return score.Passed ? 0 : 3;
 }
-catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception)
+catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception or TimeoutException)
 {
     var result = BenchmarkResult.Unavailable(model, task.Id, Hash(prompt), exception.Message);
     PersistResult(suiteDirectory, model, result);
@@ -115,6 +112,32 @@ static Process StartModel(string command, string workingDirectory)
         startInfo.ArgumentList.Add(command);
     }
     return Process.Start(startInfo) ?? throw new InvalidOperationException("Could not start model process.");
+}
+
+static async Task<string> RunModel(
+    string model, string command, string workingDirectory, string prompt, TimeSpan timeout)
+{
+    using var process = StartModel(command, workingDirectory);
+    await process.StandardInput.WriteAsync(prompt);
+    process.StandardInput.Close();
+    var outputTask = process.StandardOutput.ReadToEndAsync();
+    var errorTask = process.StandardError.ReadToEndAsync();
+    using var timeoutCancellation = new CancellationTokenSource(timeout);
+    try
+    {
+        await process.WaitForExitAsync(timeoutCancellation.Token);
+    }
+    catch (OperationCanceledException) when (timeoutCancellation.IsCancellationRequested)
+    {
+        process.Kill(entireProcessTree: true);
+        await process.WaitForExitAsync();
+        throw new TimeoutException($"Model '{model}' timed out after {timeout.TotalMilliseconds:0} ms.");
+    }
+
+    var error = await errorTask;
+    if (process.ExitCode != 0)
+        throw new InvalidOperationException($"Model '{model}' exited {process.ExitCode}: {error}");
+    return await outputTask;
 }
 
 static BenchmarkScore Score(string source)
