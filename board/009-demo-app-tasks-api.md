@@ -1,0 +1,21 @@
+# Demo app: a Tasks API written entirely in .phrase
+
+- **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Milestone:** Usable v1 (`board/MILESTONE-usable-v1.md`)
+- **Story:** As Steve (and any engineer), I want a small real app written only in .phrase, so that I can see the language build something useful.
+- **Acceptance criteria (ZOMBIES):**
+  - Zero: Given the app source, When inspected, Then there is no hand-written C# except declared native blocks
+  - One: Given `demo/tasks/Tasks.phrase`, When built with the CLI, Then `dotnet build` passes with zero warnings
+  - Many: Given 3-5 endpoints (create, get, list, complete, delete) with validation and a failure path, When the generated specs run, Then all pass
+  - Boundaries: Given the specs, When counted, Then each endpoint has at least one success spec and one failure spec
+  - Exceptions: Given an invalid task title, When posted, Then the spec-declared failure is returned
+
+## Context
+
+- Read first: `TEAM_WORKING_AGREEMENT.md`, `docs/GRAMMAR.md`, `HANDOFF.md`, the milestone doc and the previous card.
+- `reference/csharp` is the target the emitter must match in behavior.
+- Outside-in TDD with Given/When/Then comments; stage explicit paths only, never `.mob/`.
+
+## Done when
+
+The PM writes the concrete commands at the Ready check. The gate is `dotnet test Phrase.sln --filter "Status!=Pending"` with zero warnings, plus a mechanical check that the card's new tests exist.

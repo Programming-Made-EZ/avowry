@@ -1,6 +1,6 @@
 # Complete resolver malformed-input hardening
 
-- **Status:** Ready, rank 1
+- **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
 - **Story:** As a Phrase author (an engineer or an LLM), I want malformed values and failed bindings to produce exactly one precise diagnostic each, so that I can fix my program from the messages alone and the compiler never crashes or cascades into noise.
 - **Source:** Independent review of 59d8a9c and 84b5737 by Grok (verdict CHANGES, 2026-10-25), minus the repeated-holes crash already fixed in 45813e1.
 - **Acceptance criteria (ZOMBIES):**

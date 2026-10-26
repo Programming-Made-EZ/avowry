@@ -1,0 +1,22 @@
+# C# emitter: FastEndpoints endpoints and Program
+
+- **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Milestone:** Usable v1 (`board/MILESTONE-usable-v1.md`)
+- **Story:** As an engineer (or an LLM), I want each endpoint emitted as a FastEndpoints class with its route, input, output and failure responses, so that the generated app serves real HTTP.
+- **Acceptance criteria (ZOMBIES):**
+  - Zero: Given no endpoints, When emitted, Then Program.cs builds and the app starts with no routes
+  - One: Given `POST /orders`, When emitted, Then a FastEndpoints endpoint with the verb, route, input and output types is produced (compare `reference/csharp/Orders.Api/CreateOrder.cs`)
+  - Many: Given 3-5 endpoints with different verbs, When emitted, Then each has its own class and route
+  - Boundaries: Given route parameters and an endpoint with no output, When emitted, Then they bind and respond correctly
+  - Interface: Given a `respond with` step and a `fail with` step, When called, Then HTTP statuses match the language's mapping, documented in GRAMMAR.md
+  - Exceptions: Given invalid input, When called, Then the declared failure is returned, not a 500
+
+## Context
+
+- Read first: `TEAM_WORKING_AGREEMENT.md`, `docs/GRAMMAR.md`, `HANDOFF.md`, the milestone doc and the previous card.
+- `reference/csharp` is the target the emitter must match in behavior.
+- Outside-in TDD with Given/When/Then comments; stage explicit paths only, never `.mob/`.
+
+## Done when
+
+The PM writes the concrete commands at the Ready check. The gate is `dotnet test Phrase.sln --filter "Status!=Pending"` with zero warnings, plus a mechanical check that the card's new tests exist.

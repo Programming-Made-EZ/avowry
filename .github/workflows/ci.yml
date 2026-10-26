@@ -28,3 +28,25 @@ jobs:
       # cannot rot) but excluded from the gate until they go green.
       - name: Test
         run: dotnet test Phrase.sln --no-build -c Release --filter "Status!=Pending" --logger "console;verbosity=normal"
+
+  # Detects the Usable v1 milestone (board/MILESTONE-usable-v1.md). Non-blocking until card 012 makes it a gate.
+  usable-v1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Usable v1 acceptance test
+        id: usable
+        run: dotnet test Phrase.sln -c Release --filter "Milestone=UsableV1" --logger "console;verbosity=normal"
+
+      - name: Report
+        if: steps.usable.outcome == 'success'
+        run: |
+          echo "USABLE v1 REACHED"
+          echo "USABLE v1 REACHED: demo app at demo/tasks (see its README)" >> "$GITHUB_STEP_SUMMARY"

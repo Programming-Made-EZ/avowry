@@ -1,0 +1,22 @@
+# Close the language gaps the demo app exposes
+
+- **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Milestone:** Usable v1 (`board/MILESTONE-usable-v1.md`)
+- **Story:** As a Phrase author, I want the constructs a real CRUD API needs (lookup, update, list, delete, validation), so that I can write a small app entirely in .phrase.
+- **Acceptance criteria (ZOMBIES):**
+  - Zero: Given the demo app's list-all endpoint with no data, When specified, Then an empty list is a valid output
+  - One: Given a get-by-id, When the id is unknown, Then a declared `NotFound` failure is returned
+  - Many: Given create, read, update, delete and list endpoints written in .phrase, When resolved, Then every one has zero diagnostics
+  - Boundaries: Given validation rules (non-empty text, positive numbers), When violated, Then a declared failure is returned
+  - Interface: Given persistence, When needed, Then it is an effect with a generated in-memory implementation, so specs need no database
+  - Exceptions: Given a construct the grammar lacks, When the mob finds it, Then it is added to GRAMMAR.md through the Decider protocol, with the reason recorded
+
+## Context
+
+- Read first: `TEAM_WORKING_AGREEMENT.md`, `docs/GRAMMAR.md`, `HANDOFF.md`, the milestone doc and the previous card.
+- `reference/csharp` is the target the emitter must match in behavior.
+- Outside-in TDD with Given/When/Then comments; stage explicit paths only, never `.mob/`.
+
+## Done when
+
+The PM writes the concrete commands at the Ready check. The gate is `dotnet test Phrase.sln --filter "Status!=Pending"` with zero warnings, plus a mechanical check that the card's new tests exist.
