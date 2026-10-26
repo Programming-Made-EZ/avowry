@@ -7,7 +7,7 @@
 
 ## Who did what
 
-- **Codex:** 10 turns (green x3, ready x1, refactor x3, ship x2, slice x1)
+- **Codex:** 11 turns (green x3, ready x1, refactor x3, ship x3, slice x1)
 - **Copilot:** 1 turns (red x1)
 
 ## Recent turns
@@ -23,6 +23,7 @@
 - Turn 9: Codex (devops-engineer, ship): STOPPED — ship gate failed.
 - Turn 10: Codex (backend-dev, green): changed loop.py, tests/test_loop_pick.py
 - Turn 11: Codex (backend-dev, refactor): changed loop.py, tests/test_loop_pick.py
+- Turn 12: Codex (devops-engineer, ship): STOPPED — ship gate failed. git diff --check reported trailing whitespace/mixed line endings throughout tests/testlooppick.py.
 
 ## Flags, checks and decisions on this card
 
@@ -46,10 +47,9 @@
 ## Latest commits
 
 - 97636a1 Tooling cards: absolute Phrase paths and Given/When/Then criteria (run 063 stopped at the Ready check); seed
-- d190f0b Loop: no separate discovery step (Steve's simplification); 071 withdrawn, folded into 067; D24 amended
 
 ## What's next
 
-- Running. Latest: turn 11 by Codex (refactor). Next: the next stage of the current cycle.
+- Running. Latest: turn 12 by Codex (ship). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 23:16 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 23:25 UTC. Summary only: no prompts, replies, code or secrets are published._
