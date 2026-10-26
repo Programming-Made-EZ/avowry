@@ -1,16 +1,16 @@
-# Second provider spike: prove the keyword model is language-neutral
+# Second adapter spike: prove the keyword model is language-neutral
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
 - **Milestone:** Vocabulary v1
 - **North star:** `VISION.md`
 - **Source:** Steve's purpose ruling: any implementation language. Decider D3.
-- **Story:** As the language designer, I want a second provider (TypeScript) for the seed catalogue, so that I know one source really compiles to many targets.
-- **Hypothesis:** We believe a TypeScript provider for the seed keywords will show the keyword model needs no C#-specific concepts. We'll know when at least 8 of the seed keywords pass the same specs on TypeScript with no change to the keyword definitions, and the keyword definitions changed by the spike number zero or are each recorded as a model defect.
+- **Story:** As the language designer, I want a second adapter (TypeScript) for the seed catalogue, so that I know one source really compiles to many targets.
+- **Hypothesis:** We believe a TypeScript adapter for the seed keywords will show the keyword model needs no C#-specific concepts. We'll know when at least 8 of the seed keywords pass the same specs on TypeScript with no change to the keyword definitions, and the keyword definitions changed by the spike number zero or are each recorded as a model defect.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given a keyword with no TypeScript implementation, When compiled, Then the diagnostic names the keyword and the target
   - One: Given one keyword, When compiled to TypeScript, Then its specs run as tests and pass
   - Many: Given the seed catalogue, When compiled to TypeScript, Then at least 8 of the keywords pass
-  - Boundaries: Given a difference between languages (null handling, integer width), When found, Then it is recorded in the ADR as a model defect or a provider rule
+  - Boundaries: Given a difference between languages (null handling, integer width), When found, Then it is recorded in the ADR as a model defect or a adapter rule
   - Exceptions: Given a keyword that cannot be expressed in TypeScript, When found, Then the spike reports it without hiding it
 
 ## Context

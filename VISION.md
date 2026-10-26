@@ -14,7 +14,7 @@ Product decisions are judged against this page. It records Steve's purpose rulin
   (paginate a list, retry with backoff, validate a field, create-read-update-delete a record). Ordinary control flow,
   loops and if/else, is just ordinary: it is there, it is simple, and it is not where the language earns its keep.
 - **Every keyword can be produced reliably, in any implementation language.** A keyword is defined once, by its
-  sentence-name, its typed holes and its specs. Providers turn it into each target language's idiomatic code (C#
+  sentence-name, its typed holes and its specs. Adapters turn it into each target language's idiomatic code (C#
   first); a keyword without a hand-written implementation is produced by an LLM, pinned by hash so the output is
   reproducible, and held to the same specs.
 - **The goal is a comprehensive vocabulary that minimizes the work an LLM must do** to build a codebase (fewer
@@ -24,10 +24,35 @@ Product decisions are judged against this page. It records Steve's purpose rulin
   library, the keyword catalogue carries spec-backed definitions and per-target implementations that every project
   reuses. One source compiles to many targets.
 
+## Direction rulings (Steve, 2026-10-25)
+
+**1. Synthesis (future).** Steve: "in the future it would be useful to synthesize existing code."
+*Interpretation:* a reverse direction. Existing code in any language is read and Phrase is synthesized from it by
+mapping the code's patterns to keywords. A **future** milestone (M5, after Usable v1 and Vocabulary v1; it displaces
+nothing).
+
+**2. Adapters.** Steve: "we should have adapters for each language."
+*Interpretation:* one adapter per target language. The word "provider" in the code and docs becomes "adapter"; the C#
+provider is the first adapter.
+
+**3. Base library plus adapters.** Steve: "a base library for universal patterns and adapters that add keywords for
+those languages."
+*Interpretation:* the **base library** holds language-neutral universal pattern keywords, each with specs. Each
+**adapter** (a) implements every base keyword for its language, verified by the shared specs, and (b) may add
+language- or ecosystem-specific keywords of its own, also spec-backed. C# is built as the first adapter, not as a
+one-off emitter.
+
+**4. Human readability.** Steve: "I could actually see potential for a compiler here. something that converts between
+the two."
+*Interpretation (to confirm with Steve):* a converter between the LLM-optimized Phrase form and a human-friendly
+rendering, in both directions. It pairs with synthesis: both are translations between representations. A **future**
+milestone (M6). An alternative reading, one-way human-readable documentation generated from Phrase, is noted; the mob
+will confirm which Steve means before building anything.
+
 ## What this commits us to
 
 - The catalogue is a first-class artifact: every keyword has a name that is a sentence, typed holes, specs that run as
-  tests on every target, and an implementation per provider.
+  tests on every target, and an implementation per adapter.
 - The core stays small and boring; the vocabulary grows by evidence, not by taste. New keywords come from patterns
   found in real codebases and real LLM tasks.
 - LLMs are the customers. The vocabulary is judged by what a model does with it.

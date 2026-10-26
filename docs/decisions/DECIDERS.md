@@ -20,3 +20,9 @@ Format: `Decider D<n>: <proposal>`, votes, `Result: passed|failed`. All-Yes resu
 - Date: 2026-10-25. Proposer: PM and domain expert (facilitator drafted). Seats: Codex, Copilot, Grok, agy (parallel, read-only).
 - Votes: Codex Yes; Copilot Yes; Grok Yes; agy Yes.
 - Result: passed. Outliers: none.
+
+#### Decider D4: adapters replace providers; base library plus adapters; C# built as the first adapter (reshape 003-007, 022, 025, 028); future cards 030 (synthesis, M5) and 031 (human converter, M6) after Usable v1 and Vocabulary v1
+
+- Date: 2026-10-25. Proposer: PM, domain expert and architect (facilitator drafted). Seats: Codex, Copilot, Grok, agy (parallel, read-only).
+- Votes: Codex Yes; Copilot Support-it; Grok Yes; agy Yes.
+- Result: passed. Outliers: none. Open item: the reading of ruling 4 (two-way converter vs one-way documentation) is to be confirmed with Steve.

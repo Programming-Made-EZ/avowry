@@ -10,6 +10,7 @@
   - Boundaries: Given an output dir that already has generated files, When run, Then they are replaced and hand-written files are untouched
   - Interface: Given compile errors, When run, Then each is printed as `file:line:col PHnnn message` and exit code is 1
   - Exceptions: Given an unwritable output dir, When run, Then exit code 2 and no partial output
+  - Interface (adapters, Decider D4): Given `phrase build <file> --target csharp`, When run, Then the target names an adapter; an unknown target lists the available adapters and exits 2
 
 ## Context
 

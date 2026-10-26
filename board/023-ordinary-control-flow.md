@@ -11,7 +11,7 @@
   - One: Given a condition, When an if/else step runs, Then exactly one branch runs and the resolver type-checks the condition as Bool
   - Many: Given nested if/else inside a for-each, When resolved and emitted, Then scope, failures and effects propagate correctly (PH324 reachability, PH327 cycles still hold)
   - Boundaries: Given a loop that builds a value (sum, filter, map), When written, Then it has one obvious form (no second way to loop)
-  - Interface: Given the C# provider, When emitted, Then the output is idiomatic and the same specs pass
+  - Interface: Given the C# adapter, When emitted, Then the output is idiomatic and the same specs pass
   - Exceptions: Given a malformed construct, When parsed or resolved, Then a single diagnostic with the valid forms is reported and the resolver never throws
 
 ## Context

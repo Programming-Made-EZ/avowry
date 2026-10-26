@@ -1,4 +1,4 @@
-# C# emitter: FastEndpoints endpoints and Program
+# C# adapter: FastEndpoints endpoints and Program
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
 - **Milestone:** Usable v1 (plumbing for bar 2-5; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
@@ -10,6 +10,7 @@
   - Boundaries: Given route parameters and an endpoint with no output, When emitted, Then they bind and respond correctly
   - Interface: Given a `respond with` step and a `fail with` step, When called, Then HTTP statuses match the language's mapping, documented in GRAMMAR.md
   - Exceptions: Given invalid input, When called, Then the declared failure is returned, not a 500
+  - Interface (adapter contract, Decider D4): Given the adapter contract from card 003, When this card lands, Then emission goes through it and adds no C#-only hook to the compiler core
 
 ## Context
 

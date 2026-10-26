@@ -1,4 +1,4 @@
-# C# emitter: phrases, effects and failures
+# C# adapter: phrases, effects and failures
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
 - **Milestone:** Usable v1 (plumbing for bar 2-4; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
@@ -10,6 +10,7 @@
   - Boundaries: Given a phrase with a native C# block, When emitted, Then the block is placed verbatim and builds
   - Interface: Given an effect (Db), When emitted, Then the method takes the declared dependency by interface
   - Exceptions: Given a failure code, When the phrase fails, Then the typed failure result carries that code
+  - Interface (adapter contract, Decider D4): Given the adapter contract from card 003, When this card lands, Then emission goes through it and adds no C#-only hook to the compiler core
 
 ## Context
 

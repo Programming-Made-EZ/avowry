@@ -24,11 +24,11 @@ Steve: "let me know when the language is actually usable to build an application
 | 4 | 013 Make GRAMMAR.md say what the resolver does | Cheap; first hypothesis card, measured by 016 | **Model feedback** (Codex, agy, Grok) |
 | 5 | 018 Spec resolution defects (bug, from the Grok review) | Specs are the truth the emitter turns into tests; accurate spec errors first. Decider D1 passed (3 Yes, 1 Support-it) | Review finding |
 | 6 | 019 Publish exact diagnostic message templates (docs) | All four models hit this gap; 018 fixes the message first; measured by 016 | **Model feedback** (Codex, Copilot, Grok, agy) |
-| 7 | 003 Emit types and runtime | Smallest emitter slice | plan |
+| 7 | 003 Adapter contract and C# adapter: types and runtime | Smallest slice; makes C# the first adapter, not a one-off (Decider D4) | plan |
 | 8 | 014 Document the native C# environment, add passing-guard examples | Precedes 004: it fixes the `Fail` contract the emitter implements | **Model feedback** (Grok, agy, Codex, Copilot) |
-| 9 | 004 Emit phrases, effects, failures | Behavior before HTTP | plan |
-| 10 | 005 Emit FastEndpoints endpoints and Program | Serves HTTP | plan |
-| 11 | 006 Emit specs as xUnit; first acceptance test green | Phrase compiles its first program | plan |
+| 9 | 004 C# adapter: phrases, effects, failures | Behavior before HTTP | plan |
+| 10 | 005 C# adapter: FastEndpoints endpoints and Program | Serves HTTP | plan |
+| 11 | 006 C# adapter: specs as xUnit; first acceptance test green | Phrase compiles its first program | plan |
 | 12 | 017 Benchmark v1: score by running specs | Turns pass rate into real behavior; re-baselines | Steve (data-driven) |
 | 13 | 024 Pattern discovery (mine real code and LLM tasks) | Vocabulary grows by evidence; right after the benchmark can measure it | **Vision** (Steve) |
 | 14 | 027 Benchmark: catalogue tasks (LLM work removed, learnability) | Measures 'comprehensive' instead of counting it | **Vision** (Steve), Goodhart guard |
@@ -38,21 +38,30 @@ Steve: "let me know when the language is actually usable to build an application
 | 18 | 008 Close the language gaps the demo app exposes | Find what CRUD needs, via the Decider protocol and data | plan |
 | 19 | 015 Proposal: optional `when` line (Decider first, then measured) | Token saving; needs the benchmark | **Model feedback** (agy) |
 | 20 | 021 Proposal: consistent given/responds syntax (Decider first) | Language change; only with data | **Model feedback** (agy) |
-| 21 | 025 Keyword catalogue v0: structure and ~12 seed keywords | The library half of 'spec and library'; the demo app is written from it | **Vision** (Steve) |
+| 21 | 025 Base library v0: ~12 seed keywords with C# adapter implementations | The library half of 'spec and library'; the demo app is written from it | **Vision** (Steve) |
 | 22 | 009 Demo app: Tasks API in .phrase | Bars 1, 3, 4 | plan |
 | 23 | 010 End-to-end over real HTTP | Bar 5 | plan |
 | 24 | 011 LLM-customer check | Bar 6 | plan |
 | 25 | 012 Usable v1 acceptance gate | Bars 1-6 in one test; CI gate; milestone report | plan |
 | 26 | 026 Catalogue dedup linter | Counter-metric for vocabulary bloat; after Usable v1 | **Vision** (Steve), Goodhart guard |
-| 27 | 028 Second provider spike (TypeScript) | Proves 'any implementation language'; after Usable v1 | **Vision** (Steve) |
+| 27 | 028 Second adapter spike (TypeScript) | Proves 'any implementation language'; after Usable v1 | **Vision** (Steve) |
 | 28 | 029 LLM-as-compiler with hash pinning | New targets without hand-written providers; after the spike | **Vision** (Steve) |
+| 29 | 030 Synthesize Phrase from existing code (spike) | FUTURE (M5): after Usable v1 and Vocabulary v1; needs the base library | **Vision** (Steve, ruling 1) |
+| 30 | 031 Human <-> LLM form converter (spike) | FUTURE (M6): pairs with 030; reading to confirm with Steve | **Vision** (Steve, ruling 4) |
 
 Ranks are the PM's and move at each retro; ideas are triaged by expected metric impact. Milestones are in `board/MILESTONES.md`.
 
 ## Estimate (as of 2026-10-25, after the vision ruling)
 
-**27 cards remain on the board** (002 is Done; 016 is in progress). Of those, **22 are on the Usable v1 path**
+**29 cards remain on the board** (002 is Done; 016 is in progress). Of those, **22 are on the Usable v1 path**
 (the original plan plus 022, 023 and 025 inserted for the vision) and **5 belong to Vocabulary v1** (024, 026, 027,
-028, 029; cards 024 and 027 sit mid-board because they follow the benchmark). Strictly required for the six bars:
+028, 029; plus 2 FUTURE cards, 030 and 031, after both; cards 024 and 027 sit mid-board because they follow the benchmark). Strictly required for the six bars:
 about **16**; the rest are improvements the benchmark will test (013, 014, 015, 017, 019, 020, 021). Expect **2-4
 more** from retros. The emitter and CLI (003-007) are still the long pole; 008 is still the biggest unknown.
+
+## Roadmap after Usable v1 (displaces nothing)
+
+1. **Usable v1** (M1): the six bars.
+2. **Vocabulary v1** (M4): the catalogue measured by LLM work removed.
+3. **Synthesis** (M5, future): Phrase synthesized from existing code (card 030).
+4. **Human view** (M6, future): the human-friendly converter (card 031).

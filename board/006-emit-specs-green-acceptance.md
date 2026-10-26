@@ -1,4 +1,4 @@
-# C# emitter: specs as xUnit, and the first acceptance test goes green
+# C# adapter: specs as xUnit, and the first acceptance test goes green
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
 - **Milestone:** Usable v1 (plumbing for bar 4; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
@@ -9,6 +9,7 @@
   - Many: Given the six specs in `orders.phrase`, When emitted, Then six tests run and pass (`CompileEndpointToCSharp` goes green; remove its Pending trait)
   - Boundaries: Given a spec expecting a failure code, an endpoint-response spec and a composite spec, When emitted, Then each outcome kind asserts correctly
   - Exceptions: Given a spec whose expected value differs from the actual one, When run, Then the generated test fails with a message that names the spec
+  - Interface (adapter contract, Decider D4): Given the adapter contract from card 003, When this card lands, Then emission goes through it and adds no C#-only hook to the compiler core
 
 ## Context
 
