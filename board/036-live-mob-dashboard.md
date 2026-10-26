@@ -17,6 +17,14 @@
   - Freshness: Given an event, When it happens, Then it is visible on the local dashboard within 90 seconds at the 95th percentile, measured over at least 30 events, and the figure is given to Steve with the hosting options
   - Gate: Given any hosting that is reachable from outside the laptop, When it is about to be used, Then Steve has given his explicit one-word OK on that one option, presented with the allow-list test results and the options' exposure (a privacy exposure under the escalation safety carve-out); until then the dashboard runs locally only
 
+## References (this card runs in mob-defaults, so its governing documents live in the phrase-lang repo; absolute paths)
+
+- Experiment write-up: `C:\Users\ringe\projects\phrase-lang\docs\experiments\E2-live-dashboard.md`
+- Vision (north star): `C:\Users\ringe\projects\phrase-lang\VISION.md`
+- Milestones: `C:\Users\ringe\projects\phrase-lang\board\MILESTONES.md`
+- Decisions (D7 and the break-the-check reviews): `C:\Users\ringe\projects\phrase-lang\docs\decisions\DECIDERS.md`
+- This repo's own working agreement: `TEAM_WORKING_AGREEMENT.md` at the mob-defaults root; the acceptance tests: `tests/acceptance_dashboard.py`
+
 ## Contract (what the acceptance tests check)
 
 The acceptance tests are `tests/acceptance_dashboard.py` in mob-defaults. They were written by the facilitator from this contract, not by the
