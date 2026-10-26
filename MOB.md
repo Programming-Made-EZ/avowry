@@ -1,20 +1,17 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** running
+**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 1)
 **Card in progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
 
 ## Who did what
 
-- **Codex:** 80 turns (advance x1, checkpoint x3, fix x8, green x13, ready x5, red x8, refactor x13, ship x10, slice x11, teamsignoff x8)
-- **Copilot:** 40 turns (advance x1, checkpoint x17, directions x4, green x1, ready x5, red x3, signoff x2, teamsignoff x7)
+- **Codex:** 82 turns (advance x2, checkpoint x3, fix x8, green x13, ready x5, red x8, refactor x13, ship x11, slice x11, teamsignoff x8)
+- **Copilot:** 41 turns (advance x1, checkpoint x17, directions x4, green x1, ready x5, red x3, signoff x3, teamsignoff x7)
 - **Grok:** 38 turns (directions x25, fix x2, ready x1, red x2, teamsignoff x8)
 - **agy:** 26 turns (checkpoint x18, teamsignoff x8)
 
 ## Recent turns
 
-- Turn 167: Codex (backend-dev, refactor): changed bench/results/copilot-default.json, bench/results/history.jsonl, bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
-- Turn 168: Codex (devops-engineer, ship): Shipped successfully.
-- Turn 169: Codex (backend-dev, green): changed bench/results/history.jsonl, bench/results/self-check/history.jsonl, tools/Phrase.Bench/Program.cs
 - Turn 170: Codex (backend-dev, refactor): changed bench/results/history.jsonl, bench/results/self-check/history.jsonl, tools/Phrase.Bench/Program.cs
 - Turn 171: Codex (devops-engineer, ship): Ship stopped on push failure, as instructed.
 - Turn 172: Copilot (qa-engineer, signoff): SIGN-OFF
@@ -30,6 +27,9 @@
 - Turn 182: Codex (devops-engineer, ship): Stopped due to push-launch failure, as instructed. - Local tests: 251/251 passed. - Commit created: afb9161 (Fix agy benchmark invocation).
 - Turn 183: Codex (backend-dev, green): changed bench/results/self-check/history.jsonl, bench/results/self-check/self-check-v1.json, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 184: Codex (backend-dev, refactor): changed bench/results/self-check/history.jsonl, bench/results/self-check/self-check-v1.json, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
+- Turn 185: Codex (devops-engineer, ship): Stopped due to push-launch failure, as instructed. - Local tests: 251/251 passed.
+- Turn 186: Copilot (qa-engineer, signoff): SIGNED OFF — The red-first path held: the benchmark acceptance tests were observed failing before the fix, then the harness changes were validated…
+- Turn 187: Codex (product-manager, advance): STILL IN PROGRESS — Delivered the repaired benchmark harness, trustworthy four-model baseline, self-check isolation, documentation, model-specific…
 
 ## Flags, checks and decisions on this card
 
@@ -37,6 +37,7 @@
 - **After cycle 1: not done**: 7 of 10 checks pass
 - **After cycle 2: not done**: 7 of 10 checks pass
 - **After cycle 3: not done**: 7 of 10 checks pass
+- **Not done**: Not done after 3 cycles. The next run picks up from here.
 
 ## Decider outcomes (latest)
 
@@ -52,13 +53,13 @@
 
 ## Latest commits
 
+- 84a4369 Exclude empty-reply models from benchmark baseline
 - afb9161 Fix agy benchmark invocation
 - 1e97647 Handle empty benchmark replies safely
 - 3de336d Board: card 032 reopened a second time (agy still empty; weak check could be passed by a mix); stronger checks
-- 6f7a978 Fix agy benchmark prompt invocation
 
 ## What's next
 
-- Running. Latest: turn 184 by Codex (refactor). Next: the next stage of the current cycle.
+- Stopped before the card was done. Next: look at the last flag or check above, then run again.
 
-_Updated 2026-10-26 10:00 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 10:03 UTC. Summary only: no prompts, replies, code or secrets are published._
