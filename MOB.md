@@ -2,7 +2,7 @@
 
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 1)
+**Project:** Phrase &nbsp;|&nbsp; **State:** running
 **Card in progress:** Spec resolution defects from the independent review (code only) (018)
 
 ## Who did what
@@ -60,6 +60,6 @@
 
 ## What's next
 
-- Stopped before the card was done. Next: look at the last flag or check above, then run again.
+- Running. Latest: turn 26 by Codex (advance). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 21:08 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 21:20 UTC. Summary only: no prompts, replies, code or secrets are published._
