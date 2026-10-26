@@ -11,10 +11,11 @@ generic parts only. Adopted 2026-10-25 by the mob facilitator on Steve's standin
 
 Steve: "we'll call this Task-Force Driven Development. where a task force is assembled."
 
-Before each card, a **task force** is assembled: the full role set (facilitator, PM, domain expert, architect, QA,
-backend, frontend and database dev, UX, security, agile coach, enablement, DevOps) is declared on the card, each role
-assigned to a model or seat, or marked `N/A: <reason>`. Card mode refuses to start a card with no task force
-assembled.
+Before each card, a **task force** is assembled: every role the work actually needs, and only those. The standard
+roles (PM, architect, QA, devs, UX, security, agile coach, enablement, DevOps, domain expert) are a menu to
+consider; new card-specific roles are created whenever the work calls for them (compiler engineer, grammar
+designer, technical writer, benchmark/eval designer, LLM-ergonomics reviewer, performance engineer). Each role has
+an assignee (model or seat) and a one-line why. There is no minimum or maximum role count.
 
 ## 1. Values
 
@@ -161,20 +162,26 @@ becomes a target stops being a good measure.
   metric gaming.
 - **Same for flow metrics and trust-ladder evidence:** signals for retro discussion, never quotas.
 
-### Task force before every card (TFDD, standing rule, Steve, 2026-10-25)
+### Task force before every card (TFDD, standing rule, Steve, 2026-10-25; revised same day)
 
-Steve: "before each feature is started the comprehensive set of roles should be declared and assigned."
+Steve: "before each feature is started the comprehensive set of roles should be declared and assigned," then:
+"there's no quota for how many roles are required for the task force, just that all of the roles that would apply
+are created."
 
-- **Before ANY card starts (feature or bug), a task force is assembled.** The card carries a `## Task force`
-  section and MOB.md shows it. It lists every role: facilitator, PM, domain expert (with any hat, such as language designer),
-  architect, QA, backend dev, frontend dev, database dev, UX designer, security engineer, agile coach,
-  enablement engineer, DevOps.
-- **Each role is assigned to a specific seat or model, or marked `N/A: <one-line reason>`.** No role is silently
-  omitted.
-- **Assignments follow the trust ladder rungs and per-card rotation, and avoid author-reviews-own-work:** the
-  driver cannot be the independent reviewer or QA for its own increment.
-- **Detector:** card mode refuses to start a card with no task force assembled, or an incomplete one, and prints the
-  template (`templates/TASK_FORCE.md` in mob-defaults).
+- **Before ANY card starts (feature or bug), a task force is assembled** on the card (`## Task force`; MOB.md shows
+  it): every role that actually applies, and only those. The standard roles are a **menu, not a form**: PM,
+  architect, QA, backend/frontend/database dev, UX, security, agile coach, enablement, DevOps, domain expert (language designer).
+  **Create new, card-specific roles whenever the work calls for them**, for example compiler engineer, grammar
+  designer, technical writer, benchmark/eval designer, LLM-ergonomics reviewer, performance engineer.
+- **Each role has an assignee (model or seat) and a one-line "why it's needed".** There is no minimum or maximum
+  role count.
+- **The test is fit.** A role the work clearly needs that is missing is a defect the agile coach or a reviewer
+  flags. A padded task force is a smell too.
+- **One structural rule:** whoever authors an increment never reviews or QAs it. Assign by trust-ladder rung and
+  per-card rotation.
+- **Detector:** card mode checks only that a task force is declared, that every listed role has an assignee and a
+  why, and that no seat is both `[author]` and `[reviewer]`. It never checks role names or counts. Template:
+  `templates/TASK_FORCE.md` in mob-defaults.
 
 ### Driver rotation
 

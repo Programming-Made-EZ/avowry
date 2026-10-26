@@ -23,21 +23,14 @@
 
 ## Task force
 
-Assembled retroactively on 2026-10-25 (card 016 was already running when the rule was set).
+Assembled 2026-10-25 (revised the same day to the roles-that-apply form).
 
-- Facilitator: Claude (session)
-- Product manager: Codex
-- Domain expert: Grok (hat: LLM-benchmark methodology and Goodhart guard)
-- Architect: Codex
-- QA engineer: Copilot
-- Backend dev: Codex
-- Frontend dev: N/A: the harness is a console tool with no UI
-- Database dev: N/A: results are JSON files in the repo, no database
-- UX designer: N/A: no UI; CLI output clarity is reviewed by the QA engineer
-- Security engineer: agy (model CLIs run in scratch copies; no secrets in results files)
-- Agile coach: Grok (flow metrics and retro)
-- Enablement engineer: Copilot (bench README and task authoring guide)
-- DevOps engineer: Codex (ship, CI)
+- Backend/tool engineer [author]: Codex | why: writes `tools/Phrase.Bench` and ships it
+- Benchmark/eval designer: Grok | why: designs tasks, holdout split, scoring and the Goodhart guard
+- QA engineer [reviewer]: Copilot | why: independent verification, including a rerun for the noise floor
+- Security reviewer: agy | why: model CLIs run in scratch copies and results must hold no secrets
+- Technical writer: Copilot | why: bench README and task authoring guide
+- Agile coach: Claude (session) | why: flow metrics, and a role-fit check at retro
 
 ## Done when
 
