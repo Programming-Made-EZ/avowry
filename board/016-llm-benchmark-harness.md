@@ -21,6 +21,16 @@
 - Metrics recorded per model and per task: pass rate, attempts to green, tokens in/out, diagnostics hit, misread-intent errors.
 - Baseline first: the first stored run is the baseline cards 013, 014 and 015 cite.
 
+## Remaining work, in order (set by the facilitator after 5 cycles built only the runner)
+
+The runner now has the attempt loop, unavailable-model and timeout handling (commits 4588415, ea06af5, 1738814). The suite and the
+evidence are what is missing. Do these next, one cycle each, red-first against the Done-when checks:
+
+1. Author the suite: at least 12 tasks in `bench/suite.json` (version 1) across write, read, modify and fix, each with a prompt file under `bench/tasks/`, expected behavior as specs, and at least a quarter marked `holdout`.
+2. `--self-check`: run the whole suite against the deterministic fake model twice, write result files and `history.jsonl` rows, print the noise, validate the schema.
+3. Baseline: run the real models (at least three of Codex, Copilot, Grok, agy; `unavailable` rows allowed) and commit the rows.
+4. A short `bench/README.md` (task authoring guide, how to read results).
+
 ## Task force
 
 Assembled 2026-10-25 (revised the same day to the roles-that-apply form).
