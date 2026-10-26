@@ -107,7 +107,8 @@ public class BenchmarkHarnessAcceptance
             Assert.True(exitCode == 0, stdout + stderr);
             Assert.Contains($"{model}: passed", stdout);
             var argvLine = Assert.Single(await File.ReadAllLinesAsync(argvLog));
-            Assert.DoesNotContain("Greeting", argvLine);
+            if (!model.StartsWith("copilot", StringComparison.Ordinal))
+                Assert.DoesNotContain("Greeting", argvLine);
             recordedLines.Add($"{model}: {argvLine}");
             var actualTokens = argvLine.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
             missingTokens.AddRange(requiredTokens
@@ -120,6 +121,41 @@ public class BenchmarkHarnessAcceptance
         Assert.True(
             missingTokens.Count == 0,
             $"Missing profile tokens: {string.Join(", ", missingTokens)}{Environment.NewLine}Recorded: {string.Join(Environment.NewLine, recordedLines)}");
+    }
+
+    [Fact]
+    public async Task run_delivers_the_copilot_prompt_as_the_p_argument()
+    {
+        // Given a copilot profile and a shim that records argv
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var argvLog = Path.Combine(workspace.Root, "copilot-probe-argv.log");
+        await File.WriteAllTextAsync(argvLog, string.Empty);
+        var modelCommand = await WriteArgumentRecordingShim(workspace.Root, "copilot-probe", argvLog);
+
+        // When one development task is run
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "copilot-probe", modelCommand);
+
+        // Then -p carries the task prompt and the headless flags remain separate tokens
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Contains("copilot-probe: passed", stdout);
+        var argvLine = Assert.Single(await File.ReadAllLinesAsync(argvLog));
+        const string flagTail = " -s --allow-all-tools --trust-folder";
+        var promptStart = argvLine.IndexOf("-p ", StringComparison.Ordinal);
+        Assert.True(promptStart >= 0, $"Missing -p argument: {argvLine}");
+        var promptAndFlags = argvLine[(promptStart + 3)..];
+        var headlessFlagsStart = promptAndFlags.IndexOf(flagTail, StringComparison.Ordinal);
+        Assert.True(headlessFlagsStart > 0, $"Missing headless flags after -p: {argvLine}");
+        var promptArgument = promptAndFlags[..headlessFlagsStart].Trim();
+        if (promptArgument.Length >= 2 && promptArgument.StartsWith('"') && promptArgument.EndsWith('"'))
+            promptArgument = promptArgument[1..^1];
+        var expectedPrompt = await File.ReadAllTextAsync(
+            Path.Combine(suiteDirectory, "tasks", "001-write-greeting", "prompt.md"));
+        Assert.False(promptArgument.StartsWith('@'), argvLine);
+        Assert.False(File.Exists(promptArgument), $"-p is a pathname, not prompt text: {promptArgument}");
+        Assert.Equal(expectedPrompt.TrimEnd(), promptArgument);
+        using var result = await ReadModelResult(suiteDirectory, "copilot-probe");
+        Assert.Equal("completed", result.RootElement.GetProperty("status").GetString());
     }
 
     [Fact]

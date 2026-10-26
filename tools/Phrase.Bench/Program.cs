@@ -223,11 +223,15 @@ static string ProfileArguments(string model, string workingDirectory, string pro
         return $" --max-turns 1 --prompt-file \"{promptPath}\"";
     }
     if (profile.Equals("copilot", StringComparison.Ordinal))
-        return " -p -s --allow-all-tools --trust-folder";
+        return $" -p {QuoteForShell(prompt.TrimEnd())} -s --allow-all-tools --trust-folder";
     if (profile.Equals("agy", StringComparison.Ordinal))
         return " --print";
     return "";
 }
+
+static string QuoteForShell(string value) => OperatingSystem.IsWindows()
+    ? $"\"{value}\""
+    : $"'{value.Replace("'", "'\"'\"'")}'";
 
 static BenchmarkScore Score(string source)
 {
