@@ -1,0 +1,35 @@
+# Dogfood: the mob status API, written in Phrase
+
+- **Status:** Ready, after the Usable v1 path (rank: see `board/MILESTONE-usable-v1.md`)
+- **Type:** feature (dogfood; exempt from the hypothesis rule); second demo app, NOT a Usable v1 bar
+- **Milestone:** Vocabulary v1 (M3 evidence: a second real app the mob itself uses); starts only after bar 5 (card 010) is green
+- **Source:** Steve, 2026-10-26: "this seems like a good starter app for the phrase lang" (the live mob dashboard, card 036). Team review (Decider D16: Codex Yes, Grok Yes, agy Yes, Copilot Support-it): keep the Tasks API (009) as the bounded Usable v1 proof and file this as a dogfood card after it. Steve later: the 30-minute MOB.md digests already give him the visibility he wanted, so the dashboard follow-ups are not urgent; this card's value is as a second real Phrase app, not as a dashboard.
+- **Story:** As the mob, I want a small status API for mob runs written entirely in .phrase, so that Phrase is proven on something we use daily, with real validation and failure paths, and the dashboard's data-wiring gap closes through our own product.
+- **Hypothesis:** We believe a second, unrelated real app written only in Phrase will expose language and base-library gaps that the Tasks demo does not, and will raise the benchmark pass rate for status-shaped tasks once its vocabulary is in the catalogue. Measured by: gaps found per app (cards filed), and a new bench task built from this app (card 027 style).
+- **Acceptance criteria (ZOMBIES), first slice (pure records, in-memory, no file or clock access in Phrase itself):**
+  - Zero: Given no events posted, When `GET /projects` is called, Then it returns an empty list, not an error
+  - One: Given one valid seat event posted to `POST /events`, When `GET /projects/{project}/seats` is called, Then that seat appears with its last state
+  - Many: Given events for several projects and seats, When `GET /projects` and `GET /projects/{project}/events` are called, Then each project lists only its own seats and events
+  - Boundaries: Given an event with a timestamp older than the stall threshold, When `GET /projects/{project}/stalls` is called, Then the seat is reported stalled; one younger than the threshold is not (the threshold and "now" are inputs, passed in, so the spec is deterministic)
+  - Interfaces: Given the finished API, When the existing dashboard page's `status.json` shape is compared, Then the responses carry the same fields (project, state, seats, recent events), so the page can read the API unchanged
+  - Exceptions: Given an event with a missing seat, an unknown state or a malformed timestamp, When posted, Then the spec-declared failure code is returned and nothing is stored
+  - Simple scenarios: Given the facilitator's `events.jsonl` lines, When a small bridge posts them, Then the dashboard shows live data (the bridge is a script, outside the first slice)
+- **Language needs to surface (card filed for each gap found, not assumed here):** a timestamp type and comparison, list filtering by field, in-memory keyed collections, and any file or time effect (deliberately kept out of the first slice).
+
+## Context
+
+- Read first: `TEAM_WORKING_AGREEMENT.md`, `VISION.md`, `docs/GRAMMAR.md`, `HANDOFF.md`, the milestone doc, card 009 (the Tasks demo and its pipeline) and card 036 (the dashboard whose data shape this serves).
+- The dashboard code lives in mob-defaults (`status.py`, `dashboard/`). This card builds the API in `demo/mobstatus/MobStatus.phrase` here; it must not change the dashboard.
+- Reuses the Usable v1 build pipeline: `phrase build`, `dotnet build` with zero warnings, generated specs all pass, real HTTP calls behave as specified.
+- Outside-in TDD with Given/When/Then comments; stage explicit paths only, never `.mob/`.
+
+## Done when
+
+The PM writes the concrete commands at the Ready check, mirroring card 009's gate (`dotnet test Phrase.sln --filter "Status!=Pending"` with zero warnings) plus a mechanical check that this card's specs exist and a real HTTP check of each endpoint.
+
+## Task force
+
+- Language designer (reviewer): Grok | why: the app is a test of the language; each gap becomes a card
+- Backend author (author): Codex | why: writes the .phrase and runs the build pipeline
+- Architect (reviewer): Copilot | why: slices the app against the adapter and base library
+- Acceptance designer: agy | why: writes the failure-path specs and the dashboard shape check
