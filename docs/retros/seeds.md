@@ -86,3 +86,16 @@ Dispatch expects P1 and P2 to matter most for throughput.
   commit of such a script. A symlink case is covered in code but its test is skipped on Windows (no symlink privilege).
 - **Ask of the retro:** is a runtime wrapper around the drivers' shells worth the cost, or is detect-and-flag enough?
 
+
+## Tooling authorship rule and TAKEOVER log (Dispatch, 2026-10-26; facilitator/PM call, challengeable)
+
+Tooling changes are authored by the rotation (Codex, Copilot, Grok, agy); the facilitator reviews. Any exception is logged here as a TAKEOVER with a reason.
+
+- **TAKEOVER 1: `smoke.py` (mob-defaults `4f22fc4`).** Reason: needed to unblock the smoke step while the dashboard run held the drivers. Non-author review (sandboxed Decider, 4 seats): Codex No, agy No, Copilot Support-it, Grok Support-it. Verdict: NOT sound to rely on yet.
+  Fix list (to be authored by the rotation, Codex first, after the dashboard run ends):
+  1. A missing or empty `MOB.md` must FAIL (today the failover/safety/flag checks pass on empty text).
+  2. The decider check must not pass on an echoed prompt: the proposal must not contain a vote word; require a parsed vote from the reply with no echo, and reject narration-only.
+  3. Plain card mode never runs the Grok/agy seats; run with the mode that exercises every seat, or check each seat's turn explicitly.
+  4. Check the decider result's violations/README and write-access fields, not only `integrity.ok`.
+  5. Quoting: exercise the Windows quoting path (a Done-when and a proposal with spaces and quotes).
+  6. Add a test for the `delete_guard` read-only fix; make scratch cleanup failure a FAIL, not a warning with exit 0.
