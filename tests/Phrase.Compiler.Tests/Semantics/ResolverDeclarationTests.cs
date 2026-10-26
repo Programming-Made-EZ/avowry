@@ -6,8 +6,6 @@ namespace Phrase.Compiler.Tests.Semantics;
 // Feature: Declarations and the phrase library
 //   Types resolve to core or user types, and every phrase in the library has a
 //   unique wording, so a step can only ever mean one thing.
-// Pending: the mob's starting point. Remove this trait when every test in the class passes.
-[Trait("Status", "Pending")]
 public class ResolverDeclarationTests
 {
     [Fact]
