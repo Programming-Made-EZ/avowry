@@ -1,6 +1,6 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 4)
+**Project:** Phrase &nbsp;|&nbsp; **State:** running
 **Card in progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
 
 **Latest cycle:** 1 (driver Codex; navigator Grok; observers Copilot, agy). The full working log is private; this page is a summary.
@@ -43,9 +43,9 @@
 
 ## Decider outcomes (latest)
 
-- Decider D5: declare card 016 Done on its written criteria but not M2; file bug card 032 (invalid baseline) at rank 3; run 032 as the first E1 true-mobbing card… (passed)
 - Decider D6: rank retro-016 cards: 033 (generics) and 034 (behavioral holes) after 023 and before 008; 035 (failure-code holes, Decider first) after 021; fold two… (passed)
 - Decider D7: file the live mob dashboard as tooling card 036 (experiment E2) at 2nd in Ready after the baseline fix; code in mob-defaults; one dashboard for all… (passed)
+- Decider D8: pause experiment E1 (true mobbing) on card 032 after 8 runs; finish 032 in the standard driver-plus-review mode with a whole-team sign-off before the… (passed)
 
 ## Board
 
@@ -55,10 +55,11 @@
 
 ## Latest commits
 
+- d8b9444 Decider D8: pause E1 true mobbing on card 032 after 8 runs; E1 data recorded; 032 task force tagged for standard
 - 2a32cf4 No Co-Authored-By trailers (Steve's standing coding rule): agreement bullet and commit-msg hook
 
 ## What's next
 
-- Stopped on a flag nobody could clear. Next: fix or take it to a Decider, then run the card again.
+- Running. Latest: turn 145 by agy (checkpoint). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 06:43 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 06:45 UTC. Summary only: no prompts, replies, code or secrets are published._
