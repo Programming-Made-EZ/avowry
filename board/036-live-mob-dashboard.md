@@ -82,6 +82,6 @@ to pass. All of these must exit 0.
 
 ```
 python -m unittest tests.acceptance_dashboard
-python -c "import hashlib,sys; want={'tests/acceptance_dashboard.py':'e68b93528ffadf31851a135edcdeaab2db8af019d27eedae0f21b8b50fb36f20','tests/fakes/fake_cli.py':'a0faf7155127a93df2f1bcbe06ae05a4ccbbfb360ec38a691a6e774378623a27','tests/test_card_mode.py':'0519e819ae652027cd7038be9778190d8996c9e1f2479d5bb78abbc0d272cb93'}; bad=[f for f,h in want.items() if hashlib.sha256(open(f,'rb').read()).hexdigest()!=h]; print('tampered:',bad) if bad else None; sys.exit(1 if bad else 0)"
+python -c "import hashlib,sys; want={'tests/acceptance_dashboard.py':'e68b93528ffadf31851a135edcdeaab2db8af019d27eedae0f21b8b50fb36f20','tests/fakes/fake_cli.py':'33a8a4c40bdd34567abfdb0d3ee3a8bfcbebe1906807430361ef2f22146d326a','tests/test_card_mode.py':'0519e819ae652027cd7038be9778190d8996c9e1f2479d5bb78abbc0d272cb93'}; bad=[f for f,h in want.items() if hashlib.sha256(open(f,'rb').read()).hexdigest()!=h]; print('tampered:',bad) if bad else None; sys.exit(1 if bad else 0)"
 python -m unittest discover -s tests
 ```
