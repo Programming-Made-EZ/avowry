@@ -1,7 +1,7 @@
 # C# emitter: types and runtime
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
-- **Milestone:** Usable v1 (`board/MILESTONE-usable-v1.md`)
+- **Milestone:** Usable v1 (plumbing for bar 2-4; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As an engineer (or an LLM) writing Phrase, I want my declared types and the phrase runtime emitted as C#, so that generated code has real, named types to build on.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given a program with no types, When emitted, Then Types.cs and PhraseRuntime.cs are still produced and build

@@ -1,7 +1,7 @@
 # C# emitter: FastEndpoints endpoints and Program
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
-- **Milestone:** Usable v1 (`board/MILESTONE-usable-v1.md`)
+- **Milestone:** Usable v1 (plumbing for bar 2-5; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As an engineer (or an LLM), I want each endpoint emitted as a FastEndpoints class with its route, input, output and failure responses, so that the generated app serves real HTTP.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given no endpoints, When emitted, Then Program.cs builds and the app starts with no routes

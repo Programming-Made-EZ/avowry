@@ -1,7 +1,7 @@
 # Demo app: a Tasks API written entirely in .phrase
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
-- **Milestone:** Usable v1 (`board/MILESTONE-usable-v1.md`)
+- **Milestone:** Usable v1 (plumbing for bar 1, 3, 4; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As Steve (and any engineer), I want a small real app written only in .phrase, so that I can see the language build something useful.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given the app source, When inspected, Then there is no hand-written C# except declared native blocks

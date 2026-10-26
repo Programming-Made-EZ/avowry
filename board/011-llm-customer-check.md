@@ -1,7 +1,7 @@
 # LLM-customer check: a model adds an endpoint from the docs alone
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
-- **Milestone:** Usable v1 (`board/MILESTONE-usable-v1.md`)
+- **Milestone:** Usable v1 (plumbing for bar 6; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As the language designer, I want proof that a model that has never seen the app can extend it using only GRAMMAR.md and the docs, so that Phrase is usable by its real customers.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given a fresh-context model with only GRAMMAR.md, the docs and the demo app, When asked to add `reopen task`, Then it writes the endpoint and specs in .phrase

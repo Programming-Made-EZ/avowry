@@ -118,6 +118,23 @@ When models disagree (in retro product feedback, design debates or reviews), run
    proposal **fails**. Otherwise it passes.
 5. **Record.** Every Decider run is recorded in MOB.md: the proposal, each seat's vote, and the result.
 
+### Milestones and hypothesis-driven work (standing rule, Steve, 2026-10-25)
+
+Steve: "the mob should also set milestones for themselves and use hypothesis to determine if new feature
+ideas work. ideally they should be data driven."
+
+- **Self-set milestones.** The mob sets its own milestones on the board (`board/MILESTONES.md`). Each has a
+  **measurable target** and an **automated check**. Progress against them is reviewed at every retro, and
+  the next milestone is set when one is reached. Steve hears only when a milestone is reached, plus Usable v1 itself.
+- **Hypothesis, or no card.** Every feature card (especially one that came from model feedback) carries a
+  hypothesis in exactly this form: *"We believe <change> will <improve metric> for LLM authors/readers. We'll know when
+  <metric> moves from <baseline> to <target> on <benchmark>."* Bugs and plumbing cards are exempt; a plumbing
+  card names the milestone bar it advances instead.
+- **Data, not opinion.** The LLM benchmark harness (card 016) is the instrument for everything else and is ranked high. Results are stored in the repo as a history so trends can be compared.
+- **The loop.** Before building a feature, record its baseline on the benchmark. Afterwards, re-run it.
+  Keep the change if the hypothesis held. Revise or revert if it did not, and record why in MOB.md.
+  Decider disputes are settled with data where possible. Retro ideas are triaged by expected metric impact.
+
 ### Driver rotation
 
 - **Rotation order: Codex → Copilot → Grok → agy; Claude is last resort.** Claude drives or reviews only

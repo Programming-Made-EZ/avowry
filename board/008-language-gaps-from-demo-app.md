@@ -1,7 +1,7 @@
 # Close the language gaps the demo app exposes
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
-- **Milestone:** Usable v1 (`board/MILESTONE-usable-v1.md`)
+- **Milestone:** Usable v1 (plumbing for bar 1; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As a Phrase author, I want the constructs a real CRUD API needs (lookup, update, list, delete, validation), so that I can write a small app entirely in .phrase.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given the demo app's list-all endpoint with no data, When specified, Then an empty list is a valid output

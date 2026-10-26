@@ -1,7 +1,7 @@
 # C# emitter: specs as xUnit, and the first acceptance test goes green
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
-- **Milestone:** Usable v1 (`board/MILESTONE-usable-v1.md`)
+- **Milestone:** Usable v1 (plumbing for bar 4; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As an engineer (or an LLM), I want every Given/When/Then spec emitted as a real xUnit test, so that specs run as the truth of my program.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given a unit with no specs, When emitted, Then no test is produced for it and the project still builds

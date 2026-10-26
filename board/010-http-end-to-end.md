@@ -1,7 +1,7 @@
 # End-to-end: real HTTP behaves as the specs say
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
-- **Milestone:** Usable v1 (`board/MILESTONE-usable-v1.md`)
+- **Milestone:** Usable v1 (plumbing for bar 5; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As an engineer, I want the generated app run and called over real HTTP, so that I know the specs describe what the running service does.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given the app started on a free port, When an empty list is requested, Then it responds

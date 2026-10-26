@@ -18,23 +18,25 @@ Steve: "let me know when the language is actually usable to build an application
 
 | Rank | Card | Why here | Origin |
 |---|---|---|---|
-| 1 | 002 Resolver malformed-input hardening | The emitter needs a resolver that neither lies nor crashes | Grok review |
-| 2 | 013 Make GRAMMAR.md say what the resolver does | Tiny, high value: 3 models hit the docs contradictions; the LLM check (011) depends on honest docs | **Model feedback** (Codex, agy, Grok) |
-| 3 | 003 Emit types and runtime | Smallest emitter slice | plan |
-| 4 | 014 Document the native C# environment, add passing-guard examples | Must precede 004: it fixes the `Fail` contract the emitter implements | **Model feedback** (Grok, agy, Codex, Copilot) |
-| 5 | 004 Emit phrases, effects, failures | Behavior before HTTP | plan |
-| 6 | 005 Emit FastEndpoints endpoints and Program | Serves HTTP | plan |
-| 7 | 006 Emit specs as xUnit; first acceptance test green | Phrase compiles its first program | plan |
-| 8 | 007 CLI `phrase build` | The one command in bar 2 | plan |
-| 9 | 008 Close the language gaps the demo app exposes | Find what CRUD needs, via the Decider protocol | plan |
-| 10 | 015 Proposal: optional `when` line (Decider first) | Token saving for LLM authors; only worth doing after the emitter exists | **Model feedback** (agy) |
-| 11 | 009 Demo app: Tasks API in .phrase | Bars 1, 3, 4 | plan |
-| 12 | 010 End-to-end over real HTTP | Bar 5 | plan |
-| 13 | 011 LLM-customer check | Bar 6 | plan |
-| 14 | 012 Usable v1 acceptance gate | Bars 1-6 in one test; CI gate; milestone report | plan |
+| 1 | 002 Resolver malformed-input hardening | The emitter and benchmark need a resolver that neither lies nor crashes | Grok review |
+| 2 | 016 LLM benchmark harness v0 | The instrument: every feature card needs a baseline first. v0 needs only parse + resolve | Steve (data-driven) |
+| 3 | 013 Make GRAMMAR.md say what the resolver does | Cheap; first hypothesis card, measured by 016 | **Model feedback** (Codex, agy, Grok) |
+| 4 | 003 Emit types and runtime | Smallest emitter slice | plan |
+| 5 | 014 Document the native C# environment, add passing-guard examples | Precedes 004: it fixes the `Fail` contract the emitter implements | **Model feedback** (Grok, agy, Codex, Copilot) |
+| 6 | 004 Emit phrases, effects, failures | Behavior before HTTP | plan |
+| 7 | 005 Emit FastEndpoints endpoints and Program | Serves HTTP | plan |
+| 8 | 006 Emit specs as xUnit; first acceptance test green | Phrase compiles its first program | plan |
+| 9 | 017 Benchmark v1: score by running specs | Turns pass rate into real behavior; re-baselines | Steve (data-driven) |
+| 10 | 007 CLI `phrase build` | The one command in bar 2 | plan |
+| 11 | 008 Close the language gaps the demo app exposes | Find what CRUD needs, via the Decider protocol and data | plan |
+| 12 | 015 Proposal: optional `when` line (Decider first, then measured) | Token saving; needs the benchmark | **Model feedback** (agy) |
+| 13 | 009 Demo app: Tasks API in .phrase | Bars 1, 3, 4 | plan |
+| 14 | 010 End-to-end over real HTTP | Bar 5 | plan |
+| 15 | 011 LLM-customer check | Bar 6 | plan |
+| 16 | 012 Usable v1 acceptance gate | Bars 1-6 in one test; CI gate; milestone report | plan |
 
-Ranks are the PM's and move at each retro. Model feedback from retros adds cards, inserted by value and logged in the retro (`docs/retros/`).
+Ranks are the PM's and move at each retro; ideas are triaged by expected metric impact. Milestones are in `board/MILESTONES.md`.
 
 ## Estimate (as of 2026-10-25)
 
-**14 cards are on the board** between now and Usable v1 (002-015, three of them from model feedback). Expect **2-4 more** from the next retros and from language gaps found in cards 008 and 009: about **16-18 cards, range 14-20**. Cards 003-007 are the long pole (the emitter and CLI do not exist yet); 008 is the biggest unknown because the demo app may need grammar additions.
+**16 cards are on the board** between now and Usable v1 (002-017). Expect **2-4 more** from retros and from grammar gaps found in cards 008 and 009: about **18-20 cards, range 16-22**. Cards 003-007 are the long pole (the emitter and CLI do not exist yet); 008 is the biggest unknown.

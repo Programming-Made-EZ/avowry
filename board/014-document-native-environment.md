@@ -4,6 +4,7 @@
 - **Milestone:** Usable v1
 - **Source:** Retro 001 model feedback: Grok and agy (native `Fail` vs `PhraseFailure`), Codex, Copilot and Grok (no passing-guard / `succeeds` example).
 - **Story:** As an LLM writing a leaf phrase, I want to know exactly what a `native csharp` block can call and how types map, so that I do not have to reverse-engineer it from the fixture.
+- **Hypothesis:** We believe documenting the native C# environment (`Fail`, type mapping) and showing passing-guard examples will raise first-attempt pass rate on leaf-phrase write and fix tasks for LLM authors. We'll know when that pass rate moves from the card-016 baseline to baseline plus 15 points on bench suite v1.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given a native block, When the docs are read, Then the one failure form is stated (`Fail("Code")`) and its relation to `PhraseFailure` (line 207) is explained in one sentence
   - One: Given a `List<LineItem>` hole, When used in a native block, Then the docs show its C# type and the names of the hole variables in scope
@@ -13,6 +14,7 @@
 
 ## Context
 
+- Record the baseline from `bench/results/` before starting, and re-run the benchmark after; keep, revise or revert by the result and note why in MOB.md.
 - Read first: `TEAM_WORKING_AGREEMENT.md`, `docs/GRAMMAR.md`, `tests/Phrase.Acceptance.Tests/Fixtures/orders.phrase`.
 - Stage explicit paths only, never `.mob/`. Grammar changes need a recorded reason (Decider protocol if models disagree).
 

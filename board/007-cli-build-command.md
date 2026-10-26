@@ -1,7 +1,7 @@
 # Phrase CLI: one command compiles a program
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
-- **Milestone:** Usable v1 (`board/MILESTONE-usable-v1.md`)
+- **Milestone:** Usable v1 (plumbing for bar 2; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As an engineer (or an LLM), I want one command, `phrase build <file.phrase> -o <dir>`, so that I can compile without writing C# glue code.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given a missing file, When run, Then exit code 2 and a clear message

@@ -1,7 +1,7 @@
 # C# emitter: phrases, effects and failures
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
-- **Milestone:** Usable v1 (`board/MILESTONE-usable-v1.md`)
+- **Milestone:** Usable v1 (plumbing for bar 2-4; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As an engineer (or an LLM), I want each phrase emitted as a C# method with typed failures and declared effects, so that the library of behavior is callable from endpoints.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given a leaf phrase with no failures, When emitted, Then a method with the right signature is produced
