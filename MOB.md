@@ -25,6 +25,7 @@
 
 - **Baseline (before any work): not done**: 0 of 2 checks pass
 - **After cycle 1: not done**: 0 of 2 checks pass
+- **After cycle 2: not done**: 0 of 2 checks pass
 
 ## Decider outcomes (latest)
 
@@ -43,10 +44,9 @@
 - 97636a1 Tooling cards: absolute Phrase paths and Given/When/Then criteria (run 063 stopped at the Ready check); seed
 - d190f0b Loop: no separate discovery step (Steve's simplification); 071 withdrawn, folded into 067; D24 amended
 - 222482c Loop cards: continuous, never ends (Steve); discovery 071 and budget pacing 072; 067/068 amended; D24
-- 51ddf45 Board: the loop runner cards 063-070 (Steve: it should be a loop; D23); 018 Done
 
 ## What's next
 
 - Running. Latest: turn 8 by Codex (refactor). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 22:40 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 22:49 UTC. Summary only: no prompts, replies, code or secrets are published._
