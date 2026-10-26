@@ -5,16 +5,13 @@
 
 ## Who did what
 
-- **Codex:** 85 turns (advance x2, checkpoint x3, fix x8, green x13, ready x6, red x8, refactor x14, ship x11, slice x12, teamsignoff x8)
+- **Codex:** 88 turns (advance x2, checkpoint x3, fix x8, green x14, ready x6, red x8, refactor x15, ship x12, slice x12, teamsignoff x8)
 - **Copilot:** 43 turns (advance x1, checkpoint x17, directions x4, green x2, ready x5, red x4, signoff x3, teamsignoff x7)
 - **Grok:** 38 turns (directions x25, fix x2, ready x1, red x2, teamsignoff x8)
 - **agy:** 26 turns (checkpoint x18, teamsignoff x8)
 
 ## Recent turns
 
-- Turn 175: Codex (architect, slice): CONFIRMED — This remains a thin vertical bug-fix slice: the Phrase.Bench CLI invokes models, validates captured replies, and persists an auditable…
-- Turn 176: Copilot (qa-engineer, red): changed tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
-- Turn 177: Codex (backend-dev, green): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 178: Codex (backend-dev, refactor): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 179: Codex (devops-engineer, ship): Shipped commit 1e97647 (Handle empty benchmark replies safely). - Local gate: 251/251 tests passed. - origin/main verified at 1e97647.
 - Turn 180: Codex (backend-dev, green): changed bench/results/self-check/history.jsonl, bench/results/self-check/self-check-v1.json, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
@@ -30,11 +27,15 @@
 - Turn 190: Copilot (qa-engineer, red): changed bench/results/self-check/history.jsonl, bench/results/self-check/self-check-v1.json
 - Turn 191: Copilot (backend-dev, green): changed MOB.md, bench/results/agy-gemini-4-argon-medium.json, bench/results/history.jsonl, bench/results/self-check/history.jsonl, bench/results/self-check/self-check-v1.json, tools/Phrase.Bench/Program.cs
 - Turn 192: Codex (backend-dev, refactor): changed bench/results/agy-gemini-4-argon-medium.json, bench/results/history.jsonl, bench/results/self-check/history.jsonl, bench/results/self-check/self-check-v1.json, tools/Phrase.Bench/Program.cs
+- Turn 193: Codex (devops-engineer, ship): SHIPPED — Commit e5d7619 (Keep benchmark self-check results isolated).
+- Turn 194: Codex (backend-dev, green): changed bench/results/history.jsonl
+- Turn 195: Codex (backend-dev, refactor): changed bench/results/history.jsonl
 
 ## Flags, checks and decisions on this card
 
 - **Baseline (before any work): not done**: 7 of 10 checks pass
 - **After cycle 1: not done**: 7 of 10 checks pass
+- **After cycle 2: not done**: 7 of 10 checks pass
 
 ## Decider outcomes (latest)
 
@@ -50,12 +51,13 @@
 
 ## Latest commits
 
+- e5d7619 Keep benchmark self-check results isolated
 - 84a4369 Exclude empty-reply models from benchmark baseline
 - afb9161 Fix agy benchmark invocation
 - 1e97647 Handle empty benchmark replies safely
 
 ## What's next
 
-- Running. Latest: turn 192 by Codex (refactor). Next: the next stage of the current cycle.
+- Running. Latest: turn 195 by Codex (refactor). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 11:05 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 11:14 UTC. Summary only: no prompts, replies, code or secrets are published._
