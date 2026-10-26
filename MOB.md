@@ -1,6 +1,6 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** finished
+**Project:** Phrase &nbsp;|&nbsp; **State:** running
 **Card in progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
 
 ## Who did what
@@ -53,13 +53,13 @@
 
 ## Latest commits
 
+- 0a0e965 Board: card 032 reopened after the whole-team sign-off (agy empty replies; copilot missing a task); two new Done
 - 08ed7bb Store trustworthy four-model benchmark baseline
 - 140ec7a usable-v1 CI job: green while pending ('not reached: X of 6 criteria'), red only on a ratcheted regression
 - e0f1dfa Handle locked benchmark scratch cleanup
-- e00a6d9 Document Phrase benchmark harness
 
 ## What's next
 
-- The card is done. Next: its retro, then the next card from the board.
+- Running. Latest: turn 162 by Copilot (advance). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 08:23 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 08:36 UTC. Summary only: no prompts, replies, code or secrets are published._
