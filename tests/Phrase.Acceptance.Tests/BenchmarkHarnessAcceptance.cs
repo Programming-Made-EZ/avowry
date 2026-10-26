@@ -43,8 +43,7 @@ public class BenchmarkHarnessAcceptance
         // Then real compiler scoring passes and both result stores contain the task metrics
         Assert.True(exitCode == 0, stdout + stderr);
         Assert.Contains("fake-v1: passed", stdout);
-        using var result = JsonDocument.Parse(await File.ReadAllTextAsync(
-            Path.Combine(suiteDirectory, "results", "fake-v1.json")));
+        using var result = await ReadModelResult(suiteDirectory, "fake-v1");
         Assert.True(result.RootElement.GetProperty("passed").GetBoolean());
         Assert.Equal(1, result.RootElement.GetProperty("attempts").GetInt32());
 
@@ -79,14 +78,39 @@ public class BenchmarkHarnessAcceptance
 
         // Then the second attempt passes and was prompted with the first attempt's diagnostics
         Assert.True(exitCode == 0, stdout + stderr);
-        using var result = JsonDocument.Parse(await File.ReadAllTextAsync(
-            Path.Combine(suiteDirectory, "results", "retry-v1.json")));
+        using var result = await ReadModelResult(suiteDirectory, "retry-v1");
         Assert.True(result.RootElement.GetProperty("passed").GetBoolean());
         Assert.Equal(2, result.RootElement.GetProperty("attempts").GetInt32());
         var receivedPrompts = await File.ReadAllTextAsync(received);
         var diagnostics = result.RootElement.GetProperty("diagnostics").EnumerateArray().ToArray();
         Assert.NotEmpty(diagnostics);
         Assert.All(diagnostics, diagnostic => Assert.Contains(diagnostic.GetString()!, receivedPrompts));
+    }
+
+    [Fact]
+    public async Task run_records_an_unavailable_model_instead_of_losing_the_result()
+    {
+        // Given a model command that is unavailable
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var modelCommand = OperatingSystem.IsWindows()
+            ? "more > nul && echo model unavailable 1>&2 && exit /b 17"
+            : "cat > /dev/null; echo model unavailable >&2; exit 17";
+
+        // When the benchmark CLI tries to run that model
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "missing-v1", modelCommand);
+
+        // Then it records an unavailable result with the error for the suite to continue past
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Contains("missing-v1: unavailable", stdout);
+        using var result = await ReadModelResult(suiteDirectory, "missing-v1");
+        Assert.Equal("unavailable", result.RootElement.GetProperty("status").GetString());
+        Assert.Contains("model unavailable", result.RootElement.GetProperty("error").GetString());
+
+        var historyLine = Assert.Single(await File.ReadAllLinesAsync(
+            Path.Combine(suiteDirectory, "results", "history.jsonl")));
+        using var historyResult = JsonDocument.Parse(historyLine);
+        Assert.Equal("unavailable", historyResult.RootElement.GetProperty("status").GetString());
     }
 
     private static string CopySuiteTo(string workspaceRoot)
@@ -100,6 +124,10 @@ public class BenchmarkHarnessAcceptance
             Path.Combine(taskDirectory, "prompt.md"));
         return suiteDirectory;
     }
+
+    private static async Task<JsonDocument> ReadModelResult(string suiteDirectory, string model) =>
+        JsonDocument.Parse(await File.ReadAllTextAsync(
+            Path.Combine(suiteDirectory, "results", $"{model}.json")));
 
     private static async Task<(int ExitCode, string Stdout, string Stderr)> RunBenchmark(
         string suiteDirectory, string model, string modelCommand)

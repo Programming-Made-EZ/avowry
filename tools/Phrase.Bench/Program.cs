@@ -67,17 +67,17 @@ try
     var result = new BenchmarkResult(
         model, task.Id, score.Passed, attempts, tokensIn, tokensOut,
         "estimated", diagnostics, false, Hash(prompt));
-
-    var resultsDirectory = Path.Combine(suiteDirectory, "results");
-    Directory.CreateDirectory(resultsDirectory);
-    var serializedResult = JsonSerializer.Serialize(result, Serialization.Options);
-    File.WriteAllText(Path.Combine(resultsDirectory, $"{model}.json"), serializedResult);
-    await File.AppendAllTextAsync(
-        Path.Combine(resultsDirectory, "history.jsonl"),
-        serializedResult + Environment.NewLine);
+    PersistResult(suiteDirectory, model, result);
 
     Console.WriteLine($"{model}: {(score.Passed ? "passed" : "failed")} {task.Id}");
     return score.Passed ? 0 : 3;
+}
+catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception)
+{
+    var result = BenchmarkResult.Unavailable(model, task.Id, Hash(prompt), exception.Message);
+    PersistResult(suiteDirectory, model, result);
+    Console.WriteLine($"{model}: unavailable {task.Id}");
+    return 0;
 }
 finally
 {
@@ -139,6 +139,15 @@ static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.
 static string AddDiagnostics(string prompt, IReadOnlyList<string> diagnostics) =>
     $"{prompt}{Environment.NewLine}{Environment.NewLine}Compiler diagnostics:{Environment.NewLine}{string.Join(Environment.NewLine, diagnostics)}";
 
+static void PersistResult(string suiteDirectory, string model, BenchmarkResult result)
+{
+    var resultsDirectory = Path.Combine(suiteDirectory, "results");
+    Directory.CreateDirectory(resultsDirectory);
+    var serializedResult = JsonSerializer.Serialize(result, Serialization.Options);
+    File.WriteAllText(Path.Combine(resultsDirectory, $"{model}.json"), serializedResult);
+    File.AppendAllText(Path.Combine(resultsDirectory, "history.jsonl"), serializedResult + Environment.NewLine);
+}
+
 static class Serialization
 {
     public static readonly JsonSerializerOptions Options = new(JsonSerializerDefaults.Web)
@@ -159,7 +168,13 @@ sealed record BenchmarkResult(
     string TokenMeasurement,
     IReadOnlyList<string> Diagnostics,
     bool Misread,
-    string PromptHash);
+    string PromptHash,
+    string Status = "completed",
+    string? Error = null)
+{
+    public static BenchmarkResult Unavailable(string model, string task, string promptHash, string error) =>
+        new(model, task, false, 0, 0, 0, "estimated", [], false, promptHash, "unavailable", error);
+}
 sealed record BenchmarkScore(bool Passed, IReadOnlyList<string> Diagnostics);
 
 sealed class ScoringProvider : ITargetProvider
