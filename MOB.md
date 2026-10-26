@@ -7,10 +7,14 @@
 
 ## Who did what
 
-- Nothing has run yet.
+- **Codex:** 2 turns (ready x1, slice x1)
+- **Copilot:** 1 turns (red x1)
 
 ## Recent turns
 
+- Turn 1: Codex (product-manager, ready): READY — The card has a sound Connextra story, testable Given/When/Then criteria, and all referenced guidance/source/test files exist.
+- Turn 2: Codex (architect, slice): CONFIRMED — This is a thin vertical bug-fix slice: Phrase source enters the public Resolver.Resolve(string) boundary and produces user-visible…
+- Turn 3: Copilot (qa-engineer, red): changed VISION.md, docs/GRAMMAR.md, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
 
 ## Flags, checks and decisions on this card
 
@@ -37,6 +41,6 @@
 
 ## What's next
 
-- Starting up.
+- Running. Latest: turn 3 by Copilot (red). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 20:23 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 20:30 UTC. Summary only: no prompts, replies, code or secrets are published._
