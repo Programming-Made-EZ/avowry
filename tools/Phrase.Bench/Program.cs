@@ -144,7 +144,27 @@ static async Task<bool> RunTask(
     }
     finally
     {
-        Directory.Delete(scratchDirectory, recursive: true);
+        await DeleteScratchDirectory(scratchDirectory);
+    }
+}
+
+static async Task DeleteScratchDirectory(string scratchDirectory)
+{
+    for (var attempt = 0; attempt < 3; attempt++)
+    {
+        try
+        {
+            Directory.Delete(scratchDirectory, recursive: true);
+            return;
+        }
+        catch (IOException) when (attempt < 2)
+        {
+            await Task.Delay(100);
+        }
+        catch (IOException)
+        {
+            return;
+        }
     }
 }
 

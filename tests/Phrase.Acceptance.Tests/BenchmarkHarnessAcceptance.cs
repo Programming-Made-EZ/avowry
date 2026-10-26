@@ -298,9 +298,10 @@ public class BenchmarkHarnessAcceptance
         var (exitCode, stdout, stderr) = await RunBenchmark(
             suiteDirectory, "slow-v1", modelCommand, "--timeout-ms", "100");
 
-        // Then it records the timeout and returns success so another model can run
+        // Then it records the timeout, cleans up without crashing, and returns success so another model can run
         Assert.True(exitCode == 0, stdout + stderr);
         Assert.Contains("slow-v1: unavailable", stdout);
+        Assert.DoesNotContain("IOException", stderr);
         using var result = await ReadModelResult(suiteDirectory, "slow-v1");
         Assert.Equal("unavailable", result.RootElement.GetProperty("status").GetString());
         Assert.Contains("timed out", result.RootElement.GetProperty("error").GetString());
