@@ -2,10 +2,26 @@
 
 Items raised mid-card, to be taken at the next retro. Newest first.
 
+## Dispatch proposals for the process retro (raw input, 2026-10-26); they compete for the ONE pick
+
+Evidence is from Dispatch watching from outside. Under Steve's direction the process retro is SHORT: the flow-numbers table plus ONE pick; the rest stay seeds.
+Dispatch expects P1 and P2 to matter most for throughput.
+
+- **P1. No turn ends without the next action already running.** Every report ends with a launched background job (with its expected completion) or the next step started.
+  Hypothesis: nudges from Dispatch drop to 0. Metric: idle gaps longer than 30 minutes with no job running. (Evidence: the facilitator reported twice and went idle.)
+- **P2. Fit the run shape to the task.** Classify each card's slices as code, data or long-running. Long or data steps become a scripted job run by the harness outside driver
+  turns, with a driver writing and reviewing the script. Metric: runs that end "cap hit, not done". (Evidence: four runs on the benchmark fix hit the 3-cycle cap because one
+  four-model run outlasts a driver turn.)
+- **P3. Make facilitator takeovers visible.** Log work the facilitator does itself as TAKEOVER with a reason, so the rotation share is measurable and the cause is fixed, not
+  normalized. Metric: facilitator share of commits. (Interim data: 84% of code lines.)
+- **P4. Auto-fresh on card change.** Start fresh automatically when the card file's hash changed since its working log was seeded (or warn). It cost three starts on the dashboard card.
+- **P5. Write reports for the reader.** One plain-English "what happened / what's next" line at the top of each MOB.md update, fewer internal labels (rows, Done-when, D11, cycle
+  numbers). Partly covered by Steve's headline-number rule (`Usable v1: X of 6 criteria · next card: <title>`).
+
 ## Process retro approved by Steve (2026-10-26): scope, data and how it will be run
 
 - **When:** the next retro, after "live mob dashboard (036)" is Done. **Focus:** the mob's own working process. Evidence-based.
-- **Open with flow metrics** for every card done so far (resolver, hardening, benchmark v0, benchmark fix, dashboard), from git and the
+- **(Revised 2026-10-26, Steve: the process retro is SHORT: the flow-numbers table plus ONE pick; the rest are seeds.)** Open with flow metrics for every card done so far (resolver, hardening, benchmark v0, benchmark fix, dashboard), from git and the
   working logs, using `flow_metrics.py` in mob-defaults (tests first): runs and restarts, reopenings, cycles, elapsed and idle time, estimated
   tokens, turns by seat, cycle-cap stops and ready-check stops, who drove, and the facilitator's share of the work by area. This is the process baseline.
 - **Interim numbers (036 still in progress, 2026-10-26):** 001 resolver: 5 runs, 1 reopening, about 1.0M est. tokens, 105 h idle between runs (waiting for the
