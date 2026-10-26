@@ -33,22 +33,40 @@ var task = suite.Tasks.Single();
 var prompt = File.ReadAllText(Path.Combine(suiteDirectory, task.Prompt));
 var scratchDirectory = Path.Combine(Path.GetTempPath(), "phrase-bench", Guid.NewGuid().ToString("N"));
 Directory.CreateDirectory(scratchDirectory);
+const int maximumAttempts = 3;
 
 try
 {
-    using var process = StartModel(modelCommand, scratchDirectory);
-    await process.StandardInput.WriteAsync(prompt);
-    process.StandardInput.Close();
-    var output = await process.StandardOutput.ReadToEndAsync();
-    var error = await process.StandardError.ReadToEndAsync();
-    await process.WaitForExitAsync();
-    if (process.ExitCode != 0)
-        throw new InvalidOperationException($"Model '{model}' exited {process.ExitCode}: {error}");
+    var attemptPrompt = prompt;
+    var attempts = 0;
+    var tokensIn = 0;
+    var tokensOut = 0;
+    var diagnostics = new List<string>();
+    BenchmarkScore score;
+    do
+    {
+        attempts++;
+        using var process = StartModel(modelCommand, scratchDirectory);
+        await process.StandardInput.WriteAsync(attemptPrompt);
+        process.StandardInput.Close();
+        var output = await process.StandardOutput.ReadToEndAsync();
+        var error = await process.StandardError.ReadToEndAsync();
+        await process.WaitForExitAsync();
+        if (process.ExitCode != 0)
+            throw new InvalidOperationException($"Model '{model}' exited {process.ExitCode}: {error}");
 
-    var score = Score(output);
+        tokensIn += EstimateTokens(attemptPrompt);
+        tokensOut += EstimateTokens(output);
+        score = Score(output);
+        diagnostics.AddRange(score.Diagnostics);
+        if (!score.Passed)
+            attemptPrompt = AddDiagnostics(prompt, score.Diagnostics);
+    }
+    while (!score.Passed && attempts < maximumAttempts);
+
     var result = new BenchmarkResult(
-        model, task.Id, score.Passed, 1, EstimateTokens(prompt), EstimateTokens(output),
-        "estimated", score.Diagnostics, false, Hash(prompt));
+        model, task.Id, score.Passed, attempts, tokensIn, tokensOut,
+        "estimated", diagnostics, false, Hash(prompt));
 
     var resultsDirectory = Path.Combine(suiteDirectory, "results");
     Directory.CreateDirectory(resultsDirectory);
@@ -118,6 +136,8 @@ static BenchmarkScore Score(string source)
 
 static int EstimateTokens(string text) => Math.Max(1, (int)Math.Ceiling(text.Length / 4d));
 static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text))).ToLowerInvariant();
+static string AddDiagnostics(string prompt, IReadOnlyList<string> diagnostics) =>
+    $"{prompt}{Environment.NewLine}{Environment.NewLine}Compiler diagnostics:{Environment.NewLine}{string.Join(Environment.NewLine, diagnostics)}";
 
 static class Serialization
 {
