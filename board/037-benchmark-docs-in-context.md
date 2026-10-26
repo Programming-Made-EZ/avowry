@@ -1,0 +1,25 @@
+# Benchmark: docs in the prompt, and cold runs
+
+- **Status:** Ready, 3rd in Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Type:** bug (exempt from the hypothesis rule); a benchmark-suite change, so it needs its own Decider and is never bundled with a feature it measures
+- **Milestone:** Usable v1 (plumbing: every hypothesis card needs a baseline that measures what it changes); feeds M3 'LLM-fluent' and the bootstrap-phase exit criteria
+- **Source:** Facilitator's analysis of the stored baseline (card 032), 2026-10-26, Decider D11. Two validity gaps: (1) the benchmark prompts contain no grammar or docs (for example `bench/tasks/001-write-greeting/prompt.md` says only 'Write a valid Phrase module...'), so the documentation cards (013, 014, 019) could not move this metric; (2) the runs are not cold: agy passes 7 of 8 zero-shot tasks on a language it should not know, which suggests its CLI keeps memory or project context of earlier Phrase sessions, so the baseline may include what the mob itself taught the models.
+- **Story:** As the mob, I want the benchmark to give each model the documentation a new user gets, in a fresh session with no memory of earlier work, so that the baseline measures what an LLM does with our docs and the documentation cards can move it.
+- **Acceptance criteria (ZOMBIES):**
+  - Zero: Given the existing zero-shot rows in `bench/results/history.jsonl` (stored 2026-10-26), When the suite changes, Then they are kept and labeled `mode: zero-shot`, never deleted or relabeled as the new baseline
+  - One: Given one task, When a model is run in docs-in-context mode, Then its prompt includes `docs/GRAMMAR.md` and the `orders.phrase` example verbatim, and the result records `mode: docs-in-context`, the docs hash and the prompt hash
+  - Many: Given the full development suite and all four models, When the baseline is run, Then every model has completed rows, at most 10% are `unavailable`, and the noise floor is reported
+  - Boundaries (cold runs): Given each model CLI, When a run starts, Then it uses a fresh session with no persisted memory or project context and an empty working directory, using that CLI's own flags for it, and the flags are recorded in the result; a run that cannot be made cold is labeled `warm` and not counted in the baseline
+  - Interface: Given a docs change (cards 013, 014, 019), When the benchmark is re-run, Then the docs hash differs and the result is comparable with the stored baseline row for the same task and model
+  - Exceptions: Given a prompt that exceeds a model's context or turn limit, When run, Then the row is recorded `unavailable` with the reason, not scored as a language failure
+- **Harness defect found by the second sign-off (Codex):** `CreateReplyHead` in `tools/Phrase.Bench/Program.cs` cuts the reply to 200 characters and only then scrubs, so replacing a path with `[path]` could push a head over 200 (three stored rows did), and it does not mask `~\...` paths (a Copilot row kept `~\AppData\Local\Temp\...`). The three stored rows were re-scrubbed by hand. Fix: scrub first, then cut to 200, and mask `~`-relative and `AppData` paths; add a test with a `~\AppData\Local\Temp\phrase-bench` reply.
+  - Evidence for the cold-run criterion: two stored Copilot rows begin with its tool log ('List directory', 'Search (glob)') and show Copilot searching the filesystem for existing Phrase examples, so agentic CLIs read their surroundings; the empty working directory and, where a CLI offers it, restricted tools are part of what 'cold' means.
+- **Goodhart guard:** the docs given are the real, unedited docs; no hints are added to help a model pass. The holdout stays untouched. The change to the suite goes through its own Decider with a note in MOB.md, and is not bundled with any card whose hypothesis it measures.
+
+## Task force
+
+Assembled at pull time by the facilitator (a Decider proposal; see `TEAM_WORKING_AGREEMENT.md`).
+
+## Done when
+
+The facilitator writes concrete, red-first commands at pull time. Before the run starts, one seat tries to break each check (write a way to satisfy it without doing the work) and the checks are tightened until it cannot.

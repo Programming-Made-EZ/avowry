@@ -1,6 +1,6 @@
 # Benchmark baseline is invalid: fix the harness and store a trustworthy baseline
 
-- **Status:** Reopened twice (2026-10-26): whole-team sign-off, then the facilitator's check of the second run (see below)
+- **Status:** Done 2026-10-26 (cfb1952; Decider D11, after three reopenings)
 - **Type:** bug (exempt from the hypothesis rule); the first card run under experiment E1, true mobbing
 - **Milestone:** Usable v1 (plumbing: every hypothesis card needs a trustworthy baseline); gates milestone M2 'Measured'
 - **Source:** Facilitator's check of card 016's stored results, 2026-10-25. Decider D5.

@@ -58,3 +58,11 @@ they would be compared with is not established yet. Under the bootstrap-phase ru
 closed**: it stays as the opt-in `--true-mobbing` flag, is not the default practice, and is re-evaluated after the baseline is
 established. Nothing from E1 is written into the TWA as a rule. A later trial needs a new hypothesis and a baseline that
 separates setup cost from steady-state cost.
+
+## Retro decision (2026-10-26, Decider D12: Codex Yes; Copilot Support-it; Grok Yes; agy Yes)
+
+E1 stays **open and opt-in** (see the bootstrap-phase note above). Not the default practice; nothing written into the TWA; the tooling
+stays behind `--true-mobbing` for high-risk increments; the numbers are early, setup-heavy data; re-evaluate after the baseline is
+established. Evidence that the weak link on card 032 was the Done-when and not the mode: after the pause, card 032 needed four
+standard-mode runs and three reopenings because its checks could be satisfied without proving the point. A final whole-team
+sign-off before a card's last ship is a recommendation, not a rule; on card 032 it caught two real defects.
