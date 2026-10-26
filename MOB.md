@@ -9,12 +9,11 @@
 
 - **Codex:** 44 turns (checkpoint x3, fix x6, green x5, ready x4, red x6, refactor x4, ship x2, slice x6, teamsignoff x8)
 - **Copilot:** 26 turns (checkpoint x13, directions x4, ready x2, teamsignoff x7)
-- **Grok:** 32 turns (directions x21, fix x2, red x2, teamsignoff x7)
+- **Grok:** 33 turns (directions x21, fix x2, red x2, teamsignoff x8)
 - **agy:** 22 turns (checkpoint x15, teamsignoff x7)
 
 ## Recent turns
 
-- Turn 107: Codex (architect, slice): CONFIRMED — This is a thin vertical bug-fix slice spanning model invocation, scoring, persisted results, and documentation through the benchmark CLI.
 - Turn 108: Grok (navigator, directions): gave 5 directions
 - Turn 109: Codex (driver, red): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs
 - Turn 110: Copilot (observer, checkpoint): signed off
@@ -25,13 +24,14 @@
 - Turn 115: agy (observer, checkpoint): signed off
 - Turn 116: Grok (navigator, directions): gave 6 directions
 - Turn 117: Codex (driver, refactor): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
-- Turn 118: Codex (member, teamsignoff): FLAG
-- Turn 119: Grok (member, teamsignoff): FLAG
+- Turn 118: Codex (member, teamsignoff): FLAG: bench/results/self-check/history.jsonl contains 24 newly appended duplicate self-check fixture rows and must not ship with this increment.
+- Turn 119: Grok (member, teamsignoff): FLAG: bench/results/self-check/history.jsonl adds 24 lines and all 24 duplicate existing self-check fixture rows, so that file must not ship with this increment.
 - Turn 120: Copilot (member, teamsignoff): signed off
-- Turn 121: agy (member, teamsignoff): FLAG
+- Turn 121: agy (member, teamsignoff): FLAG: bench/results/self-check/history.jsonl is dirty with 24 newly appended duplicate self-check-v1 fixture rows that must not be committed with this increment.
 - Turn 122: Grok (navigator, directions): gave 3 directions
 - Turn 123: Codex (driver, fix): changed tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
-- Turn 124: Codex (member, teamsignoff): FLAG
+- Turn 124: Codex (member, teamsignoff): FLAG: ProfileArguments passes the prompt file path as Copilot’s literal -p value, so Copilot receives a pathname instead of the task prompt.
+- Turn 125: Grok (member, teamsignoff): FLAG: copilot --help defines -p/--prompt as <text>, but return $" -p \"{promptPath}\" -s --allow-all-tools --trust-folder"; passes a temp pathname as that text.
 
 ## Flags, checks and decisions on this card
 
@@ -60,6 +60,6 @@
 
 ## What's next
 
-- Running. Latest: turn 124 by Codex (teamsignoff). Next: the next stage of the current cycle.
+- Running. Latest: turn 125 by Grok (teamsignoff). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 06:19 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 06:22 UTC. Summary only: no prompts, replies, code or secrets are published._
