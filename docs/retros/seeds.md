@@ -99,3 +99,7 @@ Tooling changes are authored by the rotation (Codex, Copilot, Grok, agy); the fa
   4. Check the decider result's violations/README and write-access fields, not only `integrity.ok`.
   5. Quoting: exercise the Windows quoting path (a Done-when and a proposal with spaces and quotes).
   6. Add a test for the `delete_guard` read-only fix; make scratch cleanup failure a FAIL, not a warning with exit 0.
+
+## Steve withdrew the course correction (2026-10-26)
+
+Steve: "perhaps I'm being too reactionary. I should let the mob decide its working process... it may have been taking a long time but it clearly had value if all models signed off." Reverted: the product-first mandate, ~20% process budget, balance wording, lighter Decider, mandatory headline and the Ready re-rank (phrase-lang `cb7e3c5`; template mob-defaults `9f21b73`, `dd7e45f`). The Decider is the default again. The dashboard time-box is withdrawn (card 036 finished anyway: Done, D13). P1 to P6, the defect ledger and the five whys above are **optional input** for the process retro, not directives; the team decides what to keep, including the non-author review rule for tooling and the hardened `smoke.py`. Unchanged: shipped work, safety guards, the sandboxed Decider runner, TFDD, trust ladder, bootstrap phase, escalation and safety carve-out, Goodhart guard, LLMs-as-customers.
