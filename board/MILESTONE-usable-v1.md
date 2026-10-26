@@ -49,27 +49,30 @@ Steve: "let me know when the language is actually usable to build an application
 | 29 | 017 Benchmark v1: score by running specs | Turns pass rate into real behavior; re-baselines | Steve (data-driven) |
 | 30 | 024 Pattern discovery (mine real code and LLM tasks) | Vocabulary grows by evidence; right after the benchmark can measure it | **Vision** (Steve) |
 | 31 | 027 Benchmark: catalogue tasks (LLM work removed, learnability) | Measures 'comprehensive' instead of counting it | **Vision** (Steve), Goodhart guard |
-| 32 | 020 Did-you-mean suggestions for failure codes and unknown names | Cheap compiler help for fix tasks; needs 017 to measure | **Model feedback** (Codex) |
-| 33 | 051 phrase build compiles one file into output projects (thin slice) | Bar 2's first command; split from 007 | Retro D18 |
-| 34 | 052 phrase build reports errors as file:line:col and names its target (thin slice) | Split from 007 | Retro D18 |
-| 35 | 023 Ordinary control flow: if/else and loops | Loops and if/else are ordinary; the demo app needs them | **Vision** (Steve) |
-| 36 | 033 Generic type parameters on phrases | 4/4 models: reusable keywords need `phrase<T>`; the base library cannot start without it. Decider D6 | **Model feedback** (all four) |
-| 37 | 034 Behavioral holes and spec test doubles | 4/4 models: retry, transaction and idempotent-execute need an action as input and scripted doubles. Decider D6 | **Model feedback** (all four) |
-| 38 | 025 Base library v0: ~12 seed keywords with C# adapter implementations | The library half of 'spec and library'; the demo app is written from it | **Vision** (Steve) |
-| 39 | 008 Close the language gaps the demo app exposes | Find what CRUD needs, via the Decider protocol and data | plan |
-| 40 | 015 Proposal: optional `when` line (Decider first, then measured) | Token saving; needs the benchmark | **Model feedback** (agy) |
-| 41 | 021 Proposal: consistent given/responds syntax (Decider first) | Language change; only with data | **Model feedback** (agy) |
-| 42 | 035 Proposal: parameterizable failure codes (Decider first) | Removes per-domain guard clones; changes the failure model. Decider D6 | **Model feedback** (agy, Copilot) |
-| 43 | 009 Demo app: Tasks API in .phrase | Bars 1, 3, 4 | plan |
-| 44 | 010 End-to-end over real HTTP | Bar 5 | plan |
-| 45 | 011 LLM-customer check | Bar 6 | plan |
-| 46 | 012 Usable v1 acceptance gate | Bars 1-6 in one test; CI gate; milestone report | plan |
-| 47 | 038 Dogfood: the mob status API in Phrase (second demo app, after the Usable v1 gate) | Steve: 'a good starter app'; Decider D16: Tasks stays the bar-1 app, this is a dogfood card after it; dashboard follow-ups are low urgency (30-minute digests cover visibility) | **Steve** (Decider D16) |
-| 48 | 026 Catalogue dedup linter | Counter-metric for vocabulary bloat; after Usable v1 | **Vision** (Steve), Goodhart guard |
-| 49 | 028 Second adapter spike (TypeScript) | Proves 'any implementation language'; after Usable v1 | **Vision** (Steve) |
-| 50 | 029 LLM-as-compiler with hash pinning | New targets without hand-written providers; after the spike | **Vision** (Steve) |
-| 51 | 030 Synthesize Phrase from existing code (spike) | FUTURE (M5): after Usable v1 and Vocabulary v1; needs the base library | **Vision** (Steve, ruling 1) |
-| 52 | 031 Human <-> LLM form converter (spike) | FUTURE (M6): pairs with 030; reading confirmed by Steve (two-way) | **Vision** (Steve, ruling 4) |
+| 32 | 060 Catalogue tasks for concurrent work and event publication (data; suite change, versioned) | Measures whether LLMs repeatedly produce these patterns; the keyword cards wait for it | **Steve**, Decider D21 |
+| 33 | 020 Did-you-mean suggestions for failure codes and unknown names | Cheap compiler help for fix tasks; needs 017 to measure | **Model feedback** (Codex) |
+| 34 | 051 phrase build compiles one file into output projects (thin slice) | Bar 2's first command; split from 007 | Retro D18 |
+| 35 | 052 phrase build reports errors as file:line:col and names its target (thin slice) | Split from 007 | Retro D18 |
+| 36 | 023 Ordinary control flow: if/else and loops | Loops and if/else are ordinary; the demo app needs them | **Vision** (Steve) |
+| 37 | 033 Generic type parameters on phrases | 4/4 models: reusable keywords need `phrase<T>`; the base library cannot start without it. Decider D6 | **Model feedback** (all four) |
+| 38 | 034 Behavioral holes and spec test doubles | 4/4 models: retry, transaction and idempotent-execute need an action as input and scripted doubles. Decider D6 | **Model feedback** (all four) |
+| 39 | 059 ADR: deterministic asynchronous and event semantics (decision; not on the Usable v1 path) | Steve: async and events may be needed; effects plus keywords, not grammar; evidence first (D21) | **Steve**, Decider D21 |
+| 40 | 025 Base library v0: ~12 seed keywords with C# adapter implementations | The library half of 'spec and library'; the demo app is written from it | **Vision** (Steve) |
+| 41 | 008 Close the language gaps the demo app exposes | Find what CRUD needs, via the Decider protocol and data | plan |
+| 42 | 015 Proposal: optional `when` line (Decider first, then measured) | Token saving; needs the benchmark | **Model feedback** (agy) |
+| 43 | 021 Proposal: consistent given/responds syntax (Decider first) | Language change; only with data | **Model feedback** (agy) |
+| 44 | 035 Proposal: parameterizable failure codes (Decider first) | Removes per-domain guard clones; changes the failure model. Decider D6 | **Model feedback** (agy, Copilot) |
+| 45 | 009 Demo app: Tasks API in .phrase | Bars 1, 3, 4 | plan |
+| 46 | 010 End-to-end over real HTTP | Bar 5 | plan |
+| 47 | 011 LLM-customer check | Bar 6 | plan |
+| 48 | 012 Usable v1 acceptance gate | Bars 1-6 in one test; CI gate; milestone report | plan |
+| 49 | 038 Dogfood: the mob status API in Phrase (second demo app, after the Usable v1 gate) | Steve: 'a good starter app'; Decider D16: Tasks stays the bar-1 app, this is a dogfood card after it; dashboard follow-ups are low urgency (30-minute digests cover visibility) | **Steve** (Decider D16) |
+| 50 | 026 Catalogue dedup linter | Counter-metric for vocabulary bloat; after Usable v1 | **Vision** (Steve), Goodhart guard |
+| 51 | 061 Spike: a scripted scheduler, fake clock and event capture make an async spec deterministic | Proves the spec model before any keyword exists | **Steve**, Decider D21 |
+| 52 | 028 Second adapter spike (TypeScript) | Proves 'any implementation language'; after Usable v1 | **Vision** (Steve) |
+| 53 | 029 LLM-as-compiler with hash pinning | New targets without hand-written providers; after the spike | **Vision** (Steve) |
+| 54 | 030 Synthesize Phrase from existing code (spike) | FUTURE (M5): after Usable v1 and Vocabulary v1; needs the base library | **Vision** (Steve, ruling 1) |
+| 55 | 031 Human <-> LLM form converter (spike) | FUTURE (M6): pairs with 030; reading confirmed by Steve (two-way) | **Vision** (Steve, ruling 4) |
 
 Ranks are the PM's and move at each retro; ideas are triaged by expected metric impact. Milestones are in `board/MILESTONES.md`.
 
