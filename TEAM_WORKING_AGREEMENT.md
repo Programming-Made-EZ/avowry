@@ -135,6 +135,23 @@ ideas work. ideally they should be data driven."
   Keep the change if the hypothesis held. Revise or revert if it did not, and record why in MOB.md.
   Decider disputes are settled with data where possible. Retro ideas are triaged by expected metric impact.
 
+### Goodhart guard (standing rule, Steve, 2026-10-25)
+
+Steve: "just keep Goodhart's Law in mind." Metrics inform decisions but are never the goal: a measure that
+becomes a target stops being a good measure.
+
+- **Balanced metrics.** Never a single one. Pair each target metric with a counter-metric (tokens saved vs. pass rate and readability; pass rate vs. spec coverage and diagnostic quality).
+- **Holdout.** Keep part of the benchmark unused while developing a feature, and evaluate on it before keeping a
+  change. Rotate or refresh tasks periodically so nobody tunes the project to the suite.
+- **The suite is versioned.** Changing tasks, scoring or prompts needs a Decider run and a MOB.md note, and is
+  never bundled with the feature it measures.
+- **No special-casing the benchmark.** No grammar or compiler hack that only helps benchmark tasks. Reviewers check this explicitly.
+- **Qualitative check.** Every metric win also needs a model to read the change cold and explain it, and the change
+  is sanity-checked against Phrase's principles ("the code is the context", specs are truth).
+- **Red flag, not a win.** At retro, a metric improving while its counter-metrics or holdout degrade is treated as
+  metric gaming.
+- **Same for flow metrics and trust-ladder evidence:** signals for retro discussion, never quotas.
+
 ### Driver rotation
 
 - **Rotation order: Codex → Copilot → Grok → agy; Claude is last resort.** Claude drives or reviews only

@@ -10,6 +10,7 @@
   - Many: Given the suite `bench/suite.json` (version 1) with at least 12 tasks across four kinds: write, read-and-explain, modify, fix-a-failing-spec, When run for Codex, Copilot, Grok and agy, Then each model gets the identical prompt and the same pinned model id, recorded in the result
   - Boundaries: Given a model that is unavailable or times out, When run, Then the result records `unavailable` with the error and the other models still run; one model's failure never aborts the suite
   - Interface: Given a task, When scored, Then v0 scores parse + resolve success and diagnostics using the real compiler (spec execution arrives with card 017); an attempt loop gives the model the diagnostics and up to 2 retries
+  - Boundaries (Goodhart guard): Given `bench/suite.json`, When tasks are listed, Then a fixed holdout subset (at least a quarter of the tasks) is marked `holdout`, is excluded from development runs, and runs only as the keep-or-revert check; each reported target metric is paired with its counter-metric
   - Exceptions: Given the same suite and model run twice, When compared, Then the harness reports the noise (difference per metric) so later hypotheses can be judged against it
 
 ## Context
