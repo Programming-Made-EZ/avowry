@@ -65,7 +65,7 @@ static async Task<int> SelfCheck(IReadOnlyDictionary<string, string> options)
         foreach (var task in suite.Tasks)
         {
             await RunTask(task, suiteDirectory, SelfCheckModel, SelfCheckModelCommand, TimeSpan.FromSeconds(5), MaximumAttempts);
-            var resultPath = Path.Combine(suiteDirectory, "results", $"{SelfCheckModel}.json");
+            var resultPath = Path.Combine(suiteDirectory, "results", "self-check", $"{SelfCheckModel}.json");
             var result = JsonSerializer.Deserialize<BenchmarkResult>(File.ReadAllText(resultPath), Serialization.Options);
             if (result is null || !HasValidSchema(result))
             {
@@ -187,6 +187,7 @@ static async Task<string> RunModel(
     if (command == SelfCheckModelCommand)
         return "module SelfCheck\n\nphrase \"self check\"\n  native csharp\n    return;\n";
 
+    command += ProfileArguments(model, workingDirectory, prompt);
     using var process = StartModel(command, workingDirectory);
     await process.StandardInput.WriteAsync(prompt);
     process.StandardInput.Close();
@@ -208,6 +209,24 @@ static async Task<string> RunModel(
     if (process.ExitCode != 0)
         throw new InvalidOperationException($"Model '{model}' exited {process.ExitCode}: {error}");
     return await outputTask;
+}
+
+static string ProfileArguments(string model, string workingDirectory, string prompt)
+{
+    var profile = model.Split('-', 2)[0];
+    if (profile.Equals("codex", StringComparison.Ordinal))
+        return " exec --skip-git-repo-check";
+    if (profile.Equals("grok", StringComparison.Ordinal))
+    {
+        var promptPath = Path.Combine(workingDirectory, "prompt.txt");
+        File.WriteAllText(promptPath, prompt);
+        return $" --max-turns 1 --prompt-file \"{promptPath}\"";
+    }
+    if (profile.Equals("copilot", StringComparison.Ordinal))
+        return " -p -s --allow-all-tools --trust-folder";
+    if (profile.Equals("agy", StringComparison.Ordinal))
+        return " --print";
+    return "";
 }
 
 static BenchmarkScore Score(string source)
@@ -276,7 +295,9 @@ static string AddDiagnostics(string prompt, IReadOnlyList<string> diagnostics) =
 
 static void PersistResult(string suiteDirectory, string model, BenchmarkResult result)
 {
-    var resultsDirectory = Path.Combine(suiteDirectory, "results");
+    var resultsDirectory = model == SelfCheckModel
+        ? Path.Combine(suiteDirectory, "results", "self-check")
+        : Path.Combine(suiteDirectory, "results");
     Directory.CreateDirectory(resultsDirectory);
     var serializedResult = JsonSerializer.Serialize(result, Serialization.Options);
     File.WriteAllText(Path.Combine(resultsDirectory, $"{model}.json"), serializedResult);

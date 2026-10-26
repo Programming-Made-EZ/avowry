@@ -79,6 +79,50 @@ public class BenchmarkHarnessAcceptance
     }
 
     [Fact]
+    public async Task run_invokes_each_profile_once_headless_with_its_working_flags()
+    {
+        // Given each supported model profile and a shim that records its arguments
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var expectedTokens = new Dictionary<string, string[]>
+        {
+            ["codex-probe"] = ["exec", "--skip-git-repo-check"],
+            ["grok-probe"] = ["--max-turns", "1", "--prompt-file"],
+            ["copilot-probe"] = ["-p", "-s", "--allow-all-tools", "--trust-folder"],
+            ["agy-probe"] = ["--print"],
+        };
+        var missingTokens = new List<string>();
+        var recordedLines = new List<string>();
+
+        foreach (var (model, requiredTokens) in expectedTokens)
+        {
+            var argvLog = Path.Combine(workspace.Root, $"{model}-argv.log");
+            await File.WriteAllTextAsync(argvLog, string.Empty);
+            var modelCommand = await WriteArgumentRecordingShim(workspace.Root, model, argvLog);
+
+            // When the benchmark CLI runs one task through the profile
+            var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, model, modelCommand);
+
+            // Then it invokes the shim once, headlessly, and completes the result
+            Assert.True(exitCode == 0, stdout + stderr);
+            Assert.Contains($"{model}: passed", stdout);
+            var argvLine = Assert.Single(await File.ReadAllLinesAsync(argvLog));
+            Assert.DoesNotContain("Greeting", argvLine);
+            recordedLines.Add($"{model}: {argvLine}");
+            var actualTokens = argvLine.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
+            missingTokens.AddRange(requiredTokens
+                .Where(required => !actualTokens.Contains(required, StringComparer.Ordinal))
+                .Select(required => $"{model}: {required}"));
+            using var result = await ReadModelResult(suiteDirectory, model);
+            Assert.Equal("completed", result.RootElement.GetProperty("status").GetString());
+        }
+
+        Assert.True(
+            missingTokens.Count == 0,
+            $"Missing profile tokens: {string.Join(", ", missingTokens)}{Environment.NewLine}Recorded: {string.Join(Environment.NewLine, recordedLines)}");
+    }
+
+    [Fact]
     public async Task run_scores_phrase_wrapped_in_narration_and_a_markdown_fence()
     {
         // Given a one-task suite and model output containing narrated, fenced Phrase
@@ -301,7 +345,7 @@ public class BenchmarkHarnessAcceptance
         Assert.Contains("noise: pass_rate=0 points", stdout);
         using var suite = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(suiteDirectory, "suite.json")));
         var taskCount = suite.RootElement.GetProperty("tasks").GetArrayLength();
-        var rows = await File.ReadAllLinesAsync(Path.Combine(suiteDirectory, "results", "history.jsonl"));
+        var rows = await File.ReadAllLinesAsync(Path.Combine(suiteDirectory, "results", "self-check", "history.jsonl"));
         Assert.Equal(taskCount * 2, rows.Length);
         foreach (var row in rows)
         {
@@ -309,6 +353,70 @@ public class BenchmarkHarnessAcceptance
             foreach (var property in new[] { "model", "task", "passed", "attempts", "tokens_in", "tokens_out", "diagnostics", "misread" })
                 Assert.True(result.RootElement.TryGetProperty(property, out _), $"Missing result property '{property}'.");
         }
+    }
+
+    [Fact]
+    public async Task self_check_writes_only_under_self_check_and_leaves_baseline_history_untouched()
+    {
+        // Given an isolated copy of the full benchmark suite with existing baseline history
+        using var workspace = TempWorkspace.Create();
+        var sourceSuiteDirectory = Path.GetDirectoryName(RepoPaths.Find("bench", "suite.json"))!;
+        var suiteDirectory = Path.Combine(workspace.Root, "bench");
+        Directory.CreateDirectory(suiteDirectory);
+        File.Copy(Path.Combine(sourceSuiteDirectory, "suite.json"), Path.Combine(suiteDirectory, "suite.json"));
+        CopyDirectory(Path.Combine(sourceSuiteDirectory, "tasks"), Path.Combine(suiteDirectory, "tasks"));
+        var resultsDirectory = Path.Combine(suiteDirectory, "results");
+        Directory.CreateDirectory(resultsDirectory);
+        var seededHistory = "{\"model\":\"codex-baseline\",\"task\":\"001-write-greeting\",\"status\":\"completed\"}" + Environment.NewLine;
+        await File.WriteAllTextAsync(Path.Combine(resultsDirectory, "history.jsonl"), seededHistory);
+
+        // When the deterministic self-check runs
+        var (exitCode, stdout, stderr) = await RunSelfCheck(suiteDirectory);
+
+        // Then baseline history is untouched and self-check results stay in their own directory
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Equal(seededHistory, await File.ReadAllTextAsync(Path.Combine(resultsDirectory, "history.jsonl")));
+        var selfCheckDirectory = Path.Combine(resultsDirectory, "self-check");
+        var selfCheckHistory = Path.Combine(selfCheckDirectory, "history.jsonl");
+        Assert.True(File.Exists(selfCheckHistory));
+        var rows = await File.ReadAllLinesAsync(selfCheckHistory);
+        Assert.NotEmpty(rows);
+        foreach (var row in rows)
+        {
+            using var result = JsonDocument.Parse(row);
+            Assert.StartsWith("self-check", result.RootElement.GetProperty("model").GetString());
+        }
+        Assert.True(File.Exists(Path.Combine(selfCheckDirectory, "self-check-v1.json")));
+    }
+
+    private static async Task<string> WriteArgumentRecordingShim(string workspaceRoot, string model, string argvLog)
+    {
+        var shimPath = Path.Combine(workspaceRoot, OperatingSystem.IsWindows() ? $"{model}.cmd" : $"{model}.sh");
+        var shim = OperatingSystem.IsWindows()
+            ? $"""
+                @echo off
+                more > nul
+                echo(%*>>"{argvLog}"
+                echo module Greeting
+                echo.
+                echo phrase "say hello"
+                echo   native csharp
+                echo     return;
+                """
+            : $"""
+                #!/bin/sh
+                cat > /dev/null
+                printf '%s\n' "$*" >> '{argvLog}'
+                cat <<'PHRASE'
+                module Greeting
+
+                phrase "say hello"
+                  native csharp
+                    return;
+                PHRASE
+                """;
+        await File.WriteAllTextAsync(shimPath, shim);
+        return OperatingSystem.IsWindows() ? shimPath : $"sh {shimPath}";
     }
 
     private static string PrintFileCommand(string path) =>
