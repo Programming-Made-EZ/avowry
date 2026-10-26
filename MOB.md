@@ -1,6 +1,6 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 4)
+**Project:** Phrase &nbsp;|&nbsp; **State:** running
 **Card in progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
 
 **Latest cycle:** 1 (driver Codex; navigator Grok; observers Copilot, agy). The full working log is private; this page is a summary.
@@ -62,6 +62,6 @@
 
 ## What's next
 
-- Stopped on a flag nobody could clear. Next: fix or take it to a Decider, then run the card again.
+- Running. Latest: turn 135 by Copilot (checkpoint). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 06:29 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 06:35 UTC. Summary only: no prompts, replies, code or secrets are published._
