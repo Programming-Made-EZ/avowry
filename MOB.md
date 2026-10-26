@@ -1,18 +1,17 @@
-**Usable v1: 0 of 6 criteria · next card: Spec resolution defects from the independent review (code only) (018)**
+**Usable v1: 0 of 6 criteria · next card: Docs: one diagnostics table, not two (docs only, split from 018) (053)**
 
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** running
+**Project:** Phrase &nbsp;|&nbsp; **State:** finished
 **Card in progress:** Spec resolution defects from the independent review (code only) (018)
 
 ## Who did what
 
-- **Codex:** 26 turns (advance x3, green x6, ready x2, refactor x6, ship x6, signoff x1, slice x2)
+- **Codex:** 27 turns (advance x4, green x6, ready x2, refactor x6, ship x6, signoff x1, slice x2)
 - **Copilot:** 6 turns (red x3, signoff x3)
 
 ## Recent turns
 
-- Turn 14: Codex (product-manager, advance): Still In Progress — delivered fixes for PH334 endpoint naming, PH332 nested paths, duplicate PH331 reporting, and unknown-hole PH331 wording; all…
 - Turn 14: Codex (product-manager, advance): CONFIRMED — This is a thin vertical bug-fix slice: Phrase source enters the public Resolver.Resolve(string) boundary and returns user-visible…
 - Turn 15: Copilot (qa-engineer, red): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
 - Turn 16: Codex (backend-dev, green): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
@@ -30,6 +29,7 @@
 - Turn 28: Codex (architect, slice): CONFIRMED — This remains a thin vertical bug-fix slice through Phrase source to user-visible diagnostics at the public Resolver.Resolve(string)…
 - Turn 29: Copilot (qa-engineer, red): no file changes
 - Turn 30: Copilot (qa-engineer, signoff): QA sign-off recorded in MOB.md.
+- Turn 31: Codex (product-manager, advance): Delivered and shipped spec-resolution fixes: PH334 uses the real endpoint name, PH332 rejects nested paths in spec data, duplicate-hole PH331 appears…
 
 ## Flags, checks and decisions on this card
 
@@ -55,6 +55,6 @@
 
 ## What's next
 
-- Running. Latest: turn 30 by Copilot (signoff). Next: the next stage of the current cycle.
+- The card is done. Next: its retro, then the next card from the board.
 
 _Updated 2026-10-26 21:25 UTC. Summary only: no prompts, replies, code or secrets are published._
