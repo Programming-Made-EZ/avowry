@@ -1,20 +1,17 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** running
+**Project:** Phrase &nbsp;|&nbsp; **State:** finished
 **Card in progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
 
 ## Who did what
 
-- **Codex:** 62 turns (checkpoint x3, fix x8, green x8, ready x5, red x8, refactor x8, ship x5, slice x9, teamsignoff x8)
-- **Copilot:** 34 turns (checkpoint x17, directions x4, green x1, ready x4, red x1, teamsignoff x7)
+- **Codex:** 63 turns (checkpoint x3, fix x8, green x8, ready x5, red x8, refactor x8, ship x6, slice x9, teamsignoff x8)
+- **Copilot:** 36 turns (advance x1, checkpoint x17, directions x4, green x1, ready x4, red x1, signoff x1, teamsignoff x7)
 - **Grok:** 37 turns (directions x25, fix x2, red x2, teamsignoff x8)
 - **agy:** 26 turns (checkpoint x18, teamsignoff x8)
 
 ## Recent turns
 
-- Turn 142: Grok (navigator, directions): gave 4 directions
-- Turn 143: Codex (driver, fix): changed tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs
-- Turn 144: Copilot (observer, checkpoint): FLAG: criterion not met: python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]…
 - Turn 145: agy (observer, checkpoint): signed off
 - Turn 146: Copilot (product-manager, ready): READY — The card has a valid Connextra story, complete Given/When/Then ZOMBIES acceptance criteria, correct rank 3, and the referenced guidelines and…
 - Turn 147: Codex (architect, slice): CONFIRMED — This remains a thin vertical bug-fix slice: real model CLI invocation flows through extraction, scoring, result persistence, and baseline…
@@ -30,6 +27,9 @@
 - Turn 157: Codex (devops-engineer, ship): Stopped: CI failed.
 - Turn 158: Copilot (backend-dev, green): changed bench/results/agy-gemini-4-argon-medium.json, bench/results/codex-gpt-5.6-sol.json, bench/results/grok-4.7.json, bench/results/history.jsonl, bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs
 - Turn 159: Codex (backend-dev, refactor): changed bench/results/agy-gemini-4-argon-medium.json, bench/results/codex-gpt-5.6-sol.json, bench/results/grok-4.7.json, bench/results/history.jsonl, bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs
+- Turn 160: Codex (devops-engineer, ship): Shipped successfully.
+- Turn 161: Copilot (qa-engineer, signoff): SIGN-OFF — The red-to-green path was proven: the fenced/narrated Phrase acceptance test failed first, the fix was then validated green, and the…
+- Turn 162: Copilot (product-manager, advance): DONE — Delivered the trustworthy four-model benchmark baseline: fenced/narrated Phrase extraction is scored correctly, self-check rows are isolated…
 
 ## Flags, checks and decisions on this card
 
@@ -53,13 +53,13 @@
 
 ## Latest commits
 
+- 08ed7bb Store trustworthy four-model benchmark baseline
+- 140ec7a usable-v1 CI job: green while pending ('not reached: X of 6 criteria'), red only on a ratcheted regression
 - e0f1dfa Handle locked benchmark scratch cleanup
 - e00a6d9 Document Phrase benchmark harness
-- 790ab41 Fix Copilot benchmark prompt argument
-- d8b9444 Decider D8: pause E1 true mobbing on card 032 after 8 runs; E1 data recorded; 032 task force tagged for standard
 
 ## What's next
 
-- Running. Latest: turn 159 by Codex (refactor). Next: the next stage of the current cycle.
+- The card is done. Next: its retro, then the next card from the board.
 
-_Updated 2026-10-26 08:15 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 08:23 UTC. Summary only: no prompts, replies, code or secrets are published._
