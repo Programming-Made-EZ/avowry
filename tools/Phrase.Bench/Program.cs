@@ -33,52 +33,69 @@ suitePath = Path.GetFullPath(suitePath);
 var suiteDirectory = Path.GetDirectoryName(suitePath)!;
 var suite = JsonSerializer.Deserialize<Suite>(File.ReadAllText(suitePath), Serialization.Options)
     ?? throw new InvalidDataException($"Could not read suite '{suitePath}'.");
-var task = suite.Tasks.Single();
-var prompt = File.ReadAllText(Path.Combine(suiteDirectory, task.Prompt));
-var scratchDirectory = Path.Combine(Path.GetTempPath(), "phrase-bench", Guid.NewGuid().ToString("N"));
-Directory.CreateDirectory(scratchDirectory);
 const int maximumAttempts = 3;
+var exitCode = 0;
 
-try
+foreach (var task in suite.Tasks.Where(task => !task.Holdout))
 {
-    var attemptPrompt = prompt;
-    var attempts = 0;
-    var tokensIn = 0;
-    var tokensOut = 0;
-    var diagnostics = new List<string>();
-    BenchmarkScore score;
-    do
+    var passed = await RunTask(task, suiteDirectory, model, modelCommand, timeout, maximumAttempts);
+    if (!passed)
+        exitCode = 3;
+}
+
+return exitCode;
+
+static async Task<bool> RunTask(
+    BenchmarkTask task,
+    string suiteDirectory,
+    string model,
+    string modelCommand,
+    TimeSpan timeout,
+    int maximumAttempts)
+{
+    var prompt = File.ReadAllText(Path.Combine(suiteDirectory, task.Prompt));
+    var scratchDirectory = Path.Combine(Path.GetTempPath(), "phrase-bench", Guid.NewGuid().ToString("N"));
+    Directory.CreateDirectory(scratchDirectory);
+
+    try
     {
-        attempts++;
-        var output = await RunModel(model, modelCommand, scratchDirectory, attemptPrompt, timeout);
+        var attemptPrompt = prompt;
+        var attempts = 0;
+        var tokensIn = 0;
+        var tokensOut = 0;
+        var diagnostics = new List<string>();
+        BenchmarkScore score;
+        do
+        {
+            attempts++;
+            var output = await RunModel(model, modelCommand, scratchDirectory, attemptPrompt, timeout);
+            tokensIn += EstimateTokens(attemptPrompt);
+            tokensOut += EstimateTokens(output);
+            score = Score(output);
+            diagnostics.AddRange(score.Diagnostics);
+            if (!score.Passed)
+                attemptPrompt = AddDiagnostics(prompt, score.Diagnostics);
+        }
+        while (!score.Passed && attempts < maximumAttempts);
 
-        tokensIn += EstimateTokens(attemptPrompt);
-        tokensOut += EstimateTokens(output);
-        score = Score(output);
-        diagnostics.AddRange(score.Diagnostics);
-        if (!score.Passed)
-            attemptPrompt = AddDiagnostics(prompt, score.Diagnostics);
+        var result = new BenchmarkResult(
+            model, task.Id, score.Passed, attempts, tokensIn, tokensOut,
+            "estimated", diagnostics, false, Hash(prompt));
+        PersistResult(suiteDirectory, model, result);
+        Console.WriteLine($"{model}: {(score.Passed ? "passed" : "failed")} {task.Id}");
+        return score.Passed;
     }
-    while (!score.Passed && attempts < maximumAttempts);
-
-    var result = new BenchmarkResult(
-        model, task.Id, score.Passed, attempts, tokensIn, tokensOut,
-        "estimated", diagnostics, false, Hash(prompt));
-    PersistResult(suiteDirectory, model, result);
-
-    Console.WriteLine($"{model}: {(score.Passed ? "passed" : "failed")} {task.Id}");
-    return score.Passed ? 0 : 3;
-}
-catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception or TimeoutException)
-{
-    var result = BenchmarkResult.Unavailable(model, task.Id, Hash(prompt), exception.Message);
-    PersistResult(suiteDirectory, model, result);
-    Console.WriteLine($"{model}: unavailable {task.Id}");
-    return 0;
-}
-finally
-{
-    Directory.Delete(scratchDirectory, recursive: true);
+    catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception or TimeoutException)
+    {
+        var result = BenchmarkResult.Unavailable(model, task.Id, Hash(prompt), exception.Message);
+        PersistResult(suiteDirectory, model, result);
+        Console.WriteLine($"{model}: unavailable {task.Id}");
+        return true;
+    }
+    finally
+    {
+        Directory.Delete(scratchDirectory, recursive: true);
+    }
 }
 
 static Dictionary<string, string> ParseOptions(string[] values)

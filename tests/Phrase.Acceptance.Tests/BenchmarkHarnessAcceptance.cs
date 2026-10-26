@@ -135,6 +135,64 @@ public class BenchmarkHarnessAcceptance
         Assert.Contains("timed out", result.RootElement.GetProperty("error").GetString());
     }
 
+    [Fact]
+    public async Task run_skips_holdout_tasks_in_default_development_mode()
+    {
+        // Given a suite with both regular and holdout tasks
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = Path.Combine(workspace.Root, "bench");
+        var developmentTaskDirectory = Path.Combine(suiteDirectory, "tasks", "001-write-greeting");
+        var holdoutTaskDirectory = Path.Combine(suiteDirectory, "tasks", "002-write-hello");
+        Directory.CreateDirectory(developmentTaskDirectory);
+        Directory.CreateDirectory(holdoutTaskDirectory);
+
+        await File.WriteAllTextAsync(Path.Combine(suiteDirectory, "suite.json"), """
+            {
+              "version": 1,
+              "tasks": [
+                {
+                  "id": "001-write-greeting",
+                  "kind": "write",
+                  "prompt": "tasks/001-write-greeting/prompt.md",
+                  "holdout": false
+                },
+                {
+                  "id": "002-write-hello",
+                  "kind": "write",
+                  "prompt": "tasks/002-write-hello/prompt.md",
+                  "holdout": true
+                }
+              ]
+            }
+            """);
+        await File.WriteAllTextAsync(
+            Path.Combine(developmentTaskDirectory, "prompt.md"),
+            "Write a valid Phrase module named `Greeting` containing a phrase that returns the text `hello`.");
+        await File.WriteAllTextAsync(
+            Path.Combine(holdoutTaskDirectory, "prompt.md"),
+            "Write a valid Phrase module named `Hello` containing a phrase that returns the text `world`.");
+
+        var modelOutput = Path.Combine(workspace.Root, "model-output.phrase");
+        await File.WriteAllTextAsync(modelOutput, """
+            module Greeting
+
+            phrase "say hello"
+              native csharp
+                return;
+            """);
+        var modelCommand = OperatingSystem.IsWindows()
+            ? $"more > nul && type \"{modelOutput}\""
+            : $"cat > /dev/null && cat \"{modelOutput}\"";
+
+        // When the benchmark CLI runs the default development slice
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "holdout-v1", modelCommand);
+
+        // Then only the non-holdout task is evaluated, leaving the holdout for keep-or-revert
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Contains("001-write-greeting", stdout);
+        Assert.DoesNotContain("002-write-hello", stdout);
+    }
+
     private static string CopySuiteTo(string workspaceRoot)
     {
         var suiteDirectory = Path.Combine(workspaceRoot, "bench");
