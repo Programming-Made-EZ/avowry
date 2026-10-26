@@ -156,6 +156,11 @@ independent review, and any reviewer objection becomes a Decider proposal.
    the next retro.
 6. **Keep it lean.** Votes are short and collected in parallel so the Decider does not drain the driver allotments.
 
+- **Run every Decider with the sandboxed runner** (`decider.py` in mob-defaults): each seat votes in its own throwaway clone of the
+  repo, never in the real working tree, with the CLI's read-only mode where one exists; every seat gets the same full prompt; votes are
+  parsed in one place; the real tree and HEAD are verified unchanged afterwards. (A voter once ran with write access in the real tree
+  and edited source files; "read-only" in the prompt is a promise, the sandbox is the mechanism.)
+
 **The task force is a Decider.** The initial task force is a Decider proposal from the facilitator or PM, so any seat
 can object to a missing or padded role. A role proposed mid-card needs a Decider too: the proposer states the role, its
 assignee and why it is needed; if it passes, the role is added to the card's `## Task force` with where it joined and
