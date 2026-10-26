@@ -1,6 +1,6 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 1)
+**Project:** Phrase &nbsp;|&nbsp; **State:** running
 **Card in progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
 
 ## Who did what
@@ -60,6 +60,6 @@
 
 ## What's next
 
-- Stopped before the card was done. Next: look at the last flag or check above, then run again.
+- Running. Latest: turn 187 by Codex (advance). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 10:03 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 10:04 UTC. Summary only: no prompts, replies, code or secrets are published._
