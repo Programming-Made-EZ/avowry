@@ -5,8 +5,9 @@
 
 ## Who did what
 
-- **Codex:** 12 turns (advance x1, green x2, ready x3, refactor x3, ship x3)
+- **Codex:** 14 turns (advance x1, green x2, ready x4, refactor x3, ship x3, slice x1)
 - **Copilot:** 2 turns (red x1, signoff x1)
+- **Grok:** 1 turns (red x1)
 
 ## Recent turns
 
@@ -24,14 +25,13 @@
 - Turn 12: Codex (devops-engineer, ship): Shipment stopped: the required acceptance gate is red.
 - Turn 13: Copilot (qa-engineer, signoff): SIGNED OFF — The red-first proof is in the mob log: python -m unittest tests.acceptancedashboard failed before any production code change, with the…
 - Turn 14: Codex (product-manager, advance): Still In Progress.
+- Turn 15: Codex (product-manager, ready): READY — The card has a sound Connextra story, comprehensive Given/When/Then acceptance criteria, and all referenced project guidelines, tests, and…
+- Turn 16: Codex (architect, slice): CONFIRMED — This is a thin vertical slice: an operator can open one local, phone-friendly dashboard and observe mob status end to end.
+- Turn 17: Grok (qa-engineer, red): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_status.py
 
 ## Flags, checks and decisions on this card
 
-- **Baseline (before any work): not done**: 2 of 3 checks pass
-- **After cycle 1: not done**: 2 of 3 checks pass
-- **After cycle 2: not done**: 2 of 3 checks pass
-- **After cycle 3: not done**: 2 of 3 checks pass
-- **Not done**: Not done after 3 cycles. The next run picks up from here.
+- None yet.
 
 ## Decider outcomes (latest)
 
@@ -41,17 +41,19 @@
 
 ## Board
 
-- **In progress:** Live mob dashboard: see every seat's status from a phone (036)
-- **Next in Ready:** next up: Benchmark: docs in the prompt, and cold runs (037); 2nd in Ready: Keyword model ADR: what a keyword is (022); 3rd in Ready: Make GRAMMAR.md say what the resolver does (013)
+- **In progress:** Live mob dashboard (tooling, experiment E2; **in progress**: finish the local-only version, then stop dashboard work) (036)
+- **Next in Ready:** next up: Adapter contract and C# adapter: types and runtime (003); 2nd in Ready: C# adapter: phrases, effects, failures (004); 3rd in Ready: C# adapter: FastEndpoints endpoints and Program (005)
 - **Done:** Resolver malformed-input hardening (002); LLM benchmark harness v0 (016); Benchmark baseline is invalid: fix the harness, store a trustworthy baseline (032)
 
 ## Latest commits
 
+- ffbbbaa Balance, not removal (Steve's clarification): agreement wording revised; Steve's diagnosis and P6 logged; defect
+- 7e43d31 Steve's course correction: product first, ~20% process budget, lighter Decider, headline number; board re-ranked
+- d77b0f9 Seed: the approved process retro after the dashboard card, its data plan and interim flow numbers
 - 9c4947a Board: card 036 states who decides dashboard hosting (team for Phrase-only, Steve for other mobs on a public URL
-- c7d990e Record two open items: Decider on the stashed emitter start at the adapter card; update the trust-ladder ledger 
 
 ## What's next
 
-- Running. Latest: turn 14 by Codex (advance). Next: the next stage of the current cycle.
+- Running. Latest: turn 17 by Grok (red). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 15:30 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 15:48 UTC. Summary only: no prompts, replies, code or secrets are published._
