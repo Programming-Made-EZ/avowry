@@ -385,7 +385,7 @@ static string AddDiagnostics(string prompt, IReadOnlyList<string> diagnostics) =
 
 static void PersistResult(string suiteDirectory, string model, BenchmarkResult result)
 {
-    var resultsDirectory = model == SelfCheckModel
+    var resultsDirectory = IsSelfCheckModel(model)
         ? Path.Combine(suiteDirectory, "results", "self-check")
         : Path.Combine(suiteDirectory, "results");
     Directory.CreateDirectory(resultsDirectory);
@@ -393,6 +393,8 @@ static void PersistResult(string suiteDirectory, string model, BenchmarkResult r
     File.WriteAllText(Path.Combine(resultsDirectory, $"{model}.json"), serializedResult);
     File.AppendAllText(Path.Combine(resultsDirectory, "history.jsonl"), serializedResult + "\n");
 }
+
+static bool IsSelfCheckModel(string model) => model.StartsWith("self-check", StringComparison.OrdinalIgnoreCase);
 
 static class Serialization
 {
