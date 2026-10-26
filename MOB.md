@@ -5,7 +5,7 @@
 
 ## Who did what
 
-- **Codex:** 9 turns (green x2, ready x3, refactor x2, ship x2)
+- **Codex:** 10 turns (green x2, ready x3, refactor x3, ship x2)
 - **Copilot:** 1 turns (red x1)
 
 ## Recent turns
@@ -20,6 +20,7 @@
 - Turn 8: Codex (backend-dev, refactor): changed facilitator.py
 - Turn 9: Codex (devops-engineer, ship): Shipment stopped: the required gate is not green.
 - Turn 10: Codex (backend-dev, green): changed facilitator.py, status.py, tests/test_status.py
+- Turn 11: Codex (backend-dev, refactor): changed facilitator.py, status.py, tests/test_status.py
 
 ## Flags, checks and decisions on this card
 
@@ -42,10 +43,9 @@
 ## Latest commits
 
 - c7d990e Record two open items: Decider on the stashed emitter start at the adapter card; update the trust-ladder ledger 
-- 68eb250 Board: card 036 has no repo-relative references to phrase-lang files (they resolve only in the References sectio
 
 ## What's next
 
-- Running. Latest: turn 10 by Codex (green). Next: the next stage of the current cycle.
+- Running. Latest: turn 11 by Codex (refactor). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 14:47 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 14:54 UTC. Summary only: no prompts, replies, code or secrets are published._
