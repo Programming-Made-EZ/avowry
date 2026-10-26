@@ -23,7 +23,7 @@ _Re-ranked 2026-10-26 on Steve's direction: product first. The Usable v1 path is
 | 1 | 002 Resolver malformed-input hardening (**Done**, 8ba3699) | The emitter and benchmark need a resolver that neither lies nor crashes | Grok review |
 | 2 | 016 LLM benchmark harness v0 (**Done** on its written criteria; baseline invalid, see 032) | The instrument: every feature card needs a baseline first. v0 needs only parse + resolve | Steve (data-driven) |
 | 3 | 032 Benchmark baseline is invalid: fix the harness, store a trustworthy baseline (**Done**, cfb1952; zero-shot baseline, see 037) | Every hypothesis card needs a trustworthy baseline; first card under experiment E1 (true mobbing). Decider D5 | Facilitator check of 016 |
-| 4 | 036 Live mob dashboard (tooling, experiment E2; **in progress**: finish the local-only version, then stop dashboard work) | Stalls cost tens of minutes and Steve has to ask for progress; Decider D7 | **Steve (raw input)** |
+| 4 | 036 Live mob dashboard (tooling, experiment E2; **Done 2026-10-26**, local-only) | Stalls cost tens of minutes and Steve has to ask for progress; Decider D7 | **Steve (raw input)** |
 | 5 | 003 Adapter contract and C# adapter: types and runtime | First on the Usable v1 path (Steve: product first). The stash Decider (salvage or drop the unreviewed emitter start) happens at its start | plan |
 | 6 | 004 C# adapter: phrases, effects, failures | Behavior before HTTP | plan |
 | 7 | 005 C# adapter: FastEndpoints endpoints and Program | Serves HTTP | plan |

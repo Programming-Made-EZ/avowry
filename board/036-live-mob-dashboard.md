@@ -1,6 +1,6 @@
 # Live mob dashboard: see every seat's status from a phone
 
-- **Status:** Ready, next up; build starts under the standard mode (experiment E2)
+- **Status:** Done 2026-10-26 (mob-defaults 551a6a3; local-only version; Decider D13 amended one unsatisfiable CSP test regex). Hosting beyond local-only is a separate, later decision.
 - **Type:** tooling, run as process/tooling experiment E2 (write-up in the phrase-lang repo, see References below)
 - **Lives:** the card is on Phrase's board because mob-defaults has no board; **the code lives in mob-defaults** (`facilitator.py` plus `templates/`), not in phrase-lang
 - **North star:** the phrase-lang vision document (see References below): the mob's own effectiveness; LLMs as customers include the mob's operators
@@ -82,6 +82,6 @@ to pass. All of these must exit 0.
 
 ```
 python -m unittest tests.acceptance_dashboard
-python -c "import hashlib,sys; want={'tests/acceptance_dashboard.py':'3b7cfd260f5296f987ce54d2a27b89d66adfbbee98d470b062d1c02bde00d9d0','tests/fakes/fake_cli.py':'a0faf7155127a93df2f1bcbe06ae05a4ccbbfb360ec38a691a6e774378623a27','tests/test_card_mode.py':'0519e819ae652027cd7038be9778190d8996c9e1f2479d5bb78abbc0d272cb93'}; bad=[f for f,h in want.items() if hashlib.sha256(open(f,'rb').read()).hexdigest()!=h]; print('tampered:',bad) if bad else None; sys.exit(1 if bad else 0)"
+python -c "import hashlib,sys; want={'tests/acceptance_dashboard.py':'e68b93528ffadf31851a135edcdeaab2db8af019d27eedae0f21b8b50fb36f20','tests/fakes/fake_cli.py':'a0faf7155127a93df2f1bcbe06ae05a4ccbbfb360ec38a691a6e774378623a27','tests/test_card_mode.py':'0519e819ae652027cd7038be9778190d8996c9e1f2479d5bb78abbc0d272cb93'}; bad=[f for f,h in want.items() if hashlib.sha256(open(f,'rb').read()).hexdigest()!=h]; print('tampered:',bad) if bad else None; sys.exit(1 if bad else 0)"
 python -m unittest discover -s tests
 ```
