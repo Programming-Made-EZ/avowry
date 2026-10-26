@@ -2,6 +2,7 @@
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
 - **Type:** tooling (thin slice; the code lives in mob-defaults; authored by the driver rotation and reviewed by a non-author under D15, with the smoke run)
+- **Amended:** Steve, 2026-10-26 (simplification): "during every retro we have the product category where new features should be identified." So there is no separate discovery step: the loop is card, retro (all four categories; the product category produces the new cards), rank, next card.
 - **Milestone:** process: the loop runner (retro seed P1: no turn ends with nothing running)
 - **Source:** Steve, 2026-10-26 (mob-defaults is his product): "it should be a loop." The continuous loop must live in the tooling, not in the facilitator's chat turns; three idle gaps today all came from the loop depending on a chat turn (retro seed P1). Team design: Decider D23 (Codex Yes, Grok Yes, Copilot Support-it with changes; agy no response).
 - **Depends on:** 066
@@ -10,7 +11,7 @@
 - **Done checks (at most 3, each failing on partial work):**
   1. Exit 0 runs `flow_metrics.py` and writes a retro proposal, then the re-rank hook (a sandboxed Decider; the board changes only by a passed Decider's patch)
   2. A crash between phases never duplicates the retro or the Decider for the same run id
-  3. With fewer than the threshold of eligible Ready cards the loop starts the discovery step (card 071) instead of stopping; the loop never ends because Ready is empty (Steve's correction)
+  3. The retro covers all four categories, and its product category (with LLM-customer feedback from every model that answers) is where new features are identified: its proposals become cards only through a passed sandboxed Decider (PM and domain expert refine, then rank) and must meet the thin-slice rules. An empty Ready list is a SIGNAL that the product category is under-producing: the loop records it as an input line for the next retro and keeps going (heartbeat, backoff); there is no special discovery mode and the loop never ends because Ready is empty
 
 ## Context
 

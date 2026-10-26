@@ -1,6 +1,6 @@
 # Loop: when Ready runs low, discover new cards instead of stopping
 
-- **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Status:** WITHDRAWN 2026-10-26 (Steve's simplification: the retro's product category already identifies new features; folded into card 067). Do not start.
 - **Type:** tooling (thin slice; the code lives in mob-defaults; authored by the driver rotation and reviewed by a non-author under D15, with the smoke run)
 - **Milestone:** process: the loop runner (continuous, never ends)
 - **Source:** Steve, 2026-10-26: "don't forget the team can find their own features to add. so theoretically the loop is continuous and never ends." The loop stops only for a STOP file or Steve saying stop, a one-way door that needs Steve's OK, or a driver allotment running out. Part of the loop design, Decider D23 and its amendment D24.
