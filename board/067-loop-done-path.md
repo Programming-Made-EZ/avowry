@@ -10,7 +10,7 @@
 - **Done checks (at most 3, each failing on partial work):**
   1. Exit 0 runs `flow_metrics.py` and writes a retro proposal, then the re-rank hook (a sandboxed Decider; the board changes only by a passed Decider's patch)
   2. A crash between phases never duplicates the retro or the Decider for the same run id
-  3. With no Ready card the loop stops with a clear message and a final heartbeat
+  3. With fewer than the threshold of eligible Ready cards the loop starts the discovery step (card 071) instead of stopping; the loop never ends because Ready is empty (Steve's correction)
 
 ## Context
 

@@ -1,0 +1,37 @@
+# Loop: when Ready runs low, discover new cards instead of stopping
+
+- **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Type:** tooling (thin slice; the code lives in mob-defaults; authored by the driver rotation and reviewed by a non-author under D15, with the smoke run)
+- **Milestone:** process: the loop runner (continuous, never ends)
+- **Source:** Steve, 2026-10-26: "don't forget the team can find their own features to add. so theoretically the loop is continuous and never ends." The loop stops only for a STOP file or Steve saying stop, a one-way door that needs Steve's OK, or a driver allotment running out. Part of the loop design, Decider D23 and its amendment D24.
+- **Depends on:** 067
+- **Story:** As the mob (and Steve), I want the loop to keep finding and doing work within the finite driver allotments, so that it is continuous and never ends for lack of cards.
+- **One observable behaviour:** When fewer than the threshold of eligible Ready cards remain, the loop runs one discovery step and the PM and domain expert refine its output into ranked cards, so the loop continues.
+- **Done checks (at most 3, each failing on partial work):**
+  1. The loop runs exactly one discovery step per run id when Ready is below the threshold (crash-safe, not duplicated); sources rotate: the product-category retro with LLM-customer feedback from every model, benchmark gaps, pattern mining from VISION's direction, and the seeds
+  2. Discovery output becomes board cards only through a passed sandboxed Decider that refines them (PM and domain expert lenses) and ranks them; a proposed card with more than 3 Done checks, no `Depends on:` line or no Done-when is refused back to refinement (the thin-slice rules)
+  3. A discovery that yields no new card never ends the loop: it backs off with a heartbeat and tries the next source; the loop stops only for a STOP file, a one-way door, or allotments out
+
+## Context
+
+- continuous discovery. The team finds its own features: this is the product-category retro, benchmark-gap analysis, pattern mining and seed review run as a step, with LLM-customer feedback collected from every model that answers.
+- The loop stops ONLY for a STOP file or Steve saying stop, a one-way door that needs Steve, or a driver allotment running out (which pauses it). Safety rules apply in full.
+- Read first: the mob-defaults `README.md`, `TEAM_WORKING_AGREEMENT.md`, `facilitator.py`, `flow_metrics.py`, `decider.py`, `delete_guard.py`; Phrase `VISION.md`, `docs/retros/seeds.md`, `docs/pattern-candidates-raw.md`, `bench/`; cards 063 to 070.
+- Tests first with the fake CLIs; smoke-tested before it touches a real card.
+
+## Task force
+
+- Tooling author [author]: Grok | why: next in the rotation for tooling (D15)
+- Reviewer [reviewer]: Codex | why: non-author review of the diff (D15)
+- Domain expert: Grok | why: owns the discovery sources and the refinement lenses
+- Facilitator: Claude | why: runs the smoke run and reviews; any takeover is logged
+
+## Done when
+
+Run from the mob-defaults repo root (the mob has no board of its own; this card lives on Phrase's board):
+
+```
+python -m unittest tests.test_loop_discovery_step
+python -m unittest discover -s tests
+python smoke.py
+```

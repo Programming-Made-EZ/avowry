@@ -9,7 +9,7 @@
 - **One observable behaviour:** While looping, the status and MOB.md publish and the heartbeat keep updating, a STOP file ends the loop cleanly, and a one-way door writes one one-word ask for Steve.
 - **Done checks (at most 3, each failing on partial work):**
   1. The summary publish and heartbeat update during every phase (also while a child runs); a stalled heartbeat is visible in the published MOB.md
-  2. A `.mob/STOP` file stops the loop after the current atomic step, with no new card started
+  2. The loop stops ONLY for a `.mob/STOP` file (after the current atomic step, no new card started), a one-way door that needs Steve (written to the Needs-Steve file; the loop waits for the one-word reply), or all driver allotments out (card 072: it pauses, it does not end)
   3. An escalation writes `.mob/loop/escalate.md` (options, one line each, a recommendation, one word) shown in MOB.md as Needs Steve; the loop polls `escalate.reply` for the answer
 
 ## Context
