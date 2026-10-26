@@ -5,7 +5,7 @@
 
 ## Who did what
 
-- **Codex:** 14 turns (advance x1, green x2, ready x4, refactor x3, ship x3, slice x1)
+- **Codex:** 15 turns (advance x1, green x3, ready x4, refactor x3, ship x3, slice x1)
 - **Copilot:** 2 turns (red x1, signoff x1)
 - **Grok:** 1 turns (red x1)
 
@@ -28,6 +28,7 @@
 - Turn 15: Codex (product-manager, ready): READY — The card has a sound Connextra story, comprehensive Given/When/Then acceptance criteria, and all referenced project guidelines, tests, and…
 - Turn 16: Codex (architect, slice): CONFIRMED — This is a thin vertical slice: an operator can open one local, phone-friendly dashboard and observe mob status end to end.
 - Turn 17: Grok (qa-engineer, red): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_status.py
+- Turn 18: Codex (backend-dev, green): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 
 ## Flags, checks and decisions on this card
 
@@ -54,6 +55,6 @@
 
 ## What's next
 
-- Running. Latest: turn 17 by Grok (red). Next: the next stage of the current cycle.
+- Running. Latest: turn 18 by Codex (green). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 16:00 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 16:08 UTC. Summary only: no prompts, replies, code or secrets are published._
