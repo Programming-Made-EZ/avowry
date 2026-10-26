@@ -7,6 +7,13 @@ How we work lives here. Process improvements land in **Practices** at a retro; t
 The mechanics (flags, scripts) live in the mob-crosscli docs. Seeded from the play-tracker mob's agreement,
 generic parts only. Adopted 2026-10-25 by the mob facilitator on Steve's standing instruction that every mob has an agreement.
 
+## North star
+
+[VISION.md](VISION.md) is the purpose of Phrase, from Steve's ruling. **Product decisions are judged against it**,
+at every Decider that touches the product, and the board and milestones are assessed against it. A question about
+the product's purpose or direction is answered by VISION.md first; it escalates to Steve only if VISION.md does not
+settle it.
+
 ## Task-Force Driven Development (TFDD)
 
 Steve: "we'll call this Task-Force Driven Development. where a task force is assembled."

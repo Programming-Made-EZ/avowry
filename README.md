@@ -2,6 +2,7 @@
 
 A programming language for LLMs where **names are descriptions** and **specs are the truth**. Code at every level reads as its own summary, so the code is the context. Phrase compiles through a language-neutral IR to target providers; C# (FastEndpoints + xUnit) is first.
 
+- **Purpose and north star: [VISION.md](VISION.md)** (a vocabulary of common patterns an LLM reads and writes for free, in any language; both a spec and a library)
 - Grammar and resolution rules: [docs/GRAMMAR.md](docs/GRAMMAR.md)
 - First program: [tests/Phrase.Acceptance.Tests/Fixtures/orders.phrase](tests/Phrase.Acceptance.Tests/Fixtures/orders.phrase)
 - What the C# provider should emit for it: [reference/csharp](reference/csharp)
