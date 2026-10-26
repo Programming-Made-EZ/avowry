@@ -1,15 +1,16 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** running
+**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 3)
 **Card in progress:** Live mob dashboard: see every seat's status from a phone (036)
 
 ## Who did what
 
-- **Codex:** 1 turns (ready x1)
+- **Codex:** 2 turns (ready x2)
 
 ## Recent turns
 
 - Turn 1: Codex (product-manager, ready): NOT READY — The Connextra story and Given/When/Then acceptance criteria are sound, but the referenced docs/experiments/E2-live-dashboard.md…
+- Turn 2: Codex (product-manager, ready): NOT READY — The story and Gherkin acceptance criteria are sound, but docs/experiments/E2-live-dashboard.md, VISION.md, and board/MILESTONES.md still…
 
 ## Flags, checks and decisions on this card
 
@@ -29,13 +30,13 @@
 
 ## Latest commits
 
+- a7e9a76 Board: card 036 lists its governing documents by absolute path (cross-repo run)
 - 0d5022a Board: card 036 (live mob dashboard) gets its contract, task force and a hash-locked Done-when
 - d956bd3 Agreement: run every Decider with the sandboxed runner
 - da40c05 Retro 032: add the voter-write-access incident
-- 82c7fa0 Retro seed: a Decider voter ran with full write access and edited the repo; runner fix planned
 
 ## What's next
 
-- Running. Latest: turn 1 by Codex (ready). Next: the next stage of the current cycle.
+- Stopped before the card was done. Next: look at the last flag or check above, then run again.
 
 _Updated 2026-10-26 13:36 UTC. Summary only: no prompts, replies, code or secrets are published._
