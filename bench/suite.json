@@ -6,6 +6,72 @@
       "kind": "write",
       "prompt": "tasks/001-write-greeting/prompt.md",
       "holdout": false
+    },
+    {
+      "id": "002-write-total",
+      "kind": "write",
+      "prompt": "tasks/002-write-total/prompt.md",
+      "holdout": false
+    },
+    {
+      "id": "003-write-endpoint",
+      "kind": "write",
+      "prompt": "tasks/003-write-endpoint/prompt.md",
+      "holdout": true
+    },
+    {
+      "id": "004-read-phrase",
+      "kind": "read",
+      "prompt": "tasks/004-read-phrase/prompt.md",
+      "holdout": false
+    },
+    {
+      "id": "005-read-failure",
+      "kind": "read",
+      "prompt": "tasks/005-read-failure/prompt.md",
+      "holdout": false
+    },
+    {
+      "id": "006-read-endpoint",
+      "kind": "read",
+      "prompt": "tasks/006-read-endpoint/prompt.md",
+      "holdout": true
+    },
+    {
+      "id": "007-modify-return",
+      "kind": "modify",
+      "prompt": "tasks/007-modify-return/prompt.md",
+      "holdout": false
+    },
+    {
+      "id": "008-modify-type",
+      "kind": "modify",
+      "prompt": "tasks/008-modify-type/prompt.md",
+      "holdout": false
+    },
+    {
+      "id": "009-modify-endpoint",
+      "kind": "modify",
+      "prompt": "tasks/009-modify-endpoint/prompt.md",
+      "holdout": true
+    },
+    {
+      "id": "010-fix-trigger",
+      "kind": "fix",
+      "prompt": "tasks/010-fix-trigger/prompt.md",
+      "holdout": false
+    },
+    {
+      "id": "011-fix-type",
+      "kind": "fix",
+      "prompt": "tasks/011-fix-type/prompt.md",
+      "holdout": false
+    },
+    {
+      "id": "012-fix-spec",
+      "kind": "fix",
+      "prompt": "tasks/012-fix-spec/prompt.md",
+      "holdout": true
     }
   ]
 }

@@ -20,6 +20,33 @@ public class BenchmarkHarnessAcceptance
     }
 
     [Fact]
+    public void v1_suite_has_fixed_task_and_holdout_coverage()
+    {
+        // Given the versioned benchmark suite
+        var suitePath = RepoPaths.Find("bench", "suite.json");
+        using var suite = JsonDocument.Parse(File.ReadAllText(suitePath));
+        var root = suite.RootElement;
+        var tasks = root.GetProperty("tasks").EnumerateArray().ToArray();
+
+        // When its task mix is inspected
+        var kinds = tasks.Select(task => task.GetProperty("kind").GetString()).ToHashSet();
+        var holdoutCount = tasks.Count(task => task.GetProperty("holdout").GetBoolean());
+        var suiteDirectory = Path.GetDirectoryName(suitePath)!;
+
+        // Then it covers all four task kinds with a fixed quarter held out and prompt-backed specs
+        Assert.Equal(1, root.GetProperty("version").GetInt32());
+        Assert.True(tasks.Length >= 12, $"Expected at least 12 tasks, found {tasks.Length}.");
+        Assert.True(new[] { "write", "read", "modify", "fix" }.All(kinds.Contains));
+        Assert.True(holdoutCount * 4 >= tasks.Length, $"Expected at least a quarter holdout, found {holdoutCount}/{tasks.Length}.");
+        foreach (var task in tasks)
+        {
+            var promptPath = Path.Combine(suiteDirectory, task.GetProperty("prompt").GetString()!);
+            Assert.True(File.Exists(promptPath), $"Missing task prompt: {promptPath}");
+            Assert.Contains("spec", File.ReadAllText(promptPath), StringComparison.OrdinalIgnoreCase);
+        }
+    }
+
+    [Fact]
     public async Task run_scores_one_fake_model_and_persists_its_result()
     {
         // Given a one-task suite and a deterministic model command in an isolated workspace
@@ -198,7 +225,19 @@ public class BenchmarkHarnessAcceptance
         var suiteDirectory = Path.Combine(workspaceRoot, "bench");
         var taskDirectory = Path.Combine(suiteDirectory, "tasks", "001-write-greeting");
         Directory.CreateDirectory(taskDirectory);
-        File.Copy(RepoPaths.Find("bench", "suite.json"), Path.Combine(suiteDirectory, "suite.json"));
+        File.WriteAllText(Path.Combine(suiteDirectory, "suite.json"), """
+            {
+              "version": 1,
+              "tasks": [
+                {
+                  "id": "001-write-greeting",
+                  "kind": "write",
+                  "prompt": "tasks/001-write-greeting/prompt.md",
+                  "holdout": false
+                }
+              ]
+            }
+            """);
         File.Copy(
             RepoPaths.Find("bench", "tasks", "001-write-greeting", "prompt.md"),
             Path.Combine(taskDirectory, "prompt.md"));
