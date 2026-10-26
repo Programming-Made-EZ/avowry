@@ -21,9 +21,9 @@
 - Metrics recorded per model and per task: pass rate, attempts to green, tokens in/out, diagnostics hit, misread-intent errors.
 - Baseline first: the first stored run is the baseline cards 013, 014 and 015 cite.
 
-## Role roster
+## Task force
 
-Declared retroactively on 2026-10-25 (card 016 was already running when the rule was set).
+Assembled retroactively on 2026-10-25 (card 016 was already running when the rule was set).
 
 - Facilitator: Claude (session)
 - Product manager: Codex

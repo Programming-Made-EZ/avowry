@@ -7,6 +7,15 @@ How we work lives here. Process improvements land in **Practices** at a retro; t
 The mechanics (flags, scripts) live in the mob-crosscli docs. Seeded from the play-tracker mob's agreement,
 generic parts only. Adopted 2026-10-25 by the mob facilitator on Steve's standing instruction that every mob has an agreement.
 
+## Task-Force Driven Development (TFDD)
+
+Steve: "we'll call this Task-Force Driven Development. where a task force is assembled."
+
+Before each card, a **task force** is assembled: the full role set (facilitator, PM, domain expert, architect, QA,
+backend, frontend and database dev, UX, security, agile coach, enablement, DevOps) is declared on the card, each role
+assigned to a model or seat, or marked `N/A: <reason>`. Card mode refuses to start a card with no task force
+assembled.
+
 ## 1. Values
 
 - **Correctness over speed, but speed matters.** Never ship on a claim nobody independently reproduced.
@@ -152,19 +161,20 @@ becomes a target stops being a good measure.
   metric gaming.
 - **Same for flow metrics and trust-ladder evidence:** signals for retro discussion, never quotas.
 
-### Role roster before every card (standing rule, Steve, 2026-10-25)
+### Task force before every card (TFDD, standing rule, Steve, 2026-10-25)
 
 Steve: "before each feature is started the comprehensive set of roles should be declared and assigned."
 
-- **Before ANY card starts (feature or bug)**, the card carries a `## Role roster` and MOB.md shows it. It lists
-  every role: facilitator, PM, domain expert (with any hat, such as language designer), architect, QA, backend dev, frontend dev,
-  database dev, UX designer, security engineer, agile coach, enablement engineer, DevOps.
+- **Before ANY card starts (feature or bug), a task force is assembled.** The card carries a `## Task force`
+  section and MOB.md shows it. It lists every role: facilitator, PM, domain expert (with any hat, such as language designer),
+  architect, QA, backend dev, frontend dev, database dev, UX designer, security engineer, agile coach,
+  enablement engineer, DevOps.
 - **Each role is assigned to a specific seat or model, or marked `N/A: <one-line reason>`.** No role is silently
   omitted.
 - **Assignments follow the trust ladder rungs and per-card rotation, and avoid author-reviews-own-work:** the
   driver cannot be the independent reviewer or QA for its own increment.
-- **Detector:** card mode refuses to start a card whose roster is missing or incomplete and prints the template
-  (`templates/ROLE_ROSTER.md` in mob-defaults).
+- **Detector:** card mode refuses to start a card with no task force assembled, or an incomplete one, and prints the
+  template (`templates/TASK_FORCE.md` in mob-defaults).
 
 ### Driver rotation
 

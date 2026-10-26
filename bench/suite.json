@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "tasks": [
+    {
+      "id": "001-write-greeting",
+      "kind": "write",
+      "prompt": "tasks/001-write-greeting/prompt.md",
+      "holdout": false
+    }
+  ]
+}
