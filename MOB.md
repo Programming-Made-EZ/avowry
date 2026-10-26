@@ -7,7 +7,7 @@
 
 ## Who did what
 
-- **Codex:** 7 turns (green x2, ready x1, refactor x2, ship x1, slice x1)
+- **Codex:** 9 turns (green x3, ready x1, refactor x2, ship x2, slice x1)
 - **Copilot:** 1 turns (red x1)
 
 ## Recent turns
@@ -20,6 +20,8 @@
 - Turn 6: Codex (devops-engineer, ship): STOPPED — ship gate failed.
 - Turn 7: Codex (backend-dev, green): changed loop.py, tests/test_loop_pick.py
 - Turn 8: Codex (backend-dev, refactor): changed loop.py, tests/test_loop_pick.py
+- Turn 9: Codex (devops-engineer, ship): STOPPED — ship gate failed.
+- Turn 10: Codex (backend-dev, green): changed loop.py, tests/test_loop_pick.py
 
 ## Flags, checks and decisions on this card
 
@@ -47,6 +49,6 @@
 
 ## What's next
 
-- Running. Latest: turn 8 by Codex (refactor). Next: the next stage of the current cycle.
+- Running. Latest: turn 10 by Codex (green). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 22:49 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 22:58 UTC. Summary only: no prompts, replies, code or secrets are published._
