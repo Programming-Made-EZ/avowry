@@ -5,16 +5,13 @@
 
 ## Who did what
 
-- **Codex:** 54 turns (checkpoint x3, fix x8, green x6, ready x5, red x8, refactor x5, ship x2, slice x9, teamsignoff x8)
+- **Codex:** 57 turns (checkpoint x3, fix x8, green x7, ready x5, red x8, refactor x6, ship x3, slice x9, teamsignoff x8)
 - **Copilot:** 33 turns (checkpoint x17, directions x4, ready x4, red x1, teamsignoff x7)
 - **Grok:** 37 turns (directions x25, fix x2, red x2, teamsignoff x8)
 - **agy:** 26 turns (checkpoint x18, teamsignoff x8)
 
 ## Recent turns
 
-- Turn 133: Grok (navigator, directions): gave 3 directions
-- Turn 134: Codex (driver, fix): changed tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
-- Turn 135: Copilot (observer, checkpoint): FLAG: tools/Phrase.Bench/Program.cs was edited during the red step, violating the rule that only the test may change.
 - Turn 136: Copilot (product-manager, ready): READY — The card has a valid Connextra story, complete Given/When/Then ZOMBIES acceptance criteria, and the referenced guidelines and sources exist.
 - Turn 137: Codex (architect, slice): CONFIRMED — This is a thin vertical bug-fix slice spanning real CLI invocation, scoring, persisted results, and documented interpretation.
 - Turn 138: Grok (navigator, directions): gave 3 directions
@@ -30,11 +27,15 @@
 - Turn 148: Copilot (qa-engineer, red): changed tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs
 - Turn 149: Codex (backend-dev, green): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 150: Codex (backend-dev, refactor): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
+- Turn 151: Codex (devops-engineer, ship): Stopped: CI had a failing usable-v1 job.
+- Turn 152: Codex (backend-dev, green): changed bench/results/self-check/history.jsonl, bench/README.md
+- Turn 153: Codex (backend-dev, refactor): changed bench/results/self-check/history.jsonl, bench/README.md
 
 ## Flags, checks and decisions on this card
 
 - **Baseline (before any work): not done**: 3 of 6 checks pass
 - **After cycle 1: not done**: 4 of 6 checks pass
+- **After cycle 2: not done**: 5 of 6 checks pass
 
 ## Decider outcomes (latest)
 
@@ -50,10 +51,11 @@
 
 ## Latest commits
 
+- 790ab41 Fix Copilot benchmark prompt argument
 - d8b9444 Decider D8: pause E1 true mobbing on card 032 after 8 runs; E1 data recorded; 032 task force tagged for standard
 
 ## What's next
 
-- Running. Latest: turn 150 by Codex (refactor). Next: the next stage of the current cycle.
+- Running. Latest: turn 153 by Codex (refactor). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 06:52 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 07:00 UTC. Summary only: no prompts, replies, code or secrets are published._
