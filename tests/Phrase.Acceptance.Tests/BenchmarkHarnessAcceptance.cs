@@ -60,9 +60,7 @@ public class BenchmarkHarnessAcceptance
               native csharp
                 return;
             """);
-        var modelCommand = OperatingSystem.IsWindows()
-            ? $"more > nul && type \"{modelOutput}\""
-            : $"cat > /dev/null && cat \"{modelOutput}\"";
+        var modelCommand = PrintFileCommand(modelOutput);
 
         // When the benchmark CLI runs the fake model through its real process boundary
         var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "fake-v1", modelCommand);
@@ -78,6 +76,72 @@ public class BenchmarkHarnessAcceptance
             Path.Combine(suiteDirectory, "results", "history.jsonl")));
         using var historyResult = JsonDocument.Parse(historyLine);
         Assert.Equal("fake-v1", historyResult.RootElement.GetProperty("model").GetString());
+    }
+
+    [Fact]
+    public async Task run_scores_phrase_wrapped_in_narration_and_a_markdown_fence()
+    {
+        // Given a one-task suite and model output containing narrated, fenced Phrase
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var modelOutput = Path.Combine(workspace.Root, "model-output.txt");
+        await File.WriteAllTextAsync(modelOutput, """
+            Here is the program.
+
+            ```phrase
+            module Greeting
+
+            phrase "say hello"
+              native csharp
+                return;
+            ```
+
+            That should compile.
+            """);
+        var modelCommand = PrintFileCommand(modelOutput);
+
+        // When the benchmark CLI runs the fake model through its real process boundary
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "fenced-v1", modelCommand);
+
+        // Then the extracted Phrase is scored as a completed first-attempt pass
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Contains("fenced-v1: passed", stdout);
+        using var result = await ReadModelResult(suiteDirectory, "fenced-v1");
+        Assert.True(result.RootElement.GetProperty("passed").GetBoolean());
+        Assert.Equal(1, result.RootElement.GetProperty("attempts").GetInt32());
+        Assert.Equal("completed", result.RootElement.GetProperty("status").GetString());
+        Assert.DoesNotContain(
+            result.RootElement.GetProperty("diagnostics").EnumerateArray(),
+            diagnostic => diagnostic.GetString()!.StartsWith("PH10", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public async Task run_records_no_phrase_found_when_the_reply_contains_no_phrase()
+    {
+        // Given a one-task suite and model output containing narration without Phrase
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var modelOutput = Path.Combine(workspace.Root, "model-output.txt");
+        await File.WriteAllTextAsync(modelOutput, """
+            I cannot write that program.
+            The request is unclear, so there is no source here.
+            """);
+        var modelCommand = PrintFileCommand(modelOutput);
+
+        // When the benchmark CLI runs the fake model through its real process boundary
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "narration-v1", modelCommand);
+
+        // Then the completed attempt fails clearly without compiler syntax diagnostics
+        Assert.True(exitCode == 3, stdout + stderr);
+        Assert.Contains("narration-v1: failed", stdout);
+        using var result = await ReadModelResult(suiteDirectory, "narration-v1");
+        Assert.False(result.RootElement.GetProperty("passed").GetBoolean());
+        Assert.Equal("completed", result.RootElement.GetProperty("status").GetString());
+        var diagnostics = result.RootElement.GetProperty("diagnostics").EnumerateArray().ToArray();
+        Assert.Contains(diagnostics, diagnostic => diagnostic.GetString() == "no_phrase_found");
+        Assert.DoesNotContain(
+            diagnostics,
+            diagnostic => diagnostic.GetString()!.StartsWith("PH10", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -207,9 +271,7 @@ public class BenchmarkHarnessAcceptance
               native csharp
                 return;
             """);
-        var modelCommand = OperatingSystem.IsWindows()
-            ? $"more > nul && type \"{modelOutput}\""
-            : $"cat > /dev/null && cat \"{modelOutput}\"";
+        var modelCommand = PrintFileCommand(modelOutput);
 
         // When the benchmark CLI runs the default development slice
         var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "holdout-v1", modelCommand);
@@ -248,6 +310,11 @@ public class BenchmarkHarnessAcceptance
                 Assert.True(result.RootElement.TryGetProperty(property, out _), $"Missing result property '{property}'.");
         }
     }
+
+    private static string PrintFileCommand(string path) =>
+        OperatingSystem.IsWindows()
+            ? $"more > nul && type \"{path}\""
+            : $"cat > /dev/null && cat \"{path}\"";
 
     private static string CopySuiteTo(string workspaceRoot)
     {

@@ -121,7 +121,7 @@ static async Task<bool> RunTask(
             var output = await RunModel(model, modelCommand, scratchDirectory, attemptPrompt, timeout);
             tokensIn += EstimateTokens(attemptPrompt);
             tokensOut += EstimateTokens(output);
-            score = Score(output);
+            score = ScoreReply(output);
             diagnostics.AddRange(score.Diagnostics);
             if (!score.Passed)
                 attemptPrompt = AddDiagnostics(prompt, score.Diagnostics);
@@ -225,6 +225,48 @@ static BenchmarkScore Score(string source)
         return new(true, []);
     }
     return new(true, []);
+}
+
+static BenchmarkScore ScoreReply(string output)
+{
+    var source = ExtractPhrase(output);
+    return ContainsPhrase(source)
+        ? Score(source)
+        : new(false, ["no_phrase_found"]);
+}
+
+static string ExtractPhrase(string output)
+{
+    const string fence = "```";
+    var opening = output.IndexOf(fence + "phrase", StringComparison.Ordinal);
+    if (opening < 0)
+        return output;
+
+    var lineEnd = output.IndexOf('\n', opening);
+    if (lineEnd < 0)
+        return output;
+
+    var bodyStart = lineEnd + 1;
+    var closing = output.IndexOf(fence, bodyStart, StringComparison.Ordinal);
+    if (closing < 0)
+        return output;
+
+    return output[bodyStart..closing].TrimEnd('\r', '\n');
+}
+
+static bool ContainsPhrase(string source)
+{
+    foreach (var line in source.Split('\n'))
+    {
+        var trimmed = line.Trim();
+        if (trimmed.StartsWith("module ", StringComparison.Ordinal)
+            || trimmed.StartsWith("phrase ", StringComparison.Ordinal)
+            || trimmed.StartsWith("type ", StringComparison.Ordinal)
+            || trimmed.StartsWith("endpoint ", StringComparison.Ordinal))
+            return true;
+    }
+
+    return false;
 }
 
 static int EstimateTokens(string text) => Math.Max(1, (int)Math.Ceiling(text.Length / 4d));
