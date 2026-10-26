@@ -5,13 +5,12 @@
 
 ## Who did what
 
-- **Codex:** 27 turns (advance x1, green x7, ready x4, refactor x7, ship x7, slice x1)
+- **Codex:** 28 turns (advance x1, green x7, ready x4, refactor x8, ship x7, slice x1)
 - **Copilot:** 2 turns (red x1, signoff x1)
 - **Grok:** 1 turns (red x1)
 
 ## Recent turns
 
-- Turn 13: Copilot (qa-engineer, signoff): SIGNED OFF — The red-first proof is in the mob log: python -m unittest tests.acceptancedashboard failed before any production code change, with the…
 - Turn 14: Codex (product-manager, advance): Still In Progress.
 - Turn 15: Codex (product-manager, ready): READY — The card has a sound Connextra story, comprehensive Given/When/Then acceptance criteria, and all referenced project guidelines, tests, and…
 - Turn 16: Codex (architect, slice): CONFIRMED — This is a thin vertical slice: an operator can open one local, phone-friendly dashboard and observe mob status end to end.
@@ -29,6 +28,7 @@
 - Turn 28: Codex (backend-dev, refactor): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 - Turn 29: Codex (devops-engineer, ship): Shipment stopped because the required acceptance gate is red.
 - Turn 30: Codex (backend-dev, green): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
+- Turn 31: Codex (backend-dev, refactor): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 
 ## Flags, checks and decisions on this card
 
@@ -50,8 +50,12 @@
 - **Next in Ready:** next up: Adapter contract and C# adapter: types and runtime (003); 2nd in Ready: C# adapter: phrases, effects, failures (004); 3rd in Ready: C# adapter: FastEndpoints endpoints and Program (005)
 - **Done:** Resolver malformed-input hardening (002); LLM benchmark harness v0 (016); Benchmark baseline is invalid: fix the harness, store a trustworthy baseline (032)
 
+## Latest commits
+
+- 28c5c6a seeds: tooling authorship rule, TAKEOVER 1 (smoke.py) with review fix list
+
 ## What's next
 
-- Running. Latest: turn 30 by Codex (green). Next: the next stage of the current cycle.
+- Running. Latest: turn 31 by Codex (refactor). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 18:18 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 18:26 UTC. Summary only: no prompts, replies, code or secrets are published._
