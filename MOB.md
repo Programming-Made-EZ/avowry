@@ -7,7 +7,7 @@
 
 ## Who did what
 
-- **Codex:** 2 turns (ready x1, slice x1)
+- **Codex:** 5 turns (green x1, ready x1, refactor x1, ship x1, slice x1)
 - **Copilot:** 1 turns (red x1)
 
 ## Recent turns
@@ -15,10 +15,14 @@
 - Turn 1: Codex (product-manager, ready): READY — The card has a sound Connextra story, testable Given/When/Then criteria, and all referenced guidance/source/test files exist.
 - Turn 2: Codex (architect, slice): CONFIRMED — This is a thin vertical bug-fix slice: Phrase source enters the public Resolver.Resolve(string) boundary and produces user-visible…
 - Turn 3: Copilot (qa-engineer, red): changed VISION.md, docs/GRAMMAR.md, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
+- Turn 4: Codex (backend-dev, green): changed VISION.md, docs/GRAMMAR.md, src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
+- Turn 5: Codex (backend-dev, refactor): changed VISION.md, docs/GRAMMAR.md, src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
+- Turn 6: Codex (devops-engineer, ship): SHIP BLOCKED — required local gate failed.
 
 ## Flags, checks and decisions on this card
 
-- None yet.
+- **Baseline (before any work): not done**: 1 of 3 checks pass
+- **After cycle 1: not done**: 2 of 3 checks pass
 
 ## Decider outcomes (latest)
 
@@ -41,6 +45,6 @@
 
 ## What's next
 
-- Running. Latest: turn 3 by Copilot (red). Next: the next stage of the current cycle.
+- Running. Latest: turn 6 by Codex (ship). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 20:30 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 20:36 UTC. Summary only: no prompts, replies, code or secrets are published._
