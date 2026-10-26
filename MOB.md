@@ -5,7 +5,7 @@
 
 ## Who did what
 
-- **Codex:** 8 turns (green x1, ready x3, refactor x2, ship x2)
+- **Codex:** 9 turns (green x2, ready x3, refactor x2, ship x2)
 - **Copilot:** 1 turns (red x1)
 
 ## Recent turns
@@ -19,6 +19,7 @@
 - Turn 7: Codex (backend-dev, green): changed facilitator.py
 - Turn 8: Codex (backend-dev, refactor): changed facilitator.py
 - Turn 9: Codex (devops-engineer, ship): Shipment stopped: the required gate is not green.
+- Turn 10: Codex (backend-dev, green): changed facilitator.py, status.py, tests/test_status.py
 
 ## Flags, checks and decisions on this card
 
@@ -45,6 +46,6 @@
 
 ## What's next
 
-- Running. Latest: turn 9 by Codex (ship). Next: the next stage of the current cycle.
+- Running. Latest: turn 10 by Codex (green). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 14:40 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 14:47 UTC. Summary only: no prompts, replies, code or secrets are published._
