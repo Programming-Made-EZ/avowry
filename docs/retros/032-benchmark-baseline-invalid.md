@@ -16,7 +16,7 @@
 - Copilot: its flags at checkpoints were mostly right; the baseline showed Copilot passing 0 of 8, which is a harness-or-model question for the retro to watch, not a verdict.
 - Grok: caught the agy empty-reply data in the sign-off by reading the rows, not the claims; as a driver it over-scoped a red step in E1.
 - agy: its CLI works headless as `agy -p <prompt> --model <id> --dangerously-skip-permissions`; its 7 of 8 zero-shot passes are the cold-run question.
-- Facilitator: I wrote a Done-when that three times could be satisfied by a mix or by a count. I also ran `rm -rf` on a variable path (nothing deleted); fixed by a mechanical guard (mob-defaults `delete_guard.py`, 80 tests; phrase-lang pre-commit).
+- Facilitator: I wrote a Done-when that three times could be satisfied by a mix or by a count. I also ran `rm -rf` on a variable path (nothing deleted); fixed by a mechanical guard (mob-defaults `delete_guard.py`, 80 tests; phrase-lang pre-commit). I also launched a Decider voter with a malformed prompt and write access (incident under Organization); adjustment: voters run only in a sandbox.
 
 ## Team (mob)
 
@@ -27,6 +27,12 @@
 
 - Steve's bootstrap-phase rule (no metric-based rejections until a baseline is established) and the escalation, Decider, TFDD, Goodhart and safety rules landed in the same two days; the agreement now needs a short index.
 - A `MOB.md` summary page is published on GitHub (per turn, throttled) so Steve can follow the mob; the live dashboard (card 036) waits on Steve's hosting OK.
+- **Incident (safety): a Decider voter ran with full write access and edited the repo.** A malformed launch gave the Copilot voter the bare
+  prompt 'd11' with all tools allowed in the real working tree; for about 15 minutes it edited source files (an unreviewed start of
+  the C# adapter, +580 lines, and a test-support tweak). No commit, no push. Found from file timestamps, traced to my own launcher,
+  stopped by exact PIDs, edits kept in a labeled stash. Root causes: 'read-only' for voters was only a prompt promise; voters ran
+  in the real tree with permission-bypass flags; no check that each seat received the intended prompt. Fix: the sandboxed Decider
+  runner (scratch clone, restricted modes, prompt-integrity check, central vote parsing, tree-unchanged verification). See `docs/retros/seeds.md`.
 - A driver turn may not run longer than its timeout, so a four-model baseline cannot be a driver turn; the facilitator ran it in scratch copies.
 
 ## Product: LLMs-as-customers evidence this retro
@@ -57,3 +63,5 @@ Hypothesis: We believe asking one seat to try to break each Done-when check (wri
 card's run starts will cut reopenings caused by weak checks. We'll know when reopenings per card go from 3 (this card) to at most 1
 over the next 3 cards. Counter-metric: seat tokens and minutes per card. Trial scope: the next 3 cards. Under the bootstrap-phase
 rule the retro keeps or revises it on judgment, not on the metric, until the baseline is established.
+
+Incident action (a safety fix, not a process pick): build the sandboxed Decider runner before the next Decider; no vote is run in the real working tree from now on.
