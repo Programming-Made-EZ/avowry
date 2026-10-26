@@ -165,6 +165,19 @@ ideas work. ideally they should be data driven."
   Keep the change if the hypothesis held. Revise or revert if it did not, and record why in MOB.md.
   Decider disputes are settled with data where possible. Retro ideas are triaged by expected metric impact.
 
+### Process ideas are hypotheses, not doctrine
+
+Any process change idea, from Steve, a model or a retro, enters as an **experiment**, not a rule. Each experiment has:
+
+- a **hypothesis** ("We believe <change> will <improve metric> for <who>. We'll know when <metric> moves from
+  <baseline> to <target>.")
+- a **metric and a counter-metric** (Goodhart guard)
+- a **trial scope**: which cards, or how long
+
+The retro then decides **keep, revise or drop** through the Decider. **Only kept experiments are written into this
+agreement as rules.** Explicit standing rules from Steve still apply directly, without a trial. Running experiments
+are logged in `docs/experiments/` (one file each) and in MOB.md, not in this agreement.
+
 ### Goodhart guard (standing rule, Steve, 2026-10-25)
 
 Steve: "just keep Goodhart's Law in mind." Metrics inform decisions but are never the goal: a measure that
