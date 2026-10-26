@@ -31,8 +31,8 @@ generic parts only. Adopted 2026-10-25 by the mob facilitator on Steve's standin
   number, its position and any one-word question, never a design plan to approve. The board holds only
   product bugs and user stories; process changes live in this file.
 - **Decide reversible things yourself.** If a flag or a later card can undo it, record the assumption and
-  move on. Escalate to Steve only one-way doors (spending money, destructive data changes, security or
-  privacy, a contested product call), as one-word questions with a recommendation.
+  move on. Model disagreements go through the **Decider protocol** first. Escalate to Steve only what the
+  **Escalation** rule below allows.
 - **Independence of review.** A reviewer did not author the patch, starts from a fresh context, and shows
   evidence (commands and real output). Prefer a different model family.
 - **Goodhart's Law.** Metrics inform judgment; no number is ever the goal.
@@ -91,6 +91,32 @@ Claude as a voice) is a source of product ideas.
   idea is recorded with the reason it was rejected** (in the retro entry).
 - **After each retro the facilitator reports to Steve** which cards came from model feedback and their
   board ranks.
+
+### Escalation (standing rule, Steve, 2026-10-25)
+
+Steve: "The only thing that bubbles to me is general direction for purpose of the new language or
+conflicting opinions from the models. However there is also the decider protocol for conflicting views."
+
+- **The mob decides everything else itself:** features, syntax details, priorities, implementation and
+  tooling. Do not ask Steve.
+- **Model disagreement** (retro product feedback, design debates, reviews): run the Decider protocol first.
+- **Escalate to Steve ONLY if** (a) the question is about the language's overall purpose or direction
+  (what Phrase is for, or who it serves), or (b) a model conflict the Decider could not resolve.
+- **Format:** one short message with the options, each model's position in one line, and a recommendation;
+  answerable in one word.
+
+### Decider protocol (for conflicting views)
+
+When models disagree (in retro product feedback, design debates or reviews), run the Decider first.
+
+1. **Proposal.** The proposer states ONE concrete proposal.
+2. **Simultaneous vote.** All voting seats vote at the same time, each choosing **Yes**, **Support-it**
+   (not my first choice, but I will back it) or **No**. Seats do not see each other's votes before voting.
+3. **Outliers.** Each **No** voter (an outlier) says what it would take to get to yes; the proposer may
+   amend the proposal, and the amended proposal is voted again.
+4. **Result.** An "absolutely no" from any seat, or outliers still unresolved after the amendment, means the
+   proposal **fails**. Otherwise it passes.
+5. **Record.** Every Decider run is recorded in MOB.md: the proposal, each seat's vote, and the result.
 
 ### Driver rotation
 
@@ -167,8 +193,8 @@ within the last hour) takes a driver out of rotation, until its next successful 
   order unless a card says otherwise. No GitHub Project exists for this repo yet.
 - **Feature-flag policy:** none; compiler internals have no user-facing surface yet. The architect may
   overrule per card.
-- **Release target / one-way doors:** none yet (no published package). Publishing a package or changing the
-  grammar in a way that breaks existing `.phrase` files needs Steve, as a one-word question.
+- **Release target:** none yet (no published package). The mob decides release and grammar-compatibility
+  questions itself under the Escalation rule below.
 - **Code needing extra care:** `docs/GRAMMAR.md` (the language contract; a grammar change needs a recorded
   reason), `Semantics/Model.cs` (the IR the emitters consume; change only with a reason in the reply), and
   diagnostic messages (an LLM reads them to fix its own code: name the thing, say what was expected, list
