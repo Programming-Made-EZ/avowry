@@ -11,6 +11,7 @@ Programs compile through a language-neutral IR to target **providers** (C# first
 3. **Small fixed core, open phrase library.** The core has a handful of keywords. Everything domain-specific is a phrase defined in the project.
 4. **Leaves are target-specific, composition is universal.** Only leaf phrases contain `native` code. Composite units (endpoints, composite phrases) are pure phrase composition and transpile identically to every target.
 5. **Deterministic resolution.** Every step resolves to exactly one phrase or the compile fails. No guessing.
+6. **Specs state consumer-observable outcomes (Steve, 2026-10-26).** "I feel like we aren't adhering to consumer related output. 'succeeds' isn't really a result the customer gets value from." A `then` should say what the consumer gets: a returned value, a stored or emitted effect, a response, or a declared failure. A bare `then succeeds` proves only that nothing threw; prefer an outcome with a value, and give every declared `fails with` a spec that shows it. (Guidance today; whether the compiler warns or refuses is under review on the board.)
 
 ## 2. Lexical structure
 

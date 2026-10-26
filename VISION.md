@@ -48,6 +48,15 @@ the two."
 human-friendly rendering, in both directions. It pairs with synthesis: both are translations between
 representations. A **future** milestone (M6, card 031).
 
+**5. Consumer-observable outcomes (2026-10-26).** Steve, looking at a benchmark task whose spec reads `then succeeds`:
+"I feel like we aren't adhering to consumer related output. 'succeeds' isn't really a result the customer gets value from."
+*Interpretation (the team refines it into cards):* a spec's `then` should state an observable outcome that has value to the
+consumer: what is returned, stored, emitted or responded. A bare "no error" proves almost nothing, and a phrase whose only
+outcome is "does not throw" may be a weak abstraction (should a validation phrase return the validated or normalized value?).
+A phrase that declares `fails with X` should have a spec that shows X, since the failure path is the most important
+behaviour to specify. Status: direction; the grammar and linter rule, the audit of existing examples and benchmark tasks, and
+the validation-return question are raw input on the board.
+
 ## What this commits us to
 
 - The catalogue is a first-class artifact: every keyword has a name that is a sentence, typed holes, specs that run as

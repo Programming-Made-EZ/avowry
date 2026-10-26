@@ -8,7 +8,7 @@
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given a native block, When the docs are read, Then the one failure form is stated (`Fail("Code")`) and its relation to `PhraseFailure` (line 207) is explained in one sentence
   - One: Given a `List<LineItem>` hole, When used in a native block, Then the docs show its C# type and the names of the hole variables in scope
-  - Many: Given `orders.phrase`, When read, Then every guard has a passing spec (`then succeeds`) and a failing one, and there is a value-returning phrase with a numeric spec (for example an average)
+  - Many: Given `orders.phrase`, When read, Then every guard has a passing spec (a spec with an observable outcome: `returns`, `responds` or `fails with`) and a failing one, and there is a value-returning phrase with a numeric spec (for example an average)
   - Boundaries: Given a failure code, When used in `fails with X` and in `Fail("X")`, Then the docs say the two must match and the resolver reports a mismatch if it can detect one (otherwise a card is filed)
   - Exceptions: Given a typed-constant form for failure codes (`Fail(Failure.EmptyOrder)`, agy), When considered, Then the decision is recorded here: deferred to emitter card 004, which can generate the constants without a grammar change
 
