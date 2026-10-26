@@ -7,14 +7,11 @@
 
 ## Who did what
 
-- **Codex:** 19 turns (advance x2, green x5, ready x1, refactor x5, ship x4, signoff x1, slice x1)
+- **Codex:** 22 turns (advance x2, green x6, ready x1, refactor x6, ship x5, signoff x1, slice x1)
 - **Copilot:** 3 turns (red x2, signoff x1)
 
 ## Recent turns
 
-- Turn 5: Codex (backend-dev, refactor): changed VISION.md, docs/GRAMMAR.md, src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
-- Turn 6: Codex (devops-engineer, ship): SHIP BLOCKED — required local gate failed.
-- Turn 7: Codex (backend-dev, green): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
 - Turn 8: Codex (backend-dev, refactor): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
 - Turn 9: Codex (devops-engineer, ship): SHIP BLOCKED — required local gate failed.
 - Turn 10: Codex (backend-dev, green): changed board/MILESTONE-usable-v1.md, src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, board/059-adr-async-and-events.md, board/060-catalogue-task-pack-async-events.md, board/061-spike-deterministic-async-harness.md
@@ -30,6 +27,9 @@
 - Turn 18: Codex (devops-engineer, ship): SHIP BLOCKED — staged whitespace gate failed because the new test file uses CRLF, which Git reports as trailing whitespace on all 80 lines.
 - Turn 19: Codex (backend-dev, green): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
 - Turn 20: Codex (backend-dev, refactor): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
+- Turn 21: Codex (devops-engineer, ship): SHIPPED — commit 8962dc5 (Fix spec resolution diagnostics).
+- Turn 22: Codex (backend-dev, green): no file changes
+- Turn 23: Codex (backend-dev, refactor): no file changes
 
 ## Flags, checks and decisions on this card
 
@@ -51,13 +51,13 @@
 
 ## Latest commits
 
+- 8962dc5 Fix spec resolution diagnostics
 - f0cfccb Atomic runs experiment (D22): Bishop's Law applied, Depends on lines, card 062; D21 async decision record
 - 7558677 Board: async and events (Steve's input, D21): ADR 059, catalogue tasks 060, spike 061; keyword seeds
 - 254ad71 Steve's direction: consumer-observable outcomes (VISION ruling 5, GRAMMAR rule 6); cards 054-058; D20
-- 636f72d Board: 018 trimmed to code with task force and red-first Done-when; docs split to 053
 
 ## What's next
 
 - Stopped before the card was done. Next: look at the last flag or check above, then run again.
 
-_Updated 2026-10-26 20:59 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 21:04 UTC. Summary only: no prompts, replies, code or secrets are published._
