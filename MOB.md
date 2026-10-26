@@ -5,7 +5,7 @@
 
 ## Who did what
 
-- **Codex:** 10 turns (green x2, ready x3, refactor x3, ship x2)
+- **Codex:** 11 turns (green x2, ready x3, refactor x3, ship x3)
 - **Copilot:** 1 turns (red x1)
 
 ## Recent turns
@@ -21,6 +21,7 @@
 - Turn 9: Codex (devops-engineer, ship): Shipment stopped: the required gate is not green.
 - Turn 10: Codex (backend-dev, green): changed facilitator.py, status.py, tests/test_status.py
 - Turn 11: Codex (backend-dev, refactor): changed facilitator.py, status.py, tests/test_status.py
+- Turn 12: Codex (devops-engineer, ship): Shipment stopped: the required acceptance gate is red.
 
 ## Flags, checks and decisions on this card
 
@@ -43,10 +44,11 @@
 
 ## Latest commits
 
+- 9c4947a Board: card 036 states who decides dashboard hosting (team for Phrase-only, Steve for other mobs on a public URL
 - c7d990e Record two open items: Decider on the stashed emitter start at the adapter card; update the trust-ladder ledger 
 
 ## What's next
 
-- Running. Latest: turn 11 by Codex (refactor). Next: the next stage of the current cycle.
+- Running. Latest: turn 12 by Codex (ship). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 15:07 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 15:14 UTC. Summary only: no prompts, replies, code or secrets are published._
