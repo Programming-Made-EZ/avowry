@@ -7,19 +7,13 @@
 
 ## Who did what
 
-- **Codex:** 44 turns (checkpoint x3, fix x6, green x5, ready x4, red x6, refactor x4, ship x2, slice x6, teamsignoff x8)
-- **Copilot:** 26 turns (checkpoint x13, directions x4, ready x2, teamsignoff x7)
-- **Grok:** 33 turns (directions x21, fix x2, red x2, teamsignoff x8)
-- **agy:** 23 turns (checkpoint x15, teamsignoff x8)
+- **Codex:** 47 turns (checkpoint x3, fix x6, green x5, ready x5, red x7, refactor x4, ship x2, slice x7, teamsignoff x8)
+- **Copilot:** 27 turns (checkpoint x14, directions x4, ready x2, teamsignoff x7)
+- **Grok:** 34 turns (directions x22, fix x2, red x2, teamsignoff x8)
+- **agy:** 24 turns (checkpoint x16, teamsignoff x8)
 
 ## Recent turns
 
-- Turn 109: Codex (driver, red): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs
-- Turn 110: Copilot (observer, checkpoint): signed off
-- Turn 111: agy (observer, checkpoint): signed off
-- Turn 112: Grok (navigator, directions): gave 5 directions
-- Turn 113: Codex (driver, green): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
-- Turn 114: Copilot (observer, checkpoint): signed off
 - Turn 115: agy (observer, checkpoint): signed off
 - Turn 116: Grok (navigator, directions): gave 6 directions
 - Turn 117: Codex (driver, refactor): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
@@ -32,14 +26,17 @@
 - Turn 124: Codex (member, teamsignoff): FLAG: ProfileArguments passes the prompt file path as Copilot’s literal -p value, so Copilot receives a pathname instead of the task prompt.
 - Turn 125: Grok (member, teamsignoff): FLAG: copilot --help defines -p/--prompt as <text>, but return $" -p \"{promptPath}\" -s --allow-all-tools --trust-folder"; passes a temp pathname as that text.
 - Turn 126: agy (member, teamsignoff): FLAG: return $" -p \"{promptPath}\" -s --allow-all-tools --trust-folder"; in [Program.cs](file:///C:/home/<user>) passes a leaked global temp file path…
+- Turn 127: Codex (product-manager, ready): READY — The card has a valid Connextra story, sound Given/When/Then ZOMBIES acceptance criteria, and all referenced project guidance and sources…
+- Turn 128: Codex (architect, slice): CONFIRMED — This remains a thin vertical bug-fix slice: the Phrase.Bench CLI invokes real model CLIs, scores their replies, and persists a…
+- Turn 129: Grok (navigator, directions): gave 3 directions
+- Turn 130: Codex (driver, red): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
+- Turn 131: Copilot (observer, checkpoint): FLAG: Criterion Many/Interface not met: the benchmark check failed because model coverage isn’t complete and bench/README.md is still too short or absent.
+- Turn 132: agy (observer, checkpoint): signed off
 
 ## Flags, checks and decisions on this card
 
 - **Baseline (before any work): not done**: 4 of 6 checks pass
 - **Cycle 1 roles**: driver Codex; navigator Grok; observers Copilot, agy
-- **Flag raised at before commit (whole team)**: - codex: FLAG: bench/results/self-check/history.jsonl contains 24 newly appended duplicate self-check fixture rows and must not ship with this increment.
-- **Flag unresolved at before commit (whole team)**: - codex: FLAG: ProfileArguments passes the prompt file path as Copilot’s literal -p value, so Copilot receives a pathname instead of the task prompt.
-- **Experiment E1 metrics**: turns: 19, cycles: 1, flags: 6, fixrounds: 1, esttokens: 188633, seconds: 1303.0 (tokens are estimated from prompt and reply size)
 
 ## Decider outcomes (latest)
 
@@ -62,6 +59,6 @@
 
 ## What's next
 
-- Running. Latest: turn 126 by agy (teamsignoff). Next: the next stage of the current cycle.
+- Running. Latest: turn 132 by agy (checkpoint). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 06:23 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 06:27 UTC. Summary only: no prompts, replies, code or secrets are published._
