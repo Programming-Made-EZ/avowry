@@ -1,20 +1,17 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** running
+**Project:** Phrase &nbsp;|&nbsp; **State:** finished
 **Card in progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
 
 ## Who did what
 
-- **Codex:** 69 turns (checkpoint x3, fix x8, green x10, ready x5, red x8, refactor x10, ship x7, slice x10, teamsignoff x8)
-- **Copilot:** 38 turns (advance x1, checkpoint x17, directions x4, green x1, ready x5, red x2, signoff x1, teamsignoff x7)
+- **Codex:** 71 turns (advance x1, checkpoint x3, fix x8, green x10, ready x5, red x8, refactor x10, ship x8, slice x10, teamsignoff x8)
+- **Copilot:** 39 turns (advance x1, checkpoint x17, directions x4, green x1, ready x5, red x2, signoff x2, teamsignoff x7)
 - **Grok:** 37 turns (directions x25, fix x2, red x2, teamsignoff x8)
 - **agy:** 26 turns (checkpoint x18, teamsignoff x8)
 
 ## Recent turns
 
-- Turn 153: Codex (backend-dev, refactor): changed bench/results/self-check/history.jsonl, bench/README.md
-- Turn 154: Codex (devops-engineer, ship): Stopped: CI failed.
-- Turn 155: Codex (backend-dev, green): changed bench/results/codex-gpt-5.6-sol.json, bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 156: Codex (backend-dev, refactor): changed bench/results/codex-gpt-5.6-sol.json, bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 157: Codex (devops-engineer, ship): Stopped: CI failed.
 - Turn 158: Copilot (backend-dev, green): changed bench/results/agy-gemini-4-argon-medium.json, bench/results/codex-gpt-5.6-sol.json, bench/results/grok-4.7.json, bench/results/history.jsonl, bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs
@@ -30,6 +27,9 @@
 - Turn 168: Codex (devops-engineer, ship): Shipped successfully.
 - Turn 169: Codex (backend-dev, green): changed bench/results/history.jsonl, bench/results/self-check/history.jsonl, tools/Phrase.Bench/Program.cs
 - Turn 170: Codex (backend-dev, refactor): changed bench/results/history.jsonl, bench/results/self-check/history.jsonl, tools/Phrase.Bench/Program.cs
+- Turn 171: Codex (devops-engineer, ship): Ship stopped on push failure, as instructed.
+- Turn 172: Copilot (qa-engineer, signoff): SIGN-OFF
+- Turn 173: Codex (product-manager, advance): IN PROGRESS — The harness now extracts Phrase from narrated/fenced replies, records nophrasefound, invokes all four model CLIs headlessly, isolates…
 
 ## Flags, checks and decisions on this card
 
@@ -51,13 +51,13 @@
 
 ## Latest commits
 
+- 6f7a978 Fix agy benchmark prompt invocation
 - c972981 Complete Copilot benchmark coverage
 - 9142d84 Bootstrap phase (Steve's standing rule): no metric-based rejections until a baseline is established; exit criter
 - 0a0e965 Board: card 032 reopened after the whole-team sign-off (agy empty replies; copilot missing a task); two new Done
-- 08ed7bb Store trustworthy four-model benchmark baseline
 
 ## What's next
 
-- Running. Latest: turn 170 by Codex (refactor). Next: the next stage of the current cycle.
+- The card is done. Next: its retro, then the next card from the board.
 
-_Updated 2026-10-26 09:22 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 09:25 UTC. Summary only: no prompts, replies, code or secrets are published._
