@@ -5,7 +5,7 @@
 
 ## Who did what
 
-- **Codex:** 4 turns (ready x3, refactor x1)
+- **Codex:** 5 turns (ready x3, refactor x1, ship x1)
 - **Copilot:** 1 turns (red x1)
 
 ## Recent turns
@@ -15,10 +15,12 @@
 - Turn 3: Copilot (qa-engineer, red): no file changes
 - Turn 4: Codex (product-manager, ready): Implemented the first coherent increment in [facilitator.py](C:\Users\<user>): - Emits allow-listed start and end events for each real seat process.
 - Turn 5: Codex (backend-dev, refactor): changed facilitator.py
+- Turn 6: Codex (devops-engineer, ship): Shipping stopped: the required dashboard acceptance suite is not green.
 
 ## Flags, checks and decisions on this card
 
 - **Baseline (before any work): not done**: 2 of 3 checks pass
+- **After cycle 1: not done**: 2 of 3 checks pass
 
 ## Decider outcomes (latest)
 
@@ -39,6 +41,6 @@
 
 ## What's next
 
-- Running. Latest: turn 5 by Codex (refactor). Next: the next stage of the current cycle.
+- Running. Latest: turn 6 by Codex (ship). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 13:51 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 13:56 UTC. Summary only: no prompts, replies, code or secrets are published._
