@@ -6,8 +6,6 @@ namespace Phrase.Compiler.Tests.Semantics;
 // Feature: Endpoint flow and composite phrases
 //   An endpoint with an output ends by responding (or failing). Composite phrases
 //   use their holes as variables, and their failures and effects propagate to callers.
-// Pending: the mob's starting point. Remove this trait when every test in the class passes.
-[Trait("Status", "Pending")]
 public class ResolverFlowTests
 {
     private const string Validate = """

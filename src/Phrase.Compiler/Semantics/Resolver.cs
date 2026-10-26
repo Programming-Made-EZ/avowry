@@ -85,6 +85,22 @@ public static class Resolver
                 phrases.Add(model);
                 phraseDeclarations.Add((declaration, model));
             }
+
+            for (var i = 0; i < phraseDeclarations.Count; i++)
+            {
+                var (declaration, model) = phraseDeclarations[i];
+                if (declaration.Steps is null)
+                    continue;
+                if (model.Returns is not null)
+                    Report("PH325", $"Composite phrase '{model.Template}' cannot return a value.", declaration.At);
+                var scope = model.Holes.ToDictionary(hole => hole.Name, hole => hole.Type, StringComparer.Ordinal);
+                var steps = ResolveSteps(declaration.Steps, scope, null, model.Failures);
+                var resolved = model with { Steps = steps };
+                phraseDeclarations[i] = (declaration, resolved);
+                phrases[i] = resolved;
+            }
+
+            ResolvePhraseFlow(phrases);
             return phrases;
         }
 
@@ -107,20 +123,27 @@ public static class Resolver
                 if (outputType is not null)
                     recordFields[outputType.Name] = output;
                 var scope = new Dictionary<string, PType>(StringComparer.Ordinal) { ["input"] = inputType };
-                var steps = ResolveSteps(declaration.Steps, scope);
+                var steps = ResolveSteps(declaration.Steps, scope, outputType, null);
+                if (outputType is not null && !steps.Any(step => step is BoundRespondStep or BoundFailStep))
+                    Report("PH323", $"Endpoint '{declaration.Name}' has an output but never responds or fails.", declaration.At);
+                var failures = EffectiveFailures(steps);
                 endpoints.Add(new EndpointModel(
                     declaration.Name, declaration.Verb, declaration.Route,
-                    inputType, input, outputType, output, steps, [], []));
+                    inputType, input, outputType, output, steps, failures, []));
             }
             return endpoints;
         }
 
         private IReadOnlyList<BoundStep> ResolveSteps(
-            IReadOnlyList<Step> steps, Dictionary<string, PType> scope)
+            IReadOnlyList<Step> steps, Dictionary<string, PType> scope, PType? outputType,
+            IReadOnlyList<string>? declaredFailures)
         {
             var bound = new List<BoundStep>();
+            var terminated = false;
             foreach (var step in steps)
             {
+                if (terminated)
+                    Report("PH324", "Step is unreachable after 'respond with' or 'fail with'.", step.At);
                 switch (step)
                 {
                     case PhraseCall call:
@@ -153,16 +176,98 @@ public static class Resolver
                         break;
                     }
                     case FailStep fail:
+                        if (declaredFailures is not null && !declaredFailures.Contains(fail.Code, StringComparer.Ordinal))
+                            Report("PH326", $"Composite failure '{fail.Code}' is not declared in 'fails with'.", fail.At);
                         bound.Add(new BoundFailStep(fail.Code, SourceFormatter.Format(fail)));
+                        terminated = true;
                         break;
                     case RespondStep respond:
-                        bound.Add(new BoundRespondStep(
-                            new BoundRecord([], PType.Error), SourceFormatter.Format(respond)));
+                        if (outputType is null)
+                        {
+                            Report("PH322", "'respond with' is only valid in an endpoint with an output.", respond.At);
+                            bound.Add(new BoundRespondStep(new BoundRecord([], PType.Error), SourceFormatter.Format(respond)));
+                        }
+                        else
+                        {
+                            bound.Add(new BoundRespondStep(ResolveRecord(respond.Value, outputType, scope), SourceFormatter.Format(respond)));
+                        }
+                        terminated = true;
                         break;
                 }
             }
             return bound;
         }
+
+        private void ResolvePhraseFlow(List<PhraseModel> phrases)
+        {
+            var byKey = phrases.ToDictionary(phrase => phrase.Key, StringComparer.Ordinal);
+            var visiting = new HashSet<string>(StringComparer.Ordinal);
+            var complete = new Dictionary<string, (IReadOnlyList<string> Failures, IReadOnlySet<string> Effects)>(StringComparer.Ordinal);
+            var reportedCycles = new HashSet<string>(StringComparer.Ordinal);
+
+            (IReadOnlyList<string> Failures, IReadOnlySet<string> Effects) Visit(PhraseModel phrase)
+            {
+                if (complete.TryGetValue(phrase.Key, out var cached))
+                    return cached;
+                if (!visiting.Add(phrase.Key))
+                {
+                    if (reportedCycles.Add(phrase.Key))
+                        Report("PH327", $"Phrase '{phrase.Template}' participates in a call cycle.", PhraseDeclaration(phrase.Key).At);
+                    return ([], new HashSet<string>(StringComparer.Ordinal));
+                }
+
+                var failures = phrase.Failures.ToHashSet(StringComparer.Ordinal);
+                var effects = phrase.Effects.ToHashSet(StringComparer.Ordinal);
+                foreach (var step in phrase.Steps ?? [])
+                {
+                    if (step is BoundFailStep fail)
+                        failures.Add(fail.Code);
+                    if (step is not BoundCallStep and not BoundLetStep)
+                        continue;
+                    var key = CalledPhraseKey(step)!;
+                    var callee = byKey[key];
+                    var inherited = Visit(callee);
+                    failures.UnionWith(inherited.Failures);
+                    effects.UnionWith(inherited.Effects);
+                    foreach (var effect in inherited.Effects.Except(phrase.Effects, StringComparer.Ordinal))
+                        Report("PH328", $"Composite phrase '{phrase.Template}' must declare effect '{effect}'.", PhraseDeclaration(phrase.Key).At);
+                }
+                visiting.Remove(phrase.Key);
+                return complete[phrase.Key] = (failures.Order(StringComparer.Ordinal).ToList(), effects);
+            }
+
+            for (var i = 0; i < phrases.Count; i++)
+            {
+                var flow = Visit(phrases[i]);
+                phrases[i] = phrases[i] with { Failures = flow.Failures };
+                var declarationIndex = phraseDeclarations.FindIndex(pair => pair.Model.Key == phrases[i].Key);
+                phraseDeclarations[declarationIndex] = (phraseDeclarations[declarationIndex].Declaration, phrases[i]);
+            }
+        }
+
+        private IReadOnlyList<string> EffectiveFailures(IReadOnlyList<BoundStep> steps)
+        {
+            var failures = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var step in steps)
+            {
+                if (step is BoundFailStep fail)
+                    failures.Add(fail.Code);
+                var key = CalledPhraseKey(step);
+                if (key is not null)
+                    failures.UnionWith(phraseDeclarations.Single(pair => pair.Model.Key == key).Model.Failures);
+            }
+            return failures.Order(StringComparer.Ordinal).ToList();
+        }
+
+        private static string? CalledPhraseKey(BoundStep step) => step switch
+        {
+            BoundCallStep call => call.Call.PhraseKey,
+            BoundLetStep let => let.Call.PhraseKey,
+            _ => null,
+        };
+
+        private PhraseDecl PhraseDeclaration(string key) =>
+            phraseDeclarations.Single(pair => pair.Model.Key == key).Declaration;
 
         private (BoundCall Call, PhraseModel Phrase)? ResolveCall(
             PhraseCall call, IReadOnlyDictionary<string, PType> scope)
