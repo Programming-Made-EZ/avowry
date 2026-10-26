@@ -3,22 +3,15 @@
 **Project:** Phrase &nbsp;|&nbsp; **State:** running
 **Card in progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
 
-**Latest cycle:** 1 (driver Codex; navigator Grok; observers Copilot, agy). The full working log is private; this page is a summary.
-
 ## Who did what
 
-- **Codex:** 51 turns (checkpoint x3, fix x8, green x5, ready x5, red x8, refactor x4, ship x2, slice x8, teamsignoff x8)
-- **Copilot:** 31 turns (checkpoint x17, directions x4, ready x3, teamsignoff x7)
+- **Codex:** 54 turns (checkpoint x3, fix x8, green x6, ready x5, red x8, refactor x5, ship x2, slice x9, teamsignoff x8)
+- **Copilot:** 33 turns (checkpoint x17, directions x4, ready x4, red x1, teamsignoff x7)
 - **Grok:** 37 turns (directions x25, fix x2, red x2, teamsignoff x8)
 - **agy:** 26 turns (checkpoint x18, teamsignoff x8)
 
 ## Recent turns
 
-- Turn 128: Codex (architect, slice): CONFIRMED — This remains a thin vertical bug-fix slice: the Phrase.Bench CLI invokes real model CLIs, scores their replies, and persists a…
-- Turn 129: Grok (navigator, directions): gave 3 directions
-- Turn 130: Codex (driver, red): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
-- Turn 131: Copilot (observer, checkpoint): FLAG: Criterion Many/Interface not met: the benchmark check failed because model coverage isn’t complete and bench/README.md is still too short or absent.
-- Turn 132: agy (observer, checkpoint): signed off
 - Turn 133: Grok (navigator, directions): gave 3 directions
 - Turn 134: Codex (driver, fix): changed tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 135: Copilot (observer, checkpoint): FLAG: tools/Phrase.Bench/Program.cs was edited during the red step, violating the rule that only the test may change.
@@ -32,14 +25,16 @@
 - Turn 143: Codex (driver, fix): changed tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs
 - Turn 144: Copilot (observer, checkpoint): FLAG: criterion not met: python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]…
 - Turn 145: agy (observer, checkpoint): signed off
+- Turn 146: Copilot (product-manager, ready): READY — The card has a valid Connextra story, complete Given/When/Then ZOMBIES acceptance criteria, correct rank 3, and the referenced guidelines and…
+- Turn 147: Codex (architect, slice): CONFIRMED — This remains a thin vertical bug-fix slice: real model CLI invocation flows through extraction, scoring, result persistence, and baseline…
+- Turn 148: Copilot (qa-engineer, red): changed tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs
+- Turn 149: Codex (backend-dev, green): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
+- Turn 150: Codex (backend-dev, refactor): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 
 ## Flags, checks and decisions on this card
 
 - **Baseline (before any work): not done**: 3 of 6 checks pass
-- **Cycle 1 roles**: driver Codex; navigator Grok; observers Copilot, agy
-- **Flag raised at after red**: - copilot: FLAG: tools/Phrase.Bench/Program.cs was modified in the red checkpoint, violating the no-production-code-during-red rule.
-- **Flag unresolved at after red**: - copilot: FLAG: criterion not met: python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]; m={r['model'].split('-')[0] for r in…
-- **Experiment E1 metrics**: turns: 8, cycles: 1, flags: 3, fixrounds: 1, esttokens: 79971, seconds: 430.3 (tokens are estimated from prompt and reply size)
+- **After cycle 1: not done**: 4 of 6 checks pass
 
 ## Decider outcomes (latest)
 
@@ -56,10 +51,9 @@
 ## Latest commits
 
 - d8b9444 Decider D8: pause E1 true mobbing on card 032 after 8 runs; E1 data recorded; 032 task force tagged for standard
-- 2a32cf4 No Co-Authored-By trailers (Steve's standing coding rule): agreement bullet and commit-msg hook
 
 ## What's next
 
-- Running. Latest: turn 145 by agy (checkpoint). Next: the next stage of the current cycle.
+- Running. Latest: turn 150 by Codex (refactor). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 06:45 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 06:52 UTC. Summary only: no prompts, replies, code or secrets are published._
