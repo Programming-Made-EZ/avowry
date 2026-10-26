@@ -1,12 +1,12 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** running
+**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 1)
 **Card in progress:** Live mob dashboard: see every seat's status from a phone (036)
 
 ## Who did what
 
-- **Codex:** 11 turns (green x2, ready x3, refactor x3, ship x3)
-- **Copilot:** 1 turns (red x1)
+- **Codex:** 12 turns (advance x1, green x2, ready x3, refactor x3, ship x3)
+- **Copilot:** 2 turns (red x1, signoff x1)
 
 ## Recent turns
 
@@ -22,6 +22,8 @@
 - Turn 10: Codex (backend-dev, green): changed facilitator.py, status.py, tests/test_status.py
 - Turn 11: Codex (backend-dev, refactor): changed facilitator.py, status.py, tests/test_status.py
 - Turn 12: Codex (devops-engineer, ship): Shipment stopped: the required acceptance gate is red.
+- Turn 13: Copilot (qa-engineer, signoff): SIGNED OFF — The red-first proof is in the mob log: python -m unittest tests.acceptancedashboard failed before any production code change, with the…
+- Turn 14: Codex (product-manager, advance): Still In Progress.
 
 ## Flags, checks and decisions on this card
 
@@ -29,6 +31,7 @@
 - **After cycle 1: not done**: 2 of 3 checks pass
 - **After cycle 2: not done**: 2 of 3 checks pass
 - **After cycle 3: not done**: 2 of 3 checks pass
+- **Not done**: Not done after 3 cycles. The next run picks up from here.
 
 ## Decider outcomes (latest)
 
@@ -49,6 +52,6 @@
 
 ## What's next
 
-- Running. Latest: turn 12 by Codex (ship). Next: the next stage of the current cycle.
+- Stopped before the card was done. Next: look at the last flag or check above, then run again.
 
-_Updated 2026-10-26 15:14 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 15:15 UTC. Summary only: no prompts, replies, code or secrets are published._
