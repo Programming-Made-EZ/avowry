@@ -7,24 +7,14 @@
 
 ## Who did what
 
-- **Codex:** 40 turns (checkpoint x3, fix x5, green x5, ready x4, red x6, refactor x3, ship x2, slice x6, teamsignoff x6)
-- **Copilot:** 25 turns (checkpoint x13, directions x4, ready x2, teamsignoff x6)
-- **Grok:** 29 turns (directions x19, fix x2, red x2, teamsignoff x6)
-- **agy:** 20 turns (checkpoint x14, teamsignoff x6)
+- **Codex:** 44 turns (checkpoint x3, fix x6, green x5, ready x4, red x6, refactor x4, ship x2, slice x6, teamsignoff x8)
+- **Copilot:** 26 turns (checkpoint x13, directions x4, ready x2, teamsignoff x7)
+- **Grok:** 32 turns (directions x21, fix x2, red x2, teamsignoff x7)
+- **agy:** 22 turns (checkpoint x15, teamsignoff x7)
 
 ## Recent turns
 
-- Turn 97: Codex (devops-engineer, ship): STOPPED — commit `a4ab305` was pushed and `origin/main` matches it. Local gates passed (247 tests), and CI’s test job passed, but the `usable-v1` job 
-- Turn 98: Copilot (navigator, directions): gave 5 directions
-- Turn 99: Grok (driver, red): changed bench/results/self-check/history.jsonl
-- Turn 100: Codex (observer, checkpoint): FLAG
-- Turn 101: agy (observer, checkpoint): FLAG
-- Turn 102: Copilot (navigator, directions): gave 5 directions
-- Turn 103: Grok (driver, fix): changed bench/results/history.jsonl, bench/results/self-check/history.jsonl, tools/Phrase.Bench/Program.cs, bench/README.md, bench/results/copilot-auto.json
-- Turn 104: Codex (observer, checkpoint): FLAG
-- Turn 105: agy (observer, checkpoint): FLAG
-- Turn 106: Codex (product-manager, ready): READY — The card has a valid Connextra story, sound Given/When/Then ZOMBIES acceptance criteria, and all referenced project guidance exists. Assumptio
-- Turn 107: Codex (architect, slice): CONFIRMED — This is a thin vertical bug-fix slice spanning model invocation, scoring, persisted results, and documentation through the benchmark CLI. 
+- Turn 107: Codex (architect, slice): CONFIRMED — This is a thin vertical bug-fix slice spanning model invocation, scoring, persisted results, and documentation through the benchmark CLI.
 - Turn 108: Grok (navigator, directions): gave 5 directions
 - Turn 109: Codex (driver, red): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs
 - Turn 110: Copilot (observer, checkpoint): signed off
@@ -32,17 +22,28 @@
 - Turn 112: Grok (navigator, directions): gave 5 directions
 - Turn 113: Codex (driver, green): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 114: Copilot (observer, checkpoint): signed off
+- Turn 115: agy (observer, checkpoint): signed off
+- Turn 116: Grok (navigator, directions): gave 6 directions
+- Turn 117: Codex (driver, refactor): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
+- Turn 118: Codex (member, teamsignoff): FLAG
+- Turn 119: Grok (member, teamsignoff): FLAG
+- Turn 120: Copilot (member, teamsignoff): signed off
+- Turn 121: agy (member, teamsignoff): FLAG
+- Turn 122: Grok (navigator, directions): gave 3 directions
+- Turn 123: Codex (driver, fix): changed tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
+- Turn 124: Codex (member, teamsignoff): FLAG
 
 ## Flags, checks and decisions on this card
 
 - **Baseline (before any work): not done**: 4 of 6 checks pass
 - **Cycle 1 roles**: driver Codex; navigator Grok; observers Copilot, agy
+- **Flag raised at before commit (whole team)**: - codex: FLAG: bench/results/self-check/history.jsonl contains 24 newly appended duplicate self-check fixture rows and must not ship with this increment.
 
 ## Decider outcomes (latest)
 
-- Decider D5: declare card 016 Done on its written criteria but not M2; file bug card 032 (invalid baseline) at rank 3; run 032 as the first E1 true-mobbing card wi (passed)
-- Decider D6: rank retro-016 cards: 033 (generics) and 034 (behavioral holes) after 023 and before 008; 035 (failure-code holes, Decider first) after 021; fold two  (passed)
-- Decider D7: file the live mob dashboard as tooling card 036 (experiment E2) at 2nd in Ready after the baseline fix; code in mob-defaults; one dashboard for all mo (passed)
+- Decider D5: declare card 016 Done on its written criteria but not M2; file bug card 032 (invalid baseline) at rank 3; run 032 as the first E1 true-mobbing card… (passed)
+- Decider D6: rank retro-016 cards: 033 (generics) and 034 (behavioral holes) after 023 and before 008; 035 (failure-code holes, Decider first) after 021; fold two… (passed)
+- Decider D7: file the live mob dashboard as tooling card 036 (experiment E2) at 2nd in Ready after the baseline fix; code in mob-defaults; one dashboard for all… (passed)
 
 ## Board
 
@@ -52,13 +53,13 @@
 
 ## Latest commits
 
+- 2a32cf4 No Co-Authored-By trailers (Steve's standing coding rule): agreement bullet and commit-msg hook
 - 1d13572 Pre-commit check: the published MOB.md must hold no secrets or home paths (public repo)
 - a4ab305 Isolate benchmark self-check results
 - ce1eb04 Live mob dashboard: tooling card 036 and experiment E2, ranked via Decider D7 (amended after Copilot's ABSOLUTEL
-- bc299b5 Fix benchmark reply source extraction
 
 ## What's next
 
-- Running. Latest: turn 114 by Copilot (checkpoint). Next: the next stage of the current cycle.
+- Running. Latest: turn 124 by Codex (teamsignoff). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 06:12 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 06:19 UTC. Summary only: no prompts, replies, code or secrets are published._
