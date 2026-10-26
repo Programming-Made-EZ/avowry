@@ -1,6 +1,6 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 3)
+**Project:** Phrase &nbsp;|&nbsp; **State:** running
 **Card in progress:** Live mob dashboard: see every seat's status from a phone (036)
 
 ## Who did what
@@ -31,13 +31,13 @@
 
 ## Latest commits
 
+- 68eb250 Board: card 036 has no repo-relative references to phrase-lang files (they resolve only in the References sectio
 - a7e9a76 Board: card 036 lists its governing documents by absolute path (cross-repo run)
 - 0d5022a Board: card 036 (live mob dashboard) gets its contract, task force and a hash-locked Done-when
 - d956bd3 Agreement: run every Decider with the sandboxed runner
-- da40c05 Retro 032: add the voter-write-access incident
 
 ## What's next
 
-- Stopped before the card was done. Next: look at the last flag or check above, then run again.
+- Running. Latest: turn 3 by Codex (ready). Next: the next stage of the current cycle.
 
 _Updated 2026-10-26 13:37 UTC. Summary only: no prompts, replies, code or secrets are published._
