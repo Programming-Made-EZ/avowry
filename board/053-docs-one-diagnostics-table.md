@@ -3,6 +3,7 @@
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
 - **Type:** docs (thin slice from card 018; exempt from the hypothesis rule)
 - **Source:** Grok independent review, 2026-10-25; split from 018 under the thin-slice rule (Decider D18).
+- **Depends on:** none
 - **Story:** As a Phrase author (an engineer or an LLM), I want exactly one place that holds the full diagnostics table, so that I never read two copies that disagree.
 - **One observable behaviour:** only one of HANDOFF.md and docs/GRAMMAR.md holds the full diagnostics table, and the other points to it; GRAMMAR.md no longer wrongly says the table moved.
 - **Done checks (at most 3):**

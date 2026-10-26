@@ -4,6 +4,7 @@
 - **Milestone:** Usable v1
 - **North star:** `VISION.md`
 - **Source:** Steve's purpose ruling (VISION.md); Decider D3.
+- **Depends on:** none
 - **Story:** As the language designer, I want one written definition of a keyword, so that the grammar, the catalogue and the providers agree on what we are building.
 - **Hypothesis:** exempt: decision/plumbing card that unblocks the cards that carry hypotheses.
 - **Acceptance criteria (ZOMBIES):**

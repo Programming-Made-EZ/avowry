@@ -4,6 +4,7 @@
 - **Type:** bug (exempt from the hypothesis rule); a benchmark-suite change, so it needs its own Decider and is never bundled with a feature it measures
 - **Milestone:** Usable v1 (plumbing: every hypothesis card needs a baseline that measures what it changes); feeds M3 'LLM-fluent' and the bootstrap-phase exit criteria
 - **Source:** Facilitator's analysis of the stored baseline (card 032), 2026-10-26, Decider D11. Two validity gaps: (1) the benchmark prompts contain no grammar or docs (for example `bench/tasks/001-write-greeting/prompt.md` says only 'Write a valid Phrase module...'), so the documentation cards (013, 014, 019) could not move this metric; (2) the runs are not cold: agy passes 7 of 8 zero-shot tasks on a language it should not know, which suggests its CLI keeps memory or project context of earlier Phrase sessions, so the baseline may include what the mob itself taught the models.
+- **Depends on:** none
 - **Story:** As the mob, I want the benchmark to give each model the documentation a new user gets, in a fresh session with no memory of earlier work, so that the baseline measures what an LLM does with our docs and the documentation cards can move it.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given the existing zero-shot rows in `bench/results/history.jsonl` (stored 2026-10-26), When the suite changes, Then they are kept and labeled `mode: zero-shot`, never deleted or relabeled as the new baseline

@@ -3,6 +3,7 @@
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
 - **Type:** bug (exempt from the hypothesis rule); code only. The docs criterion (one diagnostics table) moved to card 053 under the thin-slice rule (D18).
 - **Source:** Grok independent review of a47ed6a (Copilot) and 8ba3699 (agy), 2026-10-25, verdict CHANGES.
+- **Depends on:** none
 - **Story:** As a Phrase author (an engineer or an LLM), I want spec errors reported accurately and specs held to literal data, so that the specs I write are the truth the emitter turns into tests.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given an endpoint spec that expects a failure the endpoint cannot produce, When resolved, Then PH334 names the real endpoint (for example `CreateOrder`), not the placeholder `Probe`, and lists the failures it can produce

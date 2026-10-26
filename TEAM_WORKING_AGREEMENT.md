@@ -40,8 +40,18 @@ an assignee (model or seat) and a one-line why. There is no minimum or maximum r
   concurrent (conflicting) streams R = O(α C + β), where C is total async work complexity, α the scaling
   factor, and β the fixed overhead. Design improvements can reduce, but not always eliminate, resync
   complexity; naive async approaches linear or worse."
-  *Applied:* cards share the code, the drivers and the gate, so they are conflicting streams. Hence
-  **WIP-of-one**: one card, one TDD cycle, one driver, one linear trunk in flight.
+  *Applied (revised 2026-10-26, Steve's correction, Decider D22):* Steve: "it still fits with Bishop's Law. For parallelism to work efficiently the work must be atomistic. Once dependencies are introduced true parallelism cannot be achieved." A task that is
+  atomistic and dependency-free is the cheap **parallel** class, R = O(alpha log C + beta): its `Depends on:` line is `none` and it shares no files with another in-flight task,
+  so it may run in its own worktree from current main, with merges serialized as fast-forwards. A task that names a dependency, edits files another in-flight task edits, or shares
+  state is the **concurrent** class, R = O(alpha C + beta), and stays **WIP-of-one**: one card, one TDD cycle, one driver, one linear trunk in flight. Sharing the gate is the fixed
+  overhead beta. Every card has a `Depends on:` line (a missing line does not mean none). A merge conflict reclassifies that pair as concurrent: the later task is discarded and
+  retried from the new main.
+- **Land or discard (experiment, Decider D22, under trial; not yet doctrine).** Steve: "it feels like work should be done atomistically. that way it gets an all or nothing result.
+  the smaller and more atomistic the better. this makes retries easier and more distributable." Each task starts from current main in a fresh worktree and ends in exactly one state:
+  LANDED (every check passes, a non-author has reviewed it, one commit on main) or DISCARDED (the linked worktree is removed with `git worktree remove` and, only for a strict child of a
+  registered scratch root, `safe_delete`; nothing from the attempt remains on main or in a stash). A retry starts clean; the attempt's log lives outside the worktree and is never the
+  seed of the next attempt. Metrics: retries per task, partial-state incidents (stashes, uncommitted carry-over), time to land. Counter-metric: merge conflicts and resync overhead from
+  parallel work. Review after the first three thin cards that use it; the trial Decider keeps, changes or drops it.
 - **The board is the single source of truth.** Work is pulled from the top of the ranked Ready list.
   A feature idea from Steve is RAW INPUT: the mob reviews it, refines it into a card (a Connextra story
   plus ZOMBIES acceptance criteria a user can observe), and the PM ranks it. Steve gets back the card

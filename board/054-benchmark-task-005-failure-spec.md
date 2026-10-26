@@ -4,6 +4,7 @@
 - **Type:** data (thin slice; exempt from the hypothesis rule)
 - **Milestone:** Vocabulary v1 and Usable v1 plumbing (consumer-observable outcomes, VISION ruling 5)
 - **Source:** Steve, 2026-10-26 (VISION ruling 5): "I feel like we aren't adhering to consumer related output. 'succeeds' isn't really a result the customer gets value from." Team review: Decider D20 (Codex Support-it, Copilot Support-it, Grok Yes; agy no response).
+- **Depends on:** none
 - **Story:** As a consumer of Phrase programs (an engineer, an LLM, or an end customer), I want the benchmark task 005 (read-failure) source declares MissingName and has a spec that shows it, with the suite version updated, so the task no longer teaches an outcome-less example, so that specs state a result that has value to the consumer.
 - **Done checks (at most 3, each failing on partial work):**
   1. bench/tasks/005-read-failure/prompt.md has a `then fails with MissingName` spec next to the happy-path spec; every other task file (holdouts included) is byte-identical to before

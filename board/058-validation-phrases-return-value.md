@@ -4,6 +4,7 @@
 - **Type:** feature (thin slice; exempt from the hypothesis rule)
 - **Milestone:** Vocabulary v1 and Usable v1 plumbing (consumer-observable outcomes, VISION ruling 5)
 - **Source:** Steve, 2026-10-26 (VISION ruling 5): "I feel like we aren't adhering to consumer related output. 'succeeds' isn't really a result the customer gets value from." Team review: Decider D20 (Codex Support-it, Copilot Support-it, Grok Yes; agy no response).
+- **Depends on:** 022, 055
 - **Story:** As a consumer of Phrase programs (an engineer, an LLM, or an end customer), I want a validation phrase such as `ensure {name: Text} has a value` returns the validated Text on success and fails with its declared code on invalid input, so its spec asserts a value instead of `succeeds`, so that specs state a result that has value to the consumer.
 - **Done checks (at most 3, each failing on partial work):**
   1. A Decider records the contract (validation phrases return the validated or normalized value; existing `ensure` phrases are migrated deliberately, not silently)
