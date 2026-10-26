@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Phrase.Compiler;
 
 const int MaximumAttempts = 3;
+const int EmptyReplyMaximumAttempts = 2;
 const string SelfCheckModel = "self-check-v1";
 const string SelfCheckModelCommand = "__phrase_bench_builtin_fake__";
 
@@ -115,14 +116,27 @@ static async Task<bool> RunTask(
         var tokensIn = 0;
         var tokensOut = 0;
         var diagnostics = new List<string>();
-        BenchmarkScore score;
+        var reply = string.Empty;
+        var score = new BenchmarkScore(false, []);
         do
         {
             attempts++;
-            var output = await RunModel(model, modelCommand, scratchDirectory, attemptPrompt, timeout);
+            reply = await RunModel(model, modelCommand, scratchDirectory, attemptPrompt, timeout);
             tokensIn += EstimateTokens(attemptPrompt);
-            tokensOut += EstimateTokens(output);
-            score = ScoreReply(output);
+            tokensOut += EstimateTokens(reply);
+            if (IsEmptyReply(reply))
+            {
+                if (attempts < EmptyReplyMaximumAttempts)
+                    continue;
+
+                var unavailable = BenchmarkResult.Unavailable(
+                    model, task.Id, Hash(prompt), "empty reply", attempts, tokensIn, tokensOut, CreateReplyHead(reply));
+                PersistResult(suiteDirectory, model, unavailable);
+                Console.WriteLine($"{model}: unavailable {task.Id}");
+                return true;
+            }
+
+            score = ScoreReply(reply);
             diagnostics.AddRange(score.Diagnostics);
             if (!score.Passed)
                 attemptPrompt = AddDiagnostics(prompt, score.Diagnostics);
@@ -131,7 +145,7 @@ static async Task<bool> RunTask(
 
         var result = new BenchmarkResult(
             model, task.Id, score.Passed, attempts, tokensIn, tokensOut,
-            "estimated", diagnostics, false, Hash(prompt));
+            "estimated", diagnostics, false, Hash(prompt), CreateReplyHead(reply));
         PersistResult(suiteDirectory, model, result);
         Console.WriteLine($"{model}: {(score.Passed ? "passed" : "failed")} {task.Id}");
         return score.Passed;
@@ -300,32 +314,55 @@ static BenchmarkScore ScoreReply(string output)
 
 static string ExtractPhrase(string output)
 {
-    var match = Regex.Match(
+    foreach (Match match in Regex.Matches(
         output,
-        @"```+\s*phrase\b[^\r\n]*\r?\n(?<body>[\s\S]*?)```+",
-        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
-    if (!match.Success)
-        return output;
+        @"```+[ \t]*(?:phrase[^\r\n]*)?\r?\n(?<body>[\s\S]*?)```+",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+    {
+        var body = match.Groups["body"].Value.Trim();
+        if (ContainsPhrase(body))
+            return body;
+    }
 
-    return match.Groups["body"].Value.TrimEnd('\r', '\n');
+    var plainMatch = Regex.Match(
+        output,
+        @"(?ms)(?:^|\n)(?<body>(?:module|phrase|type|endpoint)\b[^\n]*(?:\n\s+.*)*)",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+    if (plainMatch.Success)
+    {
+        var body = plainMatch.Groups["body"].Value.Trim();
+        if (ContainsPhrase(body))
+            return body;
+    }
+
+    return string.Empty;
 }
 
 static bool ContainsPhrase(string source)
 {
-    foreach (var line in source.Split('\n'))
-    {
-        var trimmed = line.Trim();
-        if (trimmed.StartsWith("module ", StringComparison.Ordinal)
-            || trimmed.StartsWith("phrase ", StringComparison.Ordinal)
-            || trimmed.StartsWith("type ", StringComparison.Ordinal)
-            || trimmed.StartsWith("endpoint ", StringComparison.Ordinal))
-            return true;
-    }
-
-    return false;
+    return Regex.IsMatch(
+        source,
+        @"(?m)^(?:module|phrase|type|endpoint)\b",
+        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 }
 
 static int EstimateTokens(string text) => Math.Max(1, (int)Math.Ceiling(text.Length / 4d));
+static bool IsEmptyReply(string reply) => string.IsNullOrWhiteSpace(reply);
+static string CreateReplyHead(string reply)
+{
+    var trimmed = reply.Trim();
+    var head = trimmed[..Math.Min(200, trimmed.Length)];
+    head = Regex.Replace(
+        head,
+        @"(?i)\b(api[_-]?key|token|secret)\s*[:=]\s*\S+",
+        "$1=[redacted]",
+        RegexOptions.CultureInvariant);
+    return Regex.Replace(
+        head,
+        @"(?<!\w)(?:[A-Za-z]:\\|/)(?:[^\s\""'<>]+[\\/])*[^\s\""'<>]*",
+        "[path]",
+        RegexOptions.CultureInvariant);
+}
 static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text))).ToLowerInvariant();
 static string AddDiagnostics(string prompt, IReadOnlyList<string> diagnostics) =>
     $"{prompt}{Environment.NewLine}{Environment.NewLine}Compiler diagnostics:{Environment.NewLine}{string.Join(Environment.NewLine, diagnostics)}";
@@ -362,11 +399,14 @@ sealed record BenchmarkResult(
     IReadOnlyList<string> Diagnostics,
     bool Misread,
     string PromptHash,
+    string ReplyHead = "",
     string Status = "completed",
     string? Error = null)
 {
-    public static BenchmarkResult Unavailable(string model, string task, string promptHash, string error) =>
-        new(model, task, false, 0, 0, 0, "estimated", [], false, promptHash, "unavailable", error);
+    public static BenchmarkResult Unavailable(
+        string model, string task, string promptHash, string error,
+        int attempts = 0, int tokensIn = 0, int tokensOut = 0, string replyHead = "") =>
+        new(model, task, false, attempts, tokensIn, tokensOut, "estimated", [], false, promptHash, replyHead, "unavailable", error);
 }
 sealed record BenchmarkScore(bool Passed, IReadOnlyList<string> Diagnostics);
 

@@ -201,6 +201,42 @@ public class BenchmarkHarnessAcceptance
     }
 
     [Fact]
+    public async Task run_extracts_phrase_from_an_unlabeled_markdown_fence()
+    {
+        // Given a model reply that wraps the Phrase in a plain markdown fence with no language tag
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var modelOutput = Path.Combine(workspace.Root, "model-output.txt");
+        await File.WriteAllTextAsync(modelOutput, """
+            Here is the final program.
+
+            ```
+            module Greeting
+
+            phrase "say hello"
+              native csharp
+                return;
+            ```
+
+            This compiles cleanly.
+            """);
+        var modelCommand = PrintFileCommand(modelOutput);
+
+        // When the benchmark CLI runs the fake model through its real process boundary
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "plain-fence-v1", modelCommand);
+
+        // Then the Phrase is stripped from the fence and scored without PH diagnostics
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Contains("plain-fence-v1: passed", stdout);
+        using var result = await ReadModelResult(suiteDirectory, "plain-fence-v1");
+        Assert.True(result.RootElement.GetProperty("passed").GetBoolean());
+        Assert.Equal("completed", result.RootElement.GetProperty("status").GetString());
+        Assert.DoesNotContain(
+            result.RootElement.GetProperty("diagnostics").EnumerateArray(),
+            diagnostic => diagnostic.GetString()!.StartsWith("PH10", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public async Task run_extracts_phrase_from_case_insensitive_markdown_fence_and_narration()
     {
         // Given a quoted model reply with mixed narration and a case-insensitive fenced Phrase block
@@ -323,6 +359,31 @@ public class BenchmarkHarnessAcceptance
             Path.Combine(suiteDirectory, "results", "history.jsonl")));
         using var historyResult = JsonDocument.Parse(historyLine);
         Assert.Equal("unavailable", historyResult.RootElement.GetProperty("status").GetString());
+    }
+
+    [Fact]
+    public async Task run_retries_an_empty_reply_once_and_records_it_as_unavailable()
+    {
+        // Given a model that repeatedly produces empty output
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var attempts = Path.Combine(workspace.Root, "attempts.txt");
+        var modelCommand = OperatingSystem.IsWindows()
+            ? $"more > nul && echo attempt>>\"{attempts}\""
+            : $"cat > /dev/null; echo attempt >> '{attempts}'";
+
+        // When the benchmark CLI tries to capture the reply
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "empty-v1", modelCommand);
+
+        // Then it retries once and records an auditable unavailable result instead of scoring the reply
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Contains("empty-v1: unavailable", stdout);
+        Assert.Equal(2, (await File.ReadAllLinesAsync(attempts)).Length);
+        using var result = await ReadModelResult(suiteDirectory, "empty-v1");
+        Assert.Equal("unavailable", result.RootElement.GetProperty("status").GetString());
+        Assert.Equal(2, result.RootElement.GetProperty("attempts").GetInt32());
+        Assert.Equal("empty reply", result.RootElement.GetProperty("error").GetString());
+        Assert.Equal(string.Empty, result.RootElement.GetProperty("reply_head").GetString());
     }
 
     [Fact]
