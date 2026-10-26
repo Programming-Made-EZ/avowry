@@ -1,6 +1,6 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** running
+**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 4)
 **Card in progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
 
 **Latest cycle:** 1 (driver Codex; navigator Grok; observers Copilot, agy). The full working log is private; this page is a summary.
@@ -38,6 +38,8 @@
 - **Baseline (before any work): not done**: 4 of 6 checks pass
 - **Cycle 1 roles**: driver Codex; navigator Grok; observers Copilot, agy
 - **Flag raised at after red**: - copilot: FLAG: Criterion Many/Interface not met: the benchmark check failed because model coverage isn’t complete and bench/README.md is still too short or absent.
+- **Flag unresolved at after red**: - copilot: FLAG: tools/Phrase.Bench/Program.cs was edited during the red step, violating the rule that only the test may change.
+- **Experiment E1 metrics**: turns: 7, cycles: 1, flags: 2, fixrounds: 1, esttokens: 67593, seconds: 392.7 (tokens are estimated from prompt and reply size)
 
 ## Decider outcomes (latest)
 
@@ -60,6 +62,6 @@
 
 ## What's next
 
-- Running. Latest: turn 135 by Copilot (checkpoint). Next: the next stage of the current cycle.
+- Stopped on a flag nobody could clear. Next: fix or take it to a Decider, then run the card again.
 
 _Updated 2026-10-26 06:29 UTC. Summary only: no prompts, replies, code or secrets are published._
