@@ -5,13 +5,12 @@
 
 ## Who did what
 
-- **Codex:** 19 turns (advance x1, green x4, ready x4, refactor x5, ship x4, slice x1)
+- **Codex:** 20 turns (advance x1, green x4, ready x4, refactor x5, ship x5, slice x1)
 - **Copilot:** 2 turns (red x1, signoff x1)
 - **Grok:** 1 turns (red x1)
 
 ## Recent turns
 
-- Turn 5: Codex (backend-dev, refactor): changed facilitator.py
 - Turn 6: Codex (devops-engineer, ship): Shipping stopped: the required dashboard acceptance suite is not green.
 - Turn 7: Codex (backend-dev, green): changed facilitator.py
 - Turn 8: Codex (backend-dev, refactor): changed facilitator.py
@@ -29,6 +28,7 @@
 - Turn 20: Codex (devops-engineer, ship): Shipment stopped because the required acceptance gate is red.
 - Turn 21: Codex (backend-dev, green): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 - Turn 22: Codex (backend-dev, refactor): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
+- Turn 23: Codex (devops-engineer, ship): Shipment stopped: required acceptance gate is red.
 
 ## Flags, checks and decisions on this card
 
@@ -56,6 +56,6 @@
 
 ## What's next
 
-- Running. Latest: turn 22 by Codex (refactor). Next: the next stage of the current cycle.
+- Running. Latest: turn 23 by Codex (ship). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 16:59 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 17:05 UTC. Summary only: no prompts, replies, code or secrets are published._
