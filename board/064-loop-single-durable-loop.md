@@ -4,7 +4,7 @@
 - **Type:** tooling (thin slice; the code lives in mob-defaults; authored by the driver rotation and reviewed by a non-author under D15, with the smoke run)
 - **Milestone:** process: the loop runner (retro seed P1: no turn ends with nothing running)
 - **Source:** Steve, 2026-10-26 (mob-defaults is his product): "it should be a loop." The continuous loop must live in the tooling, not in the facilitator's chat turns; three idle gaps today all came from the loop depending on a chat turn (retro seed P1). Team design: Decider D23 (Codex Yes, Grok Yes, Copilot Support-it with changes; agy no response).
-- **Depends on:** 063
+- **Depends on:** 076 (the picker reads the GitHub board; D25)
 - **Story:** As the mob (and Steve), I want the loop to live in `loop.py` in mob-defaults, so that the work keeps going without a chat turn and stalls cannot come from an idle facilitator.
 - **One observable behaviour:** Starting a second loop is refused, and an interrupted loop resumes its recorded phase exactly once.
 - **Acceptance criteria (Given/When/Then; at most 3, each failing on partial work):**
