@@ -7,12 +7,11 @@
 
 ## Who did what
 
-- **Codex:** 13 turns (advance x1, green x3, ready x1, refactor x3, ship x3, signoff x1, slice x1)
-- **Copilot:** 2 turns (red x1, signoff x1)
+- **Codex:** 16 turns (advance x2, green x4, ready x1, refactor x4, ship x3, signoff x1, slice x1)
+- **Copilot:** 3 turns (red x2, signoff x1)
 
 ## Recent turns
 
-- Turn 1: Codex (product-manager, ready): READY — The card has a sound Connextra story, testable Given/When/Then criteria, and all referenced guidance/source/test files exist.
 - Turn 2: Codex (architect, slice): CONFIRMED — This is a thin vertical bug-fix slice: Phrase source enters the public Resolver.Resolve(string) boundary and produces user-visible…
 - Turn 3: Copilot (qa-engineer, red): changed VISION.md, docs/GRAMMAR.md, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
 - Turn 4: Codex (backend-dev, green): changed VISION.md, docs/GRAMMAR.md, src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
@@ -27,10 +26,14 @@
 - Turn 13: Copilot (qa-engineer, signoff): I’m validating the stored mob state against the actual repo and will either complete the remaining defect fixes or sign off with the precise QA…
 - Turn 13: Codex (qa-engineer, signoff): READY — The card has a sound Connextra story, testable Given/When/Then acceptance criteria, and all referenced guidance, source, and test files exist.
 - Turn 14: Codex (product-manager, advance): Still In Progress — delivered fixes for PH334 endpoint naming, PH332 nested paths, duplicate PH331 reporting, and unknown-hole PH331 wording; all…
+- Turn 14: Codex (product-manager, advance): CONFIRMED — This is a thin vertical bug-fix slice: Phrase source enters the public Resolver.Resolve(string) boundary and returns user-visible…
+- Turn 15: Copilot (qa-engineer, red): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
+- Turn 16: Codex (backend-dev, green): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
+- Turn 17: Codex (backend-dev, refactor): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
 
 ## Flags, checks and decisions on this card
 
-- None yet.
+- **Baseline (before any work): not done**: 2 of 3 checks pass
 
 ## Decider outcomes (latest)
 
@@ -55,4 +58,4 @@
 
 - Stopped before the card was done. Next: look at the last flag or check above, then run again.
 
-_Updated 2026-10-26 20:48 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 20:54 UTC. Summary only: no prompts, replies, code or secrets are published._
