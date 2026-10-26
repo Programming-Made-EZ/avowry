@@ -321,6 +321,13 @@ within the last hour) takes a driver out of rotation, until its next successful 
 - **Never `rm -rf` (or `Remove-Item -Recurse`, `rd /s`, `git clean`) on a variable or computed path.**
   A delete is allowed only on a literal path inside the repo's scratch directory, after asserting it is
   non-empty and absolute.
+- **Detectors (Steve: constraints must self-report; a ban with no detector isn't in force).** Both bans above are enforced
+  mechanically, not by memory: (1) the facilitator appends the safety rule to every dispatched prompt and scans every model
+  reply for a recursive delete of a variable or unresolved path and for a kill by process name, raising a `Safety flag` in
+  MOB.md and on the published page; (2) `safe_delete(path, roots)` in mob-defaults' `delete_guard.py` is the one way to delete a
+  computed path, and refuses anything that is not a verified strict child of a known scratch root (empty, relative, outside,
+  `..`, symlink, the root itself, an ancestor, home, a drive root); (3) a pre-commit check
+  (`scripts/check-unsafe-deletes.py`) refuses a commit that adds such a delete or kill to a script or source file.
 - **No `AskUserQuestion`** and no interactive prompts anywhere in the mob.
 - **Do not touch other projects' repos, ports or containers** on a shared machine.
 - Drivers do not add behavior beyond the brief; extra ideas go in the report as "NOT DONE, proposed".
