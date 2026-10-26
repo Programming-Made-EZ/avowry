@@ -6,8 +6,6 @@ namespace Phrase.Compiler.Tests.Semantics;
 
 // Feature: Resolving the whole program
 //   The acceptance fixture resolves into the model the C# provider will consume.
-// Pending: the mob's starting point. Remove this trait when every test in the class passes.
-[Trait("Status", "Pending")]
 public class ResolverFixtureTests
 {
     private static readonly string Orders =

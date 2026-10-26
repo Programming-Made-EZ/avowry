@@ -101,6 +101,13 @@ public static class Resolver
             }
 
             ResolvePhraseFlow(phrases);
+            var declarationsByKey = phraseDeclarations.ToDictionary(pair => pair.Model.Key, pair => pair.Declaration, StringComparer.Ordinal);
+            for (var i = 0; i < phrases.Count; i++)
+            {
+                var declaration = declarationsByKey[phrases[i].Key];
+                var specs = ResolvePhraseSpecs(declaration, phrases[i]);
+                phrases[i] = phrases[i] with { Specs = specs };
+            }
             return phrases;
         }
 
@@ -127,9 +134,10 @@ public static class Resolver
                 if (outputType is not null && !steps.Any(step => step is BoundRespondStep or BoundFailStep))
                     Report("PH323", $"Endpoint '{declaration.Name}' has an output but never responds or fails.", declaration.At);
                 var failures = EffectiveFailures(steps);
-                endpoints.Add(new EndpointModel(
+                var model = new EndpointModel(
                     declaration.Name, declaration.Verb, declaration.Route,
-                    inputType, input, outputType, output, steps, failures, []));
+                    inputType, input, outputType, output, steps, failures, []);
+                endpoints.Add(model with { Specs = ResolveEndpointSpecs(declaration, model) });
             }
             return endpoints;
         }
@@ -257,6 +265,169 @@ public static class Resolver
                     failures.UnionWith(phraseDeclarations.Single(pair => pair.Model.Key == key).Model.Failures);
             }
             return failures.Order(StringComparer.Ordinal).ToList();
+        }
+
+        private IReadOnlyList<PhraseSpecModel> ResolvePhraseSpecs(PhraseDecl declaration, PhraseModel phrase) =>
+            declaration.Specs.Select(spec => ResolvePhraseSpec(spec, phrase)).ToList();
+
+        private PhraseSpecModel ResolvePhraseSpec(SpecDecl spec, PhraseModel phrase)
+        {
+            if (spec.When is not SpecTrigger.Called)
+            {
+                Report("PH330", $"Spec '{spec.Description}' on phrase '{phrase.Template}' must use 'when called'.", spec.At);
+            }
+
+            var scope = phrase.Holes.ToDictionary(h => h.Name, h => h.Type, StringComparer.Ordinal);
+            var givens = new List<BoundArgument>();
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var given in spec.Givens)
+            {
+                if (given is GivenInput)
+                {
+                    Report("PH331", "Phrase specs cannot bind input; use a hole binding.", given.At);
+                    continue;
+                }
+
+                var binding = (GivenBinding)given;
+                if (!scope.TryGetValue(binding.Name, out var type))
+                {
+                    Report("PH331", $"Phrase spec for '{phrase.Template}' does not bind hole '{binding.Name}'.", binding.At);
+                    continue;
+                }
+                if (!seen.Add(binding.Name))
+                {
+                    Report("PH331", $"Hole '{binding.Name}' is bound more than once in the spec.", binding.At);
+                    continue;
+                }
+            }
+
+            foreach (var hole in phrase.Holes)
+            {
+                var bindings = spec.Givens.OfType<GivenBinding>().Where(g => g.Name == hole.Name).ToList();
+                if (bindings.Count == 0)
+                {
+                    Report("PH331", $"Spec for '{phrase.Template}' is missing the hole '{hole.Name}'.", spec.At);
+                    continue;
+                }
+
+                var binding = bindings[0];
+                if (bindings.Count > 1)
+                {
+                    Report("PH331", $"Hole '{hole.Name}' is bound more than once in the spec.", binding.At);
+                }
+                if (binding.Value is PathExpr)
+                {
+                    Report("PH332", $"Spec value for '{binding.Name}' must be a literal, not a path.", binding.At);
+                    continue;
+                }
+                givens.Add(new BoundArgument(new FieldModel(hole.Name, hole.Type), ResolveValue(binding.Value, hole.Type, scope)));
+            }
+
+            var outcome = ResolveSpecOutcome(spec, phrase, scope, null, null);
+            return new PhraseSpecModel(spec.Description, givens, outcome, SourceFormatter.Lines(spec));
+        }
+
+        private IReadOnlyList<EndpointSpecModel> ResolveEndpointSpecs(EndpointDecl declaration, EndpointModel endpoint) =>
+            declaration.Specs.Select(spec => ResolveEndpointSpec(spec, endpoint)).ToList();
+
+        private EndpointSpecModel ResolveEndpointSpec(SpecDecl spec, EndpointModel endpoint)
+        {
+            if (spec.When is not SpecTrigger.Handled)
+            {
+                Report("PH330", $"Spec '{spec.Description}' on endpoint '{endpoint.Name}' must use 'when handled'.", spec.At);
+            }
+
+            var scope = new Dictionary<string, PType>(StringComparer.Ordinal) { ["input"] = endpoint.InputType };
+            var seenInput = false;
+            var inputFields = new List<BoundRecordField>();
+            foreach (var given in spec.Givens)
+            {
+                if (given is GivenInput inputGiven)
+                {
+                    seenInput = true;
+                    var inputRecord = ResolveRecord(inputGiven.Value, endpoint.InputType, scope);
+                    inputFields = [.. inputRecord.Fields];
+                    continue;
+                }
+
+                var binding = (GivenBinding)given;
+                if (binding.Name == "input")
+                {
+                    Report("PH331", $"Endpoint spec for '{endpoint.Name}' must use 'given input {{ ... }}', not 'input = ...'.", binding.At);
+                    continue;
+                }
+                Report("PH331", $"Endpoint spec for '{endpoint.Name}' must use 'given input {{ ... }}', not '{binding.Name}'.", binding.At);
+            }
+            if (!seenInput && spec.Givens.Count == 0)
+                Report("PH331", $"Endpoint spec for '{endpoint.Name}' is missing the required 'given input {{ ... }}'.", spec.At);
+            if (spec.Givens.Count(g => g is GivenInput) > 1)
+                Report("PH331", $"Endpoint spec for '{endpoint.Name}' has more than one input binding.", spec.At);
+
+            var outcome = ResolveSpecOutcome(spec, null, scope, endpoint.OutputType, endpoint.Failures);
+            var boundInput = new BoundRecord(inputFields, endpoint.InputType);
+            return new EndpointSpecModel(spec.Description, boundInput, outcome, SourceFormatter.Lines(spec));
+        }
+
+        private SpecOutcomeModel ResolveSpecOutcome(
+            SpecDecl spec,
+            PhraseModel? phrase,
+            IReadOnlyDictionary<string, PType> scope,
+            PType? outputType,
+            IReadOnlyList<string>? unitFailures)
+        {
+            var outcomes = spec.Thens;
+            if (outcomes.Count > 1)
+            {
+                Report("PH335", $"Spec '{spec.Description}' has more than one outcome.", spec.At);
+                return new SucceedsModel();
+            }
+
+            if (outcomes.Count == 0)
+                return new SucceedsModel();
+
+            var outcome = outcomes[0];
+            switch (outcome)
+            {
+                case ReturnsOutcome returns:
+                    if (phrase is null || phrase.Returns is null)
+                    {
+                        Report("PH333", $"Spec '{spec.Description}' uses 'returns' but this unit cannot return a value.", returns.At);
+                        return new SucceedsModel();
+                    }
+                    if (returns.Value is PathExpr)
+                    {
+                        Report("PH332", "Spec outcome value must be a literal, not a path.", returns.At);
+                        return new SucceedsModel();
+                    }
+                    var value = ResolveValue(returns.Value, phrase.Returns, scope);
+                    return new ReturnsModel(value);
+                case RespondsOutcome responds:
+                    if (outputType is null)
+                    {
+                        Report("PH333", $"Spec '{spec.Description}' uses 'responds' but this unit has no output.", responds.At);
+                        return new SucceedsModel();
+                    }
+                    var responseRecord = ResolveRecord(responds.Value, outputType, scope);
+                    return new RespondsModel(responseRecord);
+                case FailsWithOutcome fail:
+                    if (phrase is not null && !phrase.Failures.Contains(fail.Code, StringComparer.Ordinal))
+                    {
+                        Report("PH334", $"Phrase '{phrase.Template}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", phrase.Failures)}.", fail.At);
+                    }
+                    if (phrase is null && unitFailures is not null && !unitFailures.Contains(fail.Code, StringComparer.Ordinal))
+                    {
+                        Report("PH334", $"Endpoint '{(scope.ContainsKey("input") ? "Probe" : "unit")}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", unitFailures)}.", fail.At);
+                    }
+                    return new FailsModel(fail.Code);
+                case SucceedsOutcome:
+                    if (phrase is not null && phrase.Returns is not null)
+                    {
+                        Report("PH333", $"Spec '{spec.Description}' expects success for a phrase that returns a value.", outcome.At);
+                    }
+                    return new SucceedsModel();
+                default:
+                    throw new InvalidOperationException();
+            }
         }
 
         private static string? CalledPhraseKey(BoundStep step) => step switch

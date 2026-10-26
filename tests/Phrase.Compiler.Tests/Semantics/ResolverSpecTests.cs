@@ -7,8 +7,6 @@ namespace Phrase.Compiler.Tests.Semantics;
 //   A spec must be runnable as written: it binds every hole (or gives the endpoint
 //   input), uses literal values of the right types, and expects an outcome the unit
 //   can actually produce.
-// Pending: the mob's starting point. Remove this trait when every test in the class passes.
-[Trait("Status", "Pending")]
 public class ResolverSpecTests
 {
     private static string Adder(string spec) =>
