@@ -181,19 +181,19 @@ public static class Resolver
                     case LetStep let:
                     {
                         var resolved = ResolveCall(let.Call, scope);
-                        if (resolved is null)
-                            break;
-                        var type = resolved.Value.Phrase.Returns;
-                        if (type is null)
+                        var type = PType.Error;
+                        if (resolved is not null)
                         {
-                            Report("PH320", $"Phrase '{resolved.Value.Phrase.Template}' returns no value and cannot be used with 'let'.", let.At);
-                            type = PType.Error;
+                            type = resolved.Value.Phrase.Returns ?? PType.Error;
+                            if (resolved.Value.Phrase.Returns is null)
+                                Report("PH320", $"Phrase '{resolved.Value.Phrase.Template}' returns no value and cannot be used with 'let'.", let.At);
                         }
                         if (scope.ContainsKey(let.Name))
                             Report("PH313", $"Variable '{let.Name}' is already defined.", let.At);
                         else
                             scope.Add(let.Name, type);
-                        bound.Add(new BoundLetStep(let.Name, type, resolved.Value.Call, SourceFormatter.Format(let)));
+                        if (resolved is not null)
+                            bound.Add(new BoundLetStep(let.Name, type, resolved.Value.Call, SourceFormatter.Format(let)));
                         break;
                     }
                     case FailStep fail:
@@ -482,7 +482,7 @@ public static class Resolver
                         ResolveValue(new BoolLit(word.Text == "true", word.At), field.Type, scope),
                     CallWord word when word.Text == "none" =>
                         ResolveValue(new NoneLit(word.At), field.Type, scope),
-                    CallWord word => new BoundVariable(word.Text, scope[word.Text]),
+                    CallWord word => ResolveValue(new PathExpr([word.Text], word.At), field.Type, scope),
                     _ => throw new InvalidOperationException()
                 };
                 arguments.Add(new BoundArgument(field, value));
@@ -504,15 +504,16 @@ public static class Resolver
 
         private BoundExpr ResolveValue(Expr expression, PType expected, IReadOnlyDictionary<string, PType> scope)
         {
+            var target = expected.IsOption ? expected.Arguments[0] : expected;
             var value = expression switch
             {
                 PathExpr path => ResolvePath(path, scope),
-                StringLit text => new BoundText(text.Value, expected is { Name: "Text" or "Id" } ? expected : PType.Text),
-                NumberLit number => new BoundNumber(number.Text, number.Text.Contains('.', StringComparison.Ordinal) ? PType.Decimal : expected is { Name: "Int" or "Decimal" } ? expected : PType.Int),
+                StringLit text => new BoundText(text.Value, target is { Name: "Text" or "Id" } ? target : PType.Text),
+                NumberLit number => new BoundNumber(number.Text, number.Text.Contains('.', StringComparison.Ordinal) ? PType.Decimal : target is { Name: "Int" or "Decimal" } ? target : PType.Int),
                 BoolLit boolean => new BoundBool(boolean.Value),
-                NoneLit => new BoundNone(expected),
-                RecordExpr record => ResolveRecord(record, expected, scope),
-                ListExpr list => ResolveList(list, expected, scope),
+                NoneLit => new BoundNone(expected.IsOption ? expected : PType.OptionOf(PType.Error)),
+                RecordExpr record => ResolveRecord(record, target, scope),
+                ListExpr list => ResolveList(list, target, scope),
                 _ => throw new InvalidOperationException($"Unknown expression {expression.GetType().Name}.")
             };
             if (!Compatible(value.Type, expected))
@@ -530,6 +531,8 @@ public static class Resolver
             BoundExpr value = new BoundVariable(path.Segments[0], type);
             foreach (var segment in path.Segments.Skip(1))
             {
+                if (value.Type.IsError)
+                    return new BoundField(value, segment, PType.Error);
                 if (!recordFields.TryGetValue(value.Type.Name, out var fields))
                 {
                     Report("PH311", $"Type {value.Type} has no fields; cannot read '{segment}'.", path.At);
@@ -549,7 +552,7 @@ public static class Resolver
         private BoundRecord ResolveRecord(RecordExpr record, PType expected, IReadOnlyDictionary<string, PType> scope)
         {
             if (!recordFields.TryGetValue(expected.Name, out var expectedFields))
-                return new BoundRecord([], PType.Error);
+                return new BoundRecord([], new PType("Record", []));
             var actualNames = record.Fields.Select(f => f.Name).ToHashSet(StringComparer.Ordinal);
             if (!actualNames.SetEquals(expectedFields.Select(f => f.Name)))
                 Report("PH314", $"Record fields do not match {expected}.", record.At);
@@ -570,7 +573,7 @@ public static class Resolver
 
         private static bool Compatible(PType actual, PType expected) =>
             actual.IsError || expected.IsError || actual == expected ||
-            expected.IsOption && actual == expected.Arguments[0];
+            expected.IsOption && (expected.Arguments[0].IsError || actual == expected.Arguments[0]);
 
         private string? BareFieldHint(PhraseCall call, IReadOnlyDictionary<string, PType> scope)
         {

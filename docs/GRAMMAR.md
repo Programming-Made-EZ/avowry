@@ -155,15 +155,47 @@ result:    call total-quantity-of(items = input.items) : Int
 
 ### Resolver diagnostics
 
-`PH001` unknown phrase, `PH002` ambiguous phrase, `PH010` duplicate wording, plus `PH300` to `PH335` for types, scope, flow and specs. The full table, with the matching and type-checking rules, is in [HANDOFF.md](../HANDOFF.md) until the resolver lands; it moves here then.
+The full resolver diagnostic table (`PH001`, `PH002`, `PH010`, and `PH300` to `PH335`), which previously lived in [HANDOFF.md](../HANDOFF.md), now lives here:
+
+| Code | Meaning |
+|---|---|
+| `PH001` | Unknown phrase (quotes the closest template; suggests `variable.field` when a bare word matches a record field in scope) |
+| `PH002` | Ambiguous phrase (lists the matching templates) |
+| `PH010` | Duplicate wording (two templates with the same word sequence, holes ignored) |
+| `PH300` | Unknown type |
+| `PH301` | Wrong number of type arguments |
+| `PH302` | Type name already taken (duplicate, or a core type) |
+| `PH303` | Duplicate field (type, input or output) |
+| `PH304` | Duplicate endpoint name, or same verb and route |
+| `PH310` | Unknown variable (message lists what is in scope) |
+| `PH311` | Unknown field, or a field read on a non-record (message lists the fields) |
+| `PH312` | Type mismatch (message names both types) |
+| `PH313` | Variable already defined |
+| `PH314` | Record fields do not match the expected type |
+| `PH320` | `let` of a phrase that returns nothing |
+| `PH321` | Returned value discarded; use `let` |
+| `PH322` | `respond with` outside an endpoint, or in an endpoint with no output |
+| `PH323` | Endpoint with output never responds |
+| `PH324` | Step after `respond with` or `fail with` is unreachable |
+| `PH325` | Composite phrase with a return type (not supported in v0.1) |
+| `PH326` | Composite fails with an undeclared code |
+| `PH327` | Phrases call each other in a cycle |
+| `PH328` | Composite calls a phrase whose effect it does not declare |
+| `PH330` | Wrong trigger (`called` for phrases, `handled` for endpoints) |
+| `PH331` | Givens wrong: unknown, missing or duplicate hole; `input` in a phrase spec; missing input in an endpoint spec |
+| `PH332` | Spec value is a path, not a literal |
+| `PH333` | Outcome the unit cannot have (`returns` with no return type, `responds` in a phrase spec, `returns` in an endpoint spec, `responds` with no output) |
+| `PH334` | Expected failure the unit can never produce (message lists the ones it can) |
+| `PH335` | More than one outcome in a spec |
 
 Rules fixed by the resolver tests:
 
-- **Duplicate wording** (PH010) compares the word sequence with holes ignored entirely.
-- **Types check against an expected type.** `"text"` fits `Text` or `Id`; whole numbers fit `Int` or `Decimal`; `2.5` fits only `Decimal`; `none` fits only `Option<T>`; a `T` also fits `Option<T>`; records need their exact field set.
-- **Results are never silently discarded:** calling a value-returning phrase as a statement is PH321; use `let`.
-- **Flow is linear:** an endpoint with an output must end with `respond with` or `fail with`; anything after either is unreachable.
-- **Specs use literal data only** and have exactly one outcome.
+- **Duplicate wording** (`PH010`) compares the word sequence with holes ignored entirely.
+- **Types check against an expected type.** `"text"` fits `Text` or `Id`; whole numbers fit `Int` or `Decimal`; `2.5` fits only `Decimal`; `none` fits only `Option<T>`; a `T` also fits `Option<T>` (with literal widening for `Option<Decimal>` and `Option<Id>`); records and lists check against record and list types (`PH312` otherwise), and records need their exact field set (`PH314`).
+- **Failed bindings do not cascade:** a `let` whose phrase call fails to resolve binds its variable as `PType.Error` (`?`), which is compatible with every type so later uses do not emit a second diagnostic.
+- **Results are never silently discarded:** calling a value-returning phrase as a statement is `PH321`; use `let`.
+- **Flow is linear:** an endpoint with an output must end with `respond with` or `fail with`; anything after either is unreachable (`PH324`).
+- **Specs use literal data only** (`PH332`) and have exactly one outcome (`PH335`).
 - **Endpoint request and response shapes** are record types named `<Endpoint>.Input` and `<Endpoint>.Output`.
 
 ### Lexer diagnostics
