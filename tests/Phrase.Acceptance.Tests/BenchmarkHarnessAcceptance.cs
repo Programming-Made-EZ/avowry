@@ -87,7 +87,7 @@ public class BenchmarkHarnessAcceptance
         var expectedTokens = new Dictionary<string, string[]>
         {
             ["codex-probe"] = ["exec", "--skip-git-repo-check"],
-            ["grok-probe"] = ["--max-turns", "1", "--prompt-file"],
+            ["grok-probe"] = ["--max-turns", "10", "--prompt-file"],
             ["copilot-probe"] = ["-p", "-s", "--allow-all-tools", "--trust-folder"],
             ["agy-probe"] = ["--print"],
         };
@@ -107,8 +107,11 @@ public class BenchmarkHarnessAcceptance
             Assert.True(exitCode == 0, stdout + stderr);
             Assert.Contains($"{model}: passed", stdout);
             var argvLine = Assert.Single(await File.ReadAllLinesAsync(argvLog));
-            if (!model.StartsWith("copilot", StringComparison.Ordinal))
+            if (model.StartsWith("codex", StringComparison.Ordinal) ||
+                model.StartsWith("grok", StringComparison.Ordinal))
                 Assert.DoesNotContain("Greeting", argvLine);
+            else
+                Assert.Contains("Greeting", argvLine);
             recordedLines.Add($"{model}: {argvLine}");
             var actualTokens = argvLine.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
             missingTokens.AddRange(requiredTokens
@@ -149,6 +152,8 @@ public class BenchmarkHarnessAcceptance
         var promptArgument = promptAndFlags[..headlessFlagsStart].Trim();
         if (promptArgument.Length >= 2 && promptArgument.StartsWith('"') && promptArgument.EndsWith('"'))
             promptArgument = promptArgument[1..^1];
+        if (OperatingSystem.IsWindows())
+            promptArgument = promptArgument.Replace("\\\"", "\"");
         var expectedPrompt = await File.ReadAllTextAsync(
             Path.Combine(suiteDirectory, "tasks", "001-write-greeting", "prompt.md"));
         Assert.False(promptArgument.StartsWith('@'), argvLine);
