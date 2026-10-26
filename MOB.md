@@ -7,14 +7,11 @@
 
 ## Who did what
 
-- **Codex:** 22 turns (advance x2, green x6, ready x1, refactor x6, ship x5, signoff x1, slice x1)
-- **Copilot:** 3 turns (red x2, signoff x1)
+- **Codex:** 24 turns (advance x3, green x6, ready x1, refactor x6, ship x6, signoff x1, slice x1)
+- **Copilot:** 4 turns (red x2, signoff x2)
 
 ## Recent turns
 
-- Turn 8: Codex (backend-dev, refactor): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
-- Turn 9: Codex (devops-engineer, ship): SHIP BLOCKED — required local gate failed.
-- Turn 10: Codex (backend-dev, green): changed board/MILESTONE-usable-v1.md, src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, board/059-adr-async-and-events.md, board/060-catalogue-task-pack-async-events.md, board/061-spike-deterministic-async-harness.md
 - Turn 11: Codex (backend-dev, refactor): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
 - Turn 12: Codex (devops-engineer, ship): SHIP BLOCKED — required local gate failed.
 - Turn 13: Copilot (qa-engineer, signoff): I’m validating the stored mob state against the actual repo and will either complete the remaining defect fixes or sign off with the precise QA…
@@ -30,12 +27,17 @@
 - Turn 21: Codex (devops-engineer, ship): SHIPPED — commit 8962dc5 (Fix spec resolution diagnostics).
 - Turn 22: Codex (backend-dev, green): no file changes
 - Turn 23: Codex (backend-dev, refactor): no file changes
+- Turn 24: Codex (devops-engineer, ship): SHIP BLOCKED — full local gate failed due to missing Microsoft.AspNetCore.App 8.0 runtime.
+- Turn 25: Copilot (qa-engineer, signoff): QA sign-off: process was honest and red-first.
+- Turn 26: Codex (product-manager, advance): Spec-resolution fixes were delivered and shipped in commit 8962dc5: accurate PH334 endpoint naming, recursive PH332 literal-data enforcement, single…
 
 ## Flags, checks and decisions on this card
 
 - **Baseline (before any work): not done**: 2 of 3 checks pass
 - **After cycle 1: not done**: 2 of 3 checks pass
 - **After cycle 2: not done**: 2 of 3 checks pass
+- **After cycle 3: not done**: 2 of 3 checks pass
+- **Not done**: Not done after 3 cycles. The next run picks up from here.
 
 ## Decider outcomes (latest)
 
@@ -60,4 +62,4 @@
 
 - Stopped before the card was done. Next: look at the last flag or check above, then run again.
 
-_Updated 2026-10-26 21:04 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 21:08 UTC. Summary only: no prompts, replies, code or secrets are published._
