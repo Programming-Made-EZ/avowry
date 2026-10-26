@@ -5,18 +5,18 @@
 
 ## Who did what
 
-- **Codex:** 4 turns (ready x4)
+- **Codex:** 2 turns (ready x2)
+- **Copilot:** 1 turns (red x1)
 
 ## Recent turns
 
-- Turn 1: Codex (product-manager, ready): NOT READY — The Connextra story and Given/When/Then acceptance criteria are sound, but the referenced docs/experiments/E2-live-dashboard.md…
-- Turn 2: Codex (product-manager, ready): NOT READY — The story and Gherkin acceptance criteria are sound, but docs/experiments/E2-live-dashboard.md, VISION.md, and board/MILESTONES.md still…
-- Turn 3: Codex (product-manager, ready): NOT READY — The Connextra story and Gherkin acceptance criteria are sound, but docs/experiments/E2-live-dashboard.md, VISION.md, and…
-- Turn 4: Codex (product-manager, ready): NOT READY — The Connextra story and Gherkin acceptance criteria are sound, but docs/experiments/E2-live-dashboard.md, VISION.md, and…
+- Turn 1: Codex (product-manager, ready): READY — The card has a sound Connextra story, comprehensive Given/When/Then acceptance criteria, and all referenced guidelines, tests, and governing…
+- Turn 2: Codex (product-manager, ready): THIN VERTICAL SLICE — bounded to a locally served, read-only dashboard; implement it as these coherent increments rather than horizontal layers.
+- Turn 3: Copilot (qa-engineer, red): no file changes
 
 ## Flags, checks and decisions on this card
 
-- **Stopped**: The PM did not find the card ready. Groom it, then run again.
+- **Baseline (before any work): not done**: 2 of 3 checks pass
 
 ## Decider outcomes (latest)
 
@@ -35,10 +35,9 @@
 - 68eb250 Board: card 036 has no repo-relative references to phrase-lang files (they resolve only in the References sectio
 - a7e9a76 Board: card 036 lists its governing documents by absolute path (cross-repo run)
 - 0d5022a Board: card 036 (live mob dashboard) gets its contract, task force and a hash-locked Done-when
-- d956bd3 Agreement: run every Decider with the sandboxed runner
 
 ## What's next
 
-- Running. Latest: turn 4 by Codex (ready). Next: the next stage of the current cycle.
+- Running. Latest: turn 3 by Copilot (red). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 13:38 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 13:44 UTC. Summary only: no prompts, replies, code or secrets are published._
