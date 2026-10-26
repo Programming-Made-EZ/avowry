@@ -1,6 +1,6 @@
 # Benchmark baseline is invalid: fix the harness and store a trustworthy baseline
 
-- **Status:** Reopened 2026-10-26 after the whole-team sign-off (see below)
+- **Status:** Reopened twice (2026-10-26): whole-team sign-off, then the facilitator's check of the second run (see below)
 - **Type:** bug (exempt from the hypothesis rule); the first card run under experiment E1, true mobbing
 - **Milestone:** Usable v1 (plumbing: every hypothesis card needs a trustworthy baseline); gates milestone M2 'Measured'
 - **Source:** Facilitator's check of card 016's stored results, 2026-10-25. Decider D5.
@@ -55,6 +55,32 @@ confirmed both from `bench/results/history.jsonl`. The card is not Done until th
 Two new Done-when checks (checks 7 and 8 below) are red today and cannot be satisfied by fixtures: the first requires full
 task coverage per model; the second fails if a model's completed rows are all empty-reply signatures.
 
+## Reopened a second time (2026-10-26, facilitator check of the second run)
+
+All eight Done-when checks passed, and the baseline is still not trustworthy. Evidence from `bench/results/history.jsonl`:
+agy has 24 rows and 22 of them are empty replies (`tokens_out` at most 5) recorded as `completed` / `no_phrase_found`; the 8 old
+invalid agy rows were never moved to `bench/results/invalid/` (that directory does not exist); and the check that was meant to
+catch this only failed if ALL of a model's completed rows were empty, so a mix passed it.
+
+What must be true (the checks below are written so a mix cannot pass):
+
+- **An empty or near-empty reply is never a language result.** The runner records it as `unavailable` with the reason `empty reply`
+  (after one retry of the call), not `completed` / `no_phrase_found`.
+- **Invalid rows are moved, not hidden.** Every row produced by a failed capture (the old agy rows and the new empty ones) is moved
+  to `bench/results/invalid/` with a one-line note; `history.jsonl` keeps only rows that measured a model.
+- **agy must actually be captured.** Evidence from the facilitator's own runs: the headless call
+  `agy -p <prompt> --model gemini-4-argon-high --dangerously-skip-permissions` returns the model's reply on stdout; the harness's
+  `--print` form returned nothing. Find out why, and fix the invocation; do not tune any prompt.
+- **Rows must be auditable.** Each row stores `reply_head`: the first 200 characters of the reply with secrets and home paths
+  scrubbed, so a `no_phrase_found` can be told apart from a refusal, an error text or narration. (The 6 Grok and 9 Copilot
+  `no_phrase_found` rows with text cannot be audited today.)
+- **A model only counts if most of its runs measured it.** A model with fewer than 75% non-empty replies is reported
+  `unavailable` for the baseline with its reason, instead of filling the history with empty rows.
+- **Goodhart guard:** fix harness faults only; no prompt, suite or scoring change to make a model pass.
+
+Checks 8 to 10 below replace the earlier weak check: no completed row may be an empty reply; the invalid-rows folder exists and is
+non-empty; every row has `reply_head`.
+
 ## Done when
 
 The first four commands must exit 0; they are red today.
@@ -65,7 +91,9 @@ python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/his
 python -c "import pathlib,sys; sys.exit(0 if pathlib.Path('bench/README.md').is_file() and len(pathlib.Path('bench/README.md').read_text(encoding='utf-8'))>600 else 1)"
 python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]; bad=[r for r in rows if r.get('status')=='completed' and any(str(d).startswith('PH10') for d in r.get('diagnostics',[])) and r.get('attempts')==1]; sys.exit(0 if len(bad)*10<=max(1,len(rows)) else 1)"
 python -c "import json,sys; s=json.load(open('bench/suite.json')); dev={t['id'] for t in s['tasks'] if not t.get('holdout')}; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]; m={}; [m.setdefault(r['model'],set()).add(r['task']) for r in rows]; sys.exit(0 if len(m)>=4 and all(dev<=v for v in m.values()) else 1)"
-python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]; b={}; [b.setdefault(r['model'],[]).append(r) for r in rows if r.get('status')=='completed']; sys.exit(1 if any(all('no_phrase_found' in r.get('diagnostics',[]) and r.get('tokens_out',0)<=5 for r in v) for v in b.values()) else 0)"
+python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]; sys.exit(1 if any(r.get('status')=='completed' and r.get('tokens_out',0)<=5 for r in rows) else 0)"
+python -c "import pathlib,sys; d=pathlib.Path('bench/results/invalid'); sys.exit(0 if d.is_dir() and any(d.iterdir()) else 1)"
+python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]; sys.exit(0 if rows and all(isinstance(r.get('reply_head'),str) for r in rows if r.get('status')=='completed') else 1)"
 dotnet run --project tools/Phrase.Bench -- --self-check
 dotnet test Phrase.sln --filter "Status!=Pending"
 ```
