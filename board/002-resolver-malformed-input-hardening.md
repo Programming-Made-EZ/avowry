@@ -1,0 +1,30 @@
+# Complete resolver malformed-input hardening
+
+- **Status:** Ready, rank 1
+- **Story:** As a Phrase author (an engineer or an LLM), I want malformed values and failed bindings to produce exactly one precise diagnostic each, so that I can fix my program from the messages alone and the compiler never crashes or cascades into noise.
+- **Source:** Independent review of 59d8a9c and 84b5737 by Grok (verdict CHANGES, 2026-10-25), minus the repeated-holes crash already fixed in 45813e1.
+- **Acceptance criteria (ZOMBIES):**
+  - Zero: Given a call whose argument is a bare word naming a variable of the wrong type (a `Bool` variable for an `Int` hole), When resolved, Then PH312 names both types, as the path form already does
+  - One: Given `retry none up to 3 times` where the hole is `Text`, When resolved, Then PH312 is reported, because `none` fits only `Option<T>`
+  - One: Given a record literal where the expected type is not a record, When resolved, Then PH312 is reported, as it is for a list
+  - Many: Given `3` for an `Option<Decimal>` hole and `"c-1"` for an `Option<Id>` hole, When resolved, Then both are accepted (a value of type T fits `Option<T>`, with literal widening)
+  - Many: Given a `let` whose phrase call fails to resolve, When later steps use that variable, Then it is bound as `PType.Error` and the program yields one PH001, not a second diagnostic
+  - Boundaries: Given `Option<Decimal>` and the literal `2.5`, `3` and `none`, When resolved, Then all three are accepted; given `Option<Int>` and `2.5`, Then PH312
+  - Interface: Given the diagnostic table currently in HANDOFF.md, When this card is Done, Then `docs/GRAMMAR.md` lists PH001, PH002, PH010 and PH300-PH335 with their rules, and says where the old table went
+  - Exceptions: Given any source, even one with syntax errors, When resolved, Then the resolver never throws (the 2,000-mutation fuzz stays green)
+
+## Context
+
+- Read first: `TEAM_WORKING_AGREEMENT.md`, `HANDOFF.md`, `docs/GRAMMAR.md`, card 001.
+- Write the tests first in `tests/Phrase.Compiler.Tests/Semantics/ResolverHardeningTests.cs` (it exists), with Given/When/Then comments, one test per criterion. Name each test with a marker: `Bare_word`, `None_`, `Record_literal`, `Option`, `Failed_let`.
+- Production code is `src/Phrase.Compiler/Semantics/Resolver.cs`. Stage explicit paths only, never `.mob/`.
+- Toolchain: .NET 8 SDK (`DOTNET_ROOT` and `PATH` set by the facilitator environment).
+- No feature flag: compiler internals.
+
+## Done when
+
+```
+python -c "import pathlib,sys; t=pathlib.Path('tests/Phrase.Compiler.Tests/Semantics/ResolverHardeningTests.cs').read_text(encoding='utf-8').lower(); sys.exit(sum(k not in t for k in ['bare_word','none_','record_literal','option','failed_let']))"
+python -c "import pathlib,sys; g=pathlib.Path('docs/GRAMMAR.md').read_text(encoding='utf-8'); sys.exit(1 if 'until the resolver lands' in g else 0)"
+dotnet test Phrase.sln --filter "Status!=Pending"
+```
