@@ -176,7 +176,7 @@ ideas work. ideally they should be data driven."
   card names the milestone bar it advances instead.
 - **Data, not opinion.** The LLM benchmark harness (card 016) is the instrument for everything else and is ranked high. Results are stored in the repo as a history so trends can be compared.
 - **The loop.** Before building a feature, record its baseline on the benchmark. Afterwards, re-run it.
-  Keep the change if the hypothesis held. Revise or revert if it did not, and record why in MOB.md.
+  Keep the change if the hypothesis held. Revise or revert if it did not, and record why in MOB.md (not during the bootstrap phase, below).
   Decider disputes are settled with data where possible. Retro ideas are triaged by expected metric impact.
 
 ### Process ideas are hypotheses, not doctrine
@@ -188,9 +188,33 @@ Any process change idea, from Steve, a model or a retro, enters as an **experime
 - a **metric and a counter-metric** (Goodhart guard)
 - a **trial scope**: which cards, or how long
 
-The retro then decides **keep, revise or drop** through the Decider. **Only kept experiments are written into this
+The retro then decides **keep, revise or drop** through the Decider (on judgment, not metrics, during the bootstrap phase). **Only kept experiments are written into this
 agreement as rules.** Explicit standing rules from Steve still apply directly, without a trial. Running experiments
 are logged in `docs/experiments/` (one file each) and in MOB.md, not in this agreement.
+
+### Bootstrap phase: no metric-based rejections until a baseline is established (standing rule, Steve, 2026-10-26)
+
+Steve: "it seems like we don't have a good baseline because everything is so new. can we wait until we've established a
+cadence first with metrics before we start turning down ideas because they aren't improving something that doesn't exist yet?"
+
+- **Until a baseline is established, no idea, feature or experiment may be rejected, reverted or dropped because it "didn't
+  move the metrics".** There is nothing yet to move.
+- **Keep writing hypotheses and keep recording measurements.** They build the baseline and the history. Decisions in this phase
+  use judgment, through the Decider: Phrase's principles and `VISION.md`, qualitative evidence (cold reads, review findings), and cost.
+- **What is still allowed:** rejecting on principle, safety, correctness, security or cost; and the stop-the-line items (data
+  loss, a security hole, a broken trunk or deploy). Only the metric-based keep/revert is paused.
+- **Exit:** metric-based keep/revert starts only when the mob, by a Decider, declares the baseline **established**, with the
+  data attached. The exit criteria, all of them:
+  1. **The benchmark is trustworthy.** All four models give valid, non-empty results with full task coverage (every model has a row for every development task, at most 10% `unavailable`, no model whose completed rows are all empty replies); the prompts include the docs a new user sees (the docs-in-context mode of card 037, with the zero-shot rows kept and labeled); and the holdout exists and is untouched.
+  2. **A steady cadence.** It has run after every Done card for at least 5 consecutive Done cards (including at least one
+     documentation or feature change), so there are at least 5 runs of history per model.
+  3. **Acceptable variance.** The run-to-run noise floor is measured on unchanged code and is small: repeated runs differ by at
+     most 10 points of pass rate, and the harness self-check shows zero drift.
+  4. **Counter-metrics are tracked** in every run (tokens in and out, attempts, wall-clock time, diagnostics, misread-intent
+     errors, and the dedup and learnability measures once they exist).
+- **Re-check what was already decided on metrics.** Anything rejected for "no metric impact" returns to the board as raw input
+  for normal review; anything rejected on principle stays rejected unless the mob reconsiders. Verdicts reached on early,
+  setup-heavy data are recorded as "early data, not final".
 
 ### Goodhart guard (standing rule, Steve, 2026-10-25)
 

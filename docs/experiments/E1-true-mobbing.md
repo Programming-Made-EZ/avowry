@@ -50,3 +50,11 @@ A metric win with a counter-metric blowout is a red flag, not a win.
   - **What did not (cost and flow):** five of the stops were bugs in the mobbing tooling, all fixed with tests: verdict parsing (Grok narrates before answering), stage-aware checkpoint prompts (red is red; later increments' Done-when checks stay red), a MOB.md digest (run 3 cost about 1.45M estimated tokens before it; later runs about 70-280k), and a clean-tree start (leftovers are stashed). Even after those, runs 7 and 8 still stopped because a seat re-flagged expected-red checks and a driver edited production code in the red step; and the remaining work on this card (an invocation fix, a README, a real four-model baseline run) is mostly not red-green-refactor work.
   - **Hypothesis status:** cycles-to-green moved the wrong way (about 4-5 cycles per increment against 1); review findings and rework per increment are not yet comparable (the two shipped increments have no after-the-fact review findings so far); counter-metrics (tokens and time per increment) are many times the baseline. Setup cost is a large share of both.
   - **Decision (Decider D8):** E1 is paused on this card, not dropped. 032 finishes in the standard driver-plus-review mode with a whole-team sign-off before the final ship. The E1 retro decides keep, revise or drop after 032 is Done, with these numbers and a split of setup cost from steady-state cost.
+
+## Bootstrap-phase note (2026-10-26, Steve's standing rule)
+
+The numbers above are **early data and setup-heavy** (five of the stops were tooling bugs, now fixed), and the benchmark baseline
+they would be compared with is not established yet. Under the bootstrap-phase rule E1 is therefore **not dropped and not
+closed**: it stays as the opt-in `--true-mobbing` flag, is not the default practice, and is re-evaluated after the baseline is
+established. Nothing from E1 is written into the TWA as a rule. A later trial needs a new hypothesis and a baseline that
+separates setup cost from steady-state cost.
