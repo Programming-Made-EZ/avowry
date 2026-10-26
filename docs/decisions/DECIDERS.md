@@ -25,4 +25,4 @@ Format: `Decider D<n>: <proposal>`, votes, `Result: passed|failed`. All-Yes resu
 
 - Date: 2026-10-25. Proposer: PM, domain expert and architect (facilitator drafted). Seats: Codex, Copilot, Grok, agy (parallel, read-only).
 - Votes: Codex Yes; Copilot Support-it; Grok Yes; agy Yes.
-- Result: passed. Outliers: none. Open item: the reading of ruling 4 (two-way converter vs one-way documentation) is to be confirmed with Steve.
+- Result: passed. Outliers: none. Open item closed 2026-10-25: Steve confirmed ruling 4 is a two-way converter between the LLM-optimized form and a human-friendly rendering.

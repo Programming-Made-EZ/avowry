@@ -44,10 +44,9 @@ one-off emitter.
 
 **4. Human readability.** Steve: "I could actually see potential for a compiler here. something that converts between
 the two."
-*Interpretation (to confirm with Steve):* a converter between the LLM-optimized Phrase form and a human-friendly
-rendering, in both directions. It pairs with synthesis: both are translations between representations. A **future**
-milestone (M6). An alternative reading, one-way human-readable documentation generated from Phrase, is noted; the mob
-will confirm which Steve means before building anything.
+*Confirmed by Steve (2026-10-25):* the converter translates between the LLM-optimized Phrase form and a
+human-friendly rendering, in both directions. It pairs with synthesis: both are translations between
+representations. A **future** milestone (M6, card 031).
 
 ## What this commits us to
 
