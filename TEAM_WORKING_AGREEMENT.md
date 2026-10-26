@@ -115,6 +115,10 @@ conflicting opinions from the models. However there is also the decider protocol
   (what Phrase is for, or who it serves), or (b) a model conflict the Decider could not resolve.
 - **Format:** one short message with the options, each model's position in one line, and a recommendation;
   answerable in one word.
+- **Safety carve-out (does not widen what gets escalated):** actions outside the mob's authority still need Steve's
+  explicit OK before execution, presented as a one-word ask: destructive or irreversible changes to production or user
+  data, spending money, security or privacy exposure, and external commitments. Phrase specifics: publishing a package
+  or release (an external commitment) and any spend beyond the prepaid driver allotments.
 
 ### Decider protocol (the default for every team decision)
 
