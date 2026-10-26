@@ -1,6 +1,6 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** running
+**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 4)
 **Card in progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
 
 **Latest cycle:** 1 (driver Codex; navigator Grok; observers Copilot, agy). The full working log is private; this page is a summary.
@@ -38,6 +38,8 @@
 - **Baseline (before any work): not done**: 3 of 6 checks pass
 - **Cycle 1 roles**: driver Codex; navigator Grok; observers Copilot, agy
 - **Flag raised at after red**: - copilot: FLAG: tools/Phrase.Bench/Program.cs was modified in the red checkpoint, violating the no-production-code-during-red rule.
+- **Flag unresolved at after red**: - copilot: FLAG: criterion not met: python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]; m={r['model'].split('-')[0] for r in…
+- **Experiment E1 metrics**: turns: 8, cycles: 1, flags: 3, fixrounds: 1, esttokens: 79971, seconds: 430.3 (tokens are estimated from prompt and reply size)
 
 ## Decider outcomes (latest)
 
@@ -54,10 +56,9 @@
 ## Latest commits
 
 - 2a32cf4 No Co-Authored-By trailers (Steve's standing coding rule): agreement bullet and commit-msg hook
-- 1d13572 Pre-commit check: the published MOB.md must hold no secrets or home paths (public repo)
 
 ## What's next
 
-- Running. Latest: turn 145 by agy (checkpoint). Next: the next stage of the current cycle.
+- Stopped on a flag nobody could clear. Next: fix or take it to a Decider, then run the card again.
 
 _Updated 2026-10-26 06:43 UTC. Summary only: no prompts, replies, code or secrets are published._
