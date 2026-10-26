@@ -1,6 +1,6 @@
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** finished
+**Project:** Phrase &nbsp;|&nbsp; **State:** running
 **Card in progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
 
 ## Who did what
@@ -51,13 +51,13 @@
 
 ## Latest commits
 
+- 3de336d Board: card 032 reopened a second time (agy still empty; weak check could be passed by a mix); stronger checks
 - 6f7a978 Fix agy benchmark prompt invocation
 - c972981 Complete Copilot benchmark coverage
 - 9142d84 Bootstrap phase (Steve's standing rule): no metric-based rejections until a baseline is established; exit criter
-- 0a0e965 Board: card 032 reopened after the whole-team sign-off (agy empty replies; copilot missing a task); two new Done
 
 ## What's next
 
-- The card is done. Next: its retro, then the next card from the board.
+- Running. Latest: turn 173 by Codex (advance). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 09:25 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 09:27 UTC. Summary only: no prompts, replies, code or secrets are published._
