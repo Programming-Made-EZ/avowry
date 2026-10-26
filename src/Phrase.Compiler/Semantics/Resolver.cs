@@ -61,14 +61,27 @@ public static class Resolver
             var skeletons = new Dictionary<string, PhraseModel>(StringComparer.OrdinalIgnoreCase);
             foreach (var declaration in file.Phrases)
             {
-                var parts = declaration.Template.Parts.Select(part => part switch
+                var parts = new List<PhrasePart>();
+                var holes = new List<FieldModel>();
+                var holeNames = new HashSet<string>(StringComparer.Ordinal);
+                foreach (var part in declaration.Template.Parts)
                 {
-                    TemplateWord word => new PhrasePart(word.Text, false),
-                    TemplateHole hole => new PhrasePart(hole.Name, true),
-                    _ => throw new InvalidOperationException($"Unknown template part {part.GetType().Name}.")
-                }).ToList();
-                var holes = declaration.Template.Parts.OfType<TemplateHole>()
-                    .Select(hole => new FieldModel(hole.Name, ResolveType(hole.Type))).ToList();
+                    switch (part)
+                    {
+                        case TemplateWord word:
+                            parts.Add(new PhrasePart(word.Text, false));
+                            break;
+                        case TemplateHole hole:
+                            parts.Add(new PhrasePart(hole.Name, true));
+                            // The parser already reports PH206. Keep the first so a later scope
+                            // or call lookup has one entry per name and does not throw.
+                            if (holeNames.Add(hole.Name))
+                                holes.Add(new FieldModel(hole.Name, ResolveType(hole.Type)));
+                            break;
+                        default:
+                            throw new InvalidOperationException($"Unknown template part {part.GetType().Name}.");
+                    }
+                }
                 var model = new PhraseModel(
                     Key(declaration.Template), SourceFormatter.Format(declaration.Template), parts, holes,
                     declaration.Returns is null ? null : ResolveType(declaration.Returns),

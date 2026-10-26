@@ -1,10 +1,11 @@
+using Phrase.Compiler.Semantics;
 using Phrase.Compiler.Syntax;
 
 namespace Phrase.Compiler;
 
 /// <summary>
 /// Entry point: .phrase source in, target files out.
-/// Pipeline: lexer (done) -> parser (done) -> resolver -> IR -> provider
+/// Pipeline: lexer (done) -> parser (done) -> resolver (done) -> IR -> provider
 /// </summary>
 public static class PhraseCompiler
 {
@@ -14,12 +15,19 @@ public static class PhraseCompiler
         ArgumentNullException.ThrowIfNull(provider);
 
         var parsed = Parser.Parse(source);
-        if (parsed.Diagnostics.Count > 0)
-            throw new CompilationFailedException(parsed.Diagnostics);
+        StopOnDiagnostics(parsed.Diagnostics);
+
+        var resolved = Resolver.Resolve(parsed.File);
+        StopOnDiagnostics(resolved.Diagnostics);
 
         throw new NotImplementedException(
-            "Lexer and parser are done. Next: the resolver (bind phrase calls to templates, " +
-            "check hole types, PH001/PH002/PH010), then the IR and the C# emitter.");
+            "Lexer, parser, and resolution are done. Next: the IR and the C# emitter.");
+    }
+
+    private static void StopOnDiagnostics(IReadOnlyList<Diagnostic> diagnostics)
+    {
+        if (diagnostics.Count > 0)
+            throw new CompilationFailedException(diagnostics);
     }
 }
 
