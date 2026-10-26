@@ -2,6 +2,24 @@
 
 Items raised mid-card, to be taken at the next retro. Newest first.
 
+## Process retro approved by Steve (2026-10-26): scope, data and how it will be run
+
+- **When:** the next retro, after "live mob dashboard (036)" is Done. **Focus:** the mob's own working process. Evidence-based.
+- **Open with flow metrics** for every card done so far (resolver, hardening, benchmark v0, benchmark fix, dashboard), from git and the
+  working logs, using `flow_metrics.py` in mob-defaults (tests first): runs and restarts, reopenings, cycles, elapsed and idle time, estimated
+  tokens, turns by seat, cycle-cap stops and ready-check stops, who drove, and the facilitator's share of the work by area. This is the process baseline.
+- **Interim numbers (036 still in progress, 2026-10-26):** 001 resolver: 5 runs, 1 reopening, about 1.0M est. tokens, 105 h idle between runs (waiting for the
+  toolchain); 002 hardening: 1 run, 8 turns; 016 benchmark v0: 3 runs; 032 benchmark fix: 12 runs, 2 recorded reopenings, 201 turns, about 14M est. tokens,
+  7.5 h; 036 dashboard: 1 resumed run, still going. Work split since Oct 20 (lines added): drivers 2,367 (code 1,231), facilitator 17,006 (code 6,468, tests 6,337,
+  docs 4,190), automation 449. Facilitator share of code lines 84%: phrase-lang 74%, mob-defaults 100% (all tooling was written by the facilitator, no tooling card was
+  on a board until 036). Tokens are estimates from prompt and reply sizes; MOB.md has no timestamps, so elapsed time comes from turn-file modification times.
+- **The four pain points to examine with that data:** (a) Done checks that were too weak, and whether "one seat tries to break each check" works (first applied to 036:
+  three rounds, about 11 loopholes closed); (b) stalls and idleness: the facilitator went quiet after reporting twice, the 3-cycle cap fits long or data-heavy tasks badly
+  (cap stops are counted; each cycle's checks on 036 take about 13 minutes), and re-runs resumed a stale log (three wasted starts on 036); (c) the facilitator doing work
+  itself instead of rotating drivers: the share above, and why; (d) throughput in cards per day.
+- **Proposals:** collected from all four models (in sandboxes, read-only) plus the facilitator; ONE experiment chosen by Decider with a hypothesis, a metric and
+  counter-metric and a trial scope; the rest logged as seeds. Bootstrap phase: judge, do not reject on metrics.
+
 ## Open items carried to named moments (2026-10-26)
 
 - **Stashed emitter start (Copilot voter incident):** decided by a Decider, not by Steve, when the adapter/emitter card (003) is pulled: salvage it as a
