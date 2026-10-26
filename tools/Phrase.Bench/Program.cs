@@ -4,11 +4,18 @@ using System.Text;
 using System.Text.Json;
 using Phrase.Compiler;
 
+const int MaximumAttempts = 3;
+const string SelfCheckModel = "self-check-v1";
+const string SelfCheckModelCommand = "__phrase_bench_builtin_fake__";
+
 if (args.Length == 0)
 {
-    Console.Error.WriteLine("Usage: Phrase.Bench run --suite <path> --model <id> --model-command <command>");
+    Console.Error.WriteLine("Usage: Phrase.Bench run --suite <path> --model <id> --model-command <command> | --self-check [--suite <path>]");
     return 1;
 }
+
+if (args[0] == "--self-check")
+    return await SelfCheck(ParseOptions(args[1..]));
 
 if (args[0] != "run")
 {
@@ -31,19 +38,62 @@ var timeout = options.TryGetValue("timeout-ms", out var timeoutValue)
 
 suitePath = Path.GetFullPath(suitePath);
 var suiteDirectory = Path.GetDirectoryName(suitePath)!;
-var suite = JsonSerializer.Deserialize<Suite>(File.ReadAllText(suitePath), Serialization.Options)
-    ?? throw new InvalidDataException($"Could not read suite '{suitePath}'.");
-const int maximumAttempts = 3;
+var suite = ReadSuite(suitePath);
 var exitCode = 0;
 
 foreach (var task in suite.Tasks.Where(task => !task.Holdout))
 {
-    var passed = await RunTask(task, suiteDirectory, model, modelCommand, timeout, maximumAttempts);
+    var passed = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts);
     if (!passed)
         exitCode = 3;
 }
 
 return exitCode;
+
+static async Task<int> SelfCheck(IReadOnlyDictionary<string, string> options)
+{
+    var suitePath = Path.GetFullPath(options.TryGetValue("suite", out var configuredSuite)
+        ? configuredSuite
+        : Path.Combine("bench", "suite.json"));
+    var suiteDirectory = Path.GetDirectoryName(suitePath)!;
+    var suite = ReadSuite(suitePath);
+
+    var runs = new List<IReadOnlyList<BenchmarkResult>>();
+    for (var run = 0; run < 2; run++)
+    {
+        var results = new List<BenchmarkResult>();
+        foreach (var task in suite.Tasks)
+        {
+            await RunTask(task, suiteDirectory, SelfCheckModel, SelfCheckModelCommand, TimeSpan.FromSeconds(5), MaximumAttempts);
+            var resultPath = Path.Combine(suiteDirectory, "results", $"{SelfCheckModel}.json");
+            var result = JsonSerializer.Deserialize<BenchmarkResult>(File.ReadAllText(resultPath), Serialization.Options);
+            if (result is null || !HasValidSchema(result))
+            {
+                Console.Error.WriteLine($"Self-check produced an invalid result for '{task.Id}'.");
+                return 4;
+            }
+            results.Add(result);
+        }
+        runs.Add(results);
+    }
+
+    var firstPassRate = runs[0].Count(result => result.Passed) * 100d / runs[0].Count;
+    var secondPassRate = runs[1].Count(result => result.Passed) * 100d / runs[1].Count;
+    Console.WriteLine($"noise: pass_rate={secondPassRate - firstPassRate:+0.##;-0.##;0} points; attempts=0; tokens_in=0; tokens_out=0");
+    return 0;
+}
+
+static Suite ReadSuite(string suitePath) =>
+    JsonSerializer.Deserialize<Suite>(File.ReadAllText(suitePath), Serialization.Options)
+    ?? throw new InvalidDataException($"Could not read suite '{suitePath}'.");
+
+static bool HasValidSchema(BenchmarkResult result) =>
+    !string.IsNullOrWhiteSpace(result.Model) &&
+    !string.IsNullOrWhiteSpace(result.Task) &&
+    result.Attempts > 0 &&
+    result.TokensIn > 0 &&
+    result.TokensOut > 0 &&
+    result.Diagnostics is not null;
 
 static async Task<bool> RunTask(
     BenchmarkTask task,
@@ -134,6 +184,9 @@ static Process StartModel(string command, string workingDirectory)
 static async Task<string> RunModel(
     string model, string command, string workingDirectory, string prompt, TimeSpan timeout)
 {
+    if (command == SelfCheckModelCommand)
+        return "module SelfCheck\n\nphrase \"self check\"\n  native csharp\n    return;\n";
+
     using var process = StartModel(command, workingDirectory);
     await process.StandardInput.WriteAsync(prompt);
     process.StandardInput.Close();
@@ -185,7 +238,7 @@ static void PersistResult(string suiteDirectory, string model, BenchmarkResult r
     Directory.CreateDirectory(resultsDirectory);
     var serializedResult = JsonSerializer.Serialize(result, Serialization.Options);
     File.WriteAllText(Path.Combine(resultsDirectory, $"{model}.json"), serializedResult);
-    File.AppendAllText(Path.Combine(resultsDirectory, "history.jsonl"), serializedResult + Environment.NewLine);
+    File.AppendAllText(Path.Combine(resultsDirectory, "history.jsonl"), serializedResult + "\n");
 }
 
 static class Serialization

@@ -220,6 +220,35 @@ public class BenchmarkHarnessAcceptance
         Assert.DoesNotContain("002-write-hello", stdout);
     }
 
+    [Fact]
+    public async Task self_check_runs_every_task_twice_and_reports_zero_noise()
+    {
+        // Given an isolated copy of the full benchmark suite
+        using var workspace = TempWorkspace.Create();
+        var sourceSuiteDirectory = Path.GetDirectoryName(RepoPaths.Find("bench", "suite.json"))!;
+        var suiteDirectory = Path.Combine(workspace.Root, "bench");
+        Directory.CreateDirectory(suiteDirectory);
+        File.Copy(Path.Combine(sourceSuiteDirectory, "suite.json"), Path.Combine(suiteDirectory, "suite.json"));
+        CopyDirectory(Path.Combine(sourceSuiteDirectory, "tasks"), Path.Combine(suiteDirectory, "tasks"));
+
+        // When the deterministic self-check runs
+        var (exitCode, stdout, stderr) = await RunSelfCheck(suiteDirectory);
+
+        // Then every task has two schema-valid history rows and the reported noise is zero
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Contains("noise: pass_rate=0 points", stdout);
+        using var suite = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(suiteDirectory, "suite.json")));
+        var taskCount = suite.RootElement.GetProperty("tasks").GetArrayLength();
+        var rows = await File.ReadAllLinesAsync(Path.Combine(suiteDirectory, "results", "history.jsonl"));
+        Assert.Equal(taskCount * 2, rows.Length);
+        foreach (var row in rows)
+        {
+            using var result = JsonDocument.Parse(row);
+            foreach (var property in new[] { "model", "task", "passed", "attempts", "tokens_in", "tokens_out", "diagnostics", "misread" })
+                Assert.True(result.RootElement.TryGetProperty(property, out _), $"Missing result property '{property}'.");
+        }
+    }
+
     private static string CopySuiteTo(string workspaceRoot)
     {
         var suiteDirectory = Path.Combine(workspaceRoot, "bench");
@@ -251,24 +280,46 @@ public class BenchmarkHarnessAcceptance
     private static async Task<(int ExitCode, string Stdout, string Stderr)> RunBenchmark(
         string suiteDirectory, string model, string modelCommand, params string[] additionalArguments)
     {
+        var arguments = new List<string>
+        {
+            "run", "--suite", Path.Combine(suiteDirectory, "suite.json"),
+            "--model", model, "--model-command", modelCommand,
+        };
+        arguments.AddRange(additionalArguments);
+        return await RunBenchmarkProcess(arguments.ToArray());
+    }
+
+    private static async Task<(int ExitCode, string Stdout, string Stderr)> RunSelfCheck(string suiteDirectory)
+        => await RunBenchmarkProcess(
+            "--self-check", "--suite", Path.Combine(suiteDirectory, "suite.json"));
+
+    private static async Task<(int ExitCode, string Stdout, string Stderr)> RunBenchmarkProcess(
+        params string[] benchmarkArguments)
+    {
         var runner = RepoPaths.Find("tools", "Phrase.Bench", "Phrase.Bench.csproj");
         var startInfo = new System.Diagnostics.ProcessStartInfo("dotnet")
         {
             RedirectStandardOutput = true,
             RedirectStandardError = true,
         };
-        foreach (var argument in new[]
-        {
-            "run", "--project", runner, "--", "run", "--suite", Path.Combine(suiteDirectory, "suite.json"),
-            "--model", model, "--model-command", modelCommand,
-        })
-            startInfo.ArgumentList.Add(argument);
-        foreach (var argument in additionalArguments)
+        foreach (var argument in new[] { "run", "--project", runner, "--" }.Concat(benchmarkArguments))
             startInfo.ArgumentList.Add(argument);
         using var process = System.Diagnostics.Process.Start(startInfo)!;
         var stdout = await process.StandardOutput.ReadToEndAsync();
         var stderr = await process.StandardError.ReadToEndAsync();
         await process.WaitForExitAsync();
         return (process.ExitCode, stdout, stderr);
+    }
+
+    private static void CopyDirectory(string source, string destination)
+    {
+        foreach (var directory in Directory.EnumerateDirectories(source, "*", SearchOption.AllDirectories))
+            Directory.CreateDirectory(Path.Combine(destination, Path.GetRelativePath(source, directory)));
+        foreach (var file in Directory.EnumerateFiles(source, "*", SearchOption.AllDirectories))
+        {
+            var destinationFile = Path.Combine(destination, Path.GetRelativePath(source, file));
+            Directory.CreateDirectory(Path.GetDirectoryName(destinationFile)!);
+            File.Copy(file, destinationFile);
+        }
     }
 }
