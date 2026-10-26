@@ -35,6 +35,7 @@
 - **Baseline (before any work): not done**: 2 of 3 checks pass
 - **After cycle 1: not done**: 2 of 3 checks pass
 - **After cycle 2: not done**: 2 of 3 checks pass
+- **After cycle 3: not done**: 2 of 3 checks pass
 
 ## Decider outcomes (latest)
 
@@ -48,12 +49,8 @@
 - **Next in Ready:** next up: Adapter contract and C# adapter: types and runtime (003); 2nd in Ready: C# adapter: phrases, effects, failures (004); 3rd in Ready: C# adapter: FastEndpoints endpoints and Program (005)
 - **Done:** Resolver malformed-input hardening (002); LLM benchmark harness v0 (016); Benchmark baseline is invalid: fix the harness, store a trustworthy baseline (032)
 
-## Latest commits
-
-- ffbbbaa Balance, not removal (Steve's clarification): agreement wording revised; Steve's diagnosis and P6 logged; defect
-
 ## What's next
 
 - Running. Latest: turn 25 by Codex (refactor). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 17:19 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 17:31 UTC. Summary only: no prompts, replies, code or secrets are published._
