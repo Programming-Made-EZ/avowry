@@ -39,8 +39,8 @@ public class BenchmarkHarnessAcceptance
                 return;
             """);
         var modelCommand = OperatingSystem.IsWindows()
-            ? $"type \"{modelOutput}\""
-            : $"cat \"{modelOutput}\"";
+            ? $"more > nul && type \"{modelOutput}\""
+            : $"cat > /dev/null && cat \"{modelOutput}\"";
 
         // When the benchmark CLI runs the fake model through its real process boundary
         var runner = RepoPaths.Find("tools", "Phrase.Bench", "Phrase.Bench.csproj");
