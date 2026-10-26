@@ -8,7 +8,7 @@
 ## Who did what
 
 - **Codex:** 11 turns (green x3, ready x1, refactor x3, ship x3, slice x1)
-- **Copilot:** 1 turns (red x1)
+- **Copilot:** 2 turns (red x1, signoff x1)
 
 ## Recent turns
 
@@ -24,14 +24,11 @@
 - Turn 10: Codex (backend-dev, green): changed board/MILESTONE-usable-v1.md, src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, board/059-adr-async-and-events.md, board/060-catalogue-task-pack-async-events.md, board/061-spike-deterministic-async-harness.md
 - Turn 11: Codex (backend-dev, refactor): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
 - Turn 12: Codex (devops-engineer, ship): SHIP BLOCKED — required local gate failed.
+- Turn 13: Copilot (qa-engineer, signoff): I’m validating the stored mob state against the actual repo and will either complete the remaining defect fixes or sign off with the precise QA…
 
 ## Flags, checks and decisions on this card
 
-- **Baseline (before any work): not done**: 1 of 3 checks pass
-- **After cycle 1: not done**: 2 of 3 checks pass
-- **After cycle 2: not done**: 2 of 3 checks pass
-- **After cycle 3: not done**: 2 of 3 checks pass
-- **Not done**: Not done after 3 cycles. The next run picks up from here.
+- None yet.
 
 ## Decider outcomes (latest)
 
@@ -54,6 +51,6 @@
 
 ## What's next
 
-- Running. Latest: turn 12 by Codex (ship). Next: the next stage of the current cycle.
+- Running. Latest: turn 13 by Copilot (signoff). Next: the next stage of the current cycle.
 
 _Updated 2026-10-26 20:48 UTC. Summary only: no prompts, replies, code or secrets are published._
