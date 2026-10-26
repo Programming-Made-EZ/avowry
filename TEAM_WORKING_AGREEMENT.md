@@ -179,6 +179,14 @@ are created."
   flags. A padded task force is a smell too.
 - **One structural rule:** whoever authors an increment never reviews or QAs it. Assign by trust-ladder rung and
   per-card rotation.
+- **The task force is living, not frozen at kickoff** (Steve: "also during the building if the team identifies a
+  new role is needed then that gets added"). Any member can flag mid-card that a role is needed (a security
+  question surfaces, the work turns out to need a technical writer or a perf engineer). The role is added right
+  away, with an assignee and a one-line why, appended to the card's `## Task force` with where it joined
+  (`| joined: cycle 2`). **No Decider run is needed to add a role.** The new role then reviews the relevant work
+  done so far, not only what comes next. Card mode accepts the amendment (and refuses an invalid one).
+- **Retro reviews every mid-card addition:** why wasn't it caught at assembly? If the miss is likely to recur, the
+  role is added to the menu in the template.
 - **Detector:** card mode checks only that a task force is declared, that every listed role has an assignee and a
   why, and that no seat is both `[author]` and `[reviewer]`. It never checks role names or counts. Template:
   `templates/TASK_FORCE.md` in mob-defaults.
