@@ -7,6 +7,7 @@ using Phrase.Compiler;
 
 const int MaximumAttempts = 3;
 const int EmptyReplyMaximumAttempts = 2;
+const int MinimumNonEmptyReplyPercentage = 75;
 const string SelfCheckModel = "self-check-v1";
 const string SelfCheckModelCommand = "__phrase_bench_builtin_fake__";
 const string AgyModel = "gemini-4-argon-high";
@@ -44,13 +45,19 @@ suitePath = Path.GetFullPath(suitePath);
 var suiteDirectory = Path.GetDirectoryName(suitePath)!;
 var suite = ReadSuite(suitePath);
 var exitCode = 0;
+var taskResults = new List<TaskRunResult>();
 
 foreach (var task in suite.Tasks.Where(task => !task.Holdout))
 {
-    var passed = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts);
-    if (!passed)
+    var result = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts);
+    taskResults.Add(result);
+    if (!result.KeepsRunSuccessful)
         exitCode = 3;
 }
+
+var nonEmptyReplies = taskResults.Count(result => result.HasNonEmptyReply);
+if (nonEmptyReplies * 100 < taskResults.Count * MinimumNonEmptyReplyPercentage)
+    Console.WriteLine($"{model}: excluded from baseline; non-empty replies {nonEmptyReplies}/{taskResults.Count} (minimum {MinimumNonEmptyReplyPercentage}%)");
 
 return exitCode;
 
@@ -99,7 +106,7 @@ static bool HasValidSchema(BenchmarkResult result) =>
     result.TokensOut > 0 &&
     result.Diagnostics is not null;
 
-static async Task<bool> RunTask(
+static async Task<TaskRunResult> RunTask(
     BenchmarkTask task,
     string suiteDirectory,
     string model,
@@ -135,7 +142,7 @@ static async Task<bool> RunTask(
                     model, task.Id, Hash(prompt), "empty reply", attempts, tokensIn, tokensOut, CreateReplyHead(reply));
                 PersistResult(suiteDirectory, model, unavailable);
                 Console.WriteLine($"{model}: unavailable {task.Id}");
-                return true;
+                return new(true, false);
             }
 
             score = ScoreReply(reply);
@@ -150,14 +157,14 @@ static async Task<bool> RunTask(
             "estimated", diagnostics, false, Hash(prompt), CreateReplyHead(reply));
         PersistResult(suiteDirectory, model, result);
         Console.WriteLine($"{model}: {(score.Passed ? "passed" : "failed")} {task.Id}");
-        return score.Passed;
+        return new(score.Passed, true);
     }
     catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception or TimeoutException)
     {
         var result = BenchmarkResult.Unavailable(model, task.Id, Hash(prompt), exception.Message);
         PersistResult(suiteDirectory, model, result);
         Console.WriteLine($"{model}: unavailable {task.Id}");
-        return true;
+        return new(true, false);
     }
     finally
     {
@@ -418,6 +425,7 @@ sealed record BenchmarkResult(
         new(model, task, false, attempts, tokensIn, tokensOut, "estimated", [], false, promptHash, replyHead, "unavailable", error);
 }
 sealed record BenchmarkScore(bool Passed, IReadOnlyList<string> Diagnostics);
+sealed record TaskRunResult(bool KeepsRunSuccessful, bool HasNonEmptyReply);
 
 sealed class ScoringProvider : ITargetProvider
 {

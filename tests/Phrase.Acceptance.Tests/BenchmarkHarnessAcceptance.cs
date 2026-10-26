@@ -375,9 +375,10 @@ public class BenchmarkHarnessAcceptance
         // When the benchmark CLI tries to capture the reply
         var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "empty-v1", modelCommand);
 
-        // Then it retries once and records an auditable unavailable result instead of scoring the reply
+        // Then it retries once, records an auditable unavailable result, and excludes the model from the baseline
         Assert.True(exitCode == 0, stdout + stderr);
         Assert.Contains("empty-v1: unavailable", stdout);
+        Assert.Contains("empty-v1: excluded from baseline; non-empty replies 0/1 (minimum 75%)", stdout);
         Assert.Equal(2, (await File.ReadAllLinesAsync(attempts)).Length);
         using var result = await ReadModelResult(suiteDirectory, "empty-v1");
         Assert.Equal("unavailable", result.RootElement.GetProperty("status").GetString());
