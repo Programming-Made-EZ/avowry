@@ -21,18 +21,22 @@ public static class Resolver
     public static ResolveResult Resolve(SourceFile file)
     {
         ArgumentNullException.ThrowIfNull(file);
-        return new DeclarationResolver(file).Run();
+        return new ResolutionPass(file).Run();
     }
 
-    private sealed class DeclarationResolver(SourceFile file)
+    private sealed class ResolutionPass(SourceFile file)
     {
         private readonly List<Diagnostic> diagnostics = [];
         private readonly HashSet<string> typeNames = new(PType.Core.Keys, StringComparer.Ordinal);
+        private readonly Dictionary<string, IReadOnlyList<FieldModel>> recordFields = new(StringComparer.Ordinal);
+        private readonly List<(PhraseDecl Declaration, PhraseModel Model)> phraseDeclarations = [];
 
         public ResolveResult Run()
         {
             RegisterTypeNames();
             var types = file.Types.Select(ResolveTypeDeclaration).ToList();
+            foreach (var type in types)
+                recordFields[type.Name] = type.Fields;
             var phrases = ResolvePhrases();
             var endpoints = ResolveEndpoints();
             var module = new ModuleModel(file.Module?.Name ?? string.Empty, types, phrases, endpoints);
@@ -79,6 +83,7 @@ public static class Resolver
                 }
                 skeletons.Add(skeleton, model);
                 phrases.Add(model);
+                phraseDeclarations.Add((declaration, model));
             }
             return phrases;
         }
@@ -96,13 +101,229 @@ public static class Resolver
                     Report("PH304", $"Endpoint route '{declaration.Verb} {declaration.Route}' is already defined.", declaration.At);
                 var input = ResolveFields(declaration.Input, $"endpoint '{declaration.Name}' input");
                 var output = ResolveFields(declaration.Output, $"endpoint '{declaration.Name}' output");
+                var inputType = PType.EndpointInput(declaration.Name);
+                var outputType = declaration.Output.Count == 0 ? null : PType.EndpointOutput(declaration.Name);
+                recordFields[inputType.Name] = input;
+                if (outputType is not null)
+                    recordFields[outputType.Name] = output;
+                var scope = new Dictionary<string, PType>(StringComparer.Ordinal) { ["input"] = inputType };
+                var steps = ResolveSteps(declaration.Steps, scope);
                 endpoints.Add(new EndpointModel(
                     declaration.Name, declaration.Verb, declaration.Route,
-                    PType.EndpointInput(declaration.Name), input,
-                    declaration.Output.Count == 0 ? null : PType.EndpointOutput(declaration.Name), output,
-                    [], [], []));
+                    inputType, input, outputType, output, steps, [], []));
             }
             return endpoints;
+        }
+
+        private IReadOnlyList<BoundStep> ResolveSteps(
+            IReadOnlyList<Step> steps, Dictionary<string, PType> scope)
+        {
+            var bound = new List<BoundStep>();
+            foreach (var step in steps)
+            {
+                switch (step)
+                {
+                    case PhraseCall call:
+                    {
+                        var resolved = ResolveCall(call, scope);
+                        if (resolved is not null)
+                        {
+                            if (resolved.Value.Phrase.Returns is not null)
+                                Report("PH321", $"Phrase '{resolved.Value.Phrase.Template}' returns {resolved.Value.Phrase.Returns}; use 'let' to keep it.", call.At);
+                            bound.Add(new BoundCallStep(resolved.Value.Call, SourceFormatter.Format(call)));
+                        }
+                        break;
+                    }
+                    case LetStep let:
+                    {
+                        var resolved = ResolveCall(let.Call, scope);
+                        if (resolved is null)
+                            break;
+                        var type = resolved.Value.Phrase.Returns;
+                        if (type is null)
+                        {
+                            Report("PH320", $"Phrase '{resolved.Value.Phrase.Template}' returns no value and cannot be used with 'let'.", let.At);
+                            type = PType.Error;
+                        }
+                        if (scope.ContainsKey(let.Name))
+                            Report("PH313", $"Variable '{let.Name}' is already defined.", let.At);
+                        else
+                            scope.Add(let.Name, type);
+                        bound.Add(new BoundLetStep(let.Name, type, resolved.Value.Call, SourceFormatter.Format(let)));
+                        break;
+                    }
+                    case FailStep fail:
+                        bound.Add(new BoundFailStep(fail.Code, SourceFormatter.Format(fail)));
+                        break;
+                    case RespondStep respond:
+                        bound.Add(new BoundRespondStep(
+                            new BoundRecord([], PType.Error), SourceFormatter.Format(respond)));
+                        break;
+                }
+            }
+            return bound;
+        }
+
+        private (BoundCall Call, PhraseModel Phrase)? ResolveCall(
+            PhraseCall call, IReadOnlyDictionary<string, PType> scope)
+        {
+            var matches = phraseDeclarations.Where(p => Matches(p.Declaration.Template, call, scope)).ToList();
+            if (matches.Count == 0)
+            {
+                Report("PH001", NoMatchMessage(call, scope), call.At);
+                return null;
+            }
+            if (matches.Count > 1)
+            {
+                Report("PH002", $"Step is ambiguous between: {string.Join(", ", matches.Select(m => $"'{m.Model.Template}'"))}.", call.At);
+                return null;
+            }
+
+            var match = matches[0];
+            var arguments = new List<BoundArgument>();
+            for (var i = 0; i < call.Parts.Count; i++)
+            {
+                if (match.Declaration.Template.Parts[i] is not TemplateHole hole)
+                    continue;
+                var field = match.Model.Holes.Single(h => h.Name == hole.Name);
+                var value = call.Parts[i] switch
+                {
+                    CallArgument argument => ResolveValue(argument.Value, field.Type, scope),
+                    CallWord word when word.Text is "true" or "false" =>
+                        ResolveValue(new BoolLit(word.Text == "true", word.At), field.Type, scope),
+                    CallWord word when word.Text == "none" =>
+                        ResolveValue(new NoneLit(word.At), field.Type, scope),
+                    CallWord word => new BoundVariable(word.Text, scope[word.Text]),
+                    _ => throw new InvalidOperationException()
+                };
+                arguments.Add(new BoundArgument(field, value));
+            }
+            return (new BoundCall(match.Model.Key, arguments), match.Model);
+        }
+
+        private static bool Matches(Template template, PhraseCall call, IReadOnlyDictionary<string, PType> scope) =>
+            template.Parts.Count == call.Parts.Count && template.Parts.Zip(call.Parts).All(pair => pair.First switch
+            {
+                TemplateWord word => pair.Second is CallWord callWord &&
+                    string.Equals(word.Text, callWord.Text, StringComparison.OrdinalIgnoreCase),
+                TemplateHole => pair.Second is CallArgument || pair.Second is CallWord variable &&
+                    (scope.ContainsKey(variable.Text) || IsLiteral(variable.Text)),
+                _ => false,
+            });
+
+        private static bool IsLiteral(string word) => word is "true" or "false" or "none";
+
+        private BoundExpr ResolveValue(Expr expression, PType expected, IReadOnlyDictionary<string, PType> scope)
+        {
+            var value = expression switch
+            {
+                PathExpr path => ResolvePath(path, scope),
+                StringLit text => new BoundText(text.Value, expected is { Name: "Text" or "Id" } ? expected : PType.Text),
+                NumberLit number => new BoundNumber(number.Text, number.Text.Contains('.', StringComparison.Ordinal) ? PType.Decimal : expected is { Name: "Int" or "Decimal" } ? expected : PType.Int),
+                BoolLit boolean => new BoundBool(boolean.Value),
+                NoneLit => new BoundNone(expected),
+                RecordExpr record => ResolveRecord(record, expected, scope),
+                ListExpr list => ResolveList(list, expected, scope),
+                _ => throw new InvalidOperationException($"Unknown expression {expression.GetType().Name}.")
+            };
+            if (!Compatible(value.Type, expected))
+                Report("PH312", $"Expected {expected}, but got {value.Type}.", expression.At);
+            return value;
+        }
+
+        private BoundExpr ResolvePath(PathExpr path, IReadOnlyDictionary<string, PType> scope)
+        {
+            if (path.Segments.Count == 0 || !scope.TryGetValue(path.Segments[0], out var type))
+            {
+                Report("PH310", $"Unknown variable '{path.Segments.FirstOrDefault()}'. In scope: {string.Join(", ", scope.Keys)}.", path.At);
+                return new BoundVariable(path.Segments.FirstOrDefault() ?? "?", PType.Error);
+            }
+            BoundExpr value = new BoundVariable(path.Segments[0], type);
+            foreach (var segment in path.Segments.Skip(1))
+            {
+                if (!recordFields.TryGetValue(value.Type.Name, out var fields))
+                {
+                    Report("PH311", $"Type {value.Type} has no fields; cannot read '{segment}'.", path.At);
+                    return new BoundField(value, segment, PType.Error);
+                }
+                var field = fields.FirstOrDefault(f => f.Name == segment);
+                if (field is null)
+                {
+                    Report("PH311", $"Unknown field '{segment}' on {value.Type}. Available fields: {string.Join(", ", fields.Select(f => f.Name))}.", path.At);
+                    return new BoundField(value, segment, PType.Error);
+                }
+                value = new BoundField(value, field.Name, field.Type);
+            }
+            return value;
+        }
+
+        private BoundRecord ResolveRecord(RecordExpr record, PType expected, IReadOnlyDictionary<string, PType> scope)
+        {
+            if (!recordFields.TryGetValue(expected.Name, out var expectedFields))
+                return new BoundRecord([], PType.Error);
+            var actualNames = record.Fields.Select(f => f.Name).ToHashSet(StringComparer.Ordinal);
+            if (!actualNames.SetEquals(expectedFields.Select(f => f.Name)))
+                Report("PH314", $"Record fields do not match {expected}.", record.At);
+            var fields = expectedFields.Select(field =>
+            {
+                var actual = record.Fields.FirstOrDefault(f => f.Name == field.Name);
+                return new BoundRecordField(field.Name, actual is null ? new BoundVariable("?", PType.Error) : ResolveValue(actual.Value, field.Type, scope));
+            }).ToList();
+            return new BoundRecord(fields, expected);
+        }
+
+        private BoundList ResolveList(ListExpr list, PType expected, IReadOnlyDictionary<string, PType> scope)
+        {
+            if (!expected.IsList)
+                return new BoundList([], PType.ListOf(PType.Error));
+            return new BoundList(list.Items.Select(item => ResolveValue(item, expected.Arguments[0], scope)).ToList(), expected);
+        }
+
+        private static bool Compatible(PType actual, PType expected) =>
+            actual.IsError || expected.IsError || actual == expected ||
+            expected.IsOption && actual == expected.Arguments[0];
+
+        private string? BareFieldHint(PhraseCall call, IReadOnlyDictionary<string, PType> scope)
+        {
+            foreach (var word in call.Parts.OfType<CallWord>())
+                foreach (var variable in scope)
+                    if (recordFields.TryGetValue(variable.Value.Name, out var fields) && fields.Any(f => f.Name == word.Text))
+                        return $"{variable.Key}.{word.Text}";
+            return null;
+        }
+
+        private string NoMatchMessage(PhraseCall call, IReadOnlyDictionary<string, PType> scope)
+        {
+            const string noMatch = "No phrase matches this step.";
+            var closest = phraseDeclarations
+                .OrderBy(phrase => Distance(CallShape(call), TemplateShape(phrase.Declaration.Template)))
+                .Select(phrase => phrase.Model)
+                .FirstOrDefault();
+            var suggestion = closest is null ? string.Empty : $" Closest: \"{closest.Template}\".";
+            var hint = BareFieldHint(call, scope);
+            return hint is null ? noMatch + suggestion : $"{noMatch}{suggestion} Did you mean '{hint}'?";
+        }
+
+        private static string CallShape(PhraseCall call) => string.Join(" ", call.Parts.Select(p => p is CallWord w ? w.Text : "_"));
+        private static string TemplateShape(Template template) => string.Join(" ", template.Parts.Select(p => p is TemplateWord w ? w.Text : "_"));
+
+        private static int Distance(string left, string right)
+        {
+            var a = left.Split(' ');
+            var b = right.Split(' ');
+            var costs = Enumerable.Range(0, b.Length + 1).ToArray();
+            for (var i = 1; i <= a.Length; i++)
+            {
+                var previous = costs[0];
+                costs[0] = i;
+                for (var j = 1; j <= b.Length; j++)
+                {
+                    var old = costs[j];
+                    costs[j] = Math.Min(Math.Min(costs[j] + 1, costs[j - 1] + 1), previous + (a[i - 1].Equals(b[j - 1], StringComparison.OrdinalIgnoreCase) ? 0 : 1));
+                    previous = old;
+                }
+            }
+            return costs[^1];
         }
 
         private IReadOnlyList<FieldModel> ResolveFields(IReadOnlyList<FieldDecl> declarations, string owner)

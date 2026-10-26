@@ -6,8 +6,6 @@ namespace Phrase.Compiler.Tests.Semantics;
 // Feature: Resolving phrase calls
 //   Each step must match exactly one phrase template. Holes match one argument, or
 //   one bare word naming a variable in scope. Arguments are type-checked against holes.
-// Pending: the mob's starting point. Remove this trait when every test in the class passes.
-[Trait("Status", "Pending")]
 public class ResolverCallTests
 {
     private static BoundCall CallAt(ModuleModel module, int step) => ProbeModel(module).Steps[step] switch
