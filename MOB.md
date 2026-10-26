@@ -1,7 +1,7 @@
 # Mob status
 
 **Project:** Phrase &nbsp;|&nbsp; **State:** running
-**Card in progress:** Fix the benchmark baseline (032)
+**Card in progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
 
 **Latest cycle:** 1 (driver Codex; navigator Grok; observers Copilot, agy). The full working log is private; this page is a summary.
 
@@ -10,11 +10,10 @@
 - **Codex:** 44 turns (checkpoint x3, fix x6, green x5, ready x4, red x6, refactor x4, ship x2, slice x6, teamsignoff x8)
 - **Copilot:** 26 turns (checkpoint x13, directions x4, ready x2, teamsignoff x7)
 - **Grok:** 33 turns (directions x21, fix x2, red x2, teamsignoff x8)
-- **agy:** 22 turns (checkpoint x15, teamsignoff x7)
+- **agy:** 23 turns (checkpoint x15, teamsignoff x8)
 
 ## Recent turns
 
-- Turn 108: Grok (navigator, directions): gave 5 directions
 - Turn 109: Codex (driver, red): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs
 - Turn 110: Copilot (observer, checkpoint): signed off
 - Turn 111: agy (observer, checkpoint): signed off
@@ -32,12 +31,15 @@
 - Turn 123: Codex (driver, fix): changed tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 124: Codex (member, teamsignoff): FLAG: ProfileArguments passes the prompt file path as Copilot’s literal -p value, so Copilot receives a pathname instead of the task prompt.
 - Turn 125: Grok (member, teamsignoff): FLAG: copilot --help defines -p/--prompt as <text>, but return $" -p \"{promptPath}\" -s --allow-all-tools --trust-folder"; passes a temp pathname as that text.
+- Turn 126: agy (member, teamsignoff): FLAG: return $" -p \"{promptPath}\" -s --allow-all-tools --trust-folder"; in [Program.cs](file:///C:/home/<user>) passes a leaked global temp file path…
 
 ## Flags, checks and decisions on this card
 
 - **Baseline (before any work): not done**: 4 of 6 checks pass
 - **Cycle 1 roles**: driver Codex; navigator Grok; observers Copilot, agy
 - **Flag raised at before commit (whole team)**: - codex: FLAG: bench/results/self-check/history.jsonl contains 24 newly appended duplicate self-check fixture rows and must not ship with this increment.
+- **Flag unresolved at before commit (whole team)**: - codex: FLAG: ProfileArguments passes the prompt file path as Copilot’s literal -p value, so Copilot receives a pathname instead of the task prompt.
+- **Experiment E1 metrics**: turns: 19, cycles: 1, flags: 6, fixrounds: 1, esttokens: 188633, seconds: 1303.0 (tokens are estimated from prompt and reply size)
 
 ## Decider outcomes (latest)
 
@@ -47,7 +49,7 @@
 
 ## Board
 
-- **In progress:** Fix the benchmark baseline (032)
+- **In progress:** Benchmark baseline is invalid: fix the harness and store a trustworthy baseline (032)
 - **Next in Ready:** next up: Live mob dashboard (tooling, experiment E2; code in mob-defaults) (036); 2nd in Ready: Keyword model ADR: what a keyword is (022); 3rd in Ready: Make GRAMMAR.md say what the resolver does (013)
 - **Done:** Resolver malformed-input hardening (002); LLM benchmark harness v0 (016)
 
@@ -60,6 +62,6 @@
 
 ## What's next
 
-- Running. Latest: turn 125 by Grok (teamsignoff). Next: the next stage of the current cycle.
+- Running. Latest: turn 126 by agy (teamsignoff). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 06:22 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 06:23 UTC. Summary only: no prompts, replies, code or secrets are published._
