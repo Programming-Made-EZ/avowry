@@ -14,6 +14,8 @@
   - Interface: Given the keyword model, When the grammar and IR are checked, Then the ADR lists the grammar/IR changes needed (if any) as follow-up cards, not as hidden work
   - Exceptions: Given a disagreement among the models, When the ADR is written, Then it goes through the Decider and the record is linked
   - Interface (base library and adapters, Decider D4): Given Steve's rulings 2 and 3, When the ADR is accepted, Then it defines the base library (universal keywords with specs), the adapter (implements every base keyword, verified by the shared specs, may add language- or ecosystem-specific keywords) and the rename from provider to adapter
+  - Interface (retro 016 feedback, Decider D6): Given a base keyword, When defined, Then it is a sentence plus specs in scope in every module, and its body lives in the adapter file, not in an inline native block of the declaration (today `phrase_decl` requires inline native/steps)
+  - Interface (retro 016 feedback, Decider D6): Given a base keyword, When documented, Then it declares a canonical failure contract (its `fails with` codes) and shows one adapter example, so every adapter implements the same semantics
 
 ## Context
 

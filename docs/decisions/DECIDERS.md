@@ -26,3 +26,15 @@ Format: `Decider D<n>: <proposal>`, votes, `Result: passed|failed`. All-Yes resu
 - Date: 2026-10-25. Proposer: PM, domain expert and architect (facilitator drafted). Seats: Codex, Copilot, Grok, agy (parallel, read-only).
 - Votes: Codex Yes; Copilot Support-it; Grok Yes; agy Yes.
 - Result: passed. Outliers: none. Open item closed 2026-10-25: Steve confirmed ruling 4 is a two-way converter between the LLM-optimized form and a human-friendly rendering.
+
+#### Decider D5: declare card 016 Done on its written criteria but not M2; file bug card 032 (invalid baseline) at rank 3; run 032 as the first E1 true-mobbing card with a Codex/Grok/Copilot/agy task force
+
+- Date: 2026-10-25. Proposer: PM (facilitator drafted). Seats: Codex, Copilot, Grok, agy (parallel, read-only).
+- Votes: Codex Yes; Copilot Support-it; Grok Yes; agy Yes.
+- Result: passed. Outliers: none.
+
+#### Decider D6: rank retro-016 cards: 033 (generics) and 034 (behavioral holes) after 023 and before 008; 035 (failure-code holes, Decider first) after 021; fold two criteria into 022; record raw candidates
+
+- Date: 2026-10-25. Proposer: PM (facilitator drafted). Seats: Codex, Copilot, Grok, agy (parallel, read-only).
+- Votes: Codex Yes; Copilot Yes; Grok Yes; agy Yes.
+- Result: passed. Outliers: none.

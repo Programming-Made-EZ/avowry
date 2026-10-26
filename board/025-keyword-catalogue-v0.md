@@ -18,6 +18,7 @@
 ## Context
 
 - Depends on the keyword model ADR (022) and the emitter (003-006). Layout under `catalogue/`; seeds chosen from card 024's candidates where available, else from the demo app's needs, recorded with reasons.
+- Seed candidates (raw model input, ranked by how many models named them): `docs/pattern-candidates-raw.md`. Needs generics (033) and behavioral holes (034) for retry-style keywords.
 
 ## Task force
 
