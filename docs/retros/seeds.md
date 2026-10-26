@@ -2,6 +2,14 @@
 
 Items raised mid-card, to be taken at the next retro. Newest first.
 
+## Open items carried to named moments (2026-10-26)
+
+- **Stashed emitter start (Copilot voter incident):** decided by a Decider, not by Steve, when the adapter/emitter card (003) is pulled: salvage it as a
+  reviewed starting point, or drop it. The stash stays until then; it is not applied, shipped or deleted before that vote.
+- **Trust-ladder ledger** (`TEAM_WORKING_AGREEMENT.md`, "Driver trust ladder"): update every driver's rung and clean-cycle count from the cards
+  since Oct 25 at the next retro (it is stale). Under the bootstrap-phase rule this is judgment from review evidence, not a metric.
+- **Tooling:** a re-run of a card should warn when the card file changed since its working log was seeded (three wasted starts on card 036).
+
 ## 2026-10-26: a Decider voter ran with full write access and edited the repo (area: Organization, safety)
 
 - **What happened:** my PowerShell launcher flattened a one-item list, so the Copilot voter in one round received the bare prompt

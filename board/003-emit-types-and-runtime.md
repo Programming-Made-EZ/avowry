@@ -17,6 +17,8 @@
 - `reference/csharp` is the target the emitter must match in behavior.
 - Outside-in TDD with Given/When/Then comments; stage explicit paths only, never `.mob/`.
 
+- **Before starting (team decision, not Steve's):** run a Decider on the stashed, unreviewed emitter start (the git stash named 'UNREVIEWED edits by a runaway Copilot VOTER job', about +580 lines in `CSharpProvider.cs` plus `ITargetProvider`/`PhraseCompiler` changes and a test-support tweak): salvage it as a reviewed starting point, or drop it. Keep the stash until then; do not apply, ship or delete it before the vote.
+
 ## Done when
 
 The PM writes the concrete commands at the Ready check. The gate is `dotnet test Phrase.sln --filter "Status!=Pending"` with zero warnings, plus a mechanical check that the card's new tests exist.
