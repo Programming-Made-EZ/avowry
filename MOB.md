@@ -5,13 +5,12 @@
 
 ## Who did what
 
-- **Codex:** 16 turns (advance x1, green x3, ready x4, refactor x4, ship x3, slice x1)
+- **Codex:** 17 turns (advance x1, green x3, ready x4, refactor x4, ship x4, slice x1)
 - **Copilot:** 2 turns (red x1, signoff x1)
 - **Grok:** 1 turns (red x1)
 
 ## Recent turns
 
-- Turn 2: Codex (product-manager, ready): THIN VERTICAL SLICE — bounded to a locally served, read-only dashboard; implement it as these coherent increments rather than horizontal layers.
 - Turn 3: Copilot (qa-engineer, red): no file changes
 - Turn 4: Codex (product-manager, ready): Implemented the first coherent increment in [facilitator.py](C:\Users\<user>): - Emits allow-listed start and end events for each real seat process.
 - Turn 5: Codex (backend-dev, refactor): changed facilitator.py
@@ -29,6 +28,7 @@
 - Turn 17: Grok (qa-engineer, red): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_status.py
 - Turn 18: Codex (backend-dev, green): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 - Turn 19: Codex (backend-dev, refactor): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
+- Turn 20: Codex (devops-engineer, ship): Shipment stopped because the required acceptance gate is red.
 
 ## Flags, checks and decisions on this card
 
@@ -56,6 +56,6 @@
 
 ## What's next
 
-- Running. Latest: turn 19 by Codex (refactor). Next: the next stage of the current cycle.
+- Running. Latest: turn 20 by Codex (ship). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 16:27 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 16:33 UTC. Summary only: no prompts, replies, code or secrets are published._
