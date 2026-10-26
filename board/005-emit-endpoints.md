@@ -1,6 +1,6 @@
 # C# adapter: FastEndpoints endpoints and Program
 
-- **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Status:** SUPERSEDED 2026-10-26 by thin cards 039 to 052 (process retro, Decider D18). Kept as the source of the acceptance cases; do not start this card.
 - **Milestone:** Usable v1 (plumbing for bar 2-5; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As an engineer (or an LLM), I want each endpoint emitted as a FastEndpoints class with its route, input, output and failure responses, so that the generated app serves real HTTP.
 - **Acceptance criteria (ZOMBIES):**

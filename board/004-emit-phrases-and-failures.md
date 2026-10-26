@@ -1,6 +1,6 @@
 # C# adapter: phrases, effects and failures
 
-- **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Status:** SUPERSEDED 2026-10-26 by thin cards 039 to 052 (process retro, Decider D18). Kept as the source of the acceptance cases; do not start this card.
 - **Milestone:** Usable v1 (plumbing for bar 2-4; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As an engineer (or an LLM), I want each phrase emitted as a C# method with typed failures and declared effects, so that the library of behavior is callable from endpoints.
 - **Acceptance criteria (ZOMBIES):**

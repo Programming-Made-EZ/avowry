@@ -100,3 +100,8 @@ Format: `Decider D<n>: <proposal>`, votes, `Result: passed|failed`. All-Yes resu
 #### Decider D17: board order, rounds 2 and 3
 
 - Round 2 (018, 003 first; 038 after 012): Codex Yes; Copilot Yes; agy Yes; Grok No (033 and 034 must stay before 025, per D6). Round 3 (amended): Codex, Copilot, Grok, agy all Yes. Result: passed. New order: 018 next up, then 003, 037, 022, 013, 019, 014, 004, 005, 006, the benchmark-dependent cards, 007, 023, 033, 034, 025, 008, 009, 010, 011, 012, then 038. Card 003 still starts with the stash Decider (salvage or drop).
+
+#### Decider D18: process retro picks (thin slices trialled on the C# adapter chain; keep the listed seeds)
+
+- Date: 2026-10-26. Proposer: PM (facilitator). Seats: Codex, Copilot, Grok, agy. Votes: Codex Yes; Grok Yes; agy Yes; Copilot Support-it (pre-split cards 003 to 007 now, with locked Done checks before any coding; adopted). Result: passed. Metric: runs per card and cap hits; counter-metric: per-card ceremony overhead; review after the first three thin cards.
+- D19 (follow-up, no ruling needed): the seats gave retro feedback and proposed thin slice lists; the facilitator synthesized them into cards 039 to 052. Codex and Copilot Yes; Grok's reply parsed as No by the runner (a parse trap: its reply began "No files will be changed." before "Yes"), agy no response; neither is an objection to the slicing.

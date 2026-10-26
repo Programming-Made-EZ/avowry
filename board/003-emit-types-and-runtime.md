@@ -1,6 +1,6 @@
 # Adapter contract and C# adapter: types and runtime
 
-- **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Status:** SUPERSEDED 2026-10-26 by thin cards 039 to 052 (process retro, Decider D18). Kept as the source of the acceptance cases; do not start this card.
 - **Milestone:** Usable v1 (plumbing for bar 2-4; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As an engineer (or an LLM) writing Phrase, I want a target-adapter contract and a C# adapter that emits my declared types and the phrase runtime, so that generated code has real, named types to build on and C# is the first adapter, not a one-off emitter.
 - **Acceptance criteria (ZOMBIES):**

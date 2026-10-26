@@ -23,38 +23,47 @@ Steve: "let me know when the language is actually usable to build an application
 | 3 | 032 Benchmark baseline is invalid: fix the harness, store a trustworthy baseline (**Done**, cfb1952; zero-shot baseline, see 037) | Every hypothesis card needs a trustworthy baseline; first card under experiment E1 (true mobbing). Decider D5 | Facilitator check of 016 |
 | 4 | 036 Live mob dashboard (tooling, experiment E2; code in mob-defaults; **Done** 2026-10-26, local-only) | Stalls cost tens of minutes and Steve has to ask for progress; Decider D7 | **Steve (raw input)** |
 | 5 | 018 Spec resolution defects (bug, from the Grok review) | Specs are the truth the emitter turns into tests; accurate spec errors first. Decider D1 passed (3 Yes, 1 Support-it) | Review finding |
-| 6 | 003 Adapter contract and C# adapter: types and runtime | Smallest slice; makes C# the first adapter, not a one-off (Decider D4) | plan |
-| 7 | 037 Benchmark: docs in the prompt, and cold runs | The zero-shot baseline cannot be moved by documentation cards, and agy's 7 of 8 suggests warm sessions. Decider D11 | **Facilitator analysis** of the stored baseline |
-| 8 | 022 Keyword model ADR: what a keyword is | Decides the shape of everything the vision asks for; cheap; unblocks 023 and 025 | **Vision** (Steve) |
-| 9 | 013 Make GRAMMAR.md say what the resolver does | Cheap; first hypothesis card, measured by 016 | **Model feedback** (Codex, agy, Grok) |
-| 10 | 019 Publish exact diagnostic message templates (docs) | All four models hit this gap; 018 fixes the message first; measured by 016 | **Model feedback** (Codex, Copilot, Grok, agy) |
-| 11 | 014 Document the native C# environment, add passing-guard examples | Precedes 004: it fixes the `Fail` contract the emitter implements | **Model feedback** (Grok, agy, Codex, Copilot) |
-| 12 | 004 C# adapter: phrases, effects, failures | Behavior before HTTP | plan |
-| 13 | 005 C# adapter: FastEndpoints endpoints and Program | Serves HTTP | plan |
-| 14 | 006 C# adapter: specs as xUnit; first acceptance test green | Phrase compiles its first program | plan |
-| 15 | 017 Benchmark v1: score by running specs | Turns pass rate into real behavior; re-baselines | Steve (data-driven) |
-| 16 | 024 Pattern discovery (mine real code and LLM tasks) | Vocabulary grows by evidence; right after the benchmark can measure it | **Vision** (Steve) |
-| 17 | 027 Benchmark: catalogue tasks (LLM work removed, learnability) | Measures 'comprehensive' instead of counting it | **Vision** (Steve), Goodhart guard |
-| 18 | 020 Did-you-mean suggestions for failure codes and unknown names | Cheap compiler help for fix tasks; needs 017 to measure | **Model feedback** (Codex) |
-| 19 | 007 CLI `phrase build` | The one command in bar 2 | plan |
-| 20 | 023 Ordinary control flow: if/else and loops | Loops and if/else are ordinary; the demo app needs them | **Vision** (Steve) |
-| 21 | 033 Generic type parameters on phrases | 4/4 models: reusable keywords need `phrase<T>`; the base library cannot start without it. Decider D6 | **Model feedback** (all four) |
-| 22 | 034 Behavioral holes and spec test doubles | 4/4 models: retry, transaction and idempotent-execute need an action as input and scripted doubles. Decider D6 | **Model feedback** (all four) |
-| 23 | 025 Base library v0: ~12 seed keywords with C# adapter implementations | The library half of 'spec and library'; the demo app is written from it | **Vision** (Steve) |
-| 24 | 008 Close the language gaps the demo app exposes | Find what CRUD needs, via the Decider protocol and data | plan |
-| 25 | 015 Proposal: optional `when` line (Decider first, then measured) | Token saving; needs the benchmark | **Model feedback** (agy) |
-| 26 | 021 Proposal: consistent given/responds syntax (Decider first) | Language change; only with data | **Model feedback** (agy) |
-| 27 | 035 Proposal: parameterizable failure codes (Decider first) | Removes per-domain guard clones; changes the failure model. Decider D6 | **Model feedback** (agy, Copilot) |
-| 28 | 009 Demo app: Tasks API in .phrase | Bars 1, 3, 4 | plan |
-| 29 | 010 End-to-end over real HTTP | Bar 5 | plan |
-| 30 | 011 LLM-customer check | Bar 6 | plan |
-| 31 | 012 Usable v1 acceptance gate | Bars 1-6 in one test; CI gate; milestone report | plan |
-| 32 | 038 Dogfood: the mob status API in Phrase (second demo app, after the Usable v1 gate) | Steve: 'a good starter app'; Decider D16: Tasks stays the bar-1 app, this is a dogfood card after it; dashboard follow-ups are low urgency (30-minute digests cover visibility) | **Steve** (Decider D16) |
-| 33 | 026 Catalogue dedup linter | Counter-metric for vocabulary bloat; after Usable v1 | **Vision** (Steve), Goodhart guard |
-| 34 | 028 Second adapter spike (TypeScript) | Proves 'any implementation language'; after Usable v1 | **Vision** (Steve) |
-| 35 | 029 LLM-as-compiler with hash pinning | New targets without hand-written providers; after the spike | **Vision** (Steve) |
-| 36 | 030 Synthesize Phrase from existing code (spike) | FUTURE (M5): after Usable v1 and Vocabulary v1; needs the base library | **Vision** (Steve, ruling 1) |
-| 37 | 031 Human <-> LLM form converter (spike) | FUTURE (M6): pairs with 030; reading confirmed by Steve (two-way) | **Vision** (Steve, ruling 4) |
+| 6 | 039 One phrase with one number input compiles to C# and its spec passes (thin slice; stash Decider first) | The first thin slice of the C# chain; proves the whole pipe on the smallest case (D18) | Retro D18, Steve |
+| 7 | 040 C# compilation goes through the ITargetAdapter contract (thin slice) | Adapter contract right after the first slice, not a big-bang rename (D4, D18) | Retro D18 |
+| 8 | 037 Benchmark: docs in the prompt, and cold runs | The zero-shot baseline cannot be moved by documentation cards, and agy's 7 of 8 suggests warm sessions. Decider D11 | **Facilitator analysis** of the stored baseline |
+| 9 | 022 Keyword model ADR: what a keyword is | Decides the shape of everything the vision asks for; cheap; unblocks 023 and 025 | **Vision** (Steve) |
+| 10 | 013 Make GRAMMAR.md say what the resolver does | Cheap; first hypothesis card, measured by 016 | **Model feedback** (Codex, agy, Grok) |
+| 11 | 019 Publish exact diagnostic message templates (docs) | All four models hit this gap; 018 fixes the message first; measured by 016 | **Model feedback** (Codex, Copilot, Grok, agy) |
+| 12 | 014 Document the native C# environment, add passing-guard examples | Precedes 004: it fixes the `Fail` contract the emitter implements | **Model feedback** (Grok, agy, Codex, Copilot) |
+| 13 | 041 A declared record becomes a usable C# record (thin slice) | Types; split from 003 | Retro D18 |
+| 14 | 042 List, option and nested-record fields compile (thin slice) | Types; split from 003 | Retro D18 |
+| 15 | 043 A phrase can fail with its declared code (thin slice) | Failures; split from 004 | Retro D18 |
+| 16 | 044 A native C# block is placed verbatim and builds (thin slice) | Split from 004 | Retro D18 |
+| 17 | 045 A composite phrase calls its leaf phrases in order (thin slice) | Split from 004 | Retro D18 |
+| 18 | 047 A declared effect is supplied as an injected dependency (thin slice) | Split from 004 | Retro D18 |
+| 19 | 048 One POST endpoint serves its successful response (thin slice) | Serves HTTP; split from 005 | Retro D18 |
+| 20 | 049 A declared failure maps to its HTTP status, not a 500 (thin slice) | Split from 005 | Retro D18 |
+| 21 | 046 Docs: GRAMMAR and README name the adapter contract and the HTTP status mapping (docs only) | Docs card, after the code it describes | Retro D18 |
+| 22 | 050 Every spec outcome kind asserts correctly, and a wrong one names itself (thin slice) | Split from 006; CompileEndpointToCSharp goes green | Retro D18 |
+| 23 | 017 Benchmark v1: score by running specs | Turns pass rate into real behavior; re-baselines | Steve (data-driven) |
+| 24 | 024 Pattern discovery (mine real code and LLM tasks) | Vocabulary grows by evidence; right after the benchmark can measure it | **Vision** (Steve) |
+| 25 | 027 Benchmark: catalogue tasks (LLM work removed, learnability) | Measures 'comprehensive' instead of counting it | **Vision** (Steve), Goodhart guard |
+| 26 | 020 Did-you-mean suggestions for failure codes and unknown names | Cheap compiler help for fix tasks; needs 017 to measure | **Model feedback** (Codex) |
+| 27 | 051 phrase build compiles one file into output projects (thin slice) | Bar 2's first command; split from 007 | Retro D18 |
+| 28 | 052 phrase build reports errors as file:line:col and names its target (thin slice) | Split from 007 | Retro D18 |
+| 29 | 023 Ordinary control flow: if/else and loops | Loops and if/else are ordinary; the demo app needs them | **Vision** (Steve) |
+| 30 | 033 Generic type parameters on phrases | 4/4 models: reusable keywords need `phrase<T>`; the base library cannot start without it. Decider D6 | **Model feedback** (all four) |
+| 31 | 034 Behavioral holes and spec test doubles | 4/4 models: retry, transaction and idempotent-execute need an action as input and scripted doubles. Decider D6 | **Model feedback** (all four) |
+| 32 | 025 Base library v0: ~12 seed keywords with C# adapter implementations | The library half of 'spec and library'; the demo app is written from it | **Vision** (Steve) |
+| 33 | 008 Close the language gaps the demo app exposes | Find what CRUD needs, via the Decider protocol and data | plan |
+| 34 | 015 Proposal: optional `when` line (Decider first, then measured) | Token saving; needs the benchmark | **Model feedback** (agy) |
+| 35 | 021 Proposal: consistent given/responds syntax (Decider first) | Language change; only with data | **Model feedback** (agy) |
+| 36 | 035 Proposal: parameterizable failure codes (Decider first) | Removes per-domain guard clones; changes the failure model. Decider D6 | **Model feedback** (agy, Copilot) |
+| 37 | 009 Demo app: Tasks API in .phrase | Bars 1, 3, 4 | plan |
+| 38 | 010 End-to-end over real HTTP | Bar 5 | plan |
+| 39 | 011 LLM-customer check | Bar 6 | plan |
+| 40 | 012 Usable v1 acceptance gate | Bars 1-6 in one test; CI gate; milestone report | plan |
+| 41 | 038 Dogfood: the mob status API in Phrase (second demo app, after the Usable v1 gate) | Steve: 'a good starter app'; Decider D16: Tasks stays the bar-1 app, this is a dogfood card after it; dashboard follow-ups are low urgency (30-minute digests cover visibility) | **Steve** (Decider D16) |
+| 42 | 026 Catalogue dedup linter | Counter-metric for vocabulary bloat; after Usable v1 | **Vision** (Steve), Goodhart guard |
+| 43 | 028 Second adapter spike (TypeScript) | Proves 'any implementation language'; after Usable v1 | **Vision** (Steve) |
+| 44 | 029 LLM-as-compiler with hash pinning | New targets without hand-written providers; after the spike | **Vision** (Steve) |
+| 45 | 030 Synthesize Phrase from existing code (spike) | FUTURE (M5): after Usable v1 and Vocabulary v1; needs the base library | **Vision** (Steve, ruling 1) |
+| 46 | 031 Human <-> LLM form converter (spike) | FUTURE (M6): pairs with 030; reading confirmed by Steve (two-way) | **Vision** (Steve, ruling 4) |
 
 Ranks are the PM's and move at each retro; ideas are triaged by expected metric impact. Milestones are in `board/MILESTONES.md`.
 

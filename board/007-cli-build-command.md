@@ -1,6 +1,6 @@
 # Phrase CLI: one command compiles a program
 
-- **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Status:** SUPERSEDED 2026-10-26 by thin cards 039 to 052 (process retro, Decider D18). Kept as the source of the acceptance cases; do not start this card.
 - **Milestone:** Usable v1 (plumbing for bar 2; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As an engineer (or an LLM), I want one command, `phrase build <file.phrase> -o <dir>`, so that I can compile without writing C# glue code.
 - **Acceptance criteria (ZOMBIES):**

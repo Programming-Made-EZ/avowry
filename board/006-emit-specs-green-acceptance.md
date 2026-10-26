@@ -1,6 +1,6 @@
 # C# adapter: specs as xUnit, and the first acceptance test goes green
 
-- **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Status:** SUPERSEDED 2026-10-26 by thin cards 039 to 052 (process retro, Decider D18). Kept as the source of the acceptance cases; do not start this card.
 - **Milestone:** Usable v1 (plumbing for bar 4; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As an engineer (or an LLM), I want every Given/When/Then spec emitted as a real xUnit test, so that specs run as the truth of my program.
 - **Acceptance criteria (ZOMBIES):**
