@@ -7,11 +7,10 @@
 
 - **Codex:** 29 turns (advance x1, green x7, ready x4, refactor x8, ship x8, slice x1)
 - **Copilot:** 2 turns (red x1, signoff x1)
-- **Grok:** 1 turns (red x1)
+- **Grok:** 2 turns (red x1, signoff x1)
 
 ## Recent turns
 
-- Turn 15: Codex (product-manager, ready): READY — The card has a sound Connextra story, comprehensive Given/When/Then acceptance criteria, and all referenced project guidelines, tests, and…
 - Turn 16: Codex (architect, slice): CONFIRMED — This is a thin vertical slice: an operator can open one local, phone-friendly dashboard and observe mob status end to end.
 - Turn 17: Grok (qa-engineer, red): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_status.py
 - Turn 18: Codex (backend-dev, green): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
@@ -29,6 +28,7 @@
 - Turn 30: Codex (backend-dev, green): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 - Turn 31: Codex (backend-dev, refactor): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 - Turn 32: Codex (devops-engineer, ship): Shipment stopped: the required acceptance gate is red.
+- Turn 33: Grok (qa-engineer, signoff): I'll read the QA sign-off brief and follow it exactly.The brief is long.
 
 ## Flags, checks and decisions on this card
 
@@ -38,6 +38,7 @@
 - **After cycle 3: not done**: 2 of 3 checks pass
 - **After cycle 4: not done**: 2 of 3 checks pass
 - **After cycle 5: not done**: 2 of 3 checks pass
+- **Not done**: Not done after 5 cycles. The next run picks up from here.
 
 ## Decider outcomes (latest)
 
@@ -57,6 +58,6 @@
 
 ## What's next
 
-- Running. Latest: turn 32 by Codex (ship). Next: the next stage of the current cycle.
+- Running. Latest: turn 33 by Grok (signoff). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 18:44 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 18:52 UTC. Summary only: no prompts, replies, code or secrets are published._
