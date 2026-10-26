@@ -44,3 +44,4 @@ A metric win with a counter-metric blowout is a red flag, not a win.
 
 - 2026-10-25: approved by Steve; recorded here; experimental facilitator support (`--true-mobbing`) being added to
   mob-defaults, test first. Runs on the next card after card 016.
+- 2026-10-25, run 1 on the baseline-fix card (032), cycle 1: 20 turns, about 330k estimated tokens, 998 s, 5 flags, 1 fix round. The before-commit whole-team checkpoint caught a real defect (the self-check rows still landed in `history.jsonl`) from three members at once. The unresolved flag at the re-check was a tooling false positive (Grok narrates before it answers and the verdict parser read the first word); fixed in mob-defaults (verdict = last SIGN-OFF/FLAG token, test first). The run then stopped (exit 4) with nothing shipped, so the run-1 figures are not yet a clean per-increment cost: the next run continues the same card.
