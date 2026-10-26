@@ -7,7 +7,7 @@
 
 ## Who did what
 
-- **Codex:** 11 turns (green x3, ready x1, refactor x3, ship x3, slice x1)
+- **Codex:** 12 turns (green x3, ready x1, refactor x3, ship x3, signoff x1, slice x1)
 - **Copilot:** 1 turns (red x1)
 
 ## Recent turns
@@ -24,6 +24,7 @@
 - Turn 10: Codex (backend-dev, green): changed loop.py, tests/test_loop_pick.py
 - Turn 11: Codex (backend-dev, refactor): changed loop.py, tests/test_loop_pick.py
 - Turn 12: Codex (devops-engineer, ship): STOPPED — ship gate failed. git diff --check reported trailing whitespace/mixed line endings throughout tests/testlooppick.py.
+- Turn 13: Codex (qa-engineer, signoff): DEFECTS - Bug card: Fix mixed line endings/trailing whitespace in tests/testlooppick.py.
 
 ## Flags, checks and decisions on this card
 
@@ -44,12 +45,8 @@
 - **Next in Ready:** next up: Loop: one durable loop at a time (lock, state, heartbeat) (tooling, thin slice) (064); 2nd in Ready: Loop: run one card with a pinned toolchain (tooling, thin slice) (065); 3rd in Ready: Loop: bounded retry, park and split on failure (tooling, thin slice) (066)
 - **Done:** Resolver malformed-input hardening (002); LLM benchmark harness v0 (016); Benchmark baseline is invalid: fix the harness, store a trustworthy baseline (032); Live mob dashboard (tooling, experiment E2; code in mob-defaults; **Done** 2026-10-26, local-only) (036); Spec resolution defects (bug, from the Grok review) (018)
 
-## Latest commits
-
-- 97636a1 Tooling cards: absolute Phrase paths and Given/When/Then criteria (run 063 stopped at the Ready check); seed
-
 ## What's next
 
-- Running. Latest: turn 12 by Codex (ship). Next: the next stage of the current cycle.
+- Running. Latest: turn 13 by Codex (signoff). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 23:25 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 23:35 UTC. Summary only: no prompts, replies, code or secrets are published._
