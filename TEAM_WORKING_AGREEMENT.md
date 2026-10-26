@@ -14,19 +14,28 @@ at every Decider that touches the product, and the board and milestones are asse
 the product's purpose or direction is answered by VISION.md first; it escalates to Steve only if VISION.md does not
 settle it.
 
-## Product first, and the process budget (Steve, 2026-10-26)
+## Product emphasis, with process improvement alongside (Steve, 2026-10-26)
 
-Steve's direction (a course correction, not a team vote): since the resolver almost all effort went into process and tooling, and the
-product milestone was still at zero. So:
+Steve: "We still need the process and process improvements. I do want an emphasis on product development as well though." This is
+**balance, not removal**. His diagnosis of what went wrong: "it just seemed like we weren't getting very far because there were a lot of
+mistakes and new patches to fix those." The real cost was rework (mistakes, then patches, then more mistakes), not the process itself.
 
-- **Product first.** Work the milestone's path in dependency order. Process and tooling cards come after the product path unless a product
-  criterion actually depends on them.
-- **Process budget: at most about 20% of effort** goes to process and tooling (measure it from the flow numbers: lines and commits in
-  tooling repos, retros, agreements and decisions versus product code and tests). **One retro pick per card; the rest become seeds.**
-  **Retros are short:** the flow-numbers table plus ONE pick. The LLM-customer product-feedback round runs at cards that change the
-  language surface (grammar, docs, diagnostics), not at every retro.
+- **Product cards drive the loop.** The milestone's path is at the top of Ready, in dependency order. Process improvements **ride
+  alongside**: apply each retro's picks on the next product card, so process work does not block product. A process fix that is
+  needed to UNBLOCK product (stalls, the cycle-cap problem) is done now.
+- **Process improvement continues at every retro:** the retros and their four categories, TFDD, the trust ladder, the safety guards, the
+  bootstrap phase, the measurements and the flow numbers all stay. **At least one pick per retro**; take more when they are small and
+  clearly worth it, and record the rest as seeds.
+- **About 20% is a guideline and a signal to watch at retro, NOT a quota or a cap** (Goodhart): measure the share of effort in process
+  and tooling (lines and commits in tooling repos, retros, agreements and decisions versus product code and tests) and discuss it; never
+  steer to the number.
+- **Count rework.** The flow numbers include a defect and rework table: every stop, reopen, revert and incident, classified by root cause
+  (facilitator or tooling bug, Done check too weak, harness or data capture, model misbehavior, safety slip, run shape). The largest class
+  gets a root-cause analysis (five whys) and the CAUSE is fixed, not another symptom.
+- **Tooling meets the product's standard** (proposal P6, to be decided at the retro): a change to the facilitator, prompts or the harness is
+  test-first, reviewed by a non-author model, and smoke-tested on a toy card before it touches a real one.
 - **Headline number.** Every report and every MOB.md update starts with `Usable v1: X of 6 criteria · next card: <title>`.
-- **Safety guards, the bootstrap phase and the escalation rules stay as they are.**
+- **The lean Decider** (see below) stays.
 
 ## Task-Force Driven Development (TFDD)
 

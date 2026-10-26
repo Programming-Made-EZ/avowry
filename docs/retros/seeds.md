@@ -2,9 +2,18 @@
 
 Items raised mid-card, to be taken at the next retro. Newest first.
 
+## Steve's diagnosis and Dispatch proposal P6 (2026-10-26)
+
+- **Diagnosis (Steve):** "it just seemed like we weren't getting very far because there were a lot of mistakes and new patches to fix those." So the retro frames the cost as
+  REWORK: mistakes, patches, more mistakes. The retro adds a defect and rework table to the flow numbers (every stop, reopen, revert and incident since the resolver, classified by
+  root cause and counted), runs a five-whys on the largest class, and fixes the cause. Table and first analysis: `docs/retros/process-retro-prep-2026-10-26.md`.
+- **P6 (Dispatch). Hold the mob tooling to the product's own standard.** Most stops traced to tooling written fast and used on real cards at once. Standard for any change to
+  `facilitator.py`, prompts or the harness: test-first; reviewed by a non-author model; smoke-tested on a toy card before it touches a real one. Metric: tooling-caused stops per
+  card. Counter-metric: time to land tooling changes.
+
 ## Dispatch proposals for the process retro (raw input, 2026-10-26); they compete for the ONE pick
 
-Evidence is from Dispatch watching from outside. Under Steve's direction the process retro is SHORT: the flow-numbers table plus ONE pick; the rest stay seeds.
+Evidence is from Dispatch watching from outside. Per Steve's clarification the process retro keeps its form: flow numbers (now with a defect and rework table), the four categories, at least one pick (more if small and clearly worth it), the rest as seeds.
 Dispatch expects P1 and P2 to matter most for throughput.
 
 - **P1. No turn ends without the next action already running.** Every report ends with a launched background job (with its expected completion) or the next step started.
@@ -21,7 +30,7 @@ Dispatch expects P1 and P2 to matter most for throughput.
 ## Process retro approved by Steve (2026-10-26): scope, data and how it will be run
 
 - **When:** the next retro, after "live mob dashboard (036)" is Done. **Focus:** the mob's own working process. Evidence-based.
-- **(Revised 2026-10-26, Steve: the process retro is SHORT: the flow-numbers table plus ONE pick; the rest are seeds.)** Open with flow metrics for every card done so far (resolver, hardening, benchmark v0, benchmark fix, dashboard), from git and the
+- **(Revised twice 2026-10-26: first 'short, one pick', then Steve's clarification: BALANCE, not removal; the retro keeps its four categories; at least one pick, more if small and clearly worth it; the rest seeds.)** Open with flow metrics for every card done so far (resolver, hardening, benchmark v0, benchmark fix, dashboard), from git and the
   working logs, using `flow_metrics.py` in mob-defaults (tests first): runs and restarts, reopenings, cycles, elapsed and idle time, estimated
   tokens, turns by seat, cycle-cap stops and ready-check stops, who drove, and the facilitator's share of the work by area. This is the process baseline.
 - **Interim numbers (036 still in progress, 2026-10-26):** 001 resolver: 5 runs, 1 reopening, about 1.0M est. tokens, 105 h idle between runs (waiting for the
