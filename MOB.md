@@ -5,16 +5,13 @@
 
 ## Who did what
 
-- **Codex:** 66 turns (checkpoint x3, fix x8, green x9, ready x5, red x8, refactor x9, ship x6, slice x10, teamsignoff x8)
+- **Codex:** 69 turns (checkpoint x3, fix x8, green x10, ready x5, red x8, refactor x10, ship x7, slice x10, teamsignoff x8)
 - **Copilot:** 38 turns (advance x1, checkpoint x17, directions x4, green x1, ready x5, red x2, signoff x1, teamsignoff x7)
 - **Grok:** 37 turns (directions x25, fix x2, red x2, teamsignoff x8)
 - **agy:** 26 turns (checkpoint x18, teamsignoff x8)
 
 ## Recent turns
 
-- Turn 150: Codex (backend-dev, refactor): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
-- Turn 151: Codex (devops-engineer, ship): Stopped: CI had a failing usable-v1 job.
-- Turn 152: Codex (backend-dev, green): changed bench/results/self-check/history.jsonl, bench/README.md
 - Turn 153: Codex (backend-dev, refactor): changed bench/results/self-check/history.jsonl, bench/README.md
 - Turn 154: Codex (devops-engineer, ship): Stopped: CI failed.
 - Turn 155: Codex (backend-dev, green): changed bench/results/codex-gpt-5.6-sol.json, bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
@@ -30,11 +27,15 @@
 - Turn 165: Copilot (qa-engineer, red): changed bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 166: Codex (backend-dev, green): changed bench/results/copilot-default.json, bench/results/history.jsonl, bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
 - Turn 167: Codex (backend-dev, refactor): changed bench/results/copilot-default.json, bench/results/history.jsonl, bench/results/self-check/history.jsonl, tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs, tools/Phrase.Bench/Program.cs
+- Turn 168: Codex (devops-engineer, ship): Shipped successfully.
+- Turn 169: Codex (backend-dev, green): changed bench/results/history.jsonl, bench/results/self-check/history.jsonl, tools/Phrase.Bench/Program.cs
+- Turn 170: Codex (backend-dev, refactor): changed bench/results/history.jsonl, bench/results/self-check/history.jsonl, tools/Phrase.Bench/Program.cs
 
 ## Flags, checks and decisions on this card
 
 - **Baseline (before any work): not done**: 6 of 8 checks pass
 - **After cycle 1: not done**: 7 of 8 checks pass
+- **After cycle 2: DONE**: 8 of 8 checks pass
 
 ## Decider outcomes (latest)
 
@@ -50,13 +51,13 @@
 
 ## Latest commits
 
+- c972981 Complete Copilot benchmark coverage
 - 9142d84 Bootstrap phase (Steve's standing rule): no metric-based rejections until a baseline is established; exit criter
 - 0a0e965 Board: card 032 reopened after the whole-team sign-off (agy empty replies; copilot missing a task); two new Done
 - 08ed7bb Store trustworthy four-model benchmark baseline
-- 140ec7a usable-v1 CI job: green while pending ('not reached: X of 6 criteria'), red only on a ratcheted regression
 
 ## What's next
 
-- Running. Latest: turn 167 by Codex (refactor). Next: the next stage of the current cycle.
+- Running. Latest: turn 170 by Codex (refactor). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 09:03 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 09:22 UTC. Summary only: no prompts, replies, code or secrets are published._
