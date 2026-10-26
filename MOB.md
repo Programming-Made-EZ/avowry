@@ -5,7 +5,7 @@
 
 ## Who did what
 
-- **Codex:** 5 turns (ready x3, refactor x1, ship x1)
+- **Codex:** 6 turns (green x1, ready x3, refactor x1, ship x1)
 - **Copilot:** 1 turns (red x1)
 
 ## Recent turns
@@ -16,6 +16,7 @@
 - Turn 4: Codex (product-manager, ready): Implemented the first coherent increment in [facilitator.py](C:\Users\<user>): - Emits allow-listed start and end events for each real seat process.
 - Turn 5: Codex (backend-dev, refactor): changed facilitator.py
 - Turn 6: Codex (devops-engineer, ship): Shipping stopped: the required dashboard acceptance suite is not green.
+- Turn 7: Codex (backend-dev, green): changed facilitator.py
 
 ## Flags, checks and decisions on this card
 
@@ -36,11 +37,12 @@
 
 ## Latest commits
 
+- c7d990e Record two open items: Decider on the stashed emitter start at the adapter card; update the trust-ladder ledger 
 - 68eb250 Board: card 036 has no repo-relative references to phrase-lang files (they resolve only in the References sectio
 - a7e9a76 Board: card 036 lists its governing documents by absolute path (cross-repo run)
 
 ## What's next
 
-- Running. Latest: turn 6 by Codex (ship). Next: the next stage of the current cycle.
+- Running. Latest: turn 7 by Codex (green). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 13:56 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 14:09 UTC. Summary only: no prompts, replies, code or secrets are published._
