@@ -2,12 +2,12 @@
 
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** running
+**Project:** Phrase &nbsp;|&nbsp; **State:** stopped (exit 1)
 **Card in progress:** Spec resolution defects from the independent review (code only) (018)
 
 ## Who did what
 
-- **Codex:** 11 turns (green x3, ready x1, refactor x3, ship x3, slice x1)
+- **Codex:** 13 turns (advance x1, green x3, ready x1, refactor x3, ship x3, signoff x1, slice x1)
 - **Copilot:** 2 turns (red x1, signoff x1)
 
 ## Recent turns
@@ -25,6 +25,8 @@
 - Turn 11: Codex (backend-dev, refactor): changed src/Phrase.Compiler/Semantics/Resolver.cs, tests/Phrase.Compiler.Tests/Semantics/Resolved.cs, tests/Phrase.Compiler.Tests/Semantics/ResolverSpecDefectsTests.cs
 - Turn 12: Codex (devops-engineer, ship): SHIP BLOCKED — required local gate failed.
 - Turn 13: Copilot (qa-engineer, signoff): I’m validating the stored mob state against the actual repo and will either complete the remaining defect fixes or sign off with the precise QA…
+- Turn 13: Codex (qa-engineer, signoff): READY — The card has a sound Connextra story, testable Given/When/Then acceptance criteria, and all referenced guidance, source, and test files exist.
+- Turn 14: Codex (product-manager, advance): Still In Progress — delivered fixes for PH334 endpoint naming, PH332 nested paths, duplicate PH331 reporting, and unknown-hole PH331 wording; all…
 
 ## Flags, checks and decisions on this card
 
@@ -51,6 +53,6 @@
 
 ## What's next
 
-- Running. Latest: turn 13 by Copilot (signoff). Next: the next stage of the current cycle.
+- Stopped before the card was done. Next: look at the last flag or check above, then run again.
 
 _Updated 2026-10-26 20:48 UTC. Summary only: no prompts, replies, code or secrets are published._
