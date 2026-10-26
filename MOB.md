@@ -5,13 +5,12 @@
 
 ## Who did what
 
-- **Codex:** 21 turns (advance x1, green x5, ready x4, refactor x5, ship x5, slice x1)
+- **Codex:** 22 turns (advance x1, green x5, ready x4, refactor x6, ship x5, slice x1)
 - **Copilot:** 2 turns (red x1, signoff x1)
 - **Grok:** 1 turns (red x1)
 
 ## Recent turns
 
-- Turn 7: Codex (backend-dev, green): changed facilitator.py
 - Turn 8: Codex (backend-dev, refactor): changed facilitator.py
 - Turn 9: Codex (devops-engineer, ship): Shipment stopped: the required gate is not green.
 - Turn 10: Codex (backend-dev, green): changed facilitator.py, status.py, tests/test_status.py
@@ -29,6 +28,7 @@
 - Turn 22: Codex (backend-dev, refactor): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 - Turn 23: Codex (devops-engineer, ship): Shipment stopped: required acceptance gate is red.
 - Turn 24: Codex (backend-dev, green): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
+- Turn 25: Codex (backend-dev, refactor): changed facilitator.py, dashboard/index.html, dashboard/serve.py, status.py, tests/test_dashboard_server.py, tests/test_status.py
 
 ## Flags, checks and decisions on this card
 
@@ -51,10 +51,9 @@
 ## Latest commits
 
 - ffbbbaa Balance, not removal (Steve's clarification): agreement wording revised; Steve's diagnosis and P6 logged; defect
-- 7e43d31 Steve's course correction: product first, ~20% process budget, lighter Decider, headline number; board re-ranked
 
 ## What's next
 
-- Running. Latest: turn 24 by Codex (green). Next: the next stage of the current cycle.
+- Running. Latest: turn 25 by Codex (refactor). Next: the next stage of the current cycle.
 
-_Updated 2026-10-26 17:12 UTC. Summary only: no prompts, replies, code or secrets are published._
+_Updated 2026-10-26 17:19 UTC. Summary only: no prompts, replies, code or secrets are published._
