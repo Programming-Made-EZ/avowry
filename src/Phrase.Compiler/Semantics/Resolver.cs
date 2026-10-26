@@ -293,6 +293,7 @@ public static class Resolver
             var scope = phrase.Holes.ToDictionary(h => h.Name, h => h.Type, StringComparer.Ordinal);
             var givens = new List<BoundArgument>();
             var seen = new HashSet<string>(StringComparer.Ordinal);
+            var hasInvalidBinding = false;
             foreach (var given in spec.Givens)
             {
                 if (given is GivenInput)
@@ -304,11 +305,13 @@ public static class Resolver
                 var binding = (GivenBinding)given;
                 if (!scope.TryGetValue(binding.Name, out var type))
                 {
-                    Report("PH331", $"Phrase spec for '{phrase.Template}' does not bind hole '{binding.Name}'.", binding.At);
+                    hasInvalidBinding = true;
+                    Report("PH331", $"Phrase spec for '{phrase.Template}' does not bind hole '{binding.Name}'. Valid holes: {string.Join(", ", scope.Keys.Order(StringComparer.Ordinal))}.", binding.At);
                     continue;
                 }
                 if (!seen.Add(binding.Name))
                 {
+                    hasInvalidBinding = true;
                     Report("PH331", $"Hole '{binding.Name}' is bound more than once in the spec.", binding.At);
                     continue;
                 }
@@ -319,16 +322,13 @@ public static class Resolver
                 var bindings = spec.Givens.OfType<GivenBinding>().Where(g => g.Name == hole.Name).ToList();
                 if (bindings.Count == 0)
                 {
-                    Report("PH331", $"Spec for '{phrase.Template}' is missing the hole '{hole.Name}'.", spec.At);
+                    if (!hasInvalidBinding)
+                        Report("PH331", $"Spec for '{phrase.Template}' is missing the hole '{hole.Name}'.", spec.At);
                     continue;
                 }
 
                 var binding = bindings[0];
-                if (bindings.Count > 1)
-                {
-                    Report("PH331", $"Hole '{hole.Name}' is bound more than once in the spec.", binding.At);
-                }
-                if (binding.Value is PathExpr)
+                if (ContainsPath(binding.Value))
                 {
                     Report("PH332", $"Spec value for '{binding.Name}' must be a literal, not a path.", binding.At);
                     continue;
@@ -336,7 +336,13 @@ public static class Resolver
                 givens.Add(new BoundArgument(new FieldModel(hole.Name, hole.Type), ResolveValue(binding.Value, hole.Type, scope)));
             }
 
-            var outcome = ResolveSpecOutcome(spec, phrase, scope, null, null);
+            var outcome = ResolveSpecOutcome(
+                spec,
+                phrase,
+                scope,
+                outputType: null,
+                endpointFailures: null,
+                endpointName: null);
             return new PhraseSpecModel(spec.Description, givens, outcome, SourceFormatter.Lines(spec));
         }
 
@@ -358,6 +364,11 @@ public static class Resolver
                 if (given is GivenInput inputGiven)
                 {
                     seenInput = true;
+                    if (ContainsPath(inputGiven.Value))
+                    {
+                        Report("PH332", "Spec input must contain literal values, not paths.", inputGiven.At);
+                        continue;
+                    }
                     var inputRecord = ResolveRecord(inputGiven.Value, endpoint.InputType, scope);
                     inputFields = [.. inputRecord.Fields];
                     continue;
@@ -376,7 +387,7 @@ public static class Resolver
             if (spec.Givens.Count(g => g is GivenInput) > 1)
                 Report("PH331", $"Endpoint spec for '{endpoint.Name}' has more than one input binding.", spec.At);
 
-            var outcome = ResolveSpecOutcome(spec, null, scope, endpoint.OutputType, endpoint.Failures);
+            var outcome = ResolveSpecOutcome(spec, null, scope, endpoint.OutputType, endpoint.Failures, endpoint.Name);
             var boundInput = new BoundRecord(inputFields, endpoint.InputType);
             return new EndpointSpecModel(spec.Description, boundInput, outcome, SourceFormatter.Lines(spec));
         }
@@ -386,7 +397,8 @@ public static class Resolver
             PhraseModel? phrase,
             IReadOnlyDictionary<string, PType> scope,
             PType? outputType,
-            IReadOnlyList<string>? unitFailures)
+            IReadOnlyList<string>? endpointFailures,
+            string? endpointName)
         {
             var outcomes = spec.Thens;
             if (outcomes.Count > 1)
@@ -407,7 +419,7 @@ public static class Resolver
                         Report("PH333", $"Spec '{spec.Description}' uses 'returns' but this unit cannot return a value.", returns.At);
                         return new SucceedsModel();
                     }
-                    if (returns.Value is PathExpr)
+                    if (ContainsPath(returns.Value))
                     {
                         Report("PH332", "Spec outcome value must be a literal, not a path.", returns.At);
                         return new SucceedsModel();
@@ -420,6 +432,11 @@ public static class Resolver
                         Report("PH333", $"Spec '{spec.Description}' uses 'responds' but this unit has no output.", responds.At);
                         return new SucceedsModel();
                     }
+                    if (ContainsPath(responds.Value))
+                    {
+                        Report("PH332", "Spec outcome value must contain literal values, not paths.", responds.At);
+                        return new RespondsModel(new BoundRecord([], outputType));
+                    }
                     var responseRecord = ResolveRecord(responds.Value, outputType, scope);
                     return new RespondsModel(responseRecord);
                 case FailsWithOutcome fail:
@@ -427,9 +444,9 @@ public static class Resolver
                     {
                         Report("PH334", $"Phrase '{phrase.Template}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", phrase.Failures)}.", fail.At);
                     }
-                    if (phrase is null && unitFailures is not null && !unitFailures.Contains(fail.Code, StringComparer.Ordinal))
+                    if (phrase is null && endpointFailures is not null && !endpointFailures.Contains(fail.Code, StringComparer.Ordinal))
                     {
-                        Report("PH334", $"Endpoint '{(scope.ContainsKey("input") ? "Probe" : "unit")}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", unitFailures)}.", fail.At);
+                        Report("PH334", $"Endpoint '{endpointName}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", endpointFailures)}.", fail.At);
                     }
                     return new FailsModel(fail.Code);
                 case SucceedsOutcome:
@@ -442,6 +459,14 @@ public static class Resolver
                     throw new InvalidOperationException();
             }
         }
+
+        private static bool ContainsPath(Expr expression) => expression switch
+        {
+            PathExpr => true,
+            RecordExpr record => record.Fields.Any(field => ContainsPath(field.Value)),
+            ListExpr list => list.Items.Any(ContainsPath),
+            _ => false,
+        };
 
         private static string? CalledPhraseKey(BoundStep step) => step switch
         {

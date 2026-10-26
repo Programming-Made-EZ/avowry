@@ -44,6 +44,11 @@ internal static class Resolved
     /// <summary>Same as <see cref="Probe"/> plus output { totalQuantity: Int }.</summary>
     public static string ProbeWithOutput(params string[] steps) => Endpoint(output: true, steps, specs: "");
 
+    public static string ProbeWithSpec(string specs) =>
+        Endpoint(output: true,
+            ["let total = total quantity of input.items", "respond with { totalQuantity: total }"],
+            specs);
+
     public static string Endpoint(bool output, IEnumerable<string> steps, string specs) =>
         "endpoint Probe : POST /probe\n" +
         "  input\n" +
