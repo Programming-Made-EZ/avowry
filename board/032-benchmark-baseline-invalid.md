@@ -1,6 +1,6 @@
 # Benchmark baseline is invalid: fix the harness and store a trustworthy baseline
 
-- **Status:** Ready, rank 3 (see `board/MILESTONE-usable-v1.md`)
+- **Status:** Reopened 2026-10-26 after the whole-team sign-off (see below)
 - **Type:** bug (exempt from the hypothesis rule); the first card run under experiment E1, true mobbing
 - **Milestone:** Usable v1 (plumbing: every hypothesis card needs a trustworthy baseline); gates milestone M2 'Measured'
 - **Source:** Facilitator's check of card 016's stored results, 2026-10-25. Decider D5.
@@ -35,6 +35,26 @@ Assembled via Decider D5 (kickoff proposal by the facilitator; the same vote cov
 - Security reviewer: agy | why: model CLIs run in scratch copies, and results must hold no secrets or file paths
 - Agile coach: Claude (session) | why: records the E1 metrics and checks role fit at retro
 
+## Reopened after the whole-team sign-off (2026-10-26)
+
+The final sign-off was run before the ship, as Decider D8 required. Two seats FLAGGED, with evidence, and the facilitator
+confirmed both from `bench/results/history.jsonl`. The card is not Done until they are fixed.
+
+- **agy rows are not a measurement (Grok's flag).** All 8 `agy-gemini-4-argon-medium` rows are `completed` with `no_phrase_found`
+  and `tokens_out` 3: three empty replies per task. The agy invocation (`--print` plus the prompt on the command line) captured
+  nothing, and the runner discards stderr when the exit code is 0, so a capture failure was recorded as the model's language
+  result. Fix: invoke agy so its reply is captured (check `agy --help`; a headless/print mode that writes the reply to stdout),
+  and record an empty or near-empty reply (under a few characters) as `unavailable` with the reason `empty reply`, never as
+  `no_phrase_found`. Rows produced by a failed capture are moved out of `history.jsonl` into `bench/results/invalid/` with a
+  one-line note of why; they are not deleted and not counted.
+- **Copilot is missing a task row (Codex's flag).** `copilot-default` has 7 of the 8 development tasks: no row for
+  `002-write-total`. Fix: every model in `history.jsonl` has a row (completed or `unavailable` with its error) for every
+  development task, and the runner fails loudly if a task produced no row.
+- **Goodhart guard:** do not change any prompt or the suite to make a model pass; fix only the harness faults above.
+
+Two new Done-when checks (checks 7 and 8 below) are red today and cannot be satisfied by fixtures: the first requires full
+task coverage per model; the second fails if a model's completed rows are all empty-reply signatures.
+
 ## Done when
 
 The first four commands must exit 0; they are red today.
@@ -44,6 +64,8 @@ python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/his
 python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]; m={r['model'].split('-')[0] for r in rows if r.get('status')=='completed'}; un=sum(1 for r in rows if r.get('status')=='unavailable'); sys.exit(0 if {'codex','copilot','grok','agy'}<=m and un*10<=len(rows) else 1)"
 python -c "import pathlib,sys; sys.exit(0 if pathlib.Path('bench/README.md').is_file() and len(pathlib.Path('bench/README.md').read_text(encoding='utf-8'))>600 else 1)"
 python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]; bad=[r for r in rows if r.get('status')=='completed' and any(str(d).startswith('PH10') for d in r.get('diagnostics',[])) and r.get('attempts')==1]; sys.exit(0 if len(bad)*10<=max(1,len(rows)) else 1)"
+python -c "import json,sys; s=json.load(open('bench/suite.json')); dev={t['id'] for t in s['tasks'] if not t.get('holdout')}; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]; m={}; [m.setdefault(r['model'],set()).add(r['task']) for r in rows]; sys.exit(0 if len(m)>=4 and all(dev<=v for v in m.values()) else 1)"
+python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]; b={}; [b.setdefault(r['model'],[]).append(r) for r in rows if r.get('status')=='completed']; sys.exit(1 if any(all('no_phrase_found' in r.get('diagnostics',[]) and r.get('tokens_out',0)<=5 for r in v) for v in b.values()) else 0)"
 dotnet run --project tools/Phrase.Bench -- --self-check
 dotnet test Phrase.sln --filter "Status!=Pending"
 ```
