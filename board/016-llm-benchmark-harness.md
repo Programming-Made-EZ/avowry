@@ -21,6 +21,24 @@
 - Metrics recorded per model and per task: pass rate, attempts to green, tokens in/out, diagnostics hit, misread-intent errors.
 - Baseline first: the first stored run is the baseline cards 013, 014 and 015 cite.
 
+## Role roster
+
+Declared retroactively on 2026-10-25 (card 016 was already running when the rule was set).
+
+- Facilitator: Claude (session)
+- Product manager: Codex
+- Domain expert: Grok (hat: LLM-benchmark methodology and Goodhart guard)
+- Architect: Codex
+- QA engineer: Copilot
+- Backend dev: Codex
+- Frontend dev: N/A: the harness is a console tool with no UI
+- Database dev: N/A: results are JSON files in the repo, no database
+- UX designer: N/A: no UI; CLI output clarity is reviewed by the QA engineer
+- Security engineer: agy (model CLIs run in scratch copies; no secrets in results files)
+- Agile coach: Grok (flow metrics and retro)
+- Enablement engineer: Copilot (bench README and task authoring guide)
+- DevOps engineer: Codex (ship, CI)
+
 ## Done when
 
 The PM writes the concrete commands at the Ready check (the gate plus mechanical checks that `bench/suite.json`, the runner and a stored results file exist).

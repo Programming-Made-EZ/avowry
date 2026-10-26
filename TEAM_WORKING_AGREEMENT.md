@@ -152,6 +152,20 @@ becomes a target stops being a good measure.
   metric gaming.
 - **Same for flow metrics and trust-ladder evidence:** signals for retro discussion, never quotas.
 
+### Role roster before every card (standing rule, Steve, 2026-10-25)
+
+Steve: "before each feature is started the comprehensive set of roles should be declared and assigned."
+
+- **Before ANY card starts (feature or bug)**, the card carries a `## Role roster` and MOB.md shows it. It lists
+  every role: facilitator, PM, domain expert (with any hat, such as language designer), architect, QA, backend dev, frontend dev,
+  database dev, UX designer, security engineer, agile coach, enablement engineer, DevOps.
+- **Each role is assigned to a specific seat or model, or marked `N/A: <one-line reason>`.** No role is silently
+  omitted.
+- **Assignments follow the trust ladder rungs and per-card rotation, and avoid author-reviews-own-work:** the
+  driver cannot be the independent reviewer or QA for its own increment.
+- **Detector:** card mode refuses to start a card whose roster is missing or incomplete and prints the template
+  (`templates/ROLE_ROSTER.md` in mob-defaults).
+
 ### Driver rotation
 
 - **Rotation order: Codex → Copilot → Grok → agy; Claude is last resort.** Claude drives or reviews only
