@@ -67,6 +67,31 @@ generic parts only. Adopted 2026-10-25 by the mob facilitator on Steve's standin
 - **Process work** is chosen only at a retro, states its user benefit, and is timeboxed to one or two
   cycles. Stop-the-line exceptions only: data loss, a security hole, a broken trunk.
 
+### Continuous loop (standing rule, Steve, 2026-10-25)
+
+The mob runs continuously: card → ship each green increment → Done → retro → PM re-ranks → pull the next
+top card → repeat. It does not stop between cards or wait for pings. It stops only when the board's Ready
+column is empty AND the retro produced no new cards, or when Steve says stop. WIP stays at one card.
+
+### LLMs are the customers (standing rule, Steve, 2026-10-25)
+
+Phrase's target consumer is LLMs, so every model in the rotation (Codex, Copilot, Grok, agy/Gemini, and
+Claude as a voice) is a source of product ideas.
+
+- **Every retro covers four categories:** Individual, Team, Organization and **Product**, and opens with
+  flow metrics.
+- **Product feedback is gathered from each available model, in parallel and cheaply, as evidence and not
+  opinion polling.** Each model reads the current `docs/GRAMMAR.md` plus a sample `.phrase` file, then
+  writes or modifies a small phrase. It reports where it struggled (ambiguity, wasted tokens, misread
+  intent, a missing construct) and proposes **at most 2 improvements, each with a concrete example**.
+  Feedback-gathering turns are read-only and write no files in the repo.
+- **These ideas are raw input.** The PM, with the domain expert (the language designer), dedups them and
+  weighs value against effort and fit with Phrase's principles ("the code is the context", specs are
+  truth). Winners are refined into Connextra + ZOMBIES cards and ranked on the board. **Every rejected
+  idea is recorded with the reason it was rejected** (in the retro entry).
+- **After each retro the facilitator reports to Steve** which cards came from model feedback and their
+  board ranks.
+
 ### Driver rotation
 
 - **Rotation order: Codex → Copilot → Grok → agy; Claude is last resort.** Claude drives or reviews only
