@@ -34,4 +34,18 @@ Assembled 2026-10-25 (revised the same day to the roles-that-apply form).
 
 ## Done when
 
-The PM writes the concrete commands at the Ready check (the gate plus mechanical checks that `bench/suite.json`, the runner and a stored results file exist).
+Written by the facilitator after the first cycle shipped only a skeleton (one task, no runner). Each command must
+exit 0; the checks are red today and cannot be satisfied by existing text.
+
+```
+python -c "import json,sys; s=json.load(open('bench/suite.json')); t=s['tasks']; k={x['kind'] for x in t}; h=sum(1 for x in t if x.get('holdout')); sys.exit(0 if len(t)>=12 and k>={'write','read','modify','fix'} and h*4>=len(t) and s.get('version')==1 else 1)"
+python -c "import json,pathlib,sys; s=json.load(open('bench/suite.json')); sys.exit(0 if all(pathlib.Path('bench',x['prompt']).is_file() for x in s['tasks']) else 1)"
+dotnet run --project tools/Phrase.Bench -- --self-check
+python -c "import json,sys; rows=[json.loads(l) for l in open('bench/results/history.jsonl',encoding='utf-8') if l.strip()]; m={r['model'] for r in rows if r.get('status')!='unavailable'}; sys.exit(0 if len(m)>=3 and all(k in r for r in rows for k in ('model','task','passed','attempts','tokens_in','tokens_out','diagnostics','misread')) else 1)"
+dotnet test Phrase.sln --filter "Status!=Pending"
+```
+
+`--self-check` contract: the runner executes the whole suite against a deterministic fake model, writes a result
+file and a `history.jsonl` row per task, runs it twice to print the noise (difference per metric), and exits 0 only
+if the output matches the schema. Real baseline rows (at least three of the four models; an `unavailable` row is
+allowed for the rest) must be in `bench/results/history.jsonl`, which is committed.
