@@ -110,23 +110,43 @@ conflicting opinions from the models. However there is also the decider protocol
 - **The mob decides everything else itself:** features, syntax details, priorities, implementation and
   tooling. Do not ask Steve.
 - **Model disagreement** (retro product feedback, design debates, reviews): run the Decider protocol first.
+- **Whether anything escalates is itself decided by a Decider.**
 - **Escalate to Steve ONLY if** (a) the question is about the language's overall purpose or direction
   (what Phrase is for, or who it serves), or (b) a model conflict the Decider could not resolve.
 - **Format:** one short message with the options, each model's position in one line, and a recommendation;
   answerable in one word.
 
-### Decider protocol (for conflicting views)
+### Decider protocol (the default for every team decision)
 
-When models disagree (in retro product feedback, design debates or reviews), run the Decider first.
+Steve: "any decision should probably go through this process." The Decider settles conflicts, and it is also how
+the team decides things in the first place.
 
-1. **Proposal.** The proposer states ONE concrete proposal.
-2. **Simultaneous vote.** All voting seats vote at the same time, each choosing **Yes**, **Support-it**
-   (not my first choice, but I will back it) or **No**. Seats do not see each other's votes before voting.
-3. **Outliers.** Each **No** voter (an outlier) says what it would take to get to yes; the proposer may
-   amend the proposal, and the amended proposal is voted again.
+**What goes through it:** the task force (at kickoff and every mid-card addition), card refinement and acceptance
+criteria, PM ranking and re-ranking, design and architecture choices, keeping or reverting a feature on benchmark
+data, declaring a card Done, milestones and their targets, retro picks and process experiments, trust-ladder
+promotions and demotions, benchmark suite changes, and whether anything escalates to Steve.
+
+**Not a Decider:** the driver's moment-to-moment implementation choices inside an increment. Those are covered by
+independent review, and any reviewer objection becomes a Decider proposal.
+
+1. **Proposal.** The PM, facilitator or a role owner states ONE concrete proposal.
+2. **Simultaneous vote.** The task force votes at the same time, in parallel, each choosing **Yes**,
+   **Support-it** (not my first choice, but I will back it) or **No**. Seats do not see each other's votes first.
+3. **Outliers.** Each **No** voter says what it would take to get to yes, in a short reason; only outliers explain.
+   The proposer may amend, and the amended proposal is voted once more.
 4. **Result.** An "absolutely no" from any seat, or outliers still unresolved after the amendment, means the
-   proposal **fails**. Otherwise it passes.
-5. **Record.** Every Decider run is recorded in MOB.md: the proposal, each seat's vote, and the result.
+   proposal **fails**. Otherwise it passes. One round, no long debate.
+5. **Record.** Every run goes in MOB.md as `Decider D<n>: <proposal>`, with votes and `Result: passed|failed`. The
+   facilitator collapses an all-Yes result to a single line, for example
+   `- Decider D4: rank card 016 second, all Yes, passed`. A failed proposal is logged and may be raised again at
+   the next retro.
+6. **Keep it lean.** Votes are short and collected in parallel so the Decider does not drain the driver allotments.
+
+**The task force is a Decider.** The initial task force is a Decider proposal from the facilitator or PM, so any seat
+can object to a missing or padded role. A role proposed mid-card needs a Decider too: the proposer states the role, its
+assignee and why it is needed; if it passes, the role is added to the card's `## Task force` with where it joined and
+a pointer to the record (`| joined: cycle 2 | decider: D3`). Card mode refuses a mid-card role that carries no
+`decider:` reference or whose Decider record is missing or did not pass.
 
 ### Milestones and hypothesis-driven work (standing rule, Steve, 2026-10-25)
 
@@ -180,15 +200,17 @@ are created."
 - **One structural rule:** whoever authors an increment never reviews or QAs it. Assign by trust-ladder rung and
   per-card rotation.
 - **The task force is living, not frozen at kickoff** (Steve: "also during the building if the team identifies a
-  new role is needed then that gets added"). Any member can flag mid-card that a role is needed (a security
-  question surfaces, the work turns out to need a technical writer or a perf engineer). The role is added right
-  away, with an assignee and a one-line why, appended to the card's `## Task force` with where it joined
-  (`| joined: cycle 2`). **No Decider run is needed to add a role.** The new role then reviews the relevant work
-  done so far, not only what comes next. Card mode accepts the amendment (and refuses an invalid one).
+  new role is needed then that gets added"; then: "I think decider protocol is needed to decide if a new role is
+  required"). Any member can flag mid-card that a role is needed (a security question surfaces, the work turns out
+  to need a technical writer or a perf engineer) and states one Decider proposal: the role, its assignee and why.
+  If it passes, the role is added to the card's `## Task force` with where it joined and the Decider reference
+  (`| joined: cycle 2 | decider: D3`). The new role then reviews the relevant work done so far, not only what comes
+  next. Card mode refuses a role with no passed Decider on record.
 - **Retro reviews every mid-card addition:** why wasn't it caught at assembly? If the miss is likely to recur, the
-  role is added to the menu in the template.
+  role is added to the menu in the template. A failed proposal can be raised again at retro.
 - **Detector:** card mode checks only that a task force is declared, that every listed role has an assignee and a
-  why, and that no seat is both `[author]` and `[reviewer]`. It never checks role names or counts. Template:
+  why, that no seat is both `[author]` and `[reviewer]`, and that each mid-card role cites a passed Decider. It never
+  checks role names or counts. Template:
   `templates/TASK_FORCE.md` in mob-defaults.
 
 ### Driver rotation
