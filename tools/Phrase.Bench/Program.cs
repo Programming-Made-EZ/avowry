@@ -181,7 +181,7 @@ static Dictionary<string, string> ParseOptions(string[] values)
     return result;
 }
 
-static Process StartModel(string command, string workingDirectory)
+static Process StartModelViaShell(string command, string workingDirectory)
 {
     var windows = OperatingSystem.IsWindows();
     var startInfo = new ProcessStartInfo(windows ? "cmd.exe" : "/bin/sh")
@@ -202,14 +202,33 @@ static Process StartModel(string command, string workingDirectory)
     return Process.Start(startInfo) ?? throw new InvalidOperationException("Could not start model process.");
 }
 
+static Process StartModelWithArguments(string command, string workingDirectory, params string[] arguments)
+{
+    var startInfo = new ProcessStartInfo(command)
+    {
+        WorkingDirectory = workingDirectory,
+        RedirectStandardInput = true,
+        RedirectStandardOutput = true,
+        RedirectStandardError = true,
+        UseShellExecute = false,
+    };
+    foreach (var argument in arguments)
+        startInfo.ArgumentList.Add(argument);
+    return Process.Start(startInfo) ?? throw new InvalidOperationException("Could not start model process.");
+}
+
 static async Task<string> RunModel(
     string model, string command, string workingDirectory, string prompt, TimeSpan timeout)
 {
     if (command == SelfCheckModelCommand)
         return "module SelfCheck\n\nphrase \"self check\"\n  native csharp\n    return;\n";
 
-    command += ProfileArguments(model, workingDirectory, prompt);
-    using var process = StartModel(command, workingDirectory);
+    var profile = model.Split('-', 2)[0];
+    var useDirectArguments = profile.Equals("agy", StringComparison.Ordinal)
+        && !Path.HasExtension(command);
+    using var process = useDirectArguments
+        ? StartModelWithArguments(command, workingDirectory, "--print", prompt.TrimEnd())
+        : StartModelViaShell(command + ProfileArguments(model, workingDirectory, prompt), workingDirectory);
     await process.StandardInput.WriteAsync(prompt);
     process.StandardInput.Close();
     var outputTask = process.StandardOutput.ReadToEndAsync();
