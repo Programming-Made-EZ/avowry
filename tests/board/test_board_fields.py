@@ -59,7 +59,7 @@ class FakeGH:
         if cmd[:2] == ["project", "item-edit"]:
             item = next(x for x in self.items if x["id"] == cmd[cmd.index("--id") + 1])
             field = next(x for x in self.fields if x["id"] == cmd[cmd.index("--field-id") + 1])
-            key = set_fields.item_key(field["name"])
+            key = field["name"].lower()  # the real item-list key
             if "--number" in cmd:
                 item[key] = float(cmd[cmd.index("--number") + 1])
             elif "--text" in cmd:
@@ -160,6 +160,31 @@ class BoardFieldTests(unittest.TestCase):
             fake.items[0]["rank"] = 99
             with self.assertRaises(RuntimeError):
                 check_real_board.verify_fields(fake, board_dir=board)
+
+
+class TransientErrorTests(unittest.TestCase):
+    def test_a_transient_github_error_is_retried_then_succeeds(self):
+        # Given gh answers 'Something went wrong' once (the real API did, mid-apply), then succeeds
+        import subprocess
+        from unittest import mock
+
+        answers = [subprocess.CompletedProcess([], 1, "", "GraphQL: Something went wrong while executing your query"),
+                   subprocess.CompletedProcess([], 0, "ok", "")]
+        with mock.patch.object(subprocess, "run", side_effect=answers) as run, mock.patch.object(set_fields.time, "sleep"):
+            # When the runner is called
+            out = set_fields.gh_runner(["project", "item-list", "1"])
+        # Then it retried once and returned the output
+        self.assertEqual((out, run.call_count), ("ok", 2))
+
+    def test_a_real_error_is_not_retried(self):
+        import subprocess
+        from unittest import mock
+
+        bad = subprocess.CompletedProcess([], 1, "", "GraphQL: Did not receive a number value")
+        with mock.patch.object(subprocess, "run", return_value=bad) as run, mock.patch.object(set_fields.time, "sleep"):
+            with self.assertRaises(RuntimeError):
+                set_fields.gh_runner(["project", "item-edit"])
+        self.assertEqual(run.call_count, 1)
 
 
 if __name__ == "__main__":

@@ -9,6 +9,7 @@ import argparse
 import json
 import re
 import subprocess
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Sequence
@@ -32,8 +33,19 @@ class CardValues:
     values: dict
 
 
-def gh_runner(args: Sequence[str], *, check=True, input_text=None):
-    proc = subprocess.run(["gh", *map(str, args)], input=input_text, capture_output=True, text=True)
+TRANSIENT = ("something went wrong", "rate limit", "502", "503", "504", "timed out", "timeout")
+
+
+def gh_runner(args: Sequence[str], *, check=True, input_text=None, attempts=4):
+    for attempt in range(1, attempts + 1):
+        proc = subprocess.run(["gh", *map(str, args)], input=input_text, capture_output=True, text=True)
+        if not proc.returncode:
+            break
+        detail = (proc.stderr or proc.stdout or "").lower()
+        if attempt < attempts and any(word in detail for word in TRANSIENT):
+            time.sleep(2 * attempt)  # a transient GitHub error: wait and retry the same call
+            continue
+        break
     if check and proc.returncode:
         raise RuntimeError(proc.stderr.strip() or proc.stdout.strip() or "gh command failed")
     return proc.stdout.strip()
@@ -51,8 +63,7 @@ def validate_target(owner, repo):
 
 
 def item_key(field_name):
-    words = field_name.split()
-    return words[0].lower() + "".join(word.title() for word in words[1:])
+    return field_name.lower()  # the real gh item-list keeps spaces: 'card number', 'depends on'
 
 
 def _line(text, label):
