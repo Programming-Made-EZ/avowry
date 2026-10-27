@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:d3659d56e9223642dac218c8da29a940fa35a6ddaec4989295a7ceb339cbc01c -->
+<!-- board-table-sha256:cc5529697dbdb3d81313705f993c2b63ca95bfe4f9f8011b8ba16567440c3948 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -33,7 +33,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 11 | 076 Loop: the picker reads the GitHub board (card 063's logic, new source) | Done | 075 (063 is superseded by this card) |
 | 12 | 077 Board: the project is the single source; board files become a generated read-only archive | Done | 075, 076 |
 | 13 | 064 Loop: one durable loop at a time (lock, state, heartbeat) | Done | 076 (the picker reads the GitHub board; D25) |
-| 14 | 093 Record the sealed holdout hashes before the baseline starts | Ready | none |
+| 14 | 093 Record the sealed holdout hashes before the baseline starts | Done | none |
 | 15 | 086 Plain C# baseline on the same tasks | Ready | 093 (the sealed holdout hashes are recorded first) |
 | 16 | 084 Reference target builds and every orders spec passes | Done | none |
 | 17 | 085 A missing Phrase reply is a model failure, not a harness error | Done | none |
