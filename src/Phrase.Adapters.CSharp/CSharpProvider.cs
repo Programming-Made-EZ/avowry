@@ -107,7 +107,7 @@ public sealed class CSharpProvider : ITargetAdapter
     {
         foreach (var spec in phrase.Specs)
         {
-            if (spec.Outcome is not FailsModel &&
+            if (spec.Outcome is not FailsModel && spec.Outcome is not SucceedsModel &&
                 (spec.Outcome is not ReturnsModel returns || !IsSupportedValue(module, returns.Value)))
                 throw new NotImplementedException($"The C# emitter does not support the outcome of spec '{spec.Description}' yet.");
             foreach (var given in spec.Givens)
@@ -408,12 +408,12 @@ public sealed class CSharpProvider : ITargetAdapter
                 case RespondsModel responds:
                     code.Append("        var response = ").Append(EndpointHandlerName(endpoint.Name)).Append(".Handle(input);\n");
                     code.Append("        // Then responds ").Append(CSharpValue(responds.Value)).Append('\n');
-                    code.Append("        Assert.Equal(").Append(CSharpValue(responds.Value)).Append(", response);\n");
+                    AppendAssertion(code, spec.Description, CSharpValue(responds.Value), "response");
                     break;
                 case FailsModel fails:
                     code.Append("        var failure = Assert.Throws<PhraseFailure>(() => ").Append(EndpointHandlerName(endpoint.Name)).Append(".Handle(input));\n");
                     code.Append("        // Then fails with ").Append(fails.Code).Append('\n');
-                    code.Append("        Assert.Equal(").Append(CsString(fails.Code)).Append(", failure.Code);\n");
+                    AppendAssertion(code, spec.Description, CsString(fails.Code), "failure.Code");
                     break;
                 case SucceedsModel:
                     code.Append("        var response = ").Append(EndpointHandlerName(endpoint.Name)).Append(".Handle(input);\n");
@@ -492,15 +492,23 @@ public sealed class CSharpProvider : ITargetAdapter
 
         code.Append("        // ").Append(Capitalize(spec.Lines[index++])).Append('\n');
         var fails = spec.Outcome as FailsModel;
-        code.Append(fails is null ? "        var result = Phrases." : "        var failure = Assert.Throws<PhraseFailure>(() => Phrases.").Append(MethodName(phrase)).Append('(');
+        var succeeds = spec.Outcome is SucceedsModel;
+        code.Append(fails is not null ? "        var failure = Assert.Throws<PhraseFailure>(() => Phrases." : succeeds ? "        Phrases." : "        var result = Phrases.").Append(MethodName(phrase)).Append('(');
         code.Append(string.Join(", ", phrase.Effects.Select(effect => $"new {CSharpIdent(effect)}Double()").Concat(phrase.Holes.Select(hole => CSharpIdent(hole.Name)))));
         code.Append(fails is null ? ");\n" : "));\n");
         code.Append("        // ").Append(Capitalize(spec.Lines[index])).Append('\n');
-        if (fails is null)
-            code.Append("        Assert.Equal(").Append(CSharpValue(((ReturnsModel)spec.Outcome).Value)).Append(", result);\n");
-        else
-            code.Append("        Assert.Equal(").Append(CsString(fails.Code)).Append(", failure.Code);\n");
+        if (spec.Outcome is ReturnsModel returns)
+            AppendAssertion(code, spec.Description, CSharpValue(returns.Value), "result");
+        else if (fails is not null)
+            AppendAssertion(code, spec.Description, CsString(fails.Code), "failure.Code");
         code.Append("    }\n");
+    }
+
+    private static void AppendAssertion(StringBuilder code, string description, string expected, string actual)
+    {
+        code.Append("        Assert.True(Equals(").Append(expected).Append(", ").Append(actual).Append("), ")
+            .Append(CsString($"Spec \"{description}\" expected ")).Append(" + ").Append(expected)
+            .Append(" + \" but got \" + ").Append(actual).Append(" + \".\");\n");
     }
 
     private static string Signature(PhraseModel phrase) =>
