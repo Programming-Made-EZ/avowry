@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:8245fc8010b035525067b894a17def18994e97e322dc18d5803cf997d0383304 -->
+<!-- board-table-sha256:5417e5a314590b6dfb0e1957fe76ea387ce70b3276c907ea47ab8c3ed16c799f -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -77,7 +77,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 55 | 033 Generic type parameters on phrases | Ready | 022, 032, 040 |
 | 56 | 034 Behavioral holes and spec test doubles | Ready | 033 |
 | 57 | 059 ADR: deterministic asynchronous and event semantics | Ready | 022, 033, 034 (language foundations) |
-| 58 | 082 ADR: a spec party is who observes an outcome | Ready | 022, 058, 059, 081 |
+| 58 | 082 ADR: a spec actor is who observes an outcome | Ready | 022, 058, 059, 081 |
 | 59 | 025 Base library v0: structure and a seed of about 12 keywords, with C# adapter implementations | Ready | 024, 034, 050 |
 | 60 | 008 Close the language gaps the demo app exposes | Ready | 025, 050, 052 |
 | 61 | 015 Proposal: make the spec `when` line optional | Ready | 037 |

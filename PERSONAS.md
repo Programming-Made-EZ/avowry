@@ -2,6 +2,8 @@
 
 Steve's story standard (2026-10-26, on card 003): *"this is a role, not a persona."* A Connextra story names a **persona**, a specific user with context, goals and constraints, not a generic role such as "an engineer (or an LLM)". The "so that" is **value that persona gets**, not an internal design goal. ("C# is the first adapter, not a one-off emitter" is architecture, not user value.) This pairs with VISION ruling 5: specs state consumer-observable outcomes.
 
+An **actor**, in the UML and use-case sense (Steve, 2026-10-26), is anyone or anything outside the system that interacts with it. The personas below are the HUMAN actors; a Contract card's actor is a SYSTEM actor (the compiler, the resolver, an adapter, the generated program). The same word covers both, and the same idea names who observes an outcome in a spec (see the spec-actor ADR, card 082).
+
 The set below was drafted by the team (language designer, PM, UX lenses; Decider D27) from [VISION.md](VISION.md) and the LLM-customer feedback in [docs/retros/process-2026-10-26.md](docs/retros/process-2026-10-26.md). It is deliberately small. A story names one of these by name.
 
 ## Ari: cold-start coding agent

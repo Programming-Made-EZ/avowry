@@ -59,11 +59,11 @@ def _field(text, label):
 
 
 def check_contract(path, text):
-    """A contract card is the how: a consuming COMPONENT, an observable output, and a Story it enables."""
+    """A contract card is the how: a system ACTOR (the component that interacts with the unit), an observable output, and a Story it enables."""
     names = persona_names(pathlib.Path(__file__).resolve().parents[1] / "PERSONAS.md") if pathlib.Path(__file__).resolve().parents[1].joinpath("PERSONAS.md").exists() else []
-    consumer = _field(text, "Consumer")
+    consumer = _field(text, "Actor") or _field(text, "Consumer")  # Consumer is the legacy label
     if not consumer or ROLE_CONSUMERS.match(consumer) or consumer.lower() in {n.lower() for n in names} | {"steve", "ari", "dana", "morgan", "riley"}:
-        return f"the contract's Consumer must be a component (the resolver, the emitter, an adapter, the generated program), not a person or role: {consumer or 'missing'}"
+        return f"the contract's Actor must be a SYSTEM actor, a component outside the unit that interacts with it (the compiler, the resolver, an adapter, the generated program), not a person or role: {consumer or 'missing'}"
     observes = _field(text, "Observes")
     if not observes:
         return "the contract has no Observes line (the output the consumer can tell from a wrong result)"

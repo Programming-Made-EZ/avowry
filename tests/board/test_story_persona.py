@@ -54,8 +54,8 @@ class StoryPersonaTests(unittest.TestCase):
             self.assertIsNone(self.verdict("As an engineer, I want x.", status=status))
 
 
-def contract(consumer="the C# emitter", observes="an API project whose handler returns the declared status", enables="039", shape="Contract"):
-    return (f"# C\n\n- **Status:** Ready\n- **Shape:** {shape}\n- **Consumer:** {consumer}\n- **Given:** a resolved model\n"
+def contract(consumer="the C# emitter", label="Actor", observes="an API project whose handler returns the declared status", enables="039", shape="Contract"):
+    return (f"# C\n\n- **Status:** Ready\n- **Shape:** {shape}\n- **{label}:** {consumer}\n- **Given:** a resolved model\n"
             f"- **Observes:** {observes}\n- **Fails with:** PH333\n- **Invariants:** deterministic output\n- **Enables:** {enables}\n")
 
 
@@ -92,6 +92,13 @@ class ContractCardTests(unittest.TestCase):
         for who in ("an engineer", "Ari", "a user", "the developer"):
             with self.subTest(who=who):
                 self.assertIn("component", self.verdict(contract(consumer=who)))
+
+    def test_the_legacy_consumer_label_is_still_accepted(self):
+        self.assertIsNone(self.verdict(contract(label="Consumer")))
+
+    def test_a_contract_with_no_actor_line_is_rejected_naming_actor(self):
+        text = contract().replace("- **Actor:** the C# emitter\n", "")
+        self.assertIn("Actor", self.verdict(text))
 
     def test_a_contract_missing_observes_is_rejected(self):
         text = contract().replace("- **Observes:** an API project whose handler returns the declared status\n", "")
