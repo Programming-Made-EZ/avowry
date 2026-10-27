@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:ff8477a2c2783bdc48aaf886f3646c9afc0f925ea43c19ea9d1c840ef936f937 -->
+<!-- board-table-sha256:c068339084c25aae5b98d1e6379e51c4264d92f135b3d0d949b92a42e281c087 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -46,7 +46,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 24 | 041 A declared record becomes a usable C# record | Done | 040 |
 | 25 | 042 List fields compile | Done | 041 |
 | 26 | 043 A phrase can fail with its declared code | Done | 040 |
-| 27 | 044 A native C# block is placed verbatim and builds | Ready | 043 |
+| 27 | 044 A native C# block is placed verbatim and builds | Done | 043 |
 | 28 | 045 A composite phrase calls its leaf phrases in order | Ready | 043 |
 | 29 | 048 One POST endpoint serves its successful response | Ready | 045, 047 |
 | 30 | 049 A declared failure maps to its HTTP status, not a 500 | Ready | 048 |

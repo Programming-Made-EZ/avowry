@@ -270,3 +270,8 @@ Format: `Decider D<n>: <proposal>`, votes, `Result: passed|failed`. All-Yes resu
 
 - Date: 2026-10-27. Question: does commit 045c41d (authored by Codex) meet the three Done checks with a runtime failure type matching the reference; is it free of speculative extras; is card 043 Done. Seats: Copilot Yes; Grok Yes (the non-author reviewers). Result: passed.
 - Evidence: red NotImplementedException for failure codes; PhraseFailure(Code, Raise) matches reference/csharp PhraseRuntime; the generated failure spec uses Assert.Throws<PhraseFailure> and checks the code; 239 compiler tests and 88 acceptance tests pass with zero warnings.
+
+#### Decider D58: review of card 044 (A native C# block is placed verbatim and builds)
+
+- Date: 2026-10-27. Question: do the three Done checks hold on commit bc507ef (authored by Copilot, a test-only slice); is a test-only slice acceptable when the behaviour already exists; is card 044 Done. Seats: Codex Yes; Grok Yes (the non-author reviewers). Result: passed.
+- Evidence: card 039 already emitted the native body; the Slice=044 test pins a multi-line block (nested braces, blank line, relative indentation) verbatim in Phrases.cs, a warning-free build of the generated Specs project and its one passing spec; 239 compiler tests and 89 acceptance tests pass with zero warnings. Retro evidence: a thin chain written before the code exists can contain a card whose behaviour an earlier card already delivered; reporting it plainly (instead of padding the change) cost one short run.
