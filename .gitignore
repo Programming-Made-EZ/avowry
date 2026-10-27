@@ -5,3 +5,5 @@ TestResults/
 .vs/
 .idea/
 .mob/
+__pycache__/
+*.pyc

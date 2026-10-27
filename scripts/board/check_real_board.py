@@ -24,9 +24,9 @@ EXPECTED_FIELDS = [
 EXPECTED_STATUS_OPTIONS = ["Ready", "In Progress", "Done", "Superseded/Withdrawn"]
 
 
-def gh_runner(args):
+def gh_runner(args, *, check=True, input_text=None):
     proc = subprocess.run(["gh", *[str(part) for part in args]], capture_output=True, text=True)
-    if proc.returncode != 0:
+    if check and proc.returncode != 0:
         raise RuntimeError(proc.stderr.strip() or proc.stdout.strip() or "gh command failed")
     return proc.stdout.strip()
 
@@ -160,13 +160,26 @@ def verify_project(gh):
     return project
 
 
+def verify_fields(gh, board_dir=None, running=None):
+    """Read every project item and compare it with the card-derived values."""
+    from scripts.board import set_fields
+
+    cards = set_fields.load_cards(board_dir or BOARD_DIR, running=running)
+    _project, _fields, actions = set_fields.plan(gh, board_dir or BOARD_DIR, running=running)
+    if actions:
+        pending = [f"{action} {card.number}" for action, card, _issue, _item, _detail in actions]
+        raise RuntimeError("Project fields do not match; dry run still has work: " + ", ".join(pending))
+    return len(cards)
+
+
 def main(argv=None, gh_runner=gh_runner):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project", action="store_true", help="verify the project exists and has the correct fields")
     parser.add_argument("--issues", action="store_true", help="verify exactly one marked issue exists per card file")
+    parser.add_argument("--fields", action="store_true", help="verify every card item's values (read-only)")
     args = parser.parse_args(argv)
 
-    if not args.project and not args.issues:
+    if not args.project and not args.issues and not args.fields:
         parser.print_help()
         return 1
 
@@ -176,6 +189,8 @@ def main(argv=None, gh_runner=gh_runner):
             verify_project(gh_runner)
         if args.issues:
             count = verify_issues(gh_runner)
+        if args.fields:
+            count = verify_fields(gh_runner)
     except Exception as exc:
         print(f"FAIL: {exc}")
         return 1
@@ -184,6 +199,8 @@ def main(argv=None, gh_runner=gh_runner):
         print(f"OK: {PROJECT_NAME} exists privately under {OWNER} with the expected fields and status options.")
     if args.issues:
         print(f"OK: {count} marked issues, exactly one per card file.")
+    if args.fields:
+        print(f"OK: {count} project items match their card fields; a second dry run has nothing to do.")
     return 0
 
 
