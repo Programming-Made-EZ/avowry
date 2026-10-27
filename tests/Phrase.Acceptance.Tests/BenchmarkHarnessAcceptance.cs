@@ -302,6 +302,169 @@ public class BenchmarkHarnessAcceptance
     }
 
     [Fact]
+    public async Task run_records_narration_only_failure_as_completed_model_error_without_unavailable_status()
+    {
+        // Given a model reply that narrates but never emits Phrase source
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var modelOutput = Path.Combine(workspace.Root, "model-output.txt");
+        await File.WriteAllTextAsync(modelOutput, "I will open the working tree and look at the files first.");
+        var modelCommand = PrintFileCommand(modelOutput);
+
+        // When the benchmark runner evaluates that reply
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "narration-only-v1", modelCommand);
+
+        // Then it is treated as a real model failure, not as an unavailable harness error
+        Assert.True(exitCode == 3, stdout + stderr);
+        Assert.Contains("narration-only-v1: failed", stdout);
+        using var result = await ReadModelResult(suiteDirectory, "narration-only-v1");
+        Assert.False(result.RootElement.GetProperty("passed").GetBoolean());
+        Assert.Equal("completed", result.RootElement.GetProperty("status").GetString());
+        Assert.Equal("none", result.RootElement.GetProperty("proof_level").GetString());
+        var diagnostics = result.RootElement.GetProperty("diagnostics").EnumerateArray().ToArray();
+        Assert.Contains(diagnostics, diagnostic => diagnostic.GetString() == "no_phrase_found");
+        Assert.DoesNotContain("unavailable", result.RootElement.GetProperty("status").GetString(), StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task run_records_exiting_model_as_unavailable_with_none_proof_level()
+    {
+        // Given a model command that exits non-zero without output
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var modelCommand = OperatingSystem.IsWindows()
+            ? "more > nul && exit /b 17"
+            : "cat > /dev/null; exit 17";
+
+        // When the benchmark CLI runs that model
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "nonzero-v1", modelCommand);
+
+        // Then it records an unavailable row without claiming parse or specs proof
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Contains("nonzero-v1: unavailable", stdout);
+        using var result = await ReadModelResult(suiteDirectory, "nonzero-v1");
+        Assert.Equal("unavailable", result.RootElement.GetProperty("status").GetString());
+        Assert.Equal("none", result.RootElement.GetProperty("proof_level").GetString());
+        Assert.Contains("exited 17", result.RootElement.GetProperty("error").GetString(), StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task run_keeps_legacy_history_rows_byte_for_byte_when_appending_new_results()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var resultsDirectory = Path.Combine(suiteDirectory, "results");
+        Directory.CreateDirectory(resultsDirectory);
+        var legacyRow = "{\"model\":\"legacy-v1\",\"task\":\"001-write-greeting\",\"status\":\"completed\"}\n";
+        await File.WriteAllTextAsync(Path.Combine(resultsDirectory, "history.jsonl"), legacyRow);
+
+        var modelOutput = Path.Combine(workspace.Root, "model-output.phrase");
+        await File.WriteAllTextAsync(modelOutput, """
+            module Greeting
+
+            phrase "say hello"
+              native csharp
+                return;
+            """);
+        var modelCommand = PrintFileCommand(modelOutput);
+
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "legacy-appended-v1", modelCommand);
+
+        Assert.True(exitCode == 0, stdout + stderr);
+        var rows = await File.ReadAllLinesAsync(Path.Combine(resultsDirectory, "history.jsonl"));
+        Assert.Equal(2, rows.Length);
+        Assert.Equal(legacyRow.TrimEnd(), rows[0]);
+    }
+
+    [Fact]
+    public async Task run_inlines_task_file_bodies_in_the_assembled_prompt()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = Path.Combine(workspace.Root, "bench");
+        var taskDirectory = Path.Combine(suiteDirectory, "tasks", "001-inline-source");
+        Directory.CreateDirectory(taskDirectory);
+        await File.WriteAllTextAsync(Path.Combine(suiteDirectory, "suite.json"), """
+            {
+              "version": 1,
+              "tasks": [
+                {
+                  "id": "001-inline-source",
+                  "kind": "write",
+                  "prompt": "tasks/001-inline-source/prompt.md",
+                  "holdout": false
+                }
+              ]
+            }
+            """);
+        await File.WriteAllTextAsync(Path.Combine(taskDirectory, "prompt.md"), "Read source.phrase and return it unchanged.");
+        await File.WriteAllTextAsync(Path.Combine(taskDirectory, "source.phrase"), """
+            module Greeting
+
+            phrase "say hello"
+              native csharp
+                return;
+            """);
+        var capturedPrompt = Path.Combine(workspace.Root, "captured-prompt.txt");
+        var modelCommand = OperatingSystem.IsWindows()
+            ? $"python -c \"import sys, pathlib; pathlib.Path(r'{capturedPrompt}').write_text(sys.stdin.read()); print('module Greeting\\n\\nphrase \\\"say hello\\\"\\n  native csharp\\n    return;')\""
+            : $"python -c \"import sys, pathlib; pathlib.Path(r'{capturedPrompt}').write_text(sys.stdin.read()); print('module Greeting\\n\\nphrase \\\"say hello\\\"\\n  native csharp\\n    return;')\"";
+
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "inline-v1", modelCommand);
+
+        Assert.True(exitCode == 0, stdout + stderr);
+        var promptText = await File.ReadAllTextAsync(capturedPrompt);
+        Assert.Contains("module Greeting", promptText, StringComparison.Ordinal);
+        Assert.Contains("return;", promptText, StringComparison.Ordinal);
+        Assert.Contains("source.phrase", promptText, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task run_labels_parse_resolve_when_the_emitter_is_still_unimplemented()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var capturePath = Path.Combine(workspace.Root, "captured.txt");
+        var modelCommand = OperatingSystem.IsWindows()
+            ? $"python -c \"import sys; from pathlib import Path; Path(r'{capturePath}').write_text(sys.stdin.read()); print('module Greeting\\n\\nphrase \\\"say hello\\\"\\n  native csharp\\n    return;')\""
+            : $"python -c \"import sys; from pathlib import Path; Path(r'{capturePath}').write_text(sys.stdin.read()); print('module Greeting\\n\\nphrase \\\"say hello\\\"\\n  native csharp\\n    return;')\"";
+
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "parse-v1", modelCommand);
+
+        Assert.True(exitCode == 0, stdout + stderr);
+        using var result = await ReadModelResult(suiteDirectory, "parse-v1");
+        Assert.True(result.RootElement.GetProperty("passed").GetBoolean());
+        Assert.Equal("parse-resolve", result.RootElement.GetProperty("proof_level").GetString());
+    }
+
+    [Fact]
+    public async Task run_rerun_appends_rows_without_rewriting_old_history_entries()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var modelOutput = Path.Combine(workspace.Root, "model-output.phrase");
+        await File.WriteAllTextAsync(modelOutput, """
+            module Greeting
+
+            phrase "say hello"
+              native csharp
+                return;
+            """);
+        var modelCommand = PrintFileCommand(modelOutput);
+
+        var first = await RunBenchmark(suiteDirectory, "grok-rerun", modelCommand, "--label", "rerun-085");
+        var second = await RunBenchmark(suiteDirectory, "grok-rerun", modelCommand, "--label", "rerun-085-2");
+
+        Assert.True(first.ExitCode == 0, first.Stdout + first.Stderr);
+        Assert.True(second.ExitCode == 0, second.Stdout + second.Stderr);
+        var rows = await File.ReadAllLinesAsync(Path.Combine(suiteDirectory, "results", "history.jsonl"));
+        Assert.Equal(2, rows.Length);
+        using var firstRow = JsonDocument.Parse(rows[0]);
+        using var secondRow = JsonDocument.Parse(rows[1]);
+        Assert.Equal("rerun-085", firstRow.RootElement.GetProperty("label").GetString());
+        Assert.Equal("rerun-085-2", secondRow.RootElement.GetProperty("label").GetString());
+    }
+
+    [Fact]
     public async Task run_retries_with_compiler_diagnostics_until_the_model_output_passes()
     {
         // Given a model that emits invalid Phrase once and valid Phrase after receiving diagnostics

@@ -37,11 +37,12 @@ if (!options.TryGetValue("suite", out var suitePath) ||
     return 1;
 }
 
+var label = options.TryGetValue("label", out var configuredLabel) ? configuredLabel : null;
 var timeout = options.TryGetValue("timeout-ms", out var timeoutValue)
     ? TimeSpan.FromMilliseconds(int.Parse(timeoutValue))
     : TimeSpan.FromMinutes(5);
 
-suitePath = Path.GetFullPath(suitePath);
+suitePath = ResolveSuitePath(suitePath);
 var suiteDirectory = Path.GetDirectoryName(suitePath)!;
 var suite = ReadSuite(suitePath);
 var exitCode = 0;
@@ -49,7 +50,7 @@ var taskResults = new List<TaskRunResult>();
 
 foreach (var task in suite.Tasks.Where(task => !task.Holdout))
 {
-    var result = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts);
+    var result = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts, label);
     taskResults.Add(result);
     if (!result.KeepsRunSuccessful)
         exitCode = 3;
@@ -112,9 +113,10 @@ static async Task<TaskRunResult> RunTask(
     string model,
     string modelCommand,
     TimeSpan timeout,
-    int maximumAttempts)
+    int maximumAttempts,
+    string? label = null)
 {
-    var prompt = File.ReadAllText(Path.Combine(suiteDirectory, task.Prompt));
+    var prompt = ReadPrompt(task, suiteDirectory);
     var scratchDirectory = Path.Combine(Path.GetTempPath(), "phrase-bench", Guid.NewGuid().ToString("N"));
     Directory.CreateDirectory(scratchDirectory);
 
@@ -139,7 +141,7 @@ static async Task<TaskRunResult> RunTask(
                     continue;
 
                 var unavailable = BenchmarkResult.Unavailable(
-                    model, task.Id, Hash(prompt), "empty reply", attempts, tokensIn, tokensOut, CreateReplyHead(reply));
+                    model, task.Id, Hash(prompt), "empty reply", attempts, tokensIn, tokensOut, CreateReplyHead(reply), label: label);
                 PersistResult(suiteDirectory, model, unavailable);
                 Console.WriteLine($"{model}: unavailable {task.Id}");
                 return new(true, false);
@@ -154,14 +156,15 @@ static async Task<TaskRunResult> RunTask(
 
         var result = new BenchmarkResult(
             model, task.Id, score.Passed, attempts, tokensIn, tokensOut,
-            "estimated", diagnostics, false, Hash(prompt), CreateReplyHead(reply));
+            "estimated", diagnostics, false, Hash(prompt), CreateReplyHead(reply),
+            Status: "completed", Error: null, Label: label, ProofLevel: DetermineProofLevel(score, diagnostics));
         PersistResult(suiteDirectory, model, result);
         Console.WriteLine($"{model}: {(score.Passed ? "passed" : "failed")} {task.Id}");
         return new(score.Passed, true);
     }
     catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception or TimeoutException)
     {
-        var result = BenchmarkResult.Unavailable(model, task.Id, Hash(prompt), exception.Message);
+        var result = BenchmarkResult.Unavailable(model, task.Id, Hash(prompt), exception.Message, label: label);
         PersistResult(suiteDirectory, model, result);
         Console.WriteLine($"{model}: unavailable {task.Id}");
         return new(true, false);
@@ -202,6 +205,49 @@ static Dictionary<string, string> ParseOptions(string[] values)
         result[values[index][2..]] = values[index + 1];
     }
     return result;
+}
+
+static string ResolveSuitePath(string suitePath)
+{
+    if (Path.IsPathRooted(suitePath))
+        return Path.GetFullPath(suitePath);
+
+    var candidates = new[]
+    {
+        Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), suitePath)),
+        Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "bench", suitePath)),
+    };
+    foreach (var candidate in candidates)
+    {
+        if (File.Exists(candidate))
+            return candidate;
+    }
+    return Path.GetFullPath(suitePath);
+}
+
+static string ReadPrompt(BenchmarkTask task, string suiteDirectory)
+{
+    var promptPath = Path.Combine(suiteDirectory, task.Prompt);
+    var promptText = File.ReadAllText(promptPath);
+    var taskDirectory = Path.GetDirectoryName(promptPath)!;
+    var taskFiles = Directory.GetFiles(taskDirectory, "*", SearchOption.TopDirectoryOnly)
+        .Where(path => !string.Equals(Path.GetFileName(path), Path.GetFileName(promptPath), StringComparison.OrdinalIgnoreCase))
+        .Where(path => !string.Equals(Path.GetExtension(path), ".json", StringComparison.OrdinalIgnoreCase))
+        .OrderBy(path => path, StringComparer.OrdinalIgnoreCase)
+        .ToArray();
+    if (taskFiles.Length == 0)
+        return promptText;
+
+    var builder = new StringBuilder();
+    builder.AppendLine(promptText.TrimEnd());
+    builder.AppendLine();
+    builder.AppendLine("Task file bodies:");
+    foreach (var taskFile in taskFiles)
+    {
+        builder.AppendLine($"--- {Path.GetFileName(taskFile)} ---");
+        builder.AppendLine(File.ReadAllText(taskFile));
+    }
+    return builder.ToString().TrimEnd();
 }
 
 static Process StartModelViaShell(string command, string workingDirectory)
@@ -320,6 +366,13 @@ static BenchmarkScore Score(string source)
     return new(true, []);
 }
 
+static string DetermineProofLevel(BenchmarkScore score, IReadOnlyList<string> diagnostics)
+{
+    if (score.Passed)
+        return "parse-resolve";
+    return "none";
+}
+
 static BenchmarkScore ScoreReply(string output)
 {
     var source = ExtractPhrase(output);
@@ -391,7 +444,8 @@ static void PersistResult(string suiteDirectory, string model, BenchmarkResult r
     Directory.CreateDirectory(resultsDirectory);
     var serializedResult = JsonSerializer.Serialize(result, Serialization.Options);
     File.WriteAllText(Path.Combine(resultsDirectory, $"{model}.json"), serializedResult);
-    File.AppendAllText(Path.Combine(resultsDirectory, "history.jsonl"), serializedResult + "\n");
+    var historyPath = Path.Combine(resultsDirectory, "history.jsonl");
+    File.AppendAllText(historyPath, serializedResult + "\n");
 }
 
 static bool IsSelfCheckModel(string model) => model.StartsWith("self-check", StringComparison.OrdinalIgnoreCase);
@@ -419,12 +473,15 @@ sealed record BenchmarkResult(
     string PromptHash,
     string ReplyHead = "",
     string Status = "completed",
-    string? Error = null)
+    string? Error = null,
+    string? Label = null,
+    string ProofLevel = "none")
 {
     public static BenchmarkResult Unavailable(
         string model, string task, string promptHash, string error,
-        int attempts = 0, int tokensIn = 0, int tokensOut = 0, string replyHead = "") =>
-        new(model, task, false, attempts, tokensIn, tokensOut, "estimated", [], false, promptHash, replyHead, "unavailable", error);
+        int attempts = 0, int tokensIn = 0, int tokensOut = 0, string replyHead = "",
+        string? label = null) =>
+        new(model, task, false, attempts, tokensIn, tokensOut, "estimated", [], false, promptHash, replyHead, "unavailable", error, label, "none");
 }
 sealed record BenchmarkScore(bool Passed, IReadOnlyList<string> Diagnostics);
 sealed record TaskRunResult(bool KeepsRunSuccessful, bool HasNonEmptyReply);
