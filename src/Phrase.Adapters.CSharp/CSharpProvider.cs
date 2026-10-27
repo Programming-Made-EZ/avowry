@@ -408,7 +408,7 @@ public sealed class CSharpProvider : ITargetAdapter
                 case RespondsModel responds:
                     code.Append("        var response = ").Append(EndpointHandlerName(endpoint.Name)).Append(".Handle(input);\n");
                     code.Append("        // Then responds ").Append(CSharpValue(responds.Value)).Append('\n');
-                    AppendAssertion(code, spec.Description, CSharpValue(responds.Value), "response");
+                    AppendAssertion(code, spec.Description, CSharpAssertionValue(responds.Value), "response");
                     break;
                 case FailsModel fails:
                     code.Append("        var failure = Assert.Throws<PhraseFailure>(() => ").Append(EndpointHandlerName(endpoint.Name)).Append(".Handle(input));\n");
@@ -422,6 +422,7 @@ public sealed class CSharpProvider : ITargetAdapter
             }
             code.Append("    }\n");
         }
+        AppendAssertionHelper(code);
         code.Append("}\n");
         return code.ToString();
     }
@@ -474,6 +475,7 @@ public sealed class CSharpProvider : ITargetAdapter
 
         foreach (var effect in module.Phrases.SelectMany(phrase => phrase.Effects).Distinct(StringComparer.Ordinal))
             code.Append("\n    private sealed class ").Append(CSharpIdent(effect)).Append("Double : I").Append(CSharpIdent(effect)).Append(" { }\n");
+        AppendAssertionHelper(code);
         code.Append("}\n");
         return code.ToString();
     }
@@ -498,7 +500,7 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append(fails is null ? ");\n" : "));\n");
         code.Append("        // ").Append(Capitalize(spec.Lines[index])).Append('\n');
         if (spec.Outcome is ReturnsModel returns)
-            AppendAssertion(code, spec.Description, CSharpValue(returns.Value), "result");
+            AppendAssertion(code, spec.Description, CSharpAssertionValue(returns.Value), "result");
         else if (fails is not null)
             AppendAssertion(code, spec.Description, CsString(fails.Code), "failure.Code");
         code.Append("    }\n");
@@ -506,9 +508,25 @@ public sealed class CSharpProvider : ITargetAdapter
 
     private static void AppendAssertion(StringBuilder code, string description, string expected, string actual)
     {
-        code.Append("        Assert.True(Equals(").Append(expected).Append(", ").Append(actual).Append("), ")
-            .Append(CsString($"Spec \"{description}\" expected ")).Append(" + ").Append(expected)
-            .Append(" + \" but got \" + ").Append(actual).Append(" + \".\");\n");
+        code.Append("        AssertSpecEqual(").Append(CsString(description)).Append(", ").Append(expected).Append(", ").Append(actual).Append(");\n");
+    }
+
+    private static void AppendAssertionHelper(StringBuilder code)
+    {
+        code.Append("\n    private static void AssertSpecEqual(string spec, object expected, object actual)\n");
+        code.Append("    {\n");
+        code.Append("        try\n");
+        code.Append("        {\n");
+        code.Append("            Assert.Equivalent(expected, actual, strict: true);\n");
+        code.Append("        }\n");
+        code.Append("        catch (Xunit.Sdk.XunitException)\n");
+        code.Append("        {\n");
+        code.Append("            throw new Xunit.Sdk.XunitException($\"Spec \\\"{spec}\\\" expected {Format(expected)} but got {Format(actual)}.\");\n");
+        code.Append("        }\n");
+        code.Append("    }\n");
+        code.Append("\n    private static string Format(object value) => value is System.Collections.IEnumerable items and not string\n");
+        code.Append("        ? \"[\" + string.Join(\", \", items.Cast<object>().Select(Format)) + \"]\"\n");
+        code.Append("        : value?.ToString() ?? \"null\";\n");
     }
 
     private static string Signature(PhraseModel phrase) =>
@@ -592,6 +610,12 @@ public sealed class CSharpProvider : ITargetAdapter
         BoundList list => $"[{string.Join(", ", list.Items.Select(CSharpValue))}]",
         BoundRecord record => $"new {CSharpType(record.Type)}({string.Join(", ", record.Fields.Select(field => $"{CSharpFieldName(field.Name)}: {CSharpValue(field.Value)}"))})",
         _ => throw new InvalidOperationException($"Unsupported C# expression kind {value.GetType().Name}.")
+    };
+
+    private static string CSharpAssertionValue(BoundExpr value) => value switch
+    {
+        BoundList list => $"new[] {{ {string.Join(", ", list.Items.Select(CSharpValue))} }}",
+        _ => CSharpValue(value),
     };
 
     private static string Capitalize(string line) =>
