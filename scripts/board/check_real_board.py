@@ -5,6 +5,7 @@ import argparse
 import json
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 OWNER = "Programming-Made-EZ"
@@ -225,15 +226,56 @@ def verify_bodies(gh, board_dir=None):
     return len(cards)
 
 
+def expected_pick(items):
+    """The first Ready item by Rank whose dependencies are all Done (an independent re-statement of the picker's rules)."""
+    import re
+
+    by_number = {}
+    for x in items:
+        n = x.get("card number")
+        if n is not None:
+            by_number["%03d" % int(n)] = x
+    ready = [x for x in items if str(x.get("status", "")).lower() == "ready" and x.get("rank") is not None]
+    for x in sorted(ready, key=lambda y: y["rank"]):
+        raw = x.get("depends on")
+        if raw is None:
+            continue
+        text = str(raw).strip().lower()
+        deps = [] if text == "none" or re.fullmatch(r"none\s*\(.*\)", text) else re.findall(r"(?<!\d)(\d{3})(?!\d)", str(raw))
+        if all(d in by_number and str(by_number[d].get("status", "")).lower() == "done" for d in deps):
+            return "%03d" % int(x["card number"])
+    return None
+
+
+def verify_pick(gh, picker):
+    """Read-only: the live board's expected pick must equal what the loop's picker says (picker() returns its output line)."""
+    payload = parse_json(gh(["project", "item-list", "1", "--owner", OWNER, "--format", "json", "--limit", "1000"]))
+    expected = expected_pick(payload.get("items", []))
+    said = (picker() or "").split()[:1]
+    got = said[0] if said and said[0].isdigit() else None
+    if got != expected:
+        raise RuntimeError(f"picker says {got!r} but the first eligible Ready card by Rank is {expected!r}")
+    return expected
+
+
+def default_picker():
+    import os
+
+    repo = os.environ.get("MOB_DEFAULTS", r"C:\Users\ringe\mob-crosscli")
+    out = subprocess.run([sys.executable, "loop.py", "--pick"], cwd=repo, capture_output=True, text=True)
+    return out.stdout.strip()
+
+
 def main(argv=None, gh_runner=gh_runner):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project", action="store_true", help="verify the project exists and has the correct fields")
     parser.add_argument("--issues", action="store_true", help="verify exactly one marked issue exists per card file")
     parser.add_argument("--fields", action="store_true", help="verify every card item's values (read-only)")
     parser.add_argument("--bodies", action="store_true", help="verify each marked issue body matches its card file (read-only)")
+    parser.add_argument("--pick", action="store_true", help="verify the loop picker returns the first eligible Ready card by Rank (read-only)")
     args = parser.parse_args(argv)
 
-    if not args.project and not args.issues and not args.fields and not args.bodies:
+    if not args.project and not args.issues and not args.fields and not args.bodies and not args.pick:
         parser.print_help()
         return 1
 
@@ -247,6 +289,7 @@ def main(argv=None, gh_runner=gh_runner):
             count = verify_fields(gh_runner)
         if args.bodies:
             count = verify_bodies(gh_runner)
+        picked = verify_pick(gh_runner, default_picker) if args.pick else None
     except Exception as exc:
         print(f"FAIL: {exc}")
         return 1
@@ -259,6 +302,8 @@ def main(argv=None, gh_runner=gh_runner):
         print(f"OK: {count} project items match their card fields; a second dry run has nothing to do.")
     if args.bodies:
         print(f"OK: {count} issue bodies match their card files, exactly one per card.")
+    if args.pick:
+        print(f"OK: the loop picker and the board agree: next eligible card is {picked}.")
     return 0
 
 
