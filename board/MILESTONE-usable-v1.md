@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:31d519730ce4e97403d35a1b25595d35837bfeff8824231c77e6f83eae8cf957 -->
+<!-- board-table-sha256:c28a6fcae5b3e13b1109b24073c1e9de48a72604202152d5c9b25a82ad022993 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -51,7 +51,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 29 | 047 A declared effect is supplied as an injected dependency | Done | 043 |
 | 30 | 048 One POST endpoint serves its successful response | Done | 045, 047 |
 | 31 | 049 A declared failure maps to its HTTP status, not a 500 | Done | 048 |
-| 32 | 050 Every spec outcome kind asserts correctly, and a wrong one names itself | Ready | 049 |
+| 32 | 050 Every spec outcome kind asserts correctly, and a wrong one names itself | Done | 049 |
 | 33 | 087 orders.phrase compiles and its generated specs pass | Ready | 039, 040, 041, 043, 044, 045, 048, 049, 050, 084 |
 | 34 | 090 Benchmark: a docs-in-context mode that gives a model the real docs | Done | 085 |
 | 35 | 091 Benchmark: cold runs, a fresh session in an empty folder for every attempt | Done | 090 |
