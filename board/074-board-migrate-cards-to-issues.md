@@ -1,6 +1,6 @@
 # Board: migrate every card file into one issue
 
-- **Status:** Ready (rank: see `C:\Users\ringe\projects\phrase-lang\board\MILESTONE-usable-v1.md`, read-only)
+- **Status:** Done 2026-10-26 (scripts/board/migrate_cards.py; 77 issues created, 12 closed, one per card file; verified by check_real_board.py --issues)
 - **Type:** tooling (tooling (phrase-lang `scripts/board/`)); thin slice; authored by the driver rotation, reviewed by a non-author (D15), run atomically once card 062 exists (until then in a scratch clone), smoke-tested on a fake `gh` before any real apply
 - **Milestone:** process: the board moves to GitHub Projects (the loop's source of truth)
 - **Source:** Steve, 2026-10-26: move Phrase's board to a GitHub Projects board, as play-tracker has, so he can view it as a real board on his phone; decided before more loop cards are built on the file-based picker. Team design: Decider D25 (Codex, Copilot, Grok Yes; agy no response).
