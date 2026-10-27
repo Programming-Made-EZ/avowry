@@ -265,3 +265,8 @@ Format: `Decider D<n>: <proposal>`, votes, `Result: passed|failed`. All-Yes resu
 
 - Date: 2026-10-27. Question: does commit a9176c9 (authored by Grok) meet the three Done checks (List as IReadOnlyList<T>, a list-field spec passes, a keyword-named type builds); is the case-insensitive keyword escape acceptable; is card 042 Done. Seats: Codex Yes; Copilot Yes (the non-author reviewers). Result: passed.
 - Evidence: three reds then green (rejected list literal; List<string> instead of IReadOnlyList<string>; missing @ escape); 239 compiler tests and 87 acceptance tests pass with zero warnings. The 041 untested List mapping was corrected here with its own test, as D55 required. The case-insensitive escape also writes @Event for Pascal-cased names: legal and the same identifier, accepted.
+
+#### Decider D57: review of card 043 (A phrase can fail with its declared code)
+
+- Date: 2026-10-27. Question: does commit 045c41d (authored by Codex) meet the three Done checks with a runtime failure type matching the reference; is it free of speculative extras; is card 043 Done. Seats: Copilot Yes; Grok Yes (the non-author reviewers). Result: passed.
+- Evidence: red NotImplementedException for failure codes; PhraseFailure(Code, Raise) matches reference/csharp PhraseRuntime; the generated failure spec uses Assert.Throws<PhraseFailure> and checks the code; 239 compiler tests and 88 acceptance tests pass with zero warnings.
