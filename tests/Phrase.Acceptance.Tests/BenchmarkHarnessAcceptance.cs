@@ -138,7 +138,7 @@ public class BenchmarkHarnessAcceptance
         var required = new Dictionary<string, string[]>
         {
             ["codex-probe"] = ["exec", "--skip-git-repo-check", "--sandbox", "read-only"],
-            ["grok-probe"] = ["--max-turns", "10", "--prompt-file", "--cwd", "--disallowed-tools", "all", "--disable-web-search"],
+            ["grok-probe"] = ["--max-turns", "10", "--prompt-file", "--cwd", "--disallowed-tools", "read_file,list_dir,grep,run_terminal_cmd,search_replace,web_search,web_fetch,todo_write,task,Agent", "--disable-web-search"],
             ["copilot-probe"] = ["-s", "--trust-folder", "--deny-tool", "shell", "write", "read", "url"],
             ["agy-probe"] = ["-p", "--model", "gemini-4-argon-high", "--dangerously-skip-permissions"],
         };
@@ -859,8 +859,8 @@ public class BenchmarkHarnessAcceptance
                 return;
             """);
         var modelCommand = OperatingSystem.IsWindows()
-            ? $"python -c \"import os; print(os.getcwd()); print(os.listdir('.'));\" && type \"{modelOutput}\""
-            : $"python -c \"import os; print(os.getcwd()); print(os.listdir('.'))\" && cat \"{modelOutput}\"";
+            ? $"python -c \"import pathlib, os; listing = os.listdir('.'); print(listing); path = pathlib.Path(r'{modelOutput}'); print(path.read_text())\""
+            : $"python -c \"import pathlib, os; listing = os.listdir('.'); print(listing); path = pathlib.Path(r'{modelOutput}'); print(path.read_text())\"";
 
         // When the benchmark runs the profile in its own scratch workspace
         var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "grok-probe", modelCommand, "--cold");
@@ -873,8 +873,38 @@ public class BenchmarkHarnessAcceptance
         Assert.Equal("There is no workspace and no files to read; answer directly in this reply without looking anything up.", result.RootElement.GetProperty("cold_preamble").GetString());
         Assert.True(result.RootElement.GetProperty("workdir_empty_at_launch").GetBoolean());
         var replyHead = result.RootElement.GetProperty("reply_head").GetString();
+        Assert.StartsWith("[]", replyHead ?? string.Empty, StringComparison.Ordinal);
         Assert.DoesNotContain("bench", replyHead ?? string.Empty, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("Phrase.Acceptance.Tests", replyHead ?? string.Empty, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task run_uses_a_fresh_empty_workdir_on_retry_attempts()
+    {
+        // Given a Grok model that prints its launch directory and fails once before succeeding
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var marker = Path.Combine(workspace.Root, "retry-marker.txt");
+        var output = Path.Combine(workspace.Root, "valid-output.txt");
+        await File.WriteAllTextAsync(output, """
+            module Greeting
+
+            phrase "say hello"
+              native csharp
+                return;
+            """);
+        var modelCommand = OperatingSystem.IsWindows()
+            ? $"python -c \"import os, pathlib; print(os.listdir('.')); marker = pathlib.Path(r'{marker}'); import sys; sys.exit(1) if not marker.exists() else None\" & if exist \"{marker}\" (type \"{output}\") else (echo invalid & type nul>\"{marker}\" & exit /b 1)"
+            : $"python -c \"import os, pathlib; print(os.listdir('.')); marker = pathlib.Path(r'{marker}'); import sys; sys.exit(1) if not marker.exists() else None\"; if [ -f '{marker}' ]; then cat '{output}'; else echo invalid; touch '{marker}'; exit 1; fi";
+
+        // When the benchmark retries that model in its cold Grok profile
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "grok-probe", modelCommand, "--cold");
+
+        // Then every launch begins from an empty directory, including the retry after the failed first attempt
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Equal(2, CountOccurrences(stdout, "[]"));
+        using var result = await ReadModelResult(suiteDirectory, "grok-probe");
+        Assert.True(result.RootElement.GetProperty("workdir_empty_at_launch").GetBoolean());
     }
 
     [Fact]
@@ -1128,6 +1158,21 @@ public class BenchmarkHarnessAcceptance
         Assert.Equal("docs-in-context", labeledResult.Mode);
         Assert.Equal("abc123", labeledResult.DocsHash);
         Assert.Equal("def", labeledResult.PromptHash);
+    }
+
+    private static int CountOccurrences(string text, string value)
+    {
+        if (string.IsNullOrEmpty(value))
+            return 0;
+
+        var count = 0;
+        var index = 0;
+        while ((index = text.IndexOf(value, index, StringComparison.Ordinal)) >= 0)
+        {
+            count++;
+            index += value.Length;
+        }
+        return count;
     }
 
     private static async Task<string> WriteArgumentRecordingShim(string workspaceRoot, string model, string argvLog)

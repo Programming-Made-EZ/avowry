@@ -179,7 +179,7 @@ static async Task<TaskRunResult> RunTask(
     var docsHash = docsBlock.Length == 0 ? "" : Hash(docsBlock);
     var scratchDirectory = Path.Combine(Path.GetTempPath(), "phrase-bench", Guid.NewGuid().ToString("N"));
     Directory.CreateDirectory(scratchDirectory);
-    var workdirEmptyAtLaunch = !Directory.EnumerateFileSystemEntries(scratchDirectory).Any();
+    var workdirEmptyAtLaunch = false;
 
     try
     {
@@ -194,7 +194,23 @@ static async Task<TaskRunResult> RunTask(
         {
             attempts++;
             var attemptPrompt = ComposeModelPrompt(docsBlock, attemptTaskPrompt, coldPreamble);
-            reply = await RunModel(model, modelCommand, scratchDirectory, attemptPrompt, timeout, resolvedColdProfile);
+            var attemptWorkingDirectory = Path.Combine(scratchDirectory, $"attempt-{attempts}", "workdir");
+            Directory.CreateDirectory(attemptWorkingDirectory);
+            var promptDirectory = Path.Combine(scratchDirectory, $"attempt-{attempts}", "prompt");
+            Directory.CreateDirectory(promptDirectory);
+            var promptFilePath = Path.Combine(promptDirectory, "prompt.txt");
+            File.WriteAllText(promptFilePath, attemptPrompt);
+            workdirEmptyAtLaunch = !Directory.EnumerateFileSystemEntries(attemptWorkingDirectory).Any();
+            try
+            {
+                reply = await RunModel(model, modelCommand, attemptWorkingDirectory, attemptPrompt, timeout, resolvedColdProfile, promptFilePath);
+            }
+            catch (InvalidOperationException exception) when (attempts < maximumAttempts)
+            {
+                diagnostics.Add(exception.Message);
+                continue;
+            }
+
             tokensIn += EstimateAttemptTokens(attemptTaskPrompt, docsBlock, coldPreamble);
             tokensOut += EstimateTokens(reply);
             if (IsEmptyReply(reply))
@@ -401,6 +417,47 @@ static Process StartModelViaShell(string command, string workingDirectory)
     return Process.Start(startInfo) ?? throw new InvalidOperationException("Could not start model process.");
 }
 
+static string AppendProfileFlagsToShellCommand(string command, string extraFlags)
+{
+    if (string.IsNullOrEmpty(extraFlags))
+        return command;
+
+    var operators = OperatingSystem.IsWindows() ? new[] { "&&", "||", "&", "|" } : new[] { "&&", "||", ";", "|" };
+    var index = FindTopLevelOperatorIndex(command, operators);
+    if (index < 0)
+        return command + " " + extraFlags;
+
+    return command.Insert(index, $" {extraFlags}");
+}
+
+static int FindTopLevelOperatorIndex(string text, IReadOnlyList<string> operators)
+{
+    var quote = '\0';
+    for (var index = 0; index < text.Length; index++)
+    {
+        var current = text[index];
+        if (current == '\'' || current == '"')
+        {
+            if (quote == '\0')
+                quote = current;
+            else if (quote == current)
+                quote = '\0';
+            continue;
+        }
+
+        if (quote != '\0')
+            continue;
+
+        foreach (var op in operators.OrderByDescending(candidate => candidate.Length))
+        {
+            if (index + op.Length <= text.Length && string.CompareOrdinal(text, index, op, 0, op.Length) == 0)
+                return index;
+        }
+    }
+
+    return -1;
+}
+
 static Process StartModelWithArguments(string command, string workingDirectory, params string[] arguments)
 {
     var startInfo = new ProcessStartInfo(command)
@@ -422,10 +479,11 @@ static ColdProfile ResolveColdProfile(string model, bool coldRequested)
         return new(false, string.Empty, "cold mode not requested");
 
     var profile = model.Split('-', 2)[0];
+    const string grokDisallowedTools = "read_file,list_dir,grep,run_terminal_cmd,search_replace,web_search,web_fetch,todo_write,task,Agent";
     return profile switch
     {
         "codex" => new(true, "--sandbox read-only", "Codex exposes a read-only sandbox and a one-shot exec."),
-        "grok" => new(true, "--cwd \"<scratch>\" --disallowed-tools all --disable-web-search", "Grok supports a fresh empty cwd and explicit tool removal."),
+        "grok" => new(true, $"--cwd \"<scratch>\" --disallowed-tools {grokDisallowedTools} --disable-web-search", "Grok supports a fresh empty cwd and explicit tool removal."),
         "copilot" => new(true, "--deny-tool shell --deny-tool write --deny-tool read --deny-tool url", "Copilot denies the shell, write, read and url tool categories (verified against the real CLI: a deny-tool of * is rejected as an invalid rule)."),
         "agy" => new(false, string.Empty, "AGY profiles cannot be made cold; running warm."),
         _ => new(false, string.Empty, "No cold-session flag is available for this CLI profile."),
@@ -433,13 +491,14 @@ static ColdProfile ResolveColdProfile(string model, bool coldRequested)
 }
 
 static async Task<string> RunModel(
-    string model, string command, string workingDirectory, string prompt, TimeSpan timeout, ColdProfile? coldProfile = null)
+    string model, string command, string workingDirectory, string prompt, TimeSpan timeout, ColdProfile? coldProfile = null, string? promptFilePath = null)
 {
     if (command == SelfCheckModelCommand)
         return "module SelfCheck\n\nphrase \"self check\"\n  native csharp\n    return;\n";
 
     var profile = model.Split('-', 2)[0];
     var effectiveColdProfile = coldProfile ?? ResolveColdProfile(model, false);
+    var extraFlags = ProfileArguments(model, workingDirectory, prompt, promptFilePath, effectiveColdProfile);
     var useDirectArguments = profile.Equals("agy", StringComparison.Ordinal)
         && !Path.HasExtension(command);
     using var process = useDirectArguments
@@ -451,7 +510,7 @@ static async Task<string> RunModel(
             "--model",
             AgyModel,
             AgySkipPermissionsOption)
-        : StartModelViaShell(command + ProfileArguments(model, workingDirectory, prompt, effectiveColdProfile), workingDirectory);
+        : StartModelViaShell(AppendProfileFlagsToShellCommand(command, extraFlags), workingDirectory);
     await process.StandardInput.WriteAsync(prompt);
     process.StandardInput.Close();
     var outputTask = process.StandardOutput.ReadToEndAsync();
@@ -468,13 +527,16 @@ static async Task<string> RunModel(
         throw new TimeoutException($"Model '{model}' timed out after {timeout.TotalMilliseconds:0} ms.");
     }
 
+    var output = await outputTask;
     var error = await errorTask;
+    if (!string.IsNullOrEmpty(output))
+        Console.WriteLine(output);
     if (process.ExitCode != 0)
         throw new InvalidOperationException($"Model '{model}' exited {process.ExitCode}: {error}");
-    return await outputTask;
+    return output;
 }
 
-static string ProfileArguments(string model, string workingDirectory, string prompt, ColdProfile? coldProfile = null)
+static string ProfileArguments(string model, string workingDirectory, string prompt, string? promptFilePath = null, ColdProfile? coldProfile = null)
 {
     var profile = model.Split('-', 2)[0];
     var extraFlags = coldProfile is { Cold: true } ? ExpandColdFlags(coldProfile.Flags, workingDirectory) : string.Empty;
@@ -487,9 +549,8 @@ static string ProfileArguments(string model, string workingDirectory, string pro
 
     if (profile.Equals("grok", StringComparison.Ordinal))
     {
-        var promptPath = Path.Combine(workingDirectory, "prompt.txt");
-        File.WriteAllText(promptPath, prompt);
-        var defaultFlags = $" --max-turns 10 --prompt-file {QuoteForShell(promptPath)}";
+        var resolvedPromptPath = promptFilePath ?? Path.Combine(workingDirectory, "prompt.txt");
+        var defaultFlags = $" --max-turns 10 --prompt-file {QuoteForShell(resolvedPromptPath)}";
         return defaultFlags + (string.IsNullOrEmpty(extraFlags) ? string.Empty : $" {extraFlags}");
     }
 
