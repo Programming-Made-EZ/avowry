@@ -41,8 +41,8 @@ public sealed class CSharpProvider : ITargetAdapter
 
     private static void RequireSupportedPhrase(ModuleModel module, PhraseModel phrase)
     {
-        if (phrase.Effects.Count > 0)
-            throw new NotImplementedException($"The C# emitter does not support effects on '{phrase.Template}' yet.");
+        if (phrase.Effects.Count > 1)
+            throw new NotImplementedException($"The C# emitter does not support more than one effect on '{phrase.Template}' yet.");
 
         if (phrase.Steps is not null)
         {
@@ -217,6 +217,8 @@ public sealed class CSharpProvider : ITargetAdapter
         if (module.Phrases.Any(phrase => phrase.Failures.Count > 0))
             code.Append("using System.Diagnostics.CodeAnalysis;\n\n");
         code.Append("namespace ").Append(module.Name).Append(";\n\n");
+        foreach (var effect in module.Phrases.SelectMany(phrase => phrase.Effects).Distinct(StringComparer.Ordinal))
+            code.Append("public interface I").Append(CSharpIdent(effect)).Append(" { }\n\n");
         code.Append("public static class Phrases\n{\n");
         for (var i = 0; i < module.Phrases.Count; i++)
         {
@@ -321,7 +323,7 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append("        // ").Append(Capitalize(spec.Lines[index++])).Append('\n');
         var fails = spec.Outcome as FailsModel;
         code.Append(fails is null ? "        var result = Phrases." : "        var failure = Assert.Throws<PhraseFailure>(() => Phrases.").Append(MethodName(phrase)).Append('(');
-        code.Append(string.Join(", ", phrase.Holes.Select(hole => CSharpIdent(hole.Name))));
+        code.Append(string.Join(", ", phrase.Effects.Select(effect => $"new {CSharpIdent(effect)}Double()").Concat(phrase.Holes.Select(hole => CSharpIdent(hole.Name)))));
         code.Append(fails is null ? ");\n" : "));\n");
         code.Append("        // ").Append(Capitalize(spec.Lines[index])).Append('\n');
         if (fails is null)
@@ -329,6 +331,8 @@ public sealed class CSharpProvider : ITargetAdapter
         else
             code.Append("        Assert.Equal(").Append(CsString(fails.Code)).Append(", failure.Code);\n");
         code.Append("    }\n");
+        foreach (var effect in phrase.Effects)
+            code.Append("\n    private sealed class ").Append(CSharpIdent(effect)).Append("Double : I").Append(CSharpIdent(effect)).Append(" { }\n");
     }
 
     private static string Signature(PhraseModel phrase) =>
@@ -348,7 +352,8 @@ public sealed class CSharpProvider : ITargetAdapter
     }
 
     private static string Parameters(PhraseModel phrase) =>
-        string.Join(", ", phrase.Holes.Select(hole => $"{CSharpType(hole.Type)} {CSharpIdent(hole.Name)}"));
+        string.Join(", ", phrase.Effects.Select(effect => $"I{CSharpIdent(effect)} {CSharpIdent(effect.ToLowerInvariant())}")
+            .Concat(phrase.Holes.Select(hole => $"{CSharpType(hole.Type)} {CSharpIdent(hole.Name)}")));
 
     private static string Pascal(string word) =>
         word.Length == 0 ? word : char.ToUpperInvariant(word[0]) + word[1..];
