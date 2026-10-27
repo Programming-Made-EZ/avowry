@@ -1,0 +1,33 @@
+# Board: sync a card's changed text to its issue body (one source at a time)
+
+- **Status:** Ready (rank: see `C:\Users\ringe\projects\phrase-lang\board\MILESTONE-usable-v1.md`, read-only)
+- **Type:** tooling (phrase-lang `scripts/board/`); thin slice; authored by the driver rotation, reviewed by a non-author (D15), smoke-tested before it touches a real card
+- **Milestone:** process: stories name personas
+- **Source:** Steve, 2026-10-26, on card 003's story: "this is a role, not a persona." A story names a persona and its so-that is value that persona gets. Team plan: Decider D27 (Codex, Grok Yes; Copilot Support-it; agy no response).
+- **Depends on:** 074
+- **Story:** As Steve, I want the cards I read on the board show the new persona stories without anyone editing issues by hand, so that I can trust every card on the board to say who it is for and what that person gets.
+- **One observable behaviour:** `migrate_cards.py --sync-bodies` rewrites the body of an already-migrated issue when its card file's text changed, so story rewrites reach the board.
+- **Acceptance criteria (Given/When/Then; at most 3, each failing on partial work):**
+  1. Given the tests with a fake `gh` or fake CLIs and fixtures, When the behaviour above is exercised, Then a dry run lists each marked issue whose body differs from its card file (after the same path scrubbing) and changes nothing
+  2. Given the tests with a fake `gh` or fake CLIs and fixtures, When the behaviour above is exercised, Then apply edits only the BODY of an issue that carries its marker, never the title, labels, state or comments, never deletes, and a second apply changes nothing
+  3. Given the tests with a fake `gh` or fake CLIs and fixtures, When the behaviour above is exercised, Then a real-board check reads every marked issue back and finds each body equal to its card file; after the cutover card (077) the direction reverses and this mode is retired
+
+## Context
+
+- PERSONAS.md and `scripts/check-story-persona.py` exist (phrase-lang, Decider D27). Safety rules apply in full (never delete, default dry run, only the Phrase repo, no other mob).
+- Phrase board and docs (read-only, absolute paths): `C:\Users\ringe\projects\phrase-lang\board\`, `C:\Users\ringe\projects\phrase-lang\PERSONAS.md`, `C:\Users\ringe\projects\phrase-lang\VISION.md`.
+
+## Task force
+
+- Tooling author [author]: Grok | why: next in the rotation for tooling (D15)
+- Reviewer [reviewer]: Codex | why: non-author review of the diff (D15)
+- Facilitator: Claude | why: runs the checks and any real apply after review; takeovers are logged
+
+## Done when
+
+All must exit 0:
+
+```
+python -m unittest tests.board.test_board_sync
+python scripts/board/check_real_board.py --bodies
+```

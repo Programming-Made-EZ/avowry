@@ -1,0 +1,33 @@
+# Ready check: reject a role-only story before the product manager is asked
+
+- **Status:** Ready (rank: see `C:\Users\ringe\projects\phrase-lang\board\MILESTONE-usable-v1.md`, read-only)
+- **Type:** tooling (mob-defaults `facilitator.py`); thin slice; authored by the driver rotation, reviewed by a non-author (D15), smoke-tested before it touches a real card
+- **Milestone:** process: stories name personas
+- **Source:** Steve, 2026-10-26, on card 003's story: "this is a role, not a persona." A story names a persona and its so-that is value that persona gets. Team plan: Decider D27 (Codex, Grok Yes; Copilot Support-it; agy no response).
+- **Depends on:** 065
+- **Story:** As Steve, I want a card whose first story line is a role-only story never reaches the product-manager turn, and I get a one-line reason on my phone-sized summary, so that I can trust every card on the board to say who it is for and what that person gets.
+- **One observable behaviour:** The facilitator runs a configured story lint before the Ready check turn and stops with a clear message, exit 3, when the card's story names no persona or has no so-that.
+- **Acceptance criteria (Given/When/Then; at most 3, each failing on partial work):**
+  1. Given the tests with a fake `gh` or fake CLIs and fixtures, When the behaviour above is exercised, Then a card whose Story line names no persona from PERSONAS.md stops the run before the Ready check turn with exit 3 and a message naming the missing persona
+  2. Given the tests with a fake `gh` or fake CLIs and fixtures, When the behaviour above is exercised, Then a card with a persona and a so-that goes on to the Ready check unchanged; with no lint configured, behaviour is unchanged
+  3. Given the tests with a fake `gh` or fake CLIs and fixtures, When the behaviour above is exercised, Then the lint command comes from the toolchain file (card 065), runs in the board repo with absolute paths, and its output is shown in the published MOB.md
+
+## Context
+
+- PERSONAS.md and `scripts/check-story-persona.py` exist (phrase-lang, Decider D27). Safety rules apply in full (never delete, default dry run, only the Phrase repo, no other mob).
+- Phrase board and docs (read-only, absolute paths): `C:\Users\ringe\projects\phrase-lang\board\`, `C:\Users\ringe\projects\phrase-lang\PERSONAS.md`, `C:\Users\ringe\projects\phrase-lang\VISION.md`.
+
+## Task force
+
+- Tooling author [author]: Copilot | why: next in the rotation for tooling (D15)
+- Reviewer [reviewer]: Grok | why: non-author review of the diff (D15)
+- Facilitator: Claude | why: runs the checks and any real apply after review; takeovers are logged
+
+## Done when
+
+All must exit 0:
+
+```
+python -m unittest tests.test_ready_lint
+python -m unittest discover -s tests
+```
