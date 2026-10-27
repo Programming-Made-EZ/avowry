@@ -16,5 +16,6 @@
   <ItemGroup>
     <!-- One source of truth for fixtures: linked from the acceptance tests. -->
     <None Include="../Phrase.Acceptance.Tests/Fixtures/**/*" LinkBase="Fixtures" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../src/Phrase.Compiler/Phrase.Compiler.csproj" Link="Phrase.Compiler.csproj" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 namespace Phrase.Compiler;
 
-/// <summary>The files a provider emits, keyed by path relative to the output root.</summary>
+/// <summary>The files an adapter emits, keyed by path relative to the output root.</summary>
 public sealed record CompilationOutput(IReadOnlyDictionary<string, string> Files)
 {
     public void WriteTo(string outputRoot)
@@ -11,7 +11,7 @@ public sealed record CompilationOutput(IReadOnlyDictionary<string, string> Files
         {
             var fullPath = Path.GetFullPath(Path.Combine(root, relativePath));
             if (!fullPath.StartsWith(root, StringComparison.Ordinal))
-                throw new InvalidOperationException($"Provider emitted a path outside the output root: {relativePath}");
+                throw new InvalidOperationException($"Adapter emitted a path outside the output root: {relativePath}");
 
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
             File.WriteAllText(fullPath, contents);

@@ -10,7 +10,7 @@ public class PhraseCompilerTests
     private static readonly string Orders =
         File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", "orders.phrase"));
 
-    private static readonly ITargetProvider Provider = new TestProvider();
+    private static readonly ITargetAdapter Adapter = new TestAdapter();
 
     [Fact]
     public void Resolver_diagnostics_stop_compilation_at_the_public_boundary()
@@ -50,9 +50,9 @@ public class PhraseCompilerTests
         Assert.DoesNotContain("resolver", exception.Message, StringComparison.OrdinalIgnoreCase);
     }
 
-    private static CompilationOutput Compile(string source) => PhraseCompiler.Compile(source, Provider);
+    private static CompilationOutput Compile(string source) => PhraseCompiler.Compile(source, Adapter);
 
-    private sealed class TestProvider : ITargetProvider
+    private sealed class TestAdapter : ITargetAdapter
     {
         public string Target => "test";
 

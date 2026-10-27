@@ -1,6 +1,6 @@
 using Phrase.Acceptance.Tests.Support;
 using Phrase.Compiler;
-using Phrase.Providers.CSharp;
+using Phrase.Adapters.CSharp;
 
 namespace Phrase.Acceptance.Tests;
 

@@ -787,7 +787,7 @@ sealed record ColdProfile(bool Cold, string Flags, string Reason);
 sealed record BenchmarkScore(bool Passed, IReadOnlyList<string> Diagnostics);
 sealed record TaskRunResult(bool KeepsRunSuccessful, bool HasNonEmptyReply);
 
-sealed class ScoringProvider : ITargetProvider
+sealed class ScoringProvider : ITargetAdapter
 {
     public string Target => "benchmark";
 

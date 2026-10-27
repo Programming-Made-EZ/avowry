@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A1899B48-B9C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phrase.Compiler", "src\Phrase.Compiler\Phrase.Compiler.csproj", "{D4614084-825A-4803-B4D7-ED0A5E84D5D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phrase.Providers.CSharp", "src\Phrase.Providers.CSharp\Phrase.Providers.CSharp.csproj", "{1ADC752D-F7FE-49CC-87F0-C13706F83AF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phrase.Adapters.CSharp", "src\Phrase.Adapters.CSharp\Phrase.Adapters.CSharp.csproj", "{1ADC752D-F7FE-49CC-87F0-C13706F83AF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C2E33BC6-8208-4FA9-9C02-CF3891E5D178}"
 EndProject

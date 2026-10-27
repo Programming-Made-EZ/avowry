@@ -3,10 +3,10 @@ using Phrase.Compiler.Semantics;
 namespace Phrase.Compiler;
 
 /// <summary>
-/// A target provider turns the resolved module into files for one target
+/// A target adapter turns the resolved module into files for one target
 /// (C#, TypeScript, Python).
 /// </summary>
-public interface ITargetProvider
+public interface ITargetAdapter
 {
     /// <summary>The name used in `native &lt;target&gt;` blocks, e.g. "csharp".</summary>
     string Target { get; }

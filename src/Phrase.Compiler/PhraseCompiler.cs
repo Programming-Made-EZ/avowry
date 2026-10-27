@@ -5,14 +5,14 @@ namespace Phrase.Compiler;
 
 /// <summary>
 /// Entry point: .phrase source in, target files out.
-/// Pipeline: lexer (done) -> parser (done) -> resolver (done) -> provider.
+/// Pipeline: lexer (done) -> parser (done) -> resolver (done) -> target adapter.
 /// </summary>
 public static class PhraseCompiler
 {
-    public static CompilationOutput Compile(string source, ITargetProvider provider)
+    public static CompilationOutput Compile(string source, ITargetAdapter adapter)
     {
         ArgumentNullException.ThrowIfNull(source);
-        ArgumentNullException.ThrowIfNull(provider);
+        ArgumentNullException.ThrowIfNull(adapter);
 
         var parsed = Parser.Parse(source);
         StopOnDiagnostics(parsed.Diagnostics);
@@ -20,7 +20,7 @@ public static class PhraseCompiler
         var resolved = Resolver.Resolve(parsed.File);
         StopOnDiagnostics(resolved.Diagnostics);
 
-        return provider.Emit(resolved.Module);
+        return adapter.Emit(resolved.Module);
     }
 
     private static void StopOnDiagnostics(IReadOnlyList<Diagnostic> diagnostics)
