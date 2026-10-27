@@ -1,6 +1,6 @@
 # Board: sync a card's changed text to its issue body (one source at a time)
 
-- **Status:** Ready (rank: see `C:\Users\ringe\projects\phrase-lang\board\MILESTONE-usable-v1.md`, read-only)
+- **Status:** Done 2026-10-26 (scripts/board/migrate_cards.py --sync-bodies; 83 issue bodies match their card files; verified by check_real_board.py --bodies)
 - **Type:** tooling (phrase-lang `scripts/board/`); thin slice; authored by the driver rotation, reviewed by a non-author (D15), smoke-tested before it touches a real card
 - **Milestone:** process: stories name personas
 - **Source:** Steve, 2026-10-26, on card 003's story: "this is a role, not a persona." A story names a persona and its so-that is value that persona gets. Team plan: Decider D27 (Codex, Grok Yes; Copilot Support-it; agy no response).
