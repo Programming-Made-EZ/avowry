@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:c28a6fcae5b3e13b1109b24073c1e9de48a72604202152d5c9b25a82ad022993 -->
+<!-- board-table-sha256:7c192f7f58b7faf982eb705704add450fddb5371958f6d2b3a15eea3b98acea0 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -52,7 +52,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 30 | 048 One POST endpoint serves its successful response | Done | 045, 047 |
 | 31 | 049 A declared failure maps to its HTTP status, not a 500 | Done | 048 |
 | 32 | 050 Every spec outcome kind asserts correctly, and a wrong one names itself | Done | 049 |
-| 33 | 087 orders.phrase compiles and its generated specs pass | Ready | 039, 040, 041, 043, 044, 045, 048, 049, 050, 084 |
+| 33 | 087 orders.phrase compiles and its generated specs pass | Done | 039, 040, 041, 043, 044, 045, 048, 049, 050, 084 |
 | 34 | 090 Benchmark: a docs-in-context mode that gives a model the real docs | Done | 085 |
 | 35 | 091 Benchmark: cold runs, a fresh session in an empty folder for every attempt | Done | 090 |
 | 36 | 092 Benchmark: scrub a stored reply before cutting it to 200 characters | Done | 085 |
