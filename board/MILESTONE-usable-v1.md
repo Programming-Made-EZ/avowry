@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:b3a886b7734be1bbf2c8b9f217e10017d77aad997a80be638d85de9b5c63a40e -->
+<!-- board-table-sha256:c42cb31a5db93cc34bb6e67422f40e8d76e0c3cbbb4d527bcc41d511fbc8bdc0 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -52,7 +52,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 30 | 050 Every spec outcome kind asserts correctly, and a wrong one names itself | Ready | 049 |
 | 31 | 087 orders.phrase compiles and its generated specs pass | Ready | 039, 040, 041, 043, 044, 045, 048, 049, 050, 084 |
 | 32 | 090 Benchmark: a docs-in-context mode that gives a model the real docs | Done | 085 |
-| 33 | 091 Benchmark: cold runs, a fresh session in an empty folder for every attempt | Ready | 090 |
+| 33 | 091 Benchmark: cold runs, a fresh session in an empty folder for every attempt | Done | 090 |
 | 34 | 092 Benchmark: scrub a stored reply before cutting it to 200 characters | Ready | 085 |
 | 35 | 037 Benchmark: docs in the prompt, and cold runs | Ready | 090, 091, 092 (sliced: docs-in-context mode, cold runs and the reply-head scrub moved to those cards; this card is now the baseline RUN) |
 | 36 | 088 Head-to-head: Phrase vs plain C# on the frozen bar | Ready | 085, 086, 094, 087, 037 |
