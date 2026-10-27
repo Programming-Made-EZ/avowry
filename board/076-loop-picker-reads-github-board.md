@@ -1,10 +1,10 @@
 # Loop: the picker reads the GitHub board (card 063's logic, new source)
 
-- **Status:** Ready (rank: see `C:\Users\ringe\projects\phrase-lang\board\MILESTONE-usable-v1.md`, read-only)
+- **Status:** Done 2026-10-26 (mob-defaults 6c04bff; real-board check: python -m scripts.board.check_real_board --pick says the picker and the board agree)
 - **Type:** tooling (tooling (mob-defaults)); thin slice; authored by the driver rotation, reviewed by a non-author (D15), run atomically once card 062 exists (until then in a scratch clone), smoke-tested on a fake `gh` before any real apply
 - **Milestone:** process: the board moves to GitHub Projects (the loop's source of truth)
 - **Source:** Steve, 2026-10-26: move Phrase's board to a GitHub Projects board, as play-tracker has, so he can view it as a real board on his phone; decided before more loop cards are built on the file-based picker. Team design: Decider D25 (Codex, Copilot, Grok Yes; agy no response).
-- **Depends on:** 063, 075
+- **Depends on:** 075 (063 is superseded by this card)
 - **Story:** As Steve, I want the Phrase board as a real GitHub Projects board, so that I can see and re-rank it on my phone, and as the mob I want the loop to read that board, so that there is one source of truth.
 - **One observable behaviour:** The picker from card 063 selects the next eligible card from the GitHub project through `gh api graphql` instead of the board files, with the same rules.
 - **Acceptance criteria (Given/When/Then; at most 3, each failing on partial work):**
