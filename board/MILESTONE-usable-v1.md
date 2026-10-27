@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:1aadfdf90dac3d5106dae08c35f044d3f409a9a39a61a9513f61a6fd73cdb3cf -->
+<!-- board-table-sha256:40d3dc901f417750c65ad52cc06c97697d4256c5e514d3b5b1f9a142513caabf -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -37,7 +37,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 15 | 086 Plain C# baseline suite: the eight development tasks as C# twins and a runner | Done | 093 (Done: the sealed holdout hashes are recorded, D36) |
 | 16 | 095 Plain C# twins for the read and modify tasks | Done | 086 |
 | 17 | 096 Plain C# twins for the fix tasks, and a suite completeness check | Done | 095 |
-| 18 | 097 Plain C# arm: run cold, exactly like the Phrase arm | Ready | 096 |
+| 18 | 097 Plain C# arm: run cold, exactly like the Phrase arm | Done | 096 |
 | 19 | 094 Run the plain C# baseline: N=5 runs per model on the development tasks | Ready | 086, 095, 096, 097 |
 | 20 | 084 Reference target builds and every orders spec passes | Done | none |
 | 21 | 085 A missing Phrase reply is a model failure, not a harness error | Done | none |
