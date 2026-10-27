@@ -1,0 +1,6 @@
+# Sealed holdout task hashes (Decider D36; recorded 2026-10-27 BEFORE any scored run and before card 086 starts).
+# SHA-256 of the whole file, exact bytes, lower-case hex. The files are held by Dispatch and Steve, off this repository, and are unsealed at card 088.
+# Written by a separate Cowork session outside the mob, which will not drive or review cards 086 to 088. Exactly one task fits no pattern (marked in its sealed file).
+H1 write 3bf0847e85a82956d8f78d3bde38c231da6533b1e2f95c15f66a750057d42ec1
+H2 modify 9d4b1e8ca2cb7dcd1780bc6a4acaee2571b2f12830811d9a1ec4f3f585c17fc5
+H3 write e29a752e6353aa94ce49c01c551eb4285bacdf86d7428b1c63469332110faaaf
