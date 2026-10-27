@@ -29,6 +29,10 @@ public static partial class DotnetCli
         // remains a net8 build, while its testhost can run on an installed newer runtime.
         psi.Environment["DOTNET_ROLL_FORWARD"] = "Major";
 
+        // A reused MSBuild node outlives the build and keeps the redirected output pipe open, so the
+        // test would wait for end of output forever when several nested builds run in one gate.
+        psi.Environment["MSBUILDDISABLENODEREUSE"] = "1";
+
         // The outer test host sets MSBuild variables that would hijack the nested build.
         foreach (var name in new[] { "MSBUILD_EXE_PATH", "MSBuildExtensionsPath", "MSBuildSDKsPath", "MSBuildLoadMicrosoftTargetsReadOnly" })
             psi.Environment.Remove(name);

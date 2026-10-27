@@ -4,5 +4,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../../src/Phrase.Compiler/Phrase.Compiler.csproj" />
+    <ProjectReference Include="../../src/Phrase.Adapters.CSharp/Phrase.Adapters.CSharp.csproj" />
   </ItemGroup>
 </Project>

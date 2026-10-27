@@ -2,13 +2,17 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
+using Phrase.Adapters.CSharp;
 using Phrase.Compiler;
 using Phrase.Compiler.Semantics;
 
 const int MaximumAttempts = 3;
 const int EmptyReplyMaximumAttempts = 2;
 const int MinimumNonEmptyReplyPercentage = 75;
+const int FeedbackCap = 600;
 const string SelfCheckModel = "self-check-v1";
 const string SelfCheckModelCommand = "__phrase_bench_builtin_fake__";
 const string AgyModel = "gemini-4-argon-high";
@@ -18,7 +22,7 @@ const string ColdPreamble = "There is no workspace and no files to read; answer 
 
 if (args.Length == 0)
 {
-    Console.Error.WriteLine("Usage: Phrase.Bench run --suite <path> --model <id> --model-command <command> [--mode zero-shot|docs-in-context] [--docs-root <path>] [--custom-docs] [--cold] | --self-check [--suite <path>]");
+    Console.Error.WriteLine("Usage: Phrase.Bench run --suite <path> --model <id> --model-command <command> [--mode zero-shot|docs-in-context] [--docs-root <path>] [--custom-docs] [--cold] [--scoring parse-resolve|executed] | --self-check [--suite <path>]");
     return 1;
 }
 
@@ -101,9 +105,21 @@ var coldProfile = ResolveColdProfile(model, coldRequested);
 if (coldRequested && !coldProfile.Cold)
     Console.WriteLine($"{model}: warm; {coldProfile.Reason}; this run is not counted in a baseline");
 
+var scoring = BenchmarkScoring.ParseResolve;
+if (options.TryGetValue("scoring", out var configuredScoring))
+{
+    if (configuredScoring is not (BenchmarkScoring.ParseResolve or BenchmarkScoring.Executed))
+    {
+        Console.Error.WriteLine("--scoring must be parse-resolve or executed.");
+        return 1;
+    }
+
+    scoring = configuredScoring;
+}
+
 foreach (var task in suite.Tasks.Where(task => !task.Holdout))
 {
-    var result = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts, label, recordedMode, docsBlock, coldProfile);
+    var result = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts, label, recordedMode, docsBlock, coldProfile, scoring);
     taskResults.Add(result);
     if (!result.KeepsRunSuccessful)
         exitCode = 3;
@@ -170,7 +186,8 @@ static async Task<TaskRunResult> RunTask(
     string? label = null,
     string mode = BenchmarkModes.ZeroShot,
     string docsBlock = "",
-    ColdProfile? coldProfile = null)
+    ColdProfile? coldProfile = null,
+    string scoring = BenchmarkScoring.ParseResolve)
 {
     var taskPrompt = ReadPrompt(task, suiteDirectory);
     var resolvedColdProfile = coldProfile ?? ResolveColdProfile(model, false);
@@ -230,6 +247,12 @@ static async Task<TaskRunResult> RunTask(
             }
 
             score = ScoreReply(reply);
+            if (scoring == BenchmarkScoring.Executed && TryOutcomesPath(task, suiteDirectory, out var outcomesPath))
+            {
+                score = score.Passed
+                    ? await ScoreExecuted(ExtractPhrase(reply), outcomesPath, scratchDirectory, attempts)
+                    : score with { ScoreBar = BenchmarkScoring.ExecutedOutcomes, ProofLevel = "none" };
+            }
             diagnostics.AddRange(score.Diagnostics);
             if (!score.Passed)
                 attemptTaskPrompt = AddDiagnostics(taskPrompt, score.Diagnostics);
@@ -239,9 +262,10 @@ static async Task<TaskRunResult> RunTask(
         var result = new BenchmarkResult(
             model, task.Id, score.Passed, attempts, tokensIn, tokensOut,
             "estimated", diagnostics, false, promptHash, CreateReplyHead(reply),
-            Status: "completed", Error: null, Label: label, ProofLevel: DetermineProofLevel(score, diagnostics),
+            Status: "completed", Error: null, Label: label, ProofLevel: DetermineProofLevel(score),
             Mode: mode, DocsHash: docsHash, Cold: resolvedColdProfile.Cold, ColdFlags: resolvedColdProfile.Flags,
-            ColdPreamble: coldPreamble, ColdReason: resolvedColdProfile.Reason, WorkdirEmptyAtLaunch: workdirEmptyAtLaunch);
+            ColdPreamble: coldPreamble, ColdReason: resolvedColdProfile.Reason, WorkdirEmptyAtLaunch: workdirEmptyAtLaunch,
+            ScoreBar: score.ScoreBar, Patched: score.ScoreBar is null ? null : false, Kind: score.ScoreBar is null ? null : task.Kind);
         PersistResult(suiteDirectory, model, result);
         Console.WriteLine($"{model}: {(score.Passed ? "passed" : "failed")} {task.Id}");
         return new(score.Passed, true);
@@ -606,12 +630,8 @@ static BenchmarkScore Score(string source)
     return new(true, []);
 }
 
-static string DetermineProofLevel(BenchmarkScore score, IReadOnlyList<string> diagnostics)
-{
-    if (score.Passed)
-        return "parse-resolve";
-    return "none";
-}
+static string DetermineProofLevel(BenchmarkScore score) =>
+    score.ProofLevel ?? (score.Passed ? "parse-resolve" : "none");
 
 static BenchmarkScore ScoreReply(string output)
 {
@@ -694,6 +714,271 @@ static void PersistResult(string suiteDirectory, string model, BenchmarkResult r
 
 static bool IsSelfCheckModel(string model) => model.StartsWith("self-check", StringComparison.OrdinalIgnoreCase);
 
+static bool TryOutcomesPath(BenchmarkTask task, string suiteDirectory, out string outcomesPath)
+{
+    var promptPath = Path.Combine(suiteDirectory, task.Prompt);
+    outcomesPath = Path.Combine(Path.GetDirectoryName(promptPath)!, "outcomes.json");
+    return File.Exists(outcomesPath);
+}
+
+// One build per attempt: the generated specs project already references the API, and the
+// outcome harness is a file in that same project, so model specs and outcome cases run together.
+static async Task<BenchmarkScore> ScoreExecuted(string source, string outcomesPath, string scratchDirectory, int attempt)
+{
+    CompilationOutput output;
+    try
+    {
+        output = PhraseCompiler.Compile(source, new CSharpProvider());
+    }
+    catch (CompilationFailedException exception)
+    {
+        return FailedExecuted(string.Join(Environment.NewLine, exception.Diagnostics.Select(diagnostic => diagnostic.ToString())));
+    }
+    catch (NotImplementedException exception)
+    {
+        return FailedExecuted(exception.Message);
+    }
+
+    IReadOnlyList<Outcome> outcomes;
+    try
+    {
+        outcomes = ReadOutcomes(outcomesPath);
+    }
+    catch (InvalidDataException exception)
+    {
+        return FailedExecuted(exception.Message);
+    }
+
+    var unsupported = outcomes.FirstOrDefault(outcome => !outcome.Then.TryGetProperty("returns", out _));
+    if (unsupported is not null)
+        return FailedExecuted($"outcome \"{unsupported.Name}\" has no returns clause");
+
+    var generated = Path.Combine(scratchDirectory, $"attempt-{attempt}", "generated");
+    output.WriteTo(generated);
+    var relativeSpecs = output.Files.Keys.FirstOrDefault(path => path.EndsWith(".Specs.csproj", StringComparison.Ordinal));
+    if (relativeSpecs is null)
+        return FailedExecuted("generated specs project is missing");
+
+    var specsProject = Path.GetFullPath(Path.Combine(generated, relativeSpecs.Replace('/', Path.DirectorySeparatorChar)));
+    await File.WriteAllTextAsync(Path.Combine(Path.GetDirectoryName(specsProject)!, "GeneratedOutcomeTests.cs"), GenerateOutcomeTests(outcomes));
+    var (exitCode, log) = await RunDotnet(
+        Path.GetDirectoryName(specsProject)!,
+        TimeSpan.FromMinutes(5),
+        "test", specsProject, "--nologo", "--disable-build-servers", "--verbosity", "quiet", "--logger", "trx;LogFileName=results.trx");
+    if (exitCode < 0)
+        return FailedExecuted("dotnet_test_timeout");
+
+    var trxPath = Path.Combine(Path.GetDirectoryName(specsProject)!, "TestResults", "results.trx");
+    if (!File.Exists(trxPath))
+        return FailedExecuted(CompactFailureSummary(log));
+
+    var failures = ReadFailures(trxPath);
+    if (exitCode == 0 && failures.Length == 0)
+        return new BenchmarkScore(true, [], BenchmarkScoring.ExecutedOutcomes, "specs-passed");
+
+    var summary = failures.Length > 0
+        ? Cap(string.Join(Environment.NewLine, failures), FeedbackCap)
+        : CompactFailureSummary(log);
+    return FailedExecuted(summary);
+}
+
+static BenchmarkScore FailedExecuted(string feedback) =>
+    new(false, [Cap(feedback, FeedbackCap)], BenchmarkScoring.ExecutedOutcomes, "none");
+
+static IReadOnlyList<Outcome> ReadOutcomes(string path)
+{
+    using var document = JsonDocument.Parse(File.ReadAllText(path));
+    return document.RootElement.EnumerateArray().Select(item => new Outcome(
+        item.GetProperty("name").GetString() ?? "",
+        item.GetProperty("given").Clone(),
+        item.GetProperty("when").GetString() ?? "",
+        item.GetProperty("then").Clone())).ToArray();
+}
+
+static string GenerateOutcomeTests(IReadOnlyList<Outcome> outcomes)
+{
+    var code = new StringBuilder();
+    code.AppendLine("using System.Reflection;");
+    code.AppendLine();
+    code.AppendLine("public sealed class GeneratedOutcomeTests");
+    code.AppendLine("{");
+    code.AppendLine("    private static MethodInfo Phrase()");
+    code.AppendLine("    {");
+    code.AppendLine("        var specs = typeof(GeneratedOutcomeTests).Assembly;");
+    code.AppendLine("        foreach (var reference in specs.GetReferencedAssemblies())");
+    code.AppendLine("            System.Reflection.Assembly.Load(reference);");
+    code.AppendLine("        var methods = System.AppDomain.CurrentDomain.GetAssemblies()");
+    code.AppendLine("            .SelectMany(TypesOf)");
+    code.AppendLine("            .Where(type => type.Name == \"Phrases\" && type.IsClass && type.IsAbstract && type.IsSealed)");
+    code.AppendLine("            .SelectMany(type => type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly))");
+    code.AppendLine("            .Where(method => !method.IsSpecialName)");
+    code.AppendLine("            .ToArray();");
+    code.AppendLine("        if (methods.Length != 1)");
+    code.AppendLine("            throw new InvalidOperationException(\"ambiguous_phrase: expected exactly one public static method on Phrases; found \" + methods.Length);");
+    code.AppendLine("        return methods[0];");
+    code.AppendLine("    }");
+    code.AppendLine();
+    code.AppendLine("    private static IEnumerable<Type> TypesOf(System.Reflection.Assembly assembly)");
+    code.AppendLine("    {");
+    code.AppendLine("        try { return assembly.GetTypes(); }");
+    code.AppendLine("        catch (ReflectionTypeLoadException exception) { return exception.Types.OfType<Type>(); }");
+    code.AppendLine("    }");
+    code.AppendLine();
+    code.AppendLine("    private static object Call(IReadOnlyDictionary<string, object> given)");
+    code.AppendLine("    {");
+    code.AppendLine("        var method = Phrase();");
+    code.AppendLine("        var parameters = method.GetParameters();");
+    code.AppendLine("        var args = new object[parameters.Length];");
+    code.AppendLine("        for (var index = 0; index < parameters.Length; index++)");
+    code.AppendLine("        {");
+    code.AppendLine("            var name = parameters[index].Name ?? \"\";");
+    code.AppendLine("            if (!given.TryGetValue(name, out var value))");
+    code.AppendLine("                throw new InvalidOperationException(\"missing_given: \" + name);");
+    code.AppendLine("            args[index] = value;");
+    code.AppendLine("        }");
+    code.AppendLine();
+    code.AppendLine("        return method.Invoke(null, parameters.Length == 0 ? null : args)!;");
+    code.AppendLine("    }");
+    foreach (var outcome in outcomes)
+    {
+        var returns = outcome.Then.GetProperty("returns");
+        var pairs = string.Join(", ", outcome.Given.EnumerateObject().Select(property =>
+            $"[{CsString(property.Name)}] = {Literal(property.Value)}"));
+        var initializer = pairs.Length == 0 ? "" : " { " + pairs + " }";
+        code.AppendLine();
+        code.AppendLine("    [Fact]");
+        code.AppendLine($"    public void Outcome_{Identifier(outcome.Name)}()");
+        code.AppendLine("    {");
+        code.AppendLine("        try");
+        code.AppendLine("        {");
+        code.AppendLine($"            var actual = Call(new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase){initializer});");
+        code.AppendLine($"            if (!object.Equals({Literal(returns)}, actual))");
+        code.AppendLine($"                throw new Xunit.Sdk.XunitException(\"outcome \" + {CsString(outcome.Name)} + \" expected \" + {CsString(Display(returns))} + \" but was \" + actual);");
+        code.AppendLine("        }");
+        code.AppendLine("        catch (Xunit.Sdk.XunitException)");
+        code.AppendLine("        {");
+        code.AppendLine("            throw;");
+        code.AppendLine("        }");
+        code.AppendLine("        catch (System.Exception exception)");
+        code.AppendLine("        {");
+        code.AppendLine($"            throw new Xunit.Sdk.XunitException(\"outcome \" + {CsString(outcome.Name)} + \" failed: \" + exception.GetBaseException().Message);");
+        code.AppendLine("        }");
+        code.AppendLine("    }");
+    }
+
+    code.AppendLine("}");
+    return code.ToString();
+}
+
+static string Literal(JsonElement value) => value.ValueKind switch
+{
+    JsonValueKind.String => CsString(value.GetString() ?? ""),
+    JsonValueKind.Number => value.GetRawText(),
+    JsonValueKind.True => "true",
+    JsonValueKind.False => "false",
+    JsonValueKind.Null => "null",
+    _ => throw new InvalidDataException("Only scalar return values are supported by this slice."),
+};
+
+static string Display(JsonElement value) => value.ValueKind == JsonValueKind.String ? value.GetString() ?? "" : value.GetRawText();
+
+static string CsString(string value) =>
+    "\"" + value.Replace("\\", "\\\\", StringComparison.Ordinal).Replace("\"", "\\\"", StringComparison.Ordinal) + "\"";
+
+static string Identifier(string name)
+{
+    var value = Regex.Replace(name.ToLowerInvariant(), "[^a-z0-9]+", "_").Trim('_');
+    if (value.Length == 0)
+        return "outcome";
+    return char.IsDigit(value[0]) ? "case_" + value : value;
+}
+
+static async Task<(int ExitCode, string Output)> RunDotnet(string workingDirectory, TimeSpan timeout, params string[] arguments)
+{
+    var startInfo = DotnetStart(workingDirectory);
+    foreach (var argument in arguments)
+        startInfo.ArgumentList.Add(argument);
+    using var process = Process.Start(startInfo) ?? throw new InvalidOperationException("Could not start dotnet.");
+    var pid = process.Id;
+    var stdout = process.StandardOutput.ReadToEndAsync();
+    var stderr = process.StandardError.ReadToEndAsync();
+    using var cancellation = new CancellationTokenSource(timeout);
+    try
+    {
+        await process.WaitForExitAsync(cancellation.Token);
+    }
+    catch (OperationCanceledException) when (cancellation.IsCancellationRequested)
+    {
+        if (!process.HasExited && process.Id == pid)
+            process.Kill();
+        await process.WaitForExitAsync();
+        return (-1, "dotnet_test_timeout");
+    }
+
+    return (process.ExitCode, (await stdout) + (await stderr));
+}
+
+static ProcessStartInfo DotnetStart(string workingDirectory)
+{
+    var startInfo = new ProcessStartInfo("dotnet")
+    {
+        WorkingDirectory = workingDirectory,
+        RedirectStandardOutput = true,
+        RedirectStandardError = true,
+        UseShellExecute = false,
+    };
+    startInfo.Environment["DOTNET_ROLL_FORWARD"] = "Major";
+    startInfo.Environment["MSBUILDDISABLENODEREUSE"] = "1";
+    var dotnetRoot = Environment.GetEnvironmentVariable("DOTNET_ROOT");
+    if (string.IsNullOrEmpty(dotnetRoot))
+    {
+        var userDotnet = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".dotnet");
+        if (Directory.Exists(userDotnet))
+            dotnetRoot = userDotnet;
+    }
+
+    if (!string.IsNullOrEmpty(dotnetRoot))
+    {
+        startInfo.Environment["DOTNET_ROOT"] = dotnetRoot;
+        var path = startInfo.Environment["PATH"] ?? "";
+        if (!path.StartsWith(dotnetRoot, StringComparison.OrdinalIgnoreCase))
+            startInfo.Environment["PATH"] = dotnetRoot + Path.PathSeparator + path;
+    }
+
+    foreach (var name in new[]
+    {
+        "MSBUILD_EXE_PATH", "MSBuildExtensionsPath", "MSBuildSDKsPath", "MSBuildLoadMicrosoftTargetsReadOnly",
+        "OutputPath", "OutDir", "BaseOutputPath", "BaseIntermediateOutputPath", "IntermediateOutputPath",
+        "Configuration", "TargetFramework", "UseAppHost",
+    })
+        startInfo.Environment.Remove(name);
+    return startInfo;
+}
+
+static string[] ReadFailures(string path)
+{
+    var document = XDocument.Load(path);
+    return document.Descendants()
+        .Where(element => element.Name.LocalName == "UnitTestResult")
+        .Where(result => string.Equals((string?)result.Attribute("outcome"), "Failed", StringComparison.OrdinalIgnoreCase))
+        .Select(result => $"{(string?)result.Attribute("testName")}: {FirstLine(result.Descendants().FirstOrDefault(element => element.Name.LocalName == "Message")?.Value ?? "failed")}")
+        .ToArray();
+}
+
+static string CompactFailureSummary(string output)
+{
+    var useful = output.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+        .Where(line => line.Contains("error", StringComparison.OrdinalIgnoreCase) || line.Contains("failed", StringComparison.OrdinalIgnoreCase))
+        .Take(6);
+    var summary = Cap(string.Join(Environment.NewLine, useful), FeedbackCap);
+    return summary.Length > 0 ? summary : "dotnet_test_failed";
+}
+
+static string FirstLine(string value) =>
+    value.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).FirstOrDefault() ?? "failed";
+
+static string Cap(string value, int length) => value.Length <= length ? value : value[..length];
+
 static class Serialization
 {
     public static readonly JsonSerializerOptions Options = new(JsonSerializerDefaults.Web)
@@ -726,7 +1011,10 @@ public sealed record BenchmarkResult(
     string ColdFlags = "",
     string ColdPreamble = "",
     string ColdReason = "",
-    bool WorkdirEmptyAtLaunch = false)
+    bool WorkdirEmptyAtLaunch = false,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] string? ScoreBar = null,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] bool? Patched = null,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] string? Kind = null)
 {
     public static BenchmarkResult Unavailable(
         string model, string task, string promptHash, string error,
@@ -784,8 +1072,16 @@ static class BenchmarkModes
     public const string DocsInContextCustom = "docs-in-context-custom";
 }
 sealed record ColdProfile(bool Cold, string Flags, string Reason);
-sealed record BenchmarkScore(bool Passed, IReadOnlyList<string> Diagnostics);
+sealed record BenchmarkScore(bool Passed, IReadOnlyList<string> Diagnostics, string? ScoreBar = null, string? ProofLevel = null);
 sealed record TaskRunResult(bool KeepsRunSuccessful, bool HasNonEmptyReply);
+sealed record Outcome(string Name, JsonElement Given, string When, JsonElement Then);
+
+static class BenchmarkScoring
+{
+    public const string ParseResolve = "parse-resolve";
+    public const string Executed = "executed";
+    public const string ExecutedOutcomes = "executed-outcomes";
+}
 
 sealed class ScoringProvider : ITargetAdapter
 {

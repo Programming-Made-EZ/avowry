@@ -1,0 +1,8 @@
+[
+  {
+    "name": "doubles three",
+    "given": { "value": 3 },
+    "when": "called",
+    "then": { "returns": 6 }
+  }
+]
