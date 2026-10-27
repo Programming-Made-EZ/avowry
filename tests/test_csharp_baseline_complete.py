@@ -179,6 +179,33 @@ class CSharpBaselineCompleteTests(unittest.TestCase):
             issues = check.check_repo(root)
             self.assertIn("010-fix-trigger", issues["malformed_outcomes"])
 
+    def test_wrongly_typed_or_null_case_fields_fail(self):
+        # Codex's review point: name, given, when and then must have the right types, not merely exist
+        bad_cases = [
+            {"name": None, "given": {}, "when": "called", "then": {"returns": 1}},
+            {"name": "", "given": {}, "when": "called", "then": {"returns": 1}},
+            {"name": "works", "given": [], "when": "called", "then": {"returns": 1}},
+            {"name": "works", "given": {}, "when": 3, "then": {"returns": 1}},
+            {"name": "works", "given": {}, "when": "called", "then": None},
+            {"name": "works", "given": {}, "when": "called", "then": {}},
+            {"name": "works", "given": {}, "when": "called", "then": {"unknown_kind": 1}},
+        ]
+        for bad in bad_cases:
+            with self.subTest(bad=bad):
+                with tempfile.TemporaryDirectory() as tmp:
+                    path = Path(tmp) / "outcomes.json"
+                    path.write_text(json.dumps([bad]), encoding="utf-8")
+                    self.assertFalse(check._valid_outcomes(path))
+        for mirrored in ({"succeeds": True}, {"has_field": "name"}):
+            with self.subTest(mirrored=mirrored):
+                with tempfile.TemporaryDirectory() as tmp:
+                    path = Path(tmp) / "outcomes.json"
+                    path.write_text(json.dumps([{"name": "works", "given": {}, "when": "called", "then": mirrored}]), encoding="utf-8")
+                    self.assertTrue(check._valid_outcomes(path))  # forms the development twins mirror from the Phrase tasks
+        good = Path(tempfile.mkdtemp()) / "outcomes.json"
+        good.write_text(json.dumps([{"name": "works", "given": {"value": 3}, "when": "called", "then": {"returns": 6}}]), encoding="utf-8")
+        self.assertTrue(check._valid_outcomes(good))
+
     def test_forbidden_start_file_on_write_task_fails(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

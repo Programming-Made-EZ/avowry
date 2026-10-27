@@ -17,6 +17,12 @@ def _empty_prompt(path: Path):
     return not path.read_text(encoding="utf-8").strip()
 
 
+THEN_KINDS = {"returns", "responds", "fails_with", "stored", "published",
+              # development-twin forms that mirror the Phrase tasks as they are today: succeeds (task 005 is a bare-success
+              # spec until card 054 gives it a failure path, then its twin must change too) and has_field (task 008 checks a type shape)
+              "succeeds", "has_field"}  # the first five are bench/holdout-template.md
+
+
 def _valid_outcomes(path: Path):
     try:
         cases = _load_json(path)
@@ -28,6 +34,13 @@ def _valid_outcomes(path: Path):
         if not isinstance(case, dict):
             return False
         if not {"name", "given", "when", "then"}.issubset(case):
+            return False
+        if not (isinstance(case["name"], str) and case["name"].strip()):
+            return False
+        if not isinstance(case["given"], dict) or not (isinstance(case["when"], str) and case["when"].strip()):
+            return False
+        then = case["then"]
+        if not isinstance(then, dict) or not then or not set(then).issubset(THEN_KINDS | {"status"}) or not (set(then) & THEN_KINDS):
             return False
     return True
 
