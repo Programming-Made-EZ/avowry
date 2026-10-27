@@ -3,9 +3,10 @@
 
 The default is a dry run. --apply creates issues and closes Done, SUPERSEDED
 and WITHDRAWN cards. A later apply closes an existing open issue for a finished
-card instead of leaving it open. Owner and repo are hard-wired; anything else
-is refused. The script never deletes, and it never changes an issue that lacks
-the phrase-card marker.
+card instead of leaving it open. --sync-bodies compares each marked issue with
+the card file and, with --apply, rewrites only that body. Owner and repo are
+hard-wired; anything else is refused. The script never deletes, and it never
+changes an issue that lacks the phrase-card marker.
 """
 
 import argparse
@@ -102,6 +103,11 @@ def replace_local_paths(text: str) -> str:
     for old, new in REPLACEMENTS:
         text = text.replace(old, new)
     return text
+
+
+def normalise_newlines(text: str) -> str:
+    """Fold CRLF into LF. GitHub stores issue bodies with CRLF; card files may use LF."""
+    return (text or "").replace("\r\n", "\n")
 
 
 def load_card(path: Path) -> Card:
@@ -219,6 +225,28 @@ def plan_actions(cards, existing) -> list[Action]:
     return actions
 
 
+def plan_sync_actions(cards, existing) -> list[Action]:
+    """Plan body updates for issues that already carry the card marker.
+
+    A card with no issue is skipped. This mode does not create or close issues.
+    """
+    actions = []
+    for card in cards:
+        issue = existing.get(card.number)
+        current = "" if issue is None else (issue.get("body") or "")
+        if issue is None or normalise_newlines(current) == normalise_newlines(card.body):
+            actions.append(Action("skip", card, f"skip ({card.number}) {card.title}"))
+            continue
+        actions.append(Action(
+            "sync-body",
+            card,
+            f"sync-body ({card.number}) {card.title}",
+            issue_number=int(issue["number"]),
+            issue_body=current,
+        ))
+    return actions
+
+
 def ensure_labels(gh, slug: str, sleep):
     payload = invoke(gh, ["label", "list", "--repo", slug, "--json", "name", "--limit", "1000"], sleep)
     names = set()
@@ -260,18 +288,25 @@ def close_command(slug: str, number, card: Card) -> list[str]:
     return ["issue", "close", str(number), "--repo", slug, "--reason", card.close_reason]
 
 
-def format_summary(actions) -> str:
-    counts = {"create": 0, "close": 0, "close-existing": 0, "skip": 0}
+def edit_body_command(slug: str, number, body_path) -> list[str]:
+    return ["issue", "edit", str(number), "--repo", slug, "--body-file", str(body_path)]
+
+
+def format_summary(actions, *, sync_bodies: bool = False) -> str:
+    counts = {"create": 0, "close": 0, "close-existing": 0, "skip": 0, "sync-body": 0}
     for action in actions:
         counts[action.kind] = counts.get(action.kind, 0) + 1
-    return (
+    summary = (
         f"{counts['create']} create, {counts['close']} close, "
         f"{counts['close-existing']} close-existing, {counts['skip']} skip"
     )
+    if sync_bodies or counts["sync-body"]:
+        summary += f", {counts['sync-body']} sync-body"
+    return summary
 
 
 def validate_actions(slug: str, actions):
-    """Build every planned create and close command and run the marker and refuse checks."""
+    """Build every planned mutating command and run the marker and refuse checks."""
     for action in actions:
         if action.kind == "skip":
             continue
@@ -279,6 +314,20 @@ def validate_actions(slug: str, actions):
             command = close_command(slug, action.issue_number, action.card)
             assert_marker(action.issue_body or "", action.card, action.issue_number)
             assert_allowed(command)
+            continue
+        if action.kind == "sync-body":
+            assert_marker(action.issue_body or "", action.card, action.issue_number)
+            path = write_body_file(action.card)
+            try:
+                content = path.read_bytes().decode("utf-8")
+                command = edit_body_command(slug, action.issue_number, path)
+                assert_marker(content, action.card, action.issue_number)
+                assert_allowed(command)
+            finally:
+                try:
+                    path.unlink()
+                except OSError:
+                    pass
             continue
         path = write_body_file(action.card)
         try:
@@ -341,6 +390,23 @@ def close_existing_issue(gh, slug: str, action: Action, sleep):
     invoke(gh, close_command(slug, action.issue_number, action.card), sleep)
 
 
+def sync_issue_body(gh, slug: str, action: Action, sleep):
+    """Edit one issue's body. Title, labels, state, assignees and comments stay."""
+    assert_marker(action.issue_body or "", action.card, action.issue_number)
+    path = write_body_file(action.card)
+    try:
+        content = path.read_bytes().decode("utf-8")
+        command = edit_body_command(slug, action.issue_number, path)
+        assert_marker(content, action.card, action.issue_number)
+        assert_allowed(command)
+        invoke(gh, command, sleep)
+    finally:
+        try:
+            path.unlink()
+        except OSError:
+            pass
+
+
 def apply_actions(gh, slug: str, actions, sleep):
     if not any(action.kind != "skip" for action in actions):
         return
@@ -354,6 +420,8 @@ def apply_actions(gh, slug: str, actions, sleep):
             sleep(CREATE_INTERVAL_SECONDS)
         if action.kind == "close-existing":
             close_existing_issue(gh, slug, action, sleep)
+        elif action.kind == "sync-body":
+            sync_issue_body(gh, slug, action, sleep)
         else:
             number = create_issue(gh, slug, action.card, sleep)
             if action.kind == "close":
@@ -361,14 +429,18 @@ def apply_actions(gh, slug: str, actions, sleep):
         mutated += 1
 
 
-def migrate(gh, *, owner: str = OWNER, repo: str = REPO, dry_run: bool = True, sleep=None, board_dir=None):
+def migrate(gh, *, owner: str = OWNER, repo: str = REPO, dry_run: bool = True, sleep=None, board_dir=None, sync_bodies: bool = False):
     ensure_target(owner, repo)
     if sleep is None:
         sleep = time.sleep
     slug = f"{owner}/{repo}"
     board = Path(board_dir) if board_dir is not None else BOARD_DIR
     cards = load_cards(board)
-    actions = plan_actions(cards, index_markers(fetch_issues(gh, slug, sleep)))
+    existing = index_markers(fetch_issues(gh, slug, sleep))
+    if sync_bodies:
+        actions = plan_sync_actions(cards, existing)
+    else:
+        actions = plan_actions(cards, existing)
     validate_actions(slug, actions)
     if not dry_run:
         apply_actions(gh, slug, actions, sleep)
@@ -379,6 +451,7 @@ def main(argv: Sequence[str] | None = None, gh_runner=gh_runner, sleep=time.slee
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--apply", action="store_true", help="create issues and close finished cards")
     parser.add_argument("--dry-run", action="store_true", help="list one line per card and change nothing")
+    parser.add_argument("--sync-bodies", action="store_true", help="rewrite the body of a marked issue when its card file changed")
     parser.add_argument("--owner", default=OWNER, help="GitHub owner; must be Programming-Made-EZ")
     parser.add_argument("--repo", default=REPO, help="GitHub repo; must be phrase-lang")
     args = parser.parse_args(argv)
@@ -395,6 +468,7 @@ def main(argv: Sequence[str] | None = None, gh_runner=gh_runner, sleep=time.slee
             dry_run=dry_run,
             sleep=sleep,
             board_dir=board_dir,
+            sync_bodies=args.sync_bodies,
         )
     except ValueError:
         raise
@@ -409,7 +483,10 @@ def main(argv: Sequence[str] | None = None, gh_runner=gh_runner, sleep=time.slee
     for action in actions:
         print(action.line)
     if dry_run:
-        print(format_summary(actions))
+        print(format_summary(actions, sync_bodies=args.sync_bodies))
+    elif args.sync_bodies:
+        synced = sum(action.kind == "sync-body" for action in actions)
+        print(f"Applied: {synced} sync-body.")
     else:
         created = sum(action.kind in {"create", "close"} for action in actions)
         closed = sum(action.kind == "close" for action in actions)

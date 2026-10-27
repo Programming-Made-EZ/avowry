@@ -172,14 +172,68 @@ def verify_fields(gh, board_dir=None, running=None):
     return len(cards)
 
 
+def verify_bodies(gh, board_dir=None):
+    """Read every marked issue and compare its body with the card file. Read-only.
+
+    Line endings are folded from CRLF to LF on both sides. Fails unless each
+    card has exactly one marked issue and that body is the one the migrator
+    would build.
+    """
+    from scripts.board import migrate_cards
+
+    board = Path(board_dir) if board_dir is not None else BOARD_DIR
+    cards = migrate_cards.load_cards(board)
+    numbers = [card.number for card in cards]
+    issues = migrate_cards.fetch_issues(gh, f"{OWNER}/{REPO}", lambda _seconds: None)
+
+    found = {}
+    for issue in issues:
+        if not isinstance(issue, dict):
+            continue
+        body = issue.get("body") or ""
+        for marker in set(MARKER_RE.findall(body)):
+            found.setdefault(marker, []).append(issue)
+
+    wanted = set(numbers)
+    missing = [number for number in numbers if len(found.get(number, [])) == 0]
+    duplicates = [number for number, items in found.items() if len(items) > 1]
+    extras = sorted(number for number in found if number not in wanted)
+    used = []
+    for number in numbers:
+        items = found.get(number, [])
+        if len(items) == 1:
+            used.append(items[0].get("number"))
+    shared = len(used) != len(set(used))
+
+    by_number = {card.number: card for card in cards}
+    mismatches = []
+    for number in numbers:
+        items = found.get(number, [])
+        if len(items) != 1:
+            continue
+        actual = migrate_cards.normalise_newlines(items[0].get("body") or "")
+        expected = migrate_cards.normalise_newlines(by_number[number].body)
+        if actual != expected:
+            mismatches.append(number)
+
+    if missing or duplicates or extras or shared or mismatches:
+        raise RuntimeError(
+            "Issue bodies do not match card files. "
+            f"missing={missing} duplicates={duplicates} extras={extras} "
+            f"shared={shared} mismatches={mismatches}"
+        )
+    return len(cards)
+
+
 def main(argv=None, gh_runner=gh_runner):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project", action="store_true", help="verify the project exists and has the correct fields")
     parser.add_argument("--issues", action="store_true", help="verify exactly one marked issue exists per card file")
     parser.add_argument("--fields", action="store_true", help="verify every card item's values (read-only)")
+    parser.add_argument("--bodies", action="store_true", help="verify each marked issue body matches its card file (read-only)")
     args = parser.parse_args(argv)
 
-    if not args.project and not args.issues and not args.fields:
+    if not args.project and not args.issues and not args.fields and not args.bodies:
         parser.print_help()
         return 1
 
@@ -191,6 +245,8 @@ def main(argv=None, gh_runner=gh_runner):
             count = verify_issues(gh_runner)
         if args.fields:
             count = verify_fields(gh_runner)
+        if args.bodies:
+            count = verify_bodies(gh_runner)
     except Exception as exc:
         print(f"FAIL: {exc}")
         return 1
@@ -201,6 +257,8 @@ def main(argv=None, gh_runner=gh_runner):
         print(f"OK: {count} marked issues, exactly one per card file.")
     if args.fields:
         print(f"OK: {count} project items match their card fields; a second dry run has nothing to do.")
+    if args.bodies:
+        print(f"OK: {count} issue bodies match their card files, exactly one per card.")
     return 0
 
 
