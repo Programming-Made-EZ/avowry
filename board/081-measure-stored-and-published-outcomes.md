@@ -1,0 +1,35 @@
+# Measure stored and published outcomes under today's grammar
+
+- **Status:** Ready (rank: see `C:\Users\ringe\projects\phrase-lang\board\MILESTONE-usable-v1.md`, read-only)
+- **Shape:** Story
+- **Type:** data (benchmark task pack; suite change, versioned); thin slice; authored by the driver rotation, reviewed by a non-author (D15); smoke-tested before it touches a real card
+- **Milestone:** Vocabulary v1: spec parties (a hypothesis, bootstrap phase)
+- **Source:** Steve and Dispatch, 2026-10-26 (proposal B): named actor types in the language; every then names the party and what it observes, which makes then-succeeds unwritable and maps each party to a standard test double. Team review: Decider D29 (Codex Support-it, Copilot Yes, Grok Support-it; agy no response). Bootstrap phase: a hypothesis to test with a spike and LLM-customer evidence, not a feature.
+- **Depends on:** 037, 054
+- **Story:** As Riley, I want development benchmark tasks that ask for a stored-record outcome and a published-event outcome, run under today's grammar, so that I can see whether cold models write specs that state the stored record or the event, or hide behind succeeds, before anyone changes the grammar.
+- **Acceptance criteria (Given/When/Then; at most 3, each failing on partial work):**
+  1. Given the tests with fakes and fixtures, When the behaviour above is exercised, Then two development tasks are added (a stored-record outcome and a published-event outcome); holdouts are byte-identical; the suite version is bumped; a Decider records the change; old rows are kept and labeled (Goodhart rules)
+  2. Given the tests with fakes and fixtures, When the behaviour above is exercised, Then each completed row records pass, attempts, output tokens and the outcome class the model wrote (a stored record, an event, a declared failure, or a bare success); the control tasks 001, 002, 004, 005, 007, 010 and 011 hold their pass rate
+  3. Given the tests with fakes and fixtures, When the behaviour above is exercised, Then the harness tests pass and the repository gate passes with zero warnings
+
+## Context
+
+- Safety rules apply in full (never delete, default dry run, only the Phrase repo, no other mob). Bootstrap phase: no metric-based rejection until a Decider declares the baseline.
+- Phrase board and docs (read-only, absolute paths): `C:\Users\ringe\projects\phrase-lang\board\`, `C:\Users\ringe\projects\phrase-lang\PERSONAS.md`, `C:\Users\ringe\projects\phrase-lang\VISION.md`, `C:\Users\ringe\projects\phrase-lang\docs\decisions\DECIDERS.md`.
+
+## Task force
+
+- Author [author]: Codex | why: next in the rotation (D15)
+- Reviewer [reviewer]: Grok | why: non-author review of the diff (D15)
+- Language designer: Grok | why: checks the work against GRAMMAR.md, 022 and the outcome rule
+- Facilitator: Claude | why: runs the checks and any real apply after review; takeovers are logged
+
+## Done when
+
+All must exit 0, run from the phrase-lang repo root:
+
+```
+python scripts/check-decider-recorded.py measure-stored-and-published-outcomes
+python -c "import json,sys;v=json.load(open('bench/suite.json',encoding='utf-8'))['version'];sys.exit(0 if v>2 else 1)"
+dotnet test Phrase.sln --filter "Status!=Pending"
+```
