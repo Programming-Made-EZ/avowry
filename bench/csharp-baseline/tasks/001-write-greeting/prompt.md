@@ -1,4 +1,6 @@
-Write C# code in namespace `Greeting` with a public static method that has no parameters and returns the text "hello".
+Write C# code in namespace `Greeting` with exactly one public static method that has no parameters and returns `string`; it must return the text "hello".
+
+The Phrase twin has exactly one phrase, so the C# reply must likewise have exactly one public static method of that shape in the namespace.
 
 Also write an xUnit test proving that the returned text is "hello".
 

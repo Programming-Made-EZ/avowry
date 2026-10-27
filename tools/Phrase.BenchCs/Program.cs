@@ -113,8 +113,10 @@ static async Task<Score> Score(IReadOnlyList<SourceFile> sources, BenchmarkTask 
     if (plannedModelTests == 0)
         return new(false, "no_csharp_tests_found", 0, 0);
 
-    var project = Path.Combine(scratch, "verification");
+    var project = Path.Combine(scratch, $"verification-{Guid.NewGuid():N}");
     Directory.CreateDirectory(project);
+    if (Directory.EnumerateFileSystemEntries(project).Any())
+        throw new InvalidOperationException("verification_directory_not_empty");
     foreach (var source in sources)
         await File.WriteAllTextAsync(Path.Combine(project, source.Name), source.Content);
     await File.WriteAllTextAsync(Path.Combine(project, "GeneratedOutcomeTests.cs"), GenerateTests(task, outcomes));
@@ -200,7 +202,10 @@ static string GenerateTests(BenchmarkTask task, IReadOnlyList<Outcome> outcomes)
                       ? "method.ReturnType == typeof(string) && method.GetParameters().Length == 0"
                       : "method.Name == \"Double\" && method.ReturnType == typeof(int) && method.GetParameters() is [{ ParameterType: var parameterType }] && parameterType == typeof(int)")}})
                   .ToArray();
-              return matches.Length == 1 ? matches[0] : throw new InvalidOperationException($"entry_point_match_count: {matches.Length}");
+              return matches.Length == 1 ? matches[0] : throw new InvalidOperationException(
+                  {{(task.Id == "001-write-greeting"
+                      ? "$\"ambiguous_entry_point: expected exactly one public static parameterless string method in namespace Greeting; found {matches.Length}\""
+                      : "$\"entry_point_match_count: {matches.Length}\"")}});
           }
         {{string.Join(Environment.NewLine, methods)}}
         }
@@ -342,7 +347,7 @@ static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.
 static string ReplyHead(string reply)
 {
     var scrubbed = Regex.Replace(reply.Trim(), @"(?i)\b(api[_-]?key|token|secret)\s*[:=]\s*\S+", "$1=[redacted]", RegexOptions.CultureInvariant);
-    scrubbed = Regex.Replace(scrubbed, @"(?<!\w)(?:(?:[A-Za-z]:\\|/|~/)(?:[^\s\""'<>]+[\\/])*[^\s\""'<>]*)", "[path]", RegexOptions.CultureInvariant);
+    scrubbed = Regex.Replace(scrubbed, @"(?<!\w)(?:(?:[A-Za-z]:\\|/|~[\\/])(?:[^\s\""'<>]+[\\/])*[^\s\""'<>]*)", "[path]", RegexOptions.CultureInvariant);
     return scrubbed[..Math.Min(200, scrubbed.Length)];
 }
 

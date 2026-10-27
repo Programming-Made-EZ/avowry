@@ -151,6 +151,75 @@ public sealed class CSharpBaselineAcceptance
     }
 
     [Fact]
+    public async Task file_scoped_namespaces_in_two_marked_files_compile_separately()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, holdout: false, OneCase);
+        var reply = WriteReply(workspace.Root, "file-scoped.cs", """
+            // FILE: Greeting.cs
+            namespace Greeting;
+            public static class Welcome { public static string Message() => "hello"; }
+            // FILE: Tests.cs
+            namespace Greeting;
+            public sealed class WelcomeTests { [Xunit.Fact] public void works() => Xunit.Assert.Equal("hello", Welcome.Message()); }
+            """);
+
+        var run = await Run(suite, PrintFileCommand(reply), "file-scoped-v1");
+
+        Assert.Equal(0, run.ExitCode);
+    }
+
+    [Fact]
+    public async Task multiple_greeting_entry_points_are_an_ambiguous_completed_failure()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, holdout: false, OneCase);
+        var reply = WriteReply(workspace.Root, "ambiguous.cs", """
+            namespace Greeting;
+            public static class Welcome
+            {
+                public static string Message() => "hello";
+                public static string Helper() => "hello";
+            }
+            public sealed class Tests { [Xunit.Fact] public void works() => Xunit.Assert.Equal("hello", Welcome.Message()); }
+            """);
+
+        var run = await Run(suite, PrintFileCommand(reply), "ambiguous-v1");
+
+        Assert.Equal(3, run.ExitCode);
+        using var result = ReadResult(suite, "ambiguous-v1");
+        Assert.Equal("completed", result.RootElement.GetProperty("status").GetString());
+        Assert.Contains(result.RootElement.GetProperty("diagnostics").EnumerateArray(), value =>
+            value.GetString()!.Contains("ambiguous_entry_point", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void task_001_prompt_requires_exactly_one_matching_method()
+    {
+        var prompt = File.ReadAllText(RepoPaths.Find("bench", "csharp-baseline", "tasks", "001-write-greeting", "prompt.md"));
+
+        Assert.Contains("exactly one public static method", prompt, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("exactly one phrase", prompt, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task a_later_build_failure_cannot_reuse_an_earlier_attempt_trx()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, holdout: false, OneCase);
+        var first = WriteReply(workspace.Root, "first.cs", WrongCodeWithPassingOwnTest);
+        var later = WriteReply(workspace.Root, "later.cs", "namespace Greeting; public class Broken { [Xunit.Fact] public void test() { nope } }");
+        var command = WriteAttemptCommand(workspace.Root, first, later);
+
+        await Run(suite, command, "fresh-attempt-v1");
+
+        using var result = ReadResult(suite, "fresh-attempt-v1");
+        Assert.False(result.RootElement.GetProperty("passed").GetBoolean());
+        Assert.Equal(0, result.RootElement.GetProperty("model_test_count").GetInt32());
+        Assert.Equal(0, result.RootElement.GetProperty("harness_test_count").GetInt32());
+    }
+
+    [Fact]
     public async Task failed_build_claims_no_executed_test_counts()
     {
         using var workspace = TempWorkspace.Create();
@@ -177,6 +246,22 @@ public sealed class CSharpBaselineAcceptance
 
         using var result = ReadResult(suite, "scrub-v1");
         Assert.DoesNotContain("alice", result.RootElement.GetProperty("reply_head").GetString(), StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task reply_head_scrubs_tilde_paths_with_either_separator_before_cutting()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, holdout: false, OneCase);
+        var reply = WriteReply(workspace.Root, "tilde-path.cs",
+            @"~\AppData\Local\Temp\private-answer.cs ~/private/answer.cs " + CorrectGreetingAndTest);
+
+        await Run(suite, PrintFileCommand(reply), "tilde-scrub-v1");
+
+        using var result = ReadResult(suite, "tilde-scrub-v1");
+        var head = result.RootElement.GetProperty("reply_head").GetString();
+        Assert.DoesNotContain("AppData", head, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("~/private", head, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -254,6 +339,23 @@ public sealed class CSharpBaselineAcceptance
     private static string PrintFileCommand(string path) => OperatingSystem.IsWindows()
         ? $"more > nul & type \"{path}\""
         : $"cat >/dev/null; cat '{path}'";
+
+    private static string WriteAttemptCommand(string root, string first, string later)
+    {
+        var counter = Path.Combine(root, "attempt-counter.txt");
+        if (OperatingSystem.IsWindows())
+        {
+            var script = Path.Combine(root, "attempts.cmd");
+            File.WriteAllText(script, $"@echo off\r\nmore > nul\r\nif exist \"{counter}\" goto later\r\necho 1>\"{counter}\"\r\ntype \"{first}\"\r\nexit /b 0\r\n:later\r\ntype \"{later}\"\r\n");
+            return $"call \"{script}\"";
+        }
+        else
+        {
+            var script = Path.Combine(root, "attempts.sh");
+            File.WriteAllText(script, $"#!/bin/sh\ncat >/dev/null\nif [ -f '{counter}' ]; then cat '{later}'; else touch '{counter}'; cat '{first}'; fi\n");
+            return $"sh '{script}'";
+        }
+    }
 
     private static async Task<(int ExitCode, string Stdout, string Stderr)> Run(string suite, string command, string model)
     {
