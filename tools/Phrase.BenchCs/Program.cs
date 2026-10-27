@@ -8,10 +8,11 @@ using System.Xml.Linq;
 const int MaximumAttempts = 3;
 const string AgyModel = "gemini-4-argon-high";
 const string AgySkipPermissionsOption = "--dangerously-skip-permissions";
+const string ColdPreamble = "There is no workspace and no files to read; answer directly in this reply without looking anything up.";
 
 if (args.Length == 0 || args[0] != "run")
 {
-    Console.Error.WriteLine("Usage: Phrase.BenchCs run --suite <path> --model <id> --model-command <command> [--label <label>] [--timeout-ms <milliseconds>]");
+    Console.Error.WriteLine("Usage: Phrase.BenchCs run --suite <path> --model <id> --model-command <command> [--label <label>] [--timeout-ms <milliseconds>] [--cold]");
     return args.Length == 0 ? 1 : 2;
 }
 
@@ -32,19 +33,22 @@ var timeout = options.TryGetValue("timeout-ms", out var timeoutValue)
     ? TimeSpan.FromMilliseconds(int.Parse(timeoutValue))
     : TimeSpan.FromMinutes(5);
 var label = options.GetValueOrDefault("label");
+var coldProfile = ResolveColdProfile(model, options.ContainsKey("cold"));
 var exitCode = 0;
 
 foreach (var task in suite.Tasks.Where(task => !task.Holdout))
 {
-    var passed = await RunTask(task, suiteDirectory, model, modelCommand, label, timeout);
+    var passed = await RunTask(task, suiteDirectory, model, modelCommand, label, timeout, coldProfile);
     if (!passed)
         exitCode = 3;
 }
 return exitCode;
 
-static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, string model, string command, string? label, TimeSpan timeout)
+static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, string model, string command, string? label, TimeSpan timeout, ColdProfile coldProfile)
 {
-    var (prompt, existingCodeTokens) = AssemblePrompt(task, suiteDirectory);
+    var (taskPrompt, existingCodeTokens) = AssemblePrompt(task, suiteDirectory);
+    var coldPreamble = coldProfile.Cold ? ColdPreamble : string.Empty;
+    var prompt = coldProfile.Cold ? $"{coldPreamble}\n\n{taskPrompt}" : taskPrompt;
     var outcomes = ReadOutcomes(Path.Combine(suiteDirectory, task.Outcomes));
     var promptHash = Hash(prompt);
     var scratch = Path.Combine(Path.GetTempPath(), "phrase-bench-cs", Guid.NewGuid().ToString("N"));
@@ -54,6 +58,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
     var tokensOut = 0;
     var diagnostics = new List<string>();
     var reply = "";
+    var workdirEmptyAtLaunch = false;
     Score? lastScore = null;
     try
     {
@@ -61,7 +66,15 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
         while (attempts < MaximumAttempts)
         {
             attempts++;
-            reply = await RunModel(model, command, scratch, attemptPrompt, timeout);
+            var attemptRoot = Path.Combine(scratch, $"attempt-{attempts}");
+            var attemptWorkingDirectory = Path.Combine(attemptRoot, "workdir");
+            var promptDirectory = Path.Combine(attemptRoot, "prompt");
+            Directory.CreateDirectory(attemptWorkingDirectory);
+            Directory.CreateDirectory(promptDirectory);
+            var promptFilePath = Path.Combine(promptDirectory, "prompt.txt");
+            File.WriteAllText(promptFilePath, attemptPrompt);
+            workdirEmptyAtLaunch = !Directory.EnumerateFileSystemEntries(attemptWorkingDirectory).Any();
+            reply = await RunModel(model, command, attemptWorkingDirectory, attemptPrompt, timeout, coldProfile, promptFilePath);
             tokensIn += EstimateTokens(attemptPrompt);
             tokensOut += EstimateTokens(reply);
             var sources = ExtractCSharp(reply);
@@ -76,7 +89,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
                 if (score.Passed)
                 {
                     var passedResult = CreateResult(task, model, true, attempts, tokensIn, tokensOut, diagnostics,
-                        promptHash, reply, label, "completed", null, "specs-passed", score.ModelTestCount, score.HarnessTestCount, existingCodeTokens);
+                        promptHash, reply, label, "completed", null, "specs-passed", score.ModelTestCount, score.HarnessTestCount, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
                     Persist(suiteDirectory, model, passedResult);
                     Console.WriteLine($"{model}: passed {task.Id}");
                     return true;
@@ -87,7 +100,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
         }
 
         var failed = CreateResult(task, model, false, attempts, tokensIn, tokensOut, diagnostics,
-            promptHash, reply, label, "completed", null, "none", lastScore?.ModelTestCount ?? 0, lastScore?.HarnessTestCount ?? 0, existingCodeTokens);
+            promptHash, reply, label, "completed", null, "none", lastScore?.ModelTestCount ?? 0, lastScore?.HarnessTestCount ?? 0, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
         Persist(suiteDirectory, model, failed);
         Console.WriteLine($"{model}: failed {task.Id}");
         return false;
@@ -95,7 +108,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
     catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception or TimeoutException)
     {
         var unavailable = CreateResult(task, model, false, attempts, tokensIn, tokensOut, diagnostics,
-            promptHash, reply, label, "unavailable", exception.Message, "none", 0, 0, existingCodeTokens);
+            promptHash, reply, label, "unavailable", exception.Message, "none", 0, 0, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
         Persist(suiteDirectory, model, unavailable);
         Console.WriteLine($"{model}: unavailable {task.Id}");
         return true;
@@ -430,15 +443,22 @@ static string GivenName(JsonElement given) => given.EnumerateObject().Any()
     ? string.Join("_and_", given.EnumerateObject().Select(property => Identifier(property.Name + "_is_" + property.Value.ToString())))
     : "no_inputs";
 
-static async Task<string> RunModel(string model, string command, string workingDirectory, string prompt, TimeSpan timeout)
+static async Task<string> RunModel(string model, string command, string workingDirectory, string prompt, TimeSpan timeout, ColdProfile coldProfile, string promptFilePath)
 {
     var profile = model.Split('-', 2)[0];
     var directAgy = profile.Equals("agy", StringComparison.Ordinal) && !Path.HasExtension(command);
     using var process = directAgy
         ? StartProcess(command, workingDirectory, "-p", prompt.TrimEnd(), "--model", AgyModel, AgySkipPermissionsOption)
-        : StartShell(command + ProfileArguments(model, workingDirectory, prompt), workingDirectory);
-    await process.StandardInput.WriteAsync(prompt);
-    process.StandardInput.Close();
+        : StartShell(command + ProfileArguments(model, workingDirectory, prompt, promptFilePath, coldProfile), workingDirectory);
+    try
+    {
+        await process.StandardInput.WriteAsync(prompt);
+        process.StandardInput.Close();
+    }
+    catch (IOException)
+    {
+        // A model may exit without reading stdin; its captured reply is still scored normally.
+    }
     var stdout = process.StandardOutput.ReadToEndAsync();
     var stderr = process.StandardError.ReadToEndAsync();
     using var cancellation = new CancellationTokenSource(timeout);
@@ -481,19 +501,48 @@ static Process StartProcess(string command, string workingDirectory, params stri
     return Process.Start(info) ?? throw new InvalidOperationException($"Could not start '{command}'.");
 }
 
-static string ProfileArguments(string model, string workingDirectory, string prompt)
+static ColdProfile ResolveColdProfile(string model, bool coldRequested)
+{
+    if (!coldRequested)
+        return new(false, string.Empty, "cold mode not requested");
+    var profile = model.Split('-', 2)[0];
+    const string grokDisallowedTools = "read_file,list_dir,grep,run_terminal_cmd,search_replace,web_search,web_fetch,todo_write,task,Agent";
+    return profile switch
+    {
+        "codex" => new(true, "--sandbox read-only", "Codex exposes a read-only sandbox and a one-shot exec."),
+        "grok" => new(true, $"--cwd \"<scratch>\" --disallowed-tools {grokDisallowedTools} --disable-web-search", "Grok supports a fresh empty cwd and explicit tool removal."),
+        "copilot" => new(true, "--deny-tool shell --deny-tool write --deny-tool read --deny-tool url", "Copilot denies the shell, write, read and url tool categories."),
+        "agy" => new(false, string.Empty, "AGY profiles cannot be made cold; running warm."),
+        _ => new(false, string.Empty, "No cold-session flag is available for this CLI profile."),
+    };
+}
+
+static string ProfileArguments(string model, string workingDirectory, string prompt, string? promptFilePath = null, ColdProfile? coldProfile = null)
 {
     var profile = model.Split('-', 2)[0];
-    if (profile.Equals("codex", StringComparison.Ordinal)) return " exec --skip-git-repo-check";
+    var extraFlags = coldProfile is { Cold: true } ? ExpandColdFlags(coldProfile.Flags, workingDirectory) : string.Empty;
+    if (profile.Equals("codex", StringComparison.Ordinal)) return " exec --skip-git-repo-check" + (extraFlags.Length == 0 ? "" : $" {extraFlags}");
     if (profile.Equals("grok", StringComparison.Ordinal))
     {
-        var path = Path.Combine(workingDirectory, "prompt.txt");
-        File.WriteAllText(path, prompt);
-        return $" --max-turns 10 --prompt-file \"{path}\"";
+        var path = promptFilePath ?? Path.Combine(workingDirectory, "prompt.txt");
+        var defaults = $" --max-turns 10 --prompt-file {Quote(path)}";
+        return defaults + (extraFlags.Length == 0 ? "" : $" {extraFlags}");
     }
-    if (profile.Equals("copilot", StringComparison.Ordinal)) return $" -p {Quote(prompt.TrimEnd())} -s --allow-all-tools --trust-folder";
+    if (profile.Equals("copilot", StringComparison.Ordinal))
+    {
+        // The prompt travels on stdin in both modes: a Windows command line cannot carry a multi-line -p value safely.
+        var defaults = " -s --allow-all-tools --trust-folder";
+        if (coldProfile is { Cold: true }) defaults = defaults.Replace(" --allow-all-tools", "", StringComparison.Ordinal);
+        return defaults + (extraFlags.Length == 0 ? "" : $" {extraFlags}");
+    }
     if (profile.Equals("agy", StringComparison.Ordinal)) return $" -p {Quote(prompt.TrimEnd())} --model {AgyModel} {AgySkipPermissionsOption}";
     return "";
+}
+
+static string ExpandColdFlags(string flags, string workingDirectory)
+{
+    var actualPath = Quote(workingDirectory);
+    return flags.Replace("\"<scratch>\"", actualPath, StringComparison.Ordinal).Replace("<scratch>", actualPath, StringComparison.Ordinal);
 }
 
 static string Quote(string value) => OperatingSystem.IsWindows()
@@ -543,8 +592,8 @@ static string ReplyHead(string reply)
 
 static BenchmarkResult CreateResult(BenchmarkTask task, string model, bool passed, int attempts, int tokensIn, int tokensOut,
     IReadOnlyList<string> diagnostics, string promptHash, string reply, string? label, string status, string? error,
-    string proofLevel, int modelTestCount, int harnessTestCount, int existingCodeTokens) => new(model, task.Id, passed, attempts, tokensIn, tokensOut, "estimated", diagnostics,
-        false, promptHash, ReplyHead(reply), status, error, label, proofLevel, "plain-csharp", "", task.Kind, modelTestCount, harnessTestCount, "executed-outcomes", existingCodeTokens);
+    string proofLevel, int modelTestCount, int harnessTestCount, int existingCodeTokens, ColdProfile coldProfile, string coldPreamble, bool workdirEmptyAtLaunch) => new(model, task.Id, passed, attempts, tokensIn, tokensOut, "estimated", diagnostics,
+        false, promptHash, ReplyHead(reply), status, error, label, proofLevel, "plain-csharp", "", task.Kind, modelTestCount, harnessTestCount, "executed-outcomes", existingCodeTokens, coldProfile.Cold, coldProfile.Flags, coldPreamble, coldProfile.Reason, workdirEmptyAtLaunch);
 
 static void Persist(string suiteDirectory, string model, BenchmarkResult result)
 {
@@ -558,11 +607,15 @@ static void Persist(string suiteDirectory, string model, BenchmarkResult result)
 static Dictionary<string, string> ParseOptions(string[] values)
 {
     var parsed = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-    for (var index = 0; index < values.Length; index += 2)
+    for (var index = 0; index < values.Length;)
     {
-        if (!values[index].StartsWith("--", StringComparison.Ordinal) || index + 1 >= values.Length)
+        if (!values[index].StartsWith("--", StringComparison.Ordinal))
             throw new ArgumentException($"Invalid option '{values[index]}'.");
-        parsed[values[index][2..]] = values[index + 1];
+        var name = values[index][2..];
+        if (name.Equals("cold", StringComparison.OrdinalIgnoreCase)) { parsed[name] = "true"; index++; continue; }
+        if (index + 1 >= values.Length) throw new ArgumentException($"Invalid option '{values[index]}'.");
+        parsed[name] = values[index + 1];
+        index += 2;
     }
     return parsed;
 }
@@ -577,7 +630,9 @@ sealed record Outcome(string Name, JsonElement Given, string When, JsonElement T
 sealed record Score(bool Passed, string Diagnostics, int ModelTestCount, int HarnessTestCount);
 sealed record SourceFile(string Name, string Content);
 sealed record TestResult(int ModelTests, int HarnessTests, string Failures);
+sealed record ColdProfile(bool Cold, string Flags, string Reason);
 sealed record BenchmarkResult(string Model, string Task, bool Passed, int Attempts, int TokensIn, int TokensOut,
     string TokenMeasurement, IReadOnlyList<string> Diagnostics, bool Misread, string PromptHash, string ReplyHead,
     string Status, string? Error, string? Label, string ProofLevel, string Mode, string DocsHash, string Kind,
-    int ModelTestCount, int HarnessTestCount, string ScoreBar, int ExistingCodeTokens);
+    int ModelTestCount, int HarnessTestCount, string ScoreBar, int ExistingCodeTokens,
+    bool Cold = false, string ColdFlags = "", string ColdPreamble = "", string ColdReason = "", bool WorkdirEmptyAtLaunch = false);

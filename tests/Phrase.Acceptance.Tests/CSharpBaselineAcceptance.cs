@@ -1,11 +1,51 @@
 using System.Diagnostics;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Phrase.Acceptance.Tests.Support;
 
 namespace Phrase.Acceptance.Tests;
 
 public sealed class CSharpBaselineAcceptance
 {
+    [Fact]
+    public void cold_profile_literals_cannot_drift_between_benchmark_arms()
+    {
+        var phrase = File.ReadAllText(RepoPaths.Find("tools", "Phrase.Bench", "Program.cs"));
+        var csharp = File.ReadAllText(RepoPaths.Find("tools", "Phrase.BenchCs", "Program.cs"));
+
+        static string Literal(string source, string name) => Regex.Match(source,
+            $"const string {name} = \\\"(?<value>[^\\\"]*)\\\";").Groups["value"].Value;
+
+        Assert.Equal(Literal(phrase, "ColdPreamble"), Literal(csharp, "ColdPreamble"));
+        Assert.Equal(Literal(phrase, "grokDisallowedTools"), Literal(csharp, "grokDisallowedTools"));
+        Assert.NotEmpty(Literal(csharp, "ColdPreamble"));
+        Assert.NotEmpty(Literal(csharp, "grokDisallowedTools"));
+    }
+
+    [Fact]
+    public async Task cold_codex_uses_the_preamble_restricted_flags_and_an_empty_attempt_workdir()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, holdout: false, TwoCases);
+        var reply = WriteReply(workspace.Root, "correct.cs", CorrectGreetingAndTest);
+        var argv = Path.Combine(workspace.Root, "argv.txt");
+        var stdin = Path.Combine(workspace.Root, "stdin.txt");
+        var listing = Path.Combine(workspace.Root, "listing.txt");
+        var script = Path.Combine(workspace.Root, "fake-model.cmd");
+        File.WriteAllText(script, $"@echo off\r\necho %*>\"{argv}\"\r\nmore > \"{stdin}\"\r\ndir /b > \"{listing}\"\r\ntype \"{reply}\"\r\n");
+
+        var run = await Run(suite, $"call \"{script}\"", "codex-probe", cold: true);
+
+        Assert.Equal(0, run.ExitCode);
+        Assert.Equal("exec --skip-git-repo-check --sandbox read-only", File.ReadAllText(argv).Trim());
+        Assert.StartsWith("There is no workspace and no files to read; answer directly in this reply without looking anything up.", File.ReadAllText(stdin), StringComparison.Ordinal);
+        Assert.Equal(string.Empty, File.ReadAllText(listing).Trim());
+        using var result = ReadResult(suite, "codex-probe");
+        Assert.True(result.RootElement.GetProperty("cold").GetBoolean());
+        Assert.Equal("--sandbox read-only", result.RootElement.GetProperty("cold_flags").GetString());
+        Assert.True(result.RootElement.GetProperty("workdir_empty_at_launch").GetBoolean());
+    }
+
     // The Phrase prompt mentions a C# native body for task 002 because that is a Phrase mechanic; the C# twin intentionally does not.
     [Fact]
     public async Task correct_csharp_reply_passes_with_specs_passed_proof()
@@ -642,12 +682,13 @@ public sealed class CSharpBaselineAcceptance
         }
     }
 
-    private static async Task<(int ExitCode, string Stdout, string Stderr)> Run(string suite, string command, string model, int timeoutMs = 30000)
+    private static async Task<(int ExitCode, string Stdout, string Stderr)> Run(string suite, string command, string model, int timeoutMs = 30000, bool cold = false)
     {
         var project = RepoPaths.Find("tools", "Phrase.BenchCs", "Phrase.BenchCs.csproj");
         var info = new ProcessStartInfo("dotnet") { RedirectStandardOutput = true, RedirectStandardError = true };
         foreach (var argument in new[] { "run", "--project", project, "--", "run", "--suite", suite, "--model", model, "--model-command", command, "--timeout-ms", timeoutMs.ToString() })
             info.ArgumentList.Add(argument);
+        if (cold) info.ArgumentList.Add("--cold");
         using var process = Process.Start(info)!;
         var stdout = await process.StandardOutput.ReadToEndAsync();
         var stderr = await process.StandardError.ReadToEndAsync();
