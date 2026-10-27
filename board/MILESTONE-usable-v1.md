@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:475d108354dccaf7425f0e5c27da7a81a2f8c87bf472f5e8485d9cf2da27ea9a -->
+<!-- board-table-sha256:e3e711c4cdd207003b3eb69de6f3cd75b893e00dff591462d6f8330fabd5b566 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -58,7 +58,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 36 | 100 Phrase arm scores executed outcomes for the fix tasks | Done | 099 |
 | 37 | 104 A compact Phrase cheat sheet for model prompts | Done | 100 |
 | 38 | 105 Pilot the cheat sheet against full documentation and freeze the choice | Done | 104 |
-| 39 | 101 Run the Phrase development baseline at the specs-passed level | Ready | 100, 094 |
+| 39 | 101 Run the Phrase development baseline at the specs-passed level | Done | 100, 094 |
 | 40 | 102 Head-to-head on the sealed holdouts: both arms at N=5 | Ready | 101 |
 | 41 | 103 Head-to-head verdict page: WIN, LOSS, TIE or INCONCLUSIVE | Ready | 102 |
 | 42 | 090 Benchmark: a docs-in-context mode that gives a model the real docs | Done | 085 |
