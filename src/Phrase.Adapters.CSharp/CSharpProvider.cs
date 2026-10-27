@@ -5,10 +5,10 @@ using Phrase.Compiler.Semantics;
 namespace Phrase.Adapters.CSharp;
 
 /// <summary>
-/// Emits a C# API project and an xUnit specs project for a leaf phrase.
-/// The hand-written shape to match is reference/csharp. This slice emits
-/// Int-returning leaves, declared records, list fields as IReadOnlyList&lt;T&gt;,
-/// and their Given/When/Then specs.
+/// Emits a C# API project and an xUnit specs project.
+/// The hand-written shape to match is reference/csharp. Leaf phrases keep
+/// their native blocks. A composite phrase calls its leaves in source order
+/// and binds each result to a local, the same shape as reference/csharp.
 /// </summary>
 public sealed class CSharpProvider : ITargetAdapter
 {
@@ -41,15 +41,43 @@ public sealed class CSharpProvider : ITargetAdapter
 
     private static void RequireSupportedPhrase(ModuleModel module, PhraseModel phrase)
     {
-        if (phrase.Steps is not null)
-            throw new NotImplementedException($"The C# emitter does not support composite phrase '{phrase.Template}' yet.");
         if (phrase.Effects.Count > 0)
             throw new NotImplementedException($"The C# emitter does not support effects on '{phrase.Template}' yet.");
+
+        if (phrase.Steps is not null)
+        {
+            RequireSupportedComposite(module, phrase);
+            return;
+        }
+
         if (!phrase.Natives.ContainsKey("csharp"))
             throw new NotImplementedException($"The C# emitter needs a native csharp block on '{phrase.Template}'.");
         if (phrase.Returns is null && phrase.Failures.Count == 0)
             throw new NotImplementedException($"The C# emitter does not support phrase '{phrase.Template}' without a return type yet.");
 
+        RequireSupportedSignature(module, phrase);
+        RequireSupportedSpecs(module, phrase);
+    }
+
+    private static void RequireSupportedComposite(ModuleModel module, PhraseModel phrase)
+    {
+        // A composite cannot declare a return type (PH325): steps bind results, they do not return one.
+        if (phrase.Returns is not null)
+            throw new NotImplementedException($"The C# emitter does not support a return type on composite '{phrase.Template}' yet.");
+
+        RequireSupportedSignature(module, phrase);
+        foreach (var step in phrase.Steps!)
+        {
+            if (step is not BoundLetStep let)
+                throw new NotImplementedException($"The C# emitter does not support step '{step.Source}' yet.");
+            RequireSupportedArguments(phrase, let.Call);
+        }
+
+        RequireSupportedSpecs(module, phrase);
+    }
+
+    private static void RequireSupportedSignature(ModuleModel module, PhraseModel phrase)
+    {
         foreach (var hole in phrase.Holes)
         {
             if (!IsSupportedType(module, hole.Type))
@@ -58,7 +86,19 @@ public sealed class CSharpProvider : ITargetAdapter
 
         if (phrase.Returns is not null && !IsSupportedType(module, phrase.Returns))
             throw new NotImplementedException($"The C# emitter does not support return type '{phrase.Returns}' on '{phrase.Template}' yet.");
+    }
 
+    private static void RequireSupportedArguments(PhraseModel phrase, BoundCall call)
+    {
+        foreach (var argument in call.Arguments)
+        {
+            if (argument.Value is not BoundVariable)
+                throw new NotImplementedException($"The C# emitter does not support the call argument in '{phrase.Template}' yet.");
+        }
+    }
+
+    private static void RequireSupportedSpecs(ModuleModel module, PhraseModel phrase)
+    {
         foreach (var spec in phrase.Specs)
         {
             if (spec.Outcome is not FailsModel &&
@@ -182,7 +222,7 @@ public sealed class CSharpProvider : ITargetAdapter
         {
             if (i > 0)
                 code.Append('\n');
-            AppendPhrase(code, module.Phrases[i]);
+            AppendPhrase(code, module, module.Phrases[i]);
         }
 
         if (module.Phrases.Any(phrase => phrase.Failures.Count > 0))
@@ -194,7 +234,7 @@ public sealed class CSharpProvider : ITargetAdapter
         return code.ToString();
     }
 
-    private static void AppendPhrase(StringBuilder code, PhraseModel phrase)
+    private static void AppendPhrase(StringBuilder code, ModuleModel module, PhraseModel phrase)
     {
         var method = MethodName(phrase);
         code.Append("    /// <summary>").Append(Summary(phrase)).Append("</summary>\n");
@@ -203,9 +243,43 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append("    [Phrase(").Append(CsString(Signature(phrase))).Append(")]\n");
         code.Append("    public static ").Append(phrase.Returns is null ? "void" : CSharpType(phrase.Returns)).Append(' ').Append(method).Append('(').Append(Parameters(phrase)).Append(")\n");
         code.Append("    {\n");
-        code.Append(IndentNative(phrase.Natives["csharp"]));
+        code.Append(phrase.Steps is null ? IndentNative(phrase.Natives["csharp"]) : StepsBody(module, phrase.Steps));
         code.Append("\n    }\n");
     }
+
+    // One comment and one statement per step, matching reference/csharp CreateOrderHandler.
+    private static string StepsBody(ModuleModel module, IReadOnlyList<BoundStep> steps)
+    {
+        var body = new StringBuilder();
+        for (var i = 0; i < steps.Count; i++)
+        {
+            if (i > 0)
+                body.Append('\n');
+            body.Append("        // ").Append(steps[i].Source).Append('\n');
+            body.Append("        ").Append(StepStatement(module, steps[i]));
+        }
+
+        return body.ToString();
+    }
+
+    private static string StepStatement(ModuleModel module, BoundStep step) => step switch
+    {
+        BoundLetStep let => $"var {CSharpIdent(let.Name)} = {CallExpression(module, let.Call)};",
+        _ => throw new NotImplementedException($"The C# emitter does not support step '{step.Source}' yet."),
+    };
+
+    private static string CallExpression(ModuleModel module, BoundCall call)
+    {
+        var target = module.Phrase(call.PhraseKey);
+        var arguments = string.Join(", ", call.Arguments.Select(argument => CSharpArgument(argument.Value)));
+        return $"Phrases.{MethodName(target)}({arguments})";
+    }
+
+    private static string CSharpArgument(BoundExpr value) => value switch
+    {
+        BoundVariable variable => CSharpIdent(variable.Name),
+        _ => throw new NotImplementedException($"The C# emitter does not support call argument '{value.GetType().Name}' yet."),
+    };
 
     private static string PhraseSpecs(ModuleModel module)
     {
