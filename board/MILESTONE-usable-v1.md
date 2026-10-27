@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:099d5826fdafb116cffc35a3e8e543fc173fffd61b072dabd7bae414f139626f -->
+<!-- board-table-sha256:a9afd26f2063beda757c6260e641fca0ff1862cb4fbb9bf4a0a9516dabb11fe0 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -44,7 +44,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 22 | 039 One phrase with one number input compiles to C# and its spec passes | Done | none (the stash Decider runs first) |
 | 23 | 040 C# compilation goes through the ITargetAdapter contract | Done | 039 |
 | 24 | 041 A declared record becomes a usable C# record | Done | 040 |
-| 25 | 042 List fields compile | Ready | 041 |
+| 25 | 042 List fields compile | Done | 041 |
 | 26 | 043 A phrase can fail with its declared code | Ready | 040 |
 | 27 | 044 A native C# block is placed verbatim and builds | Ready | 043 |
 | 28 | 045 A composite phrase calls its leaf phrases in order | Ready | 043 |

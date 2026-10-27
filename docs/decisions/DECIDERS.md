@@ -260,3 +260,8 @@ Format: `Decider D<n>: <proposal>`, votes, `Result: passed|failed`. All-Yes resu
 
 - Date: 2026-10-27. Question: does commit 0dda3c6 (authored by Copilot) meet the three Done checks and match the reference Types.cs shape; is the untested extra type mapping (Decimal, Bool, Id, List, Option, bool and nested-record values) acceptable as is; is card 041 Done. Seats: Codex Yes; Grok Yes (the non-author reviewers). Result: passed.
 - Evidence: red NotImplementedException for records; a declared record Order(Sku, Quantity) is emitted as a sealed positional record like reference/csharp Types.cs; the record-based spec passes and the zero-declared-types case still builds; 239 compiler tests and 85 acceptance tests pass with zero warnings. Facilitator note: the extra mappings are untested speculation beyond the red test (against the grow-by-red method of D51); accepted because later slices exercise them, but a slice that first needs one must add its test before relying on it.
+
+#### Decider D56: review of card 042 (List fields compile)
+
+- Date: 2026-10-27. Question: does commit a9176c9 (authored by Grok) meet the three Done checks (List as IReadOnlyList<T>, a list-field spec passes, a keyword-named type builds); is the case-insensitive keyword escape acceptable; is card 042 Done. Seats: Codex Yes; Copilot Yes (the non-author reviewers). Result: passed.
+- Evidence: three reds then green (rejected list literal; List<string> instead of IReadOnlyList<string>; missing @ escape); 239 compiler tests and 87 acceptance tests pass with zero warnings. The 041 untested List mapping was corrected here with its own test, as D55 required. The case-insensitive escape also writes @Event for Pascal-cased names: legal and the same identifier, accepted.
