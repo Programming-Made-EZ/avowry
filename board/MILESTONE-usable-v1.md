@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:151a0048c986645e5fe99a4efcbbb205bf759471ca5eb7ef42467de8309763ca -->
+<!-- board-table-sha256:d3659d56e9223642dac218c8da29a940fa35a6ddaec4989295a7ceb339cbc01c -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -36,7 +36,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 14 | 093 Record the sealed holdout hashes before the baseline starts | Ready | none |
 | 15 | 086 Plain C# baseline on the same tasks | Ready | 093 (the sealed holdout hashes are recorded first) |
 | 16 | 084 Reference target builds and every orders spec passes | Done | none |
-| 17 | 085 A missing Phrase reply is a model failure, not a harness error | Ready | none |
+| 17 | 085 A missing Phrase reply is a model failure, not a harness error | Done | none |
 | 18 | 039 One phrase with one number input compiles to C# and its spec passes | Ready | none (the stash Decider runs first) |
 | 19 | 040 C# compilation goes through the ITargetAdapter contract | Ready | 039 |
 | 20 | 041 A declared record becomes a usable C# record | Ready | 040 |
