@@ -1,7 +1,7 @@
 namespace Count;
 public static class Counter
 {
-    public static int Answer() => 41;
+    public static string Answer() => 42;
 }
 public sealed class CounterTests
 {

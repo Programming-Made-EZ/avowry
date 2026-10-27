@@ -113,6 +113,140 @@ class CSharpBaselineCompleteTests(unittest.TestCase):
             issues = check.check_repo(root)
             self.assertIn("010-fix-trigger", issues["missing"])
 
+    def test_duplicate_id_in_either_suite_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            bench = root / "bench"
+            csharp = bench / "csharp-baseline"
+            csharp.mkdir(parents=True)
+            (csharp / "tasks").mkdir(parents=True)
+            phrase = [
+                self.build_task("001-write-greeting", "write"),
+                self.build_task("001-write-greeting", "write"),
+            ]
+            csharp_tasks = [
+                {"id": "001-write-greeting", "kind": "write", "prompt": "tasks/001-write-greeting/prompt.md", "outcomes": "tasks/001-write-greeting/outcomes.json", "holdout": False},
+                {"id": "001-write-greeting", "kind": "write", "prompt": "tasks/001-write-greeting/prompt.md", "outcomes": "tasks/001-write-greeting/outcomes.json", "holdout": False},
+            ]
+            (bench / "suite.json").write_text(json.dumps({"version": 1, "tasks": phrase}, indent=2), encoding="utf-8")
+            for item in csharp_tasks:
+                task_root = csharp / "tasks" / item["id"]
+                task_root.mkdir(parents=True, exist_ok=True)
+                (task_root / "prompt.md").write_text("prompt", encoding="utf-8")
+                (task_root / "outcomes.json").write_text(json.dumps([{"name": "works", "given": {}, "when": "called", "then": {"returns": 1}}]), encoding="utf-8")
+            (csharp / "suite.json").write_text(json.dumps({"version": 1, "tasks": csharp_tasks}, indent=2), encoding="utf-8")
+            issues = check.check_repo(root)
+            self.assertIn("001-write-greeting", issues["duplicate"])
+
+    def test_empty_prompt_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            bench = root / "bench"
+            csharp = bench / "csharp-baseline"
+            csharp.mkdir(parents=True)
+            (csharp / "tasks").mkdir(parents=True)
+            phrase, csharp_tasks = self.full_suite()
+            task_root = csharp / "tasks" / "010-fix-trigger"
+            task_root.mkdir(parents=True, exist_ok=True)
+            (task_root / "prompt.md").write_text("", encoding="utf-8")
+            (task_root / "outcomes.json").write_text(json.dumps([{"name": "works", "given": {}, "when": "called", "then": {"returns": 1}}]), encoding="utf-8")
+            (task_root / "start.cs").write_text("namespace Demo; public static class Demo { }", encoding="utf-8")
+            (bench / "suite.json").write_text(json.dumps({"version": 1, "tasks": phrase}, indent=2), encoding="utf-8")
+            (csharp / "suite.json").write_text(json.dumps({"version": 1, "tasks": csharp_tasks}, indent=2), encoding="utf-8")
+            issues = check.check_repo(root)
+            self.assertIn("010-fix-trigger", issues["empty_prompt"])
+
+    def test_malformed_outcomes_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            bench = root / "bench"
+            csharp = bench / "csharp-baseline"
+            csharp.mkdir(parents=True)
+            (csharp / "tasks").mkdir(parents=True)
+            phrase, csharp_tasks = self.full_suite()
+            (bench / "suite.json").write_text(json.dumps({"version": 1, "tasks": phrase}, indent=2), encoding="utf-8")
+            for item in csharp_tasks:
+                task_root = csharp / "tasks" / item["id"]
+                task_root.mkdir(parents=True, exist_ok=True)
+                (task_root / "prompt.md").write_text(f"prompt for {item['id']}", encoding="utf-8")
+                if item["id"] == "010-fix-trigger":
+                    (task_root / "outcomes.json").write_text(json.dumps([{"name": "works", "given": {}, "when": "called"}]), encoding="utf-8")
+                else:
+                    (task_root / "outcomes.json").write_text(json.dumps([{"name": "works", "given": {}, "when": "called", "then": {"returns": 1}}]), encoding="utf-8")
+                if item["kind"] in {"read", "modify", "fix"}:
+                    (task_root / "start.cs").write_text("namespace Demo; public static class Demo { }", encoding="utf-8")
+            (csharp / "suite.json").write_text(json.dumps({"version": 1, "tasks": csharp_tasks}, indent=2), encoding="utf-8")
+            issues = check.check_repo(root)
+            self.assertIn("010-fix-trigger", issues["malformed_outcomes"])
+
+    def test_forbidden_start_file_on_write_task_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            bench = root / "bench"
+            csharp = bench / "csharp-baseline"
+            csharp.mkdir(parents=True)
+            (csharp / "tasks").mkdir(parents=True)
+            phrase, csharp_tasks = self.full_suite()
+            for item in csharp_tasks:
+                if item["id"] == "001-write-greeting":
+                    item["kind"] = "write"
+                task_root = csharp / "tasks" / item["id"]
+                task_root.mkdir(parents=True, exist_ok=True)
+                (task_root / "prompt.md").write_text(f"prompt for {item['id']}", encoding="utf-8")
+                (task_root / "outcomes.json").write_text(json.dumps([{"name": "works", "given": {}, "when": "called", "then": {"returns": 1}}]), encoding="utf-8")
+                if item["id"] == "001-write-greeting":
+                    (task_root / "start.cs").write_text("namespace Demo; public static class Demo { }", encoding="utf-8")
+            (bench / "suite.json").write_text(json.dumps({"version": 1, "tasks": phrase}, indent=2), encoding="utf-8")
+            (csharp / "suite.json").write_text(json.dumps({"version": 1, "tasks": csharp_tasks}, indent=2), encoding="utf-8")
+            issues = check.check_repo(root)
+            self.assertIn("001-write-greeting", issues["forbidden_start"])
+
+    def test_unlisted_extra_folder_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            bench = root / "bench"
+            csharp = bench / "csharp-baseline"
+            csharp.mkdir(parents=True)
+            (csharp / "tasks").mkdir(parents=True)
+            phrase, csharp_tasks = self.full_suite()
+            (bench / "suite.json").write_text(json.dumps({"version": 1, "tasks": phrase}, indent=2), encoding="utf-8")
+            for item in csharp_tasks:
+                task_root = csharp / "tasks" / item["id"]
+                task_root.mkdir(parents=True, exist_ok=True)
+                (task_root / "prompt.md").write_text(f"prompt for {item['id']}", encoding="utf-8")
+                (task_root / "outcomes.json").write_text(json.dumps([{"name": "works", "given": {}, "when": "called", "then": {"returns": 1}}]), encoding="utf-8")
+                if item["kind"] in {"read", "modify", "fix"}:
+                    (task_root / "start.cs").write_text("namespace Demo; public static class Demo { }", encoding="utf-8")
+            extra = csharp / "tasks" / "013-extra"
+            extra.mkdir(parents=True, exist_ok=True)
+            (extra / "prompt.md").write_text("prompt", encoding="utf-8")
+            (extra / "outcomes.json").write_text(json.dumps([{"name": "works", "given": {}, "when": "called", "then": {"returns": 1}}]), encoding="utf-8")
+            (csharp / "suite.json").write_text(json.dumps({"version": 1, "tasks": csharp_tasks}, indent=2), encoding="utf-8")
+            issues = check.check_repo(root)
+            self.assertIn("013-extra", issues["extra"])
+
+    def test_kind_mismatch_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            bench = root / "bench"
+            csharp = bench / "csharp-baseline"
+            csharp.mkdir(parents=True)
+            (csharp / "tasks").mkdir(parents=True)
+            phrase, csharp_tasks = self.full_suite()
+            for item in csharp_tasks:
+                if item["id"] == "001-write-greeting":
+                    item["kind"] = "read"
+                task_root = csharp / "tasks" / item["id"]
+                task_root.mkdir(parents=True, exist_ok=True)
+                (task_root / "prompt.md").write_text(f"prompt for {item['id']}", encoding="utf-8")
+                (task_root / "outcomes.json").write_text(json.dumps([{"name": "works", "given": {}, "when": "called", "then": {"returns": 1}}]), encoding="utf-8")
+                if item["kind"] in {"read", "modify", "fix"}:
+                    (task_root / "start.cs").write_text("namespace Demo; public static class Demo { }", encoding="utf-8")
+            (bench / "suite.json").write_text(json.dumps({"version": 1, "tasks": phrase}, indent=2), encoding="utf-8")
+            (csharp / "suite.json").write_text(json.dumps({"version": 1, "tasks": csharp_tasks}, indent=2), encoding="utf-8")
+            issues = check.check_repo(root)
+            self.assertIn("001-write-greeting", issues["kind_mismatch"])
+
     def test_extra_twin_fails_and_names_it(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

@@ -380,6 +380,24 @@ public sealed class CSharpBaselineAcceptance
             result.RootElement.GetProperty("existing_code_tokens").GetInt32());
     }
 
+    [Theory]
+    [InlineData("010-fix-trigger", "CS0117", "does not contain a definition for 'Handled'")]
+    [InlineData("011-fix-type", "CS0029", "cannot implicitly convert type")]
+    public async Task broken_start_code_fails_with_the_expected_compiler_diagnostic(string taskId, string diagnosticName, string expectedText)
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteCopiedSuite(workspace.Root, taskId, "fix");
+        var broken = WriteReply(workspace.Root, "broken.cs", File.ReadAllText(RepoPaths.Find("bench", "csharp-baseline", "tasks", taskId, "start.cs")));
+
+        var run = await Run(suite, PrintFileCommand(broken), $"{taskId}-broken", timeoutMs: 120000);
+
+        Assert.True(run.ExitCode == 3, run.Stdout + Environment.NewLine + run.Stderr);
+        using var result = ReadResult(suite, $"{taskId}-broken");
+        Assert.False(result.RootElement.GetProperty("passed").GetBoolean());
+        Assert.Contains(diagnosticName, result.RootElement.GetProperty("diagnostics")[0].GetString() ?? string.Empty, StringComparison.Ordinal);
+        Assert.Contains(expectedText, result.RootElement.GetProperty("diagnostics")[0].GetString() ?? string.Empty, StringComparison.OrdinalIgnoreCase);
+    }
+
     [Fact]
     public async Task holdout_task_is_skipped()
     {
