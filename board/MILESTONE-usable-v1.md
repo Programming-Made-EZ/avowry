@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:3c143c26726b6b26b6871b00ae1258eea95fae0ceb2d2871772e8fb884e666c1 -->
+<!-- board-table-sha256:8245fc8010b035525067b894a17def18994e97e322dc18d5803cf997d0383304 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -31,7 +31,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 9 | 079 Board: sync a card's changed text to its issue body (one source at a time) | Done | 074 |
 | 10 | 080 Board: show a card's Shape and what it Enables | Done | 075, 079 |
 | 11 | 076 Loop: the picker reads the GitHub board (card 063's logic, new source) | Done | 075 (063 is superseded by this card) |
-| 12 | 077 Board: the project is the single source; board files become a generated read-only archive | Ready | 075, 076 |
+| 12 | 077 Board: the project is the single source; board files become a generated read-only archive | Done | 075, 076 |
 | 13 | 064 Loop: one durable loop at a time (lock, state, heartbeat) | Ready | 076 (the picker reads the GitHub board; D25) |
 | 14 | 065 Loop: run one card with a pinned toolchain | Ready | 064 |
 | 15 | 066 Loop: bounded retry, park and split on failure | Ready | 065 |
