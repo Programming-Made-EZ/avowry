@@ -1,6 +1,6 @@
 # Board: show a card's Shape and what it Enables
 
-- **Status:** Ready (rank: see `C:\Users\ringe\projects\phrase-lang\board\MILESTONE-usable-v1.md`, read-only)
+- **Status:** Done 2026-10-26 (Shape and Enables fields live on the private board; 83 items match; Contract checks in check_real_board.py --fields)
 - **Shape:** Story
 - **Type:** tooling (phrase-lang `scripts/board/`); thin slice; authored by the driver rotation, reviewed by a non-author (D15); smoke-tested before it touches a real card
 - **Milestone:** process: the board
