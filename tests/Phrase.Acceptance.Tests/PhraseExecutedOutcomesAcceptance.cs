@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Phrase.Acceptance.Tests.Support;
+using Phrase.Compiler;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -362,6 +363,19 @@ public class PhraseExecutedOutcomesAcceptance
         return rows;
     }
 
+    private static string ReadResultByModel(string suite, string model)
+    {
+        var history = Path.Combine(Path.GetDirectoryName(suite)!, "results", "history.jsonl");
+        foreach (var line in File.ReadAllLines(history))
+        {
+            using var document = JsonDocument.Parse(line);
+            if (document.RootElement.GetProperty("model").GetString() == model)
+                return line;
+        }
+
+        throw new InvalidOperationException($"Model '{model}' was not found in history");
+    }
+
     private static string Sha256Hex(string text) =>
         Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text))).ToLowerInvariant();
 
@@ -442,4 +456,118 @@ public class PhraseExecutedOutcomesAcceptance
             """,
         _ => throw new ArgumentException(task),
     };
+
+    [Fact]
+    [Trait("Slice", "100")]
+    public void Fix_task_prompts_stay_broken_and_report_the_documented_diagnostics()
+    {
+        // Given each broken start prompt for the fix tasks
+        var prompts = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["010-fix-trigger"] = "Fix the failing spec in this Phrase module. Do not change the intended behavior or remove the spec. Return only valid Phrase source.\n\n```phrase\nmodule Greeting\n\nphrase \"greeting\" -> Text\n  spec \"greets\"\n    when handled\n    then returns \"hello\"\n  native csharp\n    return \"hello\";\n```\n",
+            ["011-fix-type"] = "Fix the type error in this Phrase module while preserving the phrase name and the spec's expected value. Return only valid Phrase source.\n\n```phrase\nmodule Count\n\nphrase \"answer\" -> Text\n  spec \"is forty two\"\n    when called\n    then returns 42\n  native csharp\n    return 42;\n```\n",
+        };
+
+        foreach (var (task, expected) in prompts)
+        {
+            var actual = File.ReadAllText(RepoPaths.Find("bench", "tasks", task, "prompt.md"));
+
+            // When the prompt is checked against the committed broken start
+            // Then it must stay byte-identical and fail with its documented code
+            Assert.Equal(expected, actual);
+            var match = Regex.Match(actual, "```phrase\\r?\\n(?<source>.*?)\\r?\\n```", RegexOptions.Singleline | RegexOptions.CultureInvariant);
+            Assert.True(match.Success, task + ": broken Phrase fixture is missing");
+            var source = match.Groups["source"].Value;
+            var exception = Assert.Throws<CompilationFailedException>(() => PhraseCompiler.Compile(source, new Phrase.Adapters.CSharp.CSharpProvider()));
+            if (task == "010-fix-trigger")
+            {
+                Assert.Contains(exception.Diagnostics, diagnostic => diagnostic.Code == "PH330" && diagnostic.Message.Contains("when called", StringComparison.OrdinalIgnoreCase));
+            }
+            else
+            {
+                Assert.Contains(exception.Diagnostics, diagnostic => diagnostic.Code == "PH312" && diagnostic.Message.Contains("Text", StringComparison.OrdinalIgnoreCase) && diagnostic.Message.Contains("Int", StringComparison.OrdinalIgnoreCase));
+            }
+        }
+    }
+
+    [Theory]
+    [Trait("Slice", "100")]
+    [InlineData("010-fix-trigger")]
+    [InlineData("011-fix-type")]
+    public async Task Fixed_reply_passes_and_faulty_reply_fails_with_the_named_outcome(string task)
+    {
+        // Given a correct repair for each fix task and a wrong one that leaves the original bug
+        var correct = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["010-fix-trigger"] = """
+                module Greeting
+
+                phrase "greeting" -> Text
+                  spec "greets"
+                    when called
+                    then returns "hello"
+                  native csharp
+                    return "hello";
+                """,
+            ["011-fix-type"] = """
+                module Count
+
+                phrase "answer" -> Int
+                  spec "is forty two"
+                    when called
+                    then returns 42
+                  native csharp
+                    return 42;
+                """,
+        };
+        var wrong = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["010-fix-trigger"] = """
+                module Greeting
+
+                phrase "greeting" -> Text
+                  spec "greets"
+                    when handled
+                    then returns "hello"
+                  native csharp
+                    return "hello";
+                """,
+            ["011-fix-type"] = """
+                module Count
+
+                phrase "answer" -> Text
+                  spec "is forty two"
+                    when called
+                    then returns 42
+                  native csharp
+                    return 42;
+                """,
+        };
+
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, task);
+        var correctReply = Path.Combine(workspace.Root, "fixed.phrase");
+        var wrongReply = Path.Combine(workspace.Root, "broken.phrase");
+        await File.WriteAllTextAsync(correctReply, correct[task]);
+        await File.WriteAllTextAsync(wrongReply, wrong[task]);
+
+        // When Riley scores the fixed reply and then the unchanged-bug reply by executed outcomes
+        var fixedRun = await Run(suite, PrintFileCommand(correctReply), task + "-fixed", "--scoring", "executed");
+        var brokenRun = await Run(suite, PrintFileCommand(wrongReply), task + "-broken", "--scoring", "executed");
+
+        // Then the fixed one passes and the broken one fails naming the outcome that still fails
+        Assert.True(fixedRun.ExitCode == 0, fixedRun.Stdout + fixedRun.Stderr);
+        var fixedModel = task + "-fixed";
+        var brokenModel = task + "-broken";
+        using var fixedRow = JsonDocument.Parse(ReadResultByModel(suite, fixedModel));
+        Assert.Equal("specs-passed", fixedRow.RootElement.GetProperty("proof_level").GetString());
+        Assert.True(fixedRow.RootElement.GetProperty("passed").GetBoolean());
+        Assert.True(brokenRun.ExitCode == 3, brokenRun.Stdout + brokenRun.Stderr);
+        using var brokenRow = JsonDocument.Parse(ReadResultByModel(suite, brokenModel));
+        var diagnostics = brokenRow.RootElement.GetProperty("diagnostics").EnumerateArray().Select(item => item.GetString()!).ToArray();
+        if (task == "010-fix-trigger")
+            Assert.Contains(diagnostics, text => text.Contains("PH330", StringComparison.Ordinal) && text.Contains("when called", StringComparison.OrdinalIgnoreCase));
+        else
+            Assert.Contains(diagnostics, text => text.Contains("PH312", StringComparison.Ordinal) && text.Contains("Text", StringComparison.OrdinalIgnoreCase) && text.Contains("Int", StringComparison.OrdinalIgnoreCase));
+    }
 }

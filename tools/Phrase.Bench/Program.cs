@@ -249,9 +249,7 @@ static async Task<TaskRunResult> RunTask(
             score = ScoreReply(reply);
             if (scoring == BenchmarkScoring.Executed && TryOutcomesPath(task, suiteDirectory, out var outcomesPath))
             {
-                score = score.Passed
-                    ? await ScoreExecuted(ExtractPhrase(reply), task, outcomesPath, scratchDirectory, attempts)
-                    : score with { ScoreBar = BenchmarkScoring.ExecutedOutcomes, ProofLevel = "none" };
+                score = await ScoreExecuted(ExtractPhrase(reply), task, outcomesPath, scratchDirectory, attempts);
             }
             diagnostics.AddRange(score.Diagnostics);
             if (!score.Passed)
