@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:326a05d2f4c5425d075564c2547e306c1be408f040f3a17c84e1db14dd62a296 -->
+<!-- board-table-sha256:d6de914fe6315da898c5f2a7f491997d767c07ede7fe03221344cf8548fb0634 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -48,36 +48,36 @@ Steve: "let me know when the language is actually usable to build an application
 | 26 | 043 A phrase can fail with its declared code | Done | 040 |
 | 27 | 044 A native C# block is placed verbatim and builds | Done | 043 |
 | 28 | 045 A composite phrase calls its leaf phrases in order | Done | 043 |
-| 29 | 048 One POST endpoint serves its successful response | Ready | 045, 047 |
-| 30 | 049 A declared failure maps to its HTTP status, not a 500 | Ready | 048 |
-| 31 | 050 Every spec outcome kind asserts correctly, and a wrong one names itself | Ready | 049 |
-| 32 | 087 orders.phrase compiles and its generated specs pass | Ready | 039, 040, 041, 043, 044, 045, 048, 049, 050, 084 |
-| 33 | 090 Benchmark: a docs-in-context mode that gives a model the real docs | Done | 085 |
-| 34 | 091 Benchmark: cold runs, a fresh session in an empty folder for every attempt | Done | 090 |
-| 35 | 092 Benchmark: scrub a stored reply before cutting it to 200 characters | Done | 085 |
-| 36 | 037 Benchmark: docs in the prompt, and cold runs | Done | 090, 091, 092 (sliced: docs-in-context mode, cold runs and the reply-head scrub moved to those cards; this card is now the baseline RUN) |
-| 37 | 088 Head-to-head: Phrase vs plain C# on the frozen bar | Ready | 085, 086, 094, 087, 037 |
-| 38 | 089 Option and nested-record fields compile | Ready | 042 |
-| 39 | 065 Loop: run one card with a pinned toolchain | Ready | 064 |
-| 40 | 066 Loop: bounded retry, park and split on failure | Ready | 065 |
-| 41 | 078 Ready check: reject a role-only story before the product manager is asked | Ready | 065 |
-| 42 | 067 Loop: on Done run the retro step and re-rank, then the next card | Ready | 066 |
-| 43 | 053 Docs: one diagnostics table, not two | Ready | none |
-| 44 | 062 Atomic runs: a card runs in a fresh worktree and ends landed or discarded | Ready | none |
-| 45 | 068 Loop: liveness, publish, STOP file and the Needs-Steve file | Ready | 067 |
-| 46 | 072 Loop: pace the work against the finite driver allotments | Ready | 066 |
-| 47 | 069 Loop: resume after a crash or reboot (logon task) | Ready | 068 |
-| 48 | 070 Loop: run every card atomically (land or discard) | Ready | 062, 067 |
-| 49 | 054 Benchmark task 005 gets a failure-path spec (suite change, versioned) | Ready | none |
-| 50 | 055 A declared failure with no failure-path spec is an error (PH336) | Ready | 054, 018 |
-| 51 | 056 An endpoint with an output cannot say `succeeds` (PH333) | Ready | 055 |
-| 52 | 057 Docs: the consumer-observable outcome rule is written down | Ready | 055 |
-| 53 | 022 Keyword model ADR: what a keyword is | Ready | none |
-| 54 | 058 A validation phrase returns its validated value (first slice, language decision first) | Ready | 022, 055 |
-| 55 | 013 Make GRAMMAR.md say what the resolver does | Ready | none |
-| 56 | 019 Publish exact diagnostic message templates in GRAMMAR.md | Ready | 018 |
-| 57 | 014 Document the native C# environment and show passing-guard examples | Ready | none |
-| 58 | 047 A declared effect is supplied as an injected dependency | Ready | 043 |
+| 29 | 047 A declared effect is supplied as an injected dependency | Ready | 043 |
+| 30 | 048 One POST endpoint serves its successful response | Ready | 045, 047 |
+| 31 | 049 A declared failure maps to its HTTP status, not a 500 | Ready | 048 |
+| 32 | 050 Every spec outcome kind asserts correctly, and a wrong one names itself | Ready | 049 |
+| 33 | 087 orders.phrase compiles and its generated specs pass | Ready | 039, 040, 041, 043, 044, 045, 048, 049, 050, 084 |
+| 34 | 090 Benchmark: a docs-in-context mode that gives a model the real docs | Done | 085 |
+| 35 | 091 Benchmark: cold runs, a fresh session in an empty folder for every attempt | Done | 090 |
+| 36 | 092 Benchmark: scrub a stored reply before cutting it to 200 characters | Done | 085 |
+| 37 | 037 Benchmark: docs in the prompt, and cold runs | Done | 090, 091, 092 (sliced: docs-in-context mode, cold runs and the reply-head scrub moved to those cards; this card is now the baseline RUN) |
+| 38 | 088 Head-to-head: Phrase vs plain C# on the frozen bar | Ready | 085, 086, 094, 087, 037 |
+| 39 | 089 Option and nested-record fields compile | Ready | 042 |
+| 40 | 065 Loop: run one card with a pinned toolchain | Ready | 064 |
+| 41 | 066 Loop: bounded retry, park and split on failure | Ready | 065 |
+| 42 | 078 Ready check: reject a role-only story before the product manager is asked | Ready | 065 |
+| 43 | 067 Loop: on Done run the retro step and re-rank, then the next card | Ready | 066 |
+| 44 | 053 Docs: one diagnostics table, not two | Ready | none |
+| 45 | 062 Atomic runs: a card runs in a fresh worktree and ends landed or discarded | Ready | none |
+| 46 | 068 Loop: liveness, publish, STOP file and the Needs-Steve file | Ready | 067 |
+| 47 | 072 Loop: pace the work against the finite driver allotments | Ready | 066 |
+| 48 | 069 Loop: resume after a crash or reboot (logon task) | Ready | 068 |
+| 49 | 070 Loop: run every card atomically (land or discard) | Ready | 062, 067 |
+| 50 | 054 Benchmark task 005 gets a failure-path spec (suite change, versioned) | Ready | none |
+| 51 | 055 A declared failure with no failure-path spec is an error (PH336) | Ready | 054, 018 |
+| 52 | 056 An endpoint with an output cannot say `succeeds` (PH333) | Ready | 055 |
+| 53 | 057 Docs: the consumer-observable outcome rule is written down | Ready | 055 |
+| 54 | 022 Keyword model ADR: what a keyword is | Ready | none |
+| 55 | 058 A validation phrase returns its validated value (first slice, language decision first) | Ready | 022, 055 |
+| 56 | 013 Make GRAMMAR.md say what the resolver does | Ready | none |
+| 57 | 019 Publish exact diagnostic message templates in GRAMMAR.md | Ready | 018 |
+| 58 | 014 Document the native C# environment and show passing-guard examples | Ready | none |
 | 59 | 046 Docs: GRAMMAR and README name the adapter contract and the HTTP status mapping | Ready | 040, 049 |
 | 60 | 017 Benchmark v1: score by running the generated specs | Ready | 016, 050 |
 | 61 | 024 Pattern discovery: find the recurring patterns worth a keyword | Ready | 017 |
