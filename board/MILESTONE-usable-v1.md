@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:136085dee9ea4393f1846336807b75c66f20ef1e704c15e495f7088e51f699f1 -->
+<!-- board-table-sha256:ed748cd5a905f5deec64662baf9264e67ea35ecb75356e43d3f89a169666102c -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -32,7 +32,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 10 | 080 Board: show a card's Shape and what it Enables | Done | 075, 079 |
 | 11 | 076 Loop: the picker reads the GitHub board (card 063's logic, new source) | Done | 075 (063 is superseded by this card) |
 | 12 | 077 Board: the project is the single source; board files become a generated read-only archive | Done | 075, 076 |
-| 13 | 064 Loop: one durable loop at a time (lock, state, heartbeat) | Ready | 076 (the picker reads the GitHub board; D25) |
+| 13 | 064 Loop: one durable loop at a time (lock, state, heartbeat) | Done | 076 (the picker reads the GitHub board; D25) |
 | 14 | 084 Reference target builds and every orders spec passes | Ready | none |
 | 15 | 086 Plain C# baseline on the same tasks | Ready | none |
 | 16 | 085 A missing Phrase reply is a model failure, not a harness error | Ready | none |
@@ -47,7 +47,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 25 | 049 A declared failure maps to its HTTP status, not a 500 | Ready | 048 |
 | 26 | 050 Every spec outcome kind asserts correctly, and a wrong one names itself | Ready | 049 |
 | 27 | 087 orders.phrase compiles and its generated specs pass | Ready | 039, 040, 041, 043, 044, 045, 048, 049, 050, 084 |
-| 28 | 037 Benchmark: docs in the prompt, and cold runs | Ready | none |
+| 28 | 037 Benchmark: docs in the prompt, and cold runs | Ready | 085 (the harness fix: task files in the prompt, harness errors apart from model failures; D31) |
 | 29 | 088 Head-to-head: Phrase vs plain C# on the frozen bar | Ready | 085, 086, 087, 037 |
 | 30 | 089 Option and nested-record fields compile | Ready | 042 |
 | 31 | 065 Loop: run one card with a pinned toolchain | Ready | 064 |
