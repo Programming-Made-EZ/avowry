@@ -151,6 +151,19 @@ class BoardProjectTests(unittest.TestCase):
         fields = fake.project_fields[fake.projects[0]["id"]]
         status_field = next(field for field in fields if field.get("name") == "Status")
         self.assertEqual([opt["name"] for opt in status_field["options"]], ["Ready", "In Progress", "Done", "Superseded/Withdrawn"])
+        shape_field = next(field for field in fields if field.get("name") == "Shape")
+        self.assertEqual([opt["name"] for opt in shape_field["options"]], ["Story", "Contract"])
+        self.assertIn("Enables", {field["name"] for field in fields})
+        creates = [call for call in fake.calls if call[:2] == ["project", "field-create"]]
+        self.assertEqual(sum("Shape" in call for call in creates), 1)
+        self.assertEqual(sum("Enables" in call for call in creates), 1)
+
+    def test_existing_board_dry_run_lists_shape_and_enables_to_create(self):
+        fake = FakeGH()
+        fake.projects = [{"id": "PVT_1", "number": 1, "title": "Phrase Board", "public": False, "visibility": "PRIVATE"}]
+        summary = project.ensure_project(fake, dry_run=True)
+        self.assertIn("create field Shape", summary["changes"])
+        self.assertIn("create field Enables", summary["changes"])
 
     def test_rejects_non_phrase_owner_in_main_and_ensure_owner(self):
         fake = FakeGH()

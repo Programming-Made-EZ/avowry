@@ -21,6 +21,8 @@ EXPECTED_FIELDS = [
     "Kind",
     "Phase",
     "Card author",
+    "Shape",
+    "Enables",
 ]
 EXPECTED_STATUS_OPTIONS = ["Ready", "In Progress", "Done", "Superseded/Withdrawn"]
 
@@ -164,6 +166,26 @@ def verify_project(gh):
 def verify_fields(gh, board_dir=None, running=None):
     """Read every project item and compare it with the card-derived values."""
     from scripts.board import set_fields
+
+    payload = parse_json(gh(["project", "item-list", "1", "--owner", OWNER, "--format", "json", "--limit", "1000"]))
+    items = payload.get("items", []) if isinstance(payload, dict) else []
+    by_number = {}
+    for item in items:
+        number = item.get("card number")
+        if number is not None:
+            by_number[f"{int(float(number)):03d}"] = item
+    for number, item in by_number.items():
+        if item.get("shape") != "Contract":
+            continue
+        enables = re.findall(r"(?<!\d)\d{3}(?!\d)", str(item.get("enables") or ""))
+        if not enables:
+            raise RuntimeError(f"Contract {number} has empty Enables")
+        for enabled in enables:
+            target = by_number.get(enabled)
+            if target is None:
+                raise RuntimeError(f"Contract {number} enables card {enabled}, which is not on the board")
+            if target.get("shape") == "Contract":
+                raise RuntimeError(f"Contract {number} enables Contract {enabled}")
 
     cards = set_fields.load_cards(board_dir or BOARD_DIR, running=running)
     _project, _fields, actions = set_fields.plan(gh, board_dir or BOARD_DIR, running=running)

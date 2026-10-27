@@ -283,9 +283,10 @@ class BoardMigrateTests(unittest.TestCase):
         self.assertEqual(done["state"], "CLOSED")
         self.assertEqual(done["close_reason"], "completed")
 
-        ready = by_marker["002"]
-        self.assertEqual(ready["state"], "OPEN")
-        self.assertEqual(ready["labels"], ["card"])
+        resolver_hardening = by_marker["002"]
+        self.assertEqual(resolver_hardening["state"], "CLOSED")
+        self.assertEqual(resolver_hardening["close_reason"], "completed")
+        self.assertEqual(resolver_hardening["labels"], ["card"])
 
         superseded = by_marker["063"]
         self.assertEqual(superseded["state"], "CLOSED")

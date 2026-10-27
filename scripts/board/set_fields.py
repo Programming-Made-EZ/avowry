@@ -22,8 +22,9 @@ CARD_FILE_RE = re.compile(r"^(\d{3})-.+\.md$")
 MARKER_RE = re.compile(r"<!-- phrase-card:(\d{3}) -->")
 KINDS = ("feature", "bug", "docs", "tooling", "spike", "decision", "data")
 STATUSES = ("Ready", "In Progress", "Done", "Superseded/Withdrawn")
+SHAPES = ("Story", "Contract")
 NUMBER_FIELDS = ("Rank", "Card number")
-FIELD_NAMES = ("Rank", "Card number", "Depends on", "Kind", "Phase", "Card author", "Status")
+FIELD_NAMES = ("Rank", "Card number", "Depends on", "Kind", "Phase", "Card author", "Shape", "Enables", "Status")
 
 
 @dataclass(frozen=True)
@@ -126,7 +127,12 @@ def load_cards(board_dir=BOARD_DIR, running=None):
             status = "In Progress"
         else:
             status = "Ready"
-        values = {"Card number": int(number), "Status": status}
+        shape_line = _line(text, "Shape")
+        shape = shape_line if shape_line in SHAPES else "Story"
+        values = {"Card number": int(number), "Status": status, "Shape": shape}
+        enables = _line(text, "Enables")
+        if enables is not None:
+            values["Enables"] = ", ".join(re.findall(r"(?<!\d)\d{3}(?!\d)", enables))
         if number in ranks:
             values["Rank"] = ranks[number]
         depends = _line(text, "Depends on")

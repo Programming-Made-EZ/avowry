@@ -21,15 +21,17 @@ class FakeGH:
         names = {
             "Rank": "PVTF_rank", "Card number": "PVTF_number", "Depends on": "PVTF_depends",
             "Kind": "PVTF_kind", "Phase": "PVTF_phase", "Card author": "PVTF_author",
-            "Status": "PVTF_status",
+            "Status": "PVTF_status", "Shape": "PVTF_shape", "Enables": "PVTF_enables",
         }
         self.fields = []
         for name, field_id in names.items():
-            field = {"id": field_id, "name": name, "type": "ProjectV2SingleSelectField" if name in {"Kind", "Status"} else "ProjectV2Field"}
+            field = {"id": field_id, "name": name, "type": "ProjectV2SingleSelectField" if name in {"Kind", "Status", "Shape"} else "ProjectV2Field"}
             if name == "Kind":
                 field["options"] = [{"id": f"kind-{value}", "name": value} for value in set_fields.KINDS]
             elif name == "Status":
                 field["options"] = [{"id": f"status-{value.lower().replace(' ', '-')}", "name": value} for value in set_fields.STATUSES]
+            elif name == "Shape":
+                field["options"] = [{"id": f"shape-{value.lower()}", "name": value} for value in set_fields.SHAPES]
             self.fields.append(field)
         self.issues = []
         self.items = []
@@ -80,7 +82,7 @@ class FakeGH:
 def fixture_board(root):
     board = Path(root)
     cards = {
-        "001-one.md": "# One\n\n- **Status:** Ready\n- **Type:** feature details\n- **Milestone:** First sentence. More detail.\n- **Depends on:** 007, exact text\n\n## Task force\n\n- Driver [author]: Codex | why\n",
+        "001-one.md": "# One\n\n- **Status:** Ready\n- **Shape:** Contract\n- **Enables:** Stories 004 and 002; not card 99\n- **Type:** feature details\n- **Milestone:** First sentence. More detail.\n- **Depends on:** 007, exact text\n\n## Task force\n\n- Driver [author]: Codex | why\n",
         "002-two.md": "# Two\n\n- **Status:** Done 2026-10-26\n- **Type:** bug\n",
         "003-three.md": "# Three\n\n- **Status:** SUPERSEDED by 004\n- **Type:** mystery\n",
         "004-four.md": "# Four\n\n- **Status:** Ready\n- **Type:** docs only\n",
@@ -105,8 +107,8 @@ class BoardFieldTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             board = fixture_board(tmp)
             values = {x.number: x.values for x in set_fields.load_cards(board, running="004")}
-        self.assertEqual(values["001"], {"Rank": 2, "Card number": 1, "Depends on": "007, exact text", "Kind": "feature", "Phase": "First sentence.", "Card author": "Codex", "Status": "Done"})
-        self.assertEqual(values["002"], {"Card number": 2, "Kind": "bug", "Status": "Done"})
+        self.assertEqual(values["001"], {"Rank": 2, "Card number": 1, "Depends on": "007, exact text", "Kind": "feature", "Phase": "First sentence.", "Card author": "Codex", "Status": "Done", "Shape": "Contract", "Enables": "004, 002"})
+        self.assertEqual(values["002"], {"Card number": 2, "Kind": "bug", "Status": "Done", "Shape": "Story"})
         self.assertEqual(values["003"]["Status"], "Superseded/Withdrawn")
         self.assertNotIn("Kind", values["003"])
         self.assertEqual(values["004"]["Rank"], 1)
@@ -159,6 +161,42 @@ class BoardFieldTests(unittest.TestCase):
             self.assertFalse(any(c[:2] in (["project", "item-add"], ["project", "item-edit"], ["issue", "close"]) for c in read_calls))
             fake.items[0]["rank"] = 99
             with self.assertRaises(RuntimeError):
+                check_real_board.verify_fields(fake, board_dir=board)
+
+    def test_contract_without_enables_fails_the_fields_check(self):
+        fake = FakeGH()
+        for i in range(1, 5):
+            fake.add_issue(100 + i, f"{i:03}")
+        with tempfile.TemporaryDirectory() as tmp:
+            board = fixture_board(tmp)
+            self.run_main(["--apply"], fake, board)
+            contract = next(item for item in fake.items if item["card number"] == 1)
+            contract.pop("enables")
+            with self.assertRaisesRegex(RuntimeError, "Contract 001 has empty Enables"):
+                check_real_board.verify_fields(fake, board_dir=board)
+
+    def test_contract_cannot_enable_another_contract(self):
+        fake = FakeGH()
+        for i in range(1, 5):
+            fake.add_issue(100 + i, f"{i:03}")
+        with tempfile.TemporaryDirectory() as tmp:
+            board = fixture_board(tmp)
+            self.run_main(["--apply"], fake, board)
+            target = next(item for item in fake.items if item["card number"] == 4)
+            target["shape"] = "Contract"
+            with self.assertRaisesRegex(RuntimeError, "Contract 001 enables Contract 004"):
+                check_real_board.verify_fields(fake, board_dir=board)
+
+    def test_contract_cannot_enable_a_card_missing_from_the_board(self):
+        fake = FakeGH()
+        for i in range(1, 5):
+            fake.add_issue(100 + i, f"{i:03}")
+        with tempfile.TemporaryDirectory() as tmp:
+            board = fixture_board(tmp)
+            self.run_main(["--apply"], fake, board)
+            contract = next(item for item in fake.items if item["card number"] == 1)
+            contract["enables"] = "999"
+            with self.assertRaisesRegex(RuntimeError, "card 999, which is not on the board"):
                 check_real_board.verify_fields(fake, board_dir=board)
 
 

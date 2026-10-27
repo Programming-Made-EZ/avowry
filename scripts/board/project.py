@@ -16,6 +16,8 @@ FIELD_SPECS = [
     {"name": "Kind", "type": "SINGLE_SELECT", "options": ["feature", "bug", "docs", "tooling", "spike", "decision", "data"]},
     {"name": "Phase", "type": "TEXT"},
     {"name": "Card author", "type": "TEXT"},
+    {"name": "Shape", "type": "SINGLE_SELECT", "options": ["Story", "Contract"]},
+    {"name": "Enables", "type": "TEXT"},
     {"name": "Status", "type": "SINGLE_SELECT", "options": EXPECTED_STATUS_OPTIONS},
 ]
 
