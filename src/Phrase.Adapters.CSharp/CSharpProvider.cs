@@ -6,9 +6,9 @@ namespace Phrase.Adapters.CSharp;
 
 /// <summary>
 /// Emits a C# API project and an xUnit specs project for a leaf phrase.
-/// The hand-written shape to match is reference/csharp. This slice emits one
-/// Int-returning leaf and its Given/When/Then specs; records, failures, and
-/// endpoints are left for later slices.
+/// The hand-written shape to match is reference/csharp. This slice emits
+/// Int-returning leaves, declared records, list fields as IReadOnlyList&lt;T&gt;,
+/// and their Given/When/Then specs.
 /// </summary>
 public sealed class CSharpProvider : ITargetAdapter
 {
@@ -92,6 +92,7 @@ public sealed class CSharpProvider : ITargetAdapter
         BoundText => true,
         BoundBool => true,
         BoundRecord record => record.Fields.All(field => IsSupportedValue(module, field.Value)),
+        BoundList list => list.Items.All(item => IsSupportedValue(module, item)),
         _ => false,
     };
 
@@ -149,7 +150,7 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append("namespace ").Append(module.Name).Append(";\n\n");
         foreach (var type in module.Types)
         {
-            code.Append("public sealed record ").Append(type.Name).Append('(');
+            code.Append("public sealed record ").Append(CSharpIdent(type.Name)).Append('(');
             code.Append(string.Join(", ", type.Fields.Select(field => $"{CSharpType(field.Type)} {CSharpFieldName(field.Name)}")));
             code.Append(");\n");
         }
@@ -221,12 +222,12 @@ public sealed class CSharpProvider : ITargetAdapter
         foreach (var given in spec.Givens)
         {
             code.Append("        // ").Append(Capitalize(spec.Lines[index++])).Append('\n');
-            code.Append("        ").Append(CSharpType(given.Hole.Type)).Append(" ").Append(given.Hole.Name).Append(" = ").Append(CSharpValue(given.Value)).Append(";\n");
+            code.Append("        ").Append(CSharpType(given.Hole.Type)).Append(" ").Append(CSharpIdent(given.Hole.Name)).Append(" = ").Append(CSharpValue(given.Value)).Append(";\n");
         }
 
         code.Append("        // ").Append(Capitalize(spec.Lines[index++])).Append('\n');
         code.Append("        var result = Phrases.").Append(MethodName(phrase)).Append('(');
-        code.Append(string.Join(", ", phrase.Holes.Select(hole => hole.Name)));
+        code.Append(string.Join(", ", phrase.Holes.Select(hole => CSharpIdent(hole.Name))));
         code.Append(");\n");
         code.Append("        // ").Append(Capitalize(spec.Lines[index])).Append('\n');
         code.Append("        Assert.Equal(").Append(CSharpValue(((ReturnsModel)spec.Outcome).Value)).Append(", result);\n");
@@ -250,12 +251,32 @@ public sealed class CSharpProvider : ITargetAdapter
     }
 
     private static string Parameters(PhraseModel phrase) =>
-        string.Join(", ", phrase.Holes.Select(hole => $"{CSharpType(hole.Type)} {hole.Name}"));
+        string.Join(", ", phrase.Holes.Select(hole => $"{CSharpType(hole.Type)} {CSharpIdent(hole.Name)}"));
 
     private static string Pascal(string word) =>
         word.Length == 0 ? word : char.ToUpperInvariant(word[0]) + word[1..];
 
-    private static string CSharpFieldName(string name) => name.Length == 0 ? name : char.ToUpperInvariant(name[0]) + name[1..];
+    private static string CSharpFieldName(string name) =>
+        CSharpIdent(name.Length == 0 ? name : char.ToUpperInvariant(name[0]) + name[1..]);
+
+    // Phrase type names and Pascal-cased fields never spell a reserved word exactly.
+    // Match keywords ignoring case so Event and Class still get the @ prefix.
+    private static string CSharpIdent(string name) =>
+        CSharpKeywords.Contains(name) ? "@" + name : name;
+
+    private static readonly HashSet<string> CSharpKeywords = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char",
+        "checked", "class", "const", "continue", "decimal", "default", "delegate",
+        "do", "double", "else", "enum", "event", "explicit", "extern", "false",
+        "finally", "fixed", "float", "for", "foreach", "goto", "if", "implicit",
+        "in", "int", "interface", "internal", "is", "lock", "long", "namespace",
+        "new", "null", "object", "operator", "out", "override", "params", "private",
+        "protected", "public", "readonly", "ref", "return", "sbyte", "sealed",
+        "short", "sizeof", "stackalloc", "static", "string", "struct", "switch",
+        "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked",
+        "unsafe", "ushort", "using", "virtual", "void", "volatile", "while",
+    };
 
     private static string CSharpType(PType type)
     {
@@ -263,9 +284,9 @@ public sealed class CSharpProvider : ITargetAdapter
         if (type == PType.Text || type == PType.Id) return "string";
         if (type == PType.Decimal) return "decimal";
         if (type == PType.Bool) return "bool";
-        if (type.IsList) return $"List<{CSharpType(type.Arguments[0])}>";
+        if (type.IsList) return $"IReadOnlyList<{CSharpType(type.Arguments[0])}>";
         if (type.IsOption) return $"{CSharpType(type.Arguments[0])}?";
-        return type.Name;
+        return CSharpIdent(type.Name);
     }
 
     private static string Slug(string text)
@@ -282,7 +303,8 @@ public sealed class CSharpProvider : ITargetAdapter
         BoundText text => CsString(text.Value),
         BoundNumber number => number.Text,
         BoundBool boolean => boolean.Value ? "true" : "false",
-        BoundRecord record => $"new {record.Type.Name}({string.Join(", ", record.Fields.Select(field => $"{CSharpFieldName(field.Name)}: {CSharpValue(field.Value)}"))})",
+        BoundList list => $"[{string.Join(", ", list.Items.Select(CSharpValue))}]",
+        BoundRecord record => $"new {CSharpType(record.Type)}({string.Join(", ", record.Fields.Select(field => $"{CSharpFieldName(field.Name)}: {CSharpValue(field.Value)}"))})",
         _ => throw new InvalidOperationException($"Unsupported C# expression kind {value.GetType().Name}.")
     };
 
