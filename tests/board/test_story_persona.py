@@ -54,5 +54,49 @@ class StoryPersonaTests(unittest.TestCase):
             self.assertIsNone(self.verdict("As an engineer, I want x.", status=status))
 
 
+def contract(consumer="the C# emitter", observes="an API project whose handler returns the declared status", enables="039", shape="Contract"):
+    return (f"# C\n\n- **Status:** Ready\n- **Shape:** {shape}\n- **Consumer:** {consumer}\n- **Given:** a resolved model\n"
+            f"- **Observes:** {observes}\n- **Fails with:** PH333\n- **Invariants:** deterministic output\n- **Enables:** {enables}\n")
+
+
+class ContractCardTests(unittest.TestCase):
+    def verdict(self, text, target_shape="Story", target_exists=True):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            personas = tmp / "PERSONAS.md"
+            personas.write_text(PERSONAS, encoding="utf-8")
+            if target_exists:
+                (tmp / "039-parent.md").write_text(card("As Ari, I want x, so that y.").replace("- **Status:** Ready", f"- **Status:** Ready\n- **Shape:** {target_shape}"), encoding="utf-8")
+            path = tmp / "040-contract.md"
+            path.write_text(text, encoding="utf-8")
+            return check.check_card(path, check.persona_names(personas))
+
+    def test_a_contract_naming_a_component_an_observation_and_a_story_passes(self):
+        self.assertIsNone(self.verdict(contract()))
+
+    def test_a_contract_that_enables_nothing_is_an_orphan(self):
+        self.assertIn("orphan", self.verdict(contract(enables="")))
+
+    def test_a_contract_whose_enabled_card_is_missing_is_an_orphan(self):
+        self.assertIn("orphan", self.verdict(contract(), target_exists=False))
+
+    def test_a_contract_that_enables_only_another_contract_is_an_orphan(self):
+        self.assertIn("orphan", self.verdict(contract(), target_shape="Contract"))
+
+    def test_a_bare_success_observation_is_rejected(self):
+        for bare in ("it succeeds", "no exception is thrown", "it compiles", "it does not throw"):
+            with self.subTest(bare=bare):
+                self.assertIn("observable", self.verdict(contract(observes=bare)))
+
+    def test_a_person_or_role_as_the_consumer_is_rejected(self):
+        for who in ("an engineer", "Ari", "a user", "the developer"):
+            with self.subTest(who=who):
+                self.assertIn("component", self.verdict(contract(consumer=who)))
+
+    def test_a_contract_missing_observes_is_rejected(self):
+        text = contract().replace("- **Observes:** an API project whose handler returns the declared status\n", "")
+        self.assertIn("Observes", self.verdict(text))
+
+
 if __name__ == "__main__":
     unittest.main()

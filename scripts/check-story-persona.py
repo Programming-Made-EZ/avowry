@@ -35,6 +35,9 @@ def check_card(path, names):
     status = re.search(r"(?m)^- \*\*Status:\*\*\s*(.*)$", text)
     if status and status.group(1).strip().lower().startswith(SKIP):
         return None
+    shape = re.search(r"(?m)^- \*\*Shape:\*\*\s*(\w+)", text)
+    if shape and shape.group(1).lower() == "contract":
+        return check_contract(path, text)
     story = re.search(r"(?m)^- \*\*Story:\*\*\s*(.*)$", text)
     if not story:
         return "no Story line"
@@ -44,6 +47,41 @@ def check_card(path, names):
     if not re.search(r"\bso that\b", line, re.IGNORECASE):
         return "the story has no 'so that' (value to the persona)"
     return None
+
+
+BARE_OUTCOMES = re.compile(r"^(?:it |the \w+ )?(?:succeeds|compiles|builds|works|exists|is implemented|does not throw|no exception(?: is thrown)?)\.?$", re.IGNORECASE)
+ROLE_CONSUMERS = re.compile(r"^(?:an?|the)\s+(?:engineer|developer|user|person|human|llm|agent|reviewer|maintainer)\b", re.IGNORECASE)
+
+
+def _field(text, label):
+    m = re.search(rf"(?m)^- \*\*{label}:\*\*\s*(.*)$", text)
+    return m.group(1).strip() if m else ""
+
+
+def check_contract(path, text):
+    """A contract card is the how: a consuming COMPONENT, an observable output, and a Story it enables."""
+    names = persona_names(pathlib.Path(__file__).resolve().parents[1] / "PERSONAS.md") if pathlib.Path(__file__).resolve().parents[1].joinpath("PERSONAS.md").exists() else []
+    consumer = _field(text, "Consumer")
+    if not consumer or ROLE_CONSUMERS.match(consumer) or consumer.lower() in {n.lower() for n in names} | {"steve", "ari", "dana", "morgan", "riley"}:
+        return f"the contract's Consumer must be a component (the resolver, the emitter, an adapter, the generated program), not a person or role: {consumer or 'missing'}"
+    observes = _field(text, "Observes")
+    if not observes:
+        return "the contract has no Observes line (the output the consumer can tell from a wrong result)"
+    if BARE_OUTCOMES.match(observes):
+        return f"the contract's Observes is not an observable output (bare success): {observes}"
+    enables = re.findall(r"\b(\d{3})\b", _field(text, "Enables"))
+    if not enables:
+        return "orphan contract: no Enables link to a Story card"
+    parent_dir = pathlib.Path(path).parent
+    for number in enables:
+        parents = sorted(parent_dir.glob(f"{number}-*.md"))
+        if not parents:
+            continue
+        ptext = parents[0].read_text(encoding="utf-8")
+        pshape = re.search(r"(?m)^- \*\*Shape:\*\*\s*(\w+)", ptext)
+        if not (pshape and pshape.group(1).lower() == "contract"):
+            return None
+    return f"orphan contract: Enables {', '.join(enables)} names no existing Story card"
 
 
 def main(argv):

@@ -5,7 +5,13 @@
 - **Milestone:** Usable v1 (plumbing for bar 2 to 4) (`board/MILESTONE-usable-v1.md`)
 - **Source:** Process retro 2026-10-26 (Decider D18): thin slices, trialled on the C# adapter chain; this card replaces part of old cards 003 to 007. Steve: "I do have a concern the slices are too big."
 - **Depends on:** 039
-- **Story:** As Dana, I want choosing the C# target through the adapter contract to produce the same working number-phrase program, so that switching target language does not change my program's behavior.
+- **Shape:** Contract
+- **Consumer:** PhraseCompiler (the compiler core, which hands the resolved model to a target)
+- **Given:** the resolved one-number phrase from card 039 and the target name csharp
+- **Observes:** the same API and Specs projects as before, handed over through ITargetAdapter, and a substitute adapter receives the resolved model
+- **Fails with:** none on this slice (the check is the substitute adapter receiving the model)
+- **Invariants:** the 039 acceptance test passes unchanged; the core project references no C# emitter types
+- **Enables:** 039 (Ari: the first end-to-end behaviour keeps working when the target seam is introduced; Dana: switching target language does not change the program)
 - **One observable behaviour:** Choosing the csharp target produces the same working number-phrase program through ITargetAdapter, with no C#-only hook in the compiler core (Decider D4).
 - **Done checks (at most 3, each failing on partial work):**
   1. ITargetProvider becomes ITargetAdapter and Phrase.Providers.CSharp becomes Phrase.Adapters.CSharp; the 039 acceptance test passes unchanged
