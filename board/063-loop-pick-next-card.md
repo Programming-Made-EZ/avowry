@@ -1,6 +1,6 @@
 # Loop: pick the next eligible card from the board
 
-- **Status:** Ready (rank: see `C:\Users\ringe\projects\phrase-lang\board\MILESTONE-usable-v1.md`, read-only)
+- **Status:** SUPERSEDED 2026-10-26 by card 076 (the picker reads the GitHub board). The logic slice passed its tests (mob-defaults 63511f3) but the non-author review (Decider D26: Codex, Copilot, Grok No) found it does not fit the real board or the real run state; those defects are carried into 076's criteria.
 - **Type:** tooling (thin slice; the code lives in mob-defaults; authored by the driver rotation and reviewed by a non-author under D15, with the smoke run)
 - **Milestone:** process: the loop runner (retro seed P1: no turn ends with nothing running)
 - **Source:** Steve, 2026-10-26 (mob-defaults is his product): "it should be a loop." The continuous loop must live in the tooling, not in the facilitator's chat turns; three idle gaps today all came from the loop depending on a chat turn (retro seed P1). Team design: Decider D23 (Codex Yes, Grok Yes, Copilot Support-it with changes; agy no response).

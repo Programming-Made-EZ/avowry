@@ -11,9 +11,9 @@ EXPECTED_FIELDS = [
     "Rank",
     "Card number",
     "Depends on",
-    "Type",
-    "Milestone",
-    "Author",
+    "Kind",
+    "Phase",
+    "Card author",
 ]
 EXPECTED_STATUS_OPTIONS = ["Ready", "In Progress", "Done", "Superseded/Withdrawn"]
 

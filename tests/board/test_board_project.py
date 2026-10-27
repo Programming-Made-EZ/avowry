@@ -81,6 +81,8 @@ class FakeGH:
             if "updateProjectV2Field" in payload:
                 data = json.loads(payload)
                 vars_ = data["variables"]
+                if "projectId" in vars_ or "projectId" in data["query"]:  # what the real API answered
+                    raise RuntimeError("InputObject 'UpdateProjectV2FieldInput' doesn't accept argument 'projectId'")
                 field_id = vars_["fieldId"]
                 options = vars_["singleSelectOptions"]
                 for project in self.projects:
@@ -95,6 +97,16 @@ class FakeGH:
 
 
 class BoardProjectTests(unittest.TestCase):
+    def test_no_custom_field_uses_a_name_github_reserves(self):
+        # Given the names GitHub already uses on every project (the real apply failed on 'Type' and 'Milestone')
+        reserved = {"title", "assignees", "labels", "linked pull requests", "milestone", "repository", "reviewers",
+                    "parent issue", "sub-issues progress", "created", "updated", "closed", "type", "author"}
+        # When the field specs are read
+        names = [spec["name"].lower() for spec in project.FIELD_SPECS if spec["name"] != "Status"]
+        # Then none of the custom fields collides with a reserved name (Status is built in and is updated, not created)
+        self.assertEqual([n for n in names if n in reserved], [])
+        self.assertEqual(set(check_real_board.EXPECTED_FIELDS) - {"Status"} - {s["name"] for s in project.FIELD_SPECS}, set())
+
     def test_default_is_dry_run_and_no_mutating_calls(self):
         fake = FakeGH()
         with redirect_stdout(io.StringIO()):

@@ -13,9 +13,9 @@ FIELD_SPECS = [
     {"name": "Rank", "type": "NUMBER"},
     {"name": "Card number", "type": "NUMBER"},
     {"name": "Depends on", "type": "TEXT"},
-    {"name": "Type", "type": "SINGLE_SELECT", "options": ["feature", "bug", "docs", "tooling", "spike", "decision", "data"]},
-    {"name": "Milestone", "type": "TEXT"},
-    {"name": "Author", "type": "TEXT"},
+    {"name": "Kind", "type": "SINGLE_SELECT", "options": ["feature", "bug", "docs", "tooling", "spike", "decision", "data"]},
+    {"name": "Phase", "type": "TEXT"},
+    {"name": "Card author", "type": "TEXT"},
     {"name": "Status", "type": "SINGLE_SELECT", "options": EXPECTED_STATUS_OPTIONS},
 ]
 
@@ -173,8 +173,8 @@ def update_status_field(gh, project_id: str, field: dict):
             })
 
     query = """
-mutation UpdateProjectV2Field($projectId: ID!, $fieldId: ID!, $singleSelectOptions: [ProjectV2SingleSelectFieldOptionInput!]!) {
-  updateProjectV2Field(input: {projectId: $projectId, fieldId: $fieldId, singleSelectOptions: $singleSelectOptions}) {
+mutation UpdateProjectV2Field($fieldId: ID!, $singleSelectOptions: [ProjectV2SingleSelectFieldOptionInput!]!) {
+  updateProjectV2Field(input: {fieldId: $fieldId, singleSelectOptions: $singleSelectOptions}) {
     projectV2Field {
       ... on ProjectV2SingleSelectField {
         name
@@ -186,7 +186,6 @@ mutation UpdateProjectV2Field($projectId: ID!, $fieldId: ID!, $singleSelectOptio
     payload = json.dumps({
         "query": query,
         "variables": {
-            "projectId": project_id,
             "fieldId": field.get("id"),
             "singleSelectOptions": status_options,
         },
