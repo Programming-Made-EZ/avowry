@@ -1,4 +1,6 @@
 using Phrase.Acceptance.Tests.Support;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 
 namespace Phrase.Acceptance.Tests;
@@ -692,6 +694,242 @@ public class BenchmarkHarnessAcceptance
         Assert.True(File.Exists(Path.Combine(selfCheckDirectory, "self-check-v1.json")));
     }
 
+    [Fact]
+    public async Task run_docs_in_context_puts_grammar_and_orders_verbatim_ahead_of_the_task()
+    {
+        // Given a development task and the repository grammar and orders example
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        CopyRepositoryDocs(workspace.Root);
+        var capturedPrompt = Path.Combine(workspace.Root, "captured-prompt.txt");
+        var taskPrompt = await File.ReadAllTextAsync(
+            Path.Combine(suiteDirectory, "tasks", "001-write-greeting", "prompt.md"));
+        var grammar = await File.ReadAllTextAsync(Path.Combine(workspace.Root, "docs", "GRAMMAR.md"));
+        var orders = await File.ReadAllTextAsync(Path.Combine(
+            workspace.Root, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase"));
+
+        // When the task runs in docs-in-context mode, resolving docs from the suite parent
+        var (exitCode, stdout, stderr) = await RunBenchmark(
+            suiteDirectory,
+            "docs-verbatim-v1",
+            CapturePromptCommand(capturedPrompt),
+            "--mode",
+            "docs-in-context");
+
+        // Then the docs block is verbatim ahead of the task text and the row records both hashes
+        Assert.True(exitCode == 0, stdout + stderr);
+        var captured = await File.ReadAllTextAsync(capturedPrompt);
+        var grammarAt = captured.IndexOf(grammar, StringComparison.Ordinal);
+        var ordersAt = captured.IndexOf(orders, StringComparison.Ordinal);
+        Assert.True(grammarAt >= 0, "Grammar was not copied into the prompt verbatim.");
+        Assert.True(ordersAt >= 0, "orders.phrase was not copied into the prompt verbatim.");
+        Assert.True(grammarAt < ordersAt, captured);
+        Assert.EndsWith(taskPrompt, captured, StringComparison.Ordinal);
+        Assert.True(ordersAt < captured.Length - taskPrompt.Length, captured);
+        var docsBlock = captured[..^taskPrompt.Length];
+        using var result = await ReadModelResult(suiteDirectory, "docs-verbatim-v1");
+        Assert.Equal("docs-in-context", result.RootElement.GetProperty("mode").GetString());
+        Assert.Equal(Sha256Hex(docsBlock), result.RootElement.GetProperty("docs_hash").GetString());
+        Assert.Equal(Sha256Hex(captured), result.RootElement.GetProperty("prompt_hash").GetString());
+    }
+
+    [Fact]
+    public async Task run_docs_hash_changes_when_a_docs_file_changes_and_matches_when_it_does_not()
+    {
+        // Given two identical docs roots and a third whose orders example differs
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var sameRoot = Path.Combine(workspace.Root, "docs-same");
+        var sameCopy = Path.Combine(workspace.Root, "docs-same-copy");
+        var changedRoot = Path.Combine(workspace.Root, "docs-changed");
+        await WriteDocs(sameRoot, "grammar one\n", "example one\n");
+        await WriteDocs(sameCopy, "grammar one\n", "example one\n");
+        await WriteDocs(changedRoot, "grammar one\n", "example two\n");
+        var modelCommand = PrintFileCommand(await WritePassingPhrase(workspace.Root));
+
+        // When the same task is run against each root
+        var first = await RunBenchmark(
+            suiteDirectory, "hash-same", modelCommand, "--mode", "docs-in-context", "--docs-root", sameRoot);
+        var second = await RunBenchmark(
+            suiteDirectory, "hash-same-copy", modelCommand, "--mode", "docs-in-context", "--docs-root", sameCopy);
+        var third = await RunBenchmark(
+            suiteDirectory, "hash-changed", modelCommand, "--mode", "docs-in-context", "--docs-root", changedRoot);
+
+        // Then the docs hash follows the file bytes and ignores an identical copy
+        Assert.True(first.ExitCode == 0, first.Stdout + first.Stderr);
+        Assert.True(second.ExitCode == 0, second.Stdout + second.Stderr);
+        Assert.True(third.ExitCode == 0, third.Stdout + third.Stderr);
+        using var same = await ReadModelResult(suiteDirectory, "hash-same");
+        using var copy = await ReadModelResult(suiteDirectory, "hash-same-copy");
+        using var changed = await ReadModelResult(suiteDirectory, "hash-changed");
+        var sameHash = same.RootElement.GetProperty("docs_hash").GetString();
+        Assert.False(string.IsNullOrEmpty(sameHash));
+        Assert.Equal(sameHash, copy.RootElement.GetProperty("docs_hash").GetString());
+        Assert.NotEqual(sameHash, changed.RootElement.GetProperty("docs_hash").GetString());
+    }
+
+    [Fact]
+    public async Task run_default_mode_keeps_the_prompt_hash_from_before_docs_in_context()
+    {
+        // Given the greeting fixture whose prompt hash was fixed before this mode existed
+        const string promptHashBeforeDocsInContext = "a7bd17c3b580099223bd99f0db9c3377ba2419a1f568448dd21fda80a7fccade";
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var capturedPrompt = Path.Combine(workspace.Root, "captured-prompt.txt");
+        var taskPrompt = await File.ReadAllTextAsync(
+            Path.Combine(suiteDirectory, "tasks", "001-write-greeting", "prompt.md"));
+        Assert.Equal(promptHashBeforeDocsInContext, Sha256Hex(taskPrompt));
+
+        // When the benchmark runs with no --mode flag
+        var (exitCode, stdout, stderr) = await RunBenchmark(
+            suiteDirectory, "zero-shot-default-v1", CapturePromptCommand(capturedPrompt));
+
+        // Then the sent prompt and its stored hash are unchanged, and docs are not charged
+        Assert.True(exitCode == 0, stdout + stderr);
+        var captured = await File.ReadAllTextAsync(capturedPrompt);
+        Assert.Equal(taskPrompt, captured);
+        using var result = await ReadModelResult(suiteDirectory, "zero-shot-default-v1");
+        Assert.Equal(promptHashBeforeDocsInContext, result.RootElement.GetProperty("prompt_hash").GetString());
+        Assert.Equal("zero-shot", result.RootElement.GetProperty("mode").GetString());
+        Assert.Equal(string.Empty, result.RootElement.GetProperty("docs_hash").GetString());
+
+        var explicitRun = await RunBenchmark(
+            suiteDirectory, "zero-shot-explicit-v1", CapturePromptCommand(capturedPrompt), "--mode", "zero-shot");
+        Assert.True(explicitRun.ExitCode == 0, explicitRun.Stdout + explicitRun.Stderr);
+        Assert.Equal(taskPrompt, await File.ReadAllTextAsync(capturedPrompt));
+        using var explicitResult = await ReadModelResult(suiteDirectory, "zero-shot-explicit-v1");
+        Assert.Equal(promptHashBeforeDocsInContext, explicitResult.RootElement.GetProperty("prompt_hash").GetString());
+        Assert.Equal("zero-shot", explicitResult.RootElement.GetProperty("mode").GetString());
+        Assert.Equal(string.Empty, explicitResult.RootElement.GetProperty("docs_hash").GetString());
+    }
+
+    [Fact]
+    public async Task run_docs_in_context_counts_documentation_tokens_above_the_same_zero_shot_task()
+    {
+        // Given one task, one fake model, and a docs root
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var docsRoot = Path.Combine(workspace.Root, "docs-root");
+        await WriteDocs(docsRoot, "grammar for the token charge\n", "orders example for the token charge\n");
+        var capturedPrompt = Path.Combine(workspace.Root, "captured-prompt.txt");
+        var modelCommand = CapturePromptCommand(capturedPrompt);
+
+        // When that task is scored in both modes
+        var zeroShot = await RunBenchmark(suiteDirectory, "tokens-zero-v1", modelCommand);
+        var zeroPrompt = await File.ReadAllTextAsync(capturedPrompt);
+        var docsInContext = await RunBenchmark(
+            suiteDirectory, "tokens-docs-v1", modelCommand, "--mode", "docs-in-context", "--docs-root", docsRoot);
+        var docsPrompt = await File.ReadAllTextAsync(capturedPrompt);
+
+        // Then the docs-in-context input estimate grows by at least the docs block
+        Assert.True(zeroShot.ExitCode == 0, zeroShot.Stdout + zeroShot.Stderr);
+        Assert.True(docsInContext.ExitCode == 0, docsInContext.Stdout + docsInContext.Stderr);
+        Assert.EndsWith(zeroPrompt, docsPrompt, StringComparison.Ordinal);
+        var docsBlock = docsPrompt[..^zeroPrompt.Length];
+        var docsTokens = EstimateTokens(docsBlock);
+        using var zeroResult = await ReadModelResult(suiteDirectory, "tokens-zero-v1");
+        using var docsResult = await ReadModelResult(suiteDirectory, "tokens-docs-v1");
+        var zeroTokens = zeroResult.RootElement.GetProperty("tokens_in").GetInt32();
+        var docsTokensIn = docsResult.RootElement.GetProperty("tokens_in").GetInt32();
+        Assert.True(
+            docsTokensIn - zeroTokens >= docsTokens,
+            $"tokens_in {docsTokensIn} is not at least {docsTokens} above zero-shot {zeroTokens}.");
+    }
+
+    [Fact]
+    public async Task run_docs_in_context_charges_the_docs_block_on_every_attempt()
+    {
+        // Given a model that fails once and then emits Phrase, and a docs root
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var docsRoot = Path.Combine(workspace.Root, "docs-root");
+        await WriteDocs(docsRoot, "grammar charged on each attempt\n", "orders charged on each attempt\n");
+        var capturedPrompt = Path.Combine(workspace.Root, "captured-once.txt");
+        var measured = await RunBenchmark(
+            suiteDirectory, "tokens-measure-v1", CapturePromptCommand(capturedPrompt),
+            "--mode", "docs-in-context", "--docs-root", docsRoot);
+        Assert.True(measured.ExitCode == 0, measured.Stdout + measured.Stderr);
+        var docsPrompt = await File.ReadAllTextAsync(capturedPrompt);
+        var taskPrompt = await File.ReadAllTextAsync(
+            Path.Combine(suiteDirectory, "tasks", "001-write-greeting", "prompt.md"));
+        Assert.EndsWith(taskPrompt, docsPrompt, StringComparison.Ordinal);
+        var docsTokens = EstimateTokens(docsPrompt[..^taskPrompt.Length]);
+        var validOutput = await WritePassingPhrase(workspace.Root);
+
+        // When the same retrying model runs in both modes
+        var zeroShot = await RunBenchmark(
+            suiteDirectory, "retry-tokens-zero-v1", RetryThenPassCommand(workspace.Root, validOutput, "zero"));
+        var docsInContext = await RunBenchmark(
+            suiteDirectory, "retry-tokens-docs-v1", RetryThenPassCommand(workspace.Root, validOutput, "docs"),
+            "--mode", "docs-in-context", "--docs-root", docsRoot);
+
+        // Then each attempt, not only the first, includes the docs block estimate
+        Assert.True(zeroShot.ExitCode == 0, zeroShot.Stdout + zeroShot.Stderr);
+        Assert.True(docsInContext.ExitCode == 0, docsInContext.Stdout + docsInContext.Stderr);
+        using var zeroResult = await ReadModelResult(suiteDirectory, "retry-tokens-zero-v1");
+        using var docsResult = await ReadModelResult(suiteDirectory, "retry-tokens-docs-v1");
+        Assert.Equal(2, zeroResult.RootElement.GetProperty("attempts").GetInt32());
+        Assert.Equal(2, docsResult.RootElement.GetProperty("attempts").GetInt32());
+        var increase = docsResult.RootElement.GetProperty("tokens_in").GetInt32()
+            - zeroResult.RootElement.GetProperty("tokens_in").GetInt32();
+        Assert.True(
+            increase >= docsTokens * 2,
+            $"Two attempts increased tokens_in by {increase}, which is below twice the docs estimate {docsTokens}.");
+    }
+
+    [Fact]
+    public async Task run_appends_a_new_row_after_a_legacy_row_and_keeps_the_legacy_line_byte_identical()
+    {
+        // Given a history file whose first row has no mode field
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var docsRoot = Path.Combine(workspace.Root, "docs-root");
+        await WriteDocs(docsRoot, "grammar\n", "orders\n");
+        var resultsDirectory = Path.Combine(suiteDirectory, "results");
+        Directory.CreateDirectory(resultsDirectory);
+        var legacyRow = "{\"model\":\"legacy-v1\",\"task\":\"001-write-greeting\",\"passed\":true,\"attempts\":1,\"tokens_in\":42,\"tokens_out\":1,\"token_measurement\":\"estimated\",\"diagnostics\":[],\"misread\":false,\"prompt_hash\":\"abc\",\"status\":\"completed\"}\n";
+        var historyPath = Path.Combine(resultsDirectory, "history.jsonl");
+        await File.WriteAllTextAsync(historyPath, legacyRow);
+        var modelCommand = PrintFileCommand(await WritePassingPhrase(workspace.Root));
+
+        // When a new docs-in-context row is appended
+        var (exitCode, stdout, stderr) = await RunBenchmark(
+            suiteDirectory, "append-mode-v1", modelCommand, "--mode", "docs-in-context", "--docs-root", docsRoot);
+
+        // Then the legacy line is byte-identical and the new row carries the mode
+        Assert.True(exitCode == 0, stdout + stderr);
+        var historyBytes = await File.ReadAllBytesAsync(historyPath);
+        var legacyBytes = Encoding.UTF8.GetBytes(legacyRow);
+        Assert.Equal(legacyBytes, historyBytes[..legacyBytes.Length]);
+        var rows = await File.ReadAllLinesAsync(historyPath);
+        Assert.Equal(2, rows.Length);
+        Assert.DoesNotContain("\"mode\"", rows[0], StringComparison.Ordinal);
+        using var appended = JsonDocument.Parse(rows[1]);
+        Assert.Equal("docs-in-context", appended.RootElement.GetProperty("mode").GetString());
+        Assert.False(string.IsNullOrEmpty(appended.RootElement.GetProperty("docs_hash").GetString()));
+    }
+
+    [Fact]
+    public void read_stored_result_treats_a_missing_mode_as_zero_shot()
+    {
+        // Given a stored row from before mode existed, and a row that names its mode
+        var legacy = "{\"model\":\"legacy-v1\",\"task\":\"001-write-greeting\",\"passed\":true,\"attempts\":1,\"tokens_in\":42,\"tokens_out\":1,\"token_measurement\":\"estimated\",\"diagnostics\":[],\"misread\":false,\"prompt_hash\":\"abc\",\"status\":\"completed\"}";
+        var labeled = "{\"model\":\"docs-v1\",\"task\":\"001-write-greeting\",\"passed\":false,\"attempts\":2,\"tokens_in\":10,\"tokens_out\":4,\"token_measurement\":\"estimated\",\"diagnostics\":[\"no_phrase_found\"],\"misread\":false,\"prompt_hash\":\"def\",\"status\":\"completed\",\"mode\":\"docs-in-context\",\"docs_hash\":\"abc123\"}";
+
+        // When the history reader loads each row
+        var legacyResult = BenchmarkResults.ReadStoredResult(legacy);
+        var labeledResult = BenchmarkResults.ReadStoredResult(labeled);
+
+        // Then a missing mode reads as zero-shot and an explicit mode is kept
+        Assert.Equal("zero-shot", legacyResult.Mode);
+        Assert.Equal(string.Empty, legacyResult.DocsHash);
+        Assert.Equal("abc", legacyResult.PromptHash);
+        Assert.Equal("legacy-v1", legacyResult.Model);
+        Assert.Equal("docs-in-context", labeledResult.Mode);
+        Assert.Equal("abc123", labeledResult.DocsHash);
+        Assert.Equal("def", labeledResult.PromptHash);
+    }
+
     private static async Task<string> WriteArgumentRecordingShim(string workspaceRoot, string model, string argvLog)
     {
         var shimPath = Path.Combine(workspaceRoot, OperatingSystem.IsWindows() ? $"{model}.cmd" : $"{model}.sh");
@@ -800,4 +1038,61 @@ public class BenchmarkHarnessAcceptance
             File.Copy(file, destinationFile);
         }
     }
+
+    private static void CopyRepositoryDocs(string docsRoot)
+    {
+        CopyFile(RepoPaths.Find("docs", "GRAMMAR.md"), Path.Combine(docsRoot, "docs", "GRAMMAR.md"));
+        CopyFile(
+            RepoPaths.Find("tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase"),
+            Path.Combine(docsRoot, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase"));
+    }
+
+    private static void CopyFile(string source, string destination)
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+        File.Copy(source, destination);
+    }
+
+    private static async Task WriteDocs(string docsRoot, string grammar, string orders)
+    {
+        var grammarPath = Path.Combine(docsRoot, "docs", "GRAMMAR.md");
+        var ordersPath = Path.Combine(docsRoot, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase");
+        Directory.CreateDirectory(Path.GetDirectoryName(grammarPath)!);
+        Directory.CreateDirectory(Path.GetDirectoryName(ordersPath)!);
+        await File.WriteAllTextAsync(grammarPath, grammar);
+        await File.WriteAllTextAsync(ordersPath, orders);
+    }
+
+    private static async Task<string> WritePassingPhrase(string workspaceRoot)
+    {
+        var modelOutput = Path.Combine(workspaceRoot, "model-output.phrase");
+        await File.WriteAllTextAsync(modelOutput, """
+            module Greeting
+
+            phrase "say hello"
+              native csharp
+                return;
+            """);
+        return modelOutput;
+    }
+
+    private static string CapturePromptCommand(string capturedPrompt)
+    {
+        var writeAndPrint = "import sys, pathlib; pathlib.Path(r'" + capturedPrompt + "').write_bytes(sys.stdin.buffer.read()); print('module Greeting\\n\\nphrase \\\"say hello\\\"\\n  native csharp\\n    return;')";
+        return $"python -c \"{writeAndPrint}\"";
+    }
+
+    private static string RetryThenPassCommand(string workspaceRoot, string validOutput, string name)
+    {
+        var marker = Path.Combine(workspaceRoot, name + "-attempted");
+        var received = Path.Combine(workspaceRoot, name + "-received.txt");
+        return OperatingSystem.IsWindows()
+            ? $"more >> \"{received}\" && if exist \"{marker}\" (type \"{validOutput}\") else (echo invalid & type nul > \"{marker}\")"
+            : $"cat >> '{received}' && if test -f '{marker}'; then cat '{validOutput}'; else echo invalid; touch '{marker}'; fi";
+    }
+
+    private static string Sha256Hex(string text) =>
+        Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text))).ToLowerInvariant();
+
+    private static int EstimateTokens(string text) => Math.Max(1, (int)Math.Ceiling(text.Length / 4d));
 }

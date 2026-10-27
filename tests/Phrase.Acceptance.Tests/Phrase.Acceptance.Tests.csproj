@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="../../src/Phrase.Compiler/Phrase.Compiler.csproj" />
     <ProjectReference Include="../../src/Phrase.Providers.CSharp/Phrase.Providers.CSharp.csproj" />
+    <ProjectReference Include="../../tools/Phrase.Bench/Phrase.Bench.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Fixtures/**/*" CopyToOutputDirectory="PreserveNewest" />

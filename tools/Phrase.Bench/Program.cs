@@ -15,7 +15,7 @@ const string AgySkipPermissionsOption = "--dangerously-skip-permissions";
 
 if (args.Length == 0)
 {
-    Console.Error.WriteLine("Usage: Phrase.Bench run --suite <path> --model <id> --model-command <command> | --self-check [--suite <path>]");
+    Console.Error.WriteLine("Usage: Phrase.Bench run --suite <path> --model <id> --model-command <command> [--mode zero-shot|docs-in-context] [--docs-root <path>] | --self-check [--suite <path>]");
     return 1;
 }
 
@@ -41,16 +41,40 @@ var label = options.TryGetValue("label", out var configuredLabel) ? configuredLa
 var timeout = options.TryGetValue("timeout-ms", out var timeoutValue)
     ? TimeSpan.FromMilliseconds(int.Parse(timeoutValue))
     : TimeSpan.FromMinutes(5);
+var mode = BenchmarkModes.ZeroShot;
+if (options.TryGetValue("mode", out var configuredMode))
+{
+    if (configuredMode is not (BenchmarkModes.ZeroShot or BenchmarkModes.DocsInContext))
+    {
+        Console.Error.WriteLine("--mode must be zero-shot or docs-in-context.");
+        return 1;
+    }
+
+    mode = configuredMode;
+}
 
 suitePath = ResolveSuitePath(suitePath);
 var suiteDirectory = Path.GetDirectoryName(suitePath)!;
 var suite = ReadSuite(suitePath);
+var docsBlock = "";
+if (mode == BenchmarkModes.DocsInContext)
+{
+    var docsRoot = options.TryGetValue("docs-root", out var configuredDocsRoot)
+        ? Path.GetFullPath(configuredDocsRoot)
+        : Path.GetFullPath(Path.Combine(suiteDirectory, ".."));
+    if (!TryReadDocumentationBlock(docsRoot, out docsBlock, out var docsError))
+    {
+        Console.Error.WriteLine(docsError);
+        return 1;
+    }
+}
+
 var exitCode = 0;
 var taskResults = new List<TaskRunResult>();
 
 foreach (var task in suite.Tasks.Where(task => !task.Holdout))
 {
-    var result = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts, label);
+    var result = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts, label, mode, docsBlock);
     taskResults.Add(result);
     if (!result.KeepsRunSuccessful)
         exitCode = 3;
@@ -114,15 +138,20 @@ static async Task<TaskRunResult> RunTask(
     string modelCommand,
     TimeSpan timeout,
     int maximumAttempts,
-    string? label = null)
+    string? label = null,
+    string mode = BenchmarkModes.ZeroShot,
+    string docsBlock = "")
 {
-    var prompt = ReadPrompt(task, suiteDirectory);
+    var taskPrompt = ReadPrompt(task, suiteDirectory);
+    var prompt = ComposeModelPrompt(docsBlock, taskPrompt);
+    var promptHash = Hash(prompt);
+    var docsHash = docsBlock.Length == 0 ? "" : Hash(docsBlock);
     var scratchDirectory = Path.Combine(Path.GetTempPath(), "phrase-bench", Guid.NewGuid().ToString("N"));
     Directory.CreateDirectory(scratchDirectory);
 
     try
     {
-        var attemptPrompt = prompt;
+        var attemptTaskPrompt = taskPrompt;
         var attempts = 0;
         var tokensIn = 0;
         var tokensOut = 0;
@@ -132,8 +161,9 @@ static async Task<TaskRunResult> RunTask(
         do
         {
             attempts++;
+            var attemptPrompt = ComposeModelPrompt(docsBlock, attemptTaskPrompt);
             reply = await RunModel(model, modelCommand, scratchDirectory, attemptPrompt, timeout);
-            tokensIn += EstimateTokens(attemptPrompt);
+            tokensIn += EstimateAttemptTokens(attemptTaskPrompt, docsBlock);
             tokensOut += EstimateTokens(reply);
             if (IsEmptyReply(reply))
             {
@@ -141,7 +171,7 @@ static async Task<TaskRunResult> RunTask(
                     continue;
 
                 var unavailable = BenchmarkResult.Unavailable(
-                    model, task.Id, Hash(prompt), "empty reply", attempts, tokensIn, tokensOut, CreateReplyHead(reply), label: label);
+                    model, task.Id, promptHash, "empty reply", attempts, tokensIn, tokensOut, CreateReplyHead(reply), label: label, mode: mode, docsHash: docsHash);
                 PersistResult(suiteDirectory, model, unavailable);
                 Console.WriteLine($"{model}: unavailable {task.Id}");
                 return new(true, false);
@@ -150,21 +180,22 @@ static async Task<TaskRunResult> RunTask(
             score = ScoreReply(reply);
             diagnostics.AddRange(score.Diagnostics);
             if (!score.Passed)
-                attemptPrompt = AddDiagnostics(prompt, score.Diagnostics);
+                attemptTaskPrompt = AddDiagnostics(taskPrompt, score.Diagnostics);
         }
         while (!score.Passed && attempts < maximumAttempts);
 
         var result = new BenchmarkResult(
             model, task.Id, score.Passed, attempts, tokensIn, tokensOut,
-            "estimated", diagnostics, false, Hash(prompt), CreateReplyHead(reply),
-            Status: "completed", Error: null, Label: label, ProofLevel: DetermineProofLevel(score, diagnostics));
+            "estimated", diagnostics, false, promptHash, CreateReplyHead(reply),
+            Status: "completed", Error: null, Label: label, ProofLevel: DetermineProofLevel(score, diagnostics),
+            Mode: mode, DocsHash: docsHash);
         PersistResult(suiteDirectory, model, result);
         Console.WriteLine($"{model}: {(score.Passed ? "passed" : "failed")} {task.Id}");
         return new(score.Passed, true);
     }
     catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception or TimeoutException)
     {
-        var result = BenchmarkResult.Unavailable(model, task.Id, Hash(prompt), exception.Message, label: label);
+        var result = BenchmarkResult.Unavailable(model, task.Id, promptHash, exception.Message, label: label, mode: mode, docsHash: docsHash);
         PersistResult(suiteDirectory, model, result);
         Console.WriteLine($"{model}: unavailable {task.Id}");
         return new(true, false);
@@ -224,6 +255,39 @@ static string ResolveSuitePath(string suitePath)
     }
     return Path.GetFullPath(suitePath);
 }
+
+static bool TryReadDocumentationBlock(string docsRoot, out string docsBlock, out string error)
+{
+    var grammarPath = Path.Combine(docsRoot, "docs", "GRAMMAR.md");
+    var examplePath = Path.Combine(docsRoot, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase");
+    if (!File.Exists(grammarPath) || !File.Exists(examplePath))
+    {
+        docsBlock = "";
+        error = $"docs-in-context mode could not find docs/GRAMMAR.md and tests/Phrase.Acceptance.Tests/Fixtures/orders.phrase under '{docsRoot}'.";
+        return false;
+    }
+
+    docsBlock = DocumentationBlock(File.ReadAllText(grammarPath), File.ReadAllText(examplePath));
+    error = "";
+    return true;
+}
+
+static string DocumentationBlock(string grammar, string example)
+{
+    var builder = new StringBuilder();
+    builder.Append(grammar);
+    if (builder.Length == 0 || builder[^1] != '\n')
+        builder.Append('\n');
+    builder.Append('\n');
+    builder.Append(example);
+    if (builder.Length == 0 || builder[^1] != '\n')
+        builder.Append('\n');
+    builder.Append('\n');
+    return builder.ToString();
+}
+
+static string ComposeModelPrompt(string docsBlock, string taskPrompt) =>
+    docsBlock.Length == 0 ? taskPrompt : docsBlock + taskPrompt;
 
 static string ReadPrompt(BenchmarkTask task, string suiteDirectory)
 {
@@ -416,6 +480,17 @@ static bool ContainsPhrase(string source)
 }
 
 static int EstimateTokens(string text) => Math.Max(1, (int)Math.Ceiling(text.Length / 4d));
+
+// Documentation is charged on its own estimate on every attempt. Joining it with the
+// task and dividing by four can drop a token, and the frozen bar counts those tokens
+// against Phrase in full.
+static int EstimateAttemptTokens(string taskPrompt, string docsBlock)
+{
+    var tokens = EstimateTokens(taskPrompt);
+    if (docsBlock.Length > 0)
+        tokens += EstimateTokens(docsBlock);
+    return tokens;
+}
 static bool IsEmptyReply(string reply) => string.IsNullOrWhiteSpace(reply);
 static string CreateReplyHead(string reply)
 {
@@ -460,7 +535,7 @@ static class Serialization
 
 sealed record Suite(int Version, IReadOnlyList<BenchmarkTask> Tasks);
 sealed record BenchmarkTask(string Id, string Kind, string Prompt, bool Holdout);
-sealed record BenchmarkResult(
+public sealed record BenchmarkResult(
     string Model,
     string Task,
     bool Passed,
@@ -475,13 +550,44 @@ sealed record BenchmarkResult(
     string Status = "completed",
     string? Error = null,
     string? Label = null,
-    string ProofLevel = "none")
+    string ProofLevel = "none",
+    string Mode = BenchmarkModes.ZeroShot,
+    string DocsHash = "")
 {
     public static BenchmarkResult Unavailable(
         string model, string task, string promptHash, string error,
         int attempts = 0, int tokensIn = 0, int tokensOut = 0, string replyHead = "",
-        string? label = null) =>
-        new(model, task, false, attempts, tokensIn, tokensOut, "estimated", [], false, promptHash, replyHead, "unavailable", error, label, "none");
+        string? label = null, string mode = BenchmarkModes.ZeroShot, string docsHash = "") =>
+        new(model, task, false, attempts, tokensIn, tokensOut, "estimated", [], false, promptHash, replyHead, "unavailable", error, label, "none", mode, docsHash);
+}
+
+public static class BenchmarkResults
+{
+    public static BenchmarkResult ReadStoredResult(string json)
+    {
+        using var document = JsonDocument.Parse(json);
+        var result = JsonSerializer.Deserialize<BenchmarkResult>(json, Serialization.Options)
+            ?? throw new InvalidDataException("Could not read a benchmark result.");
+        var root = document.RootElement;
+        var mode = ReadOptionalString(root, "mode");
+        var docsHash = ReadOptionalString(root, "docs_hash");
+        return result with
+        {
+            Mode = string.IsNullOrEmpty(mode) ? BenchmarkModes.ZeroShot : mode,
+            DocsHash = docsHash ?? "",
+        };
+    }
+
+    private static string? ReadOptionalString(JsonElement root, string name) =>
+        root.TryGetProperty(name, out var value) && value.ValueKind == JsonValueKind.String
+            ? value.GetString()
+            : null;
+}
+
+static class BenchmarkModes
+{
+    public const string ZeroShot = "zero-shot";
+    public const string DocsInContext = "docs-in-context";
 }
 sealed record BenchmarkScore(bool Passed, IReadOnlyList<string> Diagnostics);
 sealed record TaskRunResult(bool KeepsRunSuccessful, bool HasNonEmptyReply);
