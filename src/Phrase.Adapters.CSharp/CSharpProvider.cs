@@ -304,6 +304,8 @@ public sealed class CSharpProvider : ITargetAdapter
             }
         }
 
+        foreach (var effect in module.Phrases.SelectMany(phrase => phrase.Effects).Distinct(StringComparer.Ordinal))
+            code.Append("\n    private sealed class ").Append(CSharpIdent(effect)).Append("Double : I").Append(CSharpIdent(effect)).Append(" { }\n");
         code.Append("}\n");
         return code.ToString();
     }
@@ -331,8 +333,6 @@ public sealed class CSharpProvider : ITargetAdapter
         else
             code.Append("        Assert.Equal(").Append(CsString(fails.Code)).Append(", failure.Code);\n");
         code.Append("    }\n");
-        foreach (var effect in phrase.Effects)
-            code.Append("\n    private sealed class ").Append(CSharpIdent(effect)).Append("Double : I").Append(CSharpIdent(effect)).Append(" { }\n");
     }
 
     private static string Signature(PhraseModel phrase) =>
