@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:47a720728ea6c31d0bba8a256b5f85e5f85db452ee259ddb8a70fc14c0f80ba7 -->
+<!-- board-table-sha256:b3a886b7734be1bbf2c8b9f217e10017d77aad997a80be638d85de9b5c63a40e -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -34,7 +34,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 12 | 077 Board: the project is the single source; board files become a generated read-only archive | Done | 075, 076 |
 | 13 | 064 Loop: one durable loop at a time (lock, state, heartbeat) | Done | 076 (the picker reads the GitHub board; D25) |
 | 14 | 093 Record the sealed holdout hashes before the baseline starts | Done | none |
-| 15 | 086 Plain C# baseline suite: the eight development tasks as C# twins and a runner | Ready | 093 (Done: the sealed holdout hashes are recorded, D36) |
+| 15 | 086 Plain C# baseline suite: the eight development tasks as C# twins and a runner | Done | 093 (Done: the sealed holdout hashes are recorded, D36) |
 | 16 | 095 Plain C# twins for the read and modify tasks | Ready | 086 |
 | 17 | 096 Plain C# twins for the fix tasks, and a suite completeness check | Ready | 095 |
 | 18 | 094 Run the plain C# baseline: N=5 runs per model on the development tasks | Ready | 086, 095, 096 |
