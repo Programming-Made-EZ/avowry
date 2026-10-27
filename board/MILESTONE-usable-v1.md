@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:053b064067082ba50c3f19878ee71ae30fc9d06541dfa9833005c92541070d42 -->
+<!-- board-table-sha256:85630b82f46b3c2cf24f311f3b3b3e57ca5b36d2cc08fe94bc499b26c41697fc -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -54,7 +54,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 32 | 050 Every spec outcome kind asserts correctly, and a wrong one names itself | Done | 049 |
 | 33 | 087 orders.phrase compiles and its generated specs pass | Done | 039, 040, 041, 043, 044, 045, 048, 049, 050, 084 |
 | 34 | 098 Phrase arm scores executed outcomes for the write tasks | Done | 087, 097 |
-| 35 | 099 Phrase arm scores executed outcomes for the read and modify tasks | Ready | 098 |
+| 35 | 099 Phrase arm scores executed outcomes for the read and modify tasks | Done | 098 |
 | 36 | 100 Phrase arm scores executed outcomes for the fix tasks | Ready | 099 |
 | 37 | 101 Run the Phrase development baseline at the specs-passed level | Ready | 100, 094 |
 | 38 | 102 Head-to-head on the sealed holdouts: both arms at N=5 | Ready | 101 |
