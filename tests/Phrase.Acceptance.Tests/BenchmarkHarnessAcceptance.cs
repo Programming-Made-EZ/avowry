@@ -81,6 +81,49 @@ public class BenchmarkHarnessAcceptance
     }
 
     [Fact]
+    public async Task reply_head_scrubs_a_user_path_before_cutting_to_200_characters()
+    {
+        var prefix = new string('x', 190);
+        var reply = prefix + @" C:\ tail!";
+
+        var replyHead = await RunAndReadReplyHead(reply, "reply-head-user-path-v1");
+
+        Assert.True(replyHead.Length <= 200, $"Reply head was {replyHead.Length} characters.");
+        Assert.Contains(" [path]", replyHead, StringComparison.Ordinal);
+        Assert.DoesNotContain(@"C:\", replyHead, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task reply_head_masks_a_tilde_relative_path_inside_the_first_200_characters()
+    {
+        var replyHead = await RunAndReadReplyHead(
+            @"Inspect ~\AppData\Local\Temp\private\reply.txt before answering.",
+            "reply-head-tilde-path-v1");
+
+        Assert.Equal("Inspect [path] before answering.", replyHead);
+    }
+
+    [Fact]
+    public async Task reply_head_masks_a_secret_looking_token()
+    {
+        var replyHead = await RunAndReadReplyHead(
+            "Use api_key=top-secret-value before answering.",
+            "reply-head-secret-v1");
+
+        Assert.Equal("Use api_key=[redacted] before answering.", replyHead);
+    }
+
+    [Fact]
+    public async Task reply_head_without_sensitive_content_is_only_cut_to_200_characters()
+    {
+        var reply = new string('a', 210);
+
+        var replyHead = await RunAndReadReplyHead(reply, "reply-head-plain-v1");
+
+        Assert.Equal(reply[..200], replyHead);
+    }
+
+    [Fact]
     public async Task run_invokes_each_profile_once_headless_with_its_working_flags()
     {
         // Given each supported model profile and a shim that records its arguments
@@ -1237,6 +1280,17 @@ public class BenchmarkHarnessAcceptance
     private static async Task<JsonDocument> ReadModelResult(string suiteDirectory, string model) =>
         JsonDocument.Parse(await File.ReadAllTextAsync(
             Path.Combine(suiteDirectory, "results", $"{model}.json")));
+
+    private static async Task<string> RunAndReadReplyHead(string reply, string model)
+    {
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var modelOutput = Path.Combine(workspace.Root, "model-output.txt");
+        await File.WriteAllTextAsync(modelOutput, reply);
+        await RunBenchmark(suiteDirectory, model, PrintFileCommand(modelOutput));
+        using var result = await ReadModelResult(suiteDirectory, model);
+        return result.RootElement.GetProperty("reply_head").GetString()!;
+    }
 
     private static async Task<(int ExitCode, string Stdout, string Stderr)> RunBenchmark(
         string suiteDirectory, string model, string modelCommand, params string[] additionalArguments)

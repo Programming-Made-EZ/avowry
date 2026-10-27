@@ -663,18 +663,9 @@ static int EstimateAttemptTokens(string taskPrompt, string docsBlock, string col
 static bool IsEmptyReply(string reply) => string.IsNullOrWhiteSpace(reply);
 static string CreateReplyHead(string reply)
 {
-    var trimmed = reply.Trim();
-    var head = trimmed[..Math.Min(200, trimmed.Length)];
-    head = Regex.Replace(
-        head,
-        @"(?i)\b(api[_-]?key|token|secret)\s*[:=]\s*\S+",
-        "$1=[redacted]",
-        RegexOptions.CultureInvariant);
-    return Regex.Replace(
-        head,
-        @"(?<!\w)(?:[A-Za-z]:\\|/)(?:[^\s\""'<>]+[\\/])*[^\s\""'<>]*",
-        "[path]",
-        RegexOptions.CultureInvariant);
+    var scrubbed = Regex.Replace(reply.Trim(), @"(?i)\b(api[_-]?key|token|secret)\s*[:=]\s*\S+", "$1=[redacted]", RegexOptions.CultureInvariant);
+    scrubbed = Regex.Replace(scrubbed, @"(?<!\w)(?:(?:[A-Za-z]:\\|/|~[\\/])(?:[^\s\""'<>]+[\\/])*[^\s\""'<>]*)", "[path]", RegexOptions.CultureInvariant);
+    return scrubbed[..Math.Min(200, scrubbed.Length)];
 }
 static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text))).ToLowerInvariant();
 static string AddDiagnostics(string prompt, IReadOnlyList<string> diagnostics) =>
