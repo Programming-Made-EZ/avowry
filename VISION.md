@@ -81,6 +81,7 @@ A bigger catalogue is not a win. A smaller catalogue that removes the same work 
 - Design rules and the grammar: [docs/GRAMMAR.md](docs/GRAMMAR.md). Its rule 3 ("small fixed core, open phrase
   library") is reconciled with this vision by the keyword model ADR (card 022): keywords are the standard-library
   phrases that ship with Phrase.
+- Who a story is about: [PERSONAS.md](PERSONAS.md). A story names one of these personas (not a role) and its "so that" is value to that persona (Steve, 2026-10-26).
 - How the team works: [TEAM_WORKING_AGREEMENT.md](TEAM_WORKING_AGREEMENT.md). The board and milestones
   ([board/MILESTONE-usable-v1.md](board/MILESTONE-usable-v1.md), [board/MILESTONES.md](board/MILESTONES.md)) are
   assessed against this page.

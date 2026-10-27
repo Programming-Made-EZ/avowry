@@ -88,7 +88,7 @@ an assignee (model or seat) and a one-line why. There is no minimum or maximum r
 
 ### Board and cards
 
-- **Definition of Ready:** top of Ready; a Connextra story; ZOMBIES acceptance criteria (Zero, One, Many,
+- **Definition of Ready:** top of Ready; a Connextra story that names a PERSONA from `PERSONAS.md` (a specific user with context, goals and constraints, never a generic role such as "an engineer (or an LLM)") and a "so that" that is value THAT persona gets (not an internal design goal; Steve, 2026-10-26: "this is a role, not a persona"); the Ready check REJECTS a role-only story or a design-goal benefit; ZOMBIES acceptance criteria (Zero, One, Many,
   Boundaries, Interface, Exceptions) with a user-observable outcome; no unverified external dependency.
 - **Retro after every Done card**, before the next card is pulled. It **opens with flow metrics** taken from
   timestamps: commit-to-main time, time waiting on gates or reviews, and minutes lost to failed or retried
