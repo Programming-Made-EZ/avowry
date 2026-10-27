@@ -77,6 +77,17 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
             reply = await RunModel(model, command, attemptWorkingDirectory, attemptPrompt, timeout, coldProfile, promptFilePath);
             tokensIn += EstimateTokens(attemptPrompt);
             tokensOut += EstimateTokens(reply);
+            if (string.IsNullOrWhiteSpace(reply))
+            {
+                if (attempts < MaximumAttempts)
+                    continue;
+
+                var unavailable = CreateResult(task, model, false, attempts, tokensIn, tokensOut, diagnostics,
+                    promptHash, reply, label, "unavailable", "empty reply", "none", 0, 0, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
+                Persist(suiteDirectory, model, unavailable);
+                Console.WriteLine($"{model}: unavailable {task.Id}");
+                return true;
+            }
             var sources = ExtractCSharp(reply);
             if (sources.Count == 0)
             {
@@ -472,10 +483,7 @@ static async Task<string> RunModel(string model, string command, string workingD
     var error = await stderr;
     if (process.ExitCode != 0)
         throw new InvalidOperationException($"Model '{model}' exited {process.ExitCode}: {error}");
-    var output = await stdout;
-    if (string.IsNullOrWhiteSpace(output))
-        throw new InvalidOperationException($"Model '{model}' returned an empty capture.");
-    return output;
+    return await stdout;
 }
 
 static Process StartShell(string command, string workingDirectory)

@@ -145,6 +145,41 @@ public sealed class CSharpBaselineAcceptance
     }
 
     [Fact]
+    public async Task empty_reply_is_retried_to_the_cap_and_records_attempt_tokens()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, holdout: false, OneCase);
+        var empty = WriteReply(workspace.Root, "empty.txt", string.Empty);
+
+        var run = await Run(suite, PrintFileCommand(empty), "empty-v1");
+
+        Assert.Equal(0, run.ExitCode);
+        using var result = ReadResult(suite, "empty-v1");
+        Assert.Equal("unavailable", result.RootElement.GetProperty("status").GetString());
+        Assert.Equal("empty reply", result.RootElement.GetProperty("error").GetString());
+        Assert.Equal(3, result.RootElement.GetProperty("attempts").GetInt32());
+        Assert.Equal(3 * EstimateTokens("Return only C# source for namespace Greeting, static class Greeter, static string SayHello()."),
+            result.RootElement.GetProperty("tokens_in").GetInt32());
+    }
+
+    [Fact]
+    public async Task empty_first_reply_can_pass_on_the_second_attempt()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, holdout: false, OneCase);
+        var empty = WriteReply(workspace.Root, "empty.txt", string.Empty);
+        var correct = WriteReply(workspace.Root, "correct.cs", CorrectGreetingAndTest);
+        var command = WriteAttemptCommand(workspace.Root, empty, correct);
+
+        var run = await Run(suite, command, "empty-then-pass-v1");
+
+        Assert.Equal(0, run.ExitCode);
+        using var result = ReadResult(suite, "empty-then-pass-v1");
+        Assert.True(result.RootElement.GetProperty("passed").GetBoolean());
+        Assert.Equal(2, result.RootElement.GetProperty("attempts").GetInt32());
+    }
+
+    [Fact]
     public async Task generated_test_count_equals_the_number_of_outcome_cases()
     {
         using var workspace = TempWorkspace.Create();
