@@ -90,7 +90,7 @@ public class BenchmarkHarnessAcceptance
         {
             ["codex-probe"] = ["exec", "--skip-git-repo-check"],
             ["grok-probe"] = ["--max-turns", "10", "--prompt-file"],
-            ["copilot-probe"] = ["-p", "-s", "--allow-all-tools", "--trust-folder"],
+            ["copilot-probe"] = ["-s", "--allow-all-tools", "--trust-folder"],
             ["agy-probe"] = ["-p", "--model", "gemini-4-argon-high", "--dangerously-skip-permissions"],
         };
         var missingTokens = new List<string>();
@@ -110,7 +110,8 @@ public class BenchmarkHarnessAcceptance
             Assert.Contains($"{model}: passed", stdout);
             var argvLine = Assert.Single(await File.ReadAllLinesAsync(argvLog));
             if (model.StartsWith("codex", StringComparison.Ordinal) ||
-                model.StartsWith("grok", StringComparison.Ordinal))
+                model.StartsWith("grok", StringComparison.Ordinal) ||
+                model.StartsWith("copilot", StringComparison.Ordinal))
                 Assert.DoesNotContain("Greeting", argvLine);
             else
                 Assert.Contains("Greeting", argvLine);
@@ -129,40 +130,77 @@ public class BenchmarkHarnessAcceptance
     }
 
     [Fact]
-    public async Task run_delivers_the_copilot_prompt_as_the_p_argument()
+    public async Task cold_runs_append_exactly_the_cold_extras_and_never_break_the_command_line()
     {
-        // Given a copilot profile and a shim that records argv
+        // Given each profile launched cold, with a shim that records the real arguments it received
         using var workspace = TempWorkspace.Create();
         var suiteDirectory = CopySuiteTo(workspace.Root);
-        var argvLog = Path.Combine(workspace.Root, "copilot-probe-argv.log");
-        await File.WriteAllTextAsync(argvLog, string.Empty);
-        var modelCommand = await WriteArgumentRecordingShim(workspace.Root, "copilot-probe", argvLog);
+        var required = new Dictionary<string, string[]>
+        {
+            ["codex-probe"] = ["exec", "--skip-git-repo-check", "--sandbox", "read-only"],
+            ["grok-probe"] = ["--max-turns", "10", "--prompt-file", "--cwd", "--disallowed-tools", "all", "--disable-web-search"],
+            ["copilot-probe"] = ["-s", "--trust-folder", "--deny-tool", "shell", "write", "read", "url"],
+            ["agy-probe"] = ["-p", "--model", "gemini-4-argon-high", "--dangerously-skip-permissions"],
+        };
+        var forbidden = new Dictionary<string, string[]>
+        {
+            ["copilot-probe"] = ["--allow-all-tools", "*", "-p"],
+        };
+        var problems = new List<string>();
 
-        // When one development task is run
-        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "copilot-probe", modelCommand);
+        foreach (var (model, tokens) in required)
+        {
+            var argvLog = Path.Combine(workspace.Root, $"{model}-cold-argv.log");
+            await File.WriteAllTextAsync(argvLog, string.Empty);
+            var modelCommand = await WriteArgumentRecordingShim(workspace.Root, model, argvLog);
 
-        // Then -p carries the task prompt and the headless flags remain separate tokens
+            // When the benchmark runs one task cold
+            var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, model, modelCommand, "--cold");
+
+            // Then the command line has each required token, no forbidden one, no duplicated flag, and no flag left without its value
+            Assert.True(exitCode == 0, stdout + stderr);
+            var lines = await File.ReadAllLinesAsync(argvLog);
+            Assert.True(lines.Length == 1, $"{model}: expected one recorded command line, got {lines.Length}. stdout: {stdout} stderr: {stderr}");
+            var line = lines[0];
+            var actual = line.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
+            problems.AddRange(tokens.Where(token => !actual.Contains(token, StringComparer.Ordinal)).Select(token => $"{model}: missing {token}"));
+            if (forbidden.TryGetValue(model, out var banned))
+                problems.AddRange(banned.Where(token => actual.Contains(token, StringComparer.Ordinal)).Select(token => $"{model}: forbidden {token}"));
+            problems.AddRange(actual.Where(token => token.StartsWith("--", StringComparison.Ordinal))
+                .GroupBy(token => token).Where(group => group.Key != "--deny-tool" && group.Count() > 1).Select(group => $"{model}: duplicated {group.Key}"));
+            if (model == "grok-probe")
+            {
+                var index = Array.IndexOf(actual, "--prompt-file");
+                if (index < 0 || index + 1 >= actual.Length || actual[index + 1].StartsWith("--", StringComparison.Ordinal))
+                    problems.Add("grok-probe: --prompt-file has no value");
+                var cwd = Array.IndexOf(actual, "--cwd");
+                if (cwd < 0 || cwd + 1 >= actual.Length || actual[cwd + 1].StartsWith("--", StringComparison.Ordinal))
+                    problems.Add("grok-probe: --cwd has no value");
+            }
+        }
+
+        Assert.True(problems.Count == 0, string.Join(Environment.NewLine, problems));
+    }
+
+    [Fact]
+    public async Task run_delivers_the_copilot_prompt_on_stdin_so_a_multi_line_prompt_survives()
+    {
+        // Given a copilot profile whose task has a multi-line prompt (task file bodies and the documentation block are multi-line)
+        // and a shim that captures stdin and the argument line (a cmd.exe command line ends at the first newline, so -p cannot carry a multi-line prompt)
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var promptFile = Path.Combine(suiteDirectory, "tasks", "001-write-greeting", "prompt.md");
+        await File.WriteAllTextAsync(promptFile, "First line of the task.\n\nSecond paragraph of the task.\nWrite a valid Phrase module named Greeting.");
+        var capturedPrompt = Path.Combine(workspace.Root, "copilot-stdin.txt");
+
+        // When the task is run through the copilot profile
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "copilot-probe", CapturePromptCommand(capturedPrompt));
+
+        // Then the whole multi-line prompt arrived on stdin, and no -p argument carried it
         Assert.True(exitCode == 0, stdout + stderr);
-        Assert.Contains("copilot-probe: passed", stdout);
-        var argvLine = Assert.Single(await File.ReadAllLinesAsync(argvLog));
-        const string flagTail = " -s --allow-all-tools --trust-folder";
-        var promptStart = argvLine.IndexOf("-p ", StringComparison.Ordinal);
-        Assert.True(promptStart >= 0, $"Missing -p argument: {argvLine}");
-        var promptAndFlags = argvLine[(promptStart + 3)..];
-        var headlessFlagsStart = promptAndFlags.IndexOf(flagTail, StringComparison.Ordinal);
-        Assert.True(headlessFlagsStart > 0, $"Missing headless flags after -p: {argvLine}");
-        var promptArgument = promptAndFlags[..headlessFlagsStart].Trim();
-        if (promptArgument.Length >= 2 && promptArgument.StartsWith('"') && promptArgument.EndsWith('"'))
-            promptArgument = promptArgument[1..^1];
-        if (OperatingSystem.IsWindows())
-            promptArgument = promptArgument.Replace("\\\"", "\"");
-        var expectedPrompt = await File.ReadAllTextAsync(
-            Path.Combine(suiteDirectory, "tasks", "001-write-greeting", "prompt.md"));
-        Assert.False(promptArgument.StartsWith('@'), argvLine);
-        Assert.False(File.Exists(promptArgument), $"-p is a pathname, not prompt text: {promptArgument}");
-        Assert.Equal(expectedPrompt.TrimEnd(), promptArgument);
-        using var result = await ReadModelResult(suiteDirectory, "copilot-probe");
-        Assert.Equal("completed", result.RootElement.GetProperty("status").GetString());
+        var stdinText = await File.ReadAllTextAsync(capturedPrompt);
+        Assert.Contains("First line of the task.", stdinText.Replace("\r\n", "\n"));
+        Assert.Contains("Second paragraph of the task.\nWrite a valid Phrase module named Greeting.", stdinText.Replace("\r\n", "\n"));
     }
 
     [Fact]
@@ -807,6 +845,77 @@ public class BenchmarkHarnessAcceptance
     }
 
     [Fact]
+    public async Task run_records_cold_profile_metadata_and_uses_an_empty_workdir_at_launch()
+    {
+        // Given a fresh scratch directory and a fake Grok command that lists its working directory
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var modelOutput = Path.Combine(workspace.Root, "model-output.txt");
+        await File.WriteAllTextAsync(modelOutput, """
+            module Greeting
+
+            phrase "say hello"
+              native csharp
+                return;
+            """);
+        var modelCommand = OperatingSystem.IsWindows()
+            ? $"python -c \"import os; print(os.getcwd()); print(os.listdir('.'));\" && type \"{modelOutput}\""
+            : $"python -c \"import os; print(os.getcwd()); print(os.listdir('.'))\" && cat \"{modelOutput}\"";
+
+        // When the benchmark runs the profile in its own scratch workspace
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "grok-probe", modelCommand, "--cold");
+
+        // Then the row records the profile as cold, with the flags used, and the workdir started empty
+        Assert.True(exitCode == 0, stdout + stderr);
+        using var result = await ReadModelResult(suiteDirectory, "grok-probe");
+        Assert.True(result.RootElement.GetProperty("cold").GetBoolean());
+        Assert.False(string.IsNullOrEmpty(result.RootElement.GetProperty("cold_flags").GetString()));
+        Assert.Equal("There is no workspace and no files to read; answer directly in this reply without looking anything up.", result.RootElement.GetProperty("cold_preamble").GetString());
+        Assert.True(result.RootElement.GetProperty("workdir_empty_at_launch").GetBoolean());
+        var replyHead = result.RootElement.GetProperty("reply_head").GetString();
+        Assert.DoesNotContain("bench", replyHead ?? string.Empty, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("Phrase.Acceptance.Tests", replyHead ?? string.Empty, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void read_stored_result_treats_missing_cold_fields_as_warm_legacy_rows()
+    {
+        // Given a row from before cold-run metadata existed
+        var legacy = "{\"model\":\"legacy-v1\",\"task\":\"001-write-greeting\",\"passed\":true,\"attempts\":1,\"tokens_in\":42,\"tokens_out\":1,\"token_measurement\":\"estimated\",\"diagnostics\":[],\"misread\":false,\"prompt_hash\":\"abc\",\"status\":\"completed\"}";
+
+        // When it is read back
+        var result = BenchmarkResults.ReadStoredResult(legacy);
+
+        // Then the cold metadata falls back to a warm legacy default rather than a lie
+        Assert.False(result.Cold);
+        Assert.Equal(string.Empty, result.ColdFlags);
+        Assert.Equal(string.Empty, result.ColdPreamble);
+        Assert.Equal(string.Empty, result.ColdReason);
+        Assert.False(result.WorkdirEmptyAtLaunch);
+    }
+
+    [Fact]
+    public async Task run_records_a_max_turns_error_as_unavailable_with_the_reason()
+    {
+        // Given a model that refuses to answer within its turn cap
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var modelCommand = OperatingSystem.IsWindows()
+            ? "echo Error: max turns reached 1>&2 & exit /b 1"
+            : "echo 'Error: max turns reached' >&2; exit 1";
+
+        // When the benchmark runs it
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "turn-limit-v1", modelCommand);
+
+        // Then the result is unavailable with the turn-limit reason instead of a language failure
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Contains("turn-limit-v1: unavailable", stdout, StringComparison.Ordinal);
+        using var result = await ReadModelResult(suiteDirectory, "turn-limit-v1");
+        Assert.Equal("unavailable", result.RootElement.GetProperty("status").GetString());
+        Assert.Contains("max turns reached", result.RootElement.GetProperty("error").GetString(), StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
     public async Task run_docs_in_context_counts_documentation_tokens_above_the_same_zero_shot_task()
     {
         // Given one task, one fake model, and a docs root
@@ -923,6 +1032,7 @@ public class BenchmarkHarnessAcceptance
         // Then usage names the flag that keeps invented docs out of the baseline
         Assert.Equal(1, exitCode);
         Assert.Contains("--custom-docs", stderr, StringComparison.Ordinal);
+        Assert.Contains("--cold", stderr, StringComparison.Ordinal);
     }
 
     [Fact]
