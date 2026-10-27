@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:85630b82f46b3c2cf24f311f3b3b3e57ca5b36d2cc08fe94bc499b26c41697fc -->
+<!-- board-table-sha256:53bf748d7a06d883afacdcf0dc7e44d934ce8fb7e1490038989a889f659cd7bf -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -55,7 +55,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 33 | 087 orders.phrase compiles and its generated specs pass | Done | 039, 040, 041, 043, 044, 045, 048, 049, 050, 084 |
 | 34 | 098 Phrase arm scores executed outcomes for the write tasks | Done | 087, 097 |
 | 35 | 099 Phrase arm scores executed outcomes for the read and modify tasks | Done | 098 |
-| 36 | 100 Phrase arm scores executed outcomes for the fix tasks | Ready | 099 |
+| 36 | 100 Phrase arm scores executed outcomes for the fix tasks | Done | 099 |
 | 37 | 101 Run the Phrase development baseline at the specs-passed level | Ready | 100, 094 |
 | 38 | 102 Head-to-head on the sealed holdouts: both arms at N=5 | Ready | 101 |
 | 39 | 103 Head-to-head verdict page: WIN, LOSS, TIE or INCONCLUSIVE | Ready | 102 |
