@@ -202,9 +202,14 @@ def verify_bodies(gh, board_dir=None):
     card has exactly one marked issue and that body is the one the migrator
     would build.
     """
-    from scripts.board import migrate_cards
+    from scripts.board import generate_archive, migrate_cards
 
     board = Path(board_dir) if board_dir is not None else BOARD_DIR
+    if (board / "CUTOVER").exists():
+        # after the cutover the files are generated from the issues: the check is the archive check
+        if generate_archive.main(["--check"], gh_runner=gh, board_dir=board):
+            raise RuntimeError("the generated archive differs from the issues: run scripts/board/generate_archive.py --apply")
+        return len(list(board.glob("[0-9][0-9][0-9]-*.md")))
     cards = migrate_cards.load_cards(board)
     numbers = [card.number for card in cards]
     issues = migrate_cards.fetch_issues(gh, f"{OWNER}/{REPO}", lambda _seconds: None)

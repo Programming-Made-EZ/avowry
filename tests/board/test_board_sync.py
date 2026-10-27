@@ -519,6 +519,7 @@ class BoardSyncTests(unittest.TestCase):
             migrate_cards.sync_issue_body(fake, SLUG, action, lambda _seconds: None)
         self.assertEqual(fake.calls, [])
 
+    @unittest.skipIf((Path(__file__).resolve().parents[2] / "board" / "CUTOVER").exists(), "retired after the cutover: reads the real board files, which are now generated")
     def test_check_bodies_matches_every_card_after_line_ending_normalisation(self):
         # Given every real card has one issue and the stored body uses the other line ending
         fake = FakeGH()
@@ -561,6 +562,7 @@ class BoardSyncTests(unittest.TestCase):
         self.assertEqual(fake.issues[0]["title"], f"(001) kept title 1")
         self.assertEqual(fake.issues[0]["labels"], ["custom-label"])
 
+    @unittest.skipIf((Path(__file__).resolve().parents[2] / "board" / "CUTOVER").exists(), "retired after the cutover: reads the real board files, which are now generated")
     def test_check_bodies_fails_when_the_text_or_the_set_of_issues_is_wrong(self):
         cards = migrate_cards.load_cards(BOARD)
 

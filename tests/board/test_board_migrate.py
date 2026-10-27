@@ -203,6 +203,7 @@ class BoardMigrateTests(unittest.TestCase):
         self.assertEqual(fake.issues, [])
         self.assertFalse(any(call[1] in {"create", "close"} for call in fake.calls))
 
+    @unittest.skipIf((Path(__file__).resolve().parents[2] / "board" / "CUTOVER").exists(), "retired after the cutover: reads the real board files, which are now generated")
     def test_apply_creates_one_marked_issue_per_card(self):
         # Given every card file on the board
         fake = FakeGH()
@@ -272,6 +273,7 @@ class BoardMigrateTests(unittest.TestCase):
         self.assertIn("card", fake.labels)
         self.assertIn("tooling", fake.labels)
 
+    @unittest.skipIf((Path(__file__).resolve().parents[2] / "board" / "CUTOVER").exists(), "retired after the cutover: reads the real board files, which are now generated")
     def test_known_cards_get_the_right_labels_and_close_reasons(self):
         fake = FakeGH()
         self.run_main(["--apply"], fake)
@@ -308,6 +310,7 @@ class BoardMigrateTests(unittest.TestCase):
         self.assertNotIn("mob-crosscli", dashboard["body"])
         self.assertNotIn("C:\\Users", dashboard["body"])
 
+    @unittest.skipIf((Path(__file__).resolve().parents[2] / "board" / "CUTOVER").exists(), "retired after the cutover: reads the real board files, which are now generated")
     def test_second_apply_creates_nothing_and_following_dry_run_says_nothing_to_do(self):
         fake = FakeGH()
         self.run_main(["--apply"], fake)
@@ -328,6 +331,7 @@ class BoardMigrateTests(unittest.TestCase):
         self.assertIn("Nothing to do", applied)
         self.assertEqual(dry.strip(), "Nothing to do.")
 
+    @unittest.skipIf((Path(__file__).resolve().parents[2] / "board" / "CUTOVER").exists(), "retired after the cutover: reads the real board files, which are now generated")
     def test_no_delete_and_issues_without_the_marker_are_not_edited(self):
         fake = FakeGH()
         unmarked = {
@@ -505,6 +509,7 @@ class BoardMigrateTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertEqual(len([call for call in other.calls if call[:2] == ["issue", "create"]]), 1)
 
+    @unittest.skipIf((Path(__file__).resolve().parents[2] / "board" / "CUTOVER").exists(), "retired after the cutover: reads the real board files, which are now generated")
     def test_check_real_board_issues_counts_one_marker_per_card(self):
         fake = FakeGH()
         self.run_main(["--apply"], fake)
