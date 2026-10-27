@@ -17,15 +17,13 @@ public sealed class CSharpProvider : ITargetAdapter
     public CompilationOutput Emit(ModuleModel module)
     {
         ArgumentNullException.ThrowIfNull(module);
-        if (module.Types.Count > 0)
-            throw new NotImplementedException("The C# emitter does not support records yet.");
         if (module.Endpoints.Count > 0)
             throw new NotImplementedException("The C# emitter does not support endpoints yet.");
         if (module.Name.Length == 0)
             throw new NotImplementedException("The C# emitter needs a module name.");
 
         foreach (var phrase in module.Phrases)
-            RequireSupportedPhrase(phrase);
+            RequireSupportedPhrase(module, phrase);
 
         var api = module.Name + ".Api";
         var specs = module.Name + ".Specs";
@@ -33,6 +31,7 @@ public sealed class CSharpProvider : ITargetAdapter
         {
             [$"{api}/{module.Name}.Api.csproj"] = ApiProject(module.Name),
             [$"{api}/PhraseRuntime.cs"] = Runtime(module.Name),
+            [$"{api}/Types.cs"] = Types(module),
             [$"{api}/Phrases.cs"] = Phrases(module),
             [$"{specs}/{module.Name}.Specs.csproj"] = SpecsProject(module.Name),
             [$"{specs}/PhraseSpecs.cs"] = PhraseSpecs(module),
@@ -40,7 +39,7 @@ public sealed class CSharpProvider : ITargetAdapter
         return new CompilationOutput(files);
     }
 
-    private static void RequireSupportedPhrase(PhraseModel phrase)
+    private static void RequireSupportedPhrase(ModuleModel module, PhraseModel phrase)
     {
         if (phrase.Steps is not null)
             throw new NotImplementedException($"The C# emitter does not support composite phrase '{phrase.Template}' yet.");
@@ -50,26 +49,51 @@ public sealed class CSharpProvider : ITargetAdapter
             throw new NotImplementedException($"The C# emitter does not support effects on '{phrase.Template}' yet.");
         if (!phrase.Natives.ContainsKey("csharp"))
             throw new NotImplementedException($"The C# emitter needs a native csharp block on '{phrase.Template}'.");
-        if (phrase.Returns is null || !phrase.Returns.Equals(PType.Int))
-            throw new NotImplementedException($"The C# emitter does not support return type '{phrase.Returns?.ToString() ?? "nothing"}' on '{phrase.Template}' yet.");
+        if (phrase.Returns is null)
+            throw new NotImplementedException($"The C# emitter does not support phrase '{phrase.Template}' without a return type yet.");
 
         foreach (var hole in phrase.Holes)
         {
-            if (!hole.Type.Equals(PType.Int))
+            if (!IsSupportedType(module, hole.Type))
                 throw new NotImplementedException($"The C# emitter does not support hole type '{hole.Type}' on '{phrase.Template}' yet.");
         }
 
+        if (!IsSupportedType(module, phrase.Returns))
+            throw new NotImplementedException($"The C# emitter does not support return type '{phrase.Returns}' on '{phrase.Template}' yet.");
+
         foreach (var spec in phrase.Specs)
         {
-            if (spec.Outcome is not ReturnsModel returns || returns.Value is not BoundNumber number || !number.Type.Equals(PType.Int))
+            if (spec.Outcome is not ReturnsModel returns || !IsSupportedValue(module, returns.Value))
                 throw new NotImplementedException($"The C# emitter does not support the outcome of spec '{spec.Description}' yet.");
             foreach (var given in spec.Givens)
             {
-                if (given.Value is not BoundNumber givenNumber || !givenNumber.Type.Equals(PType.Int))
+                if (!IsSupportedValue(module, given.Value))
                     throw new NotImplementedException($"The C# emitter does not support the given value of spec '{spec.Description}' yet.");
             }
         }
     }
+
+    private static bool IsSupportedType(ModuleModel module, PType type)
+    {
+        if (type.IsError)
+            return false;
+        if (type == PType.Int || type == PType.Text || type == PType.Decimal || type == PType.Bool || type == PType.Id)
+            return true;
+        if (type.IsList)
+            return IsSupportedType(module, type.Arguments[0]);
+        if (type.IsOption)
+            return IsSupportedType(module, type.Arguments[0]);
+        return module.Types.Any(t => t.Name == type.Name);
+    }
+
+    private static bool IsSupportedValue(ModuleModel module, BoundExpr value) => value switch
+    {
+        BoundNumber => true,
+        BoundText => true,
+        BoundBool => true,
+        BoundRecord record => record.Fields.All(field => IsSupportedValue(module, field.Value)),
+        _ => false,
+    };
 
     private static string ApiProject(string module) =>
         "<Project Sdk=\"Microsoft.NET.Sdk\">\n" +
@@ -115,6 +139,22 @@ public sealed class CSharpProvider : ITargetAdapter
         "{\n" +
         "    public string Template { get; } = template;\n" +
         "}\n";
+
+    private static string Types(ModuleModel module)
+    {
+        var code = new StringBuilder();
+        code.Append("// <auto-generated>\n");
+        code.Append("// Emitted by the Phrase C# adapter. Declared record types are generated here.\n");
+        code.Append("// </auto-generated>\n");
+        code.Append("namespace ").Append(module.Name).Append(";\n\n");
+        foreach (var type in module.Types)
+        {
+            code.Append("public sealed record ").Append(type.Name).Append('(');
+            code.Append(string.Join(", ", type.Fields.Select(field => $"{CSharpType(field.Type)} {CSharpFieldName(field.Name)}")));
+            code.Append(");\n");
+        }
+        return code.ToString();
+    }
 
     private static string Phrases(ModuleModel module)
     {
@@ -181,7 +221,7 @@ public sealed class CSharpProvider : ITargetAdapter
         foreach (var given in spec.Givens)
         {
             code.Append("        // ").Append(Capitalize(spec.Lines[index++])).Append('\n');
-            code.Append("        int ").Append(given.Hole.Name).Append(" = ").Append(NumberText(given.Value)).Append(";\n");
+            code.Append("        ").Append(CSharpType(given.Hole.Type)).Append(" ").Append(given.Hole.Name).Append(" = ").Append(CSharpValue(given.Value)).Append(";\n");
         }
 
         code.Append("        // ").Append(Capitalize(spec.Lines[index++])).Append('\n');
@@ -189,7 +229,7 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append(string.Join(", ", phrase.Holes.Select(hole => hole.Name)));
         code.Append(");\n");
         code.Append("        // ").Append(Capitalize(spec.Lines[index])).Append('\n');
-        code.Append("        Assert.Equal(").Append(NumberText(((ReturnsModel)spec.Outcome).Value)).Append(", result);\n");
+        code.Append("        Assert.Equal(").Append(CSharpValue(((ReturnsModel)spec.Outcome).Value)).Append(", result);\n");
         code.Append("    }\n");
     }
 
@@ -210,10 +250,23 @@ public sealed class CSharpProvider : ITargetAdapter
     }
 
     private static string Parameters(PhraseModel phrase) =>
-        string.Join(", ", phrase.Holes.Select(hole => "int " + hole.Name));
+        string.Join(", ", phrase.Holes.Select(hole => $"{CSharpType(hole.Type)} {hole.Name}"));
 
     private static string Pascal(string word) =>
         word.Length == 0 ? word : char.ToUpperInvariant(word[0]) + word[1..];
+
+    private static string CSharpFieldName(string name) => name.Length == 0 ? name : char.ToUpperInvariant(name[0]) + name[1..];
+
+    private static string CSharpType(PType type)
+    {
+        if (type == PType.Int) return "int";
+        if (type == PType.Text || type == PType.Id) return "string";
+        if (type == PType.Decimal) return "decimal";
+        if (type == PType.Bool) return "bool";
+        if (type.IsList) return $"List<{CSharpType(type.Arguments[0])}>";
+        if (type.IsOption) return $"{CSharpType(type.Arguments[0])}?";
+        return type.Name;
+    }
 
     private static string Slug(string text)
     {
@@ -223,6 +276,15 @@ public sealed class CSharpProvider : ITargetAdapter
 
     private static string NumberText(BoundExpr value) =>
         value is BoundNumber number ? number.Text : throw new InvalidOperationException($"Expected an Int literal, found {value.GetType().Name}.");
+
+    private static string CSharpValue(BoundExpr value) => value switch
+    {
+        BoundText text => CsString(text.Value),
+        BoundNumber number => number.Text,
+        BoundBool boolean => boolean.Value ? "true" : "false",
+        BoundRecord record => $"new {record.Type.Name}({string.Join(", ", record.Fields.Select(field => $"{CSharpFieldName(field.Name)}: {CSharpValue(field.Value)}"))})",
+        _ => throw new InvalidOperationException($"Unsupported C# expression kind {value.GetType().Name}.")
+    };
 
     private static string Capitalize(string line) =>
         line.Length == 0 ? line : char.ToUpperInvariant(line[0]) + line[1..];
