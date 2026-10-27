@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:c16b1dacd110ebbcaa8809520c3f61a09818777a7af641f9b8f2462afb9cf191 -->
+<!-- board-table-sha256:099d5826fdafb116cffc35a3e8e543fc173fffd61b072dabd7bae414f139626f -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -43,7 +43,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 21 | 085 A missing Phrase reply is a model failure, not a harness error | Done | none |
 | 22 | 039 One phrase with one number input compiles to C# and its spec passes | Done | none (the stash Decider runs first) |
 | 23 | 040 C# compilation goes through the ITargetAdapter contract | Done | 039 |
-| 24 | 041 A declared record becomes a usable C# record | Ready | 040 |
+| 24 | 041 A declared record becomes a usable C# record | Done | 040 |
 | 25 | 042 List fields compile | Ready | 041 |
 | 26 | 043 A phrase can fail with its declared code | Ready | 040 |
 | 27 | 044 A native C# block is placed verbatim and builds | Ready | 043 |
