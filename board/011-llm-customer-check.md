@@ -1,6 +1,7 @@
 # LLM-customer check: a model adds an endpoint from the docs alone
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Depends on:** 009, 010, 057
 - **Milestone:** Usable v1 (plumbing for bar 6; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As Ari, I want to extend an unfamiliar Phrase app using only GRAMMAR.md and the documentation, so that I can deliver a working endpoint without repository-specific coaching.
 - **Acceptance criteria (ZOMBIES):**

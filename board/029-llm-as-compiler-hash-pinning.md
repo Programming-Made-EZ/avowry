@@ -4,6 +4,7 @@
 - **Milestone:** Vocabulary v1
 - **North star:** `VISION.md`
 - **Source:** Steve's earlier confirmed design: LLM-as-compiler with hash pinning. Decider D3.
+- **Depends on:** 028
 - **Story:** As Dana, I want a keyword without a hand-written target implementation to produce reproducible, spec-verified code, so that I can use the behavior in a new target language with confidence in repeat builds.
 - **Hypothesis:** We believe pinned LLM-produced implementations will let a new target support most of the catalogue without hand-written adapter implementations. We'll know when, for one target, the share of seed keywords produced by the LLM that pass their specs on the first pinned run reaches a target set from the card-028 baseline, with re-runs reproducing the pinned output exactly.
 - **Acceptance criteria (ZOMBIES):**

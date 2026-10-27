@@ -1,7 +1,8 @@
 # LLM benchmark harness v0: measure how well models use Phrase
 
-- **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Status:** Done 2026-10-26 on its written criteria (baseline invalid then; see 032)
 - **Source:** Steve, 2026-10-25: data-driven, hypothesis-driven work. This is the instrument for every later feature card.
+- **Depends on:** none
 - **Story:** As Riley, I want each model in the rotation to run a fixed, versioned suite of Phrase tasks from a cold start, so that I can judge feature and documentation changes from comparable evidence rather than opinion.
 - **Hypothesis:** We believe a pinned, repeatable benchmark will let us rank and keep or revert changes by metric for LLM authors/readers. We'll know when two runs of the same suite on the same model differ by no more than 10 points of pass rate (noise floor) and every later feature card cites a baseline from it.
 - **Acceptance criteria (ZOMBIES):**

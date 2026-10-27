@@ -4,6 +4,7 @@
 - **Milestone:** Usable v1 (base library needs it)
 - **North star:** `VISION.md`
 - **Source:** Retro 016 model feedback: Codex, Copilot, Grok, agy (4 of 4). Decider D6.
+- **Depends on:** 033
 - **Story:** As Dana, I want keywords such as retry, transaction and idempotent-execute to accept an action that specs can control, so that I can rely on their effectful behavior across target languages.
 - **Hypothesis:** We believe behavioral holes plus spec test doubles will make retry-style keywords expressible in the base library for LLM authors. We'll know when the retry, pagination and idempotent-execute seed keywords pass identical specs on the C# adapter without a native block in the keyword's definition, and native lines per task on the catalogue tasks fall from the baseline.
 - **Acceptance criteria (ZOMBIES):**

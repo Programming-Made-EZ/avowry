@@ -1,6 +1,7 @@
 # Proposal: make the spec `when` line optional
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Depends on:** 037
 - **Milestone:** Usable v1
 - **Source:** Retro 001 model feedback: agy (the `when called`/`when handled` line carries no information).
 - **Story:** As Ari, I want to omit a redundant spec `when` line when the unit kind determines the action, so that I spend fewer tokens and avoid introducing a contradictory action.

@@ -4,6 +4,7 @@
 - **Milestone:** Vocabulary v1
 - **North star:** `VISION.md`
 - **Source:** Steve's purpose ruling: judge coverage by LLM work removed. Decider D3.
+- **Depends on:** 017, 024
 - **Story:** As Riley, I want benchmark tasks to measure work removed and whether a cold model finds the right keyword, so that I can judge catalogue coverage by useful task outcomes instead of keyword count.
 - **Hypothesis:** We believe tasks that compare the same job with and without the catalogue will show how much LLM work each keyword removes, and a find-and-use task will show whether it is learnable. We'll know when the suite reports, per keyword and per model, tokens and native lines written at equal pass rate, and the share of cold runs that find and use the right keyword, each against a stored baseline.
 - **Acceptance criteria (ZOMBIES):**

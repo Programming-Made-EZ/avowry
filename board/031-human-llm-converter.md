@@ -4,6 +4,7 @@
 - **Milestone:** M6 Human view (future)
 - **North star:** `VISION.md`
 - **Source:** Steve's direction ruling 4 (VISION.md); Decider D4. Reading confirmed by Steve: two-way converter.
+- **Depends on:** 030
 - **Story:** As Morgan, I want bidirectional conversion between LLM-optimized Phrase and a human-friendly rendering, so that I can read and edit the behavior an agent maintains.
 - **Hypothesis:** We believe a lossless two-way converter will let humans review Phrase without raising the cost for LLM authors/readers. We'll know when round trips (LLM form to human form and back) reproduce the original exactly on the fixtures, and reviewers rate the human form faster to read than the LLM form, with LLM token counts for the canonical form unchanged.
 - **Acceptance criteria (ZOMBIES):**

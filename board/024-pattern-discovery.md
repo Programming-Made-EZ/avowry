@@ -4,6 +4,7 @@
 - **Milestone:** Vocabulary v1
 - **North star:** `VISION.md`
 - **Source:** Steve's purpose ruling: a comprehensive vocabulary found by evidence. Decider D3.
+- **Depends on:** 017
 - **Story:** As Riley, I want a repeatable way to find recurring patterns in real codebases and LLM task logs, so that I can propose vocabulary that removes demonstrated work from real tasks.
 - **Hypothesis:** We believe mining real code and LLM tasks will find patterns whose keywords remove more LLM work than hand-picked ones. We'll know when the top 10 mined candidates, turned into keywords, cut tokens written per task on the catalogue benchmark (card 027) by more than the same number of hand-picked keywords do, with the near-duplicate rate (card 026) not higher.
 - **Acceptance criteria (ZOMBIES):**

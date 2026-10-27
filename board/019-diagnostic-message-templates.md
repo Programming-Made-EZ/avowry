@@ -1,6 +1,7 @@
 # Publish exact diagnostic message templates in GRAMMAR.md
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Depends on:** 018
 - **Milestone:** Usable v1
 - **Source:** Retro 002 model feedback: Codex, Copilot, Grok and agy (4 of 4); agy also flagged PH326 vs endpoint failures.
 - **Story:** As Ari, I want the exact message template for each diagnostic in GRAMMAR.md, so that I can understand and fix a failing program without opening the compiler.

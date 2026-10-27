@@ -4,6 +4,7 @@
 - **Milestone:** Usable v1 (base library needs it)
 - **North star:** `VISION.md`
 - **Source:** Retro 016 model feedback: agy (failure-code holes), Copilot (canonical failure contract). Decider D6.
+- **Depends on:** 033
 - **Story:** As Ari, I want a reusable guard's caller to supply its failure code, so that I can use one guard pattern while preserving each domain's observable failure.
 - **Hypothesis:** We believe failure-code holes will remove per-domain guard clones for LLM authors without hiding failures. We'll know when the guard keywords in the base library drop from one per domain code to one per rule, and PH334 (undeclared failure) coverage stays complete in the dedup count and the spec pass rate.
 - **Acceptance criteria (ZOMBIES):**

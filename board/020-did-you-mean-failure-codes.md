@@ -1,6 +1,7 @@
 # Did-you-mean suggestions for failure codes and other unknown names
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Depends on:** 017
 - **Milestone:** Usable v1
 - **Source:** Retro 002 model feedback: Codex (typo-aware failure suggestions).
 - **Story:** As Ari, I want an unknown failure code or name to include the closest valid suggestion, so that I can fix a typo in one attempt.

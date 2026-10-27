@@ -1,6 +1,7 @@
 # Usable v1: acceptance test passes on main and gates CI
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Depends on:** 009, 010, 011
 - **Milestone:** Usable v1 (plumbing for bars 1-6; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As Steve, I want one automated test that says whether Phrase is usable to build an application, so that usable is detected rather than guessed.
 - **Acceptance criteria (ZOMBIES):**

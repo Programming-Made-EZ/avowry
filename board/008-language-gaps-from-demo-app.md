@@ -1,6 +1,7 @@
 # Close the language gaps the demo app exposes
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Depends on:** 025, 050, 052
 - **Milestone:** Usable v1 (plumbing for bar 1; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As Dana, I want Phrase to support the lookup, update, list, delete and validation behavior of a real CRUD API, so that I can describe a complete small service without directing an agent to add native glue.
 - **Acceptance criteria (ZOMBIES):**

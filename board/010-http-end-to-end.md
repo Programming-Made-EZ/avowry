@@ -1,6 +1,7 @@
 # End-to-end: real HTTP behaves as the specs say
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
+- **Depends on:** 009
 - **Milestone:** Usable v1 (plumbing for bar 5; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
 - **Story:** As Dana, I want the generated app to run and respond over real HTTP as its specs say, so that I can trust the specified behavior is what consumers receive from the service.
 - **Acceptance criteria (ZOMBIES):**

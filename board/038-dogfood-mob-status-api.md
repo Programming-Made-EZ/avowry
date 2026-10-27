@@ -1,6 +1,7 @@
 # Dogfood: the mob status API, written in Phrase
 
 - **Status:** Ready, after the Usable v1 path (rank: see `board/MILESTONE-usable-v1.md`)
+- **Depends on:** 012, 036
 - **Type:** feature (dogfood; exempt from the hypothesis rule); second demo app, NOT a Usable v1 bar
 - **Milestone:** Vocabulary v1 (M3 evidence: a second real app the mob itself uses); starts only after bar 5 (card 010) is green
 - **Source:** Steve, 2026-10-26: "this seems like a good starter app for the phrase lang" (the live mob dashboard, card 036). Team review (Decider D16: Codex Yes, Grok Yes, agy Yes, Copilot Support-it): keep the Tasks API (009) as the bounded Usable v1 proof and file this as a dogfood card after it. Steve later: the 30-minute MOB.md digests already give him the visibility he wanted, so the dashboard follow-ups are not urgent; this card's value is as a second real Phrase app, not as a dashboard.

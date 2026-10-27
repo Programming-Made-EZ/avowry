@@ -4,6 +4,7 @@
 - **Milestone:** Usable v1 (base library needs it)
 - **North star:** `VISION.md`
 - **Source:** Retro 016 model feedback: Codex, Copilot, Grok, agy (4 of 4). Decider D6.
+- **Depends on:** 022, 032, 040
 - **Story:** As Ari, I want reusable phrases to accept type parameters such as `phrase<T>`, so that I can apply one known keyword to different domain types without cloning it.
 - **Hypothesis:** We believe type parameters will let one base keyword replace per-domain clones for LLM authors. We'll know when the number of near-duplicate phrase clones in the fixtures and seed library (the dedup count) drops to zero for the guards covered, and lines written per write task on the benchmark's validation tasks fall from the baseline, with no rise in resolver diagnostics per attempt.
 - **Acceptance criteria (ZOMBIES):**

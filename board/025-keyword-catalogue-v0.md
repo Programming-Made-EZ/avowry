@@ -4,6 +4,7 @@
 - **Milestone:** Usable v1
 - **North star:** `VISION.md`
 - **Source:** Steve's purpose ruling: the catalogue is the library. Decider D3.
+- **Depends on:** 024, 034, 050
 - **Story:** As Ari, I want a documented base library of spec-backed universal patterns that work through the C# adapter, so that I can reuse a known keyword instead of writing each pattern myself.
 - **Hypothesis:** We believe a seed catalogue of common patterns will cut native-code lines and attempts-to-green on write tasks for LLM authors. We'll know when native-code lines per write task on the demo-app tasks move from the card-016/017 baseline to at most 60% of it, with pass rate unchanged and no two seed keywords flagged as near-duplicates.
 - **Acceptance criteria (ZOMBIES):**
