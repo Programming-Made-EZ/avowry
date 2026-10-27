@@ -57,6 +57,9 @@ A phrase that declares `fails with X` should have a spec that shows X, since the
 behaviour to specify. Status: direction; the grammar and linter rule, the audit of existing examples and benchmark tasks, and
 the validation-return question are raw input on the board.
 
+**6. Agile: iterate and increment, do not over-specify up front (2026-10-26).** Steve: "Just for general direction, I want this to aim toward agile philosophy. It's a common temptation to skew toward spec-heavy up-front planning. We should avoid this temptation despite building effectively a spec for planning. Iteration and incremental is the key to successful development."
+*Interpretation (how to apply it is the mob's call):* a guiding principle for both the product and the process. **Product:** Phrase specs support emergent, just-in-time design that grows one slice at a time; they must not demand big up-front specification before something works. **Process:** cards evolve the language through small, working increments; a card is only as specified as the next slice needs, and a plan that is mostly written specification before any working increment is the temptation to avoid, even though the board is effectively a spec for planning. Used as a lens at every retro: where are we over-specifying up front? Status: direction (guiding principle).
+
 ## What this commits us to
 
 - The catalogue is a first-class artifact: every keyword has a name that is a sentence, typed holes, specs that run as
