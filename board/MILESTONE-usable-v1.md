@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:f0af093d50fd08d11a5cd7fc4f85100be62ee7f6afc0ffc19df6751284bb9f79 -->
+<!-- board-table-sha256:f650ed0ac9088b86d3bc3b232ac0636ad806d5754da470984500b14961ba8257 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -54,7 +54,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 32 | 090 Benchmark: a docs-in-context mode that gives a model the real docs | Done | 085 |
 | 33 | 091 Benchmark: cold runs, a fresh session in an empty folder for every attempt | Done | 090 |
 | 34 | 092 Benchmark: scrub a stored reply before cutting it to 200 characters | Done | 085 |
-| 35 | 037 Benchmark: docs in the prompt, and cold runs | Ready | 090, 091, 092 (sliced: docs-in-context mode, cold runs and the reply-head scrub moved to those cards; this card is now the baseline RUN) |
+| 35 | 037 Benchmark: docs in the prompt, and cold runs | Done | 090, 091, 092 (sliced: docs-in-context mode, cold runs and the reply-head scrub moved to those cards; this card is now the baseline RUN) |
 | 36 | 088 Head-to-head: Phrase vs plain C# on the frozen bar | Ready | 085, 086, 094, 087, 037 |
 | 37 | 089 Option and nested-record fields compile | Ready | 042 |
 | 38 | 065 Loop: run one card with a pinned toolchain | Ready | 064 |
