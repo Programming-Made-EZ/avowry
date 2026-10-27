@@ -53,7 +53,7 @@ an assignee (model or seat) and a one-line why. There is no minimum or maximum r
   seed of the next attempt. Metrics: retries per task, partial-state incidents (stashes, uncommitted carry-over), time to land. Counter-metric: merge conflicts and resync overhead from
   parallel work. Review after the first three thin cards that use it; the trial Decider keeps, changes or drops it.
 - **Agile: iterate and increment (Steve, 2026-10-26; VISION ruling 6).** "I want this to aim toward agile philosophy. It's a common temptation to skew toward spec-heavy up-front planning. We should avoid this temptation despite building effectively a spec for planning. Iteration and incremental is the key to successful development." So: specify only as much as the next slice needs; prefer a working increment over a longer plan; let design emerge slice by slice; and ask at every retro, in the process category, "where are we over-specifying up front?" (long Done-when lists, cards written far ahead of their turn, ceremony per card, designs decided before evidence). A signal to watch, never a quota; the thin-slice rules (D18) are an application of it.
-- **The board is the single source of truth.** Work is pulled from the top of the ranked Ready list.
+- **The Phrase Board on GitHub Projects (project 1 under Programming-Made-EZ, private) is the single source of truth.** `board/` is a generated read-only archive (`scripts/board/generate_archive.py`). The loop and the retro re-rank hook write Rank and Status to the project only, after a passed Decider, skipping any card whose Rank is newer than the Decider's snapshot. Card text is edited on the issue. Work is pulled from the top of the ranked Ready list.
   A feature idea from Steve is RAW INPUT: the mob reviews it, refines it into a card (a Connextra story
   plus ZOMBIES acceptance criteria a user can observe), and the PM ranks it. Steve gets back the card
   number, its position and any one-word question, never a design plan to approve. The board holds only
@@ -358,9 +358,7 @@ within the last hour) takes a driver out of rotation, until its next successful 
   and put it first on `PATH` for runs). Green means `dotnet test Phrase.sln --filter "Status!=Pending"`
   passes with zero warnings (`TreatWarningsAsErrors` is on). Tests marked `Status=Pending` are the to-do
   list; remove the trait in the same commit that turns a class green.
-- **Board:** the `board/` folder (one markdown card per file, `NNN-slug.md`). Cards carry a Connextra story,
-  ZOMBIES acceptance criteria and a "Done when" command list the facilitator runs. The PM ranks by number
-  order unless a card says otherwise. No GitHub Project exists for this repo yet.
+- **Board:** the Phrase Board on GitHub Projects (project 1 under Programming-Made-EZ, private) is the single source of truth. `board/` is a generated read-only archive (`scripts/board/generate_archive.py`), one `NNN-slug.md` per card. Card text is edited on the issue. The loop and the retro re-rank hook write Rank and Status to the project only, after a passed Decider, skipping any card whose Rank is newer than the Decider's snapshot. Cards carry a Connextra story, ZOMBIES acceptance criteria and a "Done when" command list the facilitator runs.
 - **Feature-flag policy:** none; compiler internals have no user-facing surface yet. The architect may
   overrule per card.
 - **Release target:** none yet (no published package). The mob decides release and grammar-compatibility

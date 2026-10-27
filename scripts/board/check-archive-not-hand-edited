@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+"""Pre-commit entry: generated board archives are not hand-edited.
+
+The check itself is scripts/check-board-archive.py. This path is the name
+used by the cutover card. It reads the git index only and does not call gh.
+"""
+
+import runpy
+from pathlib import Path
+
+runpy.run_path(
+    str(Path(__file__).resolve().parents[1] / "check-board-archive.py"),
+    run_name="__main__",
+)

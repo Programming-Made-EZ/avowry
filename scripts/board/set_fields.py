@@ -25,6 +25,10 @@ STATUSES = ("Ready", "In Progress", "Done", "Superseded/Withdrawn")
 SHAPES = ("Story", "Contract")
 NUMBER_FIELDS = ("Rank", "Card number")
 FIELD_NAMES = ("Rank", "Card number", "Depends on", "Kind", "Phase", "Card author", "Shape", "Enables", "Status")
+CUTOVER_REFUSAL = (
+    "board/CUTOVER exists: the files-to-board direction is retired. "
+    "The GitHub project is canonical. A dry run is still allowed."
+)
 
 
 @dataclass(frozen=True)
@@ -259,6 +263,8 @@ def main(argv=None, gh_runner=gh_runner, board_dir=BOARD_DIR):
     validate_target(args.owner, args.repo)
     dry_run = not args.apply or args.dry_run
     try:
+        if not dry_run and (Path(board_dir) / "CUTOVER").is_file():
+            raise RuntimeError(CUTOVER_REFUSAL)
         project, fields, actions = plan(gh_runner, board_dir, args.owner, args.repo, args.running)
         if not dry_run:
             apply_actions(gh_runner, project["id"], fields, actions, args.owner, args.repo)

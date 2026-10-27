@@ -39,6 +39,10 @@ LABEL_SPECS = (
     ("card", "1D76DB", "Phrase board card"),
     ("tooling", "5319E7", "Tooling card"),
 )
+CUTOVER_REFUSAL = (
+    "board/CUTOVER exists: the files-to-board direction is retired. "
+    "The GitHub project is canonical. A dry run is still allowed."
+)
 
 
 @dataclass(frozen=True)
@@ -435,6 +439,8 @@ def migrate(gh, *, owner: str = OWNER, repo: str = REPO, dry_run: bool = True, s
         sleep = time.sleep
     slug = f"{owner}/{repo}"
     board = Path(board_dir) if board_dir is not None else BOARD_DIR
+    if not dry_run and (board / "CUTOVER").is_file():
+        raise RuntimeError(CUTOVER_REFUSAL)
     cards = load_cards(board)
     existing = index_markers(fetch_issues(gh, slug, sleep))
     if sync_bodies:
