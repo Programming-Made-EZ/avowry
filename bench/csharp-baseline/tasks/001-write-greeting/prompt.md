@@ -1,10 +1,4 @@
-Write C# code that returns the text "hello".
-
-Use namespace `Greeting`, a public static class `Greeter`, and this method signature:
-
-```csharp
-public static string SayHello()
-```
+Write C# code in namespace `Greeting` with a public static method that has no parameters and returns the text "hello".
 
 Also write an xUnit test proving that the returned text is "hello".
 

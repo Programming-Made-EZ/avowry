@@ -6,6 +6,7 @@ namespace Phrase.Acceptance.Tests;
 
 public sealed class CSharpBaselineAcceptance
 {
+    // The Phrase prompt mentions a C# native body for task 002 because that is a Phrase mechanic; the C# twin intentionally does not.
     [Fact]
     public async Task correct_csharp_reply_passes_with_specs_passed_proof()
     {
@@ -20,6 +21,7 @@ public sealed class CSharpBaselineAcceptance
         Assert.True(result.RootElement.GetProperty("passed").GetBoolean());
         Assert.Equal("specs-passed", result.RootElement.GetProperty("proof_level").GetString());
         Assert.Equal("plain-csharp", result.RootElement.GetProperty("mode").GetString());
+        Assert.Equal("executed-outcomes", result.RootElement.GetProperty("score_bar").GetString());
         Assert.Equal(1, result.RootElement.GetProperty("model_test_count").GetInt32());
         Assert.Equal(2, result.RootElement.GetProperty("harness_test_count").GetInt32());
     }
@@ -37,6 +39,9 @@ public sealed class CSharpBaselineAcceptance
         using var result = ReadResult(suite, "wrong-v1");
         Assert.False(result.RootElement.GetProperty("passed").GetBoolean());
         Assert.Contains("returns_hello", result.RootElement.GetProperty("diagnostics")[0].GetString());
+        Assert.True(result.RootElement.GetProperty("diagnostics")[0].GetString()!.Length <= 600);
+        Assert.Equal(1, result.RootElement.GetProperty("model_test_count").GetInt32());
+        Assert.Equal(1, result.RootElement.GetProperty("harness_test_count").GetInt32());
     }
 
     [Fact]
@@ -52,7 +57,7 @@ public sealed class CSharpBaselineAcceptance
         using var result = ReadResult(suite, "no-test-v1");
         Assert.Contains(result.RootElement.GetProperty("diagnostics").EnumerateArray(), value => value.GetString() == "no_csharp_tests_found");
         Assert.Equal(0, result.RootElement.GetProperty("model_test_count").GetInt32());
-        Assert.Equal(1, result.RootElement.GetProperty("harness_test_count").GetInt32());
+        Assert.Equal(0, result.RootElement.GetProperty("harness_test_count").GetInt32());
     }
 
     [Fact]
@@ -114,6 +119,87 @@ public sealed class CSharpBaselineAcceptance
     }
 
     [Fact]
+    public async Task entry_point_is_discovered_without_a_hard_coded_class_or_method_name()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, holdout: false, OneCase);
+        var reply = WriteReply(workspace.Root, "discovered.cs", """
+            namespace Greeting; public static class Welcome { public static string Message() => "hello"; }
+            public sealed class WelcomeTests { [Xunit.Fact] public void works() => Xunit.Assert.Equal("hello", Welcome.Message()); }
+            """);
+
+        var run = await Run(suite, PrintFileCommand(reply), "discovered-v1");
+
+        Assert.Equal(0, run.ExitCode);
+    }
+
+    [Fact]
+    public async Task marked_two_file_reply_is_written_as_two_compilation_units()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, holdout: false, OneCase);
+        var reply = WriteReply(workspace.Root, "two-files.cs", """
+            // FILE: Greeting.cs
+            namespace Greeting { public static class Welcome { public static string Message() => "hello"; } }
+            // FILE: Tests.cs
+            namespace Greeting { public sealed class WelcomeTests { [Xunit.Fact] public void works() => Xunit.Assert.Equal("hello", Welcome.Message()); } }
+            """);
+
+        var run = await Run(suite, PrintFileCommand(reply), "two-files-v1");
+
+        Assert.Equal(0, run.ExitCode);
+    }
+
+    [Fact]
+    public async Task failed_build_claims_no_executed_test_counts()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, holdout: false, OneCase);
+        var reply = WriteReply(workspace.Root, "broken.cs", "namespace Greeting; public class Broken { [Xunit.Fact] public void test() { nope } }");
+
+        await Run(suite, PrintFileCommand(reply), "broken-v1");
+
+        using var result = ReadResult(suite, "broken-v1");
+        Assert.Equal(0, result.RootElement.GetProperty("model_test_count").GetInt32());
+        Assert.Equal(0, result.RootElement.GetProperty("harness_test_count").GetInt32());
+        Assert.Equal("none", result.RootElement.GetProperty("proof_level").GetString());
+    }
+
+    [Fact]
+    public async Task reply_head_is_scrubbed_before_it_is_cut()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, holdout: false, OneCase);
+        var secretPath = @"C:\Users\alice\private\answer.cs";
+        var reply = WriteReply(workspace.Root, "path.cs", new string('x', 190) + " " + secretPath + "\n" + CorrectGreetingAndTest);
+
+        await Run(suite, PrintFileCommand(reply), "scrub-v1");
+
+        using var result = ReadResult(suite, "scrub-v1");
+        Assert.DoesNotContain("alice", result.RootElement.GetProperty("reply_head").GetString(), StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task zero_executed_model_tests_is_a_completed_failure()
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, holdout: false, OneCase);
+        var reply = WriteReply(workspace.Root, "skipped.cs", """
+            namespace Greeting; public static class Welcome { public static string Message() => "hello"; }
+            public sealed class Tests { [Xunit.Fact(Skip = "not run")] public void skipped() { } }
+            """);
+
+        var run = await Run(suite, PrintFileCommand(reply), "skipped-v1");
+
+        Assert.Equal(3, run.ExitCode);
+        using var result = ReadResult(suite, "skipped-v1");
+        Assert.Equal("completed", result.RootElement.GetProperty("status").GetString());
+        Assert.Equal("tests_did_not_run", result.RootElement.GetProperty("diagnostics")[0].GetString());
+        Assert.Equal(0, result.RootElement.GetProperty("model_test_count").GetInt32());
+        Assert.Equal("none", result.RootElement.GetProperty("proof_level").GetString());
+    }
+
+    [Fact]
     public async Task holdout_task_is_skipped()
     {
         using var workspace = TempWorkspace.Create();
@@ -130,6 +216,7 @@ public sealed class CSharpBaselineAcceptance
         // FILE: Greeter.cs
         namespace Greeting; public static class Greeter { public static string SayHello() => "hello"; }
         // FILE: GreeterTests.cs
+        using Greeting;
         public sealed class GreeterTests { [Xunit.Fact] public void Greeter_returns_hello() => Xunit.Assert.Equal("hello", Greeter.SayHello()); }
         """;
     private const string CorrectCodeWithWrongOwnTest = """

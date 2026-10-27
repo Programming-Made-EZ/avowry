@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 const int MaximumAttempts = 3;
 const string AgyModel = "gemini-4-argon-high";
@@ -53,6 +54,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
     var tokensOut = 0;
     var diagnostics = new List<string>();
     var reply = "";
+    Score? lastScore = null;
     try
     {
         var attemptPrompt = prompt;
@@ -62,14 +64,15 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
             reply = await RunModel(model, command, scratch, attemptPrompt, timeout);
             tokensIn += EstimateTokens(attemptPrompt);
             tokensOut += EstimateTokens(reply);
-            var source = ExtractCSharp(reply);
-            if (source.Length == 0)
+            var sources = ExtractCSharp(reply);
+            if (sources.Count == 0)
             {
                 diagnostics.Add("no_csharp_found");
             }
             else
             {
-                var score = await Score(source, task, outcomes, scratch, timeout);
+                var score = await Score(sources, task, outcomes, scratch, timeout);
+                lastScore = score;
                 if (score.Passed)
                 {
                     var passedResult = CreateResult(task, model, true, attempts, tokensIn, tokensOut, diagnostics,
@@ -84,7 +87,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
         }
 
         var failed = CreateResult(task, model, false, attempts, tokensIn, tokensOut, diagnostics,
-            promptHash, reply, label, "completed", null, "none", CountModelTests(ExtractCSharp(reply)), outcomes.Count);
+            promptHash, reply, label, "completed", null, "none", lastScore?.ModelTestCount ?? 0, lastScore?.HarnessTestCount ?? 0);
         Persist(suiteDirectory, model, failed);
         Console.WriteLine($"{model}: failed {task.Id}");
         return false;
@@ -92,7 +95,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
     catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception or TimeoutException)
     {
         var unavailable = CreateResult(task, model, false, attempts, tokensIn, tokensOut, diagnostics,
-            promptHash, reply, label, "unavailable", exception.Message, "none", CountModelTests(ExtractCSharp(reply)), outcomes.Count);
+            promptHash, reply, label, "unavailable", exception.Message, "none", 0, 0);
         Persist(suiteDirectory, model, unavailable);
         Console.WriteLine($"{model}: unavailable {task.Id}");
         return true;
@@ -104,15 +107,16 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
     }
 }
 
-static async Task<Score> Score(string source, BenchmarkTask task, IReadOnlyList<Outcome> outcomes, string scratch, TimeSpan timeout)
+static async Task<Score> Score(IReadOnlyList<SourceFile> sources, BenchmarkTask task, IReadOnlyList<Outcome> outcomes, string scratch, TimeSpan timeout)
 {
-    var modelTestCount = CountModelTests(source);
-    if (modelTestCount == 0)
-        return new(false, "no_csharp_tests_found", 0, outcomes.Count);
+    var plannedModelTests = CountModelTests(string.Join(Environment.NewLine, sources.Select(source => source.Content)));
+    if (plannedModelTests == 0)
+        return new(false, "no_csharp_tests_found", 0, 0);
 
     var project = Path.Combine(scratch, "verification");
     Directory.CreateDirectory(project);
-    await File.WriteAllTextAsync(Path.Combine(project, "Candidate.cs"), source);
+    foreach (var source in sources)
+        await File.WriteAllTextAsync(Path.Combine(project, source.Name), source.Content);
     await File.WriteAllTextAsync(Path.Combine(project, "GeneratedOutcomeTests.cs"), GenerateTests(task, outcomes));
     await File.WriteAllTextAsync(Path.Combine(project, "Verification.csproj"), """
         <Project Sdk="Microsoft.NET.Sdk">
@@ -124,7 +128,8 @@ static async Task<Score> Score(string source, BenchmarkTask task, IReadOnlyList<
           </ItemGroup>
         </Project>
         """);
-    using var process = StartProcess("dotnet", project, "test", "Verification.csproj", "--nologo", "--verbosity", "normal");
+    const string trxName = "results.trx";
+    using var process = StartProcess("dotnet", project, "test", "Verification.csproj", "--nologo", "--verbosity", "quiet", "--logger", $"trx;LogFileName={trxName}");
     var stdout = process.StandardOutput.ReadToEndAsync();
     var stderr = process.StandardError.ReadToEndAsync();
     using var cancellation = new CancellationTokenSource(timeout);
@@ -133,12 +138,30 @@ static async Task<Score> Score(string source, BenchmarkTask task, IReadOnlyList<
     {
         process.Kill(entireProcessTree: true);
         await process.WaitForExitAsync();
-        return new(false, "dotnet_test_timeout", modelTestCount, outcomes.Count);
+        return new(false, "dotnet_test_timeout", 0, 0);
     }
     var output = (await stdout) + (await stderr);
+    var trxPath = Path.Combine(project, "TestResults", trxName);
+    if (!File.Exists(trxPath))
+        return new(false, CompactFailureSummary(output), 0, 0);
+    var result = ReadTestResult(trxPath);
+    if (result.ModelTests == 0 || result.HarnessTests < outcomes.Count)
+        return new(false, "tests_did_not_run", result.ModelTests, result.HarnessTests);
     return process.ExitCode == 0
-        ? new(true, "", modelTestCount, outcomes.Count)
-        : new(false, TrimDiagnostic(output), modelTestCount, outcomes.Count);
+        ? new(true, "", result.ModelTests, result.HarnessTests)
+        : new(false, result.Failures, result.ModelTests, result.HarnessTests);
+}
+
+static TestResult ReadTestResult(string path)
+{
+    var document = XDocument.Load(path);
+    var results = document.Descendants().Where(element => element.Name.LocalName == "UnitTestResult").ToArray();
+    var executed = results.Where(result => !string.Equals((string?)result.Attribute("outcome"), "NotExecuted", StringComparison.OrdinalIgnoreCase)).ToArray();
+    var harness = executed.Count(result => ((string?)result.Attribute("testName"))?.Contains("GeneratedOutcomeTests", StringComparison.Ordinal) == true);
+    var model = executed.Length - harness;
+    var failures = results.Where(result => string.Equals((string?)result.Attribute("outcome"), "Failed", StringComparison.OrdinalIgnoreCase))
+        .Select(result => $"{(string?)result.Attribute("testName")}: {FirstLine(result.Descendants().FirstOrDefault(element => element.Name.LocalName == "Message")?.Value ?? "failed")}");
+    return new(model, harness, Cap(string.Join(Environment.NewLine, failures), 600));
 }
 
 static int CountModelTests(string source) => string.IsNullOrWhiteSpace(source)
@@ -149,8 +172,8 @@ static string GenerateTests(BenchmarkTask task, IReadOnlyList<Outcome> outcomes)
 {
     var calls = task.Id switch
     {
-        "001-write-greeting" => outcomes.Select(outcome => $"Assert.Equal({Literal(outcome.Returns)}, global::Greeting.Greeter.SayHello());"),
-        "002-write-total" => outcomes.Select(outcome => $"Assert.Equal({Literal(outcome.Returns)}, global::Totals.Calculator.Double({Literal(outcome.Given.GetProperty("value"))}));"),
+        "001-write-greeting" => outcomes.Select(outcome => $"Assert.Equal({Literal(outcome.Returns)}, (string)EntryPoint().Invoke(null, null)!);"),
+        "002-write-total" => outcomes.Select(outcome => $"Assert.Equal({Literal(outcome.Returns)}, (int)EntryPoint().Invoke(null, new object[] {{ {Literal(outcome.Given.GetProperty("value"))} }})!);"),
         _ => throw new InvalidDataException($"No C# outcome adapter exists for '{task.Id}'.")
     };
     var methods = outcomes.Zip(calls).Select(pair => $$"""
@@ -161,10 +184,24 @@ static string GenerateTests(BenchmarkTask task, IReadOnlyList<Outcome> outcomes)
           }
         """);
     return $$"""
+        using System;
+        using System.Linq;
+        using System.Reflection;
         using Xunit;
 
         public sealed class GeneratedOutcomeTests
         {
+          private static MethodInfo EntryPoint()
+          {
+              var matches = typeof(GeneratedOutcomeTests).Assembly.GetTypes()
+                  .Where(type => type.Namespace == {{JsonSerializer.Serialize(task.Id == "001-write-greeting" ? "Greeting" : "Totals")}})
+                  .SelectMany(type => type.GetMethods(BindingFlags.Public | BindingFlags.Static))
+                  .Where(method => {{(task.Id == "001-write-greeting"
+                      ? "method.ReturnType == typeof(string) && method.GetParameters().Length == 0"
+                      : "method.Name == \"Double\" && method.ReturnType == typeof(int) && method.GetParameters() is [{ ParameterType: var parameterType }] && parameterType == typeof(int)")}})
+                  .ToArray();
+              return matches.Length == 1 ? matches[0] : throw new InvalidOperationException($"entry_point_match_count: {matches.Length}");
+          }
         {{string.Join(Environment.NewLine, methods)}}
         }
         """;
@@ -267,26 +304,52 @@ static string ProfileArguments(string model, string workingDirectory, string pro
 static string Quote(string value) => OperatingSystem.IsWindows()
     ? $"\"{value.Replace("\"", "\\\"")}\"" : $"'{value.Replace("'", "'\"'\"'")}'";
 
-static string ExtractCSharp(string output)
+static IReadOnlyList<SourceFile> ExtractCSharp(string output)
 {
     var fenced = Regex.Matches(output, @"```+[ \t]*(?:c#|csharp|cs)?[^\r\n]*\r?\n(?<body>[\s\S]*?)```+", RegexOptions.IgnoreCase)
         .Select(match => match.Groups["body"].Value.Trim())
         .Where(LooksLikeCSharp)
         .ToArray();
-    if (fenced.Length > 0) return string.Join(Environment.NewLine, fenced);
-    return LooksLikeCSharp(output) ? output.Trim() : "";
+    var source = fenced.Length > 0 ? string.Join(Environment.NewLine, fenced) : LooksLikeCSharp(output) ? output.Trim() : "";
+    if (source.Length == 0) return Array.Empty<SourceFile>();
+    var markers = Regex.Matches(source, @"(?m)^\s*//\s*FILE:\s*(?<name>[^\r\n]+)\s*$", RegexOptions.IgnoreCase);
+    if (markers.Count == 0) return [new("Candidate.cs", source)];
+    var files = new List<SourceFile>();
+    for (var index = 0; index < markers.Count; index++)
+    {
+        var name = Path.GetFileName(markers[index].Groups["name"].Value.Trim());
+        if (!name.EndsWith(".cs", StringComparison.OrdinalIgnoreCase) || files.Any(file => file.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
+            name = $"Candidate{index + 1}.cs";
+        var start = markers[index].Index + markers[index].Length;
+        var end = index + 1 < markers.Count ? markers[index + 1].Index : source.Length;
+        files.Add(new(name, source[start..end].Trim()));
+    }
+    return files;
 }
 static bool LooksLikeCSharp(string text) => Regex.IsMatch(text, @"\b(namespace|class|record|struct)\b") && text.Contains('{');
 static string AddDiagnostics(string prompt, string diagnostics) => $"{prompt}\n\nCompiler or test diagnostics:\n{diagnostics}";
-static string TrimDiagnostic(string output) => output.Length <= 8000 ? output.Trim() : output[^8000..].Trim();
+static string CompactFailureSummary(string output)
+{
+    var useful = output.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+        .Where(line => line.Contains("error", StringComparison.OrdinalIgnoreCase) || line.Contains("failed", StringComparison.OrdinalIgnoreCase))
+        .Take(6);
+    return Cap(string.Join(Environment.NewLine, useful), 600) is { Length: > 0 } summary ? summary : "dotnet_test_failed";
+}
+static string FirstLine(string value) => value.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).FirstOrDefault() ?? "failed";
+static string Cap(string value, int length) => value[..Math.Min(length, value.Length)];
 static int EstimateTokens(string text) => Math.Max(1, (int)Math.Ceiling(text.Length / 4d));
 static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text))).ToLowerInvariant();
-static string ReplyHead(string reply) => reply.Trim()[..Math.Min(200, reply.Trim().Length)];
+static string ReplyHead(string reply)
+{
+    var scrubbed = Regex.Replace(reply.Trim(), @"(?i)\b(api[_-]?key|token|secret)\s*[:=]\s*\S+", "$1=[redacted]", RegexOptions.CultureInvariant);
+    scrubbed = Regex.Replace(scrubbed, @"(?<!\w)(?:(?:[A-Za-z]:\\|/|~/)(?:[^\s\""'<>]+[\\/])*[^\s\""'<>]*)", "[path]", RegexOptions.CultureInvariant);
+    return scrubbed[..Math.Min(200, scrubbed.Length)];
+}
 
 static BenchmarkResult CreateResult(BenchmarkTask task, string model, bool passed, int attempts, int tokensIn, int tokensOut,
     IReadOnlyList<string> diagnostics, string promptHash, string reply, string? label, string status, string? error,
     string proofLevel, int modelTestCount, int harnessTestCount) => new(model, task.Id, passed, attempts, tokensIn, tokensOut, "estimated", diagnostics,
-        false, promptHash, ReplyHead(reply), status, error, label, proofLevel, "plain-csharp", "", task.Kind, modelTestCount, harnessTestCount);
+        false, promptHash, ReplyHead(reply), status, error, label, proofLevel, "plain-csharp", "", task.Kind, modelTestCount, harnessTestCount, "executed-outcomes");
 
 static void Persist(string suiteDirectory, string model, BenchmarkResult result)
 {
@@ -317,7 +380,9 @@ sealed record Suite(int Version, IReadOnlyList<BenchmarkTask> Tasks);
 sealed record BenchmarkTask(string Id, string Kind, string Prompt, string Outcomes, bool Holdout);
 sealed record Outcome(string Name, JsonElement Given, string When, JsonElement Returns);
 sealed record Score(bool Passed, string Diagnostics, int ModelTestCount, int HarnessTestCount);
+sealed record SourceFile(string Name, string Content);
+sealed record TestResult(int ModelTests, int HarnessTests, string Failures);
 sealed record BenchmarkResult(string Model, string Task, bool Passed, int Attempts, int TokensIn, int TokensOut,
     string TokenMeasurement, IReadOnlyList<string> Diagnostics, bool Misread, string PromptHash, string ReplyHead,
     string Status, string? Error, string? Label, string ProofLevel, string Mode, string DocsHash, string Kind,
-    int ModelTestCount, int HarnessTestCount);
+    int ModelTestCount, int HarnessTestCount, string ScoreBar);
