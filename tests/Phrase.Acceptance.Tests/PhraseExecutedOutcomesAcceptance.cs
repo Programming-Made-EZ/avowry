@@ -14,6 +14,95 @@ public class PhraseExecutedOutcomesAcceptance
 {
     const string PromptHashBeforeExecutedScoring = "a7bd17c3b580099223bd99f0db9c3377ba2419a1f568448dd21fda80a7fccade";
 
+    [Theory]
+    [Trait("Slice", "099")]
+    [InlineData("004-read-phrase", "read")]
+    [InlineData("005-read-failure", "read")]
+    [InlineData("007-modify-return", "modify")]
+    [InlineData("008-modify-type", "modify")]
+    public async Task Correct_read_and_modify_replies_pass_and_record_the_starting_code(string task, string kind)
+    {
+        // Given a read or modify task and a fake model whose recorded reply is a correct Phrase module
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, task);
+        var reply = Path.Combine(workspace.Root, "correct.phrase");
+        await File.WriteAllTextAsync(reply, CorrectChangeReply(task));
+
+        // When Riley scores the reply by its executed outcomes
+        var run = await Run(suite, PrintFileCommand(reply), "correct-" + task, "--scoring", "executed");
+
+        // Then the row proves the requested behaviour and charges the inlined starting Phrase
+        var row = Assert.Single(ReadHistory(suite).Values);
+        Assert.True(run.ExitCode == 0, run.Stdout + run.Stderr + row);
+        using var result = JsonDocument.Parse(row);
+        Assert.True(result.RootElement.GetProperty("passed").GetBoolean());
+        Assert.Equal("specs-passed", result.RootElement.GetProperty("proof_level").GetString());
+        Assert.Equal(kind, result.RootElement.GetProperty("kind").GetString());
+        Assert.Equal(EstimateTokens(StartingPhrase(task)), result.RootElement.GetProperty("existing_code_tokens").GetInt32());
+    }
+
+    [Theory]
+    [Trait("Slice", "099")]
+    [InlineData("004-read-phrase", "read")]
+    [InlineData("005-read-failure", "read")]
+    [InlineData("007-modify-return", "modify")]
+    [InlineData("008-modify-type", "modify")]
+    public async Task Wrong_read_and_modify_replies_fail_naming_the_outcome(string task, string kind)
+    {
+        // Given a read or modify task and a fake model whose reply violates its first outcome
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteSuite(workspace.Root, task);
+        var reply = Path.Combine(workspace.Root, "wrong.phrase");
+        await File.WriteAllTextAsync(reply, WrongChangeReply(task));
+
+        // When Riley scores the reply by its executed outcomes
+        var run = await Run(suite, PrintFileCommand(reply), "wrong-" + task, "--scoring", "executed");
+
+        // Then it fails and the compact feedback names the outcome that was not preserved
+        var row = Assert.Single(ReadHistory(suite).Values);
+        Assert.True(run.ExitCode == 3, run.Stdout + run.Stderr + row);
+        using var result = JsonDocument.Parse(row);
+        Assert.False(result.RootElement.GetProperty("passed").GetBoolean());
+        var diagnostics = result.RootElement.GetProperty("diagnostics").EnumerateArray().Select(item => item.GetString()!).ToArray();
+        Assert.Contains(diagnostics, text => text.Contains(OutcomeName(suite, task), StringComparison.Ordinal));
+        Assert.Equal(kind, result.RootElement.GetProperty("kind").GetString());
+    }
+
+    [Fact]
+    [Trait("Slice", "099")]
+    public async Task Read_and_modify_starting_modules_compile_and_their_specs_pass()
+    {
+        // Given every inlined starting module for the read and modify tasks
+        foreach (var task in ChangeTasks)
+        {
+            // When it is compiled with the C# adapter and its generated specs run
+            var output = Phrase.Compiler.PhraseCompiler.Compile(StartingPhrase(task), new Phrase.Adapters.CSharp.CSharpProvider());
+            using var workspace = TempWorkspace.Create();
+            output.WriteTo(workspace.Root);
+            var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
+
+            // Then the fixture itself is valid, with any rejection naming the task
+            Assert.True(result.ExitCode == 0, task + Environment.NewLine + result.Log);
+            Assert.Equal(0, result.Failed ?? 0);
+        }
+    }
+
+    [Fact]
+    [Trait("Slice", "099")]
+    public void Phrase_and_csharp_rows_name_change_metadata_the_same_way()
+    {
+        // Given the stored result contracts for the Phrase and plain C# arms
+        var phraseFields = ResultFields(RepoPaths.Find("tools", "Phrase.Bench", "Program.cs"));
+        var csharpFields = ResultFields(RepoPaths.Find("tools", "Phrase.BenchCs", "Program.cs"));
+
+        // When their change-task metadata is compared
+        var expected = new HashSet<string>(["Kind", "ExistingCodeTokens"], StringComparer.Ordinal);
+
+        // Then both arms expose the same field names
+        Assert.True(expected.SetEquals(phraseFields.Intersect(expected)), string.Join(", ", phraseFields));
+        Assert.True(expected.SetEquals(csharpFields.Intersect(expected)), string.Join(", ", csharpFields));
+    }
+
     [Fact]
     [Trait("Slice", "098")]
     public async Task Correct_write_replies_pass_at_specs_passed_with_executed_outcomes()
@@ -108,7 +197,7 @@ public class PhraseExecutedOutcomesAcceptance
     public void Phrase_task_outcomes_match_the_csharp_twin_byte_for_byte()
     {
         // Given the C# twin is the single source of a write task's outcome cases
-        foreach (var task in new[] { "001-write-greeting", "002-write-total" })
+        foreach (var task in new[] { "001-write-greeting", "002-write-total" }.Concat(ChangeTasks))
         {
             var twinPath = RepoPaths.Find("bench", "csharp-baseline", "tasks", task, "outcomes.json");
             var copyPath = RepoPaths.Find("bench", "tasks", task, "outcomes.json");
@@ -181,7 +270,9 @@ public class PhraseExecutedOutcomesAcceptance
             var outcomes = Path.Combine(destination, "outcomes.json");
             if (!File.Exists(outcomes))
                 File.Copy(twinOutcomes, outcomes);
-            tasks.Add($$"""{"id":"{{taskId}}","kind":"write","prompt":"tasks/{{taskId}}/prompt.md","holdout":false}""");
+            var kind = taskId.Contains("-read-", StringComparison.Ordinal) ? "read"
+                : taskId.Contains("-modify-", StringComparison.Ordinal) ? "modify" : "write";
+            tasks.Add($$"""{"id":"{{taskId}}","kind":"{{kind}}","prompt":"tasks/{{taskId}}/prompt.md","holdout":false}""");
         }
 
         var suite = Path.Combine(suiteDirectory, "suite.json");
@@ -273,4 +364,82 @@ public class PhraseExecutedOutcomesAcceptance
 
     private static string Sha256Hex(string text) =>
         Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text))).ToLowerInvariant();
+
+    private static readonly string[] ChangeTasks = ["004-read-phrase", "005-read-failure", "007-modify-return", "008-modify-type"];
+
+    private static string StartingPhrase(string task)
+    {
+        var prompt = File.ReadAllText(RepoPaths.Find("bench", "tasks", task, "prompt.md"));
+        var match = Regex.Match(prompt, "```phrase\\r?\\n(?<source>.*?)\\r?\\n```", RegexOptions.Singleline | RegexOptions.CultureInvariant);
+        Assert.True(match.Success, $"{task}: starting Phrase fixture is missing");
+        return match.Groups["source"].Value;
+    }
+
+    private static int EstimateTokens(string text) => Math.Max(1, (int)Math.Ceiling(text.Length / 4d));
+
+    private static HashSet<string> ResultFields(string path)
+    {
+        var source = File.ReadAllText(path);
+        var start = source.IndexOf("record BenchmarkResult(", StringComparison.Ordinal);
+        Assert.True(start >= 0, path + ": BenchmarkResult is missing");
+        var end = source.IndexOf(");", start, StringComparison.Ordinal);
+        var declaration = source[start..end];
+        return Regex.Matches(declaration, @"\b(?:string|int|bool)\??\s+(?<name>[A-Z]\w*)")
+            .Select(match => match.Groups["name"].Value)
+            .ToHashSet(StringComparer.Ordinal);
+    }
+
+    private static string CorrectChangeReply(string task) => task switch
+    {
+        "004-read-phrase" => StartingPhrase(task) + "\n\n# The phrase returns its Text input unchanged.\n# The spec proves sample is preserved.",
+        "005-read-failure" => StartingPhrase(task) + "\n\n# MissingName occurs for an empty name.\n# The spec proves Ada succeeds.",
+        "007-modify-return" => """
+            module Status
+
+            phrase "current status" -> Text
+              spec "returns ready"
+                when called
+                then returns "ready"
+              native csharp
+                return "ready";
+            """,
+        "008-modify-type" => """
+            module Customers
+
+            type Customer
+              name: Text
+              email: Text
+
+            phrase "email of {customer: Customer}" -> Text
+              spec "returns a customer's email"
+                given customer = { name: "Ada", email: "ada@example.com" }
+                when called
+                then returns "ada@example.com"
+              native csharp
+                return customer.Email;
+            """,
+        _ => throw new ArgumentException(task),
+    };
+
+    private static string WrongChangeReply(string task) => task switch
+    {
+        "004-read-phrase" => CorrectChangeReply(task).Replace("return value;", "return \"other\";", StringComparison.Ordinal),
+        "005-read-failure" => CorrectChangeReply(task).Replace("if (string.IsNullOrEmpty(name))", "if (!string.IsNullOrEmpty(name))", StringComparison.Ordinal),
+        "007-modify-return" => CorrectChangeReply(task).Replace("return \"ready\";", "return \"waiting\";", StringComparison.Ordinal),
+        "008-modify-type" => """
+            module Customers
+
+            type Customer
+              email: Text
+
+            phrase "email of {customer: Customer}" -> Text
+              spec "returns a customer's email"
+                given customer = { email: "ada@example.com" }
+                when called
+                then returns "ada@example.com"
+              native csharp
+                return customer.Email;
+            """,
+        _ => throw new ArgumentException(task),
+    };
 }

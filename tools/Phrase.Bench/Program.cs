@@ -189,7 +189,7 @@ static async Task<TaskRunResult> RunTask(
     ColdProfile? coldProfile = null,
     string scoring = BenchmarkScoring.ParseResolve)
 {
-    var taskPrompt = ReadPrompt(task, suiteDirectory);
+    var (taskPrompt, existingCodeTokens) = ReadPrompt(task, suiteDirectory);
     var resolvedColdProfile = coldProfile ?? ResolveColdProfile(model, false);
     var coldPreamble = resolvedColdProfile.Cold ? ColdPreamble : string.Empty;
     var prompt = ComposeModelPrompt(docsBlock, taskPrompt, coldPreamble);
@@ -250,7 +250,7 @@ static async Task<TaskRunResult> RunTask(
             if (scoring == BenchmarkScoring.Executed && TryOutcomesPath(task, suiteDirectory, out var outcomesPath))
             {
                 score = score.Passed
-                    ? await ScoreExecuted(ExtractPhrase(reply), outcomesPath, scratchDirectory, attempts)
+                    ? await ScoreExecuted(ExtractPhrase(reply), task, outcomesPath, scratchDirectory, attempts)
                     : score with { ScoreBar = BenchmarkScoring.ExecutedOutcomes, ProofLevel = "none" };
             }
             diagnostics.AddRange(score.Diagnostics);
@@ -265,7 +265,8 @@ static async Task<TaskRunResult> RunTask(
             Status: "completed", Error: null, Label: label, ProofLevel: DetermineProofLevel(score),
             Mode: mode, DocsHash: docsHash, Cold: resolvedColdProfile.Cold, ColdFlags: resolvedColdProfile.Flags,
             ColdPreamble: coldPreamble, ColdReason: resolvedColdProfile.Reason, WorkdirEmptyAtLaunch: workdirEmptyAtLaunch,
-            ScoreBar: score.ScoreBar, Patched: score.ScoreBar is null ? null : false, Kind: score.ScoreBar is null ? null : task.Kind);
+            ScoreBar: score.ScoreBar, Patched: score.ScoreBar is null ? null : false, Kind: score.ScoreBar is null ? null : task.Kind,
+            ExistingCodeTokens: score.ScoreBar is null ? null : existingCodeTokens);
         PersistResult(suiteDirectory, model, result);
         Console.WriteLine($"{model}: {(score.Passed ? "passed" : "failed")} {task.Id}");
         return new(score.Passed, true);
@@ -396,7 +397,7 @@ static string ComposeModelPrompt(string docsBlock, string taskPrompt, string col
     return string.IsNullOrEmpty(coldPreamble) ? promptBody : coldPreamble + "\n\n" + promptBody;
 }
 
-static string ReadPrompt(BenchmarkTask task, string suiteDirectory)
+static (string Prompt, int ExistingCodeTokens) ReadPrompt(BenchmarkTask task, string suiteDirectory)
 {
     var promptPath = Path.Combine(suiteDirectory, task.Prompt);
     var promptText = File.ReadAllText(promptPath);
@@ -407,7 +408,7 @@ static string ReadPrompt(BenchmarkTask task, string suiteDirectory)
         .OrderBy(path => path, StringComparer.OrdinalIgnoreCase)
         .ToArray();
     if (taskFiles.Length == 0)
-        return promptText;
+        return (promptText, StartingPhraseTokens(promptText));
 
     var builder = new StringBuilder();
     builder.AppendLine(promptText.TrimEnd());
@@ -418,7 +419,13 @@ static string ReadPrompt(BenchmarkTask task, string suiteDirectory)
         builder.AppendLine($"--- {Path.GetFileName(taskFile)} ---");
         builder.AppendLine(File.ReadAllText(taskFile));
     }
-    return builder.ToString().TrimEnd();
+    return (builder.ToString().TrimEnd(), taskFiles.Sum(path => EstimateTokens(File.ReadAllText(path))));
+}
+
+static int StartingPhraseTokens(string prompt)
+{
+    var match = Regex.Match(prompt, "```phrase\\r?\\n(?<source>.*?)\\r?\\n```", RegexOptions.Singleline | RegexOptions.CultureInvariant);
+    return match.Success ? EstimateTokens(match.Groups["source"].Value) : 0;
 }
 
 static Process StartModelViaShell(string command, string workingDirectory)
@@ -723,7 +730,7 @@ static bool TryOutcomesPath(BenchmarkTask task, string suiteDirectory, out strin
 
 // One build per attempt: the generated specs project already references the API, and the
 // outcome harness is a file in that same project, so model specs and outcome cases run together.
-static async Task<BenchmarkScore> ScoreExecuted(string source, string outcomesPath, string scratchDirectory, int attempt)
+static async Task<BenchmarkScore> ScoreExecuted(string source, BenchmarkTask task, string outcomesPath, string scratchDirectory, int attempt)
 {
     CompilationOutput output;
     try
@@ -749,9 +756,12 @@ static async Task<BenchmarkScore> ScoreExecuted(string source, string outcomesPa
         return FailedExecuted(exception.Message);
     }
 
-    var unsupported = outcomes.FirstOrDefault(outcome => !outcome.Then.TryGetProperty("returns", out _));
+    var unsupported = outcomes.FirstOrDefault(outcome =>
+        !outcome.Then.TryGetProperty("returns", out _) &&
+        !outcome.Then.TryGetProperty("succeeds", out _) &&
+        !outcome.Then.TryGetProperty("has_field", out _));
     if (unsupported is not null)
-        return FailedExecuted($"outcome \"{unsupported.Name}\" has no returns clause");
+        return FailedExecuted($"outcome \"{unsupported.Name}\" has no supported then clause");
 
     var generated = Path.Combine(scratchDirectory, $"attempt-{attempt}", "generated");
     output.WriteTo(generated);
@@ -760,7 +770,7 @@ static async Task<BenchmarkScore> ScoreExecuted(string source, string outcomesPa
         return FailedExecuted("generated specs project is missing");
 
     var specsProject = Path.GetFullPath(Path.Combine(generated, relativeSpecs.Replace('/', Path.DirectorySeparatorChar)));
-    await File.WriteAllTextAsync(Path.Combine(Path.GetDirectoryName(specsProject)!, "GeneratedOutcomeTests.cs"), GenerateOutcomeTests(outcomes));
+    await File.WriteAllTextAsync(Path.Combine(Path.GetDirectoryName(specsProject)!, "GeneratedOutcomeTests.cs"), GenerateOutcomeTests(task, outcomes));
     var (exitCode, log) = await RunDotnet(
         Path.GetDirectoryName(specsProject)!,
         TimeSpan.FromMinutes(5),
@@ -795,8 +805,11 @@ static IReadOnlyList<Outcome> ReadOutcomes(string path)
         item.GetProperty("then").Clone())).ToArray();
 }
 
-static string GenerateOutcomeTests(IReadOnlyList<Outcome> outcomes)
+static string GenerateOutcomeTests(BenchmarkTask task, IReadOnlyList<Outcome> outcomes)
 {
+    if (task.Id == "008-modify-type")
+        return GenerateCustomerOutcomeTests(outcomes);
+
     var code = new StringBuilder();
     code.AppendLine("using System.Reflection;");
     code.AppendLine();
@@ -841,7 +854,6 @@ static string GenerateOutcomeTests(IReadOnlyList<Outcome> outcomes)
     code.AppendLine("    }");
     foreach (var outcome in outcomes)
     {
-        var returns = outcome.Then.GetProperty("returns");
         var pairs = string.Join(", ", outcome.Given.EnumerateObject().Select(property =>
             $"[{CsString(property.Name)}] = {Literal(property.Value)}"));
         var initializer = pairs.Length == 0 ? "" : " { " + pairs + " }";
@@ -851,9 +863,16 @@ static string GenerateOutcomeTests(IReadOnlyList<Outcome> outcomes)
         code.AppendLine("    {");
         code.AppendLine("        try");
         code.AppendLine("        {");
-        code.AppendLine($"            var actual = Call(new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase){initializer});");
-        code.AppendLine($"            if (!object.Equals({Literal(returns)}, actual))");
-        code.AppendLine($"                throw new Xunit.Sdk.XunitException(\"outcome \" + {CsString(outcome.Name)} + \" expected \" + {CsString(Display(returns))} + \" but was \" + actual);");
+        if (outcome.Then.TryGetProperty("returns", out var returns))
+        {
+            code.AppendLine($"            var actual = Call(new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase){initializer});");
+            code.AppendLine($"            if (!object.Equals({Literal(returns)}, actual))");
+            code.AppendLine($"                throw new Xunit.Sdk.XunitException(\"outcome \" + {CsString(outcome.Name)} + \" expected \" + {CsString(Display(returns))} + \" but was \" + actual);");
+        }
+        else
+        {
+            code.AppendLine($"            Call(new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase){initializer});");
+        }
         code.AppendLine("        }");
         code.AppendLine("        catch (Xunit.Sdk.XunitException)");
         code.AppendLine("        {");
@@ -866,6 +885,57 @@ static string GenerateOutcomeTests(IReadOnlyList<Outcome> outcomes)
         code.AppendLine("    }");
     }
 
+    code.AppendLine("}");
+    return code.ToString();
+}
+
+static string GenerateCustomerOutcomeTests(IReadOnlyList<Outcome> outcomes)
+{
+    var code = new StringBuilder();
+    code.AppendLine("using System.Reflection;");
+    code.AppendLine();
+    code.AppendLine("public sealed class GeneratedOutcomeTests");
+    code.AppendLine("{");
+    code.AppendLine("    private static Type Customer() => typeof(GeneratedOutcomeTests).Assembly.GetReferencedAssemblies().Select(System.Reflection.Assembly.Load).SelectMany(a => a.GetTypes()).Single(t => t.Name == \"Customer\");");
+    code.AppendLine("    private static MemberInfo Field(string name)");
+    code.AppendLine("    {");
+    code.AppendLine("        const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase;");
+    code.AppendLine("        return (MemberInfo?)Customer().GetProperty(name, flags) ?? Customer().GetField(name, flags) ?? throw new InvalidOperationException(\"missing_field: \" + name);");
+    code.AppendLine("    }");
+    code.AppendLine("    private static object Create(IReadOnlyDictionary<string, string> values)");
+    code.AppendLine("    {");
+    code.AppendLine("        var ctor = Customer().GetConstructors().Single();");
+    code.AppendLine("        return ctor.Invoke(ctor.GetParameters().Select(p => (object)values[p.Name!]).ToArray());");
+    code.AppendLine("    }");
+    code.AppendLine("    private static object Call(object customer)");
+    code.AppendLine("    {");
+    code.AppendLine("        var method = Customer().Assembly.GetTypes().Where(t => t.Name == \"Phrases\").SelectMany(t => t.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)).Single(m => m.ReturnType == typeof(string) && m.GetParameters() is [{ ParameterType: var p }] && p == Customer());");
+    code.AppendLine("        return method.Invoke(null, new[] { customer })!;");
+    code.AppendLine("    }");
+    foreach (var outcome in outcomes)
+    {
+        code.AppendLine();
+        code.AppendLine("    [Fact]");
+        code.AppendLine($"    public void Outcome_{Identifier(outcome.Name)}()");
+        code.AppendLine("    {");
+        code.AppendLine("        try");
+        code.AppendLine("        {");
+        if (outcome.Then.TryGetProperty("has_field", out var field))
+        {
+            code.AppendLine($"            _ = Field({Literal(field)});");
+        }
+        else
+        {
+            var pairs = string.Join(", ", outcome.Given.EnumerateObject().Select(property => $"[{CsString(property.Name)}] = {Literal(property.Value)}"));
+            var returns = outcome.Then.GetProperty("returns");
+            code.AppendLine($"            var actual = Call(Create(new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) {{ {pairs} }}));");
+            code.AppendLine($"            if (!object.Equals({Literal(returns)}, actual)) throw new Xunit.Sdk.XunitException(\"outcome \" + {CsString(outcome.Name)} + \" expected \" + {CsString(Display(returns))} + \" but was \" + actual);");
+        }
+        code.AppendLine("        }");
+        code.AppendLine("        catch (Xunit.Sdk.XunitException) { throw; }");
+        code.AppendLine($"        catch (System.Exception exception) {{ throw new Xunit.Sdk.XunitException(\"outcome \" + {CsString(outcome.Name)} + \" failed: \" + exception.GetBaseException().Message); }}");
+        code.AppendLine("    }");
+    }
     code.AppendLine("}");
     return code.ToString();
 }
@@ -1014,7 +1084,8 @@ public sealed record BenchmarkResult(
     bool WorkdirEmptyAtLaunch = false,
     [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] string? ScoreBar = null,
     [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] bool? Patched = null,
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] string? Kind = null)
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] string? Kind = null,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] int? ExistingCodeTokens = null)
 {
     public static BenchmarkResult Unavailable(
         string model, string task, string promptHash, string error,

@@ -1,0 +1,14 @@
+[
+  {
+    "name": "preserves the name field",
+    "given": {},
+    "when": "inspected",
+    "then": { "has_field": "name" }
+  },
+  {
+    "name": "returns a customer's email",
+    "given": { "name": "Ada", "email": "ada@example.com" },
+    "when": "called",
+    "then": { "returns": "ada@example.com" }
+  }
+]

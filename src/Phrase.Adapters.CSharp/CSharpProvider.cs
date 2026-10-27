@@ -58,9 +58,6 @@ public sealed class CSharpProvider : ITargetAdapter
 
         if (!phrase.Natives.ContainsKey("csharp"))
             throw new NotImplementedException($"The C# emitter needs a native csharp block on '{phrase.Template}'.");
-        if (phrase.Returns is null && phrase.Failures.Count == 0)
-            throw new NotImplementedException($"The C# emitter does not support phrase '{phrase.Template}' without a return type yet.");
-
         RequireSupportedSignature(module, phrase);
         RequireSupportedSpecs(module, phrase);
     }
