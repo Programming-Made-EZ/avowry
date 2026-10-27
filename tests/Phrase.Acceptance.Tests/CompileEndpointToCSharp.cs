@@ -9,9 +9,9 @@ namespace Phrase.Acceptance.Tests;
 //   I want the C# provider to emit a FastEndpoints API and xUnit specs
 //   So that every spec in the .phrase source runs as a real test in the target
 //
-// This is the outer loop of outside-in TDD. It stays red until the compiler
-// pipeline is driven out by inner unit tests. It is tagged Pending so trunk CI
-// stays green; remove the trait once it passes.
+// This is the end-to-end acceptance test for the C# emitter: it compiles the
+// orders.phrase fixture, writes both generated projects, and verifies every
+// generated spec passes in the target framework.
 public class CompileEndpointToCSharp
 {
     [Fact]
