@@ -36,8 +36,24 @@ public sealed class TempWorkspace : IDisposable
 
     public void Dispose()
     {
-        try { Directory.Delete(Root, recursive: true); }
-        catch (IOException) { /* best effort; temp dir */ }
+        // A generated server just exited can leave its output locked for a moment on Windows.
+        for (var attempt = 1; ; attempt++)
+        {
+            try
+            {
+                if (Directory.Exists(Root))
+                    Directory.Delete(Root, recursive: true);
+                return;
+            }
+            catch (IOException) when (attempt == 25)
+            {
+                return;
+            }
+            catch (Exception ex) when (attempt < 25 && ex is IOException or UnauthorizedAccessException)
+            {
+                Thread.Sleep(100);
+            }
+        }
     }
 
     private static bool IsBuildArtifact(string relativePath) =>
