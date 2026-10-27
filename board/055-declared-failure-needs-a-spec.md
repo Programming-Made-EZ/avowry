@@ -5,7 +5,7 @@
 - **Milestone:** Vocabulary v1 and Usable v1 plumbing (consumer-observable outcomes, VISION ruling 5)
 - **Source:** Steve, 2026-10-26 (VISION ruling 5): "I feel like we aren't adhering to consumer related output. 'succeeds' isn't really a result the customer gets value from." Team review: Decider D20 (Codex Support-it, Copilot Support-it, Grok Yes; agy no response).
 - **Depends on:** 054, 018
-- **Story:** As a consumer of Phrase programs (an engineer, an LLM, or an end customer), I want resolving a phrase whose `fails with` code has no `then fails with` spec on that phrase reports PH336, naming the phrase and the code, so that specs state a result that has value to the consumer.
+- **Story:** As Morgan, I want PH336 to name any phrase and declared failure code missing a failure-path spec, so that I can detect unverified consumer-visible failures during review.
 - **Done checks (at most 3, each failing on partial work):**
   1. The MissingName shape (only `then succeeds`) reports PH336 (trait Slice=055); a phrase with two codes and one failure spec reports only the missing code
   2. orders.phrase still resolves clean; the test prelude's guards and helpers each gain a covering failure spec so exact-code tests stay about their own codes

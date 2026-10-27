@@ -5,7 +5,7 @@
 - **North star:** `VISION.md`
 - **Source:** Steve's purpose ruling (VISION.md); Decider D3.
 - **Depends on:** none
-- **Story:** As the language designer, I want one written definition of a keyword, so that the grammar, the catalogue and the providers agree on what we are building.
+- **Story:** As Morgan, I want one written definition of a keyword across the grammar, catalogue and adapters, so that I can review a keyword without reconciling conflicting models of what it is.
 - **Hypothesis:** exempt: decision/plumbing card that unblocks the cards that carry hypotheses.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given GRAMMAR.md rule 3 ('small fixed core, open phrase library'), When the ADR is accepted, Then rule 3 is restated so that keywords are the standard-library phrases that ship with Phrase and the core stays small

@@ -2,7 +2,7 @@
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
 - **Milestone:** Usable v1 (plumbing for bar 1; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
-- **Story:** As a Phrase author, I want the constructs a real CRUD API needs (lookup, update, list, delete, validation), so that I can write a small app entirely in .phrase.
+- **Story:** As Dana, I want Phrase to support the lookup, update, list, delete and validation behavior of a real CRUD API, so that I can describe a complete small service without directing an agent to add native glue.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given the demo app's list-all endpoint with no data, When specified, Then an empty list is a valid output
   - One: Given a get-by-id, When the id is unknown, Then a declared `NotFound` failure is returned

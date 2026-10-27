@@ -5,7 +5,7 @@
 - **Milestone:** Usable v1 (plumbing for bar 2 to 4) (`board/MILESTONE-usable-v1.md`)
 - **Source:** Process retro 2026-10-26 (Decider D18): thin slices, trialled on the C# adapter chain; this card replaces part of old cards 003 to 007. Steve: "I do have a concern the slices are too big."
 - **Depends on:** 045, 047
-- **Story:** As an engineer (or an LLM) writing Phrase, I want a generated POST endpoint binds its request and returns the declared success response, in process (handler called by the spec), so that the Phrase compiler grows one observable behaviour at a time.
+- **Story:** As Dana, I want a generated POST endpoint to bind its request and return its declared success response in a passing handler spec, so that I can trust consumers receive the response I specified.
 - **One observable behaviour:** A generated POST endpoint binds its request and returns the declared success response, in process (handler called by the spec).
 - **Done checks (at most 3, each failing on partial work):**
   1. The endpoint class, handler and Program.cs compile and start (compare reference/csharp CreateOrder.cs)

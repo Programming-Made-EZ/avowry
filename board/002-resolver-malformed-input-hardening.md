@@ -1,7 +1,7 @@
 # Complete resolver malformed-input hardening
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
-- **Story:** As a Phrase author (an engineer or an LLM), I want malformed values and failed bindings to produce exactly one precise diagnostic each, so that I can fix my program from the messages alone and the compiler never crashes or cascades into noise.
+- **Story:** As Ari, I want malformed values and failed bindings to produce exactly one precise diagnostic each, so that I can fix my program from the messages alone without spending attempts on compiler crashes or cascading noise.
 - **Source:** Independent review of 59d8a9c and 84b5737 by Grok (verdict CHANGES, 2026-10-25), minus the repeated-holes crash already fixed in 45813e1.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given a call whose argument is a bare word naming a variable of the wrong type (a `Bool` variable for an `Int` hole), When resolved, Then PH312 names both types, as the path form already does

@@ -5,7 +5,7 @@
 - **Milestone:** Vocabulary v1 (base-library keywords; NOT on the Usable v1 path)
 - **Source:** Steve, 2026-10-26: "I'm thinking there are certain concepts like asynchronous (parallel/concurrent) and events which our language may need to have." Team review: Decider D21 (Codex Support-it, Copilot Support-it, Grok Yes; agy no response). Bootstrap phase applies: a hypothesis to test, not an idea to reject on metrics.
 - **Depends on:** 022, 033, 034 (language foundations)
-- **Story:** As an engineer or an LLM writing Phrase, I want a written decision says where asynchronous work, parallel collection, bounded concurrency, timeouts, cancellation and events live (declared effects plus base-library keywords, not core grammar) and what the portable, deterministic spec model is, so that asynchronous and event-driven work is expressible and specified deterministically on every target.
+- **Story:** As Ari, I want documented portable semantics for asynchronous work, parallel collection, bounded concurrency, timeouts, cancellation and events, so that I can express and deterministically specify those behaviors for every target.
 - **Done checks (at most 3, each failing on partial work):**
   1. docs/decisions/ADR-async-events.md records the grammar, library and effect boundaries and names the effects (Scheduler, Clock, Cancellation, Events)
   2. It defines the portable observables (input-ordered results, failure aggregation, timeout and cancel outcomes, delivery) and the spec model (virtual clock, scripted scheduler, event capture; specs never depend on wall time or OS interleaving)

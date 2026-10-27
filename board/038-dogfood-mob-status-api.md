@@ -4,7 +4,7 @@
 - **Type:** feature (dogfood; exempt from the hypothesis rule); second demo app, NOT a Usable v1 bar
 - **Milestone:** Vocabulary v1 (M3 evidence: a second real app the mob itself uses); starts only after bar 5 (card 010) is green
 - **Source:** Steve, 2026-10-26: "this seems like a good starter app for the phrase lang" (the live mob dashboard, card 036). Team review (Decider D16: Codex Yes, Grok Yes, agy Yes, Copilot Support-it): keep the Tasks API (009) as the bounded Usable v1 proof and file this as a dogfood card after it. Steve later: the 30-minute MOB.md digests already give him the visibility he wanted, so the dashboard follow-ups are not urgent; this card's value is as a second real Phrase app, not as a dashboard.
-- **Story:** As the mob, I want a small status API for mob runs written entirely in .phrase, so that Phrase is proven on something we use daily, with real validation and failure paths, and the dashboard's data-wiring gap closes through our own product.
+- **Story:** As Riley, I want our mob-run status API written entirely in Phrase with real validation and failure paths, so that I can use it daily and expose language gaps through genuine work.
 - **Hypothesis:** We believe a second, unrelated real app written only in Phrase will expose language and base-library gaps that the Tasks demo does not, and will raise the benchmark pass rate for status-shaped tasks once its vocabulary is in the catalogue. Measured by: gaps found per app (cards filed), and a new bench task built from this app (card 027 style).
 - **Acceptance criteria (ZOMBIES), first slice (pure records, in-memory, no file or clock access in Phrase itself):**
   - Zero: Given no events posted, When `GET /projects` is called, Then it returns an empty list, not an error

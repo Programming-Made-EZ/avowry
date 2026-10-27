@@ -3,7 +3,7 @@
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
 - **Milestone:** Usable v1
 - **Source:** Retro 002 model feedback: Codex, Copilot, Grok and agy (4 of 4); agy also flagged PH326 vs endpoint failures.
-- **Story:** As an LLM fixing a failing program, I want the exact message each diagnostic prints, so that I can predict it and act on it without opening the compiler.
+- **Story:** As Ari, I want the exact message template for each diagnostic in GRAMMAR.md, so that I can understand and fix a failing program without opening the compiler.
 - **Hypothesis:** We believe publishing the exact message template next to each diagnostic code will cut wasted reads and wrong fixes for LLM authors. We'll know when attempts-to-green on the benchmark's fix-a-failing-spec tasks moves from the card-016 baseline to at most 80% of it, with pass rate unchanged, on bench suite v1.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given the diagnostics table in GRAMMAR.md, When read, Then every code lists its exact message template with placeholders (for example `PH334 Spec expects failure '{code}', which '{unit}' cannot produce. It can fail with: {codes}`)

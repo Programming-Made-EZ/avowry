@@ -5,7 +5,7 @@
 - **Milestone:** Usable v1 (plumbing for bar 2 to 4) (`board/MILESTONE-usable-v1.md`)
 - **Source:** Process retro 2026-10-26 (Decider D18): thin slices, trialled on the C# adapter chain; this card replaces part of old cards 003 to 007. Steve: "I do have a concern the slices are too big."
 - **Depends on:** 043
-- **Story:** As an engineer (or an LLM) writing Phrase, I want a composite phrase invokes three leaf phrases in source order, surfaces the union of their failures, and returns the computed result, so that the Phrase compiler grows one observable behaviour at a time.
+- **Story:** As Dana, I want a composite phrase to call its leaves in source order, return the computed result and expose their possible failures, so that the service behavior I specify is preserved in the generated program.
 - **One observable behaviour:** A composite phrase invokes three leaf phrases in source order, surfaces the union of their failures, and returns the computed result.
 - **Done checks (at most 3, each failing on partial work):**
   1. Generated C# preserves call order and local bindings

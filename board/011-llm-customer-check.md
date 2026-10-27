@@ -2,7 +2,7 @@
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
 - **Milestone:** Usable v1 (plumbing for bar 6; exempt from the hypothesis rule) (`board/MILESTONE-usable-v1.md`)
-- **Story:** As the language designer, I want proof that a model that has never seen the app can extend it using only GRAMMAR.md and the docs, so that Phrase is usable by its real customers.
+- **Story:** As Ari, I want to extend an unfamiliar Phrase app using only GRAMMAR.md and the documentation, so that I can deliver a working endpoint without repository-specific coaching.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given a fresh-context model with only GRAMMAR.md, the docs and the demo app, When asked to add `reopen task`, Then it writes the endpoint and specs in .phrase
   - One: Given the change, When built with the CLI, Then it compiles with zero diagnostics and zero warnings

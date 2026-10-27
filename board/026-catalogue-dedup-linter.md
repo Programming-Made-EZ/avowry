@@ -4,7 +4,7 @@
 - **Milestone:** Vocabulary v1
 - **North star:** `VISION.md`
 - **Source:** Steve's purpose ruling and the Goodhart guard on 'comprehensive'. Decider D3.
-- **Story:** As the language designer, I want a linter that flags keywords that do nearly the same thing, so that a bigger vocabulary never means a more confusing one.
+- **Story:** As Ari, I want near-duplicate catalogue keywords flagged, so that I can choose the right pattern without spending context distinguishing equivalent names.
 - **Hypothesis:** We believe a dedup linter will keep vocabulary bloat down without losing coverage for LLM authors. We'll know when the near-duplicate rate (flagged pairs per 100 keywords) stays below the agreed threshold while the benchmark's native-line reduction does not fall.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given an empty catalogue, When linted, Then it passes

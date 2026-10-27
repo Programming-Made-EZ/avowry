@@ -5,7 +5,7 @@
 - **Milestone:** Vocabulary v1 (base-library keywords; NOT on the Usable v1 path)
 - **Source:** Steve, 2026-10-26: "I'm thinking there are certain concepts like asynchronous (parallel/concurrent) and events which our language may need to have." Team review: Decider D21 (Codex Support-it, Copilot Support-it, Grok Yes; agy no response). Bootstrap phase applies: a hypothesis to test, not an idea to reject on metrics.
 - **Depends on:** 022, 033, 034 (language foundations)
-- **Story:** As an engineer or an LLM writing Phrase, I want the benchmark has development tasks that need parallel collection, bounded concurrency, publish and timeout or cancel, so we can measure whether LLMs repeatedly produce these patterns and whether named keywords remove work, so that asynchronous and event-driven work is expressible and specified deterministically on every target.
+- **Story:** As Riley, I want benchmark tasks that require parallel collection, bounded concurrency, publication and timeout or cancellation, so that I can measure recurring demand and whether named keywords reduce agent work.
 - **Done checks (at most 3, each failing on partial work):**
   1. Development tasks are added (holdouts untouched, byte-identical) with the suite version bumped and a Decider recording the change (Goodhart rules)
   2. Baseline rows are recorded with native lines, tokens, attempts-to-green and repeated-run determinism, alongside the old rows unchanged and labeled

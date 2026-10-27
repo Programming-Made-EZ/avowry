@@ -5,7 +5,7 @@
 - **Milestone:** Vocabulary v1 (base-library keywords; NOT on the Usable v1 path)
 - **Source:** Steve, 2026-10-26: "I'm thinking there are certain concepts like asynchronous (parallel/concurrent) and events which our language may need to have." Team review: Decider D21 (Codex Support-it, Copilot Support-it, Grok Yes; agy no response). Bootstrap phase applies: a hypothesis to test, not an idea to reject on metrics.
 - **Depends on:** 022, 033, 034 (language foundations); 025, 047 (a base library and the first effect)
-- **Story:** As an engineer or an LLM writing Phrase, I want one scripted timeout-and-cancel spec and one event-capture spec run on the C# adapter with a fake clock and a controlled scheduler, no real waiting, with the same trace every run, so that asynchronous and event-driven work is expressible and specified deterministically on every target.
+- **Story:** As Morgan, I want timeout-and-cancel and event-capture specs to produce the same C# trace on every run without real waiting, so that I can review asynchronous behavior from stable, repeatable evidence.
 - **Done checks (at most 3, each failing on partial work):**
   1. The spec scripts completion order and the clock as literal data and the generated test follows it with no real wait (trait Slice=061)
   2. Running the generated tests twenty times gives the same result and trace every time

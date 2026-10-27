@@ -3,7 +3,7 @@
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
 - **Milestone:** Usable v1
 - **Source:** Retro 002 model feedback: Codex (typo-aware failure suggestions).
-- **Story:** As an LLM fixing a typo, I want the compiler to name the closest valid failure code or name, so that I fix it in one attempt.
+- **Story:** As Ari, I want an unknown failure code or name to include the closest valid suggestion, so that I can fix a typo in one attempt.
 - **Hypothesis:** We believe a closest-match suggestion on PH334 (and other unknown-name diagnostics) will reduce attempts-to-green on fix tasks for LLM authors. We'll know when attempts-to-green on the benchmark's fix-a-failing-spec tasks moves from the card-016/017 baseline to at least one attempt fewer on average, with the counter-metric (message tokens) up by no more than 10%.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given a spec expecting `InvalidQty` where the unit can fail with `InvalidQuantity`, When resolved, Then PH334 adds `Did you mean 'InvalidQuantity'?`

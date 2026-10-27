@@ -5,7 +5,7 @@
 - **Milestone:** Usable v1 (plumbing for bar 2 to 4) (`board/MILESTONE-usable-v1.md`)
 - **Source:** Process retro 2026-10-26 (Decider D18): thin slices, trialled on the C# adapter chain; this card replaces part of old cards 003 to 007. Steve: "I do have a concern the slices are too big."
 - **Depends on:** 040
-- **Story:** As an engineer (or an LLM) writing Phrase, I want a phrase that takes a declared record input compiles and its spec constructs that record and passes; PhraseRuntime is emitted even when nothing fails, so that the Phrase compiler grows one observable behaviour at a time.
+- **Story:** As Ari, I want a phrase with a declared record input to compile to C# and pass a spec that constructs the record, so that I can use domain-shaped input in working generated behavior.
 - **One observable behaviour:** A phrase that takes a declared record input compiles and its spec constructs that record and passes; PhraseRuntime is emitted even when nothing fails.
 - **Done checks (at most 3, each failing on partial work):**
   1. Types.cs contains the record with the declared field names and mapped types (compare reference/csharp Types.cs)

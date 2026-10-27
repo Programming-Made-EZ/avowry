@@ -5,7 +5,7 @@
 - **Milestone:** process: the loop runner (continuous, never ends)
 - **Source:** Steve, 2026-10-26: "don't forget the team can find their own features to add. so theoretically the loop is continuous and never ends." The loop stops only for a STOP file or Steve saying stop, a one-way door that needs Steve's OK, or a driver allotment running out. Part of the loop design, Decider D23 and its amendment D24.
 - **Depends on:** 066
-- **Story:** As the mob (and Steve), I want the loop to keep finding and doing work within the finite driver allotments, so that it is continuous and never ends for lack of cards.
+- **Story:** As Steve, I want the loop to rotate around depleted drivers and pause safely when all allotments are exhausted, so that I can keep the mob productive without unapproved spend.
 - **One observable behaviour:** The loop tracks each driver's usage against its allotment, rotates away from a nearly empty driver, and pauses without ending when all are out.
 - **Acceptance criteria (Given/When/Then; at most 3, each failing on partial work):**
   1. Given the loop tests with the fake CLIs and a fixture board, When the behaviour above is exercised, Then per-driver usage (estimated tokens and turns from the run logs) is recorded per turn and compared with a configured allotment per driver

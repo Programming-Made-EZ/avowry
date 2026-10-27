@@ -5,7 +5,7 @@
 - **Milestone:** Usable v1 (plumbing for bar 2 to 4) (`board/MILESTONE-usable-v1.md`)
 - **Source:** Process retro 2026-10-26 (Decider D18): thin slices, trialled on the C# adapter chain; this card replaces part of old cards 003 to 007. Steve: "I do have a concern the slices are too big."
 - **Depends on:** 043
-- **Story:** As an engineer (or an LLM) writing Phrase, I want a phrase with a native C# block emits the block verbatim inside its method, and the project builds and its spec passes, so that the Phrase compiler grows one observable behaviour at a time.
+- **Story:** As Ari, I want a native C# block to appear verbatim in its generated method with a passing build and spec, so that I can fill a language gap with predictable target code.
 - **One observable behaviour:** A phrase with a native C# block emits the block verbatim inside its method, and the project builds and its spec passes.
 - **Done checks (at most 3, each failing on partial work):**
   1. The block text appears unchanged in the generated method

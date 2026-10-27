@@ -2,7 +2,7 @@
 
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
 - **Source:** Follow-up to card 016; needs the emitter (card 006).
-- **Story:** As the mob, I want benchmark tasks scored by whether the generated specs pass, so that pass rate means the program behaves as specified, not just that it resolves.
+- **Story:** As Riley, I want benchmark tasks scored by whether their generated specs pass, so that I can see whether a model produced the requested behavior rather than merely resolvable code.
 - **Hypothesis:** We believe scoring against executed specs will expose misread-intent errors that parse-and-resolve scoring misses for LLM authors. We'll know when the share of tasks that resolve but fail their specs is measured and reported per model, from not measured (v0) to a number on suite v1.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given a task whose solution resolves but has no passing specs, When scored, Then it is a failure counted as a misread-intent error

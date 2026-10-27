@@ -3,7 +3,7 @@
 - **Status:** Ready (rank: see `board/MILESTONE-usable-v1.md`)
 - **Milestone:** Usable v1
 - **Source:** Retro 002 model feedback: agy (`given input { ... }` vs `given items = []`; `then responds { ... }` vs `respond with { ... }`).
-- **Story:** As an LLM writing specs, I want one shape for bindings and responses, so that I do not drop an `=` or a `with` and get a syntax error.
+- **Story:** As Ari, I want bindings and responses to use one consistent syntax shape, so that I can write specs without losing attempts to a dropped `=` or `with`.
 - **Hypothesis:** We believe making `given input = { ... }` and `then responds with { ... }` consistent with the other forms will cut first-attempt syntax errors for LLM authors. We'll know when first-attempt PH2xx syntax diagnostics per spec-writing task move from the baseline to at most half of it on bench suite v1, with no rise in tokens out.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given the Decider protocol, When the task force votes on this exact grammar change, Then the card proceeds only if it passes; if it fails the card closes as rejected with the reason (a grammar change is a language-direction question only if the Decider cannot settle it)

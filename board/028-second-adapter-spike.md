@@ -4,7 +4,7 @@
 - **Milestone:** Vocabulary v1
 - **North star:** `VISION.md`
 - **Source:** Steve's purpose ruling: any implementation language. Decider D3.
-- **Story:** As the language designer, I want a second adapter (TypeScript) for the seed catalogue, so that I know one source really compiles to many targets.
+- **Story:** As Dana, I want the seed catalogue to produce the same specified behavior through a TypeScript adapter, so that I can choose another target language without rewriting my Phrase program.
 - **Hypothesis:** We believe a TypeScript adapter for the seed keywords will show the keyword model needs no C#-specific concepts. We'll know when at least 8 of the seed keywords pass the same specs on TypeScript with no change to the keyword definitions, and the keyword definitions changed by the spike number zero or are each recorded as a model defect.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given a keyword with no TypeScript implementation, When compiled, Then the diagnostic names the keyword and the target

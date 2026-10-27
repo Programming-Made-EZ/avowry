@@ -4,7 +4,7 @@
 - **Milestone:** Usable v1
 - **Source:** Retro 001 model feedback: Codex and agy (bare-word rule), Grok (`and` rule).
 - **Depends on:** none
-- **Story:** As an LLM writing Phrase, I want the EBNF and the prose to agree, so that I never have to guess which one is right.
+- **Story:** As Ari, I want the EBNF and prose to describe the same accepted syntax, so that I can write valid Phrase without guessing which documentation is right.
 - **Hypothesis:** We believe making the EBNF and prose agree will cut grammar-misread errors for LLM authors/readers. We'll know when first-attempt diagnostics per write task on the write tasks of bench suite v1 move from the card-016 baseline to at most half of it, for at least three of four models.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given the `argument` rule in the EBNF, When read, Then it includes a bare word naming a variable in scope, matching Section 4 (today it omits it)

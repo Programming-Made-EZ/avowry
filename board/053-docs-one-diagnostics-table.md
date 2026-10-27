@@ -4,7 +4,7 @@
 - **Type:** docs (thin slice from card 018; exempt from the hypothesis rule)
 - **Source:** Grok independent review, 2026-10-25; split from 018 under the thin-slice rule (Decider D18).
 - **Depends on:** none
-- **Story:** As a Phrase author (an engineer or an LLM), I want exactly one place that holds the full diagnostics table, so that I never read two copies that disagree.
+- **Story:** As Ari, I want one authoritative diagnostics table in the documentation, so that I can act on an error without reconciling conflicting copies.
 - **One observable behaviour:** only one of HANDOFF.md and docs/GRAMMAR.md holds the full diagnostics table, and the other points to it; GRAMMAR.md no longer wrongly says the table moved.
 - **Done checks (at most 3):**
   1. Exactly one of the two files contains the table rows (mechanical count)

@@ -4,7 +4,7 @@
 - **Milestone:** M5 Synthesis (future)
 - **North star:** `VISION.md`
 - **Source:** Steve's direction ruling 1 (VISION.md); Decider D4.
-- **Story:** As an engineer with an existing codebase, I want existing code read and Phrase synthesized from it by keyword mapping, so that I can adopt Phrase without rewriting by hand.
+- **Story:** As Dana, I want an existing C# codebase translated into Phrase through keyword mapping, so that I can adopt Phrase without paying for a manual rewrite of existing behavior.
 - **Hypothesis:** We believe mapping code patterns to catalogue keywords will produce Phrase that is smaller and passes the same behavior for LLM authors/readers. We'll know when, on a sample of real C# files, the synthesized Phrase compiles back through the C# adapter and its specs pass for at least a target share of the files (set from a first measured pass), with the share of code left as native blocks reported as the counter-metric.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given code containing no recognizable pattern, When synthesized, Then the output is native blocks only and the report says no keywords matched

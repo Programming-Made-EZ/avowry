@@ -5,7 +5,7 @@
 - **Milestone:** Usable v1 (plumbing for bar 2 to 4) (`board/MILESTONE-usable-v1.md`)
 - **Source:** Process retro 2026-10-26 (Decider D18): thin slices, trialled on the C# adapter chain; this card replaces part of old cards 003 to 007. Steve: "I do have a concern the slices are too big."
 - **Depends on:** 048
-- **Story:** As an engineer (or an LLM) writing Phrase, I want invalid input to an endpoint returns the declared failure with the HTTP status the language maps it to, so that the Phrase compiler grows one observable behaviour at a time.
+- **Story:** As Morgan, I want invalid endpoint input to return its declared failure with the mapped HTTP status instead of a 500, so that I can verify the intended failure behavior from the response.
 - **One observable behaviour:** Invalid input to an endpoint returns the declared failure with the HTTP status the language maps it to.
 - **Done checks (at most 3, each failing on partial work):**
   1. A generated spec expecting the declared failure passes (trait Slice=049)

@@ -5,7 +5,7 @@
 - **Milestone:** process: the loop runner (retro seed P1: no turn ends with nothing running)
 - **Source:** Steve, 2026-10-26 (mob-defaults is his product): "it should be a loop." The continuous loop must live in the tooling, not in the facilitator's chat turns; three idle gaps today all came from the loop depending on a chat turn (retro seed P1). Team design: Decider D23 (Codex Yes, Grok Yes, Copilot Support-it with changes; agy no response).
 - **Depends on:** 064
-- **Story:** As the mob (and Steve), I want the loop to live in `loop.py` in mob-defaults, so that the work keeps going without a chat turn and stalls cannot come from an idle facilitator.
+- **Story:** As Riley, I want the loop to run each picked card with the checked-in toolchain and record its classified result, so that I can reproduce runs and diagnose failures without relying on shell setup.
 - **One observable behaviour:** The loop launches card mode for the picked card with the .NET 8 environment set from a checked-in toolchain file, and records the exit code.
 - **Acceptance criteria (Given/When/Then; at most 3, each failing on partial work):**
   1. Given the loop tests with the fake CLIs and a fixture board, When the behaviour above is exercised, Then a missing or wrong .NET runtime fails BEFORE card mode is dispatched, with a clear message (the 018 stall class)

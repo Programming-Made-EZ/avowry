@@ -4,7 +4,7 @@
 - **Milestone:** Usable v1
 - **North star:** `VISION.md`
 - **Source:** Steve's purpose ruling: loops and if/else are ordinary. Decider D3.
-- **Story:** As an LLM writing Phrase, I want if/else and loops to be plain, obvious constructs, so that ordinary logic never needs a native block.
+- **Story:** As Ari, I want plain, obvious constructs for if/else and loops, so that I can express ordinary logic without inventing native code.
 - **Hypothesis:** We believe adding plain if/else and for-each to the core will remove native-code lines and attempts-to-green on modify and write tasks for LLM authors. We'll know when native-code lines per task on the benchmark's write tasks that need branching or iteration move from the card-016/017 baseline to at most half of it, with pass rate unchanged and the construct count in the grammar growing by no more than 2.
 - **Acceptance criteria (ZOMBIES):**
   - Zero: Given an empty list, When a for-each step runs, Then the body runs zero times and the specs say so

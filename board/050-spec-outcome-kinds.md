@@ -5,7 +5,7 @@
 - **Milestone:** Usable v1 (plumbing for bar 2 to 4) (`board/MILESTONE-usable-v1.md`)
 - **Source:** Process retro 2026-10-26 (Decider D18): thin slices, trialled on the C# adapter chain; this card replaces part of old cards 003 to 007. Steve: "I do have a concern the slices are too big."
 - **Depends on:** 049
-- **Story:** As an engineer (or an LLM) writing Phrase, I want generated tests cover a failure-code expectation, an endpoint-response expectation and a composite expectation, and a spec whose expected value is wrong fails with a message naming that spec, so that the Phrase compiler grows one observable behaviour at a time.
+- **Story:** As Morgan, I want generated tests to assert failure codes, endpoint responses and composite results and to name a spec when its expected value is wrong, so that I can identify the exact consumer behavior that broke.
 - **One observable behaviour:** Generated tests cover a failure-code expectation, an endpoint-response expectation and a composite expectation, and a spec whose expected value is wrong fails with a message naming that spec.
 - **Done checks (at most 3, each failing on partial work):**
   1. One test per spec with the right assertion for each outcome kind (trait Slice=050)

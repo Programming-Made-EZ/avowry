@@ -5,7 +5,7 @@
 - **Milestone:** Usable v1 (plumbing for bar 2 to 4) (`board/MILESTONE-usable-v1.md`)
 - **Source:** Process retro 2026-10-26 (Decider D18): thin slices, trialled on the C# adapter chain; this card replaces part of old cards 003 to 007. Steve: "I do have a concern the slices are too big."
 - **Depends on:** 039
-- **Story:** As an engineer (or an LLM) writing Phrase, I want choosing the csharp target produces the same working number-phrase program through ITargetAdapter, with no C#-only hook in the compiler core (Decider D4), so that the Phrase compiler grows one observable behaviour at a time.
+- **Story:** As Dana, I want choosing the C# target through the adapter contract to produce the same working number-phrase program, so that switching target language does not change my program's behavior.
 - **One observable behaviour:** Choosing the csharp target produces the same working number-phrase program through ITargetAdapter, with no C#-only hook in the compiler core (Decider D4).
 - **Done checks (at most 3, each failing on partial work):**
   1. ITargetProvider becomes ITargetAdapter and Phrase.Providers.CSharp becomes Phrase.Adapters.CSharp; the 039 acceptance test passes unchanged

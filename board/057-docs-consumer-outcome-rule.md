@@ -5,7 +5,7 @@
 - **Milestone:** Vocabulary v1 and Usable v1 plumbing (consumer-observable outcomes, VISION ruling 5)
 - **Source:** Steve, 2026-10-26 (VISION ruling 5): "I feel like we aren't adhering to consumer related output. 'succeeds' isn't really a result the customer gets value from." Team review: Decider D20 (Codex Support-it, Copilot Support-it, Grok Yes; agy no response).
 - **Depends on:** 055
-- **Story:** As a consumer of Phrase programs (an engineer, an LLM, or an end customer), I want a reader of the docs sees that a consumer-visible outcome is a returned value, a response or a declared failure, and that `succeeds` remains for a unit with nothing to return, so that specs state a result that has value to the consumer.
+- **Story:** As Ari, I want the documentation to distinguish returned values, responses and declared failures from valid no-output success, so that I can write specs that assert the outcome a consumer actually observes.
 - **Done checks (at most 3, each failing on partial work):**
   1. VISION ruling 5 and GRAMMAR design rule 6 exist (written 2026-10-26), and the GRAMMAR diagnostics table has the PH336 row card 055 adds
   2. Card 014's criterion no longer requires `then succeeds` on every guard
