@@ -511,8 +511,16 @@ static async Task<string> RunModel(
             AgyModel,
             AgySkipPermissionsOption)
         : StartModelViaShell(AppendProfileFlagsToShellCommand(command, extraFlags), workingDirectory);
-    await process.StandardInput.WriteAsync(prompt);
-    process.StandardInput.Close();
+    try
+    {
+        await process.StandardInput.WriteAsync(prompt);
+        process.StandardInput.Close();
+    }
+    catch (IOException)
+    {
+        // The model exited without reading its stdin (profiles that take the prompt from a file or argument, such as Grok):
+        // a broken pipe is not a failure of the run; its reply is read and scored as usual.
+    }
     var outputTask = process.StandardOutput.ReadToEndAsync();
     var errorTask = process.StandardError.ReadToEndAsync();
     using var timeoutCancellation = new CancellationTokenSource(timeout);

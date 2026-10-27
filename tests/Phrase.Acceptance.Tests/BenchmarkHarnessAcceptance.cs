@@ -226,6 +226,26 @@ public class BenchmarkHarnessAcceptance
     }
 
     [Fact]
+    public async Task run_survives_a_model_that_exits_without_reading_its_stdin_given_a_large_prompt()
+    {
+        // Given a model that takes its prompt from a file or argument and exits at once without reading stdin
+        // (the real Grok profile does), and a large prompt (a big task file is inlined into it)
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        await File.WriteAllTextAsync(Path.Combine(suiteDirectory, "tasks", "001-write-greeting", "big-context.txt"), new string('x', 400_000));
+        var modelCommand = OperatingSystem.IsWindows()
+            ? "python -c \"print('module Greeting\\n\\nphrase \\\"say hello\\\"\\n  native csharp\\n    return;')\""
+            : "python -c \"print('module Greeting\\n\\nphrase \\\"say hello\\\"\\n  native csharp\\n    return;')\"";
+
+        // When the benchmark runs the task
+        var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "stdin-ignorer", modelCommand);
+
+        // Then the broken pipe does not crash the run: the reply is still read and scored
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Contains("stdin-ignorer: passed", stdout);
+    }
+
+    [Fact]
     public async Task run_delivers_the_copilot_prompt_on_stdin_so_a_multi_line_prompt_survives()
     {
         // Given a copilot profile whose task has a multi-line prompt (task file bodies and the documentation block are multi-line)
