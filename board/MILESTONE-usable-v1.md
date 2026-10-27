@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:f5854a0ec8ff8f2fd5400cdd8e64149f3f30f29a1902514f4c1f5ad4374c6ff3 -->
+<!-- board-table-sha256:47a720728ea6c31d0bba8a256b5f85e5f85db452ee259ddb8a70fc14c0f80ba7 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -51,7 +51,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 29 | 049 A declared failure maps to its HTTP status, not a 500 | Ready | 048 |
 | 30 | 050 Every spec outcome kind asserts correctly, and a wrong one names itself | Ready | 049 |
 | 31 | 087 orders.phrase compiles and its generated specs pass | Ready | 039, 040, 041, 043, 044, 045, 048, 049, 050, 084 |
-| 32 | 090 Benchmark: a docs-in-context mode that gives a model the real docs | Ready | 085 |
+| 32 | 090 Benchmark: a docs-in-context mode that gives a model the real docs | Done | 085 |
 | 33 | 091 Benchmark: cold runs, a fresh session in an empty folder for every attempt | Ready | 090 |
 | 34 | 092 Benchmark: scrub a stored reply before cutting it to 200 characters | Ready | 085 |
 | 35 | 037 Benchmark: docs in the prompt, and cold runs | Ready | 090, 091, 092 (sliced: docs-in-context mode, cold runs and the reply-head scrub moved to those cards; this card is now the baseline RUN) |
