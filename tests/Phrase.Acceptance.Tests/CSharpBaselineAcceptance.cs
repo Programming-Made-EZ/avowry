@@ -284,6 +284,98 @@ public sealed class CSharpBaselineAcceptance
         Assert.Equal("none", result.RootElement.GetProperty("proof_level").GetString());
     }
 
+    // Phrase.Bench scores read tasks at parse-resolve only: it does not check that comments were added.
+    // These twins keep that level for the comment text, and execute the spec cases the Phrase prompt states.
+    [Fact]
+    public void read_and_modify_outcomes_match_the_phrase_prompts()
+    {
+        var identity = File.ReadAllText(RepoPaths.Find("bench", "tasks", "004-read-phrase", "prompt.md"));
+        var identityOutcomes = File.ReadAllText(RepoPaths.Find("bench", "csharp-baseline", "tasks", "004-read-phrase", "outcomes.json"));
+        Assert.Contains("returns its input", identity, StringComparison.Ordinal);
+        Assert.Contains("value = \"sample\"", identity, StringComparison.Ordinal);
+        Assert.Contains("returns \"sample\"", identity, StringComparison.Ordinal);
+        Assert.Contains("returns its input", identityOutcomes, StringComparison.Ordinal);
+        Assert.Contains("\"value\": \"sample\"", identityOutcomes, StringComparison.Ordinal);
+        Assert.Contains("\"returns\": \"sample\"", identityOutcomes, StringComparison.Ordinal);
+
+        var names = File.ReadAllText(RepoPaths.Find("bench", "tasks", "005-read-failure", "prompt.md"));
+        var namesOutcomes = File.ReadAllText(RepoPaths.Find("bench", "csharp-baseline", "tasks", "005-read-failure", "outcomes.json"));
+        Assert.Contains("accepts a name", names, StringComparison.Ordinal);
+        Assert.Contains("name = \"Ada\"", names, StringComparison.Ordinal);
+        Assert.Contains("then succeeds", names, StringComparison.Ordinal);
+        Assert.Contains("MissingName", names, StringComparison.Ordinal);
+        Assert.Contains("accepts a name", namesOutcomes, StringComparison.Ordinal);
+        Assert.Contains("\"name\": \"Ada\"", namesOutcomes, StringComparison.Ordinal);
+        Assert.Contains("\"succeeds\": true", namesOutcomes, StringComparison.Ordinal);
+
+        var status = File.ReadAllText(RepoPaths.Find("bench", "tasks", "007-modify-return", "prompt.md"));
+        var statusOutcomes = File.ReadAllText(RepoPaths.Find("bench", "csharp-baseline", "tasks", "007-modify-return", "outcomes.json"));
+        Assert.Contains("returns `\"ready\"`", status, StringComparison.Ordinal);
+        Assert.Contains("return;", status, StringComparison.Ordinal);
+        Assert.Contains("returns ready", statusOutcomes, StringComparison.Ordinal);
+        Assert.Contains("\"returns\": \"ready\"", statusOutcomes, StringComparison.Ordinal);
+
+        var customers = File.ReadAllText(RepoPaths.Find("bench", "tasks", "008-modify-type", "prompt.md"));
+        var customersOutcomes = File.ReadAllText(RepoPaths.Find("bench", "csharp-baseline", "tasks", "008-modify-type", "outcomes.json"));
+        Assert.Contains("email: Text", customers, StringComparison.Ordinal);
+        Assert.Contains("name: Text", customers, StringComparison.Ordinal);
+        Assert.Contains("Preserve the existing field", customers, StringComparison.Ordinal);
+        Assert.Contains("customer's email can be returned", customers, StringComparison.Ordinal);
+        Assert.Contains("preserves the name field", customersOutcomes, StringComparison.Ordinal);
+        Assert.Contains("\"has_field\": \"name\"", customersOutcomes, StringComparison.Ordinal);
+        Assert.Contains("returns a customer's email", customersOutcomes, StringComparison.Ordinal);
+        Assert.Contains("\"email\"", customersOutcomes, StringComparison.Ordinal);
+        Assert.Contains("\"returns\": \"ada@example.com\"", customersOutcomes, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("004-read-phrase", "read")]
+    [InlineData("005-read-failure", "read")]
+    [InlineData("007-modify-return", "modify")]
+    [InlineData("008-modify-type", "modify")]
+    public async Task correct_change_task_reply_passes_and_records_the_starting_code(string taskId, string kind)
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteCopiedSuite(workspace.Root, taskId, kind);
+        var reply = WriteReply(workspace.Root, "correct.cs", CorrectChangeReply(taskId));
+        var capture = Path.Combine(workspace.Root, "prompt-capture.txt");
+
+        var run = await Run(suite, CapturePromptCommand(workspace.Root, reply, capture), $"{taskId}-ok", timeoutMs: 120000);
+
+        Assert.True(run.ExitCode == 0, run.Stdout + Environment.NewLine + run.Stderr);
+        var prompt = File.ReadAllText(capture);
+        var body = File.ReadAllText(RepoPaths.Find("bench", "csharp-baseline", "tasks", taskId, "start.cs"));
+        Assert.Contains(body.Trim(), prompt, StringComparison.Ordinal);
+        using var result = ReadResult(suite, $"{taskId}-ok");
+        Assert.True(result.RootElement.GetProperty("passed").GetBoolean());
+        Assert.Equal(kind, result.RootElement.GetProperty("kind").GetString());
+        Assert.Equal("executed-outcomes", result.RootElement.GetProperty("score_bar").GetString());
+        Assert.Equal(EstimateTokens(body), result.RootElement.GetProperty("existing_code_tokens").GetInt32());
+        Assert.True(result.RootElement.GetProperty("model_test_count").GetInt32() >= 1);
+        Assert.True(result.RootElement.GetProperty("harness_test_count").GetInt32() >= 1);
+    }
+
+    [Theory]
+    [InlineData("004-read-phrase", "read", "Given_value_is_sample_When_called_Then_returns_its_input")]
+    [InlineData("005-read-failure", "read", "Given_name_is_ada_When_called_Then_accepts_a_name")]
+    [InlineData("007-modify-return", "modify", "Given_no_inputs_When_called_Then_returns_ready")]
+    [InlineData("008-modify-type", "modify", "Given_name_is_ada_and_email_is_ada_example_com_When_called_Then_returns_a_customer_s_email")]
+    public async Task wrong_change_task_reply_fails_and_names_the_failing_test(string taskId, string kind, string failingTest)
+    {
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteCopiedSuite(workspace.Root, taskId, kind);
+        var reply = WriteReply(workspace.Root, "wrong.cs", WrongChangeReply(taskId));
+
+        var run = await Run(suite, PrintFileCommand(reply), $"{taskId}-bad", timeoutMs: 120000);
+
+        Assert.True(run.ExitCode == 3, run.Stdout + Environment.NewLine + run.Stderr);
+        using var result = ReadResult(suite, $"{taskId}-bad");
+        Assert.False(result.RootElement.GetProperty("passed").GetBoolean());
+        Assert.Contains(failingTest, result.RootElement.GetProperty("diagnostics")[0].GetString());
+        Assert.Equal(EstimateTokens(File.ReadAllText(RepoPaths.Find("bench", "csharp-baseline", "tasks", taskId, "start.cs"))),
+            result.RootElement.GetProperty("existing_code_tokens").GetInt32());
+    }
+
     [Fact]
     public async Task holdout_task_is_skipped()
     {
@@ -314,6 +406,137 @@ public sealed class CSharpBaselineAcceptance
         """;
     private const string OneCase = "[{\"name\":\"returns hello\",\"given\":{},\"when\":\"called\",\"then\":{\"returns\":\"hello\"}}]";
     private const string TwoCases = "[{\"name\":\"returns hello\",\"given\":{},\"when\":\"called\",\"then\":{\"returns\":\"hello\"}},{\"name\":\"returns hello again\",\"given\":{},\"when\":\"called\",\"then\":{\"returns\":\"hello\"}}]";
+
+    private static string CorrectChangeReply(string taskId) => taskId switch
+    {
+        "004-read-phrase" => """
+            namespace Identity;
+            // Returns the text it was given.
+            public static class Identity {
+                // Of returns value unchanged.
+                public static string Of(string value) => value;
+            }
+            // Proves that "sample" is returned.
+            public sealed class Spec {
+                [Xunit.Fact]
+                public void returns_its_input() => Xunit.Assert.Equal("sample", Identity.Of("sample"));
+            }
+            """,
+        "005-read-failure" => """
+            namespace Names;
+            // MissingName occurs when name is null or empty.
+            public static class Names {
+                public static void Ensure(string name) {
+                    // An empty name fails with MissingName; any other name is accepted.
+                    if (string.IsNullOrEmpty(name)) throw new System.Exception("MissingName");
+                }
+            }
+            // Proves that Ada is accepted and the call succeeds.
+            public sealed class Spec {
+                [Xunit.Fact]
+                public void accepts_a_name() => Names.Ensure("Ada");
+            }
+            """,
+        "007-modify-return" => """
+            namespace Status;
+            public static class Status {
+                public static string Current() => "ready";
+            }
+            public sealed class Spec {
+                [Xunit.Fact]
+                public void returns_ready() => Xunit.Assert.Equal("ready", Status.Current());
+            }
+            """,
+        "008-modify-type" => """
+            namespace Customers;
+            public sealed record Customer(string name, string email);
+            public static class Customers {
+                public static string EmailOf(Customer customer) => customer.email;
+            }
+            public sealed class Spec {
+                [Xunit.Fact]
+                public void returns_the_email() {
+                    var customer = new Customer("Ada", "ada@example.com");
+                    Xunit.Assert.Equal("ada@example.com", Customers.EmailOf(customer));
+                }
+            }
+            """,
+        _ => throw new ArgumentException(taskId)
+    };
+
+    private static string WrongChangeReply(string taskId) => taskId switch
+    {
+        "004-read-phrase" => """
+            namespace Identity;
+            public static class Identity {
+                public static string Of(string value) => "other";
+            }
+            public sealed class Spec {
+                [Xunit.Fact]
+                public void returns_other() => Xunit.Assert.Equal("other", Identity.Of("sample"));
+            }
+            """,
+        "005-read-failure" => """
+            namespace Names;
+            public static class Names {
+                public static void Ensure(string name) { throw new System.Exception("MissingName"); }
+            }
+            public sealed class Spec {
+                [Xunit.Fact]
+                public void rejects_ada() => Xunit.Assert.Throws<System.Exception>(() => Names.Ensure("Ada"));
+            }
+            """,
+        "007-modify-return" => """
+            namespace Status;
+            public static class Status {
+                public static void Current() { return; }
+            }
+            public sealed class Spec {
+                [Xunit.Fact]
+                public void still_returns() { Status.Current(); }
+            }
+            """,
+        "008-modify-type" => """
+            namespace Customers;
+            public record Customer(string name);
+            public sealed class Spec {
+                [Xunit.Fact]
+                public void has_name() => Xunit.Assert.Equal("Ada", new Customer("Ada").name);
+            }
+            """,
+        _ => throw new ArgumentException(taskId)
+    };
+
+    private static int EstimateTokens(string text) => Math.Max(1, (int)Math.Ceiling(text.Length / 4d));
+
+    private static string WriteCopiedSuite(string root, string taskId, string kind)
+    {
+        var source = RepoPaths.Find("bench", "csharp-baseline", "tasks", taskId);
+        var taskRoot = Path.Combine(root, "csharp-baseline", "tasks", taskId);
+        Directory.CreateDirectory(taskRoot);
+        foreach (var file in Directory.GetFiles(source))
+            File.Copy(file, Path.Combine(taskRoot, Path.GetFileName(file)), overwrite: true);
+        var suite = Path.Combine(root, "csharp-baseline", "suite.json");
+        File.WriteAllText(suite, $$"""
+            {"version":1,"tasks":[{"id":"{{taskId}}","kind":"{{kind}}","prompt":"tasks/{{taskId}}/prompt.md","outcomes":"tasks/{{taskId}}/outcomes.json","holdout":false}]}
+            """);
+        return suite;
+    }
+
+    private static string CapturePromptCommand(string root, string replyPath, string capturePath)
+    {
+        if (OperatingSystem.IsWindows())
+        {
+            var script = Path.Combine(root, "capture.cmd");
+            File.WriteAllText(script, "@echo off\r\n" +
+                $"python -c \"import pathlib,sys; pathlib.Path(r'{capturePath}').write_bytes(sys.stdin.buffer.read()); sys.stdout.buffer.write(pathlib.Path(r'{replyPath}').read_bytes())\"\r\n");
+            return $"call \"{script}\"";
+        }
+
+        var shell = Path.Combine(root, "capture.sh");
+        File.WriteAllText(shell, $"#!/bin/sh\npython -c \"import pathlib,sys; pathlib.Path(r'{capturePath}').write_bytes(sys.stdin.buffer.read()); sys.stdout.buffer.write(pathlib.Path(r'{replyPath}').read_bytes())\"\n");
+        return $"sh '{shell}'";
+    }
 
     private static string WriteSuite(string root, bool holdout, string outcomes)
     {
@@ -357,11 +580,11 @@ public sealed class CSharpBaselineAcceptance
         }
     }
 
-    private static async Task<(int ExitCode, string Stdout, string Stderr)> Run(string suite, string command, string model)
+    private static async Task<(int ExitCode, string Stdout, string Stderr)> Run(string suite, string command, string model, int timeoutMs = 30000)
     {
         var project = RepoPaths.Find("tools", "Phrase.BenchCs", "Phrase.BenchCs.csproj");
         var info = new ProcessStartInfo("dotnet") { RedirectStandardOutput = true, RedirectStandardError = true };
-        foreach (var argument in new[] { "run", "--project", project, "--", "run", "--suite", suite, "--model", model, "--model-command", command, "--timeout-ms", "30000" })
+        foreach (var argument in new[] { "run", "--project", project, "--", "run", "--suite", suite, "--model", model, "--model-command", command, "--timeout-ms", timeoutMs.ToString() })
             info.ArgumentList.Add(argument);
         using var process = Process.Start(info)!;
         var stdout = await process.StandardOutput.ReadToEndAsync();

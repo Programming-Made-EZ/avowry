@@ -44,7 +44,7 @@ return exitCode;
 
 static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, string model, string command, string? label, TimeSpan timeout)
 {
-    var prompt = File.ReadAllText(Path.Combine(suiteDirectory, task.Prompt));
+    var (prompt, existingCodeTokens) = AssemblePrompt(task, suiteDirectory);
     var outcomes = ReadOutcomes(Path.Combine(suiteDirectory, task.Outcomes));
     var promptHash = Hash(prompt);
     var scratch = Path.Combine(Path.GetTempPath(), "phrase-bench-cs", Guid.NewGuid().ToString("N"));
@@ -76,7 +76,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
                 if (score.Passed)
                 {
                     var passedResult = CreateResult(task, model, true, attempts, tokensIn, tokensOut, diagnostics,
-                        promptHash, reply, label, "completed", null, "specs-passed", score.ModelTestCount, score.HarnessTestCount);
+                        promptHash, reply, label, "completed", null, "specs-passed", score.ModelTestCount, score.HarnessTestCount, existingCodeTokens);
                     Persist(suiteDirectory, model, passedResult);
                     Console.WriteLine($"{model}: passed {task.Id}");
                     return true;
@@ -87,7 +87,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
         }
 
         var failed = CreateResult(task, model, false, attempts, tokensIn, tokensOut, diagnostics,
-            promptHash, reply, label, "completed", null, "none", lastScore?.ModelTestCount ?? 0, lastScore?.HarnessTestCount ?? 0);
+            promptHash, reply, label, "completed", null, "none", lastScore?.ModelTestCount ?? 0, lastScore?.HarnessTestCount ?? 0, existingCodeTokens);
         Persist(suiteDirectory, model, failed);
         Console.WriteLine($"{model}: failed {task.Id}");
         return false;
@@ -95,7 +95,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
     catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception or TimeoutException)
     {
         var unavailable = CreateResult(task, model, false, attempts, tokensIn, tokensOut, diagnostics,
-            promptHash, reply, label, "unavailable", exception.Message, "none", 0, 0);
+            promptHash, reply, label, "unavailable", exception.Message, "none", 0, 0, existingCodeTokens);
         Persist(suiteDirectory, model, unavailable);
         Console.WriteLine($"{model}: unavailable {task.Id}");
         return true;
@@ -170,19 +170,18 @@ static int CountModelTests(string source) => string.IsNullOrWhiteSpace(source)
     ? 0
     : Regex.Matches(source, @"\[\s*(?:(?:global::)?Xunit\.)?(?:Fact|Theory)(?:Attribute)?\s*(?:\([^\]]*\))?\s*\]", RegexOptions.IgnoreCase).Count;
 
+// Read tasks keep Phrase.Bench's check level for comments: that scorer never checks comment text.
+// The executed check is the spec case in the Phrase prompt, plus a reply that still compiles.
 static string GenerateTests(BenchmarkTask task, IReadOnlyList<Outcome> outcomes)
 {
-    var calls = task.Id switch
-    {
-        "001-write-greeting" => outcomes.Select(outcome => $"Assert.Equal({Literal(outcome.Returns)}, (string)EntryPoint().Invoke(null, null)!);"),
-        "002-write-total" => outcomes.Select(outcome => $"Assert.Equal({Literal(outcome.Returns)}, (int)EntryPoint().Invoke(null, new object[] {{ {Literal(outcome.Given.GetProperty("value"))} }})!);"),
-        _ => throw new InvalidDataException($"No C# outcome adapter exists for '{task.Id}'.")
-    };
-    var methods = outcomes.Zip(calls).Select(pair => $$"""
+    if (task.Id == "008-modify-type")
+        return GenerateCustomerTests(outcomes);
+
+    var methods = outcomes.Select(outcome => $$"""
           [Fact]
-          public void Given_{{GivenName(pair.First.Given)}}_When_{{Identifier(pair.First.When)}}_Then_{{Identifier(pair.First.Name)}}()
+          public void Given_{{GivenName(outcome.Given)}}_When_{{Identifier(outcome.When)}}_Then_{{Identifier(outcome.Name)}}()
           {
-              {{pair.Second}}
+              {{CallOf(task, outcome)}}
           }
         """);
     return $$"""
@@ -196,20 +195,203 @@ static string GenerateTests(BenchmarkTask task, IReadOnlyList<Outcome> outcomes)
           private static MethodInfo EntryPoint()
           {
               var matches = typeof(GeneratedOutcomeTests).Assembly.GetTypes()
-                  .Where(type => type.Namespace == {{JsonSerializer.Serialize(task.Id == "001-write-greeting" ? "Greeting" : "Totals")}})
+                  .Where(type => type.Namespace == {{JsonSerializer.Serialize(NamespaceOf(task))}})
                   .SelectMany(type => type.GetMethods(BindingFlags.Public | BindingFlags.Static))
-                  .Where(method => {{(task.Id == "001-write-greeting"
-                      ? "method.ReturnType == typeof(string) && method.GetParameters().Length == 0"
-                      : "method.Name == \"Double\" && method.ReturnType == typeof(int) && method.GetParameters() is [{ ParameterType: var parameterType }] && parameterType == typeof(int)")}})
+                  .Where(method => {{ShapeOf(task)}})
                   .ToArray();
               return matches.Length == 1 ? matches[0] : throw new InvalidOperationException(
-                  {{(task.Id == "001-write-greeting"
-                      ? "$\"ambiguous_entry_point: expected exactly one public static parameterless string method in namespace Greeting; found {matches.Length}\""
-                      : "$\"entry_point_match_count: {matches.Length}\"")}});
+                  {{FailureOf(task)}});
           }
         {{string.Join(Environment.NewLine, methods)}}
         }
         """;
+}
+
+static string NamespaceOf(BenchmarkTask task) => task.Id switch
+{
+    "001-write-greeting" => "Greeting",
+    "002-write-total" => "Totals",
+    "004-read-phrase" => "Identity",
+    "005-read-failure" => "Names",
+    "007-modify-return" => "Status",
+    _ => throw new InvalidDataException($"No C# outcome adapter exists for '{task.Id}'.")
+};
+
+static string ShapeOf(BenchmarkTask task) => task.Id switch
+{
+    "001-write-greeting" => "method.ReturnType == typeof(string) && method.GetParameters().Length == 0",
+    "002-write-total" => "method.Name == \"Double\" && method.ReturnType == typeof(int) && method.GetParameters() is [{ ParameterType: var parameterType }] && parameterType == typeof(int)",
+    "004-read-phrase" => "method.ReturnType == typeof(string) && method.GetParameters() is [{ ParameterType: var parameterType }] && parameterType == typeof(string)",
+    "005-read-failure" => "method.ReturnType == typeof(void) && method.GetParameters() is [{ ParameterType: var parameterType }] && parameterType == typeof(string)",
+    "007-modify-return" => "method.ReturnType == typeof(string) && method.GetParameters().Length == 0",
+    _ => throw new InvalidDataException($"No C# outcome adapter exists for '{task.Id}'.")
+};
+
+static string FailureOf(BenchmarkTask task) => task.Id switch
+{
+    "001-write-greeting" => "$\"ambiguous_entry_point: expected exactly one public static parameterless string method in namespace Greeting; found {matches.Length}\"",
+    "002-write-total" => "$\"entry_point_match_count: {matches.Length}\"",
+    "004-read-phrase" => "$\"ambiguous_entry_point: expected exactly one public static string method with one string parameter in namespace Identity; found {matches.Length}\"",
+    "005-read-failure" => "$\"ambiguous_entry_point: expected exactly one public static void method with one string parameter in namespace Names; found {matches.Length}\"",
+    "007-modify-return" => "$\"ambiguous_entry_point: expected exactly one public static parameterless string method in namespace Status; found {matches.Length}\"",
+    _ => throw new InvalidDataException($"No C# outcome adapter exists for '{task.Id}'.")
+};
+
+static string CallOf(BenchmarkTask task, Outcome outcome) => task.Id switch
+{
+    "001-write-greeting" => $"Assert.Equal({Literal(outcome.Then.GetProperty("returns"))}, (string)EntryPoint().Invoke(null, null)!);",
+    "002-write-total" => $"Assert.Equal({Literal(outcome.Then.GetProperty("returns"))}, (int)EntryPoint().Invoke(null, new object[] {{ {Literal(outcome.Given.GetProperty("value"))} }})!);",
+    "004-read-phrase" => $"Assert.Equal({Literal(outcome.Then.GetProperty("returns"))}, (string)EntryPoint().Invoke(null, new object[] {{ {Literal(outcome.Given.GetProperty("value"))} }})!);",
+    "005-read-failure" => $"Assert.Null(Record.Exception(() => EntryPoint().Invoke(null, new object[] {{ {Literal(outcome.Given.GetProperty("name"))} }})));",
+    "007-modify-return" => $"Assert.Equal({Literal(outcome.Then.GetProperty("returns"))}, (string)EntryPoint().Invoke(null, null)!);",
+    _ => throw new InvalidDataException($"No C# outcome adapter exists for '{task.Id}'.")
+};
+
+static string GenerateCustomerTests(IReadOnlyList<Outcome> outcomes)
+{
+    var methods = string.Join(Environment.NewLine, outcomes.Select(outcome => $$"""
+          [Fact]
+          public void Given_{{GivenName(outcome.Given)}}_When_{{Identifier(outcome.When)}}_Then_{{Identifier(outcome.Name)}}()
+          {
+              {{CustomerCall(outcome)}}
+          }
+        """));
+    return """
+        using System;
+        using System.Collections.Generic;
+        using System.Linq;
+        using System.Reflection;
+        using Xunit;
+
+        public sealed class GeneratedOutcomeTests
+        {
+          private static Type CustomerType()
+          {
+              var matches = typeof(GeneratedOutcomeTests).Assembly.GetTypes().Where(type => type.Name == "Customer").ToArray();
+              return matches.Length == 1 ? matches[0] : throw new InvalidOperationException(
+                  $"ambiguous_entry_point: expected exactly one type named Customer; found {matches.Length}");
+          }
+
+          private static MemberInfo StringMember(Type type, string name)
+          {
+              const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase;
+              var property = type.GetProperty(name, flags);
+              if (property != null && property.PropertyType == typeof(string)) return property;
+              var field = type.GetField(name, flags);
+              if (field != null && field.FieldType == typeof(string)) return field;
+              return null;
+          }
+
+          private static object CreateCustomer(Type type, IReadOnlyDictionary<string, string> values)
+          {
+              ConstructorInfo chosen = null;
+              var chosenParameters = Array.Empty<ParameterInfo>();
+              foreach (var ctor in type.GetConstructors())
+              {
+                  var parameters = ctor.GetParameters();
+                  var viable = true;
+                  foreach (var parameter in parameters)
+                  {
+                      if (parameter.ParameterType != typeof(string) || parameter.Name is null ||
+                          !values.Keys.Any(key => key.Equals(parameter.Name, StringComparison.OrdinalIgnoreCase)))
+                      {
+                          viable = false;
+                          break;
+                      }
+                  }
+                  if (viable && (chosen == null || parameters.Length > chosenParameters.Length))
+                  {
+                      chosen = ctor;
+                      chosenParameters = parameters;
+                  }
+              }
+              if (chosen == null) throw new InvalidOperationException("customer_construction_failed");
+              var args = new object[chosenParameters.Length];
+              var bound = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+              for (var index = 0; index < chosenParameters.Length; index++)
+              {
+                  var parameterName = chosenParameters[index].Name;
+                  var key = values.Keys.First(candidate => candidate.Equals(parameterName, StringComparison.OrdinalIgnoreCase));
+                  args[index] = values[key];
+                  bound.Add(parameterName);
+              }
+              var created = chosen.Invoke(args);
+              foreach (var pair in values)
+              {
+                  if (bound.Contains(pair.Key)) continue;
+                  Set(type, created, pair.Key, pair.Value);
+              }
+              return created;
+          }
+
+          private static void Set(Type type, object target, string name, string value)
+          {
+              var member = StringMember(type, name);
+              if (member is PropertyInfo property) property.SetValue(target, value);
+              else if (member is FieldInfo field) field.SetValue(target, value);
+              else throw new InvalidOperationException($"missing_field: {name}");
+          }
+
+          private static string CallEmail(object customer)
+          {
+              var customerType = customer.GetType();
+              var matches = customerType.Assembly.GetTypes()
+                  .SelectMany(type => type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly))
+                  .Where(method => method.ReturnType == typeof(string) && !method.IsSpecialName)
+                  .Where(method => method.Name is not ("ToString" or "Equals" or "GetHashCode" or "Deconstruct"))
+                  .Where(method => method.Name.IndexOf('<') < 0)
+                  .Where(method => method.GetCustomAttributes().All(attribute => attribute.GetType().Name is not ("FactAttribute" or "TheoryAttribute")))
+                  .Where(method => method.IsStatic
+                      ? method.GetParameters() is [{ ParameterType: var parameterType }] && parameterType == customerType
+                      : method.DeclaringType == customerType && method.GetParameters().Length == 0)
+                  .ToArray();
+              if (matches.Length != 1)
+                  throw new InvalidOperationException($"ambiguous_entry_point: expected exactly one method that returns a customer's email; found {matches.Length}");
+              var method = matches[0];
+              var result = method.IsStatic ? method.Invoke(null, new[] { customer }) : method.Invoke(customer, null);
+              return (string)result;
+          }
+
+        """ + methods + "\n}\n";
+}
+
+static string CustomerCall(Outcome outcome)
+{
+    if (outcome.Then.TryGetProperty("has_field", out var field))
+        return $"Assert.NotNull(StringMember(CustomerType(), {Literal(field)}));";
+    if (!outcome.Then.TryGetProperty("returns", out var returns))
+        throw new InvalidDataException($"Outcome '{outcome.Name}' has no supported then clause.");
+    var pairs = string.Join(", ", outcome.Given.EnumerateObject().Select(property =>
+        $"[{JsonSerializer.Serialize(property.Name)}] = {Literal(property.Value)}"));
+    var checks = string.Join(" ", outcome.Given.EnumerateObject().Select(property =>
+        $"Assert.NotNull(StringMember(customerType, {JsonSerializer.Serialize(property.Name)}));"));
+    return $"var customerType = CustomerType(); {checks} Assert.Equal({Literal(returns)}, CallEmail(CreateCustomer(customerType, new Dictionary<string, string> {{ {pairs} }})));";
+}
+
+static (string Prompt, int ExistingCodeTokens) AssemblePrompt(BenchmarkTask task, string suiteDirectory)
+{
+    var promptPath = Path.Combine(suiteDirectory, task.Prompt);
+    var promptText = File.ReadAllText(promptPath);
+    var taskDirectory = Path.GetDirectoryName(promptPath)!;
+    var bodies = Directory.GetFiles(taskDirectory, "*", SearchOption.TopDirectoryOnly)
+        .Where(path => !string.Equals(Path.GetFileName(path), Path.GetFileName(promptPath), StringComparison.OrdinalIgnoreCase))
+        .Where(path => !string.Equals(Path.GetExtension(path), ".json", StringComparison.OrdinalIgnoreCase))
+        .OrderBy(path => path, StringComparer.OrdinalIgnoreCase)
+        .Select(path => (Name: Path.GetFileName(path), Body: File.ReadAllText(path)))
+        .ToArray();
+    if (bodies.Length == 0)
+        return (promptText, 0);
+
+    var builder = new StringBuilder();
+    builder.AppendLine(promptText.TrimEnd());
+    builder.AppendLine();
+    builder.AppendLine("Task file bodies:");
+    foreach (var file in bodies)
+    {
+        builder.AppendLine($"--- {file.Name} ---");
+        builder.AppendLine(file.Body);
+    }
+    return (builder.ToString().TrimEnd(), bodies.Sum(file => EstimateTokens(file.Body)));
 }
 
 static IReadOnlyList<Outcome> ReadOutcomes(string path)
@@ -217,7 +399,7 @@ static IReadOnlyList<Outcome> ReadOutcomes(string path)
     using var document = JsonDocument.Parse(File.ReadAllText(path));
     return document.RootElement.EnumerateArray().Select(item => new Outcome(
         item.GetProperty("name").GetString()!, item.GetProperty("given").Clone(), item.GetProperty("when").GetString()!,
-        item.GetProperty("then").GetProperty("returns").Clone())).ToArray();
+        item.GetProperty("then").Clone())).ToArray();
 }
 
 static string Literal(JsonElement value) => value.ValueKind switch
@@ -353,8 +535,8 @@ static string ReplyHead(string reply)
 
 static BenchmarkResult CreateResult(BenchmarkTask task, string model, bool passed, int attempts, int tokensIn, int tokensOut,
     IReadOnlyList<string> diagnostics, string promptHash, string reply, string? label, string status, string? error,
-    string proofLevel, int modelTestCount, int harnessTestCount) => new(model, task.Id, passed, attempts, tokensIn, tokensOut, "estimated", diagnostics,
-        false, promptHash, ReplyHead(reply), status, error, label, proofLevel, "plain-csharp", "", task.Kind, modelTestCount, harnessTestCount, "executed-outcomes");
+    string proofLevel, int modelTestCount, int harnessTestCount, int existingCodeTokens) => new(model, task.Id, passed, attempts, tokensIn, tokensOut, "estimated", diagnostics,
+        false, promptHash, ReplyHead(reply), status, error, label, proofLevel, "plain-csharp", "", task.Kind, modelTestCount, harnessTestCount, "executed-outcomes", existingCodeTokens);
 
 static void Persist(string suiteDirectory, string model, BenchmarkResult result)
 {
@@ -383,11 +565,11 @@ static class Serialization
 }
 sealed record Suite(int Version, IReadOnlyList<BenchmarkTask> Tasks);
 sealed record BenchmarkTask(string Id, string Kind, string Prompt, string Outcomes, bool Holdout);
-sealed record Outcome(string Name, JsonElement Given, string When, JsonElement Returns);
+sealed record Outcome(string Name, JsonElement Given, string When, JsonElement Then);
 sealed record Score(bool Passed, string Diagnostics, int ModelTestCount, int HarnessTestCount);
 sealed record SourceFile(string Name, string Content);
 sealed record TestResult(int ModelTests, int HarnessTests, string Failures);
 sealed record BenchmarkResult(string Model, string Task, bool Passed, int Attempts, int TokensIn, int TokensOut,
     string TokenMeasurement, IReadOnlyList<string> Diagnostics, bool Misread, string PromptHash, string ReplyHead,
     string Status, string? Error, string? Label, string ProofLevel, string Mode, string DocsHash, string Kind,
-    int ModelTestCount, int HarnessTestCount, string ScoreBar);
+    int ModelTestCount, int HarnessTestCount, string ScoreBar, int ExistingCodeTokens);

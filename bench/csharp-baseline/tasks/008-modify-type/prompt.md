@@ -1,0 +1,1 @@
+Modify this C# source by adding an `email` string field to `Customer`, then add a method and an xUnit test proving a customer's email can be returned. Preserve the existing field and return only valid C# source.

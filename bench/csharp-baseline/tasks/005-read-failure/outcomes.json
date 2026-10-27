@@ -1,0 +1,8 @@
+[
+  {
+    "name": "accepts a name",
+    "given": { "name": "Ada" },
+    "when": "called",
+    "then": { "succeeds": true }
+  }
+]

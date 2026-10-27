@@ -1,0 +1,8 @@
+[
+  {
+    "name": "returns ready",
+    "given": {},
+    "when": "called",
+    "then": { "returns": "ready" }
+  }
+]

@@ -14,6 +14,34 @@
       "prompt": "tasks/002-write-total/prompt.md",
       "outcomes": "tasks/002-write-total/outcomes.json",
       "holdout": false
+    },
+    {
+      "id": "004-read-phrase",
+      "kind": "read",
+      "prompt": "tasks/004-read-phrase/prompt.md",
+      "outcomes": "tasks/004-read-phrase/outcomes.json",
+      "holdout": false
+    },
+    {
+      "id": "005-read-failure",
+      "kind": "read",
+      "prompt": "tasks/005-read-failure/prompt.md",
+      "outcomes": "tasks/005-read-failure/outcomes.json",
+      "holdout": false
+    },
+    {
+      "id": "007-modify-return",
+      "kind": "modify",
+      "prompt": "tasks/007-modify-return/prompt.md",
+      "outcomes": "tasks/007-modify-return/outcomes.json",
+      "holdout": false
+    },
+    {
+      "id": "008-modify-type",
+      "kind": "modify",
+      "prompt": "tasks/008-modify-type/prompt.md",
+      "outcomes": "tasks/008-modify-type/outcomes.json",
+      "holdout": false
     }
   ]
 }

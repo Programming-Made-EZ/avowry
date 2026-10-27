@@ -1,0 +1,8 @@
+[
+  {
+    "name": "returns its input",
+    "given": { "value": "sample" },
+    "when": "called",
+    "then": { "returns": "sample" }
+  }
+]
