@@ -21,6 +21,7 @@ CARD_FILE_RE = re.compile(r"^(\d{3})-.+\.md$")
 MARKER_RE = re.compile(r"<!-- phrase-card:(\d{3}) -->")
 KINDS = ("feature", "bug", "docs", "tooling", "spike", "decision", "data")
 STATUSES = ("Ready", "In Progress", "Done", "Superseded/Withdrawn")
+NUMBER_FIELDS = ("Rank", "Card number")
 FIELD_NAMES = ("Rank", "Card number", "Depends on", "Kind", "Phase", "Card author", "Status")
 
 
@@ -211,9 +212,10 @@ def apply_actions(gh, project_id, field_map, actions, owner=OWNER, repo=REPO):
             continue
         field, value = detail
         command = ["project", "item-edit", "--id", item["id"], "--project-id", project_id, "--field-id", field["id"]]
-        if field.get("type") == "NUMBER":
+        # the real gh reports number and text fields alike as ProjectV2Field, so numbers are known by name
+        if field["name"] in NUMBER_FIELDS:
             command.extend(["--number", str(value)])
-        elif field.get("type") == "SINGLE_SELECT":
+        elif str(field.get("type", "")).endswith("SingleSelectField") or field.get("type") == "SINGLE_SELECT":
             option = next((x for x in field.get("options", []) if x.get("name") == value), None)
             if option is None:
                 raise RuntimeError(f"Missing option {value!r} for {field['name']}")

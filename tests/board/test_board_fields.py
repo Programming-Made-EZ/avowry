@@ -25,7 +25,7 @@ class FakeGH:
         }
         self.fields = []
         for name, field_id in names.items():
-            field = {"id": field_id, "name": name, "type": "SINGLE_SELECT" if name in {"Kind", "Status"} else ("NUMBER" if name in {"Rank", "Card number"} else "TEXT")}
+            field = {"id": field_id, "name": name, "type": "ProjectV2SingleSelectField" if name in {"Kind", "Status"} else "ProjectV2Field"}
             if name == "Kind":
                 field["options"] = [{"id": f"kind-{value}", "name": value} for value in set_fields.KINDS]
             elif name == "Status":
@@ -63,6 +63,8 @@ class FakeGH:
             if "--number" in cmd:
                 item[key] = float(cmd[cmd.index("--number") + 1])
             elif "--text" in cmd:
+                if field["name"] in {"Rank", "Card number"}:  # what the real API answered when a number field got --text
+                    raise RuntimeError("GraphQL: Did not receive a number value to update a field of type number (updateProjectV2ItemFieldValue)")
                 item[key] = cmd[cmd.index("--text") + 1]
             else:
                 option_id = cmd[cmd.index("--single-select-option-id") + 1]
