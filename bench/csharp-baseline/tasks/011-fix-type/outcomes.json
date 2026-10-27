@@ -1,0 +1,8 @@
+[
+  {
+    "name": "returns forty two",
+    "given": {},
+    "when": "called",
+    "then": { "returns": 42 }
+  }
+]

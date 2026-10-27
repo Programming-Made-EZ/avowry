@@ -42,6 +42,20 @@
       "prompt": "tasks/008-modify-type/prompt.md",
       "outcomes": "tasks/008-modify-type/outcomes.json",
       "holdout": false
+    },
+    {
+      "id": "010-fix-trigger",
+      "kind": "fix",
+      "prompt": "tasks/010-fix-trigger/prompt.md",
+      "outcomes": "tasks/010-fix-trigger/outcomes.json",
+      "holdout": false
+    },
+    {
+      "id": "011-fix-type",
+      "kind": "fix",
+      "prompt": "tasks/011-fix-type/prompt.md",
+      "outcomes": "tasks/011-fix-type/outcomes.json",
+      "holdout": false
     }
   ]
 }

@@ -214,6 +214,8 @@ static string NamespaceOf(BenchmarkTask task) => task.Id switch
     "004-read-phrase" => "Identity",
     "005-read-failure" => "Names",
     "007-modify-return" => "Status",
+    "010-fix-trigger" => "Greeting",
+    "011-fix-type" => "Count",
     _ => throw new InvalidDataException($"No C# outcome adapter exists for '{task.Id}'.")
 };
 
@@ -224,6 +226,8 @@ static string ShapeOf(BenchmarkTask task) => task.Id switch
     "004-read-phrase" => "method.ReturnType == typeof(string) && method.GetParameters() is [{ ParameterType: var parameterType }] && parameterType == typeof(string)",
     "005-read-failure" => "method.ReturnType == typeof(void) && method.GetParameters() is [{ ParameterType: var parameterType }] && parameterType == typeof(string)",
     "007-modify-return" => "method.ReturnType == typeof(string) && method.GetParameters().Length == 0",
+    "010-fix-trigger" => "method.ReturnType == typeof(string) && method.GetParameters().Length == 0",
+    "011-fix-type" => "method.Name == \"Answer\" && method.ReturnType == typeof(int) && method.GetParameters().Length == 0",
     _ => throw new InvalidDataException($"No C# outcome adapter exists for '{task.Id}'.")
 };
 
@@ -234,6 +238,8 @@ static string FailureOf(BenchmarkTask task) => task.Id switch
     "004-read-phrase" => "$\"ambiguous_entry_point: expected exactly one public static string method with one string parameter in namespace Identity; found {matches.Length}\"",
     "005-read-failure" => "$\"ambiguous_entry_point: expected exactly one public static void method with one string parameter in namespace Names; found {matches.Length}\"",
     "007-modify-return" => "$\"ambiguous_entry_point: expected exactly one public static parameterless string method in namespace Status; found {matches.Length}\"",
+    "010-fix-trigger" => "$\"ambiguous_entry_point: expected exactly one public static parameterless string method in namespace Greeting; found {matches.Length}\"",
+    "011-fix-type" => "$\"ambiguous_entry_point: expected exactly one public static parameterless int method named Answer in namespace Count; found {matches.Length}\"",
     _ => throw new InvalidDataException($"No C# outcome adapter exists for '{task.Id}'.")
 };
 
@@ -244,6 +250,8 @@ static string CallOf(BenchmarkTask task, Outcome outcome) => task.Id switch
     "004-read-phrase" => $"Assert.Equal({Literal(outcome.Then.GetProperty("returns"))}, (string)EntryPoint().Invoke(null, new object[] {{ {Literal(outcome.Given.GetProperty("value"))} }})!);",
     "005-read-failure" => $"Assert.Null(Record.Exception(() => EntryPoint().Invoke(null, new object[] {{ {Literal(outcome.Given.GetProperty("name"))} }})));",
     "007-modify-return" => $"Assert.Equal({Literal(outcome.Then.GetProperty("returns"))}, (string)EntryPoint().Invoke(null, null)!);",
+    "010-fix-trigger" => $"Assert.Equal({Literal(outcome.Then.GetProperty("returns"))}, (string)EntryPoint().Invoke(null, null)!);",
+    "011-fix-type" => $"Assert.Equal({Literal(outcome.Then.GetProperty("returns"))}, (int)EntryPoint().Invoke(null, null)!);",
     _ => throw new InvalidDataException($"No C# outcome adapter exists for '{task.Id}'.")
 };
 

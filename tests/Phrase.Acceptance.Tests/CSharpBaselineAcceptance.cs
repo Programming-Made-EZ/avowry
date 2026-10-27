@@ -333,6 +333,8 @@ public sealed class CSharpBaselineAcceptance
     [InlineData("005-read-failure", "read")]
     [InlineData("007-modify-return", "modify")]
     [InlineData("008-modify-type", "modify")]
+    [InlineData("010-fix-trigger", "fix")]
+    [InlineData("011-fix-type", "fix")]
     public async Task correct_change_task_reply_passes_and_records_the_starting_code(string taskId, string kind)
     {
         using var workspace = TempWorkspace.Create();
@@ -360,6 +362,8 @@ public sealed class CSharpBaselineAcceptance
     [InlineData("005-read-failure", "read", "Given_name_is_ada_When_called_Then_accepts_a_name")]
     [InlineData("007-modify-return", "modify", "Given_no_inputs_When_called_Then_returns_ready")]
     [InlineData("008-modify-type", "modify", "Given_name_is_ada_and_email_is_ada_example_com_When_called_Then_returns_a_customer_s_email")]
+    [InlineData("010-fix-trigger", "fix", "Given_no_inputs_When_called_Then_returns_hello")]
+    [InlineData("011-fix-type", "fix", "Given_no_inputs_When_called_Then_returns_forty_two")]
     public async Task wrong_change_task_reply_fails_and_names_the_failing_test(string taskId, string kind, string failingTest)
     {
         using var workspace = TempWorkspace.Create();
@@ -461,6 +465,26 @@ public sealed class CSharpBaselineAcceptance
                 }
             }
             """,
+        "010-fix-trigger" => """
+            namespace Greeting;
+            public static class Greeter {
+                public static string SayHello() => "hello";
+            }
+            public sealed class Spec {
+                [Xunit.Fact]
+                public void returns_hello() => Xunit.Assert.Equal("hello", Greeter.SayHello());
+            }
+            """,
+        "011-fix-type" => """
+            namespace Count;
+            public static class Counter {
+                public static int Answer() => 42;
+            }
+            public sealed class Spec {
+                [Xunit.Fact]
+                public void returns_forty_two() => Xunit.Assert.Equal(42, Counter.Answer());
+            }
+            """,
         _ => throw new ArgumentException(taskId)
     };
 
@@ -502,6 +526,26 @@ public sealed class CSharpBaselineAcceptance
             public sealed class Spec {
                 [Xunit.Fact]
                 public void has_name() => Xunit.Assert.Equal("Ada", new Customer("Ada").name);
+            }
+            """,
+        "010-fix-trigger" => """
+            namespace Greeting;
+            public static class Greeter {
+                public static string SayHello() => "goodbye";
+            }
+            public sealed class Spec {
+                [Xunit.Fact]
+                public void still_returns_hello() => Xunit.Assert.Equal("hello", Greeter.SayHello());
+            }
+            """,
+        "011-fix-type" => """
+            namespace Count;
+            public static class Counter {
+                public static int Answer() => 41;
+            }
+            public sealed class Spec {
+                [Xunit.Fact]
+                public void returns_forty_two() => Xunit.Assert.Equal(42, Counter.Answer());
             }
             """,
         _ => throw new ArgumentException(taskId)
