@@ -189,3 +189,8 @@ Format: `Decider D<n>: <proposal>`, votes, `Result: passed|failed`. All-Yes resu
   - H3 write e29a752e6353aa94ce49c01c551eb4285bacdf86d7428b1c63469332110faaaf
 - Provenance, as reported by Dispatch: a separate Cowork session outside the mob wrote all three; it will not drive or review cards 086 to 088; the sealed files are held by Dispatch and Steve, off the repository; they are not committed and no path to them is recorded here. The mob does not read their content before card 088 unseals them. At unsealing each file's SHA-256 must equal the hash above; a mismatch voids that holdout.
 - Result: passed (recorded).
+
+#### Decider D35: benchmark change bench-docs-in-context-mode (card 090): a docs-in-context run mode
+
+- Date: 2026-10-27. Seats: Copilot Yes; Codex Support-it (one gap: --docs-root let a row be labeled docs-in-context with edited docs; FIXED before this record: an explicit --docs-root is refused unless --custom-docs is passed, and such a run is labeled docs-in-context-custom and never counted in a baseline); agy out of quota. Result: passed.
+- Verdict: a fair, honest measurement change under the frozen bar (D32): the docs given are the real unedited docs/GRAMMAR.md and the orders.phrase fixture; documentation tokens are charged on every attempt against Phrase; the default mode and its prompt hashes are unchanged; legacy rows read as zero-shot and are never rewritten; the holdout is untouched.

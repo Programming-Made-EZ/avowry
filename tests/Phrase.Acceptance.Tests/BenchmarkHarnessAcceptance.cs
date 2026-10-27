@@ -749,13 +749,13 @@ public class BenchmarkHarnessAcceptance
 
         // When the same task is run against each root
         var first = await RunBenchmark(
-            suiteDirectory, "hash-same", modelCommand, "--mode", "docs-in-context", "--docs-root", sameRoot);
+            suiteDirectory, "hash-same", modelCommand, "--mode", "docs-in-context", "--docs-root", sameRoot, "--custom-docs");
         var second = await RunBenchmark(
-            suiteDirectory, "hash-same-copy", modelCommand, "--mode", "docs-in-context", "--docs-root", sameCopy);
+            suiteDirectory, "hash-same-copy", modelCommand, "--mode", "docs-in-context", "--docs-root", sameCopy, "--custom-docs");
         var third = await RunBenchmark(
-            suiteDirectory, "hash-changed", modelCommand, "--mode", "docs-in-context", "--docs-root", changedRoot);
+            suiteDirectory, "hash-changed", modelCommand, "--mode", "docs-in-context", "--docs-root", changedRoot, "--custom-docs");
 
-        // Then the docs hash follows the file bytes and ignores an identical copy
+        // Then the docs hash follows the file bytes and ignores an identical copy, and the row is custom
         Assert.True(first.ExitCode == 0, first.Stdout + first.Stderr);
         Assert.True(second.ExitCode == 0, second.Stdout + second.Stderr);
         Assert.True(third.ExitCode == 0, third.Stdout + third.Stderr);
@@ -766,6 +766,9 @@ public class BenchmarkHarnessAcceptance
         Assert.False(string.IsNullOrEmpty(sameHash));
         Assert.Equal(sameHash, copy.RootElement.GetProperty("docs_hash").GetString());
         Assert.NotEqual(sameHash, changed.RootElement.GetProperty("docs_hash").GetString());
+        Assert.Equal("docs-in-context-custom", same.RootElement.GetProperty("mode").GetString());
+        Assert.Equal("docs-in-context-custom", copy.RootElement.GetProperty("mode").GetString());
+        Assert.Equal("docs-in-context-custom", changed.RootElement.GetProperty("mode").GetString());
     }
 
     [Fact]
@@ -818,7 +821,7 @@ public class BenchmarkHarnessAcceptance
         var zeroShot = await RunBenchmark(suiteDirectory, "tokens-zero-v1", modelCommand);
         var zeroPrompt = await File.ReadAllTextAsync(capturedPrompt);
         var docsInContext = await RunBenchmark(
-            suiteDirectory, "tokens-docs-v1", modelCommand, "--mode", "docs-in-context", "--docs-root", docsRoot);
+            suiteDirectory, "tokens-docs-v1", modelCommand, "--mode", "docs-in-context", "--docs-root", docsRoot, "--custom-docs");
         var docsPrompt = await File.ReadAllTextAsync(capturedPrompt);
 
         // Then the docs-in-context input estimate grows by at least the docs block
@@ -834,6 +837,7 @@ public class BenchmarkHarnessAcceptance
         Assert.True(
             docsTokensIn - zeroTokens >= docsTokens,
             $"tokens_in {docsTokensIn} is not at least {docsTokens} above zero-shot {zeroTokens}.");
+        Assert.Equal("docs-in-context-custom", docsResult.RootElement.GetProperty("mode").GetString());
     }
 
     [Fact]
@@ -847,7 +851,7 @@ public class BenchmarkHarnessAcceptance
         var capturedPrompt = Path.Combine(workspace.Root, "captured-once.txt");
         var measured = await RunBenchmark(
             suiteDirectory, "tokens-measure-v1", CapturePromptCommand(capturedPrompt),
-            "--mode", "docs-in-context", "--docs-root", docsRoot);
+            "--mode", "docs-in-context", "--docs-root", docsRoot, "--custom-docs");
         Assert.True(measured.ExitCode == 0, measured.Stdout + measured.Stderr);
         var docsPrompt = await File.ReadAllTextAsync(capturedPrompt);
         var taskPrompt = await File.ReadAllTextAsync(
@@ -861,7 +865,7 @@ public class BenchmarkHarnessAcceptance
             suiteDirectory, "retry-tokens-zero-v1", RetryThenPassCommand(workspace.Root, validOutput, "zero"));
         var docsInContext = await RunBenchmark(
             suiteDirectory, "retry-tokens-docs-v1", RetryThenPassCommand(workspace.Root, validOutput, "docs"),
-            "--mode", "docs-in-context", "--docs-root", docsRoot);
+            "--mode", "docs-in-context", "--docs-root", docsRoot, "--custom-docs");
 
         // Then each attempt, not only the first, includes the docs block estimate
         Assert.True(zeroShot.ExitCode == 0, zeroShot.Stdout + zeroShot.Stderr);
@@ -875,6 +879,7 @@ public class BenchmarkHarnessAcceptance
         Assert.True(
             increase >= docsTokens * 2,
             $"Two attempts increased tokens_in by {increase}, which is below twice the docs estimate {docsTokens}.");
+        Assert.Equal("docs-in-context-custom", docsResult.RootElement.GetProperty("mode").GetString());
     }
 
     [Fact]
@@ -892,11 +897,11 @@ public class BenchmarkHarnessAcceptance
         await File.WriteAllTextAsync(historyPath, legacyRow);
         var modelCommand = PrintFileCommand(await WritePassingPhrase(workspace.Root));
 
-        // When a new docs-in-context row is appended
+        // When a new custom-docs row is appended
         var (exitCode, stdout, stderr) = await RunBenchmark(
-            suiteDirectory, "append-mode-v1", modelCommand, "--mode", "docs-in-context", "--docs-root", docsRoot);
+            suiteDirectory, "append-mode-v1", modelCommand, "--mode", "docs-in-context", "--docs-root", docsRoot, "--custom-docs");
 
-        // Then the legacy line is byte-identical and the new row carries the mode
+        // Then the legacy line is byte-identical and the new row carries the custom mode
         Assert.True(exitCode == 0, stdout + stderr);
         var historyBytes = await File.ReadAllBytesAsync(historyPath);
         var legacyBytes = Encoding.UTF8.GetBytes(legacyRow);
@@ -905,8 +910,93 @@ public class BenchmarkHarnessAcceptance
         Assert.Equal(2, rows.Length);
         Assert.DoesNotContain("\"mode\"", rows[0], StringComparison.Ordinal);
         using var appended = JsonDocument.Parse(rows[1]);
-        Assert.Equal("docs-in-context", appended.RootElement.GetProperty("mode").GetString());
+        Assert.Equal("docs-in-context-custom", appended.RootElement.GetProperty("mode").GetString());
         Assert.False(string.IsNullOrEmpty(appended.RootElement.GetProperty("docs_hash").GetString()));
+    }
+
+    [Fact]
+    public async Task usage_mentions_the_custom_docs_flag()
+    {
+        // Given the benchmark CLI with no arguments
+        var (exitCode, _, stderr) = await RunBenchmarkProcess();
+
+        // Then usage names the flag that keeps invented docs out of the baseline
+        Assert.Equal(1, exitCode);
+        Assert.Contains("--custom-docs", stderr, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task run_refuses_an_explicit_docs_root_that_is_not_the_repository_without_custom_docs()
+    {
+        // Given fixture docs outside the repository root derived from the suite
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var docsRoot = Path.Combine(workspace.Root, "invented-docs");
+        await WriteDocs(docsRoot, "invented grammar\n", "invented orders\n");
+        var modelCommand = PrintFileCommand(await WritePassingPhrase(workspace.Root));
+        var fullDocsRoot = Path.GetFullPath(docsRoot);
+
+        // When docs-in-context is pointed at that folder without --custom-docs
+        var (exitCode, stdout, stderr) = await RunBenchmark(
+            suiteDirectory, "refused-docs-v1", modelCommand,
+            "--mode", "docs-in-context", "--docs-root", docsRoot);
+
+        // Then the run is refused and no row is stored as docs-in-context
+        Assert.Equal(1, exitCode);
+        Assert.Contains(fullDocsRoot, stderr, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("--custom-docs", stderr, StringComparison.Ordinal);
+        Assert.Contains("not the repository root", stderr, StringComparison.Ordinal);
+        Assert.DoesNotContain("refused-docs-v1: passed", stdout, StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(suiteDirectory, "results", "refused-docs-v1.json")));
+    }
+
+    [Fact]
+    public async Task run_custom_docs_is_labeled_docs_in_context_custom_and_not_counted_in_a_baseline()
+    {
+        // Given fixture docs outside the repository root derived from the suite
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var docsRoot = Path.Combine(workspace.Root, "invented-docs");
+        await WriteDocs(docsRoot, "invented grammar\n", "invented orders\n");
+        var modelCommand = PrintFileCommand(await WritePassingPhrase(workspace.Root));
+
+        // When that folder is passed with --docs-root and --custom-docs
+        var (exitCode, stdout, stderr) = await RunBenchmark(
+            suiteDirectory, "custom-docs-v1", modelCommand,
+            "--mode", "docs-in-context", "--docs-root", docsRoot, "--custom-docs");
+
+        // Then the row is labeled custom, keeps the docs hash, and is not a baseline run
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.Contains(
+            "custom-docs-v1: custom docs; this run is not counted in a baseline",
+            stdout,
+            StringComparison.Ordinal);
+        using var result = await ReadModelResult(suiteDirectory, "custom-docs-v1");
+        Assert.Equal("docs-in-context-custom", result.RootElement.GetProperty("mode").GetString());
+        Assert.False(string.IsNullOrEmpty(result.RootElement.GetProperty("docs_hash").GetString()));
+    }
+
+    [Fact]
+    public async Task run_accepts_the_canonical_repository_root_as_docs_root_without_custom_docs()
+    {
+        // Given the repository root derived from the suite, passed explicitly
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var canonicalRoot = Path.GetFullPath(Path.Combine(suiteDirectory, ".."));
+        await WriteDocs(canonicalRoot, "repository grammar\n", "repository orders\n");
+        var modelCommand = PrintFileCommand(await WritePassingPhrase(workspace.Root));
+
+        // When docs-in-context uses that path as --docs-root and omits --custom-docs
+        var (exitCode, stdout, stderr) = await RunBenchmark(
+            suiteDirectory, "canonical-docs-v1", modelCommand,
+            "--mode", "docs-in-context", "--docs-root", canonicalRoot);
+
+        // Then the run is accepted and the row stays docs-in-context
+        Assert.True(exitCode == 0, stdout + stderr);
+        Assert.DoesNotContain("not counted in a baseline", stdout, StringComparison.Ordinal);
+        using var result = await ReadModelResult(suiteDirectory, "canonical-docs-v1");
+        Assert.Equal("docs-in-context", result.RootElement.GetProperty("mode").GetString());
+        Assert.False(string.IsNullOrEmpty(result.RootElement.GetProperty("docs_hash").GetString()));
     }
 
     [Fact]

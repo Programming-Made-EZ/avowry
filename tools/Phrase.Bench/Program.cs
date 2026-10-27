@@ -15,7 +15,7 @@ const string AgySkipPermissionsOption = "--dangerously-skip-permissions";
 
 if (args.Length == 0)
 {
-    Console.Error.WriteLine("Usage: Phrase.Bench run --suite <path> --model <id> --model-command <command> [--mode zero-shot|docs-in-context] [--docs-root <path>] | --self-check [--suite <path>]");
+    Console.Error.WriteLine("Usage: Phrase.Bench run --suite <path> --model <id> --model-command <command> [--mode zero-shot|docs-in-context] [--docs-root <path>] [--custom-docs] | --self-check [--suite <path>]");
     return 1;
 }
 
@@ -57,11 +57,29 @@ suitePath = ResolveSuitePath(suitePath);
 var suiteDirectory = Path.GetDirectoryName(suitePath)!;
 var suite = ReadSuite(suitePath);
 var docsBlock = "";
+var recordedMode = mode;
 if (mode == BenchmarkModes.DocsInContext)
 {
-    var docsRoot = options.TryGetValue("docs-root", out var configuredDocsRoot)
-        ? Path.GetFullPath(configuredDocsRoot)
-        : Path.GetFullPath(Path.Combine(suiteDirectory, ".."));
+    var repositoryRoot = Path.GetFullPath(Path.Combine(suiteDirectory, ".."));
+    var docsRoot = repositoryRoot;
+    if (options.TryGetValue("docs-root", out var configuredDocsRoot))
+    {
+        var explicitRoot = Path.GetFullPath(configuredDocsRoot);
+        if (!IsSameFullPath(explicitRoot, repositoryRoot))
+        {
+            if (!options.ContainsKey("custom-docs"))
+            {
+                Console.Error.WriteLine(
+                    $"--docs-root '{explicitRoot}' is not the repository root '{repositoryRoot}'. Pass --custom-docs to use other docs; that run is recorded as docs-in-context-custom and is not counted in a baseline.");
+                return 1;
+            }
+
+            recordedMode = BenchmarkModes.DocsInContextCustom;
+        }
+
+        docsRoot = explicitRoot;
+    }
+
     if (!TryReadDocumentationBlock(docsRoot, out docsBlock, out var docsError))
     {
         Console.Error.WriteLine(docsError);
@@ -69,12 +87,15 @@ if (mode == BenchmarkModes.DocsInContext)
     }
 }
 
+if (recordedMode == BenchmarkModes.DocsInContextCustom)
+    Console.WriteLine($"{model}: custom docs; this run is not counted in a baseline");
+
 var exitCode = 0;
 var taskResults = new List<TaskRunResult>();
 
 foreach (var task in suite.Tasks.Where(task => !task.Holdout))
 {
-    var result = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts, label, mode, docsBlock);
+    var result = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts, label, recordedMode, docsBlock);
     taskResults.Add(result);
     if (!result.KeepsRunSuccessful)
         exitCode = 3;
@@ -229,13 +250,37 @@ static async Task DeleteScratchDirectory(string scratchDirectory)
 static Dictionary<string, string> ParseOptions(string[] values)
 {
     var result = new Dictionary<string, string>(StringComparer.Ordinal);
-    for (var index = 0; index < values.Length; index += 2)
+    for (var index = 0; index < values.Length; index++)
     {
-        if (!values[index].StartsWith("--", StringComparison.Ordinal) || index + 1 == values.Length)
+        if (!values[index].StartsWith("--", StringComparison.Ordinal))
             throw new ArgumentException($"Invalid option '{values[index]}'.");
-        result[values[index][2..]] = values[index + 1];
+        var name = values[index][2..];
+        if (name == "custom-docs")
+        {
+            result[name] = "true";
+            continue;
+        }
+
+        if (index + 1 == values.Length)
+            throw new ArgumentException($"Invalid option '{values[index]}'.");
+        result[name] = values[++index];
     }
     return result;
+}
+
+static bool IsSameFullPath(string left, string right) =>
+    string.Equals(
+        NormalizeFullPath(left),
+        NormalizeFullPath(right),
+        OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal);
+
+static string NormalizeFullPath(string path)
+{
+    var full = Path.GetFullPath(path);
+    var root = Path.GetPathRoot(full);
+    if (root is not null && full.Length > root.Length)
+        full = full.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+    return full;
 }
 
 static string ResolveSuitePath(string suitePath)
@@ -588,6 +633,7 @@ static class BenchmarkModes
 {
     public const string ZeroShot = "zero-shot";
     public const string DocsInContext = "docs-in-context";
+    public const string DocsInContextCustom = "docs-in-context-custom";
 }
 sealed record BenchmarkScore(bool Passed, IReadOnlyList<string> Diagnostics);
 sealed record TaskRunResult(bool KeepsRunSuccessful, bool HasNonEmptyReply);
