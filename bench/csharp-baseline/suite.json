@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "tasks": [
+    {
+      "id": "001-write-greeting",
+      "kind": "write",
+      "prompt": "tasks/001-write-greeting/prompt.md",
+      "outcomes": "tasks/001-write-greeting/outcomes.json",
+      "holdout": false
+    },
+    {
+      "id": "002-write-total",
+      "kind": "write",
+      "prompt": "tasks/002-write-total/prompt.md",
+      "outcomes": "tasks/002-write-total/outcomes.json",
+      "holdout": false
+    }
+  ]
+}
