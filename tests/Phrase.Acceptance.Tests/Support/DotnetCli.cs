@@ -25,6 +25,10 @@ public static partial class DotnetCli
         foreach (var arg in new[] { "test", projectPath, "--nologo", "--disable-build-servers" })
             psi.ArgumentList.Add(arg);
 
+        // A newer system host may have no matching ASP.NET Core 8 runtime. The reference
+        // remains a net8 build, while its testhost can run on an installed newer runtime.
+        psi.Environment["DOTNET_ROLL_FORWARD"] = "Major";
+
         // The outer test host sets MSBuild variables that would hijack the nested build.
         foreach (var name in new[] { "MSBUILD_EXE_PATH", "MSBuildExtensionsPath", "MSBuildSDKsPath", "MSBuildLoadMicrosoftTargetsReadOnly" })
             psi.Environment.Remove(name);

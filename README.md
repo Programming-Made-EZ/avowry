@@ -31,7 +31,7 @@ dotnet test Phrase.sln --filter "Status!=Pending"     # what CI gates on
 
 | Test | Status | Why |
 |---|---|---|
-| `ReferenceTarget.Reference_output_builds_and_every_spec_passes` | Green | Proves the target design compiles, all 6 specs pass, and the harness detects failures |
+| `ReferenceTarget.Reference_output_builds_and_every_spec_passes` | Green | A fresh run builds the target and passes all 6 specs; the nested runner uses `DOTNET_ROLL_FORWARD=Major` when only a newer ASP.NET Core runtime is installed, and `python scripts/check-readme-reference-status.py` verifies this status against the test |
 | `CompileEndpointToCSharp.Generated_csharp_builds_and_every_spec_passes` | Red (Pending) | Lexes and parses the fixture cleanly, then stops with `NotImplementedException` at the resolver |
 | `Phrase.Compiler.Tests` (lexer) | Green, 51 tests | Layout, tokens, native blocks, PH100 to PH109, the full fixture, and 2,000 fuzzed mutations |
 | `Phrase.Compiler.Tests` (parser) | Green, 79 tests | Declarations, templates, endpoints, steps, specs, PH200 to PH211, recovery, fixture, 2,000 fuzzed mutations |
