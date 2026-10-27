@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:c42cb31a5db93cc34bb6e67422f40e8d76e0c3cbbb4d527bcc41d511fbc8bdc0 -->
+<!-- board-table-sha256:f0af093d50fd08d11a5cd7fc4f85100be62ee7f6afc0ffc19df6751284bb9f79 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -35,7 +35,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 13 | 064 Loop: one durable loop at a time (lock, state, heartbeat) | Done | 076 (the picker reads the GitHub board; D25) |
 | 14 | 093 Record the sealed holdout hashes before the baseline starts | Done | none |
 | 15 | 086 Plain C# baseline suite: the eight development tasks as C# twins and a runner | Done | 093 (Done: the sealed holdout hashes are recorded, D36) |
-| 16 | 095 Plain C# twins for the read and modify tasks | Ready | 086 |
+| 16 | 095 Plain C# twins for the read and modify tasks | Done | 086 |
 | 17 | 096 Plain C# twins for the fix tasks, and a suite completeness check | Ready | 095 |
 | 18 | 094 Run the plain C# baseline: N=5 runs per model on the development tasks | Ready | 086, 095, 096 |
 | 19 | 084 Reference target builds and every orders spec passes | Done | none |
@@ -53,7 +53,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 31 | 087 orders.phrase compiles and its generated specs pass | Ready | 039, 040, 041, 043, 044, 045, 048, 049, 050, 084 |
 | 32 | 090 Benchmark: a docs-in-context mode that gives a model the real docs | Done | 085 |
 | 33 | 091 Benchmark: cold runs, a fresh session in an empty folder for every attempt | Done | 090 |
-| 34 | 092 Benchmark: scrub a stored reply before cutting it to 200 characters | Ready | 085 |
+| 34 | 092 Benchmark: scrub a stored reply before cutting it to 200 characters | Done | 085 |
 | 35 | 037 Benchmark: docs in the prompt, and cold runs | Ready | 090, 091, 092 (sliced: docs-in-context mode, cold runs and the reply-head scrub moved to those cards; this card is now the baseline RUN) |
 | 36 | 088 Head-to-head: Phrase vs plain C# on the frozen bar | Ready | 085, 086, 094, 087, 037 |
 | 37 | 089 Option and nested-record fields compile | Ready | 042 |
