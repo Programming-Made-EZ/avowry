@@ -1,4 +1,5 @@
 using Phrase.Compiler;
+using Phrase.Compiler.Semantics;
 
 namespace Phrase.Compiler.Tests;
 
@@ -54,5 +55,9 @@ public class PhraseCompilerTests
     private sealed class TestProvider : ITargetProvider
     {
         public string Target => "test";
+
+        public CompilationOutput Emit(ModuleModel module) =>
+            throw new NotImplementedException(
+                "Lexer, parser, and resolution are done. Next: the IR and the C# emitter.");
     }
 }

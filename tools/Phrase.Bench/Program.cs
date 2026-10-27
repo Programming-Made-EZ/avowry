@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Phrase.Compiler;
+using Phrase.Compiler.Semantics;
 
 const int MaximumAttempts = 3;
 const int EmptyReplyMaximumAttempts = 2;
@@ -789,4 +790,8 @@ sealed record TaskRunResult(bool KeepsRunSuccessful, bool HasNonEmptyReply);
 sealed class ScoringProvider : ITargetProvider
 {
     public string Target => "benchmark";
+
+    public CompilationOutput Emit(ModuleModel module) =>
+        throw new NotImplementedException(
+            "Lexer, parser, and resolution are done. Next: the IR and the C# emitter.");
 }

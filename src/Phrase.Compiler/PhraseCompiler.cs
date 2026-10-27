@@ -5,7 +5,7 @@ namespace Phrase.Compiler;
 
 /// <summary>
 /// Entry point: .phrase source in, target files out.
-/// Pipeline: lexer (done) -> parser (done) -> resolver (done) -> IR -> provider
+/// Pipeline: lexer (done) -> parser (done) -> resolver (done) -> provider.
 /// </summary>
 public static class PhraseCompiler
 {
@@ -20,8 +20,7 @@ public static class PhraseCompiler
         var resolved = Resolver.Resolve(parsed.File);
         StopOnDiagnostics(resolved.Diagnostics);
 
-        throw new NotImplementedException(
-            "Lexer, parser, and resolution are done. Next: the IR and the C# emitter.");
+        return provider.Emit(resolved.Module);
     }
 
     private static void StopOnDiagnostics(IReadOnlyList<Diagnostic> diagnostics)
