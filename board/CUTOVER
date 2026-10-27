@@ -1,0 +1,3 @@
+The Phrase Board (GitHub Projects, project 1 under Programming-Made-EZ, private) is the single source of truth since 2026-10-26.
+board/NNN-*.md and the rank table are generated read-only archives (scripts/board/generate_archive.py). Edit the issue, then regenerate.
+scripts/board/migrate_cards.py and set_fields.py (files to board) are retired and refuse --apply.
