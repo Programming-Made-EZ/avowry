@@ -17,7 +17,12 @@ public sealed record ModuleModel(
     IReadOnlyList<EndpointModel> Endpoints)
 {
     public PhraseModel Phrase(string key) => Phrases.Single(p => p.Key == key);
+    public string PhraseFile { get; init; } = "";
+    public string BuildId { get; init; } = "";
 }
+
+public readonly record struct SourceSpan(int FirstLine, int LastLine);
+public sealed record DeclaredFailureModel(string Name, int Line);
 
 public sealed record FieldModel(string Name, PType Type);
 
@@ -36,7 +41,11 @@ public sealed record PhraseModel(
     IReadOnlyList<string> Failures,               // effective: declared plus everything its steps can fail with
     IReadOnlyDictionary<string, string> Natives,  // target -> code (leaf phrases)
     IReadOnlyList<BoundStep>? Steps,              // composite phrases
-    IReadOnlyList<PhraseSpecModel> Specs);
+    IReadOnlyList<PhraseSpecModel> Specs)
+{
+    public int Line { get; init; }
+    public IReadOnlyList<DeclaredFailureModel> DeclaredFailures { get; init; } = [];
+}
 
 public sealed record EndpointModel(
     string Name,
@@ -48,11 +57,17 @@ public sealed record EndpointModel(
     IReadOnlyList<FieldModel> Output,
     IReadOnlyList<BoundStep> Steps,
     IReadOnlyList<string> Failures,               // everything its steps can fail with
-    IReadOnlyList<EndpointSpecModel> Specs);
+    IReadOnlyList<EndpointSpecModel> Specs)
+{
+    public int Line { get; init; }
+}
 
 // ---------- steps ----------
 
-public abstract record BoundStep(string Source);
+public abstract record BoundStep(string Source)
+{
+    public int Line { get; init; }
+}
 public sealed record BoundCallStep(BoundCall Call, string Source) : BoundStep(Source);
 public sealed record BoundLetStep(string Name, PType Type, BoundCall Call, string Source) : BoundStep(Source);
 public sealed record BoundLetUpdateStep(string Name, BoundExpr Record, IReadOnlyList<BoundRecordField> Fields, PType Type, string Source) : BoundStep(Source);
@@ -90,13 +105,19 @@ public sealed record PhraseSpecModel(
     string Description,
     IReadOnlyList<BoundArgument> Givens,          // one per hole, in hole order
     SpecOutcomeModel Outcome,
-    IReadOnlyList<string> Lines);
+    IReadOnlyList<string> Lines)
+{
+    public SourceSpan SourceSpan { get; init; }
+}
 
 public sealed record EndpointSpecModel(
     string Description,
     BoundRecord Input,
     SpecOutcomeModel Outcome,
-    IReadOnlyList<string> Lines);
+    IReadOnlyList<string> Lines)
+{
+    public SourceSpan SourceSpan { get; init; }
+}
 
 public abstract record SpecOutcomeModel;
 public sealed record ReturnsModel(BoundExpr Value) : SpecOutcomeModel;

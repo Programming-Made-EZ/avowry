@@ -3,6 +3,7 @@ namespace Phrase.Compiler;
 /// <summary>The files an adapter emits, keyed by path relative to the output root.</summary>
 public sealed record CompilationOutput(IReadOnlyDictionary<string, string> Files)
 {
+    public Semantics.ModuleModel? Module { get; init; }
     public void WriteTo(string outputRoot)
     {
         var root = Path.TrimEndingDirectorySeparator(Path.GetFullPath(outputRoot)) + Path.DirectorySeparatorChar;

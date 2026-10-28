@@ -38,7 +38,10 @@ public sealed record PhraseDecl(
     IReadOnlyList<SpecDecl> Specs,
     IReadOnlyList<NativeBlock> Natives, // leaf phrase: one per target
     IReadOnlyList<Step>? Steps,         // composite phrase: non-null instead of natives
-    Position At);
+    Position At)
+{
+    public int FailureLine { get; init; }
+}
 
 /// <summary>A phrase name: words and typed holes, e.g. <c>total quantity of {items: List&lt;LineItem&gt;}</c>.</summary>
 public sealed record Template(IReadOnlyList<TemplatePart> Parts, Position At);

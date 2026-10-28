@@ -36,14 +36,28 @@ public sealed class CSharpProvider : ITargetAdapter
             [$"{specs}/PhraseSpecs.cs"] = PhraseSpecs(module),
         };
 
+        if (module.BuildId.Length > 0)
+            files[$"{api}/PhraseBuild.cs"] = "using System.Reflection;\n\n[assembly: AssemblyMetadata(\"PhraseBuildId\", \"" + module.BuildId + "\")]\n";
+
         foreach (var endpoint in module.Endpoints)
         {
             files[$"{api}/{EndpointFileName(endpoint.Name)}.cs"] = EndpointFile(module, endpoint);
             files[$"{specs}/{EndpointSpecsFileName(endpoint.Name)}.cs"] = EndpointSpecs(module, endpoint);
         }
 
-        return new CompilationOutput(files);
+        if (module.BuildId.Length > 0)
+        {
+            foreach (var path in files.Keys.Where(path => path.EndsWith(".cs", StringComparison.Ordinal)).ToList())
+                files[path] = WithoutPhraseSourceKnowledge(files[path]);
+        }
+
+        return new CompilationOutput(files) { Module = module };
     }
+
+    private static string WithoutPhraseSourceKnowledge(string source) => string.Join("\n",
+        source.Replace("\r\n", "\n", StringComparison.Ordinal).Split('\n')
+            .Where(line => !line.TrimStart().StartsWith("//", StringComparison.Ordinal) &&
+                           !line.TrimStart().StartsWith("[Phrase(", StringComparison.Ordinal)));
 
     private static void RequireSupportedPhrase(ModuleModel module, PhraseModel phrase)
     {

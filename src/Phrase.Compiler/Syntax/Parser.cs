@@ -288,6 +288,7 @@ public static class Parser
             var template = ParseTemplate(templateToken);
             var effects = new List<string>();
             var failures = new List<string>();
+            var failureLine = 0;
             var specs = new List<SpecDecl>();
             var natives = new List<NativeBlock>();
             List<Step>? steps = null;
@@ -314,6 +315,7 @@ public static class Parser
                         cc.Next(); cc.Next();
                         if (sawFailures) { Report("PH204", "List every failure in one `fails with A, B` clause.", clauseAt); return; }
                         sawFailures = true;
+                        failureLine = clauseAt.Line;
                         failures.AddRange(ParseTypeNameList(cc, "a failure code"));
                         NoChildren(child);
                     }
@@ -353,7 +355,7 @@ public static class Parser
             if (!sawNative && !sawSteps)
                 Report("PH203", "Phrase has no implementation; add `native <target>` or `steps`.", at);
 
-            return new PhraseDecl(template, returns, effects, failures, specs, natives, steps, at);
+            return new PhraseDecl(template, returns, effects, failures, specs, natives, steps, at) { FailureLine = failureLine };
         }
 
         private static List<string> ParseTypeNameList(Cursor c, string what)

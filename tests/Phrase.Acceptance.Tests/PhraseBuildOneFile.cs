@@ -84,7 +84,7 @@ public class PhraseBuildOneFile
     {
         // Given orders.phrase and the files PhraseCompiler.Compile plus WriteTo produce
         var sourcePath = RepoPaths.Find("tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase");
-        var expectedOutput = PhraseCompiler.Compile(await File.ReadAllTextAsync(sourcePath), new CSharpProvider());
+        var expectedOutput = PhraseCompiler.Compile(await File.ReadAllTextAsync(sourcePath), new CSharpProvider(), sourcePath);
         using var expected = TempWorkspace.Create();
         expectedOutput.WriteTo(expected.Root);
         using var actual = TempWorkspace.Create();
@@ -96,6 +96,7 @@ public class PhraseBuildOneFile
         Assert.True(result.ExitCode == 0, result.Text);
         var expectedFiles = Snapshot(expected.Root);
         var actualFiles = Snapshot(actual.Root);
+        actualFiles.Remove("Orders.phrasemap.json");
         Assert.Equal(expectedFiles.Keys.OrderBy(key => key, StringComparer.Ordinal), actualFiles.Keys.OrderBy(key => key, StringComparer.Ordinal));
         foreach (var (relative, bytes) in expectedFiles)
             Assert.Equal(bytes, actualFiles[relative]);

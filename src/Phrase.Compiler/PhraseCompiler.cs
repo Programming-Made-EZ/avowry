@@ -10,6 +10,9 @@ namespace Phrase.Compiler;
 public static class PhraseCompiler
 {
     public static CompilationOutput Compile(string source, ITargetAdapter adapter)
+        => Compile(source, adapter, null);
+
+    public static CompilationOutput Compile(string source, ITargetAdapter adapter, string? phraseFile)
     {
         ArgumentNullException.ThrowIfNull(source);
         ArgumentNullException.ThrowIfNull(adapter);
@@ -20,7 +23,18 @@ public static class PhraseCompiler
         var resolved = Resolver.Resolve(parsed.File);
         StopOnDiagnostics(resolved.Diagnostics);
 
-        return adapter.Emit(resolved.Module);
+        var module = resolved.Module;
+        if (phraseFile is not null)
+        {
+            var normalized = source.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n');
+            var hash = System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(normalized));
+            module = module with
+            {
+                PhraseFile = Path.GetFileName(phraseFile.Replace('\\', '/')),
+                BuildId = Convert.ToHexString(hash)[..16].ToLowerInvariant(),
+            };
+        }
+        return adapter.Emit(module);
     }
 
     private static void StopOnDiagnostics(IReadOnlyList<Diagnostic> diagnostics)

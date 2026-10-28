@@ -94,7 +94,11 @@ public static class Resolver
                     declaration.Returns is null ? null : ResolveType(declaration.Returns),
                     declaration.Effects, declaration.Failures,
                     declaration.Natives.ToDictionary(n => n.Target, n => n.Code, StringComparer.Ordinal),
-                    declaration.Steps is null ? null : [], []);
+                    declaration.Steps is null ? null : [], [])
+                {
+                    Line = declaration.At.Line,
+                    DeclaredFailures = declaration.Failures.Select(name => new DeclaredFailureModel(name, declaration.FailureLine)).ToList(),
+                };
                 var skeleton = Skeleton(declaration.Template);
                 if (skeletons.TryGetValue(skeleton, out var existing))
                 {
@@ -156,7 +160,7 @@ public static class Resolver
                 var failures = EffectiveFailures(steps);
                 var model = new EndpointModel(
                     declaration.Name, declaration.Verb, declaration.Route,
-                    inputType, input, outputType, output, steps, failures, []);
+                    inputType, input, outputType, output, steps, failures, []) { Line = declaration.At.Line };
                 endpoints.Add(model with { Specs = ResolveEndpointSpecs(declaration, model) });
             }
             return endpoints;
@@ -181,7 +185,7 @@ public static class Resolver
                         {
                             if (resolved.Value.Phrase.Returns is not null)
                                 Report("PH321", $"Phrase '{resolved.Value.Phrase.Template}' returns {resolved.Value.Phrase.Returns}; use 'let' to keep it.", call.At);
-                            bound.Add(new BoundCallStep(resolved.Value.Call, SourceFormatter.Format(call)));
+                            bound.Add(new BoundCallStep(resolved.Value.Call, SourceFormatter.Format(call)) { Line = call.At.Line });
                         }
                         break;
                     }
@@ -200,7 +204,7 @@ public static class Resolver
                         else
                             scope.Add(let.Name, type);
                         if (resolved is not null)
-                            bound.Add(new BoundLetStep(let.Name, type, resolved.Value.Call, SourceFormatter.Format(let)));
+                            bound.Add(new BoundLetStep(let.Name, type, resolved.Value.Call, SourceFormatter.Format(let)) { Line = let.At.Line });
                         break;
                     }
                     case LetUpdateStep update:
@@ -209,23 +213,23 @@ public static class Resolver
                     case FailStep fail:
                         if (declaredFailures is not null && !declaredFailures.Contains(fail.Code, StringComparer.Ordinal))
                             Report("PH326", $"Composite failure '{fail.Code}' is not declared in 'fails with'.", fail.At);
-                        bound.Add(new BoundFailStep(fail.Code, SourceFormatter.Format(fail)));
+                        bound.Add(new BoundFailStep(fail.Code, SourceFormatter.Format(fail)) { Line = fail.At.Line });
                         terminated = true;
                         break;
                     case EnsureStep ensure:
                         if (declaredFailures is not null && !declaredFailures.Contains(ensure.Code, StringComparer.Ordinal))
                             Report("PH326", $"Ensure failure '{ensure.Code}' is not declared in 'fails with'.", ensure.At);
-                        bound.Add(new BoundEnsureStep(ResolveCondition(ensure.Condition, scope), ensure.Code, SourceFormatter.Format(ensure)));
+                        bound.Add(new BoundEnsureStep(ResolveCondition(ensure.Condition, scope), ensure.Code, SourceFormatter.Format(ensure)) { Line = ensure.At.Line });
                         break;
                     case RespondStep respond:
                         if (outputType is null)
                         {
                             Report(ExtensionDiagnostics.Web("PH322"), "'respond with' is only valid in an endpoint with an output.", respond.At);
-                            bound.Add(new BoundRespondStep(new BoundRecord([], PType.Error), SourceFormatter.Format(respond)));
+                            bound.Add(new BoundRespondStep(new BoundRecord([], PType.Error), SourceFormatter.Format(respond)) { Line = respond.At.Line });
                         }
                         else
                         {
-                            bound.Add(new BoundRespondStep(ResolveRecord(respond.Value, outputType, scope), SourceFormatter.Format(respond)));
+                            bound.Add(new BoundRespondStep(ResolveRecord(respond.Value, outputType, scope), SourceFormatter.Format(respond)) { Line = respond.At.Line });
                         }
                         terminated = true;
                         break;
@@ -276,7 +280,7 @@ public static class Resolver
             else
                 scope.Add(update.Name, record.Type);
 
-            return new BoundLetUpdateStep(update.Name, record, boundFields, record.Type, SourceFormatter.Format(update));
+            return new BoundLetUpdateStep(update.Name, record, boundFields, record.Type, SourceFormatter.Format(update)) { Line = update.At.Line };
         }
 
         private BoundCondition ResolveCondition(Condition condition, IReadOnlyDictionary<string, PType> scope)
@@ -438,7 +442,7 @@ public static class Resolver
                 outputType: null,
                 endpointFailures: null,
                 endpointName: null);
-            return new PhraseSpecModel(spec.Description, givens, outcome, SourceFormatter.Lines(spec));
+            return new PhraseSpecModel(spec.Description, givens, outcome, SourceFormatter.Lines(spec)) { SourceSpan = SpecSpan(spec) };
         }
 
         private IReadOnlyList<EndpointSpecModel> ResolveEndpointSpecs(EndpointDecl declaration, EndpointModel endpoint) =>
@@ -484,7 +488,16 @@ public static class Resolver
 
             var outcome = ResolveSpecOutcome(spec, null, scope, endpoint.OutputType, endpoint.Failures, endpoint.Name);
             var boundInput = new BoundRecord(inputFields, endpoint.InputType);
-            return new EndpointSpecModel(spec.Description, boundInput, outcome, SourceFormatter.Lines(spec));
+            return new EndpointSpecModel(spec.Description, boundInput, outcome, SourceFormatter.Lines(spec)) { SourceSpan = SpecSpan(spec) };
+        }
+
+        private static SourceSpan SpecSpan(SpecDecl spec)
+        {
+            var last = spec.Givens.Select(item => item.At.Line)
+                .Concat(spec.Thens.Select(item => item.At.Line))
+                .Append(spec.At.Line)
+                .Max();
+            return new SourceSpan(spec.At.Line, last);
         }
 
         private SpecOutcomeModel ResolveSpecOutcome(
