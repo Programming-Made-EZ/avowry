@@ -35,7 +35,7 @@ A record update is a copy of a record with named fields replaced. The original v
 let completed = task with { done: true }
 ```
 
-The source must be a record already in scope (a hole, a prior `let`, or `input`, optionally followed by a field path). The parser reserves `with { ... }` for an update only when the name before `with` is already in scope and the braces contain a non-empty `name: value` field list. This narrow reservation leaves ordinary phrase calls such as `let sent = send with { urgent: true }` available when `send` is wording rather than an in-scope value.
+The source must be a record already in scope (a hole, a prior `let`, or `input`, optionally followed by a field path). The parser reserves `with { ... }` for an update only when the name before `with` is already in scope and a brace follows; the update itself then requires a non-empty `name: value` field list, and an empty or malformed list is a parse diagnostic (PH200), not a phrase call. This narrow reservation leaves ordinary phrase calls such as `let sent = send with { urgent: true }` available when `send` is wording rather than an in-scope value.
 
 Each named field must exist on that record and match the field's type (Text, Int, Bool, Id, or a user type). Duplicate names in one update are an error; an unknown field is an error even when the record declares no fields. A trailing comma is not allowed. Nested update expressions are deliberately rejected with a syntax diagnostic; bind the inner update to a `let` first, then use that name as the outer field value.
 
