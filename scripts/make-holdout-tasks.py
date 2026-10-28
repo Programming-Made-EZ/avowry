@@ -13,6 +13,38 @@ from pathlib import Path
 from typing import Any
 
 
+PHRASE_WRAPPER_LINES = (
+    "Use the provided Phrase documentation. Return only valid Phrase source.",
+    "```phrase",
+)
+CSHARP_WRAPPER_LINES = (
+    "Return only valid C# source.",
+    "```csharp",
+)
+START_FENCE_END = "```"
+
+
+def strip_language_wrapper(prompt: str, wrapper_lines: tuple[str, str]) -> str:
+    wrapper, start_fence = wrapper_lines
+    remainder: list[str] = []
+    in_start = False
+    for line in prompt.splitlines(keepends=True):
+        exact = line.rstrip("\r\n")
+        if in_start:
+            if exact == START_FENCE_END:
+                in_start = False
+            continue
+        if exact == wrapper:
+            continue
+        if exact == start_fence:
+            in_start = True
+            continue
+        remainder.append(line)
+    if in_start:
+        raise ValueError(f"unclosed matching-language start fence: {start_fence}")
+    return "".join(remainder)
+
+
 def git_root() -> Path | None:
     git = shutil.which("git")
     if git is None:
@@ -125,16 +157,16 @@ def render_prompt(task_text: str, libraries: str, outcomes: list[dict[str, Any]]
     if change is not None:
         base.extend(["Change requested:", change.strip(), ""])
     if arm == "phrase":
-        wrapper = "Use the provided Phrase documentation. Return only valid Phrase source."
+        wrapper, start_fence = PHRASE_WRAPPER_LINES
         if kind == "modify" and start_phrase is not None:
-            base.extend([wrapper, "", "```phrase", start_phrase.strip(), "```"])
+            base.extend([wrapper, "", start_fence, start_phrase.strip(), START_FENCE_END])
         else:
             base.append(wrapper)
         return "\n".join(base) + "\n"
 
-    wrapper = "Return only valid C# source."
+    wrapper, start_fence = CSHARP_WRAPPER_LINES
     if kind == "modify" and start_csharp is not None:
-        base.extend([wrapper, "", "```csharp", start_csharp.strip(), "```"])
+        base.extend([wrapper, "", start_fence, start_csharp.strip(), START_FENCE_END])
     else:
         base.append(wrapper)
     return "\n".join(base) + "\n"

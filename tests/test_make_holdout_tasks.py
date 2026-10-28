@@ -1,4 +1,5 @@
 import json
+import importlib.util
 import subprocess
 import sys
 import tempfile
@@ -7,6 +8,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "make-holdout-tasks.py"
+
+
+def load_converter():
+    spec = importlib.util.spec_from_file_location("make_holdout_tasks", SCRIPT)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 class MakeHoldoutTasksTests(unittest.TestCase):
@@ -157,6 +165,32 @@ Every case is observed by the caller, including the failure path.
             self.assertEqual(phrase_outcomes, csharp_outcomes)
             self.assertNotIn("TEST-NONCE", result.stdout + result.stderr)
             self.assertNotIn("enthusiastic friendly greeting", result.stdout + result.stderr)
+
+    def test_write_and_modify_prompts_differ_only_by_declared_language_wrapper(self):
+        # Given Riley's invented faithful-layout write and modify holdouts
+        converter = load_converter()
+        for kind in ("write", "modify"):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                holdout = root / f"H1-{kind}.md"
+                holdout.write_text(self.make_holdout(kind), encoding="utf-8")
+                out_dir = root / "generated"
+                result = subprocess.run(
+                    [sys.executable, str(SCRIPT), str(holdout), str(out_dir)],
+                    cwd=str(ROOT),
+                    capture_output=True,
+                    text=True,
+                )
+                self.assertEqual(0, result.returncode, result.stderr or result.stdout)
+
+                # When only the explicitly declared wrapper lines and matching start fence are stripped
+                phrase_prompt = (out_dir / "phrase" / "tasks" / "H1" / "prompt.md").read_text(encoding="utf-8")
+                csharp_prompt = (out_dir / "csharp" / "tasks" / "H1" / "prompt.md").read_text(encoding="utf-8")
+                phrase_remainder = converter.strip_language_wrapper(phrase_prompt, converter.PHRASE_WRAPPER_LINES)
+                csharp_remainder = converter.strip_language_wrapper(csharp_prompt, converter.CSHARP_WRAPPER_LINES)
+
+                # Then no unlisted arm-specific wording, ordering, or whitespace remains
+                self.assertEqual(phrase_remainder, csharp_remainder)
 
     def test_refuses_repo_internal_output_path(self):
         repo_root = ROOT
