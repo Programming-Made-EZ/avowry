@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:652f8f42586d796f0996cf5a3a594b1bb685d9c2822d185fdc08eb8d0b7c1d55 -->
+<!-- board-table-sha256:7a29bc37db9e2b33ecebe044bc11865afccbaa50c3faf9d900d957751ff92a24 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -79,7 +79,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 57 | 152 Library bindings and project profile: the layering ADR | Done | 138 |
 | 58 | 158 Tasks demo README: how to run the demo yourself | Done | none |
 | 59 | 159 A validation step in Phrase: ensure a condition or fail with a declared name | Done | 138 |
-| 60 | 160 A record update form: a copy of a record with one field changed | Ready | 159 |
+| 60 | 160 A record update form: a copy of a record with one field changed | Done | 159 |
 | 61 | 161 Generated failures and endpoint classes point back to the Phrase source | Ready | 138 |
 | 62 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
 | 63 | 163 Generated endpoint files are named *.cs.cs: decide and document the convention | Ready | none |
