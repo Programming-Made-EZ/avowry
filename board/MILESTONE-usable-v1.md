@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:31b842c1b086504508c8161978fed34468df204e85b25861f005b58e0c6047fa -->
+<!-- board-table-sha256:2c3960bdc2fc75f19ab3bcdd1bd569149c2028e3567fc1d6120ffcd9cd7ca962 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -113,10 +113,10 @@ Steve: "let me know when the language is actually usable to build an application
 | 91 | 070 Loop: run every card atomically (land or discard) | Ready | 062, 067 |
 | 92 | 054 Benchmark task 005 gets a failure-path spec (suite change, versioned) | Ready | none |
 | 93 | 055 A declared failure with no failure-path spec is an error (PH336) | Superseded/Withdrawn | 054, 018 |
-| 94 | 056 An endpoint with an output cannot say `succeeds` (PH333) | Ready | 055 |
+| 94 | 056 An endpoint with an output cannot say `succeeds` (PH333) | Ready | 134 |
 | 95 | 057 Docs: the consumer-observable outcome rule is written down | Superseded/Withdrawn | 055 |
 | 96 | 022 Keyword model ADR: what a keyword is | Ready | none |
-| 97 | 058 A validation phrase returns its validated value (first slice, language decision first) | Ready | 022, 055 |
+| 97 | 058 A validation phrase returns its validated value (first slice, language decision first) | Ready | 022, 134 |
 | 98 | 013 Make GRAMMAR.md say what the resolver does | Ready | none |
 | 99 | 019 Publish exact diagnostic message templates in GRAMMAR.md | Ready | 018 |
 | 100 | 014 Document the native C# environment and show passing-guard examples | Ready | none |
@@ -142,13 +142,13 @@ Steve: "let me know when the language is actually usable to build an application
 | 120 | 010 End-to-end: real HTTP behaves as the specs say | Superseded/Withdrawn | 009 |
 | 121 | 011 LLM-customer check: a model adds an endpoint from the docs alone | Superseded/Withdrawn | 009, 010, 057 |
 | 122 | 012 Usable v1: acceptance test passes on main and gates CI | Superseded/Withdrawn | 009, 010, 011 |
-| 123 | 038 Dogfood: the mob status API, written in Phrase | Ready | 012, 036 |
-| 124 | 026 Catalogue dedup linter: flag near-duplicate keywords | Ready | 012, 025 |
+| 123 | 038 Dogfood: the mob status API, written in Phrase | Ready | 138, 036 |
+| 124 | 026 Catalogue dedup linter: flag near-duplicate keywords | Ready | 138, 025 |
 | 125 | 061 Spike: a scripted scheduler, fake clock and event capture make an async spec deterministic | Ready | 022, 033, 034 (language foundations); 025, 047 (a base library and the first effect) |
 | 126 | 083 Spike: an in-memory store and an event capture assert one scripted observation | Ready | 082, 034, 047, 061 |
-| 127 | 028 Second adapter spike: prove the keyword model is language-neutral | Ready | 012, 025 |
+| 127 | 028 Second adapter spike: prove the keyword model is language-neutral | Ready | 138, 025 |
 | 128 | 029 LLM-as-compiler with hash pinning for keywords without an adapter implementation | Ready | 028 |
-| 129 | 030 Synthesize Phrase from existing code (spike: C# to Phrase) | Ready | 012, 024, 025 |
+| 129 | 030 Synthesize Phrase from existing code (spike: C# to Phrase) | Ready | 138, 024, 025 |
 | 130 | 031 Converter between LLM-optimized Phrase and a human-friendly rendering (spike) | Ready | 030 |
 <!-- board-table:end -->
 
