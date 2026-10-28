@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>phrase</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Phrase.Compiler/Phrase.Compiler.csproj" />
+    <ProjectReference Include="../Phrase.Adapters.CSharp/Phrase.Adapters.CSharp.csproj" />
+  </ItemGroup>
+</Project>
