@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:e6e3aec5c28996a8c5c8b879a78700baa09d8391b4c777d4ea203b79eb06d42c -->
+<!-- board-table-sha256:e31170bea3d99255100ff6a793a79211337c2e403319d85436997905f71745d0 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -77,7 +77,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 55 | 137 LLM-customer check: a model adds an endpoint from the docs alone | Done | 135, 136 |
 | 56 | 138 Usable v1: the acceptance test passes on main and gates CI | Done | 135, 136, 137 |
 | 57 | 152 Library bindings and project profile: the layering ADR | Done | 138 |
-| 58 | 158 Tasks demo README: how to run the demo yourself | Ready | none |
+| 58 | 158 Tasks demo README: how to run the demo yourself | Done | none |
 | 59 | 159 A validation step in Phrase: ensure a condition or fail with a declared name | Ready | 138 |
 | 60 | 160 A record update form: a copy of a record with one field changed | Ready | 159 |
 | 61 | 161 Generated failures and endpoint classes point back to the Phrase source | Ready | 138 |
