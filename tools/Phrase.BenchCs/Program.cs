@@ -142,8 +142,8 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
             var promptFilePath = Path.Combine(promptDirectory, "prompt.txt");
             File.WriteAllText(promptFilePath, attemptPrompt);
             workdirEmptyAtLaunch = !Directory.EnumerateFileSystemEntries(attemptWorkingDirectory).Any();
-            reply = await RunModel(model, command, attemptWorkingDirectory, attemptPrompt, timeout, coldProfile, promptFilePath);
             tokensIn += EstimateTokens(attemptPrompt);
+            reply = await RunModel(model, command, attemptWorkingDirectory, attemptPrompt, timeout, coldProfile, promptFilePath);
             tokensOut += EstimateTokens(reply);
             if (string.IsNullOrWhiteSpace(reply))
             {
@@ -690,24 +690,33 @@ static async Task<string> RunModel(string model, string command, string workingD
     using var process = directAgy
         ? StartProcess(command, workingDirectory, "-p", prompt.TrimEnd(), "--model", AgyModel, AgySkipPermissionsOption)
         : StartShell(command + ProfileArguments(model, workingDirectory, prompt, promptFilePath, coldProfile), workingDirectory);
-    try
-    {
-        await process.StandardInput.WriteAsync(prompt);
-        process.StandardInput.Close();
-    }
-    catch (IOException)
-    {
-        // A model may exit without reading stdin; its captured reply is still scored normally.
-    }
+    var rootPid = process.Id;
     var stdout = process.StandardOutput.ReadToEndAsync();
     var stderr = process.StandardError.ReadToEndAsync();
     using var cancellation = new CancellationTokenSource(timeout);
-    try { await process.WaitForExitAsync(cancellation.Token); }
+    var elapsed = Stopwatch.StartNew();
+    try
+    {
+        try
+        {
+            await process.StandardInput.WriteAsync(prompt.AsMemory(), cancellation.Token);
+            process.StandardInput.Close();
+        }
+        catch (IOException)
+        {
+            // A model may exit without reading stdin; its captured reply is still scored normally.
+        }
+        await process.WaitForExitAsync(cancellation.Token);
+    }
     catch (OperationCanceledException) when (cancellation.IsCancellationRequested)
     {
-        process.Kill(entireProcessTree: true);
-        await process.WaitForExitAsync();
-        throw new TimeoutException($"Model '{model}' timed out after {timeout.TotalMilliseconds:0} ms.");
+        if (!process.HasExited && process.Id == rootPid)
+            process.Kill(entireProcessTree: true);
+        await Task.WhenAny(
+            Task.WhenAll(process.WaitForExitAsync(), stdout, stderr),
+            Task.Delay(TimeSpan.FromSeconds(2)));
+        throw new TimeoutException(
+            $"Model '{model}' timed out with a limit of {timeout.TotalMilliseconds:0} ms after {elapsed.Elapsed.TotalMilliseconds:0} ms.");
     }
     var error = await stderr;
     if (process.ExitCode != 0)

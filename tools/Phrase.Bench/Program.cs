@@ -269,13 +269,13 @@ static async Task<TaskRunResult> RunTask(
     var scratchDirectory = Path.Combine(Path.GetTempPath(), "phrase-bench", Guid.NewGuid().ToString("N"));
     Directory.CreateDirectory(scratchDirectory);
     var workdirEmptyAtLaunch = false;
+    var attempts = 0;
+    var tokensIn = 0;
+    var tokensOut = 0;
 
     try
     {
         var attemptTaskPrompt = taskPrompt;
-        var attempts = 0;
-        var tokensIn = 0;
-        var tokensOut = 0;
         var diagnostics = new List<string>();
         var reply = string.Empty;
         var score = new BenchmarkScore(false, []);
@@ -290,6 +290,7 @@ static async Task<TaskRunResult> RunTask(
             var promptFilePath = Path.Combine(promptDirectory, "prompt.txt");
             File.WriteAllText(promptFilePath, attemptPrompt);
             workdirEmptyAtLaunch = !Directory.EnumerateFileSystemEntries(attemptWorkingDirectory).Any();
+            tokensIn += EstimateAttemptTokens(attemptTaskPrompt, docsBlock, coldPreamble);
             try
             {
                 reply = await RunModel(model, modelCommand, attemptWorkingDirectory, attemptPrompt, timeout, resolvedColdProfile, promptFilePath);
@@ -300,7 +301,6 @@ static async Task<TaskRunResult> RunTask(
                 continue;
             }
 
-            tokensIn += EstimateAttemptTokens(attemptTaskPrompt, docsBlock, coldPreamble);
             tokensOut += EstimateTokens(reply);
             if (IsEmptyReply(reply))
             {
@@ -343,7 +343,8 @@ static async Task<TaskRunResult> RunTask(
     catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception or TimeoutException)
     {
         var result = BenchmarkResult.Unavailable(
-            model, task.Id, promptHash, exception.Message, label: label, mode: mode, docsHash: docsHash,
+            model, task.Id, promptHash, exception.Message, attempts, tokensIn, tokensOut, CreateReplyHead(string.Empty),
+            label: label, mode: mode, docsHash: docsHash,
             cold: resolvedColdProfile.Cold, coldFlags: resolvedColdProfile.Flags, coldPreamble: coldPreamble,
             coldReason: resolvedColdProfile.Reason, workdirEmptyAtLaunch: workdirEmptyAtLaunch);
         PersistResult(suiteDirectory, model, result, privateResultsPath);
@@ -612,28 +613,34 @@ static async Task<string> RunModel(
             AgyModel,
             AgySkipPermissionsOption)
         : StartModelViaShell(AppendProfileFlagsToShellCommand(command, extraFlags), workingDirectory);
-    try
-    {
-        await process.StandardInput.WriteAsync(prompt);
-        process.StandardInput.Close();
-    }
-    catch (IOException)
-    {
-        // The model exited without reading its stdin (profiles that take the prompt from a file or argument, such as Grok):
-        // a broken pipe is not a failure of the run; its reply is read and scored as usual.
-    }
+    var rootPid = process.Id;
     var outputTask = process.StandardOutput.ReadToEndAsync();
     var errorTask = process.StandardError.ReadToEndAsync();
     using var timeoutCancellation = new CancellationTokenSource(timeout);
+    var elapsed = Stopwatch.StartNew();
     try
     {
+        try
+        {
+            await process.StandardInput.WriteAsync(prompt.AsMemory(), timeoutCancellation.Token);
+            process.StandardInput.Close();
+        }
+        catch (IOException)
+        {
+            // The model exited without reading its stdin (profiles that take the prompt from a file or argument, such as Grok):
+            // a broken pipe is not a failure of the run; its reply is read and scored as usual.
+        }
         await process.WaitForExitAsync(timeoutCancellation.Token);
     }
     catch (OperationCanceledException) when (timeoutCancellation.IsCancellationRequested)
     {
-        process.Kill(entireProcessTree: true);
-        await process.WaitForExitAsync();
-        throw new TimeoutException($"Model '{model}' timed out after {timeout.TotalMilliseconds:0} ms.");
+        if (!process.HasExited && process.Id == rootPid)
+            process.Kill(entireProcessTree: true);
+        await Task.WhenAny(
+            Task.WhenAll(process.WaitForExitAsync(), outputTask, errorTask),
+            Task.Delay(TimeSpan.FromSeconds(2)));
+        throw new TimeoutException(
+            $"Model '{model}' timed out with a limit of {timeout.TotalMilliseconds:0} ms after {elapsed.Elapsed.TotalMilliseconds:0} ms.");
     }
 
     var output = await outputTask;
