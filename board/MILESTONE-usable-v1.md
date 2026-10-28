@@ -1,6 +1,6 @@
 # Milestone: Usable v1
 
-product owner: "let me know when the language is actually usable to build an application."
+Principle: the product owner needs one unmistakable signal for when the language is actually usable to build an application, so the milestone is defined by a test, not by opinion.
 
 **Usable v1 means one automated end-to-end test passes on main.** That test is
 `tests/Phrase.Acceptance.Tests/UsableV1.cs` (traits `Milestone=UsableV1` and `Status=Pending` until card 012). It checks, in order:
