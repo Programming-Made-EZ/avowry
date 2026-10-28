@@ -72,6 +72,14 @@ public sealed record RespondStep(RecordExpr Value, Position At) : Step(At);
 /// <summary><c>fail with Code</c></summary>
 public sealed record FailStep(string Code, Position At) : Step(At);
 
+/// <summary><c>ensure &lt;condition&gt; else Code</c></summary>
+public sealed record EnsureStep(Condition Condition, string Code, Position At) : Step(At);
+
+public abstract record Condition(Position At);
+public sealed record BlankCondition(PathExpr Value, bool IsNotBlank, Position At) : Condition(At);
+public sealed record LengthAtMostCondition(PathExpr Value, int Maximum, Position At) : Condition(At);
+public sealed record ComparisonCondition(PathExpr Left, string Operator, Expr Right, Position At) : Condition(At);
+
 /// <summary>An unresolved phrase call: words and arguments in source order.</summary>
 public sealed record PhraseCall(IReadOnlyList<CallPart> Parts, Position At) : Step(At);
 

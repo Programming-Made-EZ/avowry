@@ -589,6 +589,39 @@ public static class Parser
                 return new FailStep(code.Text, at);
             }
 
+            if (c.IsName("ensure") && line.Tokens.Any(token => token is { Kind: TokenKind.Name, Text: "else" }))
+            {
+                c.Next();
+                var value = ParsePath(c);
+                Condition condition;
+                if (c.IsName("is") && (c.IsName("blank", 1) || c.IsName("not", 1) && c.IsName("blank", 2)))
+                {
+                    c.Next();
+                    var isNotBlank = c.IsName("not");
+                    if (isNotBlank) c.Next();
+                    c.Next();
+                    condition = new BlankCondition(value, isNotBlank, at);
+                }
+                else if (c.IsName("length") && c.IsName("at", 1) && c.IsName("most", 2))
+                {
+                    c.Next(); c.Next(); c.Next();
+                    var maximum = c.Expect(TokenKind.Number, "an integer maximum");
+                    condition = new LengthAtMostCondition(value, int.Parse(maximum.Text, System.Globalization.CultureInfo.InvariantCulture), at);
+                }
+                else
+                {
+                    var op = c.Next();
+                    if (op.Kind != TokenKind.Symbol || op.Text is not ("<" or "<=" or ">" or ">=" or "==" or "!="))
+                        throw c.Error("a comparison operator (<, <=, >, >=, == or !=)");
+                    condition = new ComparisonCondition(value, op.Text, ParseExpr(c), at);
+                }
+                if (!c.IsName("else")) throw c.Error("`else` after the ensure condition");
+                c.Next();
+                var code = c.Expect(TokenKind.TypeName, "a failure code (Capitalized)");
+                c.ExpectEnd();
+                return new EnsureStep(condition, code.Text, at);
+            }
+
             return ParseCall(c);
         }
 

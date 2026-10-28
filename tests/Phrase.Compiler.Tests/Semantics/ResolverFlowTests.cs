@@ -8,6 +8,47 @@ namespace Phrase.Compiler.Tests.Semantics;
 //   use their holes as variables, and their failures and effects propagate to callers.
 public class ResolverFlowTests
 {
+    [Fact]
+    [Trait("Slice", "159")]
+    public void Ensure_resolves_its_typed_condition_and_failure()
+    {
+        // Given a phrase with a declared text guard
+        var source = Program("""
+            phrase "validate {title: Text}"
+              fails with EmptyTitle
+              steps
+                ensure title is not blank else EmptyTitle
+            """);
+
+        // When the phrase is resolved
+        var phrase = Clean(source).Phrase("validate _");
+
+        // Then the condition is typed and the failure is part of its flow
+        var ensure = Assert.IsType<BoundEnsureStep>(Assert.Single(phrase.Steps!));
+        Assert.Equal(PType.Text, Assert.IsType<BoundBlankCondition>(ensure.Condition).Value.Type);
+        Assert.Equal("EmptyTitle", ensure.Code);
+        Assert.Equal(["EmptyTitle"], phrase.Failures);
+    }
+
+    [Theory]
+    [Trait("Slice", "159")]
+    [InlineData("ensure title length at most 200 else Missing", "PH326")]
+    [InlineData("ensure count length at most 200 else Invalid", "PH312")]
+    [InlineData("ensure missing is not blank else Invalid", "PH310")]
+    public void Ensure_rejects_undeclared_failures_wrong_types_and_unknown_names(string step, string code)
+    {
+        // Given an invalid ensure step
+        var source = Program($$"""
+            phrase "validate {title: Text} count {count: Int}"
+              fails with Invalid
+              steps
+                {{step}}
+            """);
+
+        // When the phrase is resolved
+        // Then the specific semantic error is reported
+        Assert.Equal([code], Codes(source));
+    }
     private const string Validate = """
         phrase "validate {items: List<LineItem>}"
           steps

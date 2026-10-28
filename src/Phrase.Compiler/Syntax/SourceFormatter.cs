@@ -22,6 +22,7 @@ public static class SourceFormatter
         LetStep l => $"let {l.Name} = {Format(l.Call)}",
         RespondStep r => $"respond with {Format(r.Value)}",
         FailStep f => $"fail with {f.Code}",
+        EnsureStep e => $"ensure {Format(e.Condition)} else {e.Code}",
         PhraseCall c => string.Join(" ", c.Parts.Select(p => p switch
         {
             CallWord w => w.Text,
@@ -29,6 +30,14 @@ public static class SourceFormatter
             _ => throw Unknown(p),
         })),
         _ => throw Unknown(step),
+    };
+
+    public static string Format(Condition condition) => condition switch
+    {
+        BlankCondition b => $"{Format(b.Value)} is {(b.IsNotBlank ? "not " : "")}blank",
+        LengthAtMostCondition l => $"{Format(l.Value)} length at most {l.Maximum}",
+        ComparisonCondition c => $"{Format(c.Left)} {c.Operator} {Format(c.Right)}",
+        _ => throw Unknown(condition),
     };
 
     public static string Format(Expr expr) => expr switch

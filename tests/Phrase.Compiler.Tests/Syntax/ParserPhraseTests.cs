@@ -8,6 +8,29 @@ namespace Phrase.Compiler.Tests.Syntax;
 //   its specs, and an implementation: native blocks (leaf) or steps (composite).
 public class ParserPhraseTests
 {
+    [Fact]
+    [Trait("Slice", "159")]
+    public void Ensure_conditions_are_parsed_as_steps()
+    {
+        // Given a phrase with each ensure condition shape
+        var source = InModule("""
+            phrase "validate {title: Text} count {count: Int} limit {limit: Int}"
+              fails with Invalid
+              steps
+                ensure title is not blank else Invalid
+                ensure title length at most 200 else Invalid
+                ensure count <= limit else Invalid
+            """);
+
+        // When the phrase is parsed
+        var phrase = Assert.Single(Clean(source).Phrases);
+
+        // Then each condition and its declared failure are preserved in the AST
+        Assert.Equal([
+            "(ensure title is not blank else Invalid)",
+            "(ensure title length at most 200 else Invalid)",
+            "(ensure count <= limit else Invalid)"], phrase.Steps!.Select(Print));
+    }
     private static PhraseDecl SinglePhrase(string body) => Assert.Single(Clean(InModule(body)).Phrases);
 
     [Fact]

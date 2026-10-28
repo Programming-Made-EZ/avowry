@@ -65,7 +65,7 @@ public class ExtensionBoundaryTests
         // steps stays core because a composite phrase uses it; an endpoint's steps block is the web construct endpoint-steps.
         string[] core =
         [
-            "and", "called", "effects", "fail with", "fails with", "given", "let", "module", "native",
+            "and", "called", "effects", "ensure", "fail with", "fails with", "given", "let", "module", "native",
             "phrase", "returns", "spec", "steps", "succeeds", "then", "type", "uses", "when",
         ];
         string[] web =
@@ -97,6 +97,7 @@ public class ExtensionBoundaryTests
         Assert.Equal(ExtensionPart.Web, ExtensionKeywords.Construct("responds"));
         Assert.Equal(ExtensionPart.Web, ExtensionKeywords.Construct("status-mapping"));
         Assert.Equal(ExtensionPart.Core, ExtensionKeywords.Construct("phrase-steps"));
+        Assert.Equal(ExtensionPart.Core, ExtensionKeywords.Construct("ensure-step"));
 
         // And the web diagnostics stay web, including only the endpoint arm of the shared codes
         foreach (var code in new[] { "PH209", "PH304", "PH322", "PH323" })

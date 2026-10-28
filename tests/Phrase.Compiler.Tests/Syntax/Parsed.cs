@@ -36,6 +36,7 @@ internal static class Parsed
         LetStep s => $"(let {s.Name} {Print(s.Call)})",
         RespondStep s => $"(respond {Print(s.Value)})",
         FailStep s => $"(fail {s.Code})",
+        EnsureStep s => $"(ensure {SourceFormatter.Format(s.Condition)} else {s.Code})",
         PhraseCall c => $"(call {string.Join(" ", c.Parts.Select(Print))})",
         CallWord w => w.Text,
         CallArgument a => $"<{Print(a.Value)}>",

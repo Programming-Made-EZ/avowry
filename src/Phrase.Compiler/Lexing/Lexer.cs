@@ -209,6 +209,13 @@ public static class Lexer
                     continue;
                 }
 
+                if (c is '<' or '>' or '=' or '!' && next == '=')
+                {
+                    Add(TokenKind.Symbol, $"{c}=", lineNo, column);
+                    p += 2;
+                    continue;
+                }
+
                 switch (c)
                 {
                     case '{' or '[':

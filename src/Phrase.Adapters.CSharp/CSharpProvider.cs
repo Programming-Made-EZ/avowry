@@ -71,6 +71,8 @@ public sealed class CSharpProvider : ITargetAdapter
         RequireSupportedSignature(module, phrase);
         foreach (var step in phrase.Steps!)
         {
+            if (step is BoundEnsureStep)
+                continue;
             if (step is not BoundLetStep let)
                 throw new NotImplementedException($"The C# emitter does not support step '{step.Source}' yet.");
             RequireSupportedArguments(phrase, let.Call);
@@ -424,7 +426,21 @@ public sealed class CSharpProvider : ITargetAdapter
     private static string StepStatement(ModuleModel module, BoundStep step) => step switch
     {
         BoundLetStep let => $"var {CSharpIdent(let.Name)} = {CallExpression(module, let.Call)};",
+        BoundEnsureStep ensure => EnsureStatement(ensure),
         _ => throw new NotImplementedException($"The C# emitter does not support step '{step.Source}' yet."),
+    };
+
+    private static string EnsureStatement(BoundEnsureStep ensure) =>
+        $"if ({FailureCondition(ensure.Condition)}) PhraseFailure.Raise({CsString(ensure.Code)});";
+
+    private static string FailureCondition(BoundCondition condition) => condition switch
+    {
+        BoundBlankCondition blank => blank.IsNotBlank
+            ? $"string.IsNullOrWhiteSpace({CSharpArgument(blank.Value)})"
+            : $"!string.IsNullOrWhiteSpace({CSharpArgument(blank.Value)})",
+        BoundLengthAtMostCondition length => $"{CSharpArgument(length.Value)}.Length > {length.Maximum}",
+        BoundComparisonCondition comparison => $"!({CSharpArgument(comparison.Left)} {comparison.Operator} {CSharpArgument(comparison.Right)})",
+        _ => throw new NotImplementedException($"The C# emitter does not support condition '{condition.GetType().Name}' yet."),
     };
 
     private static string CallExpression(ModuleModel module, BoundCall call, IReadOnlyList<string>? availableEffects = null)
@@ -570,6 +586,7 @@ public sealed class CSharpProvider : ITargetAdapter
         BoundLetStep let => $"var {CSharpIdent(let.Name)} = {CallExpression(module, let.Call, EndpointEffects(module, endpoint))};",
         BoundRespondStep respond => $"return new {EndpointResponseName(endpoint.Name)}({string.Join(", ", respond.Value.Fields.Select(field => $"{CSharpFieldName(field.Name)}: {EndpointResponseValue(field.Value)}"))});",
         BoundFailStep fail => $"PhraseFailure.Raise({CsString(fail.Code)});",
+        BoundEnsureStep ensure => EnsureStatement(ensure),
         _ => string.Empty,
     };
 

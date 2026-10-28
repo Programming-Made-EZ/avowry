@@ -9,15 +9,16 @@ type Task
 
 phrase "create task {id: Id} titled {title: Text}" -> Task
   effects TaskStore
-  fails with EmptyTitle, TitleTooLong
   native csharp
-    if (string.IsNullOrWhiteSpace(title))
-        Fail("EmptyTitle");
-    if (title.Length > 200)
-        Fail("TitleTooLong");
     var task = new Task(id, title, false);
     taskstore.Save(task);
     return task;
+
+phrase "validate task title {title: Text}"
+  fails with EmptyTitle, TitleTooLong
+  steps
+    ensure title is not blank else EmptyTitle
+    ensure title length at most 200 else TitleTooLong
 
 phrase "find task {id: Id}" -> Task
   effects TaskStore
@@ -61,6 +62,7 @@ endpoint CreateTask : POST /tasks
   output
     task: Task
   steps
+    validate task title input.title
     let task = create task input.id titled input.title
     respond with { task: task }
   spec "a valid title creates an open task"

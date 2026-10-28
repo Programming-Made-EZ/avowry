@@ -25,12 +25,15 @@ public class TasksDemoApp
         var model = Resolver.Resolve(source);
         var backlog = await File.ReadAllTextAsync(backlogPath);
 
-        // Then it is five Phrase endpoints, five declared native leaves, no hand-written C#,
+        // Then it is five Phrase endpoints, five declared native leaves, visible ensure rules, no hand-written C#,
         // and the backlog records create, get, list, complete, delete, validation in order
         Assert.Empty(model.Diagnostics);
         Assert.Equal(5, model.Module.Endpoints.Count);
         Assert.Equal(5, source.Replace("\r\n", "\n", StringComparison.Ordinal)
             .Split('\n').Count(line => line == "  native csharp"));
+        Assert.Contains("ensure title is not blank else EmptyTitle", source, StringComparison.Ordinal);
+        Assert.Contains("ensure title length at most 200 else TitleTooLong", source, StringComparison.Ordinal);
+        Assert.DoesNotContain("string.IsNullOrWhiteSpace", source, StringComparison.Ordinal);
         Assert.Empty(Directory.GetFiles(Path.GetDirectoryName(sourcePath)!, "*.cs", SearchOption.AllDirectories));
         var positions = new[] { "Create", "Get", "List", "Complete", "Delete", "Validation" }
             .Select(feature => backlog.IndexOf(feature, StringComparison.Ordinal)).ToArray();

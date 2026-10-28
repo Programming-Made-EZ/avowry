@@ -33,6 +33,7 @@ public static class ExtensionKeywords
         ["phrase"] = ExtensionPart.Core,
         ["steps"] = ExtensionPart.Core,
         ["let"] = ExtensionPart.Core,
+        ["ensure"] = ExtensionPart.Core,
         ["fail with"] = ExtensionPart.Core,
         ["fails with"] = ExtensionPart.Core,
         ["effects"] = ExtensionPart.Core,
@@ -63,6 +64,7 @@ public static class ExtensionKeywords
     private static readonly Dictionary<string, ExtensionPart> Constructs = new(StringComparer.Ordinal)
     {
         ["phrase-steps"] = ExtensionPart.Core,
+        ["ensure-step"] = ExtensionPart.Core,
         ["endpoint"] = ExtensionPart.Web,
         ["endpoint-steps"] = ExtensionPart.Web,
         ["route"] = ExtensionPart.Web,

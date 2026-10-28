@@ -57,6 +57,12 @@ public sealed record BoundCallStep(BoundCall Call, string Source) : BoundStep(So
 public sealed record BoundLetStep(string Name, PType Type, BoundCall Call, string Source) : BoundStep(Source);
 public sealed record BoundRespondStep(BoundRecord Value, string Source) : BoundStep(Source);
 public sealed record BoundFailStep(string Code, string Source) : BoundStep(Source);
+public sealed record BoundEnsureStep(BoundCondition Condition, string Code, string Source) : BoundStep(Source);
+
+public abstract record BoundCondition;
+public sealed record BoundBlankCondition(BoundExpr Value, bool IsNotBlank) : BoundCondition;
+public sealed record BoundLengthAtMostCondition(BoundExpr Value, int Maximum) : BoundCondition;
+public sealed record BoundComparisonCondition(BoundExpr Left, string Operator, BoundExpr Right) : BoundCondition;
 
 /// <summary>A call to the phrase with this key; one argument per hole, in hole order.</summary>
 public sealed record BoundCall(string PhraseKey, IReadOnlyList<BoundArgument> Arguments);

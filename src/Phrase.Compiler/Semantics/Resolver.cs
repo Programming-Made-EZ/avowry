@@ -205,6 +205,11 @@ public static class Resolver
                         bound.Add(new BoundFailStep(fail.Code, SourceFormatter.Format(fail)));
                         terminated = true;
                         break;
+                    case EnsureStep ensure:
+                        if (declaredFailures is not null && !declaredFailures.Contains(ensure.Code, StringComparer.Ordinal))
+                            Report("PH326", $"Ensure failure '{ensure.Code}' is not declared in 'fails with'.", ensure.At);
+                        bound.Add(new BoundEnsureStep(ResolveCondition(ensure.Condition, scope), ensure.Code, SourceFormatter.Format(ensure)));
+                        break;
                     case RespondStep respond:
                         if (outputType is null)
                         {
@@ -220,6 +225,37 @@ public static class Resolver
                 }
             }
             return bound;
+        }
+
+        private BoundCondition ResolveCondition(Condition condition, IReadOnlyDictionary<string, PType> scope)
+        {
+            switch (condition)
+            {
+                case BlankCondition blank:
+                {
+                    var value = ResolvePath(blank.Value, scope);
+                    if (!value.Type.IsError && value.Type != PType.Text)
+                        Report("PH312", $"Blank checks require Text, but got {value.Type}.", blank.At);
+                    return new BoundBlankCondition(value, blank.IsNotBlank);
+                }
+                case LengthAtMostCondition length:
+                {
+                    var value = ResolvePath(length.Value, scope);
+                    if (!value.Type.IsError && value.Type != PType.Text)
+                        Report("PH312", $"Length checks require Text, but got {value.Type}.", length.At);
+                    return new BoundLengthAtMostCondition(value, length.Maximum);
+                }
+                case ComparisonCondition comparison:
+                {
+                    var left = ResolvePath(comparison.Left, scope);
+                    var right = ResolveValue(comparison.Right, PType.Int, scope);
+                    if (!left.Type.IsError && left.Type != PType.Int)
+                        Report("PH312", $"Comparisons require Int, but got {left.Type}.", comparison.At);
+                    return new BoundComparisonCondition(left, comparison.Operator, right);
+                }
+                default:
+                    throw new InvalidOperationException($"Unknown condition {condition.GetType().Name}.");
+            }
         }
 
         private void ResolvePhraseFlow(List<PhraseModel> phrases)
@@ -246,6 +282,8 @@ public static class Resolver
                 {
                     if (step is BoundFailStep fail)
                         failures.Add(fail.Code);
+                    if (step is BoundEnsureStep ensure)
+                        failures.Add(ensure.Code);
                     if (step is not BoundCallStep and not BoundLetStep)
                         continue;
                     var key = CalledPhraseKey(step)!;
@@ -276,6 +314,8 @@ public static class Resolver
             {
                 if (step is BoundFailStep fail)
                     failures.Add(fail.Code);
+                if (step is BoundEnsureStep ensure)
+                    failures.Add(ensure.Code);
                 var key = CalledPhraseKey(step);
                 if (key is not null)
                     failures.UnionWith(phraseDeclarations.Single(pair => pair.Model.Key == key).Model.Failures);
