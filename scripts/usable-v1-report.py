@@ -56,6 +56,14 @@ def load_ratchet():
     return [int(b) for b in json.loads(RATCHET.read_text(encoding="utf-8")).get("must_pass", [])]
 
 
+def reached_line(root=None):
+    """Milestone line. Point at demo/tasks/README.md only when that file exists."""
+    base = Path(root) if root is not None else ROOT
+    if (base / "demo" / "tasks" / "README.md").is_file():
+        return "USABLE v1 REACHED: demo app at demo/tasks (see demo/tasks/README.md for how to run it)"
+    return "USABLE v1 REACHED: demo app at demo/tasks"
+
+
 def report(results):
     try:
         ratchet = load_ratchet()
@@ -82,7 +90,7 @@ def report(results):
         print(f"::error::Usable v1 REGRESSION: bar(s) {regressed} previously passed (board/usable-v1-ratchet.json) and now fail")
         return 1
     if len(met) == len(BARS):
-        print("USABLE v1 REACHED: demo app at demo/tasks (see its README for how to run it)")
+        print(reached_line())
         print("::notice::USABLE v1 REACHED")
         return 0
     print(f"::error::Usable v1 not reached: {len(met)} of {len(BARS)} criteria")
@@ -100,6 +108,14 @@ def self_test():
     assert classify({1: (True, "")}, [])[2] == [2, 3, 4, 5, 6], "missing bars are reported"
     assert report(ok) == 0, "six passing bars reach Usable v1"
     assert report(none) == 1, "a failing bar fails the job now that every bar is ratcheted"
+    with tempfile.TemporaryDirectory() as tmp:
+        missing = Path(tmp)
+        assert reached_line(missing) == "USABLE v1 REACHED: demo app at demo/tasks"
+        (missing / "demo" / "tasks").mkdir(parents=True)
+        (missing / "demo" / "tasks" / "README.md").write_text("# demo\n", encoding="utf-8")
+        assert reached_line(missing) == (
+            "USABLE v1 REACHED: demo app at demo/tasks (see demo/tasks/README.md for how to run it)"
+        )
     print("self-test ok")
     return 0
 
