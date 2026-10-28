@@ -13,6 +13,7 @@ public class ParserPhraseTests
     [InlineData("200.5")]
     [InlineData("-1")]
     [InlineData("99999999999")]
+    [InlineData("-99999999999")]
     public void Length_maximum_must_be_a_non_negative_32_bit_integer(string maximum)
     {
         // Given an ensure length condition whose maximum is not a supported integer
