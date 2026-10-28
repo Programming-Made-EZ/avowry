@@ -14,6 +14,7 @@ TASK_IDS = [
     "008-modify-type",
     "010-fix-trigger",
     "011-fix-type",
+    "020-endpoint-greetings",
 ]
 
 
@@ -41,7 +42,7 @@ def main(argv):
     if problems:
         print("\n".join(problems))
         return 1
-    print("Phrase executed-outcomes suite is complete for the eight head-to-head tasks.")
+    print("Phrase executed-outcomes suite is complete for the eight head-to-head tasks and endpoint task.")
     return 0
 
 

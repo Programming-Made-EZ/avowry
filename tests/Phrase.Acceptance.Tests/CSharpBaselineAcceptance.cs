@@ -118,7 +118,7 @@ public sealed class CSharpBaselineAcceptance
         // Given the committed plain-C# baseline outcomes
         var root = RepoPaths.Find("bench", "csharp-baseline", "tasks");
         var files = Directory.GetFiles(root, "outcomes.json", SearchOption.AllDirectories);
-        var allowed = new HashSet<string>(StringComparer.Ordinal) { "returns", "fails_with", "succeeds", "has_field" };
+        var allowed = new HashSet<string>(StringComparer.Ordinal) { "returns", "fails_with", "succeeds", "has_field", "responds" };
 
         // When each case is read
         Assert.NotEmpty(files);
