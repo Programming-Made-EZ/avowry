@@ -287,14 +287,23 @@ Never assume a driver is permanently out. A driver that is out of quota or other
 
 ### Staffing: roles over models (standing rule, product owner, 2026-10-28)
 
-Roles are the primary perspectives; models are the staff who fill them. "Although diversity of model is important the diversity of roles is more important."
+Roles are the primary perspectives; models are the staff who fill them. Diversity of model matters, but diversity of roles matters more, because each role asks a different question of the work.
 
 - **Roles first.** The task force names the roles for a card (product manager, architect, author, tester, reviewer, domain expert, security and so on). Every role is seated for every card, whatever models are available. Decider votes and reviews are seated BY ROLE: a vote does not shrink to "two seats" because a model is out; each role is filled by an available model.
+- **Decider seats are by role, never by model.** When a model runs out of credits, the Decider still seats every role: each seat is filled by an available model in a fresh context, and one model may fill several role-seats (never reviewing its own authorship). A vote is never taken with fewer seats because a model is out. The decision record names which model filled which role-seat. Why: the diverse perspectives come from the roles, and shrinking the vote when quota runs out quietly weakens every decision.
 - **Work never stalls for lack of a specific model.** When a model is out of quota, its roles are reassigned to available models. In the extreme one model fills several roles, each in a fresh context with its own role charter and without the other roles' reasoning, and Claude covers if every other driver is out.
 - **Claude is a normal member of the rotation** (Sonnet by default, a stronger model only when the work needs it). It can fill roles, author, review and vote alongside Codex, Copilot, Grok and agy; in particular it takes seats while another model is out so that votes and reviews keep a full set of role perspectives. The only limit: do not let Claude carry everything while other models still have quota. It becomes the sole driver only when all the others are out.
 - **How Claude is seated.** A seat is a fresh context given the role charter, the proposal and read access to the committed files, nothing from the facilitator's own reasoning. Where the headless CLI is signed in it is a driver like the others; otherwise the facilitator seats it as a fresh-context subagent. The log names the model and the role for every seat.
 - **Rules that do not change.** The author of a change never votes on it; reviews are non-author by role and by context; one model may hold several roles on a card only in separate fresh contexts, and may not review its own authorship.
 - **Model diversity still matters, but never blocks.** Prefer spreading roles across different models when available. For Phrase's benchmarks the models are the customers and the test subjects, so which models were run is part of the evidence. Claude is a reasonable extra model for the benchmarks if the team wants another data point, decided by Decider and pre-registered as usual.
+
+### Decisions stay reversible (standing rule)
+
+**Principle:** with fewer models available to review, a wrong call is more likely, so the safety net is cheap reversal. Small, atomic units of work are therefore even more important.
+
+- **Each card, commit and decision is small enough to revert cleanly on its own.** A card that cannot be reverted without side effects is split until each piece can be.
+- **Prefer two-way doors.** A decision that cannot be undone cheaply is flagged as a one-way door and escalated as the Escalation section already says; everything else is decided by the Decider and recorded with how it would be reversed.
+- **The record says how to undo it.** A Decider record for anything touching shared state (a published file, a frozen document, a board field, a benchmark baseline) names the revert step, or says it is a one-way door.
 
 ### Driver rotation
 
