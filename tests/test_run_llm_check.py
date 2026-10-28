@@ -5,6 +5,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -402,11 +403,22 @@ def _pid_is_running(pid: int) -> bool:
             check=False,
         )
         return str(pid) in completed.stdout
-    try:
-        os.kill(pid, 0)
-    except OSError:
-        return False
-    return True
+    # A killed child may need a moment to exit and, when its parent is gone, can stay a zombie until init reaps it.
+    deadline = time.time() + 5
+    while True:
+        try:
+            os.kill(pid, 0)
+        except OSError:
+            return False
+        try:
+            state = Path(f"/proc/{pid}/stat").read_text(encoding="utf-8").rsplit(")", 1)[1].split()[0]
+        except (OSError, IndexError):
+            state = ""
+        if state == "Z":
+            return False
+        if time.time() >= deadline:
+            return True
+        time.sleep(0.1)
 
 
 if __name__ == "__main__":
