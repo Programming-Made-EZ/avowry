@@ -434,17 +434,34 @@ static string ResolveSuitePath(string suitePath)
 static bool TryReadDocumentationBlock(string docsRoot, out string docsBlock, out string error)
 {
     var grammarPath = Path.Combine(docsRoot, "docs", "GRAMMAR.md");
+    var cheatSheetPath = Path.Combine(docsRoot, "docs", "CHEATSHEET.md");
     var examplePath = Path.Combine(docsRoot, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase");
-    if (!File.Exists(grammarPath) || !File.Exists(examplePath))
+    if (!File.Exists(grammarPath))
     {
         docsBlock = "";
-        error = $"docs-in-context mode could not find docs/GRAMMAR.md and tests/Phrase.Acceptance.Tests/Fixtures/orders.phrase under '{docsRoot}'.";
+        error = $"docs-in-context mode could not find docs/GRAMMAR.md under '{docsRoot}'.";
         return false;
     }
 
-    docsBlock = DocumentationBlock(File.ReadAllText(grammarPath), File.ReadAllText(examplePath));
-    error = "";
-    return true;
+    // Prefer the orders fixture when it is present so scored custom-docs roots stay unchanged.
+    // A docs root that holds only GRAMMAR.md and CHEATSHEET.md (the LLM-customer check) uses the sheet.
+    if (File.Exists(examplePath))
+    {
+        docsBlock = DocumentationBlock(File.ReadAllText(grammarPath), File.ReadAllText(examplePath));
+        error = "";
+        return true;
+    }
+
+    if (File.Exists(cheatSheetPath))
+    {
+        docsBlock = DocumentationBlock(File.ReadAllText(grammarPath), File.ReadAllText(cheatSheetPath));
+        error = "";
+        return true;
+    }
+
+    docsBlock = "";
+    error = $"docs-in-context mode could not find docs/CHEATSHEET.md or tests/Phrase.Acceptance.Tests/Fixtures/orders.phrase under '{docsRoot}'.";
+    return false;
 }
 
 static string DocumentationBlock(string grammar, string example)
@@ -979,7 +996,7 @@ static string GenerateEndpointOutcomeTests(IReadOnlyList<Outcome> outcomes)
 {
     var methods = string.Join(Environment.NewLine, outcomes.Select(outcome => $$"""
           [Fact]
-          public async Task Outcome_{{Identifier(outcome.Name)}}()
+          public async global::System.Threading.Tasks.Task Outcome_{{Identifier(outcome.Name)}}()
           {
               var result = await InvokeEndpointAsync({{JsonSerializer.Serialize(outcome.Given.GetRawText())}});
               {{EndpointAssertion(outcome)}}
@@ -988,6 +1005,7 @@ static string GenerateEndpointOutcomeTests(IReadOnlyList<Outcome> outcomes)
     return """
         using System.IO;
         using System.Reflection;
+        using System.Text;
         using System.Text.Json;
         using System.Threading;
         using FastEndpoints;
@@ -995,21 +1013,95 @@ static string GenerateEndpointOutcomeTests(IReadOnlyList<Outcome> outcomes)
 
         public sealed class GeneratedOutcomeTests
         {
-          private static Type FindEndpointType()
+          private static readonly string[] StoreSeedKeys = { "tasks", "stored", "items" };
+          private static readonly string[] OriginalTaskEndpoints =
+          {
+              "CreateTaskEndpoint", "GetTaskEndpoint", "ListTasksEndpoint",
+              "CompleteTaskEndpoint", "DeleteTaskEndpoint"
+          };
+
+          private static IEnumerable<Type> TypesOf(Assembly assembly)
+          {
+              try { return assembly.GetTypes(); }
+              catch (ReflectionTypeLoadException exception) { return exception.Types.OfType<Type>(); }
+          }
+
+          private static Type[] AllTypes()
           {
               foreach (var reference in typeof(GeneratedOutcomeTests).Assembly.GetReferencedAssemblies())
                   Assembly.Load(reference);
-              var matches = AppDomain.CurrentDomain.GetAssemblies()
-                  .SelectMany(assembly =>
-                  {
-                      try { return assembly.GetTypes(); }
-                      catch (ReflectionTypeLoadException exception) { return exception.Types.OfType<Type>(); }
-                  })
+              return AppDomain.CurrentDomain.GetAssemblies().SelectMany(TypesOf).ToArray();
+          }
+
+          private static Type[] EndpointTypes()
+          {
+              return AllTypes()
                   .Where(type => type is { IsAbstract: false, IsInterface: false } && typeof(IEndpoint).IsAssignableFrom(type))
                   .ToArray();
-              return matches.Length == 1
-                  ? matches[0]
-                  : throw new InvalidOperationException($"endpoint_type_match_count: {matches.Length}");
+          }
+
+          private static Type FindEndpointType(JsonElement given)
+          {
+              var matches = EndpointTypes();
+              if (matches.Length == 1)
+                  return matches[0];
+
+              var open = FindByRoute(matches, "/tasks/open");
+              if (open is not null)
+                  return open;
+
+              var requestKeys = RequestKeys(given);
+              var byRequest = matches.Where(type => RequestPropertyNames(type).SetEquals(requestKeys)).ToArray();
+              if (byRequest.Length == 1)
+                  return byRequest[0];
+
+              var added = matches.Where(type => Array.IndexOf(OriginalTaskEndpoints, type.Name) < 0).ToArray();
+              if (added.Length == 1)
+                  return added[0];
+
+              throw new InvalidOperationException($"endpoint_type_match_count: {matches.Length}");
+          }
+
+          private static Type? FindByRoute(Type[] endpoints, string route)
+          {
+              foreach (var type in AllTypes())
+              {
+                  var attribute = type.GetCustomAttributes().FirstOrDefault(item => item.GetType().Name == "PhraseAttribute");
+                  if (attribute is null)
+                      continue;
+                  var template = attribute.GetType().GetProperty("Template")?.GetValue(attribute) as string ?? "";
+                  if (!template.Contains(route, StringComparison.OrdinalIgnoreCase))
+                      continue;
+                  var endpointName = type.Name.EndsWith("Handler", StringComparison.Ordinal)
+                      ? type.Name[..^7] + "Endpoint"
+                      : type.Name + "Endpoint";
+                  var match = endpoints.FirstOrDefault(endpoint => endpoint.Name == endpointName);
+                  if (match is not null)
+                      return match;
+              }
+              return null;
+          }
+
+          private static HashSet<string> RequestKeys(JsonElement given)
+          {
+              var keys = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+              if (given.ValueKind != JsonValueKind.Object)
+                  return keys;
+              foreach (var property in given.EnumerateObject())
+              {
+                  if (StoreSeedKeys.Contains(property.Name, StringComparer.OrdinalIgnoreCase))
+                      continue;
+                  keys.Add(property.Name);
+              }
+              return keys;
+          }
+
+          private static HashSet<string> RequestPropertyNames(Type endpointType)
+          {
+              var request = RequestType(endpointType);
+              return request.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                  .Select(property => property.Name)
+                  .ToHashSet(StringComparer.OrdinalIgnoreCase);
           }
 
           private static Type RequestType(Type endpointType)
@@ -1018,20 +1110,95 @@ static string GenerateEndpointOutcomeTests(IReadOnlyList<Outcome> outcomes)
               {
                   if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Endpoint<,>))
                       return type.GetGenericArguments()[0];
+                  if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Endpoint<>))
+                      return type.GetGenericArguments()[0];
               }
               throw new InvalidOperationException("endpoint_request_type_not_found");
           }
 
-          private static async Task<(int StatusCode, string Body)> InvokeEndpointAsync(string requestJson)
+          private static string RequestJson(JsonElement given)
           {
-              var endpointType = FindEndpointType();
+              if (given.ValueKind != JsonValueKind.Object)
+                  return given.GetRawText();
+              using var stream = new MemoryStream();
+              using (var writer = new Utf8JsonWriter(stream))
+              {
+                  writer.WriteStartObject();
+                  foreach (var property in given.EnumerateObject())
+                  {
+                      if (StoreSeedKeys.Contains(property.Name, StringComparer.OrdinalIgnoreCase))
+                          continue;
+                      property.WriteTo(writer);
+                  }
+                  writer.WriteEndObject();
+              }
+              return Encoding.UTF8.GetString(stream.ToArray());
+          }
+
+          private static object[] CreateDependencies(Type endpointType, JsonElement given)
+          {
+              var ctor = endpointType.GetConstructors(BindingFlags.Public | BindingFlags.Instance).FirstOrDefault();
+              if (ctor is null)
+                  return Array.Empty<object>();
+              var args = new List<object>();
+              foreach (var parameter in ctor.GetParameters())
+              {
+                  if (!parameter.ParameterType.IsInterface)
+                      continue;
+                  var impl = AllTypes().FirstOrDefault(type =>
+                      type is { IsClass: true, IsAbstract: false } &&
+                      parameter.ParameterType.IsAssignableFrom(type) &&
+                      type != endpointType);
+                  if (impl is null)
+                      throw new InvalidOperationException("store_implementation_not_found: " + parameter.ParameterType.Name);
+                  var instance = Activator.CreateInstance(impl)
+                      ?? throw new InvalidOperationException("store_not_created: " + impl.Name);
+                  SeedStore(instance, given);
+                  args.Add(instance);
+              }
+              return args.ToArray();
+          }
+
+          private static void SeedStore(object store, JsonElement given)
+          {
+              var save = store.GetType().GetMethod("Save");
+              if (save is null || given.ValueKind != JsonValueKind.Object)
+                  return;
+              JsonElement items = default;
+              var found = false;
+              foreach (var key in StoreSeedKeys)
+              {
+                  if (given.TryGetProperty(key, out items) && items.ValueKind == JsonValueKind.Array)
+                  {
+                      found = true;
+                      break;
+                  }
+              }
+              if (!found)
+                  return;
+              var itemType = save.GetParameters()[0].ParameterType;
+              var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+              foreach (var item in items.EnumerateArray())
+              {
+                  var value = JsonSerializer.Deserialize(item.GetRawText(), itemType, options)
+                      ?? throw new InvalidOperationException("store_item_deserialization_failed");
+                  save.Invoke(store, new object[] { value });
+              }
+          }
+
+          private static async global::System.Threading.Tasks.Task<(int StatusCode, string Body)> InvokeEndpointAsync(string givenJson)
+          {
+              using var given = JsonDocument.Parse(givenJson);
+              var requestJson = RequestJson(given.RootElement);
+              var endpointType = FindEndpointType(given.RootElement);
               var context = new DefaultHttpContext();
               context.Response.Body = new MemoryStream();
+              var dependencies = CreateDependencies(endpointType, given.RootElement);
               var create = typeof(Factory).GetMethods(BindingFlags.Public | BindingFlags.Static)
                   .Single(method => method.Name == "Create" && method.IsGenericMethodDefinition &&
                       method.GetParameters().Length == 2 &&
                       method.GetParameters()[0].ParameterType == typeof(DefaultHttpContext));
-              var endpoint = create.MakeGenericMethod(endpointType).Invoke(null, new object[] { context, Array.Empty<object>() })
+              var endpoint = create.MakeGenericMethod(endpointType).Invoke(null, new object[] { context, dependencies })
                   ?? throw new InvalidOperationException("endpoint_instance_not_created");
               var requestType = RequestType(endpointType);
               var payload = JsonSerializer.Deserialize(requestJson, requestType, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
@@ -1039,7 +1206,7 @@ static string GenerateEndpointOutcomeTests(IReadOnlyList<Outcome> outcomes)
               var handle = endpointType.GetMethod("HandleAsync", new[] { requestType, typeof(CancellationToken) })
                   ?? throw new InvalidOperationException("endpoint_handle_not_found");
               var returned = handle.Invoke(endpoint, new object[] { payload, CancellationToken.None });
-              if (returned is Task task)
+              if (returned is global::System.Threading.Tasks.Task task)
                   await task;
               context.Response.Body.Position = 0;
               using var reader = new StreamReader(context.Response.Body, leaveOpen: true);

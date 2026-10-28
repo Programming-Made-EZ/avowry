@@ -1,0 +1,1 @@
+Add one new endpoint to the existing Tasks service that lists only the tasks that are not done. Callers reach it at GET /tasks/open. Include specs for a successful listing and for the case where storage is unavailable. Return only valid Phrase source.

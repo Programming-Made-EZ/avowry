@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "tasks": [
+    {
+      "id": "U1-add-endpoint",
+      "kind": "modify",
+      "prompt": "tasks/U1-add-endpoint/prompt.md",
+      "holdout": false
+    }
+  ]
+}

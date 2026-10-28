@@ -1,0 +1,32 @@
+[
+  {
+    "name": "lists only open tasks",
+    "given": {
+      "available": true,
+      "tasks": [
+        { "id": "task-1", "title": "Write the demo", "done": false },
+        { "id": "task-2", "title": "Ship it", "done": true }
+      ]
+    },
+    "when": "handled",
+    "then": {
+      "responds": {
+        "tasks": [
+          { "id": "task-1", "title": "Write the demo", "done": false }
+        ]
+      },
+      "status": 200
+    }
+  },
+  {
+    "name": "unavailable storage is StoreUnavailable",
+    "given": {
+      "available": false,
+      "tasks": []
+    },
+    "when": "handled",
+    "then": {
+      "fails_with": "StoreUnavailable"
+    }
+  }
+]
