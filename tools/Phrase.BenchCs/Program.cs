@@ -12,7 +12,7 @@ const string ColdPreamble = "There is no workspace and no files to read; answer 
 
 if (args.Length == 0 || args[0] != "run")
 {
-    Console.Error.WriteLine("Usage: Phrase.BenchCs run --suite <path> --model <id> --model-command <command> [--label <label>] [--timeout-ms <milliseconds>] [--cold]");
+    Console.Error.WriteLine("Usage: Phrase.BenchCs run --suite <path> --model <id> --model-command <command> [--label <label>] [--timeout-ms <milliseconds>] [--cold] [--private-results <path>]");
     return args.Length == 0 ? 1 : 2;
 }
 
@@ -33,18 +33,19 @@ var timeout = options.TryGetValue("timeout-ms", out var timeoutValue)
     ? TimeSpan.FromMilliseconds(int.Parse(timeoutValue))
     : TimeSpan.FromMinutes(5);
 var label = options.GetValueOrDefault("label");
+var privateResults = options.GetValueOrDefault("private-results");
 var coldProfile = ResolveColdProfile(model, options.ContainsKey("cold"));
 var exitCode = 0;
 
 foreach (var task in suite.Tasks.Where(task => !task.Holdout))
 {
-    var passed = await RunTask(task, suiteDirectory, model, modelCommand, label, timeout, coldProfile);
+    var passed = await RunTask(task, suiteDirectory, model, modelCommand, label, timeout, coldProfile, privateResults);
     if (!passed)
         exitCode = 3;
 }
 return exitCode;
 
-static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, string model, string command, string? label, TimeSpan timeout, ColdProfile coldProfile)
+static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, string model, string command, string? label, TimeSpan timeout, ColdProfile coldProfile, string? privateResultsPath = null)
 {
     var (taskPrompt, existingCodeTokens) = AssemblePrompt(task, suiteDirectory);
     var coldPreamble = coldProfile.Cold ? ColdPreamble : string.Empty;
@@ -84,7 +85,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
 
                 var unavailable = CreateResult(task, model, false, attempts, tokensIn, tokensOut, diagnostics,
                     promptHash, reply, label, "unavailable", "empty reply", "none", 0, 0, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
-                Persist(suiteDirectory, model, unavailable);
+                Persist(suiteDirectory, model, unavailable, privateResultsPath);
                 Console.WriteLine($"{model}: unavailable {task.Id}");
                 return true;
             }
@@ -101,7 +102,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
                 {
                     var passedResult = CreateResult(task, model, true, attempts, tokensIn, tokensOut, diagnostics,
                         promptHash, reply, label, "completed", null, "specs-passed", score.ModelTestCount, score.HarnessTestCount, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
-                    Persist(suiteDirectory, model, passedResult);
+                    Persist(suiteDirectory, model, passedResult, privateResultsPath);
                     Console.WriteLine($"{model}: passed {task.Id}");
                     return true;
                 }
@@ -112,7 +113,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
 
         var failed = CreateResult(task, model, false, attempts, tokensIn, tokensOut, diagnostics,
             promptHash, reply, label, "completed", null, "none", lastScore?.ModelTestCount ?? 0, lastScore?.HarnessTestCount ?? 0, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
-        Persist(suiteDirectory, model, failed);
+        Persist(suiteDirectory, model, failed, privateResultsPath);
         Console.WriteLine($"{model}: failed {task.Id}");
         return false;
     }
@@ -120,7 +121,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
     {
         var unavailable = CreateResult(task, model, false, attempts, tokensIn, tokensOut, diagnostics,
             promptHash, reply, label, "unavailable", exception.Message, "none", 0, 0, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
-        Persist(suiteDirectory, model, unavailable);
+        Persist(suiteDirectory, model, unavailable, privateResultsPath);
         Console.WriteLine($"{model}: unavailable {task.Id}");
         return true;
     }
@@ -765,13 +766,20 @@ static BenchmarkResult CreateResult(BenchmarkTask task, string model, bool passe
     string proofLevel, int modelTestCount, int harnessTestCount, int existingCodeTokens, ColdProfile coldProfile, string coldPreamble, bool workdirEmptyAtLaunch) => new(model, task.Id, passed, attempts, tokensIn, tokensOut, "estimated", diagnostics,
         false, promptHash, ReplyHead(reply), status, error, label, proofLevel, "plain-csharp", "", task.Kind, modelTestCount, harnessTestCount, "executed-outcomes", existingCodeTokens, coldProfile.Cold, coldProfile.Flags, coldPreamble, coldProfile.Reason, workdirEmptyAtLaunch);
 
-static void Persist(string suiteDirectory, string model, BenchmarkResult result)
+static void Persist(string suiteDirectory, string model, BenchmarkResult result, string? privateResultsPath = null)
 {
     var directory = Path.Combine(suiteDirectory, "results");
     Directory.CreateDirectory(directory);
     var json = JsonSerializer.Serialize(result, Serialization.Options);
     File.WriteAllText(Path.Combine(directory, $"{model}.json"), json);
-    File.AppendAllText(Path.Combine(directory, "history.jsonl"), json + "\n");
+    // Holdout rows carry reply text. A private path keeps that append out of the committed history file.
+    var historyPath = string.IsNullOrWhiteSpace(privateResultsPath)
+        ? Path.Combine(directory, "history.jsonl")
+        : privateResultsPath;
+    var historyDirectory = Path.GetDirectoryName(historyPath);
+    if (!string.IsNullOrEmpty(historyDirectory))
+        Directory.CreateDirectory(historyDirectory);
+    File.AppendAllText(historyPath, json + "\n");
 }
 
 static Dictionary<string, string> ParseOptions(string[] values)

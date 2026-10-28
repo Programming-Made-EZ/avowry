@@ -22,7 +22,7 @@ const string ColdPreamble = "There is no workspace and no files to read; answer 
 
 if (args.Length == 0)
 {
-    Console.Error.WriteLine("Usage: Phrase.Bench run --suite <path> --model <id> --model-command <command> [--mode zero-shot|docs-in-context] [--docs-root <path>] [--custom-docs] [--cold] [--scoring parse-resolve|executed] | --self-check [--suite <path>]");
+    Console.Error.WriteLine("Usage: Phrase.Bench run --suite <path> --model <id> --model-command <command> [--mode zero-shot|docs-in-context] [--docs-root <path>] [--custom-docs] [--cold] [--scoring parse-resolve|executed] [--private-results <path>] | --self-check [--suite <path>]");
     return 1;
 }
 
@@ -117,9 +117,13 @@ if (options.TryGetValue("scoring", out var configuredScoring))
     scoring = configuredScoring;
 }
 
+var privateResults = options.TryGetValue("private-results", out var configuredPrivateResults)
+    ? configuredPrivateResults
+    : null;
+
 foreach (var task in suite.Tasks.Where(task => !task.Holdout))
 {
-    var result = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts, label, recordedMode, docsBlock, coldProfile, scoring);
+    var result = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts, label, recordedMode, docsBlock, coldProfile, scoring, privateResults);
     taskResults.Add(result);
     if (!result.KeepsRunSuccessful)
         exitCode = 3;
@@ -187,7 +191,8 @@ static async Task<TaskRunResult> RunTask(
     string mode = BenchmarkModes.ZeroShot,
     string docsBlock = "",
     ColdProfile? coldProfile = null,
-    string scoring = BenchmarkScoring.ParseResolve)
+    string scoring = BenchmarkScoring.ParseResolve,
+    string? privateResultsPath = null)
 {
     var (taskPrompt, existingCodeTokens) = ReadPrompt(task, suiteDirectory);
     var resolvedColdProfile = coldProfile ?? ResolveColdProfile(model, false);
@@ -241,7 +246,7 @@ static async Task<TaskRunResult> RunTask(
                     label: label, mode: mode, docsHash: docsHash,
                     cold: resolvedColdProfile.Cold, coldFlags: resolvedColdProfile.Flags, coldPreamble: coldPreamble,
                     coldReason: resolvedColdProfile.Reason, workdirEmptyAtLaunch: workdirEmptyAtLaunch);
-                PersistResult(suiteDirectory, model, unavailable);
+                PersistResult(suiteDirectory, model, unavailable, privateResultsPath);
                 Console.WriteLine($"{model}: unavailable {task.Id}");
                 return new(true, false);
             }
@@ -265,7 +270,7 @@ static async Task<TaskRunResult> RunTask(
             ColdPreamble: coldPreamble, ColdReason: resolvedColdProfile.Reason, WorkdirEmptyAtLaunch: workdirEmptyAtLaunch,
             ScoreBar: score.ScoreBar, Patched: score.ScoreBar is null ? null : false, Kind: score.ScoreBar is null ? null : task.Kind,
             ExistingCodeTokens: score.ScoreBar is null ? null : existingCodeTokens);
-        PersistResult(suiteDirectory, model, result);
+        PersistResult(suiteDirectory, model, result, privateResultsPath);
         Console.WriteLine($"{model}: {(score.Passed ? "passed" : "failed")} {task.Id}");
         return new(score.Passed, true);
     }
@@ -275,7 +280,7 @@ static async Task<TaskRunResult> RunTask(
             model, task.Id, promptHash, exception.Message, label: label, mode: mode, docsHash: docsHash,
             cold: resolvedColdProfile.Cold, coldFlags: resolvedColdProfile.Flags, coldPreamble: coldPreamble,
             coldReason: resolvedColdProfile.Reason, workdirEmptyAtLaunch: workdirEmptyAtLaunch);
-        PersistResult(suiteDirectory, model, result);
+        PersistResult(suiteDirectory, model, result, privateResultsPath);
         Console.WriteLine($"{model}: unavailable {task.Id}");
         return new(true, false);
     }
@@ -705,7 +710,7 @@ static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.
 static string AddDiagnostics(string prompt, IReadOnlyList<string> diagnostics) =>
     $"{prompt}{Environment.NewLine}{Environment.NewLine}Compiler diagnostics:{Environment.NewLine}{string.Join(Environment.NewLine, diagnostics)}";
 
-static void PersistResult(string suiteDirectory, string model, BenchmarkResult result)
+static void PersistResult(string suiteDirectory, string model, BenchmarkResult result, string? privateResultsPath = null)
 {
     var resultsDirectory = IsSelfCheckModel(model)
         ? Path.Combine(suiteDirectory, "results", "self-check")
@@ -713,7 +718,13 @@ static void PersistResult(string suiteDirectory, string model, BenchmarkResult r
     Directory.CreateDirectory(resultsDirectory);
     var serializedResult = JsonSerializer.Serialize(result, Serialization.Options);
     File.WriteAllText(Path.Combine(resultsDirectory, $"{model}.json"), serializedResult);
-    var historyPath = Path.Combine(resultsDirectory, "history.jsonl");
+    // Holdout rows carry reply text. A private path keeps that append out of the committed history file.
+    var historyPath = string.IsNullOrWhiteSpace(privateResultsPath)
+        ? Path.Combine(resultsDirectory, "history.jsonl")
+        : privateResultsPath;
+    var historyDirectory = Path.GetDirectoryName(historyPath);
+    if (!string.IsNullOrEmpty(historyDirectory))
+        Directory.CreateDirectory(historyDirectory);
     File.AppendAllText(historyPath, serializedResult + "\n");
 }
 

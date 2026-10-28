@@ -4,3 +4,4 @@ top="$(git rev-parse --show-toplevel)"
 python "$top/scripts/check-no-secrets.py" || exit 1
 python "$top/scripts/check-unsafe-deletes.py" || exit 1
 python "$top/scripts/check-board-archive.py" || exit 1
+python "$top/scripts/check-no-holdout-in-tracked-files.py" || exit 1
