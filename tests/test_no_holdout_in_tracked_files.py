@@ -66,6 +66,26 @@ class NoHoldoutInTrackedFilesTests(unittest.TestCase):
             self.assertTrue(any("Holdout-r1" in item or "holdout" in item.lower() for item in violations))
             self.assertEqual(1, check.main([str(repo)]))
 
+    def test_fails_when_a_tracked_results_row_has_a_holdout_task_id(self):
+        # Given a tracked results row with an H-number task id and an ordinary label
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            self.init_repo(repo)
+            history = repo / "bench" / "results" / "history.jsonl"
+            history.parent.mkdir(parents=True)
+            history.write_text(
+                '{"model":"steve","task":"H9","label":"mistaken-run","reply_head":"secret reply"}\n',
+                encoding="utf-8",
+            )
+            self.track(repo)
+
+            # When the check runs
+            violations = check.find_violations(repo)
+
+            # Then it fails on the H-number task even though the label is not holdout-like
+            self.assertTrue(any("H9" in item for item in violations))
+            self.assertEqual(1, check.main([str(repo)]))
+
     def test_accepts_an_untracked_holdout_path_and_a_label_that_does_not_start_with_holdout(self):
         # Given a tracked baseline row and an untracked file under bench/holdouts-unsealed
         with tempfile.TemporaryDirectory() as tmp:

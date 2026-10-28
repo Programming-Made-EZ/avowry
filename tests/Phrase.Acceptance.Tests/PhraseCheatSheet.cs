@@ -268,6 +268,7 @@ public class PhraseCheatSheet
         {
             "run", "--suite", Path.Combine(suiteDirectory, "suite.json"),
             "--model", model, "--model-command", modelCommand,
+            "--private-results", Path.Combine(suiteDirectory, "results", "history.jsonl"),
         };
         arguments.AddRange(additionalArguments);
         var runner = RepoPaths.Find("tools", "Phrase.Bench", "Phrase.Bench.csproj");

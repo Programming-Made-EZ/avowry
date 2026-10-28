@@ -64,6 +64,14 @@ if (options.TryGetValue("mode", out var configuredMode))
 suitePath = ResolveSuitePath(suitePath);
 var suiteDirectory = Path.GetDirectoryName(suitePath)!;
 var suite = ReadSuite(suitePath);
+var privateResults = options.TryGetValue("private-results", out var configuredPrivateResults)
+    ? configuredPrivateResults
+    : null;
+if (privateResults is null && RequiresPrivateResults(suitePath, suite.Tasks, out var privateResultsRule))
+{
+    Console.Error.WriteLine($"Refusing holdout-looking suite: {privateResultsRule}. Pass --private-results <path> to run it.");
+    return 1;
+}
 var docsBlock = "";
 var recordedMode = mode;
 if (mode == BenchmarkModes.DocsInContext)
@@ -117,10 +125,6 @@ if (options.TryGetValue("scoring", out var configuredScoring))
     scoring = configuredScoring;
 }
 
-var privateResults = options.TryGetValue("private-results", out var configuredPrivateResults)
-    ? configuredPrivateResults
-    : null;
-
 foreach (var task in suite.Tasks.Where(task => !task.Holdout))
 {
     var result = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts, label, recordedMode, docsBlock, coldProfile, scoring, privateResults);
@@ -171,6 +175,68 @@ static async Task<int> SelfCheck(IReadOnlyDictionary<string, string> options)
 static Suite ReadSuite(string suitePath) =>
     JsonSerializer.Deserialize<Suite>(File.ReadAllText(suitePath), Serialization.Options)
     ?? throw new InvalidDataException($"Could not read suite '{suitePath}'.");
+
+static bool RequiresPrivateResults(string suitePath, IReadOnlyList<BenchmarkTask> tasks, out string rule)
+{
+    if (tasks.Any(task => Regex.IsMatch(task.Id, "^H[0-9]+$", RegexOptions.CultureInvariant)))
+    {
+        rule = "task ids matching ^H[0-9]+$ require private results";
+        return true;
+    }
+
+    if (suitePath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+        .Any(part => part.Equals("holdouts-unsealed", StringComparison.OrdinalIgnoreCase)))
+    {
+        rule = "suites under a holdouts-unsealed folder require private results";
+        return true;
+    }
+
+    var ignored = RunGit("check-ignore", "--quiet", "--no-index", "--", suitePath);
+    if (ignored == 0)
+    {
+        rule = "git-ignored suite paths require private results";
+        return true;
+    }
+
+    if (ignored != 1 && RunGit("rev-parse", "--is-inside-work-tree") != 0)
+    {
+        rule = "Git must be available to verify that the suite is tracked";
+        return true;
+    }
+
+    if (RunGit("ls-files", "--error-unmatch", "--", suitePath) != 0)
+    {
+        rule = "suite paths outside Git tracking require private results";
+        return true;
+    }
+
+    rule = "";
+    return false;
+}
+
+static int RunGit(params string[] arguments)
+{
+    try
+    {
+        var info = new ProcessStartInfo("git")
+        {
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+        };
+        foreach (var argument in arguments)
+            info.ArgumentList.Add(argument);
+        using var process = Process.Start(info);
+        if (process is null)
+            return -1;
+        process.WaitForExit();
+        return process.ExitCode;
+    }
+    catch
+    {
+        return -1;
+    }
+}
 
 static bool HasValidSchema(BenchmarkResult result) =>
     !string.IsNullOrWhiteSpace(result.Model) &&

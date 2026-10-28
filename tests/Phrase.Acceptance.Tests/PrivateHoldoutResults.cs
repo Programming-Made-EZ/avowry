@@ -11,7 +11,7 @@ public sealed class PrivateHoldoutResults
 {
     private const string ReplyMarker = "REPLYMARKER-113-ZEBRA";
     private const string PromptMarker = "PROMPTTEXT-113-QUILL";
-    private const string TaskId = "task-113-invented";
+    private const string TaskId = "H9";
     private const string HoldoutLabel = "holdout-private-label";
 
     [Fact]
@@ -49,27 +49,28 @@ public sealed class PrivateHoldoutResults
         Assert.Contains(TaskId, privateText, StringComparison.Ordinal);
         Assert.Contains(HoldoutLabel, privateText, StringComparison.Ordinal);
 
-        // When the same arms run again without the private path
+        // When the same holdout-looking arms run again without the private path
         var phraseDefault = await RunArm("Phrase.Bench", phraseSuite, "steve-phrase-v1", WriteFakeModel(workspace.Root, "phrase-default.cmd", "phrase-default.sh", phraseReply, phraseDefaultCapture), privateResults: null);
         var csharpDefault = await RunArm("Phrase.BenchCs", csharpSuite, "steve-csharp-v1", WriteFakeModel(workspace.Root, "csharp-default.cmd", "csharp-default.sh", csharpReply, csharpDefaultCapture), privateResults: null);
 
-        // Then the default run still appends to the suite history, with the same prompt hash and launch arguments
-        Assert.True(phraseDefault.ExitCode == 0, phraseDefault.Stdout + phraseDefault.Stderr);
-        Assert.True(csharpDefault.ExitCode == 3, csharpDefault.Stdout + csharpDefault.Stderr);
+        // Then both arms refuse before launching a model or publishing any task-derived row
+        Assert.NotEqual(0, phraseDefault.ExitCode);
+        Assert.NotEqual(0, csharpDefault.ExitCode);
+        Assert.Contains("holdout", phraseDefault.Stderr, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("--private-results", phraseDefault.Stderr, StringComparison.Ordinal);
+        Assert.Contains("holdout", csharpDefault.Stderr, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("--private-results", csharpDefault.Stderr, StringComparison.Ordinal);
+        Assert.DoesNotContain(PromptMarker, phraseDefault.Stdout + phraseDefault.Stderr, StringComparison.Ordinal);
+        Assert.DoesNotContain(PromptMarker, csharpDefault.Stdout + csharpDefault.Stderr, StringComparison.Ordinal);
+        Assert.False(File.Exists(phraseDefaultCapture));
+        Assert.False(File.Exists(csharpDefaultCapture));
         AssertCommittedHistoriesUnchanged(committedBefore);
         Assert.Equal(2, File.ReadAllText(privateRows).Split('\n', StringSplitOptions.RemoveEmptyEntries).Length);
+        Assert.False(File.Exists(HistoryPath(phraseSuite)));
+        Assert.False(File.Exists(HistoryPath(csharpSuite)));
+
         var phrasePrivateRow = JsonDocument.Parse(privateLines.Single(line => line.Contains("steve-phrase-v1", StringComparison.Ordinal)));
         var csharpPrivateRow = JsonDocument.Parse(privateLines.Single(line => line.Contains("steve-csharp-v1", StringComparison.Ordinal)));
-        var phraseHistory = JsonDocument.Parse(File.ReadAllLines(HistoryPath(Path.Combine(Path.GetDirectoryName(phraseSuite)!, "suite.json"))).Single());
-        var csharpHistory = JsonDocument.Parse(File.ReadAllLines(HistoryPath(csharpSuite)).Single());
-        Assert.Equal(phrasePrivateRow.RootElement.GetProperty("prompt_hash").GetString(), phraseHistory.RootElement.GetProperty("prompt_hash").GetString());
-        Assert.Equal(csharpPrivateRow.RootElement.GetProperty("prompt_hash").GetString(), csharpHistory.RootElement.GetProperty("prompt_hash").GetString());
-        Assert.Equal(phrasePrivateRow.RootElement.GetProperty("attempts").GetInt32(), phraseHistory.RootElement.GetProperty("attempts").GetInt32());
-        Assert.Equal(csharpPrivateRow.RootElement.GetProperty("attempts").GetInt32(), csharpHistory.RootElement.GetProperty("attempts").GetInt32());
-        Assert.Equal(File.ReadAllText(phrasePrivateCapture), File.ReadAllText(phraseDefaultCapture));
-        Assert.Equal(File.ReadAllText(csharpPrivateCapture), File.ReadAllText(csharpDefaultCapture));
-        Assert.DoesNotContain(privateRows, File.ReadAllText(phrasePrivateCapture), StringComparison.Ordinal);
-        Assert.DoesNotContain(privateRows, File.ReadAllText(csharpPrivateCapture), StringComparison.Ordinal);
 
         var summary = Path.Combine(workspace.Root, "summary.json");
         var summarized = RunPython(RepoPaths.Find("scripts", "summarize-private-results.py"), privateRows, "--out", summary);
@@ -106,6 +107,37 @@ public sealed class PrivateHoldoutResults
         Assert.Equal(60d, docsPhrase.GetProperty("mean_total_tokens").GetDouble(), 6);
         Assert.Equal(0.25, docsPhrase.GetProperty("documentation_tokens_share").GetDouble(), 6);
         Assert.False(docsCSharp.TryGetProperty("documentation_tokens_share", out _));
+    }
+
+    [Fact]
+    [Trait("Slice", "113")]
+    public async Task git_ignored_suite_refuses_before_the_model_is_launched()
+    {
+        // Given an invented non-H task in a git-ignored temp folder inside the repository
+        var root = Path.Combine(RepoPaths.Root, "tests", "Phrase.Acceptance.Tests", "bin", "slice-113-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            var suite = WritePhraseSuite(root, "development-task");
+            var reply = WriteReply(root, "reply.txt", PhraseReply);
+            var capture = Path.Combine(root, "model-started.txt");
+            var committedBefore = SnapshotCommittedHistories();
+
+            // When the Phrase arm is run without --private-results
+            var result = await RunArm("Phrase.Bench", suite, "steve-phrase-v1", WriteFakeModel(root, "ignored.cmd", "ignored.sh", reply, capture), privateResults: null);
+
+            // Then the ignored-path rule refuses without exposing task text or launching the model
+            Assert.NotEqual(0, result.ExitCode);
+            Assert.Contains("git-ignored", result.Stderr, StringComparison.OrdinalIgnoreCase);
+            Assert.Contains("--private-results", result.Stderr, StringComparison.Ordinal);
+            Assert.DoesNotContain(PromptMarker, result.Stdout + result.Stderr, StringComparison.Ordinal);
+            Assert.False(File.Exists(capture));
+            AssertCommittedHistoriesUnchanged(committedBefore);
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
     }
 
     [Fact]
@@ -166,13 +198,13 @@ public sealed class PrivateHoldoutResults
     private static string HistoryPath(string suite) =>
         Path.Combine(Path.GetDirectoryName(suite)!, "results", "history.jsonl");
 
-    private static string WritePhraseSuite(string root)
+    private static string WritePhraseSuite(string root, string taskId = TaskId)
     {
         var suiteRoot = Path.Combine(root, "phrase-suite");
-        var taskRoot = Path.Combine(suiteRoot, "tasks", TaskId);
+        var taskRoot = Path.Combine(suiteRoot, "tasks", taskId);
         Directory.CreateDirectory(taskRoot);
         File.WriteAllText(Path.Combine(taskRoot, "prompt.md"), PromptMarker + "\nReturn a Phrase module that says hello.\n");
-        File.WriteAllText(Path.Combine(suiteRoot, "suite.json"), SuiteJson(includeOutcomes: false));
+        File.WriteAllText(Path.Combine(suiteRoot, "suite.json"), SuiteJson(includeOutcomes: false, taskId));
         return Path.Combine(suiteRoot, "suite.json");
     }
 
@@ -185,14 +217,14 @@ public sealed class PrivateHoldoutResults
         File.WriteAllText(Path.Combine(taskRoot, "outcomes.json"), """
             [{"name":"says hello","given":{},"when":"called","then":{"returns":"hello"}}]
             """);
-        File.WriteAllText(Path.Combine(suiteRoot, "suite.json"), SuiteJson(includeOutcomes: true));
+        File.WriteAllText(Path.Combine(suiteRoot, "suite.json"), SuiteJson(includeOutcomes: true, TaskId));
         return Path.Combine(suiteRoot, "suite.json");
     }
 
-    private static string SuiteJson(bool includeOutcomes)
+    private static string SuiteJson(bool includeOutcomes, string taskId)
     {
-        var outcomes = includeOutcomes ? $",\"outcomes\":\"tasks/{TaskId}/outcomes.json\"" : "";
-        return "{\"version\":1,\"tasks\":[{\"id\":\"" + TaskId + "\",\"kind\":\"write\",\"prompt\":\"tasks/" + TaskId + "/prompt.md\"" + outcomes + ",\"holdout\":false}]}";
+        var outcomes = includeOutcomes ? $",\"outcomes\":\"tasks/{taskId}/outcomes.json\"" : "";
+        return "{\"version\":1,\"tasks\":[{\"id\":\"" + taskId + "\",\"kind\":\"write\",\"prompt\":\"tasks/" + taskId + "/prompt.md\"" + outcomes + ",\"holdout\":false}]}";
     }
 
     private static string WriteReply(string root, string name, string contents)

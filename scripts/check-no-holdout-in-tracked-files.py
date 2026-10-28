@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Fail if a tracked file is a holdout or a tracked results row is labelled holdout.
+"""Fail if a tracked file or tracked results row contains holdout material.
 
 The repository is public. Sealed holdouts live under bench/holdouts-unsealed and
-must stay untracked. A results row whose label starts with "holdout" would publish
-a reply derived from those tasks, so it must not be tracked either.
+must stay untracked. A results row whose label starts with "holdout" or whose task
+id is H-numbered would publish a derived reply, so it must not be tracked either.
 
 Used by .githooks/pre-commit. Reads git ls-files (the index), not the work tree of
 untracked paths.
@@ -12,6 +12,7 @@ untracked paths.
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -80,6 +81,11 @@ def label_starts_with_holdout(row: dict) -> bool:
     return isinstance(label, str) and label.lower().startswith("holdout")
 
 
+def has_holdout_task_id(row: dict) -> bool:
+    task = row.get("task")
+    return isinstance(task, str) and re.fullmatch(r"H[0-9]+", task) is not None
+
+
 def find_violations(repo: Path) -> list[str]:
     violations = []
     for relative in tracked_files(repo):
@@ -94,6 +100,8 @@ def find_violations(repo: Path) -> list[str]:
         for line_number, row in iter_rows(relative, text):
             if label_starts_with_holdout(row):
                 violations.append(f"{relative}:{line_number}: label starts with holdout ({row.get('label')})")
+            if has_holdout_task_id(row):
+                violations.append(f"{relative}:{line_number}: task id matches ^H[0-9]+$ ({row.get('task')})")
     return violations
 
 

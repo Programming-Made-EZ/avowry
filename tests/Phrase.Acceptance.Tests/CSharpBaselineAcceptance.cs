@@ -858,6 +858,8 @@ public sealed class CSharpBaselineAcceptance
         var info = new ProcessStartInfo("dotnet") { RedirectStandardOutput = true, RedirectStandardError = true };
         foreach (var argument in new[] { "run", "--project", project, "--", "run", "--suite", suite, "--model", model, "--model-command", command, "--timeout-ms", timeoutMs.ToString() })
             info.ArgumentList.Add(argument);
+        info.ArgumentList.Add("--private-results");
+        info.ArgumentList.Add(Path.Combine(Path.GetDirectoryName(suite)!, "results", "history.jsonl"));
         if (cold) info.ArgumentList.Add("--cold");
         using var process = Process.Start(info)!;
         var stdout = await process.StandardOutput.ReadToEndAsync();

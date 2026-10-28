@@ -341,6 +341,8 @@ public class PhraseExecutedOutcomesAcceptance
         info.Environment["DOTNET_ROLL_FORWARD"] = "Major";
         foreach (var argument in new[] { "run", "--disable-build-servers", "--project", project, "--", "run", "--suite", suite, "--model", model, "--model-command", command })
             info.ArgumentList.Add(argument);
+        info.ArgumentList.Add("--private-results");
+        info.ArgumentList.Add(Path.Combine(Path.GetDirectoryName(suite)!, "results", "history.jsonl"));
         foreach (var argument in extra)
             info.ArgumentList.Add(argument);
         using var process = System.Diagnostics.Process.Start(info)!;

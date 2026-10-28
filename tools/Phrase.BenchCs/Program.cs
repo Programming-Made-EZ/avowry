@@ -34,6 +34,11 @@ var timeout = options.TryGetValue("timeout-ms", out var timeoutValue)
     : TimeSpan.FromMinutes(5);
 var label = options.GetValueOrDefault("label");
 var privateResults = options.GetValueOrDefault("private-results");
+if (privateResults is null && RequiresPrivateResults(suitePath, suite.Tasks, out var privateResultsRule))
+{
+    Console.Error.WriteLine($"Refusing holdout-looking suite: {privateResultsRule}. Pass --private-results <path> to run it.");
+    return 1;
+}
 var coldProfile = ResolveColdProfile(model, options.ContainsKey("cold"));
 var exitCode = 0;
 
@@ -44,6 +49,68 @@ foreach (var task in suite.Tasks.Where(task => !task.Holdout))
         exitCode = 3;
 }
 return exitCode;
+
+static bool RequiresPrivateResults(string suitePath, IReadOnlyList<BenchmarkTask> tasks, out string rule)
+{
+    if (tasks.Any(task => Regex.IsMatch(task.Id, "^H[0-9]+$", RegexOptions.CultureInvariant)))
+    {
+        rule = "task ids matching ^H[0-9]+$ require private results";
+        return true;
+    }
+
+    if (suitePath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+        .Any(part => part.Equals("holdouts-unsealed", StringComparison.OrdinalIgnoreCase)))
+    {
+        rule = "suites under a holdouts-unsealed folder require private results";
+        return true;
+    }
+
+    var ignored = RunGit("check-ignore", "--quiet", "--no-index", "--", suitePath);
+    if (ignored == 0)
+    {
+        rule = "git-ignored suite paths require private results";
+        return true;
+    }
+
+    if (ignored != 1 && RunGit("rev-parse", "--is-inside-work-tree") != 0)
+    {
+        rule = "Git must be available to verify that the suite is tracked";
+        return true;
+    }
+
+    if (RunGit("ls-files", "--error-unmatch", "--", suitePath) != 0)
+    {
+        rule = "suite paths outside Git tracking require private results";
+        return true;
+    }
+
+    rule = "";
+    return false;
+}
+
+static int RunGit(params string[] arguments)
+{
+    try
+    {
+        var info = new ProcessStartInfo("git")
+        {
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+        };
+        foreach (var argument in arguments)
+            info.ArgumentList.Add(argument);
+        using var process = Process.Start(info);
+        if (process is null)
+            return -1;
+        process.WaitForExit();
+        return process.ExitCode;
+    }
+    catch
+    {
+        return -1;
+    }
+}
 
 static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, string model, string command, string? label, TimeSpan timeout, ColdProfile coldProfile, string? privateResultsPath = null)
 {

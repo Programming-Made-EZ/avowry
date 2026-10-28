@@ -1319,6 +1319,7 @@ public class BenchmarkHarnessAcceptance
         {
             "run", "--suite", Path.Combine(suiteDirectory, "suite.json"),
             "--model", model, "--model-command", modelCommand,
+            "--private-results", Path.Combine(suiteDirectory, "results", "history.jsonl"),
         };
         arguments.AddRange(additionalArguments);
         return await RunBenchmarkProcess(arguments.ToArray());
