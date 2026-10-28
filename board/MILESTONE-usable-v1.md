@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:ce6f1180068a4b73f972d7684f152a12dcc943e231e158859b98a419275f2fca -->
+<!-- board-table-sha256:695ef37403efc06fdb708f759ded9ca81ec055d2ac7433e51beb722bf3d4d992 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -80,7 +80,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 58 | 153 Verdict page states the success criteria | Ready | 138 |
 | 59 | 155 Verdict page as a judgment backed by data | Ready | 153 |
 | 60 | 156 Personas capture the same ten fields | Ready | 154 |
-| 61 | 154 Docs state principles and rationale, not who said them | Ready | 153 |
+| 61 | 154 Docs state principles and rationale, not who said them | Done | 153 |
 | 62 | 145 Store operations as Phrase steps, not native code | Ready | 135 |
 | 63 | 146 Validation rules as Phrase: not blank and a maximum length | Ready | 145 |
 | 64 | 147 A list endpoint without a fake flag | Ready | 145 |
