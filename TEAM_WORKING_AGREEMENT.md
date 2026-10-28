@@ -279,6 +279,15 @@ are created."
   checks role names or counts. Template:
   `templates/TASK_FORCE.md` in mob-defaults.
 
+### CI on main is part of the line (standing rule, product owner, 2026-10-28)
+
+A green local gate is not a green main: the remote CI runs on a different operating system and a clean machine, and a trunk that nobody sees failing is a trunk that does not gate anything. The principle is that a constraint must report its own failure to the people who are responsible for it; a failure found by email is a process defect.
+
+- After every push to main the facilitator runs `python scripts/check-ci-main.py --wait 1500` (bounded). Green or still pending is fine; red is **stop the line**: no other card starts, the next card is the fix, and the product owner is told in the next report.
+- The check also runs at the start of every loop iteration, so a red main left by anything (a late run, a merge, a flaky environment) is caught within one card.
+- Every test that launches a fake model, a shell or a path must work on both Windows and Linux (the CI is Linux); a test that can only pass on one is a defect found by the CI, not an excuse to ignore it.
+- A red CI is logged as a bug card and covered in the next retro (why it went unseen).
+
 ### Driver availability (standing rule, product owner, 2026-10-28)
 
 Never assume a driver is permanently out. A driver that is out of quota or otherwise unavailable is re-probed, not forgotten:
