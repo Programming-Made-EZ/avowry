@@ -103,3 +103,11 @@ Other domain extensions use the same two doors when they exist: an explicit `use
 ## Consequences
 
 Card 142 can partition the compiler along the web rows above without a behaviour change and without editing the frozen docs. Cards 131, 133 and 135 then extend the web part. Card 143 splits the scored cheat sheet into a core sheet and a web sheet, under a new Decider and a fresh baseline. The testing-frameworks, data, messaging, auth and background-jobs rows wait until a real use needs them.
+
+## Provisional conventions
+
+These behaviours exist only because Phrase has no syntax for them yet. They are PROVISIONAL: later work must not depend on them silently, and each has a stated replacement.
+
+| Convention | Where | Why provisional | Replacement |
+|---|---|---|---|
+| An effect named `{Record}Store`, used by a phrase with that record type, where the record has an `id` field of type Text or Id, is a prototype store: the C# adapter emits `I{Record}Store` with `Save`, `Find` and `List`, an `InMemory{Record}Store`, a singleton registration in `Program.cs` and a spec double that derives from it (card 132, Decider D95) | `src/Phrase.Adapters.CSharp/CSharpProvider.cs` | Phrase has no syntax for effect operations; the `save`, `find` and `load` verbs are vocabulary, not declarations. A name-keyed convention is a prototype step, not a language design. | A language decision on effect operations, most likely carried by the data and databases extension (NOT BUILT), which declares `save`, `find`, `load` and `list` for a record and lets an adapter emit real stores. Until then cards 135 to 138 may use the convention for the Tasks prototype only, and each use is listed in the card. |
