@@ -12,6 +12,27 @@ SPEC.loader.exec_module(check)
 
 
 class NoPersonalNamesTests(unittest.TestCase):
+    def test_rejects_quoted_product_owner_attribution(self):
+        role = "product " + "owner"
+        self.assertTrue(check.forbidden_reasons("notes.md", role + ': "keep it small"'))
+
+    def test_rejects_gendered_pronouns_beside_product_roles_or_persona(self):
+        role = "product " + "owner"
+        sponsor = "spon" + "sor"
+        name = "Ste" + "ve"
+        for subject, pronoun in [
+            (role, "he"),
+            (role, "his"),
+            (sponsor, "h" + "im"),
+            (name, "himself"),
+            (role, "hers"),
+        ]:
+            line = f"The {subject} handles it for {pronoun}."
+            with self.subTest(line=line):
+                self.assertTrue(check.forbidden_reasons("notes.md", line))
+
+        self.assertFalse(check.forbidden_reasons("notes.md", "The reviewer handles it herself."))
+
     def test_rejects_attribution_and_escalation_but_allows_persona_contexts(self):
         name = "Ste" + "ve"
         forbidden = [

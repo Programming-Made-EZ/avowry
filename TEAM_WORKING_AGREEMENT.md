@@ -16,7 +16,7 @@ settle it.
 
 ## Task-Force Driven Development (TFDD)
 
-product owner: "we'll call this Task-Force Driven Development. where a task force is assembled."
+**Principle:** use Task-Force Driven Development, assembling a task force for each card so the work has every role it needs and no ceremonial extras.
 
 Before each card, a **task force** is assembled: every role the work actually needs, and only those. The standard
 roles (PM, architect, QA, devs, UX, security, agile coach, enablement, DevOps, domain expert) are a menu to
@@ -29,25 +29,20 @@ an assignee (model or seat) and a one-line why. There is no minimum or maximum r
 - **Correctness over speed, but speed matters.** Never ship on a claim nobody independently reproduced.
 - **Evidence over vibes.** Findings, retro items and "it works" are grounded in a log line, a timestamp or a
   re-run command.
-- **Respect the product owner's attention.** He is one person on a phone. Decide what the team can decide; ask only what
-  needs him, and ask it so one word answers it.
+- **Respect the product owner's attention.** The product owner is one person on a phone. Decide what the team can decide; ask only what
+  needs their decision, and ask it so one word answers it.
 - **The team owns outcomes, not tasks.** Done means a verified, user-observable increment on main.
 
 ## 2. Principles
 
-- **Bishop's Law** (the product owner, 2025): "Work done in async requires a resync. As the work complexity
-  increases, so does the resync complexity. Revised: parallel (independent) streams R = O(α log C + β);
-  concurrent (conflicting) streams R = O(α C + β), where C is total async work complexity, α the scaling
-  factor, and β the fixed overhead. Design improvements can reduce, but not always eliminate, resync
-  complexity; naive async approaches linear or worse."
-  *Applied (revised 2026-10-26, the product owner's correction, Decider D22):* product owner: "it still fits with Bishop's Law. For parallelism to work efficiently the work must be atomistic. Once dependencies are introduced true parallelism cannot be achieved." A task that is
+- **Bishop's Law:** asynchronous work requires resynchronization, and resynchronization grows with work complexity. Independent streams have R = O(α log C + β), while conflicting streams have R = O(α C + β), where C is total async work complexity, α the scaling factor and β the fixed overhead. Design can reduce but not always eliminate that cost, so naive asynchronous approaches scale linearly or worse.
+  *Applied (revised 2026-10-26, Decider D22):* work is divided into atomistic, independent units because dependencies prevent true parallelism. A task that is
   atomistic and dependency-free is the cheap **parallel** class, R = O(alpha log C + beta): its `Depends on:` line is `none` and it shares no files with another in-flight task,
   so it may run in its own worktree from current main, with merges serialized as fast-forwards. A task that names a dependency, edits files another in-flight task edits, or shares
   state is the **concurrent** class, R = O(alpha C + beta), and stays **WIP-of-one**: one card, one TDD cycle, one driver, one linear trunk in flight. Sharing the gate is the fixed
   overhead beta. Every card has a `Depends on:` line (a missing line does not mean none). A merge conflict reclassifies that pair as concurrent: the later task is discarded and
   retried from the new main.
-- **Land or discard (experiment, Decider D22, under trial; not yet doctrine).** product owner: "it feels like work should be done atomistically. that way it gets an all or nothing result.
-  the smaller and more atomistic the better. this makes retries easier and more distributable." Each task starts from current main in a fresh worktree and ends in exactly one state:
+- **Land or discard (experiment, Decider D22, under trial; not yet doctrine).** Work should be small, atomistic and all-or-nothing because clean units are easier to retry and distribute. Each task starts from current main in a fresh worktree and ends in exactly one state:
   LANDED (every check passes, a non-author has reviewed it, one commit on main) or DISCARDED (the linked worktree is removed with `git worktree remove` and, only for a strict child of a
   registered scratch root, `safe_delete`; nothing from the attempt remains on main or in a stash). A retry starts clean; the attempt's log lives outside the worktree and is never the
   seed of the next attempt. Metrics: retries per task, partial-state incidents (stashes, uncommitted carry-over), time to land. Counter-metric: merge conflicts and resync overhead from
@@ -66,7 +61,7 @@ an assignee (model or seat) and a one-line why. There is no minimum or maximum r
 - **Goodhart's Law.** Metrics are evidence for judgment; no number is the goal, and a verdict is a judgment backed by data, not a stamp against a threshold.
 - **A rule without a detector isn't in force.** Prefer a mechanical check at a named transition to a
   promise to remember.
-- **product owner works from his phone.** No `AskUserQuestion`, no popups, no approval dialogs, no open-ended
+- **The product owner works from their phone.** No `AskUserQuestion`, no popups, no approval dialogs, no open-ended
   review requests.
 
 ## 3. Practices
@@ -127,8 +122,7 @@ Claude as a voice) is a source of product ideas.
 
 ### Escalation (standing rule, product owner, 2026-10-25)
 
-product owner: "The only thing that bubbles to me is general direction for purpose of the new language or
-conflicting opinions from the models. However there is also the decider protocol for conflicting views."
+**Principle:** escalate only questions about the language's overall purpose or unresolved model conflicts, because the mob owns implementation decisions and the Decider handles disagreements first.
 
 - **The mob decides everything else itself:** features, syntax details, priorities, implementation and
   tooling. Do not ask product owner.
@@ -145,8 +139,7 @@ conflicting opinions from the models. However there is also the decider protocol
 
 ### Decider protocol (the default for every team decision)
 
-product owner: "any decision should probably go through this process." The Decider settles conflicts, and it is also how
-the team decides things in the first place.
+**Principle:** use the Decider for team decisions as well as conflicts, because simultaneous votes expose disagreement before work proceeds.
 
 **What goes through it:** the task force (at kickoff and every mid-card addition), card refinement and acceptance
 criteria, PM ranking and re-ranking, design and architecture choices, keeping or reverting a feature on benchmark
@@ -182,8 +175,7 @@ a pointer to the record (`| joined: cycle 2 | decider: D3`). Card mode refuses a
 
 ### Milestones and hypothesis-driven work (standing rule, product owner, 2026-10-25)
 
-product owner: "the mob should also set milestones for themselves and use hypothesis to determine if new feature
-ideas work. ideally they should be data driven."
+**Principle:** the mob sets measurable milestones and tests feature hypotheses with data, because evidence makes progress and product value challengeable.
 
 - **Self-set milestones.** The mob sets its own milestones on the board (`board/MILESTONES.md`). Each has a
   **measurable target** and an **automated check**. Progress against them is reviewed at every retro, and
@@ -212,8 +204,7 @@ are logged in `docs/experiments/` (one file each) and in MOB.md, not in this agr
 
 ### Bootstrap phase: no metric-based rejections until a baseline is established (standing rule, product owner, 2026-10-26)
 
-product owner: "it seems like we don't have a good baseline because everything is so new. can we wait until we've established a
-cadence first with metrics before we start turning down ideas because they aren't improving something that doesn't exist yet?"
+**Principle:** do not reject ideas for failing to improve a metric until a baseline exists, because improvement cannot be measured against nonexistent evidence.
 
 - **Until a baseline is established, no idea, feature or experiment may be rejected, reverted or dropped because it "didn't
   move the metrics".** There is nothing yet to move.
@@ -250,9 +241,7 @@ The aim is value for a persona, not a number. Teams go wrong when they pick a sp
 
 ### Task force before every card (TFDD, standing rule, product owner, 2026-10-25; revised same day)
 
-product owner: "before each feature is started the comprehensive set of roles should be declared and assigned," then:
-"there's no quota for how many roles are required for the task force, just that all of the roles that would apply
-are created."
+**Principle:** declare and assign every applicable role before work starts, with no role-count quota, because task-force fit matters more than size.
 
 - **Before ANY card starts (feature or bug), a task force is assembled** on the card (`## Task force`; MOB.md shows
   it): every role that actually applies, and only those. The standard roles are a **menu, not a form**: PM,
@@ -265,9 +254,7 @@ are created."
   flags. A padded task force is a smell too.
 - **One structural rule:** whoever authors an increment never reviews or QAs it. Assign by trust-ladder rung and
   per-card rotation.
-- **The task force is living, not frozen at kickoff** (product owner: "also during the building if the team identifies a
-  new role is needed then that gets added"; then: "I think decider protocol is needed to decide if a new role is
-  required"). Any member can flag mid-card that a role is needed (a security question surfaces, the work turns out
+- **The task force is living, not frozen at kickoff.** Add a newly needed role through the Decider because the work can reveal expertise that was not visible at assembly. Any member can flag mid-card that a role is needed (a security question surfaces, the work turns out
   to need a technical writer or a perf engineer) and states one Decider proposal: the role, its assignee and why.
   If it passes, the role is added to the card's `## Task force` with where it joined and the Decider reference
   (`| joined: cycle 2 | decider: D3`). The new role then reviews the relevant work done so far, not only what comes
@@ -325,8 +312,7 @@ Roles are the primary perspectives; models are the staff who fill them. "Althoug
 
 ### Driver trust ladder
 
-Why (product owner): "we want to provide a way to regain trust and responsibility," and "just like a coworker who
-underperforms, you still try to find a way they can be helpful." **Coach, never bench.** A quality problem
+**Principle:** provide a way to regain trust and responsibility because an underperforming collaborator can still contribute with appropriate support. **Coach, never bench.** A quality problem
 changes a driver's rung, never its membership. Only real unavailability (an error captured from a probe
 within the last hour) takes a driver out of rotation, until its next successful probe.
 

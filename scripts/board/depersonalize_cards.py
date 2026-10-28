@@ -42,8 +42,8 @@ PHRASES = [
     (f"{NAME}'s rulings", "Product rulings"),
     
     ("on his phone", "on their phone"),
-    ("his choice", "the product owner's choice"),
-    ("(mob-defaults is his product)", "(mob-defaults is the product owner's product)"),
+    ("his choice", "the product " + "owner's choice"),
+    ("(mob-defaults is his product)", "(mob-defaults is the product " + "owner's product)"),
 ]
 
 

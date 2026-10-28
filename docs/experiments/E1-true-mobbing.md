@@ -11,7 +11,7 @@ the mob-defaults README change only if it is kept.
 - **Observers:** the rest of the task force. They get the DELTA at each checkpoint (after red, after green, before
   commit) and reply `SIGN-OFF` or `FLAG: <one line of evidence>`. No per-keystroke watching.
 - **Rotation:** each cycle driver, then navigator, then observer, following the trust ladder.
-- **Ownership (product owner: "we still want the whole mob to own, so we still need a whole team sign-off"):** the whole task
+- **Ownership:** the whole task force signs off because mob ownership requires every member to accept the increment. The whole task
   force owns the increment. Before each commit to main EVERY member (driver, navigator, every observer) gives a
   sign-off. Any FLAG is resolved first; a disputed FLAG goes to the Decider. This replaces the separate
   single-reviewer step for mobbed increments: "author never reviews own work" becomes "no increment ships without

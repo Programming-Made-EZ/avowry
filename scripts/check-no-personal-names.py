@@ -17,7 +17,10 @@ FORBIDDEN = (
     ("dated attribution", re.compile(rf"(?:\({NAME_RE}|,\s*{NAME_RE})\s*,?\s*20\d\d", re.I)),
     ("by/from attribution", re.compile(rf"\b(?:by|from)\s+{NAME_RE}\b", re.I)),
     ("personal escalation", re.compile(rf"\bneeds[ -]+{NAME_RE}\b|\bNeeds-{NAME_RE}\b", re.I)),
+    ("quoted product-owner attribution", re.compile(r'\bproduct owner\s*:\s*"', re.I)),
 )
+GENDERED_PRONOUN = re.compile(r"\b(?:his|him|he|himself|hers)\b", re.I)
+PRODUCT_ROLE = re.compile(rf"\b(?:product owner|sponsor|{NAME_RE})\b", re.I)
 
 
 def _allowed(path, line):
@@ -42,6 +45,8 @@ def forbidden_reasons(path, line):
     if masked is True:
         return []
     reasons = [label for label, pattern in FORBIDDEN if pattern.search(masked)]
+    if PRODUCT_ROLE.search(masked) and GENDERED_PRONOUN.search(masked):
+        reasons.append("gendered pronoun beside product role or persona")
     if re.search(NAME_RE, masked, re.I) and '"' in masked:
         reasons.append("quoted passage beside a personal name")
     return reasons

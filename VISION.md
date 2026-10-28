@@ -1,10 +1,6 @@
 # Vision: the north star
 
-Product decisions are judged against this page. It records the product owner's purpose ruling (2026-10-25).
-
-> "it's a language where the specific keywords are defined or common patterns that can easily be produced by an LLM for any implementation language. Things like loops and if/else are ordinary. we want to create a comprehensive set of keywords so that we minimize the amount of work an LLM has to do in order to build and understand the codebase of any language. this makes it both a spec as well as a library."
->
-> the product owner
+Product decisions are judged against this page. Phrase defines common-pattern keywords that an LLM can produce for any implementation language, because a comprehensive vocabulary minimizes the work needed to build and understand a codebase while serving as both specification and library.
 
 ## Purpose
 
@@ -24,43 +20,35 @@ Product decisions are judged against this page. It records the product owner's p
   library, the keyword catalogue carries spec-backed definitions and per-target implementations that every project
   reuses. One source compiles to many targets.
 
-## Direction rulings (product owner, 2026-10-25)
+## Product principles
 
-**1. Synthesis (future).** product owner: "in the future it would be useful to synthesize existing code."
-*Interpretation:* a reverse direction. Existing code in any language is read and Phrase is synthesized from it by
+**1. Synthesis (future).** Phrase will eventually be synthesized from existing code so teams can adopt it without rewriting a system first. Existing code in any language is read and Phrase is synthesized from it by
 mapping the code's patterns to keywords. A **future** milestone (M5, after Usable v1 and Vocabulary v1; it displaces
 nothing).
 
-**2. Adapters.** product owner: "we should have adapters for each language."
-*Interpretation:* one adapter per target language. The word "provider" in the code and docs becomes "adapter"; the C#
+**2. Adapters.** Each target language has an adapter so the language-neutral model can support multiple ecosystems. The word "provider" in the code and docs becomes "adapter"; the C#
 provider is the first adapter.
 
-**3. Base library plus adapters.** product owner: "a base library for universal patterns and adapters that add keywords for
-those languages."
-*Interpretation:* the **base library** holds language-neutral universal pattern keywords, each with specs. Each
+**3. Base library plus adapters.** Universal patterns belong in a base library while target-specific keywords belong in adapters, so common behavior is reusable without erasing ecosystem differences. The **base library** holds language-neutral universal pattern keywords, each with specs. Each
 **adapter** (a) implements every base keyword for its language, verified by the shared specs, and (b) may add
 language- or ecosystem-specific keywords of its own, also spec-backed. C# is built as the first adapter, not as a
 one-off emitter.
 
-**4. Human readability.** product owner: "I could actually see potential for a compiler here. something that converts between
-the two."
-*Confirmed by product owner (2026-10-25):* the converter translates between the LLM-optimized Phrase form and a
+**4. Human readability.** A converter translates in both directions between LLM-optimized Phrase and a human-friendly rendering, so each audience can use the representation it understands best. The converter translates between the LLM-optimized Phrase form and a
 human-friendly rendering, in both directions. It pairs with synthesis: both are translations between
 representations. A **future** milestone (M6, card 031).
 
-**5. Consumer-observable outcomes (2026-10-26).** product owner, looking at a benchmark task whose spec reads `then succeeds`:
-"I feel like we aren't adhering to consumer related output. 'succeeds' isn't really a result the customer gets value from."
-*Interpretation (the team refines it into cards):* a spec's `then` should state an observable outcome that has value to the
+**5. Consumer-observable outcomes (2026-10-26).** A spec's `then` should state a consumer-observable outcome rather than merely `then succeeds`, because absence of an error does not express customer value. The team refines this principle into cards: a spec's `then` should state an observable outcome that has value to the
 consumer: what is returned, stored, emitted or responded. A bare "no error" proves almost nothing, and a phrase whose only
 outcome is "does not throw" may be a weak abstraction (should a validation phrase return the validated or normalized value?).
 A phrase that declares `fails with X` should have a spec that shows X, since the failure path is the most important
 behaviour to specify. Status: direction; the grammar and linter rule, the audit of existing examples and benchmark tasks, and
 the validation-return question are raw input on the board.
 
-**6. Agile: iterate and increment, do not over-specify up front (2026-10-26).** product owner: "Just for general direction, I want this to aim toward agile philosophy. It's a common temptation to skew toward spec-heavy up-front planning. We should avoid this temptation despite building effectively a spec for planning. Iteration and incremental is the key to successful development."
+**6. Agile: iterate and increment, do not over-specify up front (2026-10-26).** Phrase evolves in small working increments because spec-heavy up-front planning delays evidence and makes emerging design harder.
 *Interpretation (how to apply it is the mob's call):* a guiding principle for both the product and the process. **Product:** Phrase specs support emergent, just-in-time design that grows one slice at a time; they must not demand big up-front specification before something works. **Process:** cards evolve the language through small, working increments; a card is only as specified as the next slice needs, and a plan that is mostly written specification before any working increment is the temptation to avoid, even though the board is effectively a spec for planning. Used as a lens at every retro: where are we over-specifying up front? Status: direction (guiding principle).
 
-**7. What Phrase is measured against (2026-10-28).** product owner: "I don't think we wanted to beat C#. we wanted to solve the problems identified earlier." The problems: AI-written code is unaccountable; teams cannot verify it as fast as it is written; intent vanishes with the prompt. **Phrase's success criteria are verifiability, preserved intent and reviewability, not out-performing C# on raw token cost.** The head-to-head benchmark against plain C# (pass rate, attempts, tokens on small tasks) stays as honest context and keeps being published, but it is not the success measure. The measures that are: the undetected-defect rate (how often planted defects survive each approach's checks), intent recovery (can a fresh reader state what each unit must do, including edge and failure cases) and review speed and accuracy (how fast and how correctly a reviewer approves or rejects AI-written changes). Each is pre-registered by a Decider before any row.
+**7. What Phrase is measured against (2026-10-28).** Phrase is measured against the problems it exists to solve because beating C# on raw token cost would not prove that AI-written code is accountable, verifiable or understandable. The problems: AI-written code is unaccountable; teams cannot verify it as fast as it is written; intent vanishes with the prompt. **Phrase's success criteria are verifiability, preserved intent and reviewability, not out-performing C# on raw token cost.** The head-to-head benchmark against plain C# (pass rate, attempts, tokens on small tasks) stays as honest context and keeps being published, but it is not the success measure. The measures that are: the undetected-defect rate (how often planted defects survive each approach's checks), intent recovery (can a fresh reader state what each unit must do, including edge and failure cases) and review speed and accuracy (how fast and how correctly a reviewer approves or rejects AI-written changes). Each is pre-registered by a Decider before any row.
 
 ## What this commits us to
 
