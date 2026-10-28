@@ -226,7 +226,8 @@ public sealed class CSharpProvider : ITargetAdapter
 
     // Phrase has no syntax for effect members. save, find and load are vocabulary, not declarations.
     // An effect named {Record}Store, used with that record, and whose record has an id of Text or Id,
-    // is the prototype persistence effect: Save, Find and List, plus an in-memory class for specs and the app.
+    // is the provisional prototype store: Save replaces an item with the same id, Find, Remove(id) -> bool,
+    // and List. The in-memory class locks each method. Specs and Program.cs share that class.
     private sealed record PersistenceStore(string Effect, TypeModel Entity);
 
     private static List<PersistenceStore> PersistenceStores(ModuleModel module)
@@ -282,33 +283,60 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append("{\n");
         code.Append("    void Save(").Append(typeName).Append(" item);\n");
         code.Append("    ").Append(typeName).Append("? Find(string id);\n");
+        code.Append("    bool Remove(string id);\n");
         code.Append("    IReadOnlyList<").Append(typeName).Append("> List();\n");
         code.Append("}\n\n");
         code.Append("public class ").Append(className).Append(" : ").Append(interfaceName).Append('\n');
         code.Append("{\n");
-        code.Append("    private readonly List<").Append(typeName).Append("> items = new();\n\n");
+        code.Append("    private readonly List<").Append(typeName).Append("> items = new();\n");
+        code.Append("    private readonly object gate = new();\n\n");
         code.Append("    public void Save(").Append(typeName).Append(" item)\n");
         code.Append("    {\n");
-        code.Append("        for (var index = 0; index < items.Count; index++)\n");
+        code.Append("        lock (gate)\n");
         code.Append("        {\n");
-        code.Append("            if (items[index].").Append(id).Append(" == item.").Append(id).Append(")\n");
+        code.Append("            for (var index = 0; index < items.Count; index++)\n");
         code.Append("            {\n");
-        code.Append("                items[index] = item;\n");
-        code.Append("                return;\n");
-        code.Append("            }\n");
-        code.Append("        }\n\n");
-        code.Append("        items.Add(item);\n");
+        code.Append("                if (items[index].").Append(id).Append(" == item.").Append(id).Append(")\n");
+        code.Append("                {\n");
+        code.Append("                    items[index] = item;\n");
+        code.Append("                    return;\n");
+        code.Append("                }\n");
+        code.Append("            }\n\n");
+        code.Append("            items.Add(item);\n");
+        code.Append("        }\n");
         code.Append("    }\n\n");
         code.Append("    public ").Append(typeName).Append("? Find(string id)\n");
         code.Append("    {\n");
-        code.Append("        foreach (var item in items)\n");
+        code.Append("        lock (gate)\n");
         code.Append("        {\n");
-        code.Append("            if (item.").Append(id).Append(" == id)\n");
-        code.Append("                return item;\n");
-        code.Append("        }\n\n");
-        code.Append("        return null;\n");
+        code.Append("            foreach (var item in items)\n");
+        code.Append("            {\n");
+        code.Append("                if (item.").Append(id).Append(" == id)\n");
+        code.Append("                    return item;\n");
+        code.Append("            }\n\n");
+        code.Append("            return null;\n");
+        code.Append("        }\n");
         code.Append("    }\n\n");
-        code.Append("    public IReadOnlyList<").Append(typeName).Append("> List() => items.ToArray();\n");
+        code.Append("    public bool Remove(string id)\n");
+        code.Append("    {\n");
+        code.Append("        lock (gate)\n");
+        code.Append("        {\n");
+        code.Append("            for (var index = 0; index < items.Count; index++)\n");
+        code.Append("            {\n");
+        code.Append("                if (items[index].").Append(id).Append(" == id)\n");
+        code.Append("                {\n");
+        code.Append("                    items.RemoveAt(index);\n");
+        code.Append("                    return true;\n");
+        code.Append("                }\n");
+        code.Append("            }\n\n");
+        code.Append("            return false;\n");
+        code.Append("        }\n");
+        code.Append("    }\n\n");
+        code.Append("    public IReadOnlyList<").Append(typeName).Append("> List()\n");
+        code.Append("    {\n");
+        code.Append("        lock (gate)\n");
+        code.Append("            return items.ToArray();\n");
+        code.Append("    }\n");
         code.Append("}\n\n");
     }
 
@@ -475,7 +503,10 @@ public sealed class CSharpProvider : ITargetAdapter
             code.Append(string.Join(", ", effects.Select(effect => $"I{CSharpIdent(effect)} {CSharpIdent(effect.ToLowerInvariant())}")));
             code.Append(')');
         }
-        code.Append(" : Endpoint<").Append(EndpointRequestName(endpoint.Name)).Append(", ").Append(endpoint.OutputType is null ? "void" : EndpointResponseName(endpoint.Name)).Append(">\n");
+        code.Append(" : Endpoint<").Append(EndpointRequestName(endpoint.Name));
+        if (endpoint.OutputType is not null)
+            code.Append(", ").Append(EndpointResponseName(endpoint.Name));
+        code.Append(">\n");
         code.Append("{\n");
         code.Append("    public override void Configure()\n");
         code.Append("    {\n");
@@ -494,10 +525,22 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append("    {\n");
         code.Append("        try\n");
         code.Append("        {\n");
-        code.Append("            await Send.OkAsync(").Append(EndpointHandlerName(endpoint.Name)).Append(".Handle(req");
-        foreach (var effect in effects)
-            code.Append(", ").Append(CSharpIdent(effect.ToLowerInvariant()));
-        code.Append("), ct);\n");
+        if (endpoint.OutputType is null)
+        {
+            // No response record: FastEndpoints.Endpoint<TRequest> and Send.OkAsync(ct), HTTP 200 with an empty body.
+            code.Append("            ").Append(EndpointHandlerName(endpoint.Name)).Append(".Handle(req");
+            foreach (var effect in effects)
+                code.Append(", ").Append(CSharpIdent(effect.ToLowerInvariant()));
+            code.Append(");\n");
+            code.Append("            await Send.OkAsync(ct);\n");
+        }
+        else
+        {
+            code.Append("            await Send.OkAsync(").Append(EndpointHandlerName(endpoint.Name)).Append(".Handle(req");
+            foreach (var effect in effects)
+                code.Append(", ").Append(CSharpIdent(effect.ToLowerInvariant()));
+            code.Append("), ct);\n");
+        }
         code.Append("        }\n");
         code.Append("        catch (PhraseFailure failure)\n");
         code.Append("        {\n");
@@ -558,6 +601,11 @@ public sealed class CSharpProvider : ITargetAdapter
                     foreach (var item in ValuesOfType(expected.Value, entity.Name))
                         code.Append("        ").Append(CSharpIdent(effect.ToLowerInvariant())).Append(".Save(").Append(CSharpValue(item)).Append(");\n");
                 }
+                else if (entity is not null && spec.Outcome is SucceedsModel && KnownIdSeed(entity, spec.Input) is { } seed)
+                {
+                    // A no-output success has no response record to copy. The input id is the known item.
+                    code.Append("        ").Append(CSharpIdent(effect.ToLowerInvariant())).Append(".Save(").Append(seed).Append(");\n");
+                }
             }
             code.Append("        // When handled\n");
             code.Append("        var endpoint = Factory.Create<").Append(endpoint.Name).Append("Endpoint>(context => context.Response.Body = new MemoryStream()");
@@ -581,6 +629,7 @@ public sealed class CSharpProvider : ITargetAdapter
                     break;
                 case SucceedsModel:
                     code.Append("        // Then succeeds\n");
+                    code.Append("        Assert.Equal(200, endpoint.HttpContext.Response.StatusCode);\n");
                     break;
             }
             code.Append("    }\n");
@@ -628,6 +677,26 @@ public sealed class CSharpProvider : ITargetAdapter
         AppendAssertionHelper(code);
         code.Append("}\n");
         return code.ToString();
+    }
+
+    // `then succeeds` carries no record. Seed one item whose id is the spec input's id
+    // so a known id is present and an unknown id (a failure spec) is not.
+    private static string? KnownIdSeed(TypeModel entity, BoundRecord input)
+    {
+        var supplied = input.Fields.FirstOrDefault(field => field.Name == "id");
+        if (supplied?.Value is not BoundText || entity.Fields.All(field => field.Name != "id"))
+            return null;
+
+        var arguments = entity.Fields.Select(field =>
+            $"{CSharpFieldName(field.Name)}: {(field.Name == "id" ? CSharpValue(supplied.Value) : StoredDefault(field.Type))}");
+        return $"new {CSharpIdent(entity.Name)}({string.Join(", ", arguments)})";
+    }
+
+    private static string StoredDefault(PType type)
+    {
+        if (type == PType.Text || type == PType.Id)
+            return "\"\"";
+        throw new NotImplementedException($"The C# emitter cannot seed a stored field of type '{type}' yet.");
     }
 
     private static IEnumerable<BoundExpr> ValuesOfType(BoundExpr value, string typeName)
