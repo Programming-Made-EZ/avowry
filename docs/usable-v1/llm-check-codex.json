@@ -1,0 +1,14 @@
+{
+  "model": "codex",
+  "date": "2026-10-28",
+  "attempts": 1,
+  "tokens_in": 5836,
+  "tokens_out": 1185,
+  "passed": true,
+  "proof_level": "specs-passed",
+  "specs": 13,
+  "specs_passed": 13,
+  "build_warnings": 0,
+  "grammar_sha256": "ad0f6e51fe1d61968fecb7ed3609bb00b204f3aa482defcf38f6fd6f6728dc9f",
+  "cheatsheet_sha256": "fe3d8a8b37f4b5bfe2c95e9a38bd9b59de5c57fa163c2c4526ef55d5c1300ae3"
+}
