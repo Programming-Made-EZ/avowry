@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Usable v1 milestone report for CI.
 
-Runs the six per-bar tests (Milestone=UsableV1) and summarizes them. The job stays GREEN while the milestone is pending
-("Usable v1 not reached: X of 6 criteria") and goes RED only when a bar listed in board/usable-v1-ratchet.json regresses,
-or when the report itself cannot be produced. When all six bars are met it prints USABLE v1 REACHED.
+Runs the six per-bar tests (Milestone=UsableV1) and summarizes them. All six reached bars are ratcheted, so the job goes
+RED when any criterion regresses or when the report itself cannot be produced. A green run prints USABLE v1 REACHED.
 
   python3 scripts/usable-v1-report.py              run the tests and report
   python3 scripts/usable-v1-report.py --from-trx F  report from an existing TRX file (no test run)
@@ -94,6 +93,7 @@ def self_test():
     assert classify(partial, [1]) == ([1], [], [])
     assert classify(none, [1])[1] == [1], "a ratcheted bar that fails is a regression"
     assert classify({1: (True, "")}, [])[2] == [2, 3, 4, 5, 6], "missing bars are reported"
+    assert report(ok) == 0, "six passing bars reach Usable v1"
     print("self-test ok")
     return 0
 

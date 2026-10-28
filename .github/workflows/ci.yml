@@ -29,8 +29,7 @@ jobs:
       - name: Test
         run: dotnet test Phrase.sln --no-build -c Release --filter "Status!=Pending" --logger "console;verbosity=normal"
 
-  # Detects the Usable v1 milestone (board/MILESTONE-usable-v1.md). Green while the milestone is pending, with a notice
-  # "Usable v1 not reached: X of 6 criteria"; red only if a bar in board/usable-v1-ratchet.json regresses.
+  # Gates the reached Usable v1 milestone. Every bar is ratcheted, so any regression makes this job red.
   usable-v1:
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -40,6 +39,9 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
+
+      - name: Build
+        run: dotnet build Phrase.sln -c Release
 
       - name: Usable v1 report
         run: python3 scripts/usable-v1-report.py

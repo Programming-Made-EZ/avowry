@@ -32,12 +32,15 @@ public class TasksOverHttp
         var resolved = Resolver.Resolve(source);
         Assert.Empty(resolved.Diagnostics);
         var module = resolved.Module;
-        var specCount = module.Endpoints.Sum(endpoint => endpoint.Specs.Count);
-        Assert.Equal(11, specCount);
+        Assert.Equal(11, module.Endpoints.Sum(endpoint => endpoint.Specs.Count));
         using var workspace = TempWorkspace.Create();
         var cli = await PhraseCli.RunAsync("build", sourcePath, "-o", workspace.Root);
         Assert.True(cli.ExitCode == 0, cli.Text);
-        var project = workspace.FindSingle("*.Api.csproj");
+        await AssertEverySpecMatchesAsync(workspace.FindSingle("*.Api.csproj"), module);
+    }
+
+    internal static async Task AssertEverySpecMatchesAsync(string project, ModuleModel module)
+    {
         var mismatches = new List<string>();
 
         // When each spec is sent over HTTP on a fresh process for its endpoint
