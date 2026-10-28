@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:9ec44dd9089be6e0dc6dca5871cf7fab6f64ed56f91cbfa253f9c3b452029ed3 -->
+<!-- board-table-sha256:577e5fd6ab9ed40f98842061f28aa82be96f61c11d1ee62a774c2b7a71356a29 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -66,7 +66,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 44 | 114 A model that outlives its timeout is stopped with its whole process tree | Done | 113 |
 | 45 | 102 Head-to-head on the sealed holdouts: both arms at N=5 | Ready | 101 |
 | 46 | 103 Head-to-head verdict page: WIN, LOSS, TIE or INCONCLUSIVE | Ready | 102 |
-| 47 | 051 phrase build compiles one file into output projects | Ready | 040 |
+| 47 | 051 phrase build compiles one file into output projects | Done | 040 |
 | 48 | 141 Extension map: the layering ADR and the audit of the core | Ready | 051 |
 | 49 | 142 Web extension boundary: the compiler partitions core and web | Ready | 141 |
 | 50 | 132 A persistence effect with a generated in-memory implementation | Ready | 047 |
