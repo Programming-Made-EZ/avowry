@@ -18,6 +18,7 @@ ADR = ROOT / "docs" / "adr" / "ADR-library-binding-layering.md"
 
 SECTIONS = (
     "## Layers",
+    "## Logic sources, in order",
     "## Audit of FastEndpoints in the C# emitter",
     "## Hard-wire rule",
     "## Second binding",
@@ -90,6 +91,17 @@ SKETCH_NEEDLES = (
 
 FILE_IN_TICKS = re.compile(r"`([^`]+)`")
 FILE_PATH = re.compile(r"^[\w./-]+\.(?:cs|csproj|md|py)$")
+LINE_CITATION = re.compile(
+    r"`(?P<path>[\w./-]+\.(?:cs|csproj|md|py))`\s+"
+    r"(?:line|lines)\s+(?P<lines>[\d,\s-]+)"
+)
+
+LOGIC_SOURCE_ORDER = (
+    "library pattern",
+    "adapter idiom",
+    "LLM-generated body",
+    "native escape hatch",
+)
 
 
 def section(text, heading):
@@ -141,6 +153,12 @@ def cited_files(where):
     return cited
 
 
+def cited_lines(where):
+    for match in LINE_CITATION.finditer(where):
+        numbers = [int(value) for value in re.findall(r"\d+", match.group("lines"))]
+        yield match.group("path"), numbers
+
+
 def check_text(text, root):
     problems = []
     for heading in SECTIONS:
@@ -150,6 +168,20 @@ def check_text(text, root):
     layers = section(text, "## Layers")
     for needle in missing_needles(layers, LAYERS_NEEDLES):
         problems.append(f"layers section lacks {needle}")
+
+    logic_sources = section(text, "## Logic sources, in order")
+    if logic_sources is not None:
+        lowered_logic_sources = logic_sources.lower()
+        positions = [lowered_logic_sources.find(source.lower()) for source in LOGIC_SOURCE_ORDER]
+        if any(position < 0 for position in positions) or positions != sorted(positions):
+            problems.append("logic-sources section lacks the four-step order")
+        native_share = (
+            "share of logic still in native blocks",
+            "trade-off signal",
+            "not a target",
+        )
+        if missing_needles(logic_sources, native_share):
+            problems.append("logic-sources section lacks the native-share signal statement")
 
     audit = section(text, "## Audit of FastEndpoints in the C# emitter")
     if audit is not None:
@@ -164,13 +196,27 @@ def check_text(text, root):
         rows = table_rows(audit)
         if not rows:
             problems.append("audit table has no rows")
+        for rel in cited_files(audit):
+            if not (pathlib.Path(root) / rel).is_file():
+                problems.append(f"audit cites missing file {rel}")
+        for rel, numbers in cited_lines(audit):
+            cited_path = pathlib.Path(root) / rel
+            if not cited_path.is_file():
+                continue
+            line_count = len(cited_path.read_text(encoding="utf-8").splitlines())
+            for number in numbers:
+                if number > line_count:
+                    problems.append(
+                        f"audit cites {rel} line {number} beyond its {line_count} lines"
+                    )
         for cells in rows:
             where = cells[1]
             files = cited_files(where)
             if not files:
                 problems.append(f"audit row '{cells[0]}' names no file")
             for rel in files:
-                if not (pathlib.Path(root) / rel).is_file():
+                cited_path = pathlib.Path(root) / rel
+                if not cited_path.is_file():
                     problems.append(f"audit row cites missing file {rel}")
             seam = cells[2] if len(cells) > 2 else ""
             if not seam:

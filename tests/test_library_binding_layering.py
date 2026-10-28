@@ -34,11 +34,22 @@ with smart defaults and an override.
 The mapping is deterministic: emitters and an LLM-as-compiler both honour it.
 The same spec and generated tests verify every binding.
 
+## Logic sources, in order
+
+1. Library pattern.
+2. Adapter idiom.
+3. LLM-generated body.
+4. Native escape hatch.
+
+The share of logic still in native blocks is tracked as a trade-off signal, not a target.
+
 ## Audit of FastEndpoints in the C# emitter
 
 | Place | Where it lives today | Seam it needs |
 |---|---|---|
 {places}
+
+Other mentions, no seam needed: `scripts/check-extension-map.py`.
 
 ## Hard-wire rule
 
@@ -79,6 +90,44 @@ class LibraryBindingLayeringTests(unittest.TestCase):
         )
         problems = check.check_text(text, ROOT)
         self.assertTrue(any("NoSuchBinding.cs" in problem for problem in problems))
+
+    def test_audit_citation_beyond_end_of_file_fails(self):
+        text = passing_text().replace(
+            "`src/Phrase.Adapters.CSharp/CSharpProvider.cs` line 1",
+            "`src/Phrase.Adapters.CSharp/CSharpProvider.cs` line 999999",
+            1,
+        )
+        problems = check.check_text(text, ROOT)
+        self.assertTrue(any("line 999999" in problem for problem in problems))
+
+    def test_audit_file_outside_table_must_exist(self):
+        text = passing_text().replace(
+            "`scripts/check-extension-map.py`",
+            "`scripts/no-such-audit-mention.py`",
+        )
+        problems = check.check_text(text, ROOT)
+        self.assertTrue(any("no-such-audit-mention.py" in problem for problem in problems))
+
+    def test_missing_logic_sources_section_fails(self):
+        text = passing_text().replace("## Logic sources, in order", "## Logic")
+        problems = check.check_text(text, ROOT)
+        self.assertTrue(any("## Logic sources, in order" in problem for problem in problems))
+
+    def test_logic_source_order_fails_when_reordered(self):
+        text = passing_text().replace(
+            "2. Adapter idiom.\n3. LLM-generated body.",
+            "2. LLM-generated body.\n3. Adapter idiom.",
+        )
+        problems = check.check_text(text, ROOT)
+        self.assertTrue(any("four-step order" in problem for problem in problems))
+
+    def test_missing_native_share_signal_fails(self):
+        text = passing_text().replace(
+            "The share of logic still in native blocks is tracked as a trade-off signal, not a target.",
+            "Native blocks can be counted.",
+        )
+        problems = check.check_text(text, ROOT)
+        self.assertTrue(any("native-share signal" in problem for problem in problems))
 
     def test_second_binding_rule_missing_fails(self):
         text = passing_text().replace(
