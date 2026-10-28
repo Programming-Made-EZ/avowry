@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:d5fbb446236a5f1453094943838517bb547ba45e05f0ae4c2b3a9dd857e1236a -->
+<!-- board-table-sha256:68d64b05b7812ec0c946ecaaf6b34d5d962f08e284b352d927498cd7e7ca4a9f -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -81,100 +81,101 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 59 | 159 A validation step in Phrase: ensure a condition or fail with a declared name | Done | 138 |
 | 60 | 160 A record update form: a copy of a record with one field changed | Done | 159 |
 | 61 | 161 Generated failures and endpoint classes point back to the Phrase source | Ready | 138 |
-| 62 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
-| 63 | 163 Generated endpoint files are named *.cs.cs: decide and document the convention | Ready | none |
-| 64 | 164 #line directives: the debugger and C# compiler errors point at .phrase lines | Ready | 161 |
-| 65 | 153 Verdict page states the success criteria | Ready | 138 |
-| 66 | 155 Verdict page as a judgment backed by data | Ready | 153 |
-| 67 | 156 Personas capture the same ten fields | Ready | 154 |
-| 68 | 154 Docs state principles and rationale, not who said them | Done | 153 |
-| 69 | 145 Store operations as Phrase steps, not native code | Ready | 135 |
-| 70 | 146 Validation rules as Phrase: not blank and a maximum length | Ready | 145 |
-| 71 | 147 A list endpoint without a fake flag | Ready | 145 |
-| 72 | 148 Composite steps: a phrase calls a phrase and changes one field of a record | Ready | 145 |
-| 73 | 134 ZOMBIES spec-coverage warnings | Ready | 138 |
-| 74 | 149 Undetected-defect rate: planted defects against Phrase specs and model-written C# tests | Ready | 134 |
-| 75 | 150 Intent recovery: can a fresh reader state what each unit must do | Ready | 134 |
-| 76 | 151 Review speed and accuracy: approving and rejecting AI-written changes | Ready | 134 |
-| 77 | 139 Loop step: re-probe unavailable drivers and restore them | Ready | 064 |
-| 78 | 140 Cheat sheet plus library index: the hybrid prompt, measured | Ready | 134 |
-| 79 | 143 Split the documentation: a smaller core cheat sheet and a web sheet | Ready | 142, 140 |
-| 80 | 144 Rerun Copilot's unavailable holdout rows after its quota returns | Ready | 102 |
-| 81 | 106 Mutation check: the generated C# specs catch broken implementations | Done | 087 |
-| 82 | 107 Spec to code with a model: does a Phrase spec get verified-correct code more reliably | Ready | 106 |
-| 83 | 108 A second target's Specs project from the same specs | Ready | 106 |
-| 84 | 109 C# implementation emission one phrase kind at a time | Ready | 108 |
-| 85 | 115 Which cheaper models can each CLI run headless and cold | Ready | 102 |
-| 86 | 116 Pre-register the cheaper-model experiment before any row | Ready | 115 |
-| 87 | 117 Run the cheaper models in both arms | Ready | 116 |
-| 88 | 118 Cost per passing task: the cheaper-model report | Ready | 117 |
-| 89 | 119 Generate matching Phrase and C# codebases of 1, 10 and 50 endpoints | Done | 111 |
-| 90 | 130 Plain C# codebases in ordinary hand-written style | Done | 119 |
-| 91 | 120 Pre-register the codebase-size experiment before any row | Ready | 119, 116 |
-| 92 | 121 Snapshot a real project slice privately and scrub it | Superseded/Withdrawn | 120 |
-| 93 | 122 Port the real slice to Phrase in the private folder | Superseded/Withdrawn | 121 |
-| 94 | 123 Run the codebase-size experiment in both arms | Ready | 120 |
-| 95 | 124 Codebase-size report: how cost and pass rate change with size | Ready | 123 |
-| 96 | 125 Choose and pin public C# repositories for the real-code tier | Ready | 120 |
-| 97 | 126 Port a representative slice of the pinned public repo to Phrase | Ready | 125 |
-| 98 | 127 Write the growth-study backlog and pre-register the study | Ready | 120 |
-| 99 | 128 Run the growth study in both arms from shared checkpoints | Ready | 127, 119 |
-| 100 | 129 Growth-study curve: cost and pass rate against codebase size | Ready | 128 |
-| 101 | 090 Benchmark: a docs-in-context mode that gives a model the real docs | Done | 085 |
-| 102 | 091 Benchmark: cold runs, a fresh session in an empty folder for every attempt | Done | 090 |
-| 103 | 092 Benchmark: scrub a stored reply before cutting it to 200 characters | Done | 085 |
-| 104 | 037 Benchmark: docs in the prompt, and cold runs | Done | 090, 091, 092 (sliced: docs-in-context mode, cold runs and the reply-head scrub moved to those cards; this card is now the baseline RUN) |
-| 105 | 088 Head-to-head: Phrase vs plain C# on the frozen bar | Superseded/Withdrawn | 085, 086, 094, 087, 037 |
-| 106 | 089 Option and nested-record fields compile | Ready | 042 |
-| 107 | 065 Loop: run one card with a pinned toolchain | Ready | 064 |
-| 108 | 066 Loop: bounded retry, park and split on failure | Ready | 065 |
-| 109 | 078 Ready check: reject a role-only story before the product manager is asked | Ready | 065 |
-| 110 | 067 Loop: on Done run the retro step and re-rank, then the next card | Ready | 066 |
-| 111 | 053 Docs: one diagnostics table, not two | Ready | none |
-| 112 | 062 Atomic runs: a card runs in a fresh worktree and ends landed or discarded | Ready | none |
-| 113 | 068 Loop: liveness, publish, STOP file and the Needs-product-owner file | Ready | 067 |
-| 114 | 072 Loop: pace the work against the finite driver allotments | Ready | 066 |
-| 115 | 069 Loop: resume after a crash or reboot (logon task) | Ready | 068 |
-| 116 | 070 Loop: run every card atomically (land or discard) | Ready | 062, 067 |
-| 117 | 054 Benchmark task 005 gets a failure-path spec (suite change, versioned) | Ready | none |
-| 118 | 055 A declared failure with no failure-path spec is an error (PH336) | Superseded/Withdrawn | 054, 018 |
-| 119 | 056 An endpoint with an output cannot say `succeeds` (PH333) | Ready | 134 |
-| 120 | 057 Docs: the consumer-observable outcome rule is written down | Superseded/Withdrawn | 055 |
-| 121 | 022 Keyword model ADR: what a keyword is | Ready | none |
-| 122 | 058 A validation phrase returns its validated value (first slice, language decision first) | Ready | 022, 134 |
-| 123 | 013 Make GRAMMAR.md say what the resolver does | Ready | none |
-| 124 | 019 Publish exact diagnostic message templates in GRAMMAR.md | Ready | 018 |
-| 125 | 014 Document the native C# environment and show passing-guard examples | Ready | none |
-| 126 | 046 Docs: GRAMMAR and README name the adapter contract and the HTTP status mapping | Ready | 040, 049 |
-| 127 | 017 Benchmark v1: score by running the generated specs | Ready | 016, 050 |
-| 128 | 024 Pattern discovery: find the recurring patterns worth a keyword | Ready | 017 |
-| 129 | 027 Benchmark: catalogue tasks that measure LLM work removed and learnability | Ready | 017, 024 |
-| 130 | 060 Catalogue tasks for concurrent work and event publication (measure the demand) | Ready | 022, 033, 034 (language foundations) |
-| 131 | 081 Measure stored and published outcomes under today's grammar | Ready | 037, 054 |
-| 132 | 020 Did-you-mean suggestions for failure codes and other unknown names | Ready | 017 |
-| 133 | 052 phrase build reports errors as file:line:col and names its target | Ready | 051 |
-| 134 | 023 Ordinary control flow: if/else and loops | Ready | 022, 050 |
-| 135 | 033 Generic type parameters on phrases | Ready | 022, 032, 040 |
-| 136 | 034 Behavioral holes and spec test doubles | Ready | 033 |
-| 137 | 059 ADR: deterministic asynchronous and event semantics | Ready | 022, 033, 034 (language foundations) |
-| 138 | 082 ADR: a spec actor is who observes an outcome | Ready | 022, 058, 059, 081 |
-| 139 | 025 Base library v0: structure and a seed of about 12 keywords, with C# adapter implementations | Ready | 024, 034, 050 |
-| 140 | 008 Close the language gaps the demo app exposes | Superseded/Withdrawn | 025, 050, 052 |
-| 141 | 015 Proposal: make the spec `when` line optional | Ready | 037 |
-| 142 | 021 Proposal: consistent given/responds syntax | Ready | 017 |
-| 143 | 035 Proposal: parameterizable failure codes | Ready | 033 |
-| 144 | 009 Demo app: a Tasks API written entirely in .phrase | Superseded/Withdrawn | 008 |
-| 145 | 010 End-to-end: real HTTP behaves as the specs say | Superseded/Withdrawn | 009 |
-| 146 | 011 LLM-customer check: a model adds an endpoint from the docs alone | Superseded/Withdrawn | 009, 010, 057 |
-| 147 | 012 Usable v1: acceptance test passes on main and gates CI | Superseded/Withdrawn | 009, 010, 011 |
-| 148 | 038 Dogfood: the mob status API, written in Phrase | Ready | 138, 036 |
-| 149 | 026 Catalogue dedup linter: flag near-duplicate keywords | Ready | 138, 025 |
-| 150 | 061 Spike: a scripted scheduler, fake clock and event capture make an async spec deterministic | Ready | 022, 033, 034 (language foundations); 025, 047 (a base library and the first effect) |
-| 151 | 083 Spike: an in-memory store and an event capture assert one scripted observation | Ready | 082, 034, 047, 061 |
-| 152 | 028 Second adapter spike: prove the keyword model is language-neutral | Ready | 138, 025 |
-| 153 | 029 LLM-as-compiler with hash pinning for keywords without an adapter implementation | Ready | 028 |
-| 154 | 030 Synthesize Phrase from existing code (spike: C# to Phrase) | Ready | 138, 024, 025 |
-| 155 | 031 Converter between LLM-optimized Phrase and a human-friendly rendering (spike) | Ready | 030 |
+| 62 | 165 Failure observer: the generated API raises a neutral failure event; tracing plugs in outside the runtime | Ready | 161 |
+| 63 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
+| 64 | 163 Generated endpoint files are named *.cs.cs: decide and document the convention | Ready | none |
+| 65 | 164 #line directives: the debugger and C# compiler errors point at .phrase lines | Ready | 161 |
+| 66 | 153 Verdict page states the success criteria | Ready | 138 |
+| 67 | 155 Verdict page as a judgment backed by data | Ready | 153 |
+| 68 | 156 Personas capture the same ten fields | Ready | 154 |
+| 69 | 154 Docs state principles and rationale, not who said them | Done | 153 |
+| 70 | 145 Store operations as Phrase steps, not native code | Ready | 135 |
+| 71 | 146 Validation rules as Phrase: not blank and a maximum length | Ready | 145 |
+| 72 | 147 A list endpoint without a fake flag | Ready | 145 |
+| 73 | 148 Composite steps: a phrase calls a phrase and changes one field of a record | Ready | 145 |
+| 74 | 134 ZOMBIES spec-coverage warnings | Ready | 138 |
+| 75 | 149 Undetected-defect rate: planted defects against Phrase specs and model-written C# tests | Ready | 134 |
+| 76 | 150 Intent recovery: can a fresh reader state what each unit must do | Ready | 134 |
+| 77 | 151 Review speed and accuracy: approving and rejecting AI-written changes | Ready | 134 |
+| 78 | 139 Loop step: re-probe unavailable drivers and restore them | Ready | 064 |
+| 79 | 140 Cheat sheet plus library index: the hybrid prompt, measured | Ready | 134 |
+| 80 | 143 Split the documentation: a smaller core cheat sheet and a web sheet | Ready | 142, 140 |
+| 81 | 144 Rerun Copilot's unavailable holdout rows after its quota returns | Ready | 102 |
+| 82 | 106 Mutation check: the generated C# specs catch broken implementations | Done | 087 |
+| 83 | 107 Spec to code with a model: does a Phrase spec get verified-correct code more reliably | Ready | 106 |
+| 84 | 108 A second target's Specs project from the same specs | Ready | 106 |
+| 85 | 109 C# implementation emission one phrase kind at a time | Ready | 108 |
+| 86 | 115 Which cheaper models can each CLI run headless and cold | Ready | 102 |
+| 87 | 116 Pre-register the cheaper-model experiment before any row | Ready | 115 |
+| 88 | 117 Run the cheaper models in both arms | Ready | 116 |
+| 89 | 118 Cost per passing task: the cheaper-model report | Ready | 117 |
+| 90 | 119 Generate matching Phrase and C# codebases of 1, 10 and 50 endpoints | Done | 111 |
+| 91 | 130 Plain C# codebases in ordinary hand-written style | Done | 119 |
+| 92 | 120 Pre-register the codebase-size experiment before any row | Ready | 119, 116 |
+| 93 | 121 Snapshot a real project slice privately and scrub it | Superseded/Withdrawn | 120 |
+| 94 | 122 Port the real slice to Phrase in the private folder | Superseded/Withdrawn | 121 |
+| 95 | 123 Run the codebase-size experiment in both arms | Ready | 120 |
+| 96 | 124 Codebase-size report: how cost and pass rate change with size | Ready | 123 |
+| 97 | 125 Choose and pin public C# repositories for the real-code tier | Ready | 120 |
+| 98 | 126 Port a representative slice of the pinned public repo to Phrase | Ready | 125 |
+| 99 | 127 Write the growth-study backlog and pre-register the study | Ready | 120 |
+| 100 | 128 Run the growth study in both arms from shared checkpoints | Ready | 127, 119 |
+| 101 | 129 Growth-study curve: cost and pass rate against codebase size | Ready | 128 |
+| 102 | 090 Benchmark: a docs-in-context mode that gives a model the real docs | Done | 085 |
+| 103 | 091 Benchmark: cold runs, a fresh session in an empty folder for every attempt | Done | 090 |
+| 104 | 092 Benchmark: scrub a stored reply before cutting it to 200 characters | Done | 085 |
+| 105 | 037 Benchmark: docs in the prompt, and cold runs | Done | 090, 091, 092 (sliced: docs-in-context mode, cold runs and the reply-head scrub moved to those cards; this card is now the baseline RUN) |
+| 106 | 088 Head-to-head: Phrase vs plain C# on the frozen bar | Superseded/Withdrawn | 085, 086, 094, 087, 037 |
+| 107 | 089 Option and nested-record fields compile | Ready | 042 |
+| 108 | 065 Loop: run one card with a pinned toolchain | Ready | 064 |
+| 109 | 066 Loop: bounded retry, park and split on failure | Ready | 065 |
+| 110 | 078 Ready check: reject a role-only story before the product manager is asked | Ready | 065 |
+| 111 | 067 Loop: on Done run the retro step and re-rank, then the next card | Ready | 066 |
+| 112 | 053 Docs: one diagnostics table, not two | Ready | none |
+| 113 | 062 Atomic runs: a card runs in a fresh worktree and ends landed or discarded | Ready | none |
+| 114 | 068 Loop: liveness, publish, STOP file and the Needs-product-owner file | Ready | 067 |
+| 115 | 072 Loop: pace the work against the finite driver allotments | Ready | 066 |
+| 116 | 069 Loop: resume after a crash or reboot (logon task) | Ready | 068 |
+| 117 | 070 Loop: run every card atomically (land or discard) | Ready | 062, 067 |
+| 118 | 054 Benchmark task 005 gets a failure-path spec (suite change, versioned) | Ready | none |
+| 119 | 055 A declared failure with no failure-path spec is an error (PH336) | Superseded/Withdrawn | 054, 018 |
+| 120 | 056 An endpoint with an output cannot say `succeeds` (PH333) | Ready | 134 |
+| 121 | 057 Docs: the consumer-observable outcome rule is written down | Superseded/Withdrawn | 055 |
+| 122 | 022 Keyword model ADR: what a keyword is | Ready | none |
+| 123 | 058 A validation phrase returns its validated value (first slice, language decision first) | Ready | 022, 134 |
+| 124 | 013 Make GRAMMAR.md say what the resolver does | Ready | none |
+| 125 | 019 Publish exact diagnostic message templates in GRAMMAR.md | Ready | 018 |
+| 126 | 014 Document the native C# environment and show passing-guard examples | Ready | none |
+| 127 | 046 Docs: GRAMMAR and README name the adapter contract and the HTTP status mapping | Ready | 040, 049 |
+| 128 | 017 Benchmark v1: score by running the generated specs | Ready | 016, 050 |
+| 129 | 024 Pattern discovery: find the recurring patterns worth a keyword | Ready | 017 |
+| 130 | 027 Benchmark: catalogue tasks that measure LLM work removed and learnability | Ready | 017, 024 |
+| 131 | 060 Catalogue tasks for concurrent work and event publication (measure the demand) | Ready | 022, 033, 034 (language foundations) |
+| 132 | 081 Measure stored and published outcomes under today's grammar | Ready | 037, 054 |
+| 133 | 020 Did-you-mean suggestions for failure codes and other unknown names | Ready | 017 |
+| 134 | 052 phrase build reports errors as file:line:col and names its target | Ready | 051 |
+| 135 | 023 Ordinary control flow: if/else and loops | Ready | 022, 050 |
+| 136 | 033 Generic type parameters on phrases | Ready | 022, 032, 040 |
+| 137 | 034 Behavioral holes and spec test doubles | Ready | 033 |
+| 138 | 059 ADR: deterministic asynchronous and event semantics | Ready | 022, 033, 034 (language foundations) |
+| 139 | 082 ADR: a spec actor is who observes an outcome | Ready | 022, 058, 059, 081 |
+| 140 | 025 Base library v0: structure and a seed of about 12 keywords, with C# adapter implementations | Ready | 024, 034, 050 |
+| 141 | 008 Close the language gaps the demo app exposes | Superseded/Withdrawn | 025, 050, 052 |
+| 142 | 015 Proposal: make the spec `when` line optional | Ready | 037 |
+| 143 | 021 Proposal: consistent given/responds syntax | Ready | 017 |
+| 144 | 035 Proposal: parameterizable failure codes | Ready | 033 |
+| 145 | 009 Demo app: a Tasks API written entirely in .phrase | Superseded/Withdrawn | 008 |
+| 146 | 010 End-to-end: real HTTP behaves as the specs say | Superseded/Withdrawn | 009 |
+| 147 | 011 LLM-customer check: a model adds an endpoint from the docs alone | Superseded/Withdrawn | 009, 010, 057 |
+| 148 | 012 Usable v1: acceptance test passes on main and gates CI | Superseded/Withdrawn | 009, 010, 011 |
+| 149 | 038 Dogfood: the mob status API, written in Phrase | Ready | 138, 036 |
+| 150 | 026 Catalogue dedup linter: flag near-duplicate keywords | Ready | 138, 025 |
+| 151 | 061 Spike: a scripted scheduler, fake clock and event capture make an async spec deterministic | Ready | 022, 033, 034 (language foundations); 025, 047 (a base library and the first effect) |
+| 152 | 083 Spike: an in-memory store and an event capture assert one scripted observation | Ready | 082, 034, 047, 061 |
+| 153 | 028 Second adapter spike: prove the keyword model is language-neutral | Ready | 138, 025 |
+| 154 | 029 LLM-as-compiler with hash pinning for keywords without an adapter implementation | Ready | 028 |
+| 155 | 030 Synthesize Phrase from existing code (spike: C# to Phrase) | Ready | 138, 024, 025 |
+| 156 | 031 Converter between LLM-optimized Phrase and a human-friendly rendering (spike) | Ready | 030 |
 <!-- board-table:end -->
 
 Ranks are the PM's and move at each retro; ideas are triaged by expected metric impact. Milestones are in `board/MILESTONES.md`.
