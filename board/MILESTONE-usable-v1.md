@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:2c3960bdc2fc75f19ab3bcdd1bd569149c2028e3567fc1d6120ffcd9cd7ca962 -->
+<!-- board-table-sha256:b53d0049049d7d0677c6ff5f833cb9ee4c8774e13d455b866caf6c8d721c6f5e -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -84,7 +84,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 62 | 117 Run the cheaper models in both arms | Ready | 116 |
 | 63 | 118 Cost per passing task: the cheaper-model report | Ready | 117 |
 | 64 | 119 Generate matching Phrase and C# codebases of 1, 10 and 50 endpoints | Done | 111 |
-| 65 | 130 Plain C# codebases in ordinary hand-written style | Ready | 119 |
+| 65 | 130 Plain C# codebases in ordinary hand-written style | Done | 119 |
 | 66 | 120 Pre-register the codebase-size experiment before any row | Ready | 119, 116 |
 | 67 | 121 Snapshot a real project slice privately and scrub it | Superseded/Withdrawn | 120 |
 | 68 | 122 Port the real slice to Phrase in the private folder | Superseded/Withdrawn | 121 |
