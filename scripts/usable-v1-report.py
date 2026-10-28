@@ -52,14 +52,19 @@ def classify(results, ratchet):
 
 
 def load_ratchet():
-    try:
-        return [int(b) for b in json.loads(RATCHET.read_text(encoding="utf-8")).get("must_pass", [])]
-    except (OSError, ValueError):
-        return []
+    """The ratcheted bars; a missing or unreadable ratchet file is an error, never an empty ratchet."""
+    return [int(b) for b in json.loads(RATCHET.read_text(encoding="utf-8")).get("must_pass", [])]
 
 
 def report(results):
-    ratchet = load_ratchet()
+    try:
+        ratchet = load_ratchet()
+    except (OSError, ValueError) as exc:
+        print(f"::error::Usable v1 ratchet unreadable ({RATCHET.name}): {exc}")
+        return 1
+    if sorted(ratchet) != sorted(BARS):
+        print(f"::error::Usable v1 ratchet must list every bar {sorted(BARS)}, found {sorted(ratchet)}")
+        return 1
     met, regressed, missing = classify(results, ratchet)
     lines = [f"## Usable v1: {len(met)} of {len(BARS)} criteria met", ""]
     for bar, title in BARS.items():
@@ -80,8 +85,8 @@ def report(results):
         print("USABLE v1 REACHED: demo app at demo/tasks (see its README for how to run it)")
         print("::notice::USABLE v1 REACHED")
         return 0
-    print(f"::notice::Usable v1 not reached: {len(met)} of {len(BARS)} criteria")
-    return 0
+    print(f"::error::Usable v1 not reached: {len(met)} of {len(BARS)} criteria")
+    return 1
 
 
 def self_test():
@@ -94,6 +99,7 @@ def self_test():
     assert classify(none, [1])[1] == [1], "a ratcheted bar that fails is a regression"
     assert classify({1: (True, "")}, [])[2] == [2, 3, 4, 5, 6], "missing bars are reported"
     assert report(ok) == 0, "six passing bars reach Usable v1"
+    assert report(none) == 1, "a failing bar fails the job now that every bar is ratcheted"
     print("self-test ok")
     return 0
 
