@@ -36,9 +36,9 @@
 
 ## Decider outcomes (latest)
 
-- Decider D23: Steve's "it should be a loop": the loop runner in mob-defaults, cards 063 to 070 (passed)
-- Decider D24: amendment to D23 (Steve's correction: the loop never ends; discovery instead of stop; allotment pacing) (passed)
-- Decider D25: Steve's board move: Phrase's board becomes a GitHub Projects board (cards 073 to 077) (passed)
+- Decider D23: the product owner's "it should be a loop": the loop runner in mob-defaults, cards 063 to 070 (passed)
+- Decider D24: amendment to D23 (the product owner's correction: the loop never ends; discovery instead of stop; allotment pacing) (passed)
+- Decider D25: the product owner's board move: Phrase's board becomes a GitHub Projects board (cards 073 to 077) (passed)
 
 ## Board
 
@@ -48,7 +48,7 @@
 
 ## Latest commits
 
-- 0b15667 Board to GitHub Projects (Steve; D25): cards 073-077, private project, 064 depends on 076
+- 0b15667 Board to GitHub Projects (product owner; D25): cards 073-077, private project, 064 depends on 076
 
 ## What's next
 

@@ -1,4 +1,4 @@
-# Bootstrap phase (Steve's standing rule, 2026-10-26)
+# Bootstrap phase (the product owner's standing rule, 2026-10-26)
 
 The rule and its exit criteria are in `TEAM_WORKING_AGREEMENT.md` ("Bootstrap phase"). This file tracks status.
 

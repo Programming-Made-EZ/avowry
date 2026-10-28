@@ -86,7 +86,7 @@ def tracked_issue(number, card, body, **extra):
         "body": body,
         "state": "OPEN",
         "labels": ["custom-label"],
-        "assignees": ["steve"],
+        "assignees": ["fixture"],
         "comments": [{"id": number, "body": "leave this comment"}],
         "close_reason": None,
     }
@@ -312,7 +312,7 @@ class BoardSyncTests(unittest.TestCase):
         self.assertEqual(changed["title"], "(001) Sync the story")
         self.assertEqual(changed["state"], "OPEN")
         self.assertEqual(changed["labels"], ["custom-label"])
-        self.assertEqual(changed["assignees"], ["steve"])
+        self.assertEqual(changed["assignees"], ["fixture"])
         self.assertEqual(changed["comments"], [{"id": 42, "body": "leave this comment"}])
         self.assertIsNone(changed["close_reason"])
         self.assertEqual(snapshot(fake.issues[1]), unchanged)
@@ -531,7 +531,7 @@ class BoardSyncTests(unittest.TestCase):
                 "body": opposite_endings(card.body),
                 "state": "OPEN",
                 "labels": ["custom-label"],
-                "assignees": ["steve"],
+                "assignees": ["fixture"],
                 "comments": [{"id": index, "body": "leave this comment"}],
             })
         self.assertNotEqual(fake.issues[0]["body"], cards[0].body)

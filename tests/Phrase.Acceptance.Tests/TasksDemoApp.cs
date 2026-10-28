@@ -14,7 +14,7 @@ public class TasksDemoApp
     [Trait("Slice", "135")]
     public async Task Tasks_source_is_only_phrase_and_lists_the_feature_order()
     {
-        // Given Steve's prototype source and its growth-checkpoint backlog
+        // Given the product owner's prototype source and its growth-checkpoint backlog
         var sourcePath = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
         var backlogPath = RepoPaths.Find("demo", "tasks", "BACKLOG.md");
         Assert.True(File.Exists(sourcePath), $"Tasks demo not found: {sourcePath}");
@@ -64,7 +64,7 @@ public class TasksDemoApp
         Assert.True(File.Exists(Path.Combine(demoRoot, "BACKLOG.md")));
         using var workspace = TempWorkspace.Create();
 
-        // When Steve builds the real file with phrase build and runs the generated specs
+        // When product owner builds the real file with phrase build and runs the generated specs
         var cli = await PhraseCli.RunAsync("build", sourcePath, "-o", workspace.Root);
         Assert.True(cli.ExitCode == 0, cli.Text);
         var build = await BuildAsync(workspace.FindSingle("*.Api.csproj"));

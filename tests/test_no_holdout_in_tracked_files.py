@@ -53,8 +53,8 @@ class NoHoldoutInTrackedFilesTests(unittest.TestCase):
             history = repo / "bench" / "results" / "history.jsonl"
             history.parent.mkdir(parents=True)
             history.write_text(
-                '{"model":"steve","task":"H1","label":"baseline-r1","passed":true}\n'
-                '{"model":"steve","task":"H1","label":"Holdout-r1","reply_head":"secret reply"}\n',
+                '{"model":"fixture","task":"H1","label":"baseline-r1","passed":true}\n'
+                '{"model":"fixture","task":"H1","label":"Holdout-r1","reply_head":"secret reply"}\n',
                 encoding="utf-8",
             )
             self.track(repo)
@@ -74,7 +74,7 @@ class NoHoldoutInTrackedFilesTests(unittest.TestCase):
             history = repo / "bench" / "results" / "history.jsonl"
             history.parent.mkdir(parents=True)
             history.write_text(
-                '{"model":"steve","task":"H9","label":"mistaken-run","reply_head":"secret reply"}\n',
+                '{"model":"fixture","task":"H9","label":"mistaken-run","reply_head":"secret reply"}\n',
                 encoding="utf-8",
             )
             self.track(repo)

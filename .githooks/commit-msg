@@ -1,7 +1,7 @@
 #!/bin/sh
-# Steve's standing coding rule: no Co-Authored-By trailers on commits.
+# the product owner's standing coding rule: no Co-Authored-By trailers on commits.
 # Enable once per clone: git config core.hooksPath .githooks
 if grep -qi '^co-authored-by:' "$1"; then
-  echo "commit-msg: Co-Authored-By trailers are not allowed (Steve's standing coding rule)." >&2
+  echo "commit-msg: Co-Authored-By trailers are not allowed (the product owner's standing coding rule)." >&2
   exit 1
 fi

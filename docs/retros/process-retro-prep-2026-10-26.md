@@ -1,6 +1,6 @@
 # Process retro prep: defect and rework table (2026-10-26)
 
-Input to the process retro that follows "live mob dashboard (036)". Steve's diagnosis frames it: "it just seemed like we weren't getting very far
+Input to the process retro that follows "live mob dashboard (036)". the product owner's diagnosis frames it: "it just seemed like we weren't getting very far
 because there were a lot of mistakes and new patches to fix those." So the cost to examine is **rework**: mistakes, then patches, then more mistakes.
 
 Every stop, reopen, revert and incident since the resolver (2026-10-25 and 26), hand-classified from the working logs (`.mob/*/MOB.md`), git history and the
@@ -66,7 +66,7 @@ marked.
 | S safety slip | 2 (rows 21, 22) | |
 
 By stops caused, tooling bugs lead as well: the five E1 tooling bugs alone account for about 7 stopped runs, the stale log for 3 wasted starts, the environment for 2.
-Model misbehavior is the smallest of the real causes (3 items). Steve's read is right: most of the rework traces to the tooling and the facilitator's own operating, not to the models.
+Model misbehavior is the smallest of the real causes (3 items). the product owner's read is right: most of the rework traces to the tooling and the facilitator's own operating, not to the models.
 
 ## Five whys on the largest class (facilitator and tooling bugs)
 

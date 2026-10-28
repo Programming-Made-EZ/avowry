@@ -5,7 +5,7 @@ Usage: rerank.py --after NNN --cards 084,085,086 [--apply]
 
 Rank is the only field written (one item-edit per changed item). Default is a dry run. Cards without a Rank that are not named stay unranked.
 Every named card and the anchor must be on the board, or nothing is written. Never deletes; the owner is hard-wired. A re-rank is a
-board decision: the loop's retro hook calls this only after a passed Decider (or on Steve's direction); a human phone edit of Rank is the
+board decision: the loop's retro hook calls this only after a passed Decider (or on the product owner's direction); a human phone edit of Rank is the
 other way to reorder. Run scripts/board/generate_archive.py --apply afterwards to refresh the archive table."""
 
 import argparse

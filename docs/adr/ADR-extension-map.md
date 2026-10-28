@@ -6,7 +6,7 @@
 
 ## Context
 
-Dana needs one map of what is core and what is an extension, plus an audit of the domain words that still sit in the core, so the language grows by clean breaks. Steve's direction (2026-10-28, recorded in D89) moves web concepts into a web extension and gives every other application domain the same shape. The conditions on that Decider are the audit list below and the loading rule in the last section. VISION ruling 3 still stands beside this map: a base library of universal patterns, and one adapter per target language.
+Dana needs one map of what is core and what is an extension, plus an audit of the domain words that still sit in the core, so the language grows by clean breaks. the product owner's direction (2026-10-28, recorded in D89) moves web concepts into a web extension and gives every other application domain the same shape. The conditions on that Decider are the audit list below and the loading rule in the last section. VISION ruling 3 still stands beside this map: a base library of universal patterns, and one adapter per target language.
 
 ## Core
 

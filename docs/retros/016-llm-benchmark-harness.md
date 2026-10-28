@@ -36,7 +36,7 @@
 ## Product: LLMs-as-customers feedback (round 3: propose base-library keywords)
 
 All four models (Codex, Copilot, Grok, agy) were asked, from their own experience, to propose base-library keywords for
-Steve's vision and to say where the docs are unclear.
+the product owner's vision and to say where the docs are unclear.
 
 | Finding | Models | Outcome |
 |---|---|---|

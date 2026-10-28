@@ -2,9 +2,9 @@
 
 Items raised mid-card, to be taken at the next retro. Newest first.
 
-## Steve's diagnosis and Dispatch proposal P6 (2026-10-26)
+## the product owner's diagnosis and Dispatch proposal P6 (2026-10-26)
 
-- **Diagnosis (Steve):** "it just seemed like we weren't getting very far because there were a lot of mistakes and new patches to fix those." So the retro frames the cost as
+- **Diagnosis (product owner):** "it just seemed like we weren't getting very far because there were a lot of mistakes and new patches to fix those." So the retro frames the cost as
   REWORK: mistakes, patches, more mistakes. The retro adds a defect and rework table to the flow numbers (every stop, reopen, revert and incident since the resolver, classified by
   root cause and counted), runs a five-whys on the largest class, and fixes the cause. Table and first analysis: `docs/retros/process-retro-prep-2026-10-26.md`.
 - **P6 (Dispatch). Hold the mob tooling to the product's own standard.** Most stops traced to tooling written fast and used on real cards at once. Standard for any change to
@@ -13,7 +13,7 @@ Items raised mid-card, to be taken at the next retro. Newest first.
 
 ## Dispatch proposals for the process retro (raw input, 2026-10-26); they compete for the ONE pick
 
-Evidence is from Dispatch watching from outside. Per Steve's clarification the process retro keeps its form: flow numbers (now with a defect and rework table), the four categories, at least one pick (more if small and clearly worth it), the rest as seeds.
+Evidence is from Dispatch watching from outside. Per the product owner's clarification the process retro keeps its form: flow numbers (now with a defect and rework table), the four categories, at least one pick (more if small and clearly worth it), the rest as seeds.
 Dispatch expects P1 and P2 to matter most for throughput.
 
 - **P1. No turn ends without the next action already running.** Every report ends with a launched background job (with its expected completion) or the next step started.
@@ -25,12 +25,12 @@ Dispatch expects P1 and P2 to matter most for throughput.
   normalized. Metric: facilitator share of commits. (Interim data: 84% of code lines.)
 - **P4. Auto-fresh on card change.** Start fresh automatically when the card file's hash changed since its working log was seeded (or warn). It cost three starts on the dashboard card.
 - **P5. Write reports for the reader.** One plain-English "what happened / what's next" line at the top of each MOB.md update, fewer internal labels (rows, Done-when, D11, cycle
-  numbers). Partly covered by Steve's headline-number rule (`Usable v1: X of 6 criteria · next card: <title>`).
+  numbers). Partly covered by the product owner's headline-number rule (`Usable v1: X of 6 criteria · next card: <title>`).
 
-## Process retro approved by Steve (2026-10-26): scope, data and how it will be run
+## Process retro approved by product owner (2026-10-26): scope, data and how it will be run
 
 - **When:** the next retro, after "live mob dashboard (036)" is Done. **Focus:** the mob's own working process. Evidence-based.
-- **(Revised twice 2026-10-26: first 'short, one pick', then Steve's clarification: BALANCE, not removal; the retro keeps its four categories; at least one pick, more if small and clearly worth it; the rest seeds.)** Open with flow metrics for every card done so far (resolver, hardening, benchmark v0, benchmark fix, dashboard), from git and the
+- **(Revised twice 2026-10-26: first 'short, one pick', then the product owner's clarification: BALANCE, not removal; the retro keeps its four categories; at least one pick, more if small and clearly worth it; the rest seeds.)** Open with flow metrics for every card done so far (resolver, hardening, benchmark v0, benchmark fix, dashboard), from git and the
   working logs, using `flow_metrics.py` in mob-defaults (tests first): runs and restarts, reopenings, cycles, elapsed and idle time, estimated
   tokens, turns by seat, cycle-cap stops and ready-check stops, who drove, and the facilitator's share of the work by area. This is the process baseline.
 - **Interim numbers (036 still in progress, 2026-10-26):** 001 resolver: 5 runs, 1 reopening, about 1.0M est. tokens, 105 h idle between runs (waiting for the
@@ -47,7 +47,7 @@ Dispatch expects P1 and P2 to matter most for throughput.
 
 ## Open items carried to named moments (2026-10-26)
 
-- **Stashed emitter start (Copilot voter incident):** decided by a Decider, not by Steve, when the adapter/emitter card (003) is pulled: salvage it as a
+- **Stashed emitter start (Copilot voter incident):** decided by a Decider, not by product owner, when the adapter/emitter card (003) is pulled: salvage it as a
   reviewed starting point, or drop it. The stash stays until then; it is not applied, shipped or deleted before that vote.
 - **Trust-ladder ledger** (`TEAM_WORKING_AGREEMENT.md`, "Driver trust ladder"): update every driver's rung and clean-cycle count from the cards
   since Oct 25 at the next retro (it is stale). Under the bootstrap-phase rule this is judgment from review evidence, not a metric.
@@ -74,7 +74,7 @@ Dispatch expects P1 and P2 to matter most for throughput.
 
 - **What happened:** while clearing a scratch folder the facilitator ran `rm -rf` on a variable path. The folder did not exist and
   nothing was deleted, but the standing ban (never `rm -rf` a variable or computed path) relied on memory.
-- **Steve's rule applied:** "constraints must self-report": a ban with no detector isn't in force.
+- **the product owner's rule applied:** "constraints must self-report": a ban with no detector isn't in force.
 - **Shipped (mob-defaults `delete_guard.py`, 80 tests, and phrase-lang pre-commit):** a detector for recursive deletes of variable or
   unresolved paths and for kills by process name; `safe_delete(path, roots)` as the single safe way to delete; the safety rule
   appended to every prompt; a `Safety flag` raised in MOB.md (and on the published page) for any model reply that shows such a
@@ -100,25 +100,25 @@ Tooling changes are authored by the rotation (Codex, Copilot, Grok, agy); the fa
   5. Quoting: exercise the Windows quoting path (a Done-when and a proposal with spaces and quotes).
   6. Add a test for the `delete_guard` read-only fix; make scratch cleanup failure a FAIL, not a warning with exit 0.
 
-## Steve withdrew the course correction (2026-10-26)
+## product owner withdrew the course correction (2026-10-26)
 
-Steve: "perhaps I'm being too reactionary. I should let the mob decide its working process... it may have been taking a long time but it clearly had value if all models signed off." Reverted: the product-first mandate, ~20% process budget, balance wording, lighter Decider, mandatory headline and the Ready re-rank (phrase-lang `cb7e3c5`; template mob-defaults `9f21b73`, `dd7e45f`). The Decider is the default again. The dashboard time-box is withdrawn (card 036 finished anyway: Done, D13). P1 to P6, the defect ledger and the five whys above are **optional input** for the process retro, not directives; the team decides what to keep, including the non-author review rule for tooling and the hardened `smoke.py`. Unchanged: shipped work, safety guards, the sandboxed Decider runner, TFDD, trust ladder, bootstrap phase, escalation and safety carve-out, Goodhart guard, LLMs-as-customers.
+product owner: "perhaps I'm being too reactionary. I should let the mob decide its working process... it may have been taking a long time but it clearly had value if all models signed off." Reverted: the product-first mandate, ~20% process budget, balance wording, lighter Decider, mandatory headline and the Ready re-rank (phrase-lang `cb7e3c5`; template mob-defaults `9f21b73`, `dd7e45f`). The Decider is the default again. The dashboard time-box is withdrawn (card 036 finished anyway: Done, D13). P1 to P6, the defect ledger and the five whys above are **optional input** for the process retro, not directives; the team decides what to keep, including the non-author review rule for tooling and the hardened `smoke.py`. Unchanged: shipped work, safety guards, the sandboxed Decider runner, TFDD, trust ladder, bootstrap phase, escalation and safety carve-out, Goodhart guard, LLMs-as-customers.
 
-## Async and events: keyword seeds (Steve's input, Decider D21, 2026-10-26)
+## Async and events: keyword seeds (the product owner's input, Decider D21, 2026-10-26)
 
 Not cards yet, by D21 and the bootstrap phase: wait for the ADR (059), the spike (061) and the demand evidence (060). Each would be a thin card on the base library after those: (1) "run {tasks} in parallel and collect the results" (input-ordered results, failure aggregation); (2) "process {items} concurrently, at most {n} at a time" (in-flight never exceeds n, proven by a controlled scheduler); (3) "publish {event}" with an observer keyword (the handler sentence must not start with the line-start word `when`); (4) a timeout / cancel sentence (declared failure code, virtual clock). Effects named by the language designer: Scheduler, Clock, Cancellation, Events. Usable v1 does not need any of this (Tasks demo: no; status API 038 first slice: no).
 
 ## P1 occurrence count and the 018 stall (2026-10-26)
 
-P1 (no turn ends with the next action running) had a third occurrence today, and Steve's direction is that the loop lives in the tooling ("it should be a loop"; cards 063 to 070). The 018 stop itself was an ENVIRONMENT fault (the .NET 8 runtime not on the mob shell's path after I restarted the run from a new shell), counted in the defect ledger as class T (tooling, ledger row 1 class); card 065 pins the toolchain so it cannot be forgotten. Slicing trial data point: 018 (code only, four behaviours) took two runs and 6 cycles, but the cap hits were the environment fault, not size; all four behaviours passed after the first run.
+P1 (no turn ends with the next action running) had a third occurrence today, and the product owner's direction is that the loop lives in the tooling ("it should be a loop"; cards 063 to 070). The 018 stop itself was an ENVIRONMENT fault (the .NET 8 runtime not on the mob shell's path after I restarted the run from a new shell), counted in the defect ledger as class T (tooling, ledger row 1 class); card 065 pins the toolchain so it cannot be forgotten. Slicing trial data point: 018 (code only, four behaviours) took two runs and 6 cycles, but the cap hits were the environment fault, not size; all four behaviours passed after the first run.
 
 ## Run 063 stopped at the Ready check (2026-10-26, exit 3): same class as card 036's three wasted starts
 
 The PM said NOT READY: (1) the thin cards' "Done checks" were not in Given/When/Then form, and (2) `board/MILESTONE-usable-v1.md` and card 062 are not in the mob-defaults repo, so the PM could not verify them. The card was written for the Phrase repo but run in mob-defaults. Fixed in the tooling cards (062, 063 to 070, 072): absolute read-only paths to the Phrase board, and Given/When/Then criteria. Lasting fix candidates for the retro: the card template for tooling cards (absolute paths and G/W/T by default); P4 auto-fresh; and the loop's picker (card 063) should run the Ready check itself and park a card that fails it, not stop. The watchdog caught this only after a nudge: P1 again (a run that stops at exit 3 needs the loop to react, which is cards 063 to 067).
 
-## Agile lens for the next retro (Steve's ruling, 2026-10-26; VISION ruling 6)
+## Agile lens for the next retro (the product owner's ruling, 2026-10-26; VISION ruling 6)
 
-Steve: "Just for general direction, I want this to aim toward agile philosophy. It's a common temptation to skew toward spec-heavy up-front planning. We should avoid this temptation despite building effectively a spec for planning. Iteration and incremental is the key to successful development." Apply it as a lens: where are we over-specifying up front? Candidates to examine with data: Done-when lists and acceptance criteria written long before a card's turn (the board holds ~80 cards, most written ahead of need); cards 077 to 083 and the loop cards 064 to 072 as a plan; the number of Deciders and records per small change; the keyword, actor and async ADRs placed before a working slice; and ceremony per card (task force, review, retro) versus the size of the increment. Questions for the retro: which cards should be deleted or merged until their turn, which ADRs should wait for a spike, and what is the smallest working increment that could replace each plan. Measure: share of effort on planning artefacts versus working increments, and cards written but not pulled within a week.
+product owner: "Just for general direction, I want this to aim toward agile philosophy. It's a common temptation to skew toward spec-heavy up-front planning. We should avoid this temptation despite building effectively a spec for planning. Iteration and incremental is the key to successful development." Apply it as a lens: where are we over-specifying up front? Candidates to examine with data: Done-when lists and acceptance criteria written long before a card's turn (the board holds ~80 cards, most written ahead of need); cards 077 to 083 and the loop cards 064 to 072 as a plan; the number of Deciders and records per small change; the keyword, actor and async ADRs placed before a working slice; and ceremony per card (task force, review, retro) versus the size of the increment. Questions for the retro: which cards should be deleted or merged until their turn, which ADRs should wait for a spike, and what is the smallest working increment that could replace each plan. Measure: share of effort on planning artefacts versus working increments, and cards written but not pulled within a week.
 
 ## Smoke run findings after the persona standard (2026-10-26, found while closing card 064)
 
@@ -130,13 +130,13 @@ Rerun of the 8 development tasks (label rerun-085): 2 passed at parse-resolve (0
 
 ## Stall pattern evidence: untracked background work (2026-10-27, for the next retro; P1, now the fifth-plus occurrence)
 
-Steve's watchdog nudges kept finding the mob idle although work was in flight. Root cause, found by Steve in the facilitator's own reports ("task not tracked"): the facilitator launched reviews as UNTRACKED background processes (a shell `&` inside a command, or a Decider run in a subshell) and then ended its turn. A tracked background task (the tool's run_in_background) wakes the facilitator with a completion notification; an untracked one wakes nothing, so the mob idled until a human nudged it. Earlier occurrences, same class: a run stopping at exit 3 with no reaction (063), the .NET 8 environment fault stopping 018, the ledger of idle gaps in the defect table. Rule adopted effective 2026-10-27 until the loop runner drives the facilitator: (1) never end a turn with untracked background work; run checks in the foreground (block on them, capped at 10 minutes per call) or as tracked background tasks; (2) if something cannot be tracked, poll it with a bounded sleep loop inside the turn; (3) end a turn only when the next action needs a human or Dispatch, and say which. Metric for the retro: idle gaps per day and minutes between a background job finishing and the next action; fix of the cause is the loop runner (cards 064 to 072, paused behind the head-to-head by Steve's lean).
+the product owner's watchdog nudges kept finding the mob idle although work was in flight. Root cause, found by product owner in the facilitator's own reports ("task not tracked"): the facilitator launched reviews as UNTRACKED background processes (a shell `&` inside a command, or a Decider run in a subshell) and then ended its turn. A tracked background task (the tool's run_in_background) wakes the facilitator with a completion notification; an untracked one wakes nothing, so the mob idled until a human nudged it. Earlier occurrences, same class: a run stopping at exit 3 with no reaction (063), the .NET 8 environment fault stopping 018, the ledger of idle gaps in the defect table. Rule adopted effective 2026-10-27 until the loop runner drives the facilitator: (1) never end a turn with untracked background work; run checks in the foreground (block on them, capped at 10 minutes per call) or as tracked background tasks; (2) if something cannot be tracked, poll it with a bounded sleep loop inside the turn; (3) end a turn only when the next action needs a human or Dispatch, and say which. Metric for the retro: idle gaps per day and minutes between a background job finishing and the next action; fix of the cause is the loop runner (cards 064 to 072, paused behind the head-to-head by the product owner's lean).
 
 ## Real-CLI probes caught what fakes hid (2026-10-27, for the next retro)
 
 During cards 084 to 091 the unit tests with fake CLIs passed while the real CLIs disagreed, five times: Grok's `--disallowed-tools all` removes no tool (the explicit tool-id list does); Copilot's `--deny-tool '*'` is an invalid rule (the categories shell, write, read, url work); a Windows command line ends at the first newline so a multi-line prompt cannot travel as `-p` text; the reference test depended on the default runtime; a README claimed green for a failing test. Candidate lessons: any card that launches a CLI gets a real-CLI probe in its Done-when (the smoke run, card to fix it is queued behind the head-to-head), and fakes are written from the real CLI's recorded behaviour. This is the P6 finding again (tooling held to the product's standard) with data.
 
-## Waiting rule: cap every wait (Steve via Dispatch, 2026-10-27)
+## Waiting rule: cap every wait (product owner via Dispatch, 2026-10-27)
 
 Waiting on a reviewer or author is fine, but capped: if a reviewer or author has not returned within 30 minutes past its expected time, treat it as HUNG. Capture whatever evidence it left (its output file, its partial result), kill ONLY its own PID (never by name), and either re-run the review with the next driver in the rotation or record it as a driver failure, then move on. Never wait indefinitely inside one turn: the user's messages cannot reach the facilitator until the turn ends. Practice: every handoff is a tracked background task (its completion wakes the facilitator) or a foreground wait of at most 10 minutes per call; the expected finish time is stated when the work is handed off so the 30-minute cap is computable.
 

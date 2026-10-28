@@ -605,6 +605,7 @@ class AgreementTests(unittest.TestCase):
         self.assertIn('python "$top/scripts/check-no-secrets.py"', hook)
         self.assertIn('python "$top/scripts/check-unsafe-deletes.py"', hook)
         self.assertIn('python "$top/scripts/check-no-holdout-in-tracked-files.py"', hook)
+        self.assertIn('python "$top/scripts/check-no-personal-names.py"', hook)
 
 
 if __name__ == "__main__":

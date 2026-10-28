@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Mechanical guard for Steve's safety rules (a ban with no detector isn't in force).
+"""Mechanical guard for the product owner's safety rules (a ban with no detector isn't in force).
 
   * Never recursively delete a variable or computed path (a BaccaratSim agy dispatch once deleted PowerShell 7, ~/.dotnet,
     ~/.ssh and more by running rm -rf on a temp-dir variable that expanded wrong).

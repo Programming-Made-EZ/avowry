@@ -32,8 +32,8 @@ public sealed class PrivateHoldoutResults
         var committedBefore = SnapshotCommittedHistories();
 
         // When both arms run with a private results path
-        var phrasePrivate = await RunArm("Phrase.Bench", phraseSuite, "steve-phrase-v1", WriteFakeModel(workspace.Root, "phrase-private.cmd", "phrase-private.sh", phraseReply, phrasePrivateCapture), privateRows);
-        var csharpPrivate = await RunArm("Phrase.BenchCs", csharpSuite, "steve-csharp-v1", WriteFakeModel(workspace.Root, "csharp-private.cmd", "csharp-private.sh", csharpReply, csharpPrivateCapture), privateRows);
+        var phrasePrivate = await RunArm("Phrase.Bench", phraseSuite, "fixture-phrase-v1", WriteFakeModel(workspace.Root, "phrase-private.cmd", "phrase-private.sh", phraseReply, phrasePrivateCapture), privateRows);
+        var csharpPrivate = await RunArm("Phrase.BenchCs", csharpSuite, "fixture-csharp-v1", WriteFakeModel(workspace.Root, "csharp-private.cmd", "csharp-private.sh", csharpReply, csharpPrivateCapture), privateRows);
 
         // Then the committed history files stay byte-identical and the private file holds the rows
         Assert.True(phrasePrivate.ExitCode == 0, phrasePrivate.Stdout + phrasePrivate.Stderr);
@@ -50,8 +50,8 @@ public sealed class PrivateHoldoutResults
         Assert.Contains(HoldoutLabel, privateText, StringComparison.Ordinal);
 
         // When the same holdout-looking arms run again without the private path
-        var phraseDefault = await RunArm("Phrase.Bench", phraseSuite, "steve-phrase-v1", WriteFakeModel(workspace.Root, "phrase-default.cmd", "phrase-default.sh", phraseReply, phraseDefaultCapture), privateResults: null);
-        var csharpDefault = await RunArm("Phrase.BenchCs", csharpSuite, "steve-csharp-v1", WriteFakeModel(workspace.Root, "csharp-default.cmd", "csharp-default.sh", csharpReply, csharpDefaultCapture), privateResults: null);
+        var phraseDefault = await RunArm("Phrase.Bench", phraseSuite, "fixture-phrase-v1", WriteFakeModel(workspace.Root, "phrase-default.cmd", "phrase-default.sh", phraseReply, phraseDefaultCapture), privateResults: null);
+        var csharpDefault = await RunArm("Phrase.BenchCs", csharpSuite, "fixture-csharp-v1", WriteFakeModel(workspace.Root, "csharp-default.cmd", "csharp-default.sh", csharpReply, csharpDefaultCapture), privateResults: null);
 
         // Then both arms refuse before launching a model or publishing any task-derived row
         Assert.NotEqual(0, phraseDefault.ExitCode);
@@ -69,16 +69,16 @@ public sealed class PrivateHoldoutResults
         Assert.False(File.Exists(HistoryPath(phraseSuite)));
         Assert.False(File.Exists(HistoryPath(csharpSuite)));
 
-        var phrasePrivateRow = JsonDocument.Parse(privateLines.Single(line => line.Contains("steve-phrase-v1", StringComparison.Ordinal)));
-        var csharpPrivateRow = JsonDocument.Parse(privateLines.Single(line => line.Contains("steve-csharp-v1", StringComparison.Ordinal)));
+        var phrasePrivateRow = JsonDocument.Parse(privateLines.Single(line => line.Contains("fixture-phrase-v1", StringComparison.Ordinal)));
+        var csharpPrivateRow = JsonDocument.Parse(privateLines.Single(line => line.Contains("fixture-csharp-v1", StringComparison.Ordinal)));
 
         var summary = Path.Combine(workspace.Root, "summary.json");
         var summarized = RunPython(RepoPaths.Find("scripts", "summarize-private-results.py"), privateRows, "--out", summary);
         Assert.True(summarized.ExitCode == 0, summarized.Stdout + summarized.Stderr);
         AssertNumbersOnly(summary, phrasePrivateRow.RootElement.GetProperty("prompt_hash").GetString()!);
         using var live = JsonDocument.Parse(File.ReadAllText(summary));
-        var phraseGroup = Group(live, "phrase", "steve-phrase-v1");
-        var csharpGroup = Group(live, "csharp", "steve-csharp-v1");
+        var phraseGroup = Group(live, "phrase", "fixture-phrase-v1");
+        var csharpGroup = Group(live, "csharp", "fixture-csharp-v1");
         Assert.Equal("", phraseGroup.GetProperty("kind").GetString());
         Assert.Equal(1, phraseGroup.GetProperty("count").GetInt32());
         Assert.Equal(1, phraseGroup.GetProperty("completed_count").GetInt32());
@@ -103,8 +103,8 @@ public sealed class PrivateHoldoutResults
         Assert.True(docsRun.ExitCode == 0, docsRun.Stdout + docsRun.Stderr);
         AssertNumbersOnly(docsSummary, "unused-prompt-hash");
         using var docs = JsonDocument.Parse(File.ReadAllText(docsSummary));
-        var docsPhrase = Group(docs, "phrase", "steve-phrase-v1");
-        var docsCSharp = Group(docs, "csharp", "steve-csharp-v1");
+        var docsPhrase = Group(docs, "phrase", "fixture-phrase-v1");
+        var docsCSharp = Group(docs, "csharp", "fixture-csharp-v1");
         Assert.Equal(2, docsPhrase.GetProperty("count").GetInt32());
         Assert.Equal(0.5, docsPhrase.GetProperty("pass_rate").GetDouble(), 6);
         Assert.Equal(2d, docsPhrase.GetProperty("mean_attempts").GetDouble(), 6);
@@ -128,7 +128,7 @@ public sealed class PrivateHoldoutResults
             var committedBefore = SnapshotCommittedHistories();
 
             // When the Phrase arm is run without --private-results
-            var result = await RunArm("Phrase.Bench", suite, "steve-phrase-v1", WriteFakeModel(root, "ignored.cmd", "ignored.sh", reply, capture), privateResults: null);
+            var result = await RunArm("Phrase.Bench", suite, "fixture-phrase-v1", WriteFakeModel(root, "ignored.cmd", "ignored.sh", reply, capture), privateResults: null);
 
             // Then the ignored-path rule refuses without exposing task text or launching the model
             Assert.NotEqual(0, result.ExitCode);
@@ -338,7 +338,7 @@ public sealed class PrivateHoldoutResults
         """;
 
     private const string DocsRows =
-        "{\"model\":\"steve-phrase-v1\",\"task\":\"" + TaskId + "\",\"status\":\"completed\",\"passed\":true,\"attempts\":1,\"tokens_in\":60,\"tokens_out\":40,\"reply_head\":\"" + ReplyMarker + "\",\"prompt\":\"" + PromptMarker + "\",\"label\":\"" + HoldoutLabel + "\",\"mode\":\"docs-in-context\",\"kind\":\"write\",\"documentation_tokens\":25}\n"
-        + "{\"model\":\"steve-phrase-v1\",\"task\":\"H2\",\"status\":\"completed\",\"passed\":false,\"attempts\":3,\"tokens_in\":20,\"tokens_out\":0,\"reply_head\":\"" + ReplyMarker + " extra reply text\",\"prompt\":\"" + PromptMarker + "\",\"label\":\"" + HoldoutLabel + "\",\"mode\":\"docs-in-context\",\"kind\":\"write\",\"documentation_tokens\":5}\n"
-        + "{\"model\":\"steve-csharp-v1\",\"task\":\"" + TaskId + "\",\"status\":\"completed\",\"passed\":false,\"attempts\":3,\"tokens_in\":10,\"tokens_out\":10,\"reply_head\":\"" + ReplyMarker + "\",\"label\":\"" + HoldoutLabel + "\",\"mode\":\"plain-csharp\",\"kind\":\"write\",\"documentation_tokens\":10}\n";
+        "{\"model\":\"fixture-phrase-v1\",\"task\":\"" + TaskId + "\",\"status\":\"completed\",\"passed\":true,\"attempts\":1,\"tokens_in\":60,\"tokens_out\":40,\"reply_head\":\"" + ReplyMarker + "\",\"prompt\":\"" + PromptMarker + "\",\"label\":\"" + HoldoutLabel + "\",\"mode\":\"docs-in-context\",\"kind\":\"write\",\"documentation_tokens\":25}\n"
+        + "{\"model\":\"fixture-phrase-v1\",\"task\":\"H2\",\"status\":\"completed\",\"passed\":false,\"attempts\":3,\"tokens_in\":20,\"tokens_out\":0,\"reply_head\":\"" + ReplyMarker + " extra reply text\",\"prompt\":\"" + PromptMarker + "\",\"label\":\"" + HoldoutLabel + "\",\"mode\":\"docs-in-context\",\"kind\":\"write\",\"documentation_tokens\":5}\n"
+        + "{\"model\":\"fixture-csharp-v1\",\"task\":\"" + TaskId + "\",\"status\":\"completed\",\"passed\":false,\"attempts\":3,\"tokens_in\":10,\"tokens_out\":10,\"reply_head\":\"" + ReplyMarker + "\",\"label\":\"" + HoldoutLabel + "\",\"mode\":\"plain-csharp\",\"kind\":\"write\",\"documentation_tokens\":10}\n";
 }

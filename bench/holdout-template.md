@@ -1,7 +1,7 @@
 <!-- nonce: REPLACE-WITH-32-RANDOM-HEX-CHARACTERS-GENERATED-WHEN-YOU-WRITE-THE-TASK -->
 # Holdout task H<n>: <short neutral title>
 
-This is the TEMPLATE for a sealed holdout task (Decider D32; Steve's priority ruling 2026-10-26). One task is ONE file, UTF-8, LF line endings, no BOM,
+This is the TEMPLATE for a sealed holdout task (Decider D32; the product owner's priority ruling 2026-10-26). One task is ONE file, UTF-8, LF line endings, no BOM,
 named `H<n>-<kind>.md` (for example `H1-write.md`, `H2-modify.md`, `H3-write.md`). Written OUTSIDE the mob by someone who will not drive or review cards 086 to 088.
 The mob never reads it before card 088 unseals it. The file is neutral: it names no language. The harness derives the Phrase prompt and the plain-C# prompt from it with the SAME wrapper,
 so nothing here may favour either language.

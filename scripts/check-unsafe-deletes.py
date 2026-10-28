@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Fail a commit that ADDS a recursive delete of a variable or unresolved path, or a kill by process name, in a script or
-source file. Steve's safety rules ("a ban with no detector isn't in force"). Used by .githooks/pre-commit.
+source file. the product owner's safety rules ("a ban with no detector isn't in force"). Used by .githooks/pre-commit.
 
 The detector is scripts/delete_guard.py, a copy of mob-defaults/delete_guard.py (keep them in sync). Use safe_delete from it
 instead of deleting a computed path yourself. Docs (.md) are not scanned: they describe the rule.
@@ -44,7 +44,7 @@ def main():
             for finding in delete_guard.find_unsafe(text):
                 problems.append(f"{name}:{number}: {finding.kind}: {finding.snippet}")
     if problems:
-        print("pre-commit: unsafe delete or kill added (Steve's safety rules):", file=sys.stderr)
+        print("pre-commit: unsafe delete or kill added (the product owner's safety rules):", file=sys.stderr)
         for p in problems[:10]:
             print("  " + p, file=sys.stderr)
         print("  Use delete_guard.safe_delete(path, roots) for deletes; kill only by exact PID.", file=sys.stderr)

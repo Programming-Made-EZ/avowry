@@ -5,18 +5,18 @@ facilitator refuses to start a card in a repo without this file.
 
 How we work lives here. Process improvements land in **Practices** at a retro; they are never board cards.
 The mechanics (flags, scripts) live in the mob-crosscli docs. Seeded from the play-tracker mob's agreement,
-generic parts only. Adopted 2026-10-25 by the mob facilitator on Steve's standing instruction that every mob has an agreement.
+generic parts only. Adopted 2026-10-25 by the mob facilitator on the product owner's standing instruction that every mob has an agreement.
 
 ## North star
 
-[VISION.md](VISION.md) is the purpose of Phrase, from Steve's ruling. **Product decisions are judged against it**,
+[VISION.md](VISION.md) is the purpose of Phrase, from the product owner's ruling. **Product decisions are judged against it**,
 at every Decider that touches the product, and the board and milestones are assessed against it. A question about
-the product's purpose or direction is answered by VISION.md first; it escalates to Steve only if VISION.md does not
+the product's purpose or direction is answered by VISION.md first; it escalates to product owner only if VISION.md does not
 settle it.
 
 ## Task-Force Driven Development (TFDD)
 
-Steve: "we'll call this Task-Force Driven Development. where a task force is assembled."
+product owner: "we'll call this Task-Force Driven Development. where a task force is assembled."
 
 Before each card, a **task force** is assembled: every role the work actually needs, and only those. The standard
 roles (PM, architect, QA, devs, UX, security, agile coach, enablement, DevOps, domain expert) are a menu to
@@ -29,44 +29,44 @@ an assignee (model or seat) and a one-line why. There is no minimum or maximum r
 - **Correctness over speed, but speed matters.** Never ship on a claim nobody independently reproduced.
 - **Evidence over vibes.** Findings, retro items and "it works" are grounded in a log line, a timestamp or a
   re-run command.
-- **Respect Steve's attention.** He is one person on a phone. Decide what the team can decide; ask only what
+- **Respect the product owner's attention.** He is one person on a phone. Decide what the team can decide; ask only what
   needs him, and ask it so one word answers it.
 - **The team owns outcomes, not tasks.** Done means a verified, user-observable increment on main.
 
 ## 2. Principles
 
-- **Bishop's Law** (Steve Bishop, 2025): "Work done in async requires a resync. As the work complexity
+- **Bishop's Law** (the product owner, 2025): "Work done in async requires a resync. As the work complexity
   increases, so does the resync complexity. Revised: parallel (independent) streams R = O(α log C + β);
   concurrent (conflicting) streams R = O(α C + β), where C is total async work complexity, α the scaling
   factor, and β the fixed overhead. Design improvements can reduce, but not always eliminate, resync
   complexity; naive async approaches linear or worse."
-  *Applied (revised 2026-10-26, Steve's correction, Decider D22):* Steve: "it still fits with Bishop's Law. For parallelism to work efficiently the work must be atomistic. Once dependencies are introduced true parallelism cannot be achieved." A task that is
+  *Applied (revised 2026-10-26, the product owner's correction, Decider D22):* product owner: "it still fits with Bishop's Law. For parallelism to work efficiently the work must be atomistic. Once dependencies are introduced true parallelism cannot be achieved." A task that is
   atomistic and dependency-free is the cheap **parallel** class, R = O(alpha log C + beta): its `Depends on:` line is `none` and it shares no files with another in-flight task,
   so it may run in its own worktree from current main, with merges serialized as fast-forwards. A task that names a dependency, edits files another in-flight task edits, or shares
   state is the **concurrent** class, R = O(alpha C + beta), and stays **WIP-of-one**: one card, one TDD cycle, one driver, one linear trunk in flight. Sharing the gate is the fixed
   overhead beta. Every card has a `Depends on:` line (a missing line does not mean none). A merge conflict reclassifies that pair as concurrent: the later task is discarded and
   retried from the new main.
-- **Land or discard (experiment, Decider D22, under trial; not yet doctrine).** Steve: "it feels like work should be done atomistically. that way it gets an all or nothing result.
+- **Land or discard (experiment, Decider D22, under trial; not yet doctrine).** product owner: "it feels like work should be done atomistically. that way it gets an all or nothing result.
   the smaller and more atomistic the better. this makes retries easier and more distributable." Each task starts from current main in a fresh worktree and ends in exactly one state:
   LANDED (every check passes, a non-author has reviewed it, one commit on main) or DISCARDED (the linked worktree is removed with `git worktree remove` and, only for a strict child of a
   registered scratch root, `safe_delete`; nothing from the attempt remains on main or in a stash). A retry starts clean; the attempt's log lives outside the worktree and is never the
   seed of the next attempt. Metrics: retries per task, partial-state incidents (stashes, uncommitted carry-over), time to land. Counter-metric: merge conflicts and resync overhead from
   parallel work. Review after the first three thin cards that use it; the trial Decider keeps, changes or drops it.
-- **Agile: iterate and increment (Steve, 2026-10-26; VISION ruling 6).** "I want this to aim toward agile philosophy. It's a common temptation to skew toward spec-heavy up-front planning. We should avoid this temptation despite building effectively a spec for planning. Iteration and incremental is the key to successful development." So: specify only as much as the next slice needs; prefer a working increment over a longer plan; let design emerge slice by slice; and ask at every retro, in the process category, "where are we over-specifying up front?" (long Done-when lists, cards written far ahead of their turn, ceremony per card, designs decided before evidence). A signal to watch, never a quota; the thin-slice rules (D18) are an application of it.
+- **Agile: iterate and increment (product owner, 2026-10-26; VISION ruling 6).** "I want this to aim toward agile philosophy. It's a common temptation to skew toward spec-heavy up-front planning. We should avoid this temptation despite building effectively a spec for planning. Iteration and incremental is the key to successful development." So: specify only as much as the next slice needs; prefer a working increment over a longer plan; let design emerge slice by slice; and ask at every retro, in the process category, "where are we over-specifying up front?" (long Done-when lists, cards written far ahead of their turn, ceremony per card, designs decided before evidence). A signal to watch, never a quota; the thin-slice rules (D18) are an application of it.
 - **The Phrase Board on GitHub Projects (project 1 under Programming-Made-EZ, private) is the single source of truth.** `board/` is a generated read-only archive (`scripts/board/generate_archive.py`). The loop and the retro re-rank hook write Rank and Status to the project only, after a passed Decider, skipping any card whose Rank is newer than the Decider's snapshot. Card text is edited on the issue. Work is pulled from the top of the ranked Ready list.
-  A feature idea from Steve is RAW INPUT: the mob reviews it, refines it into a card (a Connextra story
-  plus ZOMBIES acceptance criteria a user can observe), and the PM ranks it. Steve gets back the card
+  A feature idea from product owner is RAW INPUT: the mob reviews it, refines it into a card (a Connextra story
+  plus ZOMBIES acceptance criteria a user can observe), and the PM ranks it. product owner gets back the card
   number, its position and any one-word question, never a design plan to approve. The board holds only
   product bugs and user stories; process changes live in this file.
 - **Decide reversible things yourself.** If a flag or a later card can undo it, record the assumption and
-  move on. Model disagreements go through the **Decider protocol** first. Escalate to Steve only what the
+  move on. Model disagreements go through the **Decider protocol** first. Escalate to product owner only what the
   **Escalation** rule below allows.
 - **Independence of review.** A reviewer did not author the patch, starts from a fresh context, and shows
   evidence (commands and real output). Prefer a different model family.
-- **Goodhart's Law.** Metrics inform judgment; no number is ever the goal.
+- **Goodhart's Law.** Metrics are evidence for judgment; no number is the goal, and a verdict is a judgment backed by data, not a stamp against a threshold.
 - **A rule without a detector isn't in force.** Prefer a mechanical check at a named transition to a
   promise to remember.
-- **Steve works from his phone.** No `AskUserQuestion`, no popups, no approval dialogs, no open-ended
+- **product owner works from his phone.** No `AskUserQuestion`, no popups, no approval dialogs, no open-ended
   review requests.
 
 ## 3. Practices
@@ -80,7 +80,7 @@ an assignee (model or seat) and a one-line why. There is no minimum or maximum r
   each test as sensitive as before.
 - **Trunk-based development.** Each green increment ships to main as soon as the gate is green; no
   long-lived branches. The gate (tests, zero warnings, any CI) passes before anything deploys.
-- **No `Co-Authored-By` trailers on commits** (Steve's standing coding rule). This covers drivers, the facilitator and
+- **No `Co-Authored-By` trailers on commits** (the product owner's standing coding rule). This covers drivers, the facilitator and
   the MOB.md publisher. A `commit-msg` hook (`.githooks/commit-msg`, enabled with `git config core.hooksPath .githooks`)
   rejects them. Pushed history is not rewritten.
 - **Vertical slices.** Every slice has a user-observable acceptance criterion.
@@ -89,8 +89,8 @@ an assignee (model or seat) and a one-line why. There is no minimum or maximum r
 
 ### Board and cards
 
-- **Card shapes (Steve, 2026-10-26; Decider D28).** A card is a STORY or a CONTRACT. A STORY is the why: As <persona from PERSONAS.md>, I want <capability that persona can observe>, so that <value that persona gets>, with acceptance criteria the persona can observe. A CONTRACT is the how, for a low-level piece no persona can observe directly (the resolver, emitter internals, a keyword implementation, an adapter seam); its ACTOR is a SYSTEM ACTOR, the component outside the unit that interacts with it (the calling phrase, the next compiler stage, an adapter, the generated program at runtime), not a person. An actor, in the UML and use-case sense (Steve's ruling, 2026-10-26), is anyone or anything outside the system that interacts with it: a persona is a HUMAN actor, a contract's actor is a SYSTEM actor: `Shape: Contract`, `Actor:` the system actor (the interacting component), `Given:` its inputs, `Observes:` the output the consumer can tell from a wrong result, `Fails with:` codes (or none), `Invariants:` checkable truths, `Enables:` the Story card(s) it serves. A card is a Contract ONLY when no persona can observe the outcome; persona-observable compiler work stays a Story. NO ORPHANS: every Contract enables at least one Story, and is cut from a failing persona-level acceptance test (outside-in TDD, consumer-driven contracts). Specs on either shape state an outcome observed by someone (a persona, or the consuming component), never a bare "succeeds", "compiles" or "does not throw". The Ready check accepts either shape and REJECTS a role-only story, a design-goal benefit, a person or role as a contract's consumer, a bare-success observation and an orphan contract. A Contract ranks behind the Story it enables unless that Story is Done.
-- **Definition of Ready:** top of Ready; a Connextra story that names a PERSONA from `PERSONAS.md` (a specific user with context, goals and constraints, never a generic role such as "an engineer (or an LLM)") and a "so that" that is value THAT persona gets (not an internal design goal; Steve, 2026-10-26: "this is a role, not a persona"); the Ready check REJECTS a role-only story or a design-goal benefit; ZOMBIES acceptance criteria (Zero, One, Many,
+- **Card shapes (product owner, 2026-10-26; Decider D28).** A card is a STORY or a CONTRACT. A STORY is the why: As <persona from PERSONAS.md>, I want <capability that persona can observe>, so that <value that persona gets>, with acceptance criteria the persona can observe. A CONTRACT is the how, for a low-level piece no persona can observe directly (the resolver, emitter internals, a keyword implementation, an adapter seam); its ACTOR is a SYSTEM ACTOR, the component outside the unit that interacts with it (the calling phrase, the next compiler stage, an adapter, the generated program at runtime), not a person. An actor, in the UML and use-case sense (the product owner's ruling, 2026-10-26), is anyone or anything outside the system that interacts with it: a persona is a HUMAN actor, a contract's actor is a SYSTEM actor: `Shape: Contract`, `Actor:` the system actor (the interacting component), `Given:` its inputs, `Observes:` the output the consumer can tell from a wrong result, `Fails with:` codes (or none), `Invariants:` checkable truths, `Enables:` the Story card(s) it serves. A card is a Contract ONLY when no persona can observe the outcome; persona-observable compiler work stays a Story. NO ORPHANS: every Contract enables at least one Story, and is cut from a failing persona-level acceptance test (outside-in TDD, consumer-driven contracts). Specs on either shape state an outcome observed by someone (a persona, or the consuming component), never a bare "succeeds", "compiles" or "does not throw". The Ready check accepts either shape and REJECTS a role-only story, a design-goal benefit, a person or role as a contract's consumer, a bare-success observation and an orphan contract. A Contract ranks behind the Story it enables unless that Story is Done.
+- **Definition of Ready:** top of Ready; a Connextra story that names a PERSONA from `PERSONAS.md` (a specific user with context, goals and constraints, never a generic role such as "an engineer (or an LLM)") and a "so that" that is value THAT persona gets (not an internal design goal; product owner, 2026-10-26: "this is a role, not a persona"); the Ready check REJECTS a role-only story or a design-goal benefit; ZOMBIES acceptance criteria (Zero, One, Many,
   Boundaries, Interface, Exceptions) with a user-observable outcome; no unverified external dependency.
 - **Retro after every Done card**, before the next card is pulled. It **opens with flow metrics** taken from
   timestamps: commit-to-main time, time waiting on gates or reviews, and minutes lost to failed or retried
@@ -99,19 +99,20 @@ an assignee (model or seat) and a one-line why. There is no minimum or maximum r
 - **Process work** is chosen only at a retro, states its user benefit, and is timeboxed to one or two
   cycles. Stop-the-line exceptions only: data loss, a security hole, a broken trunk.
 
-### Continuous loop (standing rule, Steve, 2026-10-25)
+### Continuous loop (standing rule, product owner, 2026-10-25)
 
 The mob runs continuously: card → ship each green increment → Done → retro → PM re-ranks → pull the next
 top card → repeat. It does not stop between cards or wait for pings. It stops only when the board's Ready
-column is empty AND the retro produced no new cards, or when Steve says stop. WIP stays at one card.
+column is empty AND the retro produced no new cards, or when product owner says stop. WIP stays at one card.
 
-### LLMs are the customers (standing rule, Steve, 2026-10-25)
+### LLMs are the customers (standing rule, product owner, 2026-10-25)
 
 Phrase's target consumer is LLMs, so every model in the rotation (Codex, Copilot, Grok, agy/Gemini, and
 Claude as a voice) is a source of product ideas.
 
 - **Every retro covers four categories:** Individual, Team, Organization and **Product**, and opens with
   flow metrics.
+- **In the product category, also ask who else would use or be affected by the product, and whether they are represented in `PERSONAS.md`.** The product's value is defined by the people and actors it serves: a missing persona means missing value and missing measurements. If a user type turns up that the file does not hold, add a persona with context, goals, pain points and constraints (examples of user types that can be missing: a reviewer approving AI-written changes, a team lead setting library and architecture standards, a newcomer reading an unfamiliar codebase, a cheaper or smaller model acting as an author). Then check whether existing or new cards should serve them, and say so in the retro entry.
 - **Product feedback is gathered from each available model, in parallel and cheaply, as evidence and not
   opinion polling.** Each model reads the current `docs/GRAMMAR.md` plus a sample `.phrase` file, then
   writes or modifies a small phrase. It reports where it struggled (ambiguity, wasted tokens, misread
@@ -121,36 +122,36 @@ Claude as a voice) is a source of product ideas.
   weighs value against effort and fit with Phrase's principles ("the code is the context", specs are
   truth). Winners are refined into Connextra + ZOMBIES cards and ranked on the board. **Every rejected
   idea is recorded with the reason it was rejected** (in the retro entry).
-- **After each retro the facilitator reports to Steve** which cards came from model feedback and their
+- **After each retro the facilitator reports to product owner** which cards came from model feedback and their
   board ranks.
 
-### Escalation (standing rule, Steve, 2026-10-25)
+### Escalation (standing rule, product owner, 2026-10-25)
 
-Steve: "The only thing that bubbles to me is general direction for purpose of the new language or
+product owner: "The only thing that bubbles to me is general direction for purpose of the new language or
 conflicting opinions from the models. However there is also the decider protocol for conflicting views."
 
 - **The mob decides everything else itself:** features, syntax details, priorities, implementation and
-  tooling. Do not ask Steve.
+  tooling. Do not ask product owner.
 - **Model disagreement** (retro product feedback, design debates, reviews): run the Decider protocol first.
 - **Whether anything escalates is itself decided by a Decider.**
-- **Escalate to Steve ONLY if** (a) the question is about the language's overall purpose or direction
+- **Escalate to product owner ONLY if** (a) the question is about the language's overall purpose or direction
   (what Phrase is for, or who it serves), or (b) a model conflict the Decider could not resolve.
 - **Format:** one short message with the options, each model's position in one line, and a recommendation;
   answerable in one word.
-- **Safety carve-out (does not widen what gets escalated):** actions outside the mob's authority still need Steve's
+- **Safety carve-out (does not widen what gets escalated):** actions outside the mob's authority still need the product owner's
   explicit OK before execution, presented as a one-word ask: destructive or irreversible changes to production or user
   data, spending money, security or privacy exposure, and external commitments. Phrase specifics: publishing a package
   or release (an external commitment) and any spend beyond the prepaid driver allotments.
 
 ### Decider protocol (the default for every team decision)
 
-Steve: "any decision should probably go through this process." The Decider settles conflicts, and it is also how
+product owner: "any decision should probably go through this process." The Decider settles conflicts, and it is also how
 the team decides things in the first place.
 
 **What goes through it:** the task force (at kickoff and every mid-card addition), card refinement and acceptance
 criteria, PM ranking and re-ranking, design and architecture choices, keeping or reverting a feature on benchmark
 data, declaring a card Done, milestones and their targets, retro picks and process experiments, trust-ladder
-promotions and demotions, benchmark suite changes, and whether anything escalates to Steve.
+promotions and demotions, benchmark suite changes, and whether anything escalates to product owner.
 
 **Not a Decider:** the driver's moment-to-moment implementation choices inside an increment. Those are covered by
 independent review, and any reviewer objection becomes a Decider proposal.
@@ -179,14 +180,14 @@ assignee and why it is needed; if it passes, the role is added to the card's `##
 a pointer to the record (`| joined: cycle 2 | decider: D3`). Card mode refuses a mid-card role that carries no
 `decider:` reference or whose Decider record is missing or did not pass.
 
-### Milestones and hypothesis-driven work (standing rule, Steve, 2026-10-25)
+### Milestones and hypothesis-driven work (standing rule, product owner, 2026-10-25)
 
-Steve: "the mob should also set milestones for themselves and use hypothesis to determine if new feature
+product owner: "the mob should also set milestones for themselves and use hypothesis to determine if new feature
 ideas work. ideally they should be data driven."
 
 - **Self-set milestones.** The mob sets its own milestones on the board (`board/MILESTONES.md`). Each has a
   **measurable target** and an **automated check**. Progress against them is reviewed at every retro, and
-  the next milestone is set when one is reached. Steve hears only when a milestone is reached, plus Usable v1 itself.
+  the next milestone is set when one is reached. product owner hears only when a milestone is reached, plus Usable v1 itself.
 - **Hypothesis, or no card.** Every feature card (especially one that came from model feedback) carries a
   hypothesis in exactly this form: *"We believe <change> will <improve metric> for LLM authors/readers. We'll know when
   <metric> moves from <baseline> to <target> on <benchmark>."* Bugs and plumbing cards are exempt; a plumbing
@@ -198,7 +199,7 @@ ideas work. ideally they should be data driven."
 
 ### Process ideas are hypotheses, not doctrine
 
-Any process change idea, from Steve, a model or a retro, enters as an **experiment**, not a rule. Each experiment has:
+Any process change idea, from product owner, a model or a retro, enters as an **experiment**, not a rule. Each experiment has:
 
 - a **hypothesis** ("We believe <change> will <improve metric> for <who>. We'll know when <metric> moves from
   <baseline> to <target>.")
@@ -206,12 +207,12 @@ Any process change idea, from Steve, a model or a retro, enters as an **experime
 - a **trial scope**: which cards, or how long
 
 The retro then decides **keep, revise or drop** through the Decider (on judgment, not metrics, during the bootstrap phase). **Only kept experiments are written into this
-agreement as rules.** Explicit standing rules from Steve still apply directly, without a trial. Running experiments
+agreement as rules.** Explicit standing rules from product owner still apply directly, without a trial. Running experiments
 are logged in `docs/experiments/` (one file each) and in MOB.md, not in this agreement.
 
-### Bootstrap phase: no metric-based rejections until a baseline is established (standing rule, Steve, 2026-10-26)
+### Bootstrap phase: no metric-based rejections until a baseline is established (standing rule, product owner, 2026-10-26)
 
-Steve: "it seems like we don't have a good baseline because everything is so new. can we wait until we've established a
+product owner: "it seems like we don't have a good baseline because everything is so new. can we wait until we've established a
 cadence first with metrics before we start turning down ideas because they aren't improving something that doesn't exist yet?"
 
 - **Until a baseline is established, no idea, feature or experiment may be rejected, reverted or dropped because it "didn't
@@ -233,26 +234,23 @@ cadence first with metrics before we start turning down ideas because they aren'
   for normal review; anything rejected on principle stays rejected unless the mob reconsiders. Verdicts reached on early,
   setup-heavy data are recorded as "early data, not final".
 
-### Goodhart guard (standing rule, Steve, 2026-10-25)
+### Metrics are evidence, not targets (the Goodhart guard)
 
-Steve: "just keep Goodhart's Law in mind." Metrics inform decisions but are never the goal: a measure that
-becomes a target stops being a good measure.
+The aim is value for a persona, not a number. Teams go wrong when they pick a specific measurement and adjust behaviour to reach it: that puts the cart before the horse and creates perverse incentives (the cobra effect). A measure that becomes a target stops being a good measure.
 
-- **Balanced metrics.** Never a single one. Pair each target metric with a counter-metric (tokens saved vs. pass rate and readability; pass rate vs. spec coverage and diagnostic quality).
-- **Holdout.** Keep part of the benchmark unused while developing a feature, and evaluate on it before keeping a
-  change. Rotate or refresh tasks periodically so nobody tunes the project to the suite.
-- **The suite is versioned.** Changing tasks, scoring or prompts needs a Decider run and a MOB.md note, and is
-  never bundled with the feature it measures.
+- **Start from value.** Every improvement card states the value it is meant to create for a persona (for example "a reviewer can tell intent from a diff faster"), not a figure to reach (for example "tokens at 75 percent of the baseline"). The hypothesis says why the change should create that value; the data checks whether it did and what it cost.
+- **Metrics are evidence and trade-off detectors, not targets.** Measure the effect honestly and report what improved, what got worse and by how much, then judge whether the value was delivered. A number moving is not success on its own, and a number not moving is not failure on its own.
+- **Keep honest measurement hygiene.** Pre-register what will be measured and how, so results cannot be cherry-picked or re-scored after the fact. Keep holdouts and counter-metrics, and rotate or refresh tasks so nobody tunes the project to the suite. A pre-registered threshold is a guard against self-deception, not the goal and not the verdict.
+- **Verdicts are judgments backed by data.** A pass or fail stamp against a frozen bar is not the verdict. Example: "Phrase costs about five times the tokens on tiny tasks, makes no accuracy difference for strong models, raised the weakest model to 100 percent and caught every planted bug where specs existed. So the bet on verifiability is supported, cost is a trade-off to work on, and beating the baseline was never the goal."
+- **The suite is versioned.** Changing tasks, scoring or prompts needs a Decider run and a note in the status file, and is never bundled with the feature it measures.
 - **No special-casing the benchmark.** No grammar or compiler hack that only helps benchmark tasks. Reviewers check this explicitly.
-- **Qualitative check.** Every metric win also needs a model to read the change cold and explain it, and the change
-  is sanity-checked against Phrase's principles ("the code is the context", specs are truth).
-- **Red flag, not a win.** At retro, a metric improving while its counter-metrics or holdout degrade is treated as
-  metric gaming.
+- **Qualitative check.** Every metric win also needs a model to read the change cold and explain it, and the change is sanity-checked against the product's principles.
+- **Watch for perverse incentives in retros.** If a card optimises a metric without improving the value, or a metric improves while its counter-metrics or holdout degrade, call it out as metric gaming, not a win.
 - **Same for flow metrics and trust-ladder evidence:** signals for retro discussion, never quotas.
 
-### Task force before every card (TFDD, standing rule, Steve, 2026-10-25; revised same day)
+### Task force before every card (TFDD, standing rule, product owner, 2026-10-25; revised same day)
 
-Steve: "before each feature is started the comprehensive set of roles should be declared and assigned," then:
+product owner: "before each feature is started the comprehensive set of roles should be declared and assigned," then:
 "there's no quota for how many roles are required for the task force, just that all of the roles that would apply
 are created."
 
@@ -267,7 +265,7 @@ are created."
   flags. A padded task force is a smell too.
 - **One structural rule:** whoever authors an increment never reviews or QAs it. Assign by trust-ladder rung and
   per-card rotation.
-- **The task force is living, not frozen at kickoff** (Steve: "also during the building if the team identifies a
+- **The task force is living, not frozen at kickoff** (product owner: "also during the building if the team identifies a
   new role is needed then that gets added"; then: "I think decider protocol is needed to decide if a new role is
   required"). Any member can flag mid-card that a role is needed (a security question surfaces, the work turns out
   to need a technical writer or a perf engineer) and states one Decider proposal: the role, its assignee and why.
@@ -281,7 +279,7 @@ are created."
   checks role names or counts. Template:
   `templates/TASK_FORCE.md` in mob-defaults.
 
-### Driver availability (standing rule, Steve, 2026-10-28)
+### Driver availability (standing rule, product owner, 2026-10-28)
 
 Never assume a driver is permanently out. A driver that is out of quota or otherwise unavailable is re-probed, not forgotten:
 
@@ -291,7 +289,7 @@ Never assume a driver is permanently out. A driver that is out of quota or other
 - **While a driver is out:** its seats rotate to the others, Deciders run with the seats available, a vote needs a voter who is not the author, and the verdict of a measurement states the unavailable driver and the reset time. A frozen rule that needs the driver (for example a minimum number of models) is never changed to work around the outage.
 - **Visible state:** DRIVERS.md in the repository root carries the driver status table (driver, status, last probe, known reset, note) and a short event log; MOB.md may link to it.
 
-### Staffing: roles over models (standing rule, Steve, 2026-10-28)
+### Staffing: roles over models (standing rule, product owner, 2026-10-28)
 
 Roles are the primary perspectives; models are the staff who fill them. "Although diversity of model is important the diversity of roles is more important."
 
@@ -318,7 +316,7 @@ Roles are the primary perspectives; models are the staff who fill them. "Althoug
 
 ### Driver trust ladder
 
-Why (Steve): "we want to provide a way to regain trust and responsibility," and "just like a coworker who
+Why (product owner): "we want to provide a way to regain trust and responsibility," and "just like a coworker who
 underperforms, you still try to find a way they can be helpful." **Coach, never bench.** A quality problem
 changes a driver's rung, never its membership. Only real unavailability (an error captured from a probe
 within the last hour) takes a driver out of rotation, until its next successful probe.
@@ -359,7 +357,7 @@ within the last hour) takes a driver out of rotation, until its next successful 
 - **Never `rm -rf` (or `Remove-Item -Recurse`, `rd /s`, `git clean`) on a variable or computed path.**
   A delete is allowed only on a literal path inside the repo's scratch directory, after asserting it is
   non-empty and absolute.
-- **Detectors (Steve: constraints must self-report; a ban with no detector isn't in force).** Both bans above are enforced
+- **Detectors (product owner: constraints must self-report; a ban with no detector isn't in force).** Both bans above are enforced
   mechanically, not by memory: (1) the facilitator appends the safety rule to every dispatched prompt and scans every model
   reply for a recursive delete of a variable or unresolved path and for a kill by process name, raising a `Safety flag` in
   MOB.md and on the published page; (2) `safe_delete(path, roots)` in mob-defaults' `delete_guard.py` is the one way to delete a

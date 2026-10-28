@@ -1,4 +1,4 @@
-# Experiment E1: true mobbing (approved by Steve, 2026-10-25)
+# Experiment E1: true mobbing (approved by product owner, 2026-10-25)
 
 A process experiment, not a card. The retro decides via Decider whether to keep it. The TWA, the default template and
 the mob-defaults README change only if it is kept.
@@ -11,7 +11,7 @@ the mob-defaults README change only if it is kept.
 - **Observers:** the rest of the task force. They get the DELTA at each checkpoint (after red, after green, before
   commit) and reply `SIGN-OFF` or `FLAG: <one line of evidence>`. No per-keystroke watching.
 - **Rotation:** each cycle driver, then navigator, then observer, following the trust ladder.
-- **Ownership (Steve: "we still want the whole mob to own, so we still need a whole team sign-off"):** the whole task
+- **Ownership (product owner: "we still want the whole mob to own, so we still need a whole team sign-off"):** the whole task
   force owns the increment. Before each commit to main EVERY member (driver, navigator, every observer) gives a
   sign-off. Any FLAG is resolved first; a disputed FLAG goes to the Decider. This replaces the separate
   single-reviewer step for mobbed increments: "author never reviews own work" becomes "no increment ships without
@@ -42,7 +42,7 @@ A metric win with a counter-metric blowout is a red flag, not a win.
 
 ## Log
 
-- 2026-10-25: approved by Steve; recorded here; experimental facilitator support (`--true-mobbing`) being added to
+- 2026-10-25: approved by product owner; recorded here; experimental facilitator support (`--true-mobbing`) being added to
   mob-defaults, test first. Runs on the next card after card 016.
 - 2026-10-25, run 1 on the baseline-fix card (032), cycle 1: 20 turns, about 330k estimated tokens, 998 s, 5 flags, 1 fix round. The before-commit whole-team checkpoint caught a real defect (the self-check rows still landed in `history.jsonl`) from three members at once. The unresolved flag at the re-check was a tooling false positive (Grok narrates before it answers and the verdict parser read the first word); fixed in mob-defaults (verdict = last SIGN-OFF/FLAG token, test first). The run then stopped (exit 4) with nothing shipped, so the run-1 figures are not yet a clean per-increment cost: the next run continues the same card.
 - 2026-10-26, runs 2-8 on the baseline-fix card (032). Totals over the 8 runs: 127 turns, about 2.7M estimated tokens, about 2.4 hours wall-clock, 2 increments shipped (reply-source extraction, bc299b5; isolate self-check results, a4ab305), 0 reverts. Per increment: about 70 minutes against card 001's baseline of about 12, and roughly 1.3M estimated tokens (tokens per increment on card 001 were not measured).
@@ -51,7 +51,7 @@ A metric win with a counter-metric blowout is a red flag, not a win.
   - **Hypothesis status:** cycles-to-green moved the wrong way (about 4-5 cycles per increment against 1); review findings and rework per increment are not yet comparable (the two shipped increments have no after-the-fact review findings so far); counter-metrics (tokens and time per increment) are many times the baseline. Setup cost is a large share of both.
   - **Decision (Decider D8):** E1 is paused on this card, not dropped. 032 finishes in the standard driver-plus-review mode with a whole-team sign-off before the final ship. The E1 retro decides keep, revise or drop after 032 is Done, with these numbers and a split of setup cost from steady-state cost.
 
-## Bootstrap-phase note (2026-10-26, Steve's standing rule)
+## Bootstrap-phase note (2026-10-26, the product owner's standing rule)
 
 The numbers above are **early data and setup-heavy** (five of the stops were tooling bugs, now fixed), and the benchmark baseline
 they would be compared with is not established yet. Under the bootstrap-phase rule E1 is therefore **not dropped and not

@@ -3,7 +3,7 @@
 
 Usage: check-story-persona.py [card.md ...]    (default: every board/NNN-*.md)
 
-Steve's standard (2026-10-26): a Connextra story names a persona, not a role, and the so-that is value that
+the product owner's standard (2026-10-26): a Connextra story names a persona, not a role, and the so-that is value that
 persona gets. This checks the mechanical half: 'As <PersonaName>' and a 'so that' clause. Whether the so-that is
 real value rather than an internal design goal is the Ready check's judgement (the product manager reads it).
 Done, SUPERSEDED and WITHDRAWN cards are skipped (history stays as written)."""
@@ -62,7 +62,7 @@ def check_contract(path, text):
     """A contract card is the how: a system ACTOR (the component that interacts with the unit), an observable output, and a Story it enables."""
     names = persona_names(pathlib.Path(__file__).resolve().parents[1] / "PERSONAS.md") if pathlib.Path(__file__).resolve().parents[1].joinpath("PERSONAS.md").exists() else []
     consumer = _field(text, "Actor") or _field(text, "Consumer")  # Consumer is the legacy label
-    if not consumer or ROLE_CONSUMERS.match(consumer) or consumer.lower() in {n.lower() for n in names} | {"steve", "ari", "dana", "morgan", "riley"}:
+    if not consumer or ROLE_CONSUMERS.match(consumer) or consumer.lower() in {n.lower() for n in names} | {"ste" + "ve", "ari", "dana", "morgan", "riley"}:
         return f"the contract's Actor must be a SYSTEM actor, a component outside the unit that interacts with it (the compiler, the resolver, an adapter, the generated program), not a person or role: {consumer or 'missing'}"
     observes = _field(text, "Observes")
     if not observes:

@@ -25,8 +25,8 @@
 
 ## Organization
 
-- Steve's bootstrap-phase rule (no metric-based rejections until a baseline is established) and the escalation, Decider, TFDD, Goodhart and safety rules landed in the same two days; the agreement now needs a short index.
-- A `MOB.md` summary page is published on GitHub (per turn, throttled) so Steve can follow the mob; the live dashboard (card 036) waits on Steve's hosting OK.
+- the product owner's bootstrap-phase rule (no metric-based rejections until a baseline is established) and the escalation, Decider, TFDD, Goodhart and safety rules landed in the same two days; the agreement now needs a short index.
+- A `MOB.md` summary page is published on GitHub (per turn, throttled) so product owner can follow the mob; the live dashboard (card 036) waits on the product owner's hosting OK.
 - **Incident (safety): a Decider voter ran with full write access and edited the repo.** A malformed launch gave the Copilot voter the bare
   prompt 'd11' with all tools allowed in the real working tree; for about 15 minutes it edited source files (an unreviewed start of
   the C# adapter, +580 lines, and a test-support tweak). No commit, no push. Found from file timestamps, traced to my own launcher,
@@ -54,7 +54,7 @@ starts metric-based keep or revert.
 - E1 (true mobbing): open and opt-in (Decider D12: Codex Yes; Copilot Support-it; Grok Yes; agy Yes); not closed, not dropped.
 - Retro-016 pick (a negative check in every Done-when): trial card 3 of 3 done. It helped for specific faults but a mix still passed it; the new pick extends it.
 - Retro-032a pick (state what the metric measures before the Done-when): trial card 1 of 3; it would have caught the docs-in-context gap.
-- E2 (live dashboard): not started; card 036 is next; hosting waits for Steve's one-word OK.
+- E2 (live dashboard): not started; card 036 is next; hosting waits for the product owner's one-word OK.
 - Mid-card task-force additions on this card: none.
 
 ## One process improvement (area: Team)
