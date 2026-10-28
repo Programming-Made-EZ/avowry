@@ -243,7 +243,7 @@ public class PhraseExecutedOutcomesAcceptance
             if (model.StartsWith("codex", StringComparison.Ordinal))
                 Assert.Equal(launch, arguments);
             else
-                Assert.Matches(new Regex("^" + Regex.Escape(launch) + "\".*prompt\\.txt\"$", RegexOptions.CultureInvariant), arguments);
+                Assert.Matches(new Regex("^" + Regex.Escape(launch) + "\"?.*prompt\\.txt\"?$", RegexOptions.CultureInvariant), arguments);
             Assert.DoesNotContain("--scoring", arguments, StringComparison.Ordinal);
             using var result = JsonDocument.Parse(ReadHistory(suite)["001-write-greeting"]);
             Assert.True(result.RootElement.GetProperty("passed").GetBoolean());

@@ -31,10 +31,21 @@ public sealed class CSharpBaselineAcceptance
         var argv = Path.Combine(workspace.Root, "argv.txt");
         var stdin = Path.Combine(workspace.Root, "stdin.txt");
         var listing = Path.Combine(workspace.Root, "listing.txt");
-        var script = Path.Combine(workspace.Root, "fake-model.cmd");
-        File.WriteAllText(script, $"@echo off\r\necho %*>\"{argv}\"\r\nmore > \"{stdin}\"\r\ndir /b > \"{listing}\"\r\ntype \"{reply}\"\r\n");
+        string command;
+        if (OperatingSystem.IsWindows())
+        {
+            var script = Path.Combine(workspace.Root, "fake-model.cmd");
+            File.WriteAllText(script, $"@echo off\r\necho %*>\"{argv}\"\r\nmore > \"{stdin}\"\r\ndir /b > \"{listing}\"\r\ntype \"{reply}\"\r\n");
+            command = $"call \"{script}\"";
+        }
+        else
+        {
+            var script = Path.Combine(workspace.Root, "fake-model.sh");
+            File.WriteAllText(script, $"#!/bin/sh\nprintf '%s\\n' \"$*\" > '{argv}'\ncat > '{stdin}'\nls -A > '{listing}'\ncat '{reply}'\n");
+            command = $"sh \"{script}\"";
+        }
 
-        var run = await Run(suite, $"call \"{script}\"", "codex-probe", cold: true);
+        var run = await Run(suite, command, "codex-probe", cold: true);
 
         Assert.Equal(0, run.ExitCode);
         Assert.Equal("exec --skip-git-repo-check --sandbox read-only", File.ReadAllText(argv).Trim());
