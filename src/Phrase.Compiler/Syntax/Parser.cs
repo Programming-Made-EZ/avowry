@@ -606,7 +606,9 @@ public static class Parser
                 {
                     c.Next(); c.Next(); c.Next();
                     var maximum = c.Expect(TokenKind.Number, "an integer maximum");
-                    condition = new LengthAtMostCondition(value, int.Parse(maximum.Text, System.Globalization.CultureInfo.InvariantCulture), at);
+                    if (!int.TryParse(maximum.Text, System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var parsedMaximum))
+                        throw new SyntaxError(new Diagnostic("PH200", "Length maximum must be a non-negative 32-bit integer.", maximum.Line, maximum.Column));
+                    condition = new LengthAtMostCondition(value, parsedMaximum, at);
                 }
                 else
                 {

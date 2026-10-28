@@ -8,6 +8,55 @@ namespace Phrase.Compiler.Tests.Syntax;
 //   its specs, and an implementation: native blocks (leaf) or steps (composite).
 public class ParserPhraseTests
 {
+    [Theory]
+    [Trait("Slice", "159")]
+    [InlineData("200.5")]
+    [InlineData("-1")]
+    [InlineData("99999999999")]
+    public void Length_maximum_must_be_a_non_negative_32_bit_integer(string maximum)
+    {
+        // Given an ensure length condition whose maximum is not a supported integer
+        var source = InModule($$"""
+            phrase "validate {title: Text}"
+              fails with Invalid
+              steps
+                ensure title length at most {{maximum}} else Invalid
+            """);
+
+        // When the phrase is parsed
+        var result = Parser.Parse(source);
+
+        // Then parsing returns a normal, clear diagnostic rather than throwing
+        var diagnostic = Assert.Single(result.Diagnostics);
+        Assert.Equal("PH200", diagnostic.Code);
+        Assert.Contains("non-negative 32-bit integer", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    [Trait("Slice", "159")]
+    public void Ensure_is_only_a_step_keyword_at_the_start_of_a_step_line()
+    {
+        // Given ensure appears in native code, a spec string, and an identifier
+        var source = InModule("""
+            phrase "preserve {ensureValue: Int}" -> Int
+              spec "ensure remains ordinary text"
+                given ensureValue = 1
+                when called
+                then returns 1
+              native csharp
+                var ensure = ensureValue;
+                return ensure;
+            """);
+
+        // When it is parsed
+        var phrase = Assert.Single(Clean(source).Phrases);
+
+        // Then those occurrences remain their original text and are not ensure steps
+        Assert.Null(phrase.Steps);
+        Assert.Equal("ensure remains ordinary text", Assert.Single(phrase.Specs).Description);
+        Assert.Contains("var ensure = ensureValue;", Assert.Single(phrase.Natives).Code, StringComparison.Ordinal);
+    }
+
     [Fact]
     [Trait("Slice", "159")]
     public void Ensure_conditions_are_parsed_as_steps()

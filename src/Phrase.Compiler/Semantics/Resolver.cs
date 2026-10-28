@@ -64,6 +64,10 @@ public static class Resolver
             var skeletons = new Dictionary<string, PhraseModel>(StringComparer.OrdinalIgnoreCase);
             foreach (var declaration in file.Phrases)
             {
+                var failureNames = new HashSet<string>(StringComparer.Ordinal);
+                foreach (var failure in declaration.Failures)
+                    if (!failureNames.Add(failure))
+                        Report("PH329", $"Failure '{failure}' is repeated in 'fails with'.", declaration.At);
                 var parts = new List<PhrasePart>();
                 var holes = new List<FieldModel>();
                 var holeNames = new HashSet<string>(StringComparer.Ordinal);
@@ -576,6 +580,10 @@ public static class Resolver
         private BoundExpr ResolveValue(Expr expression, PType expected, IReadOnlyDictionary<string, PType> scope)
         {
             var target = expected.IsOption ? expected.Arguments[0] : expected;
+            if (expression is NumberLit integer && target == PType.Int &&
+                !integer.Text.Contains('.', StringComparison.Ordinal) &&
+                !int.TryParse(integer.Text, System.Globalization.NumberStyles.AllowLeadingSign, System.Globalization.CultureInfo.InvariantCulture, out _))
+                Report("PH312", $"Integer literal '{integer.Text}' must fit in a 32-bit Int.", integer.At);
             var value = expression switch
             {
                 PathExpr path => ResolvePath(path, scope),

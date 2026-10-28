@@ -13,6 +13,49 @@ public class EnsureStepCompiles
 {
     [Fact]
     [Trait("Slice", "159")]
+    public async Task Whitespace_record_fields_and_called_phrase_failures_reach_the_generated_API()
+    {
+        // Given a native-free record-field guard called by an endpoint with a whitespace-only title spec
+        const string source = """
+            module Tasks
+            uses web
+
+            type Task
+              title: Text
+
+            phrase "validate {task: Task}"
+              fails with EmptyTitle
+              steps
+                ensure task.title is not blank else EmptyTitle
+
+            endpoint CreateTask : POST /tasks
+              input
+                title: Text
+              steps
+                validate { title: input.title }
+              spec "whitespace title is rejected"
+                given input { title: "   " }
+                when handled
+                then fails with EmptyTitle
+            """;
+
+        // When the C# adapter compiles the module and runs its generated API spec
+        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        using var workspace = TempWorkspace.Create();
+        output.WriteTo(workspace.Root);
+        var endpoint = File.ReadAllText(workspace.FindSingle("CreateTask.cs.cs"));
+        var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
+
+        // Then the inherited failure is exercised as HTTP 422 and the whitespace title is rejected
+        Assert.Contains("catch (PhraseFailure failure)", endpoint, StringComparison.Ordinal);
+        Assert.Contains("await Send.ErrorsAsync(422, ct);", endpoint, StringComparison.Ordinal);
+        Assert.True(result.Built, result.Log);
+        Assert.Equal(1, result.Total);
+        Assert.Equal(0, result.Failed);
+    }
+
+    [Fact]
+    [Trait("Slice", "159")]
     public async Task Int_comparisons_with_literals_and_inputs_compile_and_execute()
     {
         // Given a native-free phrase comparing an Int with both a literal and another input

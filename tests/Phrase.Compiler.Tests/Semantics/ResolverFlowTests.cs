@@ -49,6 +49,88 @@ public class ResolverFlowTests
         // Then the specific semantic error is reported
         Assert.Equal([code], Codes(source));
     }
+
+    [Theory]
+    [Trait("Slice", "159")]
+    [InlineData("ensure title < 1 else Invalid")]
+    [InlineData("ensure count < \"one\" else Invalid")]
+    public void Ensure_comparisons_require_matching_Int_operands(string step)
+    {
+        // Given an ensure comparison with mismatched operand types
+        var source = Program($$"""
+            phrase "validate {title: Text} count {count: Int}"
+              fails with Invalid
+              steps
+                {{step}}
+            """);
+
+        // When the phrase is resolved
+        // Then the comparison reports the normal type diagnostic
+        Assert.Equal(["PH312"], Codes(source));
+    }
+
+    [Fact]
+    [Trait("Slice", "159")]
+    public void Ensure_comparison_Int_literals_must_fit_in_32_bits()
+    {
+        // Given an ensure comparison with an integer outside the Int range
+        var source = Program("""
+            phrase "validate {count: Int}"
+              fails with Invalid
+              steps
+                ensure count < 99999999999 else Invalid
+            """);
+
+        // When the phrase is resolved
+        var result = Resolver.Resolve(source);
+
+        // Then the literal is diagnosed instead of reaching generated C#
+        var diagnostic = Assert.Single(result.Diagnostics);
+        Assert.Equal("PH312", diagnostic.Code);
+        Assert.Contains("32-bit Int", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    [Trait("Slice", "159")]
+    public void Ensure_can_read_a_Text_field_from_a_record()
+    {
+        // Given a record field is the subject of an ensure condition
+        var source = Program("""
+            type Task
+              title: Text
+
+            phrase "validate {task: Task}"
+              fails with EmptyTitle
+              steps
+                ensure task.title is not blank else EmptyTitle
+            """);
+
+        // When the phrase is resolved
+        var phrase = Clean(source).Phrase("validate _");
+
+        // Then the field path remains typed as Text
+        var ensure = Assert.IsType<BoundEnsureStep>(Assert.Single(phrase.Steps!));
+        var condition = Assert.IsType<BoundBlankCondition>(ensure.Condition);
+        Assert.Equal(PType.Text, condition.Value.Type);
+        Assert.IsType<BoundField>(condition.Value);
+    }
+
+    [Fact]
+    [Trait("Slice", "159")]
+    public void Duplicate_declared_failure_names_are_rejected()
+    {
+        // Given a phrase repeats a name in fails with
+        var source = Program("""
+            phrase "validate {count: Int}"
+              fails with Invalid, Invalid
+              steps
+                ensure count > 0 else Invalid
+            """);
+
+        // When the phrase is resolved
+        // Then the duplicate is reported clearly
+        Assert.Equal(["PH329"], Codes(source));
+    }
     private const string Validate = """
         phrase "validate {items: List<LineItem>}"
           steps
