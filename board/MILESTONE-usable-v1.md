@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:797a9a3c6efb5804435aca256735192a11f4b0d42e2bd71df6aee7955eb14e5a -->
+<!-- board-table-sha256:bd3ed6dcd26e1bf0ef4c317f8bd5bd144fa9bba6ac1c9762b5f091a8fa512604 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -60,7 +60,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 38 | 105 Pilot the cheat sheet against full documentation and freeze the choice | Done | 104 |
 | 39 | 101 Run the Phrase development baseline at the specs-passed level | Done | 100, 094 |
 | 40 | 110 Plain C# arm scores endpoint responds outcomes with status | Done | 094 |
-| 41 | 111 Phrase arm scores endpoint responds outcomes with status | Ready | 110 |
+| 41 | 111 Phrase arm scores endpoint responds outcomes with status | Done | 110 |
 | 42 | 102 Head-to-head on the sealed holdouts: both arms at N=5 | Ready | 101 |
 | 43 | 103 Head-to-head verdict page: WIN, LOSS, TIE or INCONCLUSIVE | Ready | 102 |
 | 44 | 106 Mutation check: the generated C# specs catch broken implementations | Done | 087 |
