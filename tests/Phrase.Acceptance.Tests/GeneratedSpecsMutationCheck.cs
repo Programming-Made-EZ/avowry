@@ -1,4 +1,5 @@
 using Phrase.Acceptance.Tests.Support;
+using Xunit.Abstractions;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -8,16 +9,25 @@ namespace Phrase.Acceptance.Tests;
 //   specified is really there.
 public class GeneratedSpecsMutationCheck
 {
+    private readonly ITestOutputHelper output;
+
+    public GeneratedSpecsMutationCheck(ITestOutputHelper output) => this.output = output;
+
     [Fact]
     [Trait("Slice", "106")]
     public async Task Orders_specs_kill_at_least_ninety_percent_deterministically()
     {
-        // Given the orders fixture, its hand-written native C# bodies, and fixed mutations
-        var source = Fixture.Read("orders.phrase");
+        // Given a committed mutation fixture with boundary specs and the frozen orders fixture
+        var mutationSource = Fixture.Read("orders-mutation.phrase");
+        var ordersSource = Fixture.Read("orders.phrase");
 
-        // When the generated specs are run against every mutation twice
-        var first = await CSharpMutationCheck.RunAsync(source);
-        var second = await CSharpMutationCheck.RunAsync(source);
+        // When each fixture's generated specs are run against every mutation twice
+        var first = await CSharpMutationCheck.RunAsync(mutationSource);
+        var second = await CSharpMutationCheck.RunAsync(mutationSource);
+        var ordersFirst = await CSharpMutationCheck.RunAsync(ordersSource);
+        var ordersSecond = await CSharpMutationCheck.RunAsync(ordersSource);
+        output.WriteLine($"Mutation fixture:{Environment.NewLine}{first.Report}");
+        output.WriteLine($"orders.phrase (informational):{Environment.NewLine}{ordersFirst.Report}");
 
         // Then totals and per-phrase results report killed over buildable mutants
         Assert.Equal(9, first.Total.Buildable);
@@ -38,5 +48,8 @@ public class GeneratedSpecsMutationCheck
 
         // And two runs report identical mutation numbers and survivor names
         Assert.Equal(first.DeterministicSummary, second.DeterministicSummary);
+
+        // And the unchanged orders fixture reports its visible gap deterministically, without a threshold
+        Assert.Equal(ordersFirst.DeterministicSummary, ordersSecond.DeterministicSummary);
     }
 }

@@ -50,12 +50,11 @@ public static class CSharpMutationCheck
     public static async Task<MutationCheckResult> RunAsync(string source)
     {
         var started = Stopwatch.StartNew();
-        var sourceWithBoundarySpecs = AddBoundarySpecsToCopy(source);
         var outcomes = new List<(Mutation Mutation, bool Built, bool Killed)>();
 
         foreach (var mutation in Mutations)
         {
-            var mutant = ReplaceExactlyOnce(sourceWithBoundarySpecs, mutation.OriginalBody, mutation.MutatedBody);
+            var mutant = ReplaceExactlyOnce(source, mutation.OriginalBody, mutation.MutatedBody);
             using var workspace = TempWorkspace.Create();
             PhraseCompiler.Compile(mutant, new CSharpProvider()).WriteTo(workspace.Root);
             var run = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
@@ -85,16 +84,6 @@ public static class CSharpMutationCheck
         var report = summary + Environment.NewLine + $"Run time: {started.Elapsed.TotalSeconds:F1} seconds";
         return new MutationCheckResult(phrases, total, survivors, started.Elapsed, summary, report);
     }
-
-    private static string AddBoundarySpecsToCopy(string source) => source
-        .Replace(
-            "  native csharp\n    if (items.Count == 0) Fail(\"EmptyOrder\");",
-            "  spec \"accepts a non-empty list\"\n    given items = [{ sku: \"A\", quantity: 1 }]\n    when called\n    then succeeds\n  native csharp\n    if (items.Count == 0) Fail(\"EmptyOrder\");",
-            StringComparison.Ordinal)
-        .Replace(
-            "  native csharp\n    if (items.Any(i => i.Quantity <= 0)) Fail(\"InvalidQuantity\");",
-            "  spec \"accepts a positive quantity\"\n    given items = [{ sku: \"A\", quantity: 1 }]\n    when called\n    then succeeds\n  native csharp\n    if (items.Any(i => i.Quantity <= 0)) Fail(\"InvalidQuantity\");",
-            StringComparison.Ordinal);
 
     private static string ReplaceExactlyOnce(string source, string original, string replacement)
     {
