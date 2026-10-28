@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:373e4f6dfd8d7acd058e9725adb0959d7c9c13cf3e129b63d16c43e2925ce91e -->
+<!-- board-table-sha256:fd9a3dac2473c51a07dc7541448174b71b6818bb3abd091bc6a318a30b374cc3 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -63,7 +63,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 41 | 111 Phrase arm scores endpoint responds outcomes with status | Done | 110 |
 | 42 | 112 Turn a holdout file into both arms' task folders with one wrapper | Done | 111 |
 | 43 | 113 Holdout run rows stay private: numbers are published, replies are not | Done | 111 |
-| 44 | 114 A model that outlives its timeout is stopped with its whole process tree | Ready | 113 |
+| 44 | 114 A model that outlives its timeout is stopped with its whole process tree | Done | 113 |
 | 45 | 102 Head-to-head on the sealed holdouts: both arms at N=5 | Ready | 101 |
 | 46 | 103 Head-to-head verdict page: WIN, LOSS, TIE or INCONCLUSIVE | Ready | 102 |
 | 47 | 106 Mutation check: the generated C# specs catch broken implementations | Done | 087 |
