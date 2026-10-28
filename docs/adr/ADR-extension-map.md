@@ -29,7 +29,7 @@ An extension is a library with its own cheat sheet or index, loaded only when a 
 
 The base library is the other library, and it is domain-neutral. It is the index of universal phrases (VISION ruling 3). It ships with Phrase. A domain extension does not. `ensure` and `compute` are base-library verbs. They are vocabulary, not core keywords, and they are not a domain extension.
 
-A target-language adapter is orthogonal to a domain extension. The adapter turns the resolved module into one language. A C# adapter serves every domain extension: the same C# adapter emits web endpoints, and later a desktop phrase or a SQL phrase, when those extensions are loaded. FastEndpoints, the Web SDK and xUnit are bindings inside the C# adapter. They are not the adapter seam itself. The seam is `ITargetAdapter` (`src/Phrase.Compiler/ITargetAdapter.cs` lines 9-15).
+A target-language adapter is orthogonal to a domain extension. The adapter turns the resolved module into one language. A C# adapter serves every domain extension: the same C# adapter emits web endpoints, and later a desktop phrase or a SQL phrase, when those extensions are loaded. FastEndpoints, the Web SDK and xUnit are bindings inside the C# adapter. They are not the adapter seam itself. The seam is `ITargetAdapter` (`src/Phrase.Compiler/ITargetAdapter.cs` lines 9-15). How those bindings are selected, and how a project names architecture and coding standards, is [ADR-library-binding-layering.md](ADR-library-binding-layering.md) (card 152).
 
 ## Testing split
 
