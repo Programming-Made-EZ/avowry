@@ -81,6 +81,8 @@ paired with counter-metrics:
 
 A bigger catalogue is not a win. A smaller catalogue that removes the same work is a better one.
 
+This paragraph measures the vocabulary's economy (LLM work removed). It is context, not the success measure of Phrase: since ruling 7 (2026-10-28) the success criteria are verifiability, preserved intent and reviewability, and the economy metrics are reported honestly beside them without defining success.
+
 ## How this relates to the rest
 
 - Design rules and the grammar: [docs/GRAMMAR.md](docs/GRAMMAR.md). Its rule 3 ("small fixed core, open phrase
