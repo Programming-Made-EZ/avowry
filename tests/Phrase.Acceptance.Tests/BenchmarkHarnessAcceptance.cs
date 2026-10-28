@@ -1189,6 +1189,39 @@ public class BenchmarkHarnessAcceptance
         Assert.Equal(1, exitCode);
         Assert.Contains("--custom-docs", stderr, StringComparison.Ordinal);
         Assert.Contains("--cold", stderr, StringComparison.Ordinal);
+        Assert.Contains("--max-attempts", stderr, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    [Trait("Slice", "137")]
+    public async Task max_attempts_one_invokes_a_failing_model_once()
+    {
+        // Given a model that always fails to emit Phrase, and a one-task suite
+        using var workspace = TempWorkspace.Create();
+        var suiteDirectory = CopySuiteTo(workspace.Root);
+        var calls = Path.Combine(workspace.Root, "calls.txt");
+        var script = Path.Combine(workspace.Root, "always-fail.py");
+        await File.WriteAllTextAsync(script, $$"""
+            import pathlib
+            path = pathlib.Path({{JsonSerializer.Serialize(calls)}})
+            with path.open("a", encoding="utf-8") as handle:
+                handle.write("called\n")
+            print("not a phrase")
+            """);
+        var python = OperatingSystem.IsWindows() ? "python" : "python3";
+        var modelCommand = $"{python} \"{script}\"";
+
+        // When the bench is asked for a single attempt
+        var (exitCode, stdout, stderr) = await RunBenchmark(
+            suiteDirectory, "once-v1", modelCommand, "--max-attempts", "1");
+
+        // Then the model ran once and the stored row records one attempt
+        Assert.True(exitCode == 3, stdout + stderr);
+        var callLines = (await File.ReadAllLinesAsync(calls)).Where(line => line.Length > 0).ToArray();
+        Assert.True(callLines.Length == 1, $"expected one call, got {callLines.Length}. stdout: {stdout} stderr: {stderr}");
+        using var result = await ReadModelResult(suiteDirectory, "once-v1");
+        Assert.Equal(1, result.RootElement.GetProperty("attempts").GetInt32());
+        Assert.False(result.RootElement.GetProperty("passed").GetBoolean());
     }
 
     [Fact]

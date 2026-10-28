@@ -22,7 +22,7 @@ const string ColdPreamble = "There is no workspace and no files to read; answer 
 
 if (args.Length == 0)
 {
-    Console.Error.WriteLine("Usage: Phrase.Bench run --suite <path> --model <id> --model-command <command> [--mode zero-shot|docs-in-context] [--docs-root <path>] [--custom-docs] [--cold] [--scoring parse-resolve|executed] [--private-results <path>] | --self-check [--suite <path>]");
+    Console.Error.WriteLine("Usage: Phrase.Bench run --suite <path> --model <id> --model-command <command> [--mode zero-shot|docs-in-context] [--docs-root <path>] [--custom-docs] [--cold] [--scoring parse-resolve|executed] [--private-results <path>] [--max-attempts <n>] | --self-check [--suite <path>]");
     return 1;
 }
 
@@ -125,9 +125,19 @@ if (options.TryGetValue("scoring", out var configuredScoring))
     scoring = configuredScoring;
 }
 
+var maximumAttempts = MaximumAttempts;
+if (options.TryGetValue("max-attempts", out var maxAttemptsValue))
+{
+    if (!int.TryParse(maxAttemptsValue, out maximumAttempts) || maximumAttempts < 1)
+    {
+        Console.Error.WriteLine("--max-attempts must be a positive integer.");
+        return 1;
+    }
+}
+
 foreach (var task in suite.Tasks.Where(task => !task.Holdout))
 {
-    var result = await RunTask(task, suiteDirectory, model, modelCommand, timeout, MaximumAttempts, label, recordedMode, docsBlock, coldProfile, scoring, privateResults);
+    var result = await RunTask(task, suiteDirectory, model, modelCommand, timeout, maximumAttempts, label, recordedMode, docsBlock, coldProfile, scoring, privateResults);
     taskResults.Add(result);
     if (!result.KeepsRunSuccessful)
         exitCode = 3;
@@ -304,7 +314,7 @@ static async Task<TaskRunResult> RunTask(
             tokensOut += EstimateTokens(reply);
             if (IsEmptyReply(reply))
             {
-                if (attempts < EmptyReplyMaximumAttempts)
+                if (attempts < EmptyReplyMaximumAttempts && attempts < maximumAttempts)
                     continue;
 
                 var unavailable = BenchmarkResult.Unavailable(

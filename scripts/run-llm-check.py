@@ -13,6 +13,7 @@ import json
 import os
 import re
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
@@ -51,6 +52,14 @@ REASON_COMPILE = "compile"
 REASON_BUILD = "build"
 REASON_SPEC = "spec"
 REASON_OUTCOME = "outcome"
+REASON_TIMEOUT = "timeout"
+REASON_ERROR = "error"
+QUIET_SUMMARY = re.compile(
+    r"Failed:\s+(\d+),\s+Passed:\s+(\d+),\s+Skipped:\s+(\d+),\s+Total:\s+(\d+)",
+    re.I,
+)
+TOTAL_TESTS_LINE = re.compile(r"Total tests:\s+(\d+)", re.I)
+FAILED_INDENTED = re.compile(r"^\s*Failed:\s+(\d+)\s*$", re.M | re.I)
 
 
 def repo_root(explicit: str | None) -> Path:
@@ -100,20 +109,27 @@ def stop_pid(pid: int) -> None:
         )
         return
     try:
-        os.kill(pid, 9)
+        os.killpg(pid, signal.SIGKILL)
     except OSError:
-        return
+        try:
+            os.kill(pid, signal.SIGKILL)
+        except OSError:
+            return
 
 
 def run_process(argv: list[str], cwd: Path, env: dict[str, str], timeout: int) -> subprocess.CompletedProcess[str]:
-    proc = subprocess.Popen(
-        argv,
-        cwd=str(cwd),
-        env=env,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-    )
+    popen_kwargs: dict = {
+        "cwd": str(cwd),
+        "env": env,
+        "stdout": subprocess.PIPE,
+        "stderr": subprocess.PIPE,
+        "text": True,
+        "encoding": "utf-8",
+        "errors": "replace",
+    }
+    if os.name != "nt":
+        popen_kwargs["start_new_session"] = True
+    proc = subprocess.Popen(argv, **popen_kwargs)
     pid = proc.pid
     try:
         stdout, stderr = proc.communicate(timeout=timeout)
@@ -124,7 +140,34 @@ def run_process(argv: list[str], cwd: Path, env: dict[str, str], timeout: int) -
         except subprocess.TimeoutExpired:
             stdout, stderr = "", ""
         raise TimeoutError(f"process {pid} exceeded {timeout}s: {' '.join(argv[:6])}")
-    return subprocess.CompletedProcess(argv, proc.returncode, stdout, stderr)
+    return subprocess.CompletedProcess(argv, proc.returncode, stdout or "", stderr or "")
+
+
+CAPTURE_HELPER = """
+import pathlib, shlex, subprocess, sys
+
+def quote_for_shell(argument):
+    if sys.platform == "win32":
+        if argument == "":
+            return '""'
+        if any(ch in argument for ch in ' \t"&|<>^()%'):
+            return '"' + argument.replace('"', '\\\\"') + '"'
+        return argument
+    return shlex.quote(argument)
+
+cmd = pathlib.Path(COMMAND_PATH).read_text(encoding="utf-8")
+if sys.argv[1:]:
+    cmd = cmd + " " + " ".join(quote_for_shell(argument) for argument in sys.argv[1:])
+prompt = sys.stdin.buffer.read()
+if sys.platform == "win32":
+    proc = subprocess.run("cmd.exe /d /c " + cmd, input=prompt, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+else:
+    proc = subprocess.run(["/bin/sh", "-c", cmd], input=prompt, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+pathlib.Path(OUT_PATH).write_bytes(proc.stdout or b"")
+sys.stdout.buffer.write(proc.stdout or b"")
+sys.stderr.buffer.write(proc.stderr or b"")
+raise SystemExit(proc.returncode)
+"""
 
 
 def write_capture_wrapper(scratch: Path, command: str) -> str:
@@ -133,18 +176,9 @@ def write_capture_wrapper(scratch: Path, command: str) -> str:
     helper_path = scratch / "capture_model.py"
     command_path.write_text(command, encoding="utf-8")
     helper_path.write_text(
-        "import pathlib, subprocess, sys\n"
-        f"cmd = pathlib.Path({json.dumps(str(command_path))}).read_text(encoding='utf-8')\n"
-        f"out = pathlib.Path({json.dumps(str(capture_path))})\n"
-        "prompt = sys.stdin.buffer.read()\n"
-        "if sys.platform == 'win32':\n"
-        "    proc = subprocess.run('cmd.exe /d /c ' + cmd, input=prompt, stdout=subprocess.PIPE, stderr=subprocess.PIPE)\n"
-        "else:\n"
-        "    proc = subprocess.run(['/bin/sh', '-c', cmd], input=prompt, stdout=subprocess.PIPE, stderr=subprocess.PIPE)\n"
-        "out.write_bytes(proc.stdout or b'')\n"
-        "sys.stdout.buffer.write(proc.stdout or b'')\n"
-        "sys.stderr.buffer.write(proc.stderr or b'')\n"
-        "raise SystemExit(proc.returncode)\n",
+        f"COMMAND_PATH = {json.dumps(str(command_path))}\n"
+        f"OUT_PATH = {json.dumps(str(capture_path))}\n"
+        + CAPTURE_HELPER,
         encoding="utf-8",
     )
     python = sys.executable or "python"
@@ -202,14 +236,17 @@ def prepare_docs(repo: Path, work: Path) -> tuple[Path, str, str]:
     return docs_root, sha256_file(grammar_src), sha256_file(sheet_src)
 
 
+def phrase_dll_candidates(repo: Path) -> list[Path]:
+    root = repo / "src" / "Phrase.Cli" / "bin"
+    if not root.is_dir():
+        return []
+    return [path for path in root.glob("*/net8.0/phrase.dll") if path.is_file()]
+
+
 def find_phrase_dll(repo: Path, env: dict[str, str]) -> Path:
-    candidates = [
-        repo / "src" / "Phrase.Cli" / "bin" / "Debug" / "net8.0" / "phrase.dll",
-        repo / "src" / "Phrase.Cli" / "bin" / "Release" / "net8.0" / "phrase.dll",
-    ]
-    for dll in candidates:
-        if dll.is_file():
-            return dll
+    existing = phrase_dll_candidates(repo)
+    if existing:
+        return max(existing, key=lambda path: path.stat().st_mtime)
     project = repo / "src" / "Phrase.Cli" / "Phrase.Cli.csproj"
     built = run_process(
         ["dotnet", "build", str(project), "--nologo", "--disable-build-servers"],
@@ -219,9 +256,9 @@ def find_phrase_dll(repo: Path, env: dict[str, str]) -> Path:
     )
     if built.returncode != 0:
         raise RuntimeError("phrase CLI did not build:\n" + built.stdout + built.stderr)
-    for dll in candidates:
-        if dll.is_file():
-            return dll
+    existing = phrase_dll_candidates(repo)
+    if existing:
+        return max(existing, key=lambda path: path.stat().st_mtime)
     raise FileNotFoundError("phrase.dll is missing after build")
 
 
@@ -307,13 +344,41 @@ def classify_reply(source: str, repo: Path, work: Path, env: dict[str, str]) -> 
         env,
         timeout=300,
     )
-    log = tested.stdout + tested.stderr
+    return classify_test_run(specs, warnings, tested.stdout + tested.stderr, tested.returncode)
+
+
+def parse_dotnet_test_counts(log: str) -> tuple[int | None, int | None]:
+    quiet = QUIET_SUMMARY.search(log)
+    if quiet:
+        return int(quiet.group(4)), int(quiet.group(1))
+    total_tests = TOTAL_TESTS_LINE.search(log)
+    if total_tests:
+        total = int(total_tests.group(1))
+        failed_match = FAILED_INDENTED.search(log) or FAILED_TESTS.search(log)
+        failed = int(failed_match.group(1)) if failed_match else None
+        return total, failed
     total_match = TOTAL_TESTS.search(log)
     failed_match = FAILED_TESTS.search(log)
-    total = int(total_match.group(1)) if total_match else 0
-    failed = int(failed_match.group(1)) if failed_match else (0 if tested.returncode == 0 else max(specs, 1))
+    total = int(total_match.group(1)) if total_match else None
+    failed = int(failed_match.group(1)) if failed_match else None
+    return total, failed
+
+
+def classify_test_run(specs: int, warnings: int, log: str, returncode: int) -> dict:
+    total, failed = parse_dotnet_test_counts(log)
+    if total is None or total == 0:
+        return {
+            "passed": False,
+            "reason": REASON_SPEC,
+            "proof_level": "none",
+            "specs": specs,
+            "specs_passed": 0,
+            "build_warnings": warnings,
+        }
+    if failed is None:
+        failed = 0 if returncode == 0 else max(specs, 1)
     passed_count = max(total - failed, 0)
-    if tested.returncode != 0 or failed > 0:
+    if returncode != 0 or failed > 0:
         return {
             "passed": False,
             "reason": REASON_SPEC,
@@ -322,12 +387,11 @@ def classify_reply(source: str, repo: Path, work: Path, env: dict[str, str]) -> 
             "specs_passed": passed_count,
             "build_warnings": warnings,
         }
-
     return {
         "passed": True,
         "proof_level": "specs-passed",
         "specs": max(specs, total),
-        "specs_passed": passed_count if total else specs,
+        "specs_passed": passed_count,
         "build_warnings": warnings,
     }
 
@@ -344,6 +408,18 @@ def read_bench_row(results_dir: Path) -> dict:
     return json.loads(lines[-1]) if lines else {}
 
 
+def bench_failure_reason(bench_row: dict) -> str | None:
+    if not bench_row:
+        return REASON_ERROR
+    status = str(bench_row.get("status") or "").lower()
+    if status != "unavailable":
+        return None
+    error = str(bench_row.get("error") or "")
+    if "timed out" in error.lower():
+        return REASON_TIMEOUT
+    return REASON_ERROR
+
+
 def totals_document(
     model: str,
     grammar_sha: str,
@@ -354,7 +430,11 @@ def totals_document(
 ) -> dict:
     passed = bool(classified.get("passed")) and outcome_passed
     reason = classified.get("reason")
-    if classified.get("passed") and not outcome_passed:
+    bench_reason = bench_failure_reason(bench_row)
+    if bench_reason:
+        passed = False
+        reason = bench_reason
+    elif classified.get("passed") and not outcome_passed:
         reason = REASON_OUTCOME
         passed = False
     document = {
@@ -389,59 +469,88 @@ def run_check(args: argparse.Namespace) -> int:
     model = args.model
     env = prepare_dotnet_env(os.environ.copy())
     out_path = Path(args.out).resolve() if args.out else repo / "docs" / "usable-v1" / "llm-check.json"
+    grammar_sha = sha256_file(repo / "docs" / "GRAMMAR.md")
+    sheet_sha = sha256_file(repo / "docs" / "CHEATSHEET.md")
 
-    with tempfile.TemporaryDirectory(prefix="phrase-llm-check-") as raw:
-        work = Path(raw)
-        suite = prepare_suite(repo, work)
-        docs_root, grammar_sha, sheet_sha = prepare_docs(repo, work)
-        command = args.model_command or default_model_command(model)
-        wrapped = write_capture_wrapper(work, command)
-        bench_model = model if args.model_command is None else "llm-check-fake-v1"
-        private_results = work / "private" / "history.jsonl"
-        private_results.parent.mkdir(parents=True, exist_ok=True)
-        bench_project = repo / "tools" / "Phrase.Bench" / "Phrase.Bench.csproj"
-        argv = [
-            "dotnet",
-            "run",
-            "--disable-build-servers",
-            "--project",
-            str(bench_project),
-            "--",
-            "run",
-            "--suite",
-            str(suite),
-            "--model",
-            bench_model,
-            "--model-command",
-            wrapped,
-            "--cold",
-            "--scoring",
-            "executed",
-            "--mode",
-            "docs-in-context",
-            "--docs-root",
-            str(docs_root),
-            "--custom-docs",
-            "--private-results",
-            str(private_results),
-        ]
-        bench = run_process(argv, repo, env, timeout=args.timeout)
-        capture = work / "reply.txt"
-        reply = capture.read_text(encoding="utf-8") if capture.is_file() else ""
-        if not contains_phrase(extract_phrase(reply)):
-            reply = bench.stdout or reply
-        source = extract_phrase(reply)
-        classified = classify_reply(source, repo, work, env)
-        bench_row = read_bench_row(work / "bench" / "results")
-        if not bench_row and private_results.is_file():
-            lines = [line for line in private_results.read_text(encoding="utf-8").splitlines() if line.strip()]
-            bench_row = json.loads(lines[-1]) if lines else {}
-        outcome_passed = classified.get("passed") is True and bench.returncode == 0
-        if classified.get("reason") in {REASON_COMPILE, REASON_BUILD, REASON_SPEC}:
-            outcome_passed = classified.get("passed") is True
-        document = totals_document(model, grammar_sha, sheet_sha, bench_row, classified, outcome_passed)
+    def write_failure(reason: str, bench_row: dict | None = None, classified: dict | None = None) -> int:
+        document = totals_document(
+            model,
+            grammar_sha,
+            sheet_sha,
+            bench_row or {},
+            classified or {"passed": False, "reason": reason, "specs": 0, "specs_passed": 0, "build_warnings": 0},
+            False,
+        )
+        document["reason"] = reason
+        document["passed"] = False
+        document["proof_level"] = "none"
         write_json(out_path, document)
-        return 0 if document["passed"] else 1
+        return 1
+
+    try:
+        with tempfile.TemporaryDirectory(prefix="phrase-llm-check-") as raw:
+            work = Path(raw)
+            suite = prepare_suite(repo, work)
+            docs_root, grammar_sha, sheet_sha = prepare_docs(repo, work)
+            command = args.model_command or default_model_command(model)
+            wrapped = write_capture_wrapper(work, command)
+            private_results = work / "private" / "history.jsonl"
+            private_results.parent.mkdir(parents=True, exist_ok=True)
+            bench_project = repo / "tools" / "Phrase.Bench" / "Phrase.Bench.csproj"
+            argv = [
+                "dotnet",
+                "run",
+                "--disable-build-servers",
+                "--project",
+                str(bench_project),
+                "--",
+                "run",
+                "--suite",
+                str(suite),
+                "--model",
+                model,
+                "--model-command",
+                wrapped,
+                "--cold",
+                "--scoring",
+                "executed",
+                "--mode",
+                "docs-in-context",
+                "--docs-root",
+                str(docs_root),
+                "--custom-docs",
+                "--private-results",
+                str(private_results),
+                "--max-attempts",
+                "1",
+            ]
+            try:
+                bench = run_process(argv, repo, env, timeout=args.timeout)
+            except TimeoutError:
+                return write_failure(REASON_TIMEOUT)
+            capture = work / "reply.txt"
+            reply = capture.read_text(encoding="utf-8", errors="replace") if capture.is_file() else ""
+            if not contains_phrase(extract_phrase(reply)):
+                reply = bench.stdout or reply
+            source = extract_phrase(reply)
+            classified = classify_reply(source, repo, work, env)
+            bench_row = read_bench_row(work / "bench" / "results")
+            if not bench_row and private_results.is_file():
+                lines = [line for line in private_results.read_text(encoding="utf-8").splitlines() if line.strip()]
+                bench_row = json.loads(lines[-1]) if lines else {}
+            bench_reason = bench_failure_reason(bench_row)
+            if bench_reason:
+                return write_failure(bench_reason, bench_row, classified)
+            outcome_passed = classified.get("passed") is True and bench.returncode == 0
+            if classified.get("reason") in {REASON_COMPILE, REASON_BUILD, REASON_SPEC}:
+                outcome_passed = classified.get("passed") is True
+            document = totals_document(model, grammar_sha, sheet_sha, bench_row, classified, outcome_passed)
+            write_json(out_path, document)
+            return 0 if document["passed"] else 1
+    except TimeoutError:
+        return write_failure(REASON_TIMEOUT)
+    except Exception:
+        return write_failure(REASON_ERROR)
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
@@ -456,7 +565,17 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
 
 def main(argv: list[str]) -> int:
     try:
-        return run_check(parse_args(argv))
+        args = parse_args(argv)
+    except SystemExit:
+        raise
+    except Exception as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    try:
+        return run_check(args)
+    except TimeoutError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
     except Exception as exc:  # pragma: no cover - CLI failure path
         print(f"error: {exc}", file=sys.stderr)
         return 2
