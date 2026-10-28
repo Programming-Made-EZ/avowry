@@ -18,6 +18,7 @@ public class SourceFormatterTests
     [Theory]
     [InlineData("ensure input.items is not empty")]
     [InlineData("let total = total quantity of input.items")]
+    [InlineData("let completed = input with { n: 1 }")]
     [InlineData("respond with { totalQuantity: total }")]
     [InlineData("respond with {}")]
     [InlineData("fail with NotBuilt")]

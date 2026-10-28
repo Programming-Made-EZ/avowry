@@ -20,6 +20,7 @@ public static class SourceFormatter
     public static string Format(Step step) => step switch
     {
         LetStep l => $"let {l.Name} = {Format(l.Call)}",
+        LetUpdateStep u => $"let {u.Name} = {Format(u.Source)} with {Format(u.Fields)}",
         RespondStep r => $"respond with {Format(r.Value)}",
         FailStep f => $"fail with {f.Code}",
         EnsureStep e => $"ensure {Format(e.Condition)} else {e.Code}",

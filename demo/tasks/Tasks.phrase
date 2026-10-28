@@ -1,5 +1,5 @@
 # PROVISIONAL {Record}Store convention uses: create task, find task, list tasks,
-# complete task, and delete task each declare the TaskStore effect.
+# save, and delete task each declare the TaskStore effect.
 module Tasks
 
 type Task
@@ -37,16 +37,10 @@ phrase "list tasks {available: Bool}" -> List<Task>
         Fail("StoreUnavailable");
     return taskstore.List();
 
-phrase "complete task {id: Id}" -> Task
+phrase "save {task: Task}"
   effects TaskStore
-  fails with NotFound
   native csharp
-    var task = taskstore.Find(id);
-    if (task is null)
-        Fail("NotFound");
-    var completed = new Task(task.Id, task.Title, true);
-    taskstore.Save(completed);
-    return completed;
+    taskstore.Save(task);
 
 phrase "delete task {id: Id}"
   effects TaskStore
@@ -118,8 +112,10 @@ endpoint CompleteTask : PUT /tasks/{id}/complete
   output
     task: Task
   steps
-    let task = complete task input.id
-    respond with { task: task }
+    let task = find task input.id
+    let completed = task with { done: true }
+    save completed
+    respond with { task: completed }
   spec "a known task becomes complete"
     given input { id: "task-1" }
     when handled

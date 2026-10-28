@@ -203,6 +203,9 @@ public static class Resolver
                             bound.Add(new BoundLetStep(let.Name, type, resolved.Value.Call, SourceFormatter.Format(let)));
                         break;
                     }
+                    case LetUpdateStep update:
+                        bound.Add(ResolveLetUpdate(update, scope));
+                        break;
                     case FailStep fail:
                         if (declaredFailures is not null && !declaredFailures.Contains(fail.Code, StringComparer.Ordinal))
                             Report("PH326", $"Composite failure '{fail.Code}' is not declared in 'fails with'.", fail.At);
@@ -229,6 +232,48 @@ public static class Resolver
                 }
             }
             return bound;
+        }
+
+        private BoundLetUpdateStep ResolveLetUpdate(LetUpdateStep update, Dictionary<string, PType> scope)
+        {
+            var record = ResolvePath(update.Source, scope);
+            IReadOnlyList<FieldModel> fields = [];
+            if (!record.Type.IsError)
+            {
+                if (!recordFields.TryGetValue(record.Type.Name, out var declared))
+                    Report("PH311", $"Type {record.Type} has no fields; cannot update it.", update.At);
+                else
+                    fields = declared;
+            }
+
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            var boundFields = new List<BoundRecordField>();
+            foreach (var field in update.Fields.Fields)
+            {
+                if (!seen.Add(field.Name))
+                {
+                    Report("PH303", $"Field '{field.Name}' is repeated in the update.", field.At);
+                    continue;
+                }
+
+                var declared = fields.FirstOrDefault(candidate => candidate.Name == field.Name);
+                if (declared is null)
+                {
+                    if (fields.Count > 0)
+                        Report("PH311", $"Unknown field '{field.Name}' on {record.Type}. Available fields: {string.Join(", ", fields.Select(candidate => candidate.Name))}.", field.At);
+                    boundFields.Add(new BoundRecordField(field.Name, ResolveValue(field.Value, PType.Error, scope)));
+                    continue;
+                }
+
+                boundFields.Add(new BoundRecordField(declared.Name, ResolveValue(field.Value, declared.Type, scope)));
+            }
+
+            if (scope.ContainsKey(update.Name))
+                Report("PH313", $"Variable '{update.Name}' is already defined.", update.At);
+            else
+                scope.Add(update.Name, record.Type);
+
+            return new BoundLetUpdateStep(update.Name, record, boundFields, record.Type, SourceFormatter.Format(update));
         }
 
         private BoundCondition ResolveCondition(Condition condition, IReadOnlyDictionary<string, PType> scope)

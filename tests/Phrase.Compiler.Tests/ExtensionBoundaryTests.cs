@@ -98,6 +98,7 @@ public class ExtensionBoundaryTests
         Assert.Equal(ExtensionPart.Web, ExtensionKeywords.Construct("status-mapping"));
         Assert.Equal(ExtensionPart.Core, ExtensionKeywords.Construct("phrase-steps"));
         Assert.Equal(ExtensionPart.Core, ExtensionKeywords.Construct("ensure-step"));
+        Assert.Equal(ExtensionPart.Core, ExtensionKeywords.Construct("record-update"));
 
         // And the web diagnostics stay web, including only the endpoint arm of the shared codes
         foreach (var code in new[] { "PH209", "PH304", "PH322", "PH323" })

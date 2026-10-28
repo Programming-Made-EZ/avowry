@@ -55,6 +55,7 @@ public sealed record EndpointModel(
 public abstract record BoundStep(string Source);
 public sealed record BoundCallStep(BoundCall Call, string Source) : BoundStep(Source);
 public sealed record BoundLetStep(string Name, PType Type, BoundCall Call, string Source) : BoundStep(Source);
+public sealed record BoundLetUpdateStep(string Name, BoundExpr Record, IReadOnlyList<BoundRecordField> Fields, PType Type, string Source) : BoundStep(Source);
 public sealed record BoundRespondStep(BoundRecord Value, string Source) : BoundStep(Source);
 public sealed record BoundFailStep(string Code, string Source) : BoundStep(Source);
 public sealed record BoundEnsureStep(BoundCondition Condition, string Code, string Source) : BoundStep(Source);

@@ -81,6 +81,30 @@ public class ParserPhraseTests
             "(ensure title length at most 200 else Invalid)",
             "(ensure count <= limit else Invalid)"], phrase.Steps!.Select(Print));
     }
+
+    [Fact]
+    [Trait("Slice", "160")]
+    public void Record_update_form_is_parsed_as_a_let_step()
+    {
+        // Given a phrase that copies a record with one named field replaced
+        var source = InModule("""
+            phrase "complete {task: Task}"
+              steps
+                let completed = task with { done: true }
+            """);
+
+        // When the phrase is parsed
+        var phrase = Assert.Single(Clean(source).Phrases);
+
+        // Then the update keeps the source record, the replaced field, and the new value
+        Assert.Equal(["(let completed task with {done: true})"], phrase.Steps!.Select(Print));
+        var update = Assert.IsType<LetUpdateStep>(Assert.Single(phrase.Steps!));
+        Assert.Equal("completed", update.Name);
+        Assert.Equal(["task"], update.Source.Segments);
+        var field = Assert.Single(update.Fields.Fields);
+        Assert.Equal("done", field.Name);
+        Assert.True(Assert.IsType<BoolLit>(field.Value).Value);
+    }
     private static PhraseDecl SinglePhrase(string body) => Assert.Single(Clean(InModule(body)).Phrases);
 
     [Fact]

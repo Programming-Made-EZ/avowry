@@ -117,7 +117,7 @@ Failures answer HTTP 422 with the declared error name in `generalErrors`. The na
 
 ## Native C# remaining
 
-All five endpoint bodies still use `native csharp` blocks for validation, store access and record updates. That is an escape hatch, not the intended home of application logic.
+Five `native csharp` blocks remain. Completing a task is now a Phrase update (`task with { done: true }`) plus the existing load and save steps. The remaining blocks are the escape hatch for store operations and record construction that Phrase does not yet express. The list is in [docs/PATTERNS.md](../../docs/PATTERNS.md).
 
 Library patterns belong in Phrase so a reader can see the rule without reading C#:
 

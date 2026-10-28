@@ -71,7 +71,7 @@ public sealed class CSharpProvider : ITargetAdapter
         RequireSupportedSignature(module, phrase);
         foreach (var step in phrase.Steps!)
         {
-            if (step is BoundEnsureStep)
+            if (step is BoundEnsureStep or BoundLetUpdateStep)
                 continue;
             if (step is not BoundLetStep let)
                 throw new NotImplementedException($"The C# emitter does not support step '{step.Source}' yet.");
@@ -426,9 +426,18 @@ public sealed class CSharpProvider : ITargetAdapter
     private static string StepStatement(ModuleModel module, BoundStep step) => step switch
     {
         BoundLetStep let => $"var {CSharpIdent(let.Name)} = {CallExpression(module, let.Call)};",
+        BoundLetUpdateStep update => $"var {CSharpIdent(update.Name)} = {RecordUpdateExpression(update)};",
         BoundEnsureStep ensure => EnsureStatement(ensure),
         _ => throw new NotImplementedException($"The C# emitter does not support step '{step.Source}' yet."),
     };
+
+    private static string RecordUpdateExpression(BoundLetUpdateStep update)
+    {
+        var assignments = string.Join(", ", update.Fields.Select(field =>
+            $"{CSharpFieldName(field.Name)} = {CSharpArgument(field.Value)}"));
+        var body = assignments.Length == 0 ? "{ }" : "{ " + assignments + " }";
+        return $"{CSharpArgument(update.Record)} with {body}";
+    }
 
     private static string EnsureStatement(BoundEnsureStep ensure) =>
         $"if ({FailureCondition(ensure.Condition)}) PhraseFailure.Raise({CsString(ensure.Code)});";
@@ -584,6 +593,7 @@ public sealed class CSharpProvider : ITargetAdapter
     {
         BoundCallStep call => $"{CallExpression(module, call.Call, EndpointEffects(module, endpoint))};",
         BoundLetStep let => $"var {CSharpIdent(let.Name)} = {CallExpression(module, let.Call, EndpointEffects(module, endpoint))};",
+        BoundLetUpdateStep update => $"var {CSharpIdent(update.Name)} = {RecordUpdateExpression(update)};",
         BoundRespondStep respond => $"return new {EndpointResponseName(endpoint.Name)}({string.Join(", ", respond.Value.Fields.Select(field => $"{CSharpFieldName(field.Name)}: {EndpointResponseValue(field.Value)}"))});",
         BoundFailStep fail => $"PhraseFailure.Raise({CsString(fail.Code)});",
         BoundEnsureStep ensure => EnsureStatement(ensure),

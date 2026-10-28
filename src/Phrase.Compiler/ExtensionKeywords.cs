@@ -65,6 +65,7 @@ public static class ExtensionKeywords
     {
         ["phrase-steps"] = ExtensionPart.Core,
         ["ensure-step"] = ExtensionPart.Core,
+        ["record-update"] = ExtensionPart.Core,
         ["endpoint"] = ExtensionPart.Web,
         ["endpoint-steps"] = ExtensionPart.Web,
         ["route"] = ExtensionPart.Web,

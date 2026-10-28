@@ -66,6 +66,9 @@ public abstract record Step(Position At);
 /// <summary><c>let name = &lt;phrase call&gt;</c></summary>
 public sealed record LetStep(string Name, PhraseCall Call, Position At) : Step(At);
 
+/// <summary><c>let name = source with { field: value, ... }</c> — a copy of a record with named fields replaced.</summary>
+public sealed record LetUpdateStep(string Name, PathExpr Source, RecordExpr Fields, Position At) : Step(At);
+
 /// <summary><c>respond with { ... }</c></summary>
 public sealed record RespondStep(RecordExpr Value, Position At) : Step(At);
 

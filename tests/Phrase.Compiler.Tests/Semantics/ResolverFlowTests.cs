@@ -131,6 +131,62 @@ public class ResolverFlowTests
         // Then the duplicate is reported clearly
         Assert.Equal(["PH329"], Codes(source));
     }
+
+    [Fact]
+    [Trait("Slice", "160")]
+    public void Record_update_resolves_to_the_source_record_type()
+    {
+        // Given a phrase that copies a Task with done set to true
+        var source = Program("""
+            type Task
+              id: Id
+              title: Text
+              done: Bool
+
+            phrase "complete {task: Task}"
+              steps
+                let completed = task with { done: true }
+            """);
+
+        // When the phrase is resolved
+        var phrase = Clean(source).Phrase("complete _");
+        var update = Assert.IsType<BoundLetUpdateStep>(Assert.Single(phrase.Steps!));
+
+        // Then the copy has the Task type, the replaced field is Bool, and the original name stays in scope
+        Assert.Equal("completed", update.Name);
+        Assert.Equal("Task", update.Type.Name);
+        var field = Assert.Single(update.Fields);
+        Assert.Equal("done", field.Name);
+        Assert.Equal(PType.Bool, field.Value.Type);
+        Assert.True(Assert.IsType<BoundBool>(field.Value).Value);
+        Assert.Equal("task", Assert.IsType<BoundVariable>(update.Record).Name);
+    }
+
+    [Theory]
+    [Trait("Slice", "160")]
+    [InlineData("let completed = missing with { done: true }", "PH310")]
+    [InlineData("let completed = title with { done: true }", "PH311")]
+    [InlineData("let completed = task with { missing: true }", "PH311")]
+    [InlineData("let completed = task with { done: \"yes\" }", "PH312")]
+    [InlineData("let completed = task with { done: true, done: false }", "PH303")]
+    public void Record_update_rejects_unknown_records_fields_wrong_types_and_duplicates(string step, string code)
+    {
+        // Given an invalid record update
+        var source = Program($$"""
+            type Task
+              id: Id
+              title: Text
+              done: Bool
+
+            phrase "complete {task: Task} titled {title: Text}"
+              steps
+                {{step}}
+            """);
+
+        // When the phrase is resolved
+        // Then the specific semantic error is reported
+        Assert.Equal([code], Codes(source));
+    }
     private const string Validate = """
         phrase "validate {items: List<LineItem>}"
           steps

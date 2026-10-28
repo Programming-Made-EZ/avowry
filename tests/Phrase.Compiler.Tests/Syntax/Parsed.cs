@@ -34,6 +34,7 @@ internal static class Parsed
         TemplateHole h => $"{{{h.Name}: {Print(h.Type)}}}",
 
         LetStep s => $"(let {s.Name} {Print(s.Call)})",
+        LetUpdateStep s => $"(let {s.Name} {Print(s.Source)} with {Print(s.Fields)})",
         RespondStep s => $"(respond {Print(s.Value)})",
         FailStep s => $"(fail {s.Code})",
         EnsureStep s => $"(ensure {SourceFormatter.Format(s.Condition)} else {s.Code})",

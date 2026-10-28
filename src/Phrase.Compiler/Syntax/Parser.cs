@@ -568,6 +568,14 @@ public static class Parser
                 c.Next();
                 var name = c.Expect(TokenKind.Name, "a variable name after `let`");
                 c.ExpectSymbol("=");
+                if (LooksLikeRecordUpdate(c))
+                {
+                    var source = ParsePath(c);
+                    c.Next(); // with
+                    var fields = ParseRecord(c);
+                    c.ExpectEnd();
+                    return new LetUpdateStep(name.Text, source, fields, at);
+                }
                 return new LetStep(name.Text, ParseCall(c), at);
             }
 
@@ -625,6 +633,16 @@ public static class Parser
             }
 
             return ParseCall(c);
+        }
+
+        /// <summary><c>path with { ... }</c> is a record update, not a phrase call.</summary>
+        private static bool LooksLikeRecordUpdate(Cursor c)
+        {
+            if (!c.Is(TokenKind.Name)) return false;
+            var k = 1;
+            while (c.IsSymbol(".", k) && c.Is(TokenKind.Name, k + 1))
+                k += 2;
+            return c.IsName("with", k) && c.IsSymbol("{", k + 1);
         }
 
         /// <summary>Bare names are words; dotted paths, literals, records and lists are arguments.</summary>
