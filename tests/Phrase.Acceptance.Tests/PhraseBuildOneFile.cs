@@ -84,7 +84,7 @@ public class PhraseBuildOneFile
     {
         // Given orders.phrase and the files PhraseCompiler.Compile plus WriteTo produce
         var sourcePath = RepoPaths.Find("tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase");
-        var expectedOutput = PhraseCompiler.Compile(await File.ReadAllTextAsync(sourcePath), new CSharpProvider());
+        var expectedOutput = PhraseCompiler.Compile(await File.ReadAllTextAsync(sourcePath), new CSharpProvider(), sourcePath);
         using var expected = TempWorkspace.Create();
         expectedOutput.WriteTo(expected.Root);
         using var actual = TempWorkspace.Create();

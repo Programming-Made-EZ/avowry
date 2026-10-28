@@ -39,6 +39,46 @@ public class TasksOverHttp
         await AssertEverySpecMatchesAsync(workspace.FindSingle("*.Api.csproj"), module);
     }
 
+    [Fact]
+    [Trait("Slice", "161")]
+    public async Task Every_declared_failure_names_its_Phrase_source_in_the_response_header()
+    {
+        // Given the Tasks demo with four distinct declared failures
+        var sourcePath = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var source = await File.ReadAllTextAsync(sourcePath);
+        var module = Resolver.Resolve(source).Module;
+        using var workspace = TempWorkspace.Create();
+        var cli = await PhraseCli.RunAsync("build", sourcePath, "-o", workspace.Root);
+        Assert.True(cli.ExitCode == 0, cli.Text);
+
+        // When every Phrase failure spec is exercised over a live generated API
+        var observed = await ObserveFailureSourcesAsync(workspace.FindSingle("*.Api.csproj"), module);
+
+        // Then EmptyTitle, TitleTooLong, NotFound and StoreUnavailable identify file, endpoint and failure
+        Assert.Equal(new[] { "EmptyTitle", "NotFound", "StoreUnavailable", "TitleTooLong" }, observed.Keys.Order(StringComparer.Ordinal));
+        Assert.All(observed, item => Assert.Matches($"^Tasks\\.phrase:[0-9]+ endpoint [A-Za-z]+ failure {item.Key}$", item.Value));
+    }
+
+    private static async Task<Dictionary<string, string>> ObserveFailureSourcesAsync(string project, ModuleModel module)
+    {
+        var observed = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var endpoint in module.Endpoints.Where(endpoint => endpoint.Specs.Any(spec => spec.Outcome is FailsModel)))
+        {
+            await using var api = await GeneratedApi.StartAsync(project);
+            using var http = new HttpClient { BaseAddress = new Uri(api.BaseUrl), Timeout = SpecTimeout };
+            foreach (var spec in endpoint.Specs.Where(spec => spec.Outcome is FailsModel))
+            {
+                var call = RequestFor(endpoint, spec.Input);
+                var response = await SendAsync(http, MethodOf(endpoint.Verb), call.Path, call.Json);
+                var failure = (FailsModel)spec.Outcome;
+                Assert.True(response.Status == HttpStatusCode.UnprocessableEntity, Detail(api, endpoint.Name, response));
+                Assert.True(response.Headers.TryGetValue("X-Phrase-Source", out var source), Detail(api, endpoint.Name, response));
+                observed[failure.Code] = source;
+            }
+        }
+        return observed;
+    }
+
     internal static async Task AssertEverySpecMatchesAsync(string project, ModuleModel module)
     {
         var mismatches = new List<string>();
@@ -358,7 +398,8 @@ public class TasksOverHttp
         if (json is not null)
             request.Content = new StringContent(json, Encoding.UTF8, "application/json");
         using var response = await http.SendAsync(request);
-        return new LiveResponse(response.StatusCode, await response.Content.ReadAsStringAsync());
+        var headers = response.Headers.ToDictionary(header => header.Key, header => string.Join(",", header.Value), StringComparer.OrdinalIgnoreCase);
+        return new LiveResponse(response.StatusCode, await response.Content.ReadAsStringAsync(), headers);
     }
 
     private static string Json(BoundExpr value)
@@ -472,5 +513,5 @@ public class TasksOverHttp
         $"{spec}: PID {api.Pid} on {api.BaseUrl} returned {(int)response.Status}. Body: {response.Body}{Environment.NewLine}{api.Log}";
 
     private readonly record struct LiveCall(string Path, string? Json);
-    private readonly record struct LiveResponse(HttpStatusCode Status, string Body);
+    private readonly record struct LiveResponse(HttpStatusCode Status, string Body, IReadOnlyDictionary<string, string> Headers);
 }

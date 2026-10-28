@@ -14,7 +14,9 @@ public sealed record ModuleModel(
     string Name,
     IReadOnlyList<TypeModel> Types,
     IReadOnlyList<PhraseModel> Phrases,
-    IReadOnlyList<EndpointModel> Endpoints)
+    IReadOnlyList<EndpointModel> Endpoints,
+    string SourceName = "",
+    int SourceLine = 1)
 {
     public PhraseModel Phrase(string key) => Phrases.Single(p => p.Key == key);
 }
@@ -36,7 +38,8 @@ public sealed record PhraseModel(
     IReadOnlyList<string> Failures,               // effective: declared plus everything its steps can fail with
     IReadOnlyDictionary<string, string> Natives,  // target -> code (leaf phrases)
     IReadOnlyList<BoundStep>? Steps,              // composite phrases
-    IReadOnlyList<PhraseSpecModel> Specs);
+    IReadOnlyList<PhraseSpecModel> Specs,
+    int SourceLine = 1);
 
 public sealed record EndpointModel(
     string Name,
@@ -48,7 +51,8 @@ public sealed record EndpointModel(
     IReadOnlyList<FieldModel> Output,
     IReadOnlyList<BoundStep> Steps,
     IReadOnlyList<string> Failures,               // everything its steps can fail with
-    IReadOnlyList<EndpointSpecModel> Specs);
+    IReadOnlyList<EndpointSpecModel> Specs,
+    int SourceLine = 1);
 
 // ---------- steps ----------
 

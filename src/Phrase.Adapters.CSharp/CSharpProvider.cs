@@ -42,8 +42,14 @@ public sealed class CSharpProvider : ITargetAdapter
             files[$"{specs}/{EndpointSpecsFileName(endpoint.Name)}.cs"] = EndpointSpecs(module, endpoint);
         }
 
+        foreach (var path in files.Keys.Where(path => path.EndsWith(".cs", StringComparison.Ordinal)).ToList())
+            files[path] = SourceComment(module, module.SourceLine, $"module {module.Name}") + files[path];
+
         return new CompilationOutput(files);
     }
+
+    private static string SourceComment(ModuleModel module, int line, string declaration, string indent = "") =>
+        $"{indent}// phrase: {module.SourceName}:{line} {declaration}\n";
 
     private static void RequireSupportedPhrase(ModuleModel module, PhraseModel phrase)
     {
@@ -398,6 +404,7 @@ public sealed class CSharpProvider : ITargetAdapter
     private static void AppendPhrase(StringBuilder code, ModuleModel module, PhraseModel phrase)
     {
         var method = MethodName(phrase);
+        code.Append(SourceComment(module, phrase.SourceLine, $"phrase {phrase.Template}", "    "));
         code.Append("    /// <summary>").Append(Summary(phrase)).Append("</summary>\n");
         if (phrase.Failures.Count > 0)
             code.Append("    /// <remarks>Fails with: ").Append(string.Join(", ", phrase.Failures)).Append("</remarks>\n");
@@ -503,7 +510,8 @@ public sealed class CSharpProvider : ITargetAdapter
 
         code.Append("/// <summary>Pure handler: the endpoint's steps, one line per step.</summary>\n");
         code.Append("[Phrase(\"endpoint ").Append(endpoint.Name).Append(" : ").Append(endpoint.Verb).Append(' ').Append(endpoint.Route).Append("\")]\n");
-        code.Append("public static class ").Append(EndpointHandlerName(endpoint.Name)).Append("\n{");
+        code.Append("public static class ").Append(EndpointHandlerName(endpoint.Name)).Append("\n{\n");
+        code.Append(SourceComment(module, endpoint.SourceLine, $"endpoint {endpoint.Name}", "    "));
         code.Append("    public static ").Append(endpoint.OutputType is null ? "void" : EndpointResponseName(endpoint.Name)).Append(' ');
         code.Append("Handle(").Append(EndpointRequestName(endpoint.Name)).Append(" input");
         foreach (var effect in effects)
@@ -548,6 +556,7 @@ public sealed class CSharpProvider : ITargetAdapter
         }).Append("(\"").Append(endpoint.Route).Append("\");\n");
         code.Append("        AllowAnonymous();\n");
         code.Append("    }\n\n");
+        code.Append(SourceComment(module, endpoint.SourceLine, $"endpoint {endpoint.Name}", "    "));
         code.Append("    public override async ").Append(AsyncTaskType(module)).Append(" HandleAsync(").Append(EndpointRequestName(endpoint.Name)).Append(" req, CancellationToken ct)\n");
         code.Append("    {\n");
         code.Append("        try\n");
@@ -571,6 +580,7 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append("        }\n");
         code.Append("        catch (PhraseFailure failure)\n");
         code.Append("        {\n");
+        code.Append("            HttpContext.Response.Headers[\"X-Phrase-Source\"] = $").Append(CsString($"{module.SourceName}:{endpoint.SourceLine} endpoint {endpoint.Name} failure {{failure.Code}}" )).Append(";\n");
         code.Append("            AddError(failure.Code);\n");
         code.Append("            await Send.ErrorsAsync(422, ct);\n");
         code.Append("        }\n");

@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using Phrase.Acceptance.Tests.Support;
 using Phrase.Adapters.CSharp;
 using Phrase.Compiler;
@@ -12,10 +13,10 @@ namespace Phrase.Acceptance.Tests;
 //   while every existing app keeps working.
 public class WebExtensionBoundary
 {
-    // SHA-256 of the generated file set for orders.phrase, recorded on the committed
-    // tree before this slice. Paths are sorted ordinally. Each path and file text is
+    // SHA-256 of the generated file set for orders.phrase, excluding source trace comments.
+    // Paths are sorted ordinally. Trace-comment lines are omitted; each path and file text is
     // UTF-8, with a NUL byte after the path and after the text.
-    private const string OrdersOutputHash = "409bf3c677d1b2f6f14e993085b272ebf0595795e4f571d208a9e55d39a9c721";
+    private const string OrdersOutputHash = "c017ee5ca6dee359536e9c9e7a97bc3dc0f0bb7f3726f24b7a2f0cd5b0c6d159";
 
     [Fact]
     [Trait("Slice", "142")]
@@ -46,7 +47,10 @@ public class WebExtensionBoundary
         {
             buffer.Write(Encoding.UTF8.GetBytes(path));
             buffer.WriteByte(0);
-            buffer.Write(Encoding.UTF8.GetBytes(files[path]));
+            var withoutTraceComments = string.Join('\n', files[path].Split('\n')
+                .Where(line => !line.TrimStart().StartsWith("// phrase:", StringComparison.Ordinal)));
+            var withoutTraceLines = Regex.Replace(withoutTraceComments, @"Orders\.phrase:\d+", "Orders.phrase:#");
+            buffer.Write(Encoding.UTF8.GetBytes(withoutTraceLines));
             buffer.WriteByte(0);
         }
 
