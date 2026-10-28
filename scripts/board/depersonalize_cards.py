@@ -16,6 +16,36 @@ SLUG = f"{OWNER}/{REPO}"
 NAME = "Ste" + "ve"
 N = re.escape(NAME)
 
+# Reviewed phrase rewrites for older cards: direction becomes a product principle, quotes become paraphrase.
+PHRASES = [
+    (f"{NAME}'s purpose-level ruling relayed by Dispatch,", "Product direction (purpose level),"),
+    (f"{NAME}'s direction rulings relayed by Dispatch,", "Product direction,"),
+    (f"{NAME}'s direction ruling relayed by Dispatch,", "Product direction,"),
+    (f"{NAME}'s direction relayed by Dispatch, 2026-10-27 (let's get to a real prototype first)", "Product direction, 2026-10-27 (reach a real prototype first)"),
+    (f"{NAME}'s answers relayed by Dispatch, 2026-10-27 (use a publicly available repository instead of his private projects", "Product direction, 2026-10-27 (use a publicly available repository instead of private projects"),
+    (f"{NAME}'s idea relayed by Dispatch, 2026-10-27 (test against different code base sizes; use his real projects as the medium and large codebases)", "Product direction, 2026-10-27 (test against different code base sizes; use real projects as the medium and large codebases)"),
+    (f"{NAME}'s hypothesis relayed by Dispatch,", "Product hypothesis,"),
+    (f"{NAME}'s standing rule relayed by Dispatch, 2026-10-28 (as part of the mob loop it should always test for models to be available again)", "Product direction, 2026-10-28 (the mob loop always re-tests whether unavailable models are available again)"),
+    (f"{NAME}'s priority ruling, 2026-10-26", "Product priority, 2026-10-26"),
+    (f"{NAME} and Dispatch, 2026-10-26 (proposal B)", "Product direction, 2026-10-26 (proposal B)"),
+    (f"{NAME}, 2026-10-26 (proposal A)", "Product direction, 2026-10-26 (proposal A)"),
+    (f"{NAME}, 2026-10-26, on card 003's story: \"this is a role, not a persona.\"", "Product direction, 2026-10-26, on card 003's story: a role is not a persona."),
+    (f'{NAME}, 2026-10-26 (mob-defaults is his product): "it should be a loop."', "Product direction, 2026-10-26: the work should run as a loop."),
+    (f'{NAME}: "I do have a concern the slices are too big."', "Concern raised: the slices are too big."),
+    ("\"don't forget the team can find their own features to add. so theoretically the loop is continuous and never ends.\"", "the team finds its own features to add, so the loop is continuous and never ends."),
+    ('"this seems like a good starter app for the phrase lang"', "a Tasks app is a good starter app for the language"),
+    (f"{NAME}, 2026-10-26 (VISION ruling 5): \"I feel like we aren't adhering to consumer related output. 'succeeds' isn't really a result the customer gets value from.\"", "Product direction, 2026-10-26 (VISION ruling 5): output should be something the customer gets value from; a bare 'succeeds' is not such a result."),
+    (f"{NAME}'s direction ruling 4", "Product direction ruling 4"),
+    (f"{NAME}'s direction ruling 1", "Product direction ruling 1"),
+    (f"{NAME}'s purpose ruling", "Product purpose ruling"),
+    (f"{NAME}'s earlier confirmed design", "Earlier confirmed design"),
+    (f"{NAME}'s rulings", "Product rulings"),
+    
+    ("on his phone", "on their phone"),
+    ("his choice", "the product owner's choice"),
+    ("(mob-defaults is his product)", "(mob-defaults is the product owner's product)"),
+]
+
 
 def depersonalize(text):
     text = text.replace("\r\n", "\n")
@@ -26,6 +56,11 @@ def depersonalize(text):
     )
     text = re.sub(rf"(?i)\bneeds\s+{N}\b", "needs the product owner", text)
     text = re.sub(rf"(?i)\bNeeds-{N}\b", "Needs-product-owner", text)
+    for old, new in PHRASES:
+        text = text.replace(old, new)
+    text = re.sub(rf"\b{N}'s\b", "the product owner's", text)
+    text = re.sub(rf"\b{N}\b", "the product owner", text)
+    text = re.sub(r"(?m)(^[-0-9. *]*|[.:] )the product owner", lambda m: m.group(1) + "The product owner", text)
     return text
 
 
