@@ -14,7 +14,7 @@ namespace Phrase.Compiler.Syntax;
 public static class Parser
 {
     public static readonly IReadOnlySet<string> Targets = new HashSet<string>(StringComparer.Ordinal) { "csharp", "typescript", "python" };
-    public static readonly IReadOnlySet<string> HttpVerbs = new HashSet<string>(StringComparer.Ordinal) { "GET", "POST", "PUT", "PATCH", "DELETE" };
+    public static readonly IReadOnlySet<string> HttpVerbs = ExtensionKeywords.HttpVerbs;
 
     public static ParseResult Parse(string source)
     {
@@ -150,6 +150,7 @@ public static class Parser
     private sealed class Impl(LexResult lexed)
     {
         private readonly List<Diagnostic> _diagnostics = [.. lexed.Diagnostics];
+        private bool _web;
 
         public ParseResult Run()
         {
@@ -169,6 +170,15 @@ public static class Parser
 
                 var head = line.Tokens[0];
                 var keyword = head.Kind == TokenKind.Name ? head.Text : null;
+                if (keyword == "uses" && IsUsesWeb(line))
+                {
+                    if (!ExtensionKeywords.Is(ExtensionPart.Core, "uses"))
+                        throw new InvalidOperationException("The explicit extension load 'uses' is a core keyword.");
+                    _web = true;
+                    NoChildren(line);
+                    continue;
+                }
+
                 switch (keyword)
                 {
                     case "module":
@@ -185,7 +195,8 @@ public static class Parser
                         sawDeclaration = true;
                         AddIfParsed(phrases, () => ParsePhrase(line));
                         break;
-                    case "endpoint":
+                    case "endpoint" when ExtensionKeywords.Is(ExtensionPart.Web, "endpoint"):
+                        _web = true;
                         sawDeclaration = true;
                         AddIfParsed(endpoints, () => ParseEndpoint(line));
                         break;
@@ -198,8 +209,14 @@ public static class Parser
             if (module is null && !_diagnostics.Any(d => d.Code == "PH202"))
                 Report("PH202", "A file must start with `module <Name>`.", new Position(1, 1));
 
-            return new ParseResult(new SourceFile(module, types, phrases, endpoints), _diagnostics);
+            return new ParseResult(new SourceFile(module, types, phrases, endpoints), _diagnostics)
+            {
+                ActiveExtensions = _web ? ExtensionKeywords.CoreAndWeb : ExtensionKeywords.CoreOnly,
+            };
         }
+
+        private static bool IsUsesWeb(Line line) =>
+            line.Tokens.Count == 2 && line.Tokens[1] is { Kind: TokenKind.Name, Text: "web" };
 
         // ------------------------------------------------------------- declarations
 
@@ -443,10 +460,13 @@ public static class Parser
             c.ExpectSymbol(":");
             var verb = c.Expect(TokenKind.TypeName, "an HTTP verb");
             var route = ParseRoute(c);
+            _web = true;
             c.ExpectEnd();
 
-            if (!HttpVerbs.Contains(verb.Text))
-                Report("PH209", $"Unknown HTTP verb '{verb.Text}'. Use one of: {string.Join(", ", HttpVerbs)}.", Pos(verb));
+            if (!ExtensionKeywords.IsHttpVerb(verb.Text))
+                Report(ExtensionDiagnostics.Web("PH209"), $"Unknown HTTP verb '{verb.Text}'. Use one of: {string.Join(", ", HttpVerbs)}.", Pos(verb));
+            else
+                _web = true;
 
             List<FieldDecl>? input = null, output = null;
             List<Step>? steps = null;
@@ -462,7 +482,10 @@ public static class Parser
 
                     switch (section)
                     {
-                        case "input" or "output" or "steps":
+                        case "input" when ExtensionKeywords.Is(ExtensionPart.Web, "input"):
+                        case "output" when ExtensionKeywords.Is(ExtensionPart.Web, "output"):
+                        case "steps" when ExtensionKeywords.Is(ExtensionPart.Core, "steps")
+                            && ExtensionKeywords.Construct("endpoint-steps") == ExtensionPart.Web:
                             cc.Next();
                             cc.ExpectEnd();
                             var seen = section switch { "input" => input is not null, "output" => output is not null, _ => steps is not null };
@@ -488,6 +511,9 @@ public static class Parser
 
         private static string ParseRoute(Cursor c)
         {
+            if (ExtensionKeywords.Construct("route") != ExtensionPart.Web)
+                throw new InvalidOperationException("Routes belong to the web extension.");
+
             var route = new StringBuilder();
             if (!c.IsSymbol("/")) throw c.Error("a route starting with '/'");
             c.Next();
@@ -501,6 +527,8 @@ public static class Parser
                 }
                 else if (c.TryConsume("{"))
                 {
+                    if (ExtensionKeywords.Construct("route-parameter") != ExtensionPart.Web)
+                        throw new InvalidOperationException("Route parameters belong to the web extension.");
                     var parameter = c.Expect(TokenKind.Name, "a route parameter name");
                     c.ExpectSymbol("}");
                     route.Append('{').Append(parameter.Text).Append('}');
@@ -543,7 +571,9 @@ public static class Parser
                 return new LetStep(name.Text, ParseCall(c), at);
             }
 
-            if (c.IsName("respond") && c.IsName("with", 1))
+            if (c.IsName("respond") && c.IsName("with", 1)
+                && ExtensionKeywords.Is(ExtensionPart.Web, "respond with")
+                && ExtensionKeywords.Construct("respond-with") == ExtensionPart.Web)
             {
                 c.Next(); c.Next();
                 var value = ParseRecord(c);
@@ -736,7 +766,7 @@ public static class Parser
 
         private static Given ParseGiven(Cursor c, Position at)
         {
-            if (c.IsName("input") && c.IsSymbol("{", 1))
+            if (c.IsName("input") && c.IsSymbol("{", 1) && ExtensionKeywords.Is(ExtensionPart.Web, "input"))
             {
                 c.Next();
                 var input = ParseRecord(c);
@@ -755,7 +785,10 @@ public static class Parser
         {
             SpecTrigger trigger;
             if (c.IsName("called")) trigger = SpecTrigger.Called;
-            else if (c.IsName("handled")) trigger = SpecTrigger.Handled;
+            else if (c.IsName("handled")
+                && ExtensionKeywords.Is(ExtensionPart.Web, "handled")
+                && ExtensionKeywords.Construct("when-handled") == ExtensionPart.Web)
+                trigger = SpecTrigger.Handled;
             else throw c.Error("`called` (phrase spec) or `handled` (endpoint spec)");
             c.Next();
             c.ExpectEnd();
@@ -766,7 +799,10 @@ public static class Parser
         {
             Outcome outcome;
             if (c.IsName("returns")) { c.Next(); outcome = new ReturnsOutcome(ParseExpr(c), at); }
-            else if (c.IsName("responds")) { c.Next(); outcome = new RespondsOutcome(ParseRecord(c), at); }
+            else if (c.IsName("responds")
+                && ExtensionKeywords.Is(ExtensionPart.Web, "responds")
+                && ExtensionKeywords.Construct("responds") == ExtensionPart.Web)
+            { c.Next(); outcome = new RespondsOutcome(ParseRecord(c), at); }
             else if (c.IsName("fails") && c.IsName("with", 1)) { c.Next(); c.Next(); outcome = new FailsWithOutcome(c.Expect(TokenKind.TypeName, "a failure code (Capitalized)").Text, at); }
             else if (c.IsName("succeeds")) { c.Next(); outcome = new SucceedsOutcome(at); }
             else throw c.Error("an outcome (returns, responds, fails with or succeeds)");

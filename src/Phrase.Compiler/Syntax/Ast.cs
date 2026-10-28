@@ -13,7 +13,11 @@ public sealed record SourceFile(
     IReadOnlyList<PhraseDecl> Phrases,
     IReadOnlyList<EndpointDecl> Endpoints);
 
-public sealed record ParseResult(SourceFile File, IReadOnlyList<Diagnostic> Diagnostics);
+public sealed record ParseResult(SourceFile File, IReadOnlyList<Diagnostic> Diagnostics)
+{
+    /// <summary>Extensions this file loads. Always contains <c>core</c>. The same source always yields the same list.</summary>
+    public IReadOnlyList<string> ActiveExtensions { get; init; } = ExtensionKeywords.CoreOnly;
+}
 
 // ---------- declarations ----------
 

@@ -14,7 +14,10 @@ public static class Resolver
         ArgumentNullException.ThrowIfNull(source);
         var parsed = Parser.Parse(source);
         var resolved = Resolve(parsed.File);
-        return new ResolveResult(resolved.Module, [.. parsed.Diagnostics, .. resolved.Diagnostics]);
+        return new ResolveResult(resolved.Module, [.. parsed.Diagnostics, .. resolved.Diagnostics])
+        {
+            ActiveExtensions = parsed.ActiveExtensions,
+        };
     }
 
     /// <summary>Resolves an already-parsed file. Must never throw, even on a tree with syntax errors.</summary>
@@ -132,9 +135,9 @@ public static class Resolver
             foreach (var declaration in file.Endpoints)
             {
                 if (!names.Add(declaration.Name))
-                    Report("PH304", $"Endpoint '{declaration.Name}' is already defined.", declaration.At);
+                    Report(ExtensionDiagnostics.Web("PH304"), $"Endpoint '{declaration.Name}' is already defined.", declaration.At);
                 if (!routes.Add((declaration.Verb, declaration.Route)))
-                    Report("PH304", $"Endpoint route '{declaration.Verb} {declaration.Route}' is already defined.", declaration.At);
+                    Report(ExtensionDiagnostics.Web("PH304"), $"Endpoint route '{declaration.Verb} {declaration.Route}' is already defined.", declaration.At);
                 var input = ResolveFields(declaration.Input, $"endpoint '{declaration.Name}' input");
                 var output = ResolveFields(declaration.Output, $"endpoint '{declaration.Name}' output");
                 var inputType = PType.EndpointInput(declaration.Name);
@@ -145,7 +148,7 @@ public static class Resolver
                 var scope = new Dictionary<string, PType>(StringComparer.Ordinal) { ["input"] = inputType };
                 var steps = ResolveSteps(declaration.Steps, scope, outputType, null);
                 if (outputType is not null && !steps.Any(step => step is BoundRespondStep or BoundFailStep))
-                    Report("PH323", $"Endpoint '{declaration.Name}' has an output but never responds or fails.", declaration.At);
+                    Report(ExtensionDiagnostics.Web("PH323"), $"Endpoint '{declaration.Name}' has an output but never responds or fails.", declaration.At);
                 var failures = EffectiveFailures(steps);
                 var model = new EndpointModel(
                     declaration.Name, declaration.Verb, declaration.Route,
@@ -205,7 +208,7 @@ public static class Resolver
                     case RespondStep respond:
                         if (outputType is null)
                         {
-                            Report("PH322", "'respond with' is only valid in an endpoint with an output.", respond.At);
+                            Report(ExtensionDiagnostics.Web("PH322"), "'respond with' is only valid in an endpoint with an output.", respond.At);
                             bound.Add(new BoundRespondStep(new BoundRecord([], PType.Error), SourceFormatter.Format(respond)));
                         }
                         else
@@ -287,7 +290,7 @@ public static class Resolver
         {
             if (spec.When is not SpecTrigger.Called)
             {
-                Report("PH330", $"Spec '{spec.Description}' on phrase '{phrase.Template}' must use 'when called'.", spec.At);
+                Report(ExtensionDiagnostics.CoreArm("PH330"), $"Spec '{spec.Description}' on phrase '{phrase.Template}' must use 'when called'.", spec.At);
             }
 
             var scope = phrase.Holes.ToDictionary(h => h.Name, h => h.Type, StringComparer.Ordinal);
@@ -298,7 +301,7 @@ public static class Resolver
             {
                 if (given is GivenInput)
                 {
-                    Report("PH331", "Phrase specs cannot bind input; use a hole binding.", given.At);
+                    Report(ExtensionDiagnostics.WebArm("PH331"), "Phrase specs cannot bind input; use a hole binding.", given.At);
                     continue;
                 }
 
@@ -306,13 +309,13 @@ public static class Resolver
                 if (!scope.TryGetValue(binding.Name, out var type))
                 {
                     hasInvalidBinding = true;
-                    Report("PH331", $"Phrase spec for '{phrase.Template}' does not bind hole '{binding.Name}'. Valid holes: {string.Join(", ", scope.Keys.Order(StringComparer.Ordinal))}.", binding.At);
+                    Report(ExtensionDiagnostics.CoreArm("PH331"), $"Phrase spec for '{phrase.Template}' does not bind hole '{binding.Name}'. Valid holes: {string.Join(", ", scope.Keys.Order(StringComparer.Ordinal))}.", binding.At);
                     continue;
                 }
                 if (!seen.Add(binding.Name))
                 {
                     hasInvalidBinding = true;
-                    Report("PH331", $"Hole '{binding.Name}' is bound more than once in the spec.", binding.At);
+                    Report(ExtensionDiagnostics.CoreArm("PH331"), $"Hole '{binding.Name}' is bound more than once in the spec.", binding.At);
                     continue;
                 }
             }
@@ -323,7 +326,7 @@ public static class Resolver
                 if (bindings.Count == 0)
                 {
                     if (!hasInvalidBinding)
-                        Report("PH331", $"Spec for '{phrase.Template}' is missing the hole '{hole.Name}'.", spec.At);
+                        Report(ExtensionDiagnostics.CoreArm("PH331"), $"Spec for '{phrase.Template}' is missing the hole '{hole.Name}'.", spec.At);
                     continue;
                 }
 
@@ -353,7 +356,7 @@ public static class Resolver
         {
             if (spec.When is not SpecTrigger.Handled)
             {
-                Report("PH330", $"Spec '{spec.Description}' on endpoint '{endpoint.Name}' must use 'when handled'.", spec.At);
+                Report(ExtensionDiagnostics.WebArm("PH330"), $"Spec '{spec.Description}' on endpoint '{endpoint.Name}' must use 'when handled'.", spec.At);
             }
 
             var scope = new Dictionary<string, PType>(StringComparer.Ordinal) { ["input"] = endpoint.InputType };
@@ -377,15 +380,15 @@ public static class Resolver
                 var binding = (GivenBinding)given;
                 if (binding.Name == "input")
                 {
-                    Report("PH331", $"Endpoint spec for '{endpoint.Name}' must use 'given input {{ ... }}', not 'input = ...'.", binding.At);
+                    Report(ExtensionDiagnostics.WebArm("PH331"), $"Endpoint spec for '{endpoint.Name}' must use 'given input {{ ... }}', not 'input = ...'.", binding.At);
                     continue;
                 }
-                Report("PH331", $"Endpoint spec for '{endpoint.Name}' must use 'given input {{ ... }}', not '{binding.Name}'.", binding.At);
+                Report(ExtensionDiagnostics.WebArm("PH331"), $"Endpoint spec for '{endpoint.Name}' must use 'given input {{ ... }}', not '{binding.Name}'.", binding.At);
             }
             if (!seenInput && spec.Givens.Count == 0)
-                Report("PH331", $"Endpoint spec for '{endpoint.Name}' is missing the required 'given input {{ ... }}'.", spec.At);
+                Report(ExtensionDiagnostics.WebArm("PH331"), $"Endpoint spec for '{endpoint.Name}' is missing the required 'given input {{ ... }}'.", spec.At);
             if (spec.Givens.Count(g => g is GivenInput) > 1)
-                Report("PH331", $"Endpoint spec for '{endpoint.Name}' has more than one input binding.", spec.At);
+                Report(ExtensionDiagnostics.WebArm("PH331"), $"Endpoint spec for '{endpoint.Name}' has more than one input binding.", spec.At);
 
             var outcome = ResolveSpecOutcome(spec, null, scope, endpoint.OutputType, endpoint.Failures, endpoint.Name);
             var boundInput = new BoundRecord(inputFields, endpoint.InputType);
@@ -416,7 +419,10 @@ public static class Resolver
                 case ReturnsOutcome returns:
                     if (phrase is null || phrase.Returns is null)
                     {
-                        Report("PH333", $"Spec '{spec.Description}' uses 'returns' but this unit cannot return a value.", returns.At);
+                        var code = phrase is null
+                            ? ExtensionDiagnostics.WebArm("PH333")
+                            : ExtensionDiagnostics.CoreArm("PH333");
+                        Report(code, $"Spec '{spec.Description}' uses 'returns' but this unit cannot return a value.", returns.At);
                         return new SucceedsModel();
                     }
                     if (ContainsPath(returns.Value))
@@ -429,7 +435,7 @@ public static class Resolver
                 case RespondsOutcome responds:
                     if (outputType is null)
                     {
-                        Report("PH333", $"Spec '{spec.Description}' uses 'responds' but this unit has no output.", responds.At);
+                        Report(ExtensionDiagnostics.WebArm("PH333"), $"Spec '{spec.Description}' uses 'responds' but this unit has no output.", responds.At);
                         return new SucceedsModel();
                     }
                     if (ContainsPath(responds.Value))
@@ -442,17 +448,17 @@ public static class Resolver
                 case FailsWithOutcome fail:
                     if (phrase is not null && !phrase.Failures.Contains(fail.Code, StringComparer.Ordinal))
                     {
-                        Report("PH334", $"Phrase '{phrase.Template}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", phrase.Failures)}.", fail.At);
+                        Report(ExtensionDiagnostics.CoreArm("PH334"), $"Phrase '{phrase.Template}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", phrase.Failures)}.", fail.At);
                     }
                     if (phrase is null && endpointFailures is not null && !endpointFailures.Contains(fail.Code, StringComparer.Ordinal))
                     {
-                        Report("PH334", $"Endpoint '{endpointName}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", endpointFailures)}.", fail.At);
+                        Report(ExtensionDiagnostics.WebArm("PH334"), $"Endpoint '{endpointName}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", endpointFailures)}.", fail.At);
                     }
                     return new FailsModel(fail.Code);
                 case SucceedsOutcome:
                     if (phrase is not null && phrase.Returns is not null)
                     {
-                        Report("PH333", $"Spec '{spec.Description}' expects success for a phrase that returns a value.", outcome.At);
+                        Report(ExtensionDiagnostics.CoreArm("PH333"), $"Spec '{spec.Description}' expects success for a phrase that returns a value.", outcome.At);
                     }
                     return new SucceedsModel();
                 default:

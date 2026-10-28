@@ -4,7 +4,11 @@ namespace Phrase.Compiler.Semantics;
 // every spec checked. This is the IR that target providers consume. It holds no syntax
 // nodes; `Source` strings carry canonical source text for comments and traceability.
 
-public sealed record ResolveResult(ModuleModel Module, IReadOnlyList<Diagnostic> Diagnostics);
+public sealed record ResolveResult(ModuleModel Module, IReadOnlyList<Diagnostic> Diagnostics)
+{
+    /// <summary>Extensions this file loads. Always contains <c>core</c>. The same source always yields the same list.</summary>
+    public IReadOnlyList<string> ActiveExtensions { get; init; } = ExtensionKeywords.CoreOnly;
+}
 
 public sealed record ModuleModel(
     string Name,
