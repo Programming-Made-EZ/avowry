@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:269eac8a3a36ecf321ffba4c0b7ca230ad17d97945ee7ab84daefd66591d7460 -->
+<!-- board-table-sha256:c34e997c3000d2121cac60cbd28bd3f7795e8fb6bc338db4f4251036f652e7ed -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -75,7 +75,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 53 | 135 Tasks demo app: a CRUD API written entirely in Phrase | Done | 051, 131, 132, 133 |
 | 54 | 136 Real HTTP behaves as the specs say | Done | 135 |
 | 55 | 137 LLM-customer check: a model adds an endpoint from the docs alone | Done | 135, 136 |
-| 56 | 138 Usable v1: the acceptance test passes on main and gates CI | Ready | 135, 136, 137 |
+| 56 | 138 Usable v1: the acceptance test passes on main and gates CI | Done | 135, 136, 137 |
 | 57 | 152 Library bindings and project profile: the layering ADR | Ready | 138 |
 | 58 | 153 Verdict page states the success criteria | Ready | 138 |
 | 59 | 155 Verdict page as a judgment backed by data | Ready | 153 |
