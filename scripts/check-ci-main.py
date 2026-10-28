@@ -31,6 +31,10 @@ def verdict(runs):
     """('red'|'green'|'pending'|'unknown', run) from runs ordered newest first."""
     if not runs:
         return "unknown", None
+    # A newest run that ended cancelled has no verdict (a timeout cancels a job): treat it as red, never as green.
+    # Older cancelled runs are superseded pushes and are skipped.
+    if runs[0].get("status") == "completed" and runs[0].get("conclusion") == "cancelled":
+        return "red", runs[0]
     finished = [r for r in runs if r.get("status") == "completed" and r.get("conclusion") != "cancelled"]
     if finished and finished[0].get("conclusion") in RED:
         return "red", finished[0]

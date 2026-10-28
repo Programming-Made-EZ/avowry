@@ -24,8 +24,11 @@ class CheckCiMainTests(unittest.TestCase):
         self.assertEqual("pending", ci.verdict([run("in_progress", ""), run("completed", "success")])[0])
         self.assertEqual(0, ci.main([], runner=lambda a: [run("completed", "success")]))
 
-    def test_cancelled_runs_are_ignored_and_unreadable_status_is_not_green(self):
-        self.assertEqual("green", ci.verdict([run("completed", "cancelled"), run("completed", "success")])[0])
+    def test_newest_cancelled_run_is_red_but_older_cancelled_runs_are_skipped(self):
+        self.assertEqual("red", ci.verdict([run("completed", "cancelled"), run("completed", "success")])[0])
+        self.assertEqual("green", ci.verdict([run("completed", "success"), run("completed", "cancelled")])[0])
+
+    def test_unreadable_status_is_not_green(self):
         def broken(args):
             raise RuntimeError("no network")
         self.assertEqual(2, ci.main([], runner=broken))
