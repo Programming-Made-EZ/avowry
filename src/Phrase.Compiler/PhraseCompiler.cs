@@ -9,7 +9,7 @@ namespace Phrase.Compiler;
 /// </summary>
 public static class PhraseCompiler
 {
-    public static CompilationOutput Compile(string source, ITargetAdapter adapter, string? sourceName = null)
+    public static CompilationOutput Compile(string source, ITargetAdapter adapter)
     {
         ArgumentNullException.ThrowIfNull(source);
         ArgumentNullException.ThrowIfNull(adapter);
@@ -17,7 +17,7 @@ public static class PhraseCompiler
         var parsed = Parser.Parse(source);
         StopOnDiagnostics(parsed.Diagnostics);
 
-        var resolved = Resolver.Resolve(parsed.File, sourceName);
+        var resolved = Resolver.Resolve(parsed.File);
         StopOnDiagnostics(resolved.Diagnostics);
 
         return adapter.Emit(resolved.Module);

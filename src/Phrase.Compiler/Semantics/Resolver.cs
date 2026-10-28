@@ -9,11 +9,11 @@ namespace Phrase.Compiler.Semantics;
 public static class Resolver
 {
     /// <summary>Parses then resolves. Parse diagnostics come first in the result.</summary>
-    public static ResolveResult Resolve(string source, string? sourceName = null)
+    public static ResolveResult Resolve(string source)
     {
         ArgumentNullException.ThrowIfNull(source);
         var parsed = Parser.Parse(source);
-        var resolved = Resolve(parsed.File, sourceName);
+        var resolved = Resolve(parsed.File);
         return new ResolveResult(resolved.Module, [.. parsed.Diagnostics, .. resolved.Diagnostics])
         {
             ActiveExtensions = parsed.ActiveExtensions,
@@ -21,13 +21,13 @@ public static class Resolver
     }
 
     /// <summary>Resolves an already-parsed file. Must never throw, even on a tree with syntax errors.</summary>
-    public static ResolveResult Resolve(SourceFile file, string? sourceName = null)
+    public static ResolveResult Resolve(SourceFile file)
     {
         ArgumentNullException.ThrowIfNull(file);
-        return new ResolutionPass(file, sourceName).Run();
+        return new ResolutionPass(file).Run();
     }
 
-    private sealed class ResolutionPass(SourceFile file, string? sourceName)
+    private sealed class ResolutionPass(SourceFile file)
     {
         private readonly List<Diagnostic> diagnostics = [];
         private readonly HashSet<string> typeNames = new(PType.Core.Keys, StringComparer.Ordinal);
@@ -42,11 +42,7 @@ public static class Resolver
                 recordFields[type.Name] = type.Fields;
             var phrases = ResolvePhrases();
             var endpoints = ResolveEndpoints();
-            var moduleName = file.Module?.Name ?? string.Empty;
-            var portableSourceName = string.IsNullOrWhiteSpace(sourceName)
-                ? moduleName + ".phrase"
-                : Path.GetFileName(sourceName).Replace('\\', '/');
-            var module = new ModuleModel(moduleName, types, phrases, endpoints, portableSourceName, file.Module?.At.Line ?? 1);
+            var module = new ModuleModel(file.Module?.Name ?? string.Empty, types, phrases, endpoints);
             return new ResolveResult(module, diagnostics);
         }
 
@@ -98,7 +94,7 @@ public static class Resolver
                     declaration.Returns is null ? null : ResolveType(declaration.Returns),
                     declaration.Effects, declaration.Failures,
                     declaration.Natives.ToDictionary(n => n.Target, n => n.Code, StringComparer.Ordinal),
-                    declaration.Steps is null ? null : [], [], declaration.At.Line);
+                    declaration.Steps is null ? null : [], []);
                 var skeleton = Skeleton(declaration.Template);
                 if (skeletons.TryGetValue(skeleton, out var existing))
                 {
@@ -160,7 +156,7 @@ public static class Resolver
                 var failures = EffectiveFailures(steps);
                 var model = new EndpointModel(
                     declaration.Name, declaration.Verb, declaration.Route,
-                    inputType, input, outputType, output, steps, failures, [], declaration.At.Line);
+                    inputType, input, outputType, output, steps, failures, []);
                 endpoints.Add(model with { Specs = ResolveEndpointSpecs(declaration, model) });
             }
             return endpoints;

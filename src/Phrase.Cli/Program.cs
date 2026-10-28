@@ -17,7 +17,7 @@ if (!File.Exists(file))
 
 try
 {
-    var compiled = PhraseCompiler.Compile(File.ReadAllText(file), new CSharpProvider(), file);
+    var compiled = PhraseCompiler.Compile(File.ReadAllText(file), new CSharpProvider());
     compiled.WriteTo(output);
     return 0;
 }
