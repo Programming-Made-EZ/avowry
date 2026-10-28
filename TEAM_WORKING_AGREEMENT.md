@@ -291,10 +291,21 @@ Never assume a driver is permanently out. A driver that is out of quota or other
 - **While a driver is out:** its seats rotate to the others, Deciders run with the seats available, a vote needs a voter who is not the author, and the verdict of a measurement states the unavailable driver and the reset time. A frozen rule that needs the driver (for example a minimum number of models) is never changed to work around the outage.
 - **Visible state:** DRIVERS.md in the repository root carries the driver status table (driver, status, last probe, known reset, note) and a short event log; MOB.md may link to it.
 
+### Staffing: roles over models (standing rule, Steve, 2026-10-28)
+
+Roles are the primary perspectives; models are the staff who fill them. "Although diversity of model is important the diversity of roles is more important."
+
+- **Roles first.** The task force names the roles for a card (product manager, architect, author, tester, reviewer, domain expert, security and so on). Every role is seated for every card, whatever models are available. Decider votes and reviews are seated BY ROLE: a vote does not shrink to "two seats" because a model is out; each role is filled by an available model.
+- **Work never stalls for lack of a specific model.** When a model is out of quota, its roles are reassigned to available models. In the extreme one model fills several roles, each in a fresh context with its own role charter and without the other roles' reasoning, and Claude covers if every other driver is out.
+- **Claude is a normal member of the rotation** (Sonnet by default, a stronger model only when the work needs it). It can fill roles, author, review and vote alongside Codex, Copilot, Grok and agy; in particular it takes seats while another model is out so that votes and reviews keep a full set of role perspectives. The only limit: do not let Claude carry everything while other models still have quota. It becomes the sole driver only when all the others are out.
+- **How Claude is seated.** A seat is a fresh context given the role charter, the proposal and read access to the committed files, nothing from the facilitator's own reasoning. Where the headless CLI is signed in it is a driver like the others; otherwise the facilitator seats it as a fresh-context subagent. The log names the model and the role for every seat.
+- **Rules that do not change.** The author of a change never votes on it; reviews are non-author by role and by context; one model may hold several roles on a card only in separate fresh contexts, and may not review its own authorship.
+- **Model diversity still matters, but never blocks.** Prefer spreading roles across different models when available. For Phrase's benchmarks the models are the customers and the test subjects, so which models were run is part of the evidence. Claude is a reasonable extra model for the benchmarks if the team wants another data point, decided by Decider and pre-registered as usual.
+
 ### Driver rotation
 
-- **Rotation order: Codex → Copilot → Grok → agy; Claude is last resort.** Claude drives or reviews only
-  when no other eligible driver is available, and the log says why.
+- **Rotation order: Codex → Copilot → Grok → agy, with Claude a normal member (see Staffing: roles over models).**
+  Claude is the sole driver only when every other driver is out; the log says why a seat went to whom.
 - **Drivers are prepaid allotments, not flat subscriptions.** Any of them can run dry from heavy use.
   Balance load across all four; do not hand-pick a favorite.
 - **The rotation unit is one TDD cycle** (Red, Green, commit, Refactor, commit, swap) by ONE driver. The
