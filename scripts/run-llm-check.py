@@ -160,7 +160,7 @@ if sys.argv[1:]:
     cmd = cmd + " " + " ".join(quote_for_shell(argument) for argument in sys.argv[1:])
 prompt = sys.stdin.buffer.read()
 if sys.platform == "win32":
-    proc = subprocess.run("cmd.exe /d /c " + cmd, input=prompt, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.run('cmd.exe /d /s /c "' + cmd + '"', input=prompt, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 else:
     proc = subprocess.run(["/bin/sh", "-c", cmd], input=prompt, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 pathlib.Path(OUT_PATH).write_bytes(proc.stdout or b"")
