@@ -223,11 +223,20 @@ def check_readme(readme: str, source: str, root: Path) -> list[str]:
     mentioned_failures = {a or b for a, b in FAILURE_MENTION.findall(whole)}
     for name in sorted(mentioned_failures - failures):
         problems.append(f"failure {name} is not declared in Tasks.phrase")
-    for name in ("EmptyTitle", "NotFound", "StoreUnavailable"):
-        if name in failures and name not in mentioned_failures and name not in whole:
+    for name in sorted(failures):
+        if name not in whole:
             problems.append(f"README never names declared failure {name}")
-        elif name in failures and name not in whole:
-            problems.append(f"README never names declared failure {name}")
+
+    spec_count = len(re.findall(r'(?m)^\s*spec\s+"', source))
+    if f"Passed: {spec_count}" not in whole:
+        problems.append(f"README must state Passed: {spec_count} (the number of specs in Tasks.phrase)")
+
+    served = re.findall(r"--urls\s+http://[^\s:]+:(\d+)", whole)
+    called = {m for call in calls for m in re.findall(r"://[^\s/:]+:(\d+)", call["raw"])}
+    if not served:
+        problems.append("README never says which port the API is served on (--urls)")
+    elif called - set(served):
+        problems.append(f"curl calls use port(s) {sorted(called - set(served))}, the API is served on {served[0]}")
 
     return problems
 
@@ -288,6 +297,17 @@ Expected HTTP 200 with {} and HTTP 422 EmptyTitle, 422 NotFound, 422 StoreUnavai
 """
         problems = check_readme(fake, source, ROOT)
         self.assertTrue(any("priority" in problem for problem in problems))
+
+    def test_spec_count_failure_names_and_port_must_match_the_source(self):
+        source = PHRASE.read_text(encoding="utf-8")
+        readme = README.read_text(encoding="utf-8")
+        self.assertEqual([], check_readme(readme, source, ROOT))
+        extra_spec = source + '  spec "one more"\n'
+        self.assertTrue(any("Passed:" in problem for problem in check_readme(readme, extra_spec, ROOT)))
+        renamed = source.replace("TitleTooLong", "TitleTooLongX")
+        self.assertTrue(any("TitleTooLongX" in problem for problem in check_readme(readme, renamed, ROOT)))
+        wrong_port = readme.replace("localhost:5099/tasks/nope", "localhost:5100/tasks/nope")
+        self.assertTrue(any("5100" in problem for problem in check_readme(wrong_port, source, ROOT)))
 
     def test_output_folder_inside_the_repo_is_rejected(self):
         source = PHRASE.read_text(encoding="utf-8")
