@@ -12,7 +12,7 @@ SUMMARIZER = ROOT / "scripts" / "summarize-private-results.py"
 
 
 class VerdictPageTests(unittest.TestCase):
-    def run_verdict(self, csharp_rows, phrase_rows, holdout=None):
+    def run_verdict(self, csharp_rows, phrase_rows, holdout=None, drivers=None):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             csharp = root / "csharp.jsonl"
@@ -25,6 +25,10 @@ class VerdictPageTests(unittest.TestCase):
                 summary = root / "holdout.json"
                 summary.write_text(json.dumps(holdout), encoding="utf-8")
                 command += ["--holdout-summary", str(summary)]
+            if drivers is not None:
+                drivers_file = root / "DRIVERS.md"
+                drivers_file.write_text(drivers, encoding="utf-8")
+                command += ["--drivers", str(drivers_file)]
             command += ["--out", str(output)]
             completed = subprocess.run(command, cwd=ROOT, text=True, capture_output=True)
             self.assertEqual(0, completed.returncode, completed.stderr)
@@ -57,13 +61,13 @@ class VerdictPageTests(unittest.TestCase):
         csharp = self.rows("csharp", tokens=200)
         phrase = self.rows("phrase", tokens=100)
         # When Steve generates the verdict page
-        page = self.run_verdict(csharp, phrase)
+        page = self.run_verdict(csharp, phrase, self.winning_holdout())
         # Then the frozen bar calls the result a win
         self.assertTrue(page.startswith("WIN "), page)
 
     def test_loss_for_pass_gap_over_ten_points(self):
         # Given Phrase is twenty points behind plain C#
-        page = self.run_verdict(self.rows("csharp", 5, 200), self.rows("phrase", 4, 100))
+        page = self.run_verdict(self.rows("csharp", 5, 200), self.rows("phrase", 4, 100), self.winning_holdout())
         # When and then the frozen pass band is applied
         self.assertTrue(page.startswith("LOSS "), page)
 
@@ -76,44 +80,45 @@ class VerdictPageTests(unittest.TestCase):
                 row["passed"] = False
                 row["attempts"] = 3
         # When and then the frozen pass band is applied
-        page = self.run_verdict(self.rows("csharp", 5, 200), phrase)
+        page = self.run_verdict(self.rows("csharp", 5, 200), phrase, self.winning_holdout())
         self.assertTrue(page.startswith("TIE "), page)
 
     def test_inconclusive_for_too_many_harness_errors(self):
         # Given more than ten percent of scheduled rows are harness errors
         phrase = self.rows("phrase", tokens=100, harness_errors=2)
         # When and then completeness is checked before performance
-        page = self.run_verdict(self.rows("csharp", tokens=200), phrase)
+        page = self.run_verdict(self.rows("csharp", tokens=200), phrase, self.winning_holdout())
         self.assertTrue(page.startswith("INCONCLUSIVE "), page)
         self.assertIn("harness-error", page)
 
     def test_inconclusive_holdout_names_unavailable_drivers_and_resets(self):
-        # Given a numbers-only holdout summary where Copilot is wholly unavailable and Grok has an unavailable group
-        holdout = {"groups": [
-            {"arm": arm, "model": model, "kind": kind, "count": 5,
-             "completed_count": (0 if model == "copilot" or (model == "grok" and arm == "phrase" and kind == "modify") else 5),
-             "unavailable_count": (5 if model == "copilot" or (model == "grok" and arm == "phrase" and kind == "modify") else 0),
-             "pass_rate": 0.0 if model == "copilot" else 1.0,
-             "mean_attempts": 1.0, "mean_total_tokens": 100.0}
-            for arm in ("csharp", "phrase") for model in ("codex", "grok", "copilot")
-            for kind in ("write", "modify")
-        ]}
+        # Given an invented summary whose drivers and failures differ from the committed run
+        holdout = self.winning_holdout()
+        for group in holdout["groups"]:
+            if group["model"] == "delta":
+                group["completed_count"] = 0
+                group["unavailable_count"] = 5
+            elif group["model"] == "epsilon" and group["arm"] == "phrase" and group["kind"] == "modify":
+                group["completed_count"] = 2
+                group["unavailable_count"] = 3
+        drivers = """| Driver | Status | Last probe | Known reset | Note |
+|---|---|---|---|---|
+| Delta | UNAVAILABLE | today | 2031-02-03 04:05 UTC | invented |
+| Epsilon | available | today | none | invented |
+"""
         # When the holdout is judged on the same frozen bar
-        page = self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100), holdout)
-        # Then Steve sees both frozen-bar completeness reasons
+        page = self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100), holdout, drivers)
+        # Then it is inconclusive and tells Steve the concrete availability reasons
         self.assertTrue(page.startswith("INCONCLUSIVE "), page)
-        self.assertIn("only 1 usable model", page)
+        self.assertIn("Delta has no completed holdout rows", page)
+        self.assertIn("Epsilon has 3 unavailable holdout rows", page)
         self.assertIn("holdout harness-error rows are", page)
+        self.assertIn("Delta resets 2031-02-03 04:05 UTC", page)
+        self.assertNotIn("Copilot", page)
 
     def test_fully_completed_three_model_holdout_uses_the_performance_bar(self):
         # Given all holdout groups completed for three models
-        holdout = {"groups": [
-            {"arm": arm, "model": model, "kind": kind, "count": 5,
-             "completed_count": 5, "unavailable_count": 0, "pass_rate": 1.0,
-             "mean_attempts": 1.0, "mean_total_tokens": 100.0}
-            for arm in ("csharp", "phrase") for model in ("codex", "grok", "copilot")
-            for kind in ("write", "modify")
-        ]}
+        holdout = self.winning_holdout()
         # When Steve generates the verdict page
         page = self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100), holdout)
         # Then availability does not obscure the frozen performance verdict
@@ -193,7 +198,7 @@ class VerdictPageTests(unittest.TestCase):
 
     def test_token_failure_is_tie_and_reports_development_comparison(self):
         # Given Phrase passes equally but uses more than 75 percent of C# tokens
-        page = self.run_verdict(self.rows("csharp", tokens=300), self.rows("phrase", tokens=1183))
+        page = self.run_verdict(self.rows("csharp", tokens=300), self.rows("phrase", tokens=1183), self.winning_holdout())
         # When and then efficiency is evaluated separately from pass rate
         self.assertTrue(page.startswith("TIE "), page)
         self.assertIn("1,183", page)
@@ -209,11 +214,114 @@ class VerdictPageTests(unittest.TestCase):
             completed = subprocess.run(command + ["--out", str(output)], cwd=ROOT, text=True, capture_output=True)
             self.assertEqual(0, completed.returncode, completed.stderr)
             page = output.read_text(encoding="utf-8")
-        # Then today's development-only data is a TIE and no stored task text leaks
-        self.assertTrue(page.startswith("TIE "), page)
+        # Then today's development-only reading is retained under an inconclusive headline and no task text leaks
+        self.assertTrue(page.startswith("INCONCLUSIVE "), page)
+        self.assertIn("Development tasks alone: TIE", page)
         self.assertNotIn("001-write-greeting", page)
         self.assertNotIn("returns hello", page)
         self.assertNotIn("bench/", page)
+
+    def test_no_holdout_can_never_be_the_headline_result(self):
+        # Given Steve has development rows that would otherwise be a clear WIN
+        page = self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100))
+        # When he asks for the decision without supplying the sealed-result summary
+        # Then the headline is inconclusive while the development-only reading remains visible
+        self.assertTrue(page.startswith("INCONCLUSIVE "), page)
+        self.assertIn("no holdout result supplied", page.splitlines()[0])
+        self.assertIn("Development tasks alone: WIN", page)
+
+    def test_holdout_loss_and_token_failure_change_the_headline(self):
+        # Given development is a WIN but one holdout loses on pass rate and another misses the token bar
+        loss = self.winning_holdout(phrase_pass_rate=0.8)
+        token_tie = self.winning_holdout(phrase_tokens=180)
+        # When Steve reads each combined decision
+        # Then D32's "judged on the same bar" clause changes the headline
+        self.assertTrue(self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100), loss).startswith("LOSS "))
+        self.assertTrue(self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100), token_tie).startswith("TIE "))
+
+    def test_holdout_attempt_ceiling_and_read_gap_change_the_headline(self):
+        # Given development is a WIN but one holdout needs more attempts and another has a blocking read gap
+        attempts = self.winning_holdout()
+        for group in attempts["groups"]:
+            if group["arm"] == "phrase":
+                group["mean_attempts"] = 2.0
+        read_gap = self.winning_holdout()
+        read_gap["groups"].extend(
+            {"arm": arm, "model": model, "kind": "read", "count": 5,
+             "completed_count": 5, "unavailable_count": 0,
+             "pass_rate": 0.85 if arm == "phrase" else 1.0,
+             "mean_attempts": 1.0,
+             "mean_total_tokens": 100.0 if arm == "phrase" else 200.0}
+            for arm in ("csharp", "phrase") for model in ("delta", "epsilon", "zeta"))
+        # When Steve reads each combined decision
+        # Then the same frozen attempt and read conditions prevent a WIN
+        self.assertTrue(self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100), attempts).startswith("TIE "))
+        self.assertTrue(self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100), read_gap).startswith("TIE "))
+
+    def test_patch_rate_is_computed_and_construction_wording_is_conditional(self):
+        # Given one Phrase development row records a generated-C# patch
+        phrase = self.rows("phrase", tokens=100)
+        phrase[0]["patched"] = True
+        # When the page is generated
+        page = self.run_verdict(self.rows("csharp", tokens=200), phrase, self.winning_holdout())
+        # Then Steve sees the measured rate, without a false by-construction claim
+        self.assertIn("Patch rate: Phrase 1.7%.", page)
+        self.assertNotIn("1.7% by construction", page)
+
+    def test_patch_rate_is_not_by_construction_when_a_row_does_not_record_false(self):
+        # Given a Phrase development row has no explicit patched measurement
+        phrase = self.rows("phrase", tokens=100)
+        del phrase[0]["patched"]
+        # When Steve reads the computed zero patch rate
+        page = self.run_verdict(self.rows("csharp", tokens=200), phrase, self.winning_holdout())
+        # Then the page does not claim every row recorded false
+        self.assertIn("Patch rate: Phrase 0.0%.", page)
+        self.assertNotIn("0.0% by construction", page)
+
+    def test_each_verdict_has_distinct_vocabulary_guidance(self):
+        # Given examples of every possible frozen-bar verdict
+        pages = {
+            "WIN": self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100), self.winning_holdout()),
+            "LOSS": self.run_verdict(self.rows("csharp", 5, 200), self.rows("phrase", 4, 100), self.winning_holdout()),
+            "TIE": self.run_verdict(self.rows("csharp", 5, 200), self.rows("phrase", 5, 180), self.winning_holdout()),
+            "INCONCLUSIVE": self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100)),
+        }
+        # When Steve reads what each result means for paused vocabulary work
+        guidance = [page.splitlines()[2] for page in pages.values()]
+        # Then all four plain sentences differ
+        self.assertEqual(4, len(set(guidance)), guidance)
+
+    def test_exact_pass_rate_boundaries_are_stable(self):
+        # Given Phrase is exactly 5.0 or exactly 10.0 percentage points behind
+        exact_five = self.rows("phrase", tokens=100)
+        exact_ten = self.rows("phrase", tokens=100)
+        for index in range(3):
+            exact_five[index]["passed"] = False
+        for index in range(6):
+            exact_ten[index]["passed"] = False
+        # When the integer-row pass gaps reach D32's boundaries
+        # Then exactly 5 remains WIN-eligible and exactly 10 is a TIE
+        self.assertTrue(self.run_verdict(self.rows("csharp", tokens=200), exact_five, self.winning_holdout()).startswith("WIN "))
+        self.assertTrue(self.run_verdict(self.rows("csharp", tokens=200), exact_ten, self.winning_holdout()).startswith("TIE "))
+
+    def test_page_notes_the_recorded_token_failure_reading(self):
+        # Given D32 does not name the token-failure result when pass rate is fine
+        page = self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=180), self.winning_holdout())
+        # When the script applies all conditions required for WIN
+        # Then the page makes its TIE reading explicit for the facilitator
+        self.assertIn("NOTE: D32 does not name the outcome of a token condition that fails while pass rate is fine", page)
+
+    @staticmethod
+    def winning_holdout(phrase_pass_rate=1.0, phrase_tokens=100):
+        return {"groups": [
+            {"arm": arm, "model": model, "kind": kind, "count": 5,
+             "completed_count": 5, "unavailable_count": 0,
+             "pass_rate": phrase_pass_rate if arm == "phrase" else 1.0,
+             "mean_attempts": 1.0,
+             "mean_total_tokens": phrase_tokens if arm == "phrase" else 200.0}
+            for arm in ("csharp", "phrase") for model in ("delta", "epsilon", "zeta")
+            for kind in ("write", "modify")
+        ]}
 
 
 if __name__ == "__main__":

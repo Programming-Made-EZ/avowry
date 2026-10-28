@@ -141,39 +141,104 @@ def format_number(value: float) -> str:
     return f"{value:,.0f}"
 
 
-def holdout_reasons(summary: dict | None) -> list[str]:
-    if summary is None:
-        return []
-    groups = summary.get("groups", []) if isinstance(summary, dict) else []
-    if not groups or any(
-            "completed_count" not in group or "unavailable_count" not in group
-            for group in groups):
-        return ["holdout summary lacks harness-error counts"]
-    models = defaultdict(list)
-    scheduled = 0
-    unavailable = 0
+def rate_per_mille(value: float) -> int:
+    return round(value * 1000)
+
+
+def summary_arm_rate(groups: list[dict], arm: str) -> float:
+    by_model = defaultdict(lambda: [0.0, 0])
     for group in groups:
-        model = str(group.get("model", ""))
-        count = int(number(group.get("count")))
-        completed_count = int(number(group.get("completed_count")))
-        unavailable_count = int(number(group.get("unavailable_count")))
-        models[model].append(completed_count)
-        scheduled += count
-        unavailable += unavailable_count
-    usable = sum(1 for completed in models.values() if completed and all(value > 0 for value in completed))
+        if group.get("arm") != arm:
+            continue
+        completed = int(number(group.get("completed_count")))
+        by_model[str(group.get("model", ""))][0] += number(group.get("pass_rate")) * completed
+        by_model[str(group.get("model", ""))][1] += completed
+    return mean([passes / completed for passes, completed in by_model.values() if completed])
+
+
+def summary_group(groups: list[dict], kinds: tuple[str, ...]) -> dict:
+    paired_groups = []
+    by_key = {(str(group.get("model", "")), str(group.get("kind", "")), group.get("arm")): group
+              for group in groups if str(group.get("kind", "")) in kinds}
+    for model, kind, arm in sorted(by_key):
+        if arm != "csharp":
+            continue
+        left = by_key[(model, kind, arm)]
+        right = by_key.get((model, kind, "phrase"))
+        if right is not None:
+            paired_groups.append((left, right))
+
+    def weighted(arm_index: int, field: str) -> float:
+        values = [(number(pair[arm_index].get(field)), int(number(pair[arm_index].get("completed_count"))))
+                  for pair in paired_groups]
+        count = sum(weight for _, weight in values)
+        return sum(value * weight for value, weight in values) / count if count else 0.0
+
+    return {
+        "pairs": sum(min(int(number(left.get("completed_count"))),
+                         int(number(right.get("completed_count")))) for left, right in paired_groups),
+        "csharp_tokens": weighted(0, "mean_total_tokens"),
+        "phrase_tokens": weighted(1, "mean_total_tokens"),
+        "csharp_attempts": weighted(0, "mean_attempts"),
+        "phrase_attempts": weighted(1, "mean_attempts"),
+    }
+
+
+def decide_holdout(summary: dict) -> tuple[str, list[str]]:
+    groups = summary.get("groups", []) if isinstance(summary, dict) else []
+    if not groups or any("completed_count" not in group or "unavailable_count" not in group
+                         for group in groups):
+        return "INCONCLUSIVE", ["holdout summary lacks harness-error counts"]
+    csharp_rate = summary_arm_rate(groups, "csharp")
+    phrase_rate = summary_arm_rate(groups, "phrase")
+    write = summary_group(groups, ("write",))
+    change = summary_group(groups, CHANGE_KINDS)
+    completed_by_model = defaultdict(list)
+    scheduled = unavailable = 0
+    for group in groups:
+        completed_by_model[str(group.get("model", ""))].append(int(number(group.get("completed_count"))))
+        scheduled += int(number(group.get("count")))
+        unavailable += int(number(group.get("unavailable_count")))
+    usable = sum(1 for completed in completed_by_model.values() if completed and all(value > 0 for value in completed))
     reasons = []
     if usable < BAR["minimum_models"]:
         noun = "model" if usable == 1 else "models"
         reasons.append(f"the holdout has only {usable} usable {noun}, fewer than {BAR['minimum_models']}")
+    for name, group in (("write", write), ("change", change)):
+        if group["pairs"] < BAR["minimum_pairs"]:
+            reasons.append(f"the holdout {name} group has only {group['pairs']} paired task-runs, fewer than 3")
     error_share = unavailable / scheduled if scheduled else 1.0
     if error_share > BAR["maximum_harness_error_share"]:
         reasons.append(f"holdout harness-error rows are {format_percent(error_share)}, above 10.0%")
-    return reasons
+    if reasons:
+        return "INCONCLUSIVE", reasons
+    gap_per_mille = rate_per_mille(csharp_rate - phrase_rate)
+    if gap_per_mille > BAR["tie_gap_points"] * 10:
+        return "LOSS", [f"holdout Phrase pass rate is {gap_per_mille / 10:.1f} points below plain C#"]
+    if gap_per_mille > BAR["win_gap_points"] * 10:
+        return "TIE", [f"holdout Phrase pass rate is {gap_per_mille / 10:.1f} points below plain C#"]
+    read_c = summary_arm_rate([group for group in groups if group.get("kind") == "read"], "csharp")
+    read_p = summary_arm_rate([group for group in groups if group.get("kind") == "read"], "phrase")
+    has_read = any(group.get("kind") == "read" for group in groups)
+    read_blocked = has_read and rate_per_mille(read_c - read_p) > BAR["read_block_points"] * 10
+    token_ok = all(group["phrase_tokens"] <= BAR["token_ratio"] * group["csharp_tokens"]
+                   for group in (write, change))
+    attempts_ok = all(group["phrase_attempts"] <= group["csharp_attempts"] for group in (write, change))
+    if token_ok and attempts_ok and not read_blocked:
+        return "WIN", ["the holdout meets every frozen condition its numeric summary can test"]
+    failed = []
+    if not token_ok:
+        failed.append("the holdout token condition fails")
+    if not attempts_ok:
+        failed.append("the holdout attempt condition fails")
+    if read_blocked:
+        failed.append("the holdout read-task gap blocks a win")
+    return "TIE", failed
 
 
 def decide(csharp: list[dict], phrase: list[dict], holdout: dict | None) -> tuple[str, list[str], dict, dict]:
     csharp_rate, phrase_rate = arm_pass_rate(csharp), arm_pass_rate(phrase)
-    gap = (csharp_rate - phrase_rate) * 100
+    gap_per_mille = rate_per_mille(csharp_rate - phrase_rate)
     write, change = group_means(csharp, phrase, ("write",)), group_means(csharp, phrase, CHANGE_KINDS)
     all_rows = csharp + phrase
     models = set(str(row.get("model", "")) for row in all_rows)
@@ -186,13 +251,12 @@ def decide(csharp: list[dict], phrase: list[dict], holdout: dict | None) -> tupl
             reasons.append(f"the {name} group has only {group['pairs']} paired task-runs, fewer than 3")
     if harness_share > BAR["maximum_harness_error_share"]:
         reasons.append(f"harness-error rows are {format_percent(harness_share)}, above 10.0%")
-    reasons.extend(holdout_reasons(holdout))
     if reasons:
         return "INCONCLUSIVE", reasons, write, change
-    if gap > BAR["tie_gap_points"]:
-        return "LOSS", [f"Phrase pass rate is {gap:.1f} points below plain C#"], write, change
-    if gap >= BAR["win_gap_points"]:
-        return "TIE", [f"Phrase pass rate is {gap:.1f} points below plain C#"], write, change
+    if gap_per_mille > BAR["tie_gap_points"] * 10:
+        return "LOSS", [f"Phrase pass rate is {gap_per_mille / 10:.1f} points below plain C#"], write, change
+    if gap_per_mille > BAR["win_gap_points"] * 10:
+        return "TIE", [f"Phrase pass rate is {gap_per_mille / 10:.1f} points below plain C#"], write, change
 
     read_c = task_macro([row for row in csharp if row["kind"] == "read"], lambda row: row.get("passed") is True)
     read_p = task_macro([row for row in phrase if row["kind"] == "read"], lambda row: row.get("passed") is True)
@@ -218,13 +282,64 @@ def decide(csharp: list[dict], phrase: list[dict], holdout: dict | None) -> tupl
     return "TIE", failed, write, change
 
 
-def render(csharp: list[dict], phrase: list[dict], holdout: dict | None) -> str:
-    verdict, reasons, write, change = decide(csharp, phrase, holdout)
+def driver_resets(path: Path) -> dict[str, str]:
+    resets = {}
+    if not path.exists():
+        return resets
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.startswith("|") or line.startswith("|---"):
+            continue
+        cells = [cell.strip() for cell in line.strip("|").split("|")]
+        if len(cells) >= 4 and cells[0] != "Driver" and cells[3].lower() != "none":
+            resets[cells[0].lower()] = cells[3]
+    return resets
+
+
+def holdout_availability(summary: dict, drivers: Path) -> list[str]:
+    lines = []
+    resets = driver_resets(drivers)
+    by_model = defaultdict(lambda: [0, 0])
+    for group in summary.get("groups", []):
+        by_model[str(group.get("model", ""))][0] += int(number(group.get("completed_count")))
+        by_model[str(group.get("model", ""))][1] += int(number(group.get("unavailable_count")))
+    for name, (completed, unavailable) in sorted(by_model.items()):
+        display = name.title()
+        if completed == 0:
+            lines.append(f"{display} has no completed holdout rows.")
+        elif unavailable:
+            lines.append(f"{display} has {unavailable} unavailable holdout rows.")
+        reset = resets.get(name.lower())
+        if unavailable and reset:
+            lines.append(f"{display} resets {reset}.")
+    return lines
+
+
+VOCABULARY_GUIDANCE = {
+    "WIN": "Vocabulary work may resume because Phrase clears the frozen WIN bar.",
+    "LOSS": "Vocabulary work stays paused because Phrase loses on the frozen pass-rate bar.",
+    "TIE": "Vocabulary work stays paused because Phrase has not produced the required WIN.",
+    "INCONCLUSIVE": "Vocabulary work stays paused until a conclusive development-and-holdout result exists.",
+}
+
+
+def render(csharp: list[dict], phrase: list[dict], holdout: dict | None, drivers: Path) -> str:
+    development_verdict, development_reasons, write, change = decide(csharp, phrase, None)
+    if holdout is None:
+        verdict, reasons = "INCONCLUSIVE", ["no holdout result supplied"]
+    else:
+        holdout_verdict, holdout_reasons = decide_holdout(holdout)
+        # D32: holdouts are "judged on the same bar; an INCONCLUSIVE holdout makes the whole call INCONCLUSIVE."
+        severity = {"WIN": 0, "TIE": 1, "LOSS": 2, "INCONCLUSIVE": 3}
+        verdict = max((development_verdict, holdout_verdict), key=severity.get)
+        reasons = ((development_reasons if verdict == development_verdict else [])
+                   + (holdout_reasons if verdict == holdout_verdict else []))
     csharp_rate, phrase_rate = arm_pass_rate(csharp), arm_pass_rate(phrase)
     first = (f"{verdict} Phrase passes {format_percent(phrase_rate)} versus plain C# {format_percent(csharp_rate)}; "
              f"{'; '.join(reasons)}.")
-    lines = [first, "", "Vocabulary work remains paused because this result does not clear the frozen WIN bar."
-             if verdict != "WIN" else "Vocabulary work may continue because Phrase clears the frozen WIN bar."]
+    lines = [first, "", VOCABULARY_GUIDANCE[verdict], "",
+             f"Development tasks alone: {development_verdict} ({'; '.join(development_reasons)})."]
+    if holdout is not None:
+        lines += holdout_availability(holdout, drivers)
     lines += ["", "Development totals", "", "| Arm | Model | Kind | Pass rate | Mean attempts | Mean total tokens | Context tokens |",
               "|---|---|---|---:|---:|---:|---:|"]
     for arm, rows in (("Plain C#", csharp), ("Phrase", phrase)):
@@ -234,16 +349,22 @@ def render(csharp: list[dict], phrase: list[dict], holdout: dict | None) -> str:
                          f"{item['attempts']:.2f} | {format_number(item['tokens'])} | {context} |")
     development_tokens_ok = (write["phrase_tokens"] <= BAR["token_ratio"] * write["csharp_tokens"]
                              and change["phrase_tokens"] <= BAR["token_ratio"] * change["csharp_tokens"])
+    patch_rate = sum(row.get("patched") is True for row in phrase) / len(phrase) if phrase else 0.0
+    patch_line = f"Patch rate: Phrase {format_percent(patch_rate)}."
+    if phrase and all(row.get("patched") is False for row in phrase):
+        patch_line = f"Patch rate: Phrase {format_percent(patch_rate)} by construction; every Phrase row records patched false."
     lines += ["", f"Unweighted mean pass rate: plain C# {format_percent(csharp_rate)}; Phrase {format_percent(phrase_rate)}.",
               f"Harness-error share: plain C# {format_percent(mean([is_harness_error(r) for r in csharp]))}; "
               f"Phrase {format_percent(mean([is_harness_error(r) for r in phrase]))}.",
-              "Patch rate: Phrase 0.0% by construction; the Phrase arm writes only Phrase.",
+              patch_line,
               f"Write tasks passing in both arms: Phrase {format_number(write['phrase_tokens'])} tokens and {write['phrase_attempts']:.2f} attempts; "
               f"plain C# {format_number(write['csharp_tokens'])} tokens and {write['csharp_attempts']:.2f} attempts.",
               f"Change tasks passing in both arms: Phrase {format_number(change['phrase_tokens'])} tokens and {change['phrase_attempts']:.2f} attempts; "
               f"plain C# {format_number(change['csharp_tokens'])} tokens and {change['csharp_attempts']:.2f} attempts.",
               f"On development tasks alone, the token condition {'passes' if development_tokens_ok else 'fails'}: "
-              f"Phrase about {format_number(task_macro(phrase, total_tokens))} tokens per task against plain C# about {format_number(task_macro(csharp, total_tokens))}."]
+              f"Phrase about {format_number(task_macro(phrase, total_tokens))} tokens per task against plain C# about {format_number(task_macro(csharp, total_tokens))}.",
+              "NOTE: D32 does not name the outcome of a token condition that fails while pass rate is fine; "
+              "this script classifies it as TIE under 'all conditions required for WIN'."]
     return "\n".join(lines) + "\n"
 
 
@@ -252,10 +373,11 @@ def main() -> int:
     parser.add_argument("--csharp", required=True, type=Path)
     parser.add_argument("--phrase", required=True, type=Path)
     parser.add_argument("--holdout-summary", type=Path)
+    parser.add_argument("--drivers", type=Path, default=Path("DRIVERS.md"))
     parser.add_argument("--out", required=True, type=Path)
     args = parser.parse_args()
     holdout = json.loads(args.holdout_summary.read_text(encoding="utf-8")) if args.holdout_summary else None
-    page = render(load_rows(args.csharp, "csharp"), load_rows(args.phrase, "phrase"), holdout)
+    page = render(load_rows(args.csharp, "csharp"), load_rows(args.phrase, "phrase"), holdout, args.drivers)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(page, encoding="utf-8")
     return 0
