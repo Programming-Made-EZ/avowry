@@ -1,0 +1,142 @@
+# PROVISIONAL {Record}Store convention uses: create task, find task, list tasks,
+# complete task, and delete task each declare the TaskStore effect.
+module Tasks
+
+type Task
+  id: Id
+  title: Text
+  done: Bool
+
+phrase "create task {id: Id} titled {title: Text}" -> Task
+  effects TaskStore
+  fails with EmptyTitle, TitleTooLong
+  native csharp
+    if (string.IsNullOrWhiteSpace(title))
+        Fail("EmptyTitle");
+    if (title.Length > 200)
+        Fail("TitleTooLong");
+    var task = new Task(id, title, false);
+    taskstore.Save(task);
+    return task;
+
+phrase "find task {id: Id}" -> Task
+  effects TaskStore
+  fails with NotFound
+  native csharp
+    var task = taskstore.Find(id);
+    if (task is null)
+        Fail("NotFound");
+    return task;
+
+phrase "list tasks {available: Bool}" -> List<Task>
+  effects TaskStore
+  fails with StoreUnavailable
+  native csharp
+    if (!available)
+        Fail("StoreUnavailable");
+    return taskstore.List();
+
+phrase "complete task {id: Id}" -> Task
+  effects TaskStore
+  fails with NotFound
+  native csharp
+    var task = taskstore.Find(id);
+    if (task is null)
+        Fail("NotFound");
+    var completed = new Task(task.Id, task.Title, true);
+    taskstore.Save(completed);
+    return completed;
+
+phrase "delete task {id: Id}"
+  effects TaskStore
+  fails with NotFound
+  native csharp
+    if (!taskstore.Remove(id))
+        Fail("NotFound");
+
+endpoint CreateTask : POST /tasks
+  input
+    id: Id
+    title: Text
+  output
+    task: Task
+  steps
+    let task = create task input.id titled input.title
+    respond with { task: task }
+  spec "a valid title creates an open task"
+    given input { id: "task-1", title: "Write the demo" }
+    when handled
+    then responds { task: { id: "task-1", title: "Write the demo", done: false } }
+  spec "an empty title is rejected"
+    given input { id: "task-1", title: "" }
+    when handled
+    then fails with EmptyTitle
+  spec "a title over 200 characters is rejected"
+    given input { id: "task-1", title: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" }
+    when handled
+    then fails with TitleTooLong
+
+endpoint GetTask : GET /tasks/{id}
+  input
+    id: Id
+  output
+    task: Task
+  steps
+    let task = find task input.id
+    respond with { task: task }
+  spec "a known id returns its task"
+    given input { id: "task-1" }
+    when handled
+    then responds { task: { id: "task-1", title: "Write the demo", done: false } }
+  spec "an unknown id is NotFound"
+    given input { id: "missing" }
+    when handled
+    then fails with NotFound
+
+endpoint ListTasks : GET /tasks
+  input
+    available: Bool
+  output
+    tasks: List<Task>
+  steps
+    let tasks = list tasks input.available
+    respond with { tasks: tasks }
+  spec "available storage lists tasks"
+    given input { available: true }
+    when handled
+    then responds { tasks: [{ id: "task-1", title: "Write the demo", done: false }] }
+  spec "unavailable storage reports its declared failure"
+    given input { available: false }
+    when handled
+    then fails with StoreUnavailable
+
+endpoint CompleteTask : PUT /tasks/{id}/complete
+  input
+    id: Id
+  output
+    task: Task
+  steps
+    let task = complete task input.id
+    respond with { task: task }
+  spec "a known task becomes complete"
+    given input { id: "task-1" }
+    when handled
+    then responds { task: { id: "task-1", title: "Write the demo", done: true } }
+  spec "an unknown task is NotFound"
+    given input { id: "missing" }
+    when handled
+    then fails with NotFound
+
+endpoint DeleteTask : DELETE /tasks/{id}
+  input
+    id: Id
+  steps
+    delete task input.id
+  spec "a known task is deleted"
+    given input { id: "task-1" }
+    when handled
+    then succeeds
+  spec "an unknown task is NotFound"
+    given input { id: "missing" }
+    when handled
+    then fails with NotFound

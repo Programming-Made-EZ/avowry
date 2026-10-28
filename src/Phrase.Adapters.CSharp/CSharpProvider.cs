@@ -363,6 +363,8 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append("// Emitted by the Phrase C# adapter. Change the .phrase source, not this file.\n");
         code.Append("// Method bodies are the phrases' `native csharp` blocks, passed through unchanged.\n");
         code.Append("// </auto-generated>\n");
+        if (DeclaresTask(module))
+            code.Append("#nullable enable\n");
         if (module.Phrases.Any(phrase => phrase.Failures.Count > 0))
             code.Append("using System.Diagnostics.CodeAnalysis;\n\n");
         code.Append("namespace ").Append(module.Name).Append(";\n\n");
@@ -521,7 +523,7 @@ public sealed class CSharpProvider : ITargetAdapter
         }).Append("(\"").Append(endpoint.Route).Append("\");\n");
         code.Append("        AllowAnonymous();\n");
         code.Append("    }\n\n");
-        code.Append("    public override async Task HandleAsync(").Append(EndpointRequestName(endpoint.Name)).Append(" req, CancellationToken ct)\n");
+        code.Append("    public override async ").Append(AsyncTaskType(module)).Append(" HandleAsync(").Append(EndpointRequestName(endpoint.Name)).Append(" req, CancellationToken ct)\n");
         code.Append("    {\n");
         code.Append("        try\n");
         code.Append("        {\n");
@@ -587,7 +589,7 @@ public sealed class CSharpProvider : ITargetAdapter
         foreach (var spec in endpoint.Specs)
         {
             code.Append("\n    [Fact(DisplayName = ").Append(CsString($"{endpoint.Name}: {spec.Description}")).Append(")]\n");
-            code.Append("    public async Task ").Append(EndpointSpecMethodName(endpoint.Name, spec.Description)).Append("()\n");
+            code.Append("    public async ").Append(AsyncTaskType(module)).Append(' ').Append(EndpointSpecMethodName(endpoint.Name, spec.Description)).Append("()\n");
             code.Append("    {\n");
             code.Append("        // Given input ").Append(CSharpValue(spec.Input)).Append('\n');
             code.Append("        var input = ").Append(CSharpValue(spec.Input)).Append(";\n");
@@ -696,6 +698,8 @@ public sealed class CSharpProvider : ITargetAdapter
     {
         if (type == PType.Text || type == PType.Id)
             return "\"\"";
+        if (type == PType.Bool)
+            return "false";
         throw new NotImplementedException($"The C# emitter cannot seed a stored field of type '{type}' yet.");
     }
 
@@ -716,6 +720,10 @@ public sealed class CSharpProvider : ITargetAdapter
     }
 
     private static string EndpointFileName(string endpoint) => endpoint + ".cs";
+    private static bool DeclaresTask(ModuleModel module) =>
+        module.Types.Any(type => type.Name.Equals("Task", StringComparison.Ordinal));
+    private static string AsyncTaskType(ModuleModel module) =>
+        DeclaresTask(module) ? "global::System.Threading.Tasks.Task" : "Task";
     private static string EndpointSpecsFileName(string endpoint) => endpoint + "Specs.cs";
     private static string EndpointSpecsName(string endpoint) => endpoint + "Specs";
     private static string EndpointRequestName(string endpoint) => endpoint + "Request";
