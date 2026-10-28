@@ -260,7 +260,7 @@ def decide(csharp: list[dict], phrase: list[dict], holdout: dict | None) -> tupl
 
     read_c = task_macro([row for row in csharp if row["kind"] == "read"], lambda row: row.get("passed") is True)
     read_p = task_macro([row for row in phrase if row["kind"] == "read"], lambda row: row.get("passed") is True)
-    read_blocked = (read_c - read_p) * 100 > BAR["read_block_points"]
+    read_blocked = rate_per_mille(read_c - read_p) > BAR["read_block_points"] * 10
     token_ok = []
     attempts_ok = []
     for group in (write, change):
@@ -282,35 +282,38 @@ def decide(csharp: list[dict], phrase: list[dict], holdout: dict | None) -> tupl
     return "TIE", failed, write, change
 
 
-def driver_resets(path: Path) -> dict[str, str]:
-    resets = {}
+def driver_details(path: Path) -> dict[str, tuple[str, str, str]]:
+    details = {}
     if not path.exists():
-        return resets
+        return details
     for line in path.read_text(encoding="utf-8").splitlines():
         if not line.startswith("|") or line.startswith("|---"):
             continue
         cells = [cell.strip() for cell in line.strip("|").split("|")]
-        if len(cells) >= 4 and cells[0] != "Driver" and cells[3].lower() != "none":
-            resets[cells[0].lower()] = cells[3]
-    return resets
+        if len(cells) >= 4 and cells[0] != "Driver":
+            details[cells[0].lower()] = (cells[0], cells[1], cells[3])
+    return details
 
 
 def holdout_availability(summary: dict, drivers: Path) -> list[str]:
     lines = []
-    resets = driver_resets(drivers)
+    drivers_by_name = driver_details(drivers)
     by_model = defaultdict(lambda: [0, 0])
     for group in summary.get("groups", []):
         by_model[str(group.get("model", ""))][0] += int(number(group.get("completed_count")))
         by_model[str(group.get("model", ""))][1] += int(number(group.get("unavailable_count")))
     for name, (completed, unavailable) in sorted(by_model.items()):
-        display = name.title()
+        driver = drivers_by_name.get(name.split("-", 1)[0].lower())
+        display, status, reset = driver or (name.title(), "", "none")
         if completed == 0:
             lines.append(f"{display} has no completed holdout rows.")
         elif unavailable:
             lines.append(f"{display} has {unavailable} unavailable holdout rows.")
-        reset = resets.get(name.lower())
-        if unavailable and reset:
-            lines.append(f"{display} resets {reset}.")
+        if unavailable and status:
+            lines.append(f"{display} status: {status}.")
+        if unavailable and reset.lower() != "none":
+            reset_text = reset if reset.lower().startswith("resets ") else f"resets {reset}"
+            lines.append(f"{display} {reset_text}.")
     return lines
 
 

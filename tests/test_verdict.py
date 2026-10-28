@@ -92,29 +92,51 @@ class VerdictPageTests(unittest.TestCase):
         self.assertIn("harness-error", page)
 
     def test_inconclusive_holdout_names_unavailable_drivers_and_resets(self):
-        # Given an invented summary whose drivers and failures differ from the committed run
+        # Given Steve has real model names and an invented driver table with current statuses
         holdout = self.winning_holdout()
         for group in holdout["groups"]:
-            if group["model"] == "delta":
+            group["model"] = {
+                "delta": "copilot-default", "epsilon": "codex-gpt-5.6-sol", "zeta": "grok-4.7",
+            }[group["model"]]
+            if group["model"] == "copilot-default":
                 group["completed_count"] = 0
                 group["unavailable_count"] = 5
-            elif group["model"] == "epsilon" and group["arm"] == "phrase" and group["kind"] == "modify":
+            elif group["model"] == "codex-gpt-5.6-sol" and group["arm"] == "phrase" and group["kind"] == "modify":
                 group["completed_count"] = 2
                 group["unavailable_count"] = 3
         drivers = """| Driver | Status | Last probe | Known reset | Note |
 |---|---|---|---|---|
-| Delta | UNAVAILABLE | today | 2031-02-03 04:05 UTC | invented |
-| Epsilon | available | today | none | invented |
+| Copilot | UNAVAILABLE (invented quota) | today | 2031-02-03 04:05 UTC | invented |
+| Codex | available | today | none | invented |
+| Grok | available | today | none | invented |
 """
         # When the holdout is judged on the same frozen bar
         page = self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100), holdout, drivers)
-        # Then it is inconclusive and tells Steve the concrete availability reasons
+        # Then Steve sees the driver-table display name, status, and reset for the prefixed model
         self.assertTrue(page.startswith("INCONCLUSIVE "), page)
-        self.assertIn("Delta has no completed holdout rows", page)
-        self.assertIn("Epsilon has 3 unavailable holdout rows", page)
+        self.assertIn("Copilot has no completed holdout rows", page)
+        self.assertIn("Copilot status: UNAVAILABLE (invented quota)", page)
+        self.assertIn("Codex has 3 unavailable holdout rows", page)
         self.assertIn("holdout harness-error rows are", page)
-        self.assertIn("Delta resets 2031-02-03 04:05 UTC", page)
-        self.assertNotIn("Copilot", page)
+        self.assertIn("Copilot resets 2031-02-03 04:05 UTC", page)
+
+    def test_committed_driver_table_describes_real_unavailable_models(self):
+        # Given Steve has unavailable real model names and the committed driver table
+        holdout = self.winning_holdout()
+        for group in holdout["groups"]:
+            group["model"] = {
+                "delta": "copilot-default", "epsilon": "agy-gemini-4-argon-high", "zeta": "grok-4.7",
+            }[group["model"]]
+            if group["model"] in ("copilot-default", "agy-gemini-4-argon-high"):
+                group["completed_count"] = 0
+                group["unavailable_count"] = 5
+        # When the page uses DRIVERS.md through its default command-line path
+        page = self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100), holdout)
+        # Then Steve sees the committed display names, statuses, and reset times
+        self.assertIn("Copilot status: UNAVAILABLE (no quota)", page)
+        self.assertIn("Copilot resets 2026-11-01 00:00 UTC (account endpoint)", page)
+        self.assertIn("agy status: UNAVAILABLE (quota)", page)
+        self.assertIn("agy resets in 108h50m", page)
 
     def test_fully_completed_three_model_holdout_uses_the_performance_bar(self):
         # Given all holdout groups completed for three models
@@ -303,6 +325,27 @@ class VerdictPageTests(unittest.TestCase):
         # Then exactly 5 remains WIN-eligible and exactly 10 is a TIE
         self.assertTrue(self.run_verdict(self.rows("csharp", tokens=200), exact_five, self.winning_holdout()).startswith("WIN "))
         self.assertTrue(self.run_verdict(self.rows("csharp", tokens=200), exact_ten, self.winning_holdout()).startswith("TIE "))
+
+    def test_exact_ten_point_development_read_gap_remains_win_eligible(self):
+        # Given Steve has exact 80.0% versus 70.0% development read rates and a pass gap under 5.0 points
+        csharp = [row for row in self.rows("csharp", tokens=200) if row["kind"] != "read"]
+        phrase = [row for row in self.rows("phrase", tokens=100) if row["kind"] != "read"]
+        for rows in (csharp, phrase):
+            for row in rows:
+                row["task"] += "-" + row["label"][-1]
+        for model in ("alpha", "beta", "gamma"):
+            for run in range(10):
+                common = {"model": model, "task": f"read-{run}", "kind": "read",
+                          "label": "baseline-094-r" + str(run % 5 + 1), "attempts": 1,
+                          "tokens_in": 200, "tokens_out": 0, "existing_code_tokens": 40,
+                          "patched": False, "status": "completed"}
+                csharp.append({**common, "passed": run < 8})
+                phrase.append({**common, "label": "head2head-dev-r" + str(run % 5 + 1),
+                               "tokens_in": 100, "passed": run < 7})
+        # When the development path applies the frozen read-gap boundary
+        page = self.run_verdict(csharp, phrase, self.winning_holdout())
+        # Then an exact 10.0-point read gap does not block the otherwise qualifying WIN
+        self.assertTrue(page.startswith("WIN "), page)
 
     def test_page_notes_the_recorded_token_failure_reading(self):
         # Given D32 does not name the token-failure result when pass rate is fine
