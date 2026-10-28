@@ -12,6 +12,16 @@ namespace Phrase.Acceptance.Tests;
 public class MatchingCodebases
 {
     [Fact]
+    [Trait("Slice", "130")]
+    public async Task Ordinary_csharp_builds_warning_free_and_passes_the_shared_cases()
+    {
+        // Given Riley needs an ordinary hand-written C# comparison arm
+        // When a representative generated codebase is built and tested
+        // Then it passes the same cases as its generated counterpart without warnings
+        await ProveSize(1);
+    }
+
+    [Fact]
     [Trait("Slice", "119")]
     public async Task Size_one_phrase_specs_and_plain_csharp_tests_pass()
     {
@@ -72,7 +82,7 @@ public class MatchingCodebases
         // And each modify and fix task has one outcomes file shared by both arms
         Assert.True(File.Exists(Path.Combine(workspace.Root, "phrase", "leaves.phrase")));
         Assert.True(File.Exists(Path.Combine(workspace.Root, "phrase", "endpoints", "PlaceHoldNorth.phrase")));
-        Assert.True(File.Exists(Path.Combine(workspace.Root, "csharp", "Shelf.Api", "Phrases.cs")));
+        Assert.True(File.Exists(Path.Combine(workspace.Root, "csharp", "Shelf.Api", "LoanRules.cs")));
         Assert.True(File.Exists(Path.Combine(workspace.Root, "csharp", "Shelf.Api", "PlaceHoldNorth.cs")));
         var tasksRoot = Path.Combine(workspace.Root, "tasks");
         var tasks = Directory.GetDirectories(tasksRoot);
@@ -100,7 +110,7 @@ public class MatchingCodebases
         // The fix task changes the endpoint and needs the shared leaf phrase
         var fixPrompt = File.ReadAllText(Path.Combine(tasksRoot, "fix-place-hold", "prompt.md"));
         Assert.Contains("Needs phrase file: phrase/leaves.phrase", fixPrompt, StringComparison.Ordinal);
-        Assert.Contains("Needs csharp file: csharp/Shelf.Api/Phrases.cs", fixPrompt, StringComparison.Ordinal);
+        Assert.Contains("Needs csharp file: csharp/Shelf.Api/LoanRules.cs", fixPrompt, StringComparison.Ordinal);
         Assert.DoesNotContain("is a loan of at most three weeks", fixPrompt, StringComparison.Ordinal);
     }
 

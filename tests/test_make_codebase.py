@@ -31,6 +31,11 @@ def size_class(text: str) -> str:
     return "one-file" if len(text.splitlines()) <= 150 else "whole-codebase"
 
 
+def line_ratio(left: str, right: str) -> float:
+    counts = (len(left.splitlines()), len(right.splitlines()))
+    return max(counts) / min(counts)
+
+
 def run(size, out, seed=1, cwd=None, with_seed=True):
     cmd = [sys.executable, str(SCRIPT), str(size), str(out)]
     if with_seed:
@@ -54,6 +59,29 @@ def tree(root: Path) -> dict[str, bytes]:
 
 
 class MakeCodebaseTests(unittest.TestCase):
+    def test_plain_csharp_uses_no_phrase_vocabulary(self):
+        # Given Riley generates each study size as an ordinary C# codebase
+        with tempfile.TemporaryDirectory() as tmp:
+            for size in (1, 10, 50):
+                out = Path(tmp) / str(size)
+                self.assertEqual(0, run(size, out, seed=130).returncode, size)
+
+                # When every plain C# file name and its contents are inspected
+                occurrences = []
+                for path in out.rglob("*"):
+                    if not path.is_file() or not (
+                        path.is_relative_to(out / "csharp") or path.suffix == ".cs"
+                    ):
+                        continue
+                    relative = path.relative_to(out).as_posix()
+                    if "phrase" in relative.lower():
+                        occurrences.append(relative)
+                    if "phrase" in path.read_text(encoding="utf-8").lower():
+                        occurrences.append(f"{relative} (contents)")
+
+                # Then no generated C# name, type, attribute, namespace or comment uses it
+                self.assertEqual([], occurrences, f"size {size}: {occurrences}")
+
     def test_imports_are_stdlib_only(self):
         # Given the generator source
         tree_ast = ast.parse(SCRIPT.read_text(encoding="utf-8"))
@@ -138,7 +166,8 @@ class MakeCodebaseTests(unittest.TestCase):
                 self.assertTrue((api / "Shelf.Api.csproj").is_file())
                 self.assertTrue((specs / "Shelf.Specs.csproj").is_file())
                 self.assertTrue((api / "Program.cs").is_file())
-                self.assertTrue((api / "PhraseRuntime.cs").is_file())
+                self.assertTrue((api / "LoanRuleException.cs").is_file())
+                self.assertTrue((api / "LoanRules.cs").is_file())
                 endpoint_files = [
                     path for path in (out / "phrase" / "endpoints").glob("*.phrase")
                 ]
@@ -146,7 +175,7 @@ class MakeCodebaseTests(unittest.TestCase):
                 csharp_endpoints = [
                     path.name
                     for path in api.glob("*.cs")
-                    if path.name not in {"Program.cs", "PhraseRuntime.cs", "Types.cs", "Phrases.cs"}
+                    if path.name not in {"Program.cs", "LoanRuleException.cs", "DomainModels.cs", "LoanRules.cs"}
                 ]
                 self.assertEqual(size, len(csharp_endpoints))
                 facts = sum(
@@ -212,7 +241,7 @@ class MakeCodebaseTests(unittest.TestCase):
         phrase_start = (task / "phrase" / "start.phrase").read_text(encoding="utf-8")
         csharp_start = (task / "csharp" / "start.cs").read_text(encoding="utf-8")
         leaf = (out / "phrase" / "leaves.phrase").read_text(encoding="utf-8")
-        phrases = (out / "csharp" / "Shelf.Api" / "Phrases.cs").read_text(encoding="utf-8")
+        rules = (out / "csharp" / "Shelf.Api" / "LoanRules.cs").read_text(encoding="utf-8")
         endpoint = (out / "phrase" / "endpoints" / "PlaceHoldNorth.phrase").read_text(encoding="utf-8")
         endpoint_cs = (out / "csharp" / "Shelf.Api" / "PlaceHoldNorth.cs").read_text(encoding="utf-8")
 
@@ -224,7 +253,9 @@ class MakeCodebaseTests(unittest.TestCase):
         self.assertIn("posts its loan limit as 14 days", endpoint)
         self.assertIn("posts its loan limit as 14 days", endpoint_cs)
         self.assertEqual(phrase_start, leaf)
-        self.assertEqual(csharp_start, phrases)
+        self.assertEqual(csharp_start, rules)
+        # A 3x line-count ratio keeps both changed files in the same practical size class.
+        self.assertLessEqual(line_ratio(phrase_start, csharp_start), 3.0)
         self.assertEqual(size_class(phrase_start), size_class(csharp_start))
         self.assertEqual("one-file", size_class(phrase_start))
         if size == 50:
@@ -239,19 +270,19 @@ class MakeCodebaseTests(unittest.TestCase):
         phrase_start = (task / "phrase" / "start.phrase").read_text(encoding="utf-8")
         csharp_start = (task / "csharp" / "start.cs").read_text(encoding="utf-8")
         leaf = (out / "phrase" / "leaves.phrase").read_text(encoding="utf-8")
-        phrases = (out / "csharp" / "Shelf.Api" / "Phrases.cs").read_text(encoding="utf-8")
+        rules = (out / "csharp" / "Shelf.Api" / "LoanRules.cs").read_text(encoding="utf-8")
         endpoint = (out / "phrase" / "endpoints" / "PlaceHoldNorth.phrase").read_text(encoding="utf-8")
         endpoint_cs = (out / "csharp" / "Shelf.Api" / "PlaceHoldNorth.cs").read_text(encoding="utf-8")
         call = "is a loan of at most three weeks"
 
         self.assertIn("Changed phrase file: phrase/endpoints/PlaceHoldNorth.phrase", prompt)
         self.assertIn("Needs phrase file: phrase/leaves.phrase", prompt)
-        self.assertIn("Needs csharp file: csharp/Shelf.Api/Phrases.cs", prompt)
+        self.assertIn("Needs csharp file: csharp/Shelf.Api/LoanRules.cs", prompt)
         self.assertNotIn(call, prompt)
         self.assertNotIn(call, phrase_start)
         self.assertNotIn("EnsureDaysIsALoanOfAtMostThreeWeeks", csharp_start)
         self.assertIn(call, leaf)
-        self.assertIn("EnsureDaysIsALoanOfAtMostThreeWeeks", phrases)
+        self.assertIn("EnsureDaysIsALoanOfAtMostThreeWeeks", rules)
         self.assertIn(call, endpoint)
         self.assertIn("EnsureDaysIsALoanOfAtMostThreeWeeks", endpoint_cs)
         self.assertNotEqual(phrase_start, endpoint)
@@ -260,6 +291,8 @@ class MakeCodebaseTests(unittest.TestCase):
         self.assertEqual(size_class(phrase_start), size_class(endpoint))
         self.assertEqual(size_class(csharp_start), size_class(endpoint_cs))
         self.assertEqual("one-file", size_class(phrase_start))
+        # Endpoint implementations may be more ceremonial in C#, but no more than 3x.
+        self.assertLessEqual(line_ratio(phrase_start, csharp_start), 3.0)
         self.assert_shared_outcomes(task, prompt)
 
     def assert_shared_outcomes(self, task: Path, prompt: str):

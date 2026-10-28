@@ -144,29 +144,16 @@ app.Run();
 public partial class Program;
 """
 
-RUNTIME = """\
-using System.Diagnostics.CodeAnalysis;
-
+DOMAIN_FAILURE = """\
 namespace Shelf;
 
-/// <summary>Links a generated symbol back to the phrase or endpoint it came from.</summary>
-[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-public sealed class PhraseAttribute(string template) : Attribute
-{
-    public string Template { get; } = template;
-}
-
-/// <summary>A declared failure code raised by a phrase (fails with Code).</summary>
-public sealed class PhraseFailure(string code) : Exception(code)
+public sealed class LoanRuleException(string code) : Exception(code)
 {
     public string Code { get; } = code;
-
-    [DoesNotReturn]
-    public static void Raise(string code) => throw new PhraseFailure(code);
 }
 """
 
-TYPES_CS = """\
+DOMAIN_MODELS = """\
 namespace Shelf;
 
 public sealed record Copy(string CopyId, string Title);
@@ -176,58 +163,56 @@ public sealed record Loan(Copy Book, int Days);
 public sealed record Shelf(string Name, IReadOnlyList<Copy> Copies);
 """
 
-PHRASES_CS = """\
+LOAN_RULES = """\
 namespace Shelf;
 
-public static class Phrases
+public sealed class LoanRules
 {
-    public static void EnsureBookHasATitle(Copy book)
+    public void EnsureBookHasATitle(Copy book)
     {
-        if (string.IsNullOrWhiteSpace(book.Title)) PhraseFailure.Raise("MissingTitle");
+        if (string.IsNullOrWhiteSpace(book.Title))
+            throw new LoanRuleException("MissingTitle");
     }
 
-    public static void EnsureDaysIsALoanOfAtMostThreeWeeks(int days)
+    public void EnsureDaysIsALoanOfAtMostThreeWeeks(int days)
     {
-        if (days > 21) PhraseFailure.Raise("LoanTooLong");
+        if (days > 21)
+            throw new LoanRuleException("LoanTooLong");
     }
 
-    public static int TheDayCountOfDays(int days)
-    {
-        return days;
-    }
+    public int GetDayCount(int days) => days;
 
-    public static int CountCopiesOnShelf(Shelf shelf)
-    {
-        return shelf.Copies.Count;
-    }
+    public int CountCopies(Shelf shelf) => shelf.Copies.Count;
 }
 """
 
-PHRASE_SPECS = """\
+LOAN_RULE_TESTS = """\
 using Shelf;
 
 namespace Shelf.Specs;
 
-public class PhraseSpecs
+public class LoanRuleTests
 {
+    private readonly LoanRules rules = new();
+
     [Fact]
     public void Ensure_book_rejects_a_blank_title()
     {
-        var failure = Assert.Throws<PhraseFailure>(() => Phrases.EnsureBookHasATitle(new Copy(CopyId: "c-1", Title: "")));
+        var failure = Assert.Throws<LoanRuleException>(() => rules.EnsureBookHasATitle(new Copy(CopyId: "c-1", Title: "")));
         Assert.Equal("MissingTitle", failure.Code);
     }
 
     [Fact]
     public void Ensure_days_rejects_a_loan_past_three_weeks()
     {
-        var failure = Assert.Throws<PhraseFailure>(() => Phrases.EnsureDaysIsALoanOfAtMostThreeWeeks(22));
+        var failure = Assert.Throws<LoanRuleException>(() => rules.EnsureDaysIsALoanOfAtMostThreeWeeks(22));
         Assert.Equal("LoanTooLong", failure.Code);
     }
 
     [Fact]
     public void The_day_count_returns_the_days()
     {
-        Assert.Equal(7, Phrases.TheDayCountOfDays(7));
+        Assert.Equal(7, rules.GetDayCount(7));
     }
 
     [Fact]
@@ -240,7 +225,7 @@ public class PhraseSpecs
                 new Copy(CopyId: "c-1", Title: "Elm"),
                 new Copy(CopyId: "c-2", Title: "Ash"),
             });
-        Assert.Equal(2, Phrases.CountCopiesOnShelf(shelf));
+        Assert.Equal(2, rules.CountCopies(shelf));
     }
 }
 """
@@ -398,14 +383,15 @@ def csharp_endpoint(ep: Endpoint, sample: Sample, call_loan: bool) -> str:
             "{",
             f"    public static {ep.name}Response Handle({ep.name}Request input)",
             "    {",
-            "        Phrases.EnsureBookHasATitle(input.Loan.Book);",
+            "        var rules = new LoanRules();",
+            "        rules.EnsureBookHasATitle(input.Loan.Book);",
         ]
     )
     if call_loan:
-        lines.append("        Phrases.EnsureDaysIsALoanOfAtMostThreeWeeks(input.Loan.Days);")
+        lines.append("        rules.EnsureDaysIsALoanOfAtMostThreeWeeks(input.Loan.Days);")
     lines.extend(
         [
-            "        var counted = Phrases.TheDayCountOfDays(input.Loan.Days);",
+            "        var counted = rules.GetDayCount(input.Loan.Days);",
             f"        return new {ep.name}Response(Days: counted);",
             "    }",
             "}",
@@ -424,7 +410,7 @@ def csharp_endpoint(ep: Endpoint, sample: Sample, call_loan: bool) -> str:
             "        {",
             f"            await Send.OkAsync({ep.name}Handler.Handle(req), ct);",
             "        }",
-            "        catch (PhraseFailure failure)",
+            "        catch (LoanRuleException failure)",
             "        {",
             "            AddError(failure.Code);",
             "            await Send.ErrorsAsync(422, ct);",
@@ -459,7 +445,7 @@ def csharp_specs(ep: Endpoint, sample: Sample) -> str:
             "    public void Rejects_a_loan_past_three_weeks()",
             "    {",
             f"        var input = new {ep.name}Request(Loan: {bad});",
-            f"        var failure = Assert.Throws<PhraseFailure>(() => {ep.name}Handler.Handle(input));",
+            f"        var failure = Assert.Throws<LoanRuleException>(() => {ep.name}Handler.Handle(input));",
             '        Assert.Equal("LoanTooLong", failure.Code);',
             "    }",
             "}",
@@ -571,11 +557,11 @@ def build_files(size: int, seed: int) -> dict[str, str]:
         "csharp/Directory.Build.props": finished(STANDALONE_PROPS),
         "csharp/Shelf.Api/Shelf.Api.csproj": finished(API_PROJECT),
         "csharp/Shelf.Api/Program.cs": finished(PROGRAM),
-        "csharp/Shelf.Api/PhraseRuntime.cs": finished(RUNTIME),
-        "csharp/Shelf.Api/Types.cs": finished(TYPES_CS),
-        "csharp/Shelf.Api/Phrases.cs": finished(PHRASES_CS),
+        "csharp/Shelf.Api/LoanRuleException.cs": finished(DOMAIN_FAILURE),
+        "csharp/Shelf.Api/DomainModels.cs": finished(DOMAIN_MODELS),
+        "csharp/Shelf.Api/LoanRules.cs": finished(LOAN_RULES),
         "csharp/Shelf.Specs/Shelf.Specs.csproj": finished(SPECS_PROJECT),
-        "csharp/Shelf.Specs/PhraseSpecs.cs": finished(PHRASE_SPECS),
+        "csharp/Shelf.Specs/LoanRuleTests.cs": finished(LOAN_RULE_TESTS),
     }
     for ep in endpoints:
         files[f"phrase/endpoints/{ep.name}.phrase"] = finished(endpoint_phrase[ep.name])
@@ -583,13 +569,13 @@ def build_files(size: int, seed: int) -> dict[str, str]:
         files[f"csharp/Shelf.Specs/{ep.name}Specs.cs"] = finished(csharp_specs(ep, sample))
 
     modify_phrase = files["phrase/leaves.phrase"]
-    modify_csharp = files["csharp/Shelf.Api/Phrases.cs"]
+    modify_csharp = files["csharp/Shelf.Api/LoanRules.cs"]
     modify_body = dump_outcomes(modify_outcomes())
     modify_prompt = task_prompt(
         "modify",
         "phrase/leaves.phrase",
         "phrase/endpoints/PlaceHoldNorth.phrase",
-        "csharp/Shelf.Api/Phrases.cs",
+        "csharp/Shelf.Api/LoanRules.cs",
         "csharp/Shelf.Api/PlaceHoldNorth.cs",
         "Modify the shared loan-length rule so it enforces the limit the north desk posts. "
         "The number is not in this prompt. It is written in the endpoint file this task names.",
@@ -610,7 +596,7 @@ def build_files(size: int, seed: int) -> dict[str, str]:
         "phrase/endpoints/PlaceHoldNorth.phrase",
         "phrase/leaves.phrase",
         "csharp/Shelf.Api/PlaceHoldNorth.cs",
-        "csharp/Shelf.Api/Phrases.cs",
+        "csharp/Shelf.Api/LoanRules.cs",
         "Fix PlaceHoldNorth so a long loan fails with the code the shared leaf declares. "
         "The endpoint file no longer calls that leaf. The wording to restore is not in this prompt. "
         "It is declared in the leaf file this task names.",
