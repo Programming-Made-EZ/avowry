@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:80cc5d14897d7bf45e0dc8e3c2582309adee135d5f6ab0ff10b832359b93e86f -->
+<!-- board-table-sha256:e0e3ab2b694469d7a4ec3ab132158df7d9621e7a2decc086b39a514bee1e486f -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -72,7 +72,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 50 | 132 A persistence effect with a generated in-memory implementation | Done | 047 |
 | 51 | 131 GET endpoints: a collection and one item by route parameter | Done | 132 |
 | 52 | 133 PUT and DELETE endpoints: update and remove a stored item | Done | 131 |
-| 53 | 135 Tasks demo app: a CRUD API written entirely in Phrase | Ready | 051, 131, 132, 133 |
+| 53 | 135 Tasks demo app: a CRUD API written entirely in Phrase | Done | 051, 131, 132, 133 |
 | 54 | 136 Real HTTP behaves as the specs say | Ready | 135 |
 | 55 | 137 LLM-customer check: a model adds an endpoint from the docs alone | Ready | 135, 136 |
 | 56 | 138 Usable v1: the acceptance test passes on main and gates CI | Ready | 135, 136, 137 |
