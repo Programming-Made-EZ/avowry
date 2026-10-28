@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:2db6af791e64d6b7d1807e0bcf32557a0f01b2c450cbe40907bdd1750aeb3ed3 -->
+<!-- board-table-sha256:4a2c7e031504a8815158412a645aa3b7e880eed4d9fdfbdbe7c9a6b09bb91a3c -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -63,7 +63,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 41 | 111 Phrase arm scores endpoint responds outcomes with status | Ready | 110 |
 | 42 | 102 Head-to-head on the sealed holdouts: both arms at N=5 | Ready | 101 |
 | 43 | 103 Head-to-head verdict page: WIN, LOSS, TIE or INCONCLUSIVE | Ready | 102 |
-| 44 | 106 Mutation check: the generated C# specs catch broken implementations | Ready | 087 |
+| 44 | 106 Mutation check: the generated C# specs catch broken implementations | Done | 087 |
 | 45 | 107 Spec to code with a model: does a Phrase spec get verified-correct code more reliably | Ready | 106 |
 | 46 | 108 A second target's Specs project from the same specs | Ready | 106 |
 | 47 | 109 C# implementation emission one phrase kind at a time | Ready | 108 |
