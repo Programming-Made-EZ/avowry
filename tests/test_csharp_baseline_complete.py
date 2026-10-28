@@ -179,6 +179,20 @@ class CSharpBaselineCompleteTests(unittest.TestCase):
             issues = check.check_repo(root)
             self.assertIn("010-fix-trigger", issues["malformed_outcomes"])
 
+    def test_endpoint_responds_with_status_is_valid_and_unknown_kind_still_fails(self):
+        valid = [
+            {"name": "greets Ada", "given": {"name": "Ada"}, "when": "called", "then": {"responds": {"message": "hello", "name": "Ada"}, "status": 200}},
+            {"name": "rejects missing name", "given": {"name": ""}, "when": "called", "then": {"fails_with": "MissingName"}},
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "outcomes.json"
+            path.write_text(json.dumps(valid), encoding="utf-8")
+            self.assertTrue(check._valid_outcomes(path))
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "outcomes.json"
+            path.write_text(json.dumps([{"name": "works", "given": {}, "when": "called", "then": {"mystery": "value"}}]), encoding="utf-8")
+            self.assertFalse(check._valid_outcomes(path))
+
     def test_wrongly_typed_or_null_case_fields_fail(self):
         # Codex's review point: name, given, when and then must have the right types, not merely exist
         bad_cases = [

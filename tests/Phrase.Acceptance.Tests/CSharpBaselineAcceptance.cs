@@ -66,6 +66,76 @@ public sealed class CSharpBaselineAcceptance
         Assert.Equal(2, result.RootElement.GetProperty("harness_test_count").GetInt32());
     }
 
+    // Feature: Plain C# arm scores an endpoint responds case with its status
+    //   As Riley, I want a responds case judged by the response record and the HTTP status
+    //   a caller observes, so that an endpoint task can pass or fail on that reply.
+    [Fact]
+    [Trait("Slice", "110")]
+    public async Task endpoint_reply_passes_when_response_record_and_status_match()
+    {
+        // Given an invented endpoint task whose outcomes use responds with a status and fails_with,
+        // and a fake model whose reply is a correct FastEndpoints handler
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteEndpointSuite(workspace.Root, EndpointOutcomes);
+        var reply = WriteReply(workspace.Root, "greetings-endpoint.cs", CorrectEndpointReply);
+
+        // When the plain C# arm runs that reply
+        var run = await Run(suite, PrintFileCommand(reply), "endpoint-correct-v1", timeoutMs: 180000);
+
+        // Then the row passes at specs-passed with the executed-outcomes score bar
+        Assert.True(run.ExitCode == 0, FailureDetail(suite, "endpoint-correct-v1", run));
+        using var result = ReadResult(suite, "endpoint-correct-v1");
+        Assert.True(result.RootElement.GetProperty("passed").GetBoolean());
+        Assert.Equal("specs-passed", result.RootElement.GetProperty("proof_level").GetString());
+        Assert.Equal("executed-outcomes", result.RootElement.GetProperty("score_bar").GetString());
+        Assert.Equal("endpoint", result.RootElement.GetProperty("kind").GetString());
+    }
+
+    [Fact]
+    [Trait("Slice", "110")]
+    public async Task endpoint_reply_fails_when_response_record_or_status_are_wrong()
+    {
+        // Given the same invented endpoint task and a reply whose response record does not match
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteEndpointSuite(workspace.Root, EndpointOutcomes);
+        var reply = WriteReply(workspace.Root, "greetings-endpoint.cs", WrongEndpointReply);
+
+        // When the plain C# arm runs that reply
+        var run = await Run(suite, PrintFileCommand(reply), "endpoint-wrong-v1", timeoutMs: 180000);
+
+        // Then the row fails and names the failing responds case
+        Assert.True(run.ExitCode == 3, FailureDetail(suite, "endpoint-wrong-v1", run));
+        using var result = ReadResult(suite, "endpoint-wrong-v1");
+        Assert.False(result.RootElement.GetProperty("passed").GetBoolean());
+        var diagnostics = result.RootElement.GetProperty("diagnostics").EnumerateArray().Select(item => item.GetString() ?? "").ToArray();
+        Assert.Contains(diagnostics, text => text.Contains("greets_ada", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    [Trait("Slice", "110")]
+    public void committed_outcomes_keep_the_existing_then_kinds()
+    {
+        // Given the committed plain-C# baseline outcomes
+        var root = RepoPaths.Find("bench", "csharp-baseline", "tasks");
+        var files = Directory.GetFiles(root, "outcomes.json", SearchOption.AllDirectories);
+        var allowed = new HashSet<string>(StringComparer.Ordinal) { "returns", "fails_with", "succeeds", "has_field" };
+
+        // When each case is read
+        Assert.NotEmpty(files);
+        foreach (var file in files)
+        {
+            using var document = JsonDocument.Parse(File.ReadAllText(file));
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                var kinds = item.GetProperty("then").EnumerateObject().Select(property => property.Name).Where(name => name != "status").ToArray();
+
+                // Then the case still uses an existing then kind
+                Assert.NotEmpty(kinds);
+                Assert.All(kinds, kind => Assert.Contains(kind, allowed));
+            }
+        }
+    }
+
     [Fact]
     public async Task wrong_reply_fails_with_the_failing_test_name_in_diagnostics()
     {
@@ -485,6 +555,50 @@ public sealed class CSharpBaselineAcceptance
         Assert.False(File.Exists(Path.Combine(Path.GetDirectoryName(suite)!, "results", "holdout-v1.json")));
     }
 
+    private const string EndpointOutcomes = "[{\"name\":\"greets Ada\",\"given\":{\"name\":\"Ada\"},\"when\":\"called\",\"then\":{\"responds\":{\"message\":\"hello\",\"name\":\"Ada\"},\"status\":200}},{\"name\":\"rejects blank name\",\"given\":{\"name\":\"\"},\"when\":\"called\",\"then\":{\"fails_with\":\"MissingName\"}}]";
+    private const string CorrectEndpointReply = """
+        using FastEndpoints;
+        namespace Greetings;
+        public sealed record GreetingRequest(string Name);
+        public sealed record GreetingResponse(string Message, string Name);
+        public sealed class GreetingsEndpoint : Endpoint<GreetingRequest, GreetingResponse>
+        {
+            public override void Configure() => Post("/greetings");
+            public override async Task HandleAsync(GreetingRequest req, CancellationToken ct)
+            {
+                if (string.IsNullOrWhiteSpace(req.Name))
+                {
+                    AddError("MissingName");
+                    await Send.ErrorsAsync(422, ct);
+                    return;
+                }
+
+                await Send.OkAsync(new GreetingResponse("hello", req.Name), ct);
+            }
+        }
+        """;
+    private const string WrongEndpointReply = """
+        using FastEndpoints;
+        namespace Greetings;
+        public sealed record GreetingRequest(string Name);
+        public sealed record GreetingResponse(string Message, string Name);
+        public sealed class GreetingsEndpoint : Endpoint<GreetingRequest, GreetingResponse>
+        {
+            public override void Configure() => Post("/greetings");
+            public override async Task HandleAsync(GreetingRequest req, CancellationToken ct)
+            {
+                if (string.IsNullOrWhiteSpace(req.Name))
+                {
+                    AddError("MissingName");
+                    await Send.ErrorsAsync(422, ct);
+                    return;
+                }
+
+                await Send.OkAsync(new GreetingResponse("goodbye", req.Name), ct);
+            }
+        }
+        """;
+
     private const string CorrectGreeting = "namespace Greeting; public static class Greeter { public static string SayHello() => \"hello\"; }";
     private const string CorrectGreetingAndTest = """
         // FILE: Greeter.cs
@@ -645,6 +759,27 @@ public sealed class CSharpBaselineAcceptance
     };
 
     private static int EstimateTokens(string text) => Math.Max(1, (int)Math.Ceiling(text.Length / 4d));
+
+    private static string FailureDetail(string suite, string model, (int ExitCode, string Stdout, string Stderr) run)
+    {
+        var detail = run.Stdout + Environment.NewLine + run.Stderr;
+        var resultPath = Path.Combine(Path.GetDirectoryName(suite)!, "results", $"{model}.json");
+        return File.Exists(resultPath) ? detail + Environment.NewLine + File.ReadAllText(resultPath) : detail;
+    }
+
+    private static string WriteEndpointSuite(string root, string outcomes)
+    {
+        var suiteRoot = Path.Combine(root, "csharp-baseline");
+        var taskRoot = Path.Combine(suiteRoot, "tasks", "020-endpoint-greetings");
+        Directory.CreateDirectory(taskRoot);
+        File.WriteAllText(Path.Combine(taskRoot, "prompt.md"), "Return only a FastEndpoints endpoint for POST /greetings.");
+        File.WriteAllText(Path.Combine(taskRoot, "outcomes.json"), outcomes);
+        var suite = Path.Combine(suiteRoot, "suite.json");
+        File.WriteAllText(suite, """
+            {"version":1,"tasks":[{"id":"020-endpoint-greetings","kind":"endpoint","prompt":"tasks/020-endpoint-greetings/prompt.md","outcomes":"tasks/020-endpoint-greetings/outcomes.json","holdout":false}]}
+            """);
+        return suite;
+    }
 
     private static string WriteCopiedSuite(string root, string taskId, string kind)
     {

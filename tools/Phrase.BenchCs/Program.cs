@@ -133,9 +133,13 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
 
 static async Task<Score> Score(IReadOnlyList<SourceFile> sources, BenchmarkTask task, IReadOnlyList<Outcome> outcomes, string scratch, TimeSpan timeout)
 {
-    var plannedModelTests = CountModelTests(string.Join(Environment.NewLine, sources.Select(source => source.Content)));
-    if (plannedModelTests == 0)
-        return new(false, "no_csharp_tests_found", 0, 0);
+    var endpoint = IsEndpointOutcome(outcomes);
+    if (!endpoint)
+    {
+        var plannedModelTests = CountModelTests(string.Join(Environment.NewLine, sources.Select(source => source.Content)));
+        if (plannedModelTests == 0)
+            return new(false, "no_csharp_tests_found", 0, 0);
+    }
 
     var project = Path.Combine(scratch, $"verification-{Guid.NewGuid():N}");
     Directory.CreateDirectory(project);
@@ -144,7 +148,7 @@ static async Task<Score> Score(IReadOnlyList<SourceFile> sources, BenchmarkTask 
     foreach (var source in sources)
         await File.WriteAllTextAsync(Path.Combine(project, source.Name), source.Content);
     await File.WriteAllTextAsync(Path.Combine(project, "GeneratedOutcomeTests.cs"), GenerateTests(task, outcomes));
-    await File.WriteAllTextAsync(Path.Combine(project, "Verification.csproj"), """
+    await File.WriteAllTextAsync(Path.Combine(project, "Verification.csproj"), endpoint ? EndpointVerificationProject() : """
         <Project Sdk="Microsoft.NET.Sdk">
           <PropertyGroup><TargetFramework>net8.0</TargetFramework><IsPackable>false</IsPackable></PropertyGroup>
           <ItemGroup>
@@ -171,7 +175,7 @@ static async Task<Score> Score(IReadOnlyList<SourceFile> sources, BenchmarkTask 
     if (!File.Exists(trxPath))
         return new(false, CompactFailureSummary(output), 0, 0);
     var result = ReadTestResult(trxPath);
-    if (result.ModelTests == 0 || result.HarnessTests < outcomes.Count)
+    if ((!endpoint && result.ModelTests == 0) || result.HarnessTests < outcomes.Count)
         return new(false, "tests_did_not_run", result.ModelTests, result.HarnessTests);
     return process.ExitCode == 0
         ? new(true, "", result.ModelTests, result.HarnessTests)
@@ -198,6 +202,8 @@ static int CountModelTests(string source) => string.IsNullOrWhiteSpace(source)
 // The executed check is the spec case in the Phrase prompt, plus a reply that still compiles.
 static string GenerateTests(BenchmarkTask task, IReadOnlyList<Outcome> outcomes)
 {
+    if (IsEndpointOutcome(outcomes))
+        return GenerateEndpointTests(outcomes);
     if (task.Id == "008-modify-type")
         return GenerateCustomerTests(outcomes);
 
@@ -230,6 +236,29 @@ static string GenerateTests(BenchmarkTask task, IReadOnlyList<Outcome> outcomes)
         }
         """;
 }
+
+static bool IsEndpointOutcome(IReadOnlyList<Outcome> outcomes) =>
+    outcomes.Any(outcome => outcome.Then.TryGetProperty("responds", out _));
+
+// The handler reply is ordinary C# (Task, CancellationToken) and FastEndpoints, so the project must import both.
+static string EndpointVerificationProject() => """
+    <Project Sdk="Microsoft.NET.Sdk">
+      <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <IsPackable>false</IsPackable>
+      </PropertyGroup>
+      <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+        <PackageReference Include="xunit" Version="2.9.2" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+        <PackageReference Include="FastEndpoints" Version="8.3.0" />
+      </ItemGroup>
+      <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+      </ItemGroup>
+    </Project>
+    """;
 
 static string NamespaceOf(BenchmarkTask task) => task.Id switch
 {
@@ -387,6 +416,138 @@ static string GenerateCustomerTests(IReadOnlyList<Outcome> outcomes)
         """ + methods + "\n}\n";
 }
 
+static string GenerateEndpointTests(IReadOnlyList<Outcome> outcomes)
+{
+    var methods = string.Join(Environment.NewLine, outcomes.Select(outcome => $$"""
+          [Fact]
+          public async Task Given_{{GivenName(outcome.Given)}}_When_{{Identifier(outcome.When)}}_Then_{{Identifier(outcome.Name)}}()
+          {
+              var result = await InvokeEndpointAsync({{JsonSerializer.Serialize(outcome.Given.GetRawText())}});
+              {{EndpointAssertion(outcome)}}
+          }
+        """));
+    return """
+        using System;
+        using System.Collections.Generic;
+        using System.IO;
+        using System.Linq;
+        using System.Reflection;
+        using System.Text.Json;
+        using System.Threading;
+        using FastEndpoints;
+        using Microsoft.AspNetCore.Http;
+        using Xunit;
+
+        public sealed class GeneratedOutcomeTests
+        {
+          private static Type FindEndpointType()
+          {
+              var matches = typeof(GeneratedOutcomeTests).Assembly.GetTypes()
+                  .Where(type => type is { IsAbstract: false, IsInterface: false } && typeof(IEndpoint).IsAssignableFrom(type))
+                  .ToArray();
+              return matches.Length == 1
+                  ? matches[0]
+                  : throw new InvalidOperationException($"endpoint_type_match_count: {matches.Length}");
+          }
+
+          private static Type RequestType(Type endpointType)
+          {
+              for (var type = endpointType; type is not null; type = type.BaseType)
+              {
+                  if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Endpoint<,>))
+                      return type.GetGenericArguments()[0];
+              }
+              throw new InvalidOperationException("endpoint_request_type_not_found");
+          }
+
+          private static async Task<(int StatusCode, string Body)> InvokeEndpointAsync(string requestJson)
+          {
+              var endpointType = FindEndpointType();
+              var context = new DefaultHttpContext();
+              context.Response.Body = new MemoryStream();
+              var create = typeof(Factory).GetMethods(BindingFlags.Public | BindingFlags.Static)
+                  .Single(method => method.Name == "Create" && method.IsGenericMethodDefinition &&
+                      method.GetParameters().Length == 2 &&
+                      method.GetParameters()[0].ParameterType == typeof(DefaultHttpContext));
+              var endpoint = create.MakeGenericMethod(endpointType).Invoke(null, new object[] { context, Array.Empty<object>() })
+                  ?? throw new InvalidOperationException("endpoint_instance_not_created");
+              var requestType = RequestType(endpointType);
+              var payload = JsonSerializer.Deserialize(requestJson, requestType, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+                  ?? throw new InvalidOperationException("request_deserialization_failed");
+              var handle = endpointType.GetMethod("HandleAsync", new[] { requestType, typeof(CancellationToken) })
+                  ?? throw new InvalidOperationException("endpoint_handle_not_found");
+              var returned = handle.Invoke(endpoint, new object[] { payload, CancellationToken.None });
+              if (returned is Task task)
+                  await task;
+              context.Response.Body.Position = 0;
+              using var reader = new StreamReader(context.Response.Body, leaveOpen: true);
+              return (context.Response.StatusCode, await reader.ReadToEndAsync());
+          }
+
+          // Outcome records name fields in camelCase. The in-process sender writes the C# property names.
+          private static void AssertRecordEqual(string expectedJson, string actualBody)
+          {
+              using var expected = JsonDocument.Parse(expectedJson);
+              using var actual = JsonDocument.Parse(string.IsNullOrWhiteSpace(actualBody) ? "null" : actualBody);
+              Assert.True(SameJson(expected.RootElement, actual.RootElement), $"expected: {expectedJson}; actual: {actualBody}");
+          }
+
+          private static bool SameJson(JsonElement expected, JsonElement actual)
+          {
+              if (expected.ValueKind == JsonValueKind.Object && actual.ValueKind == JsonValueKind.Object)
+              {
+                  var expectedProps = expected.EnumerateObject().ToArray();
+                  var actualProps = actual.EnumerateObject().ToDictionary(property => property.Name, property => property.Value, StringComparer.OrdinalIgnoreCase);
+                  if (expectedProps.Length != actualProps.Count)
+                      return false;
+                  foreach (var property in expectedProps)
+                  {
+                      if (!actualProps.TryGetValue(property.Name, out var actualValue) || !SameJson(property.Value, actualValue))
+                          return false;
+                  }
+                  return true;
+              }
+
+              if (expected.ValueKind == JsonValueKind.Array && actual.ValueKind == JsonValueKind.Array)
+              {
+                  var expectedItems = expected.EnumerateArray().ToArray();
+                  var actualItems = actual.EnumerateArray().ToArray();
+                  if (expectedItems.Length != actualItems.Length)
+                      return false;
+                  for (var index = 0; index < expectedItems.Length; index++)
+                  {
+                      if (!SameJson(expectedItems[index], actualItems[index]))
+                          return false;
+                  }
+                  return true;
+              }
+
+              if (expected.ValueKind == JsonValueKind.Number && actual.ValueKind == JsonValueKind.Number)
+                  return expected.GetDecimal() == actual.GetDecimal();
+              if (expected.ValueKind == JsonValueKind.String && actual.ValueKind == JsonValueKind.String)
+                  return expected.GetString() == actual.GetString();
+              return expected.ValueKind == actual.ValueKind && expected.GetRawText() == actual.GetRawText();
+          }
+        """ + methods + "\n}\n";
+}
+
+static string EndpointAssertion(Outcome outcome)
+{
+    if (outcome.Then.TryGetProperty("responds", out var responds))
+    {
+        var status = outcome.Then.TryGetProperty("status", out var statusValue) ? statusValue.GetInt32() : 200;
+        return $"Assert.Equal({status}, result.StatusCode);\n              AssertRecordEqual({JsonSerializer.Serialize(responds.GetRawText())}, result.Body);";
+    }
+
+    if (outcome.Then.TryGetProperty("fails_with", out var code))
+    {
+        var failureCode = code.GetString() ?? throw new InvalidDataException($"Outcome '{outcome.Name}' fails_with is not a string.");
+        return $"Assert.Equal(422, result.StatusCode);\n              Assert.Contains({JsonSerializer.Serialize(failureCode)}, result.Body, StringComparison.Ordinal);";
+    }
+
+    throw new InvalidDataException($"Outcome '{outcome.Name}' has no supported endpoint then clause.");
+}
+
 static string CustomerCall(Outcome outcome)
 {
     if (outcome.Then.TryGetProperty("has_field", out var field))
@@ -505,6 +666,7 @@ static Process StartProcess(string command, string workingDirectory, params stri
         WorkingDirectory = workingDirectory, RedirectStandardInput = true, RedirectStandardOutput = true,
         RedirectStandardError = true, UseShellExecute = false,
     };
+    info.Environment["MSBUILDDISABLENODEREUSE"] = "1";
     foreach (var argument in arguments) info.ArgumentList.Add(argument);
     return Process.Start(info) ?? throw new InvalidOperationException($"Could not start '{command}'.");
 }
