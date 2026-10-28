@@ -94,14 +94,15 @@ public class RecordUpdateFormCompiles
         var output = new CSharpProvider().Emit(resolved.Module);
         var endpoint = Assert.Single(output.Files, file => file.Key.EndsWith("CompleteTask.cs.cs", StringComparison.Ordinal));
 
-        // Then its path is find, update, save and respond with no native block,
+        // Then its path is find, update, save and respond, with no native complete-task phrase left,
         // and the generated endpoint uses an idiomatic C# with-expression
         Assert.Collection(complete.Steps,
             step => Assert.IsType<BoundLetStep>(step),
             step => Assert.IsType<BoundLetUpdateStep>(step),
             step => Assert.IsType<BoundCallStep>(step),
             step => Assert.IsType<BoundRespondStep>(step));
-        Assert.DoesNotContain(complete.Steps, step => step.Source.Contains("native csharp", StringComparison.Ordinal));
+        // The old native "complete task" phrase is gone: restoring it (the revert of this card) fails here.
+        Assert.DoesNotContain(resolved.Module.Phrases, phrase => phrase.Key == "complete task _");
         Assert.Contains("task with { Done = true }", endpoint.Value, StringComparison.Ordinal);
     }
 
