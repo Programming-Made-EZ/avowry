@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Publish numbers from private benchmark rows.
 
-Per arm, model and kind the summary has the row count, pass rate, mean attempts
-and mean total tokens. A Phrase group also lists the documentation-token share
-when a row carries documentation_tokens or docs_tokens. Task text, replies,
-reply heads, prompts and task ids are left out.
+Per arm, model and kind the summary has scheduled, completed and unavailable
+row counts, pass rate, and mean attempts and total tokens over completed rows
+only. A Phrase group also lists the documentation-token share when a row carries
+documentation_tokens or docs_tokens. Task text, replies, reply heads, prompts
+and task ids are left out.
 """
 
 from __future__ import annotations
@@ -64,22 +65,30 @@ def summarize(rows: list[dict]) -> dict:
     for arm, model, kind in sorted(grouped):
         items = grouped[(arm, model, kind)]
         count = len(items)
+        completed = [row for row in items if row.get("status") == "completed"]
+        completed_count = len(completed)
+        unavailable_count = count - completed_count
         passed = sum(1 for row in items if row.get("passed") is True)
-        attempts = sum(float(row.get("attempts") or 0) for row in items)
-        total_tokens = sum(float(row.get("tokens_in") or 0) + float(row.get("tokens_out") or 0) for row in items)
+        attempts = sum(float(row.get("attempts") or 0) for row in completed)
+        completed_tokens = sum(
+            float(row.get("tokens_in") or 0) + float(row.get("tokens_out") or 0) for row in completed)
         entry = {
             "arm": arm,
             "model": model,
             "kind": kind,
             "count": count,
+            "completed_count": completed_count,
+            "unavailable_count": unavailable_count,
             "pass_rate": (passed / count) if count else 0.0,
-            "mean_attempts": (attempts / count) if count else 0.0,
-            "mean_total_tokens": (total_tokens / count) if count else 0.0,
+            "mean_attempts": (attempts / completed_count) if completed_count else 0.0,
+            "mean_total_tokens": (completed_tokens / completed_count) if completed_count else 0.0,
         }
         if arm == "phrase":
             present = [documentation_tokens(row) for row in items]
             if any(value is not None for value in present):
                 documented = sum(value or 0.0 for value in present)
+                total_tokens = sum(
+                    float(row.get("tokens_in") or 0) + float(row.get("tokens_out") or 0) for row in items)
                 entry["documentation_tokens_share"] = (documented / total_tokens) if total_tokens else 0.0
         groups.append(entry)
     return {"groups": groups}

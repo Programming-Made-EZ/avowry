@@ -145,19 +145,29 @@ def holdout_reasons(summary: dict | None) -> list[str]:
     if summary is None:
         return []
     groups = summary.get("groups", []) if isinstance(summary, dict) else []
-    models = defaultdict(lambda: {"count": 0, "passes": 0.0})
+    if not groups or any(
+            "completed_count" not in group or "unavailable_count" not in group
+            for group in groups):
+        return ["holdout summary lacks harness-error counts"]
+    models = defaultdict(list)
+    scheduled = 0
+    unavailable = 0
     for group in groups:
         model = str(group.get("model", ""))
         count = int(number(group.get("count")))
-        models[model]["count"] += count
-        models[model]["passes"] += number(group.get("pass_rate")) * count
-    usable = sum(1 for values in models.values() if values["count"] and values["passes"] > 0)
+        completed_count = int(number(group.get("completed_count")))
+        unavailable_count = int(number(group.get("unavailable_count")))
+        models[model].append(completed_count)
+        scheduled += count
+        unavailable += unavailable_count
+    usable = sum(1 for completed in models.values() if completed and all(value > 0 for value in completed))
     reasons = []
     if usable < BAR["minimum_models"]:
-        reasons.append(f"the holdout has only {usable} usable models, fewer than {BAR['minimum_models']}")
-    error_share = summary.get("harness_error_share") if isinstance(summary, dict) else None
-    if isinstance(error_share, (int, float)) and error_share > BAR["maximum_harness_error_share"]:
-        reasons.append(f"holdout harness-error rows are {format_percent(float(error_share))}, above 10.0%")
+        noun = "model" if usable == 1 else "models"
+        reasons.append(f"the holdout has only {usable} usable {noun}, fewer than {BAR['minimum_models']}")
+    error_share = unavailable / scheduled if scheduled else 1.0
+    if error_share > BAR["maximum_harness_error_share"]:
+        reasons.append(f"holdout harness-error rows are {format_percent(error_share)}, above 10.0%")
     return reasons
 
 
@@ -215,9 +225,6 @@ def render(csharp: list[dict], phrase: list[dict], holdout: dict | None) -> str:
              f"{'; '.join(reasons)}.")
     lines = [first, "", "Vocabulary work remains paused because this result does not clear the frozen WIN bar."
              if verdict != "WIN" else "Vocabulary work may continue because Phrase clears the frozen WIN bar."]
-    if holdout is not None and verdict == "INCONCLUSIVE":
-        lines += ["Copilot has no scored holdout rows because its quota is unavailable, and Grok's holdout runs timed out.",
-                  "Unavailable drivers: Copilot resets 2026-11-01 00:00 UTC; agy resets about 2026-11-01 21:40 UTC."]
     lines += ["", "Development totals", "", "| Arm | Model | Kind | Pass rate | Mean attempts | Mean total tokens | Context tokens |",
               "|---|---|---|---:|---:|---:|---:|"]
     for arm, rows in (("Plain C#", csharp), ("Phrase", phrase)):

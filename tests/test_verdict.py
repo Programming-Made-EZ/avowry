@@ -8,6 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "verdict.py"
+SUMMARIZER = ROOT / "scripts" / "summarize-private-results.py"
 
 
 class VerdictPageTests(unittest.TestCase):
@@ -87,22 +88,88 @@ class VerdictPageTests(unittest.TestCase):
         self.assertIn("harness-error", page)
 
     def test_inconclusive_holdout_names_unavailable_drivers_and_resets(self):
-        # Given a numbers-only holdout summary with only two usable models
+        # Given a numbers-only holdout summary where Copilot is wholly unavailable and Grok has an unavailable group
         holdout = {"groups": [
             {"arm": arm, "model": model, "kind": kind, "count": 5,
+             "completed_count": (0 if model == "copilot" or (model == "grok" and arm == "phrase" and kind == "modify") else 5),
+             "unavailable_count": (5 if model == "copilot" or (model == "grok" and arm == "phrase" and kind == "modify") else 0),
              "pass_rate": 0.0 if model == "copilot" else 1.0,
              "mean_attempts": 1.0, "mean_total_tokens": 100.0}
             for arm in ("csharp", "phrase") for model in ("codex", "grok", "copilot")
             for kind in ("write", "modify")
-        ], "harness_error_share": 0.4}
+        ]}
         # When the holdout is judged on the same frozen bar
         page = self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100), holdout)
-        # Then it is inconclusive and tells Steve the concrete availability reasons
+        # Then Steve sees both frozen-bar completeness reasons
         self.assertTrue(page.startswith("INCONCLUSIVE "), page)
-        self.assertIn("Copilot has no scored holdout rows", page)
-        self.assertIn("Grok's holdout runs timed out", page)
-        self.assertIn("2026-11-01 00:00 UTC", page)
-        self.assertIn("2026-11-01 21:40 UTC", page)
+        self.assertIn("only 1 usable model", page)
+        self.assertIn("holdout harness-error rows are", page)
+
+    def test_fully_completed_three_model_holdout_uses_the_performance_bar(self):
+        # Given all holdout groups completed for three models
+        holdout = {"groups": [
+            {"arm": arm, "model": model, "kind": kind, "count": 5,
+             "completed_count": 5, "unavailable_count": 0, "pass_rate": 1.0,
+             "mean_attempts": 1.0, "mean_total_tokens": 100.0}
+            for arm in ("csharp", "phrase") for model in ("codex", "grok", "copilot")
+            for kind in ("write", "modify")
+        ]}
+        # When Steve generates the verdict page
+        page = self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100), holdout)
+        # Then availability does not obscure the frozen performance verdict
+        self.assertTrue(page.startswith("WIN "), page)
+
+    def test_old_holdout_summary_is_inconclusive(self):
+        # Given a holdout summary from before harness-error counts were published
+        holdout = {"groups": [
+            {"arm": "phrase", "model": model, "kind": "write", "count": 5,
+             "pass_rate": 1.0, "mean_attempts": 1.0, "mean_total_tokens": 100.0}
+            for model in ("codex", "grok", "copilot")
+        ]}
+        # When Steve generates the verdict page
+        page = self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100), holdout)
+        # Then the unknown harness health cannot be mistaken for a conclusive result
+        self.assertTrue(page.startswith("INCONCLUSIVE "), page)
+        self.assertIn("holdout summary lacks harness-error counts", page)
+
+    def test_summarized_unavailable_rows_make_the_verdict_inconclusive(self):
+        # Given private rows with two completed models and one unavailable model in both arms
+        rows = [
+            {"arm": arm, "model": model, "kind": "write", "status": status,
+             "passed": status == "completed", "attempts": 1 if status == "completed" else 3,
+             "tokens_in": 80 if status == "completed" else 900, "tokens_out": 20}
+            for arm in ("csharp", "phrase") for model, status in
+            (("codex", "completed"), ("grok", "completed"), ("copilot", "unavailable"))
+        ]
+        rows.extend(
+            {"arm": arm, "model": "codex", "kind": "write", "status": "timed-out",
+             "passed": False, "attempts": 3, "tokens_in": 900, "tokens_out": 100}
+            for arm in ("csharp", "phrase"))
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            private_rows = root / "private.jsonl"
+            summary = root / "summary.json"
+            private_rows.write_text("".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+            summarized = subprocess.run(
+                [sys.executable, str(SUMMARIZER), str(private_rows), "--out", str(summary)],
+                cwd=ROOT, text=True, capture_output=True)
+            self.assertEqual(0, summarized.returncode, summarized.stderr)
+            published = json.loads(summary.read_text(encoding="utf-8"))
+            codex_phrase = next(group for group in published["groups"]
+                                if group["arm"] == "phrase" and group["model"] == "codex")
+            self.assertEqual(2, codex_phrase["count"])
+            self.assertEqual(1, codex_phrase["completed_count"])
+            self.assertEqual(1, codex_phrase["unavailable_count"])
+            self.assertEqual(1.0, codex_phrase["mean_attempts"])
+            self.assertEqual(100.0, codex_phrase["mean_total_tokens"])
+            # When that published numbers-only summary drives the verdict
+            page = self.run_verdict(
+                self.rows("csharp", tokens=200), self.rows("phrase", tokens=100),
+                published)
+        # Then Steve sees an inconclusive holdout instead of ordinary model failures
+        self.assertTrue(page.startswith("INCONCLUSIVE "), page)
+        self.assertIn("only 2 usable models", page)
+        self.assertIn("holdout harness-error rows are 50.0%", page)
 
     def test_frozen_constants_match_decider_d32(self):
         # Given the single frozen table used by the verdict implementation

@@ -81,12 +81,16 @@ public sealed class PrivateHoldoutResults
         var csharpGroup = Group(live, "csharp", "steve-csharp-v1");
         Assert.Equal("", phraseGroup.GetProperty("kind").GetString());
         Assert.Equal(1, phraseGroup.GetProperty("count").GetInt32());
+        Assert.Equal(1, phraseGroup.GetProperty("completed_count").GetInt32());
+        Assert.Equal(0, phraseGroup.GetProperty("unavailable_count").GetInt32());
         Assert.Equal(1d, phraseGroup.GetProperty("pass_rate").GetDouble(), 6);
         Assert.Equal(1d, phraseGroup.GetProperty("mean_attempts").GetDouble(), 6);
         Assert.True(phraseGroup.GetProperty("mean_total_tokens").GetDouble() > 0);
         Assert.False(phraseGroup.TryGetProperty("documentation_tokens_share", out _));
         Assert.Equal("write", csharpGroup.GetProperty("kind").GetString());
         Assert.Equal(1, csharpGroup.GetProperty("count").GetInt32());
+        Assert.Equal(1, csharpGroup.GetProperty("completed_count").GetInt32());
+        Assert.Equal(0, csharpGroup.GetProperty("unavailable_count").GetInt32());
         Assert.Equal(0d, csharpGroup.GetProperty("pass_rate").GetDouble(), 6);
         Assert.Equal(3d, csharpGroup.GetProperty("mean_attempts").GetDouble(), 6);
         Assert.True(csharpGroup.GetProperty("mean_total_tokens").GetDouble() > 0);
@@ -169,7 +173,7 @@ public sealed class PrivateHoldoutResults
         Assert.Equal(new[] { "groups" }, document.RootElement.EnumerateObject().Select(property => property.Name).ToArray());
         var allowed = new HashSet<string>
         {
-            "arm", "model", "kind", "count", "pass_rate", "mean_attempts", "mean_total_tokens", "documentation_tokens_share",
+            "arm", "model", "kind", "count", "completed_count", "unavailable_count", "pass_rate", "mean_attempts", "mean_total_tokens", "documentation_tokens_share",
         };
         foreach (var group in document.RootElement.GetProperty("groups").EnumerateArray())
         {
@@ -334,7 +338,7 @@ public sealed class PrivateHoldoutResults
         """;
 
     private const string DocsRows =
-        "{\"model\":\"steve-phrase-v1\",\"task\":\"" + TaskId + "\",\"passed\":true,\"attempts\":1,\"tokens_in\":60,\"tokens_out\":40,\"reply_head\":\"" + ReplyMarker + "\",\"prompt\":\"" + PromptMarker + "\",\"label\":\"" + HoldoutLabel + "\",\"mode\":\"docs-in-context\",\"kind\":\"write\",\"documentation_tokens\":25}\n"
-        + "{\"model\":\"steve-phrase-v1\",\"task\":\"H2\",\"passed\":false,\"attempts\":3,\"tokens_in\":20,\"tokens_out\":0,\"reply_head\":\"" + ReplyMarker + " extra reply text\",\"prompt\":\"" + PromptMarker + "\",\"label\":\"" + HoldoutLabel + "\",\"mode\":\"docs-in-context\",\"kind\":\"write\",\"documentation_tokens\":5}\n"
-        + "{\"model\":\"steve-csharp-v1\",\"task\":\"" + TaskId + "\",\"passed\":false,\"attempts\":3,\"tokens_in\":10,\"tokens_out\":10,\"reply_head\":\"" + ReplyMarker + "\",\"label\":\"" + HoldoutLabel + "\",\"mode\":\"plain-csharp\",\"kind\":\"write\",\"documentation_tokens\":10}\n";
+        "{\"model\":\"steve-phrase-v1\",\"task\":\"" + TaskId + "\",\"status\":\"completed\",\"passed\":true,\"attempts\":1,\"tokens_in\":60,\"tokens_out\":40,\"reply_head\":\"" + ReplyMarker + "\",\"prompt\":\"" + PromptMarker + "\",\"label\":\"" + HoldoutLabel + "\",\"mode\":\"docs-in-context\",\"kind\":\"write\",\"documentation_tokens\":25}\n"
+        + "{\"model\":\"steve-phrase-v1\",\"task\":\"H2\",\"status\":\"completed\",\"passed\":false,\"attempts\":3,\"tokens_in\":20,\"tokens_out\":0,\"reply_head\":\"" + ReplyMarker + " extra reply text\",\"prompt\":\"" + PromptMarker + "\",\"label\":\"" + HoldoutLabel + "\",\"mode\":\"docs-in-context\",\"kind\":\"write\",\"documentation_tokens\":5}\n"
+        + "{\"model\":\"steve-csharp-v1\",\"task\":\"" + TaskId + "\",\"status\":\"completed\",\"passed\":false,\"attempts\":3,\"tokens_in\":10,\"tokens_out\":10,\"reply_head\":\"" + ReplyMarker + "\",\"label\":\"" + HoldoutLabel + "\",\"mode\":\"plain-csharp\",\"kind\":\"write\",\"documentation_tokens\":10}\n";
 }
