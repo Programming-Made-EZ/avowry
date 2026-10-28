@@ -58,8 +58,13 @@ def depersonalize(text):
     text = re.sub(rf"(?i)\bNeeds-{N}\b", "Needs-product-owner", text)
     for old, new in PHRASES:
         text = text.replace(old, new)
+    return text
+
+
+def generic_names(text):
+    """Last-resort rewrite of the remaining mentions (the persona opener 'As NAME,' is kept)."""
     text = re.sub(rf"\b{N}'s\b", "the product owner's", text)
-    text = re.sub(rf"\b{N}\b", "the product owner", text)
+    text = re.sub(rf"(?<!As )\b{N}\b", "the product owner", text)
     text = re.sub(r"(?m)(^[-0-9. *]*|[.:] )the product owner", lambda m: m.group(1) + "The product owner", text)
     return text
 
@@ -86,11 +91,13 @@ def issues(runner=gh):
     return json.loads(runner(["issue", "list", "--repo", SLUG, "--state", "all", "--limit", "1000", "--json", "number,title,body"]))
 
 
-def plan(issue_rows):
+def plan(issue_rows, generic=False):
     changes, unknown = [], []
     for issue in issue_rows:
         body = issue.get("body") or ""
         rewritten = depersonalize(body)
+        if generic:
+            rewritten = generic_names(rewritten)
         leftovers = unknown_mentions(rewritten)
         if leftovers:
             unknown.append((issue["number"], leftovers))
@@ -115,8 +122,9 @@ def main(argv=None):
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--check", action="store_true")
     mode.add_argument("--apply", action="store_true")
+    parser.add_argument("--generic", action="store_true", help="also rewrite every remaining mention (after review)")
     args = parser.parse_args(argv)
-    changes, unknown = plan(issues())
+    changes, unknown = plan(issues(), args.generic)
     for issue, _ in changes:
         print(("apply: " if args.apply else "would edit: ") + f"card {issue['number']:03}")
     for number, lines in unknown:
