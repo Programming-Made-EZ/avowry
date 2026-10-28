@@ -105,6 +105,60 @@ public class ParserPhraseTests
         Assert.Equal("done", field.Name);
         Assert.True(Assert.IsType<BoolLit>(field.Value).Value);
     }
+
+    [Theory]
+    [Trait("Slice", "160")]
+    [InlineData("let completed = task with { done: true", "PH200")]
+    [InlineData("let completed = task with { }", "PH200")]
+    [InlineData("let completed = task with { done: true, }", "PH200")]
+    [InlineData("let completed = task with { owner: owner with { name: \"x\" } }", "PH200")]
+    [InlineData("let completed = task with { done true }", "PH200")]
+    [InlineData("let completed = task with { done: }", "PH200")]
+    public void Malformed_record_updates_report_a_normal_diagnostic(string step, string code)
+    {
+        // Given a malformed update in a phrase whose source is in scope
+        var source = InModule($$"""
+            type Task
+              done: Bool
+
+            phrase "complete {task: Task} and {owner: Task}"
+              steps
+                {{step}}
+            """);
+
+        // When the malformed source is parsed
+        var result = Parser.Parse(source);
+
+        // Then parsing does not throw and reports the ordinary syntax diagnostic
+        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == code);
+    }
+
+    [Fact]
+    [Trait("Slice", "160")]
+    public void A_phrase_call_containing_with_and_a_record_is_not_reserved_as_an_update()
+    {
+        // Given a phrase whose wording contains "with" before a record argument
+        var source = InModule("""
+            type Options
+              urgent: Bool
+
+            phrase "send with {options: Options}" -> Bool
+              native csharp
+                return options.Urgent;
+
+            phrase "dispatch"
+              steps
+                let sent = send with { urgent: true }
+            """);
+
+        // When the caller is parsed
+        var caller = Clean(source).Phrases.Single(phrase => phrase.Template.Parts.OfType<TemplateWord>().Any(word => word.Text == "dispatch"));
+
+        // Then it remains a phrase call because "send" is not an in-scope update source
+        var let = Assert.IsType<LetStep>(Assert.Single(caller.Steps!));
+        Assert.Equal("(call send with <{urgent: true}>)", Print(let.Call));
+    }
+
     private static PhraseDecl SinglePhrase(string body) => Assert.Single(Clean(InModule(body)).Phrases);
 
     [Fact]

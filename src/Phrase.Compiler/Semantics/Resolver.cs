@@ -237,7 +237,7 @@ public static class Resolver
         private BoundLetUpdateStep ResolveLetUpdate(LetUpdateStep update, Dictionary<string, PType> scope)
         {
             var record = ResolvePath(update.Source, scope);
-            IReadOnlyList<FieldModel> fields = [];
+            IReadOnlyList<FieldModel>? fields = null;
             if (!record.Type.IsError)
             {
                 if (!recordFields.TryGetValue(record.Type.Name, out var declared))
@@ -256,11 +256,14 @@ public static class Resolver
                     continue;
                 }
 
-                var declared = fields.FirstOrDefault(candidate => candidate.Name == field.Name);
+                var declared = fields?.FirstOrDefault(candidate => candidate.Name == field.Name);
                 if (declared is null)
                 {
-                    if (fields.Count > 0)
-                        Report("PH311", $"Unknown field '{field.Name}' on {record.Type}. Available fields: {string.Join(", ", fields.Select(candidate => candidate.Name))}.", field.At);
+                    if (fields is not null)
+                    {
+                        var available = fields.Count == 0 ? "none" : string.Join(", ", fields.Select(candidate => candidate.Name));
+                        Report("PH311", $"Unknown field '{field.Name}' on {record.Type}. Available fields: {available}.", field.At);
+                    }
                     boundFields.Add(new BoundRecordField(field.Name, ResolveValue(field.Value, PType.Error, scope)));
                     continue;
                 }

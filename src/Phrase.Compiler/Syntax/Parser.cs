@@ -341,7 +341,7 @@ public static class Parser
                         if (sawSteps) { Report("PH204", "Only one `steps` block is allowed.", clauseAt); return; }
                         sawSteps = true;
                         if (sawNative) { Report("PH208", "A phrase is implemented by native blocks or by steps, not both.", clauseAt); return; }
-                        steps = ParseSteps(child);
+                        steps = ParseSteps(child, template.Parts.OfType<TemplateHole>().Select(hole => hole.Name));
                     }
                     else
                     {
@@ -492,7 +492,7 @@ public static class Parser
                             if (seen) { Report("PH204", $"Only one `{section}` section is allowed.", sectionAt); return; }
                             if (section == "input") input = ParseFieldBlock(child, "input");
                             else if (section == "output") output = ParseFieldBlock(child, "output");
-                            else steps = ParseSteps(child);
+                            else steps = ParseSteps(child, ["input"]);
                             break;
                         case "spec":
                             specs.Add(ParseSpec(child, cc));
@@ -546,18 +546,24 @@ public static class Parser
 
         // ------------------------------------------------------------- steps
 
-        private List<Step> ParseSteps(Line header)
+        private List<Step> ParseSteps(Line header, IEnumerable<string> initialNames)
         {
             if (header.Children.Count == 0)
                 Report("PH203", "`steps` has no steps; indent one step per line under it.", header.Start);
 
             var steps = new List<Step>();
+            var namesInScope = initialNames.ToHashSet(StringComparer.Ordinal);
             foreach (var child in header.Children)
-                AddIfParsed(steps, () => ParseStep(child));
+            {
+                if (Try(() => ParseStep(child, namesInScope)) is not { } step) continue;
+                steps.Add(step);
+                if (step is LetStep let) namesInScope.Add(let.Name);
+                if (step is LetUpdateStep update) namesInScope.Add(update.Name);
+            }
             return steps;
         }
 
-        private Step ParseStep(Line line)
+        private Step ParseStep(Line line, IReadOnlySet<string> namesInScope)
         {
             var c = CursorFor(line);
             var at = c.Here;
@@ -568,11 +574,11 @@ public static class Parser
                 c.Next();
                 var name = c.Expect(TokenKind.Name, "a variable name after `let`");
                 c.ExpectSymbol("=");
-                if (LooksLikeRecordUpdate(c))
+                if (LooksLikeRecordUpdate(c, namesInScope))
                 {
                     var source = ParsePath(c);
                     c.Next(); // with
-                    var fields = ParseRecord(c);
+                    var fields = ParseRecord(c, requireFields: true, allowTrailingComma: false);
                     c.ExpectEnd();
                     return new LetUpdateStep(name.Text, source, fields, at);
                 }
@@ -636,9 +642,11 @@ public static class Parser
         }
 
         /// <summary><c>path with { ... }</c> is a record update, not a phrase call.</summary>
-        private static bool LooksLikeRecordUpdate(Cursor c)
+        private static bool LooksLikeRecordUpdate(Cursor c, IReadOnlySet<string> namesInScope)
         {
             if (!c.Is(TokenKind.Name)) return false;
+            var root = c.Peek()!.Text;
+            if (!namesInScope.Contains(root)) return false;
             var k = 1;
             while (c.IsSymbol(".", k) && c.Is(TokenKind.Name, k + 1))
                 k += 2;
@@ -708,18 +716,23 @@ public static class Parser
             return new PathExpr(segments, Pos(first));
         }
 
-        private static RecordExpr ParseRecord(Cursor c)
+        private static RecordExpr ParseRecord(Cursor c, bool requireFields = false, bool allowTrailingComma = true)
         {
             if (!c.IsSymbol("{")) throw c.Error("a record { field: value, ... }");
             var open = c.Next();
             var fields = new List<RecordField>();
+
+            if (requireFields && c.IsSymbol("}"))
+                throw c.Error("at least one field in a record update");
 
             while (!c.IsSymbol("}"))
             {
                 var name = c.Expect(TokenKind.Name, "a field name");
                 c.ExpectSymbol(":");
                 fields.Add(new RecordField(name.Text, ParseExpr(c), Pos(name)));
-                if (!c.TryConsume(",")) break; // a trailing comma before '}' is allowed
+                if (!c.TryConsume(",")) break;
+                if (!allowTrailingComma && c.IsSymbol("}"))
+                    throw c.Error("a field after ',' in a record update");
             }
 
             c.ExpectSymbol("}");

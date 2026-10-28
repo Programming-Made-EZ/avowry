@@ -3,6 +3,7 @@ using System.Text;
 using Phrase.Acceptance.Tests.Support;
 using Phrase.Adapters.CSharp;
 using Phrase.Compiler;
+using Phrase.Compiler.Semantics;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -86,10 +87,22 @@ public class RecordUpdateFormCompiles
         // Given the Tasks demo source
         var source = File.ReadAllText(RepoPaths.Find("demo", "tasks", "Tasks.phrase"));
 
-        // When CompleteTask is read
-        // Then completing a task is a Phrase update plus store steps, not a native constructor
-        Assert.Contains("with { done: true }", source, StringComparison.Ordinal);
-        Assert.DoesNotContain("new Task(task.Id, task.Title, true)", source, StringComparison.Ordinal);
+        // When CompleteTask is resolved and emitted
+        var resolved = Resolver.Resolve(source);
+        Assert.Empty(resolved.Diagnostics);
+        var complete = Assert.Single(resolved.Module.Endpoints, endpoint => endpoint.Name == "CompleteTask");
+        var output = new CSharpProvider().Emit(resolved.Module);
+        var endpoint = Assert.Single(output.Files, file => file.Key.EndsWith("CompleteTask.cs.cs", StringComparison.Ordinal));
+
+        // Then its path is find, update, save and respond with no native block,
+        // and the generated endpoint uses an idiomatic C# with-expression
+        Assert.Collection(complete.Steps,
+            step => Assert.IsType<BoundLetStep>(step),
+            step => Assert.IsType<BoundLetUpdateStep>(step),
+            step => Assert.IsType<BoundCallStep>(step),
+            step => Assert.IsType<BoundRespondStep>(step));
+        Assert.DoesNotContain(complete.Steps, step => step.Source.Contains("native csharp", StringComparison.Ordinal));
+        Assert.Contains("task with { Done = true }", endpoint.Value, StringComparison.Ordinal);
     }
 
     private static async Task<(int ExitCode, string Log)> BuildAsync(string project)

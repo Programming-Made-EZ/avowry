@@ -164,7 +164,7 @@ public class ResolverFlowTests
 
     [Theory]
     [Trait("Slice", "160")]
-    [InlineData("let completed = missing with { done: true }", "PH310")]
+    [InlineData("let completed = missing with { done: true }", "PH001")]
     [InlineData("let completed = title with { done: true }", "PH311")]
     [InlineData("let completed = task with { missing: true }", "PH311")]
     [InlineData("let completed = task with { done: \"yes\" }", "PH312")]
@@ -186,6 +186,53 @@ public class ResolverFlowTests
         // When the phrase is resolved
         // Then the specific semantic error is reported
         Assert.Equal([code], Codes(source));
+    }
+
+    [Fact]
+    [Trait("Slice", "160")]
+    public void Record_update_reports_an_unknown_field_on_a_zero_field_record()
+    {
+        // Given a recovered endpoint tree whose input record has no declared fields
+        var parsed = Phrase.Compiler.Syntax.Parser.Parse("""
+            module Test
+            endpoint Empty : POST /empty
+              input
+              steps
+                let copy = input with { missing: true }
+            """);
+
+        // When the recovered tree is resolved
+        var result = Resolver.Resolve(parsed.File);
+
+        // Then every record, including a zero-field record, reports the unknown field
+        var diagnostic = Assert.Single(result.Diagnostics, diagnostic => diagnostic.Code == "PH311");
+        Assert.Contains("Unknown field 'missing'", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    [Trait("Slice", "160")]
+    public void A_phrase_call_containing_with_and_a_record_still_resolves_as_a_call()
+    {
+        // Given a leaf phrase whose ordinary wording contains "with" before a record hole
+        var source = Program("""
+            type Options
+              urgent: Bool
+
+            phrase "send with {options: Options}" -> Bool
+              native csharp
+                return options.Urgent;
+
+            phrase "dispatch"
+              steps
+                let sent = send with { urgent: true }
+            """);
+
+        // When the composite phrase is resolved
+        var dispatch = Clean(source).Phrase("dispatch");
+
+        // Then "with" remains part of the phrase call rather than reserving an update
+        var let = Assert.IsType<BoundLetStep>(Assert.Single(dispatch.Steps!));
+        Assert.Equal("send with _", let.Call.PhraseKey);
     }
     private const string Validate = """
         phrase "validate {items: List<LineItem>}"
