@@ -49,11 +49,13 @@ def main(argv=None, runner=gh_json, sleep=time.sleep):
     deadline = time.time() + args.wait
     while True:
         try:
-            state, run = verdict(latest_runs(args.branch, runner))
+            runs = latest_runs(args.branch, runner)
+            state, run = verdict(runs)
         except (RuntimeError, ValueError) as exc:
             print(f"CI status unreadable: {exc}")
             return 2
-        if state != "pending" or time.time() >= deadline:
+        newest_running = bool(runs) and runs[0].get("status") != "completed"
+        if not newest_running or time.time() >= deadline:
             break
         sleep(30)
     sha = (run or {}).get("headSha", "")[:7]
