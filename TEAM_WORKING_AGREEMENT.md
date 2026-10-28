@@ -68,6 +68,7 @@ an assignee (model or seat) and a one-line why. There is no minimum or maximum r
 
 ### Engineering discipline
 
+- **Code follows `docs/CODING_GUIDELINES.md`.** One short document for this repository's own code: high cohesion and low coupling, dependencies pointing one way, small functions, naming, no throwing on user input, deterministic cross-platform output, tests that can fail, no dead code. Reviewers check every change against its checklist. It is separate from the project-profile standards Phrase applies to generated code (`docs/adr/ADR-library-binding-layering.md`).
 - **Outside-in TDD** from ZOMBIES acceptance criteria: start at the outermost boundary, work inward.
 - **Honest red first.** Watch the test fail for the right reason. A red that survives when only the fix is
   reverted is not proof. Every test carries Given/When/Then comments.
