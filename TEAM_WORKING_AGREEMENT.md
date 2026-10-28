@@ -281,6 +281,16 @@ are created."
   checks role names or counts. Template:
   `templates/TASK_FORCE.md` in mob-defaults.
 
+### Driver availability (standing rule, Steve, 2026-10-28)
+
+Never assume a driver is permanently out. A driver that is out of quota or otherwise unavailable is re-probed, not forgotten:
+
+- **When:** at every card boundary, and on a timer while any driver is out (every 30 to 60 minutes, or at its known reset time, whichever is sooner). Also before any measurement run that depends on a model.
+- **How:** a cheap availability probe per driver that reads status and spends as little quota as possible (for Copilot, the account's quota endpoint reads usage and spends none; for the others, a one-line prompt through the same launch path the harness uses). Every probe has a short timeout, writes its result and the probe time to the driver status table in DRIVERS.md, and a failed probe is logged with its error text (an error text that names a reset time is recorded as the reset time).
+- **When a driver is back:** restore its author and voter seats in the rotation, rerun the rows that were marked unavailable for it (a benchmark run is not complete while a model it needs has unavailable rows and the model is back), and log the event in DRIVERS.md (and in MOB.md when the mob keeps one).
+- **While a driver is out:** its seats rotate to the others, Deciders run with the seats available, a vote needs a voter who is not the author, and the verdict of a measurement states the unavailable driver and the reset time. A frozen rule that needs the driver (for example a minimum number of models) is never changed to work around the outage.
+- **Visible state:** DRIVERS.md in the repository root carries the driver status table (driver, status, last probe, known reset, note) and a short event log; MOB.md may link to it.
+
 ### Driver rotation
 
 - **Rotation order: Codex → Copilot → Grok → agy; Claude is last resort.** Claude drives or reviews only
