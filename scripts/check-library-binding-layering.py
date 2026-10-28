@@ -205,7 +205,7 @@ def check_text(text, root):
                 continue
             line_count = len(cited_path.read_text(encoding="utf-8").splitlines())
             for number in numbers:
-                if number > line_count:
+                if number < 1 or number > line_count:
                     problems.append(
                         f"audit cites {rel} line {number} beyond its {line_count} lines"
                     )

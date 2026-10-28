@@ -100,6 +100,15 @@ class LibraryBindingLayeringTests(unittest.TestCase):
         problems = check.check_text(text, ROOT)
         self.assertTrue(any("line 999999" in problem for problem in problems))
 
+    def test_audit_citation_of_line_zero_fails(self):
+        text = passing_text().replace(
+            "`src/Phrase.Adapters.CSharp/CSharpProvider.cs` line 1",
+            "`src/Phrase.Adapters.CSharp/CSharpProvider.cs` line 0",
+            1,
+        )
+        problems = check.check_text(text, ROOT)
+        self.assertTrue(any("line 0" in problem for problem in problems))
+
     def test_audit_file_outside_table_must_exist(self):
         text = passing_text().replace(
             "`scripts/check-extension-map.py`",
