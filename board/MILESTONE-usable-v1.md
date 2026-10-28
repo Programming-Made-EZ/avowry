@@ -17,7 +17,7 @@ Steve: "let me know when the language is actually usable to build an application
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:aa2598341ff16b078e9d178243b8fe7de5b70b63ddb433b8976fe17382bdbafa -->
+<!-- board-table-sha256:f2b96022c8d1fb1291a47b2f1ad43425784061438be691ef67696383bc6fa698 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -69,7 +69,7 @@ Steve: "let me know when the language is actually usable to build an application
 | 47 | 051 phrase build compiles one file into output projects | Done | 040 |
 | 48 | 141 Extension map: the layering ADR and the audit of the core | Done | 051 |
 | 49 | 142 Web extension boundary: the compiler partitions core and web | Done | 141 |
-| 50 | 132 A persistence effect with a generated in-memory implementation | Ready | 047 |
+| 50 | 132 A persistence effect with a generated in-memory implementation | Done | 047 |
 | 51 | 131 GET endpoints: a collection and one item by route parameter | Ready | 132 |
 | 52 | 133 PUT and DELETE endpoints: update and remove a stored item | Ready | 131 |
 | 53 | 135 Tasks demo app: a CRUD API written entirely in Phrase | Ready | 051, 131, 132, 133 |
