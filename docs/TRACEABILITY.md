@@ -17,10 +17,12 @@ The map is a build artifact outside both generated projects. It is therefore nei
 ## Executable evidence
 
 - `SourceMapTraceability` covers deterministic maps, opaque IDs, path independence, LF/CRLF normalization, trace lookup, and absence of Phrase source knowledge in generated C#.
+- `SourceMapDeployment.Publish_output_never_contains_the_source_map` proves a published Tasks API contains its assembly and no `.phrasemap.json` file.
+- `SourceMapDeployment.Running_api_answers_404_for_the_source_map_paths` proves the live Tasks API serves a real endpoint but answers 404 for obvious source-map paths.
 - `PhraseBuildOneFile.Build_output_matches_the_compiler_bytes` proves the CLI preserves every compiler-generated C# byte and adds only the map.
 - `TasksOverHttp` covers all demo endpoint behavior and the unchanged declared-failure response bodies; its live process checks the generated API boundary.
 - `WebExtensionBoundary` pins the complete Orders generated-output hash, while the demo acceptance suite executes all 11 Tasks specs.
 
 ## Not yet verified by a test
 
-These claims are stated above but their tests are tracked as separate cards (Decider D113): that the map is absent from `dotnet publish` output and that a running API answers 404 for it (card 167); that `--assembly`, `--strict` and a generated-file hash mismatch behave as described, and that every bad input to `phrase trace` fails cleanly (card 168). Step ids are checked for shape and cross-build equality today; the independent recompute and one id per failure per endpoint are card 170.
+These claims are stated above but their tests are tracked as separate cards (Decider D113): that `--assembly`, `--strict` and a generated-file hash mismatch behave as described, and that every bad input to `phrase trace` fails cleanly (card 168). Step ids are checked for shape and cross-build equality today; the independent recompute and one id per failure per endpoint are card 170.
