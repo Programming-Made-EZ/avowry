@@ -1,7 +1,7 @@
 # native-only-step: an endpoint calls a phrase implemented only by native C#
 module NativeOnly
 
-phrase "accept {n: Int}" -> Int
+avow to "accept {n: Int}" -> Int
   spec "accepts one"
     given n = 1
     when called

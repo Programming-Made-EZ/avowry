@@ -1,7 +1,7 @@
 # composite-calling-failing-phrase: an inherited failure crosses one composite level; the phrase record of reject has an empty endpoint because only check, a phrase, calls it directly (docs/TRACEABILITY.md); a multi-level composite is not expressible today, see card 189
 module CompositeFailure
 
-phrase "reject {n: Int}" -> Int
+avow to "reject {n: Int}" -> Int
   fails with Rejected
   spec "rejects a negative number"
     given n = -1
@@ -11,7 +11,7 @@ phrase "reject {n: Int}" -> Int
     if (n < 0) Fail("Rejected");
     return n;
 
-phrase "check {n: Int}"
+avow to "check {n: Int}"
   steps
     let checked = reject n
   spec "inherits the rejection"

@@ -40,7 +40,7 @@ class RunLlmCheckTests(unittest.TestCase):
             "type Task\n"
             "  id: Id\n"
             "\n"
-            'phrase "list open tasks {available: Bool}" -> List<Task>\n'
+            'avow to "list open tasks {available: Bool}" -> List<Task>\n'
             "  native csharp\n"
             "    return taskstore.List();\n"
         )
@@ -54,9 +54,9 @@ class RunLlmCheckTests(unittest.TestCase):
         runner = load_runner()
         with tempfile.TemporaryDirectory(prefix="llm-check-capture-") as raw:
             work = Path(raw)
-            reply = work / "correct.phrase"
+            reply = work / "correct.avowry"
             reply.write_text(
-                "module Demo\n\nphrase \"ok\"\n  native csharp\n    return;\n",
+                "module Demo\n\navow to \"ok\"\n  native csharp\n    return;\n",
                 encoding="utf-8",
             )
             runner.write_capture_wrapper(work, print_file_command(reply))
@@ -71,14 +71,14 @@ class RunLlmCheckTests(unittest.TestCase):
             self.assertEqual(0, completed.returncode, completed.stdout + completed.stderr)
             self.assertIn("module Demo", completed.stdout)
             self.assertIn("module Demo", captured)
-            self.assertIn('phrase "ok"', captured)
+            self.assertIn('avow to "ok"', captured)
 
     def test_committed_task_folder_has_no_start_copy(self):
         task = ROOT / "bench" / "usable-v1-llm-check" / "tasks" / "U1-add-endpoint"
         self.assertTrue((task / "prompt.md").is_file())
         self.assertTrue((task / "outcomes.json").is_file())
-        self.assertFalse((task / "start.phrase").exists())
-        self.assertFalse((task / "Tasks.phrase").exists())
+        self.assertFalse((task / "start.avowry").exists())
+        self.assertFalse((task / "Tasks.avowry").exists())
         prompt = (task / "prompt.md").read_text(encoding="utf-8")
         self.assertNotIn("```", prompt)
         self.assertNotIn("native csharp", prompt)
@@ -92,7 +92,7 @@ class RunLlmCheckTests(unittest.TestCase):
         runner = load_runner()
         with tempfile.TemporaryDirectory(prefix="llm-check-py-") as raw:
             work = Path(raw)
-            reply = work / "broken.phrase"
+            reply = work / "broken.avowry"
             reply.write_text("this is not a Phrase module\nSECRET_REPLY_TEXT\n", encoding="utf-8")
             output = work / "llm-check.json"
             completed = subprocess.run(
@@ -270,7 +270,7 @@ class RunLlmCheckTests(unittest.TestCase):
                         "--model",
                         "codex",
                         "--model-command",
-                        print_file_command(work / "missing.phrase"),
+                        print_file_command(work / "missing.avowry"),
                         "--out",
                         str(output),
                         "--repo",
@@ -306,7 +306,7 @@ class RunLlmCheckTests(unittest.TestCase):
                         "--model",
                         "grok",
                         "--model-command",
-                        print_file_command(work / "missing.phrase"),
+                        print_file_command(work / "missing.avowry"),
                         "--out",
                         str(output),
                         "--repo",
@@ -423,4 +423,3 @@ def _pid_is_running(pid: int) -> bool:
 
 if __name__ == "__main__":
     unittest.main()
-

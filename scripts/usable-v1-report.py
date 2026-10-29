@@ -21,7 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 RATCHET = ROOT / "board" / "usable-v1-ratchet.json"
 BARS = {
-    1: "A real app written entirely in .phrase (demo/tasks/Tasks.phrase)",
+    1: "A real app written entirely in .avowry (demo/tasks/Tasks.avowry)",
     2: "One CLI command compiles it to C#/FastEndpoints",
     3: "dotnet build of the generated projects has zero warnings",
     4: "The generated xUnit specs all pass, one test per spec",

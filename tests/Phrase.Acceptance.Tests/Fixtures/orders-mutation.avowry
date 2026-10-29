@@ -8,25 +8,33 @@ type LineItem
 # Leaf phrases. Each one is a self-describing name, its contract, and its specs.
 # The specs are the truth; the name is the summary.
 
-phrase "ensure {items: List<LineItem>} is not empty"
+avow to "ensure {items: List<LineItem>} is not empty"
   fails with EmptyOrder
   spec "rejects an empty list"
     given items = []
     when called
     then fails with EmptyOrder
+  spec "accepts a non-empty list"
+    given items = [{ sku: "A", quantity: 1 }]
+    when called
+    then succeeds
   native csharp
     if (items.Count == 0) Fail("EmptyOrder");
 
-phrase "ensure every quantity in {items: List<LineItem>} is positive"
+avow to "ensure every quantity in {items: List<LineItem>} is positive"
   fails with InvalidQuantity
   spec "rejects a zero quantity"
     given items = [{ sku: "A", quantity: 0 }]
     when called
     then fails with InvalidQuantity
+  spec "accepts a positive quantity"
+    given items = [{ sku: "A", quantity: 1 }]
+    when called
+    then succeeds
   native csharp
     if (items.Any(i => i.Quantity <= 0)) Fail("InvalidQuantity");
 
-phrase "total quantity of {items: List<LineItem>}" -> Int
+avow to "total quantity of {items: List<LineItem>}" -> Int
   spec "sums quantities across line items"
     given items = [{ sku: "A", quantity: 2 }, { sku: "B", quantity: 3 }]
     when called

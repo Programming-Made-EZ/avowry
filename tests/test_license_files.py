@@ -31,7 +31,7 @@ class LicenseFilesTests(unittest.TestCase):
             self.assertNotRegex(documents[name], r"\bPhrase\b", name)
         for name in ("VISION.md", "docs/release/v0.1-bar.md"):
             self.assertIn("Avowry", read(name), name)
-        self.assertIn("uses the `avowry` command and still uses the `.phrase` file extension", documents["README.md"])
+        self.assertIn("uses the `avowry` command and still uses the `.avowry` file extension", documents["README.md"])
         self.assertTrue(documents["README.md"].startswith("# Avowry\n"))
         self.assertTrue(documents["NOTICE"].startswith("Avowry\n"))
 

@@ -110,7 +110,7 @@ Claude as a voice) is a source of product ideas.
   flow metrics.
 - **In the product category, also ask who else would use or be affected by the product, and whether they are represented in `PERSONAS.md`.** The product's value is defined by the people and actors it serves: a missing persona means missing value and missing measurements. If a user type turns up that the file does not hold, add a persona with context, goals, pain points and constraints (examples of user types that can be missing: a reviewer approving AI-written changes, a team lead setting library and architecture standards, a newcomer reading an unfamiliar codebase, a cheaper or smaller model acting as an author). Then check whether existing or new cards should serve them, and say so in the retro entry.
 - **Product feedback is gathered from each available model, in parallel and cheaply, as evidence and not
-  opinion polling.** Each model reads the current `docs/GRAMMAR.md` plus a sample `.phrase` file, then
+  opinion polling.** Each model reads the current `docs/GRAMMAR.md` plus a sample `.avowry` file, then
   writes or modifies a small phrase. It reports where it struggled (ambiguity, wasted tokens, misread
   intent, a missing construct) and proposes **at most 2 improvements, each with a concrete example**.
   Feedback-gathering turns are read-only and write no files in the repo.

@@ -8,12 +8,29 @@ namespace Phrase.Acceptance.Tests;
 public class AvowryCommand
 {
     [Fact]
+    [Trait("Slice", "199")]
+    public async Task Build_rejects_the_removed_phrase_extension_and_names_avowry()
+    {
+        // Given Dana has a source path with the removed extension
+        using var workspace = TempWorkspace.Create();
+        var source = Path.Combine(workspace.Root, "Work.phrase");
+        await File.WriteAllTextAsync(source, "module Work\n");
+
+        // When she asks the CLI to build it
+        var result = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
+
+        // Then the command rejects it and names the only accepted extension
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains(".avowry", result.Stderr, StringComparison.Ordinal);
+    }
+
+    [Fact]
     [Trait("Slice", "191")]
     public async Task Help_version_build_map_and_trace_use_only_the_Avowry_name()
     {
         // Given a valid Avowry source in a clean output workspace
         using var workspace = TempWorkspace.Create();
-        var source = RepoPaths.Find("tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase");
+        var source = RepoPaths.Find("tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.avowry");
 
         // When Dana reads help and version, builds it, and traces from the resulting map
         var help = await PhraseCli.RunAsync("--help");
@@ -40,7 +57,7 @@ public class AvowryCommand
         Assert.Contains("CreateOrder", trace.Stdout, StringComparison.Ordinal);
 
         // And the failure paths of build and trace also speak as avowry
-        var missingSource = await PhraseCli.RunAsync("build", Path.Combine(workspace.Root, "Missing.phrase"), "-o", workspace.Root);
+        var missingSource = await PhraseCli.RunAsync("build", Path.Combine(workspace.Root, "Missing.avowry"), "-o", workspace.Root);
         var missingMap = await PhraseCli.RunAsync("trace", "CreateOrder", "--map", Path.Combine(workspace.Root, "Nothing.avowrymap.json"));
         var unknownName = await PhraseCli.RunAsync("trace", "NoSuchThing", "--map", map);
         Assert.Equal(2, missingSource.ExitCode);

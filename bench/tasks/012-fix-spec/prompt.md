@@ -1,6 +1,6 @@
-Fix the failing endpoint spec so it matches the endpoint contract. Preserve the endpoint behavior and return only valid Phrase source.
+Fix the failing endpoint spec so it matches the endpoint contract. Preserve the endpoint behavior and return only valid Avowry source.
 
-```phrase
+```avowry
 module Lookup
 
 endpoint Find : GET /find

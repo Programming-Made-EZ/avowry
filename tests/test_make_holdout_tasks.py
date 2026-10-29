@@ -49,8 +49,8 @@ Every case is observed by the caller, including the failure path.
 
 ## Starting code (modify tasks only; delete this section for write tasks)
 
-### start.phrase
-```phrase
+### start.avowry
+```avowry
 module Greeter
 
 endpoint Greet : GET /greet
@@ -128,7 +128,7 @@ Every case is observed by the caller, including the failure path.
             self.assertTrue((csharp_dir / "prompt.md").exists())
             self.assertTrue((phrase_dir / "outcomes.json").exists())
             self.assertTrue((csharp_dir / "outcomes.json").exists())
-            self.assertTrue((phrase_dir / "start.phrase").exists())
+            self.assertTrue((phrase_dir / "start.avowry").exists())
             self.assertTrue((csharp_dir / "start.cs").exists())
 
             phrase_prompt = (phrase_dir / "prompt.md").read_text(encoding="utf-8")

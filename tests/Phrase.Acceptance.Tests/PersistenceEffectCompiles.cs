@@ -24,7 +24,7 @@ public class PersistenceEffectCompiles
               id: Text
               name: Text
 
-            phrase "save {item: Item} and load it back" -> Item
+            avow to "save {item: Item} and load it back" -> Item
               effects ItemStore
               spec "the saved item loads back"
                 given item = { id: "a", name: "Widget" }
@@ -34,7 +34,7 @@ public class PersistenceEffectCompiles
                 itemstore.Save(item);
                 return itemstore.Find(item.Id)!;
 
-            phrase "load item {id: Text}" -> Item
+            avow to "load item {id: Text}" -> Item
               effects ItemStore
               fails with NotFound
               spec "an unknown id is NotFound"
@@ -47,7 +47,7 @@ public class PersistenceEffectCompiles
                     Fail("NotFound");
                 return loaded;
 
-            phrase "save {items: List<Item>} and list them" -> List<Item>
+            avow to "save {items: List<Item>} and list them" -> List<Item>
               effects ItemStore
               spec "several saved items stay in order"
                 given items = [{ id: "a", name: "Widget" }, { id: "b", name: "Gadget" }]
@@ -94,7 +94,7 @@ public class PersistenceEffectCompiles
         const string source = """
             module Numbers
 
-            phrase "double {n: Int}" -> Int
+            avow to "double {n: Int}" -> Int
               spec "doubles two"
                 given n = 2
                 when called

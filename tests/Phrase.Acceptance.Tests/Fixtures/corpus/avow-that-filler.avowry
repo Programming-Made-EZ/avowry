@@ -1,0 +1,6 @@
+# avow-that-filler: the accepted that filler is outside the declared name
+module Filler
+
+avow that "finish work"
+  native csharp
+    return;

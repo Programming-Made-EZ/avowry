@@ -19,7 +19,7 @@ public class SourceMapDeployment
         // Given Morgan has built the Tasks app with the CLI into a temporary workspace
         using var workspace = TempWorkspace.Create();
         using var publishOutput = TempWorkspace.Create();
-        var source = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var source = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
         var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
         Assert.True(build.ExitCode == 0, build.Text);
 
@@ -41,7 +41,7 @@ public class SourceMapDeployment
     {
         // Given Morgan has built and started the Tasks API
         using var workspace = TempWorkspace.Create();
-        var source = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var source = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
         var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
         Assert.True(build.ExitCode == 0, build.Text);
         await using var api = await GeneratedApi.StartAsync(workspace.FindSingle("Tasks.Api.csproj"));
@@ -54,7 +54,7 @@ public class SourceMapDeployment
         {
             "/Tasks.avowrymap.json",
             "/avowrymap.json",
-            "/Tasks.phrasemap.json",
+            "/Tasks.avowrymap.json",
             "/Tasks.Api/Tasks.avowrymap.json",
             "/.well-known/Tasks.avowrymap.json",
             "/wwwroot/Tasks.avowrymap.json",

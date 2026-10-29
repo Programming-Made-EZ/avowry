@@ -8,7 +8,7 @@ namespace Phrase.Compiler.Tests;
 public class PhraseCompilerTests
 {
     private static readonly string Orders =
-        File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", "orders.phrase"));
+        File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", "orders.avowry"));
 
     private static readonly ITargetAdapter Adapter = new TestAdapter();
 
@@ -19,7 +19,7 @@ public class PhraseCompilerTests
         const string source = """
             module Test
 
-            phrase "known phrase"
+            avow to "known phrase"
               native csharp
                 return;
 
@@ -40,7 +40,7 @@ public class PhraseCompilerTests
     [Fact]
     public void Valid_orders_source_reaches_the_emitter_boundary()
     {
-        // Given the valid orders.phrase acceptance fixture
+        // Given the valid orders.avowry acceptance fixture
 
         // When it is compiled through the public API
         var exception = Assert.Throws<NotImplementedException>(() => Compile(Orders));

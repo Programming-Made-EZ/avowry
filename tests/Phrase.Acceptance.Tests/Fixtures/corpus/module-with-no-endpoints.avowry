@@ -4,6 +4,6 @@ module NoEndpoints
 type Value
   number: Int
 
-phrase "keep {value: Value}" -> Value
+avow to "keep {value: Value}" -> Value
   native csharp
     return value;

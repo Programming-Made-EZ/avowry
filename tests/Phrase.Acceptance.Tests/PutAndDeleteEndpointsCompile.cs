@@ -26,14 +26,14 @@ public class PutAndDeleteEndpointsCompile
           id: Id
           name: Text
 
-        phrase "save item {id: Id} named {name: Text}" -> Item
+        avow to "save item {id: Id} named {name: Text}" -> Item
           effects ItemStore
           native csharp
             var item = new Item(id, name);
             itemstore.Save(item);
             return item;
 
-        phrase "update item {id: Id} to {name: Text}" -> Item
+        avow to "update item {id: Id} to {name: Text}" -> Item
           effects ItemStore
           fails with NotFound, EmptyName
           native csharp
@@ -46,7 +46,7 @@ public class PutAndDeleteEndpointsCompile
             itemstore.Save(updated);
             return updated;
 
-        phrase "find item {id: Id}" -> Item
+        avow to "find item {id: Id}" -> Item
           effects ItemStore
           fails with NotFound
           native csharp
@@ -55,7 +55,7 @@ public class PutAndDeleteEndpointsCompile
                 Fail("NotFound");
             return item;
 
-        phrase "remove item {id: Id}"
+        avow to "remove item {id: Id}"
           effects ItemStore
           fails with NotFound
           native csharp
@@ -217,7 +217,7 @@ public class PutAndDeleteEndpointsCompile
             type Note
               text: Text
 
-            phrase "keep note {note: Note}"
+            avow to "keep note {note: Note}"
               effects NoteStore
               spec "a note with no id is kept without a store"
                 given note = { text: "hello" }
@@ -228,7 +228,7 @@ public class PutAndDeleteEndpointsCompile
                 if (note.Text != "hello")
                     throw new InvalidOperationException(note.Text);
 
-            phrase "keep name {name: Text}"
+            avow to "keep name {name: Text}"
               effects WidgetStore
               spec "a store name with no matching record is not a store"
                 given name = "widget"

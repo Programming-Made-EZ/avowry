@@ -2,7 +2,7 @@
 
 - **Status:** Record of Decider D89 (card 141). Docs only. No compiler change.
 - **Date:** 2026-10-28
-- **Frozen by D72:** `docs/CHEATSHEET.md`, `docs/GRAMMAR.md` and `tests/Phrase.Acceptance.Tests/Fixtures/orders.phrase` stay as they are. This file is new. Card 143 is the later re-freeze that splits the cheat sheet.
+- **Frozen by D72:** `docs/CHEATSHEET.md`, `docs/GRAMMAR.md` and `tests/Phrase.Acceptance.Tests/Fixtures/orders.avowry` stay as they are. This file is new. Card 143 is the later re-freeze that splits the cheat sheet.
 
 ## Context
 

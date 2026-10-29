@@ -3,7 +3,7 @@ using Phrase.Acceptance.Tests.Support;
 namespace Phrase.Acceptance.Tests;
 
 // Feature: Reference C# target
-//   reference/csharp is the hand-written output the C# provider should emit for orders.phrase.
+//   reference/csharp is the hand-written output the C# provider should emit for orders.avowry.
 //   Keeping it green proves two things before any compiler exists:
 //   the target design is valid, and the acceptance harness can tell pass from fail.
 public class ReferenceTarget
@@ -11,8 +11,8 @@ public class ReferenceTarget
     [Fact]
     public async Task Reference_output_builds_and_every_spec_passes()
     {
-        // Given the hand-written reference output for orders.phrase, copied to a fresh workspace
-        var expectedSpecCount = Fixture.CountSpecs(Fixture.Read("orders.phrase"));
+        // Given the hand-written reference output for orders.avowry, copied to a fresh workspace
+        var expectedSpecCount = Fixture.CountSpecs(Fixture.Read("orders.avowry"));
         using var workspace = TempWorkspace.Create();
         workspace.CopyFrom(RepoPaths.Find("reference", "csharp"));
 
@@ -22,7 +22,7 @@ public class ReferenceTarget
         // Then it builds
         Assert.True(result.Built, result.Log);
 
-        // And one test runs per spec in orders.phrase
+        // And one test runs per spec in orders.avowry
         Assert.Equal(expectedSpecCount, result.Total);
 
         // And every test passes

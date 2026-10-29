@@ -23,7 +23,7 @@ public class EnsureStepCompiles
             type Task
               title: Text
 
-            phrase "validate {task: Task}"
+            avow to "validate {task: Task}"
               fails with EmptyTitle
               steps
                 ensure task.title is not blank else EmptyTitle
@@ -62,7 +62,7 @@ public class EnsureStepCompiles
         const string source = """
             module Counts
 
-            phrase "validate count {count: Int} minimum {minimum: Int}"
+            avow to "validate count {count: Int} minimum {minimum: Int}"
               fails with Zero, TooSmall
               steps
                 ensure count != 0 else Zero
@@ -106,7 +106,7 @@ public class EnsureStepCompiles
         var source = $$"""
             module Titles
 
-            phrase "validate title {title: Text}"
+            avow to "validate title {title: Text}"
               fails with EmptyTitle, TitleTooLong
               steps
                 ensure title is not blank else EmptyTitle

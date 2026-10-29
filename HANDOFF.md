@@ -1,6 +1,6 @@
 # Mob handoff: build the resolver
 
-Welcome. This repo is **Phrase**, a language for LLM-maintained codebases where *the name is the spec*: every unit of behavior is named by a plain-English sentence with typed holes, and verified by its own Given/When/Then specs. Read [README.md](README.md) for the idea and [docs/GRAMMAR.md](docs/GRAMMAR.md) for the rules. Ten minutes on [orders.phrase](tests/Phrase.Acceptance.Tests/Fixtures/orders.phrase) is the fastest way in.
+Welcome. This repo is **Phrase**, a language for LLM-maintained codebases where *the name is the spec*: every unit of behavior is named by a plain-English sentence with typed holes, and verified by its own Given/When/Then specs. Read [README.md](README.md) for the idea and [docs/GRAMMAR.md](docs/GRAMMAR.md) for the rules. Ten minutes on [orders.avowry](tests/Phrase.Acceptance.Tests/Fixtures/orders.avowry) is the fastest way in.
 
 ## Where things stand
 

@@ -55,7 +55,7 @@ public class MatchingCodebases
         var generated = await RunPythonAsync(script, size.ToString(), workspace.Root, "--seed", "119");
         Assert.True(generated.Code == 0, generated.Output);
 
-        var phrasePath = Path.Combine(workspace.Root, "phrase", "shelf.phrase");
+        var phrasePath = Path.Combine(workspace.Root, "phrase", "shelf.avowry");
         Assert.True(File.Exists(phrasePath), generated.Output);
         var source = File.ReadAllText(phrasePath);
         var endpoints = source.Split('\n').Count(line => line.StartsWith("endpoint ", StringComparison.Ordinal));
@@ -80,8 +80,8 @@ public class MatchingCodebases
         Assert.DoesNotContain("warning", csharpResult.Log, StringComparison.OrdinalIgnoreCase);
 
         // And each modify and fix task has one outcomes file shared by both arms
-        Assert.True(File.Exists(Path.Combine(workspace.Root, "phrase", "leaves.phrase")));
-        Assert.True(File.Exists(Path.Combine(workspace.Root, "phrase", "endpoints", "PlaceHoldNorth.phrase")));
+        Assert.True(File.Exists(Path.Combine(workspace.Root, "phrase", "leaves.avowry")));
+        Assert.True(File.Exists(Path.Combine(workspace.Root, "phrase", "endpoints", "PlaceHoldNorth.avowry")));
         Assert.True(File.Exists(Path.Combine(workspace.Root, "csharp", "Shelf.Api", "LoanRules.cs")));
         Assert.True(File.Exists(Path.Combine(workspace.Root, "csharp", "Shelf.Api", "PlaceHoldNorth.cs")));
         var tasksRoot = Path.Combine(workspace.Root, "tasks");
@@ -99,17 +99,17 @@ public class MatchingCodebases
 
         // The modify task changes the shared leaf and needs the endpoint that posts the desk limit
         var modifyPrompt = File.ReadAllText(Path.Combine(tasksRoot, "modify-loan-limit", "prompt.md"));
-        Assert.Contains("Needs phrase file: phrase/endpoints/PlaceHoldNorth.phrase", modifyPrompt, StringComparison.Ordinal);
+        Assert.Contains("Needs phrase file: phrase/endpoints/PlaceHoldNorth.avowry", modifyPrompt, StringComparison.Ordinal);
         Assert.Contains("Needs csharp file: csharp/Shelf.Api/PlaceHoldNorth.cs", modifyPrompt, StringComparison.Ordinal);
         Assert.DoesNotContain("posts its loan limit", modifyPrompt, StringComparison.Ordinal);
         Assert.Contains(
             "posts its loan limit",
-            File.ReadAllText(Path.Combine(workspace.Root, "phrase", "endpoints", "PlaceHoldNorth.phrase")),
+            File.ReadAllText(Path.Combine(workspace.Root, "phrase", "endpoints", "PlaceHoldNorth.avowry")),
             StringComparison.Ordinal);
 
         // The fix task changes the endpoint and needs the shared leaf phrase
         var fixPrompt = File.ReadAllText(Path.Combine(tasksRoot, "fix-place-hold", "prompt.md"));
-        Assert.Contains("Needs phrase file: phrase/leaves.phrase", fixPrompt, StringComparison.Ordinal);
+        Assert.Contains("Needs phrase file: phrase/leaves.avowry", fixPrompt, StringComparison.Ordinal);
         Assert.Contains("Needs csharp file: csharp/Shelf.Api/LoanRules.cs", fixPrompt, StringComparison.Ordinal);
         Assert.DoesNotContain("is a loan of at most three weeks", fixPrompt, StringComparison.Ordinal);
     }

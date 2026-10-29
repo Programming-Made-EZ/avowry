@@ -1,8 +1,8 @@
-# Phrase cheat sheet
+# Avowry cheat sheet
 
-Indent 2 spaces. `#` comments. Keywords only at line start: module, type, phrase, endpoint, input, output, steps, let, respond with, fail with, fails with, effects, spec, given, when, then, and, native. Hole `{name: Type}`. Types: Text, Int, Decimal, Bool, Id, List<T>, Option<T>. `"t"` fits Text or Id; `1` fits Int or Decimal; `2.5` is Decimal; true/false are Bool; none fits only Option. Outcomes: returns, fails with, succeeds, responds. `when called` on a phrase; `when handled` on an endpoint. Verbs: GET POST PUT PATCH DELETE.
+Indent 2 spaces. `#` comments. Keywords only at line start: module, type, avow, endpoint, input, output, steps, let, respond with, fail with, fails with, effects, spec, given, when, then, and, native. Hole `{name: Type}`. Types: Text, Int, Decimal, Bool, Id, List<T>, Option<T>. `"t"` fits Text or Id; `1` fits Int or Decimal; `2.5` is Decimal; true/false are Bool; none fits only Option. Outcomes: returns, fails with, succeeds, responds. Accepted declaration fillers: `to`, `that`, `it` (at most one, only directly after `avow`, and never part of the name). Write the canonical form `avow to "..."`. `when called` on an avow; `when handled` on an endpoint. Verbs: GET POST PUT PATCH DELETE.
 
-```phrase
+```avowry
 module Shop
 
 type Item
@@ -12,7 +12,7 @@ type Item
   ok: Bool
   tag: Id
 
-phrase "label of {item: Item}" -> Text
+avow to "label of {item: Item}" -> Text
   effects Shelf
   fails with Missing
   spec "reads the name"
@@ -22,7 +22,7 @@ phrase "label of {item: Item}" -> Text
   native csharp
     return item.Name;
 
-phrase "note of {note: Option<Text>}" -> Text
+avow to "note of {note: Option<Text>}" -> Text
   spec "keeps text"
     given note = "n"
     when called
@@ -30,7 +30,7 @@ phrase "note of {note: Option<Text>}" -> Text
   native csharp
     return note ?? "";
 
-phrase "sum of {left: Int} {right: Int}" -> Int
+avow to "sum of {left: Int} {right: Int}" -> Int
   spec "adds"
     given left = 1
     and right = 2
@@ -39,7 +39,7 @@ phrase "sum of {left: Int} {right: Int}" -> Int
   native csharp
     return left + right;
 
-phrase "ensure {ok: Bool} holds"
+avow to "ensure {ok: Bool} holds"
   fails with Missing
   spec "rejects false"
     given ok = false
@@ -52,7 +52,7 @@ phrase "ensure {ok: Bool} holds"
   native csharp
     if (!ok) Fail("Missing");
 
-phrase "count of {items: List<Item>}" -> Int
+avow to "count of {items: List<Item>}" -> Int
   native csharp
     return items.Count;
 

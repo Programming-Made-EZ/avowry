@@ -1,7 +1,7 @@
 # crlf-source: shared-failure content stored with CRLF line endings
 module SharedFailure
 
-phrase "reject {n: Int}"
+avow to "reject {n: Int}"
   fails with Rejected
   native csharp
     if (n < 0) Fail("Rejected");

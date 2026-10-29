@@ -18,7 +18,7 @@ public class ParserPhraseTests
     {
         // Given an ensure length condition whose maximum is not a supported integer
         var source = InModule($$"""
-            phrase "validate {title: Text}"
+            avow to "validate {title: Text}"
               fails with Invalid
               steps
                 ensure title length at most {{maximum}} else Invalid
@@ -39,7 +39,7 @@ public class ParserPhraseTests
     {
         // Given ensure appears in native code, a spec string, and an identifier
         var source = InModule("""
-            phrase "preserve {ensureValue: Int}" -> Int
+            avow to "preserve {ensureValue: Int}" -> Int
               spec "ensure remains ordinary text"
                 given ensureValue = 1
                 when called
@@ -64,7 +64,7 @@ public class ParserPhraseTests
     {
         // Given a phrase with each ensure condition shape
         var source = InModule("""
-            phrase "validate {title: Text} count {count: Int} limit {limit: Int}"
+            avow to "validate {title: Text} count {count: Int} limit {limit: Int}"
               fails with Invalid
               steps
                 ensure title is not blank else Invalid
@@ -88,7 +88,7 @@ public class ParserPhraseTests
     {
         // Given a phrase that copies a record with one named field replaced
         var source = InModule("""
-            phrase "complete {task: Task}"
+            avow to "complete {task: Task}"
               steps
                 let completed = task with { done: true }
             """);
@@ -121,7 +121,7 @@ public class ParserPhraseTests
             type Task
               done: Bool
 
-            phrase "complete {task: Task} and {owner: Task}"
+            avow to "complete {task: Task} and {owner: Task}"
               steps
                 {{step}}
             """);
@@ -142,11 +142,11 @@ public class ParserPhraseTests
             type Options
               urgent: Bool
 
-            phrase "send with {options: Options}" -> Bool
+            avow to "send with {options: Options}" -> Bool
               native csharp
                 return options.Urgent;
 
-            phrase "dispatch"
+            avow to "dispatch"
               steps
                 let sent = send with { urgent: true }
             """);
@@ -166,7 +166,7 @@ public class ParserPhraseTests
     {
         // Given a leaf phrase with one hole
         var phrase = SinglePhrase("""
-            phrase "ensure {items: List<LineItem>} is not empty"
+            avow to "ensure {items: List<LineItem>} is not empty"
               native csharp
                 if (items.Count == 0) Fail("EmptyOrder");
             """);
@@ -185,7 +185,7 @@ public class ParserPhraseTests
     {
         // Given a phrase whose template starts at column 8
         var phrase = SinglePhrase("""
-            phrase "total of {items: List<LineItem>}"
+            avow to "total of {items: List<LineItem>}"
               native csharp
                 return 0;
             """);
@@ -194,8 +194,8 @@ public class ParserPhraseTests
         var parts = phrase.Template.Parts;
 
         // Then positions are inside the quotes
-        Assert.Equal(new Position(2, 9), parts[0].At);  // "total"
-        Assert.Equal(new Position(2, 18), parts[2].At); // "{items..."
+        Assert.Equal(new Position(2, 10), parts[0].At);  // "total"
+        Assert.Equal(new Position(2, 19), parts[2].At); // "{items..."
     }
 
     [Fact]
@@ -203,7 +203,7 @@ public class ParserPhraseTests
     {
         // Given a phrase that returns a value
         var phrase = SinglePhrase("""
-            phrase "total quantity of {items: List<LineItem>}" -> Int
+            avow to "total quantity of {items: List<LineItem>}" -> Int
               native csharp
                 return items.Sum(i => i.Quantity);
             """);
@@ -218,7 +218,7 @@ public class ParserPhraseTests
     {
         // Given a guard phrase
         var phrase = SinglePhrase("""
-            phrase "ensure {items: List<LineItem>} is not empty"
+            avow to "ensure {items: List<LineItem>} is not empty"
               native csharp
                 return;
             """);
@@ -233,7 +233,7 @@ public class ParserPhraseTests
     {
         // Given a phrase declaring two failures and two effects
         var phrase = SinglePhrase("""
-            phrase "save {order: Order}"
+            avow to "save {order: Order}"
               effects Db, Bus
               fails with Conflict, Timeout
               native csharp
@@ -251,7 +251,7 @@ public class ParserPhraseTests
     {
         // Given a phrase that declares it has no effects
         var phrase = SinglePhrase("""
-            phrase "double {n: Int}" -> Int
+            avow to "double {n: Int}" -> Int
               effects none
               native csharp
                 return n * 2;
@@ -267,7 +267,7 @@ public class ParserPhraseTests
     {
         // Given a phrase implemented for two targets
         var phrase = SinglePhrase("""
-            phrase "double {n: Int}" -> Int
+            avow to "double {n: Int}" -> Int
               native csharp
                 return n * 2;
               native typescript
@@ -287,7 +287,7 @@ public class ParserPhraseTests
     {
         // Given a phrase built from other phrases
         var phrase = SinglePhrase("""
-            phrase "validate {items: List<LineItem>}"
+            avow to "validate {items: List<LineItem>}"
               steps
                 ensure items is not empty
                 ensure every quantity in items is positive
@@ -306,7 +306,7 @@ public class ParserPhraseTests
     {
         // Given a phrase with only a contract
         var source = InModule("""
-            phrase "ensure {items: List<LineItem>} is not empty"
+            avow to "ensure {items: List<LineItem>} is not empty"
               fails with EmptyOrder
             """);
 
@@ -320,7 +320,7 @@ public class ParserPhraseTests
     {
         // Given a phrase with both kinds of implementation
         var source = InModule("""
-            phrase "double {n: Int}" -> Int
+            avow to "double {n: Int}" -> Int
               native csharp
                 return n * 2;
               steps
@@ -337,7 +337,7 @@ public class ParserPhraseTests
     {
         // Given two csharp bodies
         var source = InModule("""
-            phrase "double {n: Int}" -> Int
+            avow to "double {n: Int}" -> Int
               native csharp
                 return n * 2;
               native csharp
@@ -354,7 +354,7 @@ public class ParserPhraseTests
     {
         // Given a body for a target with no provider
         var source = InModule("""
-            phrase "double {n: Int}" -> Int
+            avow to "double {n: Int}" -> Int
               native cobol
                 MULTIPLY N BY 2.
             """);
@@ -369,7 +369,7 @@ public class ParserPhraseTests
     {
         // Given a phrase that splits its failures over two lines
         var source = InModule("""
-            phrase "save {order: Order}"
+            avow to "save {order: Order}"
               fails with Conflict
               fails with Timeout
               native csharp
@@ -395,7 +395,7 @@ public class ParserPhraseTests
     public void Invalid_templates_are_reported(string template, string code)
     {
         // Given a phrase with a malformed template
-        var source = InModule($"phrase \"{template}\"\n  native csharp\n    return;\n");
+        var source = InModule($"avow to \"{template}\"\n  native csharp\n    return;\n");
 
         // When it is parsed
         // Then the template is rejected with a specific code
@@ -407,7 +407,7 @@ public class ParserPhraseTests
     {
         // Given a phrase with a line that is not a phrase clause
         var source = InModule("""
-            phrase "double {n: Int}" -> Int
+            avow to "double {n: Int}" -> Int
               returns twice n
               native csharp
                 return n * 2;

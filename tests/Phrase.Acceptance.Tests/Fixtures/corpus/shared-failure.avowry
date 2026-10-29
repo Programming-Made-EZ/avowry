@@ -1,7 +1,7 @@
 # shared-failure: one declared failure is reached by three endpoints; the phrase record of reject names the first endpoint that calls it (docs/TRACEABILITY.md)
 module SharedFailure
 
-phrase "reject {n: Int}"
+avow to "reject {n: Int}"
   fails with Rejected
   native csharp
     if (n < 0) Fail("Rejected");

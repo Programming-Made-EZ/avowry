@@ -8,7 +8,7 @@ namespace Phrase.Compiler.Tests.Syntax;
 public class ParserSpecTests
 {
     private static string PhraseWithSpec(string spec) =>
-        InModule("phrase \"total of {items: List<LineItem>}\" -> Int\n" + spec + "  native csharp\n    return 0;\n");
+        InModule("avow to \"total of {items: List<LineItem>}\" -> Int\n" + spec + "  native csharp\n    return 0;\n");
 
     private static SpecDecl SingleSpec(string spec) =>
         Assert.Single(Assert.Single(Clean(PhraseWithSpec(spec)).Phrases).Specs);

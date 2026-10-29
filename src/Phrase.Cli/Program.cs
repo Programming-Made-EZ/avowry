@@ -8,7 +8,7 @@ using Phrase.Adapters.CSharp;
 using Phrase.Compiler;
 using Phrase.Compiler.Semantics;
 
-const string Usage = "Usage: avowry build FILE.phrase -o OUT_DIR [--target csharp]\n       avowry trace NAME [--map PATH] [--assembly PATH] [--strict]";
+const string Usage = "Usage: avowry build FILE.avowry -o OUT_DIR [--target csharp]\n       avowry trace NAME [--map PATH] [--assembly PATH] [--strict]";
 if (args is ["--help"])
 {
     Console.WriteLine(Usage);
@@ -29,6 +29,11 @@ if (!ParseBuild(args, out var file, out var output))
 if (!File.Exists(file))
 {
     Error($"No such file: {file}");
+    return 2;
+}
+if (!string.Equals(Path.GetExtension(file), ".avowry", StringComparison.OrdinalIgnoreCase))
+{
+    Error("Build source must use the .avowry extension.");
     return 2;
 }
 try

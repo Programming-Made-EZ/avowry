@@ -1,9 +1,9 @@
-Read this Phrase source and return it unchanged except for comments explaining the phrase and its spec. Comments must begin with `#`. Return only valid Phrase source.
+Read this Avowry source and return it unchanged except for comments explaining the avow and its spec. Comments must begin with `#`. Return only valid Avowry source.
 
-```phrase
+```avowry
 module Identity
 
-phrase "identity of {value: Text}" -> Text
+avow to "identity of {value: Text}" -> Text
   spec "returns its input"
     given value = "sample"
     when called

@@ -1,1 +1,1 @@
-Return only a Phrase endpoint module for POST /greetings.
+Return only an Avowry endpoint module for POST /greetings.

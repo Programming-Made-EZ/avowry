@@ -18,7 +18,7 @@ public sealed class LlmCustomerCheck
 {
     private static readonly string OpenEndpointAddition = """
 
-        phrase "list open tasks {available: Bool}" -> List<Task>
+        avow to "list open tasks {available: Bool}" -> List<Task>
           effects TaskStore
           fails with StoreUnavailable
           native csharp
@@ -54,10 +54,10 @@ public sealed class LlmCustomerCheck
     [Trait("Slice", "137")]
     public async Task Correct_reply_passes_and_writes_totals_only()
     {
-        // Given a cold fake model whose recorded reply is Tasks.phrase with GET /tasks/open added
+        // Given a cold fake model whose recorded reply is Tasks.avowry with GET /tasks/open added
         using var workspace = TempWorkspace.Create();
-        var tasks = await File.ReadAllTextAsync(RepoPaths.Find("demo", "tasks", "Tasks.phrase"));
-        var reply = WriteReply(workspace.Root, "correct.phrase", tasks.TrimEnd() + OpenEndpointAddition);
+        var tasks = await File.ReadAllTextAsync(RepoPaths.Find("demo", "tasks", "Tasks.avowry"));
+        var reply = WriteReply(workspace.Root, "correct.avowry", tasks.TrimEnd() + OpenEndpointAddition);
         var output = Path.Combine(workspace.Root, "llm-check.json");
 
         // When Ari runs the LLM-customer check against that reply
@@ -91,11 +91,11 @@ public sealed class LlmCustomerCheck
     {
         // Given a fake reply that either cannot build or fails a hidden open-tasks outcome
         using var workspace = TempWorkspace.Create();
-        var tasks = await File.ReadAllTextAsync(RepoPaths.Find("demo", "tasks", "Tasks.phrase"));
+        var tasks = await File.ReadAllTextAsync(RepoPaths.Find("demo", "tasks", "Tasks.avowry"));
         var source = reason == "build"
             ? tasks.TrimEnd() + OpenEndpointAddition.Replace("return open;", "int broken = \"no\";\n            return open;", StringComparison.Ordinal)
             : tasks.TrimEnd() + OpenEndpointAddition.Replace("if (!task.Done)", "if (true)", StringComparison.Ordinal);
-        var reply = WriteReply(workspace.Root, reason + ".phrase", source);
+        var reply = WriteReply(workspace.Root, reason + ".avowry", source);
         var output = Path.Combine(workspace.Root, "llm-check.json");
 
         // When Ari runs the check

@@ -1,12 +1,12 @@
 # two-declarers: the first endpoint step reaching either declaration wins
 module TwoDeclarers
 
-phrase "reject {n: Int}"
+avow to "reject {n: Int}"
   fails with Rejected
   native csharp
     if (n < 0) Fail("Rejected");
 
-phrase "deny {n: Int}"
+avow to "deny {n: Int}"
   fails with Rejected
   native csharp
     if (n < 0) Fail("Rejected");

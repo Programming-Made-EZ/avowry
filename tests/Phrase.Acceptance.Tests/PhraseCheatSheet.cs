@@ -34,7 +34,7 @@ public class PhraseCheatSheet
         "fails with",
         "module",
         "type",
-        "phrase",
+        "avow",
         "endpoint",
         "input",
         "output",
@@ -85,7 +85,7 @@ public class PhraseCheatSheet
     [Trait("Slice", "104")]
     public void Sheet_names_every_keyword_and_core_type_and_its_examples_compile()
     {
-        // Given orders.phrase and the prompts and starting code of the eight head-to-head tasks
+        // Given orders.avowry and the prompts and starting code of the eight head-to-head tasks
         var path = RepoPaths.Find("docs", "CHEATSHEET.md");
         Assert.True(File.Exists(path), "docs/CHEATSHEET.md is missing.");
         var sheet = File.ReadAllText(path);
@@ -122,13 +122,13 @@ public class PhraseCheatSheet
         var sheetPath = RepoPaths.Find("docs", "CHEATSHEET.md");
         Assert.True(File.Exists(sheetPath), "docs/CHEATSHEET.md is missing.");
         var sheet = await File.ReadAllTextAsync(sheetPath);
-        var ordersPath = RepoPaths.Find("tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase");
+        var ordersPath = RepoPaths.Find("tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.avowry");
         var orders = await File.ReadAllTextAsync(ordersPath);
         using var workspace = TempWorkspace.Create();
         var suiteDirectory = CopySuiteTo(workspace.Root);
         var docsRoot = Path.Combine(workspace.Root, "docs-root");
         CopyFile(sheetPath, Path.Combine(docsRoot, "docs", "GRAMMAR.md"));
-        CopyFile(ordersPath, Path.Combine(docsRoot, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase"));
+        CopyFile(ordersPath, Path.Combine(docsRoot, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.avowry"));
         var validOutput = await WritePassingPhrase(workspace.Root);
         var modelCommand = RetryThenPassCommand(workspace.Root, validOutput, "sheet");
         var taskPrompt = await File.ReadAllTextAsync(Path.Combine(suiteDirectory, "tasks", "001-write-greeting", "prompt.md"));
@@ -143,7 +143,7 @@ public class PhraseCheatSheet
             "--custom-docs");
 
         // Then the row is docs-in-context-custom, docs_hash is the sha256 of the documentation block
-        // (the sheet as its grammar, then orders.phrase), and tokens_in includes the sheet on every attempt
+        // (the sheet as its grammar, then orders.avowry), and tokens_in includes the sheet on every attempt
         Assert.True(exitCode == 0, stdout + stderr);
         Assert.Contains("custom docs; this run is not counted in a baseline", stdout, StringComparison.Ordinal);
         using var result = await ReadModelResult(suiteDirectory, "sheet-custom-v1");
@@ -163,7 +163,7 @@ public class PhraseCheatSheet
     private static string Corpus()
     {
         var builder = new StringBuilder();
-        builder.AppendLine(File.ReadAllText(RepoPaths.Find("tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase")));
+        builder.AppendLine(File.ReadAllText(RepoPaths.Find("tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.avowry")));
         foreach (var task in HeadToHeadTasks)
             builder.AppendLine(File.ReadAllText(RepoPaths.Find("bench", "tasks", task, "prompt.md")));
         return builder.ToString();
@@ -182,7 +182,7 @@ public class PhraseCheatSheet
     {
         foreach (Match match in Regex.Matches(
             sheet,
-            "```phrase\\r?\\n(?<source>.*?)\\r?\\n```",
+            "```avowry\\r?\\n(?<source>.*?)\\r?\\n```",
             RegexOptions.Singleline | RegexOptions.CultureInvariant))
             yield return match.Groups["source"].Value.Replace("\r\n", "\n", StringComparison.Ordinal);
     }
@@ -242,11 +242,11 @@ public class PhraseCheatSheet
 
     private static async Task<string> WritePassingPhrase(string workspaceRoot)
     {
-        var modelOutput = Path.Combine(workspaceRoot, "model-output.phrase");
+        var modelOutput = Path.Combine(workspaceRoot, "model-output.avowry");
         await File.WriteAllTextAsync(modelOutput, """
             module Greeting
 
-            phrase "say hello"
+            avow to "say hello"
               native csharp
                 return;
             """);

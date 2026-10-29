@@ -7,20 +7,20 @@ type Task
   title: Text
   done: Bool
 
-phrase "create task {id: Id} titled {title: Text}" -> Task
+avow to "create task {id: Id} titled {title: Text}" -> Task
   effects TaskStore
   native csharp
     var task = new Task(id, title, false);
     taskstore.Save(task);
     return task;
 
-phrase "validate task title {title: Text}"
+avow to "validate task title {title: Text}"
   fails with EmptyTitle, TitleTooLong
   steps
     ensure title is not blank else EmptyTitle
     ensure title length at most 200 else TitleTooLong
 
-phrase "find task {id: Id}" -> Task
+avow to "find task {id: Id}" -> Task
   effects TaskStore
   fails with NotFound
   native csharp
@@ -29,7 +29,7 @@ phrase "find task {id: Id}" -> Task
         Fail("NotFound");
     return task;
 
-phrase "list tasks {available: Bool}" -> List<Task>
+avow to "list tasks {available: Bool}" -> List<Task>
   effects TaskStore
   fails with StoreUnavailable
   native csharp
@@ -37,12 +37,12 @@ phrase "list tasks {available: Bool}" -> List<Task>
         Fail("StoreUnavailable");
     return taskstore.List();
 
-phrase "save {task: Task}"
+avow to "save {task: Task}"
   effects TaskStore
   native csharp
     taskstore.Save(task);
 
-phrase "delete task {id: Id}"
+avow to "delete task {id: Id}"
   effects TaskStore
   fails with NotFound
   native csharp

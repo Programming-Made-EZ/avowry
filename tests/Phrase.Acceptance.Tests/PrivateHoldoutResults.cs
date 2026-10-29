@@ -331,7 +331,7 @@ public sealed class PrivateHoldoutResults
 
         module Greeting
 
-        phrase "say hello"
+        avow to "say hello"
           native csharp
             return;
 

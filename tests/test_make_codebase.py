@@ -119,8 +119,8 @@ class MakeCodebaseTests(unittest.TestCase):
 
             # When the Phrase modules are read
             # Then the seed changed the generated source
-            left = (first / "phrase" / "shelf.phrase").read_bytes()
-            right = (second / "phrase" / "shelf.phrase").read_bytes()
+            left = (first / "phrase" / "shelf.avowry").read_bytes()
+            right = (second / "phrase" / "shelf.avowry").read_bytes()
             self.assertNotEqual(left, right)
 
     def test_default_seed_matches_seed_one(self):
@@ -140,8 +140,8 @@ class MakeCodebaseTests(unittest.TestCase):
                 self.assertEqual(0, result.returncode, result.stderr)
 
                 # When the Phrase module and the plain C# project are read
-                shelf = (out / "phrase" / "shelf.phrase").read_text(encoding="utf-8")
-                leaves = (out / "phrase" / "leaves.phrase").read_text(encoding="utf-8")
+                shelf = (out / "phrase" / "shelf.avowry").read_text(encoding="utf-8")
+                leaves = (out / "phrase" / "leaves.avowry").read_text(encoding="utf-8")
                 self.assertTrue(shelf.startswith("module Shelf\n"))
                 self.assertNotIn("module Orders", shelf)
                 self.assertIn("type Copy\n", shelf)
@@ -169,7 +169,7 @@ class MakeCodebaseTests(unittest.TestCase):
                 self.assertTrue((api / "LoanRuleException.cs").is_file())
                 self.assertTrue((api / "LoanRules.cs").is_file())
                 endpoint_files = [
-                    path for path in (out / "phrase" / "endpoints").glob("*.phrase")
+                    path for path in (out / "phrase" / "endpoints").glob("*.avowry")
                 ]
                 self.assertEqual(size, len(endpoint_files))
                 csharp_endpoints = [
@@ -212,7 +212,7 @@ class MakeCodebaseTests(unittest.TestCase):
 
             # Then only the git-ignored path is written
             self.assertEqual(0, allowed.returncode, allowed.stderr)
-            self.assertTrue((ignored / "phrase" / "shelf.phrase").is_file())
+            self.assertTrue((ignored / "phrase" / "shelf.avowry").is_file())
             self.assertNotEqual(0, refused.returncode)
             self.assertIn("not git-ignored", refused.stderr)
             self.assertFalse((visible / "phrase").exists())
@@ -238,15 +238,15 @@ class MakeCodebaseTests(unittest.TestCase):
         # The loan-limit task changes the shared leaf. The posted limit lives on the endpoint.
         task = out / "tasks" / "modify-loan-limit"
         prompt = (task / "prompt.md").read_text(encoding="utf-8")
-        phrase_start = (task / "phrase" / "start.phrase").read_text(encoding="utf-8")
+        phrase_start = (task / "phrase" / "start.avowry").read_text(encoding="utf-8")
         csharp_start = (task / "csharp" / "start.cs").read_text(encoding="utf-8")
-        leaf = (out / "phrase" / "leaves.phrase").read_text(encoding="utf-8")
+        leaf = (out / "phrase" / "leaves.avowry").read_text(encoding="utf-8")
         rules = (out / "csharp" / "Shelf.Api" / "LoanRules.cs").read_text(encoding="utf-8")
-        endpoint = (out / "phrase" / "endpoints" / "PlaceHoldNorth.phrase").read_text(encoding="utf-8")
+        endpoint = (out / "phrase" / "endpoints" / "PlaceHoldNorth.avowry").read_text(encoding="utf-8")
         endpoint_cs = (out / "csharp" / "Shelf.Api" / "PlaceHoldNorth.cs").read_text(encoding="utf-8")
 
-        self.assertIn("Changed phrase file: phrase/leaves.phrase", prompt)
-        self.assertIn("Needs phrase file: phrase/endpoints/PlaceHoldNorth.phrase", prompt)
+        self.assertIn("Changed phrase file: phrase/leaves.avowry", prompt)
+        self.assertIn("Needs phrase file: phrase/endpoints/PlaceHoldNorth.avowry", prompt)
         self.assertIn("Needs csharp file: csharp/Shelf.Api/PlaceHoldNorth.cs", prompt)
         self.assertNotIn("posts its loan limit", prompt)
         self.assertNotIn("posts its loan limit", phrase_start)
@@ -259,7 +259,7 @@ class MakeCodebaseTests(unittest.TestCase):
         self.assertEqual(size_class(phrase_start), size_class(csharp_start))
         self.assertEqual("one-file", size_class(phrase_start))
         if size == 50:
-            shelf = (out / "phrase" / "shelf.phrase").read_text(encoding="utf-8")
+            shelf = (out / "phrase" / "shelf.avowry").read_text(encoding="utf-8")
             self.assertEqual("whole-codebase", size_class(shelf))
         self.assert_shared_outcomes(task, prompt)
 
@@ -267,16 +267,16 @@ class MakeCodebaseTests(unittest.TestCase):
         # The fix task changes PlaceHoldNorth. The phrase wording lives only in the shared leaf.
         task = out / "tasks" / "fix-place-hold"
         prompt = (task / "prompt.md").read_text(encoding="utf-8")
-        phrase_start = (task / "phrase" / "start.phrase").read_text(encoding="utf-8")
+        phrase_start = (task / "phrase" / "start.avowry").read_text(encoding="utf-8")
         csharp_start = (task / "csharp" / "start.cs").read_text(encoding="utf-8")
-        leaf = (out / "phrase" / "leaves.phrase").read_text(encoding="utf-8")
+        leaf = (out / "phrase" / "leaves.avowry").read_text(encoding="utf-8")
         rules = (out / "csharp" / "Shelf.Api" / "LoanRules.cs").read_text(encoding="utf-8")
-        endpoint = (out / "phrase" / "endpoints" / "PlaceHoldNorth.phrase").read_text(encoding="utf-8")
+        endpoint = (out / "phrase" / "endpoints" / "PlaceHoldNorth.avowry").read_text(encoding="utf-8")
         endpoint_cs = (out / "csharp" / "Shelf.Api" / "PlaceHoldNorth.cs").read_text(encoding="utf-8")
         call = "is a loan of at most three weeks"
 
-        self.assertIn("Changed phrase file: phrase/endpoints/PlaceHoldNorth.phrase", prompt)
-        self.assertIn("Needs phrase file: phrase/leaves.phrase", prompt)
+        self.assertIn("Changed phrase file: phrase/endpoints/PlaceHoldNorth.avowry", prompt)
+        self.assertIn("Needs phrase file: phrase/leaves.avowry", prompt)
         self.assertIn("Needs csharp file: csharp/Shelf.Api/LoanRules.cs", prompt)
         self.assertNotIn(call, prompt)
         self.assertNotIn(call, phrase_start)

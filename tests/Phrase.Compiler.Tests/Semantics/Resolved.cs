@@ -15,21 +15,21 @@ internal static class Resolved
           sku: Text
           quantity: Int
 
-        phrase "ensure {items: List<LineItem>} is not empty"
+        avow to "ensure {items: List<LineItem>} is not empty"
           fails with EmptyOrder
           native csharp
             return;
 
-        phrase "ensure every quantity in {items: List<LineItem>} is positive"
+        avow to "ensure every quantity in {items: List<LineItem>} is positive"
           fails with InvalidQuantity
           native csharp
             return;
 
-        phrase "total quantity of {items: List<LineItem>}" -> Int
+        avow to "total quantity of {items: List<LineItem>}" -> Int
           native csharp
             return 0;
 
-        phrase "ensure {n: Int} is positive"
+        avow to "ensure {n: Int} is positive"
           fails with NotPositive
           native csharp
             return;

@@ -77,7 +77,7 @@ public class LexerDiagnosticTests
     public void A_native_block_with_no_body_is_PH106()
     {
         // Given a native header with nothing indented under it
-        const string source = "native csharp\nphrase \"next\"\n";
+        const string source = "native csharp\navow to \"next\"\n";
 
         // When it is lexed
         var diagnostic = Assert.Single(Lexer.Lex(source).Diagnostics);

@@ -892,5 +892,11 @@
     "status": "applied",
     "title": "Review of card 191: the command is avowry; output and the map file say Avowry",
     "order": 121
+  },
+  "D131": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "Review of card 199: the avow keyword, filler words and the .avowry extension",
+    "order": 122
   }
 }

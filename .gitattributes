@@ -1,2 +1,2 @@
-tests/Phrase.Acceptance.Tests/Fixtures/corpus/*.phrase -text
+tests/Phrase.Acceptance.Tests/Fixtures/corpus/*.avowry -text
 LICENSE text eol=lf

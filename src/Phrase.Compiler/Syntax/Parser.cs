@@ -191,7 +191,7 @@ public static class Parser
                         sawDeclaration = true;
                         AddIfParsed(types, () => ParseType(line));
                         break;
-                    case "phrase":
+                    case "avow":
                         sawDeclaration = true;
                         AddIfParsed(phrases, () => ParsePhrase(line));
                         break;
@@ -201,7 +201,7 @@ public static class Parser
                         AddIfParsed(endpoints, () => ParseEndpoint(line));
                         break;
                     default:
-                        Report("PH201", $"Expected a declaration (module, type, phrase or endpoint), found '{head.Text}'.", Pos(head));
+                        Report("PH201", $"Expected a declaration (module, type, avow or endpoint), found '{head.Text}'.", Pos(head));
                         break;
                 }
             }
@@ -280,6 +280,14 @@ public static class Parser
         {
             var c = CursorFor(line);
             var at = Pos(c.Next());
+            if (c.Is(TokenKind.Name))
+            {
+                var filler = c.Next();
+                if (filler.Text is not ("to" or "that" or "it"))
+                    throw FillerError("PH212", filler);
+                if (c.Is(TokenKind.Name))
+                    throw FillerError("PH213", c.Peek()!);
+            }
             var templateToken = c.Expect(TokenKind.String, "a quoted phrase template");
             TypeRef? returns = null;
             if (c.TryConsume("->")) returns = ParseTypeRef(c);
@@ -357,6 +365,11 @@ public static class Parser
 
             return new PhraseDecl(template, returns, effects, failures, specs, natives, steps, at) { FailureLine = failureLine };
         }
+
+        private static SyntaxError FillerError(string code, Token token) =>
+            new(new Diagnostic(code,
+                "An avow may have at most one filler before its template: to, that, it. Canonical form: avow to \"...\".",
+                token.Line, token.Column));
 
         private static List<string> ParseTypeNameList(Cursor c, string what)
         {

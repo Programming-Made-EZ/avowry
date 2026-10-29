@@ -14,7 +14,7 @@ public class ResolverFlowTests
     {
         // Given a phrase with a declared text guard
         var source = Program("""
-            phrase "validate {title: Text}"
+            avow to "validate {title: Text}"
               fails with EmptyTitle
               steps
                 ensure title is not blank else EmptyTitle
@@ -39,7 +39,7 @@ public class ResolverFlowTests
     {
         // Given an invalid ensure step
         var source = Program($$"""
-            phrase "validate {title: Text} count {count: Int}"
+            avow to "validate {title: Text} count {count: Int}"
               fails with Invalid
               steps
                 {{step}}
@@ -58,7 +58,7 @@ public class ResolverFlowTests
     {
         // Given an ensure comparison with mismatched operand types
         var source = Program($$"""
-            phrase "validate {title: Text} count {count: Int}"
+            avow to "validate {title: Text} count {count: Int}"
               fails with Invalid
               steps
                 {{step}}
@@ -75,7 +75,7 @@ public class ResolverFlowTests
     {
         // Given an ensure comparison with an integer outside the Int range
         var source = Program("""
-            phrase "validate {count: Int}"
+            avow to "validate {count: Int}"
               fails with Invalid
               steps
                 ensure count < 99999999999 else Invalid
@@ -99,7 +99,7 @@ public class ResolverFlowTests
             type Task
               title: Text
 
-            phrase "validate {task: Task}"
+            avow to "validate {task: Task}"
               fails with EmptyTitle
               steps
                 ensure task.title is not blank else EmptyTitle
@@ -121,7 +121,7 @@ public class ResolverFlowTests
     {
         // Given a phrase repeats a name in fails with
         var source = Program("""
-            phrase "validate {count: Int}"
+            avow to "validate {count: Int}"
               fails with Invalid, Invalid
               steps
                 ensure count > 0 else Invalid
@@ -143,7 +143,7 @@ public class ResolverFlowTests
               title: Text
               done: Bool
 
-            phrase "complete {task: Task}"
+            avow to "complete {task: Task}"
               steps
                 let completed = task with { done: true }
             """);
@@ -178,7 +178,7 @@ public class ResolverFlowTests
               title: Text
               done: Bool
 
-            phrase "complete {task: Task} titled {title: Text}"
+            avow to "complete {task: Task} titled {title: Text}"
               steps
                 {{step}}
             """);
@@ -218,11 +218,11 @@ public class ResolverFlowTests
             type Options
               urgent: Bool
 
-            phrase "send with {options: Options}" -> Bool
+            avow to "send with {options: Options}" -> Bool
               native csharp
                 return options.Urgent;
 
-            phrase "dispatch"
+            avow to "dispatch"
               steps
                 let sent = send with { urgent: true }
             """);
@@ -235,7 +235,7 @@ public class ResolverFlowTests
         Assert.Equal("send with _", let.Call.PhraseKey);
     }
     private const string Validate = """
-        phrase "validate {items: List<LineItem>}"
+        avow to "validate {items: List<LineItem>}"
           steps
             ensure items is not empty
             ensure every quantity in items is positive
@@ -354,7 +354,7 @@ public class ResolverFlowTests
     public void A_composite_may_only_fail_with_declared_codes(string clause, string? code)
     {
         // Given a composite phrase that fails directly
-        var source = Program($"phrase \"reject {{items: List<LineItem>}}\"\n{clause}  steps\n    fail with Rejected\n");
+        var source = Program($"avow to \"reject {{items: List<LineItem>}}\"\n{clause}  steps\n    fail with Rejected\n");
 
         // When it is resolved
         // Then the code must be declared in fails with
@@ -366,8 +366,8 @@ public class ResolverFlowTests
     {
         // Given two composites that call each other
         var source = Program(
-            "phrase \"ping {n: Int}\"\n  steps\n    pong n\n",
-            "phrase \"pong {n: Int}\"\n  steps\n    ping n\n");
+            "avow to \"ping {n: Int}\"\n  steps\n    pong n\n",
+            "avow to \"pong {n: Int}\"\n  steps\n    ping n\n");
 
         // When it is resolved
         // Then the cycle is reported
@@ -381,8 +381,8 @@ public class ResolverFlowTests
     {
         // Given an effectful leaf and a composite that calls it
         var source = Program(
-            "phrase \"save {item: LineItem}\"\n  effects Db\n  native csharp\n    return;\n",
-            $"phrase \"store {{item: LineItem}}\"\n{clause}  steps\n    save item\n");
+            "avow to \"save {item: LineItem}\"\n  effects Db\n  native csharp\n    return;\n",
+            $"avow to \"store {{item: LineItem}}\"\n{clause}  steps\n    save item\n");
 
         // When it is resolved
         // Then the callee's effect must be declared
@@ -393,7 +393,7 @@ public class ResolverFlowTests
     public void A_composite_with_a_return_type_is_PH325()
     {
         // Given a composite that claims to return a value
-        var source = Program("phrase \"count {items: List<LineItem>}\" -> Int\n  steps\n    ensure items is not empty\n");
+        var source = Program("avow to \"count {items: List<LineItem>}\" -> Int\n  steps\n    ensure items is not empty\n");
 
         // When it is resolved
         // Then it is reported, since steps have no way to return a value in v0.1
@@ -404,7 +404,7 @@ public class ResolverFlowTests
     public void Responding_from_a_composite_is_PH322()
     {
         // Given a composite that tries to respond
-        var source = Program("phrase \"answer {n: Int}\"\n  steps\n    respond with { totalQuantity: n }\n");
+        var source = Program("avow to \"answer {n: Int}\"\n  steps\n    respond with { totalQuantity: n }\n");
 
         // When it is resolved
         // Then it is reported

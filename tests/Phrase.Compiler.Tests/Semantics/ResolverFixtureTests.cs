@@ -9,12 +9,12 @@ namespace Phrase.Compiler.Tests.Semantics;
 public class ResolverFixtureTests
 {
     private static readonly string Orders =
-        File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", "orders.phrase"));
+        File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", "orders.avowry"));
 
     [Fact]
     public void The_orders_fixture_resolves_cleanly()
     {
-        // Given the orders.phrase acceptance fixture
+        // Given the orders.avowry acceptance fixture
         // When it is resolved
         var module = Clean(Orders);
 
@@ -28,7 +28,7 @@ public class ResolverFixtureTests
     [Fact]
     public void Every_endpoint_step_is_bound_and_keeps_its_source()
     {
-        // Given the orders.phrase acceptance fixture
+        // Given the orders.avowry acceptance fixture
         // When it is resolved
         var steps = Clean(Orders).Endpoints.Single().Steps;
 
@@ -57,7 +57,7 @@ public class ResolverFixtureTests
     [Fact]
     public void Failures_propagate_to_the_endpoint()
     {
-        // Given the orders.phrase acceptance fixture
+        // Given the orders.avowry acceptance fixture
         // When it is resolved
         var endpoint = Clean(Orders).Endpoints.Single();
 
@@ -68,7 +68,7 @@ public class ResolverFixtureTests
     [Fact]
     public void All_six_specs_survive_resolution()
     {
-        // Given the orders.phrase acceptance fixture
+        // Given the orders.avowry acceptance fixture
         // When it is resolved
         var module = Clean(Orders);
 

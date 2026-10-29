@@ -10,10 +10,10 @@ namespace Phrase.Compiler.Tests.Semantics;
 public class ResolverSpecTests
 {
     private static string Adder(string spec) =>
-        Program("phrase \"add {a: Int} to {b: Int}\" -> Int\n  fails with Overflow\n" + spec + "  native csharp\n    return a + b;\n");
+        Program("avow to \"add {a: Int} to {b: Int}\" -> Int\n  fails with Overflow\n" + spec + "  native csharp\n    return a + b;\n");
 
     private static string Checker(string spec) =>
-        Program("phrase \"check {n: Int}\"\n  fails with Overflow\n" + spec + "  native csharp\n    return;\n");
+        Program("avow to \"check {n: Int}\"\n  fails with Overflow\n" + spec + "  native csharp\n    return;\n");
 
     private static string ProbeWithSpec(string spec) =>
         Program(Endpoint(
@@ -143,7 +143,7 @@ public class ResolverSpecTests
     {
         // Given a composite whose spec expects a guard's failure
         var source = Program(
-            "phrase \"validate {items: List<LineItem>}\"\n" +
+            "avow to \"validate {items: List<LineItem>}\"\n" +
             Spec("rejects empty", "given items = []", "when called", "then fails with EmptyOrder") +
             "  steps\n    ensure items is not empty\n");
 

@@ -17,7 +17,7 @@ public class NativeCSharpBlockCompiles
         const string source = """
             module Numbers
 
-            phrase "double {n: Int}" -> Int
+            avow to "double {n: Int}" -> Int
               spec "doubles two"
                 given n = 2
                 when called

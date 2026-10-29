@@ -12,7 +12,7 @@ public class LexerNativeBlockTests
     {
         // Given a leaf phrase with a C# body
         const string source = """
-            phrase "total quantity of {items: List<LineItem>}" -> Int
+            avow to "total quantity of {items: List<LineItem>}" -> Int
               native csharp
                 return items.Sum(i => i.Quantity);
             """;
@@ -23,7 +23,7 @@ public class LexerNativeBlockTests
         // Then the body is a single RAW token inside the phrase block, with its base indentation removed
         Assert.Empty(result.Diagnostics);
         Assert.Equal(
-            "phrase \"total quantity of {items: List<LineItem>}\" -> Int NL INDENT native csharp NL RAW NL DEDENT EOF",
+            "avow to \"total quantity of {items: List<LineItem>}\" -> Int NL INDENT native csharp NL RAW NL DEDENT EOF",
             Lexed.Render(result.Tokens));
         Assert.Equal("return items.Sum(i => i.Quantity);", result.Tokens.Single(t => t.Kind == TokenKind.Raw).Text);
     }
@@ -59,14 +59,14 @@ public class LexerNativeBlockTests
     public void Trailing_blank_lines_are_not_part_of_the_block()
     {
         // Given a body followed by blank lines and the next declaration
-        const string source = "native csharp\n  return 1;\n\n\nphrase \"next\"\n";
+        const string source = "native csharp\n  return 1;\n\n\navow to \"next\"\n";
 
         // When it is lexed
         var result = Lexer.Lex(source);
 
         // Then the block ends at its last code line and lexing resumes normally
         Assert.Equal("return 1;", result.Tokens.Single(t => t.Kind == TokenKind.Raw).Text);
-        Assert.Equal("native csharp NL RAW NL phrase \"next\" NL EOF", Lexed.Render(result.Tokens));
+        Assert.Equal("native csharp NL RAW NL avow to \"next\" NL EOF", Lexed.Render(result.Tokens));
     }
 
     [Fact]

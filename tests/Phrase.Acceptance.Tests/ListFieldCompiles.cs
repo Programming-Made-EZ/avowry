@@ -20,7 +20,7 @@ public class ListFieldCompiles
             type Order
               skus: List<Text>
 
-            phrase "count of {order: Order}" -> Int
+            avow to "count of {order: Order}" -> Int
               spec "counts the skus"
                 given order = { skus: ["A", "B"] }
                 when called
@@ -54,7 +54,7 @@ public class ListFieldCompiles
             type Event
               class: Int
 
-            phrase "value of {item: Event}" -> Int
+            avow to "value of {item: Event}" -> Int
               spec "reads the field"
                 given item = { class: 2 }
                 when called

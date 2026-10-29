@@ -1,4 +1,4 @@
-"""The Tasks demo README cannot drift from demo/tasks/Tasks.phrase."""
+"""The Tasks demo README cannot drift from demo/tasks/Tasks.avowry."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "demo" / "tasks" / "README.md"
-PHRASE = ROOT / "demo" / "tasks" / "Tasks.phrase"
+PHRASE = ROOT / "demo" / "tasks" / "Tasks.avowry"
 
 FENCE = re.compile(r"```(?:[^\n`]*)\n(.*?)```", re.DOTALL)
 MODULE = re.compile(r"^module\s+(\S+)", re.M)
@@ -33,7 +33,7 @@ FAILURE_MENTION = re.compile(
 )
 COMPILE = re.compile(
     r"dotnet\s+run\s+--project\s+src/Phrase\.Cli\s+--\s+build\s+"
-    r"demo/tasks/Tasks\.phrase\s+-o\s+(\S+)"
+    r"demo/tasks/Tasks\.avowry\s+-o\s+(\S+)"
 )
 BUILD_API = re.compile(r"dotnet\s+build\s+\S*Tasks\.Api")
 TEST_SPECS = re.compile(r"dotnet\s+test\s+\S*Tasks\.Specs")
@@ -54,7 +54,7 @@ def fenced_blocks(text: str) -> list[str]:
 def phrase_surface(source: str) -> tuple[str, list[dict], set[str]]:
     match = MODULE.search(source)
     if match is None:
-        raise ValueError("Tasks.phrase has no module line")
+        raise ValueError("Tasks.avowry has no module line")
     module = match.group(1)
     endpoints = []
     for found in ENDPOINT.finditer(source):
@@ -147,7 +147,7 @@ def check_readme(readme: str, source: str, root: Path) -> list[str]:
 
     compile_match = COMPILE.search(joined)
     if compile_match is None:
-        problems.append("missing compile command: dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.phrase -o <out>")
+        problems.append("missing compile command: dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.avowry -o <out>")
     else:
         output = compile_match.group(1)
         if not outside_or_ignored(output):
@@ -191,7 +191,7 @@ def check_readme(readme: str, source: str, root: Path) -> list[str]:
         for field in call["fields"]:
             mentioned_fields.add(field)
             if field not in allowed_fields:
-                problems.append(f"request field {field} is not an endpoint input in Tasks.phrase")
+                problems.append(f"request field {field} is not an endpoint input in Tasks.avowry")
 
     missing_endpoints = {(endpoint["verb"], endpoint["route"]) for endpoint in endpoints} - matched
     for verb, route in sorted(missing_endpoints):
@@ -205,7 +205,7 @@ def check_readme(readme: str, source: str, root: Path) -> list[str]:
     mentioned_verbs = {call["verb"] for call in calls}
     allowed_verbs = {endpoint["verb"] for endpoint in endpoints}
     for verb in sorted(mentioned_verbs - allowed_verbs):
-        problems.append(f"HTTP verb {verb} is not used by Tasks.phrase")
+        problems.append(f"HTTP verb {verb} is not used by Tasks.avowry")
     for verb in sorted(allowed_verbs - mentioned_verbs):
         problems.append(f"README never uses HTTP verb {verb}")
 
@@ -222,14 +222,14 @@ def check_readme(readme: str, source: str, root: Path) -> list[str]:
 
     mentioned_failures = {a or b for a, b in FAILURE_MENTION.findall(whole)}
     for name in sorted(mentioned_failures - failures):
-        problems.append(f"failure {name} is not declared in Tasks.phrase")
+        problems.append(f"failure {name} is not declared in Tasks.avowry")
     for name in sorted(failures):
         if name not in whole:
             problems.append(f"README never names declared failure {name}")
 
     spec_count = len(re.findall(r'(?m)^\s*spec\s+"', source))
     if f"Passed: {spec_count}" not in whole:
-        problems.append(f"README must state Passed: {spec_count} (the number of specs in Tasks.phrase)")
+        problems.append(f"README must state Passed: {spec_count} (the number of specs in Tasks.avowry)")
 
     served = re.findall(r"--urls\s+http://[^\s:]+:(\d+)", whole)
     called = {m for call in calls for m in re.findall(r"://[^\s/:]+:(\d+)", call["raw"])}
@@ -254,21 +254,21 @@ class DemoReadmeTests(unittest.TestCase):
     def test_fenced_commands_match_tasks_phrase(self):
         # Given the Tasks demo README and the Phrase source it describes
         self.assertTrue(README.is_file(), "demo/tasks/README.md is missing")
-        self.assertTrue(PHRASE.is_file(), "demo/tasks/Tasks.phrase is missing")
+        self.assertTrue(PHRASE.is_file(), "demo/tasks/Tasks.avowry is missing")
         readme = README.read_text(encoding="utf-8")
         source = PHRASE.read_text(encoding="utf-8")
 
         # When the README's fenced commands are parsed
         problems = check_readme(readme, source, ROOT)
 
-        # Then every path, project name, route, verb, field and status exists in Tasks.phrase
+        # Then every path, project name, route, verb, field and status exists in Tasks.avowry
         self.assertEqual(problems, [])
 
     def test_invented_route_is_rejected(self):
         source = PHRASE.read_text(encoding="utf-8")
         fake = """# Demo
 ```bash
-dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.phrase -o /tmp/phrase-tasks
+dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.avowry -o /tmp/phrase-tasks
 dotnet build /tmp/phrase-tasks/Tasks.Api
 dotnet test /tmp/phrase-tasks/Tasks.Specs
 dotnet run --project /tmp/phrase-tasks/Tasks.Api --urls http://localhost:5099
@@ -283,7 +283,7 @@ Expected HTTP 200 with {} and HTTP 422 EmptyTitle.
         source = PHRASE.read_text(encoding="utf-8")
         fake = """# Demo
 ```bash
-dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.phrase -o /tmp/phrase-tasks
+dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.avowry -o /tmp/phrase-tasks
 dotnet build /tmp/phrase-tasks/Tasks.Api
 dotnet test /tmp/phrase-tasks/Tasks.Specs
 dotnet run --project /tmp/phrase-tasks/Tasks.Api --urls http://localhost:5099
@@ -313,7 +313,7 @@ Expected HTTP 200 with {} and HTTP 422 EmptyTitle, 422 NotFound, 422 StoreUnavai
         source = PHRASE.read_text(encoding="utf-8")
         fake = """# Demo
 ```bash
-dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.phrase -o demo/tasks/out
+dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.avowry -o demo/tasks/out
 ```
 """
         problems = check_readme(fake, source, ROOT)

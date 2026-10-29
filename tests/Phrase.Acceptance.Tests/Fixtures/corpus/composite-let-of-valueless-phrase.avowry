@@ -1,17 +1,17 @@
 # composite-let-of-valueless-phrase: a let step cannot bind a composite phrase, which returns no value (multi-level composites are not expressible today; see card 189)
 module CompositeLet
 
-phrase "reject {n: Int}" -> Int
+avow to "reject {n: Int}" -> Int
   fails with Rejected
   native csharp
     if (n < 0) Fail("Rejected");
     return n;
 
-phrase "inner {n: Int}"
+avow to "inner {n: Int}"
   steps
     let checked = reject n
 
-phrase "outer {n: Int}"
+avow to "outer {n: Int}"
   steps
     let again = inner n
 

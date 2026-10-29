@@ -1,9 +1,9 @@
-Modify the Phrase module below so the phrase returns `Text` and its native body returns `"ready"`. Add a spec proving the result. Return only valid Phrase source.
+Modify the Avowry module below so the avow returns `Text` and its native body returns `"ready"`. Add a spec proving the result. Return only valid Avowry source.
 
-```phrase
+```avowry
 module Status
 
-phrase "current status"
+avow to "current status"
   native csharp
     return;
 ```

@@ -26,7 +26,7 @@ public class RecordUpdateFormCompiles
               title: Text
               done: Bool
 
-            phrase "complete {task: Task}"
+            avow to "complete {task: Task}"
               fails with EmptyTitle
               steps
                 let completed = task with { done: true }
@@ -85,7 +85,7 @@ public class RecordUpdateFormCompiles
     public void Tasks_demo_complete_uses_the_update_form()
     {
         // Given the Tasks demo source
-        var source = File.ReadAllText(RepoPaths.Find("demo", "tasks", "Tasks.phrase"));
+        var source = File.ReadAllText(RepoPaths.Find("demo", "tasks", "Tasks.avowry"));
 
         // When CompleteTask is resolved and emitted
         var resolved = Resolver.Resolve(source);

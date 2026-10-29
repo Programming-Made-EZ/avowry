@@ -7,8 +7,8 @@ using Xunit;
 
 namespace Phrase.Acceptance.Tests;
 
-// Feature: Dana's orders.phrase compiles and proves its generated specs
-//   As Dana, I want the orders.phrase fixture to emit only the C# it actually
+// Feature: Dana's orders.avowry compiles and proves its generated specs
+//   As Dana, I want the orders.avowry fixture to emit only the C# it actually
 //   needs, so that the generated API and specs prove the behavior I specified
 //   without depending on unimplemented option, effect or nested-record mappings.
 public class OrdersPhraseCompiles
@@ -17,8 +17,8 @@ public class OrdersPhraseCompiles
     [Trait("Slice", "087")]
     public async Task Orders_phrase_compiles_to_csharp_and_its_generated_specs_pass()
     {
-        // Given Dana's orders.phrase fixture and the independent spec count
-        var source = Fixture.Read("orders.phrase");
+        // Given Dana's orders.avowry fixture and the independent spec count
+        var source = Fixture.Read("orders.avowry");
         var expectedSpecCount = Fixture.CountSpecs(source);
 
         // When it is compiled with the C# provider and written to a temp workspace

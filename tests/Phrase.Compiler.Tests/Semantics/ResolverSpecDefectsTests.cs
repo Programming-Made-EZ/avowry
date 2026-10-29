@@ -6,7 +6,7 @@ namespace Phrase.Compiler.Tests.Semantics;
 public class ResolverSpecDefectsTests
 {
     private static string Adder(string spec) =>
-        Program("phrase \"add {a: Int} to {b: Int}\" -> Int\n  fails with Overflow\n" + spec + "  native csharp\n    return a + b;\n");
+        Program("avow to \"add {a: Int} to {b: Int}\" -> Int\n  fails with Overflow\n" + spec + "  native csharp\n    return a + b;\n");
 
     [Fact]
     [Trait("Slice", "018")]

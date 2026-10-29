@@ -17,7 +17,7 @@ public class LeafPhraseFailureCompiles
         const string source = """
             module Orders
 
-            phrase "ensure {quantity: Int} is positive"
+            avow to "ensure {quantity: Int} is positive"
               fails with InvalidQuantity
               spec "rejects zero"
                 given quantity = 0

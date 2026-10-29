@@ -122,7 +122,7 @@ public class LexerTokenTests
     public void A_string_keeps_template_holes_verbatim()
     {
         // Given a phrase template
-        const string source = "phrase \"ensure {items: List<LineItem>} is not empty\"\n";
+        const string source = "avow to \"ensure {items: List<LineItem>} is not empty\"\n";
 
         // When it is lexed
         var template = Lexed.Tokens(source).Single(t => t.Kind == TokenKind.String);

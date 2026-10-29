@@ -89,7 +89,7 @@ public class ResolverDeclarationTests
     public void An_unknown_type_in_a_hole_is_PH300()
     {
         // Given a phrase whose hole type does not exist
-        var source = Program("phrase \"weigh {items: List<Thing>}\"\n  native csharp\n    return;\n");
+        var source = Program("avow to \"weigh {items: List<Thing>}\"\n  native csharp\n    return;\n");
 
         // When it is resolved
         // Then it is reported
@@ -114,7 +114,7 @@ public class ResolverDeclarationTests
     public void Two_phrases_with_the_same_wording_is_PH010()
     {
         // Given a phrase worded like a prelude phrase, differing only in its hole
-        var source = Program("phrase \"ensure {count: Int} is not empty\"\n  native csharp\n    return;\n");
+        var source = Program("avow to \"ensure {count: Int} is not empty\"\n  native csharp\n    return;\n");
 
         // When it is resolved
         var diagnostic = Only(source);

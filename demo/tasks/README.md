@@ -18,7 +18,7 @@ Rationale: the compiler and the generated host target .NET 8; `curl` is the HTTP
 Generated C# is an artifact, not the source of truth. Write it outside the repository (or to a git-ignored path). These steps use `/tmp/phrase-tasks`.
 
 ```bash
-dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.phrase -o /tmp/phrase-tasks
+dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.avowry -o /tmp/phrase-tasks
 ```
 
 Expected: the Phrase compiler prints nothing and exits 0. It writes `/tmp/phrase-tasks/Tasks.Api` and `/tmp/phrase-tasks/Tasks.Specs`.
@@ -113,7 +113,7 @@ Expected HTTP 200 with an empty body.
 
 ## Failures
 
-Failures answer HTTP 422 with the declared error name in `generalErrors`. The names come from the phrase (`EmptyTitle`, `NotFound`, `StoreUnavailable`, `TitleTooLong`), not from the HTTP stack.
+Failures answer HTTP 422 with the declared error name in `generalErrors`. The names come from the avow (`EmptyTitle`, `NotFound`, `StoreUnavailable`, `TitleTooLong`), not from the HTTP stack.
 
 ## Native C# remaining
 

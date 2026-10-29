@@ -4,13 +4,13 @@ using Phrase.Adapters.CSharp;
 
 namespace Phrase.Acceptance.Tests;
 
-// Feature: Compile a .phrase endpoint to C#
+// Feature: Compile a .avowry endpoint to C#
 //   As an engineer (or an LLM) writing behavior as phrases
 //   I want the C# provider to emit a FastEndpoints API and xUnit specs
-//   So that every spec in the .phrase source runs as a real test in the target
+//   So that every spec in the .avowry source runs as a real test in the target
 //
 // This is the end-to-end acceptance test for the C# emitter: it compiles the
-// orders.phrase fixture, writes both generated projects, and verifies every
+// orders.avowry fixture, writes both generated projects, and verifies every
 // generated spec passes in the target framework.
 public class CompileEndpointToCSharp
 {
@@ -18,9 +18,9 @@ public class CompileEndpointToCSharp
     [Trait("Slice", "048")]
     public async Task Generated_post_endpoint_binds_its_request_and_returns_its_success_response()
     {
-        // Given a .phrase file describing one POST endpoint, its request record,
+        // Given a .avowry file describing one POST endpoint, its request record,
         // and a success response with a passing handler spec
-        var source = Fixture.Read("orders.phrase");
+        var source = Fixture.Read("orders.avowry");
         var expectedSpecCount = Fixture.CountSpecs(source);
 
         // When it is compiled with the C# provider and written to disk
@@ -47,7 +47,7 @@ public class CompileEndpointToCSharp
         const string source = """
             module Numbers
 
-            phrase "double {n: Int}" -> Int
+            avow to "double {n: Int}" -> Int
               spec "doubles two"
                 given n = 2
                 when called

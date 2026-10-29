@@ -1,9 +1,9 @@
-Fix the failing spec in this Phrase module. Do not change the intended behavior or remove the spec. Return only valid Phrase source.
+Fix the failing spec in this Avowry module. Do not change the intended behavior or remove the spec. Return only valid Avowry source.
 
-```phrase
+```avowry
 module Greeting
 
-phrase "greeting" -> Text
+avow to "greeting" -> Text
   spec "greets"
     when handled
     then returns "hello"

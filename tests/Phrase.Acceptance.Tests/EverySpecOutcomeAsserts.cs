@@ -17,7 +17,7 @@ public class EverySpecOutcomeAsserts
         const string source = """
             module Outcomes
 
-            phrase "reject {value: Int}"
+            avow to "reject {value: Int}"
               fails with Rejected
               spec "rejects the value"
                 given value = 1
@@ -26,11 +26,11 @@ public class EverySpecOutcomeAsserts
               native csharp
                 PhraseFailure.Raise("Rejected");
 
-            phrase "identity {value: Int}" -> Int
+            avow to "identity {value: Int}" -> Int
               native csharp
                 return value;
 
-            phrase "process {value: Int}"
+            avow to "process {value: Int}"
               spec "processes through a composite"
                 given value = 2
                 when called
@@ -72,7 +72,7 @@ public class EverySpecOutcomeAsserts
         const string source = """
             module Outcomes
 
-            phrase "identity {value: Int}" -> Int
+            avow to "identity {value: Int}" -> Int
               spec "returns the promised value"
                 given value = 1
                 when called
@@ -102,7 +102,7 @@ public class EverySpecOutcomeAsserts
         const string source = """
             module Outcomes
 
-            phrase "promised numbers" -> List<Int>
+            avow to "promised numbers" -> List<Int>
               spec "returns every promised number"
                 when called
                 then returns [1, 2]
@@ -130,7 +130,7 @@ public class EverySpecOutcomeAsserts
         const string source = """
             module Outcomes
 
-            phrase "promised numbers" -> List<Int>
+            avow to "promised numbers" -> List<Int>
               spec "returns the promised numbers"
                 when called
                 then returns [1, 99]

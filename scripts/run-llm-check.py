@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run the Usable v1 LLM-customer check on the existing Phrase bench arm.
 
-A cold model sees only GRAMMAR.md and CHEATSHEET.md plus the current Tasks.phrase
+A cold model sees only GRAMMAR.md and CHEATSHEET.md plus the current Tasks.avowry
 (copied at run time). The result is totals-only JSON: no task text, no reply text.
 """
 
@@ -37,15 +37,15 @@ WARNING_COUNT = re.compile(r"(\d+) Warning\(s\)")
 TOTAL_TESTS = re.compile(r"Total:\s+(\d+)")
 FAILED_TESTS = re.compile(r"Failed:\s+(\d+)")
 PHRASE_FENCE = re.compile(
-    r"```+[ \t]*(?:phrase[^\r\n]*)?\r?\n(?P<body>[\s\S]*?)```+",
+    r"```+[ \t]*(?:avowry[^\r\n]*)?\r?\n(?P<body>[\s\S]*?)```+",
     re.I,
 )
 PLAIN_PHRASE = re.compile(
-    r"(?ms)(?:^|\n)(?P<body>(?:module|phrase|type|endpoint)\b[^\n]*(?:\n\s+.*)*)",
+    r"(?ms)(?:^|\n)(?P<body>(?:module|avow|type|endpoint)\b[^\n]*(?:\n\s+.*)*)",
     re.I,
 )
 COMPLETE_PHRASE = re.compile(
-    r"(?m)(?:#.*\n)*\s*(?:module|phrase|type|endpoint)\b",
+    r"(?m)(?:#.*\n)*\s*(?:module|avow|type|endpoint)\b",
     re.I,
 )
 REASON_COMPILE = "compile"
@@ -188,7 +188,7 @@ def write_capture_wrapper(scratch: Path, command: str) -> str:
 
 
 def contains_phrase(source: str) -> bool:
-    return re.search(r"(?m)^(?:module|phrase|type|endpoint)\b", source, re.I) is not None
+    return re.search(r"(?m)^(?:module|avow|type|endpoint)\b", source, re.I) is not None
 
 
 def extract_phrase(output: str) -> str:
@@ -223,7 +223,7 @@ def prepare_suite(repo: Path, work: Path) -> Path:
     copy_file(suite_src / "suite.json", suite_dst / "suite.json")
     copy_file(suite_src / "tasks" / "U1-add-endpoint" / "prompt.md", task_dst / "prompt.md")
     copy_file(suite_src / "tasks" / "U1-add-endpoint" / "outcomes.json", task_dst / "outcomes.json")
-    copy_file(repo / "demo" / "tasks" / "Tasks.phrase", task_dst / "start.phrase")
+    copy_file(repo / "demo" / "tasks" / "Tasks.avowry", task_dst / "start.avowry")
     return suite_dst / "suite.json"
 
 
@@ -281,7 +281,7 @@ def classify_reply(source: str, repo: Path, work: Path, env: dict[str, str]) -> 
 
     generated = work / "generated"
     generated.mkdir(parents=True, exist_ok=True)
-    source_path = work / "reply.phrase"
+    source_path = work / "reply.avowry"
     source_path.write_text(source + ("\n" if not source.endswith("\n") else ""), encoding="utf-8")
     dll = find_phrase_dll(repo, env)
     compiled = run_process(

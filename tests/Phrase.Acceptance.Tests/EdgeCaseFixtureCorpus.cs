@@ -13,7 +13,7 @@ public partial class EdgeCaseFixtureCorpus
 
     public static IEnumerable<object[]> Fixtures() =>
         Directory.Exists(Corpus)
-            ? Directory.EnumerateFiles(Corpus, "*.phrase").Order(StringComparer.Ordinal).Select(path => new object[] { path })
+            ? Directory.EnumerateFiles(Corpus, "*.avowry").Order(StringComparer.Ordinal).Select(path => new object[] { path })
             : [];
 
     [Theory]
@@ -60,12 +60,12 @@ public partial class EdgeCaseFixtureCorpus
     public void The_corpus_has_a_header_comment_and_an_expected_file_per_fixture()
     {
         // Given the edge-case fixture corpus
-        var sources = Directory.Exists(Corpus) ? Directory.GetFiles(Corpus, "*.phrase") : [];
+        var sources = Directory.Exists(Corpus) ? Directory.GetFiles(Corpus, "*.avowry") : [];
         var outcomes = Directory.Exists(Corpus) ? Directory.GetFiles(Corpus, "*.expected.json") : [];
 
         // When Morgan checks its convention-based layout
         var missingOutcomes = sources.Where(path => !File.Exists(Path.ChangeExtension(path, ".expected.json"))).ToArray();
-        var orphanOutcomes = outcomes.Where(path => !File.Exists(path[..^".expected.json".Length] + ".phrase")).ToArray();
+        var orphanOutcomes = outcomes.Where(path => !File.Exists(path[..^".expected.json".Length] + ".avowry")).ToArray();
 
         // Then every named shape has a header and a paired expected outcome, with no orphans
         Assert.NotEmpty(sources);

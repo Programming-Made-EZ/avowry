@@ -16,7 +16,7 @@ public sealed class PhraseEndpointExecutedOutcomes
         // and a fake model whose recorded reply is a correct Phrase endpoint module
         using var workspace = TempWorkspace.Create();
         var suite = WriteSuite(workspace.Root);
-        var reply = WriteReply(workspace.Root, "correct.phrase", CorrectReply);
+        var reply = WriteReply(workspace.Root, "correct.avowry", CorrectReply);
 
         // When the Phrase arm runs it with executed scoring
         var run = await Run(suite, PrintFileCommand(reply), "endpoint-correct-v1");
@@ -36,13 +36,13 @@ public sealed class PhraseEndpointExecutedOutcomes
     {
         // Given the same endpoint task, first with a wrong response record and then with a drifted expected status
         using var workspace = TempWorkspace.Create();
-        var reply = WriteReply(workspace.Root, "wrong.phrase", WrongReply);
+        var reply = WriteReply(workspace.Root, "wrong.avowry", WrongReply);
         var wrongRecordSuite = WriteSuite(Path.Combine(workspace.Root, "wrong-record"));
         var wrongStatusSuite = WriteSuite(Path.Combine(workspace.Root, "wrong-status"), EndpointOutcomes.Replace("\"status\":200", "\"status\":201", StringComparison.Ordinal));
 
         // When Riley scores each reply by executing the endpoint outcome cases
         var wrongRecord = await Run(wrongRecordSuite, PrintFileCommand(reply), "endpoint-wrong-record-v1");
-        var wrongStatus = await Run(wrongStatusSuite, PrintFileCommand(WriteReply(workspace.Root, "correct-for-status.phrase", CorrectReply)), "endpoint-wrong-status-v1");
+        var wrongStatus = await Run(wrongStatusSuite, PrintFileCommand(WriteReply(workspace.Root, "correct-for-status.avowry", CorrectReply)), "endpoint-wrong-status-v1");
 
         // Then each row fails and names the greets-Ada case that did not match
         AssertNamedFailure(wrongRecordSuite, "endpoint-wrong-record-v1", wrongRecord, "greets_ada");
@@ -119,7 +119,7 @@ public sealed class PhraseEndpointExecutedOutcomes
     private const string CorrectReply = """
         module Greetings
 
-        phrase "ensure {name: Text} is present"
+        avow to "ensure {name: Text} is present"
           fails with MissingName
           spec "rejects blank name"
             given name = ""
@@ -147,7 +147,7 @@ public sealed class PhraseEndpointExecutedOutcomes
     private const string WrongReply = """
         module Greetings
 
-        phrase "ensure {name: Text} is present"
+        avow to "ensure {name: Text} is present"
           fails with MissingName
           spec "rejects blank name"
             given name = ""

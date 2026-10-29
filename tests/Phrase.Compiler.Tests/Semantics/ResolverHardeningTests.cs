@@ -13,7 +13,7 @@ public class ResolverHardeningTests
     {
         // Given a Bool let variable passed by bare word to an Int hole
         var source = Program(
-            "phrase \"whether {items: List<LineItem>} is ready\" -> Bool\n  native csharp\n    return true;\n",
+            "avow to \"whether {items: List<LineItem>} is ready\" -> Bool\n  native csharp\n    return true;\n",
             Probe("let ready = whether input.items is ready", "ensure ready is positive"));
 
         // When it is resolved
@@ -30,7 +30,7 @@ public class ResolverHardeningTests
     {
         // Given none passed to a hole that requires Text
         var source = Program(
-            "phrase \"retry {name: Text} up to {n: Int} times\"\n  native csharp\n    return;\n",
+            "avow to \"retry {name: Text} up to {n: Int} times\"\n  native csharp\n    return;\n",
             Probe("retry none up to 3 times"));
 
         // When it is resolved
@@ -61,7 +61,7 @@ public class ResolverHardeningTests
     {
         // Given a value compatible with an Option<Decimal> hole
         var source = Program(
-            "phrase \"store optional {value: Option<Decimal>}\"\n  native csharp\n    return;\n",
+            "avow to \"store optional {value: Option<Decimal>}\"\n  native csharp\n    return;\n",
             Probe($"store optional {value}"));
 
         // When it is resolved
@@ -76,7 +76,7 @@ public class ResolverHardeningTests
     {
         // Given a string literal passed to an Option<Id> hole
         var source = Program(
-            "phrase \"store optional {value: Option<Id>}\"\n  native csharp\n    return;\n",
+            "avow to \"store optional {value: Option<Id>}\"\n  native csharp\n    return;\n",
             Probe("store optional \"c-1\""));
 
         // When it is resolved
@@ -91,7 +91,7 @@ public class ResolverHardeningTests
     {
         // Given a decimal literal passed to an Option<Int> hole
         var source = Program(
-            "phrase \"store optional {value: Option<Int>}\"\n  native csharp\n    return;\n",
+            "avow to \"store optional {value: Option<Int>}\"\n  native csharp\n    return;\n",
             Probe("store optional 2.5"));
 
         // When it is resolved
@@ -120,7 +120,7 @@ public class ResolverHardeningTests
     {
         // Given a composite whose template repeats a hole name
         var source = Program("""
-            phrase "add {n: Int} to {n: Int}"
+            avow to "add {n: Int} to {n: Int}"
               steps
                 ensure 1 is positive
             """);
@@ -141,7 +141,7 @@ public class ResolverHardeningTests
         // Given a phrase whose template repeats a hole name, and a step that calls it
         var source = Program(
             """
-            phrase "add {n: Int} to {n: Int}"
+            avow to "add {n: Int} to {n: Int}"
               native csharp
                 return;
             """,

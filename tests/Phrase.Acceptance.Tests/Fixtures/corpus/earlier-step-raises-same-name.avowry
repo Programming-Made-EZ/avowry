@@ -1,7 +1,7 @@
 # earlier-step-raises-same-name: an ensure raises the later phrase's declared failure
 module EarlierStep
 
-phrase "reject {n: Int}"
+avow to "reject {n: Int}"
   fails with Rejected
   native csharp
     if (n < 0) Fail("Rejected");

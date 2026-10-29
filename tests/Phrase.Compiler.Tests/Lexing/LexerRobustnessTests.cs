@@ -8,7 +8,7 @@ namespace Phrase.Compiler.Tests.Lexing;
 public class LexerRobustnessTests
 {
     private static readonly string Orders =
-        File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", "orders.phrase"));
+        File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", "orders.avowry"));
 
     private const string Alphabet = " \t\n\"{}[]<>-#\\:,.=/+aZ9";
 

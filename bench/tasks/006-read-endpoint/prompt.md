@@ -1,6 +1,6 @@
-Read this Phrase endpoint and add comments that explain its input, output, steps, and spec without changing behavior. Return only valid Phrase source.
+Read this Avowry endpoint and add comments that explain its input, output, steps, and spec without changing behavior. Return only valid Avowry source.
 
-```phrase
+```avowry
 module Echo
 
 endpoint EchoText : POST /echo

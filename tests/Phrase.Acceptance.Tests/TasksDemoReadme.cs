@@ -22,7 +22,7 @@ public class TasksDemoReadme
         Assert.Contains(".NET 8", readme, StringComparison.Ordinal);
         Assert.Contains("curl", readme, StringComparison.Ordinal);
         Assert.Contains("dotnet run --project src/Phrase.Cli", readme, StringComparison.Ordinal);
-        Assert.Contains("demo/tasks/Tasks.phrase", readme, StringComparison.Ordinal);
+        Assert.Contains("demo/tasks/Tasks.avowry", readme, StringComparison.Ordinal);
         Assert.Contains("Tasks.Api", readme, StringComparison.Ordinal);
         Assert.Contains("Tasks.Specs", readme, StringComparison.Ordinal);
         Assert.Contains("0 Warning(s)", readme, StringComparison.Ordinal);
@@ -34,7 +34,7 @@ public class TasksDemoReadme
         Assert.Contains("EmptyTitle", readme, StringComparison.Ordinal);
 
         // Then it says the data is in memory, failures answer 422 with a declared name,
-        // native csharp remains, and the fenced commands match Tasks.phrase
+        // native csharp remains, and the fenced commands match Tasks.avowry
         Assert.Contains("in memory", readme, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("422", readme, StringComparison.Ordinal);
         Assert.Contains("generalErrors", readme, StringComparison.Ordinal);

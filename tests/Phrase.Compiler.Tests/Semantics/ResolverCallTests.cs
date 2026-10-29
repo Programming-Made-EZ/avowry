@@ -68,9 +68,9 @@ public class ResolverCallTests
     {
         // Given a hole-taking phrase and a fixed phrase that read the same when a variable is named ready
         var source = Program(
-            "phrase \"readiness of {items: List<LineItem>}\" -> Bool\n  native csharp\n    return true;\n",
-            "phrase \"ensure {flag: Bool} holds\"\n  native csharp\n    return;\n",
-            "phrase \"ensure ready holds\"\n  native csharp\n    return;\n",
+            "avow to \"readiness of {items: List<LineItem>}\" -> Bool\n  native csharp\n    return true;\n",
+            "avow to \"ensure {flag: Bool} holds\"\n  native csharp\n    return;\n",
+            "avow to \"ensure ready holds\"\n  native csharp\n    return;\n",
             Probe("let ready = readiness of input.items", "ensure ready holds"));
 
         // When it is resolved
@@ -140,7 +140,7 @@ public class ResolverCallTests
     {
         // Given a path that reads a field of a list
         var source = Program(
-            "phrase \"check sku {sku: Text}\"\n  native csharp\n    return;\n",
+            "avow to \"check sku {sku: Text}\"\n  native csharp\n    return;\n",
             Probe("check sku input.items.sku"));
 
         // When it is resolved
@@ -192,7 +192,7 @@ public class ResolverCallTests
     {
         // Given a phrase with Text and Int holes
         var source = Program(
-            "phrase \"retry {name: Text} up to {n: Int} times\"\n  native csharp\n    return;\n",
+            "avow to \"retry {name: Text} up to {n: Int} times\"\n  native csharp\n    return;\n",
             Probe(step));
 
         // When it is resolved

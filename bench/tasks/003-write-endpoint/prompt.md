@@ -1,1 +1,1 @@
-Write a valid Phrase module named `Health` with a `GET /health` endpoint whose output has `status: Text`. It must respond with `"ok"`. Include an endpoint spec proving that response and return only Phrase source.
+Write a valid Avowry module named `Health` with a `GET /health` endpoint whose output has `status: Text`. It must respond with `"ok"`. Include an endpoint spec proving that response and return only Avowry source.

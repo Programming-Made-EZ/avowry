@@ -4,7 +4,7 @@ using Phrase.Compiler.Syntax;
 namespace Phrase.Compiler;
 
 /// <summary>
-/// Entry point: .phrase source in, target files out.
+/// Entry point: .avowry source in, target files out.
 /// Pipeline: lexer (done) -> parser (done) -> resolver (done) -> target adapter.
 /// </summary>
 public static class PhraseCompiler

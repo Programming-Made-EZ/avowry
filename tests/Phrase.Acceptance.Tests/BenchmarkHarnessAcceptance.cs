@@ -117,11 +117,11 @@ public class BenchmarkHarnessAcceptance
         // Given a one-task suite and a deterministic model command in an isolated workspace
         using var workspace = TempWorkspace.Create();
         var suiteDirectory = CopySuiteTo(workspace.Root);
-        var modelOutput = Path.Combine(workspace.Root, "model-output.phrase");
+        var modelOutput = Path.Combine(workspace.Root, "model-output.avowry");
         await File.WriteAllTextAsync(modelOutput, """
             module Greeting
 
-            phrase "say hello"
+            avow to "say hello"
               native csharp
                 return;
             """);
@@ -297,8 +297,8 @@ public class BenchmarkHarnessAcceptance
         var suiteDirectory = CopySuiteTo(workspace.Root);
         await File.WriteAllTextAsync(Path.Combine(suiteDirectory, "tasks", "001-write-greeting", "big-context.txt"), new string('x', 400_000));
         var modelCommand = OperatingSystem.IsWindows()
-            ? "python -c \"print('module Greeting\\n\\nphrase \\\"say hello\\\"\\n  native csharp\\n    return;')\""
-            : "python -c \"print('module Greeting\\n\\nphrase \\\"say hello\\\"\\n  native csharp\\n    return;')\"";
+            ? "python -c \"print('module Greeting\\n\\navow to \\\"say hello\\\"\\n  native csharp\\n    return;')\""
+            : "python -c \"print('module Greeting\\n\\navow to \\\"say hello\\\"\\n  native csharp\\n    return;')\"";
 
         // When the benchmark runs the task
         var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "stdin-ignorer", modelCommand);
@@ -339,10 +339,10 @@ public class BenchmarkHarnessAcceptance
         await File.WriteAllTextAsync(modelOutput, """
             Here is the program.
 
-            ```phrase
+            ```avowry
             module Greeting
 
-            phrase "say hello"
+            avow to "say hello"
               native csharp
                 return;
             ```
@@ -379,7 +379,7 @@ public class BenchmarkHarnessAcceptance
             ```
             module Greeting
 
-            phrase "say hello"
+            avow to "say hello"
               native csharp
                 return;
             ```
@@ -412,10 +412,10 @@ public class BenchmarkHarnessAcceptance
         await File.WriteAllTextAsync(modelOutput, """
             Here is the program I meant.
 
-            ```PHRASE
+            ```AVOWRY
             module Greeting
 
-            phrase "say hello"
+            avow to "say hello"
               native csharp
                 return;
             ```
@@ -524,11 +524,11 @@ public class BenchmarkHarnessAcceptance
         var legacyRow = "{\"model\":\"legacy-v1\",\"task\":\"001-write-greeting\",\"status\":\"completed\"}\n";
         await File.WriteAllTextAsync(Path.Combine(resultsDirectory, "history.jsonl"), legacyRow);
 
-        var modelOutput = Path.Combine(workspace.Root, "model-output.phrase");
+        var modelOutput = Path.Combine(workspace.Root, "model-output.avowry");
         await File.WriteAllTextAsync(modelOutput, """
             module Greeting
 
-            phrase "say hello"
+            avow to "say hello"
               native csharp
                 return;
             """);
@@ -562,18 +562,18 @@ public class BenchmarkHarnessAcceptance
               ]
             }
             """);
-        await File.WriteAllTextAsync(Path.Combine(taskDirectory, "prompt.md"), "Read source.phrase and return it unchanged.");
-        await File.WriteAllTextAsync(Path.Combine(taskDirectory, "source.phrase"), """
+        await File.WriteAllTextAsync(Path.Combine(taskDirectory, "prompt.md"), "Read source.avowry and return it unchanged.");
+        await File.WriteAllTextAsync(Path.Combine(taskDirectory, "source.avowry"), """
             module Greeting
 
-            phrase "say hello"
+            avow to "say hello"
               native csharp
                 return;
             """);
         var capturedPrompt = Path.Combine(workspace.Root, "captured-prompt.txt");
         var modelCommand = OperatingSystem.IsWindows()
-            ? $"python -c \"import sys, pathlib; pathlib.Path(r'{capturedPrompt}').write_text(sys.stdin.read()); print('module Greeting\\n\\nphrase \\\"say hello\\\"\\n  native csharp\\n    return;')\""
-            : $"python -c \"import sys, pathlib; pathlib.Path(r'{capturedPrompt}').write_text(sys.stdin.read()); print('module Greeting\\n\\nphrase \\\"say hello\\\"\\n  native csharp\\n    return;')\"";
+            ? $"python -c \"import sys, pathlib; pathlib.Path(r'{capturedPrompt}').write_text(sys.stdin.read()); print('module Greeting\\n\\navow to \\\"say hello\\\"\\n  native csharp\\n    return;')\""
+            : $"python -c \"import sys, pathlib; pathlib.Path(r'{capturedPrompt}').write_text(sys.stdin.read()); print('module Greeting\\n\\navow to \\\"say hello\\\"\\n  native csharp\\n    return;')\"";
 
         var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "inline-v1", modelCommand);
 
@@ -581,7 +581,7 @@ public class BenchmarkHarnessAcceptance
         var promptText = await File.ReadAllTextAsync(capturedPrompt);
         Assert.Contains("module Greeting", promptText, StringComparison.Ordinal);
         Assert.Contains("return;", promptText, StringComparison.Ordinal);
-        Assert.Contains("source.phrase", promptText, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("source.avowry", promptText, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -591,8 +591,8 @@ public class BenchmarkHarnessAcceptance
         var suiteDirectory = CopySuiteTo(workspace.Root);
         var capturePath = Path.Combine(workspace.Root, "captured.txt");
         var modelCommand = OperatingSystem.IsWindows()
-            ? $"python -c \"import sys; from pathlib import Path; Path(r'{capturePath}').write_text(sys.stdin.read()); print('module Greeting\\n\\nphrase \\\"say hello\\\"\\n  native csharp\\n    return;')\""
-            : $"python -c \"import sys; from pathlib import Path; Path(r'{capturePath}').write_text(sys.stdin.read()); print('module Greeting\\n\\nphrase \\\"say hello\\\"\\n  native csharp\\n    return;')\"";
+            ? $"python -c \"import sys; from pathlib import Path; Path(r'{capturePath}').write_text(sys.stdin.read()); print('module Greeting\\n\\navow to \\\"say hello\\\"\\n  native csharp\\n    return;')\""
+            : $"python -c \"import sys; from pathlib import Path; Path(r'{capturePath}').write_text(sys.stdin.read()); print('module Greeting\\n\\navow to \\\"say hello\\\"\\n  native csharp\\n    return;')\"";
 
         var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "parse-v1", modelCommand);
 
@@ -607,11 +607,11 @@ public class BenchmarkHarnessAcceptance
     {
         using var workspace = TempWorkspace.Create();
         var suiteDirectory = CopySuiteTo(workspace.Root);
-        var modelOutput = Path.Combine(workspace.Root, "model-output.phrase");
+        var modelOutput = Path.Combine(workspace.Root, "model-output.avowry");
         await File.WriteAllTextAsync(modelOutput, """
             module Greeting
 
-            phrase "say hello"
+            avow to "say hello"
               native csharp
                 return;
             """);
@@ -636,11 +636,11 @@ public class BenchmarkHarnessAcceptance
         // Given a model that emits invalid Phrase once and valid Phrase after receiving diagnostics
         using var workspace = TempWorkspace.Create();
         var suiteDirectory = CopySuiteTo(workspace.Root);
-        var validOutput = Path.Combine(workspace.Root, "valid.phrase");
+        var validOutput = Path.Combine(workspace.Root, "valid.avowry");
         await File.WriteAllTextAsync(validOutput, """
             module Greeting
 
-            phrase "say hello"
+            avow to "say hello"
               native csharp
                 return;
             """);
@@ -776,11 +776,11 @@ public class BenchmarkHarnessAcceptance
             Path.Combine(holdoutTaskDirectory, "prompt.md"),
             "Write a valid Phrase module named `Hello` containing a phrase that returns the text `world`.");
 
-        var modelOutput = Path.Combine(workspace.Root, "model-output.phrase");
+        var modelOutput = Path.Combine(workspace.Root, "model-output.avowry");
         await File.WriteAllTextAsync(modelOutput, """
             module Greeting
 
-            phrase "say hello"
+            avow to "say hello"
               native csharp
                 return;
             """);
@@ -870,7 +870,7 @@ public class BenchmarkHarnessAcceptance
             Path.Combine(suiteDirectory, "tasks", "001-write-greeting", "prompt.md"));
         var grammar = await File.ReadAllTextAsync(Path.Combine(workspace.Root, "docs", "GRAMMAR.md"));
         var orders = await File.ReadAllTextAsync(Path.Combine(
-            workspace.Root, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase"));
+            workspace.Root, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.avowry"));
 
         // When the task runs in docs-in-context mode, resolving docs from the suite parent
         var (exitCode, stdout, stderr) = await RunBenchmark(
@@ -886,7 +886,7 @@ public class BenchmarkHarnessAcceptance
         var grammarAt = captured.IndexOf(grammar, StringComparison.Ordinal);
         var ordersAt = captured.IndexOf(orders, StringComparison.Ordinal);
         Assert.True(grammarAt >= 0, "Grammar was not copied into the prompt verbatim.");
-        Assert.True(ordersAt >= 0, "orders.phrase was not copied into the prompt verbatim.");
+        Assert.True(ordersAt >= 0, "orders.avowry was not copied into the prompt verbatim.");
         Assert.True(grammarAt < ordersAt, captured);
         Assert.EndsWith(taskPrompt, captured, StringComparison.Ordinal);
         Assert.True(ordersAt < captured.Length - taskPrompt.Length, captured);
@@ -939,7 +939,7 @@ public class BenchmarkHarnessAcceptance
     public async Task run_default_mode_keeps_the_prompt_hash_from_before_docs_in_context()
     {
         // Given the greeting fixture whose prompt hash was fixed before this mode existed
-        const string promptHashBeforeDocsInContext = "a7bd17c3b580099223bd99f0db9c3377ba2419a1f568448dd21fda80a7fccade";
+        const string promptHashBeforeDocsInContext = "829227c49321902dcf3d18ae2b9e9e64da6bcde3c503b79019ba683e0f9adbfc";
         using var workspace = TempWorkspace.Create();
         var suiteDirectory = CopySuiteTo(workspace.Root);
         var capturedPrompt = Path.Combine(workspace.Root, "captured-prompt.txt");
@@ -980,7 +980,7 @@ public class BenchmarkHarnessAcceptance
         await File.WriteAllTextAsync(modelOutput, """
             module Greeting
 
-            phrase "say hello"
+            avow to "say hello"
               native csharp
                 return;
             """);
@@ -1015,7 +1015,7 @@ public class BenchmarkHarnessAcceptance
         await File.WriteAllTextAsync(output, """
             module Greeting
 
-            phrase "say hello"
+            avow to "say hello"
               native csharp
                 return;
             """);
@@ -1344,7 +1344,7 @@ public class BenchmarkHarnessAcceptance
                 echo(%*>>"{argvLog}"
                 echo module Greeting
                 echo.
-                echo phrase "say hello"
+                echo avow to "say hello"
                 echo   native csharp
                 echo     return;
                 """
@@ -1355,7 +1355,7 @@ public class BenchmarkHarnessAcceptance
                 cat <<'PHRASE'
                 module Greeting
 
-                phrase "say hello"
+                avow to "say hello"
                   native csharp
                     return;
                 PHRASE
@@ -1528,8 +1528,8 @@ public class BenchmarkHarnessAcceptance
     {
         CopyFile(RepoPaths.Find("docs", "GRAMMAR.md"), Path.Combine(docsRoot, "docs", "GRAMMAR.md"));
         CopyFile(
-            RepoPaths.Find("tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase"),
-            Path.Combine(docsRoot, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase"));
+            RepoPaths.Find("tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.avowry"),
+            Path.Combine(docsRoot, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.avowry"));
     }
 
     private static void CopyFile(string source, string destination)
@@ -1541,7 +1541,7 @@ public class BenchmarkHarnessAcceptance
     private static async Task WriteDocs(string docsRoot, string grammar, string orders)
     {
         var grammarPath = Path.Combine(docsRoot, "docs", "GRAMMAR.md");
-        var ordersPath = Path.Combine(docsRoot, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase");
+        var ordersPath = Path.Combine(docsRoot, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.avowry");
         Directory.CreateDirectory(Path.GetDirectoryName(grammarPath)!);
         Directory.CreateDirectory(Path.GetDirectoryName(ordersPath)!);
         await File.WriteAllTextAsync(grammarPath, grammar);
@@ -1550,11 +1550,11 @@ public class BenchmarkHarnessAcceptance
 
     private static async Task<string> WritePassingPhrase(string workspaceRoot)
     {
-        var modelOutput = Path.Combine(workspaceRoot, "model-output.phrase");
+        var modelOutput = Path.Combine(workspaceRoot, "model-output.avowry");
         await File.WriteAllTextAsync(modelOutput, """
             module Greeting
 
-            phrase "say hello"
+            avow to "say hello"
               native csharp
                 return;
             """);
@@ -1563,7 +1563,7 @@ public class BenchmarkHarnessAcceptance
 
     private static string CapturePromptCommand(string capturedPrompt)
     {
-        var writeAndPrint = "import sys, pathlib; pathlib.Path(r'" + capturedPrompt + "').write_bytes(sys.stdin.buffer.read()); print('module Greeting\\n\\nphrase \\\"say hello\\\"\\n  native csharp\\n    return;')";
+        var writeAndPrint = "import sys, pathlib; pathlib.Path(r'" + capturedPrompt + "').write_bytes(sys.stdin.buffer.read()); print('module Greeting\\n\\navow to \\\"say hello\\\"\\n  native csharp\\n    return;')";
         return $"python -c \"{writeAndPrint}\"";
     }
 

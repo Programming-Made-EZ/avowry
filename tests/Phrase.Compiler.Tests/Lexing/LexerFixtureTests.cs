@@ -7,12 +7,12 @@ namespace Phrase.Compiler.Tests.Lexing;
 public class LexerFixtureTests
 {
     private static readonly string Orders =
-        File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", "orders.phrase"));
+        File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", "orders.avowry"));
 
     [Fact]
     public void The_orders_fixture_lexes_without_diagnostics()
     {
-        // Given the orders.phrase acceptance fixture
+        // Given the orders.avowry acceptance fixture
         // When it is lexed
         var result = Lexer.Lex(Orders);
 
@@ -23,7 +23,7 @@ public class LexerFixtureTests
     [Fact]
     public void Every_indent_in_the_fixture_is_matched_by_a_dedent()
     {
-        // Given the orders.phrase acceptance fixture
+        // Given the orders.avowry acceptance fixture
         // When it is lexed
         var tokens = Lexer.Lex(Orders).Tokens;
 
@@ -39,7 +39,7 @@ public class LexerFixtureTests
     [Fact]
     public void Each_native_block_in_the_fixture_is_one_raw_token()
     {
-        // Given the orders.phrase acceptance fixture, which has three native csharp blocks
+        // Given the orders.avowry acceptance fixture, which has three native csharp blocks
         // When it is lexed
         var raws = Lexer.Lex(Orders).Tokens.Where(t => t.Kind == TokenKind.Raw).Select(t => t.Text).ToList();
 
@@ -56,7 +56,7 @@ public class LexerFixtureTests
     [Fact]
     public void The_fixture_declares_six_specs()
     {
-        // Given the orders.phrase acceptance fixture
+        // Given the orders.avowry acceptance fixture
         // When it is lexed
         var tokens = Lexer.Lex(Orders).Tokens;
 

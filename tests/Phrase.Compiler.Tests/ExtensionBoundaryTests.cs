@@ -13,7 +13,7 @@ public class ExtensionBoundaryTests
     private const string CorePhrase = """
         module Numbers
 
-        phrase "double {n: Int}" -> Int
+        avow to "double {n: Int}" -> Int
           native csharp
             return n * 2;
         """;
@@ -22,7 +22,7 @@ public class ExtensionBoundaryTests
     private const string PhraseWithWebWords = """
         module Catalog
 
-        phrase "publish the endpoint input when the caller responds {sku: Text}" -> Text
+        avow to "publish the endpoint input when the caller responds {sku: Text}" -> Text
           native csharp
             return sku;
         """;
@@ -30,7 +30,7 @@ public class ExtensionBoundaryTests
     private const string EndpointProgram = """
         module Orders
 
-        phrase "double {n: Int}" -> Int
+        avow to "double {n: Int}" -> Int
           native csharp
             return n * 2;
 
@@ -52,7 +52,7 @@ public class ExtensionBoundaryTests
         uses web
         module Numbers
 
-        phrase "double {n: Int}" -> Int
+        avow to "double {n: Int}" -> Int
           native csharp
             return n * 2;
         """;
@@ -66,7 +66,7 @@ public class ExtensionBoundaryTests
         string[] core =
         [
             "and", "called", "effects", "ensure", "fail with", "fails with", "given", "let", "module", "native",
-            "phrase", "returns", "spec", "steps", "succeeds", "then", "type", "uses", "when",
+            "avow", "returns", "spec", "steps", "succeeds", "then", "type", "uses", "when",
         ];
         string[] web =
         [

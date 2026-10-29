@@ -180,10 +180,10 @@ public class SourceMapTraceCommand
         public static async Task<BuiltTasks> CreateAsync(Func<string, string>? change = null, bool buildAssembly = true)
         {
             var workspace = TempWorkspace.Create();
-            var source = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+            var source = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
             if (change is not null)
             {
-                var copy = Path.Combine(workspace.Root, "Tasks.phrase");
+                var copy = Path.Combine(workspace.Root, "Tasks.avowry");
                 await File.WriteAllTextAsync(copy, change(await File.ReadAllTextAsync(source)));
                 source = copy;
             }

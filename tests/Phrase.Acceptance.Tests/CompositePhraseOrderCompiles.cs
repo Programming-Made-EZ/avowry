@@ -18,23 +18,23 @@ public class CompositePhraseOrderCompiles
         const string source = """
             module Quotes
 
-            phrase "price of {sku: Text}" -> Int
+            avow to "price of {sku: Text}" -> Int
               fails with UnknownSku
               native csharp
                 if (sku.Length == 0) Fail("UnknownSku");
                 return 2;
 
-            phrase "units of {name: Text}" -> Int
+            avow to "units of {name: Text}" -> Int
               fails with MissingName
               native csharp
                 if (name.Length == 0) Fail("MissingName");
                 return 3;
 
-            phrase "label of {name: Text}" -> Text
+            avow to "label of {name: Text}" -> Text
               native csharp
                 return name;
 
-            phrase "quote {sku: Text} for {name: Text}"
+            avow to "quote {sku: Text} for {name: Text}"
               steps
                 let price = price of sku
                 let units = units of name

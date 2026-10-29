@@ -18,7 +18,7 @@ public class DeclaredEffectDependencyCompiles
         const string source = """
             module Orders
 
-            phrase "database is available" -> Bool
+            avow to "database is available" -> Bool
               effects Db
               spec "uses a database double"
                 when called
@@ -26,7 +26,7 @@ public class DeclaredEffectDependencyCompiles
               native csharp
                 return db is not null;
 
-            phrase "database is connected" -> Bool
+            avow to "database is connected" -> Bool
               effects Db
               spec "also uses the database double"
                 when called
@@ -57,7 +57,7 @@ public class DeclaredEffectDependencyCompiles
         const string source = """
             module Orders
 
-            phrase "database is available" -> Bool
+            avow to "database is available" -> Bool
               effects Db
               spec "uses a database double"
                 when called
@@ -91,7 +91,7 @@ public class DeclaredEffectDependencyCompiles
         const string source = """
             module Orders
 
-            phrase "database is available" -> Bool
+            avow to "database is available" -> Bool
               effects Db
               spec "uses a database double"
                 when called

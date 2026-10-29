@@ -59,7 +59,7 @@ type Shelf
 """
 
 LEAVES = """\
-phrase "ensure {book: Copy} has a title"
+avow to "ensure {book: Copy} has a title"
   fails with MissingTitle
   spec "rejects a blank title"
     given book = { copyId: "c-1", title: "" }
@@ -68,7 +68,7 @@ phrase "ensure {book: Copy} has a title"
   native csharp
     if (string.IsNullOrWhiteSpace(book.Title)) Fail("MissingTitle");
 
-phrase "ensure {days: Int} is a loan of at most three weeks"
+avow to "ensure {days: Int} is a loan of at most three weeks"
   fails with LoanTooLong
   spec "rejects a loan past three weeks"
     given days = 22
@@ -77,7 +77,7 @@ phrase "ensure {days: Int} is a loan of at most three weeks"
   native csharp
     if (days > 21) Fail("LoanTooLong");
 
-phrase "the day count of {days: Int}" -> Int
+avow to "the day count of {days: Int}" -> Int
   spec "returns the days"
     given days = 7
     when called
@@ -85,7 +85,7 @@ phrase "the day count of {days: Int}" -> Int
   native csharp
     return days;
 
-phrase "count copies on {shelf: Shelf}" -> Int
+avow to "count copies on {shelf: Shelf}" -> Int
   spec "counts the copies"
     given shelf = { name: "North", copies: [{ copyId: "c-1", title: "Elm" }, { copyId: "c-2", title: "Ash" }] }
     when called
@@ -520,7 +520,7 @@ def task_prompt(kind: str, changed_phrase: str, needs_phrase: str, changed_cshar
             outcomes.strip("\n"),
             "",
             "## Starting phrase file",
-            "```phrase",
+            "```avowry",
             phrase_start.strip("\n"),
             "```",
             "",
@@ -552,8 +552,8 @@ def build_files(size: int, seed: int) -> dict[str, str]:
     )
 
     files: dict[str, str] = {
-        "phrase/shelf.phrase": finished(shelf),
-        "phrase/leaves.phrase": finished(LEAVES),
+        "phrase/shelf.avowry": finished(shelf),
+        "phrase/leaves.avowry": finished(LEAVES),
         "csharp/Directory.Build.props": finished(STANDALONE_PROPS),
         "csharp/Shelf.Api/Shelf.Api.csproj": finished(API_PROJECT),
         "csharp/Shelf.Api/Program.cs": finished(PROGRAM),
@@ -564,17 +564,17 @@ def build_files(size: int, seed: int) -> dict[str, str]:
         "csharp/Shelf.Specs/LoanRuleTests.cs": finished(LOAN_RULE_TESTS),
     }
     for ep in endpoints:
-        files[f"phrase/endpoints/{ep.name}.phrase"] = finished(endpoint_phrase[ep.name])
+        files[f"phrase/endpoints/{ep.name}.avowry"] = finished(endpoint_phrase[ep.name])
         files[f"csharp/Shelf.Api/{ep.name}.cs"] = finished(endpoint_csharp[ep.name])
         files[f"csharp/Shelf.Specs/{ep.name}Specs.cs"] = finished(csharp_specs(ep, sample))
 
-    modify_phrase = files["phrase/leaves.phrase"]
+    modify_phrase = files["phrase/leaves.avowry"]
     modify_csharp = files["csharp/Shelf.Api/LoanRules.cs"]
     modify_body = dump_outcomes(modify_outcomes())
     modify_prompt = task_prompt(
         "modify",
-        "phrase/leaves.phrase",
-        "phrase/endpoints/PlaceHoldNorth.phrase",
+        "phrase/leaves.avowry",
+        "phrase/endpoints/PlaceHoldNorth.avowry",
         "csharp/Shelf.Api/LoanRules.cs",
         "csharp/Shelf.Api/PlaceHoldNorth.cs",
         "Modify the shared loan-length rule so it enforces the limit the north desk posts. "
@@ -585,7 +585,7 @@ def build_files(size: int, seed: int) -> dict[str, str]:
     )
     files["tasks/modify-loan-limit/prompt.md"] = finished(modify_prompt)
     files["tasks/modify-loan-limit/outcomes.json"] = modify_body
-    files["tasks/modify-loan-limit/phrase/start.phrase"] = modify_phrase
+    files["tasks/modify-loan-limit/phrase/start.avowry"] = modify_phrase
     files["tasks/modify-loan-limit/csharp/start.cs"] = modify_csharp
 
     fix_phrase = finished(phrase_endpoint(place, sample, call_loan=False))
@@ -593,8 +593,8 @@ def build_files(size: int, seed: int) -> dict[str, str]:
     fix_body = dump_outcomes(fix_outcomes(sample))
     fix_prompt = task_prompt(
         "fix",
-        "phrase/endpoints/PlaceHoldNorth.phrase",
-        "phrase/leaves.phrase",
+        "phrase/endpoints/PlaceHoldNorth.avowry",
+        "phrase/leaves.avowry",
         "csharp/Shelf.Api/PlaceHoldNorth.cs",
         "csharp/Shelf.Api/LoanRules.cs",
         "Fix PlaceHoldNorth so a long loan fails with the code the shared leaf declares. "
@@ -606,7 +606,7 @@ def build_files(size: int, seed: int) -> dict[str, str]:
     )
     files["tasks/fix-place-hold/prompt.md"] = finished(fix_prompt)
     files["tasks/fix-place-hold/outcomes.json"] = fix_body
-    files["tasks/fix-place-hold/phrase/start.phrase"] = fix_phrase
+    files["tasks/fix-place-hold/phrase/start.avowry"] = fix_phrase
     files["tasks/fix-place-hold/csharp/start.cs"] = fix_csharp
     return files
 

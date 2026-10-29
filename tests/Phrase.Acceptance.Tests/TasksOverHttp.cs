@@ -27,7 +27,7 @@ public class TasksOverHttp
     public async Task Every_spec_matches_over_real_http()
     {
         // Given the Tasks app, built with avowry build, and the specs of its compiled model
-        var sourcePath = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var sourcePath = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
         var source = await File.ReadAllTextAsync(sourcePath);
         var resolved = Resolver.Resolve(source);
         Assert.Empty(resolved.Diagnostics);
@@ -84,7 +84,7 @@ public class TasksOverHttp
     public async Task Twenty_parallel_creates_are_all_listed()
     {
         // Given a fresh Tasks API whose store starts empty
-        var sourcePath = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var sourcePath = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
         var source = await File.ReadAllTextAsync(sourcePath);
         var module = Resolver.Resolve(source).Module;
         var create = module.Endpoints.Single(endpoint => endpoint.Verb == "POST");

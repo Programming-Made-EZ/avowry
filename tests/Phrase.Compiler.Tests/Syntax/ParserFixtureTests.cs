@@ -9,12 +9,12 @@ namespace Phrase.Compiler.Tests.Syntax;
 public class ParserFixtureTests
 {
     private static readonly string Orders =
-        File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", "orders.phrase"));
+        File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", "orders.avowry"));
 
     [Fact]
     public void The_orders_fixture_parses_into_its_declarations()
     {
-        // Given the orders.phrase acceptance fixture
+        // Given the orders.avowry acceptance fixture
         // When it is parsed
         var file = Clean(Orders);
 
@@ -37,7 +37,7 @@ public class ParserFixtureTests
     [Fact]
     public void The_fixture_has_six_specs_split_three_and_three()
     {
-        // Given the orders.phrase acceptance fixture
+        // Given the orders.avowry acceptance fixture
         // When it is parsed
         var file = Clean(Orders);
 
@@ -51,7 +51,7 @@ public class ParserFixtureTests
     [Fact]
     public void The_fixture_contracts_are_captured()
     {
-        // Given the orders.phrase acceptance fixture
+        // Given the orders.avowry acceptance fixture
         // When it is parsed
         var phrases = Clean(Orders).Phrases;
 
@@ -66,7 +66,7 @@ public class ParserFixtureTests
     {
         // Given a file where the first phrase header is malformed
         var source = InModule("""
-            phrase ensure items
+            avow to
               native csharp
                 return;
 

@@ -56,7 +56,7 @@ public class GetEndpointsCompile
               id: Id
               name: Text
 
-            phrase "find item {id: Id}" -> Item
+            avow to "find item {id: Id}" -> Item
               effects ItemStore
               fails with NotFound
               native csharp
@@ -65,7 +65,7 @@ public class GetEndpointsCompile
                     Fail("NotFound");
                 return item;
 
-            phrase "list items" -> List<Item>
+            avow to "list items" -> List<Item>
               effects ItemStore
               native csharp
                 return itemstore.List();

@@ -30,7 +30,7 @@ public static class ExtensionKeywords
     {
         ["module"] = ExtensionPart.Core,
         ["type"] = ExtensionPart.Core,
-        ["phrase"] = ExtensionPart.Core,
+        ["avow"] = ExtensionPart.Core,
         ["steps"] = ExtensionPart.Core,
         ["let"] = ExtensionPart.Core,
         ["ensure"] = ExtensionPart.Core,

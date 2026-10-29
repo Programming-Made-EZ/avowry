@@ -1,16 +1,16 @@
-# Phrase Language: Grammar v0.1 (draft)
+# Avowry Language: Grammar v0.1 (draft)
 
-Phrase is a source language designed for LLMs to read, write, and navigate with minimal context. Its core idea: **the name of every unit of behavior is a plain-language description of that behavior**, bound to executable specs. Code at any level reads as its own summary, and the list of all phrase names is the project index.
+Avowry is a source language designed for LLMs to read, write, and navigate with minimal context. Its core idea: **the name of every unit of behavior is a plain-language description of that behavior**, bound to executable specs. Code at any level reads as its own summary, and the list of all avow names is the project index.
 
 Programs compile through a language-neutral IR to target **providers** (C# first, then TypeScript, Python). Every provider emits the same specs as native tests, so all targets are verified against one behavior suite.
 
 ## 1. Design rules
 
-1. **Names are descriptions.** A phrase name is a sentence with typed holes: `"total quantity of {items: List<LineItem>}"`.
-2. **Specs are the truth, names are the summary.** Every phrase may carry Given/When/Then specs. Specs compile to tests in every target. A body that drifts from its description fails CI.
-3. **Small fixed core, open phrase library.** The core has a handful of keywords. Everything domain-specific is a phrase defined in the project.
-4. **Leaves are target-specific, composition is universal.** Only leaf phrases contain `native` code. Composite units (endpoints, composite phrases) are pure phrase composition and transpile identically to every target.
-5. **Deterministic resolution.** Every step resolves to exactly one phrase or the compile fails. No guessing.
+1. **Names are descriptions.** An avow name is a sentence with typed holes: `"total quantity of {items: List<LineItem>}"`.
+2. **Specs are the truth, names are the summary.** Every avow may carry Given/When/Then specs. Specs compile to tests in every target. A body that drifts from its description fails CI.
+3. **Small fixed core, open avow library.** The core has a handful of keywords. Everything domain-specific is an avow defined in the project.
+4. **Leaves are target-specific, composition is universal.** Only leaf avows contain `native` code. Composite units (endpoints, composite avows) are pure avow composition and transpile identically to every target.
+5. **Deterministic resolution.** Every step resolves to exactly one avow or the compile fails. No guessing.
 6. **Specs state consumer-observable outcomes (2026-10-26).** Specs state consumer-observable outcomes so a `then` says what the consumer gets: a returned value, a stored or emitted effect, a response, or a declared failure. A bare `then succeeds` proves only that nothing threw; prefer an outcome with a value, and give every declared `fails with` a spec that shows it. (Guidance today; whether the compiler warns or refuses is under review on the board.)
 
 ## 2. Lexical structure
@@ -21,23 +21,25 @@ Programs compile through a language-neutral IR to target **providers** (C# first
 - **Comments** start with `#` (outside strings) and run to end of line. `native` blocks are passed through raw, so `#` there is target code.
 - **Names** (lexer token `Name`): a lowercase letter, then letters or digits; `-` and `'` join the word only when a letter or digit follows (`first-class`, `don't`, but `x->` is `x` then `->`). The parser treats a `Name` as an `ident` (fields, holes, variables) or a `word` (templates, steps) by position. Words match case-insensitively.
 - **Type names** (lexer token `TypeName`, grammar `Ident`): `[A-Z][A-Za-z0-9]*`. Types, modules, endpoints, failure codes, HTTP verbs.
-- **Strings:** double-quoted, single line, `\"` and `\\` escapes only. A phrase template is lexed as one string; the parser splits its words and holes.
+- **Strings:** double-quoted, single line, `\"` and `\\` escapes only. An avow template is lexed as one string; the parser splits its words and holes.
 - **Numbers:** `-?[0-9]+(\.[0-9]+)?`. A `-` followed by a digit starts a number; there is no arithmetic.
 - **Symbols:** `: , . = { } [ ] < > / ->`.
 - **Native blocks.** A logical line that is exactly `native <target>` captures every following line indented deeper than it (blank lines included) as one `RAW` token, with the block's base indentation (header + 2) removed and trailing blank lines dropped. The block ends at the first non-blank line at or left of the header's indentation.
 
 ### Core keywords
 
-`module` `type` `phrase` `endpoint` `input` `output` `steps` `let` `respond with` `fail with` `fails with` `effects` `spec` `given` `when` `then` `and` `native`
+`module` `type` `avow` `endpoint` `input` `output` `steps` `let` `respond with` `fail with` `fails with` `effects` `spec` `given` `when` `then` `and` `native`
 
-Core keywords are reserved only at the **start of a line**. Inside phrase templates and steps, words like `with` or `input` are ordinary words.
+Core keywords are reserved only at the **start of a line**. Inside avow templates and steps, words like `with` or `input` are ordinary words.
+
+An avow accepts at most one filler from the fixed set `to`, `that`, `it`, directly after `avow`. The filler is ignored, is never part of the declared name, and is not allowed after any other keyword. The formatter always writes the canonical form `avow to "..."`; for example, `avow to "to do list"` declares the name `to do list`.
 
 ## 3. Grammar (EBNF)
 
 ```ebnf
 file            = module_decl , { top_decl } ;
 module_decl     = "module" , Ident , NEWLINE ;
-top_decl        = type_decl | phrase_decl | endpoint_decl ;
+top_decl        = type_decl | avow_decl | endpoint_decl ;
 
 (* ---------- types ---------- *)
 type_decl       = "type" , Ident , NEWLINE , INDENT , field_line , { field_line } , DEDENT ;
@@ -46,10 +48,11 @@ field           = ident , ":" , type_ref ;
 type_ref        = Ident , [ "<" , type_ref , { "," , type_ref } , ">" ] ;
                   (* core: Text Int Decimal Bool Id List<T> Option<T> *)
 
-(* ---------- phrases ---------- *)
-phrase_decl     = "phrase" , template , [ "->" , type_ref ] , NEWLINE ,
-                  INDENT , phrase_clause , { phrase_clause } , DEDENT ;
-phrase_clause   = effects_clause | fails_clause | spec | native_block | steps_block ;
+(* ---------- avows ---------- *)
+avow_decl       = "avow" , [ filler ] , template , [ "->" , type_ref ] , NEWLINE ,
+                  INDENT , avow_clause , { avow_clause } , DEDENT ;
+filler          = "to" | "that" | "it" ;
+avow_clause     = effects_clause | fails_clause | spec | native_block | steps_block ;
                   (* any order; at most one effects, one fails with, one native per target;
                      native blocks OR steps, not both; at least one of them *)
 template        = '"' , template_part , { template_part } , '"' ;   (* >= 1 word *)
@@ -60,7 +63,7 @@ effects_clause  = "effects" , ( "none" | Ident , { "," , Ident } ) , NEWLINE ;
 fails_clause    = "fails with" , Ident , { "," , Ident } , NEWLINE ;
 
 impl            = native_block , { native_block }      (* one per target *)
-                | steps_block ;                         (* composite phrase *)
+                | steps_block ;                         (* composite avow *)
 native_block    = "native" , target , NEWLINE , RAW , NEWLINE ;   (* RAW: see section 2 *)
 target          = "csharp" | "typescript" | "python" ;
 
@@ -79,11 +82,11 @@ segment         = name | number | "{" , ident , "}" ;    (* /orders/{orderId}/li
 (* ---------- steps ---------- *)
 steps_block     = "steps" , NEWLINE , INDENT , step_line , { step_line } , DEDENT ;
 step_line       = step , NEWLINE ;
-step            = let_step | respond_step | fail_step | phrase_call ;
-let_step        = "let" , ident , "=" , phrase_call ;
+step            = let_step | respond_step | fail_step | avow_call ;
+let_step        = "let" , ident , "=" , avow_call ;
 respond_step    = "respond with" , record ;
 fail_step       = "fail with" , Ident ;
-phrase_call     = call_part , { call_part } ;           (* resolved, see section 4 *)
+avow_call     = call_part , { call_part } ;           (* resolved, see section 4 *)
 call_part       = word | argument ;
 word            = name ;                                (* a bare lowercase name, no '.' after it *)
 argument        = path_with_dot | literal | record | list ;
@@ -98,12 +101,12 @@ list            = "[" , [ expr , { "," , expr } , [ "," ] ] , "]" ;   (* trailin
 
 (* ---------- specs ---------- *)
 spec            = "spec" , string , NEWLINE , INDENT ,
-                  [ given_line , { and_line } ] ,        (* no givens: phrase with no holes *)
+                  [ given_line , { and_line } ] ,        (* no givens: avow with no holes *)
                   when_line ,
                   then_line , { and_line } ,
                   DEDENT ;
 given_line      = "given" , ( binding | "input" , record ) , NEWLINE ;
-binding         = ident , "=" , expr ;                  (* one per hole, phrase specs *)
+binding         = ident , "=" , expr ;                  (* one per hole, avow specs *)
 when_line       = "when" , ( "called" | "handled" ) , NEWLINE ;
 then_line       = "then" , outcome , NEWLINE ;
 outcome         = "returns" , expr
@@ -113,14 +116,14 @@ outcome         = "returns" , expr
 and_line        = "and" , ( binding | outcome ) , NEWLINE ;
 ```
 
-## 4. Phrase resolution (the important part)
+## 4. Avow resolution (the important part)
 
-A step that is not `let`, `respond with`, or `fail with` is a **phrase call**. The compiler resolves it against every phrase template in scope:
+A step that is not `let`, `respond with`, or `fail with` is a **avow call**. The compiler resolves it against every avow template in scope:
 
 1. Split the template into **words** and **holes**. The parser has already split the step into **words** (bare names) and **arguments** (dotted paths, literals, records, lists).
-2. A hole matches exactly **one argument**, or **one bare word that names a variable in scope** (a `let`, or a hole of the enclosing composite phrase). So `respond with { totalQuantity: total }` and `ensure items is not empty` inside a composite both work. Arguments never contain spaces outside brackets, so matching is a linear scan with no backtracking.
+2. A hole matches exactly **one argument**, or **one bare word that names a variable in scope** (a `let`, or a hole of the enclosing composite avow). So `respond with { totalQuantity: total }` and `ensure items is not empty` inside a composite both work. Arguments never contain spaces outside brackets, so matching is a linear scan with no backtracking.
 3. Words match case-insensitively; whitespace is normalized.
-4. **Exactly one** template must match. Zero matches is error `PH001 unknown phrase` (with the closest templates suggested). Two or more is error `PH002 ambiguous phrase`.
+4. **Exactly one** template must match. Zero matches is error `PH001 unknown avow` (with the closest templates suggested). Two or more is error `PH002 ambiguous avow`.
 5. The matched expressions are type-checked against the hole types.
 
 Example:
@@ -160,8 +163,8 @@ The full resolver diagnostic table (`PH001`, `PH002`, `PH010`, and `PH300` to `P
 
 | Code | Meaning |
 |---|---|
-| `PH001` | Unknown phrase (quotes the closest template; suggests `variable.field` when a bare word matches a record field in scope) |
-| `PH002` | Ambiguous phrase (lists the matching templates) |
+| `PH001` | Unknown avow (quotes the closest template; suggests `variable.field` when a bare word matches a record field in scope) |
+| `PH002` | Ambiguous avow (lists the matching templates) |
 | `PH010` | Duplicate wording (two templates with the same word sequence, holes ignored) |
 | `PH300` | Unknown type |
 | `PH301` | Wrong number of type arguments |
@@ -173,19 +176,19 @@ The full resolver diagnostic table (`PH001`, `PH002`, `PH010`, and `PH300` to `P
 | `PH312` | Type mismatch (message names both types) |
 | `PH313` | Variable already defined |
 | `PH314` | Record fields do not match the expected type |
-| `PH320` | `let` of a phrase that returns nothing |
+| `PH320` | `let` of an avow that returns nothing |
 | `PH321` | Returned value discarded; use `let` |
 | `PH322` | `respond with` outside an endpoint, or in an endpoint with no output |
 | `PH323` | Endpoint with output never responds |
 | `PH324` | Step after `respond with` or `fail with` is unreachable |
-| `PH325` | Composite phrase with a return type (not supported in v0.1) |
+| `PH325` | Composite avow with a return type (not supported in v0.1) |
 | `PH326` | Composite fails with an undeclared code |
-| `PH327` | Phrases call each other in a cycle |
-| `PH328` | Composite calls a phrase whose effect it does not declare |
-| `PH330` | Wrong trigger (`called` for phrases, `handled` for endpoints) |
-| `PH331` | Givens wrong: unknown, missing or duplicate hole; `input` in a phrase spec; missing input in an endpoint spec |
+| `PH327` | Avows call each other in a cycle |
+| `PH328` | Composite calls an avow whose effect it does not declare |
+| `PH330` | Wrong trigger (`called` for avows, `handled` for endpoints) |
+| `PH331` | Givens wrong: unknown, missing or duplicate hole; `input` in an avow spec; missing input in an endpoint spec |
 | `PH332` | Spec value is a path, not a literal |
-| `PH333` | Outcome the unit cannot have (`returns` with no return type, `responds` in a phrase spec, `returns` in an endpoint spec, `responds` with no output) |
+| `PH333` | Outcome the unit cannot have (`returns` with no return type, `responds` in an avow spec, `returns` in an endpoint spec, `responds` with no output) |
 | `PH334` | Expected failure the unit can never produce (message lists the ones it can) |
 | `PH335` | More than one outcome in a spec |
 
@@ -193,8 +196,8 @@ Rules fixed by the resolver tests:
 
 - **Duplicate wording** (`PH010`) compares the word sequence with holes ignored entirely.
 - **Types check against an expected type.** `"text"` fits `Text` or `Id`; whole numbers fit `Int` or `Decimal`; `2.5` fits only `Decimal`; `none` fits only `Option<T>`; a `T` also fits `Option<T>` (with literal widening for `Option<Decimal>` and `Option<Id>`); records and lists check against record and list types (`PH312` otherwise), and records need their exact field set (`PH314`).
-- **Failed bindings do not cascade:** a `let` whose phrase call fails to resolve binds its variable as `PType.Error` (`?`), which is compatible with every type so later uses do not emit a second diagnostic.
-- **Results are never silently discarded:** calling a value-returning phrase as a statement is `PH321`; use `let`.
+- **Failed bindings do not cascade:** a `let` whose avow call fails to resolve binds its variable as `PType.Error` (`?`), which is compatible with every type so later uses do not emit a second diagnostic.
+- **Results are never silently discarded:** calling a value-returning avow as a statement is `PH321`; use `let`.
 - **Flow is linear:** an endpoint with an output must end with `respond with` or `fail with`; anything after either is unreachable (`PH324`).
 - **Specs use literal data only** (`PH332`) and have exactly one outcome (`PH335`).
 - **Endpoint request and response shapes** are record types named `<Endpoint>.Input` and `<Endpoint>.Output`.
@@ -207,7 +210,7 @@ Rules fixed by the resolver tests:
 | `PH101` | Dedent to a level that matches no open block |
 | `PH102` | Indent that opens more (or less) than one 2-space level |
 | `PH103` | String not closed before end of line |
-| `PH104` | Character Phrase does not use (e.g. `+`) |
+| `PH104` | Character Avowry does not use (e.g. `+`) |
 | `PH105` | Native block line under-indented (deeper than header, shallower than base) |
 | `PH106` | Native block has no body |
 | `PH107` | Unknown string escape |
@@ -219,17 +222,19 @@ Rules fixed by the resolver tests:
 | Code | Meaning |
 |---|---|
 | `PH200` | Syntax error: expected X, found Y |
-| `PH201` | Top-level line is not `module`, `type`, `phrase` or `endpoint` |
+| `PH201` | Top-level line is not `module`, `type`, `avow` or `endpoint` |
 | `PH202` | Module declaration missing, not first, or repeated |
-| `PH203` | Required part missing: type fields, phrase implementation, endpoint `input`/`steps`, spec `when`/`then` |
+| `PH203` | Required part missing: type fields, avow implementation, endpoint `input`/`steps`, spec `when`/`then` |
 | `PH204` | Clause or section repeated (`fails with`, `input`, `when`, `native <same target>`, ...) |
 | `PH205` | Invalid template (see template rules) |
 | `PH206` | Duplicate hole name in a template |
 | `PH207` | Unknown native target |
-| `PH208` | Phrase has both native blocks and steps |
+| `PH208` | Avow has both native blocks and steps |
 | `PH209` | Unknown HTTP verb |
 | `PH210` | Spec clauses out of order, or `and` with nothing to continue |
 | `PH211` | Unexpected indented block |
+| `PH212` | Unknown word before an avow template; allowed fillers are `to`, `that`, `it` |
+| `PH213` | More than one filler before an avow template |
 
 The parser skips a bad line together with its indented children and keeps going, so one error never hides the declarations after it.
 
@@ -237,28 +242,28 @@ The lexer always returns a complete token stream with balanced `INDENT`/`DEDENT`
 
 ## 5. Semantics in brief
 
-- **Failures** are declared codes, not exceptions. A phrase may only fail with codes in its `fails with` clause, plus codes from phrases it calls. Providers map failures to their idiom (C#: a `PhraseFailure` carrying the code, mapped to HTTP 422 at endpoints).
-- **Effects** default to `none`. A phrase that calls an effectful phrase must declare the union. Providers use effects to choose sync vs async and what to inject.
+- **Failures** are declared codes, not exceptions. An avow may only fail with codes in its `fails with` clause, plus codes from avows it calls. Providers map failures to their idiom (C#: a `PhraseFailure` carrying the code, mapped to HTTP 422 at endpoints).
+- **Effects** default to `none`. An avow that calls an effectful avow must declare the union. Providers use effects to choose sync vs async and what to inject.
 - **Naming in targets.** Providers convert names to target conventions: field `quantity` becomes `Quantity` in C#, `quantity` in TypeScript. `native` blocks use target conventions.
-- **Missing native block.** If a leaf phrase has no `native` block for the selected target, compilation fails with `PH020 no implementation for target`. (Later: the LLM-assisted generator proposes one, gated by the phrase's specs.)
+- **Missing native block.** If a leaf avow has no `native` block for the selected target, compilation fails with `PH020 no implementation for target`. (Later: the LLM-assisted generator proposes one, gated by the avow's specs.)
 
 ## 6. Compilation pipeline
 
 ```
-.phrase source
+.avowry source
   -> lexer (INDENT/DEDENT)
   -> parser (AST)
-  -> resolver (phrase calls bound, types checked, lints)
-  -> IR (phrase graph: types, templates, contracts, effects, specs, impls)
+  -> resolver (avow calls bound, types checked, lints)
+  -> IR (avow graph: types, templates, contracts, effects, specs, impls)
   -> provider (C#: FastEndpoints + xUnit | TS: Hono + Vitest | Python: FastAPI + pytest)
 ```
 
-Each generated target symbol carries its source phrase (C#: `[Phrase("...")]` attribute), so an LLM reading generated code can always trace back to the phrase.
+Each generated target symbol carries its source avow (C#: `[Phrase("...")]` attribute), so an LLM reading generated code can always trace back to the avow.
 
 ## 7. Out of scope for v0.1
 
-- Emitting composite phrases with `steps` (the parser supports them; the first provider will not)
+- Emitting composite avows with `steps` (the parser supports them; the first provider will not)
 - Effects other than `none`
-- Content-hash pinning and the generation cache (`phrase.lock`)
-- The `phrase index` command (one line per phrase: template, return type, effects, failures)
+- Content-hash pinning and the generation cache (`avowry.lock`)
+- The `avowry index` command (one line per avow: template, return type, effects, failures)
 - Modules importing other modules

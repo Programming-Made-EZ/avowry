@@ -6,6 +6,9 @@ namespace Phrase.Compiler.Syntax;
 /// </summary>
 public static class SourceFormatter
 {
+    public static string Format(PhraseDecl phrase) =>
+        $"avow to {Quote(Format(phrase.Template))}" + (phrase.Returns is null ? "" : $" -> {Format(phrase.Returns)}");
+
     public static string Format(Template template) =>
         string.Join(" ", template.Parts.Select(p => p switch
         {

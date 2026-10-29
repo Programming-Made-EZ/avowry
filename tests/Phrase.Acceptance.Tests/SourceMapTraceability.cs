@@ -19,13 +19,13 @@ public class SourceMapTraceability
         const string sourceText = """
             module CompositeFailures
 
-            phrase "check invalid value" -> Int
+            avow to "check invalid value" -> Int
               fails with InvalidValue
               native csharp
                 Fail("InvalidValue");
                 return 1;
 
-            phrase "validate value"
+            avow to "validate value"
               steps
                 let result = check invalid value
 
@@ -42,7 +42,7 @@ public class SourceMapTraceability
         var sourceLines = sourceText.Split('\n');
         var declarationLine = LineOf(sourceLines, "  fails with InvalidValue");
         using var workspace = TempWorkspace.Create();
-        var source = Path.Combine(workspace.Root, "CompositeFailures.phrase");
+        var source = Path.Combine(workspace.Root, "CompositeFailures.avowry");
         await File.WriteAllTextAsync(source, sourceText);
 
         // When Morgan builds the source through the CLI and reads its external map
@@ -64,7 +64,7 @@ public class SourceMapTraceability
         const string sourceText = """
             module RepeatedFailures
 
-            phrase "check invalid value" -> Int
+            avow to "check invalid value" -> Int
               fails with InvalidValue
               native csharp
                 Fail("InvalidValue");
@@ -84,7 +84,7 @@ public class SourceMapTraceability
         var sourceLines = sourceText.Split('\n');
         var declarationLine = LineOf(sourceLines, "  fails with InvalidValue");
         using var workspace = TempWorkspace.Create();
-        var source = Path.Combine(workspace.Root, "RepeatedFailures.phrase");
+        var source = Path.Combine(workspace.Root, "RepeatedFailures.avowry");
         await File.WriteAllTextAsync(source, sourceText);
 
         // When Morgan builds the source through the CLI and reads its external map
@@ -103,7 +103,7 @@ public class SourceMapTraceability
     public async Task Step_ids_equal_an_independent_recompute_from_the_source()
     {
         // Given Morgan has the Tasks source and its CLI-built external map
-        var source = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var source = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
         var sourceLines = await File.ReadAllLinesAsync(source);
         using var workspace = TempWorkspace.Create();
         var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
@@ -123,7 +123,7 @@ public class SourceMapTraceability
     public async Task A_failure_used_by_two_endpoints_has_one_id_per_endpoint()
     {
         // Given Morgan's Tasks source uses its declared NotFound failure from three endpoints
-        var source = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var source = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
         using var workspace = TempWorkspace.Create();
 
         // When the CLI writes the source map
@@ -144,7 +144,7 @@ public class SourceMapTraceability
     public async Task Tasks_build_writes_an_external_map_and_trace_resolves_a_declared_failure()
     {
         // Given Morgan's Tasks source and an empty build directory
-        var source = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var source = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
         using var workspace = TempWorkspace.Create();
 
         // When the source is built and Morgan traces EmptyTitle
@@ -163,7 +163,7 @@ public class SourceMapTraceability
         Assert.NotEmpty(document.RootElement.GetProperty("buildId").GetString()!);
         var failure = document.RootElement.GetProperty("records").EnumerateArray()
             .Single(record => record.GetProperty("kind").GetString() == "failure" && record.GetProperty("name").GetString() == "EmptyTitle");
-        Assert.Equal("Tasks.phrase", failure.GetProperty("phraseFile").GetString());
+        Assert.Equal("Tasks.avowry", failure.GetProperty("phraseFile").GetString());
         Assert.Equal(failureLine, failure.GetProperty("line").GetInt32());
         Assert.All(document.RootElement.GetProperty("records").EnumerateArray()
             .Where(record => record.GetProperty("kind").GetString() is "endpoint" or "step" or "failure"),
@@ -171,8 +171,8 @@ public class SourceMapTraceability
         Assert.Equal("CreateTask", failure.GetProperty("endpoint").GetString());
         Assert.True(trace.ExitCode == 0, trace.Text);
         Assert.Contains("EmptyTitle  failure  422", trace.Stdout);
-        Assert.Contains($"Tasks.phrase:{failureLine} endpoint CreateTask", trace.Stdout);
-        Assert.Contains($"spec: Tasks.phrase:{specLine}-{specLine + 3}", trace.Stdout);
+        Assert.Contains($"Tasks.avowry:{failureLine} endpoint CreateTask", trace.Stdout);
+        Assert.Contains($"spec: Tasks.avowry:{specLine}-{specLine + 3}", trace.Stdout);
         Assert.Contains("stepId", trace.Stdout);
 
         // And this card adds no source file name with a line number, no trace header and no map reference
@@ -186,11 +186,11 @@ public class SourceMapTraceability
     public async Task Lf_and_crlf_sources_produce_the_same_map_lines_and_ids()
     {
         // Given Morgan has equivalent LF and CRLF copies of the Tasks source
-        var text = await File.ReadAllTextAsync(RepoPaths.Find("demo", "tasks", "Tasks.phrase"));
+        var text = await File.ReadAllTextAsync(RepoPaths.Find("demo", "tasks", "Tasks.avowry"));
         using var first = TempWorkspace.Create();
         using var second = TempWorkspace.Create();
-        var lf = Path.Combine(first.Root, "Tasks.phrase");
-        var crlf = Path.Combine(second.Root, "Tasks.phrase");
+        var lf = Path.Combine(first.Root, "Tasks.avowry");
+        var crlf = Path.Combine(second.Root, "Tasks.avowry");
         await File.WriteAllTextAsync(lf, text.Replace("\r\n", "\n", StringComparison.Ordinal));
         await File.WriteAllTextAsync(crlf, text.Replace("\r\n", "\n", StringComparison.Ordinal).Replace("\n", "\r\n", StringComparison.Ordinal));
 
@@ -210,7 +210,7 @@ public class SourceMapTraceability
     public async Task Repeated_builds_from_different_paths_are_byte_identical()
     {
         // Given the same LF-normalised Tasks source through absolute and backslash paths
-        var source = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var source = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
         using var first = TempWorkspace.Create();
         using var second = TempWorkspace.Create();
 
@@ -218,7 +218,7 @@ public class SourceMapTraceability
         var one = await PhraseCli.RunAsync("build", source, "-o", first.Root);
         // The second path is a copy in another directory; on Windows it is written with backslashes
         using var copy = TempWorkspace.Create();
-        var copied = Path.Combine(copy.Root, "Tasks.phrase");
+        var copied = Path.Combine(copy.Root, "Tasks.avowry");
         File.Copy(source, copied);
         var secondPath = OperatingSystem.IsWindows() ? copied.Replace('/', '\\') : copied;
         var two = await PhraseCli.RunAsync("build", secondPath, "-o", second.Root);
@@ -240,7 +240,7 @@ public class SourceMapTraceability
     {
         // Given Morgan has built the Tasks map
         using var workspace = TempWorkspace.Create();
-        var source = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var source = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
         var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
 
         // When a name absent from that map is traced
@@ -257,7 +257,7 @@ public class SourceMapTraceability
     public async Task Live_failures_and_endpoints_resolve_in_the_source_map()
     {
         // Given Morgan's Tasks source is built by the CLI into an empty temporary workspace
-        var sourcePath = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var sourcePath = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
         var sourceLines = await File.ReadAllLinesAsync(sourcePath);
         var resolved = Resolver.Resolve(string.Join('\n', sourceLines));
         Assert.Empty(resolved.Diagnostics);
@@ -315,14 +315,14 @@ public class SourceMapTraceability
     public async Task No_phrase_knowledge_assertions_fail_on_a_reintroduced_leak()
     {
         // Given each forbidden form of Phrase source knowledge is reintroduced independently
-        var leaks = new[] { "Tasks.phrase:12", "// phrase: Tasks.phrase", "X-Phrase-Source", "Tasks.avowrymap.json" };
+        var leaks = new[] { "Tasks.avowry:12", "// phrase: Tasks.avowry", "X-Phrase-Source", "Tasks.avowrymap.json" };
 
         // When the shared generated-output assertions inspect each mutation
         foreach (var leak in leaks)
             Assert.ThrowsAny<Xunit.Sdk.XunitException>(() => AssertNoPhraseKnowledge(leak));
 
         // Then those same assertions accept the real CLI-generated C# output
-        var source = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var source = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
         using var workspace = TempWorkspace.Create();
         var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
         Assert.True(build.ExitCode == 0, build.Text);
@@ -332,7 +332,7 @@ public class SourceMapTraceability
 
     private static void AssertNoPhraseKnowledge(string generated)
     {
-        Assert.DoesNotMatch(@"\.phrase:\d", generated);
+        Assert.DoesNotMatch(@"\.avowry:\d", generated);
         Assert.DoesNotContain("// phrase:", generated, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("X-Phrase-Source", generated, StringComparison.Ordinal);
         Assert.DoesNotContain("avowrymap", generated, StringComparison.OrdinalIgnoreCase);
@@ -364,7 +364,7 @@ public class SourceMapTraceability
     {
         "endpoint" => line.StartsWith($"endpoint {name} :", StringComparison.Ordinal),
         "step" => line == name,
-        "phrase" => line.StartsWith($"phrase \"{name}\"", StringComparison.Ordinal),
+        "phrase" => line.StartsWith($"avow to \"{name}\"", StringComparison.Ordinal),
         "failure" => line.StartsWith("fails with ", StringComparison.Ordinal)
             && line.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries).Contains(name, StringComparer.Ordinal),
         _ => false,
@@ -375,7 +375,7 @@ public class SourceMapTraceability
     public async Task Failure_records_point_at_the_exact_declaration_line_of_the_phrase_the_endpoint_calls()
     {
         // Given Morgan's Tasks source resolved by the compiler and built by the CLI
-        var source = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var source = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
         var sourceLines = await File.ReadAllLinesAsync(source);
         var resolved = Resolver.Resolve(string.Join('\n', sourceLines));
         Assert.Empty(resolved.Diagnostics);

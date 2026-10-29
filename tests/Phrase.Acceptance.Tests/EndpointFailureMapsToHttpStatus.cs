@@ -16,9 +16,9 @@ public class EndpointFailureMapsToHttpStatus
     [Trait("Slice", "049")]
     public async Task Invalid_input_returns_the_declared_failure_with_its_mapped_status()
     {
-        // Given a generated API for orders.phrase, whose empty-items failure is EmptyOrder
+        // Given a generated API for orders.avowry, whose empty-items failure is EmptyOrder
         // and which GRAMMAR.md maps to HTTP 422 with the code as the error
-        var source = Fixture.Read("orders.phrase");
+        var source = Fixture.Read("orders.avowry");
         var output = PhraseCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);

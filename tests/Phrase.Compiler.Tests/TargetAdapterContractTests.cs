@@ -19,7 +19,7 @@ public class TargetAdapterContractTests
         const string source = """
             module Numbers
 
-            phrase "double {n: Int}" -> Int
+            avow to "double {n: Int}" -> Int
               native csharp
                 return n * 2;
             """;

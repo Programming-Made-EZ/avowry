@@ -15,7 +15,7 @@ from typing import Any
 
 PHRASE_WRAPPER_LINES = (
     "Use the provided Phrase documentation. Return only valid Phrase source.",
-    "```phrase",
+    "```avowry",
 )
 CSHARP_WRAPPER_LINES = (
     "Return only valid C# source.",
@@ -135,7 +135,7 @@ def extract_modify_sections(text: str) -> tuple[str | None, str | None, str | No
         section = extract_section(text, "Starting code")
     except ValueError:
         return None, None, None
-    phrase_match = re.search(r"^### start\.phrase\s*$\s*```phrase\s*(.*?)\s*```", section, re.M | re.S)
+    phrase_match = re.search(r"^### start\.avowry\s*$\s*```avowry\s*(.*?)\s*```", section, re.M | re.S)
     csharp_match = re.search(r"^### start\.cs\s*$\s*```csharp\s*(.*?)\s*```", section, re.M | re.S)
     change_match = re.search(r"^### The change requested\s*$\n(.*?)(?=^### |\Z)", section, re.M | re.S)
     start_phrase = phrase_match.group(1).strip() if phrase_match else None
@@ -193,7 +193,7 @@ def write_task(out_dir: Path, task_id: str, task_text: str, libraries: str, outc
 
     if kind == "modify":
         if start_phrase is not None:
-            (phrase_dir / "start.phrase").write_text(start_phrase + "\n", encoding="utf-8")
+            (phrase_dir / "start.avowry").write_text(start_phrase + "\n", encoding="utf-8")
         if start_csharp is not None:
             (csharp_dir / "start.cs").write_text(start_csharp + "\n", encoding="utf-8")
 
@@ -219,7 +219,7 @@ def parse_holdout(path: Path) -> tuple[str, str, str, str, str | None, str | Non
     outcomes = extract_outcomes(text)
     start_phrase, start_csharp, change = extract_modify_sections(text)
     if kind == "modify" and (start_phrase is None or start_csharp is None):
-        raise ValueError("modify task requires start.phrase and start.cs blocks")
+        raise ValueError("modify task requires start.avowry and start.cs blocks")
     return task_id, kind, task_text, header["libraries"], start_phrase, start_csharp, outcomes, change
 
 

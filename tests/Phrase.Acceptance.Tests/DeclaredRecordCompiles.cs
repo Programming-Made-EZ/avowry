@@ -22,7 +22,7 @@ public class DeclaredRecordCompiles
               sku: Text
               quantity: Int
 
-            phrase "total {order: Order}" -> Int
+            avow to "total {order: Order}" -> Int
               spec "totals the order"
                 given order = { sku: "A", quantity: 2 }
                 when called
@@ -53,7 +53,7 @@ public class DeclaredRecordCompiles
         const string source = """
             module Numbers
 
-            phrase "double {n: Int}" -> Int
+            avow to "double {n: Int}" -> Int
               spec "doubles two"
                 given n = 2
                 when called

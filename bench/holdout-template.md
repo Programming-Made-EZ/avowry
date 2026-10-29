@@ -36,8 +36,8 @@ At least one failure-path case for every failure code named in the prose.
 
 Two equivalent starting points that behave the same, so the change is the same size in both arms:
 
-### start.phrase
-```phrase
+### start.avowry
+```avowry
 <the existing Phrase source>
 ```
 

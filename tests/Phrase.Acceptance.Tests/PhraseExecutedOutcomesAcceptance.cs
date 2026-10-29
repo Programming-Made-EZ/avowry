@@ -13,7 +13,7 @@ namespace Phrase.Acceptance.Tests;
 //   so that a Phrase pass means the same executed behaviour as a plain C# pass.
 public class PhraseExecutedOutcomesAcceptance
 {
-    const string PromptHashBeforeExecutedScoring = "a7bd17c3b580099223bd99f0db9c3377ba2419a1f568448dd21fda80a7fccade";
+    const string PromptHashBeforeExecutedScoring = "829227c49321902dcf3d18ae2b9e9e64da6bcde3c503b79019ba683e0f9adbfc";
 
     [Theory]
     [Trait("Slice", "099")]
@@ -26,7 +26,7 @@ public class PhraseExecutedOutcomesAcceptance
         // Given a read or modify task and a fake model whose recorded reply is a correct Phrase module
         using var workspace = TempWorkspace.Create();
         var suite = WriteSuite(workspace.Root, task);
-        var reply = Path.Combine(workspace.Root, "correct.phrase");
+        var reply = Path.Combine(workspace.Root, "correct.avowry");
         await File.WriteAllTextAsync(reply, CorrectChangeReply(task));
 
         // When Riley scores the reply by its executed outcomes
@@ -53,7 +53,7 @@ public class PhraseExecutedOutcomesAcceptance
         // Given a read or modify task and a fake model whose reply violates its first outcome
         using var workspace = TempWorkspace.Create();
         var suite = WriteSuite(workspace.Root, task);
-        var reply = Path.Combine(workspace.Root, "wrong.phrase");
+        var reply = Path.Combine(workspace.Root, "wrong.avowry");
         await File.WriteAllTextAsync(reply, WrongChangeReply(task));
 
         // When Riley scores the reply by its executed outcomes
@@ -114,7 +114,7 @@ public class PhraseExecutedOutcomesAcceptance
             ["001-write-greeting"] = """
                 module Greeting
 
-                phrase "say hello" -> Text
+                avow to "say hello" -> Text
                   spec "proves hello"
                     when called
                     then returns "hello"
@@ -124,7 +124,7 @@ public class PhraseExecutedOutcomesAcceptance
             ["002-write-total"] = """
                 module Totals
 
-                phrase "double {value: Int}" -> Int
+                avow to "double {value: Int}" -> Int
                   spec "doubles three"
                     given value = 3
                     when called
@@ -138,7 +138,7 @@ public class PhraseExecutedOutcomesAcceptance
         {
             using var workspace = TempWorkspace.Create();
             var suite = WriteSuite(workspace.Root, task);
-            var reply = Path.Combine(workspace.Root, "reply.phrase");
+            var reply = Path.Combine(workspace.Root, "reply.avowry");
             await File.WriteAllTextAsync(reply, source);
 
             // When the Phrase arm runs that task with executed scoring
@@ -166,11 +166,11 @@ public class PhraseExecutedOutcomesAcceptance
         using var workspace = TempWorkspace.Create();
         var suite = WriteSuite(workspace.Root, "001-write-greeting");
         var outcomeName = OutcomeName(suite, "001-write-greeting");
-        var reply = Path.Combine(workspace.Root, "wrong.phrase");
+        var reply = Path.Combine(workspace.Root, "wrong.avowry");
         await File.WriteAllTextAsync(reply, """
             module Greeting
 
-            phrase "say hello" -> Text
+            avow to "say hello" -> Text
               spec "proves hello"
                 when called
                 then returns "hello"
@@ -299,7 +299,7 @@ public class PhraseExecutedOutcomesAcceptance
                 echo(%*>"{argv}"
                 echo module Greeting
                 echo.
-                echo phrase "say hello"
+                echo avow to "say hello"
                 echo   native csharp
                 echo     return;
                 """);
@@ -313,7 +313,7 @@ public class PhraseExecutedOutcomesAcceptance
             cat <<'PHRASE'
             module Greeting
 
-            phrase "say hello"
+            avow to "say hello"
               native csharp
                 return;
             PHRASE
@@ -386,7 +386,7 @@ public class PhraseExecutedOutcomesAcceptance
     private static string StartingPhrase(string task)
     {
         var prompt = File.ReadAllText(RepoPaths.Find("bench", "tasks", task, "prompt.md"));
-        var match = Regex.Match(prompt, "```phrase\\r?\\n(?<source>.*?)\\r?\\n```", RegexOptions.Singleline | RegexOptions.CultureInvariant);
+        var match = Regex.Match(prompt, "```avowry\\r?\\n(?<source>.*?)\\r?\\n```", RegexOptions.Singleline | RegexOptions.CultureInvariant);
         Assert.True(match.Success, $"{task}: starting Phrase fixture is missing");
         return match.Groups["source"].Value;
     }
@@ -412,7 +412,7 @@ public class PhraseExecutedOutcomesAcceptance
         "007-modify-return" => """
             module Status
 
-            phrase "current status" -> Text
+            avow to "current status" -> Text
               spec "returns ready"
                 when called
                 then returns "ready"
@@ -426,7 +426,7 @@ public class PhraseExecutedOutcomesAcceptance
               name: Text
               email: Text
 
-            phrase "email of {customer: Customer}" -> Text
+            avow to "email of {customer: Customer}" -> Text
               spec "returns a customer's email"
                 given customer = { name: "Ada", email: "ada@example.com" }
                 when called
@@ -448,7 +448,7 @@ public class PhraseExecutedOutcomesAcceptance
             type Customer
               email: Text
 
-            phrase "email of {customer: Customer}" -> Text
+            avow to "email of {customer: Customer}" -> Text
               spec "returns a customer's email"
                 given customer = { email: "ada@example.com" }
                 when called
@@ -466,8 +466,8 @@ public class PhraseExecutedOutcomesAcceptance
         // Given each broken start prompt for the fix tasks
         var prompts = new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["010-fix-trigger"] = "Fix the failing spec in this Phrase module. Do not change the intended behavior or remove the spec. Return only valid Phrase source.\n\n```phrase\nmodule Greeting\n\nphrase \"greeting\" -> Text\n  spec \"greets\"\n    when handled\n    then returns \"hello\"\n  native csharp\n    return \"hello\";\n```\n",
-            ["011-fix-type"] = "Fix the type error in this Phrase module while preserving the phrase name and the spec's expected value. Return only valid Phrase source.\n\n```phrase\nmodule Count\n\nphrase \"answer\" -> Text\n  spec \"is forty two\"\n    when called\n    then returns 42\n  native csharp\n    return 42;\n```\n",
+            ["010-fix-trigger"] = "Fix the failing spec in this Avowry module. Do not change the intended behavior or remove the spec. Return only valid Avowry source.\n\n```avowry\nmodule Greeting\n\navow to \"greeting\" -> Text\n  spec \"greets\"\n    when handled\n    then returns \"hello\"\n  native csharp\n    return \"hello\";\n```\n",
+            ["011-fix-type"] = "Fix the type error in this Avowry module while preserving the avow name and the spec's expected value. Return only valid Avowry source.\n\n```avowry\nmodule Count\n\navow to \"answer\" -> Text\n  spec \"is forty two\"\n    when called\n    then returns 42\n  native csharp\n    return 42;\n```\n",
         };
 
         foreach (var (task, expected) in prompts)
@@ -477,7 +477,7 @@ public class PhraseExecutedOutcomesAcceptance
             // When the prompt is checked against the committed broken start
             // Then it must stay byte-identical and fail with its documented code
             Assert.Equal(expected, actual);
-            var match = Regex.Match(actual, "```phrase\\r?\\n(?<source>.*?)\\r?\\n```", RegexOptions.Singleline | RegexOptions.CultureInvariant);
+            var match = Regex.Match(actual, "```avowry\\r?\\n(?<source>.*?)\\r?\\n```", RegexOptions.Singleline | RegexOptions.CultureInvariant);
             Assert.True(match.Success, task + ": broken Phrase fixture is missing");
             var source = match.Groups["source"].Value;
             var exception = Assert.Throws<CompilationFailedException>(() => PhraseCompiler.Compile(source, new Phrase.Adapters.CSharp.CSharpProvider()));
@@ -504,7 +504,7 @@ public class PhraseExecutedOutcomesAcceptance
             ["010-fix-trigger"] = """
                 module Greeting
 
-                phrase "greeting" -> Text
+                avow to "greeting" -> Text
                   spec "greets"
                     when called
                     then returns "hello"
@@ -514,7 +514,7 @@ public class PhraseExecutedOutcomesAcceptance
             ["011-fix-type"] = """
                 module Count
 
-                phrase "answer" -> Int
+                avow to "answer" -> Int
                   spec "is forty two"
                     when called
                     then returns 42
@@ -527,7 +527,7 @@ public class PhraseExecutedOutcomesAcceptance
             ["010-fix-trigger"] = """
                 module Greeting
 
-                phrase "greeting" -> Text
+                avow to "greeting" -> Text
                   spec "greets"
                     when handled
                     then returns "hello"
@@ -537,7 +537,7 @@ public class PhraseExecutedOutcomesAcceptance
             ["011-fix-type"] = """
                 module Count
 
-                phrase "answer" -> Text
+                avow to "answer" -> Text
                   spec "is forty two"
                     when called
                     then returns 42
@@ -548,8 +548,8 @@ public class PhraseExecutedOutcomesAcceptance
 
         using var workspace = TempWorkspace.Create();
         var suite = WriteSuite(workspace.Root, task);
-        var correctReply = Path.Combine(workspace.Root, "fixed.phrase");
-        var wrongReply = Path.Combine(workspace.Root, "broken.phrase");
+        var correctReply = Path.Combine(workspace.Root, "fixed.avowry");
+        var wrongReply = Path.Combine(workspace.Root, "broken.avowry");
         await File.WriteAllTextAsync(correctReply, correct[task]);
         await File.WriteAllTextAsync(wrongReply, wrong[task]);
 

@@ -2,11 +2,11 @@
 
 A programming language for LLMs where **names are descriptions** and **specs are the truth**. Code at every level reads as its own summary, so the code is the context. Avowry compiles through a language-neutral IR to target providers; C# (FastEndpoints + xUnit) is first. Avowry is the language; each avow is one line of intent in it.
 
-The current implementation uses the `avowry` command and still uses the `.phrase` file extension. The file extension is renamed in a later card.
+The current implementation uses the `avowry` command and still uses the `.avowry` file extension. The file extension is renamed in a later card.
 
 - **Purpose and north star: [VISION.md](VISION.md)** (a vocabulary of common patterns an LLM reads and writes for free, in any language; both a spec and a library)
 - Grammar and resolution rules: [docs/GRAMMAR.md](docs/GRAMMAR.md)
-- First program: [tests/Phrase.Acceptance.Tests/Fixtures/orders.phrase](tests/Phrase.Acceptance.Tests/Fixtures/orders.phrase)
+- First program: [tests/Phrase.Acceptance.Tests/Fixtures/orders.avowry](tests/Phrase.Acceptance.Tests/Fixtures/orders.avowry)
 - What the C# provider should emit for it: [reference/csharp](reference/csharp)
 - **Contributing now: [HANDOFF.md](HANDOFF.md)** (the resolver, as a mob)
 
@@ -40,15 +40,15 @@ dotnet test Phrase.sln --filter "Status!=Pending"     # what CI gates on
 | `Phrase.Compiler.Tests` (formatter) | Green, 8 tests | Canonical source round trips, used for generated comments |
 | `Phrase.Compiler.Tests` (resolver) | Red (Pending), 83 tests | The spec for the resolver; see [HANDOFF.md](HANDOFF.md) |
 
-The acceptance test counts specs in the `.phrase` source independently of the compiler, so a compiler that silently drops specs cannot pass.
+The acceptance test counts specs in the `.avowry` source independently of the compiler, so a compiler that silently drops specs cannot pass.
 
 ## Next: the inner loop
 
 Build inward, one unit-test suite per stage, each with Given/When/Then comments:
 
 1. ~~**Lexer**: indentation to `INDENT`/`DEDENT`, comments, strings, raw `native` blocks~~ (done)
-2. ~~**Parser**: AST for `module`, `type`, `phrase`, `endpoint`, `spec`~~ (done)
-3. **Resolver** (in progress, see [HANDOFF.md](HANDOFF.md)): avow-call matching, type checks, failure and effect propagation, spec checks. Its output, `ModuleModel`, is the IR.
+2. ~~**Parser**: AST for `module`, `type`, `avow`, `endpoint`, `spec`~~ (done)
+3. **Resolver** (in progress, see [HANDOFF.md](HANDOFF.md)): avow call matching, type checks, failure and effect propagation, spec checks. Its output, `ModuleModel`, is the IR.
 4. **Provider contract**: give `ITargetProvider` an `Emit(ModuleModel)` member
 5. **C# emitter**: types, avows, endpoint, specs; compare against `reference/csharp`
 

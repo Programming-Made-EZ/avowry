@@ -15,7 +15,7 @@ public class TasksDemoApp
     public async Task Tasks_source_is_only_phrase_and_lists_the_feature_order()
     {
         // Given the product owner's prototype source and its growth-checkpoint backlog
-        var sourcePath = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var sourcePath = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
         var backlogPath = RepoPaths.Find("demo", "tasks", "BACKLOG.md");
         Assert.True(File.Exists(sourcePath), $"Tasks demo not found: {sourcePath}");
         Assert.True(File.Exists(backlogPath), $"Tasks backlog not found: {backlogPath}");
@@ -46,7 +46,7 @@ public class TasksDemoApp
     public async Task Tasks_api_builds_and_every_endpoint_has_passing_success_and_failure_specs()
     {
         // Given the five-feature Tasks demo, written as Phrase source with declared native leaves only
-        var sourcePath = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var sourcePath = RepoPaths.Find("demo", "tasks", "Tasks.avowry");
         Assert.True(File.Exists(sourcePath), $"Tasks demo not found: {sourcePath}");
         var source = await File.ReadAllTextAsync(sourcePath);
         var model = Resolver.Resolve(source);

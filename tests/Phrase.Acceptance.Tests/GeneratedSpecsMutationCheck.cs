@@ -4,7 +4,7 @@ using Xunit.Abstractions;
 namespace Phrase.Acceptance.Tests;
 
 // Feature: Generated specs catch broken C# phrase implementations
-//   As Dana, I want the specs generated from orders.phrase to fail when an
+//   As Dana, I want the specs generated from orders.avowry to fail when an
 //   implementation is broken, so that a green run means the behaviour I
 //   specified is really there.
 public class GeneratedSpecsMutationCheck
@@ -18,8 +18,8 @@ public class GeneratedSpecsMutationCheck
     public async Task Orders_specs_kill_at_least_ninety_percent_deterministically()
     {
         // Given a committed mutation fixture with boundary specs and the frozen orders fixture
-        var mutationSource = Fixture.Read("orders-mutation.phrase");
-        var ordersSource = Fixture.Read("orders.phrase");
+        var mutationSource = Fixture.Read("orders-mutation.avowry");
+        var ordersSource = Fixture.Read("orders.avowry");
 
         // When each fixture's generated specs are run against every mutation twice
         var first = await CSharpMutationCheck.RunAsync(mutationSource);
@@ -27,7 +27,7 @@ public class GeneratedSpecsMutationCheck
         var ordersFirst = await CSharpMutationCheck.RunAsync(ordersSource);
         var ordersSecond = await CSharpMutationCheck.RunAsync(ordersSource);
         output.WriteLine($"Mutation fixture:{Environment.NewLine}{first.Report}");
-        output.WriteLine($"orders.phrase (informational):{Environment.NewLine}{ordersFirst.Report}");
+        output.WriteLine($"orders.avowry (informational):{Environment.NewLine}{ordersFirst.Report}");
 
         // Then totals and per-phrase results report killed over buildable mutants
         Assert.Equal(9, first.Total.Buildable);

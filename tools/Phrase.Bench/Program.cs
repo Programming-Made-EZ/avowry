@@ -445,7 +445,7 @@ static bool TryReadDocumentationBlock(string docsRoot, out string docsBlock, out
 {
     var grammarPath = Path.Combine(docsRoot, "docs", "GRAMMAR.md");
     var cheatSheetPath = Path.Combine(docsRoot, "docs", "CHEATSHEET.md");
-    var examplePath = Path.Combine(docsRoot, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.phrase");
+    var examplePath = Path.Combine(docsRoot, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.avowry");
     if (!File.Exists(grammarPath))
     {
         docsBlock = "";
@@ -470,7 +470,7 @@ static bool TryReadDocumentationBlock(string docsRoot, out string docsBlock, out
     }
 
     docsBlock = "";
-    error = $"docs-in-context mode could not find docs/CHEATSHEET.md or tests/Phrase.Acceptance.Tests/Fixtures/orders.phrase under '{docsRoot}'.";
+    error = $"docs-in-context mode could not find docs/CHEATSHEET.md or tests/Phrase.Acceptance.Tests/Fixtures/orders.avowry under '{docsRoot}'.";
     return false;
 }
 
@@ -521,7 +521,7 @@ static (string Prompt, int ExistingCodeTokens) ReadPrompt(BenchmarkTask task, st
 
 static int StartingPhraseTokens(string prompt)
 {
-    var match = Regex.Match(prompt, "```phrase\\r?\\n(?<source>.*?)\\r?\\n```", RegexOptions.Singleline | RegexOptions.CultureInvariant);
+    var match = Regex.Match(prompt, "```avowry\\r?\\n(?<source>.*?)\\r?\\n```", RegexOptions.Singleline | RegexOptions.CultureInvariant);
     return match.Success ? EstimateTokens(match.Groups["source"].Value) : 0;
 }
 
@@ -623,7 +623,7 @@ static async Task<string> RunModel(
     string model, string command, string workingDirectory, string prompt, TimeSpan timeout, ColdProfile? coldProfile = null, string? promptFilePath = null)
 {
     if (command == SelfCheckModelCommand)
-        return "module SelfCheck\n\nphrase \"self check\"\n  native csharp\n    return;\n";
+        return "module SelfCheck\n\navow to \"self check\"\n  native csharp\n    return;\n";
 
     var profile = model.Split('-', 2)[0];
     var effectiveColdProfile = coldProfile ?? ResolveColdProfile(model, false);
@@ -755,7 +755,7 @@ static string ExtractPhrase(string output)
 {
     foreach (Match match in Regex.Matches(
         output,
-        @"```+[ \t]*(?:phrase[^\r\n]*)?\r?\n(?<body>[\s\S]*?)```+",
+        @"```+[ \t]*(?:avowry[^\r\n]*)?\r?\n(?<body>[\s\S]*?)```+",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
     {
         var body = match.Groups["body"].Value.Trim();
@@ -765,7 +765,7 @@ static string ExtractPhrase(string output)
 
     var plainMatch = Regex.Match(
         output,
-        @"(?ms)(?:^|\n)(?<body>(?:module|phrase|type|endpoint)\b[^\n]*(?:\n\s+.*)*)",
+        @"(?ms)(?:^|\n)(?<body>(?:module|avow|type|endpoint)\b[^\n]*(?:\n\s+.*)*)",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
     if (plainMatch.Success)
     {
@@ -781,7 +781,7 @@ static bool ContainsPhrase(string source)
 {
     return Regex.IsMatch(
         source,
-        @"(?m)^(?:module|phrase|type|endpoint)\b",
+        @"(?m)^(?:module|avow|type|endpoint)\b",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 }
 
