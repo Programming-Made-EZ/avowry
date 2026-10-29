@@ -1,4 +1,4 @@
-# D134 Owner action: @Programming-Made-EZ is a placeholder; the product owner chooses the real reviewer identity.
+# Informational only (D135 ruling): the mob is trunk-based with direct commits and no branch protection, so these entries are not enforced. They document which files are process controls; the checker requires them to stay listed.
 /scripts/mob_process.py @Programming-Made-EZ
 /.github/workflows/ @Programming-Made-EZ
 /.github/CODEOWNERS @Programming-Made-EZ

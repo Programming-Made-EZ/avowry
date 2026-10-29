@@ -25,8 +25,10 @@ The push gate also loads the checker from `github.event.before`, the commit imme
 
 Residual limits are explicit: Git committer dates can be forged; records remain self-attested until the product owner completes D134's branch protection with required checks and code-owner review and establishes a separate auditor identity; and `git push --no-verify` bypasses the local hook. CI and Dispatch are therefore the authoritative detectors, not the hook alone.
 
-## Residual limits (D135)
+## Standing design and residual limits (D135)
 
-- A single commit can make the checker permissive and still pass: the previous-version run validates the new tree with the old checker, not the new checker source, and it is skipped on force pushes. The external audit (Dispatch, every 30 minutes, with its own pinned copy of the checker) is the cover until branch protection with a code-owner review by a second identity exists.
-- Detection happens after the push. Prevention (pull requests, required checks, no direct or force pushes) is the required destination (D135, option C).
-- Records are self-attested until an auditor identity posts an external review or status per card.
+- The mob is trunk-based with direct commits to main. Unfinished or risky work ships behind default-off feature flags (or an equivalent toggle) so that main stays deployable. There are no pull requests, no branch protection and no reviewer-identity request (product owner ruling).
+- Enforcement is detection plus an external audit: this job on every push, the issue-event and 30-minute workflow, red main with the stop-the-line rule, and Dispatch auditing every 30 minutes with its own pinned copy of the checker, reporting to the product owner.
+- A single commit can make the checker permissive and still pass: the previous-version run validates the new tree with the old checker, not the new checker source, and it is skipped on force pushes. The external audit covers this.
+- A disabled CI job and a force push are not caught by the checker itself; the external audit and the stop-the-line rule cover them.
+- Records, retros and Cards lines are self-attested; the audit and the checks above are the controls.

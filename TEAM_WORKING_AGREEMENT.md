@@ -68,6 +68,8 @@ an assignee (model or seat) and a one-line why. There is no minimum or maximum r
 
 ### Engineering discipline
 
+- **Trunk-based, direct commits to main (product owner ruling, 2026-10-29, D135).** There are no pull requests and no branch protection. Unfinished or risky work ships behind default-off feature flags (or an equivalent toggle) so that main stays deployable. Enforcement is detection: CI goes red and the stop-the-line rule applies, and the external audit runs every 30 minutes (`docs/PROCESS-CHECKS.md`).
+
 - **Code follows `docs/CODING_GUIDELINES.md`.** One short document for this repository's own code: high cohesion and low coupling, dependencies pointing one way, small functions, naming, no throwing on user input, deterministic cross-platform output, tests that can fail, no dead code. Reviewers check every change against its checklist. It is separate from the project-profile standards Phrase applies to generated code (`docs/adr/ADR-library-binding-layering.md`).
 - **Outside-in TDD** from ZOMBIES acceptance criteria: start at the outermost boundary, work inward.
 - **Honest red first.** Watch the test fail for the right reason. A red that survives when only the fix is
