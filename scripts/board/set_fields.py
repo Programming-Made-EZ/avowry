@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Sequence
 
 OWNER = "Programming-Made-EZ"
-REPO = "phrase-lang"
+REPO = "avowry"
 PROJECT_NUMBER = 1
 BOARD_DIR = Path(__file__).resolve().parents[2] / "board"
 CARD_FILE_RE = re.compile(r"^(\d{3})-.+\.md$")

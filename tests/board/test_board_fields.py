@@ -9,7 +9,7 @@ from scripts.board import check_real_board, set_fields
 
 
 OWNER = "Programming-Made-EZ"
-SLUG = f"{OWNER}/phrase-lang"
+SLUG = f"{OWNER}/avowry"
 
 
 class FakeGH:

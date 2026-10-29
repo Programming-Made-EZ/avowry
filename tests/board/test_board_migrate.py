@@ -9,7 +9,7 @@ from pathlib import Path
 from scripts.board import check_real_board, migrate_cards
 
 
-SLUG = "Programming-Made-EZ/phrase-lang"
+SLUG = "Programming-Made-EZ/avowry"
 BOARD = Path(__file__).resolve().parents[2] / "board"
 CARD_FILE_RE = re.compile(r"^(\d{3})-.+\.md$")
 MARKER_RE = re.compile(r"<!-- phrase-card:(\d{3}) -->")
@@ -379,9 +379,9 @@ class BoardMigrateTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             migrate_cards.main(["--apply", "--repo", "other-repo"], gh_runner=fake, sleep=lambda _seconds: None)
         with self.assertRaises(ValueError):
-            migrate_cards.main(["--repo", "Programming-Made-EZ/phrase-lang"], gh_runner=fake, sleep=lambda _seconds: None)
+            migrate_cards.main(["--repo", "Programming-Made-EZ/avowry"], gh_runner=fake, sleep=lambda _seconds: None)
         with self.assertRaises(ValueError):
-            migrate_cards.migrate(fake, owner="some-other-owner", repo="phrase-lang")
+            migrate_cards.migrate(fake, owner="some-other-owner", repo="avowry")
         with self.assertRaises(ValueError):
             migrate_cards.migrate(fake, owner="Programming-Made-EZ", repo="other-repo")
         self.assertEqual(fake.calls, [])

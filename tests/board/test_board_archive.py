@@ -18,7 +18,7 @@ REPO = Path(__file__).resolve().parents[2]
 HOOK = REPO / "scripts" / "check-board-archive.py"
 HOOK_ALIAS = REPO / "scripts" / "board" / "check-archive-not-hand-edited"
 OWNER = "Programming-Made-EZ"
-SLUG = f"{OWNER}/phrase-lang"
+SLUG = f"{OWNER}/avowry"
 
 
 def crlf(text):

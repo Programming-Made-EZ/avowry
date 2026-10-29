@@ -865,5 +865,14 @@
     "also": [
       "process-and-staffing"
     ]
+  },
+  "D127": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "No backward compatibility for the rename; the repository is renamed first",
+    "order": 118,
+    "also": [
+      "compiler-and-adapters"
+    ]
   }
 }

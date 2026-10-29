@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 OWNER = "Programming-Made-EZ"
-REPO = "phrase-lang"
+REPO = "avowry"
 PROJECT_NAME = "Phrase Board"
 BOARD_DIR = Path(__file__).resolve().parents[2] / "board"
 CARD_FILE_RE = re.compile(r"^(\d{3})-.+\.md$")

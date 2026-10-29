@@ -42,6 +42,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D121](process-and-staffing.md#d121) — The v0.1 public preview bar and its gap cards (176 to 188)
 - [D124](process-and-staffing.md#d124) — Licence decision (Apache-2.0 plus trademark policy) and review of card 183
 - [D125](process-and-staffing.md#d125) — The public name is Avowry; the rename as nine small cards
+- [D127](process-and-staffing.md#d127) — No backward compatibility for the rename; the repository is renamed first
 
 ### benchmarks-and-measurement
 
@@ -189,3 +190,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D124](process-and-staffing.md#d124) | Licence decision (Apache-2.0 plus trademark policy) and review of card 183 | process-and-staffing | in force |
 | [D125](process-and-staffing.md#d125) | The public name is Avowry; the rename as nine small cards | process-and-staffing | in force |
 | [D126](compiler-and-adapters.md#d126) | The in-language unit is an avow; declaration form and filler words | compiler-and-adapters | in force |
+| [D127](process-and-staffing.md#d127) | No backward compatibility for the rename; the repository is renamed first | process-and-staffing | in force |

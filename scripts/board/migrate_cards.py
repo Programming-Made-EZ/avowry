@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Migrate board/NNN-*.md cards into one phrase-lang issue each.
+"""Migrate board/NNN-*.md cards into one avowry issue each.
 
 The default is a dry run. --apply creates issues and closes Done, SUPERSEDED
 and WITHDRAWN cards. A later apply closes an existing open issue for a finished
@@ -21,7 +21,7 @@ from pathlib import Path
 from typing import Sequence
 
 OWNER = "Programming-Made-EZ"
-REPO = "phrase-lang"
+REPO = "avowry"
 CREATE_INTERVAL_SECONDS = 1
 BOARD_DIR = Path(__file__).resolve().parents[2] / "board"
 CARD_FILE_RE = re.compile(r"^(\d{3})-.+\.md$")
@@ -459,7 +459,7 @@ def main(argv: Sequence[str] | None = None, gh_runner=gh_runner, sleep=time.slee
     parser.add_argument("--dry-run", action="store_true", help="list one line per card and change nothing")
     parser.add_argument("--sync-bodies", action="store_true", help="rewrite the body of a marked issue when its card file changed")
     parser.add_argument("--owner", default=OWNER, help="GitHub owner; must be Programming-Made-EZ")
-    parser.add_argument("--repo", default=REPO, help="GitHub repo; must be phrase-lang")
+    parser.add_argument("--repo", default=REPO, help="GitHub repo; must be avowry")
     args = parser.parse_args(argv)
 
     if args.owner != OWNER or args.repo != REPO:

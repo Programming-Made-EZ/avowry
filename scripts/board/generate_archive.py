@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Sequence
 
 OWNER = "Programming-Made-EZ"
-REPO = "phrase-lang"
+REPO = "avowry"
 PROJECT_NUMBER = 1
 BOARD_DIR = Path(__file__).resolve().parents[2] / "board"
 MILESTONE_NAME = "MILESTONE-usable-v1.md"
@@ -327,7 +327,7 @@ def main(argv: Sequence[str] | None = None, gh_runner=gh_runner, board_dir=None)
     parser.add_argument("--dry-run", action="store_true", help="list write/unchanged and change nothing")
     parser.add_argument("--check", action="store_true", help="exit 1 if a generated file would change; write nothing")
     parser.add_argument("--owner", default=OWNER, help="GitHub owner; must be Programming-Made-EZ")
-    parser.add_argument("--repo", default=REPO, help="GitHub repo; must be phrase-lang")
+    parser.add_argument("--repo", default=REPO, help="GitHub repo; must be avowry")
     args = parser.parse_args(argv)
     if args.owner != OWNER or args.repo != REPO:
         raise ValueError(f"Owner and repo must be {OWNER}/{REPO}; refusing {args.owner}/{args.repo}.")

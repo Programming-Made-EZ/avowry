@@ -18,7 +18,7 @@ import tempfile
 from pathlib import Path
 
 OWNER = "Programming-Made-EZ"
-REPO = "phrase-lang"
+REPO = "avowry"
 SLUG = f"{OWNER}/{REPO}"
 STATUSES = ("Ready", "In Progress", "Done", "Superseded/Withdrawn")
 

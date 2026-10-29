@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 OWNER = "Programming-Made-EZ"
-REPO = "phrase-lang"
+REPO = "avowry"
 SLUG = f"{OWNER}/{REPO}"
 NAME = "Ste" + "ve"
 N = re.escape(NAME)

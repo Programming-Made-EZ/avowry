@@ -5,7 +5,7 @@ from pathlib import Path
 
 from scripts.board import new_card, rerank
 
-SLUG = "Programming-Made-EZ/phrase-lang"
+SLUG = "Programming-Made-EZ/avowry"
 STATUS_OPTIONS = ["Ready", "In Progress", "Done", "Superseded/Withdrawn"]
 FIELDS = [
     {"id": "F_rank", "name": "Rank", "type": "ProjectV2Field"},

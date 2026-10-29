@@ -8,7 +8,7 @@ from pathlib import Path
 from scripts.board import check_real_board, migrate_cards
 
 
-SLUG = "Programming-Made-EZ/phrase-lang"
+SLUG = "Programming-Made-EZ/avowry"
 BOARD = Path(__file__).resolve().parents[2] / "board"
 
 OLD_STORY = """# Sync the story
@@ -369,7 +369,7 @@ class BoardSyncTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             migrate_cards.migrate(fake, owner="Programming-Made-EZ", repo="other-repo", sync_bodies=True)
         with self.assertRaises(ValueError):
-            migrate_cards.migrate(fake, owner="some-other-owner", repo="phrase-lang", sync_bodies=True, dry_run=False)
+            migrate_cards.migrate(fake, owner="some-other-owner", repo="avowry", sync_bodies=True, dry_run=False)
         self.assertEqual(fake.calls, [])
         self.assertEqual(fake.issues, [])
 

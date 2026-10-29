@@ -6,7 +6,7 @@ Usage: new_card.py DRAFT.md [--apply]
 DRAFT.md is named NNN-slug.md (three digits) and written like a board card (Connextra story naming a persona, or a Contract with an Actor
 and Enables, Depends on, Done when). It lives OUTSIDE board/ (board/ is a generated archive). Default is a dry run; --apply creates the issue
 (labels card, and tooling for tooling cards), adds it to project 1 and sets Status, Card number, Depends on, Kind, Phase, Card author, Shape
-and Enables from the draft. It never sets Rank (use rerank.py), never deletes, refuses any owner or repo but Programming-Made-EZ/phrase-lang,
+and Enables from the draft. It never sets Rank (use rerank.py), never deletes, refuses any owner or repo but Programming-Made-EZ/avowry,
 and creates nothing if the card already has a marked issue. Afterwards run scripts/board/generate_archive.py --apply to refresh the archive."""
 
 import argparse
