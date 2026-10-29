@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:f2d6af5699b64e64b3e8902e67245970ac8fb74bf618cd742ff6a88fa040bd04 -->
+<!-- board-table-sha256:c7dd306c827268abf3e74e37617c38f75195ef73cf0d3f35af6ce370d7cfb9b4 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -81,7 +81,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 59 | 159 A validation step in Phrase: ensure a condition or fail with a declared name | Done | 138 |
 | 60 | 160 A record update form: a copy of a record with one field changed | Done | 159 |
 | 61 | 161 Generated failures and endpoint classes point back to the Phrase source | Done | 138 |
-| 62 | 167 The source map is never published or served: tests for publish output and a 404 | Ready | 161 |
+| 62 | 167 The source map is never published or served: tests for publish output and a 404 | Done | 161 |
 | 63 | 168 The trace command: mismatch handling and error paths, never an unhandled exception | Ready | 161 |
 | 64 | 170 Step ids: an independent recompute and one id per failure per endpoint | Ready | 161 |
 | 65 | 169 The map bytes do not depend on the culture | Ready | 161 |
