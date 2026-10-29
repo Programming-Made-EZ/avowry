@@ -30,6 +30,19 @@ public static class PhraseCli
             throw new InvalidOperationException("phrase CLI is stale, run dotnet build src/Phrase.Cli");
     }
 
+    /// <summary>
+    /// Each project is compared with its own built assembly: an implementation-only edit in a referenced project
+    /// refreshes that project's assembly but not phrase.dll, so one shared dll would report a false stale.
+    /// </summary>
+    public static void EnsureAllFresh(
+        IEnumerable<(string DllPath, IEnumerable<string> SourceFiles)> projects,
+        Func<string, DateTime> lastWriteUtc,
+        TimeSpan tolerance)
+    {
+        foreach (var (dllPath, sourceFiles) in projects)
+            EnsureFresh(dllPath, sourceFiles, lastWriteUtc, tolerance);
+    }
+
     public static void EnsureFresh() => _ = FreshnessChecked.Value;
 
     public static async Task<CliRun> RunAsync(params string[] args)
@@ -134,13 +147,17 @@ public static class PhraseCli
 
     private static bool CheckProductionFreshness()
     {
-        var sources = new[]
+        var output = Path.GetDirectoryName(DllPath())!;
+        var shared = new[] { RepoPaths.Find("Directory.Build.props") }.Where(File.Exists).ToArray();
+        var projects = new[]
         {
-            RepoPaths.Find("src", "Phrase.Cli"),
-            RepoPaths.Find("src", "Phrase.Compiler"),
-            RepoPaths.Find("src", "Phrase.Adapters.CSharp"),
-        }.SelectMany(SourceFiles);
-        EnsureFresh(DllPath(), sources, File.GetLastWriteTimeUtc, FreshnessTolerance);
+            ("Phrase.Cli", "phrase.dll"),
+            ("Phrase.Compiler", "Phrase.Compiler.dll"),
+            ("Phrase.Adapters.CSharp", "Phrase.Adapters.CSharp.dll"),
+        }.Select(project => (
+            DllPath: Path.Combine(output, project.Item2),
+            SourceFiles: SourceFiles(RepoPaths.Find("src", project.Item1)).Concat(shared)));
+        EnsureAllFresh(projects, File.GetLastWriteTimeUtc, FreshnessTolerance);
         return true;
     }
 

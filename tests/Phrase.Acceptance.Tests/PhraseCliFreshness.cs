@@ -46,9 +46,43 @@ public class PhraseCliFreshness
 
     [Fact]
     [Trait("Slice", "173")]
-    public void EnsureFresh_passes_on_the_real_tree_after_a_build()
+    public void EnsureAllFresh_compares_each_project_with_its_own_assembly()
     {
-        // Given the CLI and its source projects have been built in repository gate order
+        // Given a Compiler source edited after phrase.dll was last written (an implementation-only change
+        // refreshes Phrase.Compiler.dll but leaves phrase.dll untouched)
+        var cliDllTime = new DateTime(2026, 10, 28, 12, 0, 0, DateTimeKind.Utc);
+        var timestamps = new Dictionary<string, DateTime>(StringComparer.Ordinal)
+        {
+            ["phrase.dll"] = cliDllTime,
+            ["Phrase.Compiler.dll"] = cliDllTime.AddMinutes(10),
+            ["Compiler.cs"] = cliDllTime.AddMinutes(5),
+            ["Cli.cs"] = cliDllTime.AddSeconds(-5),
+        };
+        DateTime LastWriteUtc(string path) => timestamps[path];
+        var tolerance = TimeSpan.FromSeconds(2);
+
+        // When the freshness is judged per project, and the same files are judged against one shared dll
+        var perProject = Record.Exception(() => PhraseCli.EnsureAllFresh(
+            [("phrase.dll", ["Cli.cs"]), ("Phrase.Compiler.dll", ["Compiler.cs"])], LastWriteUtc, tolerance));
+        var sharedDll = Record.Exception(() => PhraseCli.EnsureFresh("phrase.dll", ["Cli.cs", "Compiler.cs"], LastWriteUtc, tolerance));
+        timestamps["Compiler.cs"] = cliDllTime.AddMinutes(11);
+        var compilerStale = Assert.Throws<InvalidOperationException>(() => PhraseCli.EnsureAllFresh(
+            [("phrase.dll", ["Cli.cs"]), ("Phrase.Compiler.dll", ["Compiler.cs"])], LastWriteUtc, tolerance));
+
+        // Then the up-to-date build passes, the old single-dll comparison would have been a false stale,
+        // and a Compiler source newer than its own assembly still fails with the rebuild message
+        Assert.Null(perProject);
+        Assert.IsType<InvalidOperationException>(sharedDll);
+        Assert.Equal("phrase CLI is stale, run dotnet build src/Phrase.Cli", compilerStale.Message);
+    }
+
+    [Fact]
+    [Trait("Slice", "173")]
+    public async Task EnsureFresh_passes_on_the_real_tree_after_a_build()
+    {
+        // Given the CLI has been built by the helper itself (so the test does not depend on test order)
+        var run = await PhraseCli.RunAsync("--help");
+        Assert.NotNull(run);
 
         // When the production freshness wiring checks the real repository tree
         var exception = Record.Exception(PhraseCli.EnsureFresh);
