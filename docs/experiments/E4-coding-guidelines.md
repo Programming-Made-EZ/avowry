@@ -8,7 +8,7 @@ The review findings of the last cards fall into a few classes that recur: tests 
 
 ## Practice
 
-`docs/CODING_GUIDELINES.md` is one short document (about 7 KB, roughly 1,700 tokens) covering design, naming, errors and determinism, tests, code hygiene and documents, ending in a ten-item review checklist. Authors read it before building; reviewers check the change against the checklist. It covers this repository's code only and cross-references, without merging, the project-profile standards Phrase applies to generated code.
+`docs/CODING_GUIDELINES.md` is one short document (about 7 KB, roughly 1,700 tokens) covering design, naming, errors and determinism, tests, code hygiene and documents, ending in an eleven-item review checklist. Authors read it before building; reviewers check the change against the checklist. It covers this repository's code only and cross-references, without merging, the project-profile standards Phrase applies to generated code.
 
 ## Hypothesis
 

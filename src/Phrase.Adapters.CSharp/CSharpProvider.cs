@@ -35,29 +35,26 @@ public sealed class CSharpProvider : ITargetAdapter
             [$"{specs}/{module.Name}.Specs.csproj"] = SpecsProject(module.Name),
             [$"{specs}/PhraseSpecs.cs"] = PhraseSpecs(module),
         };
+        var endpointFiles = new Dictionary<string, string>(StringComparer.Ordinal);
 
         if (module.BuildId.Length > 0)
             files[$"{api}/PhraseBuild.cs"] = "using System.Reflection;\n\n[assembly: AssemblyMetadata(\"PhraseBuildId\", \"" + module.BuildId + "\")]\n";
 
         foreach (var endpoint in module.Endpoints)
         {
-            files[$"{api}/{EndpointFileName(endpoint.Name)}.cs"] = EndpointFile(module, endpoint);
+            var endpointPath = $"{api}/{EndpointFileName(endpoint.Name)}.cs";
+            endpointFiles[endpoint.Name] = endpointPath;
+            files[endpointPath] = EndpointFile(module, endpoint);
             files[$"{specs}/{EndpointSpecsFileName(endpoint.Name)}.cs"] = EndpointSpecs(module, endpoint);
         }
 
-        if (module.BuildId.Length > 0)
+        return new CompilationOutput(files)
         {
-            foreach (var path in files.Keys.Where(path => path.EndsWith(".cs", StringComparison.Ordinal)).ToList())
-                files[path] = WithoutPhraseSourceKnowledge(files[path]);
-        }
-
-        return new CompilationOutput(files) { Module = module };
+            Module = module,
+            EndpointFiles = endpointFiles,
+            PhraseFiles = module.Phrases.ToDictionary(phrase => phrase.Key, _ => $"{api}/Phrases.cs", StringComparer.Ordinal),
+        };
     }
-
-    private static string WithoutPhraseSourceKnowledge(string source) => string.Join("\n",
-        source.Replace("\r\n", "\n", StringComparison.Ordinal).Split('\n')
-            .Where(line => !line.TrimStart().StartsWith("//", StringComparison.Ordinal) &&
-                           !line.TrimStart().StartsWith("[Phrase(", StringComparison.Ordinal)));
 
     private static void RequireSupportedPhrase(ModuleModel module, PhraseModel phrase)
     {

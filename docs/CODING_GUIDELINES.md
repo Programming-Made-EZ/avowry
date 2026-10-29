@@ -51,7 +51,7 @@ Principle for every rule below: a reader, human or a fresh-context seat, should 
 
 ## Review checklist
 
-A reviewer confirms, for the change in front of them:
+A reviewer confirms, for the change in front of them (the item numbers are stable; add new ones at the end):
 
 1. Each new unit has one responsibility and a name that says it; no function over about 30 lines without a reason.
 2. Dependencies point downward; nothing low-level learned about something above it.
@@ -62,4 +62,5 @@ A reviewer confirms, for the change in front of them:
 7. No dead code, no commented-out code, no duplicated shared names.
 8. The change is small enough to revert alone; unrelated cleanup is not mixed in.
 9. Documents touched hold one concern, link instead of copying, and give rationale.
-10. The full gate was run alone and CI on Linux is green.
+10. For an emitter or adapter change, the generated output is identical to before unless the card says otherwise: the recorded output hashes are unchanged, and any change is named exactly and justified in the card.
+11. The full gate was run alone and CI on Linux is green.

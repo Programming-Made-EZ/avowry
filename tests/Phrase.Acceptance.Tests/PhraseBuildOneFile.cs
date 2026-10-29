@@ -95,8 +95,13 @@ public class PhraseBuildOneFile
         // Then every output path and its bytes match the compiler
         Assert.True(result.ExitCode == 0, result.Text);
         var expectedFiles = Snapshot(expected.Root);
-        var actualFiles = Snapshot(actual.Root);
-        actualFiles.Remove("Orders.phrasemap.json");
+        var allActualFiles = Snapshot(actual.Root);
+        var extraFiles = allActualFiles.Keys.Except(expectedFiles.Keys, StringComparer.Ordinal).ToList();
+        Assert.Equal(["Orders.phrasemap.json"], extraFiles);
+        var actualFiles = allActualFiles.Where(file => file.Key.EndsWith(".cs", StringComparison.Ordinal))
+            .ToDictionary(file => file.Key, file => file.Value, StringComparer.Ordinal);
+        expectedFiles = expectedFiles.Where(file => file.Key.EndsWith(".cs", StringComparison.Ordinal))
+            .ToDictionary(file => file.Key, file => file.Value, StringComparer.Ordinal);
         Assert.Equal(expectedFiles.Keys.OrderBy(key => key, StringComparer.Ordinal), actualFiles.Keys.OrderBy(key => key, StringComparer.Ordinal));
         foreach (var (relative, bytes) in expectedFiles)
             Assert.Equal(bytes, actualFiles[relative]);

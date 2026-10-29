@@ -1,8 +1,10 @@
 # Traceability
 
-Phrase traceability is an external source map. Generated implementation code must not know about the authoring layer that produced it, so CLI builds contain no Phrase file names, line numbers, endpoint/step source comments, or `#line` directives.
+Phrase traceability is an external source map. Generated implementation code must not know about the authoring layer that produced it, so this mechanism adds no Phrase file names with line numbers, no trace header, no `// phrase:` comments and no `#line` directives to the generated C#.
 
-`phrase build Tasks.phrase -o generated` writes `Tasks.phrasemap.json` beside the generated projects. The deterministic, LF-terminated JSON contains `schemaVersion`, a shortened SHA-256 `buildId`, and sorted endpoint, phrase, and failure records. Each record has `kind`, `name`, `phraseFile` (base name only), `line`, `endpoint`, `step`, `specLines`, `csFile`, `csMethod`, and a SHA-256 `csHash`. No timestamp or absolute path is recorded.
+Older in-code links remain for now: the C# adapter already emitted `[Phrase("...")]` attributes with the phrase template (and a runtime class for them), one comment per step with the step text, and a header comment naming the module. The attribute is the same inverted dependency as the rest of this document rules out, so the direction is settled: the link moves into this source map, the benchmark scorer reads the map, and the grammar re-freeze drops the attribute (the tracking card sequences the three parts with the re-freeze). Per-step comments are judged by one rule: plain readability text with no Phrase coupling may stay; text that copies the Phrase source of a step, or names the `.phrase` file, moves to the map. Until that card lands, the generated output of this mechanism is otherwise unchanged.
+
+`phrase build Tasks.phrase -o generated` writes `Tasks.phrasemap.json` beside the generated projects. The deterministic, LF-terminated JSON contains `schemaVersion`, a shortened SHA-256 `buildId`, and ordinally sorted endpoint, step, phrase, and failure records. Each record has `stepId`, `kind`, `name`, `phraseFile` (base name only), `line`, `endpoint`, `step`, `specLines`, `csFile`, `csMethod`, and a SHA-256 `csHash`. No timestamp or absolute path is recorded. `stepId` is the first 12 hexadecimal characters of a SHA-256 over the normalized record kind, Phrase line, and name; it is stable across working directories, path separators, drive letters, cultures, and LF/CRLF source copies.
 
 The same opaque build ID is compiled as the assembly metadata key `PhraseBuildId`. This lets tools distinguish a matching map from a stale one without putting source names or locations in the runtime.
 
@@ -11,3 +13,10 @@ Use `phrase trace EmptyTitle --map generated/Tasks.phrasemap.json`. A generated 
 The map is a build artifact outside both generated projects. It is therefore neither served by the API nor copied by `dotnet publish` of the API project. Keep deployment packaging rooted at the published project output, not the build workspace.
 
 `#line` directives are deliberately deferred to card 164 because they would place Phrase paths in debug information and stack traces.
+
+## Executable evidence
+
+- `SourceMapTraceability` covers deterministic maps, opaque IDs, path independence, LF/CRLF normalization, trace lookup, and absence of Phrase source knowledge in generated C#.
+- `PhraseBuildOneFile.Build_output_matches_the_compiler_bytes` proves the CLI preserves every compiler-generated C# byte and adds only the map.
+- `TasksOverHttp` covers all demo endpoint behavior and the unchanged declared-failure response bodies; its live process checks the generated API boundary.
+- `WebExtensionBoundary` pins the complete Orders generated-output hash, while the demo acceptance suite executes all 11 Tasks specs.

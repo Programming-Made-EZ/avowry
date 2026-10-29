@@ -17,7 +17,8 @@ public static class PhraseCompiler
         ArgumentNullException.ThrowIfNull(source);
         ArgumentNullException.ThrowIfNull(adapter);
 
-        var parsed = Parser.Parse(source);
+        var normalized = source.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n');
+        var parsed = Parser.Parse(normalized);
         StopOnDiagnostics(parsed.Diagnostics);
 
         var resolved = Resolver.Resolve(parsed.File);
@@ -26,7 +27,6 @@ public static class PhraseCompiler
         var module = resolved.Module;
         if (phraseFile is not null)
         {
-            var normalized = source.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n');
             var hash = System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(normalized));
             module = module with
             {
