@@ -28,12 +28,20 @@ jobs:
         run: python3 scripts/mob_process.py check
 
       - name: Check with previous checker
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BEFORE: ${{ github.event.before }}
         run: |
-          if git show HEAD~1:scripts/mob_process.py > "$RUNNER_TEMP/mob_process_prev.py" 2>/dev/null; then
-            python3 "$RUNNER_TEMP/mob_process_prev.py" check --root .
+          if [[ -z "$BEFORE" || "$BEFORE" =~ ^0+$ ]]; then
+            echo "::notice::push has no prior commit; previous-version check skipped"
+          elif ! git merge-base --is-ancestor "$BEFORE" HEAD; then
+            echo "::notice::push boundary is not an ancestor of HEAD; previous-version check skipped"
+          elif git show "$BEFORE:scripts/mob_process.py" > "$RUNNER_TEMP/mob_process_prev.py" 2>/dev/null; then
+            python3 "$RUNNER_TEMP/mob_process_prev.py" check --root . --skip-regeneration
           else
-            echo "::notice::HEAD~1 has no mob-process checker; previous-version check skipped"
+            echo "::notice::push boundary has no mob-process checker; previous-version check skipped"
           fi
 
   test:

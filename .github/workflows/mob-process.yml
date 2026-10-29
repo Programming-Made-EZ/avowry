@@ -25,12 +25,3 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/mob_process.py check
-      - name: Check with previous checker
-        if: github.event_name != 'schedule'
-        shell: bash
-        run: |
-          if git show HEAD~1:scripts/mob_process.py > "$RUNNER_TEMP/mob_process_prev.py" 2>/dev/null; then
-            python3 "$RUNNER_TEMP/mob_process_prev.py" check --root .
-          else
-            echo "::notice::HEAD~1 has no mob-process checker; previous-version check skipped"
-          fi

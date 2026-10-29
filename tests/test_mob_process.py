@@ -1,11 +1,11 @@
-import contextlib, importlib.util, io, json, subprocess, tempfile, unittest
+import contextlib, datetime as dt, importlib.util, io, json, subprocess, tempfile, unittest
 from pathlib import Path
 from unittest import mock
 
 SPEC = importlib.util.spec_from_file_location("mob_process", Path(__file__).resolve().parents[1] / "scripts/mob_process.py")
 mob = importlib.util.module_from_spec(SPEC); SPEC.loader.exec_module(mob)
 
-def issue(card, labels=("card",), closed="2026-10-29T20:00:00Z", events=()):
+def issue(card, labels=("card",), closed="2099-01-01T00:00:00Z", events=()):
     return {"number": card + 1000, "title": f"({card}) work", "labels": list(labels), "closedAt": closed, "events": list(events)}
 
 class MobProcessTests(unittest.TestCase):
@@ -14,12 +14,38 @@ class MobProcessTests(unittest.TestCase):
         for name in (".mob/records", "docs/decisions", "docs/retros", ".github/workflows", "board"):
             (self.root / name).mkdir(parents=True, exist_ok=True)
         digest = mob.cards_hash([])
+        patcher = mock.patch.object(mob, "FROZEN_LEGACY_SHA256", digest); patcher.start(); self.addCleanup(patcher.stop)
         (self.root / ".mob/records/LEGACY.json").write_text(json.dumps({"schema": 1, "decision": "D134", "cutoff": "2026-10-29T20:35:37Z", "cards": [], "cards_sha256": digest}), encoding="utf-8")
         (self.root / "docs/decisions/process-and-staffing.md").write_text(f"D134 sha256 of the list: {digest}\n<a id=\"d7\"></a> Card 201", encoding="utf-8")
         (self.root / "DRIVERS.md").write_text("| Driver | Status |\n|---|---|\n| Codex | available |\n| Claude | available |", encoding="utf-8")
-        workflow = "jobs:\n  mob-process:\n    steps:\n      - run: python3 scripts/mob_process.py check\n      - run: git show HEAD~1:scripts/mob_process.py > mob_process_prev.py && python3 mob_process_prev.py check --root .\n"
+        workflow = """on:
+  push:
+    branches: [main]
+jobs:
+  mob-process:
+    steps:
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/mob_process.py check
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: git show ${{ github.event.before }}:scripts/mob_process.py > mob_process_prev.py && python3 mob_process_prev.py check --root . --skip-regeneration
+"""
         (self.root / ".github/workflows/ci.yml").write_text(workflow, encoding="utf-8")
-        (self.root / ".github/workflows/mob-process.yml").write_text("issues: [closed, reopened, unlabeled]\nschedule:\n" + workflow.replace("      - run: git show", "      - if: github.event_name != 'schedule'\n        run: git show"), encoding="utf-8")
+        event_workflow = """on:
+  issues:
+    types: [closed, reopened, unlabeled]
+  schedule:
+    - cron: '*/30 * * * *'
+jobs:
+  mob-process:
+    steps:
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 scripts/mob_process.py check
+"""
+        (self.root / ".github/workflows/mob-process.yml").write_text(event_workflow, encoding="utf-8")
         protected = ("/scripts/mob_process.py", "/.github/workflows/", "/.mob/records/LEGACY.json", "/docs/decisions/process-and-staffing.md", "/.github/CODEOWNERS", "/.githooks/", "/tests/test_mob_process.py", "/docs/PROCESS-CHECKS.md", "/.mob/records/process.json", "/.mob/records/held.json")
         (self.root / ".github/CODEOWNERS").write_text("\n".join(f"{p} @owner" for p in protected), encoding="utf-8")
         self.git("init", "-b", "main"); self.git("config", "user.email", "test@example.com"); self.git("config", "user.name", "Test"); self.git("add", "."); self.git("commit", "-m", "base")
@@ -84,6 +110,34 @@ class MobProcessTests(unittest.TestCase):
         self.valid_record(); retro.write_text("Cards: 201\n",encoding="utf-8")
         self.assertIn("Card 201 record retro is missing required sections or Process improvement pick",mob.check_records(self.root,[issue(201)],self.git))
 
+    def test_legacy_list_must_equal_the_pin_inside_the_checker(self):
+        # Given a legacy list extended together with its own hash and the decision text (all consistent with each other)
+        legacy = json.loads((self.root / ".mob/records/LEGACY.json").read_text(encoding="utf-8"))
+        legacy["cards"] = [1]; legacy["cards_sha256"] = mob.cards_hash([1])
+        (self.root / ".mob/records/LEGACY.json").write_text(json.dumps(legacy), encoding="utf-8")
+        decision = self.root / "docs/decisions/process-and-staffing.md"
+        decision.write_text(f"D134 sha256 of the list: {mob.cards_hash([1])}\n", encoding="utf-8")
+        # When the legacy check runs
+        errors = mob.check_legacy(self.root, [])
+        # Then only the pin held in the checker itself catches the extension
+        self.assertEqual(["LEGACY.json differs from the frozen list pinned in the checker (D134/D135)"], errors)
+
+    def test_optional_refactor_seat_is_accepted_and_empty_fields_are_rejected(self):
+        # Given a valid record with an extra refactor seat
+        record = self.valid_record(); path = self.root / ".mob/records/201.json"
+        decision = self.root / "docs/decisions/process-and-staffing.md"
+        decision.write_text(decision.read_text(encoding="utf-8") + '\n<a id="d2016"></a> Card 201', encoding="utf-8")
+        record["seats"].append({"role": "refactor", "seat": "Codex", "model": "test", "evidence": "D2016"})
+        path.write_text(json.dumps(record), encoding="utf-8")
+        # When the records are checked
+        accepted = mob.check_records(self.root, [issue(201)], self.git)
+        # Then the extra seat is fine, but a duplicate role or an empty model is not
+        self.assertEqual([], accepted)
+        record["seats"].append(dict(record["seats"][-1])); path.write_text(json.dumps(record), encoding="utf-8")
+        self.assertIn("Card 201 must have exactly the six required role seats", mob.check_records(self.root, [issue(201)], self.git))
+        record["seats"].pop(); record["seats"][0]["model"] = " "; path.write_text(json.dumps(record), encoding="utf-8")
+        self.assertIn("Card 201 has a seat with an empty seat, model or evidence field", mob.check_records(self.root, [issue(201)], self.git))
+
     def test_closed_card_without_retro_cover_is_reported(self):
         # Given a retro whose Cards line covers card 5 only
         (self.root / "docs/retros/r.md").write_text("Cards: 5\n", encoding="utf-8")
@@ -122,5 +176,242 @@ class MobProcessTests(unittest.TestCase):
         with mock.patch.object(mob,"command",side_effect=RuntimeError("offline")) as run, mock.patch.object(mob.time,"sleep"):
             with self.assertRaisesRegex(RuntimeError,"after 3 attempts"): mob.gh_json(["repo","view"])
         self.assertEqual(3,run.call_count)
+
+    def test_record_first_commit_after_issue_closure_is_reported_exactly(self):
+        # Given Morgan audits a record whose issue closed one hour before the record's own commit
+        self.valid_record()
+        committed = dt.datetime.fromisoformat(self.git("show", "-s", "--format=%cI", "HEAD"))
+        closed = (committed - dt.timedelta(hours=1)).isoformat()
+        # When the trail record is checked
+        errors = mob.check_records(self.root, [issue(201, closed=closed)], self.git)
+        # Then the temporal violation is named exactly
+        self.assertIn("Card 201 record was first committed after issue closure", errors)
+
+    def test_commit_hash_evidence_succeeds_for_a_reachable_matching_commit(self):
+        # Given a real reachable commit names the card and predates its trail record
+        (self.root / "work.txt").write_text("done", encoding="utf-8")
+        self.git("add", "work.txt")
+        self.git("commit", "-m", "Card 201: working increment")
+        evidence = self.git("rev-parse", "HEAD")
+        record = self.valid_record()
+        record["seats"][0]["evidence"] = evidence
+        (self.root / ".mob/records/201.json").write_text(json.dumps(record), encoding="utf-8")
+        closed = (dt.datetime.fromisoformat(self.git("show", "-s", "--format=%cI", evidence)) + dt.timedelta(hours=1)).isoformat()
+        # When commit evidence is checked
+        errors = mob.check_records(self.root, [issue(201, closed=closed)], self.git)
+        # Then no commit-evidence error is reported
+        self.assertFalse(any(f"Card 201 evidence {evidence}" in error for error in errors), errors)
+
+    def test_commit_hash_evidence_not_reachable_from_head_is_reported_exactly(self):
+        # Given a trail record cites a real commit that is not reachable from HEAD
+        record = self.valid_record()
+        self.git("switch", "--detach")
+        self.git("commit", "--allow-empty", "-m", "Card 201: detached evidence")
+        evidence = self.git("rev-parse", "HEAD")
+        self.git("switch", "main")
+        record["seats"][0]["evidence"] = evidence
+        (self.root / ".mob/records/201.json").write_text(json.dumps(record), encoding="utf-8")
+        # When commit evidence is checked
+        errors = mob.check_records(self.root, [issue(201)], self.git)
+        # Then the reachability failure is named exactly
+        self.assertIn(f"Card 201 evidence {evidence} is not a reachable matching commit", errors)
+
+    def test_commit_hash_evidence_message_must_name_the_card(self):
+        # Given a reachable commit does not name the card in its message
+        record = self.valid_record()
+        evidence = self.git("rev-parse", "HEAD~1")
+        record["seats"][0]["evidence"] = evidence
+        (self.root / ".mob/records/201.json").write_text(json.dumps(record), encoding="utf-8")
+        # When commit evidence is checked
+        errors = mob.check_records(self.root, [issue(201)], self.git)
+        # Then the matching-message failure is named exactly
+        self.assertIn(f"Card 201 evidence {evidence} is not a reachable matching commit", errors)
+
+    def test_commit_hash_evidence_cannot_be_the_records_own_commit(self):
+        # Given a trail record cites the commit that first added that record
+        record = self.valid_record()
+        evidence = self.git("rev-parse", "HEAD")
+        record["seats"][0]["evidence"] = evidence
+        (self.root / ".mob/records/201.json").write_text(json.dumps(record), encoding="utf-8")
+        # When commit evidence is checked
+        errors = mob.check_records(self.root, [issue(201)], self.git)
+        # Then self-evidence is named exactly
+        self.assertIn(f"Card 201 evidence {evidence} is the record's own commit", errors)
+
+    def test_commit_hash_evidence_after_closure_is_reported_exactly(self):
+        # Given a matching commit is dated one hour after issue closure
+        self.valid_record()
+        evidence = self.git("rev-parse", "HEAD")
+        record = json.loads((self.root / ".mob/records/201.json").read_text(encoding="utf-8"))
+        record["seats"][0]["evidence"] = evidence
+        (self.root / ".mob/records/201.json").write_text(json.dumps(record), encoding="utf-8")
+        committed = dt.datetime.fromisoformat(self.git("show", "-s", "--format=%cI", evidence))
+        # When commit evidence is checked against an earlier closure
+        errors = mob.check_records(self.root, [issue(201, closed=(committed - dt.timedelta(hours=1)).isoformat())], self.git)
+        # Then the closure violation is named exactly
+        self.assertIn(f"Card 201 evidence {evidence} is dated after issue closure", errors)
+
+    def test_commit_hash_evidence_cannot_be_reused_by_another_card(self):
+        # Given one real commit names two cards and both records cite it
+        (self.root / "shared.txt").write_text("done", encoding="utf-8")
+        self.git("add", "shared.txt")
+        self.git("commit", "-m", "Card 201 and Card 202: shared evidence")
+        evidence = self.git("rev-parse", "HEAD")
+        for card in (201, 202):
+            record = self.valid_record(card)
+            record["seats"][0]["evidence"] = evidence
+            (self.root / f".mob/records/{card:03}.json").write_text(json.dumps(record), encoding="utf-8")
+        closed = (dt.datetime.fromisoformat(self.git("show", "-s", "--format=%cI", evidence)) + dt.timedelta(hours=1)).isoformat()
+        # When both records are checked
+        errors = mob.check_records(self.root, [issue(201, closed=closed), issue(202, closed=closed)], self.git)
+        # Then reuse by the later card is named exactly
+        self.assertIn(f"Card 202 evidence {evidence} is reused by Card 201", errors)
+
+    def test_cards_line_rejects_one_to_three_words(self):
+        # Given a retro uses words instead of the numeric range syntax
+        (self.root / "docs/retros/r.md").write_text("Cards: 1 to 3\n", encoding="utf-8")
+        # When the retro is parsed
+        errors = mob.retro_cards(self.root)[1]
+        # Then the invalid line is reported exactly
+        self.assertEqual([f"{(self.root / 'docs/retros/r.md').as_posix()} has an invalid Cards line"], errors)
+
+    def test_cards_line_rejects_letters(self):
+        # Given a retro uses letters in its Cards line
+        (self.root / "docs/retros/r.md").write_text("Cards: abc\n", encoding="utf-8")
+        # When the retro is parsed
+        errors = mob.retro_cards(self.root)[1]
+        # Then the invalid line is reported exactly
+        self.assertEqual([f"{(self.root / 'docs/retros/r.md').as_posix()} has an invalid Cards line"], errors)
+
+    def test_cards_line_rejects_a_trailing_comma(self):
+        # Given a retro has a trailing comma in its Cards line
+        (self.root / "docs/retros/r.md").write_text("Cards: 1,\n", encoding="utf-8")
+        # When the retro is parsed
+        errors = mob.retro_cards(self.root)[1]
+        # Then the invalid line is reported exactly
+        self.assertEqual([f"{(self.root / 'docs/retros/r.md').as_posix()} has an invalid Cards line"], errors)
+
+    def test_missing_mob_process_workflow_is_reported(self):
+        # Given the event workflow is missing
+        (self.root / ".github/workflows/mob-process.yml").unlink()
+        # When workflow wiring is checked
+        errors = mob.check_workflows(self.root)
+        # Then the missing workflow is reported exactly
+        self.assertIn("mob-process.yml must run for issue events and on a schedule", errors)
+
+    def test_card_number_comes_from_title_prefix_not_issue_number(self):
+        # Given issue 1201 has card 9 in its title prefix
+        item = issue(9)
+        item["number"] = 1201
+        # When its card number is read
+        card = mob.card_number(item)
+        # Then the title prefix wins
+        self.assertEqual(9, card)
+
+    def test_read_issues_flattens_slurped_timeline_pages(self):
+        # Given GitHub returns timeline pages as a list of lists
+        def runner(args):
+            if args[:2] == ["repo", "view"]:
+                return {"nameWithOwner": "o/r"}
+            if args[0] == "api":
+                return [[{"event": "closed"}], [{"event": "reopened"}]]
+            return [issue(1)]
+        # When issues are collected
+        items = mob.read_issues(runner)
+        # Then the timeline is flattened in order
+        self.assertEqual([{"event": "closed"}, {"event": "reopened"}], items[0]["events"])
+
+    def test_read_issues_accepts_a_flat_timeline_list(self):
+        # Given a fake runner returns an already-flat timeline
+        def runner(args):
+            if args[:2] == ["repo", "view"]:
+                return {"nameWithOwner": "o/r"}
+            if args[0] == "api":
+                return [{"event": "closed"}, {"event": "reopened"}]
+            return [issue(1)]
+        # When issues are collected
+        items = mob.read_issues(runner)
+        # Then each event remains an event rather than being iterated as a dictionary
+        self.assertEqual([{"event": "closed"}, {"event": "reopened"}], items[0]["events"])
+
+    def test_legacy_json_is_read_as_utf8(self):
+        # Given LEGACY.json contains a non-ASCII note and the platform default is unusable
+        path = self.root / ".mob/records/LEGACY.json"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        data["note"] = "café"
+        path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+        # When the legacy waiver is checked
+        errors = mob.check_legacy(self.root, [])
+        # Then UTF-8 content is readable
+        self.assertEqual([], errors)
+
+    def test_workflow_rejects_if_false(self):
+        # Given a checker job is disabled with if false
+        block = "mob-process:\n  if: false\n  run: python3 scripts/mob_process.py check\n"
+        # When it is validated
+        valid = mob.valid_job(block)
+        # Then it is unsafe
+        self.assertFalse(valid)
+
+    def test_workflow_rejects_continue_on_error(self):
+        # Given a checker job tolerates failure
+        block = "mob-process:\n  continue-on-error: true\n  run: python3 scripts/mob_process.py check\n"
+        # When it is validated
+        valid = mob.valid_job(block)
+        # Then it is unsafe
+        self.assertFalse(valid)
+
+    def test_workflow_rejects_shell_or_true(self):
+        # Given a checker command masks failure with shell or true
+        block = "mob-process:\n  run: python3 scripts/mob_process.py check || true\n"
+        # When it is validated
+        valid = mob.valid_job(block)
+        # Then it is unsafe
+        self.assertFalse(valid)
+
+    def test_ci_workflow_requires_the_previous_checker(self):
+        # Given a safe current-checker job has no previous-checker step
+        block = "mob-process:\n  run: python3 scripts/mob_process.py check\n"
+        # When CI-level validation requires previous behavior
+        valid = mob.valid_job(block, previous=True)
+        # Then the job is incomplete
+        self.assertFalse(valid)
+
+    def test_event_workflow_excludes_the_previous_checker(self):
+        # Given the issue-and-schedule workflow runs only the current checker
+        block = mob.job_block((self.root / ".github/workflows/mob-process.yml").read_text(encoding="utf-8"))
+        # When event-workflow validation does not require a previous revision
+        valid = mob.valid_job(block, previous=False)
+        # Then the job is valid
+        self.assertTrue(valid)
+
+    def test_every_checker_step_requires_gh_token(self):
+        # Given a checker step omits GH_TOKEN
+        block = "mob-process:\n  steps:\n    - run: python3 scripts/mob_process.py check\n"
+        # When the job is validated
+        valid = mob.valid_job(block)
+        # Then it is rejected because GitHub CLI cannot authenticate
+        self.assertFalse(valid)
+
+    def test_skip_regeneration_preserves_other_mob_checks(self):
+        # Given MOB.md has valid state but differs from regenerated presentation bytes
+        base = self.git("rev-parse", "--short", "HEAD")
+        original = mob.render_mob(self.root, [], self.git, base)
+        (self.root / "MOB.md").write_text(original + "changed\n", encoding="utf-8")
+        # When only regeneration comparison is skipped
+        errors = mob.check_mob(self.root, [], self.git, skip_regeneration=True)
+        # Then the byte difference is skipped and all structural checks still pass
+        self.assertEqual([], errors)
+
+    def test_skip_regeneration_does_not_skip_the_done_list_check(self):
+        # Given MOB.md has presentation drift and a false done list
+        base = self.git("rev-parse", "--short", "HEAD")
+        original = mob.render_mob(self.root, [], self.git, base)
+        changed = original.replace('"done":[]', '"done":[999]') + "changed\n"
+        (self.root / "MOB.md").write_text(changed, encoding="utf-8")
+        # When byte-for-byte regeneration is skipped
+        errors = mob.check_mob(self.root, [], self.git, skip_regeneration=True)
+        # Then the independent done-list invariant still fails exactly
+        self.assertEqual(["MOB.md done list does not equal record and legacy cards"], errors)
 
 if __name__ == "__main__": unittest.main()

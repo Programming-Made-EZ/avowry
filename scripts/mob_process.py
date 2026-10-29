@@ -13,6 +13,10 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 REQUIRED_ROLES = ("ready", "slice", "red", "green", "ship", "signoff")
+OPTIONAL_ROLES = ("refactor",)
+# D134/D135: the frozen list of legacy cards. The pin lives in the checker so that extending LEGACY.json also needs a
+# change to this file, which the PREVIOUS checker version (run by CI on every push) judges and rejects.
+FROZEN_LEGACY_SHA256 = "2618ef6c69243938dfad116f9f99e772d8a48dd3256b264a1a098ec1d42788d1"
 STATE_RE = re.compile(r"<!-- mob-state: (\{[^\n]*\}) -->")
 CARD_RE = re.compile(r"^\((\d+)\)\s")
 GH_LIMIT = 5000
@@ -75,7 +79,7 @@ def read_issues(runner=gh_json):
         return item
 
     with ThreadPoolExecutor(max_workers=4) as pool:
-        return list(pool.map(timeline, by_number.values()))
+        return list(pool.map(timeline, (by_number[number] for number in sorted(by_number))))
 
 
 def load_records(root):
@@ -107,14 +111,14 @@ def check_records(root, issues, git):
     closed = {card_number(i): i for i in issues if "card" in labels(i) and "not-card" not in labels(i) and card_number(i)}
     legacy = set(json.loads((root / ".mob/records/LEGACY.json").read_text(encoding="utf-8"))["cards"])
     drivers = driver_names(root)
-    decision_text = "\n".join(p.read_text(encoding="utf-8") for p in (root / "docs/decisions").glob("*.md"))
+    decision_text = "\n".join(p.read_text(encoding="utf-8") for p in sorted((root / "docs/decisions").glob("*.md")))
     for card in sorted(set(closed) - legacy):
         if card not in records:
             errors.append(f"Card {card:03} has no trail record")
     commit_evidence = {}
     record_dates = {}
     record_commits = {}
-    for card in records:
+    for card in sorted(records):
         path = root / f".mob/records/{card:03}.json"
         try:
             record_dates[card] = git_call(git, "log", "--diff-filter=A", "--follow", "--format=%cI", "--", str(path.relative_to(root))).splitlines()[-1]
@@ -129,8 +133,14 @@ def check_records(root, issues, git):
             continue
         seats = record.get("seats", [])
         roles = [seat.get("role") for seat in seats]
-        if sorted(roles) != sorted(REQUIRED_ROLES) or any(set(s) != {"role", "seat", "model", "evidence"} for s in seats):
+        required_roles = [role for role in roles if role in REQUIRED_ROLES]
+        if (sorted(required_roles) != sorted(REQUIRED_ROLES) or len(roles) != len(set(roles))
+                or any(role not in REQUIRED_ROLES + OPTIONAL_ROLES for role in roles)
+                or any(set(s) != {"role", "seat", "model", "evidence"} for s in seats)):
             errors.append(f"Card {card:03} must have exactly the six required role seats")
+            continue
+        if any(not str(s[key]).strip() for s in seats for key in ("seat", "model", "evidence")):
+            errors.append(f"Card {card:03} has a seat with an empty seat, model or evidence field")
             continue
         if any(str(s["seat"]).split()[0].lower() not in drivers for s in seats):
             errors.append(f"Card {card:03} has a seat not listed in DRIVERS.md")
@@ -195,7 +205,7 @@ def check_records(root, issues, git):
 
 def retro_cards(root, paths=None, maximum=None):
     found, errors = set(), []
-    for path in paths or (root / "docs/retros").glob("*.md"):
+    for path in sorted(paths or (root / "docs/retros").glob("*.md")):
         for line in path.read_text(encoding="utf-8").splitlines():
             if not line.startswith("Cards:"):
                 continue
@@ -239,6 +249,8 @@ def check_legacy(root, issues):
     match = re.search(r"sha256 of the list:\s*([0-9a-f]{64})", decision, re.I)
     if not match or match.group(1).lower() != digest:
         errors.append("LEGACY.json card hash does not equal the D134 pinned hash")
+    if digest != FROZEN_LEGACY_SHA256:
+        errors.append("LEGACY.json differs from the frozen list pinned in the checker (D134/D135)")
     cutoff = dt.datetime.fromisoformat(data.get("cutoff", "").replace("Z", "+00:00"))
     legacy = set(data.get("cards", []))
     for item in issues:
@@ -275,7 +287,10 @@ def check_workflows(root):
     event = root / ".github/workflows/mob-process.yml"
     event_text = event.read_text(encoding="utf-8") if event.exists() else ""
     event_block = job_block(event_text)
-    if not event.exists() or not all(word in event_text for word in ("issues:", "closed", "reopened", "unlabeled", "schedule:")) or not valid_job(event_block, previous=True) or "github.event_name != 'schedule'" not in event_block:
+    if (not event.exists()
+            or not all(word in event_text for word in ("issues:", "closed", "reopened", "unlabeled", "schedule:"))
+            or not valid_job(event_block, previous=False)
+            or "mob_process_prev.py" in event_block):
         errors.append("mob-process.yml must run for issue events and on a schedule")
     owners = root / ".github/CODEOWNERS"
     owner_text = owners.read_text(encoding="utf-8") if owners.exists() else ""
@@ -297,8 +312,12 @@ def job_block(text):
 def valid_job(block, previous=False):
     unsafe = re.search(r"(?mi)^\s*(?:if:\s*.*false|continue-on-error:)|\|\|\s*true", block)
     current = "python3 scripts/mob_process.py check" in block
-    old = all(x in block for x in ("git show HEAD~1:scripts/mob_process.py", "mob_process_prev.py", "check --root ."))
-    return bool(block and current and not unsafe and (old if previous else True))
+    checker_steps = re.findall(r"(?ms)^\s*-\s+(.*?)(?=^\s*-\s+|\Z)", block)
+    authenticated = all("GH_TOKEN:" in step for step in checker_steps if "mob_process.py" in step)
+    old = all(x in block for x in ("github.event.before", "mob_process_prev.py", "check --root . --skip-regeneration"))
+    push_main = all(x in block for x in ("github.event_name == 'push'", "refs/heads/main"))
+    return bool(block and current and authenticated and not unsafe
+                and (old and push_main if previous else True))
 
 
 def check_issue_labels(issues):
@@ -344,7 +363,7 @@ def render_mob(root, issues, git, as_of=None):
     return "\n".join(lines)
 
 
-def check_mob(root, issues, git):
+def check_mob(root, issues, git, skip_regeneration=False):
     path = root / "MOB.md"
     if not path.exists():
         return ["MOB.md is missing"]
@@ -367,19 +386,19 @@ def check_mob(root, issues, git):
     expected_done = sorted(set(load_records(root)) | set(json.loads((root / ".mob/records/LEGACY.json").read_text(encoding="utf-8"))["cards"]))
     if state.get("done") != expected_done:
         errors.append("MOB.md done list does not equal record and legacy cards")
-    if current_bytes != render_mob(root, issues, git, state["as_of"]).encode("utf-8"):
+    if not skip_regeneration and current_bytes != render_mob(root, issues, git, state["as_of"]).encode("utf-8"):
         errors.append("MOB.md is not byte-identical to write-mob-md output")
     return errors
 
 
-def run_check(root, issues, git=None):
+def run_check(root, issues, git=None, skip_regeneration=False):
     git = git or (lambda *args: git_command(root, *args))
     legacy = json.loads((root / ".mob/records/LEGACY.json").read_text(encoding="utf-8"))["cards"]
     closed_cards = {card_number(i) for i in issues if "card" in labels(i) and card_number(i)}
     errors = []
     maximum = max((item["number"] for item in issues), default=0) + 50
     for check in (lambda: check_records(root, issues, git), lambda: check_retros(root, closed_cards | set(legacy), maximum),
-                  lambda: check_legacy(root, issues), lambda: check_mob(root, issues, git),
+                  lambda: check_legacy(root, issues), lambda: check_mob(root, issues, git, skip_regeneration),
                   lambda: check_events(root, issues), lambda: check_workflows(root), lambda: check_issue_labels(issues)):
         try:
             errors.extend(check())
@@ -397,13 +416,15 @@ def main(argv=None, issue_reader=read_issues):
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("check", "write-mob-md"))
     parser.add_argument("--root", type=Path)
+    parser.add_argument("--skip-regeneration", action="store_true",
+                        help="skip only MOB.md's byte-for-byte regeneration comparison")
     args = parser.parse_args(argv)
     root = args.root.resolve() if args.root else Path(__file__).resolve().parents[1]
     try:
         issues = issue_reader()
         git = lambda *values: git_command(root, *values)
         if args.command == "check":
-            return run_check(root, issues, git)
+            return run_check(root, issues, git, args.skip_regeneration)
         (root / "MOB.md").write_text(render_mob(root, issues, git), encoding="utf-8", newline="\n")
         print("mob-process: wrote MOB.md")
         return 0

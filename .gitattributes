@@ -1,2 +1,3 @@
 tests/Phrase.Acceptance.Tests/Fixtures/corpus/*.avowry -text
 LICENSE text eol=lf
+MOB.md text eol=lf

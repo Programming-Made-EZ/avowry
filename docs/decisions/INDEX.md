@@ -44,6 +44,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D125](process-and-staffing.md#d125) — The public name is Avowry; the rename as nine small cards
 - [D127](process-and-staffing.md#d127) — No backward compatibility for the rename; the repository is renamed first
 - [D134](process-and-staffing.md#d134) — Mob-process accountability that does not depend on the facilitator
+- [D135](process-and-staffing.md#d135) — Review of the mob-process checker (rounds 1 to 3); detection now, prevention as the destination
 
 ### benchmarks-and-measurement
 
@@ -199,3 +200,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D132](compiler-and-adapters.md#d132) | Review of card 193: generated code uses Avowry names | compiler-and-adapters | applied |
 | [D133](compiler-and-adapters.md#d133) | Review of card 194: the compiler project and namespace are Avowry.Compiler | compiler-and-adapters | applied |
 | [D134](process-and-staffing.md#d134) | Mob-process accountability that does not depend on the facilitator | process-and-staffing | in force |
+| [D135](process-and-staffing.md#d135) | Review of the mob-process checker (rounds 1 to 3); detection now, prevention as the destination | process-and-staffing | in force |
