@@ -358,6 +358,8 @@ within the last hour) takes a driver out of rotation, until its next successful 
 | agy | 1 | 0/3 | none | New to this mob; model gemini-4-argon-high (3.1 Pro not offered) |
 | Claude (last resort) | 1 | 0/3 | none | CLI not signed in as of 2026-10-25 |
 
+Ledger note (catch-up retro, 2026-10-29): this ledger was not maintained from 2026-10-25 to 2026-10-29; no misreport or safety violation by any driver was found in that period, so the rungs above are unchanged, but the clean-cycle counts do not include the cards of that period. From card 195 on, the per-card trail records in `.mob/records/` carry the evidence for the ledger and each retro updates it.
+
 ### Safety
 
 - **Never kill a process by name or pattern**; only by exact PID, and only your own.

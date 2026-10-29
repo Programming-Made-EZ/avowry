@@ -1,0 +1,5 @@
+# D134 Owner action: @Programming-Made-EZ is a placeholder; the product owner chooses the real reviewer identity.
+/scripts/mob_process.py @Programming-Made-EZ
+/.github/workflows/ @Programming-Made-EZ
+/.mob/records/LEGACY.json @Programming-Made-EZ
+/docs/decisions/process-and-staffing.md @Programming-Made-EZ
