@@ -50,6 +50,7 @@ public partial class EdgeCaseFixtureCorpus
         {
             var specs = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
             Assert.True(specs.Built, specs.Log);
+            Assert.True(specs.Total > 0, "runSpecs fixtures must run at least one generated spec");
             Assert.Equal(0, specs.Failed);
         }
     }
@@ -84,6 +85,6 @@ public partial class EdgeCaseFixtureCorpus
             record.GetProperty("line").GetInt32());
     }
 
-    [GeneratedRegex(@"\((?<line>\d+),\d+\): (?<code>PH\d+):")]
+    [GeneratedRegex(@"(?<code>PH\d+) \((?<line>\d+):\d+\)")]
     private static partial Regex DiagnosticPattern();
 }

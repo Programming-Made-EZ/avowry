@@ -39,6 +39,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D118](process-and-staffing.md#d118) — The stale-CLI test helper fix is its own card, ranked next (card 173)
 - [D120](process-and-staffing.md#d120) — Edge-case fixture corpus: card 174 ranked after 173, card 175 for the rest
 - [D121](process-and-staffing.md#d121) — The v0.1 public preview bar and its gap cards (176 to 188)
+- [D124](process-and-staffing.md#d124) — Licence decision (Apache-2.0 plus trademark policy) and review of card 183
 
 ### benchmarks-and-measurement
 
@@ -182,3 +183,5 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D120](process-and-staffing.md#d120) | Edge-case fixture corpus: card 174 ranked after 173, card 175 for the rest | process-and-staffing | in force |
 | [D121](process-and-staffing.md#d121) | The v0.1 public preview bar and its gap cards (176 to 188) | process-and-staffing | in force |
 | [D122](compiler-and-adapters.md#d122) | Review of card 173: the CLI test helper fails loudly when stale | compiler-and-adapters | applied |
+| [D123](compiler-and-adapters.md#d123) | Review of card 174: the edge-case fixture corpus | compiler-and-adapters | applied |
+| [D124](process-and-staffing.md#d124) | Licence decision (Apache-2.0 plus trademark policy) and review of card 183 | process-and-staffing | in force |

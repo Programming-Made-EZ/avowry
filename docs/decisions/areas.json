@@ -832,5 +832,20 @@
     "status": "applied",
     "title": "Review of card 173: the CLI test helper fails loudly when stale",
     "order": 113
+  },
+  "D123": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "Review of card 174: the edge-case fixture corpus",
+    "order": 114
+  },
+  "D124": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Licence decision (Apache-2.0 plus trademark policy) and review of card 183",
+    "order": 115,
+    "also": [
+      "board-and-delivery"
+    ]
   }
 }

@@ -1,4 +1,4 @@
-# composite-calling-failing-phrase: an inherited failure crosses one composite level
+# composite-calling-failing-phrase: an inherited failure crosses one composite level; the phrase record of reject has an empty endpoint because only check, a phrase, calls it directly (docs/TRACEABILITY.md); a multi-level composite is not expressible today, see card 189
 module CompositeFailure
 
 phrase "reject {n: Int}" -> Int
