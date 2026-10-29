@@ -15,7 +15,22 @@ public sealed record CliRun(int ExitCode, string Stdout, string Stderr)
 public static class PhraseCli
 {
     private static readonly TimeSpan Timeout = TimeSpan.FromMinutes(5);
+    private static readonly TimeSpan FreshnessTolerance = TimeSpan.FromSeconds(2);
     private static readonly SemaphoreSlim BuildGate = new(1, 1);
+    private static readonly Lazy<bool> FreshnessChecked = new(CheckProductionFreshness);
+
+    public static void EnsureFresh(
+        string dllPath,
+        IEnumerable<string> sourceFiles,
+        Func<string, DateTime> lastWriteUtc,
+        TimeSpan tolerance)
+    {
+        var dllWriteTime = lastWriteUtc(dllPath);
+        if (sourceFiles.Any(source => lastWriteUtc(source) > dllWriteTime + tolerance))
+            throw new InvalidOperationException("phrase CLI is stale, run dotnet build src/Phrase.Cli");
+    }
+
+    public static void EnsureFresh() => _ = FreshnessChecked.Value;
 
     public static async Task<CliRun> RunAsync(params string[] args)
     {
@@ -56,7 +71,10 @@ public static class PhraseCli
     {
         var dll = DllPath();
         if (File.Exists(dll))
+        {
+            EnsureFresh();
             return dll;
+        }
 
         await BuildGate.WaitAsync();
         try
@@ -97,6 +115,7 @@ public static class PhraseCli
             var log = new StringBuilder().Append(await stdout).Append(await stderr).ToString();
             if (process.ExitCode != 0 || !File.Exists(dll))
                 throw new InvalidOperationException($"phrase CLI did not build ({dll}).{Environment.NewLine}{log}");
+            EnsureFresh();
             return dll;
         }
         finally
@@ -112,6 +131,25 @@ public static class PhraseCli
         AppContext.BaseDirectory.Contains($"{Path.DirectorySeparatorChar}Release{Path.DirectorySeparatorChar}", StringComparison.OrdinalIgnoreCase)
             ? "Release"
             : "Debug";
+
+    private static bool CheckProductionFreshness()
+    {
+        var sources = new[]
+        {
+            RepoPaths.Find("src", "Phrase.Cli"),
+            RepoPaths.Find("src", "Phrase.Compiler"),
+            RepoPaths.Find("src", "Phrase.Adapters.CSharp"),
+        }.SelectMany(SourceFiles);
+        EnsureFresh(DllPath(), sources, File.GetLastWriteTimeUtc, FreshnessTolerance);
+        return true;
+    }
+
+    private static IEnumerable<string> SourceFiles(string projectDirectory) =>
+        Directory.EnumerateFiles(projectDirectory, "*", SearchOption.AllDirectories)
+            .Where(path =>
+                (path.EndsWith(".cs", StringComparison.Ordinal) || path.EndsWith(".csproj", StringComparison.Ordinal)) &&
+                !Path.GetRelativePath(projectDirectory, path).Split(Path.DirectorySeparatorChar)
+                    .Any(part => part.Equals("bin", StringComparison.Ordinal) || part.Equals("obj", StringComparison.Ordinal)));
 
     private static void ApplyHostEnvironment(ProcessStartInfo psi)
     {
