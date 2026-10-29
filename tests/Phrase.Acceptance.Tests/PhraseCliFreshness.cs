@@ -2,7 +2,7 @@ using Phrase.Acceptance.Tests.Support;
 
 namespace Phrase.Acceptance.Tests;
 
-// Feature: Test runs reject a stale Phrase CLI
+// Feature: Test runs reject a stale Avowry CLI
 //   As Morgan, I want a test run against an out-of-date CLI to stop with a clear message,
 //   so that no gate result rests on a binary that does not contain the change under test.
 public class PhraseCliFreshness
@@ -37,11 +37,11 @@ public class PhraseCliFreshness
             PhraseCli.EnsureFresh("phrase.dll", ["older.cs", "newer.cs", "equal.cs"], LastWriteUtc, TimeSpan.FromSeconds(2)));
 
         // Then only a source beyond the tolerance fails, with the exact rebuild instruction
-        Assert.Equal("phrase CLI is stale, run dotnet build src/Phrase.Cli", stale.Message);
+        Assert.Equal("Avowry CLI is stale, run dotnet build src/Phrase.Cli", stale.Message);
         Assert.Null(boundary);
         Assert.Null(olderOrEqual);
         Assert.Null(noSources);
-        Assert.Equal("phrase CLI is stale, run dotnet build src/Phrase.Cli", newestDecides.Message);
+        Assert.Equal("Avowry CLI is stale, run dotnet build src/Phrase.Cli", newestDecides.Message);
     }
 
     [Fact]
@@ -73,7 +73,7 @@ public class PhraseCliFreshness
         // and a Compiler source newer than its own assembly still fails with the rebuild message
         Assert.Null(perProject);
         Assert.IsType<InvalidOperationException>(sharedDll);
-        Assert.Equal("phrase CLI is stale, run dotnet build src/Phrase.Cli", compilerStale.Message);
+        Assert.Equal("Avowry CLI is stale, run dotnet build src/Phrase.Cli", compilerStale.Message);
     }
 
     [Fact]

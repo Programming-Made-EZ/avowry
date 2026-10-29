@@ -8,7 +8,17 @@ using Phrase.Adapters.CSharp;
 using Phrase.Compiler;
 using Phrase.Compiler.Semantics;
 
-const string Usage = "Usage: phrase build FILE.phrase -o OUT_DIR [--target csharp]\n       phrase trace NAME [--map PATH] [--assembly PATH] [--strict]";
+const string Usage = "Usage: avowry build FILE.phrase -o OUT_DIR [--target csharp]\n       avowry trace NAME [--map PATH] [--assembly PATH] [--strict]";
+if (args is ["--help"])
+{
+    Console.WriteLine(Usage);
+    return 0;
+}
+if (args is ["--version"])
+{
+    Console.WriteLine($"Avowry {Assembly.GetExecutingAssembly().GetName().Version}");
+    return 0;
+}
 if (args.Length > 0 && args[0] == "trace")
     return Trace(args[1..]);
 if (!ParseBuild(args, out var file, out var output))
@@ -18,7 +28,7 @@ if (!ParseBuild(args, out var file, out var output))
 }
 if (!File.Exists(file))
 {
-    Console.Error.WriteLine($"No such file: {file}");
+    Error($"No such file: {file}");
     return 2;
 }
 try
@@ -30,7 +40,7 @@ try
 }
 catch (CompilationFailedException exception)
 {
-    Console.Error.WriteLine(exception.Message);
+    Error(exception.Message);
     return 1;
 }
 
@@ -45,7 +55,7 @@ static void WriteMap(CompilationOutput output, string root)
     var options = new JsonSerializerOptions { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
     var json = JsonSerializer.Serialize(new MapFile(1, module.BuildId, records), options)
         .Replace("\r\n", "\n", StringComparison.Ordinal) + "\n";
-    File.WriteAllText(Path.Combine(root, module.Name + ".phrasemap.json"), json, new UTF8Encoding(false));
+    File.WriteAllText(Path.Combine(root, module.Name + ".avowrymap.json"), json, new UTF8Encoding(false));
 }
 
 static IEnumerable<MapRecord> Records(CompilationOutput output, ModuleModel module)
@@ -103,17 +113,17 @@ static int Trace(string[] values)
     }
     catch (JsonException exception)
     {
-        Console.Error.WriteLine($"Could not trace: invalid JSON source map: {exception.Message}");
+        Error($"Could not trace: invalid JSON source map: {exception.Message}");
         return 2;
     }
     catch (BadImageFormatException exception)
     {
-        Console.Error.WriteLine($"Could not trace: assembly is not valid: {exception.Message}");
+        Error($"Could not trace: assembly is not valid: {exception.Message}");
         return 2;
     }
     catch (Exception exception)
     {
-        Console.Error.WriteLine($"Could not trace: {exception.Message}");
+        Error($"Could not trace: {exception.Message}");
         return 2;
     }
 }
@@ -127,21 +137,21 @@ static int TraceCore(string[] values)
     }
     if (path is null || !File.Exists(path))
     {
-        Console.Error.WriteLine("Source map not found; pass --map PATH.");
+        Error("Source map not found; pass --map PATH.");
         return 2;
     }
     var parsed = JsonSerializer.Deserialize<MapFile>(File.ReadAllText(path), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     var problem = Validate(parsed);
     if (problem is not null)
     {
-        Console.Error.WriteLine($"Source map is malformed: {problem}");
+        Error($"Source map is malformed: {problem}");
         return 2;
     }
     var map = parsed!;
     var found = map.Records.Where(record => record.Name == name || record.CsMethod == name).ToList();
     if (found.Count == 0)
     {
-        Console.Error.WriteLine($"Unknown trace name or frame: {name}");
+        Error($"Unknown trace name or frame: {name}");
         return 1;
     }
     var mismatch = CheckAssembly(map, assemblyPath, out var check);
@@ -269,6 +279,7 @@ static DeclaredFailureModel? PhraseFailureDeclaration(ModuleModel module, Phrase
     ?? phrase.Steps?.Select(step => FailureDeclaration(module, step, failure)).FirstOrDefault(declaration => declaration is not null);
 static string MethodName(PhraseModel phrase) => string.Concat(phrase.Parts.Where(part => !part.IsHole).Select(part => char.ToUpperInvariant(part.Text[0]) + part.Text[1..]));
 static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n')))).ToLowerInvariant();
+static void Error(string message) => Console.Error.WriteLine($"avowry: {message}");
 
 static bool ParseBuild(string[] values, out string file, out string output)
 {

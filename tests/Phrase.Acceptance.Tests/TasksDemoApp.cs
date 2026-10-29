@@ -67,7 +67,7 @@ public class TasksDemoApp
         Assert.True(File.Exists(Path.Combine(demoRoot, "BACKLOG.md")));
         using var workspace = TempWorkspace.Create();
 
-        // When product owner builds the real file with phrase build and runs the generated specs
+        // When product owner builds the real file with avowry build and runs the generated specs
         var cli = await PhraseCli.RunAsync("build", sourcePath, "-o", workspace.Root);
         Assert.True(cli.ExitCode == 0, cli.Text);
         var build = await BuildAsync(workspace.FindSingle("*.Api.csproj"));

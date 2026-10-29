@@ -128,7 +128,7 @@ public class SourceMapTraceCommand
         if (badInput == "invalid-json")
             await File.WriteAllTextAsync(map, "{ definitely not json");
         else if (badInput == "missing-map")
-            map = Path.Combine(workspace.Root, "missing.phrasemap.json");
+            map = Path.Combine(workspace.Root, "missing.avowrymap.json");
         else if (badInput is "missing-assembly" or "not-an-assembly")
         {
             assembly = Path.Combine(workspace.Root, badInput == "missing-assembly" ? "missing.dll" : "not-an-assembly.dll");
@@ -174,7 +174,7 @@ public class SourceMapTraceCommand
         }
 
         public string Root => workspace.Root;
-        public string Map => Path.Combine(Root, "Tasks.phrasemap.json");
+        public string Map => Path.Combine(Root, "Tasks.avowrymap.json");
         public string Assembly { get; }
 
         public static async Task<BuiltTasks> CreateAsync(Func<string, string>? change = null, bool buildAssembly = true)

@@ -193,3 +193,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D127](process-and-staffing.md#d127) | No backward compatibility for the rename; the repository is renamed first | process-and-staffing | in force |
 | [D128](compiler-and-adapters.md#d128) | Review of card 175: more edge-case fixtures | compiler-and-adapters | applied |
 | [D129](process-and-staffing.md#d129) | Review of card 190: the product is called Avowry in user-facing documents | process-and-staffing | applied |
+| [D130](process-and-staffing.md#d130) | Review of card 191: the command is avowry; output and the map file say Avowry | process-and-staffing | applied |

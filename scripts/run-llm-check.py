@@ -255,7 +255,7 @@ def find_phrase_dll(repo: Path, env: dict[str, str]) -> Path:
         timeout=180,
     )
     if built.returncode != 0:
-        raise RuntimeError("phrase CLI did not build:\n" + built.stdout + built.stderr)
+        raise RuntimeError("Avowry CLI did not build:\n" + built.stdout + built.stderr)
     existing = phrase_dll_candidates(repo)
     if existing:
         return max(existing, key=lambda path: path.stat().st_mtime)

@@ -2,7 +2,7 @@
 
 A programming language for LLMs where **names are descriptions** and **specs are the truth**. Code at every level reads as its own summary, so the code is the context. Avowry compiles through a language-neutral IR to target providers; C# (FastEndpoints + xUnit) is first. Avowry is the language; each avow is one line of intent in it.
 
-The current implementation still uses the `phrase` command and `.phrase` file extension. The command and file extension are renamed in the next cards.
+The current implementation uses the `avowry` command and still uses the `.phrase` file extension. The file extension is renamed in a later card.
 
 - **Purpose and north star: [VISION.md](VISION.md)** (a vocabulary of common patterns an LLM reads and writes for free, in any language; both a spec and a library)
 - Grammar and resolution rules: [docs/GRAMMAR.md](docs/GRAMMAR.md)

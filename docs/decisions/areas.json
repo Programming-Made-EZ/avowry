@@ -886,5 +886,11 @@
     "status": "applied",
     "title": "Review of card 190: the product is called Avowry in user-facing documents",
     "order": 120
+  },
+  "D130": {
+    "area": "process-and-staffing",
+    "status": "applied",
+    "title": "Review of card 191: the command is avowry; output and the map file say Avowry",
+    "order": 121
   }
 }

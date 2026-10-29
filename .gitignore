@@ -9,6 +9,6 @@ __pycache__/
 *.pyc
 bench/holdouts-unsealed/
 
-# Local build output of phrase build (README demo steps) and its source map
+# Local build output of avowry build (README demo steps) and its source map
 out/
-*.phrasemap.json
+*.avowrymap.json

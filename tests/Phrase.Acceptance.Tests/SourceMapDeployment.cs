@@ -31,7 +31,7 @@ public class SourceMapDeployment
         // Then the deployment contains the API assembly but no source map anywhere
         Assert.NotEmpty(Directory.GetFiles(publishOutput.Root, "Tasks.Api.dll", SearchOption.AllDirectories));
         var maps = Directory.GetFiles(publishOutput.Root, "*", SearchOption.AllDirectories)
-            .Where(path => Path.GetFileName(path).EndsWith(".phrasemap.json", StringComparison.OrdinalIgnoreCase));
+            .Where(path => Path.GetFileName(path).EndsWith(".avowrymap.json", StringComparison.OrdinalIgnoreCase));
         Assert.Empty(maps);
     }
 
@@ -52,16 +52,17 @@ public class SourceMapDeployment
         var endpointResponse = await http.PostAsync("/tasks", body);
         var mapPaths = new[]
         {
+            "/Tasks.avowrymap.json",
+            "/avowrymap.json",
             "/Tasks.phrasemap.json",
-            "/phrasemap.json",
-            "/Tasks.Api/Tasks.phrasemap.json",
-            "/.well-known/Tasks.phrasemap.json",
-            "/wwwroot/Tasks.phrasemap.json",
-            "/tasks.phrasemap.json",
-            "/Tasks.phrasemap.json/",
+            "/Tasks.Api/Tasks.avowrymap.json",
+            "/.well-known/Tasks.avowrymap.json",
+            "/wwwroot/Tasks.avowrymap.json",
+            "/tasks.avowrymap.json",
+            "/Tasks.avowrymap.json/",
         };
         var mapResponses = await Task.WhenAll(mapPaths.Select(http.GetAsync));
-        using var head = await http.SendAsync(new HttpRequestMessage(HttpMethod.Head, "/Tasks.phrasemap.json"));
+        using var head = await http.SendAsync(new HttpRequestMessage(HttpMethod.Head, "/Tasks.avowrymap.json"));
 
         // Then the endpoint behaves as specified while every source-map path is absent
         Assert.Equal(HttpStatusCode.OK, endpointResponse.StatusCode);

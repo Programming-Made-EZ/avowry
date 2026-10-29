@@ -27,7 +27,7 @@ public static class PhraseCli
     {
         var dllWriteTime = lastWriteUtc(dllPath);
         if (sourceFiles.Any(source => lastWriteUtc(source) > dllWriteTime + tolerance))
-            throw new InvalidOperationException("phrase CLI is stale, run dotnet build src/Phrase.Cli");
+            throw new InvalidOperationException("Avowry CLI is stale, run dotnet build src/Phrase.Cli");
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public static class PhraseCli
 
         ApplyHostEnvironment(psi);
 
-        using var process = Process.Start(psi) ?? throw new InvalidOperationException("Could not start the phrase CLI.");
+        using var process = Process.Start(psi) ?? throw new InvalidOperationException("Could not start the Avowry CLI.");
         var stdout = process.StandardOutput.ReadToEndAsync();
         var stderr = process.StandardError.ReadToEndAsync();
 
@@ -74,7 +74,7 @@ public static class PhraseCli
             var id = process.Id;
             if (!process.HasExited)
                 process.Kill(entireProcessTree: true);
-            throw new TimeoutException($"phrase CLI exceeded {Timeout.TotalMinutes} minutes (pid {id}).");
+            throw new TimeoutException($"Avowry CLI exceeded {Timeout.TotalMinutes} minutes (pid {id}).");
         }
 
         return new CliRun(process.ExitCode, await stdout, await stderr);
@@ -97,7 +97,7 @@ public static class PhraseCli
 
             var project = RepoPaths.Find("src", "Phrase.Cli", "Phrase.Cli.csproj");
             if (!File.Exists(project))
-                throw new FileNotFoundException($"The phrase CLI project is not in the repo yet: {project}");
+                throw new FileNotFoundException($"The Avowry CLI project is not in the repo yet: {project}");
 
             var psi = new ProcessStartInfo("dotnet")
             {
@@ -109,7 +109,7 @@ public static class PhraseCli
                 psi.ArgumentList.Add(arg);
             ApplyHostEnvironment(psi);
 
-            using var process = Process.Start(psi) ?? throw new InvalidOperationException("Could not start dotnet build for the phrase CLI.");
+            using var process = Process.Start(psi) ?? throw new InvalidOperationException("Could not start dotnet build for the Avowry CLI.");
             var stdout = process.StandardOutput.ReadToEndAsync();
             var stderr = process.StandardError.ReadToEndAsync();
             using var cts = new CancellationTokenSource(Timeout);
@@ -122,12 +122,12 @@ public static class PhraseCli
                 var id = process.Id;
                 if (!process.HasExited)
                     process.Kill(entireProcessTree: true);
-                throw new TimeoutException($"dotnet build of the phrase CLI exceeded {Timeout.TotalMinutes} minutes (pid {id}).");
+                throw new TimeoutException($"dotnet build of the Avowry CLI exceeded {Timeout.TotalMinutes} minutes (pid {id}).");
             }
 
             var log = new StringBuilder().Append(await stdout).Append(await stderr).ToString();
             if (process.ExitCode != 0 || !File.Exists(dll))
-                throw new InvalidOperationException($"phrase CLI did not build ({dll}).{Environment.NewLine}{log}");
+                throw new InvalidOperationException($"Avowry CLI did not build ({dll}).{Environment.NewLine}{log}");
             EnsureFresh();
             return dll;
         }

@@ -48,7 +48,7 @@ public class SourceMapTraceability
         // When Morgan builds the source through the CLI and reads its external map
         var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
         Assert.True(build.ExitCode == 0, build.Text);
-        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "CompositeFailures.phrasemap.json")));
+        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "CompositeFailures.avowrymap.json")));
 
         // Then the endpoint failure record points to the leaf phrase's declaration
         var failure = document.RootElement.GetProperty("records").EnumerateArray()
@@ -90,7 +90,7 @@ public class SourceMapTraceability
         // When Morgan builds the source through the CLI and reads its external map
         var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
         Assert.True(build.ExitCode == 0, build.Text);
-        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "RepeatedFailures.phrasemap.json")));
+        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "RepeatedFailures.avowrymap.json")));
 
         // Then the failure record reaches the declaring phrase after the earlier matching step
         var failure = document.RootElement.GetProperty("records").EnumerateArray()
@@ -110,7 +110,7 @@ public class SourceMapTraceability
         Assert.True(build.ExitCode == 0, build.Text);
 
         // When every id is recomputed from the documented UTF-8 hash input and its Phrase source line
-        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "Tasks.phrasemap.json")));
+        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "Tasks.avowrymap.json")));
         var recomputed = document.RootElement.GetProperty("records").EnumerateArray()
             .Select(record => (Actual: Text(record, "stepId"), Expected: RecomputeStepId(record, sourceLines))).ToArray();
 
@@ -129,7 +129,7 @@ public class SourceMapTraceability
         // When the CLI writes the source map
         var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
         Assert.True(build.ExitCode == 0, build.Text);
-        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "Tasks.phrasemap.json")));
+        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "Tasks.avowrymap.json")));
         var records = document.RootElement.GetProperty("records").EnumerateArray().ToArray();
         var notFound = records.Where(record => Text(record, "kind") == "failure" && Text(record, "name") == "NotFound").ToArray();
 
@@ -149,7 +149,7 @@ public class SourceMapTraceability
 
         // When the source is built and Morgan traces EmptyTitle
         var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
-        var map = Path.Combine(workspace.Root, "Tasks.phrasemap.json");
+        var map = Path.Combine(workspace.Root, "Tasks.avowrymap.json");
         var trace = await PhraseCli.RunAsync("trace", "EmptyTitle", "--map", map);
 
         // Then the external map is complete, deterministic, and the trace reaches the owning spec
@@ -201,8 +201,8 @@ public class SourceMapTraceability
         // Then normalization makes the complete maps byte-identical
         Assert.True(one.ExitCode == 0, one.Text);
         Assert.True(two.ExitCode == 0, two.Text);
-        Assert.Equal(await File.ReadAllBytesAsync(Path.Combine(first.Root, "Tasks.phrasemap.json")),
-            await File.ReadAllBytesAsync(Path.Combine(second.Root, "Tasks.phrasemap.json")));
+        Assert.Equal(await File.ReadAllBytesAsync(Path.Combine(first.Root, "Tasks.avowrymap.json")),
+            await File.ReadAllBytesAsync(Path.Combine(second.Root, "Tasks.avowrymap.json")));
     }
 
     [Fact]
@@ -226,7 +226,7 @@ public class SourceMapTraceability
         // Then the external map and every generated C# file are byte-identical
         Assert.True(one.ExitCode == 0, one.Text);
         Assert.True(two.ExitCode == 0, two.Text);
-        Assert.Equal(await File.ReadAllBytesAsync(Path.Combine(first.Root, "Tasks.phrasemap.json")), await File.ReadAllBytesAsync(Path.Combine(second.Root, "Tasks.phrasemap.json")));
+        Assert.Equal(await File.ReadAllBytesAsync(Path.Combine(first.Root, "Tasks.avowrymap.json")), await File.ReadAllBytesAsync(Path.Combine(second.Root, "Tasks.avowrymap.json")));
         foreach (var path in Directory.GetFiles(first.Root, "*.cs", SearchOption.AllDirectories))
         {
             var relative = Path.GetRelativePath(first.Root, path);
@@ -244,7 +244,7 @@ public class SourceMapTraceability
         var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
 
         // When a name absent from that map is traced
-        var trace = await PhraseCli.RunAsync("trace", "MissingFailure", "--map", Path.Combine(workspace.Root, "Tasks.phrasemap.json"));
+        var trace = await PhraseCli.RunAsync("trace", "MissingFailure", "--map", Path.Combine(workspace.Root, "Tasks.avowrymap.json"));
 
         // Then the command refuses the unknown name clearly
         Assert.True(build.ExitCode == 0, build.Text);
@@ -267,7 +267,7 @@ public class SourceMapTraceability
 
         // When every declared failure is observed through the running API over real HTTP
         await TasksOverHttp.AssertEverySpecMatchesAsync(workspace.FindSingle("*.Api.csproj"), resolved.Module);
-        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "Tasks.phrasemap.json")));
+        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "Tasks.avowrymap.json")));
         var records = document.RootElement.GetProperty("records").EnumerateArray().ToArray();
 
         // Then every endpoint and all four failures resolve to their exact declarations and owning endpoints
@@ -315,7 +315,7 @@ public class SourceMapTraceability
     public async Task No_phrase_knowledge_assertions_fail_on_a_reintroduced_leak()
     {
         // Given each forbidden form of Phrase source knowledge is reintroduced independently
-        var leaks = new[] { "Tasks.phrase:12", "// phrase: Tasks.phrase", "X-Phrase-Source", "Tasks.phrasemap.json" };
+        var leaks = new[] { "Tasks.phrase:12", "// phrase: Tasks.phrase", "X-Phrase-Source", "Tasks.avowrymap.json" };
 
         // When the shared generated-output assertions inspect each mutation
         foreach (var leak in leaks)
@@ -335,6 +335,7 @@ public class SourceMapTraceability
         Assert.DoesNotMatch(@"\.phrase:\d", generated);
         Assert.DoesNotContain("// phrase:", generated, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("X-Phrase-Source", generated, StringComparison.Ordinal);
+        Assert.DoesNotContain("avowrymap", generated, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("phrasemap", generated, StringComparison.OrdinalIgnoreCase);
     }
 
@@ -381,7 +382,7 @@ public class SourceMapTraceability
         using var workspace = TempWorkspace.Create();
         var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
         Assert.True(build.ExitCode == 0, build.Text);
-        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "Tasks.phrasemap.json")));
+        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "Tasks.avowrymap.json")));
         var failureRecords = document.RootElement.GetProperty("records").EnumerateArray()
             .Where(record => Text(record, "kind") == "failure").ToArray();
 

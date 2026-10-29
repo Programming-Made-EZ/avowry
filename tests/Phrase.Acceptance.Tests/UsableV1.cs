@@ -43,10 +43,10 @@ public class UsableV1 : IClassFixture<UsableV1Fixture>
     public async Task Bar2_one_cli_command_compiles_it_to_csharp_and_fastendpoints()
     {
         // Given the real Tasks application and an empty output directory
-        // When one phrase build command compiles it
+        // When one avowry build command compiles it
         var app = await fixture.App.Value;
         // Then it emits API and specs projects, including FastEndpoints endpoints
-        Assert.True(app.Cli.ExitCode == 0, "Bar 2 not met: phrase build failed." + Environment.NewLine + app.Cli.Text);
+        Assert.True(app.Cli.ExitCode == 0, "Bar 2 not met: avowry build failed." + Environment.NewLine + app.Cli.Text);
         Assert.True(File.Exists(app.ApiProject), "Bar 2 not met: the generated API project is missing.");
         Assert.True(File.Exists(app.SpecsProject), "Bar 2 not met: the generated specs project is missing.");
         var generatedCSharp = Directory.GetFiles(Path.GetDirectoryName(app.ApiProject)!, "*.cs");

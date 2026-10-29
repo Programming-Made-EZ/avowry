@@ -41,7 +41,7 @@ public partial class EdgeCaseFixtureCorpus
         }
 
         Assert.True(build.ExitCode == 0, build.Text);
-        using var map = JsonDocument.Parse(await File.ReadAllTextAsync(workspace.FindSingle("*.phrasemap.json")));
+        using var map = JsonDocument.Parse(await File.ReadAllTextAsync(workspace.FindSingle("*.avowrymap.json")));
         var actual = map.RootElement.GetProperty("records").EnumerateArray().Select(MapRecord.From).ToArray();
         var pinned = root.GetProperty("records").EnumerateArray().Select(MapRecord.From).ToArray();
         Assert.Equal(pinned, actual);

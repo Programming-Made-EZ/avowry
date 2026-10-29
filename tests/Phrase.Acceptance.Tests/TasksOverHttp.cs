@@ -26,7 +26,7 @@ public class TasksOverHttp
     [Trait("Slice", "136")]
     public async Task Every_spec_matches_over_real_http()
     {
-        // Given the Tasks app, built with phrase build, and the specs of its compiled model
+        // Given the Tasks app, built with avowry build, and the specs of its compiled model
         var sourcePath = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
         var source = await File.ReadAllTextAsync(sourcePath);
         var resolved = Resolver.Resolve(source);
