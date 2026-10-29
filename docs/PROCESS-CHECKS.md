@@ -24,3 +24,9 @@ gh api repos/{owner}/{repo}/issues/{issue-number}/timeline --paginate -H 'Accept
 The push gate also loads the checker from `github.event.before`, the commit immediately before the push, and runs it against the new tree. A rule change must therefore still satisfy the old checker. The sanctioned path for tightening a rule, or fixing a checker bug that wrongly rejects legitimate state, is two steps: first land the checker fix in a commit the old checker accepts; then use the corrected behavior in a later commit. The previous checker receives `--skip-regeneration`, which skips only the byte-for-byte MOB.md regeneration comparison so a legitimate generator change can land; the state-comment, ancestry, freshness, and done-list checks remain active.
 
 Residual limits are explicit: Git committer dates can be forged; records remain self-attested until the product owner completes D134's branch protection with required checks and code-owner review and establishes a separate auditor identity; and `git push --no-verify` bypasses the local hook. CI and Dispatch are therefore the authoritative detectors, not the hook alone.
+
+## Residual limits (D135)
+
+- A single commit can make the checker permissive and still pass: the previous-version run validates the new tree with the old checker, not the new checker source, and it is skipped on force pushes. The external audit (Dispatch, every 30 minutes, with its own pinned copy of the checker) is the cover until branch protection with a code-owner review by a second identity exists.
+- Detection happens after the push. Prevention (pull requests, required checks, no direct or force pushes) is the required destination (D135, option C).
+- Records are self-attested until an auditor identity posts an external review or status per card.

@@ -132,6 +132,11 @@ def check_records(root, issues, git):
             errors.append(f"Card {card:03} record does not match schema 1 or its filename")
             continue
         seats = record.get("seats", [])
+        if (not isinstance(seats, list) or any(not isinstance(s, dict) for s in seats)
+                or any(not isinstance(s.get(key), str) or not s[key].strip()
+                       for s in seats for key in ("role", "seat", "model", "evidence"))):
+            errors.append(f"Card {card:03} has a seat with an empty seat, model or evidence field")
+            continue
         roles = [seat.get("role") for seat in seats]
         required_roles = [role for role in roles if role in REQUIRED_ROLES]
         if (sorted(required_roles) != sorted(REQUIRED_ROLES) or len(roles) != len(set(roles))
@@ -402,8 +407,8 @@ def run_check(root, issues, git=None, skip_regeneration=False):
                   lambda: check_events(root, issues), lambda: check_workflows(root), lambda: check_issue_labels(issues)):
         try:
             errors.extend(check())
-        except (OSError, ValueError, RuntimeError) as exc:
-            errors.append(f"check could not read its input: {exc}")
+        except (OSError, ValueError, RuntimeError, TypeError, AttributeError, KeyError) as exc:
+            errors.append(f"check could not read its input: {exc!r}")
     if errors:
         for error in errors:
             print(f"::error::mob-process: {error}")

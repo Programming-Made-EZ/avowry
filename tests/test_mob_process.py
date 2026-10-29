@@ -147,6 +147,53 @@ jobs:
         self.assertIn('grep -q -- "--skip-regeneration" "$RUNNER_TEMP/mob_process_prev.py"', step)
         self.assertLess(step.index('grep -q -- "--skip-regeneration"'), step.index("check --root . --skip-regeneration"))
 
+    def test_non_string_empty_or_malformed_seats_are_reported_not_crashes(self):
+        # Given a valid record whose seat fields are damaged in the ways a careless or hostile record could be
+        record = self.valid_record(); path = self.root / ".mob/records/201.json"
+        message = "Card 201 has a seat with an empty seat, model or evidence field"
+        for seat_index, key, value in ((0, "model", None), (0, "model", 0), (1, "seat", None), (2, "evidence", ["x"])):
+            damaged = json.loads(json.dumps(record)); damaged["seats"][seat_index][key] = value
+            path.write_text(json.dumps(damaged), encoding="utf-8")
+            # When the records are checked
+            errors = mob.check_records(self.root, [issue(201)], self.git)
+            # Then the damage is a reported violation, never an exception or a pass
+            self.assertIn(message, errors, (seat_index, key, value))
+        damaged = json.loads(json.dumps(record)); damaged["seats"][0] = "not a seat"
+        path.write_text(json.dumps(damaged), encoding="utf-8")
+        self.assertIn(message, mob.check_records(self.root, [issue(201)], self.git))
+
+    def test_a_wrongly_typed_legacy_field_fails_the_check_instead_of_crashing(self):
+        # Given a legacy list whose cards field is a number instead of a list
+        legacy_path = self.root / ".mob/records/LEGACY.json"
+        legacy = json.loads(legacy_path.read_text(encoding="utf-8")); legacy["cards"] = 5
+        legacy_path.write_text(json.dumps(legacy), encoding="utf-8")
+        # When the whole detector runs
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            code = mob.run_check(self.root, [issue(201)], git=self.git)
+        # Then the run fails closed with a reported error, not an exception
+        self.assertEqual(1, code)
+        self.assertIn("check could not read its input", out.getvalue())
+
+    def test_a_seat_with_an_invented_role_is_rejected(self):
+        # Given a valid record with an extra seat whose role is not one of the known roles
+        record = self.valid_record(); path = self.root / ".mob/records/201.json"
+        record["seats"].append({"role": "wizard", "seat": "Codex", "model": "test", "evidence": "D2010"})
+        path.write_text(json.dumps(record), encoding="utf-8")
+        # When the records are checked
+        errors = mob.check_records(self.root, [issue(201)], self.git)
+        # Then only the six required roles and the optional refactor role are accepted
+        self.assertIn("Card 201 must have exactly the six required role seats", errors)
+
+    def test_a_record_retro_that_does_not_list_the_card_is_rejected(self):
+        # Given a valid record whose retro file has all sections but a Cards line for another card
+        self.valid_record()
+        (self.root / "docs/retros/r.md").write_text("Cards: 999\n# Individual\n# Team\n# Organisation\n# Product\nProcess improvement pick\n", encoding="utf-8")
+        # When the records are checked
+        errors = mob.check_records(self.root, [issue(201)], self.git)
+        # Then the record is reported as not covered by its retro
+        self.assertIn("Card 201 record retro does not cover the card", errors)
+
     def test_closed_card_without_retro_cover_is_reported(self):
         # Given a retro whose Cards line covers card 5 only
         (self.root / "docs/retros/r.md").write_text("Cards: 5\n", encoding="utf-8")
