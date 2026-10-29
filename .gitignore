@@ -8,3 +8,7 @@ TestResults/
 __pycache__/
 *.pyc
 bench/holdouts-unsealed/
+
+# Local build output of phrase build (README demo steps) and its source map
+out/
+*.phrasemap.json
