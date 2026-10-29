@@ -56,6 +56,12 @@ def load_ratchet():
     return [int(b) for b in json.loads(RATCHET.read_text(encoding="utf-8")).get("must_pass", [])]
 
 
+def load_suspended():
+    """Bars whose evidence is knowingly stale, as {bar: reason}. A suspension is a loud, reasoned exception, never silent."""
+    raw = json.loads(RATCHET.read_text(encoding="utf-8")).get("suspended", {})
+    return {int(bar): str(reason) for bar, reason in raw.items()}
+
+
 def reached_line(root=None):
     """Milestone line. Point at demo/tasks/README.md only when that file exists."""
     base = Path(root) if root is not None else ROOT
@@ -64,9 +70,11 @@ def reached_line(root=None):
     return "USABLE v1 REACHED: demo app at demo/tasks"
 
 
-def report(results):
+def report(results, suspended=None):
     try:
         ratchet = load_ratchet()
+        if suspended is None:
+            suspended = load_suspended()
     except (OSError, ValueError) as exc:
         print(f"::error::Usable v1 ratchet unreadable ({RATCHET.name}): {exc}")
         return 1
@@ -74,10 +82,12 @@ def report(results):
         print(f"::error::Usable v1 ratchet must list every bar {sorted(BARS)}, found {sorted(ratchet)}")
         return 1
     met, regressed, missing = classify(results, ratchet)
+    regressed = [bar for bar in regressed if bar not in suspended]
     lines = [f"## Usable v1: {len(met)} of {len(BARS)} criteria met", ""]
     for bar, title in BARS.items():
         ok, message = results.get(bar, (False, "no result"))
-        lines.append(f"- {'MET' if ok else 'not met'}: bar {bar}, {title}" + ("" if ok else f" ({message.splitlines()[0][:160] if message else 'no detail'})"))
+        state = "MET" if ok else ("SUSPENDED" if bar in suspended else "not met")
+        lines.append(f"- {state}: bar {bar}, {title}" + ("" if ok else f" ({message.splitlines()[0][:160] if message else 'no detail'})"))
     summary = "\n".join(lines)
     print(summary)
     target = os.environ.get("GITHUB_STEP_SUMMARY")
@@ -89,9 +99,12 @@ def report(results):
     if regressed:
         print(f"::error::Usable v1 REGRESSION: bar(s) {regressed} previously passed (board/usable-v1-ratchet.json) and now fail")
         return 1
-    if len(met) == len(BARS):
+    open_suspensions = {bar: why for bar, why in suspended.items() if bar not in met}
+    for bar, why in sorted(open_suspensions.items()):
+        print(f"::warning::Usable v1 bar {bar} is SUSPENDED, its evidence is stale: {why}")
+    if len(met) + len(open_suspensions) == len(BARS):
         print(reached_line())
-        print("::notice::USABLE v1 REACHED")
+        print("::notice::USABLE v1 REACHED" + (" (with suspended bars)" if open_suspensions else ""))
         return 0
     print(f"::error::Usable v1 not reached: {len(met)} of {len(BARS)} criteria")
     return 1
@@ -106,8 +119,13 @@ def self_test():
     assert classify(partial, [1]) == ([1], [], [])
     assert classify(none, [1])[1] == [1], "a ratcheted bar that fails is a regression"
     assert classify({1: (True, "")}, [])[2] == [2, 3, 4, 5, 6], "missing bars are reported"
-    assert report(ok) == 0, "six passing bars reach Usable v1"
-    assert report(none) == 1, "a failing bar fails the job now that every bar is ratcheted"
+    assert report(ok, {}) == 0, "six passing bars reach Usable v1"
+    assert report(none, {}) == 1, "a failing bar fails the job now that every bar is ratcheted"
+    one_stale = dict(ok); one_stale[6] = (False, "stale")
+    assert report(one_stale, {}) == 1, "a failing bar with no suspension is a regression"
+    assert report(one_stale, {6: "reason"}) == 0, "a suspended bar with a stated reason does not fail the job"
+    two_stale = dict(one_stale); two_stale[5] = (False, "x")
+    assert report(two_stale, {6: "reason"}) == 1, "a suspension covers only the bar it names"
     with tempfile.TemporaryDirectory() as tmp:
         missing = Path(tmp)
         assert reached_line(missing) == "USABLE v1 REACHED: demo app at demo/tasks"

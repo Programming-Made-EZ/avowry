@@ -1,4 +1,14 @@
 {
   "_comment": "Bars of the Usable v1 milestone that have passed and must keep passing. The usable-v1 CI job goes red if any listed bar regresses.",
-  "must_pass": [1, 2, 3, 4, 5, 6]
+  "must_pass": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "suspended": {
+    "6": "the frozen documents moved to the avow keyword and the .avowry extension (card 199); card 162 reruns the LLM check, ratifies the new hashes and removes this suspension"
+  }
 }
