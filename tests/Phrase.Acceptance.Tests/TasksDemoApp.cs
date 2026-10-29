@@ -81,7 +81,7 @@ public class TasksDemoApp
         Assert.Equal(0, specs.Failed);
 
         // And the provisional TaskStore used by the app remains safe under concurrent requests
-        var phrases = await File.ReadAllTextAsync(workspace.FindSingle("Phrases.cs"));
+        var phrases = await File.ReadAllTextAsync(workspace.FindSingle("Avows.cs"));
         Assert.Equal(4, CountOf(phrases, "lock (gate)"));
     }
 

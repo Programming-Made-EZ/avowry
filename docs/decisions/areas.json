@@ -898,5 +898,11 @@
     "status": "applied",
     "title": "Review of card 199: the avow keyword, filler words and the .avowry extension",
     "order": 122
+  },
+  "D132": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "Review of card 193: generated code uses Avowry names",
+    "order": 123
   }
 }

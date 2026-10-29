@@ -315,7 +315,11 @@ public class SourceMapTraceability
     public async Task No_phrase_knowledge_assertions_fail_on_a_reintroduced_leak()
     {
         // Given each forbidden form of Phrase source knowledge is reintroduced independently
-        var leaks = new[] { "Tasks.avowry:12", "// phrase: Tasks.avowry", "X-Phrase-Source", "Tasks.avowrymap.json" };
+        var leaks = new[]
+        {
+            "Tasks.avowry:12", "// phrase: Tasks.avowry", "X-Phrase-Source", "Tasks.avowrymap.json",
+            "PhraseRuntime", "PhraseFailure", "PhraseBuildId", "[Phrase(\"an avow\")]", "Phrases.Run()",
+        };
 
         // When the shared generated-output assertions inspect each mutation
         foreach (var leak in leaks)
@@ -337,6 +341,11 @@ public class SourceMapTraceability
         Assert.DoesNotContain("X-Phrase-Source", generated, StringComparison.Ordinal);
         Assert.DoesNotContain("avowrymap", generated, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("phrasemap", generated, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("PhraseRuntime", generated, StringComparison.Ordinal);
+        Assert.DoesNotContain("PhraseFailure", generated, StringComparison.Ordinal);
+        Assert.DoesNotContain("PhraseBuildId", generated, StringComparison.Ordinal);
+        Assert.DoesNotContain("[Phrase(", generated, StringComparison.Ordinal);
+        Assert.DoesNotContain("Phrases.", generated, StringComparison.Ordinal);
     }
 
     private static int LineOf(IReadOnlyList<string> lines, string declaration) =>

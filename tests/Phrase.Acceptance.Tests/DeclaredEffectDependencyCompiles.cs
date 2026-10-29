@@ -41,7 +41,7 @@ public class DeclaredEffectDependencyCompiles
         output.WriteTo(workspace.Root);
 
         // Then the shared effect has one double and both generated specs pass
-        var specs = File.ReadAllText(workspace.FindSingle("PhraseSpecs.cs"));
+        var specs = File.ReadAllText(workspace.FindSingle("AvowSpecs.cs"));
         Assert.Equal(1, specs.Split("sealed class DbDouble : IDb", StringSplitOptions.None).Length - 1);
         var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
         Assert.True(result.Built, result.Log);
@@ -75,7 +75,7 @@ public class DeclaredEffectDependencyCompiles
         output.WriteTo(workspace.Root);
 
         // Then the generated specs project builds and both specs pass
-        var specs = File.ReadAllText(workspace.FindSingle("PhraseSpecs.cs"));
+        var specs = File.ReadAllText(workspace.FindSingle("AvowSpecs.cs"));
         Assert.Equal(1, specs.Split("sealed class DbDouble : IDb", StringSplitOptions.None).Length - 1);
         var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
         Assert.True(result.Built, result.Log);
@@ -106,14 +106,14 @@ public class DeclaredEffectDependencyCompiles
         output.WriteTo(workspace.Root);
 
         // Then the API exposes the declared effect as an interface dependency
-        var phrases = File.ReadAllText(workspace.FindSingle("Phrases.cs"));
+        var phrases = File.ReadAllText(workspace.FindSingle("Avows.cs"));
         Assert.Contains("public interface IDb", phrases, StringComparison.Ordinal);
         Assert.Contains("DatabaseIsAvailable(IDb db)", phrases, StringComparison.Ordinal);
 
         // And the generated spec supplies a test double and passes
-        var specs = File.ReadAllText(workspace.FindSingle("PhraseSpecs.cs"));
+        var specs = File.ReadAllText(workspace.FindSingle("AvowSpecs.cs"));
         Assert.Contains("sealed class DbDouble : IDb", specs, StringComparison.Ordinal);
-        Assert.Contains("Phrases.DatabaseIsAvailable(new DbDouble())", specs, StringComparison.Ordinal);
+        Assert.Contains("Avows.DatabaseIsAvailable(new DbDouble())", specs, StringComparison.Ordinal);
         var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
         Assert.True(result.Built, result.Log);
         Assert.Equal(1, result.Total);

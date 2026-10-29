@@ -24,7 +24,7 @@ public class EverySpecOutcomeAsserts
                 when called
                 then fails with Rejected
               native csharp
-                PhraseFailure.Raise("Rejected");
+                AvowryFailure.Raise("Rejected");
 
             avow to "identity {value: Int}" -> Int
               native csharp

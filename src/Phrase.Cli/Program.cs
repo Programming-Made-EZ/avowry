@@ -80,7 +80,7 @@ static IEnumerable<MapRecord> Records(CompilationOutput output, ModuleModel modu
         var spec = phrase.Specs.FirstOrDefault();
         yield return new(StepId("phrase", phrase.Line, phrase.Template), "phrase", phrase.Template, module.PhraseFile,
             phrase.Line, owner?.Name ?? "", step?.Source ?? "", Lines(spec?.SourceSpan), cs,
-            $"Phrases.{MethodName(phrase)}", Hash(output.Files[cs]));
+            $"Avows.{MethodName(phrase)}", Hash(output.Files[cs]));
     }
     foreach (var endpoint in module.Endpoints)
     foreach (var failure in endpoint.Failures.Distinct(StringComparer.Ordinal))
@@ -197,7 +197,7 @@ static string? AssemblyBuildId(string path)
         var value = metadata.GetBlobReader(attribute.Value);
         if (value.ReadUInt16() != 1)
             throw new BadImageFormatException("The assembly metadata is malformed.", path);
-        if (value.ReadSerializedString() == "PhraseBuildId")
+        if (value.ReadSerializedString() == "AvowryBuildId")
             return value.ReadSerializedString();
     }
     return null;

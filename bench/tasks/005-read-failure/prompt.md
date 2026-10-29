@@ -10,5 +10,5 @@ avow to "ensure {name: Text} has a value"
     when called
     then succeeds
   native csharp
-    if (string.IsNullOrEmpty(name)) throw new PhraseFailure("MissingName");
+    if (string.IsNullOrEmpty(name)) throw new AvowryFailure("MissingName");
 ```

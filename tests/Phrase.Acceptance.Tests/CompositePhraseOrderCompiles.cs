@@ -52,15 +52,15 @@ public class CompositePhraseOrderCompiles
         output.WriteTo(workspace.Root);
 
         // Then the generated composite keeps call order, the three locals, and the union of leaf failures
-        var phrases = File.ReadAllText(workspace.FindSingle("Phrases.cs"));
+        var phrases = File.ReadAllText(workspace.FindSingle("Avows.cs"));
         Assert.Contains("/// <remarks>Fails with: MissingName, UnknownSku</remarks>", phrases, StringComparison.Ordinal);
         Assert.Contains(
             "        // let price = price of sku\n" +
-            "        var price = Phrases.PriceOfSku(sku);\n" +
+            "        var price = Avows.PriceOfSku(sku);\n" +
             "        // let units = units of name\n" +
-            "        var units = Phrases.UnitsOfName(name);\n" +
+            "        var units = Avows.UnitsOfName(name);\n" +
             "        // let label = label of name\n" +
-            "        var label = Phrases.LabelOfName(name);",
+            "        var label = Avows.LabelOfName(name);",
             phrases,
             StringComparison.Ordinal);
 

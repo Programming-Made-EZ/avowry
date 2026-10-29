@@ -65,7 +65,7 @@ public class PersistenceEffectCompiles
         output.WriteTo(workspace.Root);
 
         // Then the generated API has the store interface and an in-memory implementation registered for the app
-        var phrases = File.ReadAllText(workspace.FindSingle("Phrases.cs"));
+        var phrases = File.ReadAllText(workspace.FindSingle("Avows.cs"));
         Assert.Contains("public interface IItemStore", phrases, StringComparison.Ordinal);
         Assert.Contains("void Save(Item item)", phrases, StringComparison.Ordinal);
         Assert.Contains("Item? Find(string id)", phrases, StringComparison.Ordinal);
@@ -75,7 +75,7 @@ public class PersistenceEffectCompiles
         Assert.Contains("AddSingleton<IItemStore, InMemoryItemStore>()", program, StringComparison.Ordinal);
 
         // And the spec double from card 047 is still the object the specs construct
-        var specs = File.ReadAllText(workspace.FindSingle("PhraseSpecs.cs"));
+        var specs = File.ReadAllText(workspace.FindSingle("AvowSpecs.cs"));
         Assert.Contains("sealed class ItemStoreDouble : InMemoryItemStore", specs, StringComparison.Ordinal);
         Assert.Contains("new ItemStoreDouble()", specs, StringComparison.Ordinal);
 

@@ -935,12 +935,12 @@ static string GenerateOutcomeTests(BenchmarkTask task, IReadOnlyList<Outcome> ou
     code.AppendLine("            System.Reflection.Assembly.Load(reference);");
     code.AppendLine("        var methods = System.AppDomain.CurrentDomain.GetAssemblies()");
     code.AppendLine("            .SelectMany(TypesOf)");
-    code.AppendLine("            .Where(type => type.Name == \"Phrases\" && type.IsClass && type.IsAbstract && type.IsSealed)");
+    code.AppendLine("            .Where(type => type.Name == \"Avows\" && type.IsClass && type.IsAbstract && type.IsSealed)");
     code.AppendLine("            .SelectMany(type => type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly))");
     code.AppendLine("            .Where(method => !method.IsSpecialName)");
     code.AppendLine("            .ToArray();");
     code.AppendLine("        if (methods.Length != 1)");
-    code.AppendLine("            throw new InvalidOperationException(\"ambiguous_phrase: expected exactly one public static method on Phrases; found \" + methods.Length);");
+    code.AppendLine("            throw new InvalidOperationException(\"ambiguous_avow: expected exactly one public static method on Avows; found \" + methods.Length);");
     code.AppendLine("        return methods[0];");
     code.AppendLine("    }");
     code.AppendLine();
@@ -1076,7 +1076,7 @@ static string GenerateEndpointOutcomeTests(IReadOnlyList<Outcome> outcomes)
           {
               foreach (var type in AllTypes())
               {
-                  var attribute = type.GetCustomAttributes().FirstOrDefault(item => item.GetType().Name == "PhraseAttribute");
+                  var attribute = type.GetCustomAttributes().FirstOrDefault(item => item.GetType().Name == "AvowAttribute");
                   if (attribute is null)
                       continue;
                   var template = attribute.GetType().GetProperty("Template")?.GetValue(attribute) as string ?? "";
@@ -1289,7 +1289,7 @@ static string GenerateCustomerOutcomeTests(IReadOnlyList<Outcome> outcomes)
     code.AppendLine("    }");
     code.AppendLine("    private static object Call(object customer)");
     code.AppendLine("    {");
-    code.AppendLine("        var method = Customer().Assembly.GetTypes().Where(t => t.Name == \"Phrases\").SelectMany(t => t.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)).Single(m => m.ReturnType == typeof(string) && m.GetParameters() is [{ ParameterType: var p }] && p == Customer());");
+    code.AppendLine("        var method = Customer().Assembly.GetTypes().Where(t => t.Name == \"Avows\").SelectMany(t => t.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)).Single(m => m.ReturnType == typeof(string) && m.GetParameters() is [{ ParameterType: var p }] && p == Customer());");
     code.AppendLine("        return method.Invoke(null, new[] { customer })!;");
     code.AppendLine("    }");
     foreach (var outcome in outcomes)

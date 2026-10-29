@@ -35,7 +35,7 @@ public class ReferenceTarget
         // Given a fresh copy of the reference with one expected value made wrong
         using var workspace = TempWorkspace.Create();
         workspace.CopyFrom(RepoPaths.Find("reference", "csharp"));
-        var specs = workspace.FindSingle("PhraseSpecs.cs");
+        var specs = workspace.FindSingle("AvowSpecs.cs");
         var source = await File.ReadAllTextAsync(specs);
         Assert.Contains("Assert.Equal(5, result);", source);
         await File.WriteAllTextAsync(specs, source.Replace("Assert.Equal(5, result);", "Assert.Equal(6, result);"));

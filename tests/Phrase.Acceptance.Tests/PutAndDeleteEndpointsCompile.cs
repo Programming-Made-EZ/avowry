@@ -156,7 +156,7 @@ public class PutAndDeleteEndpointsCompile
         Assert.Contains("Put(\"/items/{id}\")", updateEndpoint, StringComparison.Ordinal);
 
         // And the prototype store can replace by id and remove, and its methods are locked
-        var phrases = File.ReadAllText(workspace.FindSingle("Phrases.cs"));
+        var phrases = File.ReadAllText(workspace.FindSingle("Avows.cs"));
         Assert.Contains("bool Remove(string id)", phrases, StringComparison.Ordinal);
         Assert.Contains("items[index] = item;", phrases, StringComparison.Ordinal);
         Assert.Contains("lock (gate)", phrases, StringComparison.Ordinal);
@@ -255,7 +255,7 @@ public class PutAndDeleteEndpointsCompile
             Assert.DoesNotContain("bool Remove", text, StringComparison.Ordinal);
         }
 
-        var phrases = File.ReadAllText(workspace.FindSingle("Phrases.cs"));
+        var phrases = File.ReadAllText(workspace.FindSingle("Avows.cs"));
         Assert.Contains("public interface INoteStore { }", phrases, StringComparison.Ordinal);
         Assert.Contains("public interface IWidgetStore { }", phrases, StringComparison.Ordinal);
 

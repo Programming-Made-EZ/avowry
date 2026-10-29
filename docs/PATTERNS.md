@@ -25,7 +25,7 @@ The condition vocabulary is deliberately small:
 
 The value being checked may be a variable or a field path such as `task.title`. Paths are resolved against declared record fields and must have the type required by the condition. Length maxima are non-negative 32-bit integers, and Int literals in comparisons must fit in a signed 32-bit Int.
 
-The core syntax and base-library pattern define the condition and declared-failure semantics. The C# adapter maps them to early-return-style guard clauses that raise the declared `PhraseFailure`; for example, `is not blank` becomes a `string.IsNullOrWhiteSpace` guard and `length at most 200` becomes a length guard. A project profile may select a different idiomatic representation later without changing the Avowry source.
+The core syntax and base-library pattern define the condition and declared-failure semantics. The C# adapter maps them to early-return-style guard clauses that raise the declared `AvowryFailure`; for example, `is not blank` becomes a `string.IsNullOrWhiteSpace` guard and `length at most 200` becomes a length guard. A project profile may select a different idiomatic representation later without changing the Avowry source.
 
 ## Record update
 

@@ -63,7 +63,7 @@ public class RecordUpdateFormCompiles
         var output = PhraseCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
-        var phrases = File.ReadAllText(workspace.FindSingle("Phrases.cs"));
+        var phrases = File.ReadAllText(workspace.FindSingle("Avows.cs"));
         var endpoint = File.ReadAllText(workspace.FindSingle("ShowCopy.cs.cs"));
         var build = await BuildAsync(workspace.FindSingle("*.Api.csproj"));
         var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));

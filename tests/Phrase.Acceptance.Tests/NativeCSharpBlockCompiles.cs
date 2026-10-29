@@ -37,7 +37,7 @@ public class NativeCSharpBlockCompiles
         output.WriteTo(workspace.Root);
 
         // Then the generated method contains the block text exactly, including its blank line and brace nesting
-        var phrases = File.ReadAllText(workspace.FindSingle("Phrases.cs"));
+        var phrases = File.ReadAllText(workspace.FindSingle("Avows.cs"));
         Assert.Contains("if (n == 2)\n        {\n\n            return n * 2;\n        }\n        return n * 3;", phrases, StringComparison.Ordinal);
 
         // And the generated specs project builds cleanly with no warnings in the log

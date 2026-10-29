@@ -242,7 +242,7 @@ The lexer always returns a complete token stream with balanced `INDENT`/`DEDENT`
 
 ## 5. Semantics in brief
 
-- **Failures** are declared codes, not exceptions. An avow may only fail with codes in its `fails with` clause, plus codes from avows it calls. Providers map failures to their idiom (C#: a `PhraseFailure` carrying the code, mapped to HTTP 422 at endpoints).
+- **Failures** are declared codes, not exceptions. An avow may only fail with codes in its `fails with` clause, plus codes from avows it calls. Providers map failures to their idiom (C#: an `AvowryFailure` carrying the code, mapped to HTTP 422 at endpoints).
 - **Effects** default to `none`. An avow that calls an effectful avow must declare the union. Providers use effects to choose sync vs async and what to inject.
 - **Naming in targets.** Providers convert names to target conventions: field `quantity` becomes `Quantity` in C#, `quantity` in TypeScript. `native` blocks use target conventions.
 - **Missing native block.** If a leaf avow has no `native` block for the selected target, compilation fails with `PH020 no implementation for target`. (Later: the LLM-assisted generator proposes one, gated by the avow's specs.)
@@ -258,7 +258,7 @@ The lexer always returns a complete token stream with balanced `INDENT`/`DEDENT`
   -> provider (C#: FastEndpoints + xUnit | TS: Hono + Vitest | Python: FastAPI + pytest)
 ```
 
-Each generated target symbol carries its source avow (C#: `[Phrase("...")]` attribute), so an LLM reading generated code can always trace back to the avow.
+Each generated target symbol carries its source avow (C#: `[Avow("...")]` attribute), so an LLM reading generated code can always trace back to the avow.
 
 ## 7. Out of scope for v0.1
 

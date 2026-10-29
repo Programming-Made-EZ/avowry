@@ -33,8 +33,8 @@ public class LeafPhraseFailureCompiles
         output.WriteTo(workspace.Root);
 
         // Then the runtime exposes the typed failure code and the generated failure spec passes
-        var runtime = File.ReadAllText(workspace.FindSingle("PhraseRuntime.cs"));
-        Assert.Contains("sealed class PhraseFailure", runtime, StringComparison.Ordinal);
+        var runtime = File.ReadAllText(workspace.FindSingle("AvowryRuntime.cs"));
+        Assert.Contains("sealed class AvowryFailure", runtime, StringComparison.Ordinal);
         Assert.Contains("public string Code", runtime, StringComparison.Ordinal);
         var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
         Assert.True(result.Built, result.Log);

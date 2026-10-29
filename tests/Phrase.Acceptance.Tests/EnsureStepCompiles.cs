@@ -47,7 +47,7 @@ public class EnsureStepCompiles
         var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
 
         // Then the inherited failure is exercised as HTTP 422 and the whitespace title is rejected
-        Assert.Contains("catch (PhraseFailure failure)", endpoint, StringComparison.Ordinal);
+        Assert.Contains("catch (AvowryFailure failure)", endpoint, StringComparison.Ordinal);
         Assert.Contains("await Send.ErrorsAsync(422, ct);", endpoint, StringComparison.Ordinal);
         Assert.True(result.Built, result.Log);
         Assert.Equal(1, result.Total);
@@ -133,7 +133,7 @@ public class EnsureStepCompiles
         var output = PhraseCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
-        var generated = File.ReadAllText(workspace.FindSingle("Phrases.cs"));
+        var generated = File.ReadAllText(workspace.FindSingle("Avows.cs"));
         var build = await BuildAsync(workspace.FindSingle("*.Api.csproj"));
         var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
 
@@ -141,8 +141,8 @@ public class EnsureStepCompiles
         Assert.True(result.Built, result.Log);
         Assert.True(build.ExitCode == 0, build.Log);
         Assert.Contains("0 Warning(s)", build.Log, StringComparison.Ordinal);
-        Assert.Contains("if (string.IsNullOrWhiteSpace(title)) PhraseFailure.Raise(\"EmptyTitle\");", generated, StringComparison.Ordinal);
-        Assert.Contains("if (title.Length > 200) PhraseFailure.Raise(\"TitleTooLong\");", generated, StringComparison.Ordinal);
+        Assert.Contains("if (string.IsNullOrWhiteSpace(title)) AvowryFailure.Raise(\"EmptyTitle\");", generated, StringComparison.Ordinal);
+        Assert.Contains("if (title.Length > 200) AvowryFailure.Raise(\"TitleTooLong\");", generated, StringComparison.Ordinal);
         Assert.Equal(4, result.Total);
         Assert.Equal(0, result.Failed);
     }
