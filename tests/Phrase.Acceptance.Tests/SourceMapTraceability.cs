@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Phrase.Acceptance.Tests.Support;
+using Phrase.Compiler.Semantics;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -123,4 +124,88 @@ public class SourceMapTraceability
         Assert.NotEqual(0, trace.ExitCode);
         Assert.Contains("Unknown trace name or frame: MissingFailure", trace.Stderr);
     }
+
+    [Fact]
+    [Trait("Slice", "161")]
+    public async Task Live_failures_and_endpoints_resolve_in_the_source_map()
+    {
+        // Given Morgan's Tasks source is built by the CLI into an empty temporary workspace
+        var sourcePath = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var sourceLines = await File.ReadAllLinesAsync(sourcePath);
+        var resolved = Resolver.Resolve(string.Join('\n', sourceLines));
+        Assert.Empty(resolved.Diagnostics);
+        using var workspace = TempWorkspace.Create();
+        var build = await PhraseCli.RunAsync("build", sourcePath, "-o", workspace.Root);
+        Assert.True(build.ExitCode == 0, build.Text);
+
+        // When every declared failure is observed through the running API over real HTTP
+        await TasksOverHttp.AssertEverySpecMatchesAsync(workspace.FindSingle("*.Api.csproj"), resolved.Module);
+        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "Tasks.phrasemap.json")));
+        var records = document.RootElement.GetProperty("records").EnumerateArray().ToArray();
+
+        // Then every endpoint and all four failures resolve to their exact declarations and owning endpoints
+        var endpointRecords = records.Where(record => Text(record, "kind") == "endpoint").ToArray();
+        Assert.Equal(resolved.Module.Endpoints.Select(endpoint => endpoint.Name).Order(), endpointRecords.Select(record => Text(record, "name")).Order());
+        foreach (var endpoint in resolved.Module.Endpoints)
+        {
+            var record = endpointRecords.Single(candidate => Text(candidate, "name") == endpoint.Name);
+            Assert.Equal(LineOf(sourceLines, $"endpoint {endpoint.Name} :"), record.GetProperty("line").GetInt32());
+            Assert.Equal(endpoint.Name, Text(record, "endpoint"));
+        }
+
+        var expectedFailures = new[] { "EmptyTitle", "TitleTooLong", "NotFound", "StoreUnavailable" };
+        var failureRecords = records.Where(record => Text(record, "kind") == "failure").ToArray();
+        Assert.Equal(expectedFailures.Order(), failureRecords.Select(record => Text(record, "name")).Distinct().Order());
+        foreach (var record in failureRecords)
+        {
+            var failure = Text(record, "name");
+            var declarationLines = LinesContainingFailure(sourceLines, failure);
+            var owningEndpoints = resolved.Module.Endpoints
+                .Where(endpoint => endpoint.Specs.Any(spec => spec.Outcome is FailsModel fails && fails.Code == failure))
+                .Select(endpoint => endpoint.Name)
+                .ToHashSet(StringComparer.Ordinal);
+            Assert.Contains(record.GetProperty("line").GetInt32(), declarationLines);
+            Assert.Contains(Text(record, "endpoint"), owningEndpoints);
+        }
+    }
+
+    [Fact]
+    [Trait("Slice", "161")]
+    public async Task No_phrase_knowledge_assertions_fail_on_a_reintroduced_leak()
+    {
+        // Given each forbidden form of Phrase source knowledge is reintroduced independently
+        var leaks = new[] { "Tasks.phrase:12", "// phrase: Tasks.phrase", "X-Phrase-Source", "Tasks.phrasemap.json" };
+
+        // When the shared generated-output assertions inspect each mutation
+        foreach (var leak in leaks)
+            Assert.ThrowsAny<Xunit.Sdk.XunitException>(() => AssertNoPhraseKnowledge(leak));
+
+        // Then those same assertions accept the real CLI-generated C# output
+        var source = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        using var workspace = TempWorkspace.Create();
+        var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
+        Assert.True(build.ExitCode == 0, build.Text);
+        var generated = string.Join("\n", Directory.GetFiles(workspace.Root, "*.cs", SearchOption.AllDirectories).Select(File.ReadAllText));
+        AssertNoPhraseKnowledge(generated);
+    }
+
+    private static void AssertNoPhraseKnowledge(string generated)
+    {
+        Assert.DoesNotMatch(@"\.phrase:\d", generated);
+        Assert.DoesNotContain("// phrase:", generated, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("X-Phrase-Source", generated, StringComparison.Ordinal);
+        Assert.DoesNotContain("phrasemap", generated, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static int LineOf(IReadOnlyList<string> lines, string declaration) =>
+        Array.FindIndex(lines.ToArray(), line => line.StartsWith(declaration, StringComparison.Ordinal)) + 1;
+
+    private static int[] LinesContainingFailure(IReadOnlyList<string> lines, string failure) =>
+        lines.Select((line, index) => (line, number: index + 1))
+            .Where(item => item.line.TrimStart().StartsWith("fails with ", StringComparison.Ordinal)
+                && item.line.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries).Contains(failure, StringComparer.Ordinal))
+            .Select(item => item.number)
+            .ToArray();
+
+    private static string Text(JsonElement record, string property) => record.GetProperty(property).GetString()!;
 }
