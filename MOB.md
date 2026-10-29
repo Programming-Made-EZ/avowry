@@ -1,57 +1,30 @@
-**Usable v1: 0 of 6 criteria · next card: Board: create the private Phrase project and its fields (tooling, thin slice) (073)**
+**Usable v1: 5 of 6 criteria met (bar 6 suspended until the docs re-freeze, card 162) · held card: (195)**
+
+<!-- mob-state: {"as_of": "1ea38a7aa930", "generated_at": "2026-10-29T20:33:48Z", "generator": "interim (hand-run; replaced by scripts/mob_process.py)", "held_card": 195, "process": "restoring", "schema": 1, "usable_v1": {"met": 5, "of": 6, "suspended_bars": [6]}} -->
 
 # Mob status
 
-**Project:** Phrase &nbsp;|&nbsp; **State:** finished
-**Card in progress:** Loop: pick the next eligible card from the board (063)
+**Project:** Avowry &nbsp;|&nbsp; **State:** process restoration in progress
+**Held:** card 195 (Codex finished its run; the result is not imported until the process is restored)
 
-## Who did what
+## Process lapse, stated plainly
 
-- **Codex:** 13 turns (advance x1, green x3, ready x1, refactor x3, ship x3, signoff x1, slice x1)
-- **Copilot:** 1 turns (red x1)
+From 2026-10-26 16:36 (card 063) to 2026-10-29 the mob did not run cards in card mode with role rotation, did not refresh this page and did not hold a retro after each Done card. About 70 cards were closed that way, 18 of them after the Usable v1 retro. What was done instead: a rotation author in a throwaway clone, an import by the facilitator, one fresh-context review and a Decider record per card, and a CI check. The full account is in the product owner escalation reply of 2026-10-29.
 
-## Recent turns
+Restoration order: this page, then checks that run in CI outside the facilitator (page freshness, a retro for every Done card, a role-rotation trail in `.mob/records/` for every Done card), then one catch-up retro, then card mode resumes.
 
-- Turn 1: Codex (product-manager, ready): READY — The card has a valid Connextra story, three sound Given/When/Then acceptance criteria, and all referenced project guidelines and source files…
-- Turn 2: Codex (architect, slice): THIN SLICE — it delivers one end-to-end tooling behavior: given the ranked board and card/run files, return the single card the mob should work next.
-- Turn 3: Copilot (qa-engineer, red): changed tests/test_loop_pick.py
-- Turn 4: Codex (backend-dev, green): changed loop.py, tests/test_loop_pick.py
-- Turn 5: Codex (backend-dev, refactor): changed loop.py, tests/test_loop_pick.py
-- Turn 6: Codex (devops-engineer, ship): STOPPED — ship gate failed.
-- Turn 7: Codex (backend-dev, green): changed loop.py, tests/test_loop_pick.py
-- Turn 8: Codex (backend-dev, refactor): changed loop.py, tests/test_loop_pick.py
-- Turn 9: Codex (devops-engineer, ship): STOPPED — ship gate failed.
-- Turn 10: Codex (backend-dev, green): changed loop.py, tests/test_loop_pick.py
-- Turn 11: Codex (backend-dev, refactor): changed loop.py, tests/test_loop_pick.py
-- Turn 12: Codex (devops-engineer, ship): STOPPED — ship gate failed. git diff --check reported trailing whitespace/mixed line endings throughout tests/testlooppick.py.
-- Turn 13: Codex (qa-engineer, signoff): DEFECTS - Bug card: Fix mixed line endings/trailing whitespace in tests/testlooppick.py.
-- Turn 14: Codex (product-manager, advance): Still In Progress.
+## Recently Done (rotation author, fresh-context review, Decider record; not card mode)
 
-## Flags, checks and decisions on this card
+- Card 199: the avow keyword with optional filler words and the .avowry extension, one mechanical commit (D131)
+- Card 198: the repository is renamed to avowry (D127)
+- Card 194: the compiler project and namespace are Avowry.Compiler (D133)
+- Card 193: generated code uses Avowry names (D132)
+- Card 191: the command is avowry; the map file is Module.avowrymap.json (D130)
+- Card 190: the product is called Avowry in user-facing documents (D129)
+- Card 175: four more edge-case fixtures (D128)
+- Card 174: the edge-case fixture corpus (D123)
+- Card 183: Apache-2.0 licence files and trademark policy (D124)
 
-- **Baseline (before any work): not done**: 0 of 2 checks pass
-- **After cycle 1: not done**: 0 of 2 checks pass
-- **After cycle 2: not done**: 0 of 2 checks pass
-- **After cycle 3: DONE**: 2 of 2 checks pass
+## What is next
 
-## Decider outcomes (latest)
-
-- Decider D23: the product owner's "it should be a loop": the loop runner in mob-defaults, cards 063 to 070 (passed)
-- Decider D24: amendment to D23 (the product owner's correction: the loop never ends; discovery instead of stop; allotment pacing) (passed)
-- Decider D25: the product owner's board move: Phrase's board becomes a GitHub Projects board (cards 073 to 077) (passed)
-
-## Board
-
-- **In progress:** Loop: pick the next eligible card from the board (063)
-- **Next in Ready:** next up: Board: create the private Phrase project and its fields (tooling, thin slice) (073); 2nd in Ready: Board: migrate every card file into one issue (tooling, thin slice) (074); 3rd in Ready: Board: put each issue on the project with its Status, Rank and fields (tooling, thin slice) (075)
-- **Done:** Resolver malformed-input hardening (002); LLM benchmark harness v0 (016); Benchmark baseline is invalid: fix the harness, store a trustworthy baseline (032); Live mob dashboard (tooling, experiment E2; code in mob-defaults; **Done** 2026-10-26, local-only) (036); Spec resolution defects (bug, from the Grok review) (018)
-
-## Latest commits
-
-- 0b15667 Board to GitHub Projects (product owner; D25): cards 073-077, private project, 064 depends on 076
-
-## What's next
-
-- The card is done. Next: its retro, then the next card from the board.
-
-_Updated 2026-10-26 23:36 UTC. Summary only: no prompts, replies, code or secrets are published._
+Rename cards 195 to 197 are held; then card 162 (the single docs re-freeze with the LLM check rerun) and the v0.1 release lane. See DRIVERS.md for which models are available.
