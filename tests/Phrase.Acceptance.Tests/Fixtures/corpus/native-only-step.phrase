@@ -1,0 +1,16 @@
+# native-only-step: an endpoint calls a phrase implemented only by native C#
+module NativeOnly
+
+phrase "accept {n: Int}" -> Int
+  spec "accepts one"
+    given n = 1
+    when called
+    then returns 1
+  native csharp
+    return n;
+
+endpoint Accept : POST /accept
+  input
+    n: Int
+  steps
+    let accepted = accept input.n

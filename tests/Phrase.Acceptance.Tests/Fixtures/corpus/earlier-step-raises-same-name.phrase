@@ -1,0 +1,14 @@
+# earlier-step-raises-same-name: an ensure raises the later phrase's declared failure
+module EarlierStep
+
+phrase "reject {n: Int}"
+  fails with Rejected
+  native csharp
+    if (n < 0) Fail("Rejected");
+
+endpoint Check : POST /check
+  input
+    n: Int
+  steps
+    ensure input.n > 0 else Rejected
+    reject input.n

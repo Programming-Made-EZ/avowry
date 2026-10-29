@@ -1,0 +1,2 @@
+tests/Phrase.Acceptance.Tests/Fixtures/corpus/*.phrase -text
+LICENSE text eol=lf

@@ -1,0 +1,19 @@
+# two-declarers: the first endpoint step reaching either declaration wins
+module TwoDeclarers
+
+phrase "reject {n: Int}"
+  fails with Rejected
+  native csharp
+    if (n < 0) Fail("Rejected");
+
+phrase "deny {n: Int}"
+  fails with Rejected
+  native csharp
+    if (n < 0) Fail("Rejected");
+
+endpoint Check : POST /check
+  input
+    n: Int
+  steps
+    reject input.n
+    deny input.n

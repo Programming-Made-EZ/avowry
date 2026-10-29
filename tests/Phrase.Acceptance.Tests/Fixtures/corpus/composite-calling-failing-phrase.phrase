@@ -1,0 +1,30 @@
+# composite-calling-failing-phrase: an inherited failure crosses one composite level
+module CompositeFailure
+
+phrase "reject {n: Int}" -> Int
+  fails with Rejected
+  spec "rejects a negative number"
+    given n = -1
+    when called
+    then fails with Rejected
+  native csharp
+    if (n < 0) Fail("Rejected");
+    return n;
+
+phrase "check {n: Int}"
+  steps
+    let checked = reject n
+  spec "inherits the rejection"
+    given n = -1
+    when called
+    then fails with Rejected
+
+endpoint Check : POST /check
+  input
+    n: Int
+  steps
+    check input.n
+  spec "reports the rejection"
+    given input { n: -1 }
+    when handled
+    then fails with Rejected

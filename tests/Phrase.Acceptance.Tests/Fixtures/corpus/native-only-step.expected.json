@@ -1,0 +1,5 @@
+{"outcome":"builds","records":[
+  {"kind":"endpoint","name":"Accept","endpoint":"Accept","line":12},
+  {"kind":"phrase","name":"accept {n: Int}","endpoint":"Accept","line":4},
+  {"kind":"step","name":"let accepted = accept input.n","endpoint":"Accept","line":16}
+],"runSpecs":true}

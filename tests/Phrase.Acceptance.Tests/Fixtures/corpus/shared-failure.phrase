@@ -1,0 +1,25 @@
+# shared-failure: one declared failure is reached by three endpoints
+module SharedFailure
+
+phrase "reject {n: Int}"
+  fails with Rejected
+  native csharp
+    if (n < 0) Fail("Rejected");
+
+endpoint First : POST /first
+  input
+    n: Int
+  steps
+    reject input.n
+
+endpoint Second : POST /second
+  input
+    n: Int
+  steps
+    reject input.n
+
+endpoint Third : POST /third
+  input
+    n: Int
+  steps
+    reject input.n

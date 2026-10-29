@@ -1,0 +1,7 @@
+{"outcome":"builds","records":[
+  {"kind":"endpoint","name":"Check","endpoint":"Check","line":9},
+  {"kind":"failure","name":"Rejected","endpoint":"Check","line":5},
+  {"kind":"phrase","name":"reject {n: Int}","endpoint":"Check","line":4},
+  {"kind":"step","name":"ensure input.n > 0 else Rejected","endpoint":"Check","line":13},
+  {"kind":"step","name":"reject input.n","endpoint":"Check","line":14}
+],"runSpecs":false}
