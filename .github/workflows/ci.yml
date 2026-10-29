@@ -39,7 +39,11 @@ jobs:
           elif ! git merge-base --is-ancestor "$BEFORE" HEAD; then
             echo "::notice::push boundary is not an ancestor of HEAD; previous-version check skipped"
           elif git show "$BEFORE:scripts/mob_process.py" > "$RUNNER_TEMP/mob_process_prev.py" 2>/dev/null; then
-            python3 "$RUNNER_TEMP/mob_process_prev.py" check --root . --skip-regeneration
+            if grep -q -- "--skip-regeneration" "$RUNNER_TEMP/mob_process_prev.py"; then
+              python3 "$RUNNER_TEMP/mob_process_prev.py" check --root . --skip-regeneration
+            else
+              echo "::notice::previous checker predates --root and --skip-regeneration; previous-version check skipped (bootstrap, D135)"
+            fi
           else
             echo "::notice::push boundary has no mob-process checker; previous-version check skipped"
           fi

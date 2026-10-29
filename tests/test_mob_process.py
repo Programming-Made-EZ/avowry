@@ -138,6 +138,15 @@ jobs:
         record["seats"].pop(); record["seats"][0]["model"] = " "; path.write_text(json.dumps(record), encoding="utf-8")
         self.assertIn("Card 201 has a seat with an empty seat, model or evidence field", mob.check_records(self.root, [issue(201)], self.git))
 
+    def test_ci_skips_a_previous_checker_that_predates_the_flags(self):
+        # Given the real ci.yml of this repository
+        text = (Path(__file__).resolve().parents[1] / ".github/workflows/ci.yml").read_text(encoding="utf-8")
+        # When it runs the previous checker version
+        step = text[text.index("Check with previous checker"):]
+        # Then it first checks that the old file knows --skip-regeneration, so the first rollout of the flags cannot turn main red
+        self.assertIn('grep -q -- "--skip-regeneration" "$RUNNER_TEMP/mob_process_prev.py"', step)
+        self.assertLess(step.index('grep -q -- "--skip-regeneration"'), step.index("check --root . --skip-regeneration"))
+
     def test_closed_card_without_retro_cover_is_reported(self):
         # Given a retro whose Cards line covers card 5 only
         (self.root / "docs/retros/r.md").write_text("Cards: 5\n", encoding="utf-8")
