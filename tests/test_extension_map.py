@@ -25,7 +25,7 @@ def passing_text():
 
 ## Core
 
-The core is domain-neutral. It holds phrases, specs with Given/When/Then, types, control and error patterns, effects as a mechanism, and failure codes.
+The core is domain-neutral. It holds avows, specs with Given/When/Then, types, control and error patterns, effects as a mechanism, and failure codes.
 
 ## Extension
 

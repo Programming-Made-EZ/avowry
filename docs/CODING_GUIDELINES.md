@@ -1,6 +1,6 @@
 # Coding guidelines for this repository
 
-These rules cover the code of this repository: the compiler, the adapters, the command line tool, the scripts and the tests. They are different from the project-profile coding standards that Phrase applies to the code it generates for users (see `docs/adr/ADR-library-binding-layering.md`); that profile describes the output, this file describes the tool that makes it. Reviewers check every change against this file.
+These rules cover the code of this repository: the compiler, the adapters, the command line tool, the scripts and the tests. They are different from the project-profile coding standards that Avowry applies to the code it generates for users (see `docs/adr/ADR-library-binding-layering.md`); that profile describes the output, this file describes the tool that makes it. Reviewers check every change against this file.
 
 Principle for every rule below: a reader, human or a fresh-context seat, should be able to understand and change one thing by reading only that thing. The rules exist to keep each unit cohesive, its dependencies few and pointing one way, and its behaviour pinned by a test that can fail.
 

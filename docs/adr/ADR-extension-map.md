@@ -14,12 +14,12 @@ The core is domain-neutral. It is the language, not a catalogue of applications.
 
 It holds:
 
-- phrases, whose names are sentences with typed holes
+- avows, whose names are sentences with typed holes
 - specs written with Given/When/Then, including `when called`, `returns`, `fails with` and `succeeds`
 - types: Text, Int, Decimal, Bool, Id, List and Option
-- control and error patterns: `let`, `steps` on a composite phrase, `fail with`, and linear flow
-- effects as a mechanism: a phrase declares `effects none` or a list of effect names, and a caller declares the union
-- failure codes as a mechanism: declared names a phrase may raise, carried as values the specs can name
+- control and error patterns: `let`, `steps` on a composite avow, `fail with`, and linear flow
+- effects as a mechanism: an avow declares `effects none` or a list of effect names, and a caller declares the union
+- failure codes as a mechanism: declared names an avow may raise, carried as values the specs can name
 
 A leaf may hold a `native <target>` block. That mechanism is core. The closed list of target names is adapter coupling and is audited below. Named effects such as Scheduler are not core keywords.
 
@@ -27,13 +27,13 @@ A leaf may hold a `native <target>` block. That mechanism is core. The closed li
 
 An extension is a library with its own cheat sheet or index, loaded only when a project uses it, with its own keywords, diagnostics and adapter-side emitters.
 
-The base library is the other library, and it is domain-neutral. It is the index of universal phrases (VISION ruling 3). It ships with Phrase. A domain extension does not. `ensure` and `compute` are base-library verbs. They are vocabulary, not core keywords, and they are not a domain extension.
+The base library is the other library, and it is domain-neutral. It is the index of universal avows (VISION ruling 3). It ships with Avowry. A domain extension does not. `ensure` and `compute` are base-library verbs. They are vocabulary, not core keywords, and they are not a domain extension.
 
-A target-language adapter is orthogonal to a domain extension. The adapter turns the resolved module into one language. A C# adapter serves every domain extension: the same C# adapter emits web endpoints, and later a desktop phrase or a SQL phrase, when those extensions are loaded. FastEndpoints, the Web SDK and xUnit are bindings inside the C# adapter. They are not the adapter seam itself. The seam is `ITargetAdapter` (`src/Phrase.Compiler/ITargetAdapter.cs` lines 9-15). How those bindings are selected, and how a project names architecture and coding standards, is [ADR-library-binding-layering.md](ADR-library-binding-layering.md) (card 152).
+A target-language adapter is orthogonal to a domain extension. The adapter turns the resolved module into one language. A C# adapter serves every domain extension: the same C# adapter emits web endpoints, and later a desktop avow or a SQL avow, when those extensions are loaded. FastEndpoints, the Web SDK and xUnit are bindings inside the C# adapter. They are not the adapter seam itself. The seam is `ITargetAdapter` (`src/Phrase.Compiler/ITargetAdapter.cs` lines 9-15). How those bindings are selected, and how a project names architecture and coding standards, is [ADR-library-binding-layering.md](ADR-library-binding-layering.md) (card 152).
 
 ## Testing split
 
-Phrase's own specs and Given/When/Then are core. They are the reliability backbone: one spec means the same thing on every target, and the resolved spec is part of the module the adapter receives.
+Avowry's own specs and Given/When/Then are core. They are the reliability backbone: one spec means the same thing on every target, and the resolved spec is part of the module the adapter receives.
 
 Test-framework specifics are extension territory. xUnit and NUnit wiring, mocking and fixtures belong to a testing-frameworks extension. The adapter side of spec-to-test generation belongs there too: the C# adapter's xUnit project is that binding, written today inside `CSharpProvider` because the extension does not exist yet. The core keeps the spec. The extension decides which test framework prints it.
 
@@ -106,8 +106,8 @@ Card 142 can partition the compiler along the web rows above without a behaviour
 
 ## Provisional conventions
 
-These behaviours exist only because Phrase has no syntax for them yet. They are PROVISIONAL: later work must not depend on them silently, and each has a stated replacement.
+These behaviours exist only because Avowry has no syntax for them yet. They are PROVISIONAL: later work must not depend on them silently, and each has a stated replacement.
 
 | Convention | Where | Why provisional | Replacement |
 |---|---|---|---|
-| An effect named `{Record}Store`, used by a phrase with that record type, where the record has an `id` field of type Text or Id, is a prototype store: the C# adapter emits `I{Record}Store` with `Save` (replace by id, else append), `Find`, `Remove(id)` returning whether an item was removed (card 133) and `List` (a snapshot), an `InMemory{Record}Store` whose four methods take a lock, a singleton registration in `Program.cs` and a spec double that derives from it (card 132, Decider D95) | `src/Phrase.Adapters.CSharp/CSharpProvider.cs` | Phrase has no syntax for effect operations; the `save`, `find` and `load` verbs are vocabulary, not declarations. A name-keyed convention is a prototype step, not a language design. | A language decision on effect operations, most likely carried by the data and databases extension (NOT BUILT), which declares `save`, `find`, `load` and `list` for a record and lets an adapter emit real stores. Until then cards 135 to 138 may use the convention for the Tasks prototype only, and each use is listed in the card (also: spec seeding through `Save` for `then succeeds` specs, which handles Text, Id and Bool fields (Bool seeds as false, card 135) and throws NotImplementedException for other types, and constructor injection of the store into endpoint classes). |
+| An effect named `{Record}Store`, used by an avow with that record type, where the record has an `id` field of type Text or Id, is a prototype store: the C# adapter emits `I{Record}Store` with `Save` (replace by id, else append), `Find`, `Remove(id)` returning whether an item was removed (card 133) and `List` (a snapshot), an `InMemory{Record}Store` whose four methods take a lock, a singleton registration in `Program.cs` and a spec double that derives from it (card 132, Decider D95) | `src/Phrase.Adapters.CSharp/CSharpProvider.cs` | Avowry has no syntax for effect operations; the `save`, `find` and `load` verbs are vocabulary, not declarations. A name-keyed convention is a prototype step, not a language design. | A language decision on effect operations, most likely carried by the data and databases extension (NOT BUILT), which declares `save`, `find`, `load` and `list` for a record and lets an adapter emit real stores. Until then cards 135 to 138 may use the convention for the Tasks prototype only, and each use is listed in the card (also: spec seeding through `Save` for `then succeeds` specs, which handles Text, Id and Bool fields (Bool seeds as false, card 135) and throws NotImplementedException for other types, and constructor injection of the store into endpoint classes). |

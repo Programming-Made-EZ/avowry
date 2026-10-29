@@ -7,7 +7,7 @@
 
 ## Context
 
-Dana needs one written map of how a Phrase program chooses a concrete library, an architecture style and coding standards, without putting those choices into the spec. Card 141 already splits the language into a domain-neutral core, domain extensions, and a target-language adapter. FastEndpoints, the Web SDK and xUnit already sit inside the C# adapter as bindings, not as the adapter seam (`ITargetAdapter` in `src/Phrase.Compiler/ITargetAdapter.cs` lines 9-15). This ADR names the remaining layers: library binding under each adapter, and a project profile that selects bindings, architecture and standards.
+Dana needs one written map of how an Avowry program chooses a concrete library, an architecture style and coding standards, without putting those choices into the spec. Card 141 already splits the language into a domain-neutral core, domain extensions, and a target-language adapter. FastEndpoints, the Web SDK and xUnit already sit inside the C# adapter as bindings, not as the adapter seam (`ITargetAdapter` in `src/Phrase.Compiler/ITargetAdapter.cs` lines 9-15). This ADR names the remaining layers: library binding under each adapter, and a project profile that selects bindings, architecture and standards.
 
 Rationale: verifiability and preserved intent (VISION ruling 7) require the spec to stay about endpoints, routes and stores, so generated tests still mean the same thing when the host library changes. A profile file is the one place a team lead sets library and style preferences; the emitter and an LLM-as-compiler then honour the same file.
 
@@ -37,7 +37,7 @@ A library binding lives under one adapter and maps one extension's abstract conc
 | data | C# | in-memory `{Record}Store` (provisional, card 132) | EF Core; Dapper |
 | testing frameworks | C# | xUnit 2.9.2 | NUnit |
 
-The C# emitter today is one default binding written in place, because the binding objects do not exist yet. Effect-free generated specs already call a pure handler (`CreateOrderHandler.Handle` in `reference/csharp/Orders.Api/CreateOrder.cs` lines 14-27). The FastEndpoints class around that handler is the HTTP binding. A second web binding would replace that class, the project file and the host bootstrap, and would keep the handler and the Phrase specs.
+The C# emitter today is one default binding written in place, because the binding objects do not exist yet. Effect-free generated specs already call a pure handler (`CreateOrderHandler.Handle` in `reference/csharp/Orders.Api/CreateOrder.cs` lines 14-27). The FastEndpoints class around that handler is the HTTP binding. A second web binding would replace that class, the project file and the host bootstrap, and would keep the handler and the Avowry specs.
 
 Rationale: one spec, many libraries. FastEndpoints is the compiled default because it is what Usable v1 emits (Decider D86, card 138). Minimal APIs or controllers stay possible so a team that already standardised on them is not blocked. Data bindings to EF Core or Dapper stay possible for the same reason, behind the data extension, which is NOT BUILT.
 
@@ -72,9 +72,9 @@ Rationale: if each binding invented its own tests, a second binding could drift 
 
 Implementation logic comes from layered sources, in this order:
 
-1. **Library pattern.** Universal patterns such as validation and guard steps or record update are expressed in Phrase syntax and the base library. This moves logic out of native blocks and preserves it as portable intent.
+1. **Library pattern.** Universal patterns such as validation and guard steps or record update are expressed in Avowry syntax and the base library. This moves logic out of native blocks and preserves it as portable intent.
 2. **Adapter idiom.** The target-language adapter supplies an idiomatic, high-quality implementation of the pattern. The library binding and project profile select the libraries and style, so generated code follows the target's established practices instead of being a raw minimal translation.
-3. **LLM-generated body.** Where no library pattern exists, an LLM generates the body from the phrase's specs, follows idioms supplied by the adapter, and relies on the generated tests for verification.
+3. **LLM-generated body.** Where no library pattern exists, an LLM generates the body from the avow's specs, follows idioms supplied by the adapter, and relies on the generated tests for verification.
 4. **Native escape hatch.** A native block remains available when the preceding sources cannot express the logic, but it is an escape hatch rather than the default.
 
 For card 159, the core definition is an `ensure` step with declared failure semantics. The C# adapter implements that pattern as an idiomatic guard clause. The project profile can select a binding or coding style that changes the guard's host-library representation without changing the `.phrase` source. For card 160, the core definition is an immutable record-update pattern. The C# adapter implements it as a record `with`-expression; the profile can change surrounding layout or selected library conventions while the update intent stays the same.

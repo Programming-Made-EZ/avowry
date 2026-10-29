@@ -1,10 +1,10 @@
 # Vision: the north star
 
-Product decisions are judged against this page. Phrase defines common-pattern keywords that an LLM can produce for any implementation language, because a comprehensive vocabulary minimizes the work needed to build and understand a codebase while serving as both specification and library.
+Product decisions are judged against this page. Avowry defines common-pattern keywords that an LLM can produce for any implementation language, because a comprehensive vocabulary minimizes the work needed to build and understand a codebase while serving as both specification and library.
 
 ## Purpose
 
-**Phrase is a vocabulary of common patterns that an LLM can read and write for free, in any implementation language.**
+**Avowry is a vocabulary of common patterns that an LLM can read and write for free, in any implementation language.**
 
 - **Keywords are higher-level patterns, not primitives.** A keyword names something programmers do over and over
   (paginate a list, retry with backoff, validate a field, create-read-update-delete a record). Ordinary control flow,
@@ -16,13 +16,13 @@ Product decisions are judged against this page. Phrase defines common-pattern ke
 - **The goal is a comprehensive vocabulary that minimizes the work an LLM must do** to build a codebase (fewer
   tokens written, fewer native lines, fewer attempts to green) **and to understand one** (the names are the index,
   and the code is its own context).
-- **Phrase is both a spec and a library.** As a spec, Given/When/Then is the truth, so a name cannot lie. As a
+- **Avowry is both a spec and a library.** As a spec, Given/When/Then is the truth, so a name cannot lie. As a
   library, the keyword catalogue carries spec-backed definitions and per-target implementations that every project
   reuses. One source compiles to many targets.
 
 ## Product principles
 
-**1. Synthesis (future).** Phrase will eventually be synthesized from existing code so teams can adopt it without rewriting a system first. Existing code in any language is read and Phrase is synthesized from it by
+**1. Synthesis (future).** Avowry will eventually be synthesized from existing code so teams can adopt it without rewriting a system first. Existing code in any language is read and Avowry is synthesized from it by
 mapping the code's patterns to keywords. A **future** milestone (M5, after Usable v1 and Vocabulary v1; it displaces
 nothing).
 
@@ -34,21 +34,21 @@ provider is the first adapter.
 language- or ecosystem-specific keywords of its own, also spec-backed. C# is built as the first adapter, not as a
 one-off emitter.
 
-**4. Human readability.** A converter translates in both directions between LLM-optimized Phrase and a human-friendly rendering, so each audience can use the representation it understands best. The converter translates between the LLM-optimized Phrase form and a
+**4. Human readability.** A converter translates in both directions between LLM-optimized Avowry and a human-friendly rendering, so each audience can use the representation it understands best. The converter translates between the LLM-optimized Avowry form and a
 human-friendly rendering, in both directions. It pairs with synthesis: both are translations between
 representations. A **future** milestone (M6, card 031).
 
 **5. Consumer-observable outcomes (2026-10-26).** A spec's `then` should state a consumer-observable outcome rather than merely `then succeeds`, because absence of an error does not express customer value. The team refines this principle into cards: a spec's `then` should state an observable outcome that has value to the
-consumer: what is returned, stored, emitted or responded. A bare "no error" proves almost nothing, and a phrase whose only
-outcome is "does not throw" may be a weak abstraction (should a validation phrase return the validated or normalized value?).
-A phrase that declares `fails with X` should have a spec that shows X, since the failure path is the most important
+consumer: what is returned, stored, emitted or responded. A bare "no error" proves almost nothing, and an avow whose only
+outcome is "does not throw" may be a weak abstraction (should a validation avow return the validated or normalized value?).
+An avow that declares `fails with X` should have a spec that shows X, since the failure path is the most important
 behaviour to specify. Status: direction; the grammar and linter rule, the audit of existing examples and benchmark tasks, and
 the validation-return question are raw input on the board.
 
-**6. Agile: iterate and increment, do not over-specify up front (2026-10-26).** Phrase evolves in small working increments because spec-heavy up-front planning delays evidence and makes emerging design harder.
-*Interpretation (how to apply it is the mob's call):* a guiding principle for both the product and the process. **Product:** Phrase specs support emergent, just-in-time design that grows one slice at a time; they must not demand big up-front specification before something works. **Process:** cards evolve the language through small, working increments; a card is only as specified as the next slice needs, and a plan that is mostly written specification before any working increment is the temptation to avoid, even though the board is effectively a spec for planning. Used as a lens at every retro: where are we over-specifying up front? Status: direction (guiding principle).
+**6. Agile: iterate and increment, do not over-specify up front (2026-10-26).** Avowry evolves in small working increments because spec-heavy up-front planning delays evidence and makes emerging design harder.
+*Interpretation (how to apply it is the mob's call):* a guiding principle for both the product and the process. **Product:** Avowry specs support emergent, just-in-time design that grows one slice at a time; they must not demand big up-front specification before something works. **Process:** cards evolve the language through small, working increments; a card is only as specified as the next slice needs, and a plan that is mostly written specification before any working increment is the temptation to avoid, even though the board is effectively a spec for planning. Used as a lens at every retro: where are we over-specifying up front? Status: direction (guiding principle).
 
-**7. What Phrase is measured against (2026-10-28).** Phrase is measured against the problems it exists to solve because beating C# on raw token cost would not prove that AI-written code is accountable, verifiable or understandable. The problems: AI-written code is unaccountable; teams cannot verify it as fast as it is written; intent vanishes with the prompt. **Phrase's success criteria are verifiability, preserved intent and reviewability, not out-performing C# on raw token cost.** The head-to-head benchmark against plain C# (pass rate, attempts, tokens on small tasks) stays as honest context and keeps being published, but it is not the success measure. The measures that are: the undetected-defect rate (how often planted defects survive each approach's checks), intent recovery (can a fresh reader state what each unit must do, including edge and failure cases) and review speed and accuracy (how fast and how correctly a reviewer approves or rejects AI-written changes). Each is pre-registered by a Decider before any row.
+**7. What Avowry is measured against (2026-10-28).** Avowry is measured against the problems it exists to solve because beating C# on raw token cost would not prove that AI-written code is accountable, verifiable or understandable. The problems: AI-written code is unaccountable; teams cannot verify it as fast as it is written; intent vanishes with the prompt. **Avowry's success criteria are verifiability, preserved intent and reviewability, not out-performing C# on raw token cost.** The head-to-head benchmark against plain C# (pass rate, attempts, tokens on small tasks) stays as honest context and keeps being published, but it is not the success measure. The measures that are: the undetected-defect rate (how often planted defects survive each approach's checks), intent recovery (can a fresh reader state what each unit must do, including edge and failure cases) and review speed and accuracy (how fast and how correctly a reviewer approves or rejects AI-written changes). Each is pre-registered by a Decider before any row.
 
 ## What this commits us to
 
@@ -69,13 +69,13 @@ paired with counter-metrics:
 
 A bigger catalogue is not a win. A smaller catalogue that removes the same work is a better one.
 
-This paragraph measures the vocabulary's economy (LLM work removed). It is context, not the success measure of Phrase: since ruling 7 (2026-10-28) the success criteria are verifiability, preserved intent and reviewability, and the economy metrics are reported honestly beside them without defining success.
+This paragraph measures the vocabulary's economy (LLM work removed). It is context, not the success measure of Avowry: since ruling 7 (2026-10-28) the success criteria are verifiability, preserved intent and reviewability, and the economy metrics are reported honestly beside them without defining success.
 
 ## How this relates to the rest
 
 - Design rules and the grammar: [docs/GRAMMAR.md](docs/GRAMMAR.md). Its rule 3 ("small fixed core, open phrase
   library") is reconciled with this vision by the keyword model ADR (card 022): keywords are the standard-library
-  phrases that ship with Phrase.
+  avows that ship with Avowry.
 - Who a story is about: [PERSONAS.md](PERSONAS.md). A story names one of these personas (not a role) and its "so that" is value to that persona (product owner, 2026-10-26).
 - How the team works: [TEAM_WORKING_AGREEMENT.md](TEAM_WORKING_AGREEMENT.md). The board and milestones
   ([board/MILESTONE-usable-v1.md](board/MILESTONE-usable-v1.md), [board/MILESTONES.md](board/MILESTONES.md)) are

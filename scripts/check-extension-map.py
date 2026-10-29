@@ -26,7 +26,7 @@ SECTIONS = (
 
 CORE_NEEDLES = (
     "domain-neutral",
-    "phrases",
+    "avows",
     "Given/When/Then",
     "types",
     "control",
