@@ -1,4 +1,4 @@
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler.Semantics;
 using static Phrase.Compiler.Tests.Semantics.Resolved;
 
 namespace Phrase.Compiler.Tests.Semantics;
@@ -25,7 +25,7 @@ public class ResolverCallTests
         var step = Assert.IsType<BoundCallStep>(Assert.Single(ProbeModel(module).Steps));
 
         // Then it calls that phrase with the path bound to the hole
-        Assert.Equal("ensure _ is not empty", step.Call.PhraseKey);
+        Assert.Equal("ensure _ is not empty", step.Call.AvowKey);
         var argument = Assert.Single(step.Call.Arguments);
         Assert.Equal("items", argument.Hole.Name);
         var field = Assert.IsType<BoundField>(argument.Value);
@@ -94,7 +94,7 @@ public class ResolverCallTests
 
         // Then the let is typed by the phrase's return type and the word binds to it
         Assert.Equal(("total", "Int"), (let.Name, let.Type.ToString()));
-        Assert.Equal("ensure _ is positive", call.PhraseKey);
+        Assert.Equal("ensure _ is positive", call.AvowKey);
         Assert.Equal(new BoundVariable("total", PType.Int), Assert.Single(call.Arguments).Value);
     }
 

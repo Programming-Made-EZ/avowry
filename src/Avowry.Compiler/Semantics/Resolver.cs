@@ -1,6 +1,6 @@
-using Phrase.Compiler.Syntax;
+using Avowry.Compiler.Syntax;
 
-namespace Phrase.Compiler.Semantics;
+namespace Avowry.Compiler.Semantics;
 
 /// <summary>
 /// Binds the syntax tree into the <see cref="ModuleModel"/>: every phrase call matched to
@@ -32,7 +32,7 @@ public static class Resolver
         private readonly List<Diagnostic> diagnostics = [];
         private readonly HashSet<string> typeNames = new(PType.Core.Keys, StringComparer.Ordinal);
         private readonly Dictionary<string, IReadOnlyList<FieldModel>> recordFields = new(StringComparer.Ordinal);
-        private readonly List<(PhraseDecl Declaration, PhraseModel Model)> phraseDeclarations = [];
+        private readonly List<(AvowDecl Declaration, AvowModel Model)> phraseDeclarations = [];
 
         public ResolveResult Run()
         {
@@ -40,7 +40,7 @@ public static class Resolver
             var types = file.Types.Select(ResolveTypeDeclaration).ToList();
             foreach (var type in types)
                 recordFields[type.Name] = type.Fields;
-            var phrases = ResolvePhrases();
+            var phrases = ResolveAvows();
             var endpoints = ResolveEndpoints();
             var module = new ModuleModel(file.Module?.Name ?? string.Empty, types, phrases, endpoints);
             return new ResolveResult(module, diagnostics);
@@ -58,17 +58,17 @@ public static class Resolver
         private TypeModel ResolveTypeDeclaration(TypeDecl declaration) =>
             new(declaration.Name, ResolveFields(declaration.Fields, declaration.Name));
 
-        private IReadOnlyList<PhraseModel> ResolvePhrases()
+        private IReadOnlyList<AvowModel> ResolveAvows()
         {
-            var phrases = new List<PhraseModel>();
-            var skeletons = new Dictionary<string, PhraseModel>(StringComparer.OrdinalIgnoreCase);
-            foreach (var declaration in file.Phrases)
+            var phrases = new List<AvowModel>();
+            var skeletons = new Dictionary<string, AvowModel>(StringComparer.OrdinalIgnoreCase);
+            foreach (var declaration in file.Avows)
             {
                 var failureNames = new HashSet<string>(StringComparer.Ordinal);
                 foreach (var failure in declaration.Failures)
                     if (!failureNames.Add(failure))
                         Report("PH329", $"Failure '{failure}' is repeated in 'fails with'.", declaration.At);
-                var parts = new List<PhrasePart>();
+                var parts = new List<AvowPart>();
                 var holes = new List<FieldModel>();
                 var holeNames = new HashSet<string>(StringComparer.Ordinal);
                 foreach (var part in declaration.Template.Parts)
@@ -76,10 +76,10 @@ public static class Resolver
                     switch (part)
                     {
                         case TemplateWord word:
-                            parts.Add(new PhrasePart(word.Text, false));
+                            parts.Add(new AvowPart(word.Text, false));
                             break;
                         case TemplateHole hole:
-                            parts.Add(new PhrasePart(hole.Name, true));
+                            parts.Add(new AvowPart(hole.Name, true));
                             // The parser already reports PH206. Keep the first so a later scope
                             // or call lookup has one entry per name and does not throw.
                             if (holeNames.Add(hole.Name))
@@ -89,7 +89,7 @@ public static class Resolver
                             throw new InvalidOperationException($"Unknown template part {part.GetType().Name}.");
                     }
                 }
-                var model = new PhraseModel(
+                var model = new AvowModel(
                     Key(declaration.Template), SourceFormatter.Format(declaration.Template), parts, holes,
                     declaration.Returns is null ? null : ResolveType(declaration.Returns),
                     declaration.Effects, declaration.Failures,
@@ -124,12 +124,12 @@ public static class Resolver
                 phrases[i] = resolved;
             }
 
-            ResolvePhraseFlow(phrases);
+            ResolveAvowFlow(phrases);
             var declarationsByKey = phraseDeclarations.ToDictionary(pair => pair.Model.Key, pair => pair.Declaration, StringComparer.Ordinal);
             for (var i = 0; i < phrases.Count; i++)
             {
                 var declaration = declarationsByKey[phrases[i].Key];
-                var specs = ResolvePhraseSpecs(declaration, phrases[i]);
+                var specs = ResolveAvowSpecs(declaration, phrases[i]);
                 phrases[i] = phrases[i] with { Specs = specs };
             }
             return phrases;
@@ -178,13 +178,13 @@ public static class Resolver
                     Report("PH324", "Step is unreachable after 'respond with' or 'fail with'.", step.At);
                 switch (step)
                 {
-                    case PhraseCall call:
+                    case AvowCall call:
                     {
                         var resolved = ResolveCall(call, scope);
                         if (resolved is not null)
                         {
-                            if (resolved.Value.Phrase.Returns is not null)
-                                Report("PH321", $"Phrase '{resolved.Value.Phrase.Template}' returns {resolved.Value.Phrase.Returns}; use 'let' to keep it.", call.At);
+                            if (resolved.Value.Avow.Returns is not null)
+                                Report("PH321", $"Phrase '{resolved.Value.Avow.Template}' returns {resolved.Value.Avow.Returns}; use 'let' to keep it.", call.At);
                             bound.Add(new BoundCallStep(resolved.Value.Call, SourceFormatter.Format(call)) { Line = call.At.Line });
                         }
                         break;
@@ -195,9 +195,9 @@ public static class Resolver
                         var type = PType.Error;
                         if (resolved is not null)
                         {
-                            type = resolved.Value.Phrase.Returns ?? PType.Error;
-                            if (resolved.Value.Phrase.Returns is null)
-                                Report("PH320", $"Phrase '{resolved.Value.Phrase.Template}' returns no value and cannot be used with 'let'.", let.At);
+                            type = resolved.Value.Avow.Returns ?? PType.Error;
+                            if (resolved.Value.Avow.Returns is null)
+                                Report("PH320", $"Phrase '{resolved.Value.Avow.Template}' returns no value and cannot be used with 'let'.", let.At);
                         }
                         if (scope.ContainsKey(let.Name))
                             Report("PH313", $"Variable '{let.Name}' is already defined.", let.At);
@@ -314,21 +314,21 @@ public static class Resolver
             }
         }
 
-        private void ResolvePhraseFlow(List<PhraseModel> phrases)
+        private void ResolveAvowFlow(List<AvowModel> phrases)
         {
             var byKey = phrases.ToDictionary(phrase => phrase.Key, StringComparer.Ordinal);
             var visiting = new HashSet<string>(StringComparer.Ordinal);
             var complete = new Dictionary<string, (IReadOnlyList<string> Failures, IReadOnlySet<string> Effects)>(StringComparer.Ordinal);
             var reportedCycles = new HashSet<string>(StringComparer.Ordinal);
 
-            (IReadOnlyList<string> Failures, IReadOnlySet<string> Effects) Visit(PhraseModel phrase)
+            (IReadOnlyList<string> Failures, IReadOnlySet<string> Effects) Visit(AvowModel phrase)
             {
                 if (complete.TryGetValue(phrase.Key, out var cached))
                     return cached;
                 if (!visiting.Add(phrase.Key))
                 {
                     if (reportedCycles.Add(phrase.Key))
-                        Report("PH327", $"Phrase '{phrase.Template}' participates in a call cycle.", PhraseDeclaration(phrase.Key).At);
+                        Report("PH327", $"Phrase '{phrase.Template}' participates in a call cycle.", AvowDeclaration(phrase.Key).At);
                     return ([], new HashSet<string>(StringComparer.Ordinal));
                 }
 
@@ -342,13 +342,13 @@ public static class Resolver
                         failures.Add(ensure.Code);
                     if (step is not BoundCallStep and not BoundLetStep)
                         continue;
-                    var key = CalledPhraseKey(step)!;
+                    var key = CalledAvowKey(step)!;
                     var callee = byKey[key];
                     var inherited = Visit(callee);
                     failures.UnionWith(inherited.Failures);
                     effects.UnionWith(inherited.Effects);
                     foreach (var effect in inherited.Effects.Except(phrase.Effects, StringComparer.Ordinal))
-                        Report("PH328", $"Composite phrase '{phrase.Template}' must declare effect '{effect}'.", PhraseDeclaration(phrase.Key).At);
+                        Report("PH328", $"Composite phrase '{phrase.Template}' must declare effect '{effect}'.", AvowDeclaration(phrase.Key).At);
                 }
                 visiting.Remove(phrase.Key);
                 return complete[phrase.Key] = (failures.Order(StringComparer.Ordinal).ToList(), effects);
@@ -372,17 +372,17 @@ public static class Resolver
                     failures.Add(fail.Code);
                 if (step is BoundEnsureStep ensure)
                     failures.Add(ensure.Code);
-                var key = CalledPhraseKey(step);
+                var key = CalledAvowKey(step);
                 if (key is not null)
                     failures.UnionWith(phraseDeclarations.Single(pair => pair.Model.Key == key).Model.Failures);
             }
             return failures.Order(StringComparer.Ordinal).ToList();
         }
 
-        private IReadOnlyList<PhraseSpecModel> ResolvePhraseSpecs(PhraseDecl declaration, PhraseModel phrase) =>
-            declaration.Specs.Select(spec => ResolvePhraseSpec(spec, phrase)).ToList();
+        private IReadOnlyList<AvowSpecModel> ResolveAvowSpecs(AvowDecl declaration, AvowModel phrase) =>
+            declaration.Specs.Select(spec => ResolveAvowSpec(spec, phrase)).ToList();
 
-        private PhraseSpecModel ResolvePhraseSpec(SpecDecl spec, PhraseModel phrase)
+        private AvowSpecModel ResolveAvowSpec(SpecDecl spec, AvowModel phrase)
         {
             if (spec.When is not SpecTrigger.Called)
             {
@@ -442,7 +442,7 @@ public static class Resolver
                 outputType: null,
                 endpointFailures: null,
                 endpointName: null);
-            return new PhraseSpecModel(spec.Description, givens, outcome, SourceFormatter.Lines(spec)) { SourceSpan = SpecSpan(spec) };
+            return new AvowSpecModel(spec.Description, givens, outcome, SourceFormatter.Lines(spec)) { SourceSpan = SpecSpan(spec) };
         }
 
         private IReadOnlyList<EndpointSpecModel> ResolveEndpointSpecs(EndpointDecl declaration, EndpointModel endpoint) =>
@@ -502,7 +502,7 @@ public static class Resolver
 
         private SpecOutcomeModel ResolveSpecOutcome(
             SpecDecl spec,
-            PhraseModel? phrase,
+            AvowModel? phrase,
             IReadOnlyDictionary<string, PType> scope,
             PType? outputType,
             IReadOnlyList<string>? endpointFailures,
@@ -579,18 +579,18 @@ public static class Resolver
             _ => false,
         };
 
-        private static string? CalledPhraseKey(BoundStep step) => step switch
+        private static string? CalledAvowKey(BoundStep step) => step switch
         {
-            BoundCallStep call => call.Call.PhraseKey,
-            BoundLetStep let => let.Call.PhraseKey,
+            BoundCallStep call => call.Call.AvowKey,
+            BoundLetStep let => let.Call.AvowKey,
             _ => null,
         };
 
-        private PhraseDecl PhraseDeclaration(string key) =>
+        private AvowDecl AvowDeclaration(string key) =>
             phraseDeclarations.Single(pair => pair.Model.Key == key).Declaration;
 
-        private (BoundCall Call, PhraseModel Phrase)? ResolveCall(
-            PhraseCall call, IReadOnlyDictionary<string, PType> scope)
+        private (BoundCall Call, AvowModel Avow)? ResolveCall(
+            AvowCall call, IReadOnlyDictionary<string, PType> scope)
         {
             var matches = phraseDeclarations.Where(p => Matches(p.Declaration.Template, call, scope)).ToList();
             if (matches.Count == 0)
@@ -626,7 +626,7 @@ public static class Resolver
             return (new BoundCall(match.Model.Key, arguments), match.Model);
         }
 
-        private static bool Matches(Template template, PhraseCall call, IReadOnlyDictionary<string, PType> scope) =>
+        private static bool Matches(Template template, AvowCall call, IReadOnlyDictionary<string, PType> scope) =>
             template.Parts.Count == call.Parts.Count && template.Parts.Zip(call.Parts).All(pair => pair.First switch
             {
                 TemplateWord word => pair.Second is CallWord callWord &&
@@ -715,7 +715,7 @@ public static class Resolver
             actual.IsError || expected.IsError || actual == expected ||
             expected.IsOption && (expected.Arguments[0].IsError || actual == expected.Arguments[0]);
 
-        private string? BareFieldHint(PhraseCall call, IReadOnlyDictionary<string, PType> scope)
+        private string? BareFieldHint(AvowCall call, IReadOnlyDictionary<string, PType> scope)
         {
             foreach (var word in call.Parts.OfType<CallWord>())
                 foreach (var variable in scope)
@@ -724,7 +724,7 @@ public static class Resolver
             return null;
         }
 
-        private string NoMatchMessage(PhraseCall call, IReadOnlyDictionary<string, PType> scope)
+        private string NoMatchMessage(AvowCall call, IReadOnlyDictionary<string, PType> scope)
         {
             const string noMatch = "No phrase matches this step.";
             var closest = phraseDeclarations
@@ -736,7 +736,7 @@ public static class Resolver
             return hint is null ? noMatch + suggestion : $"{noMatch}{suggestion} Did you mean '{hint}'?";
         }
 
-        private static string CallShape(PhraseCall call) => string.Join(" ", call.Parts.Select(p => p is CallWord w ? w.Text : "_"));
+        private static string CallShape(AvowCall call) => string.Join(" ", call.Parts.Select(p => p is CallWord w ? w.Text : "_"));
         private static string TemplateShape(Template template) => string.Join(" ", template.Parts.Select(p => p is TemplateWord w ? w.Text : "_"));
 
         private static int Distance(string left, string right)

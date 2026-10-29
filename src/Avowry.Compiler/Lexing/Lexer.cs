@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Phrase.Compiler.Lexing;
+namespace Avowry.Compiler.Lexing;
 
 /// <summary>
 /// Turns Phrase source into tokens. Works one physical line at a time:

@@ -1,4 +1,4 @@
-using Phrase.Compiler.Syntax;
+using Avowry.Compiler.Syntax;
 using static Phrase.Compiler.Tests.Syntax.Parsed;
 
 namespace Phrase.Compiler.Tests.Syntax;
@@ -50,7 +50,7 @@ public class ParserPhraseTests
             """);
 
         // When it is parsed
-        var phrase = Assert.Single(Clean(source).Phrases);
+        var phrase = Assert.Single(Clean(source).Avows);
 
         // Then those occurrences remain their original text and are not ensure steps
         Assert.Null(phrase.Steps);
@@ -73,7 +73,7 @@ public class ParserPhraseTests
             """);
 
         // When the phrase is parsed
-        var phrase = Assert.Single(Clean(source).Phrases);
+        var phrase = Assert.Single(Clean(source).Avows);
 
         // Then each condition and its declared failure are preserved in the AST
         Assert.Equal([
@@ -94,7 +94,7 @@ public class ParserPhraseTests
             """);
 
         // When the phrase is parsed
-        var phrase = Assert.Single(Clean(source).Phrases);
+        var phrase = Assert.Single(Clean(source).Avows);
 
         // Then the update keeps the source record, the replaced field, and the new value
         Assert.Equal(["(let completed task with {done: true})"], phrase.Steps!.Select(Print));
@@ -152,14 +152,14 @@ public class ParserPhraseTests
             """);
 
         // When the caller is parsed
-        var caller = Clean(source).Phrases.Single(phrase => phrase.Template.Parts.OfType<TemplateWord>().Any(word => word.Text == "dispatch"));
+        var caller = Clean(source).Avows.Single(phrase => phrase.Template.Parts.OfType<TemplateWord>().Any(word => word.Text == "dispatch"));
 
         // Then it remains a phrase call because "send" is not an in-scope update source
         var let = Assert.IsType<LetStep>(Assert.Single(caller.Steps!));
         Assert.Equal("(call send with <{urgent: true}>)", Print(let.Call));
     }
 
-    private static PhraseDecl SinglePhrase(string body) => Assert.Single(Clean(InModule(body)).Phrases);
+    private static AvowDecl SinglePhrase(string body) => Assert.Single(Clean(InModule(body)).Avows);
 
     [Fact]
     public void A_template_splits_into_words_and_typed_holes()
@@ -420,6 +420,6 @@ public class ParserPhraseTests
         Assert.Equal(["PH200"], result.Diagnostics.Select(d => d.Code));
 
         // And the phrase is still kept with its native block
-        Assert.Single(Assert.Single(result.File.Phrases).Natives);
+        Assert.Single(Assert.Single(result.File.Avows).Natives);
     }
 }

@@ -1,4 +1,4 @@
-using Phrase.Compiler.Lexing;
+using Avowry.Compiler.Lexing;
 
 namespace Phrase.Compiler.Tests.Lexing;
 

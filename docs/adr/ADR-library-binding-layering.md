@@ -7,7 +7,7 @@
 
 ## Context
 
-Dana needs one written map of how an Avowry program chooses a concrete library, an architecture style and coding standards, without putting those choices into the spec. Card 141 already splits the language into a domain-neutral core, domain extensions, and a target-language adapter. FastEndpoints, the Web SDK and xUnit already sit inside the C# adapter as bindings, not as the adapter seam (`ITargetAdapter` in `src/Phrase.Compiler/ITargetAdapter.cs` lines 9-15). This ADR names the remaining layers: library binding under each adapter, and a project profile that selects bindings, architecture and standards.
+Dana needs one written map of how an Avowry program chooses a concrete library, an architecture style and coding standards, without putting those choices into the spec. Card 141 already splits the language into a domain-neutral core, domain extensions, and a target-language adapter. FastEndpoints, the Web SDK and xUnit already sit inside the C# adapter as bindings, not as the adapter seam (`ITargetAdapter` in `src/Avowry.Compiler/ITargetAdapter.cs` lines 9-15). This ADR names the remaining layers: library binding under each adapter, and a project profile that selects bindings, architecture and standards.
 
 Rationale: verifiability and preserved intent (VISION ruling 7) require the spec to stay about endpoints, routes and stores, so generated tests still mean the same thing when the host library changes. A profile file is the one place a team lead sets library and style preferences; the emitter and an LLM-as-compiler then honour the same file.
 

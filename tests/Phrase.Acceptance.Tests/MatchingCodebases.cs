@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Phrase.Acceptance.Tests.Support;
 using Phrase.Adapters.CSharp;
-using Phrase.Compiler;
+using Avowry.Compiler;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -62,7 +62,7 @@ public class MatchingCodebases
         Assert.Equal(size, endpoints);
 
         // Then the Phrase module compiles with the C# adapter and its generated specs pass
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var phraseOut = TempWorkspace.Create();
         output.WriteTo(phraseOut.Root);
         var phraseResult = await DotnetCli.TestAsync(phraseOut.FindSingle("*.Specs.csproj"));

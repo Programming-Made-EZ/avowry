@@ -1,6 +1,6 @@
 using Phrase.Acceptance.Tests.Support;
 using Phrase.Adapters.CSharp;
-using Phrase.Compiler;
+using Avowry.Compiler;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -53,7 +53,7 @@ public class EverySpecOutcomeAsserts
             """;
 
         // When the generated Specs project is run
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
         var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
@@ -82,7 +82,7 @@ public class EverySpecOutcomeAsserts
             """;
 
         // When the generated Specs project is run
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
         var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
@@ -111,7 +111,7 @@ public class EverySpecOutcomeAsserts
             """;
 
         // When the generated Specs project is run
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
         var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
@@ -139,7 +139,7 @@ public class EverySpecOutcomeAsserts
             """;
 
         // When the generated Specs project is run
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
         var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));

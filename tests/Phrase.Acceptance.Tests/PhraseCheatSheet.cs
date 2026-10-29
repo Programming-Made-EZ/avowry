@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using Phrase.Acceptance.Tests.Support;
 using Phrase.Adapters.CSharp;
-using Phrase.Compiler;
+using Avowry.Compiler;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -105,7 +105,7 @@ public class PhraseCheatSheet
         {
             try
             {
-                _ = PhraseCompiler.Compile(example, new CSharpProvider());
+                _ = AvowryCompiler.Compile(example, new CSharpProvider());
             }
             catch (Exception exception)
             {

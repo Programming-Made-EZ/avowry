@@ -11,11 +11,11 @@
     <Using Include="Xunit" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../../src/Phrase.Compiler/Phrase.Compiler.csproj" />
+    <ProjectReference Include="../../src/Avowry.Compiler/Avowry.Compiler.csproj" />
   </ItemGroup>
   <ItemGroup>
     <!-- One source of truth for fixtures: linked from the acceptance tests. -->
     <None Include="../Phrase.Acceptance.Tests/Fixtures/**/*" LinkBase="Fixtures" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="../../src/Phrase.Compiler/Phrase.Compiler.csproj" Link="Phrase.Compiler.csproj" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../src/Avowry.Compiler/Avowry.Compiler.csproj" Link="Avowry.Compiler.csproj" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

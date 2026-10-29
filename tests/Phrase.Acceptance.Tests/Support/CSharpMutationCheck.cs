@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Phrase.Adapters.CSharp;
-using Phrase.Compiler;
+using Avowry.Compiler;
 
 namespace Phrase.Acceptance.Tests.Support;
 
@@ -56,7 +56,7 @@ public static class CSharpMutationCheck
         {
             var mutant = ReplaceExactlyOnce(source, mutation.OriginalBody, mutation.MutatedBody);
             using var workspace = TempWorkspace.Create();
-            PhraseCompiler.Compile(mutant, new CSharpProvider()).WriteTo(workspace.Root);
+            AvowryCompiler.Compile(mutant, new CSharpProvider()).WriteTo(workspace.Root);
             var run = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
             outcomes.Add((mutation, run.Built, run.Built && run.Failed > 0));
         }

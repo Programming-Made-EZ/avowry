@@ -1,6 +1,6 @@
-using Phrase.Compiler;
-using Phrase.Compiler.Semantics;
-using Phrase.Compiler.Syntax;
+using Avowry.Compiler;
+using Avowry.Compiler.Semantics;
+using Avowry.Compiler.Syntax;
 
 namespace Phrase.Compiler.Tests;
 
@@ -187,7 +187,7 @@ public class ExtensionBoundaryTests
         Assert.Empty(parsed.Diagnostics);
         Assert.Equal(new[] { "core" }, active);
         Assert.DoesNotContain("web", active);
-        var words = Assert.Single(parsed.File.Phrases).Template.Parts.OfType<TemplateWord>().Select(word => word.Text).ToList();
+        var words = Assert.Single(parsed.File.Avows).Template.Parts.OfType<TemplateWord>().Select(word => word.Text).ToList();
         Assert.Contains("endpoint", words);
         Assert.Contains("input", words);
         Assert.Contains("responds", words);

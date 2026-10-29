@@ -1,4 +1,4 @@
-using Phrase.Compiler.Syntax;
+using Avowry.Compiler.Syntax;
 using static Phrase.Compiler.Tests.Syntax.Parsed;
 
 namespace Phrase.Compiler.Tests.Syntax;
@@ -11,7 +11,7 @@ public class ParserSpecTests
         InModule("avow to \"total of {items: List<LineItem>}\" -> Int\n" + spec + "  native csharp\n    return 0;\n");
 
     private static SpecDecl SingleSpec(string spec) =>
-        Assert.Single(Assert.Single(Clean(PhraseWithSpec(spec)).Phrases).Specs);
+        Assert.Single(Assert.Single(Clean(PhraseWithSpec(spec)).Avows).Specs);
 
     [Fact]
     public void A_phrase_spec_binds_holes_and_expects_a_value()

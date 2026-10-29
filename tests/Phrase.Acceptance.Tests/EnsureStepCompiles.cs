@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Text;
 using Phrase.Acceptance.Tests.Support;
 using Phrase.Adapters.CSharp;
-using Phrase.Compiler;
+using Avowry.Compiler;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -40,7 +40,7 @@ public class EnsureStepCompiles
             """;
 
         // When the C# adapter compiles the module and runs its generated API spec
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
         var endpoint = File.ReadAllText(workspace.FindSingle("CreateTask.cs.cs"));
@@ -85,7 +85,7 @@ public class EnsureStepCompiles
             """;
 
         // When the C# adapter compiles the phrase and runs its generated specs
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
         var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
@@ -130,7 +130,7 @@ public class EnsureStepCompiles
             """;
 
         // When the C# adapter compiles the phrase and its generated specs
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
         var generated = File.ReadAllText(workspace.FindSingle("Avows.cs"));

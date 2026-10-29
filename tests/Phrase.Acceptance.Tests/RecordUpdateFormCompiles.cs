@@ -2,8 +2,8 @@ using System.Diagnostics;
 using System.Text;
 using Phrase.Acceptance.Tests.Support;
 using Phrase.Adapters.CSharp;
-using Phrase.Compiler;
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler;
+using Avowry.Compiler.Semantics;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -60,7 +60,7 @@ public class RecordUpdateFormCompiles
             """;
 
         // When the C# adapter compiles the module and runs its generated specs
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
         var phrases = File.ReadAllText(workspace.FindSingle("Avows.cs"));
@@ -102,7 +102,7 @@ public class RecordUpdateFormCompiles
             step => Assert.IsType<BoundCallStep>(step),
             step => Assert.IsType<BoundRespondStep>(step));
         // The old native "complete task" phrase is gone: restoring it (the revert of this card) fails here.
-        Assert.DoesNotContain(resolved.Module.Phrases, phrase => phrase.Key == "complete task _");
+        Assert.DoesNotContain(resolved.Module.Avows, phrase => phrase.Key == "complete task _");
         Assert.Contains("task with { Done = true }", endpoint.Value, StringComparison.Ordinal);
     }
 

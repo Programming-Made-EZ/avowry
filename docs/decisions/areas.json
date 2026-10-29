@@ -904,5 +904,11 @@
     "status": "applied",
     "title": "Review of card 193: generated code uses Avowry names",
     "order": 123
+  },
+  "D133": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "Review of card 194: the compiler project and namespace are Avowry.Compiler",
+    "order": 124
   }
 }

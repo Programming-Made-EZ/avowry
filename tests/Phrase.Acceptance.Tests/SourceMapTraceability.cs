@@ -2,7 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using Phrase.Acceptance.Tests.Support;
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler.Semantics;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -403,8 +403,8 @@ public class SourceMapTraceability
             var expectedLines = endpoint.Steps
                 .Select(step => step switch
                 {
-                    BoundCallStep call => resolved.Module.Phrase(call.Call.PhraseKey),
-                    BoundLetStep let => resolved.Module.Phrase(let.Call.PhraseKey),
+                    BoundCallStep call => resolved.Module.Avow(call.Call.AvowKey),
+                    BoundLetStep let => resolved.Module.Avow(let.Call.AvowKey),
                     _ => null,
                 })
                 .Where(phrase => phrase is not null)

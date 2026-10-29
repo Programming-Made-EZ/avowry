@@ -1,6 +1,6 @@
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler.Semantics;
 
-namespace Phrase.Compiler;
+namespace Avowry.Compiler;
 
 /// <summary>
 /// A target adapter turns the resolved module into files for one target

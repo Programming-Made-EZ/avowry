@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Phrase.Acceptance.Tests.Support;
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler.Semantics;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -258,7 +258,7 @@ public class TasksOverHttp
     private static HashSet<string> StoreEntityNames(ModuleModel module)
     {
         var names = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var effect in module.Phrases.SelectMany(phrase => phrase.Effects).Distinct(StringComparer.Ordinal))
+        foreach (var effect in module.Avows.SelectMany(phrase => phrase.Effects).Distinct(StringComparer.Ordinal))
         {
             const string suffix = "Store";
             if (!effect.EndsWith(suffix, StringComparison.Ordinal) || effect.Length == suffix.Length)

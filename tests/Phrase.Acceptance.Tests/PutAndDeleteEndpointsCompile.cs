@@ -2,7 +2,7 @@ using System.Net;
 using System.Text;
 using Phrase.Acceptance.Tests.Support;
 using Phrase.Adapters.CSharp;
-using Phrase.Compiler;
+using Avowry.Compiler;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -124,7 +124,7 @@ public class PutAndDeleteEndpointsCompile
     {
         // Given PUT /items/{id} and DELETE /items/{id} over the generated ItemStore,
         // including a known id, an unknown id, and an empty name
-        var output = PhraseCompiler.Compile(Source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(Source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
 
@@ -168,7 +168,7 @@ public class PutAndDeleteEndpointsCompile
     public async Task Live_http_put_then_get_then_delete_then_get()
     {
         // Given the generated app and one stored item (the store starts empty, so POST makes the id known)
-        var output = PhraseCompiler.Compile(Source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(Source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
         var api = await GeneratedApi.StartAsync(workspace.FindSingle("*.Api.csproj"));
@@ -241,7 +241,7 @@ public class PutAndDeleteEndpointsCompile
             """;
 
         // When Dana compiles it
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
 

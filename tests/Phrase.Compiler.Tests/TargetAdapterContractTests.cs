@@ -1,9 +1,10 @@
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler;
+using Avowry.Compiler.Semantics;
 
 namespace Phrase.Compiler.Tests;
 
 // Feature: Handing a resolved phrase model to a target adapter
-//   PhraseCompiler owns parsing and resolution without knowing any target emitter.
+//   AvowryCompiler owns parsing and resolution without knowing any target emitter.
 public class TargetAdapterContractTests
 {
     [Fact]
@@ -24,17 +25,17 @@ public class TargetAdapterContractTests
                 return n * 2;
             """;
 
-        // When PhraseCompiler compiles for that adapter
-        var output = PhraseCompiler.Compile(source, adapter);
+        // When AvowryCompiler compiles for that adapter
+        var output = AvowryCompiler.Compile(source, adapter);
 
         // Then it hands over the resolved model and returns the adapter's output
         Assert.Same(expectedOutput, output);
         var module = Assert.IsType<ModuleModel>(adapter.ReceivedModule);
         Assert.Equal("Numbers", module.Name);
-        Assert.Equal("double {n: Int}", Assert.Single(module.Phrases).Template);
+        Assert.Equal("double {n: Int}", Assert.Single(module.Avows).Template);
 
         // And the compiler project has no C# adapter or emitter reference
-        var project = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Phrase.Compiler.csproj"));
+        var project = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Avowry.Compiler.csproj"));
         Assert.DoesNotContain("Phrase.Adapters.CSharp", project, StringComparison.Ordinal);
         Assert.DoesNotContain("CSharpEmitter", project, StringComparison.Ordinal);
     }

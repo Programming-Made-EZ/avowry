@@ -1,4 +1,4 @@
-namespace Phrase.Compiler.Syntax;
+namespace Avowry.Compiler.Syntax;
 
 // The syntax tree. Purely structural: phrase calls are NOT resolved here.
 // A step keeps its words and arguments in source order; the resolver later
@@ -10,7 +10,7 @@ public readonly record struct Position(int Line, int Column);
 public sealed record SourceFile(
     ModuleDecl? Module,
     IReadOnlyList<TypeDecl> Types,
-    IReadOnlyList<PhraseDecl> Phrases,
+    IReadOnlyList<AvowDecl> Avows,
     IReadOnlyList<EndpointDecl> Endpoints);
 
 public sealed record ParseResult(SourceFile File, IReadOnlyList<Diagnostic> Diagnostics)
@@ -30,7 +30,7 @@ public sealed record FieldDecl(string Name, TypeRef Type, Position At);
 /// <summary>A type reference such as <c>Int</c> or <c>List&lt;LineItem&gt;</c>.</summary>
 public sealed record TypeRef(string Name, IReadOnlyList<TypeRef> Arguments, Position At);
 
-public sealed record PhraseDecl(
+public sealed record AvowDecl(
     Template Template,
     TypeRef? Returns,
     IReadOnlyList<string> Effects,      // empty = `effects none` or not declared
@@ -67,7 +67,7 @@ public sealed record EndpointDecl(
 public abstract record Step(Position At);
 
 /// <summary><c>let name = &lt;phrase call&gt;</c></summary>
-public sealed record LetStep(string Name, PhraseCall Call, Position At) : Step(At);
+public sealed record LetStep(string Name, AvowCall Call, Position At) : Step(At);
 
 /// <summary><c>let name = source with { field: value, ... }</c> — a copy of a record with named fields replaced.</summary>
 public sealed record LetUpdateStep(string Name, PathExpr Source, RecordExpr Fields, Position At) : Step(At);
@@ -87,7 +87,7 @@ public sealed record LengthAtMostCondition(PathExpr Value, int Maximum, Position
 public sealed record ComparisonCondition(PathExpr Left, string Operator, Expr Right, Position At) : Condition(At);
 
 /// <summary>An unresolved phrase call: words and arguments in source order.</summary>
-public sealed record PhraseCall(IReadOnlyList<CallPart> Parts, Position At) : Step(At);
+public sealed record AvowCall(IReadOnlyList<CallPart> Parts, Position At) : Step(At);
 
 public abstract record CallPart(Position At);
 

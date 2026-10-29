@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Text;
 using Phrase.Acceptance.Tests.Support;
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler.Semantics;
 
 namespace Phrase.Acceptance.Tests;
 

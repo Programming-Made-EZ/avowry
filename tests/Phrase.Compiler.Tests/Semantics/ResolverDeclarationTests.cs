@@ -1,4 +1,4 @@
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler.Semantics;
 using static Phrase.Compiler.Tests.Semantics.Resolved;
 
 namespace Phrase.Compiler.Tests.Semantics;
@@ -106,8 +106,8 @@ public class ResolverDeclarationTests
         // Then each phrase is keyed by its wording
         Assert.Equal(
             ["ensure _ is not empty", "ensure every quantity in _ is positive", "total quantity of _", "ensure _ is positive"],
-            module.Phrases.Select(p => p.Key));
-        Assert.Equal("total quantity of {items: List<LineItem>}", module.Phrase("total quantity of _").Template);
+            module.Avows.Select(p => p.Key));
+        Assert.Equal("total quantity of {items: List<LineItem>}", module.Avow("total quantity of _").Template);
     }
 
     [Fact]

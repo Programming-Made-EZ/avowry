@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Phrase.Acceptance.Tests.Support;
-using Phrase.Compiler;
+using Avowry.Compiler;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -77,7 +77,7 @@ public class PhraseExecutedOutcomesAcceptance
         foreach (var task in ChangeTasks)
         {
             // When it is compiled with the C# adapter and its generated specs run
-            var output = Phrase.Compiler.PhraseCompiler.Compile(StartingPhrase(task), new Phrase.Adapters.CSharp.CSharpProvider());
+            var output = Avowry.Compiler.AvowryCompiler.Compile(StartingPhrase(task), new Phrase.Adapters.CSharp.CSharpProvider());
             using var workspace = TempWorkspace.Create();
             output.WriteTo(workspace.Root);
             var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));
@@ -480,7 +480,7 @@ public class PhraseExecutedOutcomesAcceptance
             var match = Regex.Match(actual, "```avowry\\r?\\n(?<source>.*?)\\r?\\n```", RegexOptions.Singleline | RegexOptions.CultureInvariant);
             Assert.True(match.Success, task + ": broken Phrase fixture is missing");
             var source = match.Groups["source"].Value;
-            var exception = Assert.Throws<CompilationFailedException>(() => PhraseCompiler.Compile(source, new Phrase.Adapters.CSharp.CSharpProvider()));
+            var exception = Assert.Throws<CompilationFailedException>(() => AvowryCompiler.Compile(source, new Phrase.Adapters.CSharp.CSharpProvider()));
             if (task == "010-fix-trigger")
             {
                 Assert.Contains(exception.Diagnostics, diagnostic => diagnostic.Code == "PH330" && diagnostic.Message.Contains("when called", StringComparison.OrdinalIgnoreCase));

@@ -1,6 +1,6 @@
 using Phrase.Acceptance.Tests.Support;
 using Phrase.Adapters.CSharp;
-using Phrase.Compiler;
+using Avowry.Compiler;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -28,7 +28,7 @@ public class GeneratedCodeUsesAvowryNames
             """;
 
         // When Morgan compiles it with the C# adapter
-        var output = PhraseCompiler.Compile(source, new CSharpProvider(), "orders.avowry");
+        var output = AvowryCompiler.Compile(source, new CSharpProvider(), "orders.avowry");
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
 

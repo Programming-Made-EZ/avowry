@@ -1,4 +1,4 @@
-namespace Phrase.Compiler.Semantics;
+namespace Avowry.Compiler.Semantics;
 
 /// <summary>
 /// A resolved type. Equality is structural (by canonical text), so <c>List&lt;LineItem&gt;</c> equals <c>List&lt;LineItem&gt;</c>.

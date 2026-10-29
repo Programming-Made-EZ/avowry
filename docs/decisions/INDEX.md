@@ -196,3 +196,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D130](process-and-staffing.md#d130) | Review of card 191: the command is avowry; output and the map file say Avowry | process-and-staffing | applied |
 | [D131](compiler-and-adapters.md#d131) | Review of card 199: the avow keyword, filler words and the .avowry extension | compiler-and-adapters | applied |
 | [D132](compiler-and-adapters.md#d132) | Review of card 193: generated code uses Avowry names | compiler-and-adapters | applied |
+| [D133](compiler-and-adapters.md#d133) | Review of card 194: the compiler project and namespace are Avowry.Compiler | compiler-and-adapters | applied |

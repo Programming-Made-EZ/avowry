@@ -1,11 +1,11 @@
-namespace Phrase.Compiler;
+namespace Avowry.Compiler;
 
 /// <summary>The files an adapter emits, keyed by path relative to the output root.</summary>
 public sealed record CompilationOutput(IReadOnlyDictionary<string, string> Files)
 {
     public Semantics.ModuleModel? Module { get; init; }
     public IReadOnlyDictionary<string, string> EndpointFiles { get; init; } = new Dictionary<string, string>();
-    public IReadOnlyDictionary<string, string> PhraseFiles { get; init; } = new Dictionary<string, string>();
+    public IReadOnlyDictionary<string, string> AvowFiles { get; init; } = new Dictionary<string, string>();
     public void WriteTo(string outputRoot)
     {
         var root = Path.TrimEndingDirectorySeparator(Path.GetFullPath(outputRoot)) + Path.DirectorySeparatorChar;

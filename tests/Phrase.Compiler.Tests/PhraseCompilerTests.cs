@@ -1,5 +1,5 @@
-using Phrase.Compiler;
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler;
+using Avowry.Compiler.Semantics;
 
 namespace Phrase.Compiler.Tests;
 
@@ -50,7 +50,7 @@ public class PhraseCompilerTests
         Assert.DoesNotContain("resolver", exception.Message, StringComparison.OrdinalIgnoreCase);
     }
 
-    private static CompilationOutput Compile(string source) => PhraseCompiler.Compile(source, Adapter);
+    private static CompilationOutput Compile(string source) => AvowryCompiler.Compile(source, Adapter);
 
     private sealed class TestAdapter : ITargetAdapter
     {

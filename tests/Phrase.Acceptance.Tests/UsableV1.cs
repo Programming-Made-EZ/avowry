@@ -3,8 +3,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using Phrase.Acceptance.Tests.Support;
-using Phrase.Compiler.Semantics;
-using Phrase.Compiler.Syntax;
+using Avowry.Compiler.Semantics;
+using Avowry.Compiler.Syntax;
 
 namespace Phrase.Acceptance.Tests;
 

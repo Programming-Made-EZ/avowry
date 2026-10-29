@@ -1,4 +1,4 @@
-using Phrase.Compiler.Syntax;
+using Avowry.Compiler.Syntax;
 using static Phrase.Compiler.Tests.Syntax.Parsed;
 
 namespace Phrase.Compiler.Tests.Syntax;
@@ -27,7 +27,7 @@ public class ParserFixtureTests
                 "ensure every quantity in {items: List<LineItem>} is positive",
                 "total quantity of {items: List<LineItem>}",
             ],
-            file.Phrases.Select(p => Print(p.Template)));
+            file.Avows.Select(p => Print(p.Template)));
 
         var endpoint = Assert.Single(file.Endpoints);
         Assert.Equal(("CreateOrder", "POST", "/orders"), (endpoint.Name, endpoint.Verb, endpoint.Route));
@@ -42,7 +42,7 @@ public class ParserFixtureTests
         var file = Clean(Orders);
 
         // Then each phrase has one spec and the endpoint has three
-        Assert.All(file.Phrases, p => Assert.Single(p.Specs));
+        Assert.All(file.Avows, p => Assert.Single(p.Specs));
         Assert.Equal(
             ["accepts a valid order", "rejects an order with no items", "rejects an order with a zero quantity"],
             file.Endpoints[0].Specs.Select(s => s.Description));
@@ -53,7 +53,7 @@ public class ParserFixtureTests
     {
         // Given the orders.avowry acceptance fixture
         // When it is parsed
-        var phrases = Clean(Orders).Phrases;
+        var phrases = Clean(Orders).Avows;
 
         // Then failures and return types match the source
         Assert.Equal(

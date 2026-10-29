@@ -1,5 +1,5 @@
-using Phrase.Compiler.Semantics;
-using Phrase.Compiler.Syntax;
+using Avowry.Compiler.Semantics;
+using Avowry.Compiler.Syntax;
 using static Phrase.Compiler.Tests.Semantics.Resolved;
 
 namespace Phrase.Compiler.Tests.Semantics;
@@ -21,8 +21,8 @@ public class ResolverFixtureTests
         // Then the module, type and phrase library are there
         Assert.Equal("Orders", module.Name);
         Assert.Equal("LineItem", Assert.Single(module.Types).Name);
-        Assert.Equal(3, module.Phrases.Count);
-        Assert.All(module.Phrases, p => Assert.Equal("csharp", Assert.Single(p.Natives).Key));
+        Assert.Equal(3, module.Avows.Count);
+        Assert.All(module.Avows, p => Assert.Equal("csharp", Assert.Single(p.Natives).Key));
     }
 
     [Fact]
@@ -37,8 +37,8 @@ public class ResolverFixtureTests
             ["ensure _ is not empty", "ensure every quantity in _ is positive", "total quantity of _", "respond"],
             steps.Select(s => s switch
             {
-                BoundCallStep c => c.Call.PhraseKey,
-                BoundLetStep l => l.Call.PhraseKey,
+                BoundCallStep c => c.Call.AvowKey,
+                BoundLetStep l => l.Call.AvowKey,
                 BoundRespondStep => "respond",
                 _ => s.GetType().Name,
             }));
@@ -73,7 +73,7 @@ public class ResolverFixtureTests
         var module = Clean(Orders);
 
         // Then three phrase specs and three endpoint specs remain
-        Assert.Equal(3, module.Phrases.Sum(p => p.Specs.Count));
+        Assert.Equal(3, module.Avows.Sum(p => p.Specs.Count));
         var endpointSpecs = module.Endpoints.Single().Specs;
         Assert.Equal(3, endpointSpecs.Count);
 

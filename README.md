@@ -14,7 +14,7 @@ The current implementation uses the `avowry` command and still uses the `.avowry
 
 ```
 docs/GRAMMAR.md                    v0.1 grammar, resolution, lints, vocabulary
-src/Phrase.Compiler                Lexer, Parser, formatter (done); Semantics model (designed), Resolver (stub)
+src/Avowry.Compiler                Lexer, Parser, formatter (done); Semantics model (designed), Resolver (stub)
 src/Phrase.Providers.CSharp        CSharpProvider (stub)
 tests/Phrase.Compiler.Tests        inner-loop unit tests (lexer 51, parser 79, formatter 8, resolver 83 pending)
 tests/Phrase.Acceptance.Tests      outer-loop acceptance tests + harness

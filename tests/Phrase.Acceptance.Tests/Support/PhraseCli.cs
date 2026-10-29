@@ -152,7 +152,7 @@ public static class PhraseCli
         var projects = new[]
         {
             ("Phrase.Cli", "phrase.dll"),
-            ("Phrase.Compiler", "Phrase.Compiler.dll"),
+            ("Avowry.Compiler", "Avowry.Compiler.dll"),
             ("Phrase.Adapters.CSharp", "Phrase.Adapters.CSharp.dll"),
         }.Select(project => (
             DllPath: Path.Combine(output, project.Item2),

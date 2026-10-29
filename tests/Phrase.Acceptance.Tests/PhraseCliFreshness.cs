@@ -49,12 +49,12 @@ public class PhraseCliFreshness
     public void EnsureAllFresh_compares_each_project_with_its_own_assembly()
     {
         // Given a Compiler source edited after phrase.dll was last written (an implementation-only change
-        // refreshes Phrase.Compiler.dll but leaves phrase.dll untouched)
+        // refreshes Avowry.Compiler.dll but leaves phrase.dll untouched)
         var cliDllTime = new DateTime(2026, 10, 28, 12, 0, 0, DateTimeKind.Utc);
         var timestamps = new Dictionary<string, DateTime>(StringComparer.Ordinal)
         {
             ["phrase.dll"] = cliDllTime,
-            ["Phrase.Compiler.dll"] = cliDllTime.AddMinutes(10),
+            ["Avowry.Compiler.dll"] = cliDllTime.AddMinutes(10),
             ["Compiler.cs"] = cliDllTime.AddMinutes(5),
             ["Cli.cs"] = cliDllTime.AddSeconds(-5),
         };
@@ -63,11 +63,11 @@ public class PhraseCliFreshness
 
         // When the freshness is judged per project, and the same files are judged against one shared dll
         var perProject = Record.Exception(() => PhraseCli.EnsureAllFresh(
-            [("phrase.dll", ["Cli.cs"]), ("Phrase.Compiler.dll", ["Compiler.cs"])], LastWriteUtc, tolerance));
+            [("phrase.dll", ["Cli.cs"]), ("Avowry.Compiler.dll", ["Compiler.cs"])], LastWriteUtc, tolerance));
         var sharedDll = Record.Exception(() => PhraseCli.EnsureFresh("phrase.dll", ["Cli.cs", "Compiler.cs"], LastWriteUtc, tolerance));
         timestamps["Compiler.cs"] = cliDllTime.AddMinutes(11);
         var compilerStale = Assert.Throws<InvalidOperationException>(() => PhraseCli.EnsureAllFresh(
-            [("phrase.dll", ["Cli.cs"]), ("Phrase.Compiler.dll", ["Compiler.cs"])], LastWriteUtc, tolerance));
+            [("phrase.dll", ["Cli.cs"]), ("Avowry.Compiler.dll", ["Compiler.cs"])], LastWriteUtc, tolerance));
 
         // Then the up-to-date build passes, the old single-dll comparison would have been a false stale,
         // and a Compiler source newer than its own assembly still fails with the rebuild message

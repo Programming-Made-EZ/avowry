@@ -1,4 +1,4 @@
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler.Semantics;
 using static Phrase.Compiler.Tests.Semantics.Resolved;
 
 namespace Phrase.Compiler.Tests.Semantics;
@@ -21,7 +21,7 @@ public class ResolverFlowTests
             """);
 
         // When the phrase is resolved
-        var phrase = Clean(source).Phrase("validate _");
+        var phrase = Clean(source).Avow("validate _");
 
         // Then the condition is typed and the failure is part of its flow
         var ensure = Assert.IsType<BoundEnsureStep>(Assert.Single(phrase.Steps!));
@@ -106,7 +106,7 @@ public class ResolverFlowTests
             """);
 
         // When the phrase is resolved
-        var phrase = Clean(source).Phrase("validate _");
+        var phrase = Clean(source).Avow("validate _");
 
         // Then the field path remains typed as Text
         var ensure = Assert.IsType<BoundEnsureStep>(Assert.Single(phrase.Steps!));
@@ -149,7 +149,7 @@ public class ResolverFlowTests
             """);
 
         // When the phrase is resolved
-        var phrase = Clean(source).Phrase("complete _");
+        var phrase = Clean(source).Avow("complete _");
         var update = Assert.IsType<BoundLetUpdateStep>(Assert.Single(phrase.Steps!));
 
         // Then the copy has the Task type, the replaced field is Bool, and the original name stays in scope
@@ -193,7 +193,7 @@ public class ResolverFlowTests
     public void Record_update_reports_an_unknown_field_on_a_zero_field_record()
     {
         // Given a recovered endpoint tree whose input record has no declared fields
-        var parsed = Phrase.Compiler.Syntax.Parser.Parse("""
+        var parsed = Avowry.Compiler.Syntax.Parser.Parse("""
             module Test
             endpoint Empty : POST /empty
               input
@@ -228,11 +228,11 @@ public class ResolverFlowTests
             """);
 
         // When the composite phrase is resolved
-        var dispatch = Clean(source).Phrase("dispatch");
+        var dispatch = Clean(source).Avow("dispatch");
 
         // Then "with" remains part of the phrase call rather than reserving an update
         var let = Assert.IsType<BoundLetStep>(Assert.Single(dispatch.Steps!));
-        Assert.Equal("send with _", let.Call.PhraseKey);
+        Assert.Equal("send with _", let.Call.AvowKey);
     }
     private const string Validate = """
         avow to "validate {items: List<LineItem>}"
@@ -335,12 +335,12 @@ public class ResolverFlowTests
         var module = Clean(Program(Validate, Probe("validate input.items")));
 
         // When it is resolved
-        var validate = module.Phrase("validate _");
+        var validate = module.Avow("validate _");
 
         // Then its steps bind to the prelude guards
         Assert.Equal(
             ["ensure _ is not empty", "ensure every quantity in _ is positive"],
-            validate.Steps!.Cast<BoundCallStep>().Select(s => s.Call.PhraseKey));
+            validate.Steps!.Cast<BoundCallStep>().Select(s => s.Call.AvowKey));
         Assert.Equal(new BoundVariable("items", PType.ListOf(new PType("LineItem", []))), validate.Steps!.Cast<BoundCallStep>().First().Call.Arguments[0].Value);
 
         // And its failures, and the endpoint's, include the guards' failures

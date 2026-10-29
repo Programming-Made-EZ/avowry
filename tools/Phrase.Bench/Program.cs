@@ -6,8 +6,8 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Phrase.Adapters.CSharp;
-using Phrase.Compiler;
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler;
+using Avowry.Compiler.Semantics;
 
 const int MaximumAttempts = 3;
 const int EmptyReplyMaximumAttempts = 2;
@@ -727,7 +727,7 @@ static BenchmarkScore Score(string source)
 {
     try
     {
-        PhraseCompiler.Compile(source, new ScoringProvider());
+        AvowryCompiler.Compile(source, new ScoringProvider());
     }
     catch (CompilationFailedException exception)
     {
@@ -844,7 +844,7 @@ static async Task<BenchmarkScore> ScoreExecuted(string source, BenchmarkTask tas
     CompilationOutput output;
     try
     {
-        output = PhraseCompiler.Compile(source, new CSharpProvider());
+        output = AvowryCompiler.Compile(source, new CSharpProvider());
     }
     catch (CompilationFailedException exception)
     {

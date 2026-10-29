@@ -1,6 +1,6 @@
 using Phrase.Acceptance.Tests.Support;
 using Phrase.Adapters.CSharp;
-using Phrase.Compiler;
+using Avowry.Compiler;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -82,9 +82,9 @@ public class PhraseBuildOneFile
     [Trait("Slice", "051")]
     public async Task Build_output_matches_the_compiler_bytes()
     {
-        // Given orders.avowry and the files PhraseCompiler.Compile plus WriteTo produce
+        // Given orders.avowry and the files AvowryCompiler.Compile plus WriteTo produce
         var sourcePath = RepoPaths.Find("tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.avowry");
-        var expectedOutput = PhraseCompiler.Compile(await File.ReadAllTextAsync(sourcePath), new CSharpProvider(), sourcePath);
+        var expectedOutput = AvowryCompiler.Compile(await File.ReadAllTextAsync(sourcePath), new CSharpProvider(), sourcePath);
         using var expected = TempWorkspace.Create();
         expectedOutput.WriteTo(expected.Root);
         using var actual = TempWorkspace.Create();

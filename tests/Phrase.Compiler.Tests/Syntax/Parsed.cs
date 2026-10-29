@@ -1,4 +1,4 @@
-using Phrase.Compiler.Syntax;
+using Avowry.Compiler.Syntax;
 
 namespace Phrase.Compiler.Tests.Syntax;
 
@@ -38,7 +38,7 @@ internal static class Parsed
         RespondStep s => $"(respond {Print(s.Value)})",
         FailStep s => $"(fail {s.Code})",
         EnsureStep s => $"(ensure {SourceFormatter.Format(s.Condition)} else {s.Code})",
-        PhraseCall c => $"(call {string.Join(" ", c.Parts.Select(Print))})",
+        AvowCall c => $"(call {string.Join(" ", c.Parts.Select(Print))})",
         CallWord w => w.Text,
         CallArgument a => $"<{Print(a.Value)}>",
 

@@ -2,7 +2,7 @@ using System.Net;
 using System.Text;
 using Phrase.Acceptance.Tests.Support;
 using Phrase.Adapters.CSharp;
-using Phrase.Compiler;
+using Avowry.Compiler;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -19,7 +19,7 @@ public class EndpointFailureMapsToHttpStatus
         // Given a generated API for orders.avowry, whose empty-items failure is EmptyOrder
         // and which GRAMMAR.md maps to HTTP 422 with the code as the error
         var source = Fixture.Read("orders.avowry");
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
         var api = await GeneratedApi.StartAsync(workspace.FindSingle("*.Api.csproj"));

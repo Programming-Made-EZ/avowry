@@ -1,4 +1,4 @@
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler.Semantics;
 using static Phrase.Compiler.Tests.Semantics.Resolved;
 
 namespace Phrase.Compiler.Tests.Semantics;

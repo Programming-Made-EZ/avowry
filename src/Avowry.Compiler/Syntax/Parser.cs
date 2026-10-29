@@ -1,7 +1,7 @@
 using System.Text;
-using Phrase.Compiler.Lexing;
+using Avowry.Compiler.Lexing;
 
-namespace Phrase.Compiler.Syntax;
+namespace Avowry.Compiler.Syntax;
 
 /// <summary>
 /// Builds the syntax tree from tokens. Two passes:
@@ -156,7 +156,7 @@ public static class Parser
         {
             ModuleDecl? module = null;
             var types = new List<TypeDecl>();
-            var phrases = new List<PhraseDecl>();
+            var phrases = new List<AvowDecl>();
             var endpoints = new List<EndpointDecl>();
             var sawDeclaration = false;
 
@@ -193,7 +193,7 @@ public static class Parser
                         break;
                     case "avow":
                         sawDeclaration = true;
-                        AddIfParsed(phrases, () => ParsePhrase(line));
+                        AddIfParsed(phrases, () => ParseAvow(line));
                         break;
                     case "endpoint" when ExtensionKeywords.Is(ExtensionPart.Web, "endpoint"):
                         _web = true;
@@ -276,7 +276,7 @@ public static class Parser
 
         // ------------------------------------------------------------- phrases
 
-        private PhraseDecl ParsePhrase(Line line)
+        private AvowDecl ParseAvow(Line line)
         {
             var c = CursorFor(line);
             var at = Pos(c.Next());
@@ -363,7 +363,7 @@ public static class Parser
             if (!sawNative && !sawSteps)
                 Report("PH203", "Phrase has no implementation; add `native <target>` or `steps`.", at);
 
-            return new PhraseDecl(template, returns, effects, failures, specs, natives, steps, at) { FailureLine = failureLine };
+            return new AvowDecl(template, returns, effects, failures, specs, natives, steps, at) { FailureLine = failureLine };
         }
 
         private static SyntaxError FillerError(string code, Token token) =>
@@ -669,7 +669,7 @@ public static class Parser
         }
 
         /// <summary>Bare names are words; dotted paths, literals, records and lists are arguments.</summary>
-        private static PhraseCall ParseCall(Cursor c)
+        private static AvowCall ParseCall(Cursor c)
         {
             var at = c.Here;
             var parts = new List<CallPart>();
@@ -697,7 +697,7 @@ public static class Parser
             }
 
             if (parts.Count == 0) throw c.Error("a phrase call");
-            return new PhraseCall(parts, at);
+            return new AvowCall(parts, at);
         }
 
         // ------------------------------------------------------------- expressions

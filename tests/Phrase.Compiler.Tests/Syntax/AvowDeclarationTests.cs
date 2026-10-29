@@ -1,4 +1,4 @@
-using Phrase.Compiler.Syntax;
+using Avowry.Compiler.Syntax;
 
 namespace Phrase.Compiler.Tests.Syntax;
 
@@ -20,7 +20,7 @@ public class AvowDeclarationTests
 
         // Then it has the quoted template, independent of the filler
         Assert.Empty(result.Diagnostics);
-        Assert.Equal("double {n: Int}", SourceFormatter.Format(Assert.Single(result.File.Phrases).Template));
+        Assert.Equal("double {n: Int}", SourceFormatter.Format(Assert.Single(result.File.Avows).Template));
     }
 
     [Fact]
@@ -41,12 +41,12 @@ public class AvowDeclarationTests
             """;
 
         // When the module is compiled
-        var result = Phrase.Compiler.Semantics.Resolver.Resolve(source);
+        var result = Avowry.Compiler.Semantics.Resolver.Resolve(source);
 
         // Then the unchanged call resolves to the name inside the quotes
         Assert.Empty(result.Diagnostics);
-        var caller = result.Module!.Phrases.Single(phrase => phrase.Template == "run list");
-        Assert.Equal("to do list", Assert.IsType<Phrase.Compiler.Semantics.BoundCallStep>(Assert.Single(caller.Steps!)).Call.PhraseKey);
+        var caller = result.Module!.Avows.Single(phrase => phrase.Template == "run list");
+        Assert.Equal("to do list", Assert.IsType<Avowry.Compiler.Semantics.BoundCallStep>(Assert.Single(caller.Steps!)).Call.AvowKey);
     }
 
     [Theory]
@@ -90,7 +90,7 @@ public class AvowDeclarationTests
         var parsed = Parser.Parse("module Work\n\navow it \"finish work\"\n  native csharp\n    return;\n");
 
         // When its declaration is formatted
-        var formatted = SourceFormatter.Format(Assert.Single(parsed.File.Phrases));
+        var formatted = SourceFormatter.Format(Assert.Single(parsed.File.Avows));
 
         // Then the canonical source uses avow to
         Assert.Equal("avow to \"finish work\"", formatted);

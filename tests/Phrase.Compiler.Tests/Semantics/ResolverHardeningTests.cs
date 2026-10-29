@@ -1,4 +1,4 @@
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler.Semantics;
 using static Phrase.Compiler.Tests.Semantics.Resolved;
 
 namespace Phrase.Compiler.Tests.Semantics;
@@ -130,7 +130,7 @@ public class ResolverHardeningTests
 
         // Then the parser diagnostic is kept and the composite is bound
         Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "PH206");
-        var phrase = Assert.Single(result.Module.Phrases, candidate => candidate.Key == "add _ to _");
+        var phrase = Assert.Single(result.Module.Avows, candidate => candidate.Key == "add _ to _");
         Assert.NotNull(phrase.Steps);
         Assert.NotEmpty(phrase.Steps);
     }

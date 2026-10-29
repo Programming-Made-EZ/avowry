@@ -1,4 +1,4 @@
-namespace Phrase.Compiler.Lexing;
+namespace Avowry.Compiler.Lexing;
 
 public enum TokenKind
 {

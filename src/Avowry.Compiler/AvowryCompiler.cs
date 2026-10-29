@@ -1,13 +1,13 @@
-using Phrase.Compiler.Semantics;
-using Phrase.Compiler.Syntax;
+using Avowry.Compiler.Semantics;
+using Avowry.Compiler.Syntax;
 
-namespace Phrase.Compiler;
+namespace Avowry.Compiler;
 
 /// <summary>
 /// Entry point: .avowry source in, target files out.
 /// Pipeline: lexer (done) -> parser (done) -> resolver (done) -> target adapter.
 /// </summary>
-public static class PhraseCompiler
+public static class AvowryCompiler
 {
     public static CompilationOutput Compile(string source, ITargetAdapter adapter)
         => Compile(source, adapter, null);
@@ -30,7 +30,7 @@ public static class PhraseCompiler
             var hash = System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(normalized));
             module = module with
             {
-                PhraseFile = Path.GetFileName(phraseFile.Replace('\\', '/')),
+                AvowFile = Path.GetFileName(phraseFile.Replace('\\', '/')),
                 BuildId = Convert.ToHexString(hash)[..16].ToLowerInvariant(),
             };
         }

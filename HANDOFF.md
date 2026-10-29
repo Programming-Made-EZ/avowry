@@ -13,7 +13,7 @@ Welcome. This repo is **Phrase**, a language for LLM-maintained codebases where 
 | C# emitter | Next, after the resolver |
 | Acceptance test | Red (`Pending`), stops at the resolver stub |
 
-The resolver's output, `ModuleModel` in [Semantics/Model.cs](src/Phrase.Compiler/Semantics/Model.cs), is already designed. It is the IR the C# provider will consume. You implement [Semantics/Resolver.cs](src/Phrase.Compiler/Semantics/Resolver.cs) to produce it.
+The resolver's output, `ModuleModel` in [Semantics/Model.cs](src/Avowry.Compiler/Semantics/Model.cs), is already designed. It is the IR the C# provider will consume. You implement [Semantics/Resolver.cs](src/Avowry.Compiler/Semantics/Resolver.cs) to produce it.
 
 ## Running it with the cross-CLI mob
 
@@ -51,7 +51,7 @@ Each class builds on the one before it. Helpers for building test programs are i
 4. **ResolverSpecTests** (20): hole bindings, literal-only values, outcomes, endpoint specs
 5. **ResolverFixtureTests** (12): the real program, plus 2,000 fuzzed mutations that must never throw
 
-Then wire it into `PhraseCompiler.Compile` (resolve after parse, throw `CompilationFailedException` on diagnostics) so the acceptance test fails one stage further in, at the emitter.
+Then wire it into `AvowryCompiler.Compile` (resolve after parse, throw `CompilationFailedException` on diagnostics) so the acceptance test fails one stage further in, at the emitter.
 
 ## A design that fits the tests
 
@@ -127,7 +127,7 @@ Messages matter: an LLM reads them to fix its own code. Name the thing, say what
 
 - No `Pending` trait left in `tests/Phrase.Compiler.Tests/Semantics`
 - `dotnet test Phrase.sln --filter "Status!=Pending"` green with zero warnings
-- `PhraseCompiler.Compile` runs the resolver; the acceptance test now fails at the emitter
+- `AvowryCompiler.Compile` runs the resolver; the acceptance test now fails at the emitter
 - GRAMMAR.md updated with the resolver diagnostics and any rule the mob changed
 
 ## After that

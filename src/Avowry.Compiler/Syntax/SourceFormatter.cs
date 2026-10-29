@@ -1,4 +1,4 @@
-namespace Phrase.Compiler.Syntax;
+namespace Avowry.Compiler.Syntax;
 
 /// <summary>
 /// Renders syntax back to canonical Phrase source. Used for diagnostics, for comments in
@@ -6,7 +6,7 @@ namespace Phrase.Compiler.Syntax;
 /// </summary>
 public static class SourceFormatter
 {
-    public static string Format(PhraseDecl phrase) =>
+    public static string Format(AvowDecl phrase) =>
         $"avow to {Quote(Format(phrase.Template))}" + (phrase.Returns is null ? "" : $" -> {Format(phrase.Returns)}");
 
     public static string Format(Template template) =>
@@ -27,7 +27,7 @@ public static class SourceFormatter
         RespondStep r => $"respond with {Format(r.Value)}",
         FailStep f => $"fail with {f.Code}",
         EnsureStep e => $"ensure {Format(e.Condition)} else {e.Code}",
-        PhraseCall c => string.Join(" ", c.Parts.Select(p => p switch
+        AvowCall c => string.Join(" ", c.Parts.Select(p => p switch
         {
             CallWord w => w.Text,
             CallArgument a => Format(a.Value),

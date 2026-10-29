@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Avowry.Compiler</AssemblyName>
+    <RootNamespace>Avowry.Compiler</RootNamespace>
+  </PropertyGroup>
+</Project>

@@ -11,7 +11,7 @@
     <Using Include="Xunit" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../../src/Phrase.Compiler/Phrase.Compiler.csproj" />
+    <ProjectReference Include="../../src/Avowry.Compiler/Avowry.Compiler.csproj" />
     <ProjectReference Include="../../src/Phrase.Adapters.CSharp/Phrase.Adapters.CSharp.csproj" />
     <ProjectReference Include="../../tools/Phrase.Bench/Phrase.Bench.csproj" />
   </ItemGroup>

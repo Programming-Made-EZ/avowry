@@ -1,5 +1,5 @@
 using Phrase.Acceptance.Tests.Support;
-using Phrase.Compiler;
+using Avowry.Compiler;
 using Phrase.Adapters.CSharp;
 
 namespace Phrase.Acceptance.Tests;
@@ -32,7 +32,7 @@ public class DeclaredRecordCompiles
             """;
 
         // When it is compiled with the C# provider and written to a temp folder
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
 
@@ -63,7 +63,7 @@ public class DeclaredRecordCompiles
             """;
 
         // When it is compiled with the C# provider and written to a temp folder
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
 

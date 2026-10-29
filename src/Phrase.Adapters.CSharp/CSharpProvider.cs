@@ -1,6 +1,6 @@
 using System.Text;
-using Phrase.Compiler;
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler;
+using Avowry.Compiler.Semantics;
 
 namespace Phrase.Adapters.CSharp;
 
@@ -20,8 +20,8 @@ public sealed class CSharpProvider : ITargetAdapter
         if (module.Name.Length == 0)
             throw new NotImplementedException("The C# emitter needs a module name.");
 
-        foreach (var phrase in module.Phrases)
-            RequireSupportedPhrase(module, phrase);
+        foreach (var phrase in module.Avows)
+            RequireSupportedAvow(module, phrase);
 
         var api = module.Name + ".Api";
         var specs = module.Name + ".Specs";
@@ -31,9 +31,9 @@ public sealed class CSharpProvider : ITargetAdapter
             [$"{api}/Program.cs"] = Program(module),
             [$"{api}/AvowryRuntime.cs"] = Runtime(module.Name),
             [$"{api}/Types.cs"] = Types(module),
-            [$"{api}/Avows.cs"] = Phrases(module),
+            [$"{api}/Avows.cs"] = Avows(module),
             [$"{specs}/{module.Name}.Specs.csproj"] = SpecsProject(module.Name),
-            [$"{specs}/AvowSpecs.cs"] = PhraseSpecs(module),
+            [$"{specs}/AvowSpecs.cs"] = AvowSpecs(module),
         };
         var endpointFiles = new Dictionary<string, string>(StringComparer.Ordinal);
 
@@ -52,11 +52,11 @@ public sealed class CSharpProvider : ITargetAdapter
         {
             Module = module,
             EndpointFiles = endpointFiles,
-            PhraseFiles = module.Phrases.ToDictionary(phrase => phrase.Key, _ => $"{api}/Avows.cs", StringComparer.Ordinal),
+            AvowFiles = module.Avows.ToDictionary(phrase => phrase.Key, _ => $"{api}/Avows.cs", StringComparer.Ordinal),
         };
     }
 
-    private static void RequireSupportedPhrase(ModuleModel module, PhraseModel phrase)
+    private static void RequireSupportedAvow(ModuleModel module, AvowModel phrase)
     {
         if (phrase.Effects.Count > 1)
             throw new NotImplementedException($"The C# emitter does not support more than one effect on '{phrase.Template}' yet.");
@@ -73,7 +73,7 @@ public sealed class CSharpProvider : ITargetAdapter
         RequireSupportedSpecs(module, phrase);
     }
 
-    private static void RequireSupportedComposite(ModuleModel module, PhraseModel phrase)
+    private static void RequireSupportedComposite(ModuleModel module, AvowModel phrase)
     {
         // A composite cannot declare a return type (PH325): steps bind results, they do not return one.
         if (phrase.Returns is not null)
@@ -92,7 +92,7 @@ public sealed class CSharpProvider : ITargetAdapter
         RequireSupportedSpecs(module, phrase);
     }
 
-    private static void RequireSupportedSignature(ModuleModel module, PhraseModel phrase)
+    private static void RequireSupportedSignature(ModuleModel module, AvowModel phrase)
     {
         foreach (var hole in phrase.Holes)
         {
@@ -104,7 +104,7 @@ public sealed class CSharpProvider : ITargetAdapter
             throw new NotImplementedException($"The C# emitter does not support return type '{phrase.Returns}' on '{phrase.Template}' yet.");
     }
 
-    private static void RequireSupportedArguments(PhraseModel phrase, BoundCall call)
+    private static void RequireSupportedArguments(AvowModel phrase, BoundCall call)
     {
         foreach (var argument in call.Arguments)
         {
@@ -113,7 +113,7 @@ public sealed class CSharpProvider : ITargetAdapter
         }
     }
 
-    private static void RequireSupportedSpecs(ModuleModel module, PhraseModel phrase)
+    private static void RequireSupportedSpecs(ModuleModel module, AvowModel phrase)
     {
         foreach (var spec in phrase.Specs)
         {
@@ -246,7 +246,7 @@ public sealed class CSharpProvider : ITargetAdapter
     private static List<PersistenceStore> PersistenceStores(ModuleModel module)
     {
         var stores = new List<PersistenceStore>();
-        foreach (var effect in module.Phrases.SelectMany(phrase => phrase.Effects).Distinct(StringComparer.Ordinal))
+        foreach (var effect in module.Avows.SelectMany(phrase => phrase.Effects).Distinct(StringComparer.Ordinal))
         {
             var entity = PersistenceEntity(module, effect);
             if (entity is not null)
@@ -271,7 +271,7 @@ public sealed class CSharpProvider : ITargetAdapter
         if (id is null || (id.Type != PType.Text && id.Type != PType.Id))
             return null;
 
-        var usedWithRecord = module.Phrases.Any(phrase =>
+        var usedWithRecord = module.Avows.Any(phrase =>
             phrase.Effects.Any(name => string.Equals(name, effect, StringComparison.Ordinal)) &&
             (MentionsType(phrase.Returns, entityName) || phrase.Holes.Any(hole => MentionsType(hole.Type, entityName))));
         return usedWithRecord ? entity : null;
@@ -369,7 +369,7 @@ public sealed class CSharpProvider : ITargetAdapter
         return code.ToString();
     }
 
-    private static string Phrases(ModuleModel module)
+    private static string Avows(ModuleModel module)
     {
         var code = new StringBuilder();
         code.Append("// <auto-generated>\n");
@@ -378,10 +378,10 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append("// </auto-generated>\n");
         if (DeclaresTask(module))
             code.Append("#nullable enable\n");
-        if (module.Phrases.Any(phrase => phrase.Failures.Count > 0))
+        if (module.Avows.Any(phrase => phrase.Failures.Count > 0))
             code.Append("using System.Diagnostics.CodeAnalysis;\n\n");
         code.Append("namespace ").Append(module.Name).Append(";\n\n");
-        foreach (var effect in module.Phrases.SelectMany(phrase => phrase.Effects).Distinct(StringComparer.Ordinal))
+        foreach (var effect in module.Avows.SelectMany(phrase => phrase.Effects).Distinct(StringComparer.Ordinal))
         {
             var entity = PersistenceEntity(module, effect);
             if (entity is null)
@@ -390,14 +390,14 @@ public sealed class CSharpProvider : ITargetAdapter
                 AppendPersistenceStore(code, effect, entity);
         }
         code.Append("public static class Avows\n{\n");
-        for (var i = 0; i < module.Phrases.Count; i++)
+        for (var i = 0; i < module.Avows.Count; i++)
         {
             if (i > 0)
                 code.Append('\n');
-            AppendPhrase(code, module, module.Phrases[i]);
+            AppendAvow(code, module, module.Avows[i]);
         }
 
-        if (module.Phrases.Any(phrase => phrase.Failures.Count > 0))
+        if (module.Avows.Any(phrase => phrase.Failures.Count > 0))
         {
             code.Append("\n    [DoesNotReturn]\n");
             code.Append("    private static void Fail(string code) => AvowryFailure.Raise(code);\n");
@@ -406,7 +406,7 @@ public sealed class CSharpProvider : ITargetAdapter
         return code.ToString();
     }
 
-    private static void AppendPhrase(StringBuilder code, ModuleModel module, PhraseModel phrase)
+    private static void AppendAvow(StringBuilder code, ModuleModel module, AvowModel phrase)
     {
         var method = MethodName(phrase);
         code.Append("    /// <summary>").Append(Summary(phrase)).Append("</summary>\n");
@@ -465,7 +465,7 @@ public sealed class CSharpProvider : ITargetAdapter
 
     private static string CallExpression(ModuleModel module, BoundCall call, IReadOnlyList<string>? availableEffects = null)
     {
-        var target = module.Phrase(call.PhraseKey);
+        var target = module.Avow(call.AvowKey);
         var effects = target.Effects.Select(effect =>
         {
             if (availableEffects is null || !availableEffects.Contains(effect, StringComparer.Ordinal))
@@ -593,8 +593,8 @@ public sealed class CSharpProvider : ITargetAdapter
     private static IReadOnlyList<string> EndpointEffects(ModuleModel module, EndpointModel endpoint) =>
         endpoint.Steps.SelectMany(step => step switch
             {
-                BoundCallStep call => module.Phrase(call.Call.PhraseKey).Effects,
-                BoundLetStep let => module.Phrase(let.Call.PhraseKey).Effects,
+                BoundCallStep call => module.Avow(call.Call.AvowKey).Effects,
+                BoundLetStep let => module.Avow(let.Call.AvowKey).Effects,
                 _ => [],
             })
             .Distinct(StringComparer.Ordinal)
@@ -786,7 +786,7 @@ public sealed class CSharpProvider : ITargetAdapter
         return CSharpIdent(type.Name);
     }
 
-    private static string PhraseSpecs(ModuleModel module)
+    private static string AvowSpecs(ModuleModel module)
     {
         var code = new StringBuilder();
         code.Append("// <auto-generated>\n");
@@ -796,7 +796,7 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append("namespace ").Append(module.Name).Append(".Specs;\n\n");
         code.Append("public class AvowSpecs\n{\n");
         var first = true;
-        foreach (var phrase in module.Phrases)
+        foreach (var phrase in module.Avows)
         {
             foreach (var spec in phrase.Specs)
             {
@@ -807,7 +807,7 @@ public sealed class CSharpProvider : ITargetAdapter
             }
         }
 
-        foreach (var effect in module.Phrases.SelectMany(phrase => phrase.Effects).Distinct(StringComparer.Ordinal))
+        foreach (var effect in module.Avows.SelectMany(phrase => phrase.Effects).Distinct(StringComparer.Ordinal))
         {
             var entity = PersistenceEntity(module, effect);
             code.Append("\n    private sealed class ").Append(CSharpIdent(effect)).Append("Double : ");
@@ -822,7 +822,7 @@ public sealed class CSharpProvider : ITargetAdapter
         return code.ToString();
     }
 
-    private static void AppendSpec(StringBuilder code, PhraseModel phrase, PhraseSpecModel spec)
+    private static void AppendSpec(StringBuilder code, AvowModel phrase, AvowSpecModel spec)
     {
         code.Append("    [Fact(DisplayName = ").Append(CsString($"{Summary(phrase)}: {spec.Description}")).Append(")]\n");
         code.Append("    public void ").Append(SpecMethodName(phrase, spec.Description)).Append("()\n");
@@ -871,23 +871,23 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append("        : value?.ToString() ?? \"null\";\n");
     }
 
-    private static string Signature(PhraseModel phrase) =>
+    private static string Signature(AvowModel phrase) =>
         phrase.Returns is null ? phrase.Template : $"{phrase.Template} -> {phrase.Returns}";
 
-    private static string Summary(PhraseModel phrase) =>
+    private static string Summary(AvowModel phrase) =>
         string.Join(" ", phrase.Parts.Select(part => part.IsHole ? "{" + part.Text + "}" : part.Text));
 
-    private static string MethodName(PhraseModel phrase) =>
+    private static string MethodName(AvowModel phrase) =>
         string.Concat(phrase.Parts.Select(part => Pascal(part.Text)));
 
-    private static string SpecMethodName(PhraseModel phrase, string description)
+    private static string SpecMethodName(AvowModel phrase, string description)
     {
         var template = string.Join("_", phrase.Parts.Select(part => part.Text.ToLowerInvariant()));
         var name = template + "__" + Slug(description);
         return char.ToUpperInvariant(name[0]) + name[1..];
     }
 
-    private static string Parameters(PhraseModel phrase) =>
+    private static string Parameters(AvowModel phrase) =>
         string.Join(", ", phrase.Effects.Select(effect => $"I{CSharpIdent(effect)} {CSharpIdent(effect.ToLowerInvariant())}")
             .Concat(phrase.Holes.Select(hole => $"{CSharpType(hole.Type)} {CSharpIdent(hole.Name)}")));
 

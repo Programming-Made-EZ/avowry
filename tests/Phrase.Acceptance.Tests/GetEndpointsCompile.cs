@@ -1,6 +1,6 @@
 using Phrase.Acceptance.Tests.Support;
 using Phrase.Adapters.CSharp;
-using Phrase.Compiler;
+using Avowry.Compiler;
 using System.Net;
 
 namespace Phrase.Acceptance.Tests;
@@ -32,7 +32,7 @@ public class GetEndpointsCompile
             """;
 
         // When Dana compiles it through the extension registry
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
 
@@ -110,7 +110,7 @@ public class GetEndpointsCompile
             """;
 
         // When Dana compiles the module and runs its generated specs
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
         var result = await DotnetCli.TestAsync(workspace.FindSingle("*.Specs.csproj"));

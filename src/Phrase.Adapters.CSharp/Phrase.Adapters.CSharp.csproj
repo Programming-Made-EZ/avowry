@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="../Phrase.Compiler/Phrase.Compiler.csproj" />
+    <ProjectReference Include="../Avowry.Compiler/Avowry.Compiler.csproj" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Phrase.Acceptance.Tests.Support;
-using Phrase.Compiler;
+using Avowry.Compiler;
 using Phrase.Adapters.CSharp;
 using Xunit;
 
@@ -22,7 +22,7 @@ public class OrdersPhraseCompiles
         var expectedSpecCount = Fixture.CountSpecs(source);
 
         // When it is compiled with the C# provider and written to a temp workspace
-        var output = PhraseCompiler.Compile(source, new CSharpProvider());
+        var output = AvowryCompiler.Compile(source, new CSharpProvider());
         using var workspace = TempWorkspace.Create();
         output.WriteTo(workspace.Root);
 

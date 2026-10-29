@@ -5,8 +5,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using Phrase.Adapters.CSharp;
-using Phrase.Compiler;
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler;
+using Avowry.Compiler.Semantics;
 
 const string Usage = "Usage: avowry build FILE.avowry -o OUT_DIR [--target csharp]\n       avowry trace NAME [--map PATH] [--assembly PATH] [--strict]";
 if (args is ["--help"])
@@ -38,7 +38,7 @@ if (!string.Equals(Path.GetExtension(file), ".avowry", StringComparison.OrdinalI
 }
 try
 {
-    var compiled = PhraseCompiler.Compile(File.ReadAllText(file), new CSharpProvider(), file);
+    var compiled = AvowryCompiler.Compile(File.ReadAllText(file), new CSharpProvider(), file);
     compiled.WriteTo(output);
     WriteMap(compiled, output);
     return 0;
@@ -72,13 +72,13 @@ static IEnumerable<MapRecord> Records(CompilationOutput output, ModuleModel modu
         foreach (var step in endpoint.Steps)
             yield return Record(output, module, "step", step.Source, step.Line, endpoint, step, SpecFor(endpoint, step), cs);
     }
-    foreach (var phrase in module.Phrases)
+    foreach (var phrase in module.Avows)
     {
         var owner = module.Endpoints.FirstOrDefault(endpoint => endpoint.Steps.Any(step => Calls(step, phrase.Key)));
         var step = owner?.Steps.FirstOrDefault(candidate => Calls(candidate, phrase.Key));
-        var cs = output.PhraseFiles[phrase.Key];
+        var cs = output.AvowFiles[phrase.Key];
         var spec = phrase.Specs.FirstOrDefault();
-        yield return new(StepId("phrase", phrase.Line, phrase.Template), "phrase", phrase.Template, module.PhraseFile,
+        yield return new(StepId("phrase", phrase.Line, phrase.Template), "phrase", phrase.Template, module.AvowFile,
             phrase.Line, owner?.Name ?? "", step?.Source ?? "", Lines(spec?.SourceSpan), cs,
             $"Avows.{MethodName(phrase)}", Hash(output.Files[cs]));
     }
@@ -102,7 +102,7 @@ static EndpointSpecModel? SpecFor(EndpointModel endpoint, BoundStep step) =>
 static bool StepFails(BoundStep step, string code) => step is BoundFailStep fail && fail.Code == code || step is BoundEnsureStep ensure && ensure.Code == code;
 static MapLines Lines(SourceSpan? span) => new(span?.FirstLine ?? 0, span?.LastLine ?? 0);
 static MapRecord Record(CompilationOutput output, ModuleModel module, string kind, string name, int line, EndpointModel endpoint, BoundStep? step, EndpointSpecModel? spec, string cs) =>
-    new(StepId(kind, line, name, endpoint.Name), kind, name, module.PhraseFile, line, endpoint.Name, step?.Source ?? "", Lines(spec?.SourceSpan), cs, $"{endpoint.Name}Handler.Handle", Hash(output.Files[cs]));
+    new(StepId(kind, line, name, endpoint.Name), kind, name, module.AvowFile, line, endpoint.Name, step?.Source ?? "", Lines(spec?.SourceSpan), cs, $"{endpoint.Name}Handler.Handle", Hash(output.Files[cs]));
 static string StepId(string kind, int line, string name, string endpoint = "")
 {
     var normalizedName = name.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n');
@@ -272,17 +272,17 @@ static bool ParseTrace(string[] values, out string name, out string? path, out s
     return true;
 }
 
-static bool Calls(BoundStep step, string key) => step is BoundCallStep call && call.Call.PhraseKey == key || step is BoundLetStep let && let.Call.PhraseKey == key;
+static bool Calls(BoundStep step, string key) => step is BoundCallStep call && call.Call.AvowKey == key || step is BoundLetStep let && let.Call.AvowKey == key;
 static DeclaredFailureModel? FailureDeclaration(ModuleModel module, BoundStep step, string failure) => step switch
 {
-    BoundCallStep call => PhraseFailureDeclaration(module, module.Phrase(call.Call.PhraseKey), failure),
-    BoundLetStep let => PhraseFailureDeclaration(module, module.Phrase(let.Call.PhraseKey), failure),
+    BoundCallStep call => AvowFailureDeclaration(module, module.Avow(call.Call.AvowKey), failure),
+    BoundLetStep let => AvowFailureDeclaration(module, module.Avow(let.Call.AvowKey), failure),
     _ => null,
 };
-static DeclaredFailureModel? PhraseFailureDeclaration(ModuleModel module, PhraseModel phrase, string failure) =>
+static DeclaredFailureModel? AvowFailureDeclaration(ModuleModel module, AvowModel phrase, string failure) =>
     phrase.DeclaredFailures.FirstOrDefault(candidate => candidate.Name == failure)
     ?? phrase.Steps?.Select(step => FailureDeclaration(module, step, failure)).FirstOrDefault(declaration => declaration is not null);
-static string MethodName(PhraseModel phrase) => string.Concat(phrase.Parts.Where(part => !part.IsHole).Select(part => char.ToUpperInvariant(part.Text[0]) + part.Text[1..]));
+static string MethodName(AvowModel phrase) => string.Concat(phrase.Parts.Where(part => !part.IsHole).Select(part => char.ToUpperInvariant(part.Text[0]) + part.Text[1..]));
 static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n')))).ToLowerInvariant();
 static void Error(string message) => Console.Error.WriteLine($"avowry: {message}");
 

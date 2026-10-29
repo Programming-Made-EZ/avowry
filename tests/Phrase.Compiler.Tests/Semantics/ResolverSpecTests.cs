@@ -1,4 +1,4 @@
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler.Semantics;
 using static Phrase.Compiler.Tests.Semantics.Resolved;
 
 namespace Phrase.Compiler.Tests.Semantics;
@@ -28,7 +28,7 @@ public class ResolverSpecTests
         var module = Clean(Adder(Spec("adds", "given b = 2", "and a = 1", "when called", "then returns 3")));
 
         // When it is resolved
-        var spec = Assert.Single(module.Phrase("add _ to _").Specs);
+        var spec = Assert.Single(module.Avow("add _ to _").Specs);
 
         // Then givens are in hole order and the outcome is typed
         Assert.Equal(["a", "b"], spec.Givens.Select(g => g.Hole.Name));
@@ -149,7 +149,7 @@ public class ResolverSpecTests
 
         // When it is resolved
         // Then it is valid
-        Assert.Single(Clean(source).Phrase("validate _").Specs);
+        Assert.Single(Clean(source).Avow("validate _").Specs);
     }
 
     [Fact]

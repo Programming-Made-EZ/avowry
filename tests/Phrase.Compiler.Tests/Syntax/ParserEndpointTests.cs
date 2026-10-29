@@ -1,4 +1,4 @@
-using Phrase.Compiler.Syntax;
+using Avowry.Compiler.Syntax;
 using static Phrase.Compiler.Tests.Syntax.Parsed;
 
 namespace Phrase.Compiler.Tests.Syntax;

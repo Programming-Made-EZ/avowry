@@ -1,6 +1,6 @@
-using Phrase.Compiler.Semantics;
+using Avowry.Compiler.Semantics;
 
-namespace Phrase.Compiler;
+namespace Avowry.Compiler;
 
 /// <summary>Which part of the language a keyword, construct or diagnostic belongs to.</summary>
 public enum ExtensionPart

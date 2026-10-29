@@ -1,4 +1,4 @@
-namespace Phrase.Compiler.Semantics;
+namespace Avowry.Compiler.Semantics;
 
 // The bound model: every phrase call resolved to exactly one phrase, every value typed,
 // every spec checked. This is the IR that target providers consume. It holds no syntax
@@ -13,11 +13,11 @@ public sealed record ResolveResult(ModuleModel Module, IReadOnlyList<Diagnostic>
 public sealed record ModuleModel(
     string Name,
     IReadOnlyList<TypeModel> Types,
-    IReadOnlyList<PhraseModel> Phrases,
+    IReadOnlyList<AvowModel> Avows,
     IReadOnlyList<EndpointModel> Endpoints)
 {
-    public PhraseModel Phrase(string key) => Phrases.Single(p => p.Key == key);
-    public string PhraseFile { get; init; } = "";
+    public AvowModel Avow(string key) => Avows.Single(avow => avow.Key == key);
+    public string AvowFile { get; init; } = "";
     public string BuildId { get; init; } = "";
 }
 
@@ -29,19 +29,19 @@ public sealed record FieldModel(string Name, PType Type);
 public sealed record TypeModel(string Name, IReadOnlyList<FieldModel> Fields);
 
 /// <summary>One word or hole of a phrase template, in order. Providers use these to build target names.</summary>
-public sealed record PhrasePart(string Text, bool IsHole);
+public sealed record AvowPart(string Text, bool IsHole);
 
-public sealed record PhraseModel(
+public sealed record AvowModel(
     string Key,                                   // words lowercased, holes as "_": "ensure _ is not empty"
     string Template,                              // canonical: "ensure {items: List<LineItem>} is not empty"
-    IReadOnlyList<PhrasePart> Parts,
+    IReadOnlyList<AvowPart> Parts,
     IReadOnlyList<FieldModel> Holes,
     PType? Returns,
     IReadOnlyList<string> Effects,
     IReadOnlyList<string> Failures,               // effective: declared plus everything its steps can fail with
     IReadOnlyDictionary<string, string> Natives,  // target -> code (leaf phrases)
     IReadOnlyList<BoundStep>? Steps,              // composite phrases
-    IReadOnlyList<PhraseSpecModel> Specs)
+    IReadOnlyList<AvowSpecModel> Specs)
 {
     public int Line { get; init; }
     public IReadOnlyList<DeclaredFailureModel> DeclaredFailures { get; init; } = [];
@@ -81,7 +81,7 @@ public sealed record BoundLengthAtMostCondition(BoundExpr Value, int Maximum) : 
 public sealed record BoundComparisonCondition(BoundExpr Left, string Operator, BoundExpr Right) : BoundCondition;
 
 /// <summary>A call to the phrase with this key; one argument per hole, in hole order.</summary>
-public sealed record BoundCall(string PhraseKey, IReadOnlyList<BoundArgument> Arguments);
+public sealed record BoundCall(string AvowKey, IReadOnlyList<BoundArgument> Arguments);
 
 public sealed record BoundArgument(FieldModel Hole, BoundExpr Value);
 
@@ -101,7 +101,7 @@ public sealed record BoundList(IReadOnlyList<BoundExpr> Items, PType Type) : Bou
 // ---------- specs ----------
 
 /// <summary>A checked phrase spec. <see cref="Lines"/> are the canonical given/when/then lines.</summary>
-public sealed record PhraseSpecModel(
+public sealed record AvowSpecModel(
     string Description,
     IReadOnlyList<BoundArgument> Givens,          // one per hole, in hole order
     SpecOutcomeModel Outcome,
