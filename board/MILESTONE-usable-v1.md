@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:8dd8c5f398f10eea229025a47c4b1bba578dc76a638bc1b1ae76d50938f1e91d -->
+<!-- board-table-sha256:73a99af44708aa258338222f21b092bd98f9f4f130e7b065b062cf16f7986f21 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -86,13 +86,13 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 64 | 170 Step ids: an independent recompute and one id per failure per endpoint | Done | 161 |
 | 65 | 173 The phrase CLI test helper fails loudly when the built CLI is older than its sources | Done | none |
 | 66 | 174 An edge-case fixture corpus that every compiler and adapter change runs against | Done | none |
-| 67 | 175 More edge-case fixtures: Zero, Boundary and Exception shapes | Ready | 174 |
-| 68 | 198 Rename the repository to avowry now (right after card 175) | Ready | 197, 177 |
-| 69 | 190 Rename the product to Avowry in user-facing documents and legal files | Ready | none |
-| 70 | 191 The command is avowry; tool output and the map file say Avowry | Ready | 190 |
-| 71 | 199 The language keyword is avow, with optional filler words, and every source switches to .avowry (one mechanical commit) | Ready | 191 |
-| 72 | 193 Generated code uses Avowry names (runtime, failure type, build id key) | Ready | 166, 162 |
-| 73 | 194 Rename the compiler project and namespace to Avowry.Compiler | Ready | 193 |
+| 67 | 175 More edge-case fixtures: Zero, Boundary and Exception shapes | Done | 174 |
+| 68 | 198 Rename the repository to avowry now (right after card 175) | Done | 197, 177 |
+| 69 | 190 Rename the product to Avowry in user-facing documents and legal files | Done | none |
+| 70 | 191 The command is avowry; tool output and the map file say Avowry | Done | 190 |
+| 71 | 199 The language keyword is avow, with optional filler words, and every source switches to .avowry (one mechanical commit) | Done | 191 |
+| 72 | 193 Generated code uses Avowry names (runtime, failure type, build id key) | Done | 166, 162 |
+| 73 | 194 Rename the compiler project and namespace to Avowry.Compiler | Done | 193 |
 | 74 | 195 Rename the C# adapter and CLI projects to Avowry.* | Ready | 194 |
 | 75 | 196 Rename the two test projects to Avowry.*.Tests | Ready | 195 |
 | 76 | 197 Rename the solution, CI jobs, scripts and paths to Avowry | Ready | 196 |
