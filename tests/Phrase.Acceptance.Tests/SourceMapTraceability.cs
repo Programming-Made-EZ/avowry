@@ -88,7 +88,12 @@ public class SourceMapTraceability
 
         // When Morgan builds both copies
         var one = await PhraseCli.RunAsync("build", source, "-o", first.Root);
-        var two = await PhraseCli.RunAsync("build", source.Replace('/', '\\'), "-o", second.Root);
+        // The second path is a copy in another directory; on Windows it is written with backslashes
+        using var copy = TempWorkspace.Create();
+        var copied = Path.Combine(copy.Root, "Tasks.phrase");
+        File.Copy(source, copied);
+        var secondPath = OperatingSystem.IsWindows() ? copied.Replace('/', '\\') : copied;
+        var two = await PhraseCli.RunAsync("build", secondPath, "-o", second.Root);
 
         // Then the external map and every generated C# file are byte-identical
         Assert.True(one.ExitCode == 0, one.Text);
