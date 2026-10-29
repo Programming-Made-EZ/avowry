@@ -48,10 +48,7 @@ public class SourceMapTraceability
         // And this card adds no source file name with a line number, no trace header and no map reference
         // to the generated C# (the older [Phrase] attributes and step comments are a separate decision)
         var generated = string.Join("\n", Directory.GetFiles(workspace.Root, "*.cs", SearchOption.AllDirectories).Select(File.ReadAllText));
-        Assert.DoesNotMatch(@"\.phrase:\d", generated);
-        Assert.DoesNotContain("// phrase:", generated, StringComparison.OrdinalIgnoreCase);
-        Assert.DoesNotContain("X-Phrase-Source", generated, StringComparison.Ordinal);
-        Assert.DoesNotContain("phrasemap", generated, StringComparison.OrdinalIgnoreCase);
+        AssertNoPhraseKnowledge(generated);
     }
 
     [Fact]
@@ -156,16 +153,30 @@ public class SourceMapTraceability
         var expectedFailures = new[] { "EmptyTitle", "TitleTooLong", "NotFound", "StoreUnavailable" };
         var failureRecords = records.Where(record => Text(record, "kind") == "failure").ToArray();
         Assert.Equal(expectedFailures.Order(), failureRecords.Select(record => Text(record, "name")).Distinct().Order());
+
+        // The set of (failure, endpoint) pairs in the map equals the pairs the endpoint specs assert, no more and no fewer
+        var expectedPairs = resolved.Module.Endpoints
+            .SelectMany(endpoint => endpoint.Specs.Where(spec => spec.Outcome is FailsModel).Select(spec => ((FailsModel)spec.Outcome).Code + "@" + endpoint.Name))
+            .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
+        var actualPairs = failureRecords.Select(record => Text(record, "name") + "@" + Text(record, "endpoint")).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
+        Assert.Equal(expectedPairs, actualPairs);
+
         foreach (var record in failureRecords)
         {
             var failure = Text(record, "name");
-            var declarationLines = LinesContainingFailure(sourceLines, failure);
-            var owningEndpoints = resolved.Module.Endpoints
-                .Where(endpoint => endpoint.Specs.Any(spec => spec.Outcome is FailsModel fails && fails.Code == failure))
-                .Select(endpoint => endpoint.Name)
-                .ToHashSet(StringComparer.Ordinal);
-            Assert.Contains(record.GetProperty("line").GetInt32(), declarationLines);
-            Assert.Contains(Text(record, "endpoint"), owningEndpoints);
+            var endpoint = Text(record, "endpoint");
+
+            // The record points at a line that declares the failure, and its spec range contains the spec asserting it
+            Assert.Contains(record.GetProperty("line").GetInt32(), LinesContainingFailure(sourceLines, failure));
+            var specRange = record.GetProperty("specLines");
+            var first = specRange.GetProperty("first").GetInt32();
+            var last = specRange.GetProperty("last").GetInt32();
+            var endpointLine = LineOf(sourceLines, $"endpoint {endpoint} :");
+            var assertingLines = Enumerable.Range(first, last - first + 1)
+                .Where(number => sourceLines[number - 1].Trim() == $"then fails with {failure}").ToArray();
+            Assert.NotEmpty(assertingLines);
+            Assert.All(assertingLines, number => Assert.True(number > endpointLine, $"{failure} spec at line {number} is not inside endpoint {endpoint}"));
+            Assert.True(first > endpointLine, $"{failure} spec range does not start inside endpoint {endpoint}");
         }
     }
 
