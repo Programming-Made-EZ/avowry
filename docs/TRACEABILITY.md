@@ -23,6 +23,6 @@ The map is a build artifact outside both generated projects. It is therefore nei
 - `TasksOverHttp` covers all demo endpoint behavior and the unchanged declared-failure response bodies; its live process checks the generated API boundary.
 - `WebExtensionBoundary` pins the complete Orders generated-output hash, while the demo acceptance suite executes all 11 Tasks specs.
 
-## Not yet verified by a test
+## Trace command verification
 
-These claims are stated above but their tests are tracked as separate cards (Decider D113): that `--assembly`, `--strict` and a generated-file hash mismatch behave as described, and that every bad input to `phrase trace` fails cleanly (card 168). Step ids are checked for shape and cross-build equality today; the independent recompute and one id per failure per endpoint are card 170.
+`Trace_with_a_matching_assembly_prints_a_matching_build_check`, `Trace_with_an_assembly_from_another_source_warns_and_strict_exits_nonzero`, `Trace_reports_a_generated_file_hash_mismatch`, `Trace_resolves_a_Class_Method_frame_taken_from_the_map`, `Trace_of_a_shared_name_prints_every_match`, and `Trace_rejects_bad_inputs_cleanly` verify the trace command's build checks, strict mismatch handling, generated-file hashes, frame and shared-name lookup, and clean bad-input errors. Step ids are checked for shape and cross-build equality today; the independent recompute and one id per failure per endpoint are card 170.

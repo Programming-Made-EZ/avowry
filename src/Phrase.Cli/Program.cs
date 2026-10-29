@@ -1,4 +1,6 @@
 using System.Reflection;
+using System.Reflection.Metadata;
+using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -90,7 +92,17 @@ static int Trace(string[] values)
     {
         return TraceCore(values);
     }
-    catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or JsonException or BadImageFormatException or FileLoadException)
+    catch (JsonException exception)
+    {
+        Console.Error.WriteLine($"Could not trace: invalid JSON source map: {exception.Message}");
+        return 2;
+    }
+    catch (BadImageFormatException exception)
+    {
+        Console.Error.WriteLine($"Could not trace: assembly is not valid: {exception.Message}");
+        return 2;
+    }
+    catch (Exception exception)
     {
         Console.Error.WriteLine($"Could not trace: {exception.Message}");
         return 2;
@@ -109,12 +121,14 @@ static int TraceCore(string[] values)
         Console.Error.WriteLine("Source map not found; pass --map PATH.");
         return 2;
     }
-    var map = JsonSerializer.Deserialize<MapFile>(File.ReadAllText(path), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-    if (map?.Records is null)
+    var parsed = JsonSerializer.Deserialize<MapFile>(File.ReadAllText(path), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+    var problem = Validate(parsed);
+    if (problem is not null)
     {
-        Console.Error.WriteLine("Source map is malformed.");
+        Console.Error.WriteLine($"Source map is malformed: {problem}");
         return 2;
     }
+    var map = parsed!;
     var found = map.Records.Where(record => record.Name == name || record.CsMethod == name).ToList();
     if (found.Count == 0)
     {
@@ -138,11 +152,62 @@ static bool CheckAssembly(MapFile map, string? path, out string check)
         return false;
     if (!File.Exists(path))
         throw new FileNotFoundException("Assembly not found.", path);
-    var id = Assembly.LoadFrom(Path.GetFullPath(path)).GetCustomAttributes<AssemblyMetadataAttribute>()
-        .FirstOrDefault(attribute => attribute.Key == "PhraseBuildId")?.Value;
+    var id = AssemblyBuildId(path);
     var mismatch = id != map.BuildId;
     check = mismatch ? "WARNING: map does not match assembly" : "map matches assembly";
     return mismatch;
+}
+
+static string? AssemblyBuildId(string path)
+{
+    using var stream = File.OpenRead(path);
+    using var pe = new PEReader(stream);
+    if (!pe.HasMetadata)
+        throw new BadImageFormatException("The assembly has no .NET metadata.", path);
+    var metadata = pe.GetMetadataReader();
+    foreach (var handle in metadata.GetAssemblyDefinition().GetCustomAttributes())
+    {
+        var attribute = metadata.GetCustomAttribute(handle);
+        if (!IsAssemblyMetadataAttribute(metadata, attribute.Constructor))
+            continue;
+        var value = metadata.GetBlobReader(attribute.Value);
+        if (value.ReadUInt16() != 1)
+            throw new BadImageFormatException("The assembly metadata is malformed.", path);
+        if (value.ReadSerializedString() == "PhraseBuildId")
+            return value.ReadSerializedString();
+    }
+    return null;
+}
+
+static bool IsAssemblyMetadataAttribute(MetadataReader metadata, EntityHandle constructor)
+{
+    if (constructor.Kind != HandleKind.MemberReference)
+        return false;
+    var member = metadata.GetMemberReference((MemberReferenceHandle)constructor);
+    if (member.Parent.Kind != HandleKind.TypeReference)
+        return false;
+    var type = metadata.GetTypeReference((TypeReferenceHandle)member.Parent);
+    return metadata.GetString(type.Namespace) == "System.Reflection"
+        && metadata.GetString(type.Name) == "AssemblyMetadataAttribute";
+}
+
+static string? Validate(MapFile? map)
+{
+    if (map is null)
+        return "the JSON value is null";
+    if (map.Records is null)
+        return "records is missing";
+    for (var index = 0; index < map.Records.Count; index++)
+    {
+        var record = map.Records[index];
+        if (record is null)
+            return $"records[{index}] is null";
+        if (record.SpecLines is null)
+            return $"records[{index}].specLines is missing";
+        if (string.IsNullOrWhiteSpace(record.CsFile))
+            return $"records[{index}].csFile is missing";
+    }
+    return null;
 }
 
 static bool CheckHash(string mapPath, MapRecord record)
