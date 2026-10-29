@@ -808,5 +808,14 @@
     "status": "applied",
     "title": "Review of card 170: step ids recomputed independently and unique per failure per endpoint",
     "order": 110
+  },
+  "D120": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Edge-case fixture corpus: card 174 ranked after 173, card 175 for the rest",
+    "order": 111,
+    "also": [
+      "compiler-and-adapters"
+    ]
   }
 }

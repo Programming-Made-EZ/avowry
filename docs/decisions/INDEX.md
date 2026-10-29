@@ -37,6 +37,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D109](process-and-staffing.md#d109) — Decider seats are by role, not by model
 - [D116](process-and-staffing.md#d116) — Retro experiment E3 (decision log split by area) starts its trial
 - [D118](process-and-staffing.md#d118) — The stale-CLI test helper fix is its own card, ranked next (card 173)
+- [D120](process-and-staffing.md#d120) — Edge-case fixture corpus: card 174 ranked after 173, card 175 for the rest
 
 ### benchmarks-and-measurement
 
@@ -177,3 +178,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D117](compiler-and-adapters.md#d117) | Review of card 168: phrase trace mismatch handling and error paths | compiler-and-adapters | applied |
 | [D118](process-and-staffing.md#d118) | The stale-CLI test helper fix is its own card, ranked next (card 173) | process-and-staffing | in force |
 | [D119](compiler-and-adapters.md#d119) | Review of card 170: step ids recomputed independently and unique per failure per endpoint | compiler-and-adapters | applied |
+| [D120](process-and-staffing.md#d120) | Edge-case fixture corpus: card 174 ranked after 173, card 175 for the rest | process-and-staffing | in force |
