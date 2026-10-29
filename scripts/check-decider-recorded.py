@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail unless docs/decisions/DECIDERS.md has a Decider record that names <keyword> and says 'Result: passed'.
+"""Fail unless an area history has a Decider record naming <keyword> with 'Result: passed'.
 
 Usage: check-decider-recorded.py <keyword>
 
@@ -8,6 +8,8 @@ For cards whose Done-when needs a recorded team decision (an ADR, a benchmark-su
 import pathlib
 import re
 import sys
+
+from decision_files import area_paths
 
 
 def recorded(text, keyword):
@@ -19,7 +21,12 @@ def main(argv):
     if len(argv) != 2:
         print("usage: check-decider-recorded.py <keyword>", file=sys.stderr)
         return 2
-    text = pathlib.Path("docs/decisions/DECIDERS.md").read_text(encoding="utf-8")
+    decisions = pathlib.Path("docs/decisions")
+    text = "\n".join(
+        path.read_text(encoding="utf-8")
+        for path in area_paths(decisions)
+        if path.exists()
+    )
     ok = recorded(text, argv[1])
     print(f"Decider record naming '{argv[1]}' with 'Result: passed': {'found' if ok else 'MISSING'}")
     return 0 if ok else 1

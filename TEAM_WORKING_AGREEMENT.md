@@ -157,10 +157,11 @@ independent review, and any reviewer objection becomes a Decider proposal.
    The proposer may amend, and the amended proposal is voted once more.
 4. **Result.** An "absolutely no" from any seat, or outliers still unresolved after the amendment, means the
    proposal **fails**. Otherwise it passes. One round, no long debate.
-5. **Record.** Every run goes in MOB.md as `Decider D<n>: <proposal>`, with votes and `Result: passed|failed`. The
-   facilitator collapses an all-Yes result to a single line, for example
-   `- Decider D4: rank card 016 second, all Yes, passed`. A failed proposal is logged and may be raised again at
-   the next retro.
+5. **Record.** Keep one concern per history: append the complete `Decider D<n>` record to its area file under
+   `docs/decisions/`, then add one `docs/decisions/areas.json` entry with its id, area, status, title, and any
+   `also` areas. Related areas link to the owning record instead of copying it. The decision-index check enforces
+   ownership, completeness, valid supersession, summaries, and the generated index. A failed proposal remains
+   history and may be raised again at the next retro.
 6. **Keep it lean.** Votes are short and collected in parallel so the Decider does not drain the driver allotments.
 
 - **Run every Decider with the sandboxed runner** (`decider.py` in mob-defaults): each seat votes in its own throwaway clone of the

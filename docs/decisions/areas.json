@@ -1,0 +1,776 @@
+{
+  "D1": {
+    "area": "board-and-delivery",
+    "status": "applied",
+    "title": "rank bug card 018 at rank 4",
+    "order": 0
+  },
+  "D2": {
+    "area": "board-and-delivery",
+    "status": "applied",
+    "title": "rank the three retro-002 cards",
+    "order": 1
+  },
+  "D3": {
+    "area": "board-and-delivery",
+    "status": "applied",
+    "title": "assess the board against VISION.md; add milestone M4 Vocabulary v1",
+    "also": [
+      "language-and-grammar"
+    ],
+    "order": 2
+  },
+  "D4": {
+    "area": "compiler-and-adapters",
+    "status": "in force",
+    "title": "Adapters replace providers",
+    "order": 3,
+    "statement": "Adapters replace providers: a base library plus per-language adapters, with C# built first; synthesis and the human converter wait behind Usable v1 and Vocabulary v1"
+  },
+  "D5": {
+    "area": "board-and-delivery",
+    "status": "applied",
+    "title": "declare card 016 Done not M2; file baseline bug card 032",
+    "also": [
+      "process-and-staffing"
+    ],
+    "order": 4
+  },
+  "D6": {
+    "area": "board-and-delivery",
+    "status": "applied",
+    "title": "rank the retro-016 cards 033 to 035",
+    "order": 5
+  },
+  "D7": {
+    "area": "board-and-delivery",
+    "status": "in force",
+    "title": "The live mob dashboard builds only non-exposing parts (event stream, stall detection, local dashboard)",
+    "also": [
+      "process-and-staffing"
+    ],
+    "order": 6,
+    "statement": "The live mob dashboard builds only non-exposing parts (event stream, stall detection, local dashboard)"
+  },
+  "D8": {
+    "area": "process-and-staffing",
+    "status": "applied",
+    "title": "pause experiment E1 on card 032 after 8 runs",
+    "also": [
+      "board-and-delivery"
+    ],
+    "order": 7
+  },
+  "D9/D10": {
+    "area": "board-and-delivery",
+    "status": "in force",
+    "title": "The usable-v1 CI job passes while the milestone is pending and fails only on a regression of a ratcheted bar",
+    "order": 8,
+    "statement": "The usable-v1 CI job passes while the milestone is pending and fails only on a regression of a ratcheted bar"
+  },
+  "D11": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "declare card 032 Done as a repair; M2 not reached",
+    "also": [
+      "board-and-delivery"
+    ],
+    "order": 9
+  },
+  "D12": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Experiment E1 (true mobbing) stays open and opt-in behind a flag, not the default practice",
+    "order": 10,
+    "statement": "Experiment E1 (true mobbing) stays open and opt-in behind a flag, not the default practice; its numbers are labelled early data. Follows D8"
+  },
+  "D13": {
+    "area": "board-and-delivery",
+    "status": "applied",
+    "title": "amend the card 036 acceptance test CSP regex and the page takeover",
+    "order": 11
+  },
+  "D14": {
+    "area": "board-and-delivery",
+    "status": "superseded by D17",
+    "title": "board order after the product owner withdrew a re-rank",
+    "order": 12
+  },
+  "D15": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Tooling standard",
+    "also": [
+      "board-and-delivery"
+    ],
+    "order": 13,
+    "statement": "Tooling standard: a hardened smoke check before first use, non-author review of tooling, rotation authorship with logged takeovers"
+  },
+  "D16": {
+    "area": "board-and-delivery",
+    "status": "applied",
+    "title": "good starter app: keep Tasks as the bar-1 app, status API after the gate",
+    "order": 14
+  },
+  "D17": {
+    "area": "board-and-delivery",
+    "status": "applied",
+    "title": "board order rounds 2 and 3, replaces the failed round 1 order",
+    "order": 15
+  },
+  "D18": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Process retro picks",
+    "order": 16,
+    "statement": "Process retro picks: thin slices with locked Done checks before coding, trialled on the C# adapter chain; metric is runs per card and cap hits"
+  },
+  "D20": {
+    "area": "language-and-grammar",
+    "status": "in force",
+    "title": "Consumer-observable outcomes",
+    "also": [
+      "compiler-and-adapters"
+    ],
+    "order": 17,
+    "statement": "Consumer-observable outcomes: a missing failure-path spec is an error, an endpoint with an output cannot say succeeds"
+  },
+  "D21": {
+    "area": "language-and-grammar",
+    "status": "in force",
+    "title": "Async and events stay out of the core grammar",
+    "order": 18,
+    "statement": "Async and events stay out of the core grammar: they are declared effects plus base-library keywords, specified with a virtual clock and event capture, kept as a\u2026"
+  },
+  "D22": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Atomic land-or-discard runs are an experiment (E3)",
+    "also": [
+      "board-and-delivery"
+    ],
+    "order": 19,
+    "statement": "Atomic land-or-discard runs are an experiment (E3); dependency-free work may run in parallel, dependent or shared-state work stays at WIP of one"
+  },
+  "D23": {
+    "area": "board-and-delivery",
+    "status": "in force",
+    "title": "The loop runner in mob-defaults",
+    "also": [
+      "process-and-staffing"
+    ],
+    "order": 20,
+    "statement": "The loop runner in mob-defaults: a thin supervisor over card mode with pinned toolchain, one lock, retry then park, spend ceilings"
+  },
+  "D24": {
+    "area": "board-and-delivery",
+    "status": "in force",
+    "title": "The loop never ends on its own",
+    "also": [
+      "process-and-staffing"
+    ],
+    "order": 21,
+    "statement": "The loop never ends on its own: new work is discovered in every retro's product category, and it stops only for a STOP file, a one-way door or all allotments out"
+  },
+  "D25": {
+    "area": "board-and-delivery",
+    "status": "in force",
+    "title": "The board is a private GitHub Projects board with an issue per card",
+    "order": 22,
+    "statement": "The board is a private GitHub Projects board with an issue per card"
+  },
+  "D27": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Stories name a persona, not a role, with an observable capability and a so-that value",
+    "also": [
+      "board-and-delivery"
+    ],
+    "order": 23,
+    "statement": "Stories name a persona, not a role, with an observable capability and a so-that value"
+  },
+  "D28": {
+    "area": "board-and-delivery",
+    "status": "in force",
+    "title": "Every card is a Story or a Contract",
+    "also": [
+      "process-and-staffing"
+    ],
+    "order": 24,
+    "statement": "Every card is a Story or a Contract; a Contract has a system actor as consumer, enables an existing Story and is never an orphan"
+  },
+  "D29": {
+    "area": "language-and-grammar",
+    "status": "in force",
+    "title": "The spec concept is not a keyword yet",
+    "order": 25,
+    "statement": "The spec concept is not a keyword yet: measure under today's grammar first, then an ADR and a spike"
+  },
+  "D30": {
+    "area": "language-and-grammar",
+    "status": "in force",
+    "title": "The spec concept is named actor, in the use-case sense",
+    "order": 26,
+    "statement": "The spec concept is named actor, in the use-case sense: anyone or anything outside the system that interacts with it, human persona or system actor"
+  },
+  "D32": {
+    "area": "benchmarks-and-measurement",
+    "status": "in force",
+    "title": "The frozen head-to-head bar",
+    "order": 27,
+    "statement": "The frozen head-to-head bar: N, attempt cap, thresholds, token ratio, patch rate 0, INCONCLUSIVE rules and the Goodhart guard"
+  },
+  "D31": {
+    "area": "board-and-delivery",
+    "status": "superseded by D86",
+    "title": "measure first, pause the rest behind the head-to-head",
+    "also": [
+      "benchmarks-and-measurement"
+    ],
+    "order": 28
+  },
+  "D36": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "sealed holdout hashes recorded before any scored run",
+    "order": 29
+  },
+  "D35": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "benchmark change: docs-in-context run mode",
+    "order": 30
+  },
+  "D37": {
+    "area": "benchmarks-and-measurement",
+    "status": "in force",
+    "title": "Phrase and plain-C# rows are compared only at the same proof level (specs-passed on both arms)",
+    "order": 31,
+    "statement": "Phrase and plain-C# rows are compared only at the same proof level (specs-passed on both arms); a clarification of D32 with no number changed"
+  },
+  "D40": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "benchmark change: plain-C# baseline arm and write twins",
+    "order": 32
+  },
+  "D42": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "benchmark change: cold runs, same preamble for every model",
+    "order": 33
+  },
+  "D44": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "benchmark changes: reply-head scrub first and C# read and modify twins",
+    "order": 34
+  },
+  "D46": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "Phrase baseline run, cold and docs-in-context, parse-resolve level",
+    "order": 35
+  },
+  "D47": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "benchmark change: C# fix twins and completeness check",
+    "order": 36
+  },
+  "D50": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "benchmark change: plain-C# arm runs cold like the Phrase arm",
+    "order": 37
+  },
+  "D51": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "stashed runaway-voter emitter edits exported then dropped",
+    "order": 38
+  },
+  "D52": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "plain C# baseline result: little-room gate not met",
+    "order": 39
+  },
+  "D53": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 039: one Int phrase compiles to C#",
+    "order": 40
+  },
+  "D54": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 040: compilation through the adapter contract",
+    "order": 41
+  },
+  "D55": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 041: declared record becomes a C# record",
+    "order": 42
+  },
+  "D56": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 042: List fields compile",
+    "order": 43
+  },
+  "D57": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 043: a phrase fails with its declared code",
+    "order": 44
+  },
+  "D58": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 044: native C# block placed verbatim",
+    "order": 45
+  },
+  "D59": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 045: composite phrase calls leaves in order",
+    "order": 46
+  },
+  "D60": {
+    "area": "board-and-delivery",
+    "status": "applied",
+    "title": "rank fix: card 047 directly after card 045",
+    "order": 47
+  },
+  "D61": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 047: declared effect injected as a dependency",
+    "order": 48
+  },
+  "D62": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 048: one POST endpoint serves its response",
+    "order": 49
+  },
+  "D63": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 049: declared failure maps to HTTP status",
+    "order": 50
+  },
+  "D64": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 050: every spec outcome kind asserts correctly",
+    "order": 51
+  },
+  "D65": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 087: orders.phrase compiles and its specs pass",
+    "order": 52
+  },
+  "D66": {
+    "area": "benchmarks-and-measurement",
+    "status": "in force",
+    "title": "The Phrase arm scores executed outcomes at specs-passed from the shared outcomes file over eight development t",
+    "order": 53,
+    "statement": "The Phrase arm scores executed outcomes at specs-passed from the shared outcomes file over eight development tasks"
+  },
+  "D67": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "review of card 098: Phrase arm scores write tasks executed",
+    "order": 54
+  },
+  "D68": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "review of card 099: Phrase arm scores read and modify tasks",
+    "order": 55
+  },
+  "D69": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "review of card 100: Phrase arm scores fix tasks",
+    "order": 56
+  },
+  "D70": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "compact cheat sheet and frozen documentation choice before the baseline",
+    "also": [
+      "language-and-grammar"
+    ],
+    "order": 57
+  },
+  "D71": {
+    "area": "language-and-grammar",
+    "status": "applied",
+    "title": "review of card 104: compact cheat sheet for prompts",
+    "also": [
+      "benchmarks-and-measurement"
+    ],
+    "order": 58
+  },
+  "D72": {
+    "area": "language-and-grammar",
+    "status": "in force",
+    "title": "The scored Phrase arm's documentation is the frozen cheat sheet with recorded hashes",
+    "also": [
+      "benchmarks-and-measurement"
+    ],
+    "order": 59,
+    "statement": "The scored Phrase arm's documentation is the frozen cheat sheet with recorded hashes"
+  },
+  "D73": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "scored Phrase development baseline at specs-passed",
+    "order": 60
+  },
+  "D74": {
+    "area": "compiler-and-adapters",
+    "status": "in force",
+    "title": "Direction",
+    "also": [
+      "benchmarks-and-measurement",
+      "board-and-delivery"
+    ],
+    "order": 61,
+    "statement": "Direction: keep building Phrase's own deterministic compilers per target through adapters, tests first, then implementation code"
+  },
+  "R1": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "the three sealed holdouts unsealed for card 102",
+    "order": 62
+  },
+  "R2": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "holdouts are endpoint tasks; cards 110 and 111 add responds scoring",
+    "order": 63
+  },
+  "D75": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 106: mutation check of generated specs",
+    "also": [
+      "benchmarks-and-measurement"
+    ],
+    "order": 64
+  },
+  "D76": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "review of card 110: C# arm scores endpoint responds",
+    "order": 65
+  },
+  "D77": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "review of card 111: Phrase arm scores endpoint responds",
+    "order": 66
+  },
+  "R3": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "card 102 sliced into cards 112 and 113 first",
+    "order": 67
+  },
+  "D78": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "review of card 112: holdout file to both arms' task folders",
+    "order": 68
+  },
+  "D79": {
+    "area": "benchmarks-and-measurement",
+    "status": "in force",
+    "title": "Holdout run rows stay private",
+    "order": 69,
+    "statement": "Holdout run rows stay private: both tools fail closed before launching a model on a holdout-shaped suite unless private results are requested"
+  },
+  "D80": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "fairness of the three holdout prompt pairs",
+    "order": 70
+  },
+  "D81": {
+    "area": "benchmarks-and-measurement",
+    "status": "in force",
+    "title": "The cheaper-models-with-Phrase hypothesis is a separate pre-registered question beside the frozen bar, not an ",
+    "order": 71,
+    "statement": "The cheaper-models-with-Phrase hypothesis is a separate pre-registered question beside the frozen bar, not an amendment; nothing is re-scored"
+  },
+  "D82": {
+    "area": "benchmarks-and-measurement",
+    "status": "superseded by D84",
+    "title": "codebase-size hypothesis and real projects",
+    "order": 72
+  },
+  "D83": {
+    "area": "benchmarks-and-measurement",
+    "status": "in force",
+    "title": "A model that outlives its timeout is stopped with its whole process tree and counts as one unavailable attempt",
+    "order": 73,
+    "statement": "A model that outlives its timeout is stopped with its whole process tree and counts as one unavailable attempt"
+  },
+  "D84": {
+    "area": "benchmarks-and-measurement",
+    "status": "in force",
+    "title": "The real-code tier uses pinned public repositories, and a growth study is added",
+    "order": 74,
+    "statement": "The real-code tier uses pinned public repositories, and a growth study is added"
+  },
+  "D85": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "review of card 119: matching codebases of 1, 10 and 50 endpoints",
+    "order": 75
+  },
+  "D86": {
+    "area": "board-and-delivery",
+    "status": "applied",
+    "title": "shortest path to Usable v1 leads the board; ZOMBIES warnings card",
+    "also": [
+      "language-and-grammar"
+    ],
+    "order": 76
+  },
+  "D87": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "review of card 130: plain C# codebases in ordinary style",
+    "order": 77
+  },
+  "D88": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Standing driver rule",
+    "also": [
+      "benchmarks-and-measurement"
+    ],
+    "order": 78,
+    "statement": "Standing driver rule: the loop re-probes unavailable models and the driver status table is kept visible"
+  },
+  "D89": {
+    "area": "language-and-grammar",
+    "status": "in force",
+    "title": "Language layering",
+    "also": [
+      "compiler-and-adapters"
+    ],
+    "order": 79,
+    "statement": "Language layering: a domain-neutral core plus one extension per application domain, web first; the adapter axis is orthogonal to the domain axis"
+  },
+  "D90": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 051: phrase build compiles one file",
+    "also": [
+      "board-and-delivery"
+    ],
+    "order": 80
+  },
+  "D91": {
+    "area": "benchmarks-and-measurement",
+    "status": "in force",
+    "title": "The scheduled holdout run is closed",
+    "order": 81,
+    "statement": "The scheduled holdout run is closed"
+  },
+  "R4": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Staffing is by role first and model second",
+    "order": 82,
+    "statement": "Staffing is by role first and model second"
+  },
+  "D92": {
+    "area": "language-and-grammar",
+    "status": "applied",
+    "title": "review of card 141: extension map ADR and audit",
+    "order": 83
+  },
+  "D93": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 142: web extension boundary",
+    "also": [
+      "language-and-grammar"
+    ],
+    "order": 84
+  },
+  "D94": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "review of card 103: verdict page, headline INCONCLUSIVE",
+    "order": 85
+  },
+  "D95": {
+    "area": "compiler-and-adapters",
+    "status": "in force",
+    "title": "The {Record}Store persistence convention (an effect named after a record with an id) is provisional",
+    "also": [
+      "language-and-grammar"
+    ],
+    "order": 86,
+    "statement": "The {Record}Store persistence convention (an effect named after a record with an id) is provisional"
+  },
+  "D96": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 131: GET endpoints",
+    "order": 87
+  },
+  "D97": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "review of card 133: PUT and DELETE endpoints",
+    "order": 88
+  },
+  "D98": {
+    "area": "board-and-delivery",
+    "status": "applied",
+    "title": "review of card 135: Tasks demo app, logic still native",
+    "also": [
+      "compiler-and-adapters"
+    ],
+    "order": 89
+  },
+  "D99": {
+    "area": "benchmarks-and-measurement",
+    "status": "in force",
+    "title": "Phrase is measured against unaccountable AI-written code, not C# economy",
+    "also": [
+      "language-and-grammar"
+    ],
+    "order": 90,
+    "statement": "Phrase is measured against unaccountable AI-written code, not C# economy: the head-to-head is context only"
+  },
+  "D100": {
+    "area": "board-and-delivery",
+    "status": "applied",
+    "title": "review of card 136: real HTTP behaves as the specs say",
+    "also": [
+      "compiler-and-adapters"
+    ],
+    "order": 91
+  },
+  "D101": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Docs state principles and rationale, not who said them",
+    "also": [
+      "language-and-grammar"
+    ],
+    "order": 92,
+    "statement": "Docs state principles and rationale, not who said them; no personal names, no verbatim quotes attributed to a role, no gendered pronouns about the sponsor"
+  },
+  "D102": {
+    "area": "board-and-delivery",
+    "status": "in force",
+    "title": "CI on main is part of the line",
+    "order": 93,
+    "statement": "CI on main is part of the line: a red main stops the line, checked after every push and at each loop iteration by a script; the workflow is kept and fixed"
+  },
+  "D103": {
+    "area": "benchmarks-and-measurement",
+    "status": "applied",
+    "title": "review of card 137: LLM-customer check passed",
+    "also": [
+      "board-and-delivery"
+    ],
+    "order": 94
+  },
+  "D104": {
+    "area": "board-and-delivery",
+    "status": "applied",
+    "title": "review of card 138: Usable v1 reached",
+    "order": 95
+  },
+  "D105": {
+    "area": "language-and-grammar",
+    "status": "in force",
+    "title": "Logic sources are layered",
+    "also": [
+      "compiler-and-adapters"
+    ],
+    "order": 96,
+    "statement": "Logic sources are layered: core library and syntax first, language adapters' idiomatic implementations second, LLM generation from specs third, native block last"
+  },
+  "D106": {
+    "area": "board-and-delivery",
+    "status": "applied",
+    "title": "review of card 158: Tasks demo README",
+    "order": 97
+  },
+  "D107": {
+    "area": "language-and-grammar",
+    "status": "applied",
+    "title": "review of card 159: ensure validation step",
+    "also": [
+      "compiler-and-adapters"
+    ],
+    "order": 98
+  },
+  "D108": {
+    "area": "language-and-grammar",
+    "status": "applied",
+    "title": "review of card 160: record update form",
+    "also": [
+      "compiler-and-adapters"
+    ],
+    "order": 99
+  },
+  "D109": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Decider seats are by role, not by model",
+    "order": 100,
+    "statement": "Decider seats are by role, not by model"
+  },
+  "D110": {
+    "area": "compiler-and-adapters",
+    "status": "superseded by D111",
+    "title": "trace header as a switch, off by default",
+    "order": 101
+  },
+  "D111": {
+    "area": "compiler-and-adapters",
+    "status": "in force",
+    "title": "Traceability is a separate source map and a trace command outside the runtime",
+    "order": 102,
+    "statement": "Traceability is a separate source map and a trace command outside the runtime"
+  },
+  "D112": {
+    "area": "compiler-and-adapters",
+    "status": "in force",
+    "title": "The failure observer (a neutral event raised by the generated code, resolved through the source map) is its ow",
+    "order": 103,
+    "statement": "The failure observer (a neutral event raised by the generated code, resolved through the source map) is its own card after the source map"
+  },
+  "D113": {
+    "area": "board-and-delivery",
+    "status": "in force",
+    "title": "Card 161 closes on its core outcome; the rest becomes five small cards",
+    "also": [
+      "compiler-and-adapters",
+      "process-and-staffing"
+    ],
+    "order": 104
+  },
+  "D114": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "Review of card 161 (source map), closed on its amended criteria",
+    "order": 105
+  }
+}

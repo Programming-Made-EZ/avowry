@@ -208,8 +208,8 @@ class VerdictPageTests(unittest.TestCase):
             "maximum_harness_error_share": 0.10, "holdout_tasks": 3,
         }
         # When D32's frozen numbers are checked
-        d32 = (ROOT / "docs" / "decisions" / "DECIDERS.md").read_text(encoding="utf-8")
-        clause = d32.split("#### Decider D32:", 1)[1].split("#### Decider D31:", 1)[0]
+        d32 = (ROOT / "docs" / "decisions" / "benchmarks-and-measurement.md").read_text(encoding="utf-8")
+        clause = d32.split("#### Decider D32:", 1)[1].split("#### Decider D36:", 1)[0]
         # Then the implementation table agrees and the source clause still carries every threshold
         self.assertEqual(expected, verdict.BAR)
         for text in ("N = 5", "attempt cap 3", "within 5 points", "5 to 10 points",
