@@ -55,3 +55,5 @@ and wrong-area or missing-history incidents.
 
 Revert the single migration commit to restore the original `DECIDERS.md` and remove the generated area/index tooling.
 The migration hash proves the split history remains complete until that reversal.
+
+Naming note: the decision record D22 already calls the atomic-runs trial an experiment named E3; that trial never had a record file here. This file is the record of the decision-log split and keeps the name E3 in this folder; the earlier use is historical.

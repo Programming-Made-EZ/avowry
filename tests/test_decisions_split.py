@@ -151,7 +151,7 @@ class DecisionSplitTests(unittest.TestCase):
         self.assertEqual(0, self.run_script(BUILD, root).returncode)
         records = (
             "#### Decider D1: choose grammar\n\n- Result: passed.\n\n"
-            "#### Decider D2: choose compiler\n\n- Result: passed.\n"
+            "#### Decider D2: choose compiler\n\n- Result: passed.\n\n"
         ).encode()
         (root / "docs" / "decisions" / "MIGRATION.txt").write_text(
             f"count 2\nsha256 {hashlib.sha256(records).hexdigest()}\n", encoding="utf-8"
@@ -162,6 +162,22 @@ class DecisionSplitTests(unittest.TestCase):
 
         # Then the count and byte hash pass
         self.assertEqual(0, result.returncode, result.stderr)
+
+        # And appending a later record to an area file (with its mapping entry) keeps the proof valid
+        decisions = root / "docs" / "decisions"
+        compiler = decisions / "compiler-and-adapters.md"
+        compiler.write_text(
+            compiler.read_text(encoding="utf-8").rstrip("\n")
+            + '\n\n<a id="d3"></a>\n#### Decider D3: a later decision\n\n- Result: passed.\n',
+            encoding="utf-8",
+            newline="",
+        )
+        mapping = json.loads((decisions / "areas.json").read_text(encoding="utf-8"))
+        mapping["D3"] = {"area": "compiler-and-adapters", "status": "applied", "title": "A later decision", "order": 2}
+        (decisions / "areas.json").write_text(json.dumps(mapping, indent=2) + "\n", encoding="utf-8")
+        self.assertEqual(0, self.run_script(BUILD, root).returncode)
+        later = self.run_script(CHECK, root)
+        self.assertEqual(0, later.returncode, later.stderr)
 
     def test_recorded_check_reads_area_histories_instead_of_the_legacy_stub(self):
         # Given a migrated decision present only in an area history

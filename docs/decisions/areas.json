@@ -222,8 +222,8 @@
   },
   "D31": {
     "area": "board-and-delivery",
-    "status": "superseded by D86",
-    "title": "measure first, pause the rest behind the head-to-head",
+    "status": "applied",
+    "title": "measure first, pause the rest behind the head-to-head (its priority was later changed by D86)",
     "also": [
       "benchmarks-and-measurement"
     ],
@@ -511,8 +511,8 @@
   },
   "D82": {
     "area": "benchmarks-and-measurement",
-    "status": "superseded by D84",
-    "title": "codebase-size hypothesis and real projects",
+    "status": "in force",
+    "title": "codebase-size hypothesis; its real-project tier was replaced by D84 and the synthetic tier stays",
     "order": 72
   },
   "D83": {
@@ -772,5 +772,20 @@
     "status": "applied",
     "title": "Review of card 161 (source map), closed on its amended criteria",
     "order": 105
+  },
+  "D115": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "Review of card 167: the source map is never published or served",
+    "order": 106
+  },
+  "D116": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Retro experiment E3 (decision log split by area) starts its trial",
+    "order": 107,
+    "also": [
+      "board-and-delivery"
+    ]
   }
 }

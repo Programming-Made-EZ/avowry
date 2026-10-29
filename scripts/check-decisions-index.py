@@ -47,8 +47,9 @@ def main():
     if migration.exists() and set(metadata) <= set(records):
         match_count = re.search(r"(?m)^count (\d+)$", migration.read_text(encoding="utf-8"))
         match_hash = re.search(r"(?m)^sha256 ([0-9a-f]{64})$", migration.read_text(encoding="utf-8"))
-        count, digest = proof(records, metadata)
-        if not match_count or int(match_count.group(1)) != count:
+        recorded = int(match_count.group(1)) if match_count else None
+        count, digest = proof(records, metadata, recorded)
+        if recorded is None or recorded != count:
             errors.append(f"MIGRATION.txt count does not match {count} area records")
         if not match_hash or match_hash.group(1) != digest:
             errors.append("MIGRATION.txt sha256 does not match the area records")

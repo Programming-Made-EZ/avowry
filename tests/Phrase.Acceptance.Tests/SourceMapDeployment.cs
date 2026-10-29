@@ -56,12 +56,17 @@ public class SourceMapDeployment
             "/phrasemap.json",
             "/Tasks.Api/Tasks.phrasemap.json",
             "/.well-known/Tasks.phrasemap.json",
+            "/wwwroot/Tasks.phrasemap.json",
+            "/tasks.phrasemap.json",
+            "/Tasks.phrasemap.json/",
         };
         var mapResponses = await Task.WhenAll(mapPaths.Select(http.GetAsync));
+        using var head = await http.SendAsync(new HttpRequestMessage(HttpMethod.Head, "/Tasks.phrasemap.json"));
 
         // Then the endpoint behaves as specified while every source-map path is absent
         Assert.Equal(HttpStatusCode.OK, endpointResponse.StatusCode);
         Assert.All(mapResponses, response => Assert.Equal(HttpStatusCode.NotFound, response.StatusCode));
+        Assert.Equal(HttpStatusCode.NotFound, head.StatusCode);
     }
 
     private static async Task<CliRun> PublishAsync(string project, string output)
@@ -78,7 +83,11 @@ public class SourceMapDeployment
         catch (TimeoutException)
         {
             if (!process.HasExited && process.Id == pid)
-                process.Kill();
+            {
+                process.Kill(entireProcessTree: true);
+                await process.WaitForExitAsync();
+            }
+
             throw new TimeoutException($"dotnet publish process {pid} exceeded {PublishTimeout.TotalMinutes:0} minutes.");
         }
 

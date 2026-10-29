@@ -35,6 +35,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [R4](process-and-staffing.md#r4) — Staffing is by role first and model second
 - [D101](process-and-staffing.md#d101) — Docs state principles and rationale, not who said them; no personal names, no verbatim quotes attributed to a role, no gendered pronouns about the sponsor
 - [D109](process-and-staffing.md#d109) — Decider seats are by role, not by model
+- [D116](process-and-staffing.md#d116) — Retro experiment E3 (decision log split by area) starts its trial
 
 ### benchmarks-and-measurement
 
@@ -43,6 +44,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D66](benchmarks-and-measurement.md#d66) — The Phrase arm scores executed outcomes at specs-passed from the shared outcomes file over eight development tasks
 - [D79](benchmarks-and-measurement.md#d79) — Holdout run rows stay private: both tools fail closed before launching a model on a holdout-shaped suite unless private results are requested
 - [D81](benchmarks-and-measurement.md#d81) — The cheaper-models-with-Phrase hypothesis is a separate pre-registered question beside the frozen bar, not an amendment; nothing is re-scored
+- [D82](benchmarks-and-measurement.md#d82) — codebase-size hypothesis; its real-project tier was replaced by D84 and the synthetic tier stays
 - [D83](benchmarks-and-measurement.md#d83) — A model that outlives its timeout is stopped with its whole process tree and counts as one unavailable attempt
 - [D84](benchmarks-and-measurement.md#d84) — The real-code tier uses pinned public repositories, and a growth study is added
 - [D91](benchmarks-and-measurement.md#d91) — The scheduled holdout run is closed
@@ -91,7 +93,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D29](language-and-grammar.md#d29) | The spec concept is not a keyword yet | language-and-grammar | in force |
 | [D30](language-and-grammar.md#d30) | The spec concept is named actor, in the use-case sense | language-and-grammar | in force |
 | [D32](benchmarks-and-measurement.md#d32) | The frozen head-to-head bar | benchmarks-and-measurement | in force |
-| [D31](board-and-delivery.md#d31) | measure first, pause the rest behind the head-to-head | board-and-delivery | superseded by D86 |
+| [D31](board-and-delivery.md#d31) | measure first, pause the rest behind the head-to-head (its priority was later changed by D86) | board-and-delivery | applied |
 | [D36](benchmarks-and-measurement.md#d36) | sealed holdout hashes recorded before any scored run | benchmarks-and-measurement | applied |
 | [D35](benchmarks-and-measurement.md#d35) | benchmark change: docs-in-context run mode | benchmarks-and-measurement | applied |
 | [D37](benchmarks-and-measurement.md#d37) | Phrase and plain-C# rows are compared only at the same proof level (specs-passed on both arms) | benchmarks-and-measurement | in force |
@@ -135,7 +137,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D79](benchmarks-and-measurement.md#d79) | Holdout run rows stay private | benchmarks-and-measurement | in force |
 | [D80](benchmarks-and-measurement.md#d80) | fairness of the three holdout prompt pairs | benchmarks-and-measurement | applied |
 | [D81](benchmarks-and-measurement.md#d81) | The cheaper-models-with-Phrase hypothesis is a separate pre-registered question beside the frozen bar, not an  | benchmarks-and-measurement | in force |
-| [D82](benchmarks-and-measurement.md#d82) | codebase-size hypothesis and real projects | benchmarks-and-measurement | superseded by D84 |
+| [D82](benchmarks-and-measurement.md#d82) | codebase-size hypothesis; its real-project tier was replaced by D84 and the synthetic tier stays | benchmarks-and-measurement | in force |
 | [D83](benchmarks-and-measurement.md#d83) | A model that outlives its timeout is stopped with its whole process tree and counts as one unavailable attempt | benchmarks-and-measurement | in force |
 | [D84](benchmarks-and-measurement.md#d84) | The real-code tier uses pinned public repositories, and a growth study is added | benchmarks-and-measurement | in force |
 | [D85](benchmarks-and-measurement.md#d85) | review of card 119: matching codebases of 1, 10 and 50 endpoints | benchmarks-and-measurement | applied |
@@ -169,3 +171,5 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D112](compiler-and-adapters.md#d112) | The failure observer (a neutral event raised by the generated code, resolved through the source map) is its ow | compiler-and-adapters | in force |
 | [D113](board-and-delivery.md#d113) | Card 161 closes on its core outcome; the rest becomes five small cards | board-and-delivery | in force |
 | [D114](compiler-and-adapters.md#d114) | Review of card 161 (source map), closed on its amended criteria | compiler-and-adapters | applied |
+| [D115](compiler-and-adapters.md#d115) | Review of card 167: the source map is never published or served | compiler-and-adapters | applied |
+| [D116](process-and-staffing.md#d116) | Retro experiment E3 (decision log split by area) starts its trial | process-and-staffing | in force |

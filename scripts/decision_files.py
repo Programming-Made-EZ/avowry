@@ -189,7 +189,19 @@ def records_from_areas(decisions: Path) -> tuple[dict[str, str], dict[str, list[
     return records, locations
 
 
-def proof(records: dict[str, str], metadata: dict[str, dict]) -> tuple[int, str]:
+def normalized(record: str) -> str:
+    """A record ends with exactly one blank line, so appending a later record does not change its text."""
+    return record.rstrip("\n") + "\n\n"
+
+
+def proof(records: dict[str, str], metadata: dict[str, dict], limit: int | None = None) -> tuple[int, str]:
+    """Count and sha256 of the first `limit` records in source order, ignoring link anchors.
+
+    The migration proof covers only the records that existed when the log was split; later records are
+    appended after them and do not change it.
+    """
     ordered = sorted(metadata, key=lambda identifier: metadata[identifier].get("order", list(metadata).index(identifier)))
-    content = "".join(ANCHOR.sub("", records[identifier], count=1) for identifier in ordered).encode("utf-8")
+    if limit is not None:
+        ordered = ordered[:limit]
+    content = "".join(normalized(ANCHOR.sub("", records[identifier], count=1)) for identifier in ordered).encode("utf-8")
     return len(ordered), hashlib.sha256(content).hexdigest()

@@ -61,7 +61,8 @@ def main():
         "## How records are written\n\n"
         "Durable copy of Decider runs. Per-card MOB.md files are gitignored, so results that outlive a card are kept here.\n"
         "Format: `Decider D<n>: <proposal>`, votes, `Result: passed|failed`. All-Yes results may be a single line.\n"
-        "A new record is appended to its area file and gets one entry in `areas.json`.\n",
+        "A new record is appended to its area file and gets one entry in `areas.json`.\n\n"
+        "To find a decision by number (for example D86 or D21), open INDEX.md: its table lists every number with its area file and link.\n",
         encoding="utf-8",
         newline="",
     )
