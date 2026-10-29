@@ -13,6 +13,93 @@ public class SourceMapTraceability
 {
     [Fact]
     [Trait("Slice", "170")]
+    public async Task Failures_inherited_through_a_composite_phrase_still_get_a_failure_record()
+    {
+        // Given Morgan has an endpoint whose composite phrase inherits a failure declared by its leaf
+        const string sourceText = """
+            module CompositeFailures
+
+            phrase "check invalid value" -> Int
+              fails with InvalidValue
+              native csharp
+                Fail("InvalidValue");
+                return 1;
+
+            phrase "validate value"
+              steps
+                let result = check invalid value
+
+            endpoint Validate : POST /validate
+              input
+                value: Text
+              steps
+                validate value
+              spec "invalid values are rejected"
+                given input { value: "invalid" }
+                when handled
+                then fails with InvalidValue
+            """;
+        var sourceLines = sourceText.Split('\n');
+        var declarationLine = LineOf(sourceLines, "  fails with InvalidValue");
+        using var workspace = TempWorkspace.Create();
+        var source = Path.Combine(workspace.Root, "CompositeFailures.phrase");
+        await File.WriteAllTextAsync(source, sourceText);
+
+        // When Morgan builds the source through the CLI and reads its external map
+        var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
+        Assert.True(build.ExitCode == 0, build.Text);
+        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "CompositeFailures.phrasemap.json")));
+
+        // Then the endpoint failure record points to the leaf phrase's declaration
+        var failure = document.RootElement.GetProperty("records").EnumerateArray()
+            .Single(record => Text(record, "kind") == "failure" && Text(record, "name") == "InvalidValue" && Text(record, "endpoint") == "Validate");
+        Assert.Equal(declarationLine, failure.GetProperty("line").GetInt32());
+    }
+
+    [Fact]
+    [Trait("Slice", "170")]
+    public async Task A_failure_record_is_found_when_an_earlier_step_can_raise_the_same_name()
+    {
+        // Given Morgan has an endpoint ensure before a phrase that declares the same failure
+        const string sourceText = """
+            module RepeatedFailures
+
+            phrase "check invalid value" -> Int
+              fails with InvalidValue
+              native csharp
+                Fail("InvalidValue");
+                return 1;
+
+            endpoint Validate : POST /validate
+              input
+                value: Text
+              steps
+                ensure input.value is not blank else InvalidValue
+                let result = check invalid value
+              spec "invalid values are rejected"
+                given input { value: "invalid" }
+                when handled
+                then fails with InvalidValue
+            """;
+        var sourceLines = sourceText.Split('\n');
+        var declarationLine = LineOf(sourceLines, "  fails with InvalidValue");
+        using var workspace = TempWorkspace.Create();
+        var source = Path.Combine(workspace.Root, "RepeatedFailures.phrase");
+        await File.WriteAllTextAsync(source, sourceText);
+
+        // When Morgan builds the source through the CLI and reads its external map
+        var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
+        Assert.True(build.ExitCode == 0, build.Text);
+        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "RepeatedFailures.phrasemap.json")));
+
+        // Then the failure record reaches the declaring phrase after the earlier matching step
+        var failure = document.RootElement.GetProperty("records").EnumerateArray()
+            .Single(record => Text(record, "kind") == "failure" && Text(record, "name") == "InvalidValue" && Text(record, "endpoint") == "Validate");
+        Assert.Equal(declarationLine, failure.GetProperty("line").GetInt32());
+    }
+
+    [Fact]
+    [Trait("Slice", "170")]
     public async Task Step_ids_equal_an_independent_recompute_from_the_source()
     {
         // Given Morgan has the Tasks source and its CLI-built external map
@@ -281,6 +368,46 @@ public class SourceMapTraceability
             && line.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries).Contains(name, StringComparer.Ordinal),
         _ => false,
     };
+
+    [Fact]
+    [Trait("Slice", "170")]
+    public async Task Failure_records_point_at_the_exact_declaration_line_of_the_phrase_the_endpoint_calls()
+    {
+        // Given Morgan's Tasks source resolved by the compiler and built by the CLI
+        var source = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var sourceLines = await File.ReadAllLinesAsync(source);
+        var resolved = Resolver.Resolve(string.Join('\n', sourceLines));
+        Assert.Empty(resolved.Diagnostics);
+        using var workspace = TempWorkspace.Create();
+        var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
+        Assert.True(build.ExitCode == 0, build.Text);
+        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "Tasks.phrasemap.json")));
+        var failureRecords = document.RootElement.GetProperty("records").EnumerateArray()
+            .Where(record => Text(record, "kind") == "failure").ToArray();
+
+        // When the expected line is taken from the phrase that the record's endpoint actually calls
+        foreach (var record in failureRecords)
+        {
+            var endpoint = resolved.Module.Endpoints.Single(candidate => candidate.Name == Text(record, "endpoint"));
+            var failure = Text(record, "name");
+            var expectedLines = endpoint.Steps
+                .Select(step => step switch
+                {
+                    BoundCallStep call => resolved.Module.Phrase(call.Call.PhraseKey),
+                    BoundLetStep let => resolved.Module.Phrase(let.Call.PhraseKey),
+                    _ => null,
+                })
+                .Where(phrase => phrase is not null)
+                .SelectMany(phrase => phrase!.DeclaredFailures.Where(declared => declared.Name == failure).Select(declared => declared.Line))
+                .Distinct()
+                .ToArray();
+
+            // Then the endpoint has exactly one declaration line for the failure and the record carries that exact line
+            Assert.True(expectedLines.Length == 1, $"{endpoint.Name} {failure}: expected one declaring line, found {expectedLines.Length}");
+            Assert.Equal(expectedLines[0], record.GetProperty("line").GetInt32());
+            Assert.Contains(failure, sourceLines[expectedLines[0] - 1], StringComparison.Ordinal);
+        }
+    }
 
     private static string Text(JsonElement record, string property) => record.GetProperty(property).GetString()!;
 }

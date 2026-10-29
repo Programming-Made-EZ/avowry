@@ -70,8 +70,8 @@ static IEnumerable<MapRecord> Records(CompilationOutput output, ModuleModel modu
     foreach (var endpoint in module.Endpoints)
     foreach (var failure in endpoint.Failures.Distinct(StringComparer.Ordinal))
     {
-        var failureStep = endpoint.Steps.First(candidate => Failures(module, candidate).Contains(failure, StringComparer.Ordinal));
-        var declaration = FailureDeclaration(module, failureStep, failure);
+        var failureStep = endpoint.Steps.FirstOrDefault(candidate => FailureDeclaration(module, candidate, failure) is not null);
+        var declaration = failureStep is null ? null : FailureDeclaration(module, failureStep, failure);
         if (declaration is not null)
         {
             var failureSpec = endpoint.Specs.FirstOrDefault(candidate => candidate.Outcome is FailsModel fails && fails.Code == failure);
@@ -258,20 +258,15 @@ static bool ParseTrace(string[] values, out string name, out string? path, out s
 }
 
 static bool Calls(BoundStep step, string key) => step is BoundCallStep call && call.Call.PhraseKey == key || step is BoundLetStep let && let.Call.PhraseKey == key;
-static IReadOnlyList<string> Failures(ModuleModel module, BoundStep step) => step switch
-{
-    BoundCallStep call => module.Phrase(call.Call.PhraseKey).Failures,
-    BoundLetStep let => module.Phrase(let.Call.PhraseKey).Failures,
-    BoundFailStep fail => [fail.Code],
-    BoundEnsureStep ensure => [ensure.Code],
-    _ => [],
-};
 static DeclaredFailureModel? FailureDeclaration(ModuleModel module, BoundStep step, string failure) => step switch
 {
-    BoundCallStep call => module.Phrase(call.Call.PhraseKey).DeclaredFailures.FirstOrDefault(candidate => candidate.Name == failure),
-    BoundLetStep let => module.Phrase(let.Call.PhraseKey).DeclaredFailures.FirstOrDefault(candidate => candidate.Name == failure),
+    BoundCallStep call => PhraseFailureDeclaration(module, module.Phrase(call.Call.PhraseKey), failure),
+    BoundLetStep let => PhraseFailureDeclaration(module, module.Phrase(let.Call.PhraseKey), failure),
     _ => null,
 };
+static DeclaredFailureModel? PhraseFailureDeclaration(ModuleModel module, PhraseModel phrase, string failure) =>
+    phrase.DeclaredFailures.FirstOrDefault(candidate => candidate.Name == failure)
+    ?? phrase.Steps?.Select(step => FailureDeclaration(module, step, failure)).FirstOrDefault(declaration => declaration is not null);
 static string MethodName(PhraseModel phrase) => string.Concat(phrase.Parts.Where(part => !part.IsHole).Select(part => char.ToUpperInvariant(part.Text[0]) + part.Text[1..]));
 static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n')))).ToLowerInvariant();
 
