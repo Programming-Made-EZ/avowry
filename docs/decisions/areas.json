@@ -802,5 +802,11 @@
     "also": [
       "compiler-and-adapters"
     ]
+  },
+  "D119": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "Review of card 170: step ids recomputed independently and unique per failure per endpoint",
+    "order": 110
   }
 }

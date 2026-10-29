@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:c0fc5cccbb76cd00d6ad55db603c9c6c2d629c3d58fbc11a157e4eaccbe66a62 -->
+<!-- board-table-sha256:f7d07d772d013200d3cd5b57899e2945cc548cb1c7bf795ba4ac781e17444af6 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -83,7 +83,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 61 | 161 Generated failures and endpoint classes point back to the Phrase source | Done | 138 |
 | 62 | 167 The source map is never published or served: tests for publish output and a 404 | Done | 161 |
 | 63 | 168 The trace command: mismatch handling and error paths, never an unhandled exception | Done | 161 |
-| 64 | 170 Step ids: an independent recompute and one id per failure per endpoint | Ready | 161 |
+| 64 | 170 Step ids: an independent recompute and one id per failure per endpoint | Done | 161 |
 | 65 | 173 The phrase CLI test helper fails loudly when the built CLI is older than its sources | Ready | none |
 | 66 | 169 The map bytes do not depend on the culture | Ready | 161 |
 | 67 | 171 The CLI reads method and type names from the adapter; Program.cs is tidy | Ready | 161 |
