@@ -1,4 +1,4 @@
-# undeclared-native-failure: native-only Fail with an undeclared code creates no language failure record
+# undeclared-native-failure: native-only Fail with an undeclared code creates no language failure record (a quirk to revisit: GRAMMAR.md says a phrase may only fail with declared codes, but native bodies are not inspected; tracked by card 202, and fixing it flips this fixture)
 module UndeclaredNativeFailure
 phrase "reject natively"
   native csharp

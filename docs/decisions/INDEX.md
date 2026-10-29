@@ -191,3 +191,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D125](process-and-staffing.md#d125) | The public name is Avowry; the rename as nine small cards | process-and-staffing | in force |
 | [D126](compiler-and-adapters.md#d126) | The in-language unit is an avow; declaration form and filler words | compiler-and-adapters | in force |
 | [D127](process-and-staffing.md#d127) | No backward compatibility for the rename; the repository is renamed first | process-and-staffing | in force |
+| [D128](compiler-and-adapters.md#d128) | Review of card 175: more edge-case fixtures | compiler-and-adapters | applied |
