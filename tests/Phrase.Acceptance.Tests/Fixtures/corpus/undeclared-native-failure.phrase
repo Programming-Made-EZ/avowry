@@ -1,0 +1,5 @@
+# undeclared-native-failure: native-only Fail with an undeclared code creates no language failure record
+module UndeclaredNativeFailure
+phrase "reject natively"
+  native csharp
+    Fail("NativeOnly");

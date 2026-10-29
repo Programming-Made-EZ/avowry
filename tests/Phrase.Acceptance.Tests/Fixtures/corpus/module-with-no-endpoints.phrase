@@ -1,0 +1,9 @@
+# module-with-no-endpoints: a module may declare a type and a leaf phrase without declaring an endpoint
+module NoEndpoints
+
+type Value
+  number: Int
+
+phrase "keep {value: Value}" -> Value
+  native csharp
+    return value;
