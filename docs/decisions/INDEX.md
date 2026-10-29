@@ -23,6 +23,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D95](compiler-and-adapters.md#d95) — The {Record}Store persistence convention (an effect named after a record with an id) is provisional
 - [D111](compiler-and-adapters.md#d111) — Traceability is a separate source map and a trace command outside the runtime
 - [D112](compiler-and-adapters.md#d112) — The failure observer (a neutral event raised by the generated code, resolved through the source map) is its own card after the source map
+- [D126](compiler-and-adapters.md#d126) — The in-language unit is an avow; declaration form and filler words
 
 ### process-and-staffing
 
@@ -40,6 +41,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D120](process-and-staffing.md#d120) — Edge-case fixture corpus: card 174 ranked after 173, card 175 for the rest
 - [D121](process-and-staffing.md#d121) — The v0.1 public preview bar and its gap cards (176 to 188)
 - [D124](process-and-staffing.md#d124) — Licence decision (Apache-2.0 plus trademark policy) and review of card 183
+- [D125](process-and-staffing.md#d125) — The public name is Avowry; the rename as nine small cards
 
 ### benchmarks-and-measurement
 
@@ -185,3 +187,5 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D122](compiler-and-adapters.md#d122) | Review of card 173: the CLI test helper fails loudly when stale | compiler-and-adapters | applied |
 | [D123](compiler-and-adapters.md#d123) | Review of card 174: the edge-case fixture corpus | compiler-and-adapters | applied |
 | [D124](process-and-staffing.md#d124) | Licence decision (Apache-2.0 plus trademark policy) and review of card 183 | process-and-staffing | in force |
+| [D125](process-and-staffing.md#d125) | The public name is Avowry; the rename as nine small cards | process-and-staffing | in force |
+| [D126](compiler-and-adapters.md#d126) | The in-language unit is an avow; declaration form and filler words | compiler-and-adapters | in force |

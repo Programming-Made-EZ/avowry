@@ -847,5 +847,23 @@
     "also": [
       "board-and-delivery"
     ]
+  },
+  "D125": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "The public name is Avowry; the rename as nine small cards",
+    "order": 116,
+    "also": [
+      "board-and-delivery"
+    ]
+  },
+  "D126": {
+    "area": "compiler-and-adapters",
+    "status": "in force",
+    "title": "The in-language unit is an avow; declaration form and filler words",
+    "order": 117,
+    "also": [
+      "process-and-staffing"
+    ]
   }
 }
