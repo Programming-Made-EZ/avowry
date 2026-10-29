@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:ef393811b572b9e29c1e094e3d75a925cc261bf9b27d29a1268c6e26c3e6ae23 -->
+<!-- board-table-sha256:e8f0617f16adbbacb7f0ad6bef26a093ac12a3a72d0ed751f133361dea9c1648 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -84,7 +84,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 62 | 167 The source map is never published or served: tests for publish output and a 404 | Done | 161 |
 | 63 | 168 The trace command: mismatch handling and error paths, never an unhandled exception | Done | 161 |
 | 64 | 170 Step ids: an independent recompute and one id per failure per endpoint | Done | 161 |
-| 65 | 173 The phrase CLI test helper fails loudly when the built CLI is older than its sources | Ready | none |
+| 65 | 173 The phrase CLI test helper fails loudly when the built CLI is older than its sources | Done | none |
 | 66 | 174 An edge-case fixture corpus that every compiler and adapter change runs against | Ready | none |
 | 67 | 175 More edge-case fixtures: Zero, Boundary and Exception shapes | Ready | 174 |
 | 68 | 183 Add the licence file | Ready | none |

@@ -826,5 +826,11 @@
     "also": [
       "board-and-delivery"
     ]
+  },
+  "D122": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "Review of card 173: the CLI test helper fails loudly when stale",
+    "order": 113
   }
 }
