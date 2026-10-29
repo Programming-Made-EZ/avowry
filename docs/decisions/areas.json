@@ -793,5 +793,14 @@
     "status": "applied",
     "title": "Review of card 168: phrase trace mismatch handling and error paths",
     "order": 108
+  },
+  "D118": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "The stale-CLI test helper fix is its own card, ranked next (card 173)",
+    "order": 109,
+    "also": [
+      "compiler-and-adapters"
+    ]
   }
 }

@@ -36,6 +36,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D101](process-and-staffing.md#d101) — Docs state principles and rationale, not who said them; no personal names, no verbatim quotes attributed to a role, no gendered pronouns about the sponsor
 - [D109](process-and-staffing.md#d109) — Decider seats are by role, not by model
 - [D116](process-and-staffing.md#d116) — Retro experiment E3 (decision log split by area) starts its trial
+- [D118](process-and-staffing.md#d118) — The stale-CLI test helper fix is its own card, ranked next (card 173)
 
 ### benchmarks-and-measurement
 
@@ -174,3 +175,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D115](compiler-and-adapters.md#d115) | Review of card 167: the source map is never published or served | compiler-and-adapters | applied |
 | [D116](process-and-staffing.md#d116) | Retro experiment E3 (decision log split by area) starts its trial | process-and-staffing | in force |
 | [D117](compiler-and-adapters.md#d117) | Review of card 168: phrase trace mismatch handling and error paths | compiler-and-adapters | applied |
+| [D118](process-and-staffing.md#d118) | The stale-CLI test helper fix is its own card, ranked next (card 173) | process-and-staffing | in force |
