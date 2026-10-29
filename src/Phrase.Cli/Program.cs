@@ -66,13 +66,17 @@ static IEnumerable<MapRecord> Records(CompilationOutput output, ModuleModel modu
         yield return new(StepId("phrase", phrase.Line, phrase.Template), "phrase", phrase.Template, module.PhraseFile,
             phrase.Line, owner?.Name ?? "", step?.Source ?? "", Lines(spec?.SourceSpan), cs,
             $"Phrases.{MethodName(phrase)}", Hash(output.Files[cs]));
-        foreach (var failure in phrase.DeclaredFailures)
-        foreach (var endpoint in module.Endpoints.Where(endpoint => endpoint.Failures.Contains(failure.Name, StringComparer.Ordinal)))
+    }
+    foreach (var endpoint in module.Endpoints)
+    foreach (var failure in endpoint.Failures.Distinct(StringComparer.Ordinal))
+    {
+        var failureStep = endpoint.Steps.First(candidate => Failures(module, candidate).Contains(failure, StringComparer.Ordinal));
+        var declaration = FailureDeclaration(module, failureStep, failure);
+        if (declaration is not null)
         {
-            var failureStep = endpoint.Steps.FirstOrDefault(candidate => Failures(module, candidate).Contains(failure.Name, StringComparer.Ordinal));
-            var failureSpec = endpoint.Specs.FirstOrDefault(candidate => candidate.Outcome is FailsModel fails && fails.Code == failure.Name);
-            cs = output.EndpointFiles[endpoint.Name];
-            yield return Record(output, module, "failure", failure.Name, failure.Line, endpoint, failureStep, failureSpec, cs);
+            var failureSpec = endpoint.Specs.FirstOrDefault(candidate => candidate.Outcome is FailsModel fails && fails.Code == failure);
+            var cs = output.EndpointFiles[endpoint.Name];
+            yield return Record(output, module, "failure", failure, declaration.Line, endpoint, failureStep, failureSpec, cs);
         }
     }
 }
@@ -83,8 +87,13 @@ static EndpointSpecModel? SpecFor(EndpointModel endpoint, BoundStep step) =>
 static bool StepFails(BoundStep step, string code) => step is BoundFailStep fail && fail.Code == code || step is BoundEnsureStep ensure && ensure.Code == code;
 static MapLines Lines(SourceSpan? span) => new(span?.FirstLine ?? 0, span?.LastLine ?? 0);
 static MapRecord Record(CompilationOutput output, ModuleModel module, string kind, string name, int line, EndpointModel endpoint, BoundStep? step, EndpointSpecModel? spec, string cs) =>
-    new(StepId(kind, line, name), kind, name, module.PhraseFile, line, endpoint.Name, step?.Source ?? "", Lines(spec?.SourceSpan), cs, $"{endpoint.Name}Handler.Handle", Hash(output.Files[cs]));
-static string StepId(string kind, int line, string name) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes($"{kind}\n{line}\n{name.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n')}")))[..12].ToLowerInvariant();
+    new(StepId(kind, line, name, endpoint.Name), kind, name, module.PhraseFile, line, endpoint.Name, step?.Source ?? "", Lines(spec?.SourceSpan), cs, $"{endpoint.Name}Handler.Handle", Hash(output.Files[cs]));
+static string StepId(string kind, int line, string name, string endpoint = "")
+{
+    var normalizedName = name.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n');
+    var input = $"{kind}\n{line}\n{normalizedName}" + (kind == "failure" ? $"\n{endpoint}" : "");
+    return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(input)))[..12].ToLowerInvariant();
+}
 
 static int Trace(string[] values)
 {
@@ -256,6 +265,12 @@ static IReadOnlyList<string> Failures(ModuleModel module, BoundStep step) => ste
     BoundFailStep fail => [fail.Code],
     BoundEnsureStep ensure => [ensure.Code],
     _ => [],
+};
+static DeclaredFailureModel? FailureDeclaration(ModuleModel module, BoundStep step, string failure) => step switch
+{
+    BoundCallStep call => module.Phrase(call.Call.PhraseKey).DeclaredFailures.FirstOrDefault(candidate => candidate.Name == failure),
+    BoundLetStep let => module.Phrase(let.Call.PhraseKey).DeclaredFailures.FirstOrDefault(candidate => candidate.Name == failure),
+    _ => null,
 };
 static string MethodName(PhraseModel phrase) => string.Concat(phrase.Parts.Where(part => !part.IsHole).Select(part => char.ToUpperInvariant(part.Text[0]) + part.Text[1..]));
 static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n')))).ToLowerInvariant();

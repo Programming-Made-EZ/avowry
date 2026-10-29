@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using Phrase.Acceptance.Tests.Support;
 using Phrase.Compiler.Semantics;
@@ -9,6 +11,47 @@ namespace Phrase.Acceptance.Tests;
 //   so that I can find the owning spec without reading or exposing generated implementation details.
 public class SourceMapTraceability
 {
+    [Fact]
+    [Trait("Slice", "170")]
+    public async Task Step_ids_equal_an_independent_recompute_from_the_source()
+    {
+        // Given Morgan has the Tasks source and its CLI-built external map
+        var source = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        var sourceLines = await File.ReadAllLinesAsync(source);
+        using var workspace = TempWorkspace.Create();
+        var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
+        Assert.True(build.ExitCode == 0, build.Text);
+
+        // When every id is recomputed from the documented UTF-8 hash input and its Phrase source line
+        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "Tasks.phrasemap.json")));
+        var recomputed = document.RootElement.GetProperty("records").EnumerateArray()
+            .Select(record => (Actual: Text(record, "stepId"), Expected: RecomputeStepId(record, sourceLines))).ToArray();
+
+        // Then every independently recomputed id equals the id written by the CLI
+        Assert.All(recomputed, item => Assert.Equal(item.Expected, item.Actual));
+    }
+
+    [Fact]
+    [Trait("Slice", "170")]
+    public async Task A_failure_used_by_two_endpoints_has_one_id_per_endpoint()
+    {
+        // Given Morgan's Tasks source uses its declared NotFound failure from three endpoints
+        var source = RepoPaths.Find("demo", "tasks", "Tasks.phrase");
+        using var workspace = TempWorkspace.Create();
+
+        // When the CLI writes the source map
+        var build = await PhraseCli.RunAsync("build", source, "-o", workspace.Root);
+        Assert.True(build.ExitCode == 0, build.Text);
+        using var document = JsonDocument.Parse(await File.ReadAllTextAsync(Path.Combine(workspace.Root, "Tasks.phrasemap.json")));
+        var records = document.RootElement.GetProperty("records").EnumerateArray().ToArray();
+        var notFound = records.Where(record => Text(record, "kind") == "failure" && Text(record, "name") == "NotFound").ToArray();
+
+        // Then every map record is unambiguous and each NotFound endpoint use has its own id
+        Assert.Equal(records.Length, records.Select(record => Text(record, "stepId")).Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal(new[] { "CompleteTask", "DeleteTask", "GetTask" }, notFound.Select(record => Text(record, "endpoint")).Order(StringComparer.Ordinal));
+        Assert.Equal(3, notFound.Select(record => Text(record, "stepId")).Distinct(StringComparer.Ordinal).Count());
+    }
+
     [Fact]
     [Trait("Slice", "161")]
     public async Task Tasks_build_writes_an_external_map_and_trace_resolves_a_declared_failure()
@@ -217,6 +260,27 @@ public class SourceMapTraceability
                 && item.line.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries).Contains(failure, StringComparer.Ordinal))
             .Select(item => item.number)
             .ToArray();
+
+    private static string RecomputeStepId(JsonElement record, IReadOnlyList<string> sourceLines)
+    {
+        var kind = Text(record, "kind");
+        var name = Text(record, "name").Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n');
+        var line = record.GetProperty("line").GetInt32();
+        var sourceLine = sourceLines[line - 1].Trim();
+        Assert.True(SourceLineNamesRecord(sourceLine, kind, name), $"{kind} {name} is not declared by Phrase line {line}: {sourceLine}");
+        var input = $"{kind}\n{line}\n{name}" + (kind == "failure" ? $"\n{Text(record, "endpoint")}" : "");
+        return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(input)))[..12].ToLowerInvariant();
+    }
+
+    private static bool SourceLineNamesRecord(string line, string kind, string name) => kind switch
+    {
+        "endpoint" => line.StartsWith($"endpoint {name} :", StringComparison.Ordinal),
+        "step" => line == name,
+        "phrase" => line.StartsWith($"phrase \"{name}\"", StringComparison.Ordinal),
+        "failure" => line.StartsWith("fails with ", StringComparison.Ordinal)
+            && line.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries).Contains(name, StringComparer.Ordinal),
+        _ => false,
+    };
 
     private static string Text(JsonElement record, string property) => record.GetProperty(property).GetString()!;
 }
