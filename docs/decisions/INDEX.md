@@ -173,3 +173,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D114](compiler-and-adapters.md#d114) | Review of card 161 (source map), closed on its amended criteria | compiler-and-adapters | applied |
 | [D115](compiler-and-adapters.md#d115) | Review of card 167: the source map is never published or served | compiler-and-adapters | applied |
 | [D116](process-and-staffing.md#d116) | Retro experiment E3 (decision log split by area) starts its trial | process-and-staffing | in force |
+| [D117](compiler-and-adapters.md#d117) | Review of card 168: phrase trace mismatch handling and error paths | compiler-and-adapters | applied |

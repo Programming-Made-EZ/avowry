@@ -40,7 +40,7 @@ public class SourceMapTraceCommand
         // Then the mismatch is loud but only strict mode makes it fatal
         Assert.True(warning.ExitCode == 0, warning.Text);
         Assert.Contains("WARNING: map does not match assembly", warning.Stdout, StringComparison.Ordinal);
-        Assert.NotEqual(0, strict.ExitCode);
+        Assert.Equal(1, strict.ExitCode);
         Assert.Contains("WARNING: map does not match assembly", strict.Stdout, StringComparison.Ordinal);
     }
 
@@ -59,7 +59,7 @@ public class SourceMapTraceCommand
         var trace = await PhraseCli.RunAsync("trace", record.GetProperty("name").GetString()!, "--map", workspace.Map, "--strict");
 
         // Then the changed C# hash is named and the command fails
-        Assert.NotEqual(0, trace.ExitCode);
+        Assert.Equal(1, trace.ExitCode);
         Assert.Contains("generated C# hash does not match map", trace.Stdout, StringComparison.Ordinal);
     }
 
@@ -98,7 +98,7 @@ public class SourceMapTraceCommand
 
         // Then every matching record is printed instead of an arbitrary first match
         Assert.True(trace.ExitCode == 0, trace.Text);
-        Assert.True(Occurrences(trace.Stdout, "NotFound  failure") >= expected, trace.Stdout);
+        Assert.True(Occurrences(trace.Stdout, "NotFound  failure") == expected, trace.Stdout);
     }
 
     [Theory]
@@ -154,7 +154,7 @@ public class SourceMapTraceCommand
         var trace = await PhraseCli.RunAsync(arguments.ToArray());
 
         // Then trace names the problem without leaking an unhandled exception or stack trace
-        Assert.NotEqual(0, trace.ExitCode);
+        Assert.Equal(2, trace.ExitCode);
         Assert.Contains(expected, trace.Stderr, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("Unhandled exception", trace.Text, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotMatch(@"\n\s+at \S+", trace.Text);
@@ -234,7 +234,11 @@ public class SourceMapTraceCommand
             catch (OperationCanceledException)
             {
                 if (!process.HasExited && process.Id == pid)
-                    process.Kill();
+                {
+                    process.Kill(entireProcessTree: true);
+                    await process.WaitForExitAsync();
+                }
+
                 throw new TimeoutException($"dotnet build process {pid} exceeded 5 minutes.");
             }
             return new CliRun(process.ExitCode, await stdout, await stderr);

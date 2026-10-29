@@ -787,5 +787,11 @@
     "also": [
       "board-and-delivery"
     ]
+  },
+  "D117": {
+    "area": "compiler-and-adapters",
+    "status": "applied",
+    "title": "Review of card 168: phrase trace mismatch handling and error paths",
+    "order": 108
   }
 }
