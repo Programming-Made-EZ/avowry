@@ -5,4 +5,8 @@ if ! gh auth status >/dev/null 2>&1; then
   echo "pre-push: mob-process skipped because gh is not authenticated; push blocked. Run 'gh auth login'." >&2
   exit 1
 fi
-python "$top/scripts/mob_process.py" check
+if command -v python3 >/dev/null 2>&1; then
+  python3 "$top/scripts/mob_process.py" check
+else
+  python "$top/scripts/mob_process.py" check
+fi
