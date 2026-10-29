@@ -43,6 +43,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D124](process-and-staffing.md#d124) — Licence decision (Apache-2.0 plus trademark policy) and review of card 183
 - [D125](process-and-staffing.md#d125) — The public name is Avowry; the rename as nine small cards
 - [D127](process-and-staffing.md#d127) — No backward compatibility for the rename; the repository is renamed first
+- [D134](process-and-staffing.md#d134) — Mob-process accountability that does not depend on the facilitator
 
 ### benchmarks-and-measurement
 
@@ -197,3 +198,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D131](compiler-and-adapters.md#d131) | Review of card 199: the avow keyword, filler words and the .avowry extension | compiler-and-adapters | applied |
 | [D132](compiler-and-adapters.md#d132) | Review of card 193: generated code uses Avowry names | compiler-and-adapters | applied |
 | [D133](compiler-and-adapters.md#d133) | Review of card 194: the compiler project and namespace are Avowry.Compiler | compiler-and-adapters | applied |
+| [D134](process-and-staffing.md#d134) | Mob-process accountability that does not depend on the facilitator | process-and-staffing | in force |

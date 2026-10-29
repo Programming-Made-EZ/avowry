@@ -910,5 +910,11 @@
     "status": "applied",
     "title": "Review of card 194: the compiler project and namespace are Avowry.Compiler",
     "order": 124
+  },
+  "D134": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Mob-process accountability that does not depend on the facilitator",
+    "order": 125
   }
 }

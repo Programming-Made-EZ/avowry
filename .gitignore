@@ -4,7 +4,8 @@ TestResults/
 *.user
 .vs/
 .idea/
-.mob/
+.mob/*
+!.mob/records/
 __pycache__/
 *.pyc
 bench/holdouts-unsealed/
