@@ -54,6 +54,14 @@
    "seat": "architect (slice)",
    "context": "ctx-6",
    "source": ".mob/records/209/turn-slice-architect.md (dd49100)"
+  },
+  {
+   "boundary": "after criterion 1 (stand-down 1)",
+   "answer": "no",
+   "reason": "Criterion 2 is a call to the shared removal_problem from mob_process.check_record and criterion 3 is a template paragraph and a text scan; the Python, the tests and the audit lens are covered by the backend developer, QA engineer and independent reviewer, and criterion 1 raised no language, UX, security or workflow question those seats could not answer.",
+   "seat": "delivery lead",
+   "context": "ctx-7",
+   "source": "fac4808"
   }
  ],
  "d157": "one acceptance criterion per red-green cycle: Criterion 1 red, its unit layers, green, push; then Criterion 2; then Criterion 3",
