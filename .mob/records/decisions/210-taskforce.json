@@ -23,6 +23,17 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nYes\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
+  },
+  {
+   "round": 1,
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-3",
+   "started_at": "2026-10-30T16:48:51Z",
+   "reply": "OBJECTION",
+   "condition": "Add one ZOMBIES line to Done check 3 for a member whose domain, why, or context is whitespace-only or the string \"true\", so the red test pins the \"truthy value\" loophole the check names.",
+   "raw": "OBJECTION\nCONDITION: Add one ZOMBIES line to Done check 3 for a member whose domain, why, or context is whitespace-only or the string \"true\", so the red test pins the \"truthy value\" loophole the check names.\n\nSupport-it\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
   }
  ],
  "decision": null,
