@@ -56,6 +56,17 @@
    "reply": "NO OBJECTION",
    "condition": null,
    "raw": "Yes\n\nNO OBJECTION\n"
+  },
+  {
+   "round": 1,
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (17:13 UTC)",
+   "context": "ctx-3",
+   "started_at": "2026-10-30T17:32:39Z",
+   "reply": "OBJECTION",
+   "condition": "Add a red-able check that a probe whose evidence fails to write is refused for a mixed roster too, and name the mutation-run evidence as a gate before each green merges.",
+   "raw": "OBJECTION\nCONDITION: Add a red-able check that a probe whose evidence fails to write is refused for a mixed roster too, and name the mutation-run evidence as a gate before each green merges.\n\nYes, the slice is testable red first, with one gap: it needs that refusal check.\n"
   }
  ],
  "decision": null,
