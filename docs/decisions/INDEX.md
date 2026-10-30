@@ -61,6 +61,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D159](process-and-staffing.md#d159) — Record checker: evidence is compared with the record committed before this card's record (out-of-order closes)
 - [D161](process-and-staffing.md#d161) — Product owner direction: lock the mob process into tooling and the mob-defaults template before product work; reports describe, not cite
 - [D162](process-and-staffing.md#d162) — Product owner ruling: one-card waiver of the stop-the-line gate for card 219 (record-order fix)
+- [D163](process-and-staffing.md#d163) — Product owner clarification: balanced model rotation (least-recently-used available model first), not a rule against Claude
 
 ### benchmarks-and-measurement
 
@@ -244,3 +245,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D160](process-and-staffing.md#d160) | No gate exemption for card 219; card 208 runs before card 210 so no corrective close is refused | process-and-staffing | applied |
 | [D161](process-and-staffing.md#d161) | Product owner direction: lock the mob process into tooling and the mob-defaults template before product work; reports describe, not cite | process-and-staffing | in force |
 | [D162](process-and-staffing.md#d162) | Product owner ruling: one-card waiver of the stop-the-line gate for card 219 (record-order fix) | process-and-staffing | in force |
+| [D163](process-and-staffing.md#d163) | Product owner clarification: balanced model rotation (least-recently-used available model first), not a rule against Claude | process-and-staffing | in force |

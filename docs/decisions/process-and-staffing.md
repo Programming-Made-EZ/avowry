@@ -512,3 +512,10 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - Ruling: card 219 (the record checker compares each card's evidence with the record filed just before it, not the next-lower card number; D159) may start despite the open failures. One-card exemption only: it covers card 219 and nothing else, ends when card 219 closes, and changes no gate code. Every other card still follows the corrective-card gate.
 - Placement: re-rank at the next boundary with true priority order restored; where card 219 lands is the team's call, normally right after the probe gate's current criterion finishes (card 208, criterion 2).
 - Recorded in card 219's record (.mob/records/219/record-in-progress.json) and in this decision record. Supersedes D160 C1 for card 219 only; D160's order (card 208 before card 210) stands until the re-rank.
+
+<a id="d163"></a>
+#### Decider D163: product owner clarification (not a team vote): balanced model rotation, not a rule against Claude
+
+- Date: 2026-10-30. Not a team vote: product owner direction on the check that just landed in card 208 criterion 2 (a Claude seat starts only while no other model has quota). The product owner's words: "I'm not sure I want a 'no Claude' rule per se. I just want the rotation to even out and don't just jump to all Claude like has happened in the past."
+- Intent: balanced rotation. Seat the least-recently-used available model first, so load spreads across Codex, Copilot, Grok, agy and Claude (all finite prepaid allotments). The failure mode to stop is defaulting to all-Claude while others have capacity. Claude taking its share of seats is fine. No new strictness beyond this intent.
+- The team decides by Decider how to rework the just-landed check (mechanism and metric); one candidate offered, not mandated: pick the least-used available model per seat, and refuse an all-Claude roster, or a Claude share above some ratio, while others are available. This is a correction to a just-finished card and is handled as one.
