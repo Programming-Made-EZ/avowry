@@ -335,3 +335,9 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   - Reason: grooming cards below the top of Ready is cards written far ahead of their turn, which ruling 6 names as the over-specification to avoid; cards decay as evidence arrives. Just-in-time refinement is covered by C1 and the D148 re-rank of the top of Ready. Reopen if a pulled card repeatedly fails the Ready check.
   C5 Standup or sync at cycle boundaries: DROP.
   - Reason: WIP is one card (concurrent class under Bishop's Law), so there is nothing to resync; the loop boundary re-rank and the retro already sync. Reopen when two or more parallel-class worktrees run at once, with the resync cost measured then.
+
+<a id="d149"></a>
+#### Decider D149: re-rank at the loop boundary (first under D148): 205, 209, 210, 208, 211, 212
+
+- Date: 2026-10-30. Proposer: product manager seat. Seats through decider.py with the headless claude CLI: architect, QA engineer, independent reviewer (audit lens), delivery lead, agile coach. Round 1: four Yes; the audit-lens reviewer No with the condition to keep the product owner order (the proposal had moved 211 ahead of 208), adopted. Round 2: all Yes. Independent re-run: all Yes. Votes in .mob/records/deciders/D149-votes.json; the re-rank note is .mob/records/reranks/2026-10-30-1.md.
+- Result: PASSED. The top of Ready is 205, 209, 210, 208, 211, 212 (applied to Rank). The D147 dependency changes stand.

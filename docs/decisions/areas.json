@@ -1006,5 +1006,11 @@
     "status": "in force",
     "title": "Ceremonies besides the retro: Three Amigos refinement and a demo after Done as experiments; planning, backlog refinement and standup dropped",
     "order": 141
+  },
+  "D149": {
+    "area": "process-and-staffing",
+    "status": "applied",
+    "title": "Re-rank at the loop boundary: 205, 209, 210, 208, 211, 212",
+    "order": 140
   }
 }

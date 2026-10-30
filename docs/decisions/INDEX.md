@@ -222,3 +222,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D147](process-and-staffing.md#d147) | Re-rank of the corrective cards under audit 18 (209, 210, 211, 208 first; 205 to 207 resume on the auditor's closures) | process-and-staffing | applied |
 | [D148](process-and-staffing.md#d148) | Product owner rulings: 205 to 208 confirmed corrective; priority re-evaluated at every loop boundary | process-and-staffing | in force |
 | [D150](process-and-staffing.md#d150) | Ceremonies besides the retro: Three Amigos refinement and a demo after Done as experiments; planning, backlog refinement and standup dropped | process-and-staffing | in force |
+| [D149](process-and-staffing.md#d149) | Re-rank at the loop boundary: 205, 209, 210, 208, 211, 212 | process-and-staffing | applied |
