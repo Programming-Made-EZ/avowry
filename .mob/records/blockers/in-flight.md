@@ -20,3 +20,4 @@
 - 2026-10-30 15:56:34 UTC: facilitator verification run of the full mob-defaults suite at e239b12 (local; the developer's run ended without a summary line), log in the facilitator scratchpad; cap 16:21 UTC. F1/F2 stay unpushed until it is clean.
 - 2026-10-30 15:59:28 UTC: the 15:57 verification run executed avowry's suite, not mob-defaults' (a cd did not take effect; 307 tests OK, not evidence for card 209); rerun in mob-defaults at e239b12 with a head check; cap 16:24 UTC.
 - 2026-10-30 17:19 UTC: architect ctx-2, card 208 slice and split (D161 lens); cap 17:44 UTC.
+- 2026-10-30 17:59 UTC: QA engineer ctx-3, fresh-probe seat gate (card 208) criterion 1 red in mob-defaults, outside-in per the slice; started about 17:54; cap 18:20 UTC. Waiting also on: the product owner's yes/no on exempting the record-order fix (card 219) from stop-the-line; until then number order.
