@@ -166,6 +166,8 @@ Claude as a voice) is a source of product ideas.
 
 **Principle:** use the Decider for team decisions as well as conflicts, because simultaneous votes expose disagreement before work proceeds.
 
+**Lighter path for routine per-card decisions (experiment, next 5 cards, D153).** The task-force declaration, the slice decision, the loop-boundary re-rank, card-text and declaration fixes and a mid-card addition take an objection window instead of a full Decider: the product manager seat proposes in a committed note that says why the decision is neither a one-way door nor a standing-rule change; every declared role seat of the card, each in its own fresh context, records no objection or an objection with ONE fixed condition; each step is its own commit (proposal, each reply with its probe reference, decision) under .mob/records/decisions/. A full Decider with an independent re-run happens only for an objection the window does not settle, a one-way door (a publish, a deletion, a migration, a public claim) or a standing-rule change. The external auditor spot-checks windows and may FAIL one that should have been a full Decider. No window counts toward the experiment until the checker rule for windows is on main.
+
 **What goes through it:** the task force (at kickoff and every mid-card addition), card refinement and acceptance
 criteria, PM ranking and re-ranking, design and architecture choices, keeping or reverting a feature on benchmark
 data, declaring a card Done, milestones and their targets, retro picks and process experiments, trust-ladder
