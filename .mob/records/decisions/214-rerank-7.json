@@ -61,6 +61,16 @@
    "reply": "NO OBJECTION",
    "condition": null,
    "raw": "NO OBJECTION\n\nYes. The order starts the line now: 209 is startable under the gate, and the paused 217 and 213 block nothing, so no ceremony is added.\n"
+  },
+  {
+   "role": "product manager (signoff)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (12:03 UTC)",
+   "context": "win7b-pmsignoff",
+   "started_at": "2026-10-30T12:40:28Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes. The order puts the corrective cards for open FAILs first, which stops the line as the standing rules require. It defers 217 and 213 to a Decider only if the team wants them early, and it doesn't over-specify.\n"
   }
  ],
  "decision": null,
