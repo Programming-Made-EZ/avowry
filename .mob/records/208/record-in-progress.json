@@ -1,0 +1,54 @@
+{
+ "card": 208,
+ "title": "(see board/208-*.md)",
+ "status": "in progress (corrective for MD-002 and F-008); code in mob-defaults",
+ "goal": "product owner direction D161: lock the process into tooling and the template first",
+ "decisions": {
+  "rank": "note 8b (D160): before card 210",
+  "task_force": "window 208-taskforce (proposal 66d833f, amended b0d1310, decision in the following commits)"
+ },
+ "task_force": [
+  {
+   "role": "product manager (ready)",
+   "context": "ctx-1"
+  },
+  {
+   "role": "architect (slice)",
+   "context": "ctx-2"
+  },
+  {
+   "role": "QA engineer (red)",
+   "context": "ctx-3"
+  },
+  {
+   "role": "backend developer [author] (green, refactor)",
+   "context": "ctx-4"
+  },
+  {
+   "role": "independent reviewer (audit lens) [reviewer]",
+   "context": "ctx-5"
+  },
+  {
+   "role": "delivery lead (ship)",
+   "context": "ctx-6"
+  },
+  {
+   "role": "product manager (signoff)",
+   "context": "ctx-7"
+  }
+ ],
+ "claude_seat_reason": "probes at 16:24 and 17:13 UTC show Codex, Copilot, Grok and agy without usable quota",
+ "metric": "standing rules the loop runner enforces versus those enforced only by hand; audit findings per card about runner-gated rules",
+ "domain_expert": [
+  {
+   "boundary": "refinement",
+   "answer": "no",
+   "reason": "the runner is Python tooling the architect and backend developer cover; the reviewer carries a runner lens",
+   "seat": "product manager (ready)",
+   "context": "ctx-1",
+   "source": "window 208-taskforce proposal"
+  }
+ ],
+ "cycles": [],
+ "stand_downs": []
+}
