@@ -77,6 +77,17 @@
    "reply": null,
    "raw": "",
    "note": "empty or without the window answer line; not counted; re-polled"
+  },
+  {
+   "attempt": 2,
+   "role": "product manager (signoff)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (17:13 UTC)",
+   "context": "w2-208-rerank-9-pmsignoff",
+   "started_at": "2026-10-30T17:43:26Z",
+   "reply": null,
+   "raw": "",
+   "note": "empty or without the window answer line; not counted; re-polled"
   }
  ]
 }
