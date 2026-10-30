@@ -10,7 +10,18 @@
  },
  "opened_at": "2026-10-30T07:36:10Z",
  "proposal": "# Card 213: task-force declaration proposal (D153 objection window)\n\nCategory: task-force declaration.\n\n## Task force\n- Product manager (ready): Claude | why: writes the card from D153 L3b | context: ctx-1\n- Architect (slice): Claude | why: slices the card and writes the criterion-by-layer table (205 stand-down) | context: ctx-6\n- QA engineer (red): Claude | why: commits failing fixtures and tests with ZOMBIES before the rule | context: ctx-2\n- Backend developer [author] (green): Claude | why: adds the window check to scripts/mob_process.py | context: ctx-3\n- Independent reviewer (audit lens) [reviewer]: Claude | why: non-author review against D153 L1, L3b and D145 C2 | context: ctx-4\n- Delivery lead (ship): Claude | why: runs the D154 pre-ship gate | context: ctx-7\n- Product manager (signoff): Claude | why: fresh context signs off | context: ctx-5\n\n## Architect slice table (red-able or born-green)\n| Criterion | Layer | Red-able? |\n|---|---|---|\n| 1 category, end time | file parse, field check | red-able (bad fixtures); Z \"no windows passes\" born-green, guard it |\n| 2 seat fields | seat check | red-able (missing-field fixtures) |\n| 3 wiring, own tree | check entry | red-able (fixture via check); \"own tree exits zero\" born-green, guard it |\n\n## Delivery lead gate (D154)\nClosure record check in dry-run, every cited commit and record path resolves on origin (clean clone); output committed under .mob/records/ before close. No done or PASS line without a pushed hash.\n\n## Left out\nUX designer, frontend developer (no interface); database developer (no such code); security (no new trust boundary); DevOps; technical writer; language and grammar designers (no language change); performance engineer (no hot path); agile coach (no process change).\n\n## Domain expert (refinement)\nShould another domain join now? No: the change is inside scripts/mob_process.py and its tests, covered by the backend developer and the audit-lens reviewer, who is the D153 domain expert.\n\n## Reason for Claude seats\nProbes at 07:24 UTC show Codex, Copilot, Grok and agy without usable quota; each seat is a distinct fresh context.\n\n## Why this is neither a one-way door nor a standing-rule change\nTwo-way door: the declaration ends with the card and can be re-declared; nothing is published, deleted or migrated. It adds seats the 205 retro recommended and applies D153 and D154 as written; no agreement, D-record or checker is changed.\n",
- "replies": [],
+ "replies": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "win213-architect",
+   "started_at": "2026-10-30T07:37:23Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "Yes\nNO OBJECTION",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (07:24 UTC)"
+  }
+ ],
  "decision": null,
  "ended_at": null
 }
