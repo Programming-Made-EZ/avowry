@@ -70,6 +70,14 @@
    "seat": "QA engineer",
    "context": "ctx-2",
    "source": "stand_downs[1] in this record"
+  },
+  {
+   "boundary": "after green, before ship",
+   "answer": "no",
+   "reason": "conditional on F1 and F2 being fixed (fixed in 73026aa, 7fdb168, e239b12)",
+   "seat": "independent reviewer",
+   "context": "ctx-4",
+   "source": "a4475fc"
   }
  ],
  "d157": "one acceptance criterion per red-green cycle: Criterion 1 red, its unit layers, green, push; then Criterion 2; then Criterion 3",
@@ -215,5 +223,23 @@
    "handling": "the QA seat had already added 37b1273 restoring CRLF with no content change (two whole-file churn commits, 44112b4 and 37b1273; the net change from 7d371fa is 123 insertions); neither is rewritten; the facilitator's earlier note in this record (file stays LF) was wrong and is corrected here; later seats keep each file's current endings and check git diff --stat against git diff --ignore-cr-at-eol --stat before committing",
    "same_cause_as": "card 214 commit 5 (caught before commit) and card 205's red (0f7225f)"
   }
- ]
+ ],
+ "review": {
+  "seat": "independent reviewer ctx-4",
+  "commit": "a4475fc",
+  "verdict": "CHANGES REQUESTED (F1 decider test strength, F2 TASK_FORCE.md)",
+  "fixes": [
+   "73026aa F1",
+   "7fdb168 F2 red",
+   "e239b12 F2 green"
+  ],
+  "full_suite_on_fixes": "mob-defaults at e239b12: Ran 338 tests in 1030.8 s, OK (skipped=1), facilitator verification run 15:59 to 16:16 UTC (the developer's run ended without a summary line; a first facilitator run executed the wrong repository and is not evidence)",
+  "domain_expert": {
+   "boundary": "after green, before ship",
+   "answer": "no (conditional on F1 and F2, now fixed)",
+   "seat": "independent reviewer",
+   "context": "ctx-4",
+   "source": "a4475fc"
+  }
+ }
 }
