@@ -988,5 +988,11 @@
     "status": "applied",
     "title": "Task force of card 205 (D145 card A1); slice split into cards 205, 206, 207",
     "order": 137
+  },
+  "D147": {
+    "area": "process-and-staffing",
+    "status": "applied",
+    "title": "Re-rank of the corrective cards under audit 18 (209, 210, 211, 208 first; 205 to 207 resume on the auditor's closures)",
+    "order": 138
   }
 }
