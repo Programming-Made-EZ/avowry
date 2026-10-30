@@ -31,6 +31,16 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nYes. The QA seat is separate from the author, and each red commit carries \"Criterion: n\" with a green before the next red. The ZOMBIES already cover all three Done checks. The two entry points are a testable pair because the refusal text is shared.\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (12:03 UTC)"
+  },
+  {
+   "role": "backend developer",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-3",
+   "started_at": "2026-10-30T12:45:22Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (12:03 UTC)"
   }
  ],
  "decision": null,
