@@ -1,0 +1,254 @@
+{
+ "decider": "D139",
+ "result": "FAILED",
+ "clauses": [
+  "C1 findings file",
+  "C2 stop the line",
+  "C3 initial findings",
+  "C4 record fields",
+  "C5 ship rules",
+  "C6 probe log",
+  "C7 delivery"
+ ],
+ "round1": [
+  {
+   "role": "architect",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "No",
+    "C3": "No",
+    "C4": "Support-it",
+    "C5": "No",
+    "C6": "Support-it",
+    "C7": "No"
+   },
+   "note": "closure-subject exemption is an unrestricted bypass; F-001 cannot be CLOSED pending the auditor; availability is not quota"
+  },
+  {
+   "role": "QA engineer",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "No",
+    "C3": "No",
+    "C4": "Yes",
+    "C5": "No",
+    "C6": "Yes",
+    "C7": "Support-it"
+   },
+   "note": "naming an F-id bypasses the stop; F-001 open until verified; removal needs a history invariant"
+  },
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "No",
+    "C3": "Yes",
+    "C4": "Support-it",
+    "C5": "Support-it",
+    "C6": "Support-it",
+    "C7": "No"
+   },
+   "note": "exemption by naming an F-id; hand-filled interim needs a committed checklist",
+   "claude_seat_reason": "Claude seat while Codex had quota; no reason recorded at the time (audit 13 finding F-037)"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Support-it",
+    "C3": "Support-it",
+    "C4": "Support-it",
+    "C5": "Support-it",
+    "C6": "Support-it",
+    "C7": "Yes"
+   },
+   "note": "pending-audit should not stop the line; scaffold; split C5",
+   "claude_seat_reason": "Claude seat while Codex had quota; no reason recorded at the time (audit 13 finding F-037)"
+  },
+  {
+   "role": "product manager",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Support-it",
+    "C3": "Support-it",
+    "C4": "Support-it",
+    "C5": "No",
+    "C6": "Support-it",
+    "C7": "Support-it"
+   },
+   "note": "warn mode first; minimum fields first",
+   "claude_seat_reason": "Claude seat while Codex had quota; no reason recorded at the time (audit 13 finding F-037)"
+  }
+ ],
+ "round2": [
+  {
+   "role": "architect",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Support-it",
+    "C2": "Support-it",
+    "C3": "Support-it",
+    "C4": "No",
+    "C5": "No",
+    "C6": "No",
+    "C7": "Support-it"
+   },
+   "note": "C4 boundaries not derivable; C5 removal window; C6 writer provenance unprovable",
+   "interpreted": "the seat answered in prose per clause; the vote words are the facilitator's reading, the note keeps its wording"
+  },
+  {
+   "role": "QA engineer",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "No",
+    "C2": "Support-it",
+    "C3": "Support-it",
+    "C4": "Support-it",
+    "C5": "Support-it",
+    "C6": "Support-it",
+    "C7": "Support-it"
+   },
+   "note": "corrective_paths immutable once committed"
+  },
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Support-it",
+    "C2": "No",
+    "C3": "No",
+    "C4": "Support-it",
+    "C5": "Support-it",
+    "C6": "Support-it",
+    "C7": "No"
+   },
+   "note": "bounded globs; fix cards blocked by C2; computed usable_quota",
+   "claude_seat_reason": "Claude seat while Codex had quota; no reason recorded at the time (audit 13 finding F-037)"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Support-it",
+    "C3": "Yes",
+    "C4": "Support-it",
+    "C5": "Support-it",
+    "C6": "Yes",
+    "C7": "Support-it"
+   },
+   "note": "F-008 must qualify for the exemption; scaffold",
+   "claude_seat_reason": "Claude seat while Codex had quota; no reason recorded at the time (audit 13 finding F-037)"
+  },
+  {
+   "role": "product manager",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Support-it",
+    "C3": "Yes",
+    "C4": "Support-it",
+    "C5": "No",
+    "C6": "Yes",
+    "C7": "Support-it"
+   },
+   "note": "three hard rules first, the rest warn mode",
+   "claude_seat_reason": "Claude seat while Codex had quota; no reason recorded at the time (audit 13 finding F-037)"
+  }
+ ],
+ "independent_rerun": [
+  {
+   "role": "architect",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "No",
+    "C2": "No",
+    "C3": "Yes",
+    "C4": "No",
+    "C5": "No",
+    "C6": "No",
+    "C7": "Support-it"
+   },
+   "note": "immutable scope, explicit closure audit, derivable boundaries, provenance"
+  },
+  {
+   "role": "QA engineer",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Support-it",
+    "C3": "Support-it",
+    "C4": "No",
+    "C5": "No",
+    "C6": "No",
+    "C7": "Support-it"
+   },
+   "note": "boundaries, member identity and Decider evidence undefined",
+   "interpreted": "the seat answered in prose per clause; the vote words are the facilitator's reading, the note keeps its wording"
+  },
+  {
+   "role": "independent auditor",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "No",
+    "C2": "No",
+    "C3": "No",
+    "C4": "No",
+    "C5": "No",
+    "C6": "No",
+    "C7": "No"
+   },
+   "note": "unauthenticated transitions; checker self-modification; self-attested evidence",
+   "interpreted": "the seat answered in prose per clause; the vote words are the facilitator's reading, the note keeps its wording"
+  },
+  {
+   "role": "delivery lead",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": "checkable, thin cards",
+   "interpreted": "the seat answered in prose per clause; the vote words are the facilitator's reading, the note keeps its wording"
+  },
+  {
+   "role": "product manager",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "No",
+    "C3": "Support-it",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": "tie the process lane to an open finding"
+  }
+ ]
+}

@@ -1,0 +1,294 @@
+{
+ "decider": "D140",
+ "result": "FAILED",
+ "clauses": [
+  "C1 findings file",
+  "C2 stop the line",
+  "C3 initial findings",
+  "C4 record fields",
+  "C5 ship rules",
+  "C6 probe log",
+  "C7 delivery"
+ ],
+ "round1": [
+  {
+   "role": "architect",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "No",
+    "C2": "No",
+    "C3": "No",
+    "C4": "Support-it",
+    "C5": "Support-it",
+    "C6": "Support-it",
+    "C7": "No"
+   },
+   "note": "bootstrap for F-001's pre-existing fix; process paths too broad"
+  },
+  {
+   "role": "QA engineer",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Support-it",
+    "C2": "Support-it",
+    "C3": "Support-it",
+    "C4": "Support-it",
+    "C5": "Support-it",
+    "C6": "Support-it",
+    "C7": "Support-it"
+   },
+   "note": ""
+  },
+  {
+   "role": "independent auditor",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Support-it",
+    "C2": "Support-it",
+    "C3": "Support-it",
+    "C4": "No",
+    "C5": "No",
+    "C6": "No",
+    "C7": "Support-it"
+   },
+   "note": "committed attributable evidence; ancestry ordering; enforcement for every card after the cutoff"
+  },
+  {
+   "role": "delivery lead",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Support-it",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Support-it",
+    "C7": "Yes"
+   },
+   "note": ""
+  },
+  {
+   "role": "product manager",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Support-it",
+    "C2": "Support-it",
+    "C3": "Support-it",
+    "C4": "Support-it",
+    "C5": "Support-it",
+    "C6": "Support-it",
+    "C7": "Support-it"
+   },
+   "note": ""
+  }
+ ],
+ "round1_set_aside_under_F037": [
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Support-it",
+    "C2": "No",
+    "C3": "Support-it",
+    "C4": "No",
+    "C5": "Support-it",
+    "C6": "No",
+    "C7": "Yes"
+   },
+   "note": "set aside, not counted",
+   "claude_seat_reason": "Claude seat while Codex had quota; no reason recorded at the time (audit 13 finding F-037)"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Support-it",
+    "C3": "Support-it",
+    "C4": "Support-it",
+    "C5": "Support-it",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": "set aside, not counted",
+   "claude_seat_reason": "Claude seat while Codex had quota; no reason recorded at the time (audit 13 finding F-037)"
+  },
+  {
+   "role": "product manager",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Support-it",
+    "C4": "Support-it",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "Support-it"
+   },
+   "note": "set aside, not counted",
+   "claude_seat_reason": "Claude seat while Codex had quota; no reason recorded at the time (audit 13 finding F-037)"
+  }
+ ],
+ "round2": [
+  {
+   "role": "architect",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Support-it",
+    "C5": "Support-it",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": ""
+  },
+  {
+   "role": "QA engineer",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Support-it",
+    "C5": "Yes",
+    "C6": "Support-it",
+    "C7": "Yes"
+   },
+   "note": ""
+  },
+  {
+   "role": "independent auditor",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "No",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "No",
+    "C5": "Yes",
+    "C6": "No",
+    "C7": "Yes"
+   },
+   "note": "CLOSED terminal; committed CI evidence; script blob predates the line"
+  },
+  {
+   "role": "delivery lead",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Support-it",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": ""
+  },
+  {
+   "role": "product manager",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "Yes",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": ""
+  }
+ ],
+ "independent_rerun": [
+  {
+   "role": "architect",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Support-it",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "No",
+    "C5": "Support-it",
+    "C6": "Support-it",
+    "C7": "Yes"
+   },
+   "note": "deterministic started_at source"
+  },
+  {
+   "role": "QA engineer",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "No",
+    "C3": "No",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "No",
+    "C7": "Yes"
+   },
+   "note": "subject matching; F-008 wildcard; deterministic parser interface"
+  },
+  {
+   "role": "independent auditor",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Support-it",
+    "C4": "No",
+    "C5": "No",
+    "C6": "Yes",
+    "C7": "Support-it"
+   },
+   "note": "CI provenance; removals before the first Card commit"
+  },
+  {
+   "role": "delivery lead",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Support-it",
+    "C3": "Yes",
+    "C4": "Support-it",
+    "C5": "Yes",
+    "C6": "Support-it",
+    "C7": "Yes"
+   },
+   "note": ""
+  },
+  {
+   "role": "product manager",
+   "model": "codex gpt-5.6-sol (decider.py sandboxed clone, fresh context)",
+   "overall": "Yes",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": ""
+  }
+ ]
+}

@@ -447,5 +447,6 @@
   }
  ],
  "rerun_result": "confirmed: no seat at No on any clause; no difference in outcome",
- "result": "PASSED on the final wording with item 7 amended"
+ "result": "PASSED on the final wording with item 7 amended",
+ "probe_freshness": "Probe freshness (audit 15 finding F-040): the Copilot, Grok and agy probes these seats relied on were from 02:16 UTC and over 60 minutes old for the later seats; the Codex probe at 03:10 UTC was fresh; the re-probe at 04:03 UTC found all four non-Claude models out."
 }

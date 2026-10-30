@@ -1,0 +1,260 @@
+{
+ "decider": "D144",
+ "result": "FAILED; C6 escalated to the product owner (Sandbox or Spotcheck)",
+ "clauses": [
+  "C1 findings file",
+  "C2 stop the line",
+  "C3 initial findings",
+  "C4 record fields",
+  "C5 ship rules",
+  "C6 probe log",
+  "C7 delivery"
+ ],
+ "round1": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "No",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "No",
+    "C7": "Yes"
+   },
+   "note": "linear main or merges qualify; unenforceable network and write bans",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "No",
+    "C7": "Yes"
+   },
+   "note": "audit hook, pinned timeout, strict boolean",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  },
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "No",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": "checker editable under a finding token; Retro and Decider subjects",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "No"
+   },
+   "note": "MOB.md listing cannot pass its own rule",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  },
+  {
+   "role": "product manager",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": "",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  }
+ ],
+ "round2": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Support-it",
+    "C7": "Yes"
+   },
+   "note": "bootstrap for every pre-existing evidence entry; deny subprocess and ctypes",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": "more red tests for the hook",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  },
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "No",
+    "C3": "No",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": "D-number record in a strict ancestor; bootstrap read as F-001 only",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": "",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  },
+  {
+   "role": "product manager",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": "do not add clauses before product work",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  }
+ ],
+ "independent_rerun": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": "deny subprocess, exec, fork, ctypes",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "Yes"
+   },
+   "note": "",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  },
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "No",
+    "C3": "No",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "No",
+    "C7": "Yes"
+   },
+   "note": "strict ancestor; bootstrap for all pre-existing evidence; allowlist audit hook",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "Yes",
+    "C7": "No"
+   },
+   "note": "per-commit limits and restart order; overall stated as Yes with conditions",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  },
+  {
+   "role": "product manager",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "No",
+   "clauses": {
+    "C1": "Yes",
+    "C2": "Yes",
+    "C3": "Yes",
+    "C4": "Yes",
+    "C5": "Yes",
+    "C6": "No",
+    "C7": "No"
+   },
+   "note": "sandbox is over-specification; spot-check first; overall stated as Yes with reservations",
+   "claude_seat_reason": "Claude seat: Codex returned no response at its usage limit (probe 03:10 UTC); Copilot no quota, Grok 402, agy at quota (probes 02:16 UTC); the local model is not admitted as a voter"
+  }
+ ],
+ "probe_freshness": "Probe freshness (audit 15 finding F-040): the Copilot, Grok and agy probes these seats relied on were from 02:16 UTC, 87 to 105 minutes old at seat time; the re-probe at 04:03 UTC found all four non-Claude models out."
+}

@@ -13,6 +13,7 @@ Standing rule: see TEAM_WORKING_AGREEMENT.md, Driver availability. A driver is n
 
 ## Events
 
+- 2026-10-30 04:03 UTC: re-probe of all four after audit 15 (F-040): Codex usage limit (pinned gpt-5.6-sol; reset about 2026-11-04 07:16 UTC), Copilot remaining -5 of 1500 (reset 2026-11-01 00:00 UTC), Grok 402 balance exhausted, agy quota (resets in 65h21m, about 2026-11-01 21:25 UTC). Evidence: .mob/records/probes/2026-10-30.jsonl. Rule from now: no seat without probes under 60 minutes old.
 - 2026-10-30 03:10 UTC: Codex hit its usage limit (reset about 2026-11-04 07:16 UTC) after about 22 Decider seat runs in an hour; six D136 and six D137 re-vote seats returned no response. With every non-Claude model out, Decider seats are fresh Claude contexts, one per role, with the reason recorded.
 - 2026-10-30 02:58 UTC: the local model download resumed from the partial file and verified (SHA-256 match); first probe passed but slowly (prompt 8, generation 3.5 tokens per second). Trial seat limited to voter and retro feedback until the offload tuning and the trial on solved cards.
 - 2026-10-30 02:16 UTC: card-boundary probe by the new facilitator (raw output kept as probe evidence): Codex available; Copilot, Grok and agy still out. Reset pollers recreated for Copilot (30 min, quota read), Grok (30 min) and agy (60 min), each also probing at its known reset. Quota-first rule: every model with quota is seated before any Claude context. The local model download resumed from the partial file (11.5 of 21.1 GB), pausing whenever a test gate runs.
