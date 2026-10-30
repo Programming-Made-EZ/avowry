@@ -54,6 +54,14 @@
    "seat": "architect (slice)",
    "context": "ctx-6",
    "source": ".mob/records/214/turn-slice-architect.md section 4 (a71d197)"
+  },
+  {
+   "boundary": "after green, before ship",
+   "answer": "no",
+   "reason": "one harness file plus a module initializer using documented Kestrel behaviour; a hosting or CI-runner expert joins by Decider only if ubuntu CI differs",
+   "seat": "independent reviewer",
+   "context": "ctx-4",
+   "source": "a477bc6"
   }
  ],
  "cycles": [
@@ -91,5 +99,24 @@
    "started": "about 11:06 UTC",
    "result": "stopped by the facilitator before any output or commit: started on the 09:18 probes, over 60 minutes old (F-040 guardrail); re-probed 11:07 UTC and re-seated in a fresh context"
   }
- ]
+ ],
+ "review": {
+  "seat": "independent reviewer ctx-4 (attempt 2)",
+  "commits": [
+   "a7e9401 (provisional)",
+   "a477bc6 (final)"
+  ],
+  "verdict": "APPROVE with one medium fix before ship (Z test window 1 s to 5 s)",
+  "f062_cause": "EXPOSES: old harness at 391828f median ready 10.1 s, max 63 s, its 2-minute window absorbed the starvation; new harness without the floor median 9.1 s, with the floor 7.5 s; the new harness blocks no pool thread; root-cause fix is card 217 (ranked second, re-rank 6)",
+  "domain_expert": {
+   "boundary": "after green, before ship",
+   "answer": "no",
+   "reason": "one harness file plus a module initializer using documented Kestrel behaviour; a hosting or CI-runner expert joins by Decider only if ubuntu CI differs",
+   "seat": "independent reviewer",
+   "context": "ctx-4"
+  }
+ },
+ "ci": {
+  "afa4e40": "ci success (run 41045702766), the first green on the card's last code commit"
+ }
 }
