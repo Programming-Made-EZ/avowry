@@ -81,5 +81,10 @@
   }
  ],
  "decision": null,
- "ended_at": null
+ "ended_at": null,
+ "adopted_condition": {
+  "from": "QA engineer (ctx-3)",
+  "condition": "add a ZOMBIES case to Done check 3 for a member whose domain, why or context is whitespace-only or the string \"true\"",
+  "done": "card-text section of the proposal amended by the product manager (ready) ctx-1; applied to the issue after the window"
+ }
 }
