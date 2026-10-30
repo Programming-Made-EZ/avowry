@@ -1,0 +1,18 @@
+{
+ "experiment": "D153 lighter path for routine per-card decisions",
+ "origin": "Dispatch proposal (observation: about seven full Deciders on card 205 before any code), sent with the product owner's approval; the team decided it in D153 (two rounds and an independent re-run), adopting it with two conditions: the commit trail per window (L3a) and the checker rule for windows (L3b, card 213)",
+ "hypothesis": "A product manager proposal plus an objection window for routine per-card decisions cuts decision overhead without hurting decision quality.",
+ "scope": "routine per-card decisions only (task-force declaration, slice decision, loop-boundary re-rank, card-text and declaration fixes, mid-card addition); a full Decider for any unsettled objection, one-way door or standing-rule change",
+ "metric": ["decisions per card (full Deciders and windows counted separately)", "minutes from card declared (issue created) to first red commit"],
+ "counter_metric": ["routine decisions later reversed or found wrong", "windows the external auditor rules should have been full Deciders"],
+ "trial": "the D153 text says 5 cards; Dispatch's framing suggested 2: the team holds an interim review at the retro after the 2nd card that uses windows (keep, revert or continue to 5) and the final keep, revise or drop at the retro after the 5th; no window counts until card 213 is on main",
+ "baseline_card_205": {
+  "card_declared": "2026-10-30T04:44:02Z (issue 205 created)",
+  "first_red_commit": "2026-10-30T05:08:25Z (b33793a, swept into another session's commit, so the timing is approximate)",
+  "minutes_declared_to_first_red": 24,
+  "full_deciders_for_routine_card_decisions": ["D146 task force", "D147 re-rank", "D149 loop-boundary re-rank", "D152 mid-card declaration fix"],
+  "note": "D148 (product owner rulings), D150, D151 and D153 were process decisions, not routine card decisions, and are not counted"
+ },
+ "judged_at": "the retro after the 2nd and the 5th card that use objection windows",
+ "recorded": "2026-10-30"
+}
