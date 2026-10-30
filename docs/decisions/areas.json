@@ -1042,5 +1042,11 @@
     "status": "in force",
     "title": "Every stand-down and retro opens by reviewing each previous adjustment (product owner ruling)",
     "order": 146
+  },
+  "D156": {
+    "area": "process-and-staffing",
+    "status": "applied",
+    "title": "Card 214 task force, card text and the delivery lead's objection",
+    "order": 147
   }
 }

@@ -1,0 +1,117 @@
+{
+ "decider": "D156",
+ "subject": "Card 214 task force, card text and the delivery lead's objection (window 214-taskforce did not settle)",
+ "proposer": "product manager (ready) seat, ctx-1 of card 214",
+ "result": "PASSED round 1 (six Yes), confirmed by the independent re-run (five Yes, one Support-it)",
+ "claude_seat_reason": "probes at 08:21 UTC (a5be583) show Codex, Copilot, Grok and agy without usable quota",
+ "proposal_file": "D156-proposal.md (text in docs/decisions/process-and-staffing.md#d156)",
+ "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)",
+ "rounds": [
+  {
+   "round": "round 1",
+   "votes": [
+    {
+     "role": "architect",
+     "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+     "context": "d156-architect",
+     "started_at": "2026-10-30T08:26:15Z",
+     "vote": "Yes",
+     "reply": "Yes\n\nP1: The seven-seat task force with the reviewer covering test infrastructure and Kestrel is minimal and enough for a one-file card.\nP2: Folding the foreign-process hazard into Done checks 1 and 2 keeps the card at three checks. Tying check 3 to the removal commit plus a green CI run id gives F-056 a checkable closure.\nP3: Keeping each commit within the D136 limits and adding no ceremony beyond D153 and D154 is enforceable and adds nothing new.\nP4: Not adopting the single red-and-green commit is right. D137 and condition 3 of window 214-rerank-4 require the red test first, so the cause is proved and not assumed.\nP5: Polling every declared role, including the empty PM signoff seat, with one fixed condition per objection, follows F-054 and D145 without adding a rule.\n"
+    },
+    {
+     "role": "qa",
+     "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+     "context": "d156-qa",
+     "started_at": "2026-10-30T08:26:15Z",
+     "vote": "Yes",
+     "reply": "Yes\n\nP1: Yes. The seven-role declaration covers every layer, and the QA seat (ctx-2) commits the red tests before the developer touches the code.\nP2: Yes. Both hazards are testable red. (a) is a held or taken port that gives \"address already in use\". (b) is a foreign listener that the current `WaitUntilListeningAsync` wrongly reports as up. Folding them into checks 1 and 2 keeps the card at three checks, and the closure evidence in check 3 is checkable.\nP3: Yes. The D136 limits per commit are measurable, and adding no ceremony beyond D153 and D154 keeps the card small.\nP4: Yes. The red-first commit is required by D137 and by window 214-rerank-4. A single commit that ships red and green together would not prove the cause.\nP5: Yes. Polling every role, including re-polling the empty PM signoff seat, follows F-054, and one fixed condition per objection follows D145.\n"
+    },
+    {
+     "role": "dev",
+     "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+     "context": "d156-dev",
+     "started_at": "2026-10-30T08:26:16Z",
+     "vote": "Yes",
+     "reply": "Yes\n\nP1: Yes. The seven-seat declaration is workable. Developer and reviewer cover .NET and Kestrel, and a hosting or CI expert can still be added later through a Decider.\nP2: Yes. Folding the second hazard into checks 1 and 2 keeps the card at three checks. The wording is unambiguous: the harness reads the bound address from the process it started and confirms readiness against that address.\nP3: Yes. The change is one harness file plus its tests, so every commit can stay under 15 files and 400 lines. The pre-ship gate adds no work I can't comply with.\nP4: Yes. Red first, then the fix, is how I would work this card anyway. Two commits are fair to the work, and I can't game that rule. One commit shipping red and green together would remove the evidence that F-056 closes on.\nP5: Yes. Polling every role, including the PM signoff seat, and allowing one fixed condition per objection is clear.\n"
+    },
+    {
+     "role": "auditlens",
+     "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+     "context": "d156-auditlens",
+     "started_at": "2026-10-30T08:26:16Z",
+     "vote": "Yes",
+     "reply": "Yes\n\n- P1: Yes. Seven distinct seats and contexts are declared, and the reviewer (ctx-4) is separate from the author (ctx-3), so independence can be read from the window trail in git.\n- P2: Yes. Check 3 names the removal commit plus a CI run id on the last commit. Both can be checked against git and origin, and a single green re-run of fb13e3d is explicitly not enough.\n- P3: Yes. The D136 limit (at most 15 files and 400 lines) is mechanically checkable per commit. \"No ceremony beyond D153 and D154\" is vague, but it is a limit on the card, not a way to pass without doing the work.\n- P4: Yes. Not adopting the one-commit condition is right. Two commits (red test, then fix) leave the proof in `git log`, and a single commit would not show that the cause was proved first.\n- P5: Yes. Polling every role again, including the empty PM signoff seat, and allowing one fixed condition per objection closes the empty-reply gap.\n"
+    },
+    {
+     "role": "delivery",
+     "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+     "context": "d156-delivery",
+     "started_at": "2026-10-30T08:26:16Z",
+     "vote": "Yes",
+     "reply": "Yes\n\nP1: Fine. Seven seats are heavy for a small card, but each is a role already in the window trail, and no separate .NET/Kestrel expert is added.\nP2: Fine. The card text stays at 3 checks, and check 3 names its closure evidence.\nP3: Fine. D136 limits per commit plus D153 and D154 and nothing more is the ceremony ceiling I asked for.\nP4: Accepted. Red-then-fix is two small commits, not a ceremony, and my \"one commit\" condition yields to D137.\nP5: Fine. Polling every role again and allowing one fixed condition per objection keeps the line moving.\n"
+    },
+    {
+     "role": "pmsignoff",
+     "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+     "context": "d156-pmsignoff",
+     "started_at": "2026-10-30T08:26:16Z",
+     "vote": "Yes",
+     "reply": "Yes\n\nP1: The seven roles each have their own context, and the PM signoff seat is separate from PM ready, so the standing rule holds.\nP2: The card text puts the F-056 closure evidence in check 3 and adds no extra ceremony, so open FAILs still stop the line.\nP3: Capping every commit at D136 limits and adding nothing beyond D153 and D154 keeps the card from over-specifying up front (VISION ruling 6).\nP4: Red test first, then the fix, is what D137 requires and what proves the cause, so declining the delivery lead's one-commit condition is right.\nP5: Polling every declared role, with the PM signoff seat re-polled, and one fixed condition per objection follows F-054 and D145.\n"
+    }
+   ]
+  },
+  {
+   "round": "independent re-run (fresh seats, F-038)",
+   "votes": [
+    {
+     "role": "architect",
+     "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+     "context": "d156rr-architect",
+     "started_at": "2026-10-30T08:35:44Z",
+     "vote": "Yes",
+     "reply": "Yes\n\nP1: Seven-seat declaration with the reviewer and developer covering .NET/Kestrel is sound and minimal. A hosting expert can be added later through a Decider.\nP2: Folding the second hazard into checks 1 and 2 keeps three checks. Naming the removal commit plus a green CI run id as F-056 closure evidence is enforceable, since both can be checked in git.\nP3: Capping each commit at D136 limits (15 files, 400 lines), with no ceremony beyond D153 and D154, is a fair partial adoption of the delivery lead's condition.\nP4: Declining the single-commit condition is correct. D137 and the 214-rerank-4 condition require the red test committed first, so the cause is proved before the fix. Two commits is the minimum that leaves that evidence.\nP5: Polling every declared role (F-054), including the empty PM signoff seat, with one fixed condition per objection (D145), matches the existing window rules and adds no new checker.\n"
+    },
+    {
+     "role": "qa",
+     "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+     "context": "d156rr-qa",
+     "started_at": "2026-10-30T08:35:44Z",
+     "vote": "Yes",
+     "reply": "Yes\n\nP1: Yes. The seven seats separate author (ctx-3), reviewer (ctx-4), QA (ctx-2) and signoff (ctx-5), so nobody checks their own work.\nP2: Yes. Done checks 1 and 2 each name a failing condition that can be shown red first. Check 1(b), a foreign listener that the current `WaitUntilListeningAsync` wrongly accepts, catches the readiness violation without letting a bad state pass.\nP3: Yes. The D136 limits and the D154 gate add no new ceremony and don't weaken any test.\nP4: Yes. Committing red before the fix is what proves the cause. The delivery lead's one-commit condition would have removed that evidence, so rejecting it is correct.\nP5: Yes. Polling every role, including the empty PM signoff seat, with one fixed condition per objection, keeps the window valid.\n"
+    },
+    {
+     "role": "dev",
+     "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+     "context": "d156rr-dev",
+     "started_at": "2026-10-30T08:35:44Z",
+     "vote": "Yes",
+     "reply": "Yes\n\nP1: Yes. The seven seats are workable, and the author, reviewer, QA and signoff contexts are separate.\nP2: Yes. Folding the second hazard into checks 1 and 2 keeps the card at three checks. I can write one red test per hazard and one fix without gaming anything.\nP3: Yes. Keeping every commit within the D136 limits is workable, because the change is one harness file plus its tests.\nP4: Yes. Committing red first and then the fix is the correct order. The D136 limits are clear for both commits.\nP5: Yes. Polling every role again, with one fixed condition per objection, is unambiguous.\n"
+    },
+    {
+     "role": "auditlens",
+     "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+     "context": "d156rr-auditlens",
+     "started_at": "2026-10-30T08:35:44Z",
+     "vote": "Yes",
+     "reply": "Yes\n\nP1: The seven seats are distinct contexts, and author ctx-3, reviewer ctx-4, QA ctx-2 and signoff ctx-5 are separate, so no one reviews their own work. This matches the window trail.\nP2: Closure rests on two git facts: the commit that removes FreeLoopbackPort, and a CI run id on the last commit. Both can be checked from git and the CI record. Folding the second hazard into checks 1 and 2 keeps the count at three.\nP3: The D136 limits (15 files, 400 lines) can be checked per commit with git diff --stat. The gate must apply to every commit, not to the card total, so the card can't be batched into one large commit.\nP4: Adopting it only in part is right. Git history shows whether the red test was committed before the fix. That ordering is the strongest evidence, and a single-commit shortcut would remove it.\nP5: Polling every role, including the PM signoff seat that came back empty, closes the F-054 loophole. The window trail records each seat's reply.\n"
+    },
+    {
+     "role": "delivery",
+     "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+     "context": "d156rr-delivery",
+     "started_at": "2026-10-30T08:35:44Z",
+     "vote": "Support-it",
+     "reply": "Support-it\n\nP1: Seven roles is heavy for a small card, but the roles are already polled in 214-taskforce and cost no new ceremony, so I accept the declaration.\nP2: The card text changes are small and fold the second hazard into the existing checks, so Done stays at 3 checks.\nP3: I wrote the condition (15 files and 400 lines per commit, nothing beyond D153 and D154), and it is adopted accurately.\nP4: Two commits (red test, then fix) are the minimum D137 allows, and each stays within D136 limits, so I withdraw my single-commit request.\nP5: Polling every declared role is fine, and the fixed condition per objection (D145) keeps the line moving.\n"
+    },
+    {
+     "role": "pmsignoff",
+     "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+     "context": "d156rr-pmsignoff",
+     "started_at": "2026-10-30T08:35:45Z",
+     "vote": "Yes",
+     "reply": "Yes\n\nP1: The seven separate contexts match the \"every role in its own context\" rule, and the PM signoff seat is kept.\nP2: Folding the second hazard into the existing Done checks keeps the card at three checks. Naming the F-056 closure evidence (removal commit plus a green CI run id) holds the accountability rule. Excluding product code and Kestrel configuration keeps the card from being over-specified up front.\nP3: Keeping every commit within D136 limits and adding no ceremony beyond D153 and D154 is acceptable. It keeps the card on product value.\nP4: Not adopting the single red-and-green commit is correct. D137 and the condition from window 214-rerank-4 require the red test first, so the cause is proved and not assumed.\nP5: Polling every declared role, including the PM signoff seat that came back empty, is consistent with F-054. One fixed condition per objection (D145) is also consistent.\n"
+    }
+   ]
+  }
+ ]
+}
