@@ -55,6 +55,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D151](process-and-staffing.md#d151) — Stand-down: a micro-retro at each cycle boundary within a card, replaced by the full retro at Done (amends D150)
 - [D153](process-and-staffing.md#d153) — A lighter path for routine per-card decisions: objection windows; full Deciders for objections, one-way doors and rule changes
 - [D154](process-and-staffing.md#d154) — Claim-equals-commit and pre-ship evidence gate, a 5-card experiment (card 205 retro pick)
+- [D155](process-and-staffing.md#d155) — Every stand-down and retro opens by reviewing each previous adjustment (product owner ruling)
 
 ### benchmarks-and-measurement
 
@@ -230,3 +231,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D152](process-and-staffing.md#d152) | Mid-card task-force declaration fix on card 205 | process-and-staffing | applied |
 | [D153](process-and-staffing.md#d153) | A lighter path for routine per-card decisions: objection windows; full Deciders for objections, one-way doors and rule changes | process-and-staffing | in force |
 | [D154](process-and-staffing.md#d154) | Claim-equals-commit and pre-ship evidence gate, a 5-card experiment (card 205 retro pick) | process-and-staffing | in force |
+| [D155](process-and-staffing.md#d155) | Every stand-down and retro opens by reviewing each previous adjustment (product owner ruling) | process-and-staffing | in force |

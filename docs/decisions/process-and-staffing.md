@@ -396,3 +396,11 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   BASELINE (card 205): at least 2 claimed-before-committed or record-check findings (evidence claimed before it was in git; record check comparing seats by model); 1 closure-blocking defect after sign-off (fixed in f04ac7f, bd17f7a and a third commit). For B (recorded, not trialed): 2 undeclared born-green criteria of 3.
   REVERSIBILITY: two-way door. Revert by deleting the rule text and dropping the check step; no shared state changes.
   VOTING RULE: reply first line Yes, Support-it or No, then P1: to Pn: one line each (one per proposal point). A No names ONE fixed condition (CONDITION: ...). A reasonable, reversible condition is adopted and the proposal re-polled; a later round may not add new demands. Only an irreconcilable purpose or model conflict escalates. Independent fresh-seat re-run before recording.
+
+<a id="d155"></a>
+#### Decider D155: product owner ruling (not a team vote): every stand-down and retro opens by reviewing each previous adjustment
+
+- Date: 2026-10-30. Recorded as a decision record so that rule-text changes can cite it (D145 C2). Not a team vote: product owner direction, given with audit 24.
+- Ruling: every stand-down and every retro opens by reviewing each adjustment the team made at the previous stand-down or retro, before any new adjustment. For each adjustment the review states: (1) the issue it targeted; (2) whether it resolved that issue, with evidence (a metric or a commit before and after); (3) its side effects, good and bad; (4) a verdict of keep, tune or revert. The review is recorded in the card record (the in-progress record during the card, then the retro).
+- First application: card 213's next stand-down reviews stand-down 1's adjustment (shared fixture helper; module-only test runs until the pre-ship gate): did module-only runs shorten feedback, and did deferring the full suite let anything slip to pre-ship?
+- The rule goes into TEAM_WORKING_AGREEMENT.md, and a mob-defaults card brings it to the template and to the loop runner's record fields (loop.py).
