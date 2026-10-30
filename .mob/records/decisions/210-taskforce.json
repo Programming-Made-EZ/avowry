@@ -56,6 +56,17 @@
    "condition": null,
    "raw": "Yes\nNO OBJECTION\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
+  },
+  {
+   "round": 1,
+   "role": "delivery lead",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-6",
+   "started_at": "2026-10-30T16:48:51Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes. The seven seats match the checker's required roles, and the thin-slice rules (D136, D157) are applied, not added to. The card gets no new ceremony. Claude-only staffing is justified by the probes and is reversible.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
   }
  ],
  "decision": null,
