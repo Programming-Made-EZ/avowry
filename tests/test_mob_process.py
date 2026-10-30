@@ -493,4 +493,39 @@ jobs:
         # Then the independent done-list invariant still fails exactly
         self.assertEqual(["MOB.md done list does not equal record and legacy cards"], errors)
 
+    # Card 213 Done check 1, ZOMBIES: Z (no decisions folder, empty folder: born-green guard), O (one complete window passes: born-green guard),
+    # M (several windows, only the incomplete one is named), B (category outside the closed L1 list, different capitals, missing or empty ended_at),
+    # I (the message names the file and the field). E (invalid JSON) and S are left to later increments. The real windows must also pass (born-green guard).
+    @unittest.skip('PENDING(213-1)')
+    def test_window_files_need_a_closed_list_category_and_an_end_time(self):
+        (self.root / "MOB.md").write_bytes(mob.render_mob(self.root, [], self.git).encode("utf-8"))
+        def check():
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out): code = mob.run_check(self.root, [], git=self.git)
+            return code, out.getvalue()
+        def window(name, **fields):
+            data = {"window": name, "category": "slice decision", "ended_at": "2026-10-30T07:38:24Z", "replies": []}
+            data.update(fields); folder = self.root / ".mob/records/decisions"; folder.mkdir(parents=True, exist_ok=True)
+            (folder / f"{name}.json").write_text(json.dumps(data), encoding="utf-8")
+        # Given no decisions folder, then an empty one (guards), the check passes
+        self.assertEqual(0, check()[0]); (self.root / ".mob/records/decisions").mkdir(); self.assertEqual(0, check()[0])
+        # And one complete window, then every listed category (guards), passes
+        window("301-ok"); self.assertEqual(0, check()[0])
+        for i, category in enumerate(("task-force declaration", "slice decision", "loop-boundary re-rank", "card-text or declaration fix", "mid-card addition")):
+            window(f"31{i}-listed", category=category)
+        self.assertEqual(0, check()[0])
+        # And the real windows of this repository pass
+        for real in (Path(__file__).resolve().parents[1] / ".mob/records/decisions").glob("*.json"):
+            (self.root / ".mob/records/decisions" / real.name).write_bytes(real.read_bytes())
+        self.assertEqual(0, check()[0])
+        # When a window has a category outside the list, wrong capitals, no end time or an empty one, only that file is named with its field
+        for name, fields, field in (("320-sixth", {"category": "sixth kind"}, "category"), ("321-caps", {"category": "Slice Decision"}, "category"),
+                                    ("322-noend", {"ended_at": None}, "ended_at"), ("323-emptyend", {"ended_at": ""}, "ended_at")):
+            with self.subTest(name):
+                window(name, **fields)
+                # Then the check fails, names the file and the field, and names no complete window
+                code, text = check(); (self.root / ".mob/records/decisions" / f"{name}.json").unlink()
+                self.assertEqual(1, code); self.assertTrue(any(name in x and field in x for x in text.splitlines()), text)
+                self.assertNotIn("301-ok", text)
+
 if __name__ == "__main__": unittest.main()
