@@ -97,7 +97,7 @@ jobs:
             seats["green"]["seat"]=green; seats["signoff"]["seat"]=signoff
             (self.root/".mob/records/204.json").write_text(json.dumps(record),encoding="utf-8")
             return mob.check_records(self.root,[issue(204)],self.git)
-        for green,signoff in (("Claude","Claude Sonnet"),("Claude","claude (sonnet)"),("Claude ctx-4","Claude ctx-4."),("Claude ctx-4","Claude (ctx-4)"),("Claude ctx-4","Claude")):
+        for green,signoff in (("Claude","Claude Sonnet"),("Claude","claude (sonnet)"),("Claude ctx-4","Claude ctx-4."),("Claude ctx-4","Claude (ctx-4)"),("Claude ctx-4","Claude"),("Claude ctx-4 ctx-7","Claude ctx-7"),("Claude ctx-7","Claude ctx-4 ctx-7"),("Claude CTX-04","Claude ctx-4"),("Claude ctx-4","Claude ctx-004")):
             with self.subTest(green=green,signoff=signoff): self.assertIn(msg,errors(green,signoff))
         for green,signoff in (("Claude ctx-4","Claude ctx-7"),("Codex","Claude")):
             with self.subTest(green=green,signoff=signoff): self.assertNotIn(msg,errors(green,signoff))

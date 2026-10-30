@@ -106,18 +106,20 @@ def git_call(git, *args):
     return git(*args)
 
 
-CONTEXT_RE = re.compile(r"^\W*(ctx-\d+)\W*$", re.IGNORECASE)
+CONTEXT_RE = re.compile(r"^\W*ctx-(\d+)\W*$", re.IGNORECASE)
 
 
 def seat_identity(seat):
-    """D145 C4: a seat is its driver (first word, lower-cased) plus an optional context id (ctx-<digits>)."""
+    """D145 C4: a seat is its driver (first word, lower-cased) plus an optional integer context id (ctx-<digits>); more than one ctx id makes the context ambiguous (None, True)."""
     words = str(seat).split()
-    context = next((m.group(1).lower() for m in map(CONTEXT_RE.match, words[1:]) if m), None)
-    return (words[0].lower() if words else "", context)
+    contexts = [int(m.group(1)) for m in map(CONTEXT_RE.match, words[1:]) if m]
+    return (words[0].lower() if words else "", contexts[0] if len(contexts) == 1 else None, len(contexts) > 1)
 
 
 def seats_distinct(first, second):
-    (driver_a, ctx_a), (driver_b, ctx_b) = seat_identity(first), seat_identity(second)
+    (driver_a, ctx_a, many_a), (driver_b, ctx_b, many_b) = seat_identity(first), seat_identity(second)
+    if many_a or many_b:
+        return False
     return driver_a != driver_b or (ctx_a is not None and ctx_b is not None and ctx_a != ctx_b)
 
 
