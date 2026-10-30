@@ -21,6 +21,17 @@
    "condition": null,
    "raw": "Yes\n\nNO OBJECTION",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (07:24 UTC)"
+  },
+  {
+   "attempt": 2,
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "win3b-qa",
+   "started_at": "2026-10-30T07:30:05Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "Yes\n\nNO OBJECTION\n\nThe order puts the checker card (213) first, which closes the gap where an incomplete objection window passes unchecked. That is the right test-first sequencing.",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (07:24 UTC)"
   }
  ],
  "decision": null,
