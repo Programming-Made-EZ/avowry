@@ -63,8 +63,11 @@
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)"
   }
  ],
- "decision": null,
- "ended_at": null,
+ "decision": {
+  "result": "not settled in the window: one OBJECTION (delivery lead) whose condition, one commit for red and green, contradicts the standing red-first rule (D137) and condition 3 of window 214-rerank-4 (Done check 1 committed red before the fix), so a window cannot adopt it; under D153 an unsettled objection goes to a full Decider with an independent re-run (D156)",
+  "escalated_to": "D156"
+ },
+ "ended_at": "2026-10-30T08:25:25Z",
  "attempts": [
   {
    "attempt": 1,
