@@ -1,4 +1,4 @@
-import contextlib, datetime as dt, importlib.util, io, json, subprocess, tempfile, unittest
+import contextlib, datetime as dt, importlib.util, io, json, os, subprocess, tempfile, unittest
 from pathlib import Path
 from unittest import mock
 
@@ -345,6 +345,51 @@ jobs:
         errors = mob.check_records(self.root, [issue(201, closed=closed), issue(202, closed=closed)], self.git)
         # Then reuse by the later card is named exactly
         self.assertIn(f"Card 202 evidence {evidence} is reused by Card 201", errors)
+
+    def closed_in_order(self, *cards):
+        # Fixture: each card gets an evidence commit then its record commit, in the order given, at fixed committer dates one hour apart
+        evidence, hour = {}, 0
+        for card in cards:
+            stamps = []
+            for _ in range(2):
+                hour += 1; stamps.append(f"2026-01-01T{hour:02}:00:00+00:00")
+            with mock.patch.dict(os.environ, {"GIT_COMMITTER_DATE": stamps[0]}):
+                (self.root / f"work{card}.txt").write_text("done", encoding="utf-8")
+                self.git("add", f"work{card}.txt"); self.git("commit", "-m", f"Card {card}: working increment")
+                evidence[card] = self.git("rev-parse", "HEAD")
+            with mock.patch.dict(os.environ, {"GIT_COMMITTER_DATE": stamps[1]}):
+                record = self.valid_record(card)
+            record["seats"][0]["evidence"] = evidence[card]
+            (self.root / f".mob/records/{card:03}.json").write_text(json.dumps(record), encoding="utf-8")
+        retro = f"Cards: {', '.join(str(c) for c in sorted(cards))}\n# Individual\n# Team\n# Organisation\n# Product\nProcess improvement pick\n"
+        (self.root / "docs/retros/r.md").write_text(retro, encoding="utf-8")
+        return evidence
+
+    def test_record_added_out_of_number_order_is_accepted(self):
+        # Given card 214's record was committed before card 209's, and 209's evidence postdates 214's record while 214's evidence predates 209's record
+        evidence = self.closed_in_order(214, 209)
+        # When both records are checked
+        errors = mob.check_records(self.root, [issue(214), issue(209)], self.git)
+        # Then the lower-numbered card that closed later does not constrain the higher-numbered card that closed first
+        self.assertEqual([], errors)
+        self.assertNotIn(f"Card 214 evidence {evidence[214]} predates Card 209's record", errors)
+
+    def test_guard_fixture_commit_dates_are_the_fixed_ones_in_close_order(self):
+        # Given two cards closed in the order 214 then 209 through the dated fixture
+        evidence = self.closed_in_order(214, 209)
+        # When the committer dates of the evidence and the records are read back
+        dates = [self.git("show", "-s", "--format=%cI", evidence[214]), self.git("log", "--format=%cI", "--diff-filter=A", "--", ".mob/records/214.json"),
+                 self.git("show", "-s", "--format=%cI", evidence[209]), self.git("log", "--format=%cI", "--diff-filter=A", "--", ".mob/records/209.json")]
+        # Then they are strictly increasing, so the strict less-than of the checker can fire
+        self.assertEqual(["2026-01-01T01:00:00Z", "2026-01-01T02:00:00Z", "2026-01-01T03:00:00Z", "2026-01-01T04:00:00Z"], dates)
+
+    def test_guard_records_closed_in_number_order_are_still_accepted(self):
+        # Given card 209's record was committed before card 214's with each card's evidence before its own record
+        self.closed_in_order(209, 214)
+        # When both records are checked
+        errors = mob.check_records(self.root, [issue(209), issue(214)], self.git)
+        # Then the ordinary close order passes
+        self.assertEqual([], errors)
 
     def test_cards_line_rejects_one_to_three_words(self):
         # Given a retro uses words instead of the numeric range syntax
