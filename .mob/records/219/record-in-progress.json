@@ -77,6 +77,16 @@
    "D162",
    "D157"
   ],
-  "criterion": 1
+  "criterion": 1,
+  "confirmation": {
+   "status": "confirmed",
+   "by": "facilitator (D165 C2)",
+   "against": [
+    "docs/decisions/process-and-staffing.md#d159 C1 (quoted verbatim)",
+    "docs/decisions/process-and-staffing.md#d162 (the product owner's word: waive)"
+   ],
+   "note": "the line restates the recorded rule and waiver and adds no scope; no product owner question needed",
+   "at": "2026-10-30T23:53:32Z"
+  }
  }
 }
