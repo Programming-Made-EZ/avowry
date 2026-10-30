@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:909e97d5ab01a349dc7a9453d6803b3b17430eb1952b4384ead75f6b6eac2b68 -->
+<!-- board-table-sha256:5088bed0101d223ecef242ba57978bfa5355d99be6198335e81c7e1d1144a1e1 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -95,7 +95,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 73 | 194 Rename the compiler project and namespace to Avowry.Compiler | Done | 193 |
 | 74 | 195 Rename the C# adapter and CLI projects to Avowry.* | Done | 194 |
 | 75 | 205 The facilitator starts only corrective cards while a finding blocks | Done | none (A2, D, C and E depend on this card, in that order) |
-| 76 | 214 The generated API binds its own port in acceptance tests | Ready | none |
+| 76 | 214 The generated API binds its own port in acceptance tests | Done | none |
 | 77 | 217 Acceptance tests do not starve the thread pool | Ready | none |
 | 78 | 213 The checker rejects an incomplete objection window | Ready | none |
 | 79 | 209 A task force member leaves only at the retro | Ready | none |
