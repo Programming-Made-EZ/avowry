@@ -14,3 +14,13 @@ The development process as nested loops, tightest first: (1) pair programming, (
 
 ## Dispatch's candidate (input only)
 The pairing loop is the thinnest: roles hand off whole steps with no live steering. Candidate: a navigator seat steers live during the green step. Metric: defects found at review, and time to green. Counter-metric: seat cost per card.
+
+## Product owner clarification (2026-10-30): "those loops are feedback loops"
+Map each loop by its feedback, not its ceremonies: who or what gives the feedback; how fast it arrives (latency); what the team does with it. The aim is fast, honest feedback at every loop, with each loop's lessons flowing into the loops around it. Starting points for the team to check and correct:
+- Pair programming: seconds, from a partner. Missing today (roles hand off whole steps).
+- Unit TDD: about 45 seconds of module test runs.
+- Acceptance: one acceptance test, a few minutes.
+- Slice: the 18-minute full suite, the review and CI.
+- Feature: should be the persona's observed behaviour (a demo). Missing today.
+- Epic: should be the LLM customers (benchmarks and cold-model trials; Avowry's users are LLMs).
+- Development lifecycle: product owner direction and adoption.
