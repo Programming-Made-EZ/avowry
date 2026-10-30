@@ -57,6 +57,20 @@
   }
  ],
  "d157": "one acceptance criterion per red-green cycle: Criterion 1 red, its unit layers, green, push; then Criterion 2; then Criterion 3",
- "cycles": [],
+ "cycles": [
+  {
+   "criterion": 1,
+   "repo": "mob-defaults",
+   "red": "6836d76",
+   "units": [
+    "5a2c930 (layer 3, outer, fake removal_problem double)",
+    "b527e1d (layer 4, no doubles)",
+    "8e387e3 (layer 5, leaf, no doubles)"
+   ],
+   "green": "7d371fa",
+   "pushed": "together at about 14:27 UTC; suite 315 tests OK, 1 unrelated skip",
+   "notes": "the developer amended its own unpushed layer 3 commit once to undo a line-ending change (no pushed history touched; still against the no-rewrite practice, raised at stand-down 1)"
+  }
+ ],
  "stand_downs": []
 }
