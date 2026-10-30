@@ -1,0 +1,18 @@
+{
+ "window": "208-slice",
+ "category": "slice decision",
+ "rule": "D153 objection window on the architect's slice and split (D157, D161)",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "claude-sonnet subagent",
+  "context": "ctx-2",
+  "probe_reference": ".mob/records/probes/2026-10-30.jsonl (17:13 UTC)"
+ },
+ "opened_at": "2026-10-30T17:32:27Z",
+ "proposal": "The architect's slice of card 208 is .mob/records/208/turn-slice-architect.md (commit 6bd8db2): SPLIT. Card 208 keeps one concern (a seat starts only on a fresh pinned probe, and a Claude seat only while no other model has quota, with quota_reason in the record; MD-002) with three numbered criteria and a criterion-by-layer table; six new one-concern cards (corrective-card gate in the loop runner; run a card in the repository its Repository line names; wire retro, re-rank and discovery commands and stop on failure; per-card retro from every role in its own context; re-rank by the product manager and a Decider; card mode reads only role lines), each naming F-008, in the order the slice argues stops the most drift first. Two-way door: a slice can be re-cut at any stand-down; the new cards are drafts until filed and ranked.",
+ "checklist_D158": ".mob/records/208/checklist-slice.md",
+ "polled_roles_note": "F-054: all six non-proposer roles polled.",
+ "replies": [],
+ "decision": null,
+ "ended_at": null
+}
