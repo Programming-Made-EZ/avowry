@@ -89,6 +89,17 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nYes\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (17:13 UTC)"
+  },
+  {
+   "round": 2,
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-3",
+   "started_at": "2026-10-30T17:35:14Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes. The amendment meets the adopted condition. Criterion 2 case E and the layer table now cover an evidence-write failure for both mixed and all-Claude rosters. They also require `fake_calls.log` to stay unchanged. Each green commit body now carries the mutation-run output for the guards it touches, before the push.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (17:13 UTC)"
   }
  ],
  "decision": null,
