@@ -374,6 +374,25 @@ jobs:
         self.assertEqual([], errors)
         self.assertNotIn(f"Card 214 evidence {evidence[214]} predates Card 209's record", errors)
 
+    def test_previous_record_is_the_nearest_record_added_before_in_history(self):
+        # Given records keyed by card with the commit that added each, and the history position of each commit (no doubles: pure dict inputs)
+        commit_order = {"a": 0, "b": 1, "c": 2, "d": 3}
+        table = [
+            ("first record in history has none", 214, {214: "a", 209: "b"}, None),
+            ("higher number added first is not lower number's previous", 209, {214: "a", 209: "b"}, 214),
+            ("nearest earlier, not the first", 209, {205: "a", 214: "b", 209: "c"}, 214),
+            ("number-lower card added later is not previous", 214, {209: "b", 214: "a"}, None),
+            ("same commit records do not constrain each other", 209, {205: "a", 214: "b", 209: "b"}, 205),
+            ("a record not in history order is ignored", 209, {214: "z", 209: "b"}, None),
+            ("card without a record has none", 300, {214: "a"}, None),
+        ]
+        for name, card, record_commits, expected in table:
+            with self.subTest(name):
+                # When the previous record is asked for
+                result = mob.previous_record(card, record_commits, commit_order)
+                # Then it is the nearest record from a strictly earlier commit, or None
+                self.assertEqual(expected, result)
+
     def test_guard_fixture_commit_dates_are_the_fixed_ones_in_close_order(self):
         # Given two cards closed in the order 214 then 209 through the dated fixture
         evidence = self.closed_in_order(214, 209)

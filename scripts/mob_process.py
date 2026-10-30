@@ -123,6 +123,10 @@ def seats_distinct(first, second):
     return driver_a != driver_b or (ctx_a is not None and ctx_b is not None and ctx_a != ctx_b)
 
 
+def previous_record(card, record_commits, commit_order):
+    return max((n for n in record_commits if n < card), default=None)
+
+
 def check_records(root, issues, git):
     errors, records = [], load_records(root)
     closed = {card_number(i): i for i in issues if "card" in labels(i) and "not-card" not in labels(i) and card_number(i)}
