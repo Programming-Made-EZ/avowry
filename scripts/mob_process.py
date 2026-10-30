@@ -441,7 +441,7 @@ def run_check(root, issues, git=None, skip_regeneration=False):
     maximum = max((item["number"] for item in issues), default=0) + 50
     for check in (lambda: check_records(root, issues, git), lambda: check_retros(root, closed_cards | set(legacy), maximum),
                   lambda: check_legacy(root, issues), lambda: check_mob(root, issues, git, skip_regeneration),
-                  lambda: check_events(root, issues), lambda: check_workflows(root), lambda: check_issue_labels(issues)):
+                  lambda: check_events(root, issues), lambda: check_workflows(root), lambda: check_issue_labels(issues), lambda: check_windows(root)):
         try:
             errors.extend(check())
         except (OSError, ValueError, RuntimeError, TypeError, AttributeError, KeyError) as exc:

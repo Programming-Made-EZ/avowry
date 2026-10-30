@@ -493,6 +493,21 @@ jobs:
         # Then the independent done-list invariant still fails exactly
         self.assertEqual(["MOB.md done list does not equal record and legacy cards"], errors)
 
+    # Card 213 unit layer 1 (D153 L3b), ZOMBIES: Z (no decisions folder: run_check passes, covered by the existing tests), O (one bad window makes run_check return 1),
+    # M (a second incomplete window is also reported), B (the error line is an ::error::mob-process: line), I (the line names the file and the field).
+    # E: N/A because invalid JSON is later work. S: N/A because nothing simpler exists.
+    def test_run_check_wires_in_the_window_check(self):
+        (self.root / "MOB.md").write_bytes(mob.render_mob(self.root, [], self.git).encode("utf-8"))
+        folder = self.root / ".mob/records/decisions"; folder.mkdir(parents=True)
+        for name, fields in (("330-a.json", {"category": "sixth", "ended_at": "x"}), ("331-b.json", {"category": "slice decision", "ended_at": ""})):
+            (folder / name).write_text(json.dumps(fields), encoding="utf-8")
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out): code = mob.run_check(self.root, [], git=self.git)
+        lines = out.getvalue().splitlines()
+        self.assertEqual(1, code)
+        self.assertTrue(any(x.startswith("::error::mob-process:") and "330-a.json" in x and "category" in x for x in lines), lines)
+        self.assertTrue(any(x.startswith("::error::mob-process:") and "331-b.json" in x and "ended_at" in x for x in lines), lines)
+
     # Card 213 Done check 1, ZOMBIES: Z (no decisions folder, empty folder: born-green guard), O (one complete window passes: born-green guard),
     # M (several windows, only the incomplete one is named), B (category outside the closed L1 list, different capitals, missing or empty ended_at),
     # I (the message names the file and the field). E (invalid JSON) and S are left to later increments. The real windows must also pass (born-green guard).
