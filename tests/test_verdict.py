@@ -136,7 +136,8 @@ class VerdictPageTests(unittest.TestCase):
         self.assertIn("Copilot status: UNAVAILABLE (no quota)", page)
         self.assertIn("Copilot resets 2026-11-01 00:00 UTC (account endpoint)", page)
         self.assertIn("agy status: UNAVAILABLE (quota)", page)
-        self.assertIn("agy resets in 108h50m", page)
+        # The countdown changes at every probe, so the test pins the shape (a relative reset and an absolute date), not the number
+        self.assertRegex(page, r"agy resets in \d+h\d+m from [^\n]*so about \d{4}-\d{2}-\d{2} \d{2}:\d{2} UTC")
 
     def test_fully_completed_three_model_holdout_uses_the_performance_bar(self):
         # Given all holdout groups completed for three models
