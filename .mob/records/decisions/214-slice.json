@@ -80,5 +80,10 @@
   }
  ],
  "decision": null,
- "ended_at": null
+ "ended_at": null,
+ "adopted_condition": {
+  "from": "backend developer (ctx-3)",
+  "condition": "born-green mutation tests: count and ordering, each must fail when its guard is removed",
+  "amended_in": "e6fe23d"
+ }
 }
