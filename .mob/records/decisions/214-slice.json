@@ -110,6 +110,17 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nYes\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)"
+  },
+  {
+   "round": 2,
+   "role": "independent reviewer (test infrastructure, Kestrel hosting, audit lens)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-4",
+   "started_at": "2026-10-30T09:01:17Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "Yes. NO OBJECTION. The amendment meets the adopted condition: it fixes 10 named tests and a one-line mutation for each, and it puts the failing output in commit bodies, so git alone can verify it. The ordering rule is strict: tests 3–10 land before commit 5. It breaks nothing it touched.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)"
   }
  ],
  "decision": null,
