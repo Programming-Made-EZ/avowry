@@ -497,3 +497,10 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   C6. Evidence: blocker 2026-10-30-209-record-order; D159 C1 to C6; the 208-after-210 refusal avoided; D160 round 1 condition.
   REVERSIBILITY: two-way door. Only the order of two cards changes; swap them back at the next re-rank, or amend once 219 is on main.
   VOTING RULE: reply first line Yes, Support-it or No, then P1: to Pn: one line each (one per proposal point). A No names ONE fixed condition (CONDITION: ...). A reasonable, reversible condition is adopted and the proposal re-polled; a later round may not add new demands. Only an irreconcilable purpose or model conflict escalates. Independent fresh-seat re-run before recording.
+
+<a id="d161"></a>
+#### Decider D161: product owner direction (not a team vote): lock the mob process down before product work; reports describe, not cite
+
+- Date: 2026-10-30. Recorded as a decision record so that rule-text changes can cite it (D145 C2). Not a team vote: product owner direction.
+- Direction 1 (the goal behind the current order), in the product owner's words: "the mob process needs fixing because it keeps drifting. once we can lock it down and save it to the default template then we can build anything safely." Process-first is intentional: the goal is a locked-down process, enforced by tooling and saved into the mob-defaults template, after which product work resumes. Every re-rank uses this goal: work that gets the rules enforced in the mob-defaults template and the loop runner is the priority.
+- Direction 2 (reporting): in anything meant for the product owner or the person running the mob, cards, decisions and findings are described by what they are or do; a bare card number, D-number or finding ID is never used alone; an ID may follow in parentheses.

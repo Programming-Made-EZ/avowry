@@ -1072,5 +1072,11 @@
     "status": "applied",
     "title": "No gate exemption for card 219; card 208 runs before card 210 so no corrective close is refused",
     "order": 151
+  },
+  "D161": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Product owner direction: lock the mob process into tooling and the mob-defaults template before product work; reports describe, not cite",
+    "order": 152
   }
 }
