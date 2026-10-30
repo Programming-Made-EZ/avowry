@@ -1,0 +1,8 @@
+# F-054: windows that did not poll the product manager sign-off seat
+
+- Finding: audit 24, F-054. The D153 objection windows 205-rerank-3 (opened 07:26:35Z) and 213-taskforce (opened 07:36:10Z) polled five seats (architect, QA engineer, backend developer, independent reviewer (audit lens), delivery lead) and the product manager as proposer. The product manager sign-off seat, a declared role of card 213 (ctx-5), was not polled, and neither window recorded why.
+- Cause: the facilitator reused the five-seat set of the earlier full Deciders (five voters plus a proposer) instead of reading the window's declared roles. Not a team decision; the facilitator's miss.
+- Effect on the two outcomes: none known. Both windows ended with no objection from all polled seats. The sign-off seat was not heard, so neither window counts as complete under D153 L3 for the experiment metrics. The external auditor may treat them as such.
+- Correction from now on: every window polls every declared role of the card it belongs to, in its own fresh context, or the window file records which role is not polled and why. The proposer's role counts as heard through the proposal; a second seat of the same role (product manager ready and sign-off) is still polled. First application: window 214-rerank-4 (polled_roles_note field), which polls architect, QA engineer, backend developer, independent reviewer (audit lens), delivery lead and product manager (signoff).
+- The committed window trails 205-rerank-3 and 213-taskforce are left unchanged (no history or record rewrites); this note is their correction.
+- Closing evidence: this commit, and the window 214-rerank-4 trail with six replies.
