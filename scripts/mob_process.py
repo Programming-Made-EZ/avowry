@@ -299,6 +299,19 @@ def check_events(root, issues):
     return errors
 
 
+WINDOW_CATEGORIES = ("task-force declaration", "slice decision", "loop-boundary re-rank", "card-text or declaration fix", "mid-card addition")
+
+
+def window_errors(path, data):
+    errors = []
+    if data.get("category") not in WINDOW_CATEGORIES:
+        errors.append(f"{path.name}: category must be one of the closed list ({', '.join(WINDOW_CATEGORIES)})")
+    ended = data.get("ended_at")
+    if not isinstance(ended, str) or not ended.strip():
+        errors.append(f"{path.name}: ended_at is missing or empty")
+    return errors
+
+
 def check_workflows(root):
     errors = []
     ci = root / ".github/workflows/ci.yml"

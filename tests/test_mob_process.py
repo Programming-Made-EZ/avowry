@@ -528,4 +528,36 @@ jobs:
                 self.assertEqual(1, code); self.assertTrue(any(name in x and field in x for x in text.splitlines()), text)
                 self.assertNotIn("301-ok", text)
 
+WINDOW_CATEGORIES = ("task-force declaration", "slice decision", "loop-boundary re-rank", "card-text or declaration fix", "mid-card addition")
+
+class WindowErrorsTests(unittest.TestCase):
+    path = Path(".mob/records/decisions/301-x.json")
+    def complete(self, **fields):
+        data = {"category": "slice decision", "ended_at": "2026-10-30T07:38:24Z", "replies": [], "raw": "extra"}
+        data.update(fields); return data
+
+    # Card 213 unit layer 3 (D153 L3b), ZOMBIES: Z (empty data: both fields reported), O (one complete window: no errors; extra keys ignored),
+    # M (category and ended_at both bad: two errors), B (each listed category passes; sixth, other capitals, padded, non-string category fail; empty, blank, non-string, missing ended_at fail),
+    # I (each message names the file and the field). E: N/A because invalid JSON is read by check_windows (layer 2), the pure function gets parsed data. S: N/A because nothing simpler exists.
+    def test_zero_empty_data_reports_both_fields(self):
+        errors = mob.window_errors(self.path, {})
+        self.assertEqual(2, len(errors)); self.assertTrue(any("category" in e for e in errors)); self.assertTrue(any("ended_at" in e for e in errors))
+    def test_one_complete_window_has_no_errors_and_extra_keys_are_ignored(self):
+        self.assertEqual([], mob.window_errors(self.path, self.complete()))
+    def test_many_bad_fields_give_one_error_each(self):
+        self.assertEqual(2, len(mob.window_errors(self.path, self.complete(category="sixth", ended_at=""))))
+    def test_boundary_every_listed_category_passes(self):
+        for category in WINDOW_CATEGORIES:
+            with self.subTest(category): self.assertEqual([], mob.window_errors(self.path, self.complete(category=category)))
+    def test_boundary_category_outside_the_list_fails(self):
+        for category in ("sixth kind", "Slice Decision", " slice decision", "", None, 5, ["slice decision"]):
+            with self.subTest(category): self.assertEqual(1, len(mob.window_errors(self.path, self.complete(category=category))))
+    def test_boundary_missing_or_empty_end_time_fails(self):
+        for ended in ("", "  ", None, 5):
+            with self.subTest(ended): self.assertEqual(1, len(mob.window_errors(self.path, self.complete(ended_at=ended))))
+        data = self.complete(); del data["ended_at"]; self.assertEqual(1, len(mob.window_errors(self.path, data)))
+    def test_interface_messages_name_the_file_and_the_field(self):
+        self.assertIn("301-x.json", mob.window_errors(self.path, self.complete(category="no"))[0]); self.assertIn("category", mob.window_errors(self.path, self.complete(category="no"))[0])
+        self.assertIn("301-x.json", mob.window_errors(self.path, self.complete(ended_at=""))[0]); self.assertIn("ended_at", mob.window_errors(self.path, self.complete(ended_at=""))[0])
+
 if __name__ == "__main__": unittest.main()
