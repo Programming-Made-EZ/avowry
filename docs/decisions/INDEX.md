@@ -216,3 +216,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D141](process-and-staffing.md#d141) | Findings mirroring and checker rules, second re-proposal (failed; re-proposed as D144) | process-and-staffing | applied |
 | [D144](process-and-staffing.md#d144) | Findings mirroring and checker rules, third re-proposal (failed; probe-log verification escalated) | process-and-staffing | applied |
 | [D145](process-and-staffing.md#d145) | Findings mirroring and staffing, quota-first and task-force checker rules (Spotcheck now, Sandbox as experiment E7) | process-and-staffing | in force |
+| [D146](process-and-staffing.md#d146) | Task force of card 205 (D145 card A1); slice split into cards 205, 206, 207 | process-and-staffing | applied |

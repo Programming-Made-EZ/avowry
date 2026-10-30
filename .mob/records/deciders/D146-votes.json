@@ -1,0 +1,141 @@
+{
+ "decider": "D146",
+ "subject": "Task force of card 205 (D145 card A1), seven roles in contexts ctx-1 to ctx-7, the independent auditor added on the domain-expert question at refinement",
+ "result": "PASSED, confirmed by the independent re-run",
+ "probes": ".mob/records/probes/2026-10-30.jsonl (04:36 UTC)",
+ "round1": [
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "T1": "Yes",
+    "T2": "Yes",
+    "T3": "Yes",
+    "T4": "Yes"
+   },
+   "condition": "none",
+   "claude_seat_reason": "Claude seat: probes at 04:36 UTC show Codex, Copilot, Grok and agy without usable quota; the local model is not admitted"
+  },
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "T1": "Yes",
+    "T2": "Yes",
+    "T3": "Yes",
+    "T4": "Yes"
+   },
+   "condition": "none",
+   "claude_seat_reason": "Claude seat: probes at 04:36 UTC show Codex, Copilot, Grok and agy without usable quota; the local model is not admitted"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "T1": "Yes",
+    "T2": "Yes",
+    "T3": "Yes",
+    "T4": "Yes"
+   },
+   "condition": "none",
+   "claude_seat_reason": "Claude seat: probes at 04:36 UTC show Codex, Copilot, Grok and agy without usable quota; the local model is not admitted"
+  },
+  {
+   "role": "backend developer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "T1": "Yes",
+    "T2": "Yes",
+    "T3": "Yes",
+    "T4": "Yes"
+   },
+   "condition": "none",
+   "claude_seat_reason": "Claude seat: probes at 04:36 UTC show Codex, Copilot, Grok and agy without usable quota; the local model is not admitted"
+  },
+  {
+   "role": "agile coach",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "T1": "Yes",
+    "T2": "Yes",
+    "T3": "Yes",
+    "T4": "Yes"
+   },
+   "condition": "none",
+   "claude_seat_reason": "Claude seat: probes at 04:36 UTC show Codex, Copilot, Grok and agy without usable quota; the local model is not admitted"
+  }
+ ],
+ "independent_rerun": [
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "T1": "Yes",
+    "T2": "Yes",
+    "T3": "Yes",
+    "T4": "Yes"
+   },
+   "condition": "none",
+   "claude_seat_reason": "Claude seat: probes at 04:36 UTC show Codex, Copilot, Grok and agy without usable quota; the local model is not admitted"
+  },
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "T1": "Yes",
+    "T2": "Yes",
+    "T3": "Yes",
+    "T4": "Yes"
+   },
+   "condition": "none",
+   "claude_seat_reason": "Claude seat: probes at 04:36 UTC show Codex, Copilot, Grok and agy without usable quota; the local model is not admitted"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "T1": "Yes",
+    "T2": "Yes",
+    "T3": "Yes",
+    "T4": "Yes"
+   },
+   "condition": "none",
+   "claude_seat_reason": "Claude seat: probes at 04:36 UTC show Codex, Copilot, Grok and agy without usable quota; the local model is not admitted"
+  },
+  {
+   "role": "backend developer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "T1": "Yes",
+    "T2": "Yes",
+    "T3": "Yes",
+    "T4": "Yes"
+   },
+   "condition": "none",
+   "claude_seat_reason": "Claude seat: probes at 04:36 UTC show Codex, Copilot, Grok and agy without usable quota; the local model is not admitted"
+  },
+  {
+   "role": "agile coach",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "T1": "Yes",
+    "T2": "Yes",
+    "T3": "Yes",
+    "T4": "Yes"
+   },
+   "condition": "none",
+   "claude_seat_reason": "Claude seat: probes at 04:36 UTC show Codex, Copilot, Grok and agy without usable quota; the local model is not admitted"
+  }
+ ],
+ "rerun_result": "confirmed: every seat Yes; no difference"
+}
