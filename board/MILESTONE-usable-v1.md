@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:7a386719c76a70cb33876a56632e5153f97f364658f143dfdc8742a6bbd98282 -->
+<!-- board-table-sha256:4d178bef4400af04dd0256d8db996e8f8c91c59715e213e5c728668923d20a0b -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -97,20 +97,20 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 75 | 205 The facilitator starts only corrective cards while a finding blocks | Done | none (A2, D, C and E depend on this card, in that order) |
 | 76 | 214 The generated API binds its own port in acceptance tests | Done | none |
 | 77 | 209 A task force member leaves only at the retro | Ready | none |
-| 78 | 208 A seat starts only on a fresh, pinned probe, and seats rotate least-recently-used across the available models | Ready | none |
-| 79 | 219 The record checker accepts cards that close out of number order | Ready | none |
-| 80 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
-| 81 | 211 A whole-team review of the mob-defaults rulings commits | Ready | none |
-| 82 | 220 The loop runner starts a corrective card while a finding blocks | Ready | none (card 205 is done) |
-| 83 | 221 The loop runs a card in the repository its Repository line names | Ready | none |
-| 84 | 222 The loop wires its retro and re-rank steps from the repository and stops when one fails | Ready | none |
-| 85 | 223 The loop takes the per-card retro from every role, each in its own context | Ready | 208 (every retro seat starts on a fresh pinned probe), 222 (the loop calls the command and stops when it fails) |
-| 86 | 224 The loop re-ranks Ready through the product manager and a Decider after every card | Ready | 208 (every re-rank seat starts on a fresh pinned probe), 222 (the loop calls the command and stops when it fails) |
-| 87 | 225 Card mode reads only role lines as the task force | Ready | none |
-| 88 | 217 Acceptance tests do not starve the thread pool | Ready | none |
-| 89 | 218 A mid-card retro removal does not drop the seat before the retro | Ready | 209 (the refusal of every non-retro removal lands first; this card closes the one accepted form that still removes a seat early) |
-| 90 | 213 The checker rejects an incomplete objection window | Ready | none |
-| 91 | 216 The default templates carry the pending process rulings | Ready | none |
+| 78 | 219 The record checker accepts cards that close out of number order | Ready | none |
+| 79 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
+| 80 | 211 A whole-team review of the mob-defaults rulings commits | Ready | none |
+| 81 | 216 The default templates carry the pending process rulings | Ready | none |
+| 82 | 208 A seat starts only on a fresh, pinned probe, and seats rotate least-recently-used across the available models | Ready | none |
+| 83 | 220 The loop runner starts a corrective card while a finding blocks | Ready | none (card 205 is done) |
+| 84 | 221 The loop runs a card in the repository its Repository line names | Ready | none |
+| 85 | 222 The loop wires its retro and re-rank steps from the repository and stops when one fails | Ready | none |
+| 86 | 223 The loop takes the per-card retro from every role, each in its own context | Ready | 208 (every retro seat starts on a fresh pinned probe), 222 (the loop calls the command and stops when it fails) |
+| 87 | 224 The loop re-ranks Ready through the product manager and a Decider after every card | Ready | 208 (every re-rank seat starts on a fresh pinned probe), 222 (the loop calls the command and stops when it fails) |
+| 88 | 225 Card mode reads only role lines as the task force | Ready | none |
+| 89 | 217 Acceptance tests do not starve the thread pool | Ready | none |
+| 90 | 218 A mid-card retro removal does not drop the seat before the retro | Ready | 209 (the refusal of every non-retro removal lands first; this card closes the one accepted form that still removes a seat early) |
+| 91 | 213 The checker rejects an incomplete objection window | Ready | none |
 | 92 | 212 Every mob re-ranks at every loop boundary | Ready | 208 (the runner gaps, including its retro and re-rank commands: this card hardens the re-rank step that 208 wires in). |
 | 93 | 215 Every mob reviews each previous adjustment at stand-downs and retros | Ready | 208 (the runner gaps, including its retro command: this card adds record fields to the step 208 wires in). |
 | 94 | 206 The findings file mirrors the audit register | Ready | 205 (the facilitator start gate must exist so that this card, a corrective card, is the kind that starts while F-001 and F-008 block). 207 depends on this card. |
