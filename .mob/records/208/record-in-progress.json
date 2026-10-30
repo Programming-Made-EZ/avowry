@@ -64,6 +64,14 @@
    "seat": "architect",
    "context": "ctx-2",
    "source": "stand-down 1"
+  },
+  {
+   "boundary": "after criterion 2 (stand-down 2)",
+   "answer": "no",
+   "reason": "Criterion 3 is a JSON key per backend in core/backends.json, a lookup in probe_backend that replaces the first-dict-entry fallback, a field in the probe result and a card-start refusal with exit 2, all covered by the backend developer, QA engineer and independent reviewer. The one question that touches vendor knowledge, whether a probe on the pinned model reads the quota of the model a seat will use, is answered from committed evidence (the five CLIs and their model names are in probes/2026-10-30.jsonl and core/backends.json, and phrase-lang's probe_drivers.py already pins Codex to the seat model); it raises no language, UX, security or workflow question beyond those seats, so the reviewer carries it as a lens, and a member can still be added mid-card by a Decider.",
+   "seat": "Delivery lead",
+   "context": "ctx-6",
+   "source": "stand-down 2"
   }
  ],
  "cycles": [
@@ -149,6 +157,54 @@
    "context": "ctx-2",
    "model": "claude-sonnet subagent",
    "written_at": "2026-10-30T18:44:04Z"
+  },
+  {
+   "cycle": 2,
+   "boundary": "after Criterion 2 (red 6af1cca, units 56b3686 and 832ca6a, green 36f09a0 in mob-defaults; local origin/main ref = 36f09a0); Criterion 3 next (the re-rank of 2026-10-30 (10) puts the record-order fix 219 right after it)",
+   "adjustment_reviews": [
+    {
+     "adjustment": "Stand-down 1 (cycle 1, ctx-2): every seat-start in-flight line is written by the seat itself, with its start from date -u to the second, the cap (start + 25 min for a suite, otherwise the last measured time + 10 min), and the age in minutes of the last probe; the facilitator re-probes first when that age reaches 50 minutes. Metric: share of seat-start lines with own timestamp and probe age; cap moves per green.",
+     "issue": "Caps and probe ages came from facilitator estimates (criterion 1: 0 of 4 lines with the seat's own timestamp and probe age; the probe age a seat started on could not be read from the records).",
+     "resolved": "partly",
+     "evidence": "Lines since 18:45 in .mob/records/blockers/in-flight.md: QA ctx-3 18:45:36 (probe age 35 min, cap 19:10), developer ctx-4 18:55:31 (probe age 1 min, cap 19:40), suite waits 19:06:08 and 19:26:57 (each 'date -u at launch', cap start + 30 min). Own second-level timestamp 4 of 4 (criterion 1: 0 of 4); probe age on the two seat starts 2 of 2, on the two suite-wait lines 0 of 2, so 2 of 4 lines overall. Probe ages check against probes/2026-10-30.jsonl: the 18:10 probe for the 18:45 start (35 min), the 18:54 probe for the 18:55 start (1 min); the facilitator re-probed at 19:44:46, 50 minutes after the 18:54 probe, as written. No seat started on a probe of 60 minutes or more. Cap moves on the green: 1 (criterion 1: 0; 209 criterion 1: 2). The green line's cap 19:40 was passed (green 36f09a0 at 19:47:16 UTC), but the developer replaced it before it passed with the rerun line of 19:26:57 (cap 19:56:57, met: the 1193.7 s rerun ended about 19:46:50); the move was forced by a failed full run, not by an estimate. Cap sources are stated only on the suite lines; the QA cap (start + 24 min) and the developer cap (start + 44 min) do not say how they were sized. Red 6af1cca to green 36f09a0: 53 min (18:54:10Z to 19:47:16Z) against 30 on criterion 1, about 20 min of it the failed first full run.",
+     "side_effects": "Good: every seat start now carries a probe age that can be checked from the records, and the 50-minute re-probe happened on time. Bad: the wait lines (19:06, 19:26) omit the probe age, so a reader must go back to the seat-start line; the written rule does not say how a cap not tied to a suite is sized, so 25, 44 and 30 minutes were each chosen by the seat.",
+     "verdict": "keep; tune folded into this stand-down's adjustment (a wait line cites the seat-start line it belongs to, and every line names the source of its cap)."
+    },
+    {
+     "adjustment": "D157 (card 214 retro pick): one acceptance criterion per red-green cycle, checked from git.",
+     "issue": "F-060: about 800 lines of red across three Done checks before any green on card 214.",
+     "resolved": "yes",
+     "evidence": "Before (214): about 800 red lines, one green. After (208 criterion 2, git log 6af1cca..36f09a0, all four bodies carry 'Criterion: 2'): red 6af1cca (247 lines, 2 files), units 56b3686 (45) and 832ca6a (73), green 36f09a0 (83 lines, 4 files); raw and --ignore-cr-at-eol line counts are identical on all four commits, so no line-ending churn; no test or code for criterion 3 in the tree (no probe_model in tests or core); local main = origin/main = 36f09a0 (git branch -vv); the reflog shows four plain commits after e81ed21, no amend or reset. The red named its failing run (40 run, 15 failures in 12 methods) and the mutation output of G5 and G6; the green carries the mutation runs of every guard it touched. Fourth card with the pattern.",
+     "side_effects": "Good: each commit is reviewable alone and the green stayed at 83 lines. Bad: the red ran only the new and neighbouring modules, so the one existing test the criterion breaks (TrueMobbing mid-card member: a Claude member beside four models with quota) was found only by the first full run at 19:06, which cost a second full run (about 20 min; 53 min red to green against 30). Each criterion pays for one full run when the first is clean and two when it is not.",
+     "verdict": "keep; tune folded into this stand-down's adjustment (the red lists the existing tests it expects to change)."
+    },
+    {
+     "adjustment": "D158 facilitator pre-window checklist (card 209 retro pick): seats, caps, working directory, line endings.",
+     "issue": "Window and wait drift on 209: a verification run in another repository, caps from estimates, line-ending churn in seat commits.",
+     "resolved": "partly",
+     "evidence": "Window on this cycle: 208-rerank-10 (checklist 575163a): seats polled (all six non-proposer roles; decided with every seat polled), working directory named (decider.py clones C:/Users/ringe/projects/phrase-lang), probes named with their time (19:44). Line endings again 'no seat edits in a window; n/a', so that clause was not exercised in a fifth block; Caps is 'one block, about 5 minutes' with no source. Outside windows, the criterion 2 suite lines named the working directory and repository (C:\\Users\\ringe\\mob-crosscli), and the diff counts of the four commits show no line-ending churn (raw equals --ignore-cr-at-eol). No wrong-directory run this cycle (209: one).",
+     "side_effects": "Good: the wait lines now carry the working directory the checklist wanted, written by the seat, which is where 209's drift lived. Bad: the window blocks are still near copies; the n/a clauses add words without evidence.",
+     "verdict": "keep (no further change; the seat-start lines carry the checklist's content outside windows)."
+    }
+   ],
+   "observations": [
+    "(a) The first full run's failure on criterion 2 was one existing test, TrueMobbing.test_a_member_added_mid_card_joins_the_mob_at_once_and_stays_in_the_rotation, which seated a Claude member (ctx-9) beside four models with quota. Changing it in the green was the right call: the test is about a member added mid-card voting at once and joining the next rotation, the Claude seat was incidental to that point, and refusing exactly that roster is what criterion 2 requires, so the failure was the new gate working on an old fixture. Moving the member to Codex and asserting the second Codex vote keeps the test's point; making the fake probes show Claude as the only model with quota would have changed the fixture's world for no gain, and an exemption in the gate would have defeated the criterion. Claude-seat starts stay covered where they belong, in tests/test_quota_first.py (every other model down). What was not right: the break was found by a 20-minute run, not by the red, and the change is explained only in the green's body; the reviewer should confirm it with one mutation (break the mid-card join and see the test fail).",
+    "(b) The same green rewrote a guard: PureRules.test_claude_own_probe_is_never_a_reason_to_refuse now passes 'claude' inside expected, because the Claude-filter mutation stayed green with the old list; the green's body shows the mutation failing it (failures=1). The slice's rule (a guard whose mutation does not turn it red is rewritten) worked a second time.",
+    "(c) Plain failover turns are not gated for quota (no fixed backend before they run), as the red said; the slice's Not-in list does not name it, so the reviewer should state it as a known limit.",
+    "(d) This seat starts at about 19:51 UTC on the 19:44:46 probe (7 min): Codex exit 1 (usage limit, try again Nov 3rd), Copilot has_quota=False remaining=-5, Grok 402 balance exhausted, agy 429 resets in 49h40m. The cap for this write is 20:10 UTC."
+   ],
+   "worked": "D157 held for a fourth card: red 6af1cca, units 56b3686 and 832ca6a and green 36f09a0 each carry 'Criterion: 2', no amend, the green is on the tracked ref. The seats wrote their own in-flight lines with second-level times, probe ages and caps (4 of 4 own timestamps), the facilitator re-probed at 50 minutes, and the second full run (384 tests, 1193.7 s) met its cap. The guard mutations were pasted in the bodies and one weak guard was rewritten because its mutation stayed green.",
+   "did_not": "The red did not find the existing test the criterion breaks, so the first full run did (53 min red to green, against 30). Two of four in-flight lines (the suite waits) have no probe age and two caps (QA, developer) give no source; the developer's green cap moved once (replaced by the rerun line). The gate still bites only in card mode or the loop, and this card is hand-run, so none of its seats ran through the gate it builds. No audit since, so audit findings per card about runner-gated rules still cannot be read.",
+   "adjustment": "For criterion 3 (the pinned probe model): criterion 3 makes every enabled backend in backends.json require probe_model and card start refuse a missing or unknown pin, which will break every existing test that writes its own temporary backends.json or reads the shipped one, the same class of break as the criterion 2 fixture. So (1) before the red, the QA seat greps tests/ and tests/fakes for every backends.json writer or reader and lists in the red body each existing test that will need a probe_model, and the developer updates those fixtures in a unit-layer commit before the green's first full run; (2) before the full 20-minute suite, the developer runs the modules that build backends.json (tests.test_card_mode, tests.test_loop_runner, tests.test_seat_gate, tests.test_quota_first) and pastes the result in the green body; (3) every in-flight line names the source of its cap, and a wait line cites its seat-start line for the probe age. Metric: full-suite runs per green (criterion 1: 1, criterion 2: 2; target 1), existing tests changed in the green that were not listed in the red body (criterion 2: 1; target 0), cap moves per green (criterion 2: 1; target 0). Counter-metrics: red size (247 lines for criterion 2; if the fixture list pushes it past 400 lines, split at the fixture commit) and minutes from red to green (53 on criterion 2). The next probe is due by 20:34 UTC (50 minutes after 19:44) before any seat starts.",
+   "domain_expert": {
+    "answer": "no",
+    "reason": "Criterion 3 is a JSON key per backend in core/backends.json, a lookup in probe_backend that replaces the first-dict-entry fallback, a field in the probe result and a card-start refusal with exit 2, all covered by the backend developer, QA engineer and independent reviewer. The one question that touches vendor knowledge, whether a probe on the pinned model reads the quota of the model a seat will use, is answered from committed evidence (the five CLIs and their model names are in probes/2026-10-30.jsonl and core/backends.json, and phrase-lang's probe_drivers.py already pins Codex to the seat model); it raises no language, UX, security or workflow question beyond those seats, so the reviewer carries it as a lens, and a member can still be added mid-card by a Decider."
+   },
+   "metric_note": "After criterion 2 the runner enforces 5 of the 7 MD-002 rules (no seat on a probe of 60 minutes or more; re-probe at 60; refuse when it cannot probe; a Claude seat refused while another enabled model has quota, per seat and in a mixed roster; quota_reason written from the probe into the record), up from 3 of 7 after criterion 1. Still by hand: the pinned probe model (criterion 3) and the record checker's requirement of quota_reason (card 210), plus the in-flight line rules (own timestamp 4 of 4, probe age 2 of 4, cap source 2 of 4) and the gate not biting on this hand-run card or on plain failover turns. Audit findings per card about runner-gated rules: no audit since F-008, so none can be read.",
+   "seat": "Delivery lead",
+   "context": "ctx-6",
+   "model": "claude-sonnet-5-5",
+   "written_at": "2026-10-30T19:53:39Z"
   }
  ]
 }
