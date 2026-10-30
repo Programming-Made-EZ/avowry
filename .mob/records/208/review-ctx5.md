@@ -45,3 +45,39 @@ Should a member with different domain knowledge or context join now? No new seat
 ## To approve
 
 Close F1 and F2 (tests) and F3 (test or a recorded note). Settle criterion 2 through the D163 Decider, keeping the parts listed above. Re-run the six classes; I will re-read the diff.
+
+## Re-check
+
+Reviewer: independent reviewer, audit lens and runner lens, ctx-5, fresh context (Claude seat; the probes of 2026-10-30T22:13Z show Codex, Copilot, Grok and agy without usable quota, in .mob/records/probes/2026-10-30.jsonl). In-flight line committed first (3050781). Code reviewed: C:\Users\ringe\mob-crosscli at 9cda13d; decision text D164 at docs/decisions/process-and-staffing.md#d164.
+
+### Verdict: APPROVE
+
+### Corrected criterion 2 against D163 and D164
+- Least-recently-used: `last_seating(history, backend)` is the index of the backend's last line in seat-use.jsonl (-1 never seated). `claude_wait_problem` refuses a Claude seat only for an available model (enabled and probe ok) whose last seating is strictly older than Claude's. Never seated is oldest; a tie refuses nobody; a failed or disabled model never makes Claude wait; the refusal names role, context and the older model first ("Seat it on <name> instead"). Mutation `<` to `<=` (tie refuses): 9 failures in my run.
+- Claude is not banned: it takes its own LRU turn, and any turn when no other model is available (the all-Claude roster test, history line per seat started). Nothing stricter than D164 is added. The two fail-closed refusals that remain (an enabled model with no readable probe result; a history that cannot be read or written) are C1 and C2 of D164 (an unread result is never read as no quota; the evidence for a seat must exist before it starts), not new rules.
+- History tracked and append-only: `append_seat_use` appends one line per seat started, after the gate decided, none for a refused seat; `read_seat_use` refuses when a line this run saw or wrote is missing or changed, when a line is not a JSON object, or when the file is unreadable. There is no rewrite or delete path in code. The ship prompt now tells the ship seat to stage .mob/records/seat-use.jsonl with the record, so it is committed with the card. Recomputing LRU from git alone is possible from the line order. The file does not yet exist in phrase-lang (it is created at the first seating of the next card-mode run); the first card to ship under it must commit it, which D164 C1 already requires.
+- quota_reason is now `rotation_reason`: built from the probe taken_at, each other model's evidence and last seating (line number and ts), and Claude's own; never typed by a seat; field and write path kept (card 210 can still read it).
+
+### Findings closed
+- F1: three tests in tests/test_probe_model.py (9cda13d) call probe_backend with a missing, non-string and unknown pin; each asserts ok False, evidence naming probe_model, backend and pin, no model key, and that the fake CLI log was never created. I read them and trust the recorded mutation (branch disabled: 6 failures); the code branch is unchanged and returns one shape.
+- F2: SeatRotation.test_a_claude_member_added_mid_card_votes_at_once_and_its_own_vote_is_asserted (in the red d3125ea) asserts the Claude joiner's own teamsignoff vote (count of claude 1, codex 1). My mutation, the whole-team signoff stage given `[x for x in seats if x.context != "ctx-9"]`, now FAILS: `0 != 1 : ['codex', 'copilot', 'grok', 'agy']`. The old Codex-based TrueMobbing test still exists and still passes under that mutation, but it is no longer the only guard.
+- F3: SeatRotation/test_seat_rotation.test_the_seat_and_the_probe_launch_the_pinned_model_when_the_models_are_reordered; seat_turn launches the probe's pin (`cfg["probe_model"]`) for a Claude seat. My mutation, seat launches "default" instead of the pin: 3 failures. Seat model equals probe model, by name and not by key order. The product-owner question (which Claude family seats use) stays open and is out of scope, as D164 C5 says.
+
+### D157 order and D136, from git (d3125ea..9cda13d)
+Red d3125ea (Criterion: 2, tests only, failing run recorded by assertion) -> units 249eaa2 (existing tests restated), fcc396d (pure rules with stubs, 18 tests failing by assertion), 10d9db5 (test corrected), fa88edb (shared BACKENDS pollution fixed) -> green 2a01531 (stubs filled, facilitator gate; second full run 444 tests OK, 1258 s; the first full run failed on the shared-fixture pollution and fa88edb is its fix, recorded) -> 9cda13d (review fix F1, Criterion: 3, born-green test with its mutation). Every commit has its Criterion line, subjects cite MD-002 and D164, no trailers. D136 deviation: the red d3125ea is 463 lines (two test files), larger than one concern per small commit; it is recorded in the commit body (one criterion, one layer, tests only) and I accept it as a recorded deviation: the two files are one criterion and the acceptance tests need the unit-level doubles beside them. Note, not a finding: the green and the units were developed in one working tree, so 10d9db5 and fa88edb state they ran on an uncommitted green; the final green 2a01531 carries the full run.
+
+### Outside-in and doubles
+L4 acceptance in test_card_mode.SeatRotation (4 subprocess tests through fake_cli.py env knobs, recorded probe results), L2 in test_seat_rotation (in-process CardRun with the probe and clock doubles of test_seat_gate), L3 pure rules in test_seat_rotation_rules. The doubles are hand-written and recorded in the commit bodies (F-055 stays info: the gate reads only ok, taken_at and evidence).
+
+### What I ran
+- `python -m unittest tests.test_seat_rotation tests.test_seat_rotation_rules tests.test_quota_first tests.test_probe_model tests.test_seat_gate`: Ran 91, OK.
+- `python -m unittest tests.test_card_mode.SeatRotation tests.test_card_mode.QuotaFirstSeats tests.test_card_mode.TrueMobbing tests.test_card_mode.ProbeModelPins`: Ran 27 in 305 s, OK. The full suite (444, 1258 s) was not re-run; I rely on the developer's recorded run.
+- Mutations in scratch copies (git archive of HEAD under the scratchpad, repository untouched): (1) tie refuses, `<=`: 9 failures in 75 tests. (2) Claude seat launches "default", not the pin: 3 failures in the same 75. (3) joiner excluded from the whole-team signoff: SeatRotation joiner test fails; TrueMobbing class alone still passes (as noted under F2).
+
+### Observations (no change requested)
+1. TrueMobbing's old joiner test keeps its weaker Codex count and "(claude)" wording in its Decider text; harmless now that the SeatRotation test covers the vote.
+2. The history is append-only by detection inside a run (and by commit discipline across runs), not by file permission; a seat can edit the file, and the next gate read refuses if it changed during the run. Across runs, an auditor uses git.
+3. Metric C4 (seat share, all-Claude rosters while others had quota) has no reader yet; it is computable from the file and belongs to a later card.
+
+### Domain-expert answer for this boundary (T2)
+Should a member with different domain knowledge or context join now? No. The boundary is the runner's seat gate, and no new trust boundary is added: its risks (exit 2 on refusal, fail-closed reads, append-only evidence, a launched model equal to the probed one) are each pinned by a test I saw fail under mutation. The product manager seat's sign-off should be against D163 and D164 (the card text 2625dd3 carries the corrected check 2), which the corrected code meets. The one open domain question is the product owner's: which Claude family seats use (F3); it needs no seat.
