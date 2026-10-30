@@ -560,4 +560,31 @@ class WindowErrorsTests(unittest.TestCase):
         self.assertIn("301-x.json", mob.window_errors(self.path, self.complete(category="no"))[0]); self.assertIn("category", mob.window_errors(self.path, self.complete(category="no"))[0])
         self.assertIn("301-x.json", mob.window_errors(self.path, self.complete(ended_at=""))[0]); self.assertIn("ended_at", mob.window_errors(self.path, self.complete(ended_at=""))[0])
 
+class CheckWindowsTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(); self.root = Path(self.temp.name); self.addCleanup(self.temp.cleanup)
+        self.folder = self.root / ".mob/records/decisions"
+    def write(self, name, **fields):
+        data = {"category": "slice decision", "ended_at": "2026-10-30T07:38:24Z"}; data.update(fields)
+        self.folder.mkdir(parents=True, exist_ok=True); (self.folder / name).write_text(json.dumps(data), encoding="utf-8")
+
+    # Card 213 unit layer 2 (D153 L3b), ZOMBIES: Z (no decisions folder, then an empty one: no errors), O (one complete window: no errors),
+    # M (several windows, only the incomplete one is named), B (a file not named NNN-slug.json is not a window and is ignored; the repository's real windows pass),
+    # I (the error names the file and the field). E: N/A because invalid JSON is criterion 2 or later work. S: N/A because nothing simpler exists.
+    def test_zero_no_folder_and_empty_folder_have_no_errors(self):
+        self.assertEqual([], mob.check_windows(self.root)); self.folder.mkdir(parents=True); self.assertEqual([], mob.check_windows(self.root))
+    def test_one_complete_window_has_no_errors(self):
+        self.write("301-ok.json"); self.assertEqual([], mob.check_windows(self.root))
+    def test_many_windows_name_only_the_incomplete_one(self):
+        self.write("301-ok.json"); self.write("302-bad.json", category="sixth"); self.write("303-ok.json")
+        errors = mob.check_windows(self.root)
+        self.assertEqual(1, len(errors)); self.assertIn("302-bad.json", errors[0])
+    def test_boundary_files_that_are_not_windows_are_ignored(self):
+        self.write("notes.json", category="sixth"); self.write("301-bad.txt", category="sixth"); self.assertEqual([], mob.check_windows(self.root))
+    def test_boundary_the_real_windows_of_the_repository_pass(self):
+        self.assertEqual([], mob.check_windows(Path(__file__).resolve().parents[1]))
+    def test_interface_the_error_names_the_file_and_the_field(self):
+        self.write("304-noend.json", ended_at=""); errors = mob.check_windows(self.root)
+        self.assertEqual(1, len(errors)); self.assertIn("304-noend.json", errors[0]); self.assertIn("ended_at", errors[0])
+
 if __name__ == "__main__": unittest.main()

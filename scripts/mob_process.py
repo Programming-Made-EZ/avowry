@@ -312,6 +312,13 @@ def window_errors(path, data):
     return errors
 
 
+def check_windows(root):
+    errors = []
+    for path in sorted((root / ".mob/records/decisions").glob("[0-9][0-9][0-9]-*.json")):
+        errors.extend(window_errors(path, json.loads(path.read_text(encoding="utf-8"))))
+    return errors
+
+
 def check_workflows(root):
     errors = []
     ci = root / ".github/workflows/ci.yml"
