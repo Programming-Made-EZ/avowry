@@ -556,7 +556,6 @@ jobs:
     # M (two seats, one defective: only that seat is named), B (model, context, reply, probe_reference each missing or empty; a reply outside NO OBJECTION/OBJECTION; OBJECTION with an empty condition;
     # an OBJECTION with a condition passes: guard; attempt-1 entries in an attempts list are not replies: guard; the real windows pass: guard),
     # E (a seat without a reply entry is named with its own field), I (the error line names the file, the seat and the field). S: N/A because nothing simpler exists.
-    @unittest.skip('PENDING(213-2)')
     def test_every_seat_in_a_window_needs_model_context_answer_and_probe_reference(self):
         def check():
             out = io.StringIO()
