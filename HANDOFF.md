@@ -66,6 +66,9 @@ D15 rotation authorship; D72 frozen scored docs; D101 and D102 (GRAMMAR re-freez
 
 ## 4. Open retro items
 
+- **Process item for the next retro (product owner, 2026-10-30):** outliers name one fixed condition; escalate only purpose or direction questions or a truly irreconcilable model conflict. D139 to D144 failed four times because each round's outliers added new demands, and D144 was escalated although it was a reversible implementation detail; D145 passed in four rounds under the one-condition rule. Also review: Codex quota spent by about 22 Decider runs in one hour; the staffing findings F-037 and F-040.
+- **D145 is in force:** the next work is card A1 (findings file, its checks, docs/AUDIT-CHECKLIST.md and the facilitator exit-5 change), then A2, D, C, E, each citing F-008; product cards resume once no finding blocks.
+
 - The "why so long" slicing question is answered in D136 and the card 195 retro (`docs/retros/card-195-2026-10-29.md`); the first lever (smaller cards) is not yet enforced by any check or by the architect prompt (item 4 above).
 - Experiments: E3 (decision log split by area) keep; E4 (coding guidelines, `docs/CODING_GUIDELINES.md` with an 11-item review checklist) keep; E5 (a Linux check before push) continue, only feasibility exists.
 - Open product items: card 204 (personas still say Phrase in eleven places, lack the on-call engineer and the domain expert, and Dana's definition disagrees with bar 2 of the release bar); earlier benchmark rows are not comparable with rows after the keyword change (D127; card 201 records the new baseline).

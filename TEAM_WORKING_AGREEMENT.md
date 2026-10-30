@@ -168,7 +168,7 @@ independent review, and any reviewer objection becomes a Decider proposal.
 1. **Proposal.** The PM, facilitator or a role owner states ONE concrete proposal.
 2. **Simultaneous vote.** The task force votes at the same time, in parallel, each choosing **Yes**,
    **Support-it** (not my first choice, but I will back it) or **No**. Seats do not see each other's votes first.
-3. **Outliers.** Each **No** voter says what it would take to get to yes, in a short reason; only outliers explain.
+3. **Outliers.** Each **No** voter names ONE fixed condition that would bring it to Yes (product owner ruling, 2026-10-30, applied in D145); only outliers explain. A reasonable and reversible condition is adopted and the proposal re-polled; a later round may not add new demands. Escalate only a purpose or direction question, or a model conflict that is truly irreconcilable; a reversible implementation detail goes back to the team as the smallest reversible step.
    The proposer may amend, and the amended proposal is voted once more.
 4. **Result.** An "absolutely no" from any seat, or outliers still unresolved after the amendment, means the
    proposal **fails**. Otherwise it passes. One round, no long debate.
