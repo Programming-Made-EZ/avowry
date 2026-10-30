@@ -74,6 +74,29 @@
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (19:44 UTC)"
   }
  ],
- "decision": null,
- "ended_at": null
+ "decision": {
+  "result": "adopted: no objection from all six polled seats",
+  "order": [
+   208,
+   219,
+   210,
+   211,
+   220,
+   221,
+   222,
+   223,
+   224,
+   225,
+   217,
+   218,
+   213,
+   216,
+   212,
+   215,
+   206,
+   207
+  ],
+  "next": "208 criterion 3 (pinned probe model), then 219"
+ },
+ "ended_at": "2026-10-30T19:49:13Z"
 }
