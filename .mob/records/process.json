@@ -1,4 +1,4 @@
 {
-  "state": "restoring",
-  "note": "Process restoration after the 2026-10-26 to 2026-10-29 lapse (D134): the detector is being built outside the facilitator, then card mode resumes."
+  "state": "card mode restored; facilitator session retiring",
+  "note": "Card 195 ran in card mode (D138). A fresh facilitator takes over from HANDOFF.md and does its first required items before pulling any card."
 }

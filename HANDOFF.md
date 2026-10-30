@@ -1,135 +1,71 @@
-# Mob handoff: build the resolver
+# Facilitator handoff (2026-10-29)
 
-Welcome. This repo is **Phrase**, a language for LLM-maintained codebases where *the name is the spec*: every unit of behavior is named by a plain-English sentence with typed holes, and verified by its own Given/When/Then specs. Read [README.md](README.md) for the idea and [docs/GRAMMAR.md](docs/GRAMMAR.md) for the rules. Ten minutes on [orders.avowry](tests/Phrase.Acceptance.Tests/Fixtures/orders.avowry) is the fastest way in.
+This file replaces the earlier resolver handoff (the resolver is long done; earlier versions are in `git log -- HANDOFF.md`). The facilitator session that wrote it was retired by the product owner after card 195, at about 3,800 turns, the size at which earlier facilitators started dropping practices. A fresh facilitator takes over from this file. Read all of it before doing anything. The repository is Avowry (a language for LLM-maintained codebases where the name of every unit of behaviour is a plain-language description of it; the unit is an avow), at https://github.com/Programming-Made-EZ/avowry (public). The local folder is still `C:\Users\ringe\projects\phrase-lang`. Nothing has been published as a package.
 
-## Where things stand
+## 0. Required first items, before pulling ANY card
 
-| Stage | Status |
-|---|---|
-| Lexer | Done, 51 tests |
-| Parser | Done, 79 tests |
-| Source formatter | Done, 8 tests |
-| **Resolver** | **Your job: 83 tests written and red, marked `Pending`** |
-| C# emitter | Next, after the resolver |
-| Acceptance test | Red (`Pending`), stops at the resolver stub |
+An independent audit of card 195 found violations, and these items are owed. Do them in this order, each through the normal process (Decider, review, records, retro).
 
-The resolver's output, `ModuleModel` in [Semantics/Model.cs](src/Avowry.Compiler/Semantics/Model.cs), is already designed. It is the IR the C# provider will consume. You implement [Semantics/Resolver.cs](src/Avowry.Compiler/Semantics/Resolver.cs) to produce it.
+1. **Re-vote D136 parts 2 to 4 and D137 on their final adopted wording.** Both records say "passed on the adopted wording" while outliers were still at No on the last round and one clause (D137 item 7, the ZOMBIES record fields, written by the facilitator on the owner addendum) was never polled. That is not a pass under the Decider protocol. Poll fresh seats by role (architect, an auditor lens, a delivery lead), all seats on the final text, and record the result as a new D-number that supersedes where needed.
+2. **A fresh non-author re-review of the final card 195 code (commit 0aaabe4).** The reader fix (a map without sourceFile is rejected) and the two new theory rows (missing-sourceFile, old-phraseFile in tests/Phrase.Acceptance.Tests/SourceMapTraceCommand.cs) and the removal of a stray RollForward line landed after the review that D138 records. Record the verdict with the reviewer's model name.
+3. **Fix scripts/check-ci-main.py.** At c20bc15 it printed "green" while the `ci` push run was still in progress, because the newest run it looked at was the scheduled `mob-process` workflow, which had succeeded. It must require the `ci` workflow run for the current head to be complete (and every workflow run for that commit), and treat in-progress as "wait", not green. Add a test that fails on the old behaviour.
+4. **Build the checks and prompts that D136 and D137 define but nothing yet implements** (file them as small cards, sliced by the new rubric, authored test-first by the rotation): the slice field, per-commit file and line limits and the three `Slice-exception` kinds, `started_at`, `docs/FLAGS.md` and the flag checks, retro ordering, the `pending-red` CI job, the `Criterion` traits and the per-criterion and ZOMBIES record fields; the architect role prompt in the mob-defaults repo (`C:\Users\ringe\mob-crosscli\core\roles\architect.md`) changes from "Confirm the card is a thin vertical slice" to "decide SHIP AS IS or SPLIT and list the split cards"; the PM rejects oversized cards at ready time; card mode skips seats marked UNAVAILABLE in DRIVERS.md; gate-time work (filtered tests after red and green, the full gate once at ship, the slowest acceptance tests).
+5. Confirm card 195 is closed (it is closed only after the retro and the records are on main and the `ci` run is green; check the issue state and `python scripts/mob_process.py check`).
 
-## Running it with the cross-CLI mob
+### Baseline findings from the audit of card 195 (learn from them; card 195 is the baseline, not an exception)
 
-The card for this work is [board/001-build-the-resolver.md](board/001-build-the-resolver.md). From the facilitator's folder:
+- The ready commit 7f49669 also carries the staged green-step renames: `git commit` without a pathspec commits the whole index, and `git mv` had staged the renames. Always commit with `git commit -- <paths>` (or check `git diff --cached --stat` first).
+- There was no separate failing-test commit: the red seat wrote the whole card's tests in the working tree and the test was committed together with the code (the pending-test mechanism of D137 did not exist yet).
+- There was no unit layer and no test doubles: the change was a rename and a schema field, tested only at the acceptance boundary.
+- The schema change (phraseFile to sourceFile, kind phrase to avow) shipped with no flag and no compatibility (a product owner ruling, D127: no users yet).
+- 56 files in one commit (the thin-slice limit is now 15 countable files and 400 changed lines).
+- Codex filled every card-mode seat including the card-mode QA signoff of its own green (only Codex was usable in card mode); the independent signoff was a fresh Claude Sonnet 5.5 review. Card mode cannot seat Claude: the `claude` CLI is not signed in.
+- The checker passed with the card-mode seats' evidence only as turn summaries (.mob/records/195/) plus commits; the refactor turns and the Codex QA signoff are in the private whiteboard (.mob/195-*/, git-ignored), not committed.
 
-```bash
-python facilitator.py --card <repo>/board/001-build-the-resolver.md --repo <repo> --dry-run   # preview every prompt
-python facilitator.py --card <repo>/board/001-build-the-resolver.md --repo <repo>             # run it (no commits)
-python facilitator.py --card <repo>/board/001-build-the-resolver.md --repo <repo> --ship      # also commit and push each increment
-```
+## 1. Standing rules and rulings (the product owner decides these; you do not relax them)
 
-The mob's whiteboard and prompts go to `.mob/001-build-the-resolver/` (git-ignored). The card's "Done when" commands decide when to stop.
+- **Trunk-based, direct commits to main** (ruling recorded in D135). No pull requests, no branch protection, no reviewer-identity requests. Unfinished or risky work ships behind default-off feature flags (policy D136: flags are registered in `docs/FLAGS.md`, read through one `FeatureFlags` class from `AVOWRY_FEATURES` or `--enable NAME`; atomic renames and refactors need no flag; `Status=Pending` stays for unfinished tests).
+- **Enforcement is detection plus an external audit** (D134, D135). `scripts/mob_process.py check` runs in CI (job `mob-process` in ci.yml, which also runs the previous version of the checker against the new tree), in `.github/workflows/mob-process.yml` (issue events and every 30 minutes), in the pre-push hook (`.githooks/pre-push`, enabled with `git config core.hooksPath .githooks`) and, independently, by Dispatch every 30 minutes against its own pinned copy, reporting violations straight to the product owner. Stop the line on any red main (nothing else starts). The residual risks are written down in `docs/PROCESS-CHECKS.md` and D135.
+- **Mob process** (TEAM_WORKING_AGREEMENT.md is the authority): card mode with role rotation (PM ready, architect slice, QA red, dev green and refactor, QA signoff, PM advance, DevOps ship), a task force per card, independent non-author review, a Decider record per decision, a **retro after every Done card** (the retro for card N is pushed before issue N is closed and before any later commit that names another card: D136), `MOB.md` regenerated and pushed by `python scripts/mob_process.py write-mob-md` (the only writer; it is checked for freshness and byte-identity), and a trail record `.mob/records/NNN.json` per Done card (seats ready, slice, red, green, ship, signoff with seat, model and its OWN evidence: a commit whose message names the card, or a Decider id that mentions it; the signoff seat differs from the green seat; optional refactor seat). The legacy waiver `.mob/records/LEGACY.json` (91 cards, hash pinned in the checker and in D134) is frozen.
+- **Thin slices** (D136, forward-only from card 195): the architect decides SHIP AS IS or SPLIT; one concern, at most three increments, at most three acceptance criteria, at most 15 countable files and 400 changed lines per commit; exceptions are `Slice-exception: rename | rewrite s/OLD/NEW/ | generated` and are verified; commit-to-live target median 45 minutes and p90 90 minutes as data, never a quota. The product owner asked why card 195 took 76 minutes in card mode: seats were 3 percent, three full gate checks 44 percent, dev turns 95 percent of Codex time; the answer is card size and gate time, not process seats.
+- **Outside-in TDD with ZOMBIES** (the product owner's definition; D137; also in the agreement): outside-in TDD is done by first creating a failing test for one acceptance criterion. Then we identify the layer the test consumes. We then use unit-level TDD to build that layer, using test doubles for any dependencies. Once that layer is complete, we start building the real implementation of each dependency from the layer above using unit-level TDD, again with test doubles for each dependency. We continue moving through each dependency until we have enough of the implementation to make the original acceptance criterion pass. During this whole time the acceptance test is failing until the last unit is built. Then we move on to the next acceptance criterion. We use ZOMBIES (Zero, One, Many, Boundaries, Interface, Exceptions) to find all of the acceptance criteria and each of the unit tests at each layer. In card mode the red seat writes ONE acceptance test for ONE criterion. Under trunk-based main the failing acceptance test is committed with `Status=Pending` and `Criterion=NNN-K`, the green commit removes `Pending`, and a `pending-red` CI job must prove it fails by assertion (D137, not built yet). The trail record shows the sequence per criterion and the ZOMBIES tests per layer (or "N/A because" per letter).
+- **Docs state directions as product principles with rationale**: the role is "the product owner"; no personal names, no attribution as a reason, no gendered pronouns, no verbatim quotes of the owner (the TDD definition above is the practice text, not an attributed quote). `tests/test_no_personal_names.py` checks this.
+- **Frozen documents** (`docs/GRAMMAR.md`, `docs/CHEATSHEET.md`, the orders fixture) change only in a re-freeze Decider with an LLM-check rerun (card 162). Usable v1 bar 6 is **suspended** in `board/usable-v1-ratchet.json` until card 162 lifts it (D131); card 162 must remove the suspension.
+- **No backward compatibility** (D127): no users yet. The old keyword `phrase`, the extension `.phrase`, old map files are not read anywhere. The repository was renamed to avowry (D127).
+- **Name, licence and publication**: the public name is Avowry (D125; the product owner's decision). Apache-2.0 plus a trademark policy (D124); generated code belongs to the user; the NOTICE holder is a marked placeholder; a professional trademark search and the pre-publication checks are card 186; the package ID, the first publish and any public claim are the product owner's decisions; **nothing is published without written approval**.
+- **Language**: the declaration keyword is `avow`, optionally followed by exactly one filler word (`to`, `that`, `it`) outside the quotes, then the quoted template: `avow to "validate task title {title: Text}"`. The canonical form is `avow to` (D126); the source extension is `.avowry`; the command is `avowry`; generated code uses AvowryRuntime, AvowryFailure, AvowryBuildId and the `[Avow(...)]` attribute (D132).
+- **Safety and habits learned the hard way**: kill only your own PIDs, never by name; never `rm -rf` on a variable path; run the long gate alone (about 10 minutes) and rebuild the CLI first (`dotnet build src/Avowry.Cli`; a stale CLI fails the helper loudly); never end a turn with untracked background work (use `run_in_background` for every wait; a job 30 minutes past its estimate with no activity is hung, capture evidence, kill only its own processes); state expected finish times at handoffs; tests must be able to fail (show red by mutation); no `Co-Authored-By` trailers in this repository's commits (a hook rejects them); no history rewrites.
 
-## Working agreement
+## 2. The board and the next card
 
-- **Trunk-based.** Commit to `main` in small steps; CI runs on every push and must stay green.
-- **Red, green, refactor.** Pick one failing test, make it pass, refactor, commit. Tests are the spec; if a test looks wrong, discuss it as a mob, change it deliberately, and say why in the commit.
-- **Pending is the to-do list.** Each resolver test class carries `[Trait("Status", "Pending")]`. When every test in a class passes, delete that trait in the same commit so CI starts guarding it.
-- **Given/When/Then comments** in every new test.
-- **Zero warnings.** `TreatWarningsAsErrors` is on.
+- The GitHub Project "Phrase Board" (project 1, org Programming-Made-EZ, private) is the source of truth; `board/NNN-*.md` and the rank table are generated archives (`PYTHONPATH=. python scripts/board/generate_archive.py --apply`). Scripts: `scripts/board/{edit_card,new_card,rerank,generate_archive}.py`. **Issue numbers differ from card numbers for three cards**: issue 186 is card 187, issue 187 is card 188, issue 188 is card 186 (the checker reads the card number from the issue title prefix, never the issue number). Closing a card: `PYTHONPATH=. python scripts/board/edit_card.py NNN --status Done --status-line "..." --apply` after the retro and the trail record are on main and `ci` is green.
+- Current ranked queue (top first): 195 (finishing: see item 5 above), **196** rename the two test projects to Avowry.*.Tests, **197** rename the solution, CI jobs, scripts and paths, **162** the single docs re-freeze (fold the pattern steps in, the avow wording, rerun the Usable v1 bar 6 LLM check, ratify the hashes, remove the suspension), **201** migrate the sealed holdouts (owner-run: the mob never opens the sealed holdouts; new hashes are recorded before any run), 189 (unsupported constructs crash with an unhandled exception), the v0.1 lane 176, 178, 179, 186; then 169, 171, 172, 165, 166, 177, 200 (`avowry fmt`), 180, 181, 187, 188, 163, 182, 164, 184, 185; also 202 (a native `Fail` with an undeclared code should be a diagnostic), 203 (names reserved by generated code), 204 (reconcile personas and the bar, then the LLM check for the LLM customer).
+- **Slice every card with the D136 rubric before starting it.** Cards 196 and 197 are renames and will exceed 15 files: either split by project or declare `Slice-exception: rename` (verified by `git diff -M`). Card 162 touches frozen documents and needs a Decider with an LLM-check rerun (a real model run, made by the facilitator after review).
+- The Usable v1 milestone: bars 1 to 5 are met in CI; bar 6 is suspended (see above). The v0.1 public preview release bar is `docs/release/v0.1-bar.md` (8 bars, estimate 19 required cards, 4 to 8 working days).
 
-```bash
-dotnet test Phrase.sln --filter "Status!=Pending"                                       # what CI runs
-dotnet test tests/Phrase.Compiler.Tests --filter "Status=Pending"                        # the remaining work
-dotnet test tests/Phrase.Compiler.Tests --filter "FullyQualifiedName~ResolverDeclarationTests"   # one class
-```
+## 3. Decisions to know (docs/decisions/INDEX.md has all of them; split by area, E3)
 
-## Suggested order
+D15 rotation authorship; D72 frozen scored docs; D101 and D102 (GRAMMAR re-freeze; stop the line on red CI); D103 (real LLM-customer check); D109 (Decider seats are by role; one model may fill several seats; never vote with fewer seats because a model is out; record which model filled which seat); D111 source map and trace; D120 to D124 (edge-case corpus, licence); D125 the name Avowry; D126 the `avow` keyword and filler words; D127 no compatibility and the repository rename; D128 to D133 reviews of cards 175, 190, 191, 199, 193, 194; D134 and D135 accountability; D136 slices, numeric limits, flags, retro timing; D137 outside-in TDD under trunk-based main; D138 review of card 195. Recording a decision: the area file under `docs/decisions/` with an anchor line `<a id="dNNN"></a>` plus an entry in `docs/decisions/areas.json`, then `python scripts/build-decisions-index.py` and `python scripts/check-decisions-index.py`. Decider runner: `python C:/Users/ringe/mob-crosscli/decider.py --repo . --proposal-file P --seats codex --out DIR --timeout S` (proposal under about 4 KB, no double quotes); the other seats are fresh-context Claude subagents (model sonnet) with a read-only brief; start them after the proposal exists.
 
-Each class builds on the one before it. Helpers for building test programs are in [Resolved.cs](tests/Phrase.Compiler.Tests/Semantics/Resolved.cs).
+## 4. Open retro items
 
-1. **ResolverDeclarationTests** (16): type symbols, field types, phrase keys, PH010, endpoint shapes
-2. **ResolverCallTests** (18): structural matching, PH001 with suggestions, PH002, scope, type checks
-3. **ResolverFlowTests** (17): respond/fail rules, composites, failure and effect propagation, cycles
-4. **ResolverSpecTests** (20): hole bindings, literal-only values, outcomes, endpoint specs
-5. **ResolverFixtureTests** (12): the real program, plus 2,000 fuzzed mutations that must never throw
+- The "why so long" slicing question is answered in D136 and the card 195 retro (`docs/retros/card-195-2026-10-29.md`); the first lever (smaller cards) is not yet enforced by any check or by the architect prompt (item 4 above).
+- Experiments: E3 (decision log split by area) keep; E4 (coding guidelines, `docs/CODING_GUIDELINES.md` with an 11-item review checklist) keep; E5 (a Linux check before push) continue, only feasibility exists.
+- Open product items: card 204 (personas still say Phrase in eleven places, lack the on-call engineer and the domain expert, and Dana's definition disagrees with bar 2 of the release bar); earlier benchmark rows are not comparable with rows after the keyword change (D127; card 201 records the new baseline).
+- Process items: the trust-ladder ledger was not maintained from 2026-10-25 to 2026-10-29 and now carries a note; the per-cycle evidence is in the trail records; the `check-ci-main.py` flaw (item 3).
+- Catch-up retro: `docs/retros/catch-up-2026-10-29.md` covers the 91 legacy cards (frozen list). Per-card retros are forward-only from card 195.
 
-Then wire it into `AvowryCompiler.Compile` (resolve after parse, throw `CompilationFailedException` on diagnostics) so the acceptance test fails one stage further in, at the emitter.
+## 5. Drivers (DRIVERS.md is the live table; re-probe at every card boundary)
 
-## A design that fits the tests
+- Codex: available (author and voter; used in every card-mode seat for card 195). Claude: available only as fresh-context subagents (Agent tool, model sonnet); the headless `claude` CLI is not logged in, so card mode cannot seat Claude and signoff must be a Claude subagent recorded in the trail record. Copilot: no quota until about 2026-11-01 00:00 UTC. Grok: usage balance exhausted (402), no reset time. agy: quota reached, resets about 2026-11-01 21:25 UTC. Local model (Qwen3.6-35B-A3B via llama.cpp and aider, `C:\Users\ringe\local-llm`): not live; the download failed after a machine restart (partial file about 12 GB of 22 GB at `models\Qwen3.6-35B-A3B-UD-Q4_K_M.gguf.part`), not resumed; the wrapper (`C:\Users\ringe\mob-crosscli\local_driver.py`, `core\local_llm.json`) is written and tested; the local trial is not the current pick and needs an idle gate.
+- The retry pollers for Copilot, Grok and agy died with the old session; recreate them if the product owner wants them.
 
-This is a suggestion, not a requirement. The tests are the contract.
+## 6. In flight and leftovers
 
-**Passes, in order**
-
-1. **Types.** Register every user type name first (so forward references work), then resolve field types. Core types and arities are in `PType.Core`.
-2. **Phrase library.** For each phrase, resolve hole and return types and compute its `Key` (lowercased words, holes as `_`). A second phrase with the same *word sequence* (holes ignored entirely) is PH010 and stays out of the library.
-3. **Endpoints.** Check names and verb+route are unique. Register the input and output shapes as record types named `Probe.Input` / `Probe.Output`.
-4. **Bind steps,** composites first, then endpoints. Scope is an endpoint's `input`, or a composite's holes, plus each `let` as it is reached.
-5. **Effective failures.** A depth-first walk of the call graph: a leaf's failures are its declared ones; a composite's are declared plus its callees'. Re-entering a phrase while walking is a cycle (PH327). Endpoint failures are the union of callees plus its own `fail with` steps. Sort them ordinally.
-6. **Effects.** A composite must declare every effect of every phrase it calls (PH328).
-7. **Specs.** Last, because `then fails with X` needs effective failures.
-
-**Matching a call (the heart of it)**
-
-A template matches a call when both have the same number of parts and, position by position:
-
-- a template word matches a call word with the same text (case-insensitive), and
-- a template hole matches a call argument, *or* a call word that names a variable in scope.
-
-No backtracking: one hole is always exactly one part. Exactly one template must match; zero is PH001, more than one is PH002. Only after a unique match do you type-check the arguments.
-
-For PH001, rank templates by word-level edit distance from the call (holes and arguments both read as `_`) and quote the closest. If the call has a bare word where a hole belongs and some record variable has a field by that name, add a hint: *did you mean `input.items`?* LLMs make exactly this mistake.
-
-**Type checking**
-
-Check values against an expected type, rather than inferring and comparing:
-
-- Paths: infer from scope, then field by field; the result must equal the expected type.
-- `"text"` fits `Text` or `Id`. A whole number fits `Int` or `Decimal`; `2.5` fits only `Decimal`. `none` fits only `Option<T>`.
-- A value of type `T` also fits `Option<T>`.
-- Records need the exact field set of the expected record type (PH314 for missing or extra fields); lists check each item against the element type.
-- Use `PType.Error` for anything that failed to resolve, and treat it as compatible with everything. One mistake should produce one diagnostic, not ten.
-- In specs there is no scope: a path there is PH332 (spec data must be literals).
-
-## Diagnostics to implement
-
-Resolution and library: `PH001` unknown phrase, `PH002` ambiguous phrase, `PH010` duplicate wording.
-
-| Code | Meaning |
-|---|---|
-| `PH300` | Unknown type |
-| `PH301` | Wrong number of type arguments |
-| `PH302` | Type name already taken (duplicate, or a core type) |
-| `PH303` | Duplicate field (type, input or output) |
-| `PH304` | Duplicate endpoint name, or same verb and route |
-| `PH310` | Unknown variable (message lists what is in scope) |
-| `PH311` | Unknown field, or a field read on a non-record (message lists the fields) |
-| `PH312` | Type mismatch (message names both types) |
-| `PH313` | Variable already defined |
-| `PH314` | Record fields do not match the expected type |
-| `PH320` | `let` of a phrase that returns nothing |
-| `PH321` | Returned value discarded; use `let` |
-| `PH322` | `respond with` outside an endpoint, or in an endpoint with no output |
-| `PH323` | Endpoint with output never responds |
-| `PH324` | Step after `respond with` or `fail with` is unreachable |
-| `PH325` | Composite phrase with a return type (not supported in v0.1) |
-| `PH326` | Composite fails with an undeclared code |
-| `PH327` | Phrases call each other in a cycle |
-| `PH328` | Composite calls a phrase whose effect it does not declare |
-| `PH330` | Wrong trigger (`called` for phrases, `handled` for endpoints) |
-| `PH331` | Givens wrong: unknown, missing or duplicate hole; `input` in a phrase spec; missing input in an endpoint spec |
-| `PH332` | Spec value is a path, not a literal |
-| `PH333` | Outcome the unit cannot have (`returns` with no return type, `responds` in a phrase spec, `returns` in an endpoint spec, `responds` with no output) |
-| `PH334` | Expected failure the unit can never produce (message lists the ones it can) |
-| `PH335` | More than one outcome in a spec |
-
-Messages matter: an LLM reads them to fix its own code. Name the thing, say what was expected, and list the valid options where there are a few.
-
-## Definition of done
-
-- No `Pending` trait left in `tests/Phrase.Compiler.Tests/Semantics`
-- `dotnet test Phrase.sln --filter "Status!=Pending"` green with zero warnings
-- `AvowryCompiler.Compile` runs the resolver; the acceptance test now fails at the emitter
-- GRAMMAR.md updated with the resolver diagnostics and any rule the mob changed
-
-## After that
-
-The C# emitter: turn `ModuleModel` into the files in [reference/csharp](reference/csharp), which already build and pass all six specs. When `CompileEndpointToCSharp` goes green, remove its `Pending` trait and Phrase compiles its first program.
+- Card 195's code is committed (0aaabe4) and its trail record and retro are pushed (c20bc15 and later). An earlier, unimported Codex run for card 195 (made outside card mode, in a throwaway clone) was discarded.
+- Three old stashes from the 2026-10-25 benchmark experiments remain (`git stash list`); they hold stale partial work. Do not pop them.
+- Helper scripts of the old session live outside the repository in the Claude scratchpad (`C:\Users\ringe\AppData\Local\Temp\claude\C--Users-ringe-projects-phrase-lang\39123b30-167f-4efb-b4f5-bf56d1d02640\scratchpad`): `launch_author.py` (a throwaway-clone author launcher, now replaced by card mode), `record_dNNN.py` (decision recorders), `goalNNN.txt`. They are not needed; copy a pattern, not the files.
+- Card mode recipe that worked for card 195: `python C:/Users/ringe/mob-crosscli/facilitator.py --card board/NNN-slug.md --repo . --max-cycles 2 --fresh` (do NOT pass `--ship` or `--publish-summary`: the built-in page format would fail the checker; it edits the working tree directly, so touch nothing meanwhile; run it with `run_in_background`); then review the diff, run the full gate alone, get the non-author signoff from a Claude subagent, commit one evidence commit per seat with `git commit -- <paths>`, write the retro and the trail record, regenerate `MOB.md`, push (the pre-push hook runs the checker), wait for the `ci` run to finish green, close the issue, regenerate the archive.
+- Gate commands: `DOTNET_ROOT=/c/Users/ringe/.dotnet`; `dotnet build src/Avowry.Cli`; `dotnet test Phrase.sln --filter "Status!=Pending" --blame-hang-timeout 20m --blame-hang-dump-type none`; `python -m unittest discover -s tests -t .`; for the Usable v1 report build the Release CLI first (`dotnet build src/Avowry.Cli -c Release`) then `python scripts/usable-v1-report.py`. Latest totals: 284 compiler tests, 225 acceptance tests, 259 Python tests (7 skipped).
+- Tooling traps: a bash heredoc or tool argument turns `\n` inside Python strings into real newlines (write scripts with the file tool, or build backslashes with `chr(92)`); a background `&` inside a command is untracked work; the tool call timeout is 2 minutes unless run in the background.
+- External parties: Dispatch (relays the product owner and audits every 30 minutes). Pending product owner decisions: none at this time (the package ID, the NOTICE holder and the trademark search come with card 186; the first publish is the owner's call).

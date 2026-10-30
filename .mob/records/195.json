@@ -42,5 +42,5 @@
     }
   ],
   "retro": "docs/retros/card-195-2026-10-29.md",
-  "notes": "Baseline card for D136 (not an exception): five increments, 56 files in the code commit. Card-mode run 22:35:24Z to 23:51:13Z (75 min 49 s). Codex seat turns 2522 s, failover 43 s, three full gate checks 33 min 5 s. started_at 2026-10-29T22:35:24Z (first card-mode turn event). The refactor turns (turns 5 and 7) and the card-mode QA signoff (turn 8, Codex) are in the whiteboard, not committed. Before the card-mode run an earlier unimported Codex run for this card existed outside card mode and was discarded."
+  "notes": "Baseline card for D136 (not an exception): five increments, 56 files in the code commit. Card-mode run 22:35:24Z to 23:51:13Z (75 min 49 s). Codex seat turns 2522 s, failover 43 s, three full gate checks 33 min 5 s. started_at 2026-10-29T22:35:24Z (first card-mode turn event). The refactor turns (turns 5 and 7) and the card-mode QA signoff (turn 8, Codex) are in the whiteboard, not committed. Before the card-mode run an earlier unimported Codex run for this card existed outside card mode and was discarded. Honest evidence caveat: the ready commit 7f49669 also carries the staged green-step renames (a git commit without a pathspec committed the index after git mv), so it is not a clean ready-only commit; history is not rewritten."
 }

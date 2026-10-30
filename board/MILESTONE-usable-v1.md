@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:73a99af44708aa258338222f21b092bd98f9f4f130e7b065b062cf16f7986f21 -->
+<!-- board-table-sha256:d57c2d298d22709a345857b0bdba5c3c6142242da9d0a8b19d204b36434448f3 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -93,7 +93,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 71 | 199 The language keyword is avow, with optional filler words, and every source switches to .avowry (one mechanical commit) | Done | 191 |
 | 72 | 193 Generated code uses Avowry names (runtime, failure type, build id key) | Done | 166, 162 |
 | 73 | 194 Rename the compiler project and namespace to Avowry.Compiler | Done | 193 |
-| 74 | 195 Rename the C# adapter and CLI projects to Avowry.* | Ready | 194 |
+| 74 | 195 Rename the C# adapter and CLI projects to Avowry.* | Done | 194 |
 | 75 | 196 Rename the two test projects to Avowry.*.Tests | Ready | 195 |
 | 76 | 197 Rename the solution, CI jobs, scripts and paths to Avowry | Ready | 196 |
 | 77 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
