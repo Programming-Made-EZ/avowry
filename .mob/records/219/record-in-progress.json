@@ -13,7 +13,8 @@
  "decisions": {
   "rule": "D159 (the change this card implements)",
   "waiver": "D162",
-  "task_force": "window 219-taskforce"
+  "task_force": "window 219-taskforce",
+  "slice": "window 219-slice: SHIP AS IS in two cycles (slice 3b04e20, amended 37e456c)"
  },
  "placement": "re-rank at the next boundary (after the probe gate's criterion 2), team's call",
  "domain_expert": [
@@ -24,6 +25,14 @@
    "seat": "product manager (ready)",
    "context": "ctx-1",
    "source": "window 219-taskforce proposal"
+  },
+  {
+   "boundary": "slice",
+   "answer": "no",
+   "reason": "one function and git-history semantics the seated roles already hold",
+   "seat": "architect (slice)",
+   "context": "ctx-2",
+   "source": "3b04e20"
   }
  ],
  "cycles": [],
