@@ -56,6 +56,17 @@
    "condition": "Record in git, at card 216's ready step, the card-text edits and an objection-window result, so the lens joining 216 can be verified from commits rather than from the proposal's prose.",
    "raw": "OBJECTION\nCONDITION: Record in git, at card 216's ready step, the card-text edits and an objection-window result, so the lens joining 216 can be verified from commits rather than from the proposal's prose.\n\nSupport-it\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (23:03 UTC)"
+  },
+  {
+   "round": 1,
+   "role": "delivery lead",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "w11-delivery",
+   "started_at": "2026-10-30T23:31:48Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes. Putting 219 first frees the two held records. Moving 216 up is a thin docs-and-template slice, and the lens adds only one section and one test. The stated reversal keeps the order honest. I read the proposal only as far as the first 5,000 characters, so I did not see the end of it.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (23:03 UTC)"
   }
  ],
  "decision": null,
