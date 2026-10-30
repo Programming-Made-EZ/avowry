@@ -1,0 +1,17 @@
+{
+ "window": "209-slice",
+ "category": "slice decision",
+ "rule": "D153 objection window on the architect's slice (D157: one criterion per red-green cycle)",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "claude-sonnet subagent",
+  "context": "ctx-6",
+  "probe_reference": ".mob/records/probes/2026-10-30.jsonl (12:48 UTC)"
+ },
+ "opened_at": "2026-10-30T12:51:34Z",
+ "proposal": "The architect's slice of card 209 is .mob/records/209/turn-slice-architect.md (commit dd49100): three criteria, one red-green cycle each (D157), ship as is; criterion-by-layer table with doubles per layer, outermost first (F-055). Two-way door: a slice can be re-cut at any stand-down; no standing rule changes.",
+ "polled_roles_note": "F-054: product manager (ready) ctx-1, QA engineer ctx-2, backend developer ctx-3, independent reviewer ctx-4, product manager (signoff) ctx-5, delivery lead ctx-7 polled; the architect (ctx-6) is the proposer.",
+ "replies": [],
+ "decision": null,
+ "ended_at": null
+}
