@@ -78,6 +78,18 @@
    "green": "7d371fa",
    "pushed": "together at about 14:27 UTC; suite 315 tests OK, 1 unrelated skip",
    "notes": "the developer amended its own unpushed layer 3 commit once to undo a line-ending change (no pushed history touched; still against the no-rewrite practice, raised at stand-down 1)"
+  },
+  {
+   "criterion": 2,
+   "repo": "mob-defaults",
+   "red": "44112b4 (plus 37b1273 restoring CRLF)",
+   "units": [
+    "145947b (layer 3, outer, fake removal_problem double)",
+    "147a90a (layer 3 test correction instead of an amend)"
+   ],
+   "green": "18f3962",
+   "full_suite": "332 tests OK, 1 skip (14:36:50 to 14:53:59 UTC, inside the stand-down-1 cap of start + 25 min)",
+   "pushed": "about 14:56 UTC"
   }
  ],
  "stand_downs": [
