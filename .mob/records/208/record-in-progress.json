@@ -231,7 +231,16 @@
  "correction": {
   "D164": {
    "card_text": "2625dd3",
-   "red": "d3125ea"
+   "red": "d3125ea",
+   "units": [
+    "249eaa2 (four existing tests to the LRU rule)",
+    "fcc396d (pure rules seat_use_line, last_seating, claude_wait_problem, rotation_reason)",
+    "10d9db5 (card-mode refusal test names the right seat)",
+    "fa88edb (shared BACKENDS dict pollution fixed)"
+   ],
+   "green": "2a01531",
+   "full_suite": "first run 21:53 failed 13 tests from shared-fixture pollution; second run 22:24:25: 444 tests OK, 1 skip",
+   "pushed": "about 22:46 UTC"
   }
  },
  "observations_for_next_stand_down": [
