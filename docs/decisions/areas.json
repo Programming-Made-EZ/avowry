@@ -951,18 +951,24 @@
     "area": "process-and-staffing",
     "status": "in force",
     "title": "Re-vote of D136 parts 2 to 4 on the final wording; flag-scoring clause amended",
-    "order": 132
+    "order": 133
   },
   "D143": {
     "area": "process-and-staffing",
     "status": "in force",
     "title": "Re-vote of D137 on the final wording, item 7 included; item 7 amended",
-    "order": 133
+    "order": 134
   },
   "D140": {
     "area": "process-and-staffing",
     "status": "applied",
     "title": "Findings mirroring and checker rules, re-proposal of D139 (failed; re-proposed as D141)",
     "order": 131
+  },
+  "D141": {
+    "area": "process-and-staffing",
+    "status": "applied",
+    "title": "Findings mirroring and checker rules, second re-proposal (failed; re-proposed as D144)",
+    "order": 132
   }
 }

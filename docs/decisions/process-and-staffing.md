@@ -228,6 +228,15 @@ Record R4 (the product owner's standing rule, 2026-10-28, folded in as instructe
 - Independent re-run (F-038), five fresh Codex contexts on the round 2 text: architect No (C4 a deterministic started_at source), QA engineer No (C2, C3 the F-008 wildcard against the explicit-path rule; C6 a deterministic parser interface), independent auditor No (C4 CI time not verifiable from git; C5 removals before the first Card commit), delivery lead Support-it, product manager Yes. The re-run confirms FAILED; no difference in outcome.
 - Raised again as D141 with the round 2 auditor fixes. Staffing note: the set-aside Claude votes are kept as history in this record only; they are not counted.
 
+<a id="d141"></a>
+#### Decider D141: findings mirroring and the staffing, quota-first and task-force checker rules, second re-proposal (FAILED; re-proposed as D144)
+
+- Date: 2026-10-30. D140's text plus the three remaining auditor fixes (CLOSED terminal and frozen; committed CI evidence for started_at; the probe script blob predates the line).
+- Round 1: architect (Codex gpt-5.6-sol): No (C1 per-field mutation rules; C2 and C3 the F-008 test_mob_process*.py wildcard against the explicit-path rule; C6 parser identity). QA engineer (Codex): Yes. Delivery lead (Codex): Support-it. Product manager (Codex): Yes. Independent auditor: the Codex seat returned no response (usage limit), so the role was re-seated with a fresh Claude Sonnet context (reason: Codex at its usage limit, Copilot, Grok and agy out): No (C1 first-parent descent and append-only history; C2 exact finding token and which .mob/records files a process commit may touch; C4 CI time).
+- Round 2 (amended: per-field transitions, exact F-NNN token, narrowed process lane, explicit F-008 files, started_at as the later of the commit date and the CI run created time, parser by script path and blob in an isolated subprocess), five fresh Claude Sonnet contexts (reason as above): architect Support-it, independent auditor Yes, delivery lead Yes, QA engineer No on C6 (red tests for each failure path of the isolated parser), product manager No on C1, C2, C4, C6 (over-specified up front, VISION ruling 6).
+- Result: FAILED (outliers unresolved after the amendment).
+- Independent re-run (F-038), five fresh Claude contexts on the round 2 text: QA engineer Yes, product manager Yes, architect Support-it with No on C3 (F-037 and F-038 have no closure path), delivery lead No on C2 (the full-history scope would apply the rule to commits before the findings file existed), independent auditor No on C3 (findings closed by re-votes, reviews or a retro write to docs/decisions/, docs/retros/ or .mob/records/deciders/, which are not corrective_paths, so they could never close). The re-run confirms FAILED; the remaining objections are narrow and are addressed in D144.
+
 <a id="d142"></a>
 #### Decider D142: re-vote of D136 parts 2 to 4 on the final wording (passed with the flag-scoring clause amended; supersedes that sentence of D136 part 3)
 
