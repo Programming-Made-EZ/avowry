@@ -54,6 +54,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D150](process-and-staffing.md#d150) — Ceremonies besides the retro: Three Amigos refinement and a demo after Done as experiments; planning, backlog refinement and standup dropped
 - [D151](process-and-staffing.md#d151) — Stand-down: a micro-retro at each cycle boundary within a card, replaced by the full retro at Done (amends D150)
 - [D153](process-and-staffing.md#d153) — A lighter path for routine per-card decisions: objection windows; full Deciders for objections, one-way doors and rule changes
+- [D154](process-and-staffing.md#d154) — Claim-equals-commit and pre-ship evidence gate, a 5-card experiment (card 205 retro pick)
 
 ### benchmarks-and-measurement
 
@@ -228,3 +229,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D151](process-and-staffing.md#d151) | Stand-down: a micro-retro at each cycle boundary within a card, replaced by the full retro at Done (amends D150) | process-and-staffing | in force |
 | [D152](process-and-staffing.md#d152) | Mid-card task-force declaration fix on card 205 | process-and-staffing | applied |
 | [D153](process-and-staffing.md#d153) | A lighter path for routine per-card decisions: objection windows; full Deciders for objections, one-way doors and rule changes | process-and-staffing | in force |
+| [D154](process-and-staffing.md#d154) | Claim-equals-commit and pre-ship evidence gate, a 5-card experiment (card 205 retro pick) | process-and-staffing | in force |

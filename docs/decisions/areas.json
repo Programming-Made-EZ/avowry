@@ -1030,5 +1030,11 @@
     "status": "in force",
     "title": "A lighter path for routine per-card decisions: objection windows; full Deciders for objections, one-way doors and rule changes",
     "order": 144
+  },
+  "D154": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Claim-equals-commit and pre-ship evidence gate, a 5-card experiment (card 205 retro pick)",
+    "order": 145
   }
 }
