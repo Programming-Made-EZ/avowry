@@ -76,6 +76,11 @@
    "boundary": "after Done check 1",
    "answer": "no",
    "reason": "Done check 2 is the same gate and seam; no new domain"
+  },
+  {
+   "boundary": "after Done check 2",
+   "answer": "no",
+   "reason": "Done check 3 is the same fail-closed seam"
   }
  ],
  "criteria": [
@@ -134,6 +139,18 @@
     }
    ],
    "green_commit": "97226b9"
+  },
+  {
+   "criterion": "205-2",
+   "acceptance_test": "tests/test_card_mode.py::test_205_2_an_issue_naming_no_blocking_finding_is_refused_with_exit_five",
+   "red_commit": "none: never red, already satisfied by the Done check 1 gate",
+   "guard_commit": "2290341",
+   "proven_by_unit_tests": [
+    "CorrectiveGate.test_naming_none_of_several_blocking_findings_refuses_and_names_all_of_them",
+    "CorrectiveGate.test_near_misses_of_the_token_do_not_count",
+    "CorrectiveGate.test_a_closed_finding_named_in_the_issue_does_not_count",
+    "CorrectiveGateStart.test_a_message_from_the_gate_refuses_the_card_with_exit_five_and_prints_it"
+   ]
   }
  ],
  "stand_downs": [
@@ -147,6 +164,18 @@
    "context": "ctx-3",
    "model": "claude-sonnet subagent",
    "written_at": "2026-10-30T06:35:43Z",
+   "probes": ".mob/records/probes/2026-10-30.jsonl (06:35 UTC)"
+  },
+  {
+   "cycle": 2,
+   "boundary": "after Done check 2, 2290341",
+   "worked": "The stand-down 1 adjustment held (explicit pathspec, a staged line, a first-failing-line check), so the sweep defect did not recur; check 2 reused the layer 1 and 2 paths and cost one small commit.",
+   "did_not": "The Done check 2 acceptance test was never red: the Done check 1 gate already satisfied it (2290341 is a regression guard, no red-green signal); the same overlap is visible for Done check 3; ZOMBIES at slice did not record which checks earlier layers already satisfy.",
+   "adjustment": "Before writing a Done check 3 test, run the draft against current main; if green at once, commit it as a regression guard saying so, and mutation-prove it (temporarily break the fail-closed branch, show the test goes red, paste the failing line into the record); from now on the architect at slice lists per criterion which earlier layers already satisfy it and merges or marks those guard-only.",
+   "seat": "Architect",
+   "context": "ctx-2",
+   "model": "claude-sonnet subagent",
+   "written_at": "2026-10-30T06:41:05Z",
    "probes": ".mob/records/probes/2026-10-30.jsonl (06:35 UTC)"
   }
  ]
