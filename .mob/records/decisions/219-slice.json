@@ -81,5 +81,10 @@
   }
  ],
  "decision": null,
- "ended_at": null
+ "ended_at": null,
+ "adopted_condition": {
+  "from": "delivery lead ctx-6",
+  "condition": "fold criterion 3 (the held-record fixture) into the criterion 1 or 2 cycle, or drop it",
+  "adopted_as": "fold, not drop: Done check 3 is verified inside criterion 2's cycle; slice amended 37e456c"
+ }
 }
