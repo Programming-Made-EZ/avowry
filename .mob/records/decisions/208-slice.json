@@ -78,6 +78,17 @@
    "reply": "NO OBJECTION",
    "condition": null,
    "raw": "NO OBJECTION is my reply to the window, and my vote is below.\n\nYes\n"
+  },
+  {
+   "round": 2,
+   "role": "product manager (ready)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-1",
+   "started_at": "2026-10-30T17:35:14Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (17:13 UTC)"
   }
  ],
  "decision": null,
