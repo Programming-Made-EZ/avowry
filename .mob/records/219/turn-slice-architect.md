@@ -23,7 +23,7 @@ Rules the helper must hold (each named by a test below):
 2. Back-dated evidence still refused: evidence dated before the record committed immediately before this card's record fails with "Card 209 evidence <value> predates Card 214's record" (names the commit-order record, not a number-lower one).
 3. Main passes with the held records added: a fixture tree reproducing the real record sequence (205, 214, then 209 and 208 with their add, held-back removal, a 219 record, and re-add history) exits clean.
 
-One red-green cycle each. "Criterion: n" in each red commit body. Green n before red n+1. Greens pushed at once by the facilitator.
+AMENDED (window 219-slice, delivery lead's condition adopted under D145): two red-green cycles, not three. Cycle 1 is Done check 1. Cycle 2 is Done check 2 and carries Done check 3 (the held-record sequence fixture and its mutation proofs) in its red-2 or green-2 commits, each with "Criterion: 2" and a line "Done check 3: ..." in the body. Done check 3 stays a card check and is still verified, by that test and by the ship-gate rehearsal in part B below. "Criterion: n" in each red commit body. Green n before red n+1. Greens pushed at once by the facilitator.
 
 ## Criterion-by-layer table (outermost first; F-055 doubles named)
 
@@ -33,8 +33,8 @@ One red-green cycle each. "Criterion: n" in each red commit body. Green n before
 | 1 | Unit: `previous_record` | table of (records added in order, expected previous) including R1 | none (pure; dict and list inputs) | Red-able. The helper is absent, so the QA seat first adds a stub returning the number-lower card (card 208's practice) so the red is an assertion failure, not an import error. |
 | 2 | Acceptance, same layer and doubles as 1 | `test_backdated_evidence_is_refused_naming_the_previous_record_in_commit_order`: records 205, 214, 209 added in that order; 209's evidence dated after 205's record and before 214's | as above | Red-able after criterion 1's green, provided criterion 1's green is staged as "candidates = records added earlier, still choosing the largest card number" (205 is chosen, no error raised, test red). The green for 2 then picks the nearest earlier by position. If the backend developer greens criterion 1 straight to the final rule, criterion 2's acceptance test is born-green and must be declared so, with mutation M1b run before its commit. |
 | 2 | Acceptance guard: forged record date | `test_a_forged_record_commit_date_cannot_reorder_records`: 209's record commit carries a committer date earlier than 214's but is committed after it; 209's evidence is dated between the two | as above | Born-green guard (needs the final ordering). Kills M3. |
-| 3 | Acceptance: full sequence | `test_held_record_sequence_passes` (two variants: re-added in separate commits, and in one commit) | as above; no gh; no real repo files; the held JSON content is not used | Born-green by design (the greens of 1 and 2 satisfy it). It is the integration proof, so it carries the guards and mutations below instead of a red commit (D137 shown by mutation, as card 208's review fix did). |
-| 3 | Unit guard: same-commit tie (R2) | `previous_record` table row, plus an acceptance row: 208 and 209 added in one commit, 208's evidence after 214's record and before 209's evidence | none / as above | Born-green. Kills M4. |
+| 3 (in cycle 2) | Acceptance: full sequence | `test_held_record_sequence_passes` (one variant: 209 and 208 re-added in separate commits) | as above; no gh; no real repo files; the held JSON content is not used | Born-green by design (green 1 and green 2 satisfy it). Lands in cycle 2, in the red-2 commit if it can be written there or in the green-2 commit, with "Criterion: 2" and "Done check 3" lines. It is the integration proof, so it carries the mutations below instead of a red commit (D137 shown by mutation, as card 208's review fix did). |
+| 3 (in cycle 2) | Unit guard: same-commit tie (R2) | `previous_record` table row only (no acceptance variant, to keep the fixture small) | none | Born-green. Kills M4. |
 
 Process/CLI layer (`main`, hook, CI): not consumed. The change is inside check_records and run_check calls it unchanged; no new entry point, no gh double. Declared so a reviewer does not look for one.
 
@@ -57,7 +57,8 @@ A. In the test suite (committed): a fixture repository, built by test helpers, t
 2. evidence commits for 209 and 208 (dated after 214's record, as in the real data: 209's earliest evidence is 05:45 PDT, after 214's record at 05:35; 208's earliest is 10:13, after 209's record at 09:30).
 3. add 209.json, then remove it ("held back"); add 208.json, then remove it. The real history has exactly these four commits: 5a3d4af, 2bc05f6, 1c850b0, d02114d.
 4. add 219.json for a stand-in card whose evidence postdates all of the above (the card's own record lands before the held ones, D159 C6).
-5. re-add 209.json and 208.json (variants: two commits, and one commit).
+5. re-add 209.json, then 208.json (one variant, two commits).
+Kept to the minimum the order 205, 214, 209, 208 needs: no more cards, no second variant. Steps 3 and 4 stay because M5 is only caught by them.
 Expected: `check_records` yields no "predates" error for any card, and the reuse, own-commit and closure checks stay silent. The held JSON is never read by a test; only the shape (the six required roles, via `valid_record`) is reused.
 
 Why steps 3 and 4 are in the fixture: the checker takes a record's position from its first add (`--follow --diff-filter=A`, `splitlines()[-1]`). The real 209 and 208 were first added at 09:30 and 16:27 PDT and then removed, so their position is before the new 219 record. If position were the latest add (M5), 209's previous would be 219 and 209's evidence (05:45 to 09:24 PDT) would predate 219's record: the held records would be refused again. That is the real risk to D159 C4 and C6, and it only shows with the add-remove-re-add history, so a plain "214 then 209" fixture is not enough.
@@ -73,17 +74,17 @@ Files touched: scripts/mob_process.py and tests/test_mob_process.py only (2 coun
 0. f4627fc in-flight line (done); this slice turn (docs only, not countable).
 1. Red 1: tests only, subject "Card 219 red: out-of-order close is accepted (D159 C1)", body "Criterion: 1", failing run quoted (fails by assertion).
 2. Green 1: scripts/mob_process.py, staged as M1b (candidates earlier-added, largest number) with `previous_record` and the rev-list call; "Criterion: 1".
-3. Red 2: chain test plus the forged-date guard; "Criterion: 2" (the chain test is red; the guard is born-green, declared with M3 in the body).
-4. Green 2: nearest earlier by position; "Criterion: 2".
-5. Criterion 3: one test-only commit "Card 219 criterion 3: held-record sequence passes (D159 C4, C6)", born-green, "Criterion: 3", body lists the M1, M4 and M5 proofs (mutation applied, failures counted, restored, run counts). It follows green 2, so green-before-next-red holds.
-6. Optional refactor only if leftovers remain. Review-fix commits stay separate (D136).
+3. Red 2: chain test plus the forged-date guard; "Criterion: 2" (the chain test is red; the guard is born-green, declared with M3 in the body). The held-record sequence test (Done check 3) may be added here as a born-green test, with the body line "Done check 3: held-record sequence, born-green, mutations M1, M4, M5 below".
+4. Green 2: nearest earlier by position; "Criterion: 2". If the held-record test did not go in red 2, it goes in this commit, or in a test-only follow-up commit still labelled "Criterion: 2", with the line "Done check 3: ..." and the M1, M4 and M5 proofs (mutation applied, failures counted, restored, run counts) in the body.
+5. Optional refactor only if leftovers remain. Review-fix commits stay separate (D136).
+There is no third cycle and no "Criterion: 3" label; Done check 3 is evidenced by the "Done check 3" lines and by the ship-gate rehearsal.
 Subjects start with "Card 219", cite D159 (D145 C2: the checker change cites D159, recorded in an ancestor commit) and D162 where the waiver is relevant, no trailers, no rewrites. The seats do not push; the facilitator pushes greens at once.
 
 Run per commit: `python -m unittest tests.test_mob_process` (this file only; fast, no gh). The full repository suite is the delivery lead's call at ship.
 
 ## Slice verdict
 
-SHIP AS IS. One concern (how "previous" is chosen), two files, three criteria, estimated well under 400 lines per commit, no feature flag needed (checker tooling, not user-visible language behaviour). No split. Criterion 1's red is unconditional; criterion 2 is red-able under the staging above; criterion 3 is declared born-green with named mutations (M1, M4, M5) as its guard.
+SHIP AS IS (amended: two red-green cycles, Done check 3 folded into cycle 2). One concern (how "previous" is chosen), two files, three Done checks in two cycles, estimated well under 400 lines per commit, no feature flag needed (checker tooling, not user-visible language behaviour). No split. Criterion 1's red is unconditional; criterion 2 is red-able under the staging above; Done check 3 is declared born-green with named mutations (M1, M4, M5) as its guard.
 
 ## Domain-expert question at the slice boundary (T2)
 
