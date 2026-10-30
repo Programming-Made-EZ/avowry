@@ -23,6 +23,17 @@
    "reply": "NO OBJECTION",
    "condition": null,
    "raw": "NO OBJECTION\n\nYes\n"
+  },
+  {
+   "round": 1,
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (23:47 UTC)",
+   "context": "ctx-3",
+   "started_at": "2026-10-30T23:47:50Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes. Each criterion has a named test and layer. The red/green staging is explicit (M1b), and the born-green cases are declared with named mutations (M1, M3, M4, M5). The fixture covers the add, remove and re-add sequence that matters for the held records.\n"
   }
  ],
  "decision": null,
