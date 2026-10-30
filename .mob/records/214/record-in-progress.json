@@ -1,0 +1,66 @@
+{
+ "card": 214,
+ "title": "The generated API binds its own port in acceptance tests",
+ "status": "in progress (corrective card for F-056)",
+ "decisions": {
+  "rerank": "window 214-rerank-4 (decision e6e2ab8)",
+  "task_force": "Decider D156 (326c77f) after window 214-taskforce did not settle (9b5e252)",
+  "slice": "window 214-slice (decision 26f82d7): SHIP AS IS in 6 commits, slice a71d197 amended e6fe23d"
+ },
+ "task_force": [
+  {
+   "role": "product manager (ready)",
+   "context": "ctx-1"
+  },
+  {
+   "role": "QA engineer (red)",
+   "context": "ctx-2"
+  },
+  {
+   "role": "backend developer [author] (green)",
+   "context": "ctx-3"
+  },
+  {
+   "role": "independent reviewer (test infrastructure, Kestrel hosting, audit lens) [reviewer]",
+   "context": "ctx-4"
+  },
+  {
+   "role": "product manager (signoff)",
+   "context": "ctx-5"
+  },
+  {
+   "role": "architect (slice)",
+   "context": "ctx-6"
+  },
+  {
+   "role": "delivery lead (ship)",
+   "context": "ctx-7"
+  }
+ ],
+ "claude_seat_reason": "probes at 08:21 UTC (a5be583) and 09:18 UTC (31c22dc) show Codex, Copilot, Grok and agy without usable quota",
+ "domain_expert": [
+  {
+   "boundary": "refinement",
+   "answer": "no",
+   "reason": "one harness file using documented Kestrel behaviour; the backend developer covers .NET and Kestrel hosting and the reviewer carries the test-infrastructure and Kestrel lens; a hosting or CI-runner expert joins by Decider if Linux CI behaves differently",
+   "seat": "product manager (ready)",
+   "context": "ctx-1",
+   "source": "window 214-taskforce proposal (9803190), adopted by D156 C1 (326c77f)"
+  },
+  {
+   "boundary": "slice",
+   "answer": "no",
+   "reason": "no change: the Linux points are documented behaviour covered by the backend and reviewer seats; the first ubuntu CI run after commit 5 is the evidence and a mismatch triggers a Decider",
+   "seat": "architect (slice)",
+   "context": "ctx-6",
+   "source": ".mob/records/214/turn-slice-architect.md section 4 (a71d197)"
+  }
+ ],
+ "cycles": [
+  {
+   "cycle": 1,
+   "note": "the slice puts all three Done checks in one red-then-green cycle: commit 1 seams ec25197, red commits 26681e1, 1fcc793, 391828f, green commit 5 pending; the next boundary is after commit 5 and needs a domain-expert answer (T2)"
+  }
+ ],
+ "stand_downs": []
+}
