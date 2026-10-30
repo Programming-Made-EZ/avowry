@@ -67,5 +67,16 @@
    "context": "ctx-7"
   }
  ],
- "metric": "held records (2 at start: cards 208 and 209; target 0) and refused-record events per close (target 0)"
+ "metric": "held records (2 at start: cards 208 and 209; target 0) and refused-record events per close (target 0)",
+ "intent": {
+  "line": "Intent: the owner wants card 219 to proceed so the record checker compares each card's evidence with the record committed just before it (not the next-lower card number), so cards can close out of number order without held records; the product owner waived the stop-the-line gate for this card only.",
+  "quote_d159": "\"Previous record\" means the record added in git history immediately before this card's own record (by record_commits order), not the next-lower card number. A card with no earlier record has none. (C1)",
+  "quote_d162": "waive",
+  "decisions": [
+   "D159",
+   "D162",
+   "D157"
+  ],
+  "criterion": 1
+ }
 }
