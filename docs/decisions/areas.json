@@ -970,5 +970,11 @@
     "status": "applied",
     "title": "Findings mirroring and checker rules, second re-proposal (failed; re-proposed as D144)",
     "order": 132
+  },
+  "D144": {
+    "area": "process-and-staffing",
+    "status": "applied",
+    "title": "Findings mirroring and checker rules, third re-proposal (failed; probe-log verification escalated)",
+    "order": 135
   }
 }
