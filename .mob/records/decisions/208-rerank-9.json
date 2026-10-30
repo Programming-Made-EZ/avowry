@@ -65,5 +65,18 @@
   }
  ],
  "decision": null,
- "ended_at": null
+ "ended_at": null,
+ "attempts": [
+  {
+   "attempt": 1,
+   "role": "product manager (signoff)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (17:13 UTC)",
+   "context": "w-208-rerank-9-pmsignoff",
+   "started_at": "2026-10-30T17:41:59Z",
+   "reply": null,
+   "raw": "",
+   "note": "empty or without the window answer line; not counted; re-polled"
+  }
+ ]
 }
