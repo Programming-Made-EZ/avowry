@@ -73,6 +73,23 @@
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (12:03 UTC)"
   }
  ],
- "decision": null,
- "ended_at": null
+ "decision": {
+  "result": "adopted: no objection from all six polled seats",
+  "order": [
+   214,
+   217,
+   213,
+   209,
+   210,
+   208,
+   211,
+   216,
+   212,
+   215,
+   206,
+   207
+  ],
+  "changed": "order unchanged; 214 ships on its own evidence plus its pre-ship gate, no longer after 217's full runs; the thread-pool floor (afa4e40) stays as a recorded mitigation until 217 removes or justifies it"
+ },
+ "ended_at": "2026-10-30T12:05:08Z"
 }
