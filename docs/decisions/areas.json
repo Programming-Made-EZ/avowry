@@ -1000,5 +1000,11 @@
     "status": "in force",
     "title": "Product owner rulings: 205 to 208 confirmed corrective; priority re-evaluated at every loop boundary",
     "order": 139
+  },
+  "D150": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Ceremonies besides the retro: Three Amigos refinement and a demo after Done as experiments; planning, backlog refinement and standup dropped",
+    "order": 141
   }
 }

@@ -312,3 +312,26 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - Ruling 1 (escalation answer yes to F-043): cards 205 to 208 are confirmed as the corrective cards for audit 18 findings MD-001 to MD-003; the MD findings stay open until those cards close them with git evidence. The relayed starting order is 205, 209, 210, 208, 211 (D147 had ranked 209, 210, 211, 208 with 205 after them); the starting order is not frozen.
 - Ruling 2 (the team constantly re-evaluates priority at the beginning or end of the loop): at every loop boundary (each card's Done and retro, before the next pull) the product manager seat leads a re-rank of the top of Ready against current evidence (findings, retro outputs, metrics, model availability, new cards), as a Decider; the result is recorded in a committed re-rank note with a one-line rationale even when nothing changes (.mob/records/reranks/). The rule goes into TEAM_WORKING_AGREEMENT.md and HANDOFF.md, and a mob-defaults card brings it to the template, the charter and the loop runner's re-rank step.
 - Hypothesis for the next retro (not a mandate): ceremonies besides the retro; the team evaluates candidates by Decider, keeping only those that earn their cost.
+
+<a id="d150"></a>
+#### Decider D150: ceremonies besides the retro (two kept as experiments, three dropped)
+
+- Date: 2026-10-30. Trigger: the product owner's hypothesis that ceremonies besides the retro may help, with Dispatch's five starting proposals; each kept ceremony states its user benefit, metric and counter-metric, its own accountability check, trigger and cost; ceremonies that do not earn their cost are dropped. Proposer: agile coach seat. Seats through decider.py with the headless claude CLI (one throwaway clone each): round 1 architect, QA engineer, independent reviewer (audit lens), delivery lead, product manager, all Support-it; independent re-run by five fresh seats (product manager replaced by agile coach), all Support-it. Votes in .mob/records/deciders/D150-votes.json.
+- Result: PASSED. Every kept ceremony is an experiment over the next 5 cards, then keep, revise or drop at that retro.
+- Adopted text:
+  C1 Three Amigos refinement before the red seat: KEEP AS EXPERIMENT.
+  - User benefit: the persona gets criteria a user can observe, derived with ZOMBIES, with the domain-expert question answered before code, so fewer rework cards.
+  - Metric: share of cards whose review-fix commits (Card NNN review fixes) are zero. Counter-metric: minutes from card pull to red commit; also criteria count per card (watch for over-specification, ruling 6).
+  - Accountability check: git shows a commit adding the criteria and the domain-expert answer to the card record, authored by PM, QA and dev seats in separate contexts, that precedes the first red commit for that card.
+  - Trigger: every card pull, after the re-rank. Cost: about 3 short parallel seat calls, capped at one round; skip the domain-expert call when the architect slice answer is no.
+  C2 Review or demo after Done: KEEP AS EXPERIMENT.
+  - User benefit: the product owner sees working behaviour, not claims; catches a Done card that passes tests but fails the persona.
+  - Metric: share of Done cards whose retro holds a persona-run observation. Counter-metric: seat minutes per card spent on demos, and demos that only repeat the test output.
+  - Accountability check: the card retro file in docs/retros/ contains the command and its real output run as the persona, committed before the issue closes; at each milestone or every 5 cards a demo summary file is committed and linked from the retro.
+  - Trigger: each Done; summary every 5th card or milestone. Cost: about 2 seat minutes per card, about 10 minutes per summary, run by a seat that did not author the card.
+  C3 Planning or re-rank at each loop boundary: DROP as a new ceremony.
+  - Reason: already in force by D148 with its own committed note in .mob/records/reranks/; adding it here would duplicate it. D148 keeps its own accountability check.
+  C4 Periodic backlog refinement: DROP.
+  - Reason: grooming cards below the top of Ready is cards written far ahead of their turn, which ruling 6 names as the over-specification to avoid; cards decay as evidence arrives. Just-in-time refinement is covered by C1 and the D148 re-rank of the top of Ready. Reopen if a pulled card repeatedly fails the Ready check.
+  C5 Standup or sync at cycle boundaries: DROP.
+  - Reason: WIP is one card (concurrent class under Bishop's Law), so there is nothing to resync; the loop boundary re-rank and the retro already sync. Reopen when two or more parallel-class worktrees run at once, with the resync cost measured then.
