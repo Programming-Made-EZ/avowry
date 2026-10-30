@@ -1018,5 +1018,11 @@
     "status": "in force",
     "title": "Stand-down: a micro-retro at each cycle boundary within a card, replaced by the full retro at Done (amends D150)",
     "order": 142
+  },
+  "D152": {
+    "area": "process-and-staffing",
+    "status": "applied",
+    "title": "Mid-card task-force declaration fix on card 205",
+    "order": 143
   }
 }

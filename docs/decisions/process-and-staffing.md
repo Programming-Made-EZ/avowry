@@ -356,3 +356,9 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   - Metric: share of stand-down adjustments that the next cycle visibly applies (the next commit or seat record shows the change). Counter-metric: seat minutes per stand-down (target a couple of minutes, a few lines), and stand-downs that repeat the same text or say nothing.
   - Accountability check: for a card with N cycle boundaries before Done, the record holds N-1 stand-downs, each with a non-empty adjustment and the context of a task-force seat, committed in or before the boundary's commit; none after Done; the retro file names them as input.
   S3 The rest of D150 stands: Three Amigos refinement and the persona demo stay experiments; planning (covered by the D148 re-rank) and periodic backlog refinement stay dropped.
+
+<a id="d152"></a>
+#### Decider D152: mid-card task-force declaration fix on card 205
+
+- Date: 2026-10-30. Card 205 is mid-card (its red step is on mob-defaults main in b33793a). (T1) The role Independent auditor [reviewer] is renamed Independent reviewer (audit lens) [reviewer], same member, why and context ctx-5, because the mob-defaults rule refuses any card seat named auditor (the external auditor is never a mob seat); a rename, not a removal or addition. (T2) The assignee note, Left out list and domain-expert line become plain paragraphs, so card mode parses only role lines. (T3) No member joins or leaves; the card 205 retro records the fix.
+- Seats through decider.py with the headless claude CLI: architect, QA engineer, independent reviewer (audit lens), delivery lead, agile coach. Round 1: four Yes, one Support-it; independent re-run: all Yes. Votes in .mob/records/deciders/D152-votes.json. Result: PASSED; applied to issue 205.

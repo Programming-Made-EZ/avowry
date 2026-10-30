@@ -1,0 +1,70 @@
+{
+ "decider": "D152",
+ "subject": "Mid-card task-force declaration fix on card 205 (rename the reviewer seat; notes as paragraphs)",
+ "result": "PASSED round 1, confirmed by the independent re-run",
+ "round1": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Yes",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Yes",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "independent reviewer (audit lens)",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Support-it",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Yes",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "agile coach",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Yes",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  }
+ ],
+ "independent_rerun": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Yes",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Yes",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "independent reviewer (audit lens)",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Yes",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Yes",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "agile coach",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Yes",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  }
+ ],
+ "rerun_result": "confirmed: no seat at No"
+}
