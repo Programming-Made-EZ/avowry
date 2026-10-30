@@ -13,3 +13,4 @@
 - 2026-10-30 14:16 UTC: cap 14:15 passed; developer ctx-3 reported the full mob-defaults suite (started 13:54, about 17 min) still running with targeted runs green; new cap 14:30 UTC.
 - 2026-10-30 14:31 UTC: QA engineer ctx-2, card 209 criterion 2 red (D157), inner loop tests.test_mob_process; cap 14:55 UTC.
 - 2026-10-30 14:44 UTC: backend developer ctx-3, card 209 criterion 2 unit layers and green (units 145947b, 147a90a so far); full suite expected to start about 14:50; cap 15:15 UTC (stand-down 1 adjustment: suite start + 25 min).
+- Fri Oct 30 15:02:06 UTC 2026: backend developer ctx-3, card 209 criterion 3 full suite started; cap 15:27 UTC.
