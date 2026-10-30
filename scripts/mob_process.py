@@ -303,7 +303,23 @@ WINDOW_CATEGORIES = ("task-force declaration", "slice decision", "loop-boundary 
 
 
 def seat_errors(path, index, reply):
-    return []
+    seat = reply.get("role") if isinstance(reply.get("role"), str) and reply.get("role").strip() else f"seat {index + 1}"
+    errors = []
+
+    def missing(field):
+        value = reply.get(field)
+        return not isinstance(value, str) or not value.strip()
+
+    for field in ("model", "context", "probe_reference"):
+        if missing(field):
+            errors.append(f"{path.name}: {seat}: {field} is missing or empty")
+    if missing("reply"):
+        errors.append(f"{path.name}: {seat}: reply is missing or empty")
+    elif reply["reply"] not in ("NO OBJECTION", "OBJECTION"):
+        errors.append(f"{path.name}: {seat}: reply must be exactly NO OBJECTION or OBJECTION")
+    elif reply["reply"] == "OBJECTION" and missing("condition"):
+        errors.append(f"{path.name}: {seat}: an OBJECTION needs a non-empty condition")
+    return errors
 
 
 def window_errors(path, data):

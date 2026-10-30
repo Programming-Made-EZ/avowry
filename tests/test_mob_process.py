@@ -656,6 +656,40 @@ class WindowSeatsTests(unittest.TestCase):
             errors = mob.window_errors(self.path, dict(self.base, replies=["x"]))
         self.assertEqual(1, len(errors)); self.assertIn("302-y.json", errors[0]); self.assertIn("seat 1", errors[0]); double.assert_not_called()
 
+class SeatErrorsTests(unittest.TestCase):
+    path = Path(".mob/records/decisions/302-y.json")
+    def seat(self, **fields):
+        data = {"role": "architect", "model": "m", "context": "c", "reply": "NO OBJECTION", "condition": None, "probe_reference": "p"}
+        data.update(fields); return data
+
+    # Card 213 unit layer 5 (D153 L3b), ZOMBIES: Z (a seat with no defect has no errors), O (one complete seat passes; an OBJECTION with a condition passes),
+    # M (two defective fields in one seat give one error each), B (model, context, probe_reference, reply each empty, blank, non-string or absent fail; a reply outside the two fails; an OBJECTION without or with an empty condition fails),
+    # E (a seat with no reply entry fails with the field reply; a non-object entry is window_errors' case, layer 4), I (the message names the file, the seat by role or by index when there is no role, and the field). S: N/A because nothing simpler exists.
+    def test_zero_a_complete_seat_has_no_errors(self):
+        self.assertEqual([], mob.seat_errors(self.path, 0, self.seat()))
+    def test_one_complete_seat_passes_and_an_objection_needs_a_condition(self):
+        self.assertEqual([], mob.seat_errors(self.path, 0, self.seat()))
+        self.assertEqual([], mob.seat_errors(self.path, 0, self.seat(reply="OBJECTION", condition="adopt X")))
+    def test_many_defects_give_one_error_each(self):
+        self.assertEqual(2, len(mob.seat_errors(self.path, 0, self.seat(model="", probe_reference=None))))
+    def test_boundary_each_required_field_empty_or_absent_fails(self):
+        for field in ("model", "context", "probe_reference", "reply"):
+            for value in ("", "  ", None, 5):
+                with self.subTest(field=field, value=value):
+                    errors = mob.seat_errors(self.path, 0, self.seat(**{field: value})); self.assertEqual(1, len(errors)); self.assertIn(field, errors[0])
+            data = self.seat(); del data[field]
+            with self.subTest(field=field, value="absent"): self.assertEqual(1, len(mob.seat_errors(self.path, 0, data)))
+    def test_boundary_reply_outside_the_two_and_objection_without_condition_fail(self):
+        for reply in ("MAYBE", "no objection", "NO OBJECTION "):
+            with self.subTest(reply): self.assertEqual(1, len(mob.seat_errors(self.path, 0, self.seat(reply=reply))))
+        for condition in (None, "", "  ", 5):
+            with self.subTest(condition):
+                errors = mob.seat_errors(self.path, 0, self.seat(reply="OBJECTION", condition=condition)); self.assertEqual(1, len(errors)); self.assertIn("condition", errors[0])
+    def test_interface_messages_name_file_seat_and_field(self):
+        error = mob.seat_errors(self.path, 3, self.seat(role="QA engineer", context=""))[0]
+        self.assertIn("302-y.json", error); self.assertIn("QA engineer", error); self.assertIn("context", error)
+        error = mob.seat_errors(self.path, 3, {k: v for k, v in self.seat().items() if k != "role"} | {"model": ""})[0]
+        self.assertIn("seat 4", error); self.assertIn("model", error)
 class CheckWindowsTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(); self.root = Path(self.temp.name); self.addCleanup(self.temp.cleanup)
