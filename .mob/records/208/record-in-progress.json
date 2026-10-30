@@ -219,5 +219,19 @@
    "model": "claude-sonnet-5-5",
    "written_at": "2026-10-30T19:53:39Z"
   }
- ]
+ ],
+ "deviations": [
+  {
+   "commit": "d3125ea (mob-defaults, corrected criterion 2 red, QA ctx-3)",
+   "rule": "D136 (at most 400 changed lines per commit)",
+   "what": "463 insertions in 2 files (real, not line endings: the --ignore-cr-at-eol stat is the same)",
+   "handling": "not rewritten (no history rewrites); recorded here for the review, the gate and the retro; later reds split by ZOMBIES groups when they would pass 400"
+  }
+ ],
+ "correction": {
+  "D164": {
+   "card_text": "2625dd3",
+   "red": "d3125ea"
+  }
+ }
 }
