@@ -8,3 +8,4 @@
 - 2026-10-30 12:07 UTC: delivery lead ctx-7, card 214 pre-ship gate (D154: closure-record dry run, every cited hash and path resolves on origin, full suite on the pushed hash 9046262, CI green on the shipping commit); cap 12:45 UTC.
 - 2026-10-30 12:3x UTC: card 214 closed (Done); no seat in flight.
 - 2026-10-30 13:17 UTC: QA engineer ctx-2, card 209 criterion 1 red (D157) in mob-defaults, working (tests/test_card_mode.py modified, not committed); cap 13:35 UTC.
+- 2026-10-30 13:26 UTC: QA ctx-2 done (card 209 criterion 1 red 6836d76, local in mob-defaults, pushed with its green). Now: backend developer ctx-3, card 209 criterion 1 unit layers and green (full suite about 18 min); cap 13:55 UTC.
