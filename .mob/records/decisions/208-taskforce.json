@@ -146,8 +146,11 @@
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (17:13 UTC)"
   }
  ],
- "decision": null,
- "ended_at": null,
+ "decision": {
+  "result": "adopted as amended: seven seats; value and metric named (runner-enforced versus by-hand standing rules; audit findings per card about runner-gated rules); split and slice placement left to the architect; round 2 no objection from all six",
+  "task_force": "ctx-1 to ctx-7, all Claude (probes 17:13 UTC)"
+ },
+ "ended_at": "2026-10-30T17:17:26Z",
  "attempts": [
   {
    "attempt": 1,
