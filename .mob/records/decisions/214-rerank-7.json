@@ -73,8 +73,25 @@
    "raw": "NO OBJECTION\n\nYes. The order puts the corrective cards for open FAILs first, which stops the line as the standing rules require. It defers 217 and 213 to a Decider only if the team wants them early, and it doesn't over-specify.\n"
   }
  ],
- "decision": null,
- "ended_at": null,
+ "decision": {
+  "result": "adopted: no objection from all six polled seats (the sign-off seat after a re-poll of an unclear first reply)",
+  "order": [
+   209,
+   210,
+   208,
+   211,
+   217,
+   213,
+   216,
+   212,
+   215,
+   206,
+   207
+  ],
+  "next": 209,
+  "changed": "214 Done and out; the four corrective cards first; 217 from second to fifth and 213 sixth, because the corrective-card gate cannot start them while MD-001, MD-002, MD-003 and MD-010 are open; a Decider only if the team wants either started earlier"
+ },
+ "ended_at": "2026-10-30T12:41:25Z",
  "attempts": [
   {
    "attempt": 1,
