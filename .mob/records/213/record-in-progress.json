@@ -1,0 +1,97 @@
+{
+ "card": 213,
+ "title": "The checker rejects an incomplete objection window",
+ "status": "in progress (Done check 1 green 8f045e1; checks 2 and 3 to do)",
+ "decisions": [
+  "window 213-taskforce (D153; .mob/records/decisions/213-taskforce.json)"
+ ],
+ "task_force": [
+  {
+   "role": "Product manager (ready)",
+   "context": "ctx-1"
+  },
+  {
+   "role": "Architect (slice)",
+   "context": "ctx-6"
+  },
+  {
+   "role": "QA engineer (red)",
+   "context": "ctx-2"
+  },
+  {
+   "role": "Backend developer [author] (green)",
+   "context": "ctx-3"
+  },
+  {
+   "role": "Independent reviewer (audit lens) [reviewer]",
+   "context": "ctx-4"
+  },
+  {
+   "role": "Delivery lead (ship)",
+   "context": "ctx-7"
+  },
+  {
+   "role": "Product manager (signoff)",
+   "context": "ctx-5"
+  }
+ ],
+ "claude_seat_reason": "probes at 07:24 UTC show Codex, Copilot, Grok and agy without usable quota (.mob/records/probes/2026-10-30.jsonl)",
+ "domain_expert": [
+  {
+   "boundary": "refinement",
+   "answer": "no",
+   "reason": "inside scripts/mob_process.py and its tests"
+  },
+  {
+   "boundary": "slice",
+   "answer": "no",
+   "reason": "one concern in one file"
+  },
+  {
+   "boundary": "after Done check 1",
+   "answer": "no",
+   "reason": "Done check 2 is the same layer"
+  }
+ ],
+ "criteria": [
+  {
+   "criterion": "213-1",
+   "acceptance_test": "tests/test_mob_process.py::test_window_files_need_a_closed_list_category_and_an_end_time",
+   "red_commit": "43b20a4",
+   "unit_commits": [
+    {
+     "layer": "3 window_errors",
+     "commit": "ee762a8"
+    },
+    {
+     "layer": "2 check_windows",
+     "commit": "def9be8"
+    },
+    {
+     "layer": "1 run_check wiring",
+     "commit": "cad00f0"
+    }
+   ],
+   "green_commit": "8f045e1",
+   "born_green_guards": [
+    "no decisions folder",
+    "empty folder",
+    "one complete window",
+    "the repository's real windows"
+   ]
+  }
+ ],
+ "stand_downs": [
+  {
+   "cycle": 1,
+   "boundary": "after Done check 1, green 8f045e1",
+   "worked": "The criterion-by-layer table held: red 43b20a4, three small layer commits (at most 45 lines), green 8f045e1; temporary uncommitted stubs made unit tests fail by assertion; every cited hash resolves (D154).",
+   "did_not": "A hidden fixture dependency (run_check needs MOB.md in the temp tree) surfaced only at red; slow feedback (full suite about 90 s); two MOB.md regeneration commits add commits per card (a D154 counter-metric).",
+   "adjustment": "Before Done check 2, put the fixture preconditions in one shared test helper (a minimal valid tree: MOB.md, an empty decisions folder, one complete window) used by red and green; Done check 2 runs only tests.test_mob_process; the full suite runs once at the D154 pre-ship gate, its pass line citing a pushed hash.",
+   "seat": "Delivery lead",
+   "context": "ctx-7",
+   "model": "claude-sonnet subagent",
+   "written_at": "2026-10-30T07:57:46Z"
+  }
+ ]
+}
