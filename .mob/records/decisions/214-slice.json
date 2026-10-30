@@ -22,6 +22,17 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nYes\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)"
+  },
+  {
+   "round": 1,
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-2",
+   "started_at": "2026-10-30T08:59:38Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "Support-it\n\nNO OBJECTION\n\nThe slice puts every Done check in a layer-by-layer table with named doubles. It marks which cases are red-able and which are born-green, and guards each born-green case with a named mutation test. That lets each rule be tested red first, and the checks should catch the violations they name.\n\nI read only the first part of the slice file, so the later rows are unchecked.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)"
   }
  ],
  "decision": null,
