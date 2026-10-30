@@ -118,5 +118,15 @@
  },
  "ci": {
   "afa4e40": "ci success (run 41045702766), the first green on the card's last code commit"
+ },
+ "gate_failures_owner": {
+  "finding": "F-065 (audit 34/37): the three local failures the pre-ship gate (917bfc6) labelled environmental are not a closure under the flaky-tests-are-bugs rule; each is owned by card 217 by name",
+  "tests": [
+   "Phrase.Acceptance.Tests.UsableV1.Bar6_a_model_that_never_saw_the_app_can_add_an_endpoint_from_the_docs_alone",
+   "Phrase.Acceptance.Tests.CSharpBaselineAcceptance.endpoint_reply_fails_when_response_record_or_status_are_wrong",
+   "Phrase.Acceptance.Tests.CSharpBaselineAcceptance.endpoint_reply_passes_when_response_record_and_status_match"
+  ],
+  "also_217": "F-063: the thread-pool starvation flakes, including CSharpBaselineAcceptance.wrong_reply_fails_with_the_failing_test_name_in_diagnostics (failed once at 1 m 40 s under load)",
+  "owner": "card 217 (issue 217, text updated in this commit's push)"
  }
 }
