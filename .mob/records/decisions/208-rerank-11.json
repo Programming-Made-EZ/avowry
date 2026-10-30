@@ -81,5 +81,17 @@
   }
  ],
  "decision": null,
- "ended_at": null
+ "ended_at": null,
+ "adopted_conditions": [
+  {
+   "from": "QA engineer",
+   "condition": "Card 216 must name its red template test (failing before the lens text exists) in its Done check 1 at ready, and the lens test must assert the per-loop questions and the D165 citation.",
+   "status": "adopted (D145) as commitments at card 216's ready step: its Done check 1 names a red template test that fails before the lens text exists and asserts the per-loop questions and the D165 citation; the lens joining 216 is recorded in git through card-text edits and an objection window at 216's ready step"
+  },
+  {
+   "from": "independent reviewer (audit lens)",
+   "condition": "Record in git, at card 216's ready step, the card-text edits and an objection-window result, so the lens joining 216 can be verified from commits rather than from the proposal's prose.",
+   "status": "adopted (D145) as commitments at card 216's ready step: its Done check 1 names a red template test that fails before the lens text exists and asserts the per-loop questions and the D165 citation; the lens joining 216 is recorded in git through card-text edits and an objection window at 216's ready step"
+  }
+ ]
 }
