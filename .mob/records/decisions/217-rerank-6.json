@@ -41,6 +41,16 @@
    "condition": null,
    "raw": "Yes, NO OBJECTION\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:07 UTC)"
+  },
+  {
+   "role": "independent reviewer (audit lens)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "win6-auditlens",
+   "started_at": "2026-10-30T11:18:11Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes. The proposal is checkable from git: the decision record and re-rank note are committed, and the evidence is named (run 4's failing test, commits 111960d and afa4e40, audit 30 / F-062). 214's ship gate is tied to 217's two consecutive same-result full runs, so it can't be skipped quietly.\n\nOne gap: `.mob/audits/` isn't in this scratch copy, so I couldn't check `open_fails` or whether 217 counts as corrective. Placing a non-corrective 217 ahead of the corrective MD cards may stretch the gate.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:07 UTC)"
   }
  ],
  "decision": null,
