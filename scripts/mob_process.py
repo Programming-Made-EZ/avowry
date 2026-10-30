@@ -106,6 +106,21 @@ def git_call(git, *args):
     return git(*args)
 
 
+CONTEXT_RE = re.compile(r"^\W*(ctx-\d+)\W*$", re.IGNORECASE)
+
+
+def seat_identity(seat):
+    """D145 C4: a seat is its driver (first word, lower-cased) plus an optional context id (ctx-<digits>)."""
+    words = str(seat).split()
+    context = next((m.group(1).lower() for m in map(CONTEXT_RE.match, words[1:]) if m), None)
+    return (words[0].lower() if words else "", context)
+
+
+def seats_distinct(first, second):
+    (driver_a, ctx_a), (driver_b, ctx_b) = seat_identity(first), seat_identity(second)
+    return driver_a != driver_b or (ctx_a is not None and ctx_b is not None and ctx_a != ctx_b)
+
+
 def check_records(root, issues, git):
     errors, records = [], load_records(root)
     closed = {card_number(i): i for i in issues if "card" in labels(i) and "not-card" not in labels(i) and card_number(i)}
@@ -150,7 +165,7 @@ def check_records(root, issues, git):
         if any(str(s["seat"]).split()[0].lower() not in drivers for s in seats):
             errors.append(f"Card {card:03} has a seat not listed in DRIVERS.md")
         by_role = {s["role"]: s for s in seats}
-        if " ".join(by_role["signoff"]["seat"].lower().split()) == " ".join(by_role["green"]["seat"].lower().split()):
+        if not seats_distinct(by_role["signoff"]["seat"], by_role["green"]["seat"]):
             errors.append(f"Card {card:03} signoff seat must differ from green seat")
         evidence = [str(s["evidence"]) for s in seats]
         if len(set(evidence)) != len(evidence):

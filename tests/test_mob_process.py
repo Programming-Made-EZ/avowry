@@ -89,6 +89,19 @@ jobs:
         (self.root/".mob/records/204.json").write_text(json.dumps(record),encoding="utf-8")
         self.assertIn("Card 204 signoff seat must differ from green seat",mob.check_records(self.root,[issue(204)],self.git))
 
+    def test_seat_identity_is_driver_and_context_id(self):
+        # D145 C4 review of f04ac7f: same driver needs two distinct ctx ids; context-less or punctuation-varied seats are refused.
+        msg="Card 204 signoff seat must differ from green seat"
+        def errors(green,signoff):
+            record=self.valid_record(204); seats={s["role"]:s for s in record["seats"]}
+            seats["green"]["seat"]=green; seats["signoff"]["seat"]=signoff
+            (self.root/".mob/records/204.json").write_text(json.dumps(record),encoding="utf-8")
+            return mob.check_records(self.root,[issue(204)],self.git)
+        for green,signoff in (("Claude","Claude Sonnet"),("Claude","claude (sonnet)"),("Claude ctx-4","Claude ctx-4."),("Claude ctx-4","Claude (ctx-4)"),("Claude ctx-4","Claude")):
+            with self.subTest(green=green,signoff=signoff): self.assertIn(msg,errors(green,signoff))
+        for green,signoff in (("Claude ctx-4","Claude ctx-7"),("Codex","Claude")):
+            with self.subTest(green=green,signoff=signoff): self.assertNotIn(msg,errors(green,signoff))
+
     def test_evidence_success_failure_distinctness_and_boundary(self):
         record=self.valid_record(); path=self.root/".mob/records/201.json"
         self.assertNotIn("Card 201 evidence D7 decision does not mention Card 201",mob.check_records(self.root,[issue(201)],self.git))
