@@ -4,7 +4,8 @@
  "status": "in progress (corrective for MD-001); code in mob-defaults",
  "decisions": {
   "rank": "re-rank 7 (window 214-rerank-7, decision 386cf3e)",
-  "task_force": "window 209-taskforce (proposal b69366f, decision 9052942)"
+  "task_force": "window 209-taskforce (proposal b69366f, decision 9052942)",
+  "slice": "window 209-slice (decision in this push): SHIP AS IS, slice dd49100"
  },
  "task_force": [
   {
@@ -45,6 +46,14 @@
    "seat": "product manager (ready)",
    "context": "ctx-1",
    "source": "window 209-taskforce proposal (b69366f)"
+  },
+  {
+   "boundary": "slice",
+   "answer": "no",
+   "reason": "Python in facilitator.py, mob_process.py and the template, covered by the backend, QA and reviewer seats",
+   "seat": "architect (slice)",
+   "context": "ctx-6",
+   "source": ".mob/records/209/turn-slice-architect.md (dd49100)"
   }
  ],
  "d157": "one acceptance criterion per red-green cycle: Criterion 1 red, its unit layers, green, push; then Criterion 2; then Criterion 3",
