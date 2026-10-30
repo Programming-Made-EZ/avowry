@@ -129,5 +129,14 @@
    "model": "claude-sonnet subagent",
    "written_at": "2026-10-30T14:29:20Z"
   }
+ ],
+ "deviations": [
+  {
+   "commit": "44112b4 (mob-defaults, criterion 2 red, QA ctx-2)",
+   "rule": "D136 (at most 400 changed lines per commit)",
+   "what": "tests/test_mob_process.py was CRLF at 7d371fa and the commit wrote it as LF, so git counts 1181 changed lines; the real change is 123 insertions (git diff --ignore-cr-at-eol 7d371fa 44112b4)",
+   "handling": "not rewritten (no history rewrites) and not converted back (a second whole-file churn commit); the file stays LF from here; later seats keep each file's current line endings and check git diff --stat against git diff --ignore-cr-at-eol --stat before committing",
+   "same_cause_as": "card 214 commit 5 (caught before commit) and card 205's red (0f7225f)"
+  }
  ]
 }
