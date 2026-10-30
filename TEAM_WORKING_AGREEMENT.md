@@ -112,6 +112,8 @@ accountability are under Practices, Task force before every card.
 
 ### Continuous loop (standing rule, product owner, 2026-10-25)
 
+- **Re-rank at every loop boundary (product owner, 2026-10-30, D148).** Priority is re-evaluated constantly, at the beginning or end of every loop: at each card's Done and retro, before the next pull, the product manager seat leads a re-rank of the top of Ready against current evidence (open findings, retro outputs, flow and practice metrics, model availability, new cards), decided by Decider. The result is recorded in a committed re-rank note under .mob/records/reranks/ with a one-line rationale, also when nothing changes. A relayed or earlier order is a starting point, never frozen.
+
 The mob runs continuously: card → ship each green increment → Done → retro → PM re-ranks → pull the next
 top card → repeat. It does not stop between cards or wait for pings. It stops only when the board's Ready
 column is empty AND the retro produced no new cards, or when product owner says stop. WIP stays at one card.
