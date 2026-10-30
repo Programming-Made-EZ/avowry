@@ -20,6 +20,16 @@
    "condition": null,
    "raw": "Yes\nNO OBJECTION",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (07:24 UTC)"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "win213-qa",
+   "started_at": "2026-10-30T07:37:23Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "Yes\n\nNO OBJECTION\n\nThe declaration covers every role in REQUIRED_ROLES plus the reviewer, each in its own context. The QA seat is red-first, and the slice table names the criteria that are born green and need guarding.",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (07:24 UTC)"
   }
  ],
  "decision": null,
