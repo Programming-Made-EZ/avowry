@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "card": 195,
+  "title": "Rename the C# adapter and CLI projects to Avowry.*",
+  "process": "card-mode",
+  "seats": [
+    {
+      "role": "ready",
+      "seat": "Codex",
+      "model": "gpt-5.6-sol (product-manager, card mode turn 1)",
+      "evidence": "7f49669"
+    },
+    {
+      "role": "slice",
+      "seat": "Codex",
+      "model": "gpt-5.6-sol (architect, card mode turn 2)",
+      "evidence": "c184c84"
+    },
+    {
+      "role": "red",
+      "seat": "Codex",
+      "model": "gpt-5.6-sol (qa-engineer, card mode turn 3)",
+      "evidence": "518b91a"
+    },
+    {
+      "role": "green",
+      "seat": "Codex",
+      "model": "gpt-5.6-sol (backend-dev, card mode turns 4 to 7, two cycles with refactor)",
+      "evidence": "0aaabe4"
+    },
+    {
+      "role": "ship",
+      "seat": "Claude",
+      "model": "claude-sonnet-5-5 (facilitator: gates, review fixes, commit, push)",
+      "evidence": "56c9bef"
+    },
+    {
+      "role": "signoff",
+      "seat": "Claude",
+      "model": "claude-sonnet-5-5 (fresh-context reviewer, non-author)",
+      "evidence": "D138"
+    }
+  ],
+  "retro": "docs/retros/card-195-2026-10-29.md",
+  "notes": "Baseline card for D136 (not an exception): five increments, 56 files in the code commit. Card-mode run 22:35:24Z to 23:51:13Z (75 min 49 s). Codex seat turns 2522 s, failover 43 s, three full gate checks 33 min 5 s. started_at 2026-10-29T22:35:24Z (first card-mode turn event). The refactor turns (turns 5 and 7) and the card-mode QA signoff (turn 8, Codex) are in the whiteboard, not committed. Before the card-mode run an earlier unimported Codex run for this card existed outside card mode and was discarded."
+}
