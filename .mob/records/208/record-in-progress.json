@@ -58,6 +58,20 @@
    "source": "6bd8db2"
   }
  ],
- "cycles": [],
+ "cycles": [
+  {
+   "criterion": 1,
+   "repo": "mob-defaults",
+   "red": "83714f1",
+   "units": [
+    "38075b7 (layer 1, CardRun.gate_seat, recorded probe results and a scripted clock; run_backend and run_turn mocked)",
+    "26aaa0c (layer 2, probe_is_stale, no doubles)"
+   ],
+   "green": "e81ed21",
+   "full_suite": "356 tests OK, 1 skip (18:20 to 18:39 UTC; seat-written in-flight line b3c246b, cap 18:45 met)",
+   "guards": "G1, G2 mutation-proved; G3 (vacuous) dropped and replaced by two assert_not_called guards in 38075b7, mutation-proved in the green body",
+   "pushed": "about 18:42 UTC"
+  }
+ ],
  "stand_downs": []
 }
