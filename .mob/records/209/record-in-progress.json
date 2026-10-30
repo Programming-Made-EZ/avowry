@@ -98,6 +98,16 @@
    "green": "18f3962",
    "full_suite": "332 tests OK, 1 skip (14:36:50 to 14:53:59 UTC, inside the stand-down-1 cap of start + 25 min)",
    "pushed": "about 14:56 UTC"
+  },
+  {
+   "criterion": 3,
+   "repo": "mob-defaults",
+   "red": "794a4a7",
+   "units": [],
+   "green": "1bb0a83",
+   "full_suite": "336 tests OK, 1 skip (started 15:02:06 UTC; seat-written in-flight line 38762d2, cap 15:27, met)",
+   "note": "a comment-only edit to facilitator.py (line 573, drop 'cycle 3') was made after the full suite ran; the template module and a compile check were re-run",
+   "pushed": "about 15:21 UTC"
   }
  ],
  "stand_downs": [
