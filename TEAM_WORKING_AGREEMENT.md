@@ -110,6 +110,12 @@ accountability are under Practices, Task force before every card.
 - **Process work** is chosen only at a retro, states its user benefit, and is timeboxed to one or two
   cycles. Stop-the-line exceptions only: data loss, a security hole, a broken trunk.
 
+### Ceremonies besides the retro (experiments, D150, 2026-10-30)
+
+- **Three Amigos refinement before the red seat (experiment, next 5 cards).** At each pull, after the re-rank, the product manager, QA engineer and developer seats, each in its own context, derive the ZOMBIES acceptance criteria together and answer the domain-expert question; the criteria and the answer are committed to the card record before the first red commit. Metric: share of cards with zero review-fix commits; counter-metrics: minutes from pull to red, criteria count per card.
+- **Persona demo after Done (experiment, next 5 cards).** A seat that did not author the card runs the working increment as the card's persona would and commits the command and its real output in the card retro before the issue closes; every 5th card or at a milestone a short demo summary is committed and sent to the product owner. Metric: share of Done cards with a persona-run observation; counter-metrics: demo seat minutes per card, demos that only repeat test output.
+- **Dropped:** a separate planning ceremony (the D148 re-rank covers it), periodic backlog refinement (cards written ahead of their turn, VISION ruling 6; reopen if pulled cards keep failing the Ready check) and a standup (WIP is one card; reopen when parallel worktrees run). The retro after the fifth card decides keep, revise or drop for each experiment.
+
 ### Continuous loop (standing rule, product owner, 2026-10-25)
 
 - **Re-rank at every loop boundary (product owner, 2026-10-30, D148).** Priority is re-evaluated constantly, at the beginning or end of every loop: at each card's Done and retro, before the next pull, the product manager seat leads a re-rank of the top of Ready against current evidence (open findings, retro outputs, flow and practice metrics, model availability, new cards), decided by Decider. The result is recorded in a committed re-rank note under .mob/records/reranks/ with a one-line rationale, also when nothing changes. A relayed or earlier order is a starting point, never frozen.
