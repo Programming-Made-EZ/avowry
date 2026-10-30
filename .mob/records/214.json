@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 214,
+ "title": "The generated API binds its own port in acceptance tests",
+ "process": "card-mode rules run by hand (loop.py gaps, card 208); objection windows (D153) and one full Decider (D156)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude-sonnet-5-5 (product manager, refinement and task-force declaration; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 08:21 to 12:03 UTC))",
+   "evidence": "029670b"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-6",
+   "model": "claude-sonnet-5-5 (architect; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 08:21 to 12:03 UTC))",
+   "evidence": "a71d197"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-2",
+   "model": "claude-sonnet-5-5 (QA engineer; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 08:21 to 12:03 UTC))",
+   "evidence": "26681e1"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-3",
+   "model": "claude-sonnet-5-5 (backend developer, author; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 08:21 to 12:03 UTC))",
+   "evidence": "111960d"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-7",
+   "model": "claude-sonnet-5-5 (delivery lead, D154 pre-ship gate; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 08:21 to 12:03 UTC))",
+   "evidence": "917bfc6"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-5",
+   "model": "claude-sonnet-5-5 (product manager, sign-off; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 08:21 to 12:03 UTC))",
+   "evidence": "602718c"
+  }
+ ],
+ "retro": "docs/retros/card-214-2026-10-30.md",
+ "notes": "Corrective for F-056 (audit 24). Commits: seams ec25197; red 26681e1, 1fcc793, 391828f; green 111960d and 5b afa4e40 (bodies cite pre-rebase a22b651 and 3aed9dc, mapped in .mob/records/214/record-in-progress.json); review fix 5c d18194c. Non-author review ctx-4: a477bc6 (APPROVE; F-062 cause EXPOSES; attempt 1 stopped for stale probes). Pre-ship gate 917bfc6, CI run 41052829472 green. Deviation F-060 (all red before any green). Thread-pool floor kept as a mitigation until card 217 (window 217-rerank-6b). Ready turn record 029670b written at close from 9803190 and D156."
+}
