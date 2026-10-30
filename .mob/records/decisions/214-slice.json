@@ -145,8 +145,11 @@
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)"
   }
  ],
- "decision": null,
- "ended_at": null,
+ "decision": {
+  "result": "adopted: SHIP AS IS in 6 commits, with the ctx-3 condition (e6fe23d); round 2 no objection from all six polled seats",
+  "slice": ".mob/records/214/turn-slice-architect.md (a71d197, e6fe23d)"
+ },
+ "ended_at": "2026-10-30T09:02:30Z",
  "adopted_condition": {
   "from": "backend developer (ctx-3)",
   "condition": "born-green mutation tests: count and ordering, each must fail when its guard is removed",
