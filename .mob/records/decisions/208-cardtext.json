@@ -74,8 +74,10 @@
    "raw": "Yes\n\nNO OBJECTION\n"
   }
  ],
- "decision": null,
- "ended_at": null,
+ "decision": {
+  "result": "adopted: card 208 retitled with its three Done checks from the slice; Enables and Depends on lines of cards 210, 212 and 215 updated (210's Enables reading flagged by the proposer for confirmation at 210's refinement)"
+ },
+ "ended_at": "2026-10-30T17:46:08Z",
  "attempts": [
   {
    "attempt": 1,
