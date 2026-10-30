@@ -64,5 +64,18 @@
   }
  ],
  "decision": null,
- "ended_at": null
+ "ended_at": null,
+ "attempts": [
+  {
+   "attempt": 1,
+   "role": "product manager (signoff)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (12:03 UTC)",
+   "context": "win7-pmsignoff",
+   "started_at": "2026-10-30T12:39:42Z",
+   "reply": null,
+   "raw": "OBJECTION\nCONDITION: Move 217 ahead of 213 only if a Decider allows it. The proposal reasonably keeps it behind the gate-startable cards, so I raise no objection on that point. Put \"ABSOLUTELY\" aside: nothing here blocks the line.\n\nSupport-it\n",
+   "note": "unclear: first line OBJECTION, but the condition text says no objection and the reply ends Support-it; its condition (217 ahead of 213 only by Decider) misreads the proposal, which already has 217 ahead of 213 by gate order; not counted; the role re-polled in a fresh context with the order stated"
+  }
+ ]
 }
