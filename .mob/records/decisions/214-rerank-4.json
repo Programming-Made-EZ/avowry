@@ -51,6 +51,16 @@
    "condition": null,
    "raw": "Yes\n\nNO OBJECTION\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:03 UTC)"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "win4-delivery",
+   "started_at": "2026-10-30T08:09:55Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "Yes. NO OBJECTION\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:03 UTC)"
   }
  ],
  "decision": null,
