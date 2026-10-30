@@ -73,6 +73,24 @@
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:07 UTC)"
   }
  ],
- "decision": null,
- "ended_at": null
+ "decision": {
+  "result": "adopted: no objection from any of the six polled seats (every declared role, F-054)",
+  "order": [
+   214,
+   217,
+   213,
+   209,
+   210,
+   208,
+   211,
+   216,
+   212,
+   215,
+   206,
+   207
+  ],
+  "changed": "217 enters second, behind 214",
+  "open_point": "seats could not read .mob/audits/last.json (tick files are not committed); the audit-lens seat noted that 217 cites F-062, a FLAG, so the facilitator's corrective-card gate may refuse to start it while MD-001, MD-002, MD-003 and MD-010 are open FAILs; if it does, the team takes it to a Decider rather than bypassing the gate"
+ },
+ "ended_at": "2026-10-30T11:20:51Z"
 }
