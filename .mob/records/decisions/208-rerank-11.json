@@ -45,6 +45,17 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nYes\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (23:03 UTC)"
+  },
+  {
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "w11-auditlens",
+   "started_at": "2026-10-30T23:31:48Z",
+   "reply": "OBJECTION",
+   "condition": "Record in git, at card 216's ready step, the card-text edits and an objection-window result, so the lens joining 216 can be verified from commits rather than from the proposal's prose.",
+   "raw": "OBJECTION\nCONDITION: Record in git, at card 216's ready step, the card-text edits and an objection-window result, so the lens joining 216 can be verified from commits rather than from the proposal's prose.\n\nSupport-it\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (23:03 UTC)"
   }
  ],
  "decision": null,
