@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 209,
+ "title": "A task force member leaves only at the retro",
+ "process": "card-mode rules run by hand (loop.py gaps, card 208); code in Programming-Made-EZ/mob-defaults; D157 one criterion per red-green cycle",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude-sonnet-5-5 (product manager, refinement and task-force declaration; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 12:03 to 16:24 UTC))",
+   "evidence": "b69366f"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-6",
+   "model": "claude-sonnet-5-5 (architect; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 12:03 to 16:24 UTC))",
+   "evidence": "dd49100"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-2",
+   "model": "claude-sonnet-5-5 (QA engineer; red commits in mob-defaults; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 12:03 to 16:24 UTC))",
+   "evidence": "80f8b93"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-3",
+   "model": "claude-sonnet-5-5 (backend developer, author; green commits in mob-defaults; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 12:03 to 16:24 UTC))",
+   "evidence": "9195560"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-7",
+   "model": "claude-sonnet-5-5 (delivery lead, D154 pre-ship gate; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 12:03 to 16:24 UTC))",
+   "evidence": "05a71d2"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-5",
+   "model": "claude-sonnet-5-5 (product manager, sign-off; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 12:03 to 16:24 UTC))",
+   "evidence": "6609645"
+  }
+ ],
+ "retro": "docs/retros/card-209-2026-10-30.md",
+ "notes": "Corrective for MD-001. mob-defaults commits: criterion 1 red 6836d76, units 5a2c930 b527e1d 8e387e3, green 7d371fa; criterion 2 red 44112b4 (+37b1273 line endings), units 145947b 147a90a, green 18f3962; criterion 3 red 794a4a7, green 1bb0a83; review fixes 73026aa, 7fdb168, e239b12. Review a4475fc (CHANGES REQUESTED) and re-check 61a4741 (APPROVE); full suite at e239b12 338 tests OK; gate 05a71d2; sign-off 6609645. Red and green seat evidence are turn records written at close (80f8b93, 9195560). Deviations: D136 line-ending churn (44112b4/37b1273), an amend of an unpushed commit, review-fix commits without Criterion lines. Follow-up card 218."
+}
