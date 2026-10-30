@@ -1,0 +1,7 @@
+# Blocker 2026-10-30 (recorded about 05:50 UTC): no card may start, the independent audit is not logged where the gate reads it
+
+- Rule (product owner, enforced in mob-defaults since b33793a): no card starts unless an audit has been logged within 45 minutes. The facilitator exits 6 and the loop stops; the log is the run repository's .mob/audits/last.json, written by `python mob_process.py audit <repo>`.
+- Evidence: card-mode dry run of card 209 (MD-001, run repository mob-crosscli at e3736d1, in a throwaway clone) exited 6 with "the independent audit is overdue: no audit has been logged".
+- Why the team does not clear it: the command is the independent auditor's; the facilitator running it would be the mob auditing itself. The external auditor records its audits in C:\Users\ringe\projects\avowry-audit, not in the run repositories' .mob/audits.
+- Needed: the external auditor runs `python mob_process.py audit C:\Users\ringe\mob-crosscli` (for cards 208 to 211, whose code is in mob-defaults) and `python mob_process.py audit C:\Users\ringe\projects\phrase-lang` (for Avowry cards 205 to 207), on its 30-minute schedule. Note: .mob/ is ignored in both repositories except .mob/records/, so the audit log is local to the machine unless the template commits it.
+- Ready work blocked: 209 (MD-001), 210 (MD-003), 211 (MD-010), 208 (MD-002); MD-001, MD-002, MD-003 and MD-010 are open FAILs, so no other card may start either.
