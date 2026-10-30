@@ -12,9 +12,9 @@ public class GeneratedApiBoundAddress
     [Trait("Slice", "214")]
     public async Task Z_a_child_that_never_reports_an_address_times_out_naming_pid_url_0_and_log()
     {
-        // Doubles: S2 (1 second), S3 and S4 (a QuietChild that writes one log line and stays silent otherwise).
+        // Doubles: S2 (5 seconds, so a cold QuietChild has printed its log line under load), S3 and S4 (a QuietChild that writes one log line and stays silent otherwise).
         // Given a child that never prints a "Now listening on:" line
-        var options = Probes.QuietChild(["--eprint", "z-log-line"], TimeSpan.FromSeconds(1));
+        var options = Probes.QuietChild(["--eprint", "z-log-line"], TimeSpan.FromSeconds(5));
 
         // When the harness starts it
         var (api, error) = await Probes.StartAsync("unused.csproj", options);
@@ -23,7 +23,7 @@ public class GeneratedApiBoundAddress
 
         // Then a TimeoutException names the PID, the URL asked for (port 0) and the log; no guessed port was polled into success
         Assert.True(error is TimeoutException, $"Expected a TimeoutException, got {error?.GetType().Name ?? "an api at " + api?.BaseUrl}.");
-        Assert.Matches(@"process \d+ did not listen on http://127\.0\.0\.1:0 within 1 seconds", error!.Message);
+        Assert.Matches(@"process \d+ did not listen on http://127\.0\.0\.1:0 within 5 seconds", error!.Message);
         Assert.Contains("z-log-line", error.Message);
     }
 

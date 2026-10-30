@@ -7,6 +7,7 @@ namespace Phrase.Acceptance.Tests.Support;
 /// continuation (the child's "Now listening on:" line reaching a waiter) can sit in the queue past a 3 to 20 second startup window
 /// although the line was already read. A higher floor keeps those continuations prompt under the parallel full run.
 /// </summary>
+// A mitigation, not a fix: the floor stays only until card 217 removes the blocking waits that starve the pool.
 internal static class ThreadPoolFloor
 {
     [ModuleInitializer]
