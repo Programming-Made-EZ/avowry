@@ -1,7 +1,7 @@
 {
  "card": 219,
  "title": "The record checker accepts cards that close out of number order",
- "status": "not started; startable under the product owner's waiver",
+ "status": "in progress under the product owner waiver (D162)",
  "gate_waiver": {
   "by": "product owner",
   "word": "waive",
@@ -12,10 +12,51 @@
  },
  "decisions": {
   "rule": "D159 (the change this card implements)",
-  "waiver": "D162"
+  "waiver": "D162",
+  "task_force": "window 219-taskforce"
  },
  "placement": "re-rank at the next boundary (after the probe gate's criterion 2), team's call",
- "domain_expert": [],
+ "domain_expert": [
+  {
+   "boundary": "refinement",
+   "answer": "no",
+   "reason": "the card changes one function in scripts/mob_process.py that the architect and backend developer already work in",
+   "seat": "product manager (ready)",
+   "context": "ctx-1",
+   "source": "window 219-taskforce proposal"
+  }
+ ],
  "cycles": [],
- "stand_downs": []
+ "stand_downs": [],
+ "task_force": [
+  {
+   "role": "product manager (ready)",
+   "context": "ctx-1"
+  },
+  {
+   "role": "architect (slice)",
+   "context": "ctx-2"
+  },
+  {
+   "role": "QA engineer (red)",
+   "context": "ctx-3"
+  },
+  {
+   "role": "backend developer [author] (green, refactor)",
+   "context": "ctx-4"
+  },
+  {
+   "role": "independent reviewer (audit lens) [reviewer]",
+   "context": "ctx-5"
+  },
+  {
+   "role": "delivery lead (ship)",
+   "context": "ctx-6"
+  },
+  {
+   "role": "product manager (signoff)",
+   "context": "ctx-7"
+  }
+ ],
+ "metric": "held records (2 at start: cards 208 and 209; target 0) and refused-record events per close (target 0)"
 }
