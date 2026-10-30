@@ -1,0 +1,17 @@
+{
+ "window": "214-slice",
+ "category": "slice decision",
+ "rule": "D153 objection window on the architect's slice verdict (D156: commits within D136, red before the fix)",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "claude-sonnet subagent",
+  "context": "ctx-6",
+  "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)"
+ },
+ "opened_at": "2026-10-30T08:59:34Z",
+ "proposal": "The architect's slice of card 214 is .mob/records/214/turn-slice-architect.md (commit a71d197): SHIP AS IS as one card in 6 commits (seams S1-S4, three red commits, green, closure note), each within D136; criterion-by-layer table with doubles per layer, outermost first (F-055); born-green items guarded by named mutation tests; Linux CI notes. Two-way door: a slice can be re-cut at any stand-down; no standing rule changes.",
+ "polled_roles_note": "F-054: every declared role other than the proposer is polled: product manager (ready) ctx-1, QA engineer ctx-2, backend developer ctx-3, independent reviewer ctx-4, product manager (signoff) ctx-5, delivery lead ctx-7. Gap recorded: card 213's slice (c613c86) was not put to a window although D153 L1 lists the slice decision; this window is the first slice window.",
+ "replies": [],
+ "decision": null,
+ "ended_at": null
+}
