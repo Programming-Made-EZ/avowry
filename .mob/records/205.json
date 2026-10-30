@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 205,
+ "title": "The facilitator starts only corrective cards while a finding blocks",
+ "process": "card-mode rules run by hand (loop.py gaps, card 208); code in Programming-Made-EZ/mob-defaults",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude-sonnet-5-5 (product manager, refinement; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl))",
+   "evidence": "ab88bca"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude-sonnet-5-5 (architect; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl))",
+   "evidence": "c399cde"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude-sonnet-5-5 (QA engineer; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl))",
+   "evidence": "44ea678"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude-sonnet-5-5 (backend developer, author; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl))",
+   "evidence": "a33e4f5"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-6",
+   "model": "claude-sonnet-5-5 (delivery lead, ship checks and persona demo; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl))",
+   "evidence": "c4d72e2"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-7",
+   "model": "claude-sonnet-5-5 (product manager, sign-off; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl))",
+   "evidence": "9f16a84"
+  }
+ ],
+ "retro": "docs/retros/card-205-2026-10-30.md",
+ "notes": "Corrective for MD-001, MD-002, MD-003 (D148) and F-008. mob-defaults commits: red inside b33793a (swept into another session's commit: a recorded defect), unit layers 945c409, ec15cd5, d13bbe4, green 97226b9, guards 2290341 and 46864d0 (never red, mutation-proved, f3d79a2). Non-author review: independent reviewer (audit lens), Claude ctx-5, APPROVE. Closure fix in this repository (the record check compares seats by driver and context id, D145 C4): 67ac75b, 536d3bb, 6a7e465 after three reviews. Detail (task force, ZOMBIES per layer, stand-downs, mutation evidence) in .mob/records/205/record-in-progress.json."
+}
