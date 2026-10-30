@@ -79,6 +79,16 @@ jobs:
         record=self.valid_record(203); record["seats"][-1]["seat"]="Codex"; (self.root/".mob/records/203.json").write_text(json.dumps(record),encoding="utf-8")
         self.assertIn("Card 203 signoff seat must differ from green seat",mob.check_records(self.root,[issue(203)],self.git))
 
+    def test_same_model_seats_pass_when_contexts_differ(self):
+        # D145 C4: seat identity is role and context, so Claude ctx-4 green and Claude ctx-7 signoff are distinct seats.
+        record=self.valid_record(204); seats={s["role"]:s for s in record["seats"]}
+        seats["green"]["seat"]="Claude ctx-4"; seats["signoff"]["seat"]="Claude ctx-7"
+        (self.root/".mob/records/204.json").write_text(json.dumps(record),encoding="utf-8")
+        self.assertNotIn("Card 204 signoff seat must differ from green seat",mob.check_records(self.root,[issue(204)],self.git))
+        seats["signoff"]["seat"]="  claude   CTX-4 "
+        (self.root/".mob/records/204.json").write_text(json.dumps(record),encoding="utf-8")
+        self.assertIn("Card 204 signoff seat must differ from green seat",mob.check_records(self.root,[issue(204)],self.git))
+
     def test_evidence_success_failure_distinctness_and_boundary(self):
         record=self.valid_record(); path=self.root/".mob/records/201.json"
         self.assertNotIn("Card 201 evidence D7 decision does not mention Card 201",mob.check_records(self.root,[issue(201)],self.git))

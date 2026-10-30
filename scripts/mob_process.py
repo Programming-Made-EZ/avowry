@@ -150,7 +150,7 @@ def check_records(root, issues, git):
         if any(str(s["seat"]).split()[0].lower() not in drivers for s in seats):
             errors.append(f"Card {card:03} has a seat not listed in DRIVERS.md")
         by_role = {s["role"]: s for s in seats}
-        if by_role["signoff"]["seat"].split()[0].lower() == by_role["green"]["seat"].split()[0].lower():
+        if " ".join(by_role["signoff"]["seat"].lower().split()) == " ".join(by_role["green"]["seat"].lower().split()):
             errors.append(f"Card {card:03} signoff seat must differ from green seat")
         evidence = [str(s["evidence"]) for s in seats]
         if len(set(evidence)) != len(evidence):
