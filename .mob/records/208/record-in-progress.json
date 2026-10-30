@@ -99,6 +99,19 @@
    "green": "36f09a0",
    "full_suite": "first run 19:06 failed one existing test that seated a Claude member beside models with quota (now refused, as intended; the test moved the member to Codex); rerun 19:26:57: 384 tests OK, 1 skip",
    "pushed": "about 19:48 UTC"
+  },
+  {
+   "criterion": 3,
+   "repo": "mob-defaults",
+   "red": "40cc57c",
+   "units": [
+    "6effcdb (layer 1, the shared card-mode fixture pins probe_model; module runs in the body)",
+    "f24885e (layer 2, pure rule probe_model_problem, no doubles)"
+   ],
+   "green": "be9ec1b",
+   "full_suite": "402 tests OK, 1 skip, one run (20:28:03 to 20:48 UTC; seat lines 1be07da, 54d6dc4)",
+   "stand_down_2_metric": "full runs per green 1 (target 1); existing tests changed in the green 0 (target 0); cap moves 0",
+   "pushed": "about 20:49 UTC"
   }
  ],
  "stand_downs": [
