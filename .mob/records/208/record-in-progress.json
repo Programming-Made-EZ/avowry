@@ -5,7 +5,8 @@
  "goal": "product owner direction D161: lock the process into tooling and the template first",
  "decisions": {
   "rank": "note 8b (D160): before card 210",
-  "task_force": "window 208-taskforce (proposal 66d833f, amended b0d1310, decision in the following commits)"
+  "task_force": "window 208-taskforce (proposal 66d833f, amended b0d1310, decision in the following commits)",
+  "slice": "window 208-slice: SPLIT (slice 6bd8db2, amended f1b9b9a)"
  },
  "task_force": [
   {
@@ -47,6 +48,14 @@
    "seat": "product manager (ready)",
    "context": "ctx-1",
    "source": "window 208-taskforce proposal"
+  },
+  {
+   "boundary": "slice",
+   "answer": "no",
+   "reason": "all of 208's risks are ZOMBIES cases with doubles; Windows cross-repository git (card for the Repository line) and Decider application (re-rank card) are deferred to the cards where they live",
+   "seat": "architect (slice)",
+   "context": "ctx-2",
+   "source": "6bd8db2"
   }
  ],
  "cycles": [],
