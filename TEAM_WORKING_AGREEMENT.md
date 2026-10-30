@@ -25,8 +25,8 @@ designer, technical writer, benchmark/eval designer, LLM-ergonomics reviewer, pe
 an assignee (model or seat) and a one-line why. There is no minimum or maximum role count.
 
 **Task-force driven means sized to the task (product owner clarification, 2026-10-29).** The number of members and who
-they are is decided before the card starts and varies with the task. Members are added and removed during the card as
-the need appears; a member added for a need stays until the retro, which decides whether it is still needed. The
+they are is decided before the card starts and varies with the task. Members are added during the card as the need appears;
+no member is removed mid-card: removal happens only at the retro, which decides whether each member is still needed. The
 question of whether a member with different domain knowledge or context should join is always asked. The card-mode
 seat list (ready, slice, red, green, ship, signoff) is a default, not a fixed roster. The detailed rules and their
 accountability are under Practices, Task force before every card.
@@ -285,9 +285,9 @@ The aim is value for a persona, not a number. Teams go wrong when they pick a sp
 - **Sized to the task, changed by need, removed at the retro (product owner clarification, 2026-10-29).** For every card:
   1. **Declare the task force up front, sized to the task.** Each member has a role, a domain or context (what knowledge or perspective it brings), an assignee and a why. The card-mode seats (ready, slice, red, green, ship, signoff) are a default starting point, not a fixed roster: roles the card does not need are left out with a reason, and roles it does need are added.
   2. **Ask the domain-expert question and record the answer** at refinement and at every cycle boundary: should a member with different domain knowledge or context join now? The answer is yes (with the member proposed) or no (with a reason), never blank.
-  3. **Every mid-card addition or removal goes through a Decider** and is recorded with its reason, the boundary where it happened and the Decider id.
-  4. **Members added for a need stay until the retro.** The retro decides keep or remove for each added member and records the decision; an added member is never removed before it. A declared default seat the card turns out not to need may be dropped mid-card only through a Decider (item 3).
-- **Accountability.** The trail record `.mob/records/NNN.json` carries the declared task force (role, domain or context, assignee, context id, why), the domain-expert answer at refinement and at each cycle boundary, each change (add or remove, boundary, reason, Decider id) and the retro's keep or remove decision for each added member. The in-repo checker rule for these fields is decided by the findings-mirroring Decider. The external auditor FAILs independently: an undeclared task force, a missing domain-expert answer at any boundary, an unrecorded change, or the removal of an added member outside the retro.
+  3. **Every mid-card addition goes through a Decider** and is recorded with its reason, the boundary where it happened and the Decider id. A default seat the card does not need is left out when the task force is declared, before the card starts, with a reason.
+  4. **No removals mid-card.** Once the card is underway, members are only added; removal happens only at the retro, which decides keep or remove for each member that is no longer needed and records the decision with its reason.
+- **Accountability.** The trail record `.mob/records/NNN.json` carries the declared task force (role, domain or context, assignee, context id, why), the domain-expert answer at refinement and at each cycle boundary, each mid-card addition (boundary, reason, Decider id), each seat left out at declaration with its reason and the retro's keep or remove decision for each added member. The in-repo checker rule for these fields is decided by the findings-mirroring Decider. The external auditor FAILs independently: an undeclared task force, a missing domain-expert answer at any boundary, an unrecorded change, or any removal outside the retro.
 
 ### CI on main is part of the line (standing rule, product owner, 2026-10-28)
 
