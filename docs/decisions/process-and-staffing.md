@@ -480,3 +480,20 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   C6. Card 209's held record is added only after the card 219 checker commit is on main.
   REVERSIBILITY: two-way door. Revert the checker commit; no records or earlier D-records change.
   VOTING RULE: reply first line Yes, Support-it or No, then P1: to Pn: one line each (one per proposal point). A No names ONE fixed condition (CONDITION: ...). A reasonable, reversible condition is adopted and the proposal re-polled; a later round may not add new demands. Only an irreconcilable purpose or model conflict escalates. Independent fresh-seat re-run before recording.
+
+<a id="d160"></a>
+#### Decider D160: no gate exemption for card 219; card 208 runs before card 210
+
+- Date: 2026-10-30. Trigger: re-rank 8 (window 209-rerank-8) asked for a one-card exemption from the corrective-card gate for card 219. Proposer: product manager seat. Round 1 (the exemption): five Yes and one No; the product manager's condition (stop-the-line is the product owner's rule, which a Decider vote cannot waive even for one card; take the fallback) was reasonable and reversible, so it was adopted and the proposal rewritten (D145). Round 2: six Yes; independent re-run by six fresh seats: six Yes. Votes in .mob/records/deciders/D160-votes.json.
+- Result: PASSED as amended. Adopted text:
+  Decider D160 (amended after round 1): no gate exemption for card 219; 208 runs before 210
+  Trigger: blocker 2026-10-30-209-record-order and D159. Open FAILs MD-002, MD-003, MD-010 stop every card whose issue names none of them; 219 names none. The stop-the-line rule is the product owner's and a Decider vote cannot waive it.
+  Clauses:
+  C1. No exemption: card 219 does not start while MD-002, MD-003 or MD-010 is open; no gate code or issue text changes.
+  C2. Order: 208, 210, 211, then 219 and the rest (supersedes the order of note 8 for 208 and 210 only).
+  C3. Why: the checker compares evidence with the next-lower card number's record, so 210 closing before 208 would be refused when 208's record is added; in number order (208, 210, 211) no corrective close is refused.
+  C4. 219 starts once the open FAILs close and lands before any later out-of-order close, including 209's held record and 213's.
+  C5. Cost: 210 no longer precedes 208, so 208 does not get the record-check rules 210 adds, which D147 R3 had it enable; 208's records are checked by 210 only afterwards.
+  C6. Evidence: blocker 2026-10-30-209-record-order; D159 C1 to C6; the 208-after-210 refusal avoided; D160 round 1 condition.
+  REVERSIBILITY: two-way door. Only the order of two cards changes; swap them back at the next re-rank, or amend once 219 is on main.
+  VOTING RULE: reply first line Yes, Support-it or No, then P1: to Pn: one line each (one per proposal point). A No names ONE fixed condition (CONDITION: ...). A reasonable, reversible condition is adopted and the proposal re-polled; a later round may not add new demands. Only an irreconcilable purpose or model conflict escalates. Independent fresh-seat re-run before recording.

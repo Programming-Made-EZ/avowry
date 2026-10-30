@@ -239,3 +239,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D157](process-and-staffing.md#d157) | One acceptance criterion per red-green cycle, checked from git, a 5-card experiment (card 214 retro pick) | process-and-staffing | in force |
 | [D158](process-and-staffing.md#d158) | Facilitator pre-window checklist: seats, caps, working directory, line endings (card 209 retro pick, 5-card experiment) | process-and-staffing | in force |
 | [D159](process-and-staffing.md#d159) | Record checker: evidence is compared with the record committed before this card's record (out-of-order closes) | process-and-staffing | in force |
+| [D160](process-and-staffing.md#d160) | No gate exemption for card 219; card 208 runs before card 210 so no corrective close is refused | process-and-staffing | applied |

@@ -1,0 +1,207 @@
+{
+ "decider": "D160",
+ "subject": "No gate exemption for card 219; run 208 before 210 so no corrective close is refused (amended in round 2 from a one-card exemption)",
+ "proposer": "product manager seat (pm-rerank-8)",
+ "result": "Round 1 (exemption): five Yes, one No with a condition (the product manager: stop-the-line is the product owner's rule, a Decider cannot waive it; take the fallback); re-run four Yes, two Support-it. Condition adopted (D145). Round 2 (amended): six Yes; independent re-run: six Yes. PASSED as amended.",
+ "claude_seat_reason": "probes at 16:24 UTC show Codex, Copilot, Grok and agy without usable quota",
+ "round1": [
+  {
+   "role": "pm",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160-pm",
+   "started_at": "2026-10-30T16:48:51Z",
+   "overall": "No. CONDITION: drop the exemption and adopt the C6 fallback (run 208 before 210, which refuses no close), because the stop-the-line rule says no other card starts while any finding blocks, and that rule is the product owner's, so a Decider vote can't waive it, even for one card.",
+   "reply": "No. CONDITION: drop the exemption and adopt the C6 fallback (run 208 before 210, which refuses no close), because the stop-the-line rule says no other card starts while any finding blocks, and that rule is the product owner's, so a Decider vote can't waive it, even for one card.\n\n- **P1:** Allowing card 219 to start while MD-002, MD-003 and MD-010 are open is exactly what that rule forbids.\n- **P2:** The reasoning for choosing 219 is sound, but it doesn't make the exemption lawful.\n- **P3:** Limiting the exemption to 219 alone does not change that.\n- **P4:** Keeping gate code and issue text unchanged does not change that either.\n- **P5:** The evidence supports the fix D159 decided on, not an exemption from the gate.\n- **P6:** The fallback is the lawful route.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160-architect",
+   "started_at": "2026-10-30T16:48:51Z",
+   "overall": "Yes",
+   "reply": "Yes\nP1: Exempting 219 while MD-002, MD-003 or MD-010 is open is minimal and needed. 219 names none of them, and the gate would otherwise deadlock the fix.\nP2: The reasoning checks out against the blocker record and D159. The checker compares evidence with the next-lower card number's record, so 209 and a 208-after-210 close are both refused, and 219 is the card that fixes that.\nP3: Limiting the exemption to 219 alone, ending when it closes, is tight and leaves nothing open for 217, 218 or 213 to ride on.\nP4: Recording by D160 with no gate code change and no issue-text edit adds no false-positive risk and keeps the record honest.\nP5: The evidence cited (the blocker, D159 C1 to C6, and the 208-after-210 refusal) is sufficient.\nP6: The fallback of running 208 before 210 is a clean, number-order alternative, and the change is a two-way door.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160-qa",
+   "started_at": "2026-10-30T16:48:52Z",
+   "overall": "Yes",
+   "reply": "Yes\nP1: Yes. Card 219 names none of MD-002, MD-003 or MD-010, so without this it cannot start, and its start is exactly what D159 C5 needs.\nP2: Yes. 219 is the one card that unblocks corrective closes, and the 208-after-210 refusal is the same predates-the-record failure that D159 describes.\nP3: Yes. The limit is one card and it ends at 219's close, so a reviewer can check it as a plain yes or no.\nP4: Yes. The gate stays unchanged and no issue text is edited, so the gate's own tests still guard every other card; the record by D160 at 219's start is the audit trail.\nP5: Yes. The blocker, D159 and the refusal that would otherwise occur are enough evidence.\nP6: Yes. Running 208 before 210 is a sound fallback because number order never triggers the refusal.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160-dev",
+   "started_at": "2026-10-30T16:48:52Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Yes. The trigger holds: 219 names none of MD-002, MD-003 or MD-010, so the start gate blocks it as written.\nP2: Yes. 219 is the only card that unblocks 209 and 213. The number-order checker would also refuse 208 closing after 210.\nP3: Yes. The exemption covers 219 alone and ends when it closes. 217, 218 and 213 are named as not exempted.\nP4: Yes. There are no gate code changes and no issue text is edited to claim a fix it doesn't make. I can comply without gaming anything, and D160 recorded at 219's start is the audit trail.\nP5: Yes. The evidence cited, the blocker and D159 C1 to C6, matches what I read in the repo.\nP6: Yes. Running 208 before 210 is a workable fallback, since number order refuses no close.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160-auditlens",
+   "started_at": "2026-10-30T16:48:52Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: C1 is a single named exemption (card 219, FAILs MD-002, MD-003, MD-010), so the start gate can be audited against D160 in git.\nP2: The reason is verifiable from the checker's rule and the blocker file. The checker compares evidence with the next-lower card number, so 209's held record is refused, and 208 closing after 210 would be refused the same way.\nP3: The limits are tight and checkable: card 219 only, ending when 219 closes, with 217, 218 and 213 named as not exempt. The facilitator should check at 219's close that no other card started under D160.\nP4: No gate code changes and no issue text edits means nothing is faked to pass. The D160 exemption note in 219's start commit is the audit trail.\nP5: The evidence is the blocker record and D159, both of which are in git.\nP6: The fallback of running 208 before 210 is sound and keeps number order, so no close is refused.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160-delivery",
+   "started_at": "2026-10-30T16:48:52Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: C1 is fine. A one-card start exemption for 219 avoids idling the line behind unrelated open FAILs.\nP2: C2 holds. 219 is the only card whose absence blocks 209's close, and 208-after-210 would be refused the same way, so the exemption is justified.\nP3: C3 is tight. It is scoped to 219 alone and ends when 219 closes, which keeps the exemption from turning into a habit.\nP4: C4 is good. It needs no gate code change and no issue text edited to name a finding it doesn't fix, so there is little ceremony.\nP5: C5 is sound. The blocker file and D159 C1 to C6 back it up, and 219's issue text matches them.\nP6: C6 is a reasonable fallback. Running 208 before 210 keeps number order and restarts the line quickly if the exemption is refused.\n"
+  }
+ ],
+ "round1_rerun": [
+  {
+   "role": "coach",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160rr-coach",
+   "started_at": "2026-10-30T16:48:53Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The exemption is sized right: it covers one card and ends when 219 closes.\nP2: Card 219 is the only non-corrective card that blocks corrective closes, so a single named exception is justified.\nP3: No other card is exempted, including 217, 218 and 213, so the exemption can't spread.\nP4: No gate code change and no false issue text, so there's little ceremony. The facilitator records the exemption by D160 at 219's start.\nP5: The evidence is concrete: the blocker record, D159, and the 208-after-210 refusal that this prevents.\nP6: The fallback of running 208 before 210 is cheap and sound, and the exemption can be reversed with no side effects.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160rr-architect",
+   "started_at": "2026-10-30T16:48:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Trigger is sound. The blocker and D159 show the open FAILs block 219, and 219 names none of them.\nP2: C1 is minimal and enforceable. The exemption covers one card and needs no gate change.\nP3: C2's reasoning holds. 219 is the card that fixes the record-order refusal, and 208 closing after 210 would hit the same refusal.\nP4: C3 bounds it well. It names 219 alone, ends at 219's close, and excludes 217, 218 and 213.\nP5: C4 adds no false-positive risk. There are no code changes and no issue text claims a fix it doesn't make, and recording the exemption by D160 at 219's start gives an audit trail.\nP6: C5's evidence is verifiable in the repo (the blocker file and D159).\nP7: C6's fallback is workable and keeps number order.\nP8: The reversibility claim holds. Reverting 219's commits undoes everything.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160rr-qa",
+   "started_at": "2026-10-30T16:48:54Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: C1 is testable by observation. The start gate refuses any card that names none of the open FAILs, and 219 names none. The exemption lets 219 start in spite of that.\nP2: C2 holds up. 219's issue shows it is the card that unblocks 209 and 213, and D159 C4 and C6 decided the fix. The refusal for 208 closing after 210 matches how the checker picks the next-lower card record.\nP3: C3 is a fixed, checkable limit: card 219 only, ending when it closes. A later card that starts under the exemption is detectable as a violation by comparing it with D160.\nP4: C4 is safe because it changes no gate code, so no check weakens and no bad state can pass through the gate. Recording the exemption by D160 at 219's start leaves an audit trail, but nothing enforces it mechanically. A review step could cover that.\nP5: The evidence in C5 matches the blocker and D159. 219's three done checks (out-of-order accepted, back-dated refused, main passes with 209.json) each fail on partial work, so the card can go red first.\nP6: The fallback in C6 is sound. Running 208 before 210 keeps number order and refuses no close.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160rr-dev",
+   "started_at": "2026-10-30T16:48:54Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Workable. The gate blocks 219 only because its issue names none of MD-002, MD-003 or MD-010, and the blocker shows the gate is what stops D159's fix.\nP2: The blocker and D159 C4 support this: 208 closing after 210 would be refused the same way, and 219 is the card that removes that refusal.\nP3: Limits are clear and easy to follow. The exemption covers card 219 only and ends when it closes, so I have no reason to stretch it to 217, 218 or 213.\nP4: No gate code changes and no issue text edits, so I can comply without gaming anything. Recording the exemption by D160 at 219's start leaves an audit trail.\nP5: The evidence cited is sufficient.\nP6: The fallback is workable. Running 208 before 210 avoids every refusal, though it delays 219.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160rr-auditlens",
+   "started_at": "2026-10-30T16:48:54Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Nothing in the exemption text is machine-checked, but git can show it was recorded: D160 must be committed before 219's first commit, and I can check that from git log.\nP2: The claim that the checker compares against the next-lower card number is confirmed by the blocker and by D159. That makes 219 the only card that unblocks the corrective closes.\nP3: Scope is one card and it ends when 219 closes. 217, 218 and 213 are named as excluded, so it can't be stretched to other cards.\nP4: The gate code is unchanged and no issue text is edited to name a finding it doesn't fix. That keeps the exemption honest and visible.\nP5: The evidence cited (the blocker, D159 C1 to C6, and the 208-after-210 refusal) is in the repo and consistent with the 219 card text.\nP6: The fallback of running 208 before 210 is clean and number-ordered, so a refusal leaves no loophole.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160rr-delivery",
+   "started_at": "2026-10-30T16:48:55Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: C1 is sound. 219 names none of the open FAILs, so the gate would otherwise block the only card that unblocks 209 and 213.\nP2: The reasoning holds. Under the current number-order rule, closing 208 after 210 would be refused for the same reason 209 was, and D159 assigned the fix to 219.\nP3: The limit is tight and tied to a clear end (219 closes). It rules out 217, 218 and 213, which keeps this from becoming precedent.\nP4: Nothing in the gate code or issue text changes, and the facilitator records the exemption by D160 at 219's start. That is the lightest option and keeps the record honest.\nP5: The evidence is real: the blocker file and D159 C1 to C6 both support it.\nP6: The fallback of running 208 before 210 is workable but delays 219. That makes the exemption the better flow choice.\n"
+  }
+ ],
+ "round2": [
+  {
+   "role": "pm",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160b-pm",
+   "started_at": "2026-10-30T16:58:13Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 (C1): No exemption keeps the owner's stop-the-line rule intact, and my round-1 condition is met.\nP2 (C2): Running 208 before 210 and 211, then 219, is a small, reversible reorder that gets back to product value.\nP3 (C3): The refusal rationale is sound. Number order avoids a corrective close being refused.\nP4 (C4): 219 landing before any later out-of-order close keeps the open-FAIL line honest.\nP5 (C5): The cost is stated openly: 208 doesn't get 210's record-check rules, and 210 checks its records afterwards.\nP6 (C6): The evidence trail is cited and sufficient, and nothing is over-specified up front.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160b-architect",
+   "started_at": "2026-10-30T16:58:13Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Trigger and premise hold. The stop-the-line rule is the product owner's, so a Decider vote cannot waive it, and 219 names none of the open FAILs. C1's no-exemption position follows from that.\nP2: C2's order (208, 210, 211, then 219) is consistent with the number-order checker, which compares against the next-lower card number, so no corrective close is refused.\nP3: C3's reasoning is sound. If 210 closed before 208, adding 208's record would be refused. In number order nothing is refused.\nP4: C4 is enforceable. 219 lands before the out-of-order closes of 209 and 213, which matches D159 C6.\nP5: C5 states the cost honestly. 208 loses the record-check rules that 210 adds, and 210 checks 208's records afterwards. That is a minimal, visible trade-off.\nP6: The evidence list is traceable to the blocker, D159 C1 to C6 and the round 1 condition. The change only reorders two cards, so it is a two-way door. I see no false-positive risk, because no checker or gate code changes.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160b-qa",
+   "started_at": "2026-10-30T16:58:13Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: C1 is testable red first, because the open-FAIL stop already refuses card 219 and no gate code changes.\nP2: C2 gives an order that can be checked by reading which records exist, so a wrong order shows up as a refusal.\nP3: C3's rationale can be reproduced: closing 210 before 208 fails the next-lower-record comparison, and 208, 210, 211 in number order never does.\nP4: C4 is checkable, since 219 must be on main before 209's held record or 213's out-of-order close, and the checker refuses otherwise.\nP5: C5 states honestly that 208 loses the record-check rules from 210, and it keeps the gap visible rather than hiding it.\nP6: C6 names its evidence (the blocker, D159 C1 to C6 and the round 1 condition), so the claims can be traced and checked.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160b-dev",
+   "started_at": "2026-10-30T16:58:13Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Workable. 219 waits while MD-002, MD-003 and MD-010 are open, and no gate or issue text changes, so I can comply with nothing to game.\nP2: Workable. The order 208, 210, 211, then 219 and the rest is unambiguous, and it supersedes note 8 for 208 and 210 only.\nP3: Fair to the work. In number order the next-lower-record comparison never refuses a close, so I avoid a corrective close.\nP4: Workable. 219 starts once the open FAILs close and lands before any later out-of-order close, so I know where 219 sits.\nP5: The cost is acceptable. 208 doesn't get 210's record-check rules, and 210 checks 208's records afterwards.\nP6: The evidence list is adequate and the change is reversible, since only the order of two cards moves.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160b-auditlens",
+   "started_at": "2026-10-30T16:58:14Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: No exemption holds. The open FAILs are visible in git, so the rule can be checked there and the team cannot pass the gate without closing them.\nP2: The order 208, 210, 211, then 219 is plain in the re-rank record, so anyone can check it from commit order.\nP3: Number order is what the checker compares against. The blocker shows the same refusal in the 209 and 214 case, so the reason holds.\nP4: 219 landing before any later out-of-order close leaves no window where evidence is back-dated. The check is that 219's commit predates 209's and 213's records.\nP5: The cost is stated openly. 208's records get checked only after 210 lands, so that gap should be noted in the record.\nP6: The evidence list is traceable to the blocker, D159 and the round 1 condition, all of which are in git.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160b-delivery",
+   "started_at": "2026-10-30T16:58:14Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Trigger is sound. Open FAILs stop every card that doesn't name them, and 219 names none.\nP2: C1 keeps the product owner's stop-the-line rule intact. No gate or issue text changes, so there is no ceremony on 219.\nP3: C2 reorders only 208 and 210, a thin, reversible slice that restarts the line soon.\nP4: C3 is correct. Closing in number order (208, 210, 211) avoids the refusal that the number-based checker would otherwise raise.\nP5: C4 sends 219 ahead of the out-of-order closes (209's held record, 213's), which is where D159 C6 needs it.\nP6: C5 states the cost honestly. 208 loses the 210 record-check rules for now, and 210 checks 208's records afterwards.\nP7: C6 evidence is complete and traceable. The two-way door holds, because swapping the two cards back is cheap.\n"
+  }
+ ],
+ "round2_rerun": [
+  {
+   "role": "coach",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160brr-coach",
+   "started_at": "2026-10-30T16:58:14Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: No exemption for 219 is right, because the stop-the-line rule belongs to the product owner and a Decider vote can't waive it, and it needs no extra ceremony.\nP2: The order 208, 210, 211, then 219 and the rest changes only two cards, which is proportionate to the blocker.\nP3: Number order avoids the refused corrective close, so it removes rework instead of adding process.\nP4: Landing 219 before any later out-of-order close, including 209's held record and 213's, keeps the sequence simple and checkable.\nP5: The cost is stated openly: 208 doesn't get the record-check rules 210 adds, and 210 checks its records afterwards, which is acceptable.\nP6: The evidence list (blocker, D159, the refusal avoided, the round-1 condition) is enough, and I see no missing perspective.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160brr-architect",
+   "started_at": "2026-10-30T16:58:14Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Trigger is sound. The open FAILs MD-002, MD-003 and MD-010 stop every card that doesn't name them, and 219 names none, so the stop-the-line rule applies.\nP2: C1 is right. The rule belongs to the product owner, so a Decider vote can't waive it, and leaving the gate code and issue text alone adds no new surface for false positives.\nP3: C2 puts 208, 210 and 211 in number order. Under the current checker that order gives no refusal on a corrective close, and only the order of two cards changes.\nP4: C3's reasoning matches the current checker, which compares with max(n < card). Closing 210 before 208 would trip the \"predates\" refusal when 208's record is added.\nP5: C4 matches D159 C6. 219 lands before any later out-of-order close, including 209's held record and 213's.\nP6: C5's cost is stated openly and is acceptable. 208 loses the record-check rules that 210 adds, and 210 checks its records afterwards.\nP7: The evidence list is adequate, and the proposal is two-way and minimal.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160brr-qa",
+   "started_at": "2026-10-30T16:58:15Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: No gate exemption keeps the stop-the-line checks failing on open FAILs, so bad state can't pass around them.\nP2: Running 208 before 210 is testable. Number order means no corrective close is refused.\nP3: The reason is checkable. The checker compares evidence against the next-lower card's record, so an out-of-order close would be refused.\nP4: Landing 219 before later out-of-order closes gives a red-first path with a clear trigger.\nP5: The cost is stated. 208 loses 210's record-check rules until afterwards, and 210 checks its records later.\nP6: The evidence is traceable to the blocker, D159 and the round 1 condition, and the change is a two-way door.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160brr-dev",
+   "started_at": "2026-10-30T16:58:15Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: C1 is workable and fair, because I don't start 219 while MD-002, MD-003 or MD-010 is open, and there is no gate or issue-text edit to game.\nP2: C2 gives an unambiguous order of 208, 210, 211, then 219, with the note 8 override limited to 208 and 210.\nP3: C3 is sound, because number order means each close is compared with a lower-numbered record that already exists, so no corrective close is refused.\nP4: C4 is clear enough to comply with, since 219 starts once the open FAILs close and lands before any later out-of-order close, including 209's held record and 213's.\nP5: C5 is an honest, acceptable cost, because 208's records are checked by 210 only afterwards and I don't have to work around it.\nP6: C6 names the evidence, and the stated two-way door makes the order cheap to reverse.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160brr-auditlens",
+   "started_at": "2026-10-30T16:58:15Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: No exemption for 219 is the safest choice. The stop-the-line rule stays intact, and the gate and issue text are not touched, so nothing can be verified less than before.\nP2: The order 208, 210, 211, then 219 follows card-number order. In git this means no close is refused and no back-dating exception is needed.\nP3: The stated reason holds up. The checker compares evidence with the next-lower card number's record, which matches the blocker file and D159's description of the current rule.\nP4: Requiring 219 to land before 209's held record and 213's is verifiable from git history. The commit order of the checker change against those records shows it.\nP5: The cost is stated openly. 208 loses the record-check rules that 210 adds, and 210 checks 208's records only afterwards. That is a visible gap, not a loophole.\nP6: The evidence list is traceable to the blocker file, D159 C1–C6 and the round 1 condition. All of these can be checked in the repository.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d160brr-delivery",
+   "started_at": "2026-10-30T16:58:16Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 (C1): No exemption keeps the PO's stop-the-line rule intact and adds no ceremony or gate change to the line.\nP2 (C2): Running 208, 210, 211 in number order is a thin slice, and every close passes the checker the first time.\nP3 (C3): Closing 210 before 208 would be refused and force a corrective commit, so avoiding that protects the 45-minute commit-to-live median.\nP4 (C4): Landing 219 before any later out-of-order close is sensible sequencing, and it restarts the line without delay.\nP5 (C5): The cost is small because 210's record-check rules still apply to 208's records afterwards.\nP6 (C6): The evidence cited (the blocker, D159 and the refusal avoided) supports the change.\n"
+  }
+ ]
+}

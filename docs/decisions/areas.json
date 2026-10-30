@@ -1066,5 +1066,11 @@
     "status": "in force",
     "title": "Record checker: evidence is compared with the record committed before this card's record (out-of-order closes)",
     "order": 150
+  },
+  "D160": {
+    "area": "process-and-staffing",
+    "status": "applied",
+    "title": "No gate exemption for card 219; card 208 runs before card 210 so no corrective close is refused",
+    "order": 151
   }
 }
