@@ -146,8 +146,11 @@
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
   }
  ],
- "decision": null,
- "ended_at": null,
+ "decision": {
+  "result": "adopted: seven seats as proposed, with the QA engineer's ZOMBIES case; round 2 no objection from all six polled seats",
+  "task_force": "ctx-1 to ctx-7, all Claude (probes 16:24 UTC)"
+ },
+ "ended_at": "2026-10-30T17:06:09Z",
  "adopted_condition": {
   "from": "QA engineer (ctx-3)",
   "condition": "add a ZOMBIES case to Done check 3 for a member whose domain, why or context is whitespace-only or the string \"true\"",
