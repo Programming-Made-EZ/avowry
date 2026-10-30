@@ -65,3 +65,21 @@ Self-reference trap for check 3: the scan test and the red tests contain the str
 Slice field: SHIP AS IS | about 11 files over 6 commits, none above 250 lines or 5 code files | 6 increments | one concern: the harness owns its port and reads the bound address from the child
 
 - Seat: architect (slice), context ctx-6, Claude Sonnet subagent; reason for a Claude seat: probes at 08:21 UTC (commit a5be583) show Codex, Copilot, Grok and agy without usable quota.
+
+## 5. Born-green cases: named mutation tests, count and ordering (amendment, window 214-slice condition from ctx-3)
+Rule: a born-green test passes on the old harness, so it can never be seen red by running it alone. Each therefore carries a named mutation: a one-line break of its guard, applied in a scratch working copy (never committed), which must make that test fail and no other. The failing run output (test name, assertion text, the mutation as a diff of one or two lines) is pasted in the body of the commit that adds the test, before that commit lands. For a guard that commit 5 rewrites, the same mutation is repeated on the commit 5 tree and its failing output goes in the commit 5 body. The reviewer (ctx-4) may re-run any mutation. Count: 10 tests (2 in commit 1, 8 in commits 2 to 4), each named `Guard_<what>` with Trait("Slice","214") and Trait("Kind","BornGreen").
+
+| # | Test | Guard it protects | Mutation that must turn it red | Lands in | Guard lands |
+|---|---|---|---|---|---|
+| 1 | Guard_hook_is_null_by_default_and_fires_once | `BeforeChildStart?.Invoke` called exactly once after Prepare, before Process.Start | delete the Invoke, or call it twice | commit 1 | same commit 1 (seam), mutated on commit 1 tree |
+| 2 | Guard_quietchild_dll_exists_next_to_tests | ProjectReference puts QuietChild.dll where tests look | remove the ProjectReference line | commit 1 | same commit 1, mutated on commit 1 tree |
+| 3 | Guard_two_parallel_starts_get_distinct_base_urls | port ownership: distinct addresses | on the commit 5 tree, force both to a fixed URL; on the old tree, note it is only probabilistically green | commit 2 | guard is commit 5; mutation recorded in commit 5 body |
+| 4 | Guard_child_exit_code_names_pid_code_and_log | exit check in the readiness loop | remove the `HasExited` branch (old tree and commit 5 tree) | commit 2 | exists in old code, rewritten in commit 5; mutate both trees |
+| 5 | Guard_hook_exception_propagates_and_no_child_runs | hook is called before Process.Start and not wrapped | wrap the Invoke in try/catch, or move it after Start | commit 2 | commit 1 seam, mutated on commit 1 tree and re-run on commit 5 |
+| 6 | Guard_exit_after_reporting_names_pid_code_and_address | exit check after the address is known | skip the exit check once the TaskCompletionSource has a result | commit 3 | commit 5 (new path); mutation on commit 5 tree |
+| 7 | Guard_squatter_on_reported_address_is_out_of_scope | the Pid that printed the line is the Pid held | return a Pid from another process | commit 4 | commit 5; mutation on commit 5 tree |
+| 8 | Guard_default_timeouts_are_2_minutes_and_15_seconds | `internal const` defaults unchanged | change either constant by 1 second | commit 3 | exists in old code; mutate old tree and commit 5 tree |
+| 9 | Guard_bind_failure_starts_exactly_one_process | no retry loop | wrap the start in a 2-attempt loop | commit 4 | old code has none; commit 5 must not add one; mutate commit 5 tree |
+| 10 | Guard_checked_set_of_process_start_callers | scan lists the Process.Start callers | add an unlisted `Process.Start(` caller in a scratch test file | commit 4 | existing code; mutate commit 4 tree |
+
+Ordering rule for the red-before-fix claim: every born-green test (3 to 10) is committed in commits 2 to 4, strictly before the green commit 5; tests 1 and 2 are in commit 1 with their own guard. Red tests are the only ones that fail at the head of commit 4, and the born-green tests all pass there. At commit 5 the delivery lead and the reviewer see: all red tests green, all 10 guard tests still green, and the recorded mutation output for each. A born-green test whose mutation does not turn it red is removed or rewritten in the same commit, not kept as decoration.
