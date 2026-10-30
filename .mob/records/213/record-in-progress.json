@@ -51,6 +51,15 @@
    "boundary": "after Done check 1",
    "answer": "no",
    "reason": "Done check 2 is the same layer"
+  },
+  {
+   "boundary": "after Done check 2 (stand-down 2, fcfdb7b)",
+   "answer": "no",
+   "reason": "Done check 3 stays inside scripts/mob_process.py and tests.test_mob_process (wiring the window check into check and a zero exit on the card's own tree); no new domain knowledge is needed, and the one outside risk, drift from card 214's CI port-bind fix, is covered by the full suite run on resume, not by a new member.",
+   "seat": "Architect",
+   "context": "ctx-6",
+   "written_at": "2026-10-30T09:50:34Z",
+   "finding": "F-058"
   }
  ],
  "criteria": [
