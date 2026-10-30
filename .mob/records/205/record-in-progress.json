@@ -1,0 +1,153 @@
+{
+ "schema": 1,
+ "card": 205,
+ "title": "The facilitator starts only corrective cards while a finding blocks",
+ "status": "in progress (Done check 1 green; checks 2 and 3 to do)",
+ "run_repository": "Programming-Made-EZ/mob-defaults (C:/Users/ringe/mob-crosscli)",
+ "corrective_for": [
+  "MD-001",
+  "MD-002",
+  "MD-003",
+  "F-008"
+ ],
+ "process": "manual card mode under the facilitator's rules (loop.py cannot run it yet: runner gaps, card 208)",
+ "decisions": [
+  "D146 (task force)",
+  "D147, D149 (rank)",
+  "D152 (mid-card declaration fix)"
+ ],
+ "task_force": [
+  {
+   "role": "Product manager (refinement)",
+   "model": "Claude Sonnet subagent",
+   "context": "ctx-1",
+   "why": "writes and refines the card against D145 and D136"
+  },
+  {
+   "role": "Architect (slice)",
+   "model": "Claude Sonnet subagent",
+   "context": "ctx-2",
+   "why": "SHIP AS IS or SPLIT and the layer plan"
+  },
+  {
+   "role": "QA engineer (red)",
+   "model": "Claude Sonnet subagent",
+   "context": "ctx-3",
+   "why": "one failing acceptance test per criterion"
+  },
+  {
+   "role": "Backend developer [author]",
+   "model": "Claude Sonnet subagent",
+   "context": "ctx-4",
+   "why": "builds the gate outside-in"
+  },
+  {
+   "role": "Independent reviewer (audit lens) [reviewer]",
+   "model": "Claude Sonnet subagent",
+   "context": "ctx-5",
+   "why": "non-author review (renamed from Independent auditor by D152)"
+  },
+  {
+   "role": "Delivery lead (ship)",
+   "model": "Claude Sonnet subagent",
+   "context": "ctx-6",
+   "why": "ship checks, record, finding tokens"
+  },
+  {
+   "role": "Product manager (sign-off)",
+   "model": "Claude Sonnet subagent",
+   "context": "ctx-7",
+   "why": "fresh-context sign-off"
+  }
+ ],
+ "claude_seat_reason": "every non-Claude model without usable quota at each seat (probes .mob/records/probes/2026-10-30.jsonl: 04:36, 05:14, 05:25, 05:46, 06:35 UTC)",
+ "domain_expert": [
+  {
+   "boundary": "refinement",
+   "answer": "yes",
+   "member": "independent reviewer (audit lens), ctx-5"
+  },
+  {
+   "boundary": "slice",
+   "answer": "no",
+   "reason": "the gate needs no audit-register knowledge (architect)"
+  },
+  {
+   "boundary": "after Done check 1",
+   "answer": "no",
+   "reason": "Done check 2 is the same gate and seam; no new domain"
+  }
+ ],
+ "criteria": [
+  {
+   "criterion": "205-1",
+   "acceptance_test": "tests/test_card_mode.py::test_205_1_a_blocking_finding_named_in_the_issue_lets_the_card_start",
+   "red_commit": "b33793a (written by the QA red seat ctx-3, but swept into another session's commit with another subject: recorded as a defect in the stand-down and for card 211)",
+   "unit_commits": [
+    {
+     "layer": "1 run_card_mode (facilitator.py)",
+     "commit": "945c409",
+     "test_file": "tests/test_card_mode.py",
+     "class": "CorrectiveGateStart",
+     "doubles": "the gate function and the issue reader",
+     "zombies": {
+      "Z": "test_with_no_blocking_finding_neither_the_issue_reader_nor_the_gate_is_asked",
+      "O": "test_a_blocking_finding_the_gate_clears_lets_the_card_start_silently",
+      "M": "test_a_message_from_the_gate_refuses_the_card_with_exit_five_and_prints_it",
+      "B": "test_an_unreadable_issue_reaches_the_gate_as_none",
+      "I": "test_a_blocking_finding_the_gate_clears_lets_the_card_start_silently",
+      "E": "test_a_message_from_the_gate_refuses_the_card_with_exit_five_and_prints_it",
+      "S": "test_with_no_blocking_finding_neither_the_issue_reader_nor_the_gate_is_asked"
+     }
+    },
+    {
+     "layer": "2 corrective_gate_message (mob_process.py)",
+     "commit": "ec15cd5",
+     "test_file": "tests/test_mob_process.py",
+     "class": "CorrectiveGate",
+     "doubles": "N/A because the function is pure",
+     "zombies": {
+      "Z": "test_no_findings_or_only_verified_closures_let_any_card_start",
+      "O": "test_a_blocking_finding_named_by_its_exact_token_lets_the_card_start",
+      "M": "test_one_token_out_of_several_blocking_findings_is_enough",
+      "B": "test_near_misses_of_the_token_do_not_count",
+      "I": "test_naming_none_of_several_blocking_findings_refuses_and_names_all_of_them",
+      "E": "test_an_unreadable_issue_fails_closed_and_says_the_issue_could_not_be_checked",
+      "S": "test_a_blocking_finding_named_by_its_exact_token_lets_the_card_start"
+     }
+    },
+    {
+     "layer": "3 read_card_issue (facilitator.py)",
+     "commit": "d13bbe4",
+     "test_file": "tests/test_card_mode.py",
+     "class": "ReadingTheCardIssue",
+     "doubles": "the gh runner",
+     "zombies": {
+      "Z": "test_a_card_with_no_issue_number_is_unreadable_and_gh_is_not_called",
+      "O": "test_the_body_comes_back_from_one_gh_call_for_the_issue_in_the_header",
+      "M": "test_only_the_issue_in_the_generated_header_counts",
+      "B": "test_a_blank_body_or_an_unexpected_reply_is_unreadable",
+      "I": "test_the_body_comes_back_from_one_gh_call_for_the_issue_in_the_header",
+      "E": "test_a_failing_missing_or_timed_out_gh_is_unreadable",
+      "S": "test_the_body_comes_back_from_one_gh_call_for_the_issue_in_the_header"
+     }
+    }
+   ],
+   "green_commit": "97226b9"
+  }
+ ],
+ "stand_downs": [
+  {
+   "cycle": 1,
+   "boundary": "after Done check 1, green 97226b9",
+   "worked": "The three-layer split gave one small commit per layer (945c409, ec15cd5, d13bbe4) and Done check 1 went green in 97226b9 with a one-line diff; rewriting the layer 1 and 3 tests to fail by assertion made the red state meaningful.",
+   "did_not": "The red test PENDING(205-1) was swept into another session's commit (b33793a, which also rewrote tests/test_card_mode.py whole), so the red-first history is not clean; the brief wrongly called two files CRLF; about 26 minutes of seat time for about 250 lines, dominated by the 10 minute module run and the rewritten red tests.",
+   "adjustment": "In Done check 2 every commit is made with explicit pathspecs and its body carries one line 'staged: <git diff --cached --stat summary>' naming only the card's own files; a red test is run once before commit and its first failing line must be an AssertionError.",
+   "seat": "QA engineer",
+   "context": "ctx-3",
+   "model": "claude-sonnet subagent",
+   "written_at": "2026-10-30T06:35:43Z",
+   "probes": ".mob/records/probes/2026-10-30.jsonl (06:35 UTC)"
+  }
+ ]
+}
