@@ -77,6 +77,17 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nVote: Support-it\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)"
+  },
+  {
+   "round": 2,
+   "role": "product manager (ready)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-1",
+   "started_at": "2026-10-30T09:01:17Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "Yes\n\nNO OBJECTION\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)"
   }
  ],
  "decision": null,
