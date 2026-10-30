@@ -62,6 +62,14 @@
    "seat": "delivery lead",
    "context": "ctx-7",
    "source": "fac4808"
+  },
+  {
+   "boundary": "after criterion 2 (stand-down 2)",
+   "answer": "no",
+   "reason": "Criterion 3 is a template paragraph plus a text scan (and a grep the delivery lead runs); the Python, the tests and the audit lens are covered by the backend developer, QA engineer and independent reviewer, and criterion 2 raised no language, UX, security or workflow question those seats could not answer.",
+   "seat": "QA engineer",
+   "context": "ctx-2",
+   "source": "stand_downs[1] in this record"
   }
  ],
  "d157": "one acceptance criterion per red-green cycle: Criterion 1 red, its unit layers, green, push; then Criterion 2; then Criterion 3",
@@ -140,6 +148,53 @@
    "context": "ctx-7",
    "model": "claude-sonnet subagent",
    "written_at": "2026-10-30T14:29:20Z"
+  },
+  {
+   "cycle": 2,
+   "boundary": "after Criterion 2 (red 44112b4 plus CRLF restore 37b1273, units 145947b and 147a90a, green 18f3962 in mob-defaults; origin/main = 18f3962); Criterion 3 next",
+   "adjustment_reviews": [
+    {
+     "adjustment": "Stand-down 1 (this card, ctx-7): for criterion 2 and 3, write the in-flight note for the green with cap = start of the full suite + 25 min, written before the suite starts; metric: cap moves per green (criterion 1: 2; target 0); counter-metrics: minutes red to green (62) and any green held past its cap with no note.",
+     "issue": "The green step of criterion 1 ran past two guessed in-flight caps (13:55 and 14:15 UTC), each moved about a minute after it passed.",
+     "resolved": "partly",
+     "evidence": "Metric: cap moves per green 2 on criterion 1 (a3a9719 cap 13:55, 7c80c75 moved to 14:15, 406354e moved to 14:30) against 0 on criterion 2 (one note, cap 15:15 UTC, never passed; green 18f3962 at 14:54:16 UTC, origin/main = 18f3962 about 14:56). Counter-metrics: red to green 21 min (44112b4 14:33:05Z to 18f3962 14:54:16Z) against 62; no wait held past a cap. The suite really ran 14:36:50 to 14:53:59 UTC (17.2 min, 332 tests, 1 skip), so the true cap start + 25 was 15:01:50. But the rule was not applied as written: the developer did not report its suite start until the end, so the facilitator wrote the note (18cb108, 14:44 UTC) from an estimate, 'full suite expected to start about 14:50', which was 13 min later than the real start, and set cap 15:15. The cap did not move only because it was wide (13 min later than start + 25 from the true start). Criterion 2 is also a smaller change than criterion 1 (15 lines of green code in one file), so 21 min against 62 is not all the adjustment.",
+     "side_effects": "Good: no cap moves, no silence after a cap, the wait stayed visible. Bad: the cap came from the facilitator's guess of a start time it could not see, so the rule's key input (the measured start) was not used and the zero is partly luck; a wide cap hides a stalled suite for longer.",
+     "verdict": "tune: keep cap = suite start + 25 min, but the start must be the seat's own timestamp taken when the suite is launched and reported in the in-flight line, not an estimate (this stand-down's adjustment)."
+    },
+    {
+     "adjustment": "Card 213 stand-down 2 (fcfdb7b), tuned at stand-down 1 of this card: keep module-only runs and, when 213 resumes after 214, start with one full suite run on a clean checkout at the resumed head, in the background with an in-flight note (cap start + 25 min), citing a pushed hash.",
+     "issue": "Drift from card 214 and concurrent-write flakes seen only at the pre-ship gate instead of once at the start of the resumed card.",
+     "resolved": "unknown",
+     "evidence": "Still not applied: card 213 has not resumed after re-rank 7 (decision 386cf3e), so there is no before and after. This cycle adds a second suite time on the same machine: 1031 s for 315 tests (criterion 1) and 14:36:50 to 14:53:59 = 1029 s for 332 tests (criterion 2), so about 17 min is stable and the 25-min cap sizing holds.",
+     "side_effects": "None yet, because it has not run.",
+     "verdict": "tune (no evidence either way is tune under D155): unchanged from stand-down 1, judge it when 213 resumes."
+    },
+    {
+     "adjustment": "D157 (card 214 retro pick), second cycle: one acceptance criterion per red-green cycle, checked from git (Criterion: n line in each red body; green n before any red for n+1; green pushed at once; the D154 gate lists the Criterion order).",
+     "issue": "F-060 (audit 28): about 800 lines of red across three Done checks before any green on card 214.",
+     "resolved": "yes (two cycles of three; the D154 gate line is still to come)",
+     "evidence": "Git log 7d371fa..18f3962: red 44112b4 (123 lines net against 7d371fa by git diff --ignore-cr-at-eol, 1181 raw), 37b1273, 145947b, 147a90a, green 18f3962; four of the five commit bodies carry 'Criterion: 2' (37b1273 says it is not a Criterion line, it changes no test); no commit for criterion 3 exists; green 18f3962 is on origin/main (origin/main = HEAD = 18f3962). Criterion 1 had the same shape (6836d76 to 7d371fa, 111 lines of red). Criterion 2 red landed 14:33 UTC, 6 min after the criterion 1 push at about 14:27.",
+     "side_effects": "Good: reds stay reviewable (123 net lines), each green is one bounded suite run, the order is readable from git. Bad: the full suite (17.2 min) runs once per criterion; the QA seat's whole-file line-ending churn (44112b4 and 37b1273) made the raw red look like 1181 lines and tripped D136, which the Criterion line does not catch; 145947b needed a correction commit (147a90a) because its test assumed a rule the QA record test contradicted.",
+     "verdict": "keep"
+    }
+   ],
+   "observations": [
+    "(a) Line-ending churn: 44112b4 rewrote tests/test_mob_process.py from CRLF to LF (1181 changed lines for a 123-line change, D136 deviation recorded in this record) and 37b1273 restored CRLF with no content change; same cause as card 214 commit 5 and card 205's red (0f7225f), and as the criterion 1 amend (stand-down 1, observation d). Nothing is proposed beyond the one adjustment below; the deviation entry already carries the handling (compare git diff --stat with git diff --ignore-cr-at-eol --stat before committing).",
+    "(b) The correction commit 147a90a was used instead of an amend: it names itself as a correction to 145947b and keeps both failing runs in the history, so the criterion 1 amend was not repeated. The reflog line 'reset: moving to HEAD' between the two is a reset to the same commit, not a rewrite.",
+    "(c) The facilitator wrote the criterion 2 in-flight note (18cb108, cap 15:15 UTC) from an estimate, 'full suite expected to start about 14:50', because the developer did not report its suite start until the end. The suite actually ran 14:36:50 to 14:53:59 UTC, so the cap was 13 min later than the true start + 25 (15:01:50). That the green stayed inside the cap is not evidence the adjustment worked as written.",
+    "(d) The D157 order held for the second cycle and no red for criterion 3 was committed ahead; the one Criterion-line gap is 37b1273, which says it is not a Criterion line."
+   ],
+   "worked": "D157 held again: one criterion, a red with Criterion: 2, units with doubles, a correction commit instead of an amend, green pushed at once (origin/main = 18f3962), 332 tests OK. Born-green guards cite their mutations (G4, the RecordRuleCalls guard). Red to green was 21 min against 62 and no cap was missed. The record checker and facilitator.py now share removal_problem with one message, proven by TheTwoEntryPointsAgree.",
+   "did_not": "The in-flight cap came from the facilitator's estimate of the suite start (14:50 against the real 14:36:50), so stand-down 1's adjustment was applied in form but not on its input. The QA seat committed whole-file line-ending churn again and the 1181-line raw red breached D136. The card 213 adjustment is still unmeasurable. I made no gh calls, so CI timing on the push is unknown.",
+   "adjustment": "For criterion 3, the seat that starts any wait over 20 min (the full suite included) writes its own in-flight line with the start time taken from the clock at launch (date -u) and the cap = that start + 25 min; the facilitator never writes a start time or cap on a seat's behalf and asks the seat for the start if the line is missing. Metric: share of in-flight lines whose start is the seat's own timestamp (criterion 2: 0 of 1; target 1 of 1) and cap moves per green (criterion 1: 2, criterion 2: 0; target 0). Counter-metrics: minutes red to green (62, then 21) and any wait held past its cap with no note.",
+   "domain_expert": {
+    "answer": "no",
+    "reason": "Criterion 3 is a template paragraph plus a text scan (and a grep the delivery lead runs); the Python, the tests and the audit lens are covered by the backend developer, QA engineer and independent reviewer, and criterion 2 raised no language, UX, security or workflow question those seats could not answer."
+   },
+   "seat": "QA engineer",
+   "context": "ctx-2",
+   "model": "claude-sonnet subagent",
+   "written_at": "2026-10-30T14:58:23Z"
   }
  ],
  "deviations": [
