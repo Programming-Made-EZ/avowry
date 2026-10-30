@@ -145,8 +145,12 @@
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (12:48 UTC)"
   }
  ],
- "decision": null,
- "ended_at": null,
+ "decision": {
+  "result": "adopted: SHIP AS IS, three criteria with one red-green cycle each (D157), with the two adopted conditions; round 2 no objection from all six polled seats",
+  "slice": ".mob/records/209/turn-slice-architect.md (dd49100)",
+  "domain_expert_slice": "no (architect ctx-6: Python in facilitator.py, mob_process.py and the template, covered by the backend, QA and reviewer seats)"
+ },
+ "ended_at": "2026-10-30T12:56:18Z",
  "adopted_conditions": [
   {
    "from": "independent reviewer (audit lens)",
