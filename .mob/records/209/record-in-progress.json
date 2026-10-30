@@ -1,0 +1,53 @@
+{
+ "card": 209,
+ "title": "A task force member leaves only at the retro",
+ "status": "in progress (corrective for MD-001); code in mob-defaults",
+ "decisions": {
+  "rank": "re-rank 7 (window 214-rerank-7, decision 386cf3e)",
+  "task_force": "window 209-taskforce (proposal b69366f, decision 9052942)"
+ },
+ "task_force": [
+  {
+   "role": "product manager (ready)",
+   "context": "ctx-1"
+  },
+  {
+   "role": "architect (slice)",
+   "context": "ctx-6"
+  },
+  {
+   "role": "QA engineer (red)",
+   "context": "ctx-2"
+  },
+  {
+   "role": "backend developer [author] (green, refactor)",
+   "context": "ctx-3"
+  },
+  {
+   "role": "independent reviewer (audit lens) [reviewer]",
+   "context": "ctx-4"
+  },
+  {
+   "role": "delivery lead (ship)",
+   "context": "ctx-7"
+  },
+  {
+   "role": "product manager (signoff)",
+   "context": "ctx-5"
+  }
+ ],
+ "claude_seat_reason": "probes at 12:03 UTC show Codex, Copilot, Grok and agy without usable quota",
+ "domain_expert": [
+  {
+   "boundary": "refinement",
+   "answer": "no",
+   "reason": "the change is inside facilitator.py, mob_process.py and the template, which the backend developer covers; the independent reviewer (audit lens) is the domain check for MD-001 and the retro-only removal ruling",
+   "seat": "product manager (ready)",
+   "context": "ctx-1",
+   "source": "window 209-taskforce proposal (b69366f)"
+  }
+ ],
+ "d157": "one acceptance criterion per red-green cycle: Criterion 1 red, its unit layers, green, push; then Criterion 2; then Criterion 3",
+ "cycles": [],
+ "stand_downs": []
+}
