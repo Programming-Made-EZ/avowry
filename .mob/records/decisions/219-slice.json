@@ -1,0 +1,18 @@
+{
+ "window": "219-slice",
+ "category": "slice decision",
+ "rule": "D153 objection window on the architect's slice (D157)",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "claude-sonnet subagent",
+  "context": "ctx-2",
+  "probe_reference": ".mob/records/probes/2026-10-30.jsonl (23:03 UTC)"
+ },
+ "opened_at": "2026-10-30T23:47:17Z",
+ "proposal": "The architect's slice of card 219 is .mob/records/219/turn-slice-architect.md (commit 3b04e20): SHIP AS IS; three numbered criteria, one red-green cycle each (D157); criterion-by-layer table with doubles; mutations M1 to M6 for born-green cases; a fixture tree reproducing the held-record order for criterion 3; the held records land after the card closes. Two-way door.",
+ "checklist_D158": ".mob/records/219/checklist-slice.md",
+ "polled_roles_note": "F-054: all six non-proposer roles polled.",
+ "replies": [],
+ "decision": null,
+ "ended_at": null
+}
