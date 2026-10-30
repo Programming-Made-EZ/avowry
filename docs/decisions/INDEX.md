@@ -45,6 +45,8 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D127](process-and-staffing.md#d127) — No backward compatibility for the rename; the repository is renamed first
 - [D134](process-and-staffing.md#d134) — Mob-process accountability that does not depend on the facilitator
 - [D135](process-and-staffing.md#d135) — Review of the mob-process checker (rounds 1 to 3); detection now, prevention as the destination
+- [D136](process-and-staffing.md#d136) — Thin slices, numeric limits, flags in a compiler repo, retro timing (forward-only from card 195)
+- [D137](process-and-staffing.md#d137) — Outside-in TDD under trunk-based main: the pending-test mechanism
 
 ### benchmarks-and-measurement
 
@@ -201,3 +203,6 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D133](compiler-and-adapters.md#d133) | Review of card 194: the compiler project and namespace are Avowry.Compiler | compiler-and-adapters | applied |
 | [D134](process-and-staffing.md#d134) | Mob-process accountability that does not depend on the facilitator | process-and-staffing | in force |
 | [D135](process-and-staffing.md#d135) | Review of the mob-process checker (rounds 1 to 3); detection now, prevention as the destination | process-and-staffing | in force |
+| [D136](process-and-staffing.md#d136) | Thin slices, numeric limits, flags in a compiler repo, retro timing (forward-only from card 195) | process-and-staffing | in force |
+| [D137](process-and-staffing.md#d137) | Outside-in TDD under trunk-based main: the pending-test mechanism | process-and-staffing | in force |
+| [D138](process-and-staffing.md#d138) | Review and signoff of card 195 (first card-mode card since 063) | process-and-staffing | applied |

@@ -922,5 +922,23 @@
     "status": "in force",
     "title": "Review of the mob-process checker (rounds 1 to 3); detection now, prevention as the destination",
     "order": 126
+  },
+  "D136": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Thin slices, numeric limits, flags in a compiler repo, retro timing (forward-only from card 195)",
+    "order": 127
+  },
+  "D137": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Outside-in TDD under trunk-based main: the pending-test mechanism",
+    "order": 128
+  },
+  "D138": {
+    "area": "process-and-staffing",
+    "status": "applied",
+    "title": "Review and signoff of card 195 (first card-mode card since 063)",
+    "order": 129
   }
 }
