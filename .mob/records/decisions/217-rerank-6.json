@@ -61,6 +61,16 @@
    "condition": null,
    "raw": "Yes\n\nNO OBJECTION\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:07 UTC)"
+  },
+  {
+   "role": "product manager (signoff)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "win6-pmsignoff",
+   "started_at": "2026-10-30T11:18:11Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "Yes\n\nNO OBJECTION\n\nI couldn't find `.mob/audits/last.json` in this copy, so I couldn't check the open FAILs myself. I'm relying on the proposal's own statement that F-062 asks for the flake to be filed and ranked high. Putting 217 directly behind 214 follows the standing rules: a red CI stops the line, and the order is a reversible re-rank.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:07 UTC)"
   }
  ],
  "decision": null,
