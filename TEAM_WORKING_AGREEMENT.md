@@ -31,6 +31,10 @@ question of whether a member with different domain knowledge or context should j
 seat list (ready, slice, red, green, ship, signoff) is a default, not a fixed roster. The detailed rules and their
 accountability are under Practices, Task force before every card.
 
+## Current goal (product owner direction, D161)
+
+The mob process keeps drifting, so it comes first: lock it down, enforce it with tooling, save it into the mob-defaults template, then build product work on it. Every re-rank ranks the work that gets the rules enforced in the template and the loop runner first. Reports to the product owner describe cards, decisions and findings by what they are or do; an ID only in parentheses.
+
 ## 1. Values
 
 - **Correctness over speed, but speed matters.** Never ship on a claim nobody independently reproduced.
