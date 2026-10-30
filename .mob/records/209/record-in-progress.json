@@ -72,5 +72,54 @@
    "notes": "the developer amended its own unpushed layer 3 commit once to undo a line-ending change (no pushed history touched; still against the no-rewrite practice, raised at stand-down 1)"
   }
  ],
- "stand_downs": []
+ "stand_downs": [
+  {
+   "cycle": 1,
+   "boundary": "after Criterion 1 (red 6836d76, units 5a2c930, b527e1d, 8e387e3, green 7d371fa in mob-defaults, pushed together about 14:27 UTC; origin/main is at 7d371fa); Criterion 2 next",
+   "adjustment_reviews": [
+    {
+     "adjustment": "Card 213 stand-down 2 (fcfdb7b): keep module-only runs and, when 213 resumes after 214, start with one full Python suite run on a clean checkout at the resumed head (pass line citing a pushed hash) before the red.",
+     "issue": "Drift from card 214 and concurrent-write flakes seen only at the pre-ship gate instead of once at the start of the resumed card.",
+     "resolved": "unknown",
+     "evidence": "Not applied: card 213 has not resumed (209 was pulled by re-rank 7, decision 386cf3e), so there is no before and after. Indirect measurement from this card: the full mob-defaults suite ran 315 tests in 1031.751 s (17.2 min), quoted in the body of 7d371fa, against the 'about 90 s' full suite that 213 stand-down 1 quoted. The adjustment's cost was sized on the old figure.",
+     "side_effects": "None yet because it has not run. Predicted bad side effect from this card's numbers: a clean-checkout full run at resume costs about 17 min of the first step, and 209's green moved its in-flight cap twice for the same suite (13:55 to 14:15 to 14:30 UTC).",
+     "verdict": "tune (no evidence either way is tune under D155): keep the intent, but run the clean-checkout suite in the background with an in-flight note whose cap is start plus 25 min, the seat doing the red meanwhile; judge it when 213 resumes."
+    },
+    {
+     "adjustment": "Card 214 retro pick, D157: one acceptance criterion per red-green cycle, checked from git (Criterion: n line in each red body; green n before any red for n+1; green pushed at once; the pre-ship gate lists the Criterion order).",
+     "issue": "F-060 (audit 28): card 214 wrote about 800 lines of red across three Done checks before any green, one green, first push at 11:06.",
+     "resolved": "partly",
+     "evidence": "Before (214): about 800 red lines, ten guards, three criteria, one green. After (209 criterion 1, git log 46864d0..7d371fa): red 6836d76 is 111 lines in one file (tests/test_card_mode.py); five commits, all carrying 'D157 Criterion 1'; no test for criterion 2 or 3 anywhere (units 5a2c930, b527e1d, 8e387e3 are layers of criterion 1 only); green 7d371fa at 07:26 PDT, pushed together, origin/main = 7d371fa. Pull (386cf3e 05:41 PDT) to first red 06:24 = 43 min against 83 min on 214 and a 24-min baseline on 205 (different start points, indicative only). The D154 gate line for the Criterion order has not run yet. One cycle of three is a sample of one.",
+     "side_effects": "Good: reds stay small enough to review, the green is one suite run on a bounded change, the Criterion line makes the order readable from git. Bad: the full suite (17.2 min) now runs once per criterion (three times on this card, about 52 min of suite time); red 6836d76 to green took 62 min, of which 17 were the suite, with two cap moves; the developer amended once (observation d).",
+     "verdict": "keep"
+    },
+    {
+     "adjustment": "Facilitator practices after the REST quota stall (note d70fb97): one push per boundary, CI read at least 120 s apart, no manual mob_process check before a push, in-flight notes for waits over 20 minutes (F-061).",
+     "issue": "The shared token's REST quota ran out 08:22 to 08:33 UTC and blocked the pre-push hook; F-061 (40.6 min without a commit or a blocker note).",
+     "resolved": "partly",
+     "evidence": "Quota: no stall, quota note or blocked-push commit in the phrase-lang log from 05:40 PDT (47 commits) to 255e753; mob-defaults criterion 1 went out as one push (5 commits, origin/main at 7d371fa). I made no gh call, so CI read spacing and REST calls used are unknown. In-flight notes: four on this card (a3f6e49 cap 13:35, a3a9719 cap 13:55, 7c80c75 moved to 14:15, 406354e moved to 14:30 UTC), no stretch beyond the stated cap without a note; both cap moves were written about 1 min after the cap (13:55:58 and 14:16:11 UTC). F-061 has not recurred on this card. Push count for phrase-lang is not readable from git alone (255e753 is local, ahead 1).",
+     "side_effects": "Good: no blocked pushes, notes make the wait visible. Bad: caps are guessed and then moved after they pass (two of two on the green), a smaller form of the silence F-061 targeted; one push per boundary means nothing leaves the machine until a 17-min suite ends.",
+     "verdict": "keep (the cap sizing is tuned through this stand-down's adjustment)"
+    }
+   ],
+   "observations": [
+    "(a) F-060 from card 214, all red before any green: this card is the first under D157 and criterion 1 held. Git shows five commits, each naming 'D157 Criterion 1': 111 lines of acceptance red first, three unit-layer reds, then the green, and nothing for criteria 2 or 3 ahead of time. One cycle is not a verdict; criteria 2 and 3 and the D154 gate line are still to come.",
+    "(b) The GitHub REST quota ran out 08:22 to 08:33 UTC (note d70fb97); mob_process check costs 92 REST calls and was about 80% of the quota. The practices are in force and no stall recurred on this card; the A/B/C code candidates in the note (cache closed-issue timelines, poll budget, quota guard) are not decided and not adopted here.",
+    "(c) The stand-down entry had no domain-expert field, which caused F-058 on card 213. This entry carries one (domain_expert with answer, reason and member if yes); the field is still not a schema or checker rule.",
+    "(d) The developer amended its own unpushed layer 3 commit once: reflog b21d94e at 06:26:44 PDT replaced by 5a2c930 at 06:27:13 (29 s later) to undo a line-ending change; core.autocrlf is false in mob-crosscli. No pushed history was touched, but the no-amend practice was broken and the cause (a tool writing CRLF) is not fixed.",
+    "(e) The full mob-defaults suite takes about 17 minutes (1031.751 s for 315 tests), against the 90 s quoted at 213 stand-down 1. It made the green step run past its caps twice (13:55 and 14:15 UTC; green committed 14:26:30). Criteria 2 and 3 each run it again."
+   ],
+   "worked": "D157 held on its first cycle: five commits, one criterion, a small red (111 lines) before the units, green pushed at once, origin/main equals the green. Every cited hash resolves and the green commit body states the suite result (315 tests OK, 1 unrelated skip) and the old-behaviour test edits it made. Born-green guards each cite a mutation. The slice's seams (REMOVAL_RULE, removal_problem, blank marker) landed as planned. Four in-flight notes covered the whole green wait. The domain-expert question has been answered at every boundary so far.",
+   "did_not": "The green step ran past two in-flight caps (13:55 and 14:15 UTC) because the cap was a guess, not sized from the suite time; both moves were written about a minute after the cap passed. The developer amended an unpushed commit. The 17-min suite makes each green slow and the slice carried no suite-time estimate. The 213 clean-checkout adjustment still cannot be judged. I could not verify CI read spacing without gh calls.",
+   "adjustment": "For criterion 2 (and 3), write the first in-flight note for the green with a cap sized from the measured suite time: cap = start of the full suite + 25 min (17.2 min measured plus margin), written before the suite starts, with the affected module (tests.test_mob_process) as the inner loop. Metric: cap moves per green (criterion 1: 2; target 0). Counter-metrics: minutes red to green (criterion 1: 62) and any green held past its cap with no note.",
+   "domain_expert": {
+    "answer": "no",
+    "reason": "Criterion 2 is a call to the shared removal_problem from mob_process.check_record and criterion 3 is a template paragraph and a text scan; the Python, the tests and the audit lens are covered by the backend developer, QA engineer and independent reviewer, and criterion 1 raised no language, UX, security or workflow question those seats could not answer."
+   },
+   "seat": "Delivery lead",
+   "context": "ctx-7",
+   "model": "claude-sonnet subagent",
+   "written_at": "2026-10-30T14:29:20Z"
+  }
+ ]
 }
