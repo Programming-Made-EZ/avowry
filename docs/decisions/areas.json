@@ -1054,5 +1054,11 @@
     "status": "in force",
     "title": "One acceptance criterion per red-green cycle, checked from git, a 5-card experiment (card 214 retro pick)",
     "order": 148
+  },
+  "D158": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Facilitator pre-window checklist: seats, caps, working directory, line endings (card 209 retro pick, 5-card experiment)",
+    "order": 149
   }
 }

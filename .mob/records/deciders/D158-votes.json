@@ -1,0 +1,107 @@
+{
+ "decider": "D158",
+ "subject": "Card 209 retro process pick: a facilitator pre-window checklist (seats, caps, working directory, line endings), a 5-card experiment",
+ "proposer": "agile coach seat",
+ "result": "PASSED round 1 (five Yes, one Support-it), confirmed by the independent re-run (four Yes, two Support-it)",
+ "claude_seat_reason": "probes at 16:24 UTC show Codex, Copilot, Grok and agy without usable quota",
+ "round1": [
+  {
+   "role": "pm",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d158-pm",
+   "started_at": "2026-10-30T16:28:50Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Picking G alone is a bounded, one-lever experiment, and it leaves D157 untouched at trial card 1 of 5.\nP2: The deferrals are recorded, not rejected, and the fix-commit gap goes to the D157 retro as one tune bundle, which fits the rule that removals happen only at the retro.\nP3: The hypothesis is measurable (misses per card from 4 to 1 or fewer) and the card 209 baseline is stated, so the accountability-to-metrics rule is met.\nP4: C1 (all D154 seats listed, including slice and ship) puts every role in its own context and covers the PM proposal-seat gap that candidate (b) would have addressed.\nP5: C2 (cap sources) removes the estimate-only caps that caused a late catch.\nP6: C3 (printed working directory and repo root) targets the roughly 17-minute wrong-repository run.\nP7: C4 (line endings from `git ls-files --eol`) and C5 (one committed block per card) keep the ceremony small, and the ceremony-lines counter-metric watches for it growing.\nP8: The accountability check lets the auditor FAIL a card with no checklist block, and an open FAIL stops the line.\nP9: The change is reversible, adds no up-front specification beyond the five rules, and keeps the team on product value.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d158-architect",
+   "started_at": "2026-10-30T16:28:50Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Candidate G alone is a sound pick. It sits outside the D157 checker, so the card 209 baseline stays clean.\nP2: The hypothesis (4 misses to 1 or fewer) is measurable from the retro-input list. With one card of baseline, the target is a signal, not proof.\nP3: C1 is checkable by diffing the proposal's seat list against the D154 required seats, so it should not false-positive.\nP4: C2 is enforceable as long as \"estimate may not be the only source\" is read as requiring a recorded start time or a measured suite time. The auditor should treat a bare \"about N min\" as a fail.\nP5: C3 is sound because the directory and `git rev-parse --show-toplevel` are printed in the same command, so the run record carries the proof.\nP6: C4 is sound because `git ls-files --eol` gives a verifiable source rather than recollection.\nP7: C5 is the right enforcement point. Git ordering of the checklist block before the window commit is a mechanical check with no judgment call.\nP8: The counter-metrics are recorded as evidence only, not targets, which avoids Goodhart pressure. The ceremony-lines counter guards against checklist bloat.\nP9: Deferring the other six rather than rejecting them is sound, and recording the fix-commit gap for the D157 retro keeps that evidence.\nP10: The trial scope matches the D150/D153/D154/D157 window, and the proposal is a two-way door because it can be reverted by deleting the rule.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d158-qa",
+   "started_at": "2026-10-30T16:28:50Z",
+   "overall": "Yes",
+   "reply": "Yes\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d158-dev",
+   "started_at": "2026-10-30T16:28:50Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 (pick G only): Workable, since it adds no checker and touches none of my red, unit-commit, green, flag or slice rules.\nP2 (C1 seats): Clear and checkable, because each D154 seat is either present or removed with a reason.\nP3 (C2 cap sources): Fair to the work, because it rules out a cap that rests only on an estimate and I can still comply with a recorded start time or the measured suite time plus margin.\nP4 (C3 repo print): Cheap, since one printed line of directory and toplevel in the same command costs seconds against the 17 minutes lost.\nP5 (C4 line endings): Unambiguous, because `git ls-files --eol` gives a definite answer and spares me guessing.\nP6 (C5 block before window commit): Checkable from git, and I can comply without gaming it.\nP7 (deferrals and metric): Reasonable. The fix-commit gap goes to the D157 retro, and a target of 1 or fewer misses is honest, with the counter-metrics treated as evidence only.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d158-auditlens",
+   "started_at": "2026-10-30T16:28:50Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: Picking G alone is sound. It sits outside D157, so it leaves D157's single trial card as clean evidence.\nP2: The deferral is stated clearly, and the fix-commit gap is recorded for the D157 trial retro.\nP3: The hypothesis and metric (4 misses down to 1 or fewer) are measurable. The miss count comes from a retro-input list the facilitator writes, so a miss that goes unlisted cannot be seen from git. The auditor should count misses from the run records, not from that list.\nP4: C1 and C5 can be checked from git alone, because they come down to a committed block that predates the window commit. C2 can only be partly checked. A cap's named source can be seen, but whether the \"seat's recorded start time\" is real depends on its evidence being committed. C3 and C4 can be checked only if the run record contains the printed output. Requiring that output in the committed block closes the loophole, because otherwise a block with the right headings and no content would pass.\nP5: The block must contain the actual printed output, not only a mention of it. The proposal doesn't say this outright, but a reasonable reading implies it.\nP6: The accountability rule (a card without the block counts as not run and the auditor may FAIL it) leaves the team no way to pass without the practice. The word \"may\" is soft, but the auditor holds the decision.\nP7: The change is reversible. It adds no checker and alters no earlier rule.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d158-delivery",
+   "started_at": "2026-10-30T16:28:50Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Hypothesis and metric are one number from the retro-input list, with a 5-card window. That is thin and measurable.\nP2: C1 (seats listed, present or removed with a reason) would have caught the missing slice and ship seats at no cost to flow.\nP3: C2 (caps name their source) is one line per cap and replaces guessing.\nP4: C3 (print the directory and toplevel in the same command) is a few seconds against the roughly 17 minutes the wrong-repository run cost.\nP5: C4 (line endings from `git ls-files --eol`) is one command that replaces a recall error.\nP6: C5 (one block, committed before the window commit) stays inside D136 as a small file, and the ceremony-lines counter-metric watches it.\nP7: Deferring the other six and taking the fix-commit gap to the D157 trial retro keeps D157's evidence clean.\nP8: It is a two-way door, and I'd keep the block to one short block per card with no per-seat prose.\n"
+  }
+ ],
+ "rerun": [
+  {
+   "role": "coach",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d158rr-coach",
+   "started_at": "2026-10-30T16:29:38Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Candidate G only suits a single-card sample: it is the one lever outside D157, so it adds no overlap with the D157 trial.\nP2: The deferrals are sound, because tuning D157 at trial card 1 of 5 would blur its only evidence, and the fix-commit gap is recorded for the D157 retro.\nP3: C1 lists every D154 seat, slice and ship included, which closes the missing-perspective gap seen on card 209.\nP4: C2 (cap sources) and C3 (printed repository) each target a concrete miss, the 17-minute wrong-repository run among them.\nP5: C4 and C5 add little ceremony: one committed block per card, with ceremony lines per card as a counter-metric.\nP6: The metric of misses per card (4 down to 1 or fewer) is observable from git, and the 5-card scope fits the other trials.\nP7: The change is a two-way door, with no shared state or earlier rule touched, so the cost of being wrong is low.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d158rr-architect",
+   "started_at": "2026-10-30T16:29:38Z",
+   "overall": "Yes",
+   "reply": "Yes\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d158rr-qa",
+   "started_at": "2026-10-30T16:29:38Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (C1, seats): Testable red first. A checklist block missing slice or ship, or listing one with no reason, fails on inspection of the committed block.\nP2 (C2, cap source): Mostly testable. A cap with no named source is a red. The check proves a source is named, not that it is correct, which is acceptable at this scale.\nP3 (C3, repo print): Testable. A run record without the working directory and `git rev-parse --show-toplevel` output is a red, and card 209's wrong-repository run would have shown here.\nP4 (C4, line endings): Testable. An instruction with no `git ls-files --eol` output beside it is a red.\nP5 (C5, commit order): Testable and the strongest rule. `git log` order shows whether the block was committed before the window commit, and a missing block counts as not run.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d158rr-dev",
+   "started_at": "2026-10-30T16:29:38Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Candidate G alone is a sensible pick, since it sits entirely outside D157 and leaves the other six deferred.\nP2: The hypothesis (misses per card from 4 to 1 or fewer) is measurable from the retro-input list.\nP3: C1 to C5 are facilitator-side checks that don't touch my red, unit-commit, green or flag work, so I can comply without gaming them.\nP4: Printing the repository (C3) and reading `git ls-files --eol` (C4) are cheap and would have prevented the wrong-repository run and the wrong line endings.\nP5: The counter-metrics are evidence only, not targets, so they give me nothing to game.\nP6: The trial scope and the accountability check are clear: a checklist block committed before the window commit.\nP7: It is a two-way door, because deleting the checklist rule reverts it.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d158rr-auditlens",
+   "started_at": "2026-10-30T16:29:38Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The pick of G alone is verifiable from git, because the D158 record and the trial scope are committed text.\nP2: The hypothesis is testable, but the \"misses per card\" metric comes from the facilitator's own retro-input list. That is self-reported, so the auditor should cross-check it against git evidence such as fix commits and re-runs.\nP3: C1 can be checked from the committed block, since it lists each D154 seat as present or removed with a reason.\nP4: C2 is checkable as text, but the block must name the source (a start-time commit or the measured suite time), not just assert one.\nP5: C3 is only verifiable if the printed working directory and `git rev-parse --show-toplevel` output is committed in the run record. The proposal says \"the run record shows it\", so confirm that record is in git.\nP6: C4 is weak. A line-ending instruction sent to a seat is not in git unless the block quotes the `git ls-files --eol` output, so the auditor can only check that the output was quoted.\nP7: C5 is mechanical: the block's commit must come before the window commit in `git log`. The loophole is a block that is committed but filled with boilerplate, so the auditor should check content as well as presence.\nP8: Reversibility is fine, because deleting the rule changes no checker or earlier D-record.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d158rr-delivery",
+   "started_at": "2026-10-30T16:29:38Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Candidate G alone is a thin, outside-D157 slice that leaves the D157 trial's evidence clean, so it fits the flow lens.\nP2: The hypothesis is measurable (4 misses per card down to 1 or fewer) and the baseline is stated.\nP3: C1 covers every D154 required seat, including slice and ship, each present or removed with a reason. That is cheap and catches the card 209 seat omissions.\nP4: C2 requires a named source for each cap, which fixes the cap that came from an estimate.\nP5: C3 puts the working directory and repository root in the same command, so a wrong-repository run like the 17-minute one shows up in the run record.\nP6: C4 takes line-ending instructions from `git ls-files --eol`, which is a one-line command that replaces memory.\nP7: C5 adds a single committed block per card, a small ceremony cost, and the counter-metrics (issue to first red, pull to window delay, ceremony lines per card) watch for it growing.\nP8: The trial is 5 cards with a keep, revise or drop decision at the end, and reverting means deleting the rule, so the line restarts soon at low risk.\nP9: Deferring the Criterion line, trailer lint and line-ending check to the D157 retro tune bundle, and affected-tests-first until card 217, is sound sequencing.\n"
+  }
+ ]
+}

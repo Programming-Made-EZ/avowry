@@ -439,3 +439,27 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   BASELINE (card 214): 3 criteria red (about 800 lines, ten guards, 26681e1 to 391828f, 09:30 to 09:47) before one green; local green about 10:35, pushed 11:06 (111960d, afa4e40); issue 08:07 to first pushed green 179 minutes; issue to first red 83 minutes.
   REVERSIBILITY: two-way door. Revert by deleting the rule text and the gate line; no shared state or earlier D-record changes.
   VOTING RULE: reply first line Yes, Support-it or No, then P1: to Pn: one line each (one per proposal point). A No names ONE fixed condition (CONDITION: ...). A reasonable, reversible condition is adopted and the proposal re-polled; a later round may not add new demands. Only an irreconcilable purpose or model conflict escalates. Independent fresh-seat re-run before recording.
+
+<a id="d158"></a>
+#### Decider D158: the card 209 retro process pick (a facilitator pre-window checklist; a 5-card experiment)
+
+- Date: 2026-10-30. Proposer: agile coach seat, from the card 209 retro (docs/retros/card-209-2026-10-30.md; seven candidates). Seats through decider.py with the headless claude CLI, model sonnet: round 1 product manager, architect, QA engineer, backend developer, independent reviewer (audit lens), delivery lead (five Yes, one Support-it); independent re-run with the agile coach in place of the product manager (four Yes, two Support-it). Votes in .mob/records/deciders/D158-votes.json.
+- Result: PASSED. Adopted text:
+  Decider D158, the card 209 retro process pick, as an experiment
+  PICK: candidate G only (a facilitator pre-window checklist: seats, caps, working directory, line endings). The other six are deferred, not rejected.
+  Why G: it is the one lever wholly outside D157. Card 209 had four facilitator misses (slice and ship seats left out, a cap from an estimate, a verification run in the wrong repository, wrong line endings told to a developer). Each was caught late; the wrong-repository run cost about 17 minutes. G changes no checker and no earlier rule.
+  Why not the others now: (a) The Criterion or "Review fix: Fn" line, the trailer lint and the line-ending check all tune D157, at trial card 1 of 5. Changing C1 now would blur what D157 moved, and card 209 is its only evidence. Take the fix-commit gap (73026aa, 7fdb168, e239b12 carry no Criterion line) to the D157 trial retro as one tune bundle; it is recorded there as evidence now. (b) The PM proposal-seat checklist is covered by C1 below. (c) Affected-tests-first changes the D154 gate; card 217 (stale gates) comes first.
+  HYPOTHESIS: We believe a short checklist, committed before each task-force window, will remove repeat facilitator misses. We will know when misses per card fall from 4 to 1 or fewer.
+  RULE UNDER TRIAL:
+  C1. The proposal lists every D154 required seat, including slice and ship, each present or removed with a reason.
+  C2. Every in-flight cap names its source: the seat's recorded start time, or the measured suite time (about 17 minutes) plus margin. An estimate may not be the only source.
+  C3. Before a verification run, the facilitator prints the working directory and git rev-parse --show-toplevel in the same command; the run record shows it.
+  C4. A line-ending instruction to a seat comes from git ls-files --eol, not memory.
+  C5. The checklist is one block under .mob/records/ for the card, committed before the window commit.
+  METRIC: facilitator misses per card from the retro-input list (target 1 or fewer).
+  COUNTER-METRICS: issue to first red (209: 41 minutes; 214: 83; 205: 24); delay from pull to window opening; ceremony lines per card. Evidence, not targets.
+  TRIAL SCOPE: the next 5 cards, the same window as D150, D153, D154 and D157. The trial retro decides keep, revise or drop by Decider.
+  ACCOUNTABILITY CHECK: per card, git shows the checklist block committed before the window commit, with the seats, cap sources and printed repository. A card without it counts as not run and the auditor tick may FAIL it.
+  BASELINE (card 209): 4 facilitator misses; issue to first red 41 minutes; pull to sign-off 3 h 41 min; 5 full-suite runs of about 17 minutes, one in the wrong repository.
+  REVERSIBILITY: two-way door. Revert by deleting the checklist rule; no shared state, checker or earlier D-record changes.
+  VOTING RULE: reply first line Yes, Support-it or No, then P1: to Pn: one line each (one per proposal point). A No names ONE fixed condition (CONDITION: ...). A reasonable, reversible condition is adopted and the proposal re-polled; a later round may not add new demands. Only an irreconcilable purpose or model conflict escalates. Independent fresh-seat re-run before recording.
