@@ -11,7 +11,18 @@
  "opened_at": "2026-10-30T12:03:52Z",
  "proposal": "# Re-rank proposal 6b (resolve the 214 / 217 hold after the EXPOSES answer)\n\n- Led by: product manager seat, fresh context (pm-rerank-6). Amends adopted note 2026-10-30-6 (window 217-rerank-6, decision 693d9ea) on one point: card 214 no longer waits for 217's two consecutive same-result full runs. 214 ships on its own evidence plus its pre-ship gate, with the thread-pool floor (commit 5b, afa4e40) kept as a recorded mitigation until 217 removes or justifies it. Order unchanged: 214, 217, 213, 209, 210, 208, 211, 216, 212, 215, 206, 207.\n- Why: the reviewer found EXPOSES (a477bc6): the old harness median ready was 10.1 s, max 63 s, absorbed by its 2-minute window; the new harness is 9.1 s without the floor and 7.5 s with it, blocks no pool thread, and CI on afa4e40 is green on ubuntu. So 214 introduces no new defect and the slow path is pre-existing. 217 cites F-062, a FLAG, so the corrective-card gate (open FAILs MD-001, MD-002, MD-003, MD-010 only) may not start it, and holding 214 on a card that may not start would hold it indefinitely. 217 keeps position 2, so the order says it is next once the gate allows it, and it stays the root-cause fix for the load flake (the floor is a stopgap, not the fix).\n- Conditions on 214 shipping: the pre-ship gate passes (full local and CI green on the shipping commit); the floor stays in the tree with a recorded reason naming 217; 217's Done check 3 owns removing or justifying it; any red CI from the flake still stops the line as a bug.\n- Neither a one-way door nor a standing-rule change: reversible (a gate condition on one card and one note; the floor is one line that can be raised, kept or removed, and 214 can be reverted); it applies the existing rules as written (flaky tests are bugs; the corrective-card gate is unchanged and 217 is not exempted from it).\n- Window rule: every declared role polled, i.e. architect, QA engineer, backend developer, independent reviewer (audit lens), delivery lead, product manager (signoff); silence is not consent (F-054).\n",
  "polled_roles_note": "F-054: architect, QA engineer, backend developer, independent reviewer (audit lens), delivery lead, product manager (signoff) polled; the product manager is the proposer.",
- "replies": [],
+ "replies": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "win6b-architect",
+   "started_at": "2026-10-30T12:03:56Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes. The proposal changes only one gate condition on one card and one note. It leaves the corrective-card rule unchanged, so no new checker rules or false-positive risks arise. The floor is recorded as a mitigation tied to 217, which keeps it enforceable and reversible.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (12:03 UTC)"
+  }
+ ],
  "decision": null,
  "ended_at": null
 }
