@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:5088bed0101d223ecef242ba57978bfa5355d99be6198335e81c7e1d1144a1e1 -->
+<!-- board-table-sha256:d8201ce7a7be65aa0a6262c312f322bc53f7330829f8e277db4aa3a1e5035af8 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -96,12 +96,12 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 74 | 195 Rename the C# adapter and CLI projects to Avowry.* | Done | 194 |
 | 75 | 205 The facilitator starts only corrective cards while a finding blocks | Done | none (A2, D, C and E depend on this card, in that order) |
 | 76 | 214 The generated API binds its own port in acceptance tests | Done | none |
-| 77 | 217 Acceptance tests do not starve the thread pool | Ready | none |
-| 78 | 213 The checker rejects an incomplete objection window | Ready | none |
-| 79 | 209 A task force member leaves only at the retro | Ready | none |
-| 80 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
-| 81 | 208 The loop runner drives Avowry cards under today's gates | Ready | none |
-| 82 | 211 A whole-team review of the mob-defaults rulings commits | Ready | none |
+| 77 | 209 A task force member leaves only at the retro | Ready | none |
+| 78 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
+| 79 | 208 The loop runner drives Avowry cards under today's gates | Ready | none |
+| 80 | 211 A whole-team review of the mob-defaults rulings commits | Ready | none |
+| 81 | 217 Acceptance tests do not starve the thread pool | Ready | none |
+| 82 | 213 The checker rejects an incomplete objection window | Ready | none |
 | 83 | 216 The default templates carry the pending process rulings | Ready | none |
 | 84 | 212 Every mob re-ranks at every loop boundary | Ready | 208 (the runner gaps, including its retro and re-rank commands: this card hardens the re-rank step that 208 wires in). |
 | 85 | 215 Every mob reviews each previous adjustment at stand-downs and retros | Ready | 208 (the runner gaps, including its retro command: this card adds record fields to the step 208 wires in). |
