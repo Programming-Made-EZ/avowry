@@ -18,7 +18,7 @@ Rationale: the compiler and the generated host target .NET 8; `curl` is the HTTP
 Generated C# is an artifact, not the source of truth. Write it outside the repository (or to a git-ignored path). These steps use `/tmp/phrase-tasks`.
 
 ```bash
-dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.avowry -o /tmp/phrase-tasks
+dotnet run --project src/Avowry.Cli -- build demo/tasks/Tasks.avowry -o /tmp/phrase-tasks
 ```
 
 Expected: the Phrase compiler prints nothing and exits 0. It writes `/tmp/phrase-tasks/Tasks.Api` and `/tmp/phrase-tasks/Tasks.Specs`.

@@ -2,7 +2,7 @@ using System.Text;
 using Avowry.Compiler;
 using Avowry.Compiler.Semantics;
 
-namespace Phrase.Adapters.CSharp;
+namespace Avowry.Adapters.CSharp;
 
 /// <summary>
 /// Emits a C# API project and an xUnit specs project.

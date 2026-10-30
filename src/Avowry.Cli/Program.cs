@@ -4,11 +4,12 @@ using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using Phrase.Adapters.CSharp;
+using Avowry.Adapters.CSharp;
 using Avowry.Compiler;
 using Avowry.Compiler.Semantics;
 
 const string Usage = "Usage: avowry build FILE.avowry -o OUT_DIR [--target csharp]\n       avowry trace NAME [--map PATH] [--assembly PATH] [--strict]";
+const string AvowKind = "avow";
 if (args is ["--help"])
 {
     Console.WriteLine(Usage);
@@ -78,7 +79,7 @@ static IEnumerable<MapRecord> Records(CompilationOutput output, ModuleModel modu
         var step = owner?.Steps.FirstOrDefault(candidate => Calls(candidate, phrase.Key));
         var cs = output.AvowFiles[phrase.Key];
         var spec = phrase.Specs.FirstOrDefault();
-        yield return new(StepId("phrase", phrase.Line, phrase.Template), "phrase", phrase.Template, module.AvowFile,
+        yield return new(StepId(AvowKind, phrase.Line, phrase.Template), AvowKind, phrase.Template, module.AvowFile,
             phrase.Line, owner?.Name ?? "", step?.Source ?? "", Lines(spec?.SourceSpan), cs,
             $"Avows.{MethodName(phrase)}", Hash(output.Files[cs]));
     }
@@ -230,6 +231,8 @@ static string? Validate(MapFile? map)
             return $"records[{index}].specLines is missing";
         if (string.IsNullOrWhiteSpace(record.CsFile))
             return $"records[{index}].csFile is missing";
+        if (string.IsNullOrWhiteSpace(record.SourceFile))
+            return $"records[{index}].sourceFile is missing (a map written before the rename is not supported)";
     }
     return null;
 }
@@ -244,8 +247,8 @@ static bool CheckHash(string mapPath, MapRecord record)
 static void Print(MapFile map, MapRecord record, string check)
 {
     Console.WriteLine($"{record.Name}  {record.Kind}{(record.Kind == "failure" ? "  422" : "")}  stepId {record.StepId}");
-    Console.WriteLine($"  {record.PhraseFile}:{record.Line} endpoint {record.Endpoint}, step {record.Step}");
-    Console.WriteLine($"  spec: {record.PhraseFile}:{record.SpecLines.First}-{record.SpecLines.Last}");
+    Console.WriteLine($"  {record.SourceFile}:{record.Line} endpoint {record.Endpoint}, step {record.Step}");
+    Console.WriteLine($"  spec: {record.SourceFile}:{record.SpecLines.First}-{record.SpecLines.Last}");
     Console.WriteLine($"  C#: {record.CsFile}  {record.CsMethod}");
     Console.WriteLine($"  build: {map.BuildId} ({check})");
 }
@@ -308,5 +311,5 @@ static bool ParseBuild(string[] values, out string file, out string output)
 }
 
 sealed record MapFile(int SchemaVersion, string BuildId, IReadOnlyList<MapRecord> Records);
-sealed record MapRecord(string StepId, string Kind, string Name, string PhraseFile, int Line, string Endpoint, string Step, MapLines SpecLines, string CsFile, string CsMethod, string CsHash);
+sealed record MapRecord(string StepId, string Kind, string Name, string SourceFile, int Line, string Endpoint, string Step, MapLines SpecLines, string CsFile, string CsMethod, string CsHash);
 sealed record MapLines(int First, int Last);

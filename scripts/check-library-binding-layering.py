@@ -67,7 +67,7 @@ AUDIT_PLACES = (
 )
 
 AUDIT_FILES = (
-    "src/Phrase.Adapters.CSharp/CSharpProvider.cs",
+    "src/Avowry.Adapters.CSharp/CSharpProvider.cs",
     "tools/Phrase.BenchCs/Program.cs",
     "tools/Phrase.Bench/Program.cs",
 )

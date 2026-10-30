@@ -1,8 +1,8 @@
 {"outcome":"builds","records":[
+  {"kind":"avow","name":"deny {n: Int}","endpoint":"Check","line":9},
+  {"kind":"avow","name":"reject {n: Int}","endpoint":"Check","line":4},
   {"kind":"endpoint","name":"Check","endpoint":"Check","line":14},
   {"kind":"failure","name":"Rejected","endpoint":"Check","line":5},
-  {"kind":"phrase","name":"deny {n: Int}","endpoint":"Check","line":9},
-  {"kind":"phrase","name":"reject {n: Int}","endpoint":"Check","line":4},
   {"kind":"step","name":"deny input.n","endpoint":"Check","line":19},
   {"kind":"step","name":"reject input.n","endpoint":"Check","line":18}
 ],"runSpecs":false}

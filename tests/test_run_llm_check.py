@@ -372,12 +372,12 @@ class RunLlmCheckTests(unittest.TestCase):
         runner = load_runner()
         with tempfile.TemporaryDirectory(prefix="llm-check-dll-") as raw:
             repo = Path(raw)
-            debug = repo / "src" / "Phrase.Cli" / "bin" / "Debug" / "net8.0"
-            release = repo / "src" / "Phrase.Cli" / "bin" / "Release" / "net8.0"
+            debug = repo / "src" / "Avowry.Cli" / "bin" / "Debug" / "net8.0"
+            release = repo / "src" / "Avowry.Cli" / "bin" / "Release" / "net8.0"
             debug.mkdir(parents=True)
             release.mkdir(parents=True)
-            older = debug / "phrase.dll"
-            newer = release / "phrase.dll"
+            older = debug / "Avowry.Cli.dll"
+            newer = release / "Avowry.Cli.dll"
             older.write_bytes(b"old")
             newer.write_bytes(b"new")
             older_time = 1_700_000_000

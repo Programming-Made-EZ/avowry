@@ -15,7 +15,7 @@ public class PhraseCliFreshness
         var dllTime = new DateTime(2026, 10, 28, 12, 0, 0, DateTimeKind.Utc);
         var timestamps = new Dictionary<string, DateTime>(StringComparer.Ordinal)
         {
-            ["phrase.dll"] = dllTime,
+            ["Avowry.Cli.dll"] = dllTime,
             ["newer.cs"] = dllTime.AddSeconds(3),
             ["boundary.cs"] = dllTime.AddSeconds(2),
             ["nearer.csproj"] = dllTime.AddSeconds(1),
@@ -26,34 +26,34 @@ public class PhraseCliFreshness
 
         // When freshness is checked with newer, boundary, older, empty, and several sources
         var stale = Assert.Throws<InvalidOperationException>(() =>
-            PhraseCli.EnsureFresh("phrase.dll", ["newer.cs"], LastWriteUtc, TimeSpan.FromSeconds(2)));
+            PhraseCli.EnsureFresh("Avowry.Cli.dll", ["newer.cs"], LastWriteUtc, TimeSpan.FromSeconds(2)));
         var boundary = Record.Exception(() =>
-            PhraseCli.EnsureFresh("phrase.dll", ["boundary.cs", "nearer.csproj"], LastWriteUtc, TimeSpan.FromSeconds(2)));
+            PhraseCli.EnsureFresh("Avowry.Cli.dll", ["boundary.cs", "nearer.csproj"], LastWriteUtc, TimeSpan.FromSeconds(2)));
         var olderOrEqual = Record.Exception(() =>
-            PhraseCli.EnsureFresh("phrase.dll", ["equal.cs", "older.cs"], LastWriteUtc, TimeSpan.FromSeconds(2)));
+            PhraseCli.EnsureFresh("Avowry.Cli.dll", ["equal.cs", "older.cs"], LastWriteUtc, TimeSpan.FromSeconds(2)));
         var noSources = Record.Exception(() =>
-            PhraseCli.EnsureFresh("phrase.dll", [], LastWriteUtc, TimeSpan.FromSeconds(2)));
+            PhraseCli.EnsureFresh("Avowry.Cli.dll", [], LastWriteUtc, TimeSpan.FromSeconds(2)));
         var newestDecides = Assert.Throws<InvalidOperationException>(() =>
-            PhraseCli.EnsureFresh("phrase.dll", ["older.cs", "newer.cs", "equal.cs"], LastWriteUtc, TimeSpan.FromSeconds(2)));
+            PhraseCli.EnsureFresh("Avowry.Cli.dll", ["older.cs", "newer.cs", "equal.cs"], LastWriteUtc, TimeSpan.FromSeconds(2)));
 
         // Then only a source beyond the tolerance fails, with the exact rebuild instruction
-        Assert.Equal("Avowry CLI is stale, run dotnet build src/Phrase.Cli", stale.Message);
+        Assert.Equal("Avowry CLI is stale, run dotnet build src/Avowry.Cli", stale.Message);
         Assert.Null(boundary);
         Assert.Null(olderOrEqual);
         Assert.Null(noSources);
-        Assert.Equal("Avowry CLI is stale, run dotnet build src/Phrase.Cli", newestDecides.Message);
+        Assert.Equal("Avowry CLI is stale, run dotnet build src/Avowry.Cli", newestDecides.Message);
     }
 
     [Fact]
     [Trait("Slice", "173")]
     public void EnsureAllFresh_compares_each_project_with_its_own_assembly()
     {
-        // Given a Compiler source edited after phrase.dll was last written (an implementation-only change
-        // refreshes Avowry.Compiler.dll but leaves phrase.dll untouched)
+        // Given a Compiler source edited after Avowry.Cli.dll was last written (an implementation-only change
+        // refreshes Avowry.Compiler.dll but leaves Avowry.Cli.dll untouched)
         var cliDllTime = new DateTime(2026, 10, 28, 12, 0, 0, DateTimeKind.Utc);
         var timestamps = new Dictionary<string, DateTime>(StringComparer.Ordinal)
         {
-            ["phrase.dll"] = cliDllTime,
+            ["Avowry.Cli.dll"] = cliDllTime,
             ["Avowry.Compiler.dll"] = cliDllTime.AddMinutes(10),
             ["Compiler.cs"] = cliDllTime.AddMinutes(5),
             ["Cli.cs"] = cliDllTime.AddSeconds(-5),
@@ -63,17 +63,17 @@ public class PhraseCliFreshness
 
         // When the freshness is judged per project, and the same files are judged against one shared dll
         var perProject = Record.Exception(() => PhraseCli.EnsureAllFresh(
-            [("phrase.dll", ["Cli.cs"]), ("Avowry.Compiler.dll", ["Compiler.cs"])], LastWriteUtc, tolerance));
-        var sharedDll = Record.Exception(() => PhraseCli.EnsureFresh("phrase.dll", ["Cli.cs", "Compiler.cs"], LastWriteUtc, tolerance));
+            [("Avowry.Cli.dll", ["Cli.cs"]), ("Avowry.Compiler.dll", ["Compiler.cs"])], LastWriteUtc, tolerance));
+        var sharedDll = Record.Exception(() => PhraseCli.EnsureFresh("Avowry.Cli.dll", ["Cli.cs", "Compiler.cs"], LastWriteUtc, tolerance));
         timestamps["Compiler.cs"] = cliDllTime.AddMinutes(11);
         var compilerStale = Assert.Throws<InvalidOperationException>(() => PhraseCli.EnsureAllFresh(
-            [("phrase.dll", ["Cli.cs"]), ("Avowry.Compiler.dll", ["Compiler.cs"])], LastWriteUtc, tolerance));
+            [("Avowry.Cli.dll", ["Cli.cs"]), ("Avowry.Compiler.dll", ["Compiler.cs"])], LastWriteUtc, tolerance));
 
         // Then the up-to-date build passes, the old single-dll comparison would have been a false stale,
         // and a Compiler source newer than its own assembly still fails with the rebuild message
         Assert.Null(perProject);
         Assert.IsType<InvalidOperationException>(sharedDll);
-        Assert.Equal("Avowry CLI is stale, run dotnet build src/Phrase.Cli", compilerStale.Message);
+        Assert.Equal("Avowry CLI is stale, run dotnet build src/Avowry.Cli", compilerStale.Message);
     }
 
     [Fact]

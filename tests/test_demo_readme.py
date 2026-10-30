@@ -32,7 +32,7 @@ FAILURE_MENTION = re.compile(
     r"422\s+([A-Z][A-Za-z0-9]+)|fails with\s+([A-Z][A-Za-z0-9]+)"
 )
 COMPILE = re.compile(
-    r"dotnet\s+run\s+--project\s+src/Phrase\.Cli\s+--\s+build\s+"
+    r"dotnet\s+run\s+--project\s+src/Avowry\.Cli\s+--\s+build\s+"
     r"demo/tasks/Tasks\.avowry\s+-o\s+(\S+)"
 )
 BUILD_API = re.compile(r"dotnet\s+build\s+\S*Tasks\.Api")
@@ -147,7 +147,7 @@ def check_readme(readme: str, source: str, root: Path) -> list[str]:
 
     compile_match = COMPILE.search(joined)
     if compile_match is None:
-        problems.append("missing compile command: dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.avowry -o <out>")
+        problems.append("missing compile command: dotnet run --project src/Avowry.Cli -- build demo/tasks/Tasks.avowry -o <out>")
     else:
         output = compile_match.group(1)
         if not outside_or_ignored(output):
@@ -268,7 +268,7 @@ class DemoReadmeTests(unittest.TestCase):
         source = PHRASE.read_text(encoding="utf-8")
         fake = """# Demo
 ```bash
-dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.avowry -o /tmp/phrase-tasks
+dotnet run --project src/Avowry.Cli -- build demo/tasks/Tasks.avowry -o /tmp/phrase-tasks
 dotnet build /tmp/phrase-tasks/Tasks.Api
 dotnet test /tmp/phrase-tasks/Tasks.Specs
 dotnet run --project /tmp/phrase-tasks/Tasks.Api --urls http://localhost:5099
@@ -283,7 +283,7 @@ Expected HTTP 200 with {} and HTTP 422 EmptyTitle.
         source = PHRASE.read_text(encoding="utf-8")
         fake = """# Demo
 ```bash
-dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.avowry -o /tmp/phrase-tasks
+dotnet run --project src/Avowry.Cli -- build demo/tasks/Tasks.avowry -o /tmp/phrase-tasks
 dotnet build /tmp/phrase-tasks/Tasks.Api
 dotnet test /tmp/phrase-tasks/Tasks.Specs
 dotnet run --project /tmp/phrase-tasks/Tasks.Api --urls http://localhost:5099
@@ -313,7 +313,7 @@ Expected HTTP 200 with {} and HTTP 422 EmptyTitle, 422 NotFound, 422 StoreUnavai
         source = PHRASE.read_text(encoding="utf-8")
         fake = """# Demo
 ```bash
-dotnet run --project src/Phrase.Cli -- build demo/tasks/Tasks.avowry -o demo/tasks/out
+dotnet run --project src/Avowry.Cli -- build demo/tasks/Tasks.avowry -o demo/tasks/out
 ```
 """
         problems = check_readme(fake, source, ROOT)

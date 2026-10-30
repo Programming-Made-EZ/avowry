@@ -36,7 +36,7 @@ public class TargetAdapterContractTests
 
         // And the compiler project has no C# adapter or emitter reference
         var project = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Avowry.Compiler.csproj"));
-        Assert.DoesNotContain("Phrase.Adapters.CSharp", project, StringComparison.Ordinal);
+        Assert.DoesNotContain("Avowry.Adapters.CSharp", project, StringComparison.Ordinal);
         Assert.DoesNotContain("CSharpEmitter", project, StringComparison.Ordinal);
     }
 

@@ -2,7 +2,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using Phrase.Acceptance.Tests.Support;
 using Avowry.Compiler;
-using Phrase.Adapters.CSharp;
+using Avowry.Adapters.CSharp;
 using Xunit;
 
 namespace Phrase.Acceptance.Tests;

@@ -14,7 +14,7 @@ spec.loader.exec_module(check)
 
 def passing_text():
     places = "\n".join(
-        f"| {place} | `src/Phrase.Adapters.CSharp/CSharpProvider.cs` line 1; "
+        f"| {place} | `src/Avowry.Adapters.CSharp/CSharpProvider.cs` line 1; "
         f"`tools/Phrase.BenchCs/Program.cs` line 1; "
         f"`tools/Phrase.Bench/Program.cs` line 1 | the HTTP binding seam |"
         for place in check.AUDIT_PLACES
@@ -84,8 +84,8 @@ class LibraryBindingLayeringTests(unittest.TestCase):
 
     def test_audit_row_missing_file_fails(self):
         text = passing_text().replace(
-            "`src/Phrase.Adapters.CSharp/CSharpProvider.cs`",
-            "`src/Phrase.Adapters.CSharp/NoSuchBinding.cs`",
+            "`src/Avowry.Adapters.CSharp/CSharpProvider.cs`",
+            "`src/Avowry.Adapters.CSharp/NoSuchBinding.cs`",
             1,
         )
         problems = check.check_text(text, ROOT)
@@ -93,8 +93,8 @@ class LibraryBindingLayeringTests(unittest.TestCase):
 
     def test_audit_citation_beyond_end_of_file_fails(self):
         text = passing_text().replace(
-            "`src/Phrase.Adapters.CSharp/CSharpProvider.cs` line 1",
-            "`src/Phrase.Adapters.CSharp/CSharpProvider.cs` line 999999",
+            "`src/Avowry.Adapters.CSharp/CSharpProvider.cs` line 1",
+            "`src/Avowry.Adapters.CSharp/CSharpProvider.cs` line 999999",
             1,
         )
         problems = check.check_text(text, ROOT)
@@ -102,8 +102,8 @@ class LibraryBindingLayeringTests(unittest.TestCase):
 
     def test_audit_citation_of_line_zero_fails(self):
         text = passing_text().replace(
-            "`src/Phrase.Adapters.CSharp/CSharpProvider.cs` line 1",
-            "`src/Phrase.Adapters.CSharp/CSharpProvider.cs` line 0",
+            "`src/Avowry.Adapters.CSharp/CSharpProvider.cs` line 1",
+            "`src/Avowry.Adapters.CSharp/CSharpProvider.cs` line 0",
             1,
         )
         problems = check.check_text(text, ROOT)

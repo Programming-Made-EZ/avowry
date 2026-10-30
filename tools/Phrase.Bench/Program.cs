@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using Phrase.Adapters.CSharp;
+using Avowry.Adapters.CSharp;
 using Avowry.Compiler;
 using Avowry.Compiler.Semantics;
 

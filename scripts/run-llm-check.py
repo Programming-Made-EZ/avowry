@@ -237,17 +237,17 @@ def prepare_docs(repo: Path, work: Path) -> tuple[Path, str, str]:
 
 
 def phrase_dll_candidates(repo: Path) -> list[Path]:
-    root = repo / "src" / "Phrase.Cli" / "bin"
+    root = repo / "src" / "Avowry.Cli" / "bin"
     if not root.is_dir():
         return []
-    return [path for path in root.glob("*/net8.0/phrase.dll") if path.is_file()]
+    return [path for path in root.glob("*/net8.0/Avowry.Cli.dll") if path.is_file()]
 
 
 def find_phrase_dll(repo: Path, env: dict[str, str]) -> Path:
     existing = phrase_dll_candidates(repo)
     if existing:
         return max(existing, key=lambda path: path.stat().st_mtime)
-    project = repo / "src" / "Phrase.Cli" / "Phrase.Cli.csproj"
+    project = repo / "src" / "Avowry.Cli" / "Avowry.Cli.csproj"
     built = run_process(
         ["dotnet", "build", str(project), "--nologo", "--disable-build-servers"],
         repo,
@@ -259,7 +259,7 @@ def find_phrase_dll(repo: Path, env: dict[str, str]) -> Path:
     existing = phrase_dll_candidates(repo)
     if existing:
         return max(existing, key=lambda path: path.stat().st_mtime)
-    raise FileNotFoundError("phrase.dll is missing after build")
+    raise FileNotFoundError("Avowry.Cli.dll is missing after build")
 
 
 def find_csproj(root: Path, suffix: str) -> Path | None:

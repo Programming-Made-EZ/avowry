@@ -21,7 +21,7 @@ public class TasksDemoReadme
         // When Steve reads the prerequisites and the five steps
         Assert.Contains(".NET 8", readme, StringComparison.Ordinal);
         Assert.Contains("curl", readme, StringComparison.Ordinal);
-        Assert.Contains("dotnet run --project src/Phrase.Cli", readme, StringComparison.Ordinal);
+        Assert.Contains("dotnet run --project src/Avowry.Cli", readme, StringComparison.Ordinal);
         Assert.Contains("demo/tasks/Tasks.avowry", readme, StringComparison.Ordinal);
         Assert.Contains("Tasks.Api", readme, StringComparison.Ordinal);
         Assert.Contains("Tasks.Specs", readme, StringComparison.Ordinal);

@@ -4,6 +4,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../../src/Avowry.Compiler/Avowry.Compiler.csproj" />
-    <ProjectReference Include="../../src/Phrase.Adapters.CSharp/Phrase.Adapters.CSharp.csproj" />
+    <ProjectReference Include="../../src/Avowry.Adapters.CSharp/Avowry.Adapters.CSharp.csproj" />
   </ItemGroup>
 </Project>

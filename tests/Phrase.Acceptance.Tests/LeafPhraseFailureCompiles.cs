@@ -1,6 +1,6 @@
 using Phrase.Acceptance.Tests.Support;
 using Avowry.Compiler;
-using Phrase.Adapters.CSharp;
+using Avowry.Adapters.CSharp;
 
 namespace Phrase.Acceptance.Tests;
 

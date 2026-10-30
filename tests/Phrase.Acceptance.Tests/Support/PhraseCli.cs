@@ -9,7 +9,7 @@ public sealed record CliRun(int ExitCode, string Stdout, string Stderr)
 }
 
 /// <summary>
-/// Runs the real phrase executable (the built phrase.dll) the way a user would,
+/// Runs the real phrase executable (the built Avowry.Cli.dll) the way a user would,
 /// with the same dotnet host settings the nested builds already use.
 /// </summary>
 public static class PhraseCli
@@ -27,12 +27,12 @@ public static class PhraseCli
     {
         var dllWriteTime = lastWriteUtc(dllPath);
         if (sourceFiles.Any(source => lastWriteUtc(source) > dllWriteTime + tolerance))
-            throw new InvalidOperationException("Avowry CLI is stale, run dotnet build src/Phrase.Cli");
+            throw new InvalidOperationException("Avowry CLI is stale, run dotnet build src/Avowry.Cli");
     }
 
     /// <summary>
     /// Each project is compared with its own built assembly: an implementation-only edit in a referenced project
-    /// refreshes that project's assembly but not phrase.dll, so one shared dll would report a false stale.
+    /// refreshes that project's assembly but not Avowry.Cli.dll, so one shared dll would report a false stale.
     /// </summary>
     public static void EnsureAllFresh(
         IEnumerable<(string DllPath, IEnumerable<string> SourceFiles)> projects,
@@ -95,7 +95,7 @@ public static class PhraseCli
             if (File.Exists(dll))
                 return dll;
 
-            var project = RepoPaths.Find("src", "Phrase.Cli", "Phrase.Cli.csproj");
+            var project = RepoPaths.Find("src", "Avowry.Cli", "Avowry.Cli.csproj");
             if (!File.Exists(project))
                 throw new FileNotFoundException($"The Avowry CLI project is not in the repo yet: {project}");
 
@@ -138,7 +138,7 @@ public static class PhraseCli
     }
 
     private static string DllPath() =>
-        RepoPaths.Find("src", "Phrase.Cli", "bin", Configuration(), "net8.0", "phrase.dll");
+        RepoPaths.Find("src", "Avowry.Cli", "bin", Configuration(), "net8.0", "Avowry.Cli.dll");
 
     private static string Configuration() =>
         AppContext.BaseDirectory.Contains($"{Path.DirectorySeparatorChar}Release{Path.DirectorySeparatorChar}", StringComparison.OrdinalIgnoreCase)
@@ -151,9 +151,9 @@ public static class PhraseCli
         var shared = new[] { RepoPaths.Find("Directory.Build.props") }.Where(File.Exists).ToArray();
         var projects = new[]
         {
-            ("Phrase.Cli", "phrase.dll"),
+            ("Avowry.Cli", "Avowry.Cli.dll"),
             ("Avowry.Compiler", "Avowry.Compiler.dll"),
-            ("Phrase.Adapters.CSharp", "Phrase.Adapters.CSharp.dll"),
+            ("Avowry.Adapters.CSharp", "Avowry.Adapters.CSharp.dll"),
         }.Select(project => (
             DllPath: Path.Combine(output, project.Item2),
             SourceFiles: SourceFiles(RepoPaths.Find("src", project.Item1)).Concat(shared)));

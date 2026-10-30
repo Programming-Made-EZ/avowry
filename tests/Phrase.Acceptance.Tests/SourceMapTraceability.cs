@@ -163,7 +163,7 @@ public class SourceMapTraceability
         Assert.NotEmpty(document.RootElement.GetProperty("buildId").GetString()!);
         var failure = document.RootElement.GetProperty("records").EnumerateArray()
             .Single(record => record.GetProperty("kind").GetString() == "failure" && record.GetProperty("name").GetString() == "EmptyTitle");
-        Assert.Equal("Tasks.avowry", failure.GetProperty("phraseFile").GetString());
+        Assert.Equal("Tasks.avowry", failure.GetProperty("sourceFile").GetString());
         Assert.Equal(failureLine, failure.GetProperty("line").GetInt32());
         Assert.All(document.RootElement.GetProperty("records").EnumerateArray()
             .Where(record => record.GetProperty("kind").GetString() is "endpoint" or "step" or "failure"),
@@ -373,7 +373,7 @@ public class SourceMapTraceability
     {
         "endpoint" => line.StartsWith($"endpoint {name} :", StringComparison.Ordinal),
         "step" => line == name,
-        "phrase" => line.StartsWith($"avow to \"{name}\"", StringComparison.Ordinal),
+        "avow" => line.StartsWith($"avow to \"{name}\"", StringComparison.Ordinal),
         "failure" => line.StartsWith("fails with ", StringComparison.Ordinal)
             && line.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries).Contains(name, StringComparer.Ordinal),
         _ => false,

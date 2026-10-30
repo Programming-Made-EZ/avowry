@@ -1,7 +1,7 @@
 {"outcome":"builds","records":[
+  {"kind":"avow","name":"check {n: Int}","endpoint":"Check","line":14},
+  {"kind":"avow","name":"reject {n: Int}","endpoint":"","line":4},
   {"kind":"endpoint","name":"Check","endpoint":"Check","line":22},
   {"kind":"failure","name":"Rejected","endpoint":"Check","line":5},
-  {"kind":"phrase","name":"check {n: Int}","endpoint":"Check","line":14},
-  {"kind":"phrase","name":"reject {n: Int}","endpoint":"","line":4},
   {"kind":"step","name":"check input.n","endpoint":"Check","line":26}
 ],"runSpecs":true}

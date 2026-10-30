@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <AssemblyName>phrase</AssemblyName>
+    <AssemblyName>Avowry.Cli</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../Avowry.Compiler/Avowry.Compiler.csproj" />
-    <ProjectReference Include="../Phrase.Adapters.CSharp/Phrase.Adapters.CSharp.csproj" />
+    <ProjectReference Include="../Avowry.Adapters.CSharp/Avowry.Adapters.CSharp.csproj" />
   </ItemGroup>
 </Project>

@@ -1,11 +1,11 @@
 {"outcome":"builds","records":[
+  {"kind":"avow","name":"reject {n: Int}","endpoint":"First","line":4},
   {"kind":"endpoint","name":"First","endpoint":"First","line":9},
   {"kind":"endpoint","name":"Second","endpoint":"Second","line":15},
   {"kind":"endpoint","name":"Third","endpoint":"Third","line":21},
   {"kind":"failure","name":"Rejected","endpoint":"First","line":5},
   {"kind":"failure","name":"Rejected","endpoint":"Second","line":5},
   {"kind":"failure","name":"Rejected","endpoint":"Third","line":5},
-  {"kind":"phrase","name":"reject {n: Int}","endpoint":"First","line":4},
   {"kind":"step","name":"reject input.n","endpoint":"First","line":13},
   {"kind":"step","name":"reject input.n","endpoint":"Second","line":19},
   {"kind":"step","name":"reject input.n","endpoint":"Third","line":25}

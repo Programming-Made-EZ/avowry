@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using Phrase.Adapters.CSharp;
+using Avowry.Adapters.CSharp;
 using Avowry.Compiler;
 
 namespace Phrase.Acceptance.Tests.Support;

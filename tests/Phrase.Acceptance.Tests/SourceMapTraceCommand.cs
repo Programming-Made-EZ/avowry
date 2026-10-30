@@ -107,6 +107,8 @@ public class SourceMapTraceCommand
     [InlineData("null-record")]
     [InlineData("missing-specLines")]
     [InlineData("missing-csFile")]
+    [InlineData("missing-sourceFile")]
+    [InlineData("old-phraseFile")]
     [InlineData("missing-map")]
     [InlineData("missing-assembly")]
     [InlineData("not-an-assembly")]
@@ -123,6 +125,7 @@ public class SourceMapTraceCommand
             "null-record" => "record",
             "missing-specLines" => "specLines",
             "missing-csFile" => "csFile",
+            "missing-sourceFile" or "old-phraseFile" => "sourceFile",
             _ => badInput,
         };
         if (badInput == "invalid-json")
@@ -142,8 +145,15 @@ public class SourceMapTraceCommand
             var records = root["records"]!.AsArray();
             if (badInput == "null-record")
                 records[0] = null;
+            else if (badInput == "old-phraseFile")
+            {
+                // A map written before the rename carries phraseFile instead of sourceFile
+                var first = records[0]!.AsObject();
+                first["phraseFile"] = first["sourceFile"]!.DeepClone();
+                first.Remove("sourceFile");
+            }
             else
-                records[0]!.AsObject().Remove(badInput == "missing-specLines" ? "specLines" : "csFile");
+                records[0]!.AsObject().Remove(badInput switch { "missing-specLines" => "specLines", "missing-sourceFile" => "sourceFile", _ => "csFile" });
             await File.WriteAllTextAsync(map, root.ToJsonString(new JsonSerializerOptions { WriteIndented = true }));
         }
 
