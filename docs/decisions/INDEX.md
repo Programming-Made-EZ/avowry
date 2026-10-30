@@ -56,6 +56,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D153](process-and-staffing.md#d153) — A lighter path for routine per-card decisions: objection windows; full Deciders for objections, one-way doors and rule changes
 - [D154](process-and-staffing.md#d154) — Claim-equals-commit and pre-ship evidence gate, a 5-card experiment (card 205 retro pick)
 - [D155](process-and-staffing.md#d155) — Every stand-down and retro opens by reviewing each previous adjustment (product owner ruling)
+- [D157](process-and-staffing.md#d157) — One acceptance criterion per red-green cycle, checked from git, a 5-card experiment (card 214 retro pick)
 
 ### benchmarks-and-measurement
 
@@ -233,3 +234,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D154](process-and-staffing.md#d154) | Claim-equals-commit and pre-ship evidence gate, a 5-card experiment (card 205 retro pick) | process-and-staffing | in force |
 | [D155](process-and-staffing.md#d155) | Every stand-down and retro opens by reviewing each previous adjustment (product owner ruling) | process-and-staffing | in force |
 | [D156](process-and-staffing.md#d156) | Card 214 task force, card text and the delivery lead's objection | process-and-staffing | applied |
+| [D157](process-and-staffing.md#d157) | One acceptance criterion per red-green cycle, checked from git, a 5-card experiment (card 214 retro pick) | process-and-staffing | in force |

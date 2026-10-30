@@ -1048,5 +1048,11 @@
     "status": "applied",
     "title": "Card 214 task force, card text and the delivery lead's objection",
     "order": 147
+  },
+  "D157": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "One acceptance criterion per red-green cycle, checked from git, a 5-card experiment (card 214 retro pick)",
+    "order": 148
   }
 }

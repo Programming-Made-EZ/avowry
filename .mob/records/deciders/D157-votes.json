@@ -1,0 +1,107 @@
+{
+ "decider": "D157",
+ "subject": "Card 214 retro process pick: enforce one acceptance criterion per red-green cycle, checked from git (5-card experiment)",
+ "proposer": "agile coach seat",
+ "result": "PASSED round 1 (three Yes, three Support-it), confirmed by the independent re-run (four Yes, two Support-it)",
+ "claude_seat_reason": "probes at 12:03 UTC show Codex, Copilot, Grok and agy without usable quota",
+ "round1": [
+  {
+   "role": "pm",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d157-pm",
+   "started_at": "2026-10-30T12:33:27Z",
+   "overall": "Yes",
+   "reply": "Yes\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d157-architect",
+   "started_at": "2026-10-30T12:33:27Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: Pick C only, defer the other six. This is minimal and keeps the D153 and D154 trials unblurred.\nP2: C is checkable from git: a \"Criterion: n\" line in each red commit body, and red and green alternating in log order. The one soft spot is that \"red\" and \"green\" commits aren't machine-labelled. The Criterion line, plus a green naming the same n, should be the unambiguous marker.\nP3: The hypothesis and metrics are measurable. Criteria per green falls from 3 to 1, and issue to first pushed green falls from 179 minutes toward under 90. The counter-metrics keep it from being gamed.\nP4: C1 and C2 are sound. The advance-red exception requires a stated reason, which avoids false positives.\nP5: C3 and C4 hang on D154. D154 has no committed gate script yet, so C4 is a manual line in the gate output and the committed record is the evidence. That is acceptable for a trial, but I'd note it.\nP6: The accountability check (\"not run\" if absent) is enforceable, and the auditor can read it from git.\nP7: Reversal is a two-way door, with no shared state.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d157-qa",
+   "started_at": "2026-10-30T12:33:28Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (pick C only): Sound. One rule, which is checkable from git, so I can write the failing test for it first.\nP2 (hypothesis): Testable. Both numbers come from git timestamps and the commit count per green.\nP3 (C1): Red-first testable. A red commit body with no \"Criterion:\" line, or with two, should fail the check.\nP4 (C2): Testable from log order. The \"first red in advance\" exception must be checked against a stated reason in the slice, or it becomes a bypass.\nP5 (C3): Weakest point. \"Pushed at once\" and the \"in-flight note\" can't be proven from git alone, so I'd check push time against the remote ref.\nP6 (C4): Risk of passing bad state. A gate line that only prints the order, with \"breach explained\" as free text, will pass a breach. The red test should be a fixture with a skipped criterion that makes the gate FAIL without an explanation line.\nP7 (metric and counter-metrics): Fine. Both are measurable and framed as evidence, not targets.\nP8 (trial scope and accountability): Fine. \"Not run\" is defined and falsifiable.\nP9 (reversibility): Fine, a two-way door.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d157-dev",
+   "started_at": "2026-10-30T12:33:28Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Picking C alone and deferring the other six is workable; one new rule is the most I can follow cleanly beside D150, D153 and D154.\nP2: The rationale matches what I live with: 800 lines of red before any green is the real pain, and one criterion per cycle fixes it.\nP3: The hypothesis is testable, but \"the next commit\" in the hypothesis is stricter than C2's \"before any red for n+1\". I read C2 as the rule.\nP4: C1 and C2 are workable if a criterion may take several red/green unit commits with doubles, each tagged \"Criterion: n\". I'll read C2 that way and will not split or merge criteria to satisfy it.\nP5: C3 is fair, since the in-flight note covers a held green without gaming.\nP6: C4 is fair as a line in the existing D154 gate, not a new gate.\nP7: The metrics are fair, and the counter-metrics are evidence only, which guards against gaming. Issue to first red could rise, and that is acceptable.\nP8: The five-card scope is aligned with D150 and D154, so the trial retro can judge it cleanly.\nP9: The accountability check is checkable from git, and the \"counts as not run\" consequence is clear.\nP10: Reversibility holds; it is a two-way door with no shared state.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d157-auditlens",
+   "started_at": "2026-10-30T12:33:28Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d157-delivery",
+   "started_at": "2026-10-30T12:33:28Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Picking C alone fits flow, because it adds no window cap and no D154 tuning, so the line restarts now.\nP2: C targets the costliest miss: about 800 lines of red before the first green, which breaks the D136 thin-slice limit.\nP3: Deferring the other six until the D153 and D154 trial retros is right, since tuning those rules mid-trial would blur what they moved.\nP4: The hypothesis is testable, and the 179-minute issue-to-first-green is a fair baseline.\nP5: C1 to C4 are light, because one body line per red and one line in the existing gate is not ceremony; I read C3 as consistent with D154.\nP6: Criteria per green and issue-to-first-green are the right measures, and the counter-metrics watch for gaming through tiny or delayed reds.\nP7: Five cards on the same window as D150 and D154 is fine, and the trial retro decides keep, revise or drop.\nP8: The Criterion lines in git log plus the gate output committed under .mob/records/ are cheap to check.\nP9: It is a two-way door, since reverting means deleting the rule text and the gate line.\n"
+  }
+ ],
+ "rerun": [
+  {
+   "role": "coach",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d157rr-coach",
+   "started_at": "2026-10-30T12:34:15Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: C1 (number the criteria, one \"Criterion: n\" line per red commit) is the smallest change that makes the existing product-owner rule checkable. It adds no new role or meeting.\nP2: C2 (red then its green before the next red) targets the costliest 214 miss, three criteria red before one green. It is sized to that miss.\nP3: C3 reuses the D154 claim-equals-commit rule and adds no new mechanism.\nP4: C4 is one line in the existing gate, not a new gate. Deferring the other six candidates until the D153 and D154 trials end keeps the process from being padded with new rules during a trial.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d157rr-architect",
+   "started_at": "2026-10-30T12:34:15Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (C1, numbered criteria and one `Criterion: n` line per red commit): Sound and minimal. It is a single greppable trailer, so git can check it without false positives.\nP2 (C2, green before the next red): Enforceable from git log order. The \"first red in advance if the slice states why\" exception is the only judgment call, so keep it narrow.\nP3 (C3, push the green at once): Reuses the D154 claim-equals-commit rule and adds no new state.\nP4 (C4, one line in the existing gate): Right size. It adds no new gate or file, only the order of Criterion lines in the existing output.\nP5 (deferring the other six candidates): Sound. Tuning D154 mid-trial would blur what it moved.\nP6 (metrics and counter-metrics): Measurable from git timestamps and commit counts. The criteria-per-green-commit metric depends on the red/green commit classification being parseable.\nP7 (trial scope and accountability check): Verifiable from the log, though \"Criterion:\" on red commits only means green commits can't be paired by trailer.\nP8 (reversibility): Two-way door as stated.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d157rr-qa",
+   "started_at": "2026-10-30T12:34:15Z",
+   "overall": "Yes",
+   "reply": "Yes\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d157rr-dev",
+   "started_at": "2026-10-30T12:34:15Z",
+   "overall": "Yes",
+   "reply": "Yes\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d157rr-auditlens",
+   "started_at": "2026-10-30T12:34:15Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: Pick C only. Deferring the other six is sound, and it avoids tuning D154 mid-trial, which would blur what D154 moved.\nP2: Hypothesis. The two measures (criteria per green, issue to first pushed green) can both be read from git.\nP3: C1 is checkable with `git log --grep`. The weak spot is that \"exactly one\" rests on a self-declared line, so a red commit could carry tests for several criteria under one label. I'd have the auditor spot-check the test names in each red commit's diff against the named criterion.\nP4: C2 is checkable from commit order. The \"first red in advance if the slice states why\" escape hatch is acceptable, but the stated reason must be in the committed slice record. Green commits should also carry a \"Criterion: n\" line, otherwise pairing a green to its red is inference.\nP5: C3 has the biggest loophole. A green held locally with an in-flight note can pass indefinitely, because git cannot show a green that was never pushed. I'd count the notes per card in the retro and treat more than one as a flag.\nP6: C4 and the accountability check are verifiable, because the gate output is committed under `.mob/records/` before the closing commit. The gate line should be generated from `git log` by the script, not typed by hand, and a card without it counts as not run.\nP7: The metrics and counter-metrics are fine as evidence rather than targets. Criteria per green is gameable by splitting criteria, so the slice record should freeze the criteria list before the first red.\nP8: Trial scope and reversibility. The 5-card window matches D150 and D154, and the change is a two-way door.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d157rr-delivery",
+   "started_at": "2026-10-30T12:34:15Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: The pick of C only is right for flow, because it targets the 800-line, ten-guard red that cost the most time on 214.\nP2: Deferring the other six keeps the line moving and adds no more rules.\nP3: The hypothesis fits D136's thin slices, since one criterion per cycle keeps each commit well under 15 files and 400 lines.\nP4: C1 to C4 are light, with one commit-body line per red and one line in the existing gate, so the ceremony is small.\nP5: The metrics are measurable from git. Issue to first red is tracked as a counter-metric, so the target can't be gamed by delaying the red.\nP6: The trial scope of 5 cards matches D150 and D154 and adds no new window.\nP7: The accountability check is clear, and C3's immediate push is what moves commit-to-live.\nP8: It is a two-way door.\n"
+  }
+ ]
+}
