@@ -21,3 +21,4 @@
 - 2026-10-30 15:59:28 UTC: the 15:57 verification run executed avowry's suite, not mob-defaults' (a cd did not take effect; 307 tests OK, not evidence for card 209); rerun in mob-defaults at e239b12 with a head check; cap 16:24 UTC.
 - 2026-10-30 17:19 UTC: architect ctx-2, card 208 slice and split (D161 lens); cap 17:44 UTC.
 - 2026-10-30 17:59 UTC: QA engineer ctx-3, fresh-probe seat gate (card 208) criterion 1 red in mob-defaults, outside-in per the slice; started about 17:54; cap 18:20 UTC. Waiting also on: the product owner's yes/no on exempting the record-order fix (card 219) from stop-the-line; until then number order.
+- 2026-10-30 18:11 UTC: QA ctx-3 done (probe gate criterion 1 red 83714f1, local in mob-defaults, pushed with its green). Now: backend developer ctx-4, unit layers and green for criterion 1; the seat writes its own line when the full suite starts; facilitator cap for the unit layers 18:41 UTC.
