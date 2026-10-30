@@ -1,0 +1,21 @@
+{
+ "card": 219,
+ "title": "The record checker accepts cards that close out of number order",
+ "status": "not started; startable under the product owner's waiver",
+ "gate_waiver": {
+  "by": "product owner",
+  "word": "waive",
+  "decision": "D162 (docs/decisions/process-and-staffing.md#d162)",
+  "scope": "this card only; ends when this card closes; no gate code change; every other card still follows the corrective-card gate",
+  "context": "D160 refused a team-voted exemption because stop-the-line is the product owner's rule; the product owner answered the open question with this waiver",
+  "recorded_at": "2026-10-30"
+ },
+ "decisions": {
+  "rule": "D159 (the change this card implements)",
+  "waiver": "D162"
+ },
+ "placement": "re-rank at the next boundary (after the probe gate's criterion 2), team's call",
+ "domain_expert": [],
+ "cycles": [],
+ "stand_downs": []
+}
