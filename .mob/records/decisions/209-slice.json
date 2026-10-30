@@ -44,6 +44,17 @@
    "condition": null,
    "raw": "Yes\n\nNO OBJECTION\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (12:48 UTC)"
+  },
+  {
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-4",
+   "started_at": "2026-10-30T12:51:37Z",
+   "reply": "OBJECTION",
+   "condition": "Before green 1, file the open point as a board line, because `removed: retro` written mid-card still drops the seat from the next cycle, a loophole in the refusal.",
+   "raw": "OBJECTION\nCONDITION: Before green 1, file the open point as a board line, because `removed: retro` written mid-card still drops the seat from the next cycle, a loophole in the refusal.\n\nSupport-it\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (12:48 UTC)"
   }
  ],
  "decision": null,
