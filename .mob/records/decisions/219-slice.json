@@ -146,8 +146,12 @@
    "raw": "Yes\nNO OBJECTION\n"
   }
  ],
- "decision": null,
- "ended_at": null,
+ "decision": {
+  "result": "adopted: SHIP AS IS in two red-green cycles, Done check 3 verified inside criterion 2's cycle; round 2 no objection from all six",
+  "slice": ".mob/records/219/turn-slice-architect.md (3b04e20, amended 37e456c)",
+  "domain_expert_slice": "no (architect ctx-2)"
+ },
+ "ended_at": "2026-10-30T23:51:19Z",
  "adopted_condition": {
   "from": "delivery lead ctx-6",
   "condition": "fold criterion 3 (the held-record fixture) into the criterion 1 or 2 cycle, or drop it",
