@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:77bc33decb4f778b5927a84dbca3cbcb9f999d8d400df5e7e135da89e27c8272 -->
+<!-- board-table-sha256:66d4111894b6c9dc569f57915a0fb9ec87925b6a222e57f44e5cb12b1cb3d76d -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -98,15 +98,15 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 76 | 214 The generated API binds its own port in acceptance tests | Done | none |
 | 77 | 209 A task force member leaves only at the retro | Ready | none |
 | 78 | 208 A seat starts only on a fresh, pinned probe, and a Claude seat only while no other model has quota | Ready | none |
-| 79 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
-| 80 | 211 A whole-team review of the mob-defaults rulings commits | Ready | none |
-| 81 | 220 The loop runner starts a corrective card while a finding blocks | Ready | none (card 205 is done) |
-| 82 | 221 The loop runs a card in the repository its Repository line names | Ready | none |
-| 83 | 222 The loop wires its retro and re-rank steps from the repository and stops when one fails | Ready | none |
-| 84 | 223 The loop takes the per-card retro from every role, each in its own context | Ready | 208 (every retro seat starts on a fresh pinned probe), 222 (the loop calls the command and stops when it fails) |
-| 85 | 224 The loop re-ranks Ready through the product manager and a Decider after every card | Ready | 208 (every re-rank seat starts on a fresh pinned probe), 222 (the loop calls the command and stops when it fails) |
-| 86 | 225 Card mode reads only role lines as the task force | Ready | none |
-| 87 | 219 The record checker accepts cards that close out of number order | Ready | none |
+| 79 | 219 The record checker accepts cards that close out of number order | Ready | none |
+| 80 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
+| 81 | 211 A whole-team review of the mob-defaults rulings commits | Ready | none |
+| 82 | 220 The loop runner starts a corrective card while a finding blocks | Ready | none (card 205 is done) |
+| 83 | 221 The loop runs a card in the repository its Repository line names | Ready | none |
+| 84 | 222 The loop wires its retro and re-rank steps from the repository and stops when one fails | Ready | none |
+| 85 | 223 The loop takes the per-card retro from every role, each in its own context | Ready | 208 (every retro seat starts on a fresh pinned probe), 222 (the loop calls the command and stops when it fails) |
+| 86 | 224 The loop re-ranks Ready through the product manager and a Decider after every card | Ready | 208 (every re-rank seat starts on a fresh pinned probe), 222 (the loop calls the command and stops when it fails) |
+| 87 | 225 Card mode reads only role lines as the task force | Ready | none |
 | 88 | 217 Acceptance tests do not starve the thread pool | Ready | none |
 | 89 | 218 A mid-card retro removal does not drop the seat before the retro | Ready | 209 (the refusal of every non-retro removal lands first; this card closes the one accepted form that still removes a seat early) |
 | 90 | 213 The checker rejects an incomplete objection window | Ready | none |
