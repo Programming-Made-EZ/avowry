@@ -2,7 +2,7 @@
  "schema": 1,
  "card": 205,
  "title": "The facilitator starts only corrective cards while a finding blocks",
- "status": "in progress (Done check 1 green; checks 2 and 3 to do)",
+ "status": "Done checks 1 to 3 met; review APPROVE (ctx-5), ship checks PASS and persona demo (ctx-6), sign-off ACCEPTED (ctx-7); closure blocked on the record-check fix (seats compared by context), in review",
  "run_repository": "Programming-Made-EZ/mob-defaults (C:/Users/ringe/mob-crosscli)",
  "corrective_for": [
   "MD-001",
@@ -150,7 +150,63 @@
     "CorrectiveGate.test_near_misses_of_the_token_do_not_count",
     "CorrectiveGate.test_a_closed_finding_named_in_the_issue_does_not_count",
     "CorrectiveGateStart.test_a_message_from_the_gate_refuses_the_card_with_exit_five_and_prints_it"
-   ]
+   ],
+   "mutation_evidence": {
+    "clone_head": "46864d0",
+    "seat": "QA engineer",
+    "context": "ctx-3",
+    "model": "claude-sonnet subagent",
+    "run_at": "2026-10-30T07:05:17Z",
+    "method": "throwaway clone of mob-defaults; each mutation applied, the named acceptance test run, the first failing line captured, the file restored and the test passing again",
+    "mutations": [
+     {
+      "mutation": "corrective_gate_message without the token-boundary lookarounds (F-0080 and XF-008 match F-008)",
+      "file": "mob_process.py",
+      "failing_line": "AssertionError: 0 != 5 (subTests F-0080 and XF-008; failures=2)",
+      "restored_passes": true
+     },
+     {
+      "mutation": "corrective_gate_message returns an empty message when no blocking finding is named",
+      "file": "mob_process.py",
+      "failing_line": "AssertionError: 0 != 5 (all 5 subTests)",
+      "restored_passes": true
+     },
+     {
+      "mutation": "corrective_gate_message matches all findings, so the closed F-009 counts",
+      "file": "mob_process.py",
+      "failing_line": "AssertionError: 0 != 5 (subTest F-009 closed; failures=1)",
+      "restored_passes": true
+     }
+    ]
+   }
+  },
+  {
+   "criterion": "205-3",
+   "acceptance_test": "tests/test_card_mode.py::test_205_3_a_card_whose_issue_cannot_be_read_is_refused_with_exit_five_failing_closed",
+   "red_commit": "none: never red, already satisfied by layers 2 and 3",
+   "guard_commit": "46864d0",
+   "mutation_evidence": {
+    "clone_head": "46864d0",
+    "seat": "QA engineer",
+    "context": "ctx-3",
+    "model": "claude-sonnet subagent",
+    "run_at": "2026-10-30T07:05:17Z",
+    "method": "throwaway clone of mob-defaults; each mutation applied, the named acceptance test run, the first failing line captured, the file restored and the test passing again",
+    "mutations": [
+     {
+      "mutation": "read_card_issue returns a body naming F-008 when gh exits non-zero",
+      "file": "facilitator.py",
+      "failing_line": "AssertionError: 0 != 5 (case gh fails; failures=1)",
+      "restored_passes": true
+     },
+     {
+      "mutation": "corrective_gate_message returns an empty message for a blank or None body",
+      "file": "mob_process.py",
+      "failing_line": "AssertionError: 0 != 5 (7 subTests; failures=7)",
+      "restored_passes": true
+     }
+    ]
+   }
   }
  ],
  "stand_downs": [
