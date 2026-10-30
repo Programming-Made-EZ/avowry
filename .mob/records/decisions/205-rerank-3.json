@@ -13,5 +13,20 @@
  "replies": [],
  "decision": null,
  "ended_at": null,
- "note": "The first D153 window; it does not count toward the D153 experiment until card 213 (the window checker) is on main."
+ "note": "The first D153 window; it does not count toward the D153 experiment until card 213 (the window checker) is on main.",
+ "attempts": [
+  {
+   "attempt": 1,
+   "result": "no usable replies: the five seats ran through claude -p in an empty folder without read access to the repository; three NO OBJECTION replies were defaults that state they did not read the proposal, two OBJECTION replies only asked for access; not counted",
+   "seats": [
+    "architect win3-architect",
+    "QA engineer win3-qa",
+    "backend developer win3-backend",
+    "independent reviewer (audit lens) win3-reviewer",
+    "delivery lead win3-delivery"
+   ],
+   "started_at": "2026-10-30T07:28:10Z",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (07:24 UTC)"
+  }
+ ]
 }
