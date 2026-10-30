@@ -4,15 +4,6 @@ using System.Net.Sockets;
 
 namespace Phrase.Acceptance.Tests.Support;
 
-/// <summary>Pending reasons for card 214's red tests. Each turns green in commit 5 and loses its Skip there.</summary>
-internal static class Card214
-{
-    public const string Red1a = "Card 214 red: Done check 1 hazard a (port taken before the API binds), turns green in commit 5";
-    public const string Red1b = "Card 214 red: Done check 1 hazard b (foreign listener reported as up), turns green in commit 5";
-    public const string Red2 = "Card 214 red: Done check 2 (the harness owns the port and reads the bound address), turns green in commit 5";
-    public const string Red3 = "Card 214 red: Done check 3 (no port reuse window left in the source), turns green in commit 5";
-}
-
 /// <summary>How a test-owned listener treats a connection.</summary>
 public enum HolderMode
 {

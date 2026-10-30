@@ -2,11 +2,12 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Phrase.Acceptance.Tests.Support;
 
 /// <summary>
-/// Builds one generated API and runs it on a free 127.0.0.1 port.
+/// Builds one generated API and runs it on 127.0.0.1 with the port left to the OS (port 0). The bound address is read from the child's own output.
 /// The recorded PID is the single <c>dotnet</c> process hosting the app.
 /// Dispose stops that PID.
 /// </summary>
@@ -14,6 +15,10 @@ public sealed class GeneratedApi : IAsyncDisposable
 {
     private static readonly TimeSpan BuildTimeout = TimeSpan.FromMinutes(3);
     internal static readonly TimeSpan DefaultStartupTimeout = TimeSpan.FromMinutes(2);
+    internal const string RequestedUrl = "http://127.0.0.1:0";
+    private static readonly TimeSpan ExitSettle = TimeSpan.FromMilliseconds(500);
+    private static readonly Regex ListeningLine = new(@"Now listening on:\s*(\S+)", RegexOptions.CultureInvariant);
+    private static readonly Regex LoopbackAddress = new(@"^http://127\.0\.0\.1:(\d{1,5})$", RegexOptions.CultureInvariant);
 
     private readonly Process _process;
     private readonly TimeSpan _startupTimeout;
@@ -21,10 +26,11 @@ public sealed class GeneratedApi : IAsyncDisposable
     private readonly object _logGate = new();
     private readonly Task _stdout;
     private readonly Task _stderr;
+    private readonly TaskCompletionSource<(Uri? Address, string? Rejected)> _reported = new(TaskCreationOptions.RunContinuationsAsynchronously);
     private int _stopped;
 
     public int Pid { get; }
-    public string BaseUrl { get; }
+    public string BaseUrl { get; private set; }
 
     public string Log
     {
@@ -35,12 +41,12 @@ public sealed class GeneratedApi : IAsyncDisposable
         }
     }
 
-    private GeneratedApi(Process process, string baseUrl, TimeSpan startupTimeout)
+    private GeneratedApi(Process process, TimeSpan startupTimeout)
     {
         _process = process;
         _startupTimeout = startupTimeout;
         Pid = process.Id;
-        BaseUrl = baseUrl;
+        BaseUrl = RequestedUrl;
         _stdout = PumpAsync(process.StandardOutput);
         _stderr = PumpAsync(process.StandardError);
     }
@@ -74,19 +80,17 @@ public sealed class GeneratedApi : IAsyncDisposable
                 throw new InvalidOperationException($"Built API assembly was not found at {dll}.{Environment.NewLine}{build.Text}");
         }
 
-        var port = FreeLoopbackPort();
-        var baseUrl = $"http://127.0.0.1:{port}";
         var psi = Prepare("dotnet", projectDir);
         psi.ArgumentList.Add(dll);
-        psi.Environment["ASPNETCORE_URLS"] = baseUrl;
+        psi.Environment["ASPNETCORE_URLS"] = "http://127.0.0.1:0";
         options?.BeforeChildStart?.Invoke(psi);
 
         GeneratedApi? api = null;
         try
         {
             var process = Process.Start(psi) ?? throw new InvalidOperationException("Could not start dotnet.");
-            api = new GeneratedApi(process, baseUrl, options?.StartupTimeout ?? DefaultStartupTimeout);
-            await api.WaitUntilListeningAsync(port);
+            api = new GeneratedApi(process, options?.StartupTimeout ?? DefaultStartupTimeout);
+            await api.WaitUntilListeningAsync();
             return api;
         }
         catch
@@ -138,29 +142,71 @@ public sealed class GeneratedApi : IAsyncDisposable
         }
     }
 
-    private async Task WaitUntilListeningAsync(int port)
+    private async Task WaitUntilListeningAsync()
     {
         using var timeout = new CancellationTokenSource(_startupTimeout);
-        while (true)
+        var exited = _process.WaitForExitAsync();
+        var asked = RequestedUrl;
+        try
         {
-            if (_process.HasExited)
+            // The child's own output says where it bound. Nothing is connected to before that line is read.
+            var first = await Task.WhenAny(_reported.Task, exited).WaitAsync(timeout.Token);
+            if (first == exited)
+                throw await ExitedAsync(asked);
+
+            var (address, rejected) = await _reported.Task.WaitAsync(timeout.Token);
+            if (rejected is not null)
             {
+                // The other pipe may still hold earlier log lines.
+                await Task.Delay(250, timeout.Token);
                 throw new InvalidOperationException(
-                    $"Generated API process {Pid} exited with code {_process.ExitCode} before listening on {BaseUrl}.{Environment.NewLine}{Log}");
+                    $"Generated API process {Pid} reported an address the harness does not accept (only http://127.0.0.1:PORT is): \"{rejected}\".{Environment.NewLine}{Log}");
             }
 
-            try
+            asked = BaseUrl = $"http://127.0.0.1:{address!.Port}";
+            while (true)
             {
-                if (await PortIsOpenAsync(port, timeout.Token))
-                    return;
+                if (_process.HasExited)
+                    throw await ExitedAsync(asked);
+                if (await CanConnectAsync(address.Port, timeout.Token))
+                    break;
                 await Task.Delay(200, timeout.Token);
             }
-            catch (OperationCanceledException)
+
+            // A child that printed its address and is already leaving can still accept a connection for a moment.
+            try
             {
-                throw new TimeoutException(
-                    $"Generated API process {Pid} did not listen on {BaseUrl} within {_startupTimeout.TotalSeconds:0} seconds.{Environment.NewLine}{Log}");
+                await exited.WaitAsync(ExitSettle, timeout.Token);
             }
+            catch (TimeoutException)
+            {
+                // Still running after the settle time.
+            }
+
+            if (_process.HasExited)
+                throw await ExitedAsync(asked);
         }
+        catch (OperationCanceledException) when (timeout.IsCancellationRequested)
+        {
+            throw new TimeoutException(
+                $"Generated API process {Pid} did not listen on {asked} within {_startupTimeout.TotalSeconds:0} seconds.{Environment.NewLine}{Log}");
+        }
+    }
+
+    private async Task<InvalidOperationException> ExitedAsync(string url)
+    {
+        // Read what the pipes still hold before the message is built.
+        try
+        {
+            await Task.WhenAll(_stdout, _stderr).WaitAsync(TimeSpan.FromSeconds(5));
+        }
+        catch (TimeoutException)
+        {
+            // A grandchild may hold the pipes open. The log so far is what there is.
+        }
+
+        return new InvalidOperationException(
+            $"Generated API process {Pid} exited with code {_process.ExitCode} before listening on {url}.{Environment.NewLine}{Log}");
     }
 
     private async Task PumpAsync(StreamReader reader)
@@ -172,6 +218,8 @@ public sealed class GeneratedApi : IAsyncDisposable
                 return;
             lock (_logGate)
                 _log.AppendLine(line);
+            if (!_reported.Task.IsCompleted && line.Contains("Now listening on:", StringComparison.Ordinal))
+                _reported.TrySetResult(TryParseListeningAddress(line, out var address) ? (address, null) : (null, line.Trim()));
         }
     }
 
@@ -214,6 +262,11 @@ public sealed class GeneratedApi : IAsyncDisposable
         psi.Environment["DOTNET_ROLL_FORWARD"] = "Major";
         psi.Environment["MSBUILDDISABLENODEREUSE"] = "1";
         psi.Environment.Remove("ASPNETCORE_HTTPS_PORT");
+        psi.Environment.Remove("ASPNETCORE_HTTP_PORTS");
+        psi.Environment.Remove("ASPNETCORE_HTTPS_PORTS");
+        psi.Environment.Remove("DOTNET_URLS");
+        // The listening line is logged by Microsoft.Hosting.Lifetime; keep it visible whatever the app configures.
+        psi.Environment["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information";
         foreach (var name in new[]
         {
             "MSBUILD_EXE_PATH", "MSBuildExtensionsPath", "MSBuildSDKsPath", "MSBuildLoadMicrosoftTargetsReadOnly",
@@ -224,7 +277,7 @@ public sealed class GeneratedApi : IAsyncDisposable
         return psi;
     }
 
-    private static async Task<bool> PortIsOpenAsync(int port, CancellationToken cancellationToken)
+    private static async Task<bool> CanConnectAsync(int port, CancellationToken cancellationToken)
     {
         using var client = new TcpClient();
         try
@@ -244,20 +297,18 @@ public sealed class GeneratedApi : IAsyncDisposable
         }
     }
 
-    // Reads the address from a "Now listening on:" line. A stub until the harness owns its port.
+    // Reads the address from a "Now listening on:" line. Only http://127.0.0.1:PORT with PORT from 1 to 65535 is accepted.
     internal static bool TryParseListeningAddress(string line, out Uri address)
     {
         address = null!;
-        return false;
-    }
-
-    private static int FreeLoopbackPort()
-    {
-        using var listener = new TcpListener(IPAddress.Loopback, 0);
-        listener.Start();
-        var port = ((IPEndPoint)listener.LocalEndpoint).Port;
-        listener.Stop();
-        return port;
+        var match = ListeningLine.Match(line);
+        if (!match.Success)
+            return false;
+        var url = LoopbackAddress.Match(match.Groups[1].Value);
+        if (!url.Success || !int.TryParse(url.Groups[1].Value, out var port) || port is < 1 or > 65535)
+            return false;
+        address = new Uri($"http://127.0.0.1:{port}");
+        return true;
     }
 }
 

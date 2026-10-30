@@ -28,7 +28,7 @@ public class GeneratedApiSourceScan
         "Support/DotnetCli.cs", "Support/GeneratedApi.cs", "Support/PhraseCli.cs", "TasksDemoApp.cs", "TasksDemoReadme.cs", "UsableV1.cs",
     ];
 
-    [Fact(Skip = Card214.Red3)]
+    [Fact]
     [Trait("Slice", "214")]
     public void Z_the_name_of_the_old_port_chooser_is_gone_from_cs_py_and_yml_files()
     {
@@ -37,7 +37,7 @@ public class GeneratedApiSourceScan
         Assert.True(hits.Count == 0, Describe("the old port chooser is still named", hits));
     }
 
-    [Fact(Skip = Card214.Red3)]
+    [Fact]
     [Trait("Slice", "214")]
     public void O_exactly_one_place_sets_the_url_and_its_value_is_the_literal_port_0()
     {
@@ -48,7 +48,7 @@ public class GeneratedApiSourceScan
         Assert.True(hits[0].Text.Contains("= \"http://127.0.0.1:0\";", StringComparison.Ordinal), Describe("the value must be the literal http://127.0.0.1:0", hits));
     }
 
-    [Fact(Skip = Card214.Red3)]
+    [Fact]
     [Trait("Slice", "214")]
     public void M_no_listener_is_created_outside_the_cards_own_test_file()
     {
@@ -57,7 +57,7 @@ public class GeneratedApiSourceScan
         Assert.True(hits.Count == 0, Describe("a listener is created outside the allowlist", hits));
     }
 
-    [Fact(Skip = Card214.Red3)]
+    [Fact]
     [Trait("Slice", "214")]
     public void M_no_listener_is_started_then_stopped_to_read_its_port()
     {
@@ -66,7 +66,7 @@ public class GeneratedApiSourceScan
         Assert.True(hits.Count == 0, Describe("a port is chosen by binding and releasing a listener", hits));
     }
 
-    [Fact(Skip = Card214.Red3)]
+    [Fact]
     [Trait("Slice", "214")]
     public void M_no_helper_returning_an_int_is_named_port_free_unused_or_available()
     {

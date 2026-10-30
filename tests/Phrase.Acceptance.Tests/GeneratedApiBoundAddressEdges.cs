@@ -6,7 +6,7 @@ namespace Phrase.Acceptance.Tests;
 // Layers: L4 only for the parser (plain strings, no process); L2 -> L3 -> L4 -> L5 (QuietChild) for the rest.
 public class GeneratedApiBoundAddressEdges
 {
-    [Fact(Skip = Card214.Red2)]
+    [Fact]
     [Trait("Slice", "214")]
     public void B_parser_accepts_only_an_http_127_0_0_1_address_with_a_port_from_1_to_65535()
     {
@@ -43,7 +43,7 @@ public class GeneratedApiBoundAddressEdges
         Assert.True(wrong.Count == 0, string.Join(Environment.NewLine, wrong));
     }
 
-    [Fact(Skip = Card214.Red2)]
+    [Fact]
     [Trait("Slice", "214")]
     public async Task B_a_line_on_stderr_is_found()
     {
@@ -62,7 +62,7 @@ public class GeneratedApiBoundAddressEdges
         }
     }
 
-    [Fact(Skip = Card214.Red2)]
+    [Fact]
     [Trait("Slice", "214")]
     public async Task B_a_line_after_5000_earlier_log_lines_is_found()
     {
@@ -82,7 +82,7 @@ public class GeneratedApiBoundAddressEdges
         }
     }
 
-    [Theory(Skip = Card214.Red2)]
+    [Theory]
     [Trait("Slice", "214")]
     [InlineData("http://localhost:")]
     [InlineData("http://[::1]:")]
@@ -104,7 +104,7 @@ public class GeneratedApiBoundAddressEdges
         Assert.Contains("b-log-line", error.Message);
     }
 
-    [Fact(Skip = Card214.Red2)]
+    [Fact]
     [Trait("Slice", "214")]
     public async Task E_an_address_nothing_listens_on_is_not_ready_after_the_timeout_and_names_that_url()
     {

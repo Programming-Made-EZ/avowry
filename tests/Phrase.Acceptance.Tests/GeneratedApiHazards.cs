@@ -9,7 +9,7 @@ namespace Phrase.Acceptance.Tests;
 // Every foreign listener is a Holder the test owns and releases in a finally.
 public class GeneratedApiHazards
 {
-    [Fact(Skip = Card214.Red1a)]
+    [Fact]
     [Trait("Slice", "214")]
     public async Task Hazard_a_a_port_taken_before_the_api_binds_does_not_stop_a_real_api()
     {
@@ -51,7 +51,7 @@ public class GeneratedApiHazards
         }
     }
 
-    [Theory(Skip = Card214.Red1b)]
+    [Theory]
     [Trait("Slice", "214")]
     [InlineData(HolderMode.AcceptAndClose)]
     [InlineData(HolderMode.AcceptAndKeep)]

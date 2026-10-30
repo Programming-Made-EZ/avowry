@@ -8,7 +8,7 @@ namespace Phrase.Acceptance.Tests;
 // Layers, outermost first: L2 StartAsync -> L3 readiness -> L4 pump and parser -> L5 process (a real generated API, or QuietChild).
 public class GeneratedApiBoundAddress
 {
-    [Fact(Skip = Card214.Red2)]
+    [Fact]
     [Trait("Slice", "214")]
     public async Task Z_a_child_that_never_reports_an_address_times_out_naming_pid_url_0_and_log()
     {
@@ -27,7 +27,7 @@ public class GeneratedApiBoundAddress
         Assert.Contains("z-log-line", error.Message);
     }
 
-    [Fact(Skip = Card214.Red2)]
+    [Fact]
     [Trait("Slice", "214")]
     public async Task O_one_real_api_is_started_on_port_0_and_its_base_url_is_the_address_it_reported()
     {
@@ -50,7 +50,7 @@ public class GeneratedApiBoundAddress
         Assert.True(await Probes.AnsweredAsync(api.BaseUrl), $"{api.BaseUrl} did not answer.{Environment.NewLine}{api.Log}");
     }
 
-    [Fact(Skip = Card214.Red2)]
+    [Fact]
     [Trait("Slice", "214")]
     public async Task M_an_unrelated_line_is_ignored_and_the_reported_address_is_taken_without_touching_another_listener()
     {
@@ -77,7 +77,7 @@ public class GeneratedApiBoundAddress
         }
     }
 
-    [Fact(Skip = Card214.Red2)]
+    [Fact]
     [Trait("Slice", "214")]
     public async Task I_readiness_comes_from_the_childs_own_output_before_any_connection_and_not_before_the_gate()
     {
