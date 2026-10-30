@@ -233,5 +233,12 @@
    "card_text": "2625dd3",
    "red": "d3125ea"
   }
- }
+ },
+ "observations_for_next_stand_down": [
+  {
+   "by": "facilitator, on the watchdog's instruction (2026-10-30)",
+   "observation": "the facilitator ended its turn three times today while a seat was running in the background (it reported status and stopped instead of blocking with a capped wait in the same turn); an ended turn does not wake up by itself, so the loop sat idle until the watchdog nudged it",
+   "correction_now": "while any seat runs, the facilitator blocks with capped waits in the same turn and does not end the turn"
+  }
+ ]
 }
