@@ -4,7 +4,7 @@ Standing rule: see TEAM_WORKING_AGREEMENT.md, Driver availability. A driver is n
 
 | Driver | Status | Last probe | Known reset | Note |
 |---|---|---|---|---|
-| Codex | available | 2026-10-30 02:16 UTC (codex exec, read-only, one-line prompt: answered OK, model gpt-5.6-sol) | none | author and voter; seated before any Claude context (quota-first rule, 2026-10-29) |
+| Codex | UNAVAILABLE (usage limit) | 2026-10-30 03:10 UTC (codex exec with gpt-5.6-sol: You've hit your usage limit, try again at Nov 3rd 11:16 PM; the default model in the user config now reads gpt-6.1-sol, which the account rejects, and the Decider runner pins gpt-5.6-sol) | about 2026-11-04 07:16 UTC (11:16 PM local, 2026-11-03) | quota spent by about 22 Decider seat runs in one hour (retro item); seats go to fresh Claude contexts with a recorded reason until it returns |
 | Grok | UNAVAILABLE (usage balance exhausted, API status 402 Payment Required) | 2026-10-30 02:16 UTC (one-line prompt: API error status 402, Grok Build usage balance exhausted) | unknown (no reset time given; a balance top-up or a new billing period) | reset poller re-probes every 30 minutes and writes grok-back.flag; seats rotate to Codex, then Claude contexts |
 | Claude | available (seated as a fresh-context subagent; the headless CLI is not signed in) | 2026-10-29 (claude -p: Not logged in; the subagent seat works) | none | normal rotation member by the product owner's ruling (Sonnet by default); covers role seats while Copilot and agy are out; not the sole driver while Codex and Grok have quota |
 | Copilot | UNAVAILABLE (no quota) | 2026-10-30 02:16 UTC (account endpoint: has_quota False, remaining -5 of 1500) | 2026-11-01 00:00 UTC (account endpoint) | reset poller reads quota every 30 minutes (spends none) and at the reset, and writes copilot-back.flag; holdout rows marked unavailable to rerun on return |
@@ -13,6 +13,7 @@ Standing rule: see TEAM_WORKING_AGREEMENT.md, Driver availability. A driver is n
 
 ## Events
 
+- 2026-10-30 03:10 UTC: Codex hit its usage limit (reset about 2026-11-04 07:16 UTC) after about 22 Decider seat runs in an hour; six D136 and six D137 re-vote seats returned no response. With every non-Claude model out, Decider seats are fresh Claude contexts, one per role, with the reason recorded.
 - 2026-10-30 02:58 UTC: the local model download resumed from the partial file and verified (SHA-256 match); first probe passed but slowly (prompt 8, generation 3.5 tokens per second). Trial seat limited to voter and retro feedback until the offload tuning and the trial on solved cards.
 - 2026-10-30 02:16 UTC: card-boundary probe by the new facilitator (raw output kept as probe evidence): Codex available; Copilot, Grok and agy still out. Reset pollers recreated for Copilot (30 min, quota read), Grok (30 min) and agy (60 min), each also probing at its known reset. Quota-first rule: every model with quota is seated before any Claude context. The local model download resumed from the partial file (11.5 of 21.1 GB), pausing whenever a test gate runs.
 - 2026-10-28: the product owner's staffing rule: roles over models; Claude is a normal rotation member (not sole driver while others have quota). Claude seats Copilot's roles while it is out; the headless claude CLI is not logged in, so Claude is seated as a fresh-context subagent.

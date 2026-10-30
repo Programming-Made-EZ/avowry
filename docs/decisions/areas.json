@@ -946,5 +946,17 @@
     "status": "applied",
     "title": "Mirror audit findings and make the staffing, quota-first and task-force rules checkable (failed; re-proposed as D140)",
     "order": 130
+  },
+  "D142": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Re-vote of D136 parts 2 to 4 on the final wording; flag-scoring clause amended",
+    "order": 131
+  },
+  "D143": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Re-vote of D137 on the final wording, item 7 included; item 7 amended",
+    "order": 132
   }
 }

@@ -1,0 +1,451 @@
+{
+ "decider": "D143",
+ "subject": "Re-vote of D137 on the final wording, item 7 (ZOMBIES record fields) included (findings F-003, F-006; product owner ruling: rerun)",
+ "date": "2026-10-30",
+ "clauses": [
+  "K1 red commit traits",
+  "K2 unit commits",
+  "K3 green commit",
+  "K4 pending-red job",
+  "K5 checker failures",
+  "K6 per-criterion record and git-order checks",
+  "K7 ZOMBIES record fields (item 7; amended in round 2)",
+  "K8 judgment flagged",
+  "K9 card-mode implications"
+ ],
+ "claude_seat_reason": "No non-Claude model had usable quota at 03:10 UTC: Codex usage limit until about 2026-11-04 07:16 UTC (twelve Codex seats returned no response, then probe), Copilot no quota until 2026-11-01 00:00 UTC, Grok 402 balance exhausted, agy quota until about 2026-11-01 21:25 UTC; the local model is probed but not trialled or admitted as a voter. Claude-only is acceptable when all other quota is used (product owner), every role in its own fresh context.",
+ "codex_attempt": "six Codex role-seats run at about 03:05 UTC returned no response (usage limit); not counted",
+ "task_force": {
+  "roles": [
+   "architect",
+   "QA engineer",
+   "independent auditor",
+   "delivery lead",
+   "product manager",
+   "backend developer"
+  ],
+  "domain_expert_question": "yes: backend developer added at refinement (the seat that works under the slice, flag and TDD rules every card)"
+ },
+ "round1": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "doubles sentence conflicts with item 8; exact name match; per layer"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Support-it",
+    "K3": "Yes",
+    "K4": "Support-it",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "layer path rule; assertion oracle; body extraction; doubles flag-only"
+  },
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Support-it",
+    "K3": "Yes",
+    "K4": "Support-it",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "new or changed test method; Criterion on every Pending; executable named test; print N/A reasons"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "scaffold; one N/A reason for a trivial layer"
+  },
+  {
+   "role": "product manager",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Support-it",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "per-card scope of one Pending; doubles flag-only; mechanical fails only"
+  },
+  {
+   "role": "backend developer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Support-it",
+    "K3": "Yes",
+    "K4": "Support-it",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Support-it"
+   },
+   "note": "refactor without test change; compiling skeleton; per-layer ZOMBIES; leaf layers"
+  }
+ ],
+ "round1_result": "passed: no seat at No on any clause",
+ "independent_rerun_of_round1": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Support-it",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "Pending scope; name match; doubles flag-only"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Support-it",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "assertion type; doubles flag-only; empty body"
+  },
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Support-it",
+    "K3": "Yes",
+    "K4": "Support-it",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Support-it",
+    "K9": "Yes"
+   },
+   "note": "doubles contradiction; flags to a committed file"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Support-it",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "pending-red in parallel; scaffold; shared N/A reason"
+  },
+  {
+   "role": "product manager",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "generated fields; revisit item 7 at first retro"
+  },
+  {
+   "role": "backend developer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Support-it",
+    "K4": "Support-it",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "No",
+    "K8": "Yes",
+    "K9": "Support-it"
+   },
+   "note": "item 7: six letters per commit is form over substance; doubles contradiction"
+  }
+ ],
+ "rerun_difference": "the re-run had one seat at No on item 7, so the round 1 pass was not confirmed; item 7 went to an amended round",
+ "amendment": "item 7 only: ZOMBIES per layer at the layer-completing commit, exact executable test method or N/A because with a reason (one reason may cover several letters), mechanical failures only, N/A reasons printed for the audit, coverage and doubles (leaf layers excepted) FLAGGED under item 8",
+ "round2": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Support-it",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "define executable and empty; which unit commit completes a layer"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Support-it",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "Yes",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "assertion oracle and fixtures; body extraction"
+  },
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "define empty; layer-completing commit verifiable"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Yes",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "scaffold; pending-red off the critical path"
+  },
+  {
+   "role": "product manager",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "trial fields on two cards; explicit shared N/A reason"
+  },
+  {
+   "role": "backend developer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Yes",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "amendment fixes the item 7 objection"
+  }
+ ],
+ "round2_result": "passed: no seat at No on any clause",
+ "independent_rerun": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Support-it",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "assertion definition; executable parser definition"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Support-it",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "assertion type and job red tests; define empty"
+  },
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "Support-it",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "test method change per unit commit; layer-to-commit mapping printed"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "Yes",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "checker under a minute"
+  },
+  {
+   "role": "product manager",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Yes",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": ""
+  },
+  {
+   "role": "backend developer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Support-it",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Support-it",
+    "K6": "Support-it",
+    "K7": "Yes",
+    "K8": "Yes",
+    "K9": "Yes"
+   },
+   "note": "leaf layers in item 2; per-card Pending scope; body comparison"
+  }
+ ],
+ "rerun_result": "confirmed: no seat at No on any clause; no difference in outcome",
+ "result": "PASSED on the final wording with item 7 amended"
+}

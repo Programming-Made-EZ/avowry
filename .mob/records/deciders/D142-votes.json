@@ -1,0 +1,326 @@
+{
+ "decider": "D142",
+ "subject": "Re-vote of D136 parts 2 to 4 on the final wording (findings F-002, F-006; product owner ruling: rerun)",
+ "date": "2026-10-30",
+ "clauses": [
+  "K1 Part 2 commit limits",
+  "K2 per-card limits and slice field",
+  "K3 exception kinds",
+  "K4 commit-to-live and started_at",
+  "K5 flag policy",
+  "K6 what must be flagged",
+  "K7 flag scoring (amended in round 2)",
+  "K8 retro timing"
+ ],
+ "claude_seat_reason": "No non-Claude model had usable quota at 03:10 UTC: Codex usage limit until about 2026-11-04 07:16 UTC (twelve Codex seats returned no response, then probe), Copilot no quota until 2026-11-01 00:00 UTC, Grok 402 balance exhausted, agy quota until about 2026-11-01 21:25 UTC; the local model is probed but not trialled or admitted as a voter. Claude-only is acceptable when all other quota is used (product owner), every role in its own fresh context.",
+ "codex_attempt": "six Codex role-seats (architect, QA, auditor, delivery lead, product manager, backend developer) run with decider.py at about 03:05 UTC: all returned no response (usage limit); not counted",
+ "task_force": {
+  "roles": [
+   "architect",
+   "QA engineer",
+   "independent auditor",
+   "delivery lead",
+   "product manager",
+   "backend developer"
+  ],
+  "domain_expert_question": "yes: backend developer added at refinement (the seat that works under the slice, flag and TDD rules every card)"
+ },
+ "round1": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Support-it",
+    "K2": "Yes",
+    "K3": "Support-it",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Support-it"
+   },
+   "note": "non-Card subjects escape limits; publish generated patterns; flag test detection; concurrent retro tie-break"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Support-it",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "Support-it",
+    "K8": "Support-it"
+   },
+   "note": "pattern list; pinning file; flag trait detection; push-time source"
+  },
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Support-it",
+    "K2": "Yes",
+    "K3": "Support-it",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "Support-it",
+    "K8": "Yes"
+   },
+   "note": "non-Card subjects; pinning cap; unreachable loophole; FLAGS.md never created"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Support-it",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "Yes",
+    "K8": "Support-it"
+   },
+   "note": "slice field one line; no flag note on non-visible cards; push time"
+  },
+  {
+   "role": "product manager",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Yes",
+    "K8": "Yes"
+   },
+   "note": "publish patterns before first generated use"
+  },
+  {
+   "role": "backend developer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "No",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Support-it",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "No",
+    "K8": "Yes"
+   },
+   "note": "K7 contradiction: a flag must outlive its owner card, so every flag fails once its owner card is Done"
+  }
+ ],
+ "amendment": "K7 only: PASS while the owner card or the removal card or condition is open; FAIL only when the removal card is Done and the flag is still in code, or a flag read in code is unregistered or lacks its off or on test; flags found through FeatureFlags reads; tests carry Flag=NAME and State=Off or State=On.",
+ "round2": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Support-it",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Yes"
+   },
+   "note": "condition-based removal should WARN with age; literal flag names"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Support-it",
+    "K3": "Support-it",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Yes"
+   },
+   "note": "criteria parse rule; stale FLAGS.md entry; off test compares baseline"
+  },
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Support-it",
+    "K2": "Support-it",
+    "K3": "Support-it",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "Support-it",
+    "K8": "Support-it"
+   },
+   "note": "non-Card subjects; issue body snapshot; reads outside FeatureFlags; free-text removal condition"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Support-it",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Yes",
+    "K8": "Support-it"
+   },
+   "note": "exception failure blocks only its audit line; short retro"
+  },
+  {
+   "role": "product manager",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Yes",
+    "K8": "Yes"
+   },
+   "note": ""
+  },
+  {
+   "role": "backend developer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Yes",
+    "K8": "Yes"
+   },
+   "note": "amendment fixes the round 1 objection"
+  }
+ ],
+ "round2_result": "passed: no seat at No on any clause",
+ "independent_rerun": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Yes",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Yes",
+    "K8": "Yes"
+   },
+   "note": "condition-only removal with owner Done should be PASS with a FLAG"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Yes"
+   },
+   "note": "off and on tests must not be Pending; reads outside FeatureFlags"
+  },
+  {
+   "role": "independent auditor",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Support-it",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Support-it",
+    "K8": "Yes"
+   },
+   "note": "pattern list first; FAIL reads of AVOWRY_FEATURES outside FeatureFlags"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Support-it",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Yes",
+    "K8": "Support-it"
+   },
+   "note": "optional slice field for trivial cards; retro with next card first commit"
+  },
+  {
+   "role": "product manager",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Yes",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Support-it",
+    "K7": "Yes",
+    "K8": "Yes"
+   },
+   "note": "examples of user-visible and incomplete"
+  },
+  {
+   "role": "backend developer",
+   "model": "claude-sonnet (fresh subagent context)",
+   "overall": "Support-it",
+   "clauses": {
+    "K1": "Yes",
+    "K2": "Yes",
+    "K3": "Support-it",
+    "K4": "Yes",
+    "K5": "Yes",
+    "K6": "Yes",
+    "K7": "Yes",
+    "K8": "Yes"
+   },
+   "note": "pattern list; define pinning file; condition-based removal to FLAG"
+  }
+ ],
+ "rerun_result": "confirmed: no seat at No on any clause; no difference in outcome",
+ "result": "PASSED on the final wording with K7 amended"
+}
