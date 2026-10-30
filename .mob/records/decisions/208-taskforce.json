@@ -95,5 +95,10 @@
    "raw": "",
    "note": "empty reply; not counted; re-polled"
   }
- ]
+ ],
+ "adopted_condition": {
+  "from": "product manager (signoff) ctx-7",
+  "condition": "Name the product value the card returns to (which metric moves when cards 208a–e land) and defer the 208a–e split detail and MD-002 slice placement to the architect.",
+  "status": "adopted (D145); proposal being amended by the product manager (ready) ctx-1; re-poll follows"
+ }
 }
