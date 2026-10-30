@@ -1,0 +1,107 @@
+{
+ "decider": "D165",
+ "subject": "Card 208 retro pick: a one-line intent restatement before the first red, confirmed against recorded direction; the feedback-loop lens as a standing retro section",
+ "proposer": "agile coach seat",
+ "result": "PASSED round 1 (three Yes, three Support-it), confirmed by the independent re-run (two Yes, four Support-it)",
+ "claude_seat_reason": "probes at 23:03 UTC show Codex, Copilot, Grok and agy without usable quota",
+ "round1": [
+  {
+   "role": "pm",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d165-pm",
+   "started_at": "2026-10-30T23:24:09Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: The intent line before the first red moves the owner's intent check to the cheapest point, which fits accountability to metrics and keeps the work on product value.\nP2: Why this lever and not the others: a single experiment with the deferred levers named, not rejected, matches task-force driven development.\nP3: The hypothesis (intent-caused corrections after review fall from 1 per card to 0) is falsifiable and measurable from git, with the counter-metrics kept as evidence rather than targets.\nP4: C1-C4 add one sentence to an existing record, with a 30-minute cap on waiting for the owner and no new seat or meeting, so it doesn't over-specify up front (VISION.md ruling 6).\nP5: The trial runs for 3 cards, and the trial retro decides keep, revise or drop, so removals happen only at the retro.\nP6: The accountability check treats a criterion without an intent line as not run, which the auditor tick may FAIL, so an open FAIL stops the line.\nP7: C5 adopts the feedback-loop lens as a standing retro section and is explicitly a lens, not a second experiment, so it stays within one experiment.\nP8: C6 lists the missing loops as later candidates only and takes no action now.\nP9: The change is a two-way door with no shared state, and each role keeps its own context.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d165-architect",
+   "started_at": "2026-10-30T23:24:09Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (pick): Sound and minimal, since it puts the intent check where it is cheapest, before the red, and defers the other levers.\nP2 (C1): The trigger \"implements a finding, MD item or owner direction\" is fuzzy, so I suggest the red seat lists which criteria it judged \"no intent question\" and review spot-checks that list.\nP3 (C2): Matching against recorded D-records, issue text and blockers is a traceable test, and it avoids a false \"confirmed\" because the source must be quoted.\nP4 (C3): The 30-minute wait is a soft limit that nothing enforces, but the line is marked \"unconfirmed\" on proceeding, so a missed wait does no harm.\nP5 (C4): One sentence in the existing red record, with no new file, seat or checker rule, so there is nothing new to produce false positives.\nP6 (metric and counter-metrics): \"Intent-caused corrections\" depends on a judgment call, so the retro should record the classification rule. It is otherwise derivable from git.\nP7 (scope): Three behavioural cards in the D150 to D158 window is a small, bounded trial with a Decider decision at the end.\nP8 (accountability): Auditing from git, where a missing Intent line counts as not run, is enforceable without code.\nP9 (C5): Adopting the lens as a retro section is low cost, and framing it as a lens rather than a second experiment keeps the trial clean.\nP10 (C6): Listing the missing loops as later candidates is fine, since it commits to nothing now.\nP11 (reversibility): It is a true two-way door.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d165-qa",
+   "started_at": "2026-10-30T23:24:10Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The pick tests where intent is cheapest to check, before the red. The hypothesis is falsifiable: intent-caused corrections after review go from 1 per card to 0.\nP2: C1 and C2 can be checked mechanically, because git shows an \"Intent:\" line with a status and a source before each red commit. The weak spot is \"no intent question\". Any criterion can be marked that way, so review should sample those marks.\nP3: The metric, \"intent-caused corrections\", is a judgement call about causes. The counter-metrics (slice to first red, owner questions, unconfirmed lines, red-to-green minutes) are plain counts from git and will show whether the rule is gamed or slows work.\nP4: The scope is three cards with behavioural criteria, and the accountability check fails a criterion that lacks the line. That is enough to catch skipped runs. A trial retro decides keep, revise or drop.\nP5: The feedback-loop lens (C5) is a retro section, so it needs no test. It is fine as a lens, as long as the mob-defaults template card checks that the section is present.\nP6: The missing and slow loops (C6) are only candidates and nothing in this pick depends on them.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d165-dev",
+   "started_at": "2026-10-30T23:24:10Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: The pick is workable. One sentence before the first red costs me almost nothing, and it checks intent where a miss is cheapest.\nP2: The scope is slightly fuzzy. \"Implements a finding, MD item or owner direction\" and \"no intent question\" could be read loosely, but the opt-out is explicit and it is a trial.\nP3: C1 asks me to quote the owner and name the D-number or finding, so there is nothing to fill in vaguely. I can comply without gaming it.\nP4: The facilitator confirmation in C2 is a lookup against recorded direction, so it adds no meeting and no new seat.\nP5: In C3 the 30-minute wait with a proceed-unconfirmed fallback is fair, because it never blocks the red indefinitely and review checks that line first.\nP6: C4 adds one sentence to the existing red record, with no new file, so it fits the red/unit/green flow and the slice limits.\nP7: The metric, counter-metrics and accountability check come from git, so they can be audited. The auditor can FAIL a missing Intent line, so I won't skip it.\nP8: C5 and C6 are a lens and a list of candidates, not extra obligations on the red seat. The trial is two-way and the scope is limited to 3 cards.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d165-auditlens",
+   "started_at": "2026-10-30T23:24:10Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d165-delivery",
+   "started_at": "2026-10-30T23:24:10Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 (pick: intent line before first red): Yes. It's one sentence in the existing red record, so there's no new ceremony, and it checks intent where rework is cheapest.\nP2 (C1, C2: write the intent and have the facilitator confirm it against recorded direction): Yes. Confirming against recorded D-records costs minutes and doesn't need the owner.\nP3 (C3: 30-minute cap, then proceed marked unconfirmed): Yes. The cap keeps the line moving, though the wait could push slice-to-first-red past the 208 figure of 39 minutes, so that counter-metric needs watching.\nP4 (C4: no new file, seat or meeting; mechanical criteria exempt): Yes. This keeps each commit inside D136's 15 files and 400 lines and avoids a ceremony on every card.\nP5 (C5: feedback-loop lens as a retro section, template card): Yes, provided the card is a thin slice, since the lens adds no per-card cost.\nP6 (C6: missing and slow loops listed as later candidates): Yes. Deferring them keeps this to one experiment.\nMetric, counter-metrics, scope and accountability: Yes. A 3-card window plus the auditor tick gives a fast keep, revise or drop decision.\nReversibility: Yes. It's a two-way door, so we can restart the line now.\n"
+  }
+ ],
+ "rerun": [
+  {
+   "role": "coach",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d165rr-coach",
+   "started_at": "2026-10-30T23:24:10Z",
+   "overall": "Yes",
+   "reply": "Yes\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d165rr-architect",
+   "started_at": "2026-10-30T23:24:10Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 (Pick: intent line before first red): sound and minimal, since it adds one sentence to an existing record and no new seat, file or checker.\nP2 (Why / why not others): one experiment on the cheapest point in the loop keeps the signal attributable, and deferring the other levers is correct.\nP3 (Hypothesis and metric): intent-caused corrections after review per card, taken from git, is observable, though the trial retro should state how \"intent-caused\" is classified so it is not judged after the fact.\nP4 (C1, applicability): \"implements a finding, MD item or owner direction\" is the one fuzzy trigger, and the \"no intent question\" mark for mechanical criteria is an explicit, auditable escape that keeps false positives low.\nP5 (C2/C3, confirmation): confirming against recorded direction is traceable, and the \"unconfirmed\" status with a 30-minute cap keeps the rule from blocking work indefinitely.\nP6 (C4 and accountability check): the check is mechanical, because a missing Intent line counts as not run and an auditor can verify that from git without a new checker rule.\nP7 (Counter-metrics, scope, baseline): these are evidence rather than targets, so Goodhart pressure is limited, and the three-card window with a keep, revise or drop retro is bounded.\nP8 (C5/C6 and reversibility): the lens is a template section, not a second experiment, and the candidates are only listed; deletion is a clean two-way door.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d165rr-qa",
+   "started_at": "2026-10-30T23:24:10Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (pick and hypothesis): The pick is testable, because the target is 1 down to 0 intent-caused corrections per card. The baseline is n=1, so a 0 over three cards is weak evidence, and the retro should say so.\nP2 (C1, Intent line): A grep can check the line's presence, its owner quote and its D-number before the red commit. The auditor can FAIL a card that lacks it, so a missing line won't pass.\nP3 (C2, confirmed): \"Matches recorded direction\" is a judgement call. Requiring the source citation (D-number or issue line) in the record makes a false \"confirmed\" visible at review.\nP4 (C3, unconfirmed): The 30-minute wait and the \"unconfirmed\" marker can both be read from timestamps and the record. Review must check unconfirmed lines first, and that check should be a named step so it can't be skipped silently.\nP5 (C4, mechanical criteria): \"No intent question\" is an escape hatch that could be overused. Its count should be reported next to unconfirmed lines so the trial can show whether it is.\nP6 (metric and counter-metrics): \"Intent-caused\" must be classified from git by a fixed rule written down before the trial, or it can be reclassified afterwards. The counter-metrics are evidence only, which is fine.\nP7 (C5, C6, lens): The lens is a retro section and not a gate, so there is nothing to run red first. The missing and slow loops are candidates only, so I have no objection.\nP8 (reversibility): It is a two-way door and touches no checker or shared state.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d165rr-dev",
+   "started_at": "2026-10-30T23:24:11Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (C1, intent line before red): Workable. It is one sentence in the red record, and I can write it without gaming as long as it quotes the owner and names the D-number.\nP2 (C2, facilitator confirmation): Unambiguous. A match against recorded direction is \"confirmed\", and that costs me no waiting.\nP3 (C3, unconfirmed path): Fair. The 30-minute cap means I proceed instead of stalling, and review checks that line first.\nP4 (C4, no new file, seat or meeting; \"no intent question\" for mechanical criteria): Fits the existing slice and red flow, and mechanical criteria are not burdened.\nP5 (C5, feedback-loop lens): It is a retro section only and adds no work to my cards.\nP6 (C6, missing and slow loops): These are candidates for later picks and place no obligation on me now.\nP7 (metric, scope, accountability and reversibility): It is a three-card trial, easy to audit from git, and a two-way door. The one risk is that a paraphrased finding passes as \"intent\". Review's first-check of that line covers it.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d165rr-auditlens",
+   "started_at": "2026-10-30T23:24:11Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: Intent line before the first red is checkable from git only if the intent line is in a commit that precedes the red commit or carries an earlier timestamp. Please have the facilitator check the order, since otherwise it can be written after the fact.\nP2: The \"confirmed\" status and its cited source are a facilitator self-assertion, but they are traceable to named D-records and issue text, so an auditor can spot-check them.\nP3: The 30-minute wait cannot be verified from git alone. The \"unconfirmed\" mark and the review check on it can be, which is enough.\nP4: The rule is one sentence in the existing record, with no new file, so it is easy to verify and cheap to run.\nP5: The metric \"intent-caused corrections after review\" depends on someone classifying each correction. Require the classifier and the cited commit to be named in the retro so a pass can't be declared by relabelling.\nP6: A criterion without an Intent line counts as not run and the auditor may FAIL it. That closes the main loophole, but \"no intent question\" is a self-applied exemption, so the auditor should sample those.\nP7: The trial scope of three behavioural cards is countable from git. The word \"behavioural\" could be used to exclude cards, so the retro should list every card in the window with its classification.\nP8: The feedback-loop lens as a standing retro section is a lens only and creates no pass/fail surface. No concern.\nP9: The missing loops are candidates only and carry no obligation. No concern.\nP10: The change is reversible. The trial records are in git and nothing shared changes.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d165rr-delivery",
+   "started_at": "2026-10-30T23:24:11Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: Intent line before the first red is one sentence in the existing record. It catches the intent miss before the 69-minute correction cycle, so it is cheap against the baseline.\nP2: Facilitator confirmation against recorded D-records adds no meeting, and it is fast when the direction is already recorded.\nP3: The 30-minute cap on the red is acceptable. It sits inside the 45-minute commit-to-live median, and proceeding \"unconfirmed\" keeps the line moving.\nP4: The \"no intent question\" marker for mechanical criteria keeps the ceremony off cards that don't need it.\nP5: The metric (intent-caused corrections, target 0) comes from git, and the counter-metrics watch slice-to-first-red, so any slowdown shows up.\nP6: The feedback-loop lens is a retro section and a template line, with no per-card cost.\nP7: The missing and slow loops are deferred, so there is one experiment at a time.\nP8: The trial is limited to 3 behavioural cards and can be reverted by deleting the rule, so it is a two-way door.\n"
+  }
+ ]
+}

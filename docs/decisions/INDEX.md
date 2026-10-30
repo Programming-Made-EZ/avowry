@@ -63,6 +63,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D162](process-and-staffing.md#d162) — Product owner ruling: one-card waiver of the stop-the-line gate for card 219 (record-order fix)
 - [D163](process-and-staffing.md#d163) — Product owner clarification: balanced model rotation (least-recently-used available model first), not a rule against Claude
 - [D164](process-and-staffing.md#d164) — Correction to card 208: least-recently-used model per seat from a tracked seat-use history, replacing the per-seat ban on Claude (D163)
+- [D165](process-and-staffing.md#d165) — Intent line before the first red, confirmed against recorded direction; feedback-loop lens as a standing retro section (card 208 retro pick)
 
 ### benchmarks-and-measurement
 
@@ -248,3 +249,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D162](process-and-staffing.md#d162) | Product owner ruling: one-card waiver of the stop-the-line gate for card 219 (record-order fix) | process-and-staffing | in force |
 | [D163](process-and-staffing.md#d163) | Product owner clarification: balanced model rotation (least-recently-used available model first), not a rule against Claude | process-and-staffing | in force |
 | [D164](process-and-staffing.md#d164) | Correction to card 208: least-recently-used model per seat from a tracked seat-use history, replacing the per-seat ban on Claude (D163) | process-and-staffing | in force |
+| [D165](process-and-staffing.md#d165) | Intent line before the first red, confirmed against recorded direction; feedback-loop lens as a standing retro section (card 208 retro pick) | process-and-staffing | in force |

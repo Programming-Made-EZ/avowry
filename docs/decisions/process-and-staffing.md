@@ -534,3 +534,28 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   C5. Delivery: a correction to card 208 before it closes, not a new card; its landed commits (6af1cca, 56b3686, 832ca6a, 36f09a0) are the work corrected. Criterion 2 is rewritten, red first, then green, one criterion per cycle (D157). The 208 review (c2ecd10) findings are folded in as tests: F1 the unusable-pin branch; F2 TrueMobbing asserts the joiner's own vote; F3 a test that the seat's Claude model equals the probe's model (today tied only by key order). Which Claude model family seats use is left to the product owner.
   C6. REVERSIBILITY: two-way door. Revert by restoring the quota_first_problem gate and removing the history read; seat-use.jsonl is kept, not deleted. D163 stands.
   VOTING RULE: reply first line Yes, Support-it or No, then P1: to Pn: one line each (one per proposal point). A No names ONE fixed condition (CONDITION: ...). A reasonable, reversible condition is adopted and the proposal re-polled; a later round may not add new demands. Only an irreconcilable purpose or model conflict escalates. Independent fresh-seat re-run before recording.
+
+<a id="d165"></a>
+#### Decider D165: the card 208 retro pick (an intent line before the first red; the feedback-loop lens as a standing retro section)
+
+- Date: 2026-10-30. Proposer: agile coach seat, from the card 208 retro (docs/retros/card-208-2026-10-30.md), where all seven voices proposed the same candidate after the quota rule was built to the letter of the finding instead of the product owner's intent (corrected by D164). The feedback-loop lens is the product owner and Dispatch's proposal (.mob/records/208/retro-proposal-nested-loops.md). Seats through decider.py with the headless claude CLI, model sonnet: round 1 three Yes and three Support-it; independent re-run with the agile coach in place of the product manager: two Yes and four Support-it. Votes in .mob/records/deciders/D165-votes.json.
+- Result: PASSED. Adopted text:
+  Decider D165, the card 208 retro process pick, as an experiment
+  PICK: an intent line before the first red (the candidate all seven voices shared), confirmed by the facilitator against recorded product owner direction. Other levers are deferred, not rejected.
+  Why: card 208's criterion 2 was built to the letter of a finding, not the owner's intent. The intent arrived at review and sign-off (D163, D164) and cost a correction cycle. Check intent where it is cheapest, before the red.
+  Why not the others now: shuffled-order runs, a navigator seat and runner-stamped probe age are separate levers; one experiment only.
+  HYPOTHESIS: We believe a one-line intent restatement confirmed before the first red removes intent-miss rework. We will know when intent-caused corrections after review fall from 1 per card to 0.
+  RULE UNDER TRIAL:
+  C1. Before the first red of a criterion that implements a finding, MD item or owner direction, the red seat writes "Intent: <what the owner wants and why>" in its record, quoting the owner and naming the D-number or finding.
+  C2. The facilitator confirms it against recorded direction (D-records, issue text, blockers). A match is "confirmed"; the product owner is not needed.
+  C3. If it cannot be traced to a recorded statement it is "unconfirmed": the facilitator asks the owner one purpose question (what is wanted, not how). The red waits at most 30 minutes, then proceeds marked unconfirmed, and review checks that line first.
+  C4. One sentence in the existing red record; no new file, seat or meeting. Mechanical criteria are marked "no intent question".
+  METRIC: intent-caused corrections after review, per card, from git (target 0).
+  COUNTER-METRICS: slice to first red (208: 39 minutes); owner questions per card; unconfirmed lines per card; red-to-green minutes. Evidence, not targets.
+  TRIAL SCOPE: the next 3 cards with behavioural criteria, the window of D150 to D158. The trial retro decides keep, revise or drop by Decider.
+  ACCOUNTABILITY CHECK: per card, git shows each red's Intent line with status and source. A criterion without it counts as not run; the auditor tick may FAIL it.
+  BASELINE (card 208): 1 correction cycle after sign-off-time clarification (69 minutes red to green, about 3 h); 6 full runs of about 20 minutes; window to sign-off about 6 h.
+  C5. LENS: the team adopts the feedback-loop lens (each loop mapped by who gives feedback, latency, what the team does with it) as a standing retro section; a card puts it into the mob-defaults template (D161). A lens, not a second experiment.
+  C6. Missing loops, candidates for later picks, not this one: pairing (no live steering; Dispatch's navigator), feature (no persona demo), epic (no LLM-customer benchmark). Slow: lifecycle (owner input at sign-off), slice (pollution found by the 20-minute run).
+  REVERSIBILITY: two-way door. Delete the intent rule and the template section; no shared state, checker or earlier D-record changes.
+  VOTING RULE: reply first line Yes, Support-it or No, then P1: to Pn: one line each (one per proposal point). A No names ONE fixed condition (CONDITION: ...). A reasonable, reversible condition is adopted and the proposal re-polled; a later round may not add new demands. Only an irreconcilable purpose or model conflict escalates. Independent fresh-seat re-run before recording.

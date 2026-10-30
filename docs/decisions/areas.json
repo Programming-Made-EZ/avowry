@@ -1096,5 +1096,11 @@
     "status": "in force",
     "title": "Correction to card 208: least-recently-used model per seat from a tracked seat-use history, replacing the per-seat ban on Claude (D163)",
     "order": 155
+  },
+  "D165": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Intent line before the first red, confirmed against recorded direction; feedback-loop lens as a standing retro section (card 208 retro pick)",
+    "order": 156
   }
 }
