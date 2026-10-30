@@ -21,6 +21,16 @@
    "reply": "NO OBJECTION",
    "condition": null,
    "raw": "Yes, NO OBJECTION\n\nI read the proposal, the previous order (note 2026-10-30-6) and the board listing. I did not open the card files or the 213 issue text. The order applies the corrective-card gate as written, and it changes no record, checker or findings-file design.\n"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (12:03 UTC)",
+   "context": "win7-qa",
+   "started_at": "2026-10-30T12:39:42Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes. The order puts the four cards that correct open FAILs first, so each can be tested red first against the finding it names. 217 and 213 aren't corrective, so the gate wouldn't start them. Moving them back doesn't hide untested state.\n"
   }
  ],
  "decision": null,
