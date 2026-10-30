@@ -15,3 +15,4 @@
 - 2026-10-30 14:44 UTC: backend developer ctx-3, card 209 criterion 2 unit layers and green (units 145947b, 147a90a so far); full suite expected to start about 14:50; cap 15:15 UTC (stand-down 1 adjustment: suite start + 25 min).
 - Fri Oct 30 15:02:06 UTC 2026: backend developer ctx-3, card 209 criterion 3 full suite started; cap 15:27 UTC.
 - 2026-10-30 15:21 UTC: card 209 criteria 1 to 3 green on mob-defaults main (1bb0a83); next: reviewer ctx-4.
+- 2026-10-30 15:22 UTC: independent reviewer ctx-4, card 209 review; cap 15:50 UTC.
