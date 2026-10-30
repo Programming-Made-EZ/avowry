@@ -41,3 +41,20 @@ The behaviour is correct and the process is sound. Two small findings need a fol
 ## Domain-expert answer (boundary: after green, before ship; T2)
 
 Should an agent with different domain knowledge or context join now? **No.** The residual risk is a documentation and test-coverage gap inside the same two modules and templates that the backend developer, QA and this reviewer already cover (F1, F2). Nothing touches a trust boundary, a workflow or hook, a UI or the language. The delivery lead (ship) seat is already declared and required by D154. This answer holds on condition that F1 and F2 are fixed or explicitly deferred with a board line.
+
+## Re-check
+
+**Verdict: APPROVE.** (ctx-4, fresh context, Claude seat; reviewed mob-defaults 73026aa, 7fdb168, e239b12.)
+
+- **F1 fixed (73026aa).** `test_a_removal_without_a_passed_decider_is_refused` now uses `removed: retro` with no Decider, so only the Decider check can refuse it. Mutation in a scratch copy of e239b12 (`for r in added + left:` -> `for r in []:` in `sync_task_force`): the test FAILED (failures=1, 20.2 s); on the real code it passes (8.9 s). Reverted (scratch copy only).
+- **F2 fixed (7fdb168 red, e239b12 green).** templates/TASK_FORCE.md now says a member leaves only at the retro (`... | removed: retro | decider: D5`) and that a mid-card joiner stays until then; no `removed: cycle` remains under templates/. The red commit extends the scan in tests/test_template_removal.py to this file. Mutation: restoring `removed: cycle 3 | decider: D5` in the scratch TASK_FORCE.md made `tests.test_template_removal` FAIL (failures=2); real tree passes.
+- **Order:** red (7fdb168) precedes green (e239b12); the F1 change is test-only, as asked.
+
+### What I ran
+- `python -m unittest tests.test_template_removal` at e239b12: 6 tests, OK.
+- `python -m unittest tests.test_card_mode.TrueMobbing.test_a_removal_without_a_passed_decider_is_refused`: OK.
+- F1 and F2 mutations above in a git-archive scratch copy; nothing in C:\Users\ringe\mob-crosscli was edited.
+- Not re-run: the full suite (338 tests OK is the author's record at e239b12; the F1/F2 deltas are one test line, one scan extension and one template paragraph, all exercised above).
+
+### Domain-expert answer (boundary: after green, before ship; T2)
+Should an agent with different domain knowledge or context join now? **No.** The two findings were closed inside the same test and template files the existing seats cover; no trust boundary, workflow/hook, UI or language surface is touched. The condition I set earlier (F1 and F2 fixed or deferred) is met. The delivery lead (ship) seat stays as D154 requires.
