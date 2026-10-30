@@ -1,0 +1,105 @@
+{
+ "decider": "D153",
+ "subject": "A lighter path for routine per-card decisions (Dispatch proposal sent with the product owner's approval)",
+ "result": "PASSED round 2, confirmed by the independent re-run",
+ "round1": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Support-it",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p",
+   "overall": "No",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota",
+   "condition": "a checker rule, red first, that fails an incomplete window, in the adopting commit"
+  },
+  {
+   "role": "independent reviewer (audit lens)",
+   "model": "claude-sonnet via claude -p",
+   "overall": "No",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota",
+   "condition": "each window is a trail of separate commits: proposal, each seat reply, decision; adopted re-polls as further commits"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Support-it",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "agile coach",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Support-it",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  }
+ ],
+ "round2": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Support-it",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Support-it",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "independent reviewer (audit lens)",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Support-it",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Support-it",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "agile coach",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Support-it",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  }
+ ],
+ "independent_rerun": [
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Support-it",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Support-it",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "independent reviewer (audit lens)",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Support-it",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Support-it",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  },
+  {
+   "role": "product manager",
+   "model": "claude-sonnet via claude -p",
+   "overall": "Support-it",
+   "claude_seat_reason": "Claude seat through the headless claude CLI (decider.py sandboxed clone, model sonnet): probes at 05:46 UTC show Codex, Copilot, Grok and agy without usable quota"
+  }
+ ],
+ "rerun_result": "confirmed: every seat Support-it",
+ "note": "The QA engineer's condition was adopted in the nearest form the standing rules allow: the checker rule cannot land in the commit that records D153 (D145 C2), so it is the next card after 205 and no window counts toward the experiment until it is on main."
+}
