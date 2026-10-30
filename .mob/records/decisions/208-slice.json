@@ -146,8 +146,12 @@
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (17:13 UTC)"
   }
  ],
- "decision": null,
- "ended_at": null,
+ "decision": {
+  "result": "adopted: SPLIT; card 208 keeps the fresh-probe and quota-first-per-seat concern (three criteria); six one-concern runner cards to be filed; QA condition included (f1b9b9a); round 2 no objection from all six",
+  "slice": ".mob/records/208/turn-slice-architect.md (6bd8db2, f1b9b9a)",
+  "domain_expert_slice": "no (architect ctx-2)"
+ },
+ "ended_at": "2026-10-30T17:36:32Z",
  "attempts": [
   {
    "attempt": 1,
