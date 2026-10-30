@@ -1012,5 +1012,11 @@
     "status": "applied",
     "title": "Re-rank at the loop boundary: 205, 209, 210, 208, 211, 212",
     "order": 140
+  },
+  "D151": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Stand-down: a micro-retro at each cycle boundary within a card, replaced by the full retro at Done (amends D150)",
+    "order": 142
   }
 }

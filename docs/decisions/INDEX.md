@@ -52,6 +52,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D145](process-and-staffing.md#d145) — Findings mirroring and staffing, quota-first and task-force checker rules (Spotcheck now, Sandbox as experiment E7)
 - [D148](process-and-staffing.md#d148) — Product owner rulings: 205 to 208 confirmed corrective; priority re-evaluated at every loop boundary
 - [D150](process-and-staffing.md#d150) — Ceremonies besides the retro: Three Amigos refinement and a demo after Done as experiments; planning, backlog refinement and standup dropped
+- [D151](process-and-staffing.md#d151) — Stand-down: a micro-retro at each cycle boundary within a card, replaced by the full retro at Done (amends D150)
 
 ### benchmarks-and-measurement
 
@@ -223,3 +224,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D148](process-and-staffing.md#d148) | Product owner rulings: 205 to 208 confirmed corrective; priority re-evaluated at every loop boundary | process-and-staffing | in force |
 | [D150](process-and-staffing.md#d150) | Ceremonies besides the retro: Three Amigos refinement and a demo after Done as experiments; planning, backlog refinement and standup dropped | process-and-staffing | in force |
 | [D149](process-and-staffing.md#d149) | Re-rank at the loop boundary: 205, 209, 210, 208, 211, 212 | process-and-staffing | applied |
+| [D151](process-and-staffing.md#d151) | Stand-down: a micro-retro at each cycle boundary within a card, replaced by the full retro at Done (amends D150) | process-and-staffing | in force |

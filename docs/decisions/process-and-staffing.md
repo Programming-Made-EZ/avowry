@@ -341,3 +341,18 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 
 - Date: 2026-10-30. Proposer: product manager seat. Seats through decider.py with the headless claude CLI: architect, QA engineer, independent reviewer (audit lens), delivery lead, agile coach. Round 1: four Yes; the audit-lens reviewer No with the condition to keep the product owner order (the proposal had moved 211 ahead of 208), adopted. Round 2: all Yes. Independent re-run: all Yes. Votes in .mob/records/deciders/D149-votes.json; the re-rank note is .mob/records/reranks/2026-10-30-1.md.
 - Result: PASSED. The top of Ready is 205, 209, 210, 208, 211, 212 (applied to Rank). The D147 dependency changes stand.
+
+<a id="d151"></a>
+#### Decider D151: the stand-down, a micro-retro at each cycle boundary within a card (amends D150)
+
+- Date: 2026-10-30. Trigger: the product owner prefers a stand-down (a micro-retro) to a standup, replaced by the full retro at Done. Proposer: facilitator, on the product owner's input. Seats through decider.py with the headless claude CLI: round 1 architect, QA engineer, independent reviewer (audit lens), delivery lead, agile coach, all Support-it; independent re-run (product manager in place of the agile coach), all Support-it. Votes in .mob/records/deciders/D151-votes.json.
+- Result: PASSED. Adopted text:
+  S1 Standup stays dropped (D150 C5; the product owner prefers a stand-down).
+  S2 Stand-down at each cycle boundary within a card: KEEP AS EXPERIMENT (next 5 cards, then keep, revise or drop at that retro, like the other D150 experiments).
+  - What: at each cycle boundary within a card (after a green or refactor turn, before the next criterion or cycle starts), a few lines: what worked, what did not, ONE adjustment applied in the next cycle. Written by a seat of the card's task force in its own context (not the facilitator's), rotating among the members.
+  - Where: the card record .mob/records/NNN.json, a stand_downs list with one entry per cycle boundary (cycle, worked, did_not, adjustment, seat context), committed with that boundary's commit. It sits next to the domain-expert answer the same boundary already records.
+  - At Done: the full per-card retro takes its place; no stand-down is written at the last boundary, and the retro reads the stand-downs as input.
+  - User benefit: problems found in one cycle are fixed in the next one of the same card instead of waiting for the retro, so fewer review-fix commits and shorter cards.
+  - Metric: share of stand-down adjustments that the next cycle visibly applies (the next commit or seat record shows the change). Counter-metric: seat minutes per stand-down (target a couple of minutes, a few lines), and stand-downs that repeat the same text or say nothing.
+  - Accountability check: for a card with N cycle boundaries before Done, the record holds N-1 stand-downs, each with a non-empty adjustment and the context of a task-force seat, committed in or before the boundary's commit; none after Done; the retro file names them as input.
+  S3 The rest of D150 stands: Three Amigos refinement and the persona demo stay experiments; planning (covered by the D148 re-rank) and periodic backlog refinement stay dropped.
