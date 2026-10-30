@@ -95,5 +95,10 @@
    "raw": "",
    "note": "empty reply; not counted; re-polled"
   }
- ]
+ ],
+ "adopted_condition": {
+  "from": "QA engineer ctx-3",
+  "condition": "Add a red-able check that a probe whose evidence fails to write is refused for a mixed roster too, and name the mutation-run evidence as a gate before each green merges.",
+  "done": "slice amended f1b9b9a"
+ }
 }
