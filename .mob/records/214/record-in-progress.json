@@ -59,8 +59,29 @@
  "cycles": [
   {
    "cycle": 1,
-   "note": "the slice puts all three Done checks in one red-then-green cycle: commit 1 seams ec25197, red commits 26681e1, 1fcc793, 391828f, green commit 5 pending; the next boundary is after commit 5 and needs a domain-expert answer (T2)"
+   "note": "the slice puts all three Done checks in one red-then-green cycle: commit 1 seams ec25197, red commits 26681e1, 1fcc793, 391828f, green commit 5 pending; the next boundary is after commit 5 and needs a domain-expert answer (T2)",
+   "commits": {
+    "seams": "ec25197",
+    "red": [
+     "26681e1",
+     "1fcc793",
+     "391828f"
+    ],
+    "green": "111960d",
+    "green_5b": "afa4e40"
+   }
   }
  ],
- "stand_downs": []
+ "stand_downs": [],
+ "hash_map": {
+  "note": "commits 5 and 5b were made locally, then rebased onto the in-flight notes before the push; the commit bodies cite the local hashes, which are not on origin",
+  "a22b651": "111960d (commit 5)",
+  "3aed9dc": "afa4e40 (commit 5b)"
+ },
+ "deviations": [
+  {
+   "finding": "F-060 (audit 28)",
+   "text": "all three Done checks' red tests (about 800 lines, ten guards) were written before any green, with a single green in commit 5; the outside-in rule is one acceptance criterion at a time; raised at the next stand-down as a deviation"
+  }
+ ]
 }
