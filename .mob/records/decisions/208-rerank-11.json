@@ -122,6 +122,17 @@
    "condition": null,
    "raw": "Yes\n\nNO OBJECTION\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (23:03 UTC)"
+  },
+  {
+   "round": 2,
+   "role": "delivery lead",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "w11b-delivery",
+   "started_at": "2026-10-30T23:33:07Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "Yes\n\nNO OBJECTION\n\nBoth adopted conditions fit inside card 216's existing Done check 1. They add no new card, no new ceremony and no new demands, so D136 still holds. The line can restart.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (23:03 UTC)"
   }
  ],
  "decision": null,
