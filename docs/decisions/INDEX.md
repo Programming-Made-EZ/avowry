@@ -49,6 +49,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D137](process-and-staffing.md#d137) — Outside-in TDD under trunk-based main: the pending-test mechanism
 - [D142](process-and-staffing.md#d142) — Re-vote of D136 parts 2 to 4 on the final wording; flag-scoring clause amended
 - [D143](process-and-staffing.md#d143) — Re-vote of D137 on the final wording, item 7 included; item 7 amended
+- [D145](process-and-staffing.md#d145) — Findings mirroring and staffing, quota-first and task-force checker rules (Spotcheck now, Sandbox as experiment E7)
 
 ### benchmarks-and-measurement
 
@@ -214,3 +215,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D140](process-and-staffing.md#d140) | Findings mirroring and checker rules, re-proposal of D139 (failed; re-proposed as D141) | process-and-staffing | applied |
 | [D141](process-and-staffing.md#d141) | Findings mirroring and checker rules, second re-proposal (failed; re-proposed as D144) | process-and-staffing | applied |
 | [D144](process-and-staffing.md#d144) | Findings mirroring and checker rules, third re-proposal (failed; probe-log verification escalated) | process-and-staffing | applied |
+| [D145](process-and-staffing.md#d145) | Findings mirroring and staffing, quota-first and task-force checker rules (Spotcheck now, Sandbox as experiment E7) | process-and-staffing | in force |
