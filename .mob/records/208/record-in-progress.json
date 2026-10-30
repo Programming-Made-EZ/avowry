@@ -79,6 +79,18 @@
    "full_suite": "356 tests OK, 1 skip (18:20 to 18:39 UTC; seat-written in-flight line b3c246b, cap 18:45 met)",
    "guards": "G1, G2 mutation-proved; G3 (vacuous) dropped and replaced by two assert_not_called guards in 38075b7, mutation-proved in the green body",
    "pushed": "about 18:42 UTC"
+  },
+  {
+   "criterion": 2,
+   "repo": "mob-defaults",
+   "red": "6af1cca",
+   "units": [
+    "56b3686 (layer 1, record layer)",
+    "832ca6a (layer 2, pure rules)"
+   ],
+   "green": "36f09a0",
+   "full_suite": "first run 19:06 failed one existing test that seated a Claude member beside models with quota (now refused, as intended; the test moved the member to Codex); rerun 19:26:57: 384 tests OK, 1 skip",
+   "pushed": "about 19:48 UTC"
   }
  ],
  "stand_downs": [
