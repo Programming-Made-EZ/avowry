@@ -74,8 +74,11 @@
    "raw": "Yes\n\nNO OBJECTION\n"
   }
  ],
- "decision": null,
- "ended_at": null,
+ "decision": {
+  "result": "adopted: seven seats, ctx-1 to ctx-7, all Claude (probes 23:03 UTC); no objection from all six polled seats (the sign-off seat after one empty reply)",
+  "gate": "starts under the product owner's one-card waiver D162"
+ },
+ "ended_at": "2026-10-30T23:41:30Z",
  "attempts": [
   {
    "attempt": 1,
