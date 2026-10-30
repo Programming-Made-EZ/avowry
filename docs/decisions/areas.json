@@ -1090,5 +1090,11 @@
     "status": "in force",
     "title": "Product owner clarification: balanced model rotation (least-recently-used available model first), not a rule against Claude",
     "order": 154
+  },
+  "D164": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Correction to card 208: least-recently-used model per seat from a tracked seat-use history, replacing the per-seat ban on Claude (D163)",
+    "order": 155
   }
 }

@@ -1,0 +1,207 @@
+{
+ "decider": "D164",
+ "subject": "Correction to card 208's criterion 2: least-recently-used seating from a tracked seat-use history instead of a per-seat ban on Claude (D163)",
+ "proposer": "architect seat",
+ "result": "Round 1: five Yes or Support-it, independent reviewer No (re-run the same) with one condition: a tracked, committed, append-only seat-use history; adopted (D145). Round 2: four Yes, two Support-it; independent re-run: six Yes. PASSED as amended.",
+ "claude_seat_reason": "probes at 20:34 UTC show Codex, Copilot, Grok and agy without usable quota",
+ "round1": [
+  {
+   "role": "pm",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164-pm",
+   "started_at": "2026-10-30T20:56:55Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: LRU seating by recorded history spreads load without inventing a ratio, which fits D163's balanced rotation.\nP2: Keeping the 60-minute probe freshness and the rule that an unread probe is never read as quota stays honest about availability.\nP3: Reverting the \"Claude only once every other model is exhausted\" rule and adding nothing stricter matches D163's intent.\nP4: The seat-share metric, the target of 0 all-Claude rosters while others have quota, and the refusal counter-metric give accountability and guard against the check blocking work.\nP5: Correcting card 208 before it closes, red then green, one criterion per cycle, follows D157 and leaves no wrong rule on main under a closed card.\nP6: This is a two-way door, and the revert path (restore the gate, delete the history file) is clear.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164-architect",
+   "started_at": "2026-10-30T20:56:55Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Replacing the quota-first rule with least-recently-used seating fits D163's balanced-rotation intent, and the refusal names the older model, so it can be checked.\nP2: The 60-minute probe freshness, the \"unread probe is never read as quota\" rule, the SeatRefused text and the quota_reason field carry over unchanged, so the checker's false-positive guards stay.\nP3: Reverting the \"every other model exhausted\" rule is right, and nothing stricter than D163 is added.\nP4: The metrics fit, and the refusal and re-probe counter-metric keeps the check from blocking work unnoticed.\nP5: Correcting card 208 before it closes, one criterion per cycle and red first, is sound and matches D157.\nP6: It is a two-way door, since reverting only restores the gate and deletes the history file.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164-qa",
+   "started_at": "2026-10-30T20:56:55Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: C1 is testable red first. Seed a history where an available non-Claude model is older than Claude and assert SeatRefused naming that model. Then assert a Claude seat passes on its own LRU turn. The tie case and the empty or unreadable history file need their own red tests, and an unreadable history should refuse rather than pass.\nP2: C2 keeps the checks that already exist (60-minute freshness, an unread probe never read as quota, the SeatRefused text, quota_reason), so their current tests stay valid.\nP3: C3 is testable. Claude must be allowed when it is the oldest, and when the others are unavailable.\nP4: C4's all-Claude-roster count has to be computed from the history file, not from a roster check. The refusal counter-metric is a good guard against the check blocking work.\nP5: C5 is sound. One criterion per cycle, red then green, on the open card 208.\nP6: C6 is a clean two-way door. Reverting means restoring the gate and deleting the history file.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164-dev",
+   "started_at": "2026-10-30T20:56:55Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Workable. LRU over a recorded history needs no invented threshold, and I can comply without gaming it.\nP2: The 60-minute probe freshness, the never-read-as-quota rule, the SeatRefused text and the quota_reason field are unambiguous and carry over unchanged.\nP3: Dropping the \"Claude only once all others are exhausted\" rule matches D163's balanced-rotation intent, and nothing stricter is added.\nP4: The metrics are measurable, and the refusal/re-probe counter-metric shows whether the check blocks work.\nP5: Correcting criterion 2 inside open card 208 with red first, then green, one criterion per cycle fits D157 and leaves no wrong rule on main.\nP6: It is a two-way door. Reverting means restoring the gate and deleting the history file.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164-auditlens",
+   "started_at": "2026-10-30T20:56:56Z",
+   "overall": "No. Audit lens: the proposal cannot be verified from git alone, because the use history that drives LRU seating is only said to be \"appended at gate_seat\" and is never said to be committed.",
+   "reply": "No. Audit lens: the proposal cannot be verified from git alone, because the use history that drives LRU seating is only said to be \"appended at gate_seat\" and is never said to be committed.\n\nP1: The mechanism is sound, but if the history file is untracked or local, an auditor cannot replay the seating decisions and a team could pass while ignoring the rotation.\nP2: The probe freshness, the unread-probe rule and the SeatRefused text are kept, which is fine, but the quota_reason field is likewise not tied to a committed record.\nP3: Reverting the \"every other model exhausted\" rule matches D163, and nothing stricter is added.\nP4: The all-Claude-roster count and the seat share per model are only auditable if they are computed from committed history, which P1 leaves open.\nP5: A correction to card 208 before it closes is the right delivery, and one criterion per cycle with red tests first is checkable in git.\nP6: Reversibility is fine, but deleting the history file would also erase the audit trail, so the history should be committed and kept rather than deleted on revert.\n\nCONDITION: the seat-use history must be a tracked, committed file under .mob/records, with each gate_seat append committed alongside the card commit, and it must not be deleted on revert, so rotation compliance can be recomputed from git log alone.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164-delivery",
+   "started_at": "2026-10-30T20:56:56Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: LRU needs no invented ratio and keeps the change to one small gate rewrite.\nP2: Keeping the probe freshness, re-probe and refusal text means no rework on what already landed.\nP3: Reverting the \"every other model exhausted\" rule removes the main thing that blocks seats, which helps restart the line.\nP4: The metrics are acceptable, but they should come from the history file at no extra cost, with no new per-card reporting step.\nP5: Correcting inside card 208 is right and avoids a new card. It should stay within D136 (15 files, 400 lines), one criterion per cycle.\nP6: The two-way door is cheap, since reverting means restoring the old gate and deleting one file.\n"
+  }
+ ],
+ "round1_rerun": [
+  {
+   "role": "coach",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164rr-coach",
+   "started_at": "2026-10-30T20:56:56Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Mechanism: LRU seating matches D163's stated intent (\"seat the least-recently-used available model first\") and adds no invented number, so the task force is sized to the task.\nP2: Keeping the probe freshness, the re-probe and the refusal text avoids rework and adds no new ceremony.\nP3: Reverting the \"Claude only once the others are exhausted\" rule follows D163's \"no new strictness\" directly.\nP4: The metrics are proportionate. The counter-metric on refusals and delayed turns is the right feedback loop, and the target of 0 all-Claude rosters is clear.\nP5: Correcting card 208 before it closes, one criterion per cycle with red tests first, is lighter than opening a new card and follows D157.\nP6: The two-way door is credible, since the change is revertible by restoring the gate and deleting the history file.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164rr-architect",
+   "started_at": "2026-10-30T20:56:56Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Sound. LRU over a one-line-per-seat history is minimal, needs no invented ratio, and the refusal names the older model, so it can be checked.\nP2: Sound. Keeping the 60-minute freshness and treating an unread probe as \"cannot show availability\" avoids false positives from stale or unreadable data.\nP3: Sound. Allowing Claude on its LRU turn or when others lack quota drops the over-strict rule, and the check never blocks without a named older, available model.\nP4: Sound. The all-Claude-roster count (target 0) is a clear measure, and the refusal and re-probe counter-metric guards against the check blocking work.\nP5: Sound. Correcting criterion 2 inside open card 208 with a red-then-green cycle (D157) keeps a wrong rule from sitting on main under a closed card.\nP6: Sound. This is a two-way door, since reverting means restoring the gate and deleting the history file.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164rr-qa",
+   "started_at": "2026-10-30T20:56:56Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Yes. LRU over a recorded history can be tested red first: seat an LRU-older model and check that Claude is blocked and the refusal names that model.\nP2: Yes. The 60-minute freshness and the rule that an unread probe is never read as quota are testable. The red cases are a stale probe and an unreadable result, and each must refuse.\nP3: Yes. Reverting the exhaustion rule is testable: a green case where Claude takes its LRU turn, and another where the others lack quota.\nP4: Yes. The metrics and the refusal counter-metric are measurable from the history file. Rosters that were all-Claude while others had quota should be 0, and that can be checked from the same lines.\nP5: Yes. One criterion per cycle (D157), red then green, fits a correction to the open card 208.\nP6: Yes. It is a two-way door, and the revert path is clear.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164rr-dev",
+   "started_at": "2026-10-30T20:56:56Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: The LRU rule is workable and deterministic: pick the available model with the oldest last seating, and refuse Claude only when a different model is older.\nP2: C1 leaves the history format, the read, and a model never seated in the history unspecified. I'll treat a model with no history as oldest, which fits \"oldest\" and is testable with a double.\nP3: Keeping the 60-minute probe freshness, the rule that an unread probe is never read as quota, the SeatRefused text, and quota_reason leaves existing code and tests intact, so I can comply without gaming.\nP4: Reverting the \"only once every other model is exhausted\" rule is fair to the work, because Claude's turn or a quota shortage no longer blocks a seat.\nP5: The metrics are measurable from the history file. The refusals and re-probes counter-metric will show if the check blocks work.\nP6: Correcting 208 criterion 2 before close fits D157: a red test that an LRU-older model blocks Claude, a red test that Claude is allowed on its turn, then green, one criterion per cycle.\nP7: Reverting by restoring quota_first_problem and deleting the history file is a two-way door, so that is acceptable.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164rr-auditlens",
+   "started_at": "2026-10-30T20:56:57Z",
+   "overall": "No. The LRU rule can't be checked from git alone unless the use history is committed.",
+   "reply": "No. The LRU rule can't be checked from git alone unless the use history is committed.\n\nP1: Refusing Claude only when another model is older in the history is sound, but the check depends on a history file that git may not hold.\nP2: Keeping probe freshness and \"unread probe never counts as quota\" is fine, but probe results aren't in git, so the audit can't confirm \"available\".\nP3: Dropping the \"exhaust others first\" rule is consistent with D163 and adds nothing stricter.\nP4: The all-Claude-roster metric can only be computed if the use history is a committed, auditable record.\nP5: Fixing card 208 in place, red then green per D157, is right, and the commit sequence can be audited.\nP6: Reverting is a two-way door, but deleting the history file would erase the evidence, so it must stay in git history.\n\nCONDITION: The use history (model, role, card, time) must be a tracked file, committed with each seating or card commit and never rewritten, so that an auditor can recompute LRU and the all-Claude count from git alone.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164rr-delivery",
+   "started_at": "2026-10-30T20:56:57Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: LRU seating by recorded use history is a small mechanism with no invented ratio, and it fits one slice.\nP2: Keeping the probe freshness, the unread-probe rule, the SeatRefused text and quota_reason means no rework of landed code.\nP3: Reverting \"Claude only when others are exhausted\" and adding nothing stricter matches D163 and removes a blocker on seating.\nP4: The counter-metric of refusals, re-probes and delayed turns watches for flow loss, and the all-Claude-roster target of 0 is cheap to measure.\nP5: Correcting inside open card 208 with red then green per criterion avoids a new card's ceremony and leaves no wrong rule on main under a closed card.\nP6: It is a two-way door with a simple revert, so the risk is low and the line can restart soon.\n"
+  }
+ ],
+ "round2": [
+  {
+   "role": "pm",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164b-pm",
+   "started_at": "2026-10-30T21:05:52Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: LRU seating replaces the \"no Claude while others have quota\" rule, which matches D163's balanced rotation and adds no invented ratio.\nP2: Probe freshness, the SeatRefused detail and quota_reason carry over, so quota-first accountability stays intact.\nP3: Reverting to \"Claude only when others are exhausted\" and adding nothing stricter than D163 respects the product owner's clarification.\nP4: Seat share and all-Claude-while-others-had-quota (target 0), with refusals as the counter-metric, give accountability to metrics.\nP5: Correcting card 208 before it closes, red then green, one criterion per cycle, with F1–F3 folded in as tests, honors the open-findings-stop-the-line rule and the D157 cadence without a new card.\nP6: The change is a two-way door with the history file retained, so it is reversible.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164b-architect",
+   "started_at": "2026-10-30T21:05:52Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 (C1): The LRU rule is sound and minimal. Deriving it from an append-only file that the seat can't write to avoids any invented ratio or counter. Make the gate treat a model with no history as oldest, so a first seating can't trigger a false refusal.\nP2 (C2): Keeping the existing probe freshness, SeatRefused and quota_reason rules adds nothing new and keeps the checker's behavior unchanged.\nP3 (C3): Reverting to \"Claude only once every other model is exhausted\" matches D163 and adds no rule stricter than it.\nP4 (C4): All metrics come from seat-use.jsonl, so they can be recomputed from git. The all-Claude-while-others-had-quota count can be checked against probe data.\nP5 (C5): Correcting card 208 before it closes keeps the work small. Folding F1–F3 in as tests is enforceable, and F3 closes the key-order coupling.\nP6 (C6): This is a two-way door. The history file is kept on revert, so the audit trail survives.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164b-qa",
+   "started_at": "2026-10-30T21:05:52Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: C1's LRU rule can be tested red first. Seed seat-use.jsonl so a non-Claude model is older, expect SeatRefused naming that model, then run the same seed with the Claude model oldest and expect a pass.\nP2: C2 keeps the existing freshness and unread-probe tests, and those already have red cases.\nP3: C3 is testable in both directions. Claude seats on its LRU turn and when every other model lacks quota, and is refused otherwise.\nP4: C4's metrics come from the file, so a fixture file with an all-Claude roster can show the counter reads non-zero.\nP5: C5's F1, F2 and F3 are concrete tests, one per cycle, and each can be seen failing before the fix.\nP6: C6 is a safe rollback because the history file stays.\n\nMy one watch-item is not a condition. A missed append at gate_seat would leave the history stale without failing the gate, so I'd add a test that a seat without a history line fails the card check.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164b-dev",
+   "started_at": "2026-10-30T21:05:52Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: LRU from an append-only file is workable and unambiguous, and I can comply without gaming it because I have no write path to the history.\nP2: Keeping 60-minute probe freshness, the named SeatRefused and the quota_reason field gives me a clear, actionable refusal.\nP3: Reverting to \"Claude starts only once every other model is exhausted\" and allowing Claude its LRU turn matches D163 and adds nothing stricter.\nP4: The metrics are recomputable from git, and the refusal and re-probe counter-metric keeps the cost of the rule visible.\nP5: Correcting card 208 in place, red first, one criterion per cycle, with F1, F2 and F3 as tests, fits the D157 slice limits.\nP6: It is a two-way door, and keeping seat-use.jsonl on revert preserves the audit trail.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164b-auditlens",
+   "started_at": "2026-10-30T21:05:53Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The history is tracked and append-only, and LRU and the all-Claude count can be recomputed from git alone. This is my round-1 condition, adopted.\nP2: The 60-minute freshness, the SeatRefused fields and the quota_reason carry over unchanged. Because the probe's taken_at is recorded in each line, availability at seating time can be audited.\nP3: Reverting the \"Claude last\" rule to LRU adds nothing stricter than D163, so it is a reasonable reading of that decision.\nP4: Both metrics come from seat-use.jsonl. A residual loophole is that the facilitator writes the file, so an omitted seating would go unseen, and that gap is covered only if events.jsonl lines are also committed to compare against. I am noting this and not making it a condition.\nP5: Correcting card 208 before it closes, with red tests first and F1 to F3 folded in, is verifiable from the commit order.\nP6: Keeping seat-use.jsonl on revert preserves the audit trail, and the two-way door claim holds.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164b-delivery",
+   "started_at": "2026-10-30T21:05:53Z",
+   "overall": "Yes",
+   "reply": "Yes\nP1: C1 LRU seating from a derived, append-only seat-use.jsonl is a small, mechanical gate change and adds no ceremony to the card.\nP2: C2 keeps the existing probe-freshness and SeatRefused machinery, so nothing new is needed there.\nP3: C3 matches D163 and adds nothing stricter, so the line is not blocked.\nP4: C4 metrics come from the same file at no extra cost, and the refusal counter-metric guards against delay.\nP5: C5 corrects card 208 in place with one criterion per red/green cycle, which fits D136 and D157 and avoids a new card, so the line restarts sooner.\nP6: C6 is a two-way door and the history file is kept, so rollback is cheap.\n"
+  }
+ ],
+ "round2_rerun": [
+  {
+   "role": "coach",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164brr-coach",
+   "started_at": "2026-10-30T21:05:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: LRU seating from an append-only history replaces the quota-first rule with a simple mechanism, adds no invented ratio, and satisfies D163.\nP2: Keeping the 60-minute probe freshness, SeatRefused and quota_reason leaves the working parts of criterion 2 alone.\nP3: Reverting \"Claude only when others are exhausted\" and adding nothing stricter than D163 sizes the correction to the product owner's clarification.\nP4: Seat share and all-Claude rosters are both recomputable from seat-use.jsonl, and the refusal counter-metric covers the cost of the gate.\nP5: Correcting card 208 under D157 (one criterion per cycle, red first) avoids a new card, and folding in F1 to F3 as tests is proportionate.\nP6: It is a two-way door, and keeping the history file on revert preserves the audit trail.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164brr-architect",
+   "started_at": "2026-10-30T21:05:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: LRU over a derived append-only history is minimal and recomputable from git, with no invented ratio; sound.\nP2: Keeping probe freshness, SeatRefused and quota_reason leaves the proven guard in place, so no new false positives.\nP3: Reverting to \"Claude only once others are exhausted\" matches D163's balanced rotation and adds nothing stricter.\nP4: Both metrics fall out of seat-use.jsonl, and the counter-metrics watch for over-refusal.\nP5: Folding F1–F3 in as red-then-green tests is right, and F3 closes the key-order coupling.\nP6: Two-way door holds, because the revert path keeps seat-use.jsonl.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164brr-qa",
+   "started_at": "2026-10-30T21:05:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: LRU over `seat-use.jsonl` is testable red first, because a fixture where Claude is not oldest must produce a `SeatRefused` that names the older model.\nP2: The probe-freshness and unread-probe rules are kept, so the existing red tests still apply.\nP3: The reverted rule is permissive and adds nothing stricter than D163, so the tests are simple: a Claude turn when others lack quota passes, and a refusal happens only when another model is older.\nP4: Seat share and all-Claude rosters can be recomputed from the append-only file and git, so the metric can be checked independently.\nP5: F1, F2 and F3 become named red-first tests, one criterion per cycle, which is enough to catch the gaps the review found.\nP6: Reversal is clean and the history file is kept, so the change is safe to try.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164brr-dev",
+   "started_at": "2026-10-30T21:05:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: LRU from an append-only, facilitator-written file is deterministic and I can follow it without gaming, because I have no write path to it and the refusal names the older model.\nP2: Keeping the 60-minute probe freshness, the re-probe and the SeatRefused fields leaves the existing guard contracts unchanged, so my tests stay valid.\nP3: Reverting to \"Claude starts only once every other model is exhausted\" and adding nothing stricter than D163 leaves the rule unambiguous, and Claude taking its LRU turn is explicitly allowed.\nP4: Both metrics are recomputable from seat-use.jsonl, and the refusal and re-probe counter-metric does not set a target I could be tempted to game.\nP5: Fixing criterion 2 red first, then green, one criterion per cycle, with F1, F2 and F3 as tests is workable. The F3 test that the seat's Claude model equals the probe's model removes the key-order coupling.\nP6: The two-way door is clean because revert keeps seat-use.jsonl and restores the quota_first_problem gate.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164brr-auditlens",
+   "started_at": "2026-10-30T21:05:54Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: C1's tracked, append-only `.mob/records/seat-use.jsonl` meets my round-1 condition. Git alone can recompute LRU and the all-Claude count, and a seat has no write path to it.\nP2: C2 keeps probe freshness, the rule that an unread probe is never read as quota, and `SeatRefused` naming role, context and model, so refusals are auditable.\nP3: C3 is no stricter than D163. Claude taking its LRU turn, or any turn when others lack quota, is allowed, so it can't be gamed into a ban.\nP4: C4 takes both metrics, including the all-Claude-while-others-had-quota target of 0, from the committed file, so they can be checked independently.\nP5: C5 folds in the F1–F3 findings as red-then-green tests, one criterion per cycle. The F3 test closes the key-order coupling between the seat's Claude model and the probe's model.\nP6: C6 is a two-way door that keeps `seat-use.jsonl` on revert, so the audit trail survives a rollback.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d164brr-delivery",
+   "started_at": "2026-10-30T21:05:54Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: LRU seating from a tracked, append-only history is a thin slice. It needs no invented ratio and keeps the line moving.\nP2: The surviving probe freshness, SeatRefused and quota_reason behavior is already built, so it adds no new ceremony.\nP3: Reverting to \"Claude only when others are exhausted\" and adding nothing stricter than D163 matches the product owner's clarification.\nP4: The metrics are computed from the one file, and the counter-metrics watch for delay from refusals.\nP5: Correcting card 208 before it closes, one criterion per cycle, avoids a new card. The three review findings fit as tests inside that correction.\nP6: This is a two-way door, and keeping seat-use.jsonl on revert preserves the history.\n"
+  }
+ ]
+}

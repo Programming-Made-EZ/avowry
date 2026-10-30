@@ -62,6 +62,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D161](process-and-staffing.md#d161) — Product owner direction: lock the mob process into tooling and the mob-defaults template before product work; reports describe, not cite
 - [D162](process-and-staffing.md#d162) — Product owner ruling: one-card waiver of the stop-the-line gate for card 219 (record-order fix)
 - [D163](process-and-staffing.md#d163) — Product owner clarification: balanced model rotation (least-recently-used available model first), not a rule against Claude
+- [D164](process-and-staffing.md#d164) — Correction to card 208: least-recently-used model per seat from a tracked seat-use history, replacing the per-seat ban on Claude (D163)
 
 ### benchmarks-and-measurement
 
@@ -246,3 +247,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D161](process-and-staffing.md#d161) | Product owner direction: lock the mob process into tooling and the mob-defaults template before product work; reports describe, not cite | process-and-staffing | in force |
 | [D162](process-and-staffing.md#d162) | Product owner ruling: one-card waiver of the stop-the-line gate for card 219 (record-order fix) | process-and-staffing | in force |
 | [D163](process-and-staffing.md#d163) | Product owner clarification: balanced model rotation (least-recently-used available model first), not a rule against Claude | process-and-staffing | in force |
+| [D164](process-and-staffing.md#d164) | Correction to card 208: least-recently-used model per seat from a tracked seat-use history, replacing the per-seat ban on Claude (D163) | process-and-staffing | in force |
