@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:66d4111894b6c9dc569f57915a0fb9ec87925b6a222e57f44e5cb12b1cb3d76d -->
+<!-- board-table-sha256:7a386719c76a70cb33876a56632e5153f97f364658f143dfdc8742a6bbd98282 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -97,7 +97,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 75 | 205 The facilitator starts only corrective cards while a finding blocks | Done | none (A2, D, C and E depend on this card, in that order) |
 | 76 | 214 The generated API binds its own port in acceptance tests | Done | none |
 | 77 | 209 A task force member leaves only at the retro | Ready | none |
-| 78 | 208 A seat starts only on a fresh, pinned probe, and a Claude seat only while no other model has quota | Ready | none |
+| 78 | 208 A seat starts only on a fresh, pinned probe, and seats rotate least-recently-used across the available models | Ready | none |
 | 79 | 219 The record checker accepts cards that close out of number order | Ready | none |
 | 80 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
 | 81 | 211 A whole-team review of the mob-defaults rulings commits | Ready | none |
