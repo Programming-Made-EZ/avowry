@@ -92,6 +92,28 @@
    "context": "ctx-7",
    "model": "claude-sonnet subagent",
    "written_at": "2026-10-30T07:57:46Z"
+  },
+  {
+   "cycle": 2,
+   "boundary": "after Done check 2, green a47dd88 (card pauses for corrective card 214, re-rank note 2026-10-30-4; resumes for Done check 3)",
+   "adjustment_reviews": [
+    {
+     "adjustment": "Stand-down 1: one shared fixture helper (minimal valid tree) used by red and green; Done check 2 runs only tests.test_mob_process; the full suite runs once at the D154 pre-ship gate.",
+     "issue": "Hidden fixture dependency (run_check needs MOB.md in the temp tree) surfaced only at red, and feedback was slow (full suite about 90 s).",
+     "resolved": "partly",
+     "evidence": "Helper: minimal_tree exists in tests/test_mob_process.py (defined in red ff5b052, used there by the new acceptance test; green a47dd88 only deletes the pending marker, 1 line). Done check 2 hit no fixture surprise at red, but layers 4 and 5 did not need the helper, and the Done check 1 layer test still builds the tree inline (the helper was not back-ported). Speed: I timed python -m unittest tests.test_mob_process today at 71 tests in 44.4 s (45.0 s wall) against stand-down 1's full suite of about 90 s, so module-only runs roughly halve one loop, but I did not time the full suite myself, so the 90 s is a quoted figure and the saving is about 45 s per run, not measured end to end. Cycle time red to green: Done check 1 43b20a4 00:46:26 to 8f045e1 00:54:35 = 8 min 9 s (3 layers); Done check 2 ff5b052 01:02:18 to a47dd88 01:17:18 = 15 min 0 s (2 layers: red to layer 4 e68e6cf 5 min 29 s, layer 5 7e24576 at 01:09:13, then 8 min 5 s to green, during which the PM re-rank window 214-rerank-4 and F-054 commits landed on the same branch). Done check 2 is slower in wall clock but the gap is the re-rank interleave, not test runs, so the cycle-time effect is unknown; the per-run effect is a measured saving.",
+     "side_effects": "Good: fixture preconditions are named once, red written without rediscovering MOB.md. Bad: (1) a module-only loop cannot see anything outside tests.test_mob_process; the ci failure 41020033271 on fb13e3d (.NET acceptance suite port bind flake, F-056, card 214) is outside 213's code and predates the adjustment (07:25 UTC, before stand-down 1 at 07:57), so it is not slippage caused by it, but it shows what this loop is blind to. (2) The dev seat reported one full mob_process run failing transiently while another window file was mid-write; the shared repo tree is the test fixture for some checks, so concurrent seats can break a green run. I could not reproduce it and no ci run shows it, so cause is unconfirmed. (3) The helper adds a second place that must match the Done check 1 inline setup.",
+     "verdict": "tune"
+    }
+   ],
+   "f055": "Held for Done check 2. Done check 1 unit layers were committed inside-out (cad00f0 layer 1 run_check, def9be8 layer 2 check_windows, ee762a8 layer 3 window_errors) with no doubles recorded, which audit 24 F-055 flagged. Done check 2 went outside-in: layer 4 e68e6cf (window_errors, the consumer) first, with seat_errors patched as a named double (mock.patch.object(mob, \"seat_errors\", ...), stated in the test comment and the commit subject), then layer 5 7e24576 (seat_errors, the leaf) replacing the double with the real thing, green a47dd88 running the real chain. Remaining gap: the double is named in the test comment and subject, not in a separate record field. Done check 3 must go outside-in again (consumer layer first, collaborator patched and named in the subject, leaf layer next, green with no patch), and say in the red or first layer commit which double it expects, or state 'no doubles' explicitly.",
+   "worked": "Outside-in layering with a recorded double (layers 4 then 5, 7e24576 at most 51 lines); layer commits small; red-to-green kept a clean red (ff5b052) and a 1-line green; module-only runs took 45 s per run; helper used by the red test; every cited hash resolves and ci on main since stand-down 1 shows success for all completed runs (77faae8, 81cd5ce and earlier).",
+   "did_not": "Two MOB.md regeneration commits per check persisted (45a54ef, fa723af), a D154 counter-metric; ci for the latest pushes (fa723af, 7cc3de7) was still in progress when I wrote this, so slippage at the pre-ship gate is untested (that gate has not run yet); the pause for card 214 splits Done check 2 from Done check 3, so any drift from 214 is invisible to a module-only loop; the transient failure with a concurrently written window file remains unexplained.",
+   "adjustment": "Keep module-only runs for Done check 3, and when 213 resumes after 214 start with one full Python suite run on a clean checkout at the resumed head (pass line citing a pushed hash) before the red, so drift from card 214 and any concurrent-write flake is seen once at the start rather than first at the pre-ship gate.",
+   "seat": "Architect",
+   "context": "ctx-6",
+   "model": "claude-sonnet subagent",
+   "written_at": "2026-10-30T08:23:21Z"
   }
  ]
 }
