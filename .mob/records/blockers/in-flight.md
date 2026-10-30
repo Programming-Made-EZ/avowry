@@ -18,3 +18,4 @@
 - 2026-10-30 15:22 UTC: independent reviewer ctx-4, card 209 review; cap 15:50 UTC.
 - 2026-10-30T15:33:26Z: backend developer ctx-3, card 209 review-fix full suite started (start 15:33:26 UTC); cap 15:58:26 UTC.
 - 2026-10-30 15:56:34 UTC: facilitator verification run of the full mob-defaults suite at e239b12 (local; the developer's run ended without a summary line), log in the facilitator scratchpad; cap 16:21 UTC. F1/F2 stay unpushed until it is clean.
+- 2026-10-30 15:59:28 UTC: the 15:57 verification run executed avowry's suite, not mob-defaults' (a cd did not take effect; 307 tests OK, not evidence for card 209); rerun in mob-defaults at e239b12 with a head check; cap 16:24 UTC.
