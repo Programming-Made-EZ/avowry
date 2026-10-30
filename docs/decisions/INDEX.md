@@ -50,6 +50,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D142](process-and-staffing.md#d142) — Re-vote of D136 parts 2 to 4 on the final wording; flag-scoring clause amended
 - [D143](process-and-staffing.md#d143) — Re-vote of D137 on the final wording, item 7 included; item 7 amended
 - [D145](process-and-staffing.md#d145) — Findings mirroring and staffing, quota-first and task-force checker rules (Spotcheck now, Sandbox as experiment E7)
+- [D148](process-and-staffing.md#d148) — Product owner rulings: 205 to 208 confirmed corrective; priority re-evaluated at every loop boundary
 
 ### benchmarks-and-measurement
 
@@ -218,3 +219,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D145](process-and-staffing.md#d145) | Findings mirroring and staffing, quota-first and task-force checker rules (Spotcheck now, Sandbox as experiment E7) | process-and-staffing | in force |
 | [D146](process-and-staffing.md#d146) | Task force of card 205 (D145 card A1); slice split into cards 205, 206, 207 | process-and-staffing | applied |
 | [D147](process-and-staffing.md#d147) | Re-rank of the corrective cards under audit 18 (209, 210, 211, 208 first; 205 to 207 resume on the auditor's closures) | process-and-staffing | applied |
+| [D148](process-and-staffing.md#d148) | Product owner rulings: 205 to 208 confirmed corrective; priority re-evaluated at every loop boundary | process-and-staffing | in force |

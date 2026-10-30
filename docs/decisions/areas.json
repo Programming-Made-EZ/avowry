@@ -994,5 +994,11 @@
     "status": "applied",
     "title": "Re-rank of the corrective cards under audit 18 (209, 210, 211, 208 first; 205 to 207 resume on the auditor's closures)",
     "order": 138
+  },
+  "D148": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Product owner rulings: 205 to 208 confirmed corrective; priority re-evaluated at every loop boundary",
+    "order": 139
   }
 }
