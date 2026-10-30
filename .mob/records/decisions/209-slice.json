@@ -55,6 +55,17 @@
    "condition": "Before green 1, file the open point as a board line, because `removed: retro` written mid-card still drops the seat from the next cycle, a loophole in the refusal.",
    "raw": "OBJECTION\nCONDITION: Before green 1, file the open point as a board line, because `removed: retro` written mid-card still drops the seat from the next cycle, a loophole in the refusal.\n\nSupport-it\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (12:48 UTC)"
+  },
+  {
+   "round": 1,
+   "role": "delivery lead",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-7",
+   "started_at": "2026-10-30T12:51:37Z",
+   "reply": "OBJECTION",
+   "condition": "State in the card that the shared rule and all three cycles must land as thin commits, with no extra ceremony, within the D136 limits (15 files, 400 lines).",
+   "raw": "OBJECTION\nCONDITION: State in the card that the shared rule and all three cycles must land as thin commits, with no extra ceremony, within the D136 limits (15 files, 400 lines).\n\nVote: Support-it\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (12:48 UTC)"
   }
  ],
  "decision": null,
