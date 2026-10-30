@@ -64,5 +64,19 @@
   }
  ],
  "decision": null,
- "ended_at": null
+ "ended_at": null,
+ "attempts": [
+  {
+   "attempt": 1,
+   "role": "product manager (signoff)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-5",
+   "started_at": "2026-10-30T08:23:59Z",
+   "reply": null,
+   "condition": null,
+   "raw": "",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)",
+   "note": "empty reply from the seat; not counted; the role is polled again in the full Decider"
+  }
+ ]
 }
