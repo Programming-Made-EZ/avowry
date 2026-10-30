@@ -80,5 +80,18 @@
   }
  ],
  "decision": null,
- "ended_at": null
+ "ended_at": null,
+ "adopted_conditions": [
+  {
+   "from": "independent reviewer (audit lens)",
+   "condition": "file the open point (mid-card 'removed: retro' drops the seat at the next cycle) as a board card before green 1",
+   "done": "card 218 filed (issue 218)"
+  },
+  {
+   "from": "delivery lead",
+   "condition": "state in the card that the shared rule and all three cycles land as thin commits within D136, no extra ceremony",
+   "done": "card 209 Context line (issue edit, archived in this commit)"
+  }
+ ],
+ "card_text_fixes": "card 209 test references corrected (879, 1069, 1086, 1096, 1361; 914 was wrong), test rewrites moved to criterion 1's green, two red cases added, guard note; written by the product manager (ready) ctx-1"
 }
