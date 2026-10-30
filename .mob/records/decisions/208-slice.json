@@ -122,6 +122,17 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nSupport-it. The amendment meets the adopted condition. Criterion 2 case E and the layer table now cover an evidence-write failure for mixed and all-Claude rosters. The mutation-run output is required in each green body before push, so git can verify it. I found no loophole.\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (17:13 UTC)"
+  },
+  {
+   "round": 2,
+   "role": "delivery lead",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-6",
+   "started_at": "2026-10-30T17:35:15Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes. The amendment adds one E case and a body-text gate on three greens. Commit sizes stay inside the D136 limits. The mutation-run output is pasted text, not a new ceremony step.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (17:13 UTC)"
   }
  ],
  "decision": null,
