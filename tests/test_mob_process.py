@@ -511,7 +511,6 @@ jobs:
     # Card 213 Done check 1, ZOMBIES: Z (no decisions folder, empty folder: born-green guard), O (one complete window passes: born-green guard),
     # M (several windows, only the incomplete one is named), B (category outside the closed L1 list, different capitals, missing or empty ended_at),
     # I (the message names the file and the field). E (invalid JSON) and S are left to later increments. The real windows must also pass (born-green guard).
-    @unittest.skip('PENDING(213-1)')
     def test_window_files_need_a_closed_list_category_and_an_end_time(self):
         (self.root / "MOB.md").write_bytes(mob.render_mob(self.root, [], self.git).encode("utf-8"))
         def check():
