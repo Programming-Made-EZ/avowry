@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:e68ff5c304711a6842ffb4c09604eddb7c8cafe778663c7f07121742a6d495a2 -->
+<!-- board-table-sha256:969640d6a3a2430e2edc7382a50ac529d22e46a0d09d5727d76e4225bae84ef5 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -97,9 +97,9 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 75 | 205 The facilitator starts only corrective cards while a finding blocks | Done | none (A2, D, C and E depend on this card, in that order) |
 | 76 | 214 The generated API binds its own port in acceptance tests | Done | none |
 | 77 | 209 A task force member leaves only at the retro | Ready | none |
-| 78 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
-| 79 | 219 The record checker accepts cards that close out of number order | Ready | none |
-| 80 | 208 The loop runner drives Avowry cards under today's gates | Ready | none |
+| 78 | 208 The loop runner drives Avowry cards under today's gates | Ready | none |
+| 79 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
+| 80 | 219 The record checker accepts cards that close out of number order | Ready | none |
 | 81 | 211 A whole-team review of the mob-defaults rulings commits | Ready | none |
 | 82 | 217 Acceptance tests do not starve the thread pool | Ready | none |
 | 83 | 218 A mid-card retro removal does not drop the seat before the retro | Ready | 209 (the refusal of every non-retro removal lands first; this card closes the one accepted form that still removes a seat early) |
