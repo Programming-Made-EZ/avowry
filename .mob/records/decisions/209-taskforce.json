@@ -73,6 +73,9 @@
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (12:03 UTC)"
   }
  ],
- "decision": null,
- "ended_at": null
+ "decision": {
+  "result": "adopted: no objection from all six polled seats (every declared role, F-054)",
+  "task_force": "seven roles, ctx-1 to ctx-7, all Claude (probes 12:03 UTC)"
+ },
+ "ended_at": "2026-10-30T12:46:32Z"
 }
