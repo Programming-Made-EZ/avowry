@@ -83,5 +83,13 @@
    "finding": "F-060 (audit 28)",
    "text": "all three Done checks' red tests (about 800 lines, ten guards) were written before any green, with a single green in commit 5; the outside-in rule is one acceptance criterion at a time; raised at the next stand-down as a deviation"
   }
+ ],
+ "seat_attempts": [
+  {
+   "role": "independent reviewer",
+   "context": "ctx-4 (attempt 1)",
+   "started": "about 11:06 UTC",
+   "result": "stopped by the facilitator before any output or commit: started on the 09:18 probes, over 60 minutes old (F-040 guardrail); re-probed 11:07 UTC and re-seated in a fresh context"
+  }
  ]
 }
