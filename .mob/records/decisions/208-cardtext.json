@@ -67,6 +67,17 @@
    "reply": null,
    "raw": "",
    "note": "empty or without the window answer line; not counted; re-polled"
+  },
+  {
+   "attempt": 1,
+   "role": "delivery lead",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (17:13 UTC)",
+   "context": "w-208-cardtext-delivery",
+   "started_at": "2026-10-30T17:42:00Z",
+   "reply": null,
+   "raw": "Yes\n",
+   "note": "empty or without the window answer line; not counted; re-polled"
   }
  ]
 }
