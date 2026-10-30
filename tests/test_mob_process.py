@@ -493,6 +493,15 @@ jobs:
         # Then the independent done-list invariant still fails exactly
         self.assertEqual(["MOB.md done list does not equal record and legacy cards"], errors)
 
+    # Shared helper (card 213 stand-down): a minimal valid tree (MOB.md as in the Done check 1 test, an empty decisions folder), optionally one complete window.
+    def minimal_tree(self, window=None, **fields):
+        (self.root / "MOB.md").write_bytes(mob.render_mob(self.root, [], self.git).encode("utf-8"))
+        folder = self.root / ".mob/records/decisions"; folder.mkdir(parents=True, exist_ok=True)
+        if window is None: return
+        seat = {"model": "m", "context": "c", "started_at": "2026-10-30T07:30:05Z", "reply": "NO OBJECTION", "condition": None, "raw": "NO OBJECTION", "probe_reference": "p"}
+        data = {"window": window, "category": "slice decision", "ended_at": "2026-10-30T07:38:24Z", "replies": [dict(seat, role="architect"), dict(seat, role="QA engineer")]}
+        data.update(fields); (folder / f"{window}.json").write_text(json.dumps(data), encoding="utf-8")
+
     # Card 213 unit layer 1 (D153 L3b), ZOMBIES: Z (no decisions folder: run_check passes, covered by the existing tests), O (one bad window makes run_check return 1),
     # M (a second incomplete window is also reported), B (the error line is an ::error::mob-process: line), I (the line names the file and the field).
     # E: N/A because invalid JSON is later work. S: N/A because nothing simpler exists.
@@ -541,6 +550,46 @@ jobs:
                 code, text = check(); (self.root / ".mob/records/decisions" / f"{name}.json").unlink()
                 self.assertEqual(1, code); self.assertTrue(any(name in x and field in x for x in text.splitlines()), text)
                 self.assertNotIn("301-ok", text)
+
+
+    # Card 213 Done check 2 (D153 L3b), ZOMBIES: Z (a seat with all fields and an empty replies list: born-green guards), O (one complete window passes: born-green guard),
+    # M (two seats, one defective: only that seat is named), B (model, context, reply, probe_reference each missing or empty; a reply outside NO OBJECTION/OBJECTION; OBJECTION with an empty condition;
+    # an OBJECTION with a condition passes: guard; attempt-1 entries in an attempts list are not replies: guard; the real windows pass: guard),
+    # E (a seat without a reply entry is named with its own field), I (the error line names the file, the seat and the field). S: N/A because nothing simpler exists.
+    @unittest.skip('PENDING(213-2)')
+    def test_every_seat_in_a_window_needs_model_context_answer_and_probe_reference(self):
+        def check():
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out): code = mob.run_check(self.root, [], git=self.git)
+            return code, out.getvalue()
+        path = self.root / ".mob/records/decisions/340-seats.json"
+        # Given a complete window (guard), then an objection that carries a condition and an attempts entry that is not a reply (guards), the check passes
+        self.minimal_tree("340-seats"); self.assertEqual(0, check()[0])
+        data = json.loads(path.read_text(encoding="utf-8")); data["replies"][1].update(reply="OBJECTION", condition="adopt X")
+        data["attempts"] = [{"attempt": 1, "result": "not counted", "seats": ["architect a"], "started_at": "t"}]
+        path.write_text(json.dumps(data), encoding="utf-8"); self.assertEqual(0, check()[0])
+        # And the real windows of this repository pass (guard)
+        for real in (Path(__file__).resolve().parents[1] / ".mob/records/decisions").glob("*.json"):
+            (self.root / ".mob/records/decisions" / real.name).write_bytes(real.read_bytes())
+        self.assertEqual(0, check()[0])
+        for real in (Path(__file__).resolve().parents[1] / ".mob/records/decisions").glob("*.json"): (self.root / ".mob/records/decisions" / real.name).unlink()
+        # When one seat misses or empties a field, answers wrongly, or objects without a condition
+        absent = object()
+        cases = [(f"{how} {field}", {field: value}, field) for field in ("model", "context", "reply", "probe_reference") for how, value in (("empty", ""), ("null", None), ("absent", absent))]
+        cases += [("answer outside the two", {"reply": "MAYBE"}, "reply"), ("objection without condition", {"reply": "OBJECTION", "condition": None}, "condition"),
+                  ("objection with empty condition", {"reply": "OBJECTION", "condition": ""}, "condition")]
+        for label, change, field in cases:
+            with self.subTest(label):
+                base = json.loads(path.read_text(encoding="utf-8")); base["attempts"] = []; base["replies"][1] = dict(base["replies"][1], reply="NO OBJECTION", condition=None)
+                for key, value in change.items():
+                    if value is absent: del base["replies"][1][key]
+                    else: base["replies"][1][key] = value
+                path.write_text(json.dumps(base), encoding="utf-8")
+                # Then the check fails, and the error line names the file, only the defective seat and the field
+                code, text = check(); lines = [x for x in text.splitlines() if x.startswith("::error::mob-process:")]
+                self.assertEqual(1, code)
+                self.assertTrue(any("340-seats.json" in x and "QA engineer" in x and field in x for x in lines), text)
+                self.assertFalse(any("architect" in x for x in lines), text)
 
 WINDOW_CATEGORIES = ("task-force declaration", "slice decision", "loop-boundary re-rank", "card-text or declaration fix", "mid-card addition")
 
