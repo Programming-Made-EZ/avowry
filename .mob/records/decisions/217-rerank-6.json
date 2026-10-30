@@ -21,6 +21,16 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nYes. 217 is a bug card that blocks 214's ship gate, and the re-rank only reorders cards. The record is minimal and the condition is stated. I could not check the open-FAIL gate, because `.mob/audits/last.json` is missing from this copy. The proposal says 217 is a response to F-062, so the gate should allow it to start.\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:07 UTC)"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "win6-qa",
+   "started_at": "2026-10-30T11:18:10Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes. A flaky suite can't reliably catch the violations it names. Card 217 has three Done checks, and the starvation check is written to be shown red first. Its ZOMBIES checks are written by QA at ready.\n\nI couldn't find `.mob/audits/last.json` in this copy, so I didn't check open_fails against the facilitator gate.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:07 UTC)"
   }
  ],
  "decision": null,
