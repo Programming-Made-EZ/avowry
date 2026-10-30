@@ -504,3 +504,11 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - Date: 2026-10-30. Recorded as a decision record so that rule-text changes can cite it (D145 C2). Not a team vote: product owner direction.
 - Direction 1 (the goal behind the current order), in the product owner's words: "the mob process needs fixing because it keeps drifting. once we can lock it down and save it to the default template then we can build anything safely." Process-first is intentional: the goal is a locked-down process, enforced by tooling and saved into the mob-defaults template, after which product work resumes. Every re-rank uses this goal: work that gets the rules enforced in the mob-defaults template and the loop runner is the priority.
 - Direction 2 (reporting): in anything meant for the product owner or the person running the mob, cards, decisions and findings are described by what they are or do; a bare card number, D-number or finding ID is never used alone; an ID may follow in parentheses.
+
+<a id="d162"></a>
+#### Decider D162: product owner ruling (not a team vote): waive the stop-the-line gate for card 219 only
+
+- Date: 2026-10-30. Not a team vote: product owner decision, answering the question left open by D160 (a Decider vote cannot waive the product owner's stop-the-line rule). The product owner's word: "waive".
+- Ruling: card 219 (the record checker compares each card's evidence with the record filed just before it, not the next-lower card number; D159) may start despite the open failures. One-card exemption only: it covers card 219 and nothing else, ends when card 219 closes, and changes no gate code. Every other card still follows the corrective-card gate.
+- Placement: re-rank at the next boundary with true priority order restored; where card 219 lands is the team's call, normally right after the probe gate's current criterion finishes (card 208, criterion 2).
+- Recorded in card 219's record (.mob/records/219/record-in-progress.json) and in this decision record. Supersedes D160 C1 for card 219 only; D160's order (card 208 before card 210) stands until the re-rank.

@@ -1078,5 +1078,11 @@
     "status": "in force",
     "title": "Product owner direction: lock the mob process into tooling and the mob-defaults template before product work; reports describe, not cite",
     "order": 152
+  },
+  "D162": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Product owner ruling: one-card waiver of the stop-the-line gate for card 219 (record-order fix)",
+    "order": 153
   }
 }
