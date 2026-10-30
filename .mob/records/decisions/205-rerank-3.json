@@ -67,8 +67,21 @@
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (07:24 UTC)"
   }
  ],
- "decision": null,
- "ended_at": null,
+ "decision": {
+  "result": "adopted: no objection from any of the five seats (attempt 2)",
+  "order": [
+   213,
+   209,
+   210,
+   208,
+   211,
+   212,
+   206,
+   207
+  ],
+  "changed": "nothing"
+ },
+ "ended_at": "2026-10-30T07:31:08Z",
  "note": "The first D153 window; it does not count toward the D153 experiment until card 213 (the window checker) is on main.",
  "attempts": [
   {
