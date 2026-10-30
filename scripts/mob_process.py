@@ -302,6 +302,10 @@ def check_events(root, issues):
 WINDOW_CATEGORIES = ("task-force declaration", "slice decision", "loop-boundary re-rank", "card-text or declaration fix", "mid-card addition")
 
 
+def seat_errors(path, index, reply):
+    return []
+
+
 def window_errors(path, data):
     errors = []
     if data.get("category") not in WINDOW_CATEGORIES:
@@ -309,6 +313,12 @@ def window_errors(path, data):
     ended = data.get("ended_at")
     if not isinstance(ended, str) or not ended.strip():
         errors.append(f"{path.name}: ended_at is missing or empty")
+    replies = data.get("replies")
+    for index, reply in enumerate(replies if isinstance(replies, list) else []):
+        if isinstance(reply, dict):
+            errors.extend(seat_errors(path, index, reply))
+        else:
+            errors.append(f"{path.name}: seat {index + 1} is not an object")
     return errors
 
 

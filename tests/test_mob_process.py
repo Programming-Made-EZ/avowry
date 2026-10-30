@@ -623,6 +623,39 @@ class WindowErrorsTests(unittest.TestCase):
         self.assertIn("301-x.json", mob.window_errors(self.path, self.complete(category="no"))[0]); self.assertIn("category", mob.window_errors(self.path, self.complete(category="no"))[0])
         self.assertIn("301-x.json", mob.window_errors(self.path, self.complete(ended_at=""))[0]); self.assertIn("ended_at", mob.window_errors(self.path, self.complete(ended_at=""))[0])
 
+class WindowSeatsTests(unittest.TestCase):
+    path = Path(".mob/records/decisions/302-y.json")
+    base = {"category": "slice decision", "ended_at": "2026-10-30T07:38:24Z"}
+
+    # Card 213 unit layer 4 (D153 L3b), outside-in: window_errors consumes seat_errors, which is patched here (test double: unittest.mock.patch.object(mob, "seat_errors", ...)).
+    # ZOMBIES: Z (no replies key, or an empty list: the double is never called), O (one reply: the double gets (path, 0, that reply) and its errors are returned),
+    # M (two replies: both indexes are asked, errors are concatenated in order after the window field errors), B (the attempts list is never passed to the double),
+    # E (a reply entry that is not an object is named by file and index and the double is not called for it), I (the file name is passed on to the double).
+    # S: N/A because nothing simpler exists.
+    def test_zero_no_replies_never_ask_the_seat_check(self):
+        with mock.patch.object(mob, "seat_errors", return_value=["x"]) as double:
+            self.assertEqual([], mob.window_errors(self.path, dict(self.base))); self.assertEqual([], mob.window_errors(self.path, dict(self.base, replies=[])))
+        double.assert_not_called()
+    def test_one_reply_is_passed_to_the_seat_check_and_its_errors_returned(self):
+        reply = {"role": "architect"}
+        with mock.patch.object(mob, "seat_errors", return_value=["seat says no"]) as double:
+            self.assertEqual(["seat says no"], mob.window_errors(self.path, dict(self.base, replies=[reply])))
+        double.assert_called_once_with(self.path, 0, reply)
+    def test_many_replies_are_asked_in_order_after_the_window_field_errors(self):
+        replies = [{"role": "a"}, {"role": "b"}]
+        with mock.patch.object(mob, "seat_errors", side_effect=lambda path, index, reply: [f"seat {index}"]) as double:
+            errors = mob.window_errors(self.path, dict(self.base, ended_at="", replies=replies))
+        self.assertEqual(3, len(errors)); self.assertIn("ended_at", errors[0]); self.assertEqual(["seat 0", "seat 1"], errors[1:])
+        self.assertEqual([mock.call(self.path, 0, replies[0]), mock.call(self.path, 1, replies[1])], double.call_args_list)
+    def test_boundary_attempts_are_never_passed_to_the_seat_check(self):
+        with mock.patch.object(mob, "seat_errors", return_value=[]) as double:
+            mob.window_errors(self.path, dict(self.base, replies=[], attempts=[{"attempt": 1}]))
+        double.assert_not_called()
+    def test_exception_a_reply_entry_that_is_not_an_object_is_named_by_file_and_index(self):
+        with mock.patch.object(mob, "seat_errors", return_value=[]) as double:
+            errors = mob.window_errors(self.path, dict(self.base, replies=["x"]))
+        self.assertEqual(1, len(errors)); self.assertIn("302-y.json", errors[0]); self.assertIn("seat 1", errors[0]); double.assert_not_called()
+
 class CheckWindowsTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(); self.root = Path(self.temp.name); self.addCleanup(self.temp.cleanup)
