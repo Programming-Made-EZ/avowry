@@ -463,3 +463,20 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   BASELINE (card 209): 4 facilitator misses; issue to first red 41 minutes; pull to sign-off 3 h 41 min; 5 full-suite runs of about 17 minutes, one in the wrong repository.
   REVERSIBILITY: two-way door. Revert by deleting the checklist rule; no shared state, checker or earlier D-record changes.
   VOTING RULE: reply first line Yes, Support-it or No, then P1: to Pn: one line each (one per proposal point). A No names ONE fixed condition (CONDITION: ...). A reasonable, reversible condition is adopted and the proposal re-polled; a later round may not add new demands. Only an irreconcilable purpose or model conflict escalates. Independent fresh-seat re-run before recording.
+
+<a id="d159"></a>
+#### Decider D159: the record checker compares evidence with the record committed before this card's record (out-of-order closes)
+
+- Date: 2026-10-30. Trigger: card 209's record is refused because card 214 closed first (.mob/records/blockers/2026-10-30-209-record-order.md). Proposer: architect seat. Seats through decider.py with the headless claude CLI, model sonnet: round 1 product manager, architect, QA engineer, backend developer, independent reviewer (audit lens), delivery lead (five Yes, one Support-it); independent re-run with the agile coach in place of the product manager (six Yes). Votes in .mob/records/deciders/D159-votes.json. A checker rule change, recorded before any checker edit (D145 C2); implemented by card 219.
+- Result: PASSED. Adopted text:
+  Decider D159: the "previous record" evidence rule follows record commit order, not card number
+  Trigger: blocker 2026-10-30-209-record-order. scripts/mob_process.py check compares each card's commit evidence with the record of max(n < card). Cards now close out of order (D148 re-rank): 214 closed before 209, so adding 209.json makes 214's evidence "predate Card 209's record" and the pre-push hook blocks. Card 213 will hit the same refusal. A checker change needs a D-number first (D145 C2).
+  Clauses:
+  C1. "Previous record" means the record added in git history immediately before this card's own record (by record_commits order), not the next-lower card number. A card with no earlier record has none.
+  C2. Kept: evidence must not predate that previous record, must not postdate the issue close, must not be the record's own commit, and must not be reused by another card.
+  C3. Changed: only how "previous" is chosen. Lower-numbered cards that close later no longer constrain higher-numbered cards that closed earlier. The error text names the record it compared with.
+  C4. Fixes: 209.json is accepted after 214 (209's evidence is checked against the record before it, 214's is not rechecked against 209); 213 will pass the same way.
+  C5. Card 219 implements C1 to C3 in scripts/mob_process.py, red first: one failing test per criterion, one criterion per red-green cycle (D157), within D136 limits. Order: out-of-order close accepted; back-dated evidence still refused.
+  C6. Card 209's held record is added only after the card 219 checker commit is on main.
+  REVERSIBILITY: two-way door. Revert the checker commit; no records or earlier D-records change.
+  VOTING RULE: reply first line Yes, Support-it or No, then P1: to Pn: one line each (one per proposal point). A No names ONE fixed condition (CONDITION: ...). A reasonable, reversible condition is adopted and the proposal re-polled; a later round may not add new demands. Only an irreconcilable purpose or model conflict escalates. Independent fresh-seat re-run before recording.

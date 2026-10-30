@@ -1060,5 +1060,11 @@
     "status": "in force",
     "title": "Facilitator pre-window checklist: seats, caps, working directory, line endings (card 209 retro pick, 5-card experiment)",
     "order": 149
+  },
+  "D159": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Record checker: evidence is compared with the record committed before this card's record (out-of-order closes)",
+    "order": 150
   }
 }

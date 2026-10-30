@@ -1,0 +1,107 @@
+{
+ "decider": "D159",
+ "subject": "The record checker compares evidence with the record committed before this card's record, not the next-lower card number (out-of-order closes)",
+ "proposer": "architect seat",
+ "result": "PASSED round 1 (five Yes, one Support-it), confirmed by the independent re-run (six Yes)",
+ "claude_seat_reason": "probes at 16:24 UTC show Codex, Copilot, Grok and agy without usable quota",
+ "round1": [
+  {
+   "role": "pm",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d159-pm",
+   "started_at": "2026-10-30T16:34:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Defining \"previous\" as the record added just before this one in commit order matches how cards now close after the D148 re-rank. It also unblocks the line.\nP2: The rules that evidence must not predate the previous record, must not postdate the close, must not be the record's own commit, and must not be reused all stay, so accountability to the metrics is intact.\nP3: Only the choice of \"previous\" changes, and the error text names the record it compared with. That is the smallest change that gets back to product value.\nP4: 209 is accepted after 214 and 213 passes the same way, which clears the open blocker that is stopping the line.\nP5: Card 219 follows the standing rules: red first, one criterion per cycle (D157), within D136, and it has its own D-number first (D145 C2).\nP6: Adding the held 209 record only after the checker commit is on main keeps the checker as the gate and nothing is bypassed.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d159-architect",
+   "started_at": "2026-10-30T16:34:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Defining \"previous\" by the order records were added to git matches the rule's purpose (no back-dated evidence) and fits out-of-order closes after the D148 re-rank. Define \"earlier\" by ancestry or log order, not by committer-date comparison. Where one commit adds several records, tie-break by card number so the result is deterministic.\nP2: The kept rules (not before the previous record, not after the issue close, not the record's own commit, not reused) are unchanged, so this adds no new false positives.\nP3: Only how \"previous\" is chosen changes. Naming the compared record in the error text is a small, useful addition.\nP4: Rechecking 214 against 209 is dropped, which is what unblocks 209 and 213. No back-dating loophole opens, because each card is still checked against whatever record came before it in history.\nP5: Card 219 is one red-green cycle per criterion, with the order \"out-of-order accepted, then back-dated refused\". That keeps the stricter rule covered by a test.\nP6: Adding 209's record only after the 219 checker commit is on main follows D145 C2 and keeps main green.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d159-qa",
+   "started_at": "2026-10-30T16:34:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: C1 is testable red first with a fixture of two records added in the opposite order to their card numbers. The tie case of two records added in one commit needs a deterministic rule, which Card 219 can set in its own test.\nP2: C2 keeps all four existing refusals (predates previous, postdates close, record's own commit, reuse), so no violation is let through that is caught today.\nP3: C3 is a one-line change to `previous = max(n < card)`, plus error text that names the record compared with. A test can assert on that text.\nP4: C4 matches the blocker. Not rechecking 214 against 209 is acceptable because 214's evidence is still bounded by the record before it.\nP5: C5 gives one red-green cycle per criterion, and putting \"out-of-order accepted\" first and \"back-dated refused\" second guards against the checker passing everything.\nP6: C6 correctly sequences 209's record after the checker commit is on main.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d159-dev",
+   "started_at": "2026-10-30T16:34:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: The blocker and the code agree. `scripts/mob_process.py:194` picks `max(n < card)`, which causes the refusal when 214 closes before 209.\nP2: C1 can be implemented as written. `record_commits` and `record_dates` already hold each record's add commit, so ordering by them is straightforward.\nP3: C2 keeps the own-commit, after-close and reuse checks, so the fix doesn't weaken them.\nP4: C3 changes only how \"previous\" is chosen. Naming the compared record in the error text makes refusals easy to debug.\nP5: 209 and 213 will be checked against the record added before them. That is fair to the work, and I can comply with it without gaming.\nP6: C5's red-first order and one criterion per cycle (D157) fit D136 limits.\nP7: C6 holds 209's record until the checker commit is on main. That stops the pre-push hook from blocking the push.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d159-auditlens",
+   "started_at": "2026-10-30T16:34:53Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The trigger is verifiable from git. 214's evidence predates 209's record only because 209 closes later, which is a legitimate out-of-order close and not back-dating.\nP2: C1 ties \"previous\" to the order in which records were added to git history, which anyone can check with git alone. A card with no earlier record has no constraint, which is the right default.\nP3: C2 keeps the checks that stop back-dating: evidence not older than the previous record, not newer than the issue close, not the record's own commit, and not reused by another card.\nP4: C3 changes only how \"previous\" is chosen, and naming the compared record in the error text makes any refusal auditable. A loophole remains: a card could be committed first so it has no previous record, and its evidence then goes unchecked against earlier work. The close-date bound and the reuse check still cover that case.\nP5: C4 is sound. Not rechecking 214 against 209 is correct because 209's record came later in commit order.\nP6: C5 is workable. It has one failing test per criterion, and the order puts \"out-of-order accepted\" first and \"back-dated still refused\" second. The back-dated test must be required so the change doesn't weaken the check.\nP7: C6 is correctly sequenced. The held record is added only after the checker commit is on main, which keeps main green and leaves the evidence verifiable.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d159-delivery",
+   "started_at": "2026-10-30T16:34:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Ordering by record commit is the right definition of \"previous\", and \"no earlier record means none\" handles the first record cleanly.\nP2: Keeping the four evidence rules unchanged means the fix adds no new ceremony and loosens nothing beyond the ordering.\nP3: Changing only how \"previous\" is chosen is a thin slice, and naming the compared record in the error text makes future refusals quick to diagnose.\nP4: This unblocks 209 now and 213 next with no rework of existing records.\nP5: Card 219 is small enough for D136 limits (15 files, 400 lines), and one red-green cycle per criterion is proportionate with no extra gates.\nP6: Holding 209's record until the 219 checker commit is on main is correct, and it should be short because 219 is a single-file change.\n"
+  }
+ ],
+ "rerun": [
+  {
+   "role": "coach",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d159rr-coach",
+   "started_at": "2026-10-30T16:34:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: The \"previous record\" is the record added just before this one in commit order. That's the right fix, and it matches the blocker.\nP2: The three kept constraints (not before the previous record, not after the issue close, not reused) keep the checker's integrity. Nothing is dropped.\nP3: Only how \"previous\" is chosen changes, and naming the compared record in the error text makes refusals easier to diagnose.\nP4: 209 and 213 are accepted by the same fix, so there's no per-card workaround and no ceremony.\nP5: One card, red first, one criterion per cycle, within D136 limits. That's the right size for the change. It needs no extra perspective.\nP6: Holding the 209 record until the 219 checker commit is on main is the correct order and costs nothing.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d159rr-architect",
+   "started_at": "2026-10-30T16:34:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: The change is minimal. It only alters how \"previous\" is chosen, using commit order, which `record_commits` already tracks in `scripts/mob_process.py`.\nP2: Sound. The three kept checks (not before the previous record, not after the issue close, not reused) still stop back-dated evidence. I checked git: 209's commits start at about 07:27, after 214's record at 05:35, so 209.json passes under the new rule.\nP3: Only the choice of \"previous\" changes, so the false positive is removed without weakening the other rules. Naming the compared record in the error text makes failures traceable.\nP4: 209 is accepted after 214, and 213 will pass the same way.\nP5: Card 219 with one red-then-green cycle per criterion (D157), within D136 limits, is enforceable and testable. The order of out-of-order accepted first, then back-dated refused, is right.\nP6: Holding 209's record until the 219 checker commit is on main keeps main green and respects D145 C2.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d159rr-qa",
+   "started_at": "2026-10-30T16:34:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Defining \"previous\" by record commit order matches the real close order and is testable. Add a deterministic tie-break for two records added in the same commit, such as the lower card number.\nP2: The three kept refusals (predating, postdating, own commit or reuse) stay in force, so bad state is still caught.\nP3: Only the choice of previous record changes, and the error text names the record it compared with. That is easy to assert in a test.\nP4: The 209 and 213 fixes can be checked with the real history, or with a fixture that reproduces 214 closing before 209.\nP5: Two red tests, \"out-of-order close accepted\" and \"back-dated evidence still refused\", each cover one criterion under D157, in that order.\nP6: Holding 209's record until the card 219 checker is on main stops the checker and the data from being changed in the same commit.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d159rr-dev",
+   "started_at": "2026-10-30T16:34:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: C1 is workable. \"Previous\" means the record added in git history just before this card's own record, which is deterministic. The checker already computes `record_commits` and `record_dates`. One edge case needs a defined tie-break: two records added in the same commit or with equal timestamps. Sort by date, then card number.\nP2: C2 keeps every guard that matters: no predating, no postdating the close, not the record's own commit, and no reuse. Back-dating is still refused, so I can't game it.\nP3: C3 is a narrow change to the `previous = max(n < card)` selection at `scripts/mob_process.py:194`. Naming the compared record in the error text is clear and useful.\nP4: C4 fits the actual failure. 209 gets checked against the record before it (214), and 214 isn't rechecked against 209. The same holds for 213.\nP5: C5 is workable. It gives one red test per criterion, with out-of-order accepted first and back-dated refused second, inside the D157 and D136 limits.\nP6: C6 is a correct ordering constraint. The held 209 record waits until the checker commit is on main, so the hook never blocks us.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d159rr-auditlens",
+   "started_at": "2026-10-30T16:34:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Defining \"previous\" as the record added just before this card's own record, in `record_commits` order, can be checked from git alone. Please say how ties and merges are ordered. Use the first-parent order of `git log` or the topological order, not the committer date, so the order can't be forged.\nP2: Keeping the four checks (not before the previous record, not after the issue close, not the record's own commit, not reused) leaves no new way to pass. Back-dated evidence is still refused against the record immediately before it.\nP3: Only the choice of \"previous\" changes. The error text naming the record it compared with makes the refusal auditable.\nP4: Accepting 209 after 214 is sound, because 209's evidence is checked against 214's record and 214 is not re-checked against 209. 213 passes the same way.\nP5: Card 219, with one red-first test per criterion and the back-dated-still-refused test, gives a verifiable trail. D136 and D157 limits are already in place.\nP6: Adding 209's record only after the 219 checker commit is on main keeps the order visible in git. It also stops the pre-push hook from being bypassed.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d159rr-delivery",
+   "started_at": "2026-10-30T16:34:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Defining \"previous\" as the record added just before this one, by commit order, removes the false refusal and unblocks 209 and 213.\nP2: Keeping the predates, postdates, own-commit and reuse checks leaves the back-dating protection in place.\nP3: Changing only how \"previous\" is chosen is a thin slice, and naming the compared record in the error text makes refusals easy to debug.\nP4: Accepting 209 after 214 without rechecking 214 restarts the line at once, and 213 passes the same way.\nP5: Card 219 with one red-green cycle per criterion fits the D136 limits (15 files, 400 lines per commit) and adds no ceremony.\nP6: Holding 209's record until the 219 checker commit is on main is the correct order, and the short wait is cheap.\n"
+  }
+ ]
+}
