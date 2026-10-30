@@ -56,6 +56,14 @@
    "seat": "architect (slice)",
    "context": "ctx-2",
    "source": "6bd8db2"
+  },
+  {
+   "boundary": "after criterion 1 (stand-down 1)",
+   "answer": "no",
+   "reason": "Criterion 2 is a pure rule over the probe results (quota-first per seat and quota_reason in mob_process.py), a record field and refusal text with exit 2, all covered by the backend developer, QA engineer and independent reviewer; the one risk, probe evidence text copied into quota_reason, is data already committed in probes.json and raises no language, UX, security or workflow question beyond those seats.",
+   "seat": "architect",
+   "context": "ctx-2",
+   "source": "stand-down 1"
   }
  ],
  "cycles": [
@@ -73,5 +81,62 @@
    "pushed": "about 18:42 UTC"
   }
  ],
- "stand_downs": []
+ "stand_downs": [
+  {
+   "cycle": 1,
+   "boundary": "after Criterion 1 (red 83714f1, units 38075b7 and 26aaa0c, green e81ed21 in mob-defaults; local origin/main ref = e81ed21); Criterion 2 next",
+   "adjustment_reviews": [
+    {
+     "adjustment": "Card 209 stand-down 2 (cycle 2, ctx-2): the seat that starts any wait over 20 min (the full suite included) writes its own in-flight line with the start taken from the clock at launch and cap = start + 25 min; the facilitator never writes a start or cap on a seat's behalf.",
+     "issue": "The cap for the 209 criterion 2 green came from the facilitator's estimate of a suite start (14:50 against the real 14:36:50), so the zero cap moves was partly luck.",
+     "resolved": "partly",
+     "evidence": "Metric (own-timestamp share, 209 criterion 2: 0 of 1): on the 208 criterion 1 green the developer wrote its own line (b3c246b, 18:20 UTC, cap 18:45 = start + 25) and the suite ran from 18:20 (1162.263 s, 356 tests OK, 1 skip, from the e81ed21 body); green e81ed21 at 18:40:12 UTC, inside the cap; cap moves 0 (209 criterion 1: 2). So 1 of 1 for the green suite wait. Not applied to the other waits: the QA line (30cf8a2, 17:59 UTC, 'started about 17:54', cap 18:20) and the unit-layer cap 18:41 (023e582) were written by the facilitator from estimates, and the seat's own line carries the minute only, with no statement that it came from date -u. Counter-metrics: red to green 30 min (83714f1 18:10:19Z to e81ed21 18:40:12Z) against 21 and 62, with three unit layers instead of two so not comparable; no wait held past its cap.",
+     "side_effects": "Good: the green wait was bounded by a number the seat owns and no cap moved. Bad: the suite is now 19.4 min (356 tests) against 17.2, so start + 25 leaves 5.6 min of margin; the rule was read as covering only the suite, so the QA and unit-layer waits (16 and 30 min) still ran on facilitator caps.",
+     "verdict": "keep, with the tune folded into this stand-down's adjustment (the same own-line rule at every seat start, with the clock source stated)."
+    },
+    {
+     "adjustment": "D158 facilitator pre-window checklist (card 209 retro pick; seats, caps, working directory, line endings), first card under it.",
+     "issue": "Window and wait drift on 209: a verification run that executed another repository's suite (15:57 UTC), caps from estimates, and line-ending churn in seat commits.",
+     "resolved": "partly",
+     "evidence": "Before (209): wrong-directory verification run, two cap moves on the criterion 1 green, whole-file CRLF rewrite in 44112b4 (1181 raw lines for 123 net). After (208, git): four checklists committed before their windows (4b51ec6, b138c0e, 3a4f777 for two), each listing seats, working directory with a hash, and probes; all four windows decided with every seat polled. Criterion 1 raw and --ignore-cr-at-eol stats are identical on all four commits (158, 171, 4 and 49 changed lines), so no churn. But the line-endings line reads 'no seat edits in a window; n/a' in all four blocks, so that clause was never exercised and the churn-free result is not credited to it; the Caps line is 'no wait over 20 minutes' with no source, so the 'cap names its source' clause is not met by the checklist; no verification run happened in a window, so its working-directory clause is untested. No checklist exists for the non-window seat waits (QA red, developer green), where the 209 problems lived.",
+     "side_effects": "Good: seats and working directory are readable from the records for every window. Bad: the four blocks are near copies (a write cost with little new information), and they cover only windows, so the checklist missed the seat waits it was written for.",
+     "verdict": "tune: keep the window blocks; add cap source, working directory with repository top level and the line-ending instruction (from git ls-files --eol) to the in-flight line of every seat start, which this stand-down's adjustment does."
+    },
+    {
+     "adjustment": "D157 (card 214 retro pick), one acceptance criterion per red-green cycle checked from git.",
+     "issue": "F-060: about 800 lines of red across three Done checks before any green on card 214.",
+     "resolved": "yes",
+     "evidence": "Before: 214, about 800 red lines, one green. After: 208 criterion 1, git log 83714f1..e81ed21: red 83714f1 (158 lines, three files), units 38075b7 and 26aaa0c, green e81ed21, all four bodies carrying 'Criterion: 1'; no test for criterion 2 or 3 in the tree; green is on the tracked origin/main ref (git branch -vv: main e81ed21 [origin/main]); no amend (reflog shows four plain commits after e239b12). A third card with the pattern after 209's two cycles; the D154 gate line is still to come.",
+     "side_effects": "Good: reds are reviewable, the red body says openly that slice guard G3 could not be shown red, the unit layer replaced it and the green re-ran the mutations. Bad: the full suite runs once per criterion (about 19 min, three per card); the red added knobs to fake_cli.py that criteria 2 and 3 will extend.",
+     "verdict": "keep"
+    },
+    {
+     "adjustment": "Card 213 stand-down 2, tuned at 209 stand-down 1 and 2: when 213 resumes, run one full suite on a clean checkout at the resumed head in the background with an in-flight note (cap start + 25 min) and a pushed hash.",
+     "issue": "Drift from card 214 and concurrent-write flakes seen first at the pre-ship gate.",
+     "resolved": "unknown",
+     "evidence": "Still not applied: no 213 line in in-flight.md since the re-rank, and 213 is behind the 208 runner cards in the order. No before and after. Third suite timing on the same machine: 1162 s for 356 tests here, against 1031 s (315 tests) and 1029 s (332 tests).",
+     "side_effects": "None yet. Predicted: a cap sized on 1030 s is about 6 min from the limit at 1162 s.",
+     "verdict": "tune (no evidence either way): at resume size the cap as the last measured suite time plus 10 min, not a fixed 25."
+    }
+   ],
+   "observations": [
+    "(a) The new gate protects only runs the facilitator launches in card mode or the loop. This card is hand-run, so its seats were checked against probes by hand: architect 17:19 on the 17:13 probe (6 min), QA 17:54 (41 min), developer 18:11 (1 min), this seat about 18:45 on the 18:10 probe (35 min). All fresh, but none of the in-flight lines states the probe age, so it cannot be read from the records.",
+    "(b) Slice guard G3 could not be shown red by its named mutation (red 83714f1 body); the QA seat said so, unit layer 38075b7 replaced it with two assert_not_called guards and e81ed21 pasted their mutation runs. The slice rule (a guard whose mutation does not turn it red is rewritten) worked as written.",
+    "(c) The suite is 1162 s for 356 tests and cap start + 25 min left 5.6 min of margin; criteria 2 and 3 add tests.",
+    "(d) All four non-Claude backends were down at 17:13 and 18:10, so the Claude seats are justified; the next probe is due before any seat starts after 19:10 UTC."
+   ],
+   "worked": "D157 held for a third card: one criterion, four commits each with a Criterion line, green pushed at once, no amend. The slice's outside-in table was followed (L1 acceptance red, L2 with a recorded probe and a scripted clock, L3 pure rule), G1 and G2 mutation-proved, the vacuous G3 dropped and replaced. The developer wrote its own in-flight line with its start and the green landed inside the cap with no move. Four D158 window blocks were committed before their windows.",
+   "did_not": "The facilitator still wrote caps for the QA red and the unit layers from estimates ('started about 17:54'), and no in-flight line states the probe age a seat started on, so the rule this criterion builds cannot be checked by hand on this card. The D158 line-endings and cap-source clauses were never exercised (n/a in all four blocks). The card 213 adjustment remains unmeasurable.",
+   "adjustment": "For criterion 2, every seat-start in-flight line is written by the seat itself, with its start from date -u (to the second), the cap = start + 25 min for a suite (otherwise the last measured time + 10 min), and the age in minutes of the last probe in probes/2026-10-30.jsonl at that start; the facilitator re-probes first (scripts/probe_drivers.py, evidence committed) when that age is 50 min or more. Quota-first per Claude seat, tried by hand before the code writes it: each Claude seat's turn text carries a quota_reason in the shape criterion 2 builds (probe taken_at plus each non-Claude backend's evidence). Current quota_reason: probes 18:09:59 to 18:10:13 UTC (.mob/records/probes/2026-10-30.jsonl) show Codex exit 1, Copilot has_quota=False remaining=-5, Grok 402 balance exhausted, agy 429 (reset in 51h15m); no non-Claude model has quota. Metric: share of seat-start in-flight lines with the seat's own second-level timestamp and the probe age (criterion 1: 0 of 4; target all); cap moves per green (criterion 1: 0; target 0). Counter-metrics: extra probes committed, minutes red to green (30), any wait held past its cap with no note.",
+   "domain_expert": {
+    "answer": "no",
+    "reason": "Criterion 2 is a pure rule over the probe results (quota-first per seat and quota_reason in mob_process.py), a record field and refusal text with exit 2, all covered by the backend developer, QA engineer and independent reviewer; the one risk, probe evidence text copied into quota_reason, is data already committed in probes.json and raises no language, UX, security or workflow question beyond those seats."
+   },
+   "metric_note": "Criterion 1 moved one rule from by-hand to runner-enforced (no seat starts on a probe of 60 minutes or more: re-probe, or refuse with exit 2; 13 gate tests plus 14 card-mode probe tests); still by hand are Claude-seat quota-first per seat, quota_reason and the pinned probe model (criteria 2 and 3), the gate does not bite on this hand-run card, and audit findings per card about runner-gated rules cannot be read yet (no audit since).",
+   "seat": "Architect",
+   "context": "ctx-2",
+   "model": "claude-sonnet subagent",
+   "written_at": "2026-10-30T18:44:04Z"
+  }
+ ]
 }
