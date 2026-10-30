@@ -73,6 +73,27 @@
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:03 UTC)"
   }
  ],
- "decision": null,
- "ended_at": null
+ "decision": {
+  "result": "adopted: no objection from any of the six polled seats (every declared role, F-054)",
+  "order": [
+   214,
+   213,
+   209,
+   210,
+   208,
+   211,
+   212,
+   206,
+   207
+  ],
+  "changed": "214 enters first (corrective card for F-056); 213 pauses after its current green commit is pushed and resumes second; the rest unchanged",
+  "conditions_from_proposer": [
+   "214 starts only after its task-force window polls every declared role and QA has written ZOMBIES for its Done checks",
+   "213 pauses once its current green commit is pushed; a CI failure on that commit with the same bind error is recorded against F-056, not re-run to green",
+   "214 Done check 1 is committed red before the fix",
+   "F-056 closes only on git evidence: the commit removing FreeLoopbackPort and a green full acceptance suite in CI on 214's last commit"
+  ],
+  "carried_note": "QA seat (not a condition): card 214 should add a ZOMBIES red test for the second hazard, WaitUntilListeningAsync accepting a foreign process on the port; carried to 214's ready step."
+ },
+ "ended_at": "2026-10-30T08:14:05Z"
 }
