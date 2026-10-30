@@ -61,6 +61,16 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nYes. The order holds the line (214, 213 and the corrective MD cards first), and 216 is a thin docs-and-template slice that fits D136. It adds no ceremony beyond the existing window.\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)"
+  },
+  {
+   "role": "product manager (signoff)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "win5-pmsignoff",
+   "started_at": "2026-10-30T08:49:25Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "Yes\n\nNO OBJECTION\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)"
   }
  ],
  "decision": null,
