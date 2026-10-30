@@ -211,3 +211,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D139](process-and-staffing.md#d139) | Mirror audit findings and make the staffing, quota-first and task-force rules checkable (failed; re-proposed as D140) | process-and-staffing | applied |
 | [D142](process-and-staffing.md#d142) | Re-vote of D136 parts 2 to 4 on the final wording; flag-scoring clause amended | process-and-staffing | in force |
 | [D143](process-and-staffing.md#d143) | Re-vote of D137 on the final wording, item 7 included; item 7 amended | process-and-staffing | in force |
+| [D140](process-and-staffing.md#d140) | Findings mirroring and checker rules, re-proposal of D139 (failed; re-proposed as D141) | process-and-staffing | applied |
