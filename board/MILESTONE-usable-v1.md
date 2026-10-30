@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:4d178bef4400af04dd0256d8db996e8f8c91c59715e213e5c728668923d20a0b -->
+<!-- board-table-sha256:79908e00630d2b2be40156aabe3a84c85c7e12cc7331656ed7223810262c9576 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -97,11 +97,11 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 75 | 205 The facilitator starts only corrective cards while a finding blocks | Done | none (A2, D, C and E depend on this card, in that order) |
 | 76 | 214 The generated API binds its own port in acceptance tests | Done | none |
 | 77 | 209 A task force member leaves only at the retro | Ready | none |
-| 78 | 219 The record checker accepts cards that close out of number order | Ready | none |
-| 79 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
-| 80 | 211 A whole-team review of the mob-defaults rulings commits | Ready | none |
-| 81 | 216 The default templates carry the pending process rulings | Ready | none |
-| 82 | 208 A seat starts only on a fresh, pinned probe, and seats rotate least-recently-used across the available models | Ready | none |
+| 78 | 208 A seat starts only on a fresh, pinned probe, and seats rotate least-recently-used across the available models | Ready | none |
+| 79 | 219 The record checker accepts cards that close out of number order | Ready | none |
+| 80 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
+| 81 | 211 A whole-team review of the mob-defaults rulings commits | Ready | none |
+| 82 | 216 The default templates carry the pending process rulings | Ready | none |
 | 83 | 220 The loop runner starts a corrective card while a finding blocks | Ready | none (card 205 is done) |
 | 84 | 221 The loop runs a card in the repository its Repository line names | Ready | none |
 | 85 | 222 The loop wires its retro and re-rank steps from the repository and stops when one fails | Ready | none |
