@@ -206,3 +206,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D136](process-and-staffing.md#d136) | Thin slices, numeric limits, flags in a compiler repo, retro timing (forward-only from card 195) | process-and-staffing | in force |
 | [D137](process-and-staffing.md#d137) | Outside-in TDD under trunk-based main: the pending-test mechanism | process-and-staffing | in force |
 | [D138](process-and-staffing.md#d138) | Review and signoff of Card 195 (first card-mode card since 063) | process-and-staffing | applied |
+| [D139](process-and-staffing.md#d139) | Mirror audit findings and make the staffing, quota-first and task-force rules checkable (failed; re-proposed as D140) | process-and-staffing | applied |

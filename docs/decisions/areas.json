@@ -140,7 +140,7 @@
     "status": "in force",
     "title": "Async and events stay out of the core grammar",
     "order": 18,
-    "statement": "Async and events stay out of the core grammar: they are declared effects plus base-library keywords, specified with a virtual clock and event capture, kept as a\u2026"
+    "statement": "Async and events stay out of the core grammar: they are declared effects plus base-library keywords, specified with a virtual clock and event capture, kept as a…"
   },
   "D22": {
     "area": "process-and-staffing",
@@ -940,5 +940,11 @@
     "status": "applied",
     "title": "Review and signoff of Card 195 (first card-mode card since 063)",
     "order": 129
+  },
+  "D139": {
+    "area": "process-and-staffing",
+    "status": "applied",
+    "title": "Mirror audit findings and make the staffing, quota-first and task-force rules checkable (failed; re-proposed as D140)",
+    "order": 130
   }
 }
