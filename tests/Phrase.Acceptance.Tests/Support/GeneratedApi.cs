@@ -13,9 +13,10 @@ namespace Phrase.Acceptance.Tests.Support;
 public sealed class GeneratedApi : IAsyncDisposable
 {
     private static readonly TimeSpan BuildTimeout = TimeSpan.FromMinutes(3);
-    private static readonly TimeSpan StartupTimeout = TimeSpan.FromMinutes(2);
+    internal static readonly TimeSpan DefaultStartupTimeout = TimeSpan.FromMinutes(2);
 
     private readonly Process _process;
+    private readonly TimeSpan _startupTimeout;
     private readonly StringBuilder _log = new();
     private readonly object _logGate = new();
     private readonly Task _stdout;
@@ -34,41 +35,57 @@ public sealed class GeneratedApi : IAsyncDisposable
         }
     }
 
-    private GeneratedApi(Process process, string baseUrl)
+    private GeneratedApi(Process process, string baseUrl, TimeSpan startupTimeout)
     {
         _process = process;
+        _startupTimeout = startupTimeout;
         Pid = process.Id;
         BaseUrl = baseUrl;
         _stdout = PumpAsync(process.StandardOutput);
         _stderr = PumpAsync(process.StandardError);
     }
 
-    public static async Task<GeneratedApi> StartAsync(string projectPath)
+    public static async Task<GeneratedApi> StartAsync(string projectPath, GeneratedApiStartOptions? options = null)
     {
-        var projectDir = Path.GetDirectoryName(projectPath)
-            ?? throw new InvalidOperationException($"API project has no directory: {projectPath}");
-        var build = await RunToEndAsync(
-            projectDir,
-            ["build", projectPath, "--nologo", "--disable-build-servers", "-v", "m"],
-            BuildTimeout);
-        if (build.ExitCode != 0)
-            throw new InvalidOperationException($"dotnet build of {projectPath} exited {build.ExitCode}.{Environment.NewLine}{build.Text}");
+        string projectDir;
+        string dll;
+        if (options?.PrebuiltDll is { } prebuilt)
+        {
+            // The caller built this assembly already. Nothing is built here.
+            if (!File.Exists(prebuilt))
+                throw new InvalidOperationException($"Prebuilt API assembly was not found at {prebuilt}.");
+            dll = prebuilt;
+            projectDir = Path.GetDirectoryName(prebuilt)
+                ?? throw new InvalidOperationException($"Prebuilt API assembly has no directory: {prebuilt}");
+        }
+        else
+        {
+            projectDir = Path.GetDirectoryName(projectPath)
+                ?? throw new InvalidOperationException($"API project has no directory: {projectPath}");
+            var build = await RunToEndAsync(
+                projectDir,
+                ["build", projectPath, "--nologo", "--disable-build-servers", "-v", "m"],
+                BuildTimeout);
+            if (build.ExitCode != 0)
+                throw new InvalidOperationException($"dotnet build of {projectPath} exited {build.ExitCode}.{Environment.NewLine}{build.Text}");
 
-        var dll = Path.Combine(projectDir, "bin", "Debug", "net8.0", Path.GetFileNameWithoutExtension(projectPath) + ".dll");
-        if (!File.Exists(dll))
-            throw new InvalidOperationException($"Built API assembly was not found at {dll}.{Environment.NewLine}{build.Text}");
+            dll = Path.Combine(projectDir, "bin", "Debug", "net8.0", Path.GetFileNameWithoutExtension(projectPath) + ".dll");
+            if (!File.Exists(dll))
+                throw new InvalidOperationException($"Built API assembly was not found at {dll}.{Environment.NewLine}{build.Text}");
+        }
 
         var port = FreeLoopbackPort();
         var baseUrl = $"http://127.0.0.1:{port}";
         var psi = Prepare("dotnet", projectDir);
         psi.ArgumentList.Add(dll);
         psi.Environment["ASPNETCORE_URLS"] = baseUrl;
+        options?.BeforeChildStart?.Invoke(psi);
 
         GeneratedApi? api = null;
         try
         {
             var process = Process.Start(psi) ?? throw new InvalidOperationException("Could not start dotnet.");
-            api = new GeneratedApi(process, baseUrl);
+            api = new GeneratedApi(process, baseUrl, options?.StartupTimeout ?? DefaultStartupTimeout);
             await api.WaitUntilListeningAsync(port);
             return api;
         }
@@ -123,7 +140,7 @@ public sealed class GeneratedApi : IAsyncDisposable
 
     private async Task WaitUntilListeningAsync(int port)
     {
-        using var timeout = new CancellationTokenSource(StartupTimeout);
+        using var timeout = new CancellationTokenSource(_startupTimeout);
         while (true)
         {
             if (_process.HasExited)
@@ -141,7 +158,7 @@ public sealed class GeneratedApi : IAsyncDisposable
             catch (OperationCanceledException)
             {
                 throw new TimeoutException(
-                    $"Generated API process {Pid} did not listen on {BaseUrl} within {StartupTimeout.TotalSeconds:0} seconds.{Environment.NewLine}{Log}");
+                    $"Generated API process {Pid} did not listen on {BaseUrl} within {_startupTimeout.TotalSeconds:0} seconds.{Environment.NewLine}{Log}");
             }
         }
     }
@@ -227,6 +244,13 @@ public sealed class GeneratedApi : IAsyncDisposable
         }
     }
 
+    // Reads the address from a "Now listening on:" line. A stub until the harness owns its port.
+    internal static bool TryParseListeningAddress(string line, out Uri address)
+    {
+        address = null!;
+        return false;
+    }
+
     private static int FreeLoopbackPort()
     {
         using var listener = new TcpListener(IPAddress.Loopback, 0);
@@ -235,4 +259,19 @@ public sealed class GeneratedApi : IAsyncDisposable
         listener.Stop();
         return port;
     }
+}
+
+/// <summary>
+/// Test seams for <see cref="GeneratedApi.StartAsync"/>. Every member defaults to today's behaviour.
+/// </summary>
+public sealed class GeneratedApiStartOptions
+{
+    /// <summary>Called once, after Prepare and ASPNETCORE_URLS are set and immediately before Process.Start.</summary>
+    public Action<ProcessStartInfo>? BeforeChildStart { get; init; }
+
+    /// <summary>How long to wait for the child to listen. Null means <see cref="GeneratedApi.DefaultStartupTimeout"/>.</summary>
+    public TimeSpan? StartupTimeout { get; init; }
+
+    /// <summary>Path of an already built assembly to run instead of building the project. Null builds.</summary>
+    public string? PrebuiltDll { get; init; }
 }
