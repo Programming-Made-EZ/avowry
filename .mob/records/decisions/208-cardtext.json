@@ -45,5 +45,18 @@
   }
  ],
  "decision": null,
- "ended_at": null
+ "ended_at": null,
+ "attempts": [
+  {
+   "attempt": 1,
+   "role": "independent reviewer (audit lens)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (17:13 UTC)",
+   "context": "w-208-cardtext-auditlens",
+   "started_at": "2026-10-30T17:42:00Z",
+   "reply": null,
+   "raw": "",
+   "note": "empty or without the window answer line; not counted; re-polled"
+  }
+ ]
 }
