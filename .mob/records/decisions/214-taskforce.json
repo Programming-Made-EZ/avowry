@@ -51,6 +51,16 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nYes\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)"
+  },
+  {
+   "role": "delivery lead",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-7",
+   "started_at": "2026-10-30T08:23:59Z",
+   "reply": "OBJECTION",
+   "condition": "Cap the card at one commit within D136 (≤15 files, ≤400 lines), shipping the red and green steps without a separate ceremony pass.",
+   "raw": "OBJECTION\nCONDITION: Cap the card at one commit within D136 (≤15 files, ≤400 lines), shipping the red and green steps without a separate ceremony pass.\n\nYes. The line needs restarting soon. The seven-seat task force is heavy for a one-file change, but it is a two-way door.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:21 UTC, a5be583)"
   }
  ],
  "decision": null,
