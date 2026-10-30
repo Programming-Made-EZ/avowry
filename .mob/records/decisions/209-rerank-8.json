@@ -62,6 +62,16 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nYes. The order starts 210 right away, and 208's large scope is split so 219 can land alongside it. 217 stays behind the corrective cards, which matches the existing gate. The one-card Decider exemption for 219 is a small, thin-slice way to unblock the closes without ceremony on every card.\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
+  },
+  {
+   "role": "product manager (signoff)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "win8-pmsignoff",
+   "started_at": "2026-10-30T16:41:39Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes. The order puts corrective cards first, so the open FAILs stop the line. 217 stays behind them, and each role keeps its own context. The Decider exemption for 219 is asked for separately, not assumed. It reorders cards without specifying work up front.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
   }
  ],
  "decision": null,
