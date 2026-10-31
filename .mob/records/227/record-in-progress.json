@@ -407,6 +407,10 @@
   {
    "by": "backend developer ctx-5 (green 3d), facilitator decision",
    "observation": "green 3d's first full run failed 1 of 1253 (test_card_mode SeatProbes, a 12 s probe limit): the new default makes every seat scan the real mob-defaults and the seat's repository (0.34 s and 0.31 s each), which pushed the test past its limit; the QA reference green missed it because its scratch copy had no .git. Facilitator decision: isolate the test by setting MOB_WATCHED_REPOS in its subprocess env (option 2), not throttle without a red (option 1); second full run with a new in-flight line. The full-run cap 21:57:44 UTC was passed"
+  },
+  {
+   "by": "facilitator (self-reported)",
+   "observation": "ran 'rm -f retro227-runs.txt 2>/dev/null' in the scratchpad at about 23:20 UTC to clear a run log before the retro voices: a literal, non-recursive delete of a file that did not exist, so not the variable-path rule; but it breaks the 'no delete commands of any kind' line the facilitator puts in every seat brief. From now on the facilitator writes a new uniquely named log instead"
   }
  ],
  "follow_up_cards": [
