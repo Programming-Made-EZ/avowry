@@ -130,6 +130,16 @@
    "pushed": "about 04:49 UTC",
    "probes": "04:09 (d6e26ad) and 04:46 (63d3ce1), all four non-Claude drivers still without quota",
    "confirmation": "40403b6 (same-run reason reading against D163 and D164, before the green seat)"
+  },
+  {
+   "criterion": 2,
+   "fix": "review 69ff413 F1",
+   "repo": "mob-defaults",
+   "red": "4810ed8 (tests/test_decider_launched.py, 27 tests, 25 failing by assertion)",
+   "green": "fec8489 (check_voters keeps enabled, known seats in order without duplicates; run() dedupes the vote pool)",
+   "full_suite": "565 tests OK, 1 skip (from 05:17 UTC, 1332.9 s)",
+   "mutations": "M1 22 failures, M2 7, M3 11; M4 (dedupe in run() removed) survived, a guard gap named in the green body",
+   "pushed": "about 05:42 UTC"
   }
  ],
  "stand_downs": [
