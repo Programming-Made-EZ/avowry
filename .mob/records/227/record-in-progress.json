@@ -132,7 +132,11 @@
    "increment": "1b",
    "repo": "mob-defaults",
    "red": "3beff31 (4 files, 397 lines; 25 tests, 22 failing by assertion, 3 born-green guards)",
-   "note": "its body says the hook's follow-up card is 'not yet filed'; it was filed as card 228 at 2026-10-31 about 10:00 UTC (board/228-*.md)"
+   "note": "its body says the hook's follow-up card is 'not yet filed'; it was filed as card 228 at 2026-10-31 about 10:00 UTC (board/228-*.md)",
+   "green": "8440697 (command_source.py; run_backend scans every seat via a session id; CardRun.scan_commands Safety flag; decider command_scan per vote; check_record requires command_scans from card 227; backends name command_source)",
+   "full_suite": "748 tests OK, 1 skip (from 12:11:47 UTC, 1370.7 s)",
+   "mutations": "12 run, 12 red (one m10 test_card_mode run stopped, not measured)",
+   "plan": "items 1 to 8 have hashes; hook and README moved to card 228"
   }
  ],
  "stand_downs": [
@@ -215,6 +219,10 @@
   {
    "by": "facilitator (watchdog relayed)",
    "observation": "the facilitator ended its turn right after launching the criterion 1 green seat (following the bounded-turn instruction), and the watchdog saw it as idle mid-card; the seat was running inside its cap. The two instructions (bounded turns; never idle mid-card) are reconciled as: a turn ends only after a capped wait shows progress, never right after a launch"
+  },
+  {
+   "by": "facilitator",
+   "observation": "criterion 1 closed with every plan item hashed after the stand-down 1 adjustment; card 227's own record needs one command_scans entry per context at close (check_record from 227 on); a stray file C:/Users/ringe/projects/existing_card.out was written outside any repository by a QA seat's mis-directed background command, left in place (no deletes)"
   }
  ],
  "follow_up_cards": [
