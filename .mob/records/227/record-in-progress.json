@@ -163,6 +163,12 @@
    "real_runs": "unpushed on avowry and mob-defaults: ok; ladder on both: ok",
    "mutations": "M1 to M8 killed; M9 survived (push_rule_problems passes with only the word 'unpushed'; the red's rule-text test has no case missing '5 minutes' or the detector name)",
    "open": "MOB_WATCHED_REPOS is set nowhere, so the facilitator's per-seat push scan watches nothing by default; coverage is the audit pass and the manual command"
+  },
+  {
+   "criterion": 1,
+   "increment": "1c (review fix: parser)",
+   "repo": "mob-defaults",
+   "red": "54c95da (tests/test_command_scan_blocks.py, 277 lines; 130 tests, 60 failing by assertion; 7 guard mutations killed)"
   }
  ],
  "stand_downs": [
@@ -446,6 +452,13 @@
    "seat": "security-review",
    "transcript": "subagents/agent-ae2e63910d2b074c9.jsonl",
    "source": "python delete_guard.py scan-transcript (mob-defaults 8440697), run by the facilitator when the seat returned"
+  },
+  {
+   "context": "ctx-4",
+   "status": "findings",
+   "seat": "red-1c",
+   "transcript": "subagents/agent-a74322003f48af1d0.jsonl",
+   "source": "python delete_guard.py scan-transcript (mob-defaults 8440697), facilitator"
   }
  ],
  "reviews": [
