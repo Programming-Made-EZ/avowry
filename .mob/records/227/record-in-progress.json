@@ -126,6 +126,13 @@
    "green": "2fc4f98 (scan_command at command position; literal strict scratch-child allow-list; scan-transcript exit 0, 1 or 2; second clause on a line now flagged; run_backend not yet wired)",
    "full_suite": "718 tests OK, 1 skip (10:48:49 to about 11:12 UTC, 1365.4 s)",
    "mutations": "17 run, 17 killed after three added guards (CommandScanGuards)"
+  },
+  {
+   "criterion": 1,
+   "increment": "1b",
+   "repo": "mob-defaults",
+   "red": "3beff31 (4 files, 397 lines; 25 tests, 22 failing by assertion, 3 born-green guards)",
+   "note": "its body says the hook's follow-up card is 'not yet filed'; it was filed as card 228 at 2026-10-31 about 10:00 UTC (board/228-*.md)"
   }
  ],
  "stand_downs": [
