@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 219,
+ "title": "The record checker accepts cards that close out of number order",
+ "process": "card-mode rules run by hand; implements D159 under the product owner's one-card waiver of the stop-the-line gate (D162); D157 one criterion per red-green cycle (two cycles, Done check 3 inside cycle 2)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude-sonnet-5-5 (product manager, refinement and task-force declaration; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 23:03 to 00:34 UTC))",
+   "evidence": "4e2d850"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude-sonnet-5-5 (architect; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 23:03 to 00:34 UTC))",
+   "evidence": "3b04e20"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude-sonnet-5-5 (QA engineer; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 23:03 to 00:34 UTC))",
+   "evidence": "8294ead"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude-sonnet-5-5 (backend developer, author; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 23:03 to 00:34 UTC))",
+   "evidence": "698e866"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-6",
+   "model": "claude-sonnet-5-5 (delivery lead, D154 pre-ship gate; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 23:03 to 00:34 UTC))",
+   "evidence": "f92a913"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-7",
+   "model": "claude-sonnet-5-5 (product manager, sign-off; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 23:03 to 00:34 UTC))",
+   "evidence": "4f050c4"
+  }
+ ],
+ "retro": "docs/retros/card-219-2026-10-30.md",
+ "notes": "Criterion 1: red 451f4ea, unit ab94601, green b374ef7. Criterion 2 with Done check 3: red 55b5794, unit 66904ab, green 1a08bd6. Intent line bca5510 confirmed e4cda78 (D165). Review e60a511 APPROVE (held records passed in a rehearsal clone); gate f92a913; CI run 41152086289 success; sign-off 4f050c4. Lands with the held records of cards 208 and 209 in this commit (D159 C6). Deviation: the forged-date guard was not written (judged unneeded). Retro pick D166."
+}
