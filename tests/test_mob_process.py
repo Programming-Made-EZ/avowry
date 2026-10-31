@@ -410,6 +410,59 @@ jobs:
         # Then the ordinary close order passes
         self.assertEqual([], errors)
 
+    def stamp(self, hour, minute=0): return f"2026-01-01T{hour:02}:{minute:02}:00+00:00"
+
+    def evidence_commit(self, card, stamp):
+        # Fixture: a dated working-increment commit for the card; its hash is returned
+        with mock.patch.dict(os.environ, {"GIT_COMMITTER_DATE": stamp}):
+            (self.root / f"work{card}.txt").write_text("done", encoding="utf-8")
+            self.git("add", f"work{card}.txt"); self.git("commit", "-m", f"Card {card}: working increment")
+            return self.git("rev-parse", "HEAD")
+
+    def record_commit(self, card, evidence, stamp):
+        # Fixture: add the card's record in a dated commit, then name the evidence in the working copy; the record text is returned for re-adding
+        with mock.patch.dict(os.environ, {"GIT_COMMITTER_DATE": stamp}):
+            record = self.valid_record(card)
+        record["seats"][0]["evidence"] = evidence
+        path = self.root / f".mob/records/{card:03}.json"
+        path.write_text(json.dumps(record), encoding="utf-8")
+        return path.read_text(encoding="utf-8")
+
+    def hold_back(self, card, stamp):
+        with mock.patch.dict(os.environ, {"GIT_COMMITTER_DATE": stamp}):
+            self.git("rm", "-q", "-f", f".mob/records/{card:03}.json"); self.git("commit", "-m", f"Card {card}: hold the trail back")
+
+    def re_add(self, card, text, stamp):
+        path = f".mob/records/{card:03}.json"
+        (self.root / path).write_text(text, encoding="utf-8")
+        with mock.patch.dict(os.environ, {"GIT_COMMITTER_DATE": stamp}):
+            self.git("add", path); self.git("commit", "-m", f"Card {card}: restore the trail")
+
+    def test_backdated_evidence_is_refused_naming_the_record_committed_immediately_before(self):
+        # Given records added in the order 216, 214, 209; 209's evidence postdates 216's record but predates 214's, which was committed immediately before 209's
+        ev216 = self.evidence_commit(216, self.stamp(1)); self.record_commit(216, ev216, self.stamp(2))
+        ev214 = self.evidence_commit(214, self.stamp(3)); ev209 = self.evidence_commit(209, self.stamp(3, 30))
+        self.record_commit(214, ev214, self.stamp(4)); self.record_commit(209, ev209, self.stamp(5))
+        (self.root / "docs/retros/r.md").write_text("Cards: 209, 214, 216\n# Individual\n# Team\n# Organisation\n# Product\nProcess improvement pick\n", encoding="utf-8")
+        # When the records are checked
+        errors = mob.check_records(self.root, [issue(216), issue(214), issue(209)], self.git)
+        # Then the back-dated evidence is refused and the error names the record committed immediately before, not the highest earlier number
+        self.assertEqual([f"Card 209 evidence {ev209} predates Card 214's record"], errors)
+
+    def test_held_record_sequence_passes(self):
+        # Given the real order 205, 214, 209, 208; 209 and 208 are added, held back, and re-added in separate commits after a stand-in 219 record
+        ev205 = self.evidence_commit(205, self.stamp(1)); self.record_commit(205, ev205, self.stamp(2))
+        ev214 = self.evidence_commit(214, self.stamp(3)); self.record_commit(214, ev214, self.stamp(4))
+        ev209 = self.evidence_commit(209, self.stamp(5)); held209 = self.record_commit(209, ev209, self.stamp(6)); self.hold_back(209, self.stamp(7))
+        ev208 = self.evidence_commit(208, self.stamp(8)); held208 = self.record_commit(208, ev208, self.stamp(9)); self.hold_back(208, self.stamp(10))
+        ev219 = self.evidence_commit(219, self.stamp(11)); self.record_commit(219, ev219, self.stamp(12))
+        self.re_add(209, held209, self.stamp(13)); self.re_add(208, held208, self.stamp(14))
+        (self.root / "docs/retros/r.md").write_text("Cards: 205, 208, 209, 214, 219\n# Individual\n# Team\n# Organisation\n# Product\nProcess improvement pick\n", encoding="utf-8")
+        # When the records are checked
+        errors = mob.check_records(self.root, [issue(c) for c in (205, 214, 209, 208, 219)], self.git)
+        # Then no predates, reuse, own-commit or closure error is reported: each record sits at its first add, not its re-add
+        self.assertEqual([], errors)
+
     def test_cards_line_rejects_one_to_three_words(self):
         # Given a retro uses words instead of the numeric range syntax
         (self.root / "docs/retros/r.md").write_text("Cards: 1 to 3\n", encoding="utf-8")
