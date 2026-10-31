@@ -48,3 +48,4 @@
 - 2026-10-31 00:43:00 UTC: independent reviewer [reviewer] ctx-5 (Claude seat), card 219 review (D159 C1-C6, D157, D162); last probe age 9 min (probe of 2026-10-31T00:34:49Z, .mob/records/probes/2026-10-30.jsonl); cap 2026-10-31 01:13:00 UTC (start + 30 min; source: the seat brief).
 - 2026-10-31 00:47:51 UTC: delivery lead ship ctx-6 (Claude seat), card 219 pre-ship gate (D154, D157, D162); last probe age 13 min (probe of 2026-10-31T00:34:50Z, .mob/records/probes/2026-10-30.jsonl); cap 2026-10-31 01:12:47 UTC (start + 25 min; source: the seat brief).
 - 2026-10-31 01:12 UTC: cards 208, 209 and 219 closed; no seat in flight; next: loop-boundary re-rank.
+- 2026-10-31 01:36 UTC: architect (slice) ctx-2 (Claude seat), card 226 slice (MD-002, D157, D166); last probe age 16 min (probe of 2026-10-31T01:20:30Z..40Z, .mob/records/probes/2026-10-30.jsonl); cap 2026-10-31 02:01 UTC (start + 25 min; source: the seat brief).
