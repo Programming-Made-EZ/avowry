@@ -140,6 +140,22 @@
    "full_suite": "565 tests OK, 1 skip (from 05:17 UTC, 1332.9 s)",
    "mutations": "M1 22 failures, M2 7, M3 11; M4 (dedupe in run() removed) survived, a guard gap named in the green body",
    "pushed": "about 05:42 UTC"
+  },
+  {
+   "criterion": 2,
+   "fix": "guard for mutation M4 (review F1)",
+   "repo": "mob-defaults",
+   "guard": "c65ec21 (a repeated seat name starts one voter, exits 0, keeps the vote; red against M4 in a scratch copy, 1 failure)"
+  },
+  {
+   "criterion": 3,
+   "fix": "review 69ff413 F2 and F3 (and a Claude voter's rotation_reason, found by QA beyond the review)",
+   "repo": "mob-defaults",
+   "red": "3a0819f (tests/test_decider_pin_scrub.py, 17 tests, 14 failing by assertion)",
+   "green": "43912b7 (voter launched with probe_model pin, fallback default; evidence and rotation_reason scrubbed)",
+   "full_suite": "583 tests OK, 1 skip (from 05:54:55 UTC, 1353.6 s)",
+   "mutations": "7 run, 7 killed",
+   "pushed": "about 06:21 UTC"
   }
  ],
  "stand_downs": [
