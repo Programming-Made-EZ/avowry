@@ -43,6 +43,25 @@
  ],
  "claude_seat_reason": "probes at 08:39 UTC show Codex, Copilot, Grok and agy without usable quota",
  "metric": "unflagged recursive deletes on variable paths (target 0); commits unpushed for more than about 5 minutes (target 0); counter-metric: false positives on literal scratch paths through safe_delete, replies reworded to dodge the scan",
+ "intent": {
+  "line": "Intent: the product owner wants the reply/command scan to block recursive deletes on any variable or computed path, in the words of the ruling: \"The reply/command scan must block rm -rf (and equivalents like Remove-Item -Recurse -Force) on any variable or computed path. Write the failing test first, reproducing tonight's exact slip.\" The reason given: a mis-quoted delete like the 2026-10-08 home-folder wipe could take out a repository including .git, losing every unpushed commit; so the same ruling puts one corrective card over the scan fix and push-on-every-commit. Why now: the open deletion-ban failure (F-071; audit 62) is a seat that ran rm -rf on a variable scratch path in card 226 criterion 1 while the reply scan, which reads only reply text, never saw the command. Stop the line; the scan is judged by the slip it failed to catch, so the first red reproduces that slip.",
+  "by": "QA engineer (red) ctx-4",
+  "decisions": [
+   "D165",
+   "F-071",
+   "audit 62"
+  ],
+  "sources": [
+   "product owner ruling 2026-10-31 (card 227 Source line and Context in board/227-*.md)",
+   "card 226 deviation 1 in .mob/records/226/record-in-progress.json",
+   "adopted condition of window 227-taskforce (the scan sees executed commands)"
+  ],
+  "confirmation": {
+   "status": "pending",
+   "by": "facilitator (D165 C2)",
+   "note": "quotes the ruling as relayed to the QA seat and the card text; not yet checked against recorded direction"
+  }
+ },
  "domain_expert": [
   {
    "boundary": "refinement",
