@@ -248,7 +248,11 @@
    "criterion": 3,
    "increment": "3d (review fix: facilitator watch default, dedupe, wording)",
    "repo": "mob-defaults",
-   "red": "9cd8006 (tests/test_push_watch_default.py, 205 lines; 17 tests, 11 failing by assertion; 6 guards shown red); finding: scan_pushes dedupes on the folder name, not the path"
+   "red": "9cd8006 (tests/test_push_watch_default.py, 205 lines; 17 tests, 11 failing by assertion; 6 guards shown red); finding: scan_pushes dedupes on the folder name, not the path",
+   "green": "mob-defaults f8a45da (scan_pushes watches the seat's repository and mob-defaults when MOB_WATCHED_REPOS is unset; flags keyed on real path; rule wording names watched repositories and residuals; test_card_mode isolated); avowry 5deedcc (rule wording)",
+   "full_suite": "first run 1253, failures=1 (timing test); second run 1253 OK, 1 skip (22:10:21 to about 22:38 UTC, 1684 s)",
+   "mutations": "7 run, 7 killed",
+   "real": "unpushed ok on both; push_rule_problems [] on both"
   }
  ],
  "stand_downs": [
@@ -664,6 +668,14 @@
    "transcript": "subagents/agent-a4584deb250d23a68.jsonl",
    "commands": 43,
    "source": "python delete_guard.py scan-transcript (mob-defaults 799af53), facilitator; read before recording"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green-3d",
+   "transcript": "subagents/agent-ab01982346ef4824f.jsonl",
+   "commands": 50,
+   "source": "python delete_guard.py scan-transcript (mob-defaults f8a45da), facilitator; read before recording"
   }
  ],
  "reviews": [
@@ -683,6 +695,9 @@
   },
   {
    "plan": "the architect triages both reviews into fix-in-227 (per criterion, outside-in, one criterion per cycle) and move-to-228, before any fix red"
+  },
+  {
+   "plan": "all seven triage increments done (1c to 1f, 2b, 3c, 3d); re-review by both reviewers next"
   }
  ]
 }
