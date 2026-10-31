@@ -117,3 +117,64 @@ Fix (in card 228 with finding 4): apply the rmtree rule only to Python text (a `
 ## 4. Checks run on this file
 
 `git diff --cached | tr -cd '\r' | wc -c` must print 0 before the commit; the commit message carries no trailer.
+
+## Re-check (ctx-3)
+
+Seat: security reviewer, ctx-3, a fresh context and a Claude seat (the 22:23 UTC probes in `.mob/records/probes/2026-10-30.jsonl` show Codex, Copilot, Grok and agy without usable quota). I wrote none of the code. Range: mob-defaults 00f9e93..f8a45da (greens 1c, 1d, 1e, 1f, 2b, 3c, 3d) and avowry c803a43 and 5deedcc. Method: a scratch COPY of `delete_guard.py`, `command_source.py` and `mob_process.py` in `...\scratchpad\rc3-copy-20261031a\` (no file deleted anywhere); about 400 strings passed to `scan_command(s, ["scratch"])` in a Python session (never executed); a fixture transcript tree (`projroot-a`) for the source; `_command_scans_problems` and `scan_limits_problems` called on hand-built records; and a scan of every transcript under `~/.claude/projects` for false positives. Probe scripts: `probe_old.py`, `probe_new.py`, `probe3.py`, `p4.py` to `p6.py`, `fpscan.py`, `fp2.py` in that folder. No delete command was run.
+
+## Verdict (re-check): APPROVE
+
+All five findings I called must-fix for Done (1 to 5) and the medium ones (6 to 10, 14) are closed with evidence, and the items the triage moved are present as lines 1 to 7 of card 228. The new bypasses I found are PowerShell or cmd spellings and eval-style string forms that are rare in agent output; none is an ordinary idiom, so none blocks Done. The false-positive cost is real but is a manual read, not a failing record (see 3). Everything new is tagged 228; N2 may be done in 227 if it is cheap.
+
+### 1. Status of the 17 findings (strings re-run on f8a45da)
+
+| # | Finding | Status | Evidence |
+|---|---|---|---|
+| 1 | PowerShell script blocks | CLOSED | All 9 rows flagged: `if (Test-Path $p) { Remove-Item -Recurse -Force $p }`, `ForEach-Object { ... }`, `foreach ... { }`, `try { } catch {}`, `if ($x) { rm -rf $p }`, `pwsh -Command "... { }"`, `Start-Job { }`, `Invoke-Command { }`. Also `& { ... }`, `$sb = { ri -r $p }; & $sb`, `do { } while`, `else { }`, `switch ... { 1 { } }`, `gci \| % { ri -r $_ }`, `function f { ri -r ... }` flagged. |
+| 2 | Command substitution | CLOSED | All 6 rows flagged: `echo $(rm -rf $d)`, `x=$(rm -rf C:/Users)`, backticks, `"$(...)"`, `<(...)`, `${x:-$(...)}`. |
+| 3 | Heredoc to a shell or interpreter | CLOSED | Flagged: `bash <<'SH'`, `sh -s <<'SH'`, `python - <<'PY'`, `python3 <<'PY'`, `cat <<'PY' \| python3`, `powershell -Command - <<'PS'`. Data stays quiet: `cat <<EOF > x.md`, `cat > f.py <<'EOF'`, `git commit -F - <<'EOF'`, `tee f <<'EOF'`. A delete after a closed heredoc (`cat <<EOF` ... `EOF` then `rm -rf $d`, `<<A <<B`, `<<-EOF`, `cat <<'EOF' >f; rm -rf $d`) is flagged. |
+| 4 | `rmtree` only at statement start | CLOSED | All 8 rows flagged (`if isdir: shutil.rmtree(p)`, `for`, assignment, `and`, list comprehension, `map(shutil.rmtree, ps)`, `from shutil import rmtree as r`, `r = shutil.rmtree`), also `import shutil as s; s.rmtree(p)`, `__import__('shutil').rmtree(p)`, `py -3 -c`, `python3.12 -c`, a full interpreter path, `ipython -c`. |
+| 5 | Closed wrapper list | CLOSED | All 15 rows flagged: `timeout`, `ionice`, `setsid`, `watch`, `parallel`, `busybox`, `busybox sh -c`, `wsl`, `wsl -e`, `ssh host`, `ssh host "..."`, `fish -c`, `csh -c`, `env -S`, `find -ok`. Also `time -p`, `sudo -u bob`, `env -i`, `env --`, `nice -n 5`, `bash -lc`, `-xc`, `-ec`, `--login -c`, `/usr/bin/env bash -c`. |
+| 6 | Escaped quote, function bodies | CLOSED | A backslash-quote followed by `; rm -rf $d; echo` and a backslash-quote is flagged (six variants, backslash built with `chr(92)` in `p4.py`); PowerShell backtick-quote variant flagged; `f() { rm -rf $1; }; f /` and `f(){ rm -rf $1; }` flagged. |
+| 7 | `cd` before a relative root; links | `cd` part CLOSED; links part MOVED to 228 (line 1, present) | `cd /; rm -rf scratch/x`, `cd ..; ...`, `cd /c/Users && ...`, `pushd /; ...`, `cd scratch/x && rm -rf ../../y` flagged. `ln -s / scratch/l; rm -rf scratch/l/x`, `mklink /J ... & rd /s /q scratch\l\x` and `rm -rf scratch\x` are still allowed; the scan-limits text says a link inside scratch is not seen (avowry line 451). Accepted. |
+| 8 | Only Bash and PowerShell read | CLOSED | Fixture transcript with a `Monitor` tool_use: `rm -rf $d` gives `findings`, `commands 1`, `other_tools 1` (the Write call is counted, not read), with `size` and `sha256`. |
+| 9 | Transcript locator | CLOSED for shadowing; residual N3 | A decoy `sess1.jsonl` in `aaa/` beside the real one in `zzz/` gives `no command source` (two folders). The hash is stored, but it is taken at scan time, so it shows no later edit. |
+| 10 | Record check trusts the record | CLOSED, small residual | `{"card":"F-071"}`, `"card-227"`, `True` each give a "no parseable number" problem; `not run` without a reason, `clean` without a session or transcript, `clean` with `commands: True` each fail; `no command source` has its own message. Unset `MOB_WATCHED_REPOS` now watches the seat's repository and mob-defaults (`facilitator.py` lines 1312-1314). "Every repository the mob works in" is gone from the agreements (grep prints nothing). Residuals: `clean` with any session string and any count passes (self-report); `task_force: []` with `command_scans: []` passes. LOW, N3. |
+| 11 | Commits on no upstream branch, detached, stash | MOVED to 228 (line 7, present) | Rule text still says "not a backup branch with no upstream". Accepted. |
+| 12 | Rewrite resets the clock; reflog not independent | CLOSED (wording) | Avowry lines 103-109: "a forced committer date sets the reflog time too"; residuals name amend/rebase, a local-path origin, hand-written remote refs. The patch-id state is in card 228 line 7. |
+| 13 | Future-date flag churn | CLOSED | `scan_pushes` keys on repository path plus the problem with the seconds figure normalised to `N seconds` (`facilitator.py` line 1319), so the same commit is flagged once. |
+| 14 | Scan rule text missing | CLOSED | `scan_limits_problems` returns `[]` for mob-defaults and for avowry; avowry line 451 (c803a43) states after the fact, detector not a block, Agent-tool seats by hand, encoded, hidden-verb, written-file and non-Claude forms, links in scratch, and names card 228. `push_rule_problems` also returns `[]` on both. |
+| 15 | Option and spelling gaps | MOVED to 228 (line 2, present) | Still unflagged: `rm --rec $d`, `rm --recur $d`, `rd/s/q scratch\x`, `git clean -f -- -n`. Accepted (LOW). |
+| 16 | False positives in PowerShell and shell idioms | MOVED to 228 (line 3, present) | Still flagged: `Remove-Item -Recurse -Force scratch/x -ErrorAction SilentlyContinue`, `-Filter *.x`, `rm -rf scratch/x # cleanup`, `find -H scratch/x -delete`. `{ Remove-Item ... scratch/x }` is now clean. |
+| 17 | `rmtree` named in read-only text | MOVED to 228 (the "Also owned here" line, present) | Still flagged, all 8 strings: `git commit -m 'a; shutil.rmtree(p)'`, `grep -n 'x; rmtree(p)' f.py`, `rg "\| rmtree(" .`, `git log -S ';rmtree(p)'`, `echo 'x;rmtree(p)'`, and the others. See 3. |
+
+Strings that must stay clean are clean: `rm -rf scratch/x`, `git commit -m "never run rm -rf $d"`, `echo "rm -rf is banned"`, `grep 'shutil.rmtree(' .`, `git clean -n`, `rm -f file.txt`, `Remove-Item file.txt`. A further 66 ordinary commands (`git status`, `python -m pytest`, `cd x && ls`, `ssh host ls`, `timeout 30 python x.py`, `Get-ChildItem | ForEach-Object { $_.Name }`, a harmless `python - <<'PY'`, a `cat > f.sh` heredoc with `rm -rf $d` inside, `git rm -r --cached x`, `rm -r scratch/x`) gave 0 false positives.
+
+### 2. Real red 1c delete (task 4)
+
+`scan_command('M=$S/mut-227-1c; rm -rf "$M" 2>/dev/null; mkdir -p $M', ["scratch"])` returns one finding, kind `recursive delete on a variable or unresolved path`, snippet `rm -rf "$M"`; the bare `rm -rf "$M" 2>/dev/null` returns the same. Flagged. The scan also flags real variable deletes in other seat transcripts (see 3).
+
+### 3. False-positive cost (task 3)
+
+Measured with the current scanner on every `.jsonl` under `~/.claude/projects` (read only):
+- last 3 days: 957 files, 928 clean, 29 with findings, 0 without a command source;
+- last 14 hours: 1 file with a real `rm`-style hit and 48 `rmtree` hits in 9 files. All 48 are strings inside a Python heredoc or `-c` body that a seat was feeding to the scanner (test data, mutation names, scanner source being edited); none is a delete. Same cause as the record's six false-positive transcripts.
+- the other findings in the 3-day window include genuine `rm -rf "$S/mut"` and `rm -rf $S` on variable scratch paths by seats (about 15 files); the scan is doing its job on those.
+
+Does it block Done? No. A `findings` entry only needs a non-empty reason and does not fail the record (`_command_scans_problems`: a Safety flag, not missing coverage), so the false positives cost a manual read and a sentence, not a re-run. Do they invite rewording? A little, and the dodge is already visible: write the snippet to a file with a `cat > f.py` heredoc (quiet) and run `python f.py` (not scanned, card 228 line 6); I did this myself in this review without intending to. That makes the hole in 228 line 6 (a script written earlier and run later) the place where noise and evasion meet.
+
+The larger cost is the one the record already shows: noise led the facilitator to skip reading a `findings` result, and a real delete (red 1c) went unreported for about 2 h 40 min. The record names the fix (classify every `findings` result before committing). A structural fix belongs in 228 (N1).
+
+### 4. New findings
+
+**N1. MEDIUM, 228. Parse Python text instead of matching it.** The `rmtree` rule runs on the text of a Python heredoc or `-c` body, so a string literal containing `rmtree` flags (48 hits in 14 h). Fix: `ast.parse` the body and flag a call whose function name is `rmtree` (or an alias from `from shutil import rmtree as r`), falling back to the text rule when it does not parse. Add to 228 line 3. Also have the scan entry keep the snippets of a `findings` result so the record shows what a "false positive" reason claims.
+
+**N2. LOW-MEDIUM, 228 (227 if cheap). PowerShell and cmd spellings the parser does not group.** Not flagged: `@(Remove-Item -Recurse $p)`, `[void](Remove-Item -Recurse $p)`, `$r = @(ri -r $p)` (a bare `(Remove-Item ...)` and `$(...)` are flagged); `Invoke-Expression 'ri -r $p'` and `iex "Remove-Item -Recurse $p"` (the analogue of `eval 'rm -rf $d'`, which is flagged); `Start-Process pwsh -ArgumentList '-c ri -r $p'`; cmd `if exist x (rd /s /q %p%)` and `@rd /s /q %p%`; `pwsh -EncodedCommand` (already 228). Fix: treat `@(`, `[type](` and cmd `(`...`)` as groups, and add `invoke-expression` and `iex` to the eval-style runners.
+
+**N3. LOW, 228. The record trusts a `clean` entry, and the sha is taken at scan time.** `clean` with any session string and any count passes `check_record`; the stored `sha256` cannot show an edit made before the scan; `task_force: []` with `command_scans: []` passes. Fix with the CardRun write path (228 line 4): the code writes the entry, and `check_record` compares `sha256` and `commands` with the transcript when it is present.
+
+**N4. LOW, 228. Further forms not named in 228.** `uv run - <<'PY'` and other interpreter wrappers for a heredoc; an unquoted `python <<EOF` with `os.system('rm -rf ' + p)` (os.system is owned); `cmake -E remove_directory $p`; `Start-Process rm -ArgumentList`; `perl -e`, `ruby -e`, `php -r` calling a shell delete. Same family as lines 1 to 6; add to line 6.
+
+### 5. Not re-run
+
+The 22 detector fixture repositories were not rebuilt; I read `scan_pushes`, `push_rule_problems` and the agreement text and ran the two checks on the real repositories (both `[]`). The mutation runs in the record (C3, B3, B9, D4, M9, A2) are the QA seats' and were not repeated.
