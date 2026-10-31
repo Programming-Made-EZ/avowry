@@ -109,6 +109,11 @@
    "by": "facilitator",
    "what": "the re-probe due by 10:24 UTC (50 minutes after 09:34) was taken at about 10:27, after the red seat returned",
    "handling": "recorded; the red seat started at 10:15 on a 40-minute-old probe, under 60"
+  },
+  {
+   "by": "backend developer ctx-5",
+   "what": "green body says the guards are '+20 lines'; the diff is +19",
+   "handling": "recorded, not amended"
   }
  ],
  "cycles": [
@@ -117,7 +122,10 @@
    "repo": "mob-defaults",
    "red": "524171f (10 files, 233 lines, test only; 132 tests, 46 failing by assertion, 86 born-green guards shown red under six mutations)",
    "slip": "agent-a23913037593be5a6.jsonl 02:00:23Z: SP=<scratchpad>; rm -rf $SP/mut 2>/dev/null; mkdir -p $SP/mut (card 226 developer seat, criterion 1 green); the slice's attribution of it to a QA seat was wrong",
-   "pushed": "at commit (push on every commit)"
+   "pushed": "at commit (push on every commit)",
+   "green": "2fc4f98 (scan_command at command position; literal strict scratch-child allow-list; scan-transcript exit 0, 1 or 2; second clause on a line now flagged; run_backend not yet wired)",
+   "full_suite": "718 tests OK, 1 skip (10:48:49 to about 11:12 UTC, 1365.4 s)",
+   "mutations": "17 run, 17 killed after three added guards (CommandScanGuards)"
   }
  ],
  "stand_downs": [],
@@ -129,6 +137,10 @@
    "counter_metric": "count of follow-up cards",
    "baseline": "slice 4037cfe to amendment 2e2e0f3 about 22 min plus a 13-minute window on a 55 KB slice; first red not yet in at 10:15 UTC",
    "facilitator_note": "criterion 1 is already the scan alone under D157 (criteria 2 and 3, the ladder and the detector, come after its green), so the stand-down after criterion 1 can test the hypothesis on the slice document itself"
+  },
+  {
+   "by": "facilitator (watchdog relayed)",
+   "observation": "the facilitator ended its turn right after launching the criterion 1 green seat (following the bounded-turn instruction), and the watchdog saw it as idle mid-card; the seat was running inside its cap. The two instructions (bounded turns; never idle mid-card) are reconciled as: a turn ends only after a capped wait shows progress, never right after a launch"
   }
  ],
  "follow_up_cards": [
