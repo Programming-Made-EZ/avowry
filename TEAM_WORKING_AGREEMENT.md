@@ -94,6 +94,17 @@ The mob process keeps drifting, so it comes first: lock it down, enforce it with
   each test as sensitive as before.
 - **Trunk-based development.** Each green increment ships to main as soon as the gate is green; no
   long-lived branches. The gate (tests, zero warnings, any CI) passes before anything deploys.
+- **Push every commit (checked, card 227, F-071).** Every commit is pushed straight after it is made, in every repository the mob
+  works in; a commit unpushed for more than 5 minutes is a FAIL. Why: a mis-quoted delete can take out a repository including
+  `.git`, and every unpushed commit goes with it. `python mob_process.py unpushed <repo>...` (mob-defaults' `mob_process.py`;
+  git only, origin is never contacted) exits 1 naming the repository, the short sha and the age in seconds (300 passes, 301
+  fails); a commit dated in the future, a missing path or plain folder, a repository with commits and no `origin`, and any
+  non-zero git exit are FAILs too. It counts HEAD, every local branch with an upstream and every worktree HEAD, not a backup
+  branch with no upstream; the age is the older of the committer time and the earliest reflog entry. The audit pass runs it on
+  the audited repository and on mob-defaults, and the facilitator runs it after every seat on the repositories in the
+  `MOB_WATCHED_REPOS` environment variable (a `Push flag` in MOB.md, once per commit). Known gaps: remote-tracking refs are local
+  (a hand-written `origin/main` ref or an `origin` that points at a local clone looks pushed), and a rewrite resets the committer
+  time (rewrites are banned).
 - **No `Co-Authored-By` trailers on commits** (the product owner's standing coding rule). This covers drivers, the facilitator and
   the MOB.md publisher. A `commit-msg` hook (`.githooks/commit-msg`, enabled with `git config core.hooksPath .githooks`)
   rejects them. Pushed history is not rewritten.
