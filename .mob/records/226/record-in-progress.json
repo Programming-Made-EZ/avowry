@@ -244,5 +244,14 @@
    "by": "backend developer ctx-4",
    "observation": "for criterion 3: a Claude voter's reason is built by commit_seat from the history read before this run's earlier voters, so a same-run codex voter shows as 'never seated' in it; criterion 3 must account for that"
   }
+ ],
+ "confirmations": [
+  {
+   "by": "facilitator",
+   "criterion": 3,
+   "at": "2026-10-31T04:09:29Z",
+   "red": "9c8bb71 (mob-defaults)",
+   "confirmation": "Confirmed (stand-down 2 (2), D165): the reading in red 9c8bb71 follows D163 and D164. A Claude voter's recorded rotation reason must name a same-run non-Claude voter's seat-use line (its time and line index) and must not say that model was 'never' seated, because the decision already counted that line when it judged Claude (criterion 2, CardRun.check_seat pending lines). A reason that says 'never' for a model the same run seated misstates the history the rotation was judged on, so an auditor recomputing D163's 'even out' from git would be misled. Not confirmed here, left to the independent reviewer: the top-level probe object in decider-result.json and the 'Probe in force' log line, which go beyond the slice (QA added them because the recompute needs the non-voting models' ok flags); the field names are QA's choice."
+  }
  ]
 }
