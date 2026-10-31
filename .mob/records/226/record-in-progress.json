@@ -278,5 +278,22 @@
    "red": "9c8bb71 (mob-defaults)",
    "confirmation": "Confirmed (stand-down 2 (2), D165): the reading in red 9c8bb71 follows D163 and D164. A Claude voter's recorded rotation reason must name a same-run non-Claude voter's seat-use line (its time and line index) and must not say that model was 'never' seated, because the decision already counted that line when it judged Claude (criterion 2, CardRun.check_seat pending lines). A reason that says 'never' for a model the same run seated misstates the history the rotation was judged on, so an auditor recomputing D163's 'even out' from git would be misled. Not confirmed here, left to the independent reviewer: the top-level probe object in decider-result.json and the 'Probe in force' log line, which go beyond the slice (QA added them because the recompute needs the non-voting models' ok flags); the field names are QA's choice."
   }
+ ],
+ "reviews": [
+  {
+   "seat": "independent reviewer (audit lens) ctx-5",
+   "commit": "69ff413",
+   "file": ".mob/records/226/review-ctx5.md",
+   "verdict": "CHANGES REQUESTED",
+   "findings": {
+    "F1": "medium: seat-use line written for a voter that never starts (disabled, unknown, duplicate seat); criterion 2",
+    "F2": "medium to low: voter launched with key 'default' while the probe runs probe_model; agree by key order only; criterion 3",
+    "F3": "low: probe evidence unscrubbed in the git-tracked log and result; criterion 3",
+    "F4": "info, accepted",
+    "F5": "info, cost of a probe per Decider run, for the retro"
+   },
+   "probe_object": "accepted, condition: name the field in Done check 3 at close",
+   "plan": "fixes outside-in, one criterion per cycle (D157): F1 as a criterion 2 red and green, then F2 and F3 as a criterion 3 red and green, then re-review"
+  }
  ]
 }
