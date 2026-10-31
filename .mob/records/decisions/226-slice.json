@@ -78,6 +78,16 @@
    "condition": null,
    "raw": "Yes\nNO OBJECTION\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
+  },
+  {
+   "role": "product manager (ready)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-1",
+   "started_at": "2026-10-31T01:41:49Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "Yes\n\nNO OBJECTION\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
   }
  ],
  "decision": null,
