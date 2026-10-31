@@ -115,6 +115,21 @@
    "full_suite": "497 tests OK, 1 skip (03:22:22 to 03:43:38 UTC); 13 mutations killed (one rerun after a mis-targeted first M2d)",
    "pushed": "about 03:47 UTC",
    "probe": "re-probe 03:29 UTC (39d63e6), all four non-Claude drivers still without quota"
+  },
+  {
+   "criterion": 3,
+   "repo": "mob-defaults",
+   "red": "9c8bb71 (tests/test_decider_record.py, 23 tests, 20 failing by assertion, 3 born-green guards shown red on a scratch prototype)",
+   "units": [
+    "2ebedd0 (decider.run puts each voter's record into its vote, the probe in force at the top of the result, both into append_log)",
+    "c466110 (decider.start_voters returns one voter record per voter, built from the history as written)",
+    "e6d24bb (decider.voter_record and decider.probe_record)"
+   ],
+   "green": "165fde8 (same-run reason fixed in decider.start_voters through mob_process.rotation_reason, no copy; facilitator.py unchanged)",
+   "full_suite": "538 tests OK, 1 skip (04:25:11 to about 04:47 UTC, 1305.8 s); recompute and mutation output pasted in the green body",
+   "pushed": "about 04:49 UTC",
+   "probes": "04:09 (d6e26ad) and 04:46 (63d3ce1), all four non-Claude drivers still without quota",
+   "confirmation": "40403b6 (same-run reason reading against D163 and D164, before the green seat)"
   }
  ],
  "stand_downs": [
@@ -233,6 +248,12 @@
    "what": "the red a54c9d9's body says the other suites 'stayed green', but only the decider, seat-gate and seat-rotation modules were measured; test_mob_process, test_smoke and test_card_mode did not finish within the cap; reported by the seat itself",
    "rule": "report outcomes faithfully; no amends",
    "handling": "recorded, not amended; the green's single full run (497 OK) covered the unmeasured suites; raised at stand-down 2"
+  },
+  {
+   "by": "backend developer ctx-4",
+   "what": "unit layer 9 (e6d24bb) body says 'Ran 21' where the run was 'Ran 18, failures=15'; its copied-rule guard held a stray backspace where \b belonged, so it could not fail (mutation M3c survived); both disclosed in the green body and the guard fixed there; also ran 'rm -f /dev/null' once by mistake (not recursive, refused by the OS)",
+   "rule": "stand-down 2 (1): claims carry their command and count; guards shown red",
+   "handling": "recorded, not amended; M3c rerun killed after the fix; raised at the review and the retro"
   }
  ],
  "observations_for_next_stand_down": [
@@ -243,6 +264,10 @@
   {
    "by": "backend developer ctx-4",
    "observation": "for criterion 3: a Claude voter's reason is built by commit_seat from the history read before this run's earlier voters, so a same-run codex voter shows as 'never seated' in it; criterion 3 must account for that"
+  },
+  {
+   "by": "facilitator",
+   "observation": "left to the independent reviewer: the top-level probe object in decider-result.json and the 'Probe in force' log line go beyond the slice (QA's choice of fields)"
   }
  ],
  "confirmations": [
