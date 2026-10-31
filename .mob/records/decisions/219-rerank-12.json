@@ -67,6 +67,17 @@
    "condition": "Put the window-rule checker card ahead of the flake and loophole cards, and state in the proposal that only that card, not every card, carries the process ceremony.",
    "raw": "OBJECTION\nCONDITION: Put the window-rule checker card ahead of the flake and loophole cards, and state in the proposal that only that card, not every card, carries the process ceremony.\n\nSupport-it. The order is sound: the cards that name open FAILs go first, and the decision-seat card (226) leads. Process-first is the direction the product owner gave (D161). The slices are small, and nothing here delays restarting the line beyond what the stop-the-line gate already forces.\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
+  },
+  {
+   "round": 1,
+   "role": "product manager (signoff)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "w12-pmsignoff",
+   "started_at": "2026-10-31T01:20:54Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes. The proposal keeps the stop-the-line gate in force. It puts the cards that name open FAILs first, so closing them frees the other cards. It doesn't specify later work up front, and it states its reversals.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
   }
  ],
  "decision": null,
