@@ -57,9 +57,9 @@
    "adopted condition of window 227-taskforce (the scan sees executed commands)"
   ],
   "confirmation": {
-   "status": "pending",
-   "by": "facilitator (D165 C2)",
-   "note": "quotes the ruling as relayed to the QA seat and the card text; not yet checked against recorded direction"
+   "by": "facilitator",
+   "at": "2026-10-31T10:27:51Z",
+   "text": "Confirmed against the product owner's ruling (quoted word for word) and F-071/audit 62. One open reading: 'block' is sliced as detect-and-fail-the-record (227) with prevention before execution in card 228's opt-in hook; the direction question is with the product owner."
   }
  },
  "domain_expert": [
@@ -99,9 +99,27 @@
    "by": "architect (slice)",
    "what": "card 227 exceeds the per-card guide by one increment and one concern (4 increments, 2 concerns) because the product owner ruled one card for the scan and push-every-commit; every commit stays within D136",
    "handling": "recorded at the slice (2e2e0f3)"
+  },
+  {
+   "by": "QA engineer ctx-4 and facilitator",
+   "what": "the intent line (254e1d9) was committed with its confirmation pending; card 219's stand-down tune asks for line and confirmation in one commit",
+   "handling": "confirmation added in this commit; recorded"
+  },
+  {
+   "by": "facilitator",
+   "what": "the re-probe due by 10:24 UTC (50 minutes after 09:34) was taken at about 10:27, after the red seat returned",
+   "handling": "recorded; the red seat started at 10:15 on a 40-minute-old probe, under 60"
   }
  ],
- "cycles": [],
+ "cycles": [
+  {
+   "criterion": 1,
+   "repo": "mob-defaults",
+   "red": "524171f (10 files, 233 lines, test only; 132 tests, 46 failing by assertion, 86 born-green guards shown red under six mutations)",
+   "slip": "agent-a23913037593be5a6.jsonl 02:00:23Z: SP=<scratchpad>; rm -rf $SP/mut 2>/dev/null; mkdir -p $SP/mut (card 226 developer seat, criterion 1 green); the slice's attribution of it to a QA seat was wrong",
+   "pushed": "at commit (push on every commit)"
+  }
+ ],
  "stand_downs": [],
  "observations_for_next_stand_down": [
   {
