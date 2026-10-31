@@ -381,6 +381,7 @@ jobs:
             ("first record in history has none", 214, {214: "a", 209: "b"}, None),
             ("higher number added first is not lower number's previous", 209, {214: "a", 209: "b"}, 214),
             ("nearest earlier, not the first", 209, {205: "a", 214: "b", 209: "c"}, 214),
+            ("nearest earlier by position, not the largest number", 209, {216: "a", 214: "b", 209: "c"}, 214),
             ("number-lower card added later is not previous", 214, {209: "b", 214: "a"}, None),
             ("same commit records do not constrain each other", 209, {205: "a", 214: "b", 209: "b"}, 205),
             ("a record not in history order is ignored", 209, {214: "z", 209: "b"}, None),
