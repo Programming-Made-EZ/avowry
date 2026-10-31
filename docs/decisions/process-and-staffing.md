@@ -559,3 +559,26 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   C6. Missing loops, candidates for later picks, not this one: pairing (no live steering; Dispatch's navigator), feature (no persona demo), epic (no LLM-customer benchmark). Slow: lifecycle (owner input at sign-off), slice (pollution found by the 20-minute run).
   REVERSIBILITY: two-way door. Delete the intent rule and the template section; no shared state, checker or earlier D-record changes.
   VOTING RULE: reply first line Yes, Support-it or No, then P1: to Pn: one line each (one per proposal point). A No names ONE fixed condition (CONDITION: ...). A reasonable, reversible condition is adopted and the proposal re-polled; a later round may not add new demands. Only an irreconcilable purpose or model conflict escalates. Independent fresh-seat re-run before recording.
+
+<a id="d166"></a>
+#### Decider D166: the card 219 retro pick (An assumption line with a probe in the slice of any card that changes a rule, the ranking or the checker)
+
+- Date: 2026-10-30. Proposer: agile coach seat, from the card 219 retro (docs/retros/card-219-2026-10-30.md). Seats through decider.py with the headless claude CLI, model sonnet: round 1 3 Yes, 3 Support-it; independent re-run with the agile coach in place of the product manager: 3 Yes, 3 Support-it. Votes in .mob/records/deciders/D166-votes.json.
+- Result: PASSED. Adopted text:
+  Decider D166, the card 219 retro process pick, as an experiment
+  PICK: an assumption line in the slice for any card that changes a rule, the ranking or the checker (five of seven voices; the MOB.md freshness check is deferred, not rejected).
+  Why: the record checker assumed cards close in number order; re-ranking (D160) made that false and nobody looked, so signed-off cards 209 and 208 were held for several cards. Check the invariant where the change is made, not where a card trips on it.
+  HYPOTHESIS: We believe naming the invariants a change touches, with one real-history probe each, removes stuck cards caused by a stale invariant. We will know when cards held by such an assumption fall from 2 to 0.
+  RULE UNDER TRIAL:
+  C1. A card whose slice changes a rule, the ranking or order of cards, or the checker adds one line to the slice: "Assumes: <invariant the checker or gate relies on>; probe: <a real record or the current ranking it was tried against>". One line per invariant, at most three.
+  C2. The architect writes it; the reviewer checks the probe at review. A line without a probe is "unprobed" and review checks it first.
+  C3. Cards that change none of these write "no invariant change". No new file, seat or meeting.
+  C4. This is a slice line only. It is not an intent line (D165, red record), not a facilitator checklist item (D158), and not a red-green rule (D157).
+  METRIC: cards held or blocked by an invariant that stopped being true, per card, from git (target 0).
+  COUNTER-METRICS: slice minutes added; unprobed lines per card; lines that name no real invariant (ceremony). Evidence, not targets.
+  TRIAL SCOPE: the next 3 cards that match C1, the window of D150 to D158 and D165. The trial retro decides keep, revise or drop by Decider. Cards outside C1 do not count.
+  ACCOUNTABILITY CHECK: per card, git shows the slice line or "no invariant change". A matching card without it counts as not run; the auditor tick may FAIL it.
+  NO BLUR: D157, D158 and D165 keep their own metrics and cards. Retros score each on its own record: D157 from cycles, D158 from the facilitator checklist, D165 from Intent lines, D166 from slice assumption lines. A D166 catch is not credited to the others, and a card's outcome is tagged to the rule that caught it.
+  BASELINE (card 219): 2 signed-off cards (209, 208) held by an ordering assumption; both released only by a one-card waiver (D162) and card 219 (about 55 minutes to green).
+  REVERSIBILITY: two-way door. Delete the slice line; no shared state, checker or earlier D-record changes.
+  VOTING RULE: reply first line Yes, Support-it or No, then P1: to Pn: one line each (one per proposal point). A No names ONE fixed condition (CONDITION: ...). A reasonable, reversible condition is adopted and the proposal re-polled; a later round may not add new demands. Only an irreconcilable purpose or model conflict escalates. Independent fresh-seat re-run before recording.

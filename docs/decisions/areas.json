@@ -1102,5 +1102,11 @@
     "status": "in force",
     "title": "Intent line before the first red, confirmed against recorded direction; feedback-loop lens as a standing retro section (card 208 retro pick)",
     "order": 156
+  },
+  "D166": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "An assumption line with a probe in the slice of any card that changes a rule, the ranking or the checker (card 219 retro pick)",
+    "order": 157
   }
 }

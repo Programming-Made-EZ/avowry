@@ -1,0 +1,107 @@
+{
+ "decider": "D166",
+ "subject": "card 219 retro pick, an assumption line with a probe in the slice of any card that changes a rule, the ranking or the checker",
+ "proposer": "agile coach seat",
+ "result": "PASSED round 1 (3 Yes, 3 Support-it), confirmed by the independent re-run (3 Yes, 3 Support-it)",
+ "claude_seat_reason": "probes show Codex, Copilot, Grok and agy without usable quota",
+ "round1": [
+  {
+   "role": "pm",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d166-pm",
+   "started_at": "2026-10-31T01:03:43Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 (Pick/hypothesis): The pick is tied to a concrete product harm, two signed-off cards held for about 55 minutes, and it has a measurable target of 2 to 0.\nP2 (C1): The rule applies only to cards that change a rule, the ranking or the checker. Other cards carry no cost, so it is not over-specified up front.\nP3 (C2): The architect writes the line and the reviewer checks the probe. Each role works in its own context, and an unprobed line gets checked first.\nP4 (C3): \"No invariant change\" is a single line with no new file, seat or meeting. That keeps the overhead small.\nP5 (C4): The rule stays a slice line and does not blur into D157, D158 or D165. This follows the no-blur rule.\nP6 (Metric and counter-metrics): The metric comes from git and has a target of 0. The counter-metrics (slice minutes, unprobed lines, ceremony) are evidence, not targets, so they do not invite Goodhart gaming.\nP7 (Trial scope): The trial covers 3 matching cards, and the retro decides keep, revise or drop. Removal happens only at the retro, as the standing rules require.\nP8 (Accountability): A matching card without the line counts as not run, and the auditor tick may FAIL it. An open FAIL stops the line, consistent with the standing rules.\nP9 (Baseline and no-blur scoring): The card 219 baseline is concrete, and each retro scores each rule on its own record.\nP10 (Reversibility): It is a two-way door. Deleting the slice line undoes it and no shared state changes.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d166-architect",
+   "started_at": "2026-10-31T01:03:43Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (the pick): Sound and minimal. It checks the invariant at the change site, and the card 219 record shows the failure it targets.\n\nP2 (C1, the slice line): One line per invariant, capped at three, with a probe. That is cheap and testable. Whether a card \"changes a rule, the ranking or the checker\" is a judgment call, so the architect's classification will vary at the edges.\n\nP3 (C2, who checks): The reviewer checks the probe, and an \"unprobed\" label gives review a concrete thing to look for. A probe has to be something someone actually ran, because the git-only audit can't confirm that it was.\n\nP4 (C3, no new file, seat or meeting): Good. \"No invariant change\" is a cheap default for cards outside C1.\n\nP5 (C4, no blur with D157, D158, D165): Clear boundaries, and each rule keeps its own metric.\n\nP6 (metric and counter-metrics): The held-cards metric is measurable from git. The ceremony counter-metric is the one most likely to show false positives, so the trial retro should sample it by hand.\n\nP7 (accountability check): A matching card with no line counts as not run, and the git check is objective. The rule is only as good as how well \"matches C1\" is defined, so the trial retro should record borderline cards.\n\nP8 (reversibility): Two-way door. Deleting the slice line is enough to undo it.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d166-qa",
+   "started_at": "2026-10-31T01:03:43Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (C1): Testable red first, because a stale-invariant card can be replayed against the real ranking and the rule fails visibly when the line or its probe is missing.\nP2 (C2): Reviewer-checked probe is a manual gate. \"Unprobed\" is a detectable state, but nothing mechanical stops a fake probe, so the reviewer must actually run it.\nP3 (C3): \"No invariant change\" is cheap, but it can hide a miss, so reviewers should spot-check it on cards that touch the checker.\nP4 (C4): Keeping it separate from D157, D158 and D165 keeps the signal clean, so a failure can be traced to one rule.\nP5 (Hypothesis and metric): The metric is observable from git and the counter-metrics (ceremony, unprobed lines) catch pass-through. A baseline of 2 is a small sample, so read the result as evidence, not proof.\nP6 (Trial scope): Three matching cards is thin but acceptable for a two-way-door experiment.\nP7 (Accountability): Git shows the line or its absence, and \"not run\" makes a miss auditable.\nP8 (No blur) and P9 (Reversibility): Both are fine. Deleting the slice line undoes it, with no shared state touched.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d166-dev",
+   "started_at": "2026-10-31T01:03:43Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 (C1, the slice line): Workable. One line of \"Assumes: X; probe: Y\" is cheap to write, and the probe forces me to try the change against real history rather than only the unit doubles.\nP2 (C2, architect writes, reviewer checks): Fair to the work. The architect knows the invariants and the reviewer's check is concrete. An \"unprobed\" line gets reviewed first, so nobody has to argue about it.\nP3 (C3, \"no invariant change\"): I can comply without gaming it. The trigger (rule, ranking or checker) is clear, and a false \"no change\" would show up when the reviewer compares the slice with the diff.\nP4 (C4, slice line only): Clear boundaries. It adds nothing to the red record, the facilitator checklist or the red-green rules, so I won't be doing the same work in two places.\nP5 (hypothesis, metric, counter-metrics): The metric is checkable from git. The ceremony counter-metric is the right guard against padded lines.\nP6 (trial scope, accountability, no blur): Three matching cards is enough to learn from, and a missing line counts as \"not run\" rather than as a failure of mine. Scoring each rule on its own record is fair.\nP7 (reversibility, baseline): Two-way door. The card 219 baseline is stated with its numbers, and dropping the rule means deleting one line.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d166-auditlens",
+   "started_at": "2026-10-31T01:03:43Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The slice line is committed text, so git can show it was written, but it can't show the card should have written one. Self-classification into C1 versus \"no invariant change\" is the main loophole. Review should spot-check the diff against C1 triggers (rule, ranking or checker files touched).\nP2: A probe that names a real record or the current ranking can be re-run from git by the reviewer. A probe that only exists in the line and was never run would show up as unprobed.\nP3: Having the architect write the line and the reviewer check it is a separate-hands check. It is verifiable only if the reviewer's probe check leaves a trace in the review record. Please require that.\nP4: The slice-line-only scope (C4) keeps this clear of D157, D158 and D165. The no-blur rule makes each catch attributable to one rule.\nP5: The metric \"cards held by a stale invariant\" can be read from git, since holds and waivers are committed. The counter-metrics for ceremony lines are judgment calls, but they're framed as evidence, not targets.\nP6: The accountability check (missing line counts as not run, and the auditor may FAIL it) closes the skip loophole.\nP7: Trial scope is bounded at 3 matching cards and it's a two-way door, so the risk is low.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d166-delivery",
+   "started_at": "2026-10-31T01:03:43Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Pick: one slice line only on rule, ranking or checker cards is a thin slice that adds no files, seats or meetings, and the MOB.md freshness check stays deferred.\nP2: Hypothesis: it is testable, and the baseline of two held cards and about 55 minutes to green shows the cost of a stale invariant exceeds a one-line probe.\nP3: C1: at most three one-line assumptions per matching card keeps the added slice time to minutes and the commit well inside D136's 15 files and 400 lines.\nP4: C2: the architect writes the line and the reviewer checks the probe inside the existing review, so no new handoff or queue is added.\nP5: C3: \"no invariant change\" costs one line on non-matching cards, so there is no ceremony on the rest of the line.\nP6: C4: keeping it separate from D157, D158 and D165 avoids stacking checklists on the facilitator.\nP7: Metric: held-or-blocked cards per card from git is cheap to read and has a clear target of 0.\nP8: Counter-metrics: slice minutes added and ceremony lines are the right flow guards. I will watch commit-to-live against the 45-minute median.\nP9: Trial scope: three matching cards is quick, so we can restart the line now and get the verdict fast.\nP10: Accountability: a git-visible line per card is enough, and treating a missing line as \"not run\" is proportionate.\nP11: No blur: scoring each rule on its own record keeps the trial readable.\nP12: Baseline and reversibility: the baseline is grounded in card 219, and deleting the slice line undoes the whole trial, so it is a two-way door.\n"
+  }
+ ],
+ "rerun": [
+  {
+   "role": "coach",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d166rr-coach",
+   "started_at": "2026-10-31T01:03:44Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 (C1 trigger and line): The line is cheap and sits where the change is made. It is capped at three invariants and tied to a real probe, so it is sized to the failure it targets.\nP2 (C2 roles): The architect writes the line and the reviewer checks the probe at review. No new seat is added, and the reviewer already reads the slice, so the perspective is covered.\nP3 (C3 opt-out): \"No invariant change\" is a one-phrase exit, so cards that don't match C1 carry no ceremony.\nP4 (C4 separation): Keeping it a slice line stops it merging into the D157, D158 and D165 checklists, which guards against stacking rules on one moment.\nP5 (metric and counter-metrics): Counting held cards against slice minutes and ceremony lines is the right pairing. The baseline of 2 cards held is small, so I read the result as evidence and not as proof.\nP6 (trial scope): Three matching cards is a short, bounded window with a keep, revise or drop decision at the end.\nP7 (accountability check): An auditor tick on whether the line is present is proportionate. A missing line counts as not run and is not treated as a failure of the card.\nP8 (no blur): Each rule is scored on its own record, so the retro won't credit this rule for another's catch.\nP9 (reversibility): It is a two-way door. Deleting the slice line undoes it, with no checker or shared state changed.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d166rr-architect",
+   "started_at": "2026-10-31T01:03:44Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: The pick is sound. It puts the invariant check at the change that breaks it, which is where the card 219 failure started.\nP2: C1 is minimal, with one line per invariant and a cap of three. Its trigger (\"changes a rule, the ranking or order, or the checker\") is a little fuzzy, so the reviewer should rule on borderline cases.\nP3: C2 is enforceable. The reviewer checks the probe against a real record or the current ranking, and \"unprobed\" is a visible state.\nP4: C3 gives a cheap, greppable negative, \"no invariant change\", so a card can't skip the line without it showing.\nP5: C4 keeps the rule separate from D165, D158 and D157, so it doesn't add a checker rule and can't produce false positives from the checker.\nP6: The metric (cards held by a stale invariant) is observable from git, and the counter-metrics catch ceremony.\nP7: The trial scope of the next 3 matching cards is small enough to judge and short enough to finish.\nP8: The accountability check (\"not run\" if the line is missing) is clear and uses the auditor tick.\nP9: NO BLUR keeps attribution per rule, so a D166 catch isn't credited to D157, D158 or D165.\nP10: The baseline of 2 held cards and about 55 minutes to green is concrete.\nP11: Reversibility is a true two-way door, because you only delete the slice line.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d166rr-qa",
+   "started_at": "2026-10-31T01:03:44Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The pick is testable red first. Replay card 219's slice without an assumption line, and the probe \"is the ranking in number order?\" fails against the D160 ranking.\nP2: The metric (cards held by a stale invariant, from git) can be checked after the fact and has a real baseline of 2.\nP3: C1 is vague about what counts as a \"rule, ranking or checker\" change. The trigger depends on the architect's judgment, so a card could skip the line without any check noticing.\nP4: C2 puts the probe check at review, so an unprobed line is caught before merge. The probe is not run mechanically, though, and a weak probe can still pass.\nP5: C3's \"no invariant change\" is a self-declaration that nothing verifies. The counter-metric on ceremony lines is the right guard.\nP6: The accountability check (git shows the line or \"no invariant change\", and a missing line counts as not run) is observable and fails when it should.\nP7: The no-blur clause keeps this rule's catches separate from D157, D158 and D165, so each retro can score it on its own record.\nP8: The two-way door and the 3-card trial scope make a wrong call cheap to undo.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d166rr-dev",
+   "started_at": "2026-10-31T01:03:44Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 (C1): Workable. One line per invariant, at most three, and each needs a real probe, so I can write it from the checker and the ranking without inventing anything.\nP2 (C2): Fair. The architect writes the line and the reviewer checks the probe, so I'm not marking my own work.\nP3 (C3): Clear. \"No invariant change\" is a cheap, honest default, and I can't satisfy it by gaming.\nP4 (C4): Unambiguous. Keeping it a slice line only means it adds nothing to the red, unit-commit, green or flag steps.\nP5 (Metric and counter-metrics): Fine. Held cards come from git, and the counter-metrics catch ceremony lines.\nP6 (Trial scope and accountability): Fair. It is limited to three matching cards, and a missing line counts as not run, so I can tell what applies to me.\nP7 (No blur and reversibility): Fine. It is a two-way door, since I only delete the line, and it keeps D157, D158 and D165 scored separately.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d166rr-auditlens",
+   "started_at": "2026-10-31T01:03:44Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The pick is fine. A slice assumption line is committed text, so git can show whether it is there, and the \"no invariant change\" alternative gives a checkable absence.\nP2: The hypothesis and metric work from git, though \"an invariant that stopped being true\" needs a human to judge. The retro should cite the commit that shows the hold.\nP3: C1 is workable, but the architect decides whether a card matches C1. The auditor should cross-check \"no invariant change\" claims against the diff, for example any touch to the checker, the rules or the ranking files.\nP4: The reviewer checks the probe, but only the reviewer can tell a real probe from a ceremonial one. The probe should name a record ID or commit so the auditor can re-run it from git.\nP5: This is a slice line only and no new seat, file or meeting is added, so it stays separate from D157, D158 and D165.\nP6: The trial scope of the next 3 matching cards is bounded, and a matching card without the line counts as not run.\nP7: Each rule is scored on its own record and a catch is tagged to the rule that made it, which blocks the blur between rules.\nP8: The baseline of 2 cards held and about 55 minutes is taken from the card 219 record. It is a two-way door.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d166rr-delivery",
+   "started_at": "2026-10-31T01:03:45Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (Hypothesis): Naming the invariants a change touches, with one probe each, targets the exact cause of the 209/208 hold, and the 2-to-0 measure is clear.\nP2 (C1, slice line): One line, at most three invariants, and only on cards that change a rule, the ranking or the checker. That fits D136's small-slice limits and adds no ceremony to other cards.\nP3 (C2, architect writes, reviewer checks): The probe is checked at review, which is an existing step. Reviewing unprobed lines first keeps the cost low.\nP4 (C3, \"no invariant change\"): A few words on non-matching cards is cheap. I'd watch that it doesn't turn into boilerplate, and the ceremony counter-metric covers that.\nP5 (C4, scope fence): Keeping it a slice line only stops it spreading into the intent line, the facilitator checklist or red-green, so the line restarts without more gates.\nP6 (Metric and counter-metrics): Cards held by a stale invariant, counted from git, are measurable. Slice minutes, unprobed lines and ceremony lines are tracked as evidence, not targets.\nP7 (Trial scope): Three matching cards is a short window, so the line restarts quickly and the retro decides keep, revise or drop.\nP8 (Accountability check): A missing line counts as not run, which is enforceable from git without a new tool.\nP9 (No blur): Each rule is scored on its own record, so a D166 catch isn't credited to D157, D158 or D165.\nP10 (Baseline): 2 cards held and about 55 minutes to green is a fair reference point.\nP11 (Reversibility): Two-way door. Deleting the slice line undoes it, with no shared state or checker changes.\n"
+  }
+ ]
+}
