@@ -65,3 +65,59 @@ F10 (info). The unpushed detector runs only `git` (no gh, no network verb; the t
 ## To approve
 
 Close F1, F2, F3 and F4 (test first), and F5 either way. F6 to F9 can be one small commit or named in 228. I will re-read the diff.
+
+## Re-check (ctx-6)
+
+Seat: Claude (the 22:23 UTC probes show Codex, Copilot, Grok and agy without usable quota), fresh context, audit lens and runner lens. Reviewed mob-defaults 00f9e93..f8a45da (15 commits, pushed; origin/main equals f8a45da) and avowry c803a43 and 5deedcc. I wrote none of it. Scratch copy of f8a45da under the session scratchpad (git archive, a new folder for each mutation); the repositories were not touched; strings only, no delete was run.
+
+### Verdict: APPROVE
+
+All four blockers (F1 to F4) and F5 are closed with evidence, the F6 survivors die, and no invariant broke. One item is not blocking but must be written down before Done: the new rmtree rule makes the command scan flag test-data and mutation strings in Python text (see "Counter-metric").
+
+### Per finding
+
+- F1 closed. `scan_command(cmd, ["scratch"])` flags all five PowerShell block strings (the `if (Test-Path $p) { Remove-Item ... }`, ForEach-Object, `% { rm -r $_ }`, try/catch and foreach forms), `f(){ rm -rf $1; }; f $d`, `cd /; rm -rf scratch/x` and `pushd /tmp; rm -rf x`. Harmless twins stay clean (`ls {a,b}`, `${HOME}`, `find -exec echo {}`, `Get-ChildItem | % { $_.Name }`, `if (...) { Get-Item $p }`).
+- F2 closed. `bash -c 'rm -rf '"$d"`, `sh -c 'rm -rf '$d` and shlex.quote nesting from depth 1 to 12 are all flagged (past the depth limit is a finding); an unclosed `bash -c 'rm -rf ` is a finding.
+- F3 closed. `run_audit` calls `push_rule_problems` for the audited repository and every watched one (mob_process.py:849, the only caller outside the tests). Mutation M9 (parts reduced to "unpushed") now fails 13 tests.
+- F4 closed. The scan-limits bullet ("command position ... after the fact ... a detector, not a block", Agent-tool seats by hand until 228) is in templates/TEAM_WORKING_AGREEMENT.default.md:518, mob-defaults TEAM_WORKING_AGREEMENT.md:331 and avowry TEAM_WORKING_AGREEMENT.md:451 (c803a43, text only, LF); `scan_limits_problems` is called by `run_audit`. The 3d wording names the watched repositories and the rewrite and local-origin residuals ("every repository the mob works in" is gone).
+- F5 closed. `scan_pushes` with MOB_WATCHED_REPOS unset watches the seat's repository and mob-defaults; flags are keyed on realpath plus finding (age normalised, so a future-dated commit is one flag per repository). The 17 tests in test_push_watch_default pass.
+- F6 closed. All six survivors re-run as single-change mutations in fresh copies now die: C3 (remove `$` from `_PATH_BAD`) 6 failures; A2 (audit default watched = []) 1; M9 13; B3 (drop `and launched`) 1; D4 (bool card counts as 1) 1; B9 (first attempt's status) 8. `rm -rf scratch/$x`, a backtick form and `scratch/%X%` are flagged.
+- F7 closed. `delete_guard.transcript_commands` is gone; `command_source.commands_from_transcript` is the one reader and delete_guard imports it inside `main` (avoids the circular import).
+- F8 closed for the check; the writer is moved to 228 with its line present. `_command_scans_problems` now rejects `not run` and `findings` without a reason, `clean` without a transcript or an integer count (the string "5" and True are refused), `no command source` as a failure, and a card id without a number. Nothing writes the entry yet: 228 "Also owned here" item 4 says so.
+- F9 moved to 228, lines present. Wrapper verbs (`timeout`, `setsid`, `ionice`, `flock`, `busybox`, `wsl`, `ssh`, `parallel`, `watch`), a heredoc owned by python or bash, and `python -c` with rmtree after a colon or inside a list comprehension are now flagged. Not flagged: `trap "rm -rf $d" EXIT` (228 item 6). The legacy loop, the probe seat and the absolute scratch root are 228 item 5.
+- F10 info, unchanged. The detector still runs only git; avowry's own scripts lacking `ladder` and `unpushed` is 228 item 7.
+
+All seven lines of the triage's section D are present in board/228-*.md (lines 24 to 30).
+
+### Counter-metric: false positives on real seat transcripts
+
+I ran `delete_guard.py scan-transcript --root .mob/scratch` at f8a45da on six real transcripts: my own first review, the security review, stand-down 1, green 1d, red 1d and red 1c. Five are flagged only by "rmtree" text inside Python string literals or test data (`shutil.rmtree(p)` in a list of test commands, test names such as `rmtree literal child never allowed`, a `'shutil.rmtree('*20000` stress string). Only red 1c is real (`rm -rf "$M"`). A minimal probe confirms the class: a `python - <<'PY'` heredoc with `names=['test_rmtree_anywhere', 'shutil.rmtree(p)']` is flagged, and so is `python -c "print('shutil.rmtree is flagged')"`; the same heredoc with `rm -rf $d` inside a string is clean, as are a grep for the rmtree text and a git log --grep.
+
+Judgement: acceptable for card 227, not blocking. The direction is fail-closed (nothing unsafe is allowed), the class is confined to seats that write Python text naming rmtree (in practice the seats that test this scanner), the record entries carry a reason and were read by hand, and the same read caught the real delete. It is a real cost: every finding needs a manual read, and the facilitator already once recorded a real finding unread (a deviation in the record). Two conditions: (1) card 228's false-positive line (item 3) names `-ErrorAction`, `-Filter`, `-Exclude`, a `#` word, `find -H` and "rmtree in a read-only command's text" but not strings inside Python string literals or test data in heredocs (5 of 6 transcripts at f8a45da); add that, with the cheap idea of not flagging a match inside a string literal of a Python heredoc, or reporting it as "possible string, read it"; (2) the rule "read and classify every findings result before the record commit" stays. The record already carries the observation with its count.
+
+### The test_card_mode isolation (f8a45da)
+
+Acceptable. `run_facilitator` now sets MOB_WATCHED_REPOS to the fixture repository (`{**os.environ, "MOB_WATCHED_REPOS": str(self.repo), **(env or {})}`), so a value passed by a test still wins and the variable is never empty (an empty value would fall back to the real mob-defaults). One inserted line and one modified; no assertion changed. The default path through the facilitator is covered by test_push_watch_default. The other edited test lines (tests/test_command_scans_record.py: the helper builds complete entries, and the `no-number` card is dropped from a loop that expects no problem; tests/test_push_detector.py: the sample agreement uses the newly required wording) follow from the stricter checks; neither lowers an expectation, and the strict suite tests the no-number card as a failure.
+
+### Invariants, D157, D136, bodies
+
+- safe_delete and the kill rules: the text from `_make_writable_and_retry` to the end of delete_guard.py has the same md5 at 00f9e93 and f8a45da. No deleted line in tests/test_delete_guard.py in the range. delete_guard.py's other deletions are the replaced parser pieces.
+- Git only in the detector: unchanged; no gh and no network verb.
+- Line endings: decider.py 341 of 341 lines CRLF and facilitator.py 1723 of 1723 CRLF at f8a45da (the 3d body says 1727; the file has 1723 lines and 1723 CRs, so the body count is off by 4, not a break; noted, not amended). delete_guard.py, command_source.py, mob_process.py and both agreements have 0 CR; avowry c803a43 and 5deedcc have 0 CR. No CR in any commit body.
+- Trailers: 0 of 15 commits.
+- D157 order: criterion 1 red then green for 1c, 1d (plus guard d5ccc7f), 1e, 1f; then criterion 2 (2b); then criterion 3 (3c, 3d). No red for n+1 before the green for n; every commit has "Criterion: n".
+- D136 (files/lines per commit from `git show --numstat`): 1/277, 2/134, 1/345, 1/162, 1/81, 1/176, 2/34, 1/205, 5/73, 1/153, 1/9, 1/172, 2/10, 1/205, 4/39. All under 15 files and 400 lines.
+- Bodies: 3d's 17 tests in test_push_watch_default re-ran OK; its real-run claims (unpushed ok on both repositories) match my reading. The full-suite runs (1253) and the author's mutation counts are not re-run (not my brief). The 3d body explains why the existing test was edited, with numbers.
+- Stand-down 2 "built means called": `push_rule_problems`, `scan_limits_problems`, `_command_scans_problems`, `scan_entry`, `scan_pushes` and decider `command_scan` all have callers outside the tests.
+
+### What I ran
+
+- Command-scan group on f8a45da (scratch copy): test_command_scan, _blocks, _entry, _forms2, _guards_1d, _limits, _wiring, test_command_scans_record, _record_strict, test_command_source, _source_tools, test_delete_guard, test_trust_ladder, test_push_detector, test_push_rule_audit, test_push_watch_default: Ran 684, OK (skipped=1).
+- Decider and seat group: test_decider_gate, _launched, _pin_scrub, _probe, _record, _record_units, _rotation, _runner, test_seat_gate, _seat_rotation, _seat_rotation_rules: Ran 205, OK.
+- Mutations: C3, A2, M9, B3, D4, B9, each in its own scratch copy (all killed). About 70 command strings through `scan_command` (bad forms, harmless twins, hostile long strings: 3000 braces, 500 substitutions, 100000 clauses, all under 0.8 s, no recursion error).
+- Not run: the full 1253-test suite.
+
+### Not blocking, to record
+
+- Add the string-literal false-positive class to card 228's item 3 (condition 1 above).
+- `trap "rm -rf $d" EXIT` is still unflagged; it is 228 item 6.
