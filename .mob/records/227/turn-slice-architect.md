@@ -121,3 +121,95 @@ SHIP AS IS, with a named split. Three criteria, three cycles. Criterion 1 is the
 ## Domain-expert question (T2)
 
 Should a member with different domain knowledge or context join now? No further member at the slice. The security reviewer (adversarial lens, ctx-3) already joins and owns the command-form list above, including the PowerShell alias and flag-position gaps this slice found by probing; the reader and the git seam need nothing beyond the architect and the backend developer. A mid-card expert through a Decider (with its id) would be justified only if QA cannot pin the codex rollout command shape from a real file, in which case the codex reader is dropped to "unscanned" and filed as a follow-up rather than guessed.
+
+## Security review at slice (ctx-3)
+
+Seat: security reviewer (adversarial lens), ctx-3, Claude seat (probes at 09:34 UTC: Codex, Copilot, Grok and agy without usable quota). I did not write the slice. Method: strings only, passed to `delete_guard.find_unsafe` in a Python session (mob-defaults at C:\Users\ringe\mob-crosscli, run 2026-10-31); no delete command was executed anywhere. "Flagged today" is the result of that run. Where the slice already lists a form, the row still says what today's code does.
+
+### Forms (flagged today / must flag)
+
+| Form (angle) | Flagged today | Must flag |
+|---|---|---|
+| `rm -rf "$S"/x`, `rm -rf ${S}/x`, `rm -r -f $d`, `rm -fr $d`, `rm --recursive --force $d`, `rm -R $d`, `rm -rf -- $d`, `rm -vrf $d` (quoting, split and long flags) | yes | yes |
+| `rm $d -rf`, `rm $d -r -f` (flags after the operand; GNU rm accepts it) | no | yes |
+| `sudo`, `command`, `time`, `nohup`, `busybox`, `wsl`, `ssh host "..."`, `bash -c "..."`, `FOO=1 rm`, `\rm`, `/bin/rm` prefixes | yes | yes |
+| `"rm" -rf $d`, `r""m -rf $d` (quoted or split verb) | no | yes |
+| `R=rm; $R -rf $d` (verb in a variable) | no | yes (any `$VAR` in command position next to `-rf` or `-r`) |
+| `rm -rf $(mktemp -d)`, backtick substitution, `./build/*` glob, `$HOME/...` | yes | yes |
+| `rm -rf .git` (literal, relative, the repository itself) | no | yes |
+| `rm -rf /c/` (MSYS drive root), `rm -rf /c/Users/ringe/foo`, `rm -rf /tmp/x`, any absolute path outside scratch | no | yes (must-fix 2) |
+| `rm -rf C:/Users/ringe/projects/phrase-lang/scratch/x`, `rm -rf scratch/mut`, `./scratch/mut` (literal inside a scratch root) | no | no (must stay allowed) |
+| `rm -rf foo`, `rm -rf node_modules` (bare relative word) | yes | yes by the same rule as `.git`; inconsistent today (bare word flagged, `.git` not) |
+| `xargs rm -rf`, `xargs -I{} rm -rf {}` | yes | yes |
+| `find $d -delete`, `find . -name x -delete` | no | yes |
+| `find $d -exec rm -rf {} +` | yes | yes |
+| `rsync -a --delete empty/ $d/` (empty-source mirror delete) | no | yes |
+| `Remove-Item -Recurse -Force $p`, `-Recurse:$true`, `-LiteralPath`, lowercase | yes | yes |
+| `Remove-Item $p -r`, `Remove-Item -Rec $p` (parameter abbreviations) | no | yes |
+| `ri -Recurse $p`, `ri -r -fo $p`, `del -Recurse $p`, `erase -Recurse $p`, `rd -Recurse $p`, `rmdir $p -Recurse` (PowerShell aliases) | no | yes |
+| `rm -Recurse $p`, `rm -r -fo $p` (PowerShell rm alias) | yes (by luck: the Unix rm rule) | yes |
+| `Get-ChildItem $d \| Remove-Item -Recurse -Force`, `gci $d \| % { Remove-Item $_ -Recurse }` | yes | yes |
+| `Get-ChildItem $d -Recurse \| Remove-Item -Force` (pipeline, no `-Recurse` on Remove-Item) | no | yes (Remove-Item fed by the pipeline has no judged target) |
+| `Remove-Item @args -Recurse` (splat) | no | yes |
+| `Remove-Item` with a backtick line continuation, or `-Recurse` on the next line | no | yes |
+| `Remove-Item -Recurse -Force .\scratch\x`, `-Path ".\scratch\x"` (literal in scratch) | no | no |
+| `Remove-Item -Recurse -Force C:\Users\ringe\foo` (literal outside scratch) | no | yes (must-fix 2) |
+| `[IO.Directory]::Delete($p,$true)` | no | yes |
+| `iex "Remove-Item -Recurse $p"`, `powershell -Command "..."`, `Start-Process cmd -ArgumentList "/c rd /s /q $p"` | yes | yes |
+| `powershell -EncodedCommand <base64>`, `pwsh -enc ...` | no | yes (decode UTF-16LE base64 and rescan; if undecodable, a finding) |
+| `echo <base64> \| base64 -d \| sh`, `printf "r%s -rf %s" m "$d" \| sh` | no | yes (a decode-to-shell pipe is a finding in itself) |
+| `cmd="rm -rf $d"; eval $cmd` | yes (only because the string holds rm -rf) | yes; and `eval` of a built string with the verb split: no today, must flag |
+| `cmd /c rd /s /q %d%`, `rmdir /s /q "%TEMP%\x"`, `del /s /q %d%\*`, `RD /S /Q`, `rd /s/q` | yes | yes |
+| `rd /s /q C:\Users\ringe\foo` (literal outside scratch) | no | yes (must-fix 2) |
+| `shutil.rmtree(p)`, with kwargs, f-string, concat, multi-line, `python -c "..."` | yes | yes |
+| `shutil.rmtree (p)` (space before the paren) | no | yes |
+| `from shutil import rmtree` then `rmtree(p)`; `import shutil as sh` then `sh.rmtree(p)` | no | yes |
+| `shutil.rmtree("C:/Users/ringe")`, `shutil.rmtree("..")`, `shutil.rmtree("scratch/x")` | no (any quoted literal passes) | the first two yes, the third no |
+| `os.removedirs(p)`, `os.rmdir(p)`, `Path(p).rmdir()` | no | yes for `os.removedirs`; `rmdir` is non-recursive, flag only inside a walk or loop (low) |
+| `os.system("rm -rf " + p)` | no | yes (concatenation splits the verb from the target) |
+| `subprocess.run(["rm","-rf",p])` (argv list) | no | yes |
+| `subprocess.run("rm -rf %s" % p, shell=True)` | yes | yes |
+| `fs.rmSync(p,{recursive:true})`, `npx rimraf $d`, perl `rmtree($d)` | no | yes (cheap to add) |
+| `git clean -fdx`, `-xdf`, `-f -d`, `--force -d` | yes | yes |
+| `git -C repo clean -fdx` | no | yes |
+| `git clean -n` (dry run) | no | no |
+| `git rm -rf .` | yes | yes |
+| `git reset --hard HEAD~5`, `git checkout -- .`, `git branch -D main`, `git push --force` | no | outside a delete scan, but each can destroy unpushed commits or the working tree; name them in the card's Not-in-this-card line or file a follow-up |
+| Script written then run: `printf 'rm -rf $d' > c.sh; bash c.sh` | yes (body in the same command) | yes |
+| `bash cleanup.sh` where the file was written by the Write tool in another call | no | yes (must-fix 2: scan Write and Edit contents too, and flag `bash <file>` for a file the seat wrote this session) |
+
+### Bypasses of the transcript source
+
+- A seat writes a script with the Write or Edit tool (not Bash, so not scanned) and runs it with `bash x.sh` or `python x.py`: the destructive text never appears in a scanned `input.command`. The slice scans only Bash and PowerShell commands and counts other tools.
+- A non-Claude seat (Copilot, Grok, agy, and Codex until the rollout shape is pinned) is "unscanned", reported as a Safety flag. A flag is not a failure; nothing stops the next turn or the card. Only the Claude seat is covered, and today it is the only seat running at all.
+- The subagent seats (the seats of this very card) are scanned only if the facilitator runs `scan-transcript` by hand and writes the line. A forgotten step is silent. The record key `command_scans` makes the check fail only for records that already carry the key, so a record that omits the key is never checked.
+- A missing, empty or unreadable transcript is a finding (Zero), good. A seat that deletes or truncates its own transcript, or a CLI run with `--no-session-persistence`, lands on the same finding, but the finding comes after the damage.
+- The scan is post-hoc, and a delete that reaches `~/.claude/projects` removes the transcript that would prove it. The hook is the only preventive piece and is opt-in; nobody installs it by default.
+- Encoded and indirect forms (EncodedCommand, base64 to shell, printf-split verb, verb in a variable) are invisible to a text scan. The slice's unknown-form rule (a recursive verb with an unreadable target is a finding) fires only if the verb is parsed first; these forms hide the verb.
+- A child process started by a seat (`claude -p`, `python tool.py`) runs its commands in its own transcript, which the scan does not know to look for.
+
+### Bypasses of the unpushed-commit detector
+
+- Scope: HEAD plus local branches with an upstream. A commit on a branch with no upstream that is not checked out (the `backup/pre-rebase-0830` shape), or on the HEAD of another worktree of the same repository, is invisible. The first is the slice's named residual; a worktree is a second way in.
+- Repositories: only the list the caller names (avowry, mob-defaults). play-tracker, BaccaratSim, a new project repository or a clone in a scratch folder is not watched. The facilitator-runs-it-after-each-seat trigger means that with no seat running, no check runs; nothing is scheduled.
+- Clock: age is now minus committer time. A future `GIT_COMMITTER_DATE` gives a negative age and passes for as long as the date is ahead. A rebase, cherry-pick or amend resets the committer time to the rewrite moment; amends are banned by rule but not by the detector. A skewed system clock moves every age. Fix: a future-dated commit is a FAIL, and the age is taken from the older of the committer time and the reflog entry time.
+- Remote-tracking refs are local: `git update-ref refs/remotes/origin/main HEAD`, a fetch from a mirror, or an `origin` that points at a local clone or fork all make the commit look pushed. Pushing only to a remote not named origin leaves it "unpushed" (a false FAIL, the safe direction).
+- If `.git` or the repository folder is deleted, the detector says "not a git repository", a FAIL, but the commits are already gone; it reports late by design.
+- Environment: `GIT_DIR`, `safe.directory` errors, a locked or corrupted repository can make `git log` fail; any non-zero git exit must be a FAIL (fail closed), not only a missing path.
+- Not covered by the card: uncommitted work, stashes and untracked files. The 2026-10-08 wipe lost those too; the 5-minute rule does not protect them.
+
+### False positives to avoid
+
+- A literal path inside a scratch root through `safe_delete(...)`: stays allowed (`safe_delete` is not matched today; keep it so, and keep `delete_guard.py` and its test strings out of the scanned command stream).
+- Prose and quoted rules inside a command: `git commit -m "never run rm -rf $d"`, a heredoc that writes the agreement or the Safety rule, `echo "rm -rf is banned"`, `grep -n "rm -rf" file`. Today `find_unsafe` flags `never use rm -rf here`, `the rule: "never run rm -rf $d"`, a backticked `rm -rf $d` in prose, `do not call shutil.rmtree(p) directly`, and any `rm -r` followed by a word (`removed with rm -r build`, `I ran rm -rf on it`, `mkdir farm; rm -rf farm`). That is tolerable for reply text, where the rule is deliberate, but in the command stream it flags every commit message and every test file this mob writes about the rule (the slice's own probe found about 70 such strings) and invites rewording to dodge the scan (the counter-metric). Required: judge the command stream at command position (start of a clause after a separator, after `sudo`, `bash -c`, `xargs`, `eval`, an env prefix), not any substring.
+- `rm -f file.txt`, `git clean -n`, `kill 1234`, `Remove-Item file.txt` (no `-Recurse`), `rd` or `del` without `/s`: stay allowed.
+- Literal scratch deletes (`rm -rf scratch/mut`, `./scratch/mut`) pass today because the target has no variable. If must-fix 2 is adopted they must pass through an explicit scratch-root allow-list (the roots known to safe_delete), not through the absence of a `$`.
+- Words containing the verb (`farm`, `term`, `docs/rm-notes`): the `(?<![\w-])rm\s` guard handles them today; keep it.
+
+### Verdict
+
+CHANGES NEEDED. The mechanism (transcript scan, Zero case, injected clock, git only) is sound, and the card 226 slip is flagged today. The scan still misses ordinary forms and one high-impact class (literal paths), and two safeguards fail open. At most three must-fix items:
+
+1. Close the form gaps in the criterion 1 list, one red case each: `rm $d -rf` and `rm $d -r -f`; `"rm"`, `r""m` and `$R -rf`; `ri`, `del`, `erase`, `rd`, `rmdir` with `-Recurse` and the abbreviations `-r`, `-Rec`; `Remove-Item` fed by the pipeline, splatted, or continued across lines; `find ... -delete`; `rsync --delete`; `[IO.Directory]::Delete`; `os.removedirs`; `os.system("rm -rf " + p)` and `subprocess.run(["rm","-rf",p])`; bare `rmtree(p)`, aliased `sh.rmtree(p)` and `shutil.rmtree (p)`; `git -C repo clean -fdx`; `fs.rmSync` and `rimraf`. Judge the command stream at command position so the false positives above do not drown the signal.
+2. Invert the literal-path rule to an allow-list. Today any recursive delete of a literal path passes, including `rm -rf .git`, `rm -rf /c/` (MSYS drive root), `rm -rf /c/Users/ringe/foo` and `shutil.rmtree("C:/Users/ringe")`. The card's invariant is "a literal path inside a known scratch root through safe_delete stays allowed": make that the only exemption, flag every other recursive delete, and rewrite the slice's "not widened and not claimed" paragraph (the 2026-10-08 wipe was a mis-quoted path that landed on a real directory, which is exactly this class). Also scan the contents of Write and Edit tool calls, flag `bash <file>` and `python <file>` for a file the seat wrote this session, and treat `-EncodedCommand` and `-enc`, `base64 -d | sh` and `eval` of a built string as findings (decode UTF-16LE base64 and rescan where possible).
+3. Make the coverage gaps fail closed. An unscanned seat (Copilot, Grok, agy, or Codex before the rollout shape is pinned) and a subagent seat with no `command_scans` entry must fail the record check, not print a Safety flag, and `check_record` must require the `command_scans` key for every record of card 227 and later (keyless is a failure from 227 on, not ok). In the detector: a future-dated commit is a FAIL, the age is the older of committer time and reflog time, any non-zero git exit is a FAIL, and the HEADs of other worktrees are included.
