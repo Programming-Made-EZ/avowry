@@ -298,3 +298,103 @@ Criterion 3 Inputs. disabled: n/a (the caller names the repositories). unknown: 
 ### Slice verdict, amended
 
 SHIP AS IS, with the named split (part 2 and the hook go to the follow-up card). Classes A to I plus the criterion 3 additions are the content of criteria 1 and 3; the over-limit counts for increments and concerns are stated, not hidden. If commit 2 cannot stay under 400 lines, split fixtures from the test module; if criterion 1's green is not reachable inside a seat's cap, the next cut is class F (find -delete and the git forms) into the follow-up, not the allow-list or the fail-closed check, which are the reviewer's high-impact items.
+
+## Review triage (ctx-2)
+
+Seat: architect (slice), ctx-2, a fresh context and a Claude seat (the 14:59 UTC probes in `.mob/records/probes/2026-10-30.jsonl` show Codex, Copilot, Grok and agy without usable quota). Inputs read: the independent review (review-ctx6.md, fbe02c3, findings F1 to F10), the security review (review-security-ctx3.md, c165f52, findings 1 to 17), cards 227 and 228, the record's stand-downs and cycles (stand-down 2: "built means called"), D136 (at most 15 countable files and 400 lines per commit) and D157 (one criterion per red-green cycle, in order). I read no code and ran nothing; the triage rests on the evidence strings the two reviewers recorded. Both reviews say CHANGES REQUESTED.
+
+Rule used. A finding stays in 227 if it makes a Done check hold only on the listed forms (a bypass of an ordinary idiom, a check nothing calls, a rule text that promises what the code does not do). It moves to 228 if it is a hidden or non-shell form, a new capability (writing records, hooks, other backends) or a low-harm spelling gap that fails closed. Every fix names its criterion: 1 = the scan, 2 = the ladder, 3 = push and detector.
+
+### A. The blocking items: all ten stay in 227 (none is already owned by 228 and safe to defer)
+
+The independent reviewer's F1 to F5 are rows 1, 2, 7, 8 and 9. The security reviewer's findings 1 to 5 are rows 1, 3, 4, 5 and 6. Row 10 is a further item both reviews raise.
+
+| # | Finding | Decision | Criterion | One-line reason |
+|---|---|---|---|---|
+| 1 | Delete inside a one-line PowerShell block `{ ... }` is not flagged (F1, sec 1) | FIX IN 227 | 1 | The natural way to write the card 226 slip in PowerShell; 228 does not name it; a parser gap, since the same text with a newline is flagged. |
+| 2 | Quote concatenation hides a `bash -c` payload (F2) | FIX IN 227 | 1 | The slice says an unreadable form fails closed; here it passes silently. |
+| 3 | Command substitution `$(...)`, backticks, `<(...)` never scanned (sec 2) | FIX IN 227 | 1 | Common idiom; 228 names hidden verbs, not this; not owned. |
+| 4 | Heredoc fed to a shell or interpreter dropped as data (sec 3) | FIX IN 227 | 1 | `python - <<'PY'` is how an agent runs a longer snippet; the command that owns the heredoc decides, so a heredoc that writes a rule text stays data. |
+| 5 | `shutil.rmtree` seen only at the start of a statement (sec 4) | FIX IN 227 | 1 | The one-line `if isdir: rmtree` is the standard cleanup idiom; it also cures most of the rmtree-in-a-read-only-command false positive (sec 17). |
+| 6 | Wrapper verbs outside the closed list: `timeout`, `ssh`, `wsl`, `busybox`, `setsid`, `parallel` and others (sec 5, part of F9) | FIX IN 227 | 1 | The slice review marked these flagged and nobody moved them to 228; an unknown verb gets a default scan of its words. |
+| 7 | Push-rule check built and never called (F3) | FIX IN 227 | 3 | "Built means called" (stand-down 2); the first half of Done check 3 is enforced by no run; wiring it is what makes the surviving mutation M9 matter. |
+| 8 | Promised scan-limits rule text is in no agreement (F4, sec 14) | FIX IN 227 | 1 | The amendment promised it in plain words; the README snippet moved to 228, this sentence did not. |
+| 9 | Per-seat push scan watches nothing by default (F5) | FIX IN 227 | 3 | A mob that reads the rule thinks it is watched; default to the seat's repository plus mob-defaults. |
+| 10 | Record check trusts the record: `not run` with no reason, `clean` with no session or count, a card with no number (sec 10, F8 first part) | FIX IN 227 | 1 | It is the fail-closed check Done check 1 relies on; the security reviewer asked for it in this card. |
+
+### B. Other scan gaps
+
+| Finding | Decision | Criterion | Reason or line for 228 |
+|---|---|---|---|
+| Escaped quote desynchronises the tokenizer; function bodies `f() { ... }` read as one word (sec 6) | FIX IN 227 | 1 | Same parser change as the braces; a few lines. |
+| `cd` or `pushd` before a relative delete, so the relative scratch root no longer applies (sec 7, first part) | FIX IN 227 | 1 | After a cd to anything but a literal scratch child, later relative paths are a finding; fails closed, cheap. |
+| Symlink or junction inside scratch; a backslash read as a separator in bash (sec 7, second part) | MOVE TO 228 | rule text in 1 | The scan cannot see links (`safe_delete` resolves them); say it in the scan-limits sentence now; 228 line 1 below. |
+| Tools other than Bash and PowerShell that take a command (`Monitor`, terminal run, scheduled task) are counted and dropped (sec 8) | FIX IN 227 | 1 | One line at the seam; it is what "executed commands" means in Done check 1; record the count of other tools. |
+| Transcript locator takes the first folder holding the file; a seat can shadow or edit its transcript (sec 9) | FIX IN 227 | 1 | More than one match becomes "no command source"; store transcript size and sha256 in the entry. Cheap, fails closed. |
+| Removing `$` from the bad-path list survives, so `rm -rf scratch/$x` is allowed (mutation C3, F6) | FIX IN 227 | 1 | A real hole by test; add `scratch/$x`, a backtick form and `scratch/%X%` as unsafe. |
+| Option spellings: `rm --rec`, `rd/s/q`, `git clean -f -- -n` (sec 15) | MOVE TO 228 | | Low harm, same family as hidden spellings. |
+| False positives: `-ErrorAction`, `-Filter`, `-Exclude` values, a `#` comment word, `find -H` (sec 16; `}` as a target is cured by the brace fix) | MOVE TO 228 | | Fail-closed direction; keep the counter-metric (rewording to dodge) visible there. |
+| `rmtree` named in a read-only command's text is flagged (sec 17) | MOVE TO 228 (already owned) | | Already in 228; the rmtree fix shrinks it, so 228 re-verifies after 227. |
+| Two copies of the transcript reading rule (F7) | FIX IN 227 | 1 | Done inside the green that adds "any tool with a command": one reader, imported by the other. |
+| Mutations B3 (a backend that never started gets a scan entry) and B9 (decider takes the first attempt's status, not the worst) survive (F6) | FIX IN 227 | 1 | One test each; both sit in the wiring Done check 1 depends on. |
+| Legacy non-card loop and probe call the backend without the scan (F9) | MOVE TO 228 | | Not a card seat path. |
+| Absolute scratch folder is a finding unless hand-scanned with `--root` (F9) | MOVE TO 228 | | Fails closed, so nothing unsafe is allowed. |
+| `trap "rm -rf $d" EXIT`, `python -c` list comprehension (F9) | partly | 1 | The comprehension is covered by the rmtree-anywhere rule; `trap` is in 228 if the wrapper default does not reach it. |
+
+### C. Record, ladder and detector
+
+| Finding | Decision | Criterion | Reason or line for 228 |
+|---|---|---|---|
+| Nothing writes the scan entry into the record (`CardRun` drops it; the entry is typed by hand) (F8 second part) | MOVE TO 228 | | A new write path; until then the entry stays hand-typed, with the evidence fields row 10 requires. |
+| Ladder check keys on the word "safety" in a deviation; one worded "delete rule" is skipped (sec 10, related) | FIX IN 227 | 2 | Key on any deviation with a recorded rule; the green picks the exact key; test: a "delete rule" deviation with no entry fails. |
+| A boolean `card` in a ladder line counts as card 1 (mutation D4) (F6) | FIX IN 227 | 2 | One test, same file. |
+| Rule check needs only the word "unpushed" (mutation M9) (F3, F6) | FIX IN 227 | 3 | One case per missing part (5 minutes, detector name, the word "unpushed"). |
+| Audit default `watched` list set to empty survives (mutation A2) (F6) | FIX IN 227 | 3 | One test that the audit checks mob-defaults by default. |
+| The same future-dated commit is flagged again after every seat because the dedupe key holds the changing age (sec 13) | FIX IN 227 | 3 | Dedupe on repository, sha and "future"; no skew tolerance. |
+| Rule text over-claims: "every repository the mob works in" (only named ones are watched), the reflog as an independent clock (it carries the forced committer date); amend and rebase restart the clock (sec 10, 12) | FIX IN 227 | 3 | Wording only: "the repositories named", state the rewrite and local-origin residuals. |
+| Commits on a branch with no upstream, a detached HEAD left behind, a stash (sec 11) | MOVE TO 228 | | The rule text names the backup-branch case; taking every branch risks the counter-metric (false FAILs on backup branches such as backup/pre-rebase-0830) and is a design choice better made on its own. |
+| Hand-written remote refs, an origin that is a local clone, `git commit --amend` resetting the clock (sec 12) | accepted | 3 | Named in the rule text; the first-seen state keyed by patch-id goes to 228. |
+| Avowry's own `scripts/mob_process.py` has no `ladder` or `unpushed` command (F10) | MOVE TO 228 | | Info; the rule text states the dependence on mob-defaults' audit. |
+| `test_loop_state` failed once under parallel load, passes alone (F10) | none | | Not caused by this card. |
+
+### D. Lines to add to card 228's text (under "Also owned here")
+
+1. Symlinks and junctions inside scratch, and a backslash read as a separator in bash: the scan cannot see them; add a check or keep the rule-text residual (from card 227, security review 7).
+2. Option spellings: `rm --rec` and other `--recursive` prefixes, `rd/s/q` with no space, `git clean -f -- -n` read as a dry run (security 15).
+3. False positives that invite rewording: `-ErrorAction`, `-Filter`, `-Exclude` values read as targets, a `#` comment word, `find -H`; and the rmtree-in-a-read-only-command item, re-verified after card 227's rmtree fix (security 16 and 17).
+4. `CardRun` writes the command-scan entry into the record, so a clean scan leaves a trace without typing (independent review F8).
+5. Seat paths outside the card loop (the legacy non-card loop, the probe) and an absolute scratch folder, which is a finding unless hand-scanned with `--root` (F9).
+6. Forms 227 does not reach: `getattr(shutil, "rmtree")(p)`, `robocopy empty C:\Users /MIR` and `/PURGE`, a script a seat wrote in an earlier call and runs later, `trap "rm -rf $d" EXIT` if the wrapper default misses it.
+7. Detector follow-ups (or a detector card, the facilitator decides): commits on a local branch with no upstream, a detached HEAD left behind, a stash; first-seen state keyed by patch-id so a rewritten commit keeps its time; a warning when origin is a path or `file://`; avowry's own scripts having no `ladder` or `unpushed`.
+
+### E. Fix plan (D157: criterion order; one red then green per increment; each pushed at once)
+
+Paths are in mob-defaults unless named. Tests first. "Criterion: n" in each red body. Each commit at most 15 countable files and 400 lines (D136). LF everywhere except `decider.py` and `facilitator.py`, which are CRLF on every line; check `git diff --cached | tr -cd '\r' | wc -c` prints 0 on LF files.
+
+Criterion 1, the scan (four increments, green for each before the next red):
+- 1c, the parser. Red: new `tests/test_command_scan_blocks.py` (the five PowerShell block forms; `%` and `foreach-object` pass-through; the escaped-quote forms; `f(){ ...; }`; quote-concatenation `bash -c` at depth 1 and 2 and an unreadable `-c` payload as a finding; `cd /; rm -rf scratch/x` and `pushd`; `scratch/$x`, a backtick form and `scratch/%X%` unsafe). Green: `delete_guard.py` (clause splitting at `{`, `}` and function bodies, escape handling, shell-rule unquoting, the cd rule, `_PATH_BAD`). About 2 files and 300 lines red; 1 file and about 150 lines green.
+- 1d, the forms. Red: new `tests/test_command_scan_forms2.py` (substitution inside `$()`, backticks, `<()` and double quotes; a heredoc owned by `bash`, `sh -s`, `python -`, `python3`, `cat ... | python3` or `powershell -Command -` scanned, and one owned by `cat`, `tee`, `git commit -F -`, `echo` or a file redirect left as data; rmtree anywhere in Python text, assigned, passed or imported `as`; the wrapper list and the unknown-verb default; harmless twins stay clean). Green: `delete_guard.py` only. About 2 files and 350 lines red; 1 file and about 200 lines green. If the green passes 400 lines, split the heredoc rule into its own increment first.
+- 1e, the source. Red: new `tests/test_command_source_tools.py` (any tool whose input has a string `command` is scanned and other tools counted in the entry; two matching folders give "no command source"; the entry carries transcript size and sha256; a backend that never started gets no entry; the decider takes the worst attempt status). Green: `command_source.py`, `delete_guard.py` (one transcript reader, imported by the other), `facilitator.py` and `decider.py` (CRLF). About 2 files and 250 lines red; 4 files and about 150 lines green.
+- 1f, the record and the rule text. Red: new `tests/test_command_scans_record_strict.py` (`not run` without a reason, `clean` without a session or an integer command count, a card with no parseable number, the `no command source` message; the template and the mob-defaults agreement carry the scan-limits sentence). Green: `mob_process.py`, `templates/TEAM_WORKING_AGREEMENT.default.md` and mob-defaults' `TEAM_WORKING_AGREEMENT.md`; then a separate avowry text commit for `TEAM_WORKING_AGREEMENT.md`. The sentence says: the scan reads commands at command position in a Claude transcript after the fact; encoded, hidden-verb, written-file and non-Claude forms are not covered (card 228 owns them); links inside scratch are not seen; a non-Claude seat fails the record. About 2 files and 200 lines red; 3 files and about 100 lines green.
+
+Criterion 2, the ladder (one increment). Red: add to `tests/test_trust_ladder.py` (a "delete rule" deviation with no entry fails; a boolean `card` is not card 1). Green: `mob_process.py` only. About 1 file and 80 lines red; 1 file and 30 lines green.
+
+Criterion 3, push and detector (two increments).
+- 3c, the audit. Red: additions to `tests/test_push_detector.py` (an audit of an agreement lacking the rule fails, with `push_rule_problems` called from `run_audit` for the audited repository and for mob-defaults; one case per missing part of the rule; the default `watched` list includes mob-defaults). Green: `mob_process.py`. About 1 file and 120 lines red; 1 file and 40 lines green.
+- 3d, the facilitator and the wording. Red: new `tests/test_push_watch_default.py` (with `MOB_WATCHED_REPOS` unset the seat's repository and mob-defaults are scanned; a future-dated commit is flagged once across seats). Green: `facilitator.py` (CRLF), the two mob-defaults rule texts (named repositories, rewrite and local-origin residuals, reflog wording), then an avowry text commit. About 1 file and 150 lines red; 3 files and about 80 lines green.
+
+"Built means called": every new or changed function (the clause splitter, the shared reader, the stricter record check, the rule check in `run_audit`) has a caller outside the tests, and each green shows one real run on avowry and mob-defaults.
+
+D136 sizing. Seven increments (four for criterion 1, one for criterion 2, two for criterion 3), 14 commits in mob-defaults plus two small avowry text commits; every commit is expected at 5 files or fewer and under 400 lines (the largest red about 350). The card already exceeded the guide (4 increments and 2 concerns, recorded at the slice); with these it has eleven increments. The three criteria are unchanged. Record this as a deviation: the product owner ruled one card for the scan and push-on-every-commit and the blocking findings cannot ship split. If the facilitator prefers, criterion 3's two increments could go to a second card, but that reopens the single-card ruling.
+
+### F. What the next re-review will check
+
+1. Each blocking item has a failing test in its own red and a green after it (git log order; no red for n+1 before the green for n; "Criterion: n" in each red; no trailers; no CR in bodies).
+2. The reviewers' strings re-run through `scan_command(cmd, ["scratch"])`: the five PowerShell block forms, the six substitution forms, the heredoc and rmtree forms, the wrapper list, quote nesting at depths 1 to 9, the escaped-quote and cd forms; and the harmless twins stay clean (`cat <<EOF > x.md`, `git commit -m "never run rm -rf $d"`, `echo "rm -rf is banned"`, a literal `rm -rf scratch/x`).
+3. Mutations: the survivors (C3, B3, B9, D4, M9, A2) now die and the earlier kills still die; the allow-list and fail-closed rules unchanged (no deleted test lines; `safe_delete` and the kill rules byte for byte).
+4. "Built means called": `push_rule_problems` has a caller outside the tests and an audit of an agreement without the rule fails; a real run on avowry and mob-defaults prints ok for `unpushed`, `ladder` and the audit.
+5. With `MOB_WATCHED_REPOS` unset the seat's repository and mob-defaults are watched (a run, not a mention); a future-dated commit appears once.
+6. The scan-limits sentence is in the template, the mob-defaults agreement and avowry's agreement and names the 228 residuals; "every repository the mob works in" is gone.
+7. The record check rejects each hand-typed shortcut (`not run` without a reason, `clean` without a session or count, a card without a number, `no command source`).
+8. D136 per commit (`git show --numstat`), LF on LF files and CRLF on every line of `decider.py` and `facilitator.py`, the seven 228 lines present in card 228's text, and the existing suites pass (full run or the named modules; the review says which).
+9. Counter-metric: false positives on literal scratch paths and on commands that delete nothing, counted and listed.
