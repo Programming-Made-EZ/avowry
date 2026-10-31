@@ -157,7 +157,12 @@
   {
    "criterion": 3,
    "repo": "mob-defaults",
-   "red": "2dbcb29 (tests/test_push_detector.py, 399 lines; 34 tests, 31 failing by assertion, 3 guards shown red); decision e7054a7 cited"
+   "red": "2dbcb29 (tests/test_push_detector.py, 399 lines; 34 tests, 31 failing by assertion, 3 guards shown red); decision e7054a7 cited",
+   "green": "mob-defaults 00f9e93 (unpushed subcommand; run_audit calls unpushed and ladder; facilitator scan_pushes after each seat; template rule text); avowry 810e818 (push-on-every-commit rule text)",
+   "full_suite": "822 tests OK, 1 skip (from 14:44:55 UTC, 1434 s)",
+   "real_runs": "unpushed on avowry and mob-defaults: ok; ladder on both: ok",
+   "mutations": "M1 to M8 killed; M9 survived (push_rule_problems passes with only the word 'unpushed'; the red's rule-text test has no case missing '5 minutes' or the detector name)",
+   "open": "MOB_WATCHED_REPOS is set nowhere, so the facilitator's per-seat push scan watches nothing by default; coverage is the audit pass and the manual command"
   }
  ],
  "stand_downs": [
@@ -419,6 +424,13 @@
    "status": "clean",
    "seat": "red-3",
    "transcript": "subagents/agent-a34e1d8f2c51f086e.jsonl",
+   "source": "python delete_guard.py scan-transcript (mob-defaults 8440697), run by the facilitator when the seat returned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green-3",
+   "transcript": "subagents/agent-a69181a29a4bae755.jsonl",
    "source": "python delete_guard.py scan-transcript (mob-defaults 8440697), run by the facilitator when the seat returned"
   }
  ]
