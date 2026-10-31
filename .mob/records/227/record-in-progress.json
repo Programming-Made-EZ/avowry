@@ -137,6 +137,12 @@
    "full_suite": "748 tests OK, 1 skip (from 12:11:47 UTC, 1370.7 s)",
    "mutations": "12 run, 12 red (one m10 test_card_mode run stopped, not measured)",
    "plan": "items 1 to 8 have hashes; hook and README moved to card 228"
+  },
+  {
+   "criterion": 2,
+   "repo": "mob-defaults",
+   "red": "5cc58d2 (tests/test_trust_ladder.py, 387 lines; 40 tests, 37 failing by assertion, 3 born-green guards shown red)",
+   "note": "ladder lives in mob-defaults mob_process.py next to check_record; the entry and the agreement text are the green's job"
   }
  ],
  "stand_downs": [
