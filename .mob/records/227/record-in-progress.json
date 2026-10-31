@@ -140,6 +140,11 @@
    "by": "facilitator",
    "what": "recorded the red-1c seat's scan result as 'findings' at about 15:52 UTC without reading the finding, so a real recursive delete on a variable path went unreported for about 2 h 40 min, until the red 1f entry check made the facilitator re-scan",
    "handling": "recorded; from now on every 'findings' result is read and classified (real or false positive) before the record commit"
+  },
+  {
+   "by": "facilitator",
+   "what": "every decision seat run by the facilitator through decider.py since green 1b (retro voices, Decider and window voters) used a scratch backends file without command_source or --session-id, so decider.py recorded each voter's command_scan as 'unscanned'; found at the card 227 retro (8 of 8 voices unscanned)",
+   "handling": "a new scratch config copies command_source and the session-id invocation from mob-defaults core/backends.json (claude probe_model kept at sonnet pending the product owner's model-family answer); first used for the retro-pick Decider; recorded"
   }
  ],
  "cycles": [
