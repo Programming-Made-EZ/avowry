@@ -213,5 +213,13 @@
  "follow_up_cards": [
   "228: the recursive-delete scan covers hidden, encoded and non-shell forms and written files (split at the slice, 2e2e0f3)"
  ],
- "open_direction_question": "product owner: does 'block' in the safety ruling require prevention before a command runs (an opt-in hook, now in card 228), or is detect-and-fail-the-record after the fact enough for card 227?"
+ "open_direction_question": "product owner: does 'block' in the safety ruling require prevention before a command runs (an opt-in hook, now in card 228), or is detect-and-fail-the-record after the fact enough for card 227?",
+ "confirmations": [
+  {
+   "by": "facilitator",
+   "at": "2026-10-31T11:31:40Z",
+   "per": "stand-down 1 adjustment (d823a7e)",
+   "decision": "criterion 1 is not closed: its four open plan items (red 1b; command_source.py, the source of executed commands; the run_backend wiring that scans each seat's executed commands; the record check that fails an unscanned seat or a missing command_scans entry from card 227 on) are criterion 1's next increment, red 1b then green 1b, under 'Criterion: 1', before any red for criterion 2 (D157). Criterion 1 closes only when nothing in its plan reads 'not done' and the scan runs on real seats. The Intent line (254e1d9) is already confirmed, so the red seat may launch."
+  }
+ ]
 }
