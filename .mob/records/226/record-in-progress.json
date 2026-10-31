@@ -4,7 +4,8 @@
  "status": "in progress (corrective for MD-002 after audit flag F-070); code in mob-defaults",
  "decisions": {
   "rank": "re-rank 12 (window 219-rerank-12)",
-  "task_force": "window 226-taskforce"
+  "task_force": "window 226-taskforce",
+  "slice": "window 226-slice: SHIP AS IS (slice f0c0d63, amended 4bb7d00)"
  },
  "task_force": [
   {
@@ -46,8 +47,17 @@
    "seat": "product manager (ready)",
    "context": "ctx-1",
    "source": "window 226-taskforce proposal"
+  },
+  {
+   "boundary": "slice",
+   "answer": "no",
+   "reason": "the risks are the listed loopholes; the gate runs in the main thread before any worker starts",
+   "seat": "architect (slice)",
+   "context": "ctx-2",
+   "source": "f0c0d63"
   }
  ],
  "cycles": [],
- "stand_downs": []
+ "stand_downs": [],
+ "assumption_D166": "decider.py voters share card seats' seat-use history (.mob/records/seat-use.jsonl) and decider.py takes its own probe with probe_drivers; probe: today's call path takes no probe and reads no history (slice f0c0d63)"
 }
