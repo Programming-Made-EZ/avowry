@@ -84,7 +84,16 @@
  ],
  "cycles": [],
  "stand_downs": [],
- "observations_for_next_stand_down": [],
+ "observations_for_next_stand_down": [
+  {
+   "by": "Dispatch (relayed by the facilitator; the team decides)",
+   "observation": "the card 227 slice document is 55 KB, too big to pass as a prompt (the slice window had to point seats at the committed file): a thin-slicing signal; a slice that size usually holds several slices, and the security review already split one follow-up (228). Consider making the first slice only 'scan executed commands for rm -rf on variable paths, red first, reproducing tonight's slip', with the trust-ladder record and the unpushed-commit detector as next slices.",
+   "hypothesis": "smaller slices cut each vote window and time-to-first-red",
+   "counter_metric": "count of follow-up cards",
+   "baseline": "slice 4037cfe to amendment 2e2e0f3 about 22 min plus a 13-minute window on a 55 KB slice; first red not yet in at 10:15 UTC",
+   "facilitator_note": "criterion 1 is already the scan alone under D157 (criteria 2 and 3, the ladder and the detector, come after its green), so the stand-down after criterion 1 can test the hypothesis on the slice document itself"
+  }
+ ],
  "follow_up_cards": [
   "228: the recursive-delete scan covers hidden, encoded and non-shell forms and written files (split at the slice, 2e2e0f3)"
  ],
