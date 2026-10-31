@@ -39,6 +39,27 @@
  ],
  "claude_seat_reason": "probes at 01:20 UTC show Codex, Copilot, Grok and agy without usable quota",
  "metric": "decision seats seated on a stale probe or out of rotation (target 0); Claude share of decision seats while others had capacity",
+ "intent": {
+  "line": "Intent: the product owner wants decision seats (Decider voters and objection-window seats) to rotate like card seats, and the runner to enforce it: in the owner's D163 words, \"I just want the rotation to even out and don't just jump to all Claude like has happened in the past\". D164 chose least-recently-used rotation as the mechanism (a Claude seat refused only while another available model has waited longer, no ratio cap), and each seat starts on a probe under 60 minutes old. Why: audit flag F-070 (audits 56 and 57) found decision seats in decider.py still run with no fresh-probe check, no rotation and no recorded reason, which leaves MD-002 open; this card applies card 208's rules to decision seats so load cannot pile onto Claude unseen.",
+  "by": "QA engineer (red) ctx-3",
+  "decisions": [
+   "D163",
+   "D164",
+   "MD-002",
+   "F-070"
+  ],
+  "confirmation": {
+   "status": "confirmed",
+   "by": "facilitator (D165 C2)",
+   "against": [
+    "D163 (the product owner's words, quoted verbatim)",
+    "D164 C1 (least-recently-used rotation, no ratio cap)",
+    "audit flag F-070 (ledger, audits 56 and 57)"
+   ],
+   "note": "restates recorded direction and adds no scope",
+   "at": "2026-10-31T01:45:16Z"
+  }
+ },
  "domain_expert": [
   {
    "boundary": "refinement",
