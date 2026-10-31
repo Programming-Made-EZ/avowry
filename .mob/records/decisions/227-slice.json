@@ -1,0 +1,160 @@
+{
+ "window": "227-slice",
+ "category": "slice",
+ "rule": "D153 for card 227's slice (D157, D166, D167)",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "claude-sonnet subagent",
+  "context": "ctx-2",
+  "probe_reference": ".mob/records/probes/2026-10-30.jsonl (09:34 UTC)"
+ },
+ "opened_at": "2026-10-31T10:00:35Z",
+ "proposal": "# Window 227-slice: ship the card 227 slice as amended\n\nProposal: the slice in .mob/records/227/turn-slice-architect.md in this repository (committed; read the whole file): the slice (4037cfe), the section \"Security review at slice (ctx-3)\" (c6b831c, CHANGES NEEDED, three must-fix items) and the section \"Amendment for the security review (ctx-2)\" (2e2e0f3), which accepts the command-position scan, the main form families, the literal-path allow-list and fail-closed coverage into card 227, and moves hidden, encoded and non-shell forms, written-file scanning and the opt-in blocking hook to a follow-up. Card text: board/227-*.md. Follow-up filed as card 228 (board/228-*.md).\n\nFacilitator note: Done check 1 says the scan \"blocks\"; this slice reads that as: the scan reports the command and the record check fails, after the fact; blocking before a command runs is card 228's opt-in hook. Whether \"block\" in the product owner's ruling requires prevention before execution is a direction question put to the product owner now; if the owner says yes, the hook moves back into 227 and the slice is re-polled. The card exceeds the per-card guide by one increment and one concern because of the owner's one-card ruling; every commit stays within D136.\n",
+ "checklist_D158": ".mob/records/227/checklist-227-slice.md",
+ "polled_roles_note": "F-054: all seven non-proposer declared roles polled",
+ "replies": [
+  {
+   "role": "product manager (ready)",
+   "context": "w227slb-pmready (ctx-1)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (09:34 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T10:01:32Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nI did not open the slice or card files, so this is based only on the proposal text. It keeps the one-card ruling, puts the security review's must-fix items into card 227, and defers the rest to card 228. It also sends the \"block\" question to the product owner and re-polls if the answer moves the hook back into 227.\n"
+  },
+  {
+   "role": "security reviewer (adversarial lens)",
+   "context": "w227slb-security (ctx-3)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (09:34 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T10:03:28Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n"
+  },
+  {
+   "role": "QA engineer",
+   "context": "w227slb-qa (ctx-4)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (09:34 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T10:05:20Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nI only read the first 2KB of the slice file and counted keyword matches in the rest. I did not read the amendment or the card, and I did not confirm that each rule can be tested red first. This reply is therefore not an objection, but it is also not a full QA review.\n"
+  },
+  {
+   "role": "backend developer",
+   "context": "w227slb-dev (ctx-5)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (09:34 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T10:07:15Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n"
+  },
+  {
+   "role": "independent reviewer (audit lens)",
+   "context": "w227slb-auditlens (ctx-6)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (09:34 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T10:09:14Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n"
+  },
+  {
+   "role": "delivery lead",
+   "context": "w227slb-delivery (ctx-7)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (09:34 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T10:11:00Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nI didn't open the slice file, so this rests on the proposal text. The amendment moves the hook and the hidden, encoded and non-shell forms to card 228, which keeps card 227 thin. Each commit stays within D136, and the line can restart soon. I'd re-poll only if the product owner says \"block\" means prevention before execution.\n"
+  },
+  {
+   "role": "product manager (signoff)",
+   "context": "w227sl-pmsignoff (ctx-8)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (09:34 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T10:11:48Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n"
+  }
+ ],
+ "attempts": [
+  {
+   "role": "product manager (ready)",
+   "context": "w227sl-pmready (ctx-1)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (09:34 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T10:00:35Z",
+   "raw": "Support-it\n",
+   "attempt": 1,
+   "reply": null,
+   "note": "vote word instead of the window line; re-polled with a strict format line"
+  },
+  {
+   "role": "security reviewer (adversarial lens)",
+   "context": "w227sl-security (ctx-3)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (09:34 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T10:02:24Z",
+   "raw": "Support-it\n",
+   "attempt": 1,
+   "reply": null,
+   "note": "vote word instead of the window line; re-polled with a strict format line"
+  },
+  {
+   "role": "QA engineer",
+   "context": "w227sl-qa (ctx-4)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (09:34 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T10:04:22Z",
+   "raw": "Yes\n",
+   "attempt": 1,
+   "reply": null,
+   "note": "vote word instead of the window line; re-polled with a strict format line"
+  },
+  {
+   "role": "backend developer",
+   "context": "w227sl-dev (ctx-5)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (09:34 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T10:06:18Z",
+   "raw": "Support-it. The slice is workable, and I can follow it without gaming anything. Every commit is estimated under D136, and the amendment states the per-card overrun openly and gives a fallback cut if commit 2 or the criterion 1 green runs long. My one reservation: criterion 1's red-to-green gap is long.\n",
+   "attempt": 1,
+   "reply": null,
+   "note": "vote word instead of the window line; re-polled with a strict format line"
+  },
+  {
+   "role": "independent reviewer (audit lens)",
+   "context": "w227sl-auditlens (ctx-6)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (09:34 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T10:08:14Z",
+   "raw": "Yes\n\nNO OBJECTION\n",
+   "attempt": 1,
+   "reply": null,
+   "note": "vote word instead of the window line; re-polled with a strict format line"
+  },
+  {
+   "role": "delivery lead",
+   "context": "w227sl-delivery (ctx-7)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (09:34 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T10:10:10Z",
+   "raw": "Support-it. The slice is already cut to fit D136, with hidden forms, encoded forms and the blocking hook moved to card 228. That keeps each commit small and gets the line moving again. The \"blocks\" reading is flagged to the product owner, and re-polling only happens if they say prevention is required.\n",
+   "attempt": 1,
+   "reply": null,
+   "note": "vote word instead of the window line; re-polled with a strict format line"
+  }
+ ],
+ "adopted_conditions": [],
+ "decision": {
+  "result": "SHIP AS IS: slice 4037cfe, security review c6b831c, amendment 2e2e0f3; follow-up card 228 filed; the reading of 'block' as detect-and-fail is put to the product owner as a direction question"
+ },
+ "ended_at": "2026-10-31T10:13:03Z"
+}

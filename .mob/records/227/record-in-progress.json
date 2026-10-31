@@ -4,7 +4,8 @@
  "status": "in progress (stop-the-line corrective for F-071 and audit 62; product owner safety ruling 2026-10-31); code in mob-defaults",
  "decisions": {
   "rank": "re-rank 13 (window 226-rerank-13)",
-  "task_force": "window 227-taskforce (one adopted condition: the scan sees executed commands)"
+  "task_force": "window 227-taskforce (one adopted condition: the scan sees executed commands)",
+  "slice": "window 227-slice: SHIP AS IS (slice 4037cfe, security review c6b831c, amendment 2e2e0f3)"
  },
  "task_force": [
   {
@@ -50,6 +51,14 @@
    "seat": "product manager (ready)",
    "context": "ctx-1",
    "source": "window 227-taskforce proposal"
+  },
+  {
+   "boundary": "slice",
+   "answer": "no further member",
+   "reason": "the security reviewer already seated covered the adversarial read at the slice",
+   "seat": "architect (slice)",
+   "context": "ctx-2",
+   "source": "slice 4037cfe"
   }
  ],
  "open_points": [
@@ -66,9 +75,18 @@
    "by": "facilitator",
    "what": "commit 5a5659e is titled 'card text from window 227-taskforce' but carries only the earlier F-071 Source-line archive change (a script error left the issue unchanged on the first try); the real card-text change is f817dc5",
    "handling": "recorded, not amended"
+  },
+  {
+   "by": "architect (slice)",
+   "what": "card 227 exceeds the per-card guide by one increment and one concern (4 increments, 2 concerns) because the product owner ruled one card for the scan and push-every-commit; every commit stays within D136",
+   "handling": "recorded at the slice (2e2e0f3)"
   }
  ],
  "cycles": [],
  "stand_downs": [],
- "observations_for_next_stand_down": []
+ "observations_for_next_stand_down": [],
+ "follow_up_cards": [
+  "228: the recursive-delete scan covers hidden, encoded and non-shell forms and written files (split at the slice, 2e2e0f3)"
+ ],
+ "open_direction_question": "product owner: does 'block' in the safety ruling require prevention before a command runs (an opt-in hook, now in card 228), or is detect-and-fail-the-record after the fact enough for card 227?"
 }
