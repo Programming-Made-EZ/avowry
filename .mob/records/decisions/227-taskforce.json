@@ -1,0 +1,230 @@
+{
+ "window": "227-taskforce",
+ "category": "task-force declaration",
+ "rule": "D153 at ready for card 227",
+ "proposed_by": {
+  "role": "product manager (ready)",
+  "model": "claude-sonnet subagent",
+  "context": "ctx-1",
+  "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC)"
+ },
+ "opened_at": "2026-10-31T09:12:30Z",
+ "proposal": "# Card 227: task-force declaration proposal (objection window 227-taskforce)\n\nCategory: task-force declaration. Proposed by: product manager (ready), Claude seat, ctx-1 of card 227.\nProbe reference: .mob/records/probes/2026-10-30.jsonl (probe taken 2026-10-31T08:39 UTC; codex 08:39:1x, copilot 08:39:24, grok 08:39:25, agy 08:39:31). The probe goes stale at 09:39 UTC (60 minutes, probe_is_stale): any seat or poll that starts at or after that time re-probes first.\nRepositories: the card, its record and its window are in phrase-lang (C:\\Users\\ringe\\projects\\phrase-lang); the code the card changes is in mob-defaults (C:\\Users\\ringe\\mob-crosscli: delete_guard.py, facilitator.py scan_safety, mob_process.py, TEAM_WORKING_AGREEMENT.md, templates/TEAM_WORKING_AGREEMENT.default.md and their tests). Every command names its working directory.\nStart: card 227 is the stop-the-line corrective for F-071 and audit 62, from the product owner's safety ruling, ranked first by re-rank 13 (.mob/records/reranks/2026-10-31-13.md); it starts as the corrective card the gate asks for, so no waiver is needed.\n\n## Task force\n- Product manager (ready): Claude | why: refines card 227 at ready; keeps the Done checks within D157 (three, one criterion each); names the value, the metric and the counter-metric; confirms the \"Intent:\" line (D165) will quote the product owner's ruling; records the open points below | context: ctx-1\n- Architect (slice): Claude | why: decides where the scan must run so a command is seen, not only a reply (see Open points: the scan today only reads reply text); decides the seam for the push detector in mob_process.py (git only, avowry and mob-defaults); decides where the trust-ladder record lives; numbers the criteria 1 to 3 before red (D157); writes the assumption line (D166) and the hostile-input list (D167); checks D136; the card record checker requires a slice seat | context: ctx-2\n- Security reviewer (adversarial lens, slice and review) [reviewer]: Claude | why: this is a hard safety item after the 2026-10-08 home-folder wipe; at the slice reads the list of command forms and adds the bypasses an author would not think of (quoting and escaping, variable forms in bash, PowerShell, cmd and Python, command substitution, `$(...)`, backticks, env expansion, `-r` split from `-f`, `--recursive`, `rm -fr`, `Remove-Item -Recurse` via aliases `ri`, `rd`, `del /s`, `rmdir /s`, `shutil.rmtree` via `from shutil import rmtree`, `os.system(\"rm -rf ...\")`, `git clean -fdx`, a path built in a prior line); at review tries to defeat the scan and the detector with commands outside the card's list and checks the allowed side (a literal path inside a known scratch root through safe_delete) is not widened; does not author | context: ctx-3\n- QA engineer (red): Claude | why: turns each Done check's ZOMBIES and the hostile-input list into failing tests (the exact slip reconstructed from evidence, Remove-Item -Recurse -Force, shutil.rmtree and other equivalents; a commit unpushed 4 minutes, 6 minutes, with no remote, with a detached HEAD, with a branch with no upstream, on a repository that is not a git repository); one criterion per red-green cycle (D157); writes the \"Intent:\" line before the first red (D165); red first (D137) | context: ctx-4\n- Backend developer [author] (green, refactor): Claude | why: extends delete_guard.find_unsafe and the callers so each red test passes; adds the git-only unpushed-commit detector to the mob process check; edits the working agreement and the template rule text; the author does not review or QA their own increment; no `rm -r`-style command in any test or scratch cleanup, only safe_delete or a literal path | context: ctx-5\n- Independent reviewer (audit lens) [reviewer]: Claude | why: non-author review of the diff against the product owner's ruling and the card's invariants (a literal path inside a known scratch root through safe_delete stays allowed; process-kill rules unchanged; no gh calls in the detector), with a loophole lens: can a seat still run the slip's form without a finding, does the detector read the local clock and a commit date correctly, does an unreachable origin read as pushed, is the 5-minute threshold computed from the commit time and not typed | context: ctx-6\n- Delivery lead (ship): Claude | why: confirms tests, the card record, the probe lines, that both repositories are pushed and the detector reports no FAIL before the commit lands; pushes each commit at once (this card's own rule); the card record checker requires a ship seat with its own commit evidence | context: ctx-7\n- Product manager (signoff): Claude | why: a fresh context signs off against the three Done checks, because the refinement seat may not hold the second seat | context: ctx-8\n\nEight seats cover the six roles the card record checker requires (ready, slice, red, green, ship, signoff) plus the independent reviewer and the security reviewer. Neither reviewer seat is named \"auditor\": auditor_seated_problems refuses any card seat whose role contains \"auditor\", because the auditor is external to the mob and never seated.\n\n## Reason for Claude seats\nProbes at 08:39 UTC (.mob/records/probes/2026-10-30.jsonl) show Codex, Copilot, Grok and agy without usable quota: codex usage limit reached (retry Nov 3rd, 2026 11:16 PM); copilot has_quota=False remaining=-5 entitlement=1500 (resets 2026-11-01); grok 402 Payment Required, usage balance exhausted; agy 429 RESOURCE_EXHAUSTED (resets in 36h45m55s). No other model is available, so no available model has waited longer than Claude (claude_wait_problem returns nothing) and a Claude seat is allowed under D163 and D164. Each seat is a distinct fresh context (ready ctx-1, slice ctx-2, security reviewer ctx-3, red ctx-4, green ctx-5, independent reviewer ctx-6, ship ctx-7, signoff ctx-8), and nobody reviews or QAs their own increment. The reason recorded for each Claude seat is the one rotation_reason builds from this probe and the seat-use history (never typed by a seat). Non-Claude models come first again as soon as a fresh probe shows quota.\n\n## Left out\nUX designer and frontend developer (no user interface); database developer (no database); technical writer (the two rule texts are short and the backend developer edits them with the working-agreement owner's wording; the independent reviewer checks them); language designer and grammar designer (no language change); performance engineer (no hot path: a regex scan and one `git log` per repository); DevOps or runner expert (the card changes a scan, a check and rule text, not the hook, a workflow or the loop; git is the only tool the detector may call, so no CI expertise is needed); agile coach (no process-change experiment: the push-every-commit rule is the product owner's, applied by detector, not trialled). The security seat is in, see the next section.\n\n## Domain expert (refinement)\nShould a member with different domain knowledge or context join now? Yes: a security reviewer (adversarial lens), ctx-3, joins at the slice and again at review. Why: this is a hard safety item. The 2026-10-08 home-folder wipe (a mis-quoted delete that took out a home folder) is the reason the scan exists, and the slip behind this card shows the scan can miss a real form while looking fine in tests, because the tests were written by the same people who wrote the patterns. The card's risk is not the code size but the cases nobody listed: shell, PowerShell, cmd and Python forms, quoting, aliases, commands that never appear in a reply, and the order of a path built across lines. A member who did not write the patterns and whose job is to defeat them is the gap the other seats do not fill (the architect and backend developer wrote the current patterns; the independent reviewer checks against the card, not against an attacker). The seat reads the list of command forms (D167) at the slice and adds the hostile ones; it reviews the finished diff by trying to bypass it; it does not author and may not hold a second seat. If the slice needs knowledge no seat holds (for example Windows shell quoting), any member adds an expert through a Decider (mid-card addition, with the Decider id).\n\n## Product value and metric\nValue: no seat can delete a repository, including .git, by a mis-quoted or variable-path recursive delete without the mob seeing it, and a repository loss cannot also lose unpushed work. This closes the open deletion-ban failure (audit 62, F-071) and puts trunk-based push-per-commit in force by detector, not by habit.\nMetrics (read from git, the card record and the seat replies and commands, not self-reported by the seats):\n1. Recursive deletes on a variable or computed path that were run by a seat and not flagged by the scan: counted per card from the seat commands and replies against the scan's findings. Target 0 from the first card after this lands (today at least one: card 226).\n2. Commits on avowry and mob-defaults unpushed for more than about 5 minutes when the process check ran: counted per check, from git only. Target 0 (a FAIL names the repository, the commit and its age).\nCounter-metric (Goodhart guard, read next to the targets): false positives and workarounds. Count (a) scan findings on a literal path inside a known scratch root through safe_delete (these must stay allowed, target 0), (b) seat replies where the delete is described in words to avoid a finding, and (c) commits pushed in a batch only after a FAIL (the detector forced a push without the work being ready) or `--no-verify`-style bypasses. If the main metric reaches 0 while the counter-metric rises, the scan is being gamed or has become noise, and the retro reviews the rule rather than scoring the seats.\nRead at the first card after this one closes and again over the next five cards.\n\n## D157 applies\nThree Done checks, one acceptance criterion per red-green cycle, checked from git (5-card experiment, D157), kept as on the card:\n1. The scan blocks recursive deletes on variable or computed paths: the failing test is written first and reproduces the exact slip reconstructed from evidence, then Remove-Item -Recurse -Force, shutil.rmtree and other equivalents (ZOMBIES by QA at ready).\n2. A trust-ladder entry is recorded for the slip (the seat, the rule, the step down or a stated reason none applies), in the template's trust-ladder record.\n3. Push on every commit: the working agreement and the mob-defaults template say so, and a detector reports FAIL for any commit on avowry or mob-defaults unpushed for more than about 5 minutes (ZOMBIES by QA at ready).\nCheck 2 is the one that can pass on partial work: it fails only if the entry is absent. Keep it on the card, but the slice must say where the trust-ladder record lives (see Open points); if no such record exists, check 2 cannot fail and the architect names the file in the slice before red. Rules for the cycles:\n- The slice (architect, ctx-2) numbers the criteria 1 to 3 before any red.\n- Each red commit body carries \"Criterion: n\".\n- The green for criterion n lands before any red for n+1.\n- Greens are pushed at once (this card's own rule, from the first commit).\n- Each commit stays within D136 and is red first (D137).\n\n## D158 applies\nThe facilitator's pre-window checklist (D158) is run before this window opens: the proposal names seats for ready, slice, red, green, ship and signoff; reviewer seats are not named auditor; every seat has a domain/why and a distinct context; the Claude reason cites a probe file and time (08:39 UTC); the card text lines match the proposal; every declared role is listed for polling (checklist file to be committed before the window); the repositories (phrase-lang for the card and window, mob-defaults for the code) and the working directory of every command are named.\n\n## D165 applies (Intent line)\nBefore the first red of each criterion that implements owner direction, the red seat writes \"Intent: <what the owner wants and why>\" in its record, quoting the product owner's ruling and naming the D-number or finding. For this card the line quotes the product owner's safety ruling of 2026-10-31 (one corrective card covering the scan fix and push on every commit, because a mis-quoted delete like the 2026-10-08 home-folder wipe could take out a repository including .git, losing every unpushed commit), audit 62 and F-071, in the owner's words as they appear in the card's Source line and the ruling. The facilitator confirms the line against the ruling (D165 C2). Criterion 2 (the ladder entry) is mechanical and may be \"no intent question\".\n\n## D166 applies (assumption line)\nThis card changes a rule (push on every commit, in the working agreement and the template) and a checker (find_unsafe and the process check), so the slice (architect, ctx-2) writes an assumption line before the first red: \"Assumption: <what the slice takes as true that could be wrong, and how it is checked>\". Candidates: that the slip can be reconstructed from the evidence (see Open points); that the seat's command, not only its reply, reaches find_unsafe (today scan_safety in facilitator.py reads the reply text only); that \"about 5 minutes\" means a fixed threshold from the commit time (author or committer date) read from git; that a repository with no remote or upstream is a FAIL and not a skip; that avowry resolves to a repository path the check can find (see Open points). The facilitator confirms the line against the slice.\n\n## D167 applies (hostile-input list)\nThe scan takes a list of command forms (the forms it must find), which is a criterion that takes a list or map of names, so the hostile-input list applies. The architect adds one slice line per such criterion: \"Inputs: disabled: <case>; unknown: <case>; repeated: <case>; reordered: <case>\", each entry a case or \"n/a: <reason>\"; the red commit body answers every entry with a test name in that red or an n/a with a reason. Applied to the scan: disabled (a form removed from the list must make a test fail, so the list cannot silently shrink); unknown (a command form not on the list, for example a new alias, must still be flagged by the generic recursive-flag rule or named as a gap); repeated (the same form twice in one reply produces two findings or one finding with a count, decided in the slice); reordered (flags before and after the path, `-Force -Recurse`, `-fr` and `-rf`, and a path on an earlier line). The security reviewer reads this line at the slice and adds cases.\n\n## Window rule\n- Every declared role is polled (F-054): all eight role seats answer (ready ctx-1 is the proposer; slice ctx-2, security reviewer ctx-3, red ctx-4, green ctx-5, independent reviewer ctx-6, ship ctx-7, signoff ctx-8), each in its own fresh context. A declared role that is not polled makes the window invalid.\n- Each seat answers either \"no objection\" or ONE fixed condition per objection (D145). A condition that is simply adopted and re-polled stays in the window; an unsettled objection goes to a full Decider.\n- Card-text changes proposed with this declaration are card-text fixes in the same window (D153 L1).\n- The poll runs through decider.py's decision-seat gate (card 226): the voters start on a probe under 60 minutes old (re-probe first if the 08:39 UTC probe is 60 minutes old or more at poll time, 09:39 UTC).\n\n## Why this is neither a one-way door nor a standing-rule change without the owner\nTwo-way door: the declaration ends with the card; nothing is published, deleted or migrated; the roster can be changed by a Decider mid-card; the code change is reversible by revert, and the detector reports and does not delete or push anything itself. The push-every-commit rule is the product owner's ruling, not a new process experiment, so the card applies it as written. This declaration applies Task-Force Driven Development, D136, D145, D153, D157, D158, D165, D166 and D167 as written, changing no D-record.\n\n---\n\n# Open points\n\n1. **The slip is not recorded verbatim.** .mob/records/226/record-in-progress.json (deviations, \"what\") says only: \"ran rm -rf once on a variable path (a scratchpad folder that did not exist); nothing was deleted; reported by the seat itself\" (by backend developer ctx-4). .mob/records/226/turn-green-dev.md line 63 says the same in prose, and the retro input and retro voices repeat it. No file names the command line, the variable, or the shell (bash, PowerShell or Python). So \"tonight's exact command form\" cannot be copied from the record. QA must reconstruct it from evidence (the seat's raw shell transcript or session log for ctx-4 if it survives, the seat's tool-call history, the commit 9f42b70 that recorded the deviation, and the likely forms `rm -rf $SCRATCH/...`, `rm -rf \"$VAR\"`, `rm -rf <literal scratchpad path that did not exist>`). Whatever QA cannot confirm stays an open point on the card and the test says which form it covers.\n2. **Likely reason the scan missed it (to check, not assumed).** find_unsafe already flags `rm -rf $VAR` forms in text. Its only caller on seat output is facilitator.py scan_safety (line 1249), which reads the reply text. The seat described the command in words in its reply (\"rm -rf on a variable path\"), and the command itself ran in a tool call that the scan never sees. The architect must decide whether the scan has to run on the commands too (a hook or the turn transcript), not only on the reply.\n3. **Where the trust-ladder record lives.** The trust ladder is the \"Driver trust ladder\" section of TEAM_WORKING_AGREEMENT.md (mob-defaults line 269, template line 447, phrase-lang line 379). It is a rule table, not a record; no per-driver ladder record file was found in .mob/records. Done check 2 says \"the template's trust-ladder record\", so the architect must name the file (and add it to the template if it does not exist) before red.\n4. **avowry repository path.** The detector is to cover avowry and mob-defaults; no repository named avowry was found under C:\\Users\\ringe\\projects. The architect or facilitator confirms whether phrase-lang is avowry or where it lives.\n5. **F-071 text.** The ledger text for F-071 is not in the repository (re-rank 13 reads it as audit 62's failure); the auditor confirms or corrects. The card's Source line already says so.\n6. **Two repositories pushed.** The card changes mob-defaults only for code, but the card, record and window are in phrase-lang and the working agreement lives in both. Both repositories need a push after every commit from the first one.\n\n# Card 227 text changes (exact replacement lines)\n\nEdit the issue, not the generated board file. Done checks and \"ZOMBIES to be written by QA at ready\" stay as written.\n\nReplace the last \"## Context\" bullet and append, so \"## Context\" reads:\n- Filed by the facilitator on 2026-10-31 at the card 226 boundary, per the product owner's ruling and audit 62. Stop the line: no other new card starts before this one; the PM-led re-rank places it.\n- One acceptance criterion per red-green cycle (D157): the architect numbers the three Done checks 1 to 3 before red; \"Criterion: n\" in each red commit body; the green for criterion n before any red for n+1; greens pushed at once; commits within D136. The \"Intent:\" line quoting the product owner's ruling comes before the first red (D165); an assumption line in the slice (D166, because this card changes a rule and a checker); the hostile-input list (D167, because the scan takes a list of command forms).\n- Task force declared at ready by objection window 227-taskforce (D153), with every declared role polled (F-054) and the D158 pre-window checklist run first. Eight seats, all Claude (probes at 08:39 UTC show Codex, Copilot, Grok and agy without usable quota; .mob/records/probes/2026-10-30.jsonl), each a distinct fresh context ctx-1 to ctx-8: product manager (ready, ctx-1); architect (slice, ctx-2); security reviewer (adversarial lens) [reviewer] (ctx-3); QA engineer (red, ctx-4); backend developer [author] (green, refactor, ctx-5); independent reviewer (audit lens) [reviewer] (ctx-6); delivery lead (ship, ctx-7); product manager (signoff, ctx-8).\n- Left out: UX designer and frontend developer (no user interface), database developer (no database), technical writer (two short rule texts), language designer and grammar designer (no language change), performance engineer (no hot path), DevOps or runner expert (git only, no hook or workflow change), agile coach (no process-change experiment).\n- Domain-expert question (refinement): should a member with different domain knowledge or context join now? Yes: a security reviewer (adversarial lens), because this is a hard safety item after the 2026-10-08 home-folder wipe and the people who wrote the patterns cannot be the only ones trying to defeat them. Any member can add a further expert through a Decider (mid-card addition, with the Decider id).\n- Product value: no seat can delete a repository by a variable-path recursive delete unseen, and unpushed work is never more than about 5 minutes old. Metrics: unflagged recursive deletes on variable paths (target 0); commits unpushed for more than about 5 minutes (target 0); counter-metric: false positives on literal scratch paths through safe_delete and replies reworded to dodge the scan.\n- Open points to resolve at the slice: the exact slip is not recorded verbatim (QA reconstructs it from evidence); the scan reads replies and may never see a command; where the trust-ladder record lives; the avowry repository path.\n\n## Adopted condition (round 1, D145; from the QA engineer and the independent reviewer (audit lens), the same condition in two wordings)\nDone check 1 is amended, not split (D157 keeps three checks): the scan must see the commands a seat executes (its tool-call commands, through a hook or its transcript), not only its reply text. The red includes a failing test on a destructive command that never appears in the reply text, and check 1 is not met by reply-text patterns alone. Where the scan runs (hook, transcript reader or both) is the architect's decision at the slice. The re-poll may not add new demands.\n",
+ "checklist_D158": ".mob/records/227/checklist-227-taskforce.md",
+ "polled_roles_note": "F-054: all seven non-proposer declared roles polled",
+ "adopted_conditions": [
+  {
+   "from": "QA engineer and independent reviewer (audit lens), the same condition in two wordings",
+   "adopted_as": "Done check 1 amended: the scan sees executed commands (tool calls, through a hook or transcript), with a failing test on a command absent from the reply text; not met by reply-text patterns alone"
+  }
+ ],
+ "zombies_notes_for_qa": [
+  "Zero: an empty or missing command-scan source must fail (from the independent reviewer's round-2 reply)"
+ ],
+ "replies": [
+  {
+   "round": 2,
+   "role": "architect",
+   "context": "w227tfr2-architect (ctx-2)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:19:04Z",
+   "raw": "NO OBJECTION\n",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "round": 2,
+   "role": "security reviewer (adversarial lens)",
+   "context": "w227tfr2-security (ctx-3)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:19:53Z",
+   "raw": "NO OBJECTION\n\nThe adopted condition closes the main gap: the scan now has to see executed commands, not only reply text. The bypass forms I would raise (aliases, variable paths, other shells, `git clean`, an unreachable origin) already sit in the slice and review lists. Under D145 I add no new demand.\n",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "round": 2,
+   "role": "QA engineer",
+   "context": "w227tfr2-qa (ctx-4)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:20:44Z",
+   "raw": "NO OBJECTION\n",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "round": 2,
+   "role": "backend developer",
+   "context": "w227tfr2-dev (ctx-5)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:21:33Z",
+   "raw": "NO OBJECTION\n",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "round": 2,
+   "role": "delivery lead",
+   "context": "w227tfr2-delivery (ctx-7)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:23:23Z",
+   "raw": "NO OBJECTION\n",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "round": 2,
+   "role": "product manager (signoff)",
+   "context": "w227tfr2-pmsignoff (ctx-8)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:24:12Z",
+   "raw": "NO OBJECTION\n",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "round": 3,
+   "role": "independent reviewer (audit lens)",
+   "context": "w227tfr2e-auditlens (ctx-6)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:28:29Z",
+   "raw": "NO OBJECTION\n",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "note": "answered with the facilitator note in the prompt"
+  }
+ ],
+ "attempts": [
+  {
+   "round": 1,
+   "role": "architect",
+   "context": "w227tf-architect (ctx-2)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:12:30Z",
+   "raw": "NO OBJECTION\n",
+   "reply": "NO OBJECTION",
+   "note": "round 1 reply; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "round": 1,
+   "role": "security reviewer (adversarial lens)",
+   "context": "w227tf-security (ctx-3)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:13:21Z",
+   "raw": "NO OBJECTION\n",
+   "reply": "NO OBJECTION",
+   "note": "round 1 reply; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "round": 1,
+   "role": "QA engineer",
+   "context": "w227tf-qa (ctx-4)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:14:17Z",
+   "raw": "OBJECTION\nCONDITION: Add a fourth Done check (or fold into check 1) requiring a test that runs find_unsafe on a seat's tool-call command, not only its reply text, because without it check 1 can pass while the slip's form still goes unseen.\n",
+   "reply": "OBJECTION",
+   "note": "round 1 reply; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "round": 1,
+   "role": "backend developer",
+   "context": "w227tf-dev (ctx-5)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:15:15Z",
+   "raw": "NO OBJECTION\n",
+   "reply": "NO OBJECTION",
+   "note": "round 1 reply; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "context": "w227tf-auditlens (ctx-6)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:16:07Z",
+   "raw": "OBJECTION\nCONDITION: Done check 1 must require that the scan sees executed commands (hook or transcript), with a failing test on a command that never appears in the reply text, and must not be satisfied by reply-text patterns alone.\n",
+   "reply": "OBJECTION",
+   "note": "round 1 reply; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "round": 1,
+   "role": "delivery lead",
+   "context": "w227tf-delivery (ctx-7)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:17:09Z",
+   "raw": "NO OBJECTION\n",
+   "reply": "NO OBJECTION",
+   "note": "round 1 reply; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "round": 1,
+   "role": "product manager (signoff)",
+   "context": "w227tf-pmsignoff (ctx-8)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:17:59Z",
+   "raw": "NO OBJECTION\n",
+   "reply": "NO OBJECTION",
+   "note": "round 1 reply; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "context": "w227tfr2-auditlens (ctx-6)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:22:22Z",
+   "raw": "OBJECTION\nCONDITION: Done check 1 must state that its failing tests run against recorded tool-call command transcripts or hook events, with a test failing if the command-scan source is empty or missing, so a reply-text-only pass is detectable from git.\n",
+   "reply": "OBJECTION",
+   "note": "a new demand in a re-poll (D145): an empty or missing command-scan source must fail; not added to the card; handed to QA as the ZOMBIES Zero case the red must include"
+  },
+  {
+   "round": 3,
+   "role": "independent reviewer (audit lens)",
+   "context": "w227tfr2c-auditlens (ctx-6)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:25:16Z",
+   "raw": "Yes\n",
+   "reply": "NO OBJECTION",
+   "note": "not counted: the facilitator's runner dropped the facilitator note from the prompt (script bug), so the seat answered without it"
+  },
+  {
+   "round": 3,
+   "role": "independent reviewer (audit lens)",
+   "context": "w227tfr2d-auditlens (ctx-6)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T09:27:26Z",
+   "raw": "NO OBJECTION\n",
+   "reply": "NO OBJECTION",
+   "note": "not counted: the same runner bug, the note was still missing"
+  }
+ ],
+ "decision": {
+  "result": "adopted with one condition; round 2 no objection from all seven polled seats (the audit lens after a third poll with the facilitator's D145 note)",
+  "task_force": [
+   "product manager (ready) ctx-1",
+   "architect ctx-2",
+   "security reviewer (adversarial lens) ctx-3",
+   "QA engineer ctx-4",
+   "backend developer [author] ctx-5",
+   "independent reviewer (audit lens) [reviewer] ctx-6",
+   "delivery lead ctx-7",
+   "product manager (signoff) ctx-8"
+  ]
+ },
+ "ended_at": "2026-10-31T09:29:41Z"
+}
