@@ -692,6 +692,30 @@
    "transcript": "subagents/agent-ad18419b0ecbb47b5.jsonl",
    "commands": 59,
    "source": "python delete_guard.py scan-transcript (mob-defaults f8a45da), facilitator; read before recording"
+  },
+  {
+   "context": "ctx-7",
+   "status": "clean",
+   "seat": "preship-gate",
+   "transcript": "subagents/agent-a09de50c0a7a724eb.jsonl",
+   "commands": 46,
+   "source": "python delete_guard.py scan-transcript (mob-defaults f8a45da), facilitator; read before recording"
+  },
+  {
+   "context": "ctx-4",
+   "status": "clean",
+   "seat": "turn-red",
+   "transcript": "subagents/agent-a909d4f3bbe1dc2ae.jsonl",
+   "commands": 33,
+   "source": "python delete_guard.py scan-transcript (mob-defaults f8a45da), facilitator; read before recording"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "turn-green",
+   "transcript": "subagents/agent-a16c5ab490f15d6a9.jsonl",
+   "commands": 24,
+   "source": "python delete_guard.py scan-transcript (mob-defaults f8a45da), facilitator; read before recording"
   }
  ],
  "reviews": [
@@ -727,5 +751,6 @@
    "verdict": "APPROVE",
    "note": "17 findings closed or moved to 228; red 1c string flagged by the current scanner; N1 to N4 added to card 228"
   }
- ]
+ ],
+ "ci_note": "avowry CI read by the facilitator with one gh run list at about 23:10 UTC: ci success on e5105b1, 5c93c4b and 130a2c2; five later runs (4a1cc50 to 7c45132) in progress; mob-defaults has no workflow"
 }
