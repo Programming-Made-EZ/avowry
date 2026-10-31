@@ -133,6 +133,17 @@
    "reply": "NO OBJECTION",
    "condition": null,
    "raw": "NO OBJECTION\n\nBoth conditions are adopted as I asked. The checker card alone carries the window ceremony, and every other card keeps the standing rules. The open-FAIL note is committed and no new demands were added, so the line can restart.\n"
+  },
+  {
+   "round": 2,
+   "role": "product manager (signoff)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)",
+   "context": "w12b-pmsignoff",
+   "started_at": "2026-10-31T01:22:24Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes\n"
   }
  ],
  "decision": null,
