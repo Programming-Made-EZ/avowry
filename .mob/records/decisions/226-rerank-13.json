@@ -1,0 +1,155 @@
+{
+ "window": "226-rerank-13",
+ "category": "loop-boundary re-rank",
+ "rule": "D148 and D153 at the boundary after card 226 closed",
+ "proposed_by": {
+  "role": "product manager",
+  "model": "claude-sonnet subagent",
+  "context": "pm-rerank-13",
+  "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC)"
+ },
+ "opened_at": "2026-10-31T08:48:34Z",
+ "proposal": "# Re-rank proposal 13 (D148, loop boundary after the decision-seat card closed): the safety corrective goes first because the product owner stopped the line\n\n- Led by: the product manager seat (fresh context, pm-rerank-13). Claude seat because the probes at 08:39 UTC show Codex, Copilot, Grok and agy without usable quota (.mob/records/probes/2026-10-30.jsonl: codex usage limit reached, copilot has_quota=False remaining=-5, grok 402 Payment Required, agy individual quota reached, resets in 36h45m).\n- Trigger: loop boundary after card 226 (decision seats start on a fresh probe and rotate like card seats) closed. Record .mob/records/226.json, retro docs/retros/card-226-2026-10-31.md, retro pick D167 (a hostile-input list in the slice of any criterion that takes a list or map of names). The product owner ruled the new safety card (227) a stop-the-line corrective: no other new card starts before it.\n- Why a window and not a full Decider (D153): same as note 12. A loop-boundary re-rank is on the closed L1 list, it is not a one-way door and it changes no standing rule. The product owner's ruling is not up for a vote; the window only checks the placement and the conditions below.\n- Recorded slip (stated, not hidden): card 226's GitHub issue was closed before its record commit, then reopened and closed again (MOB.md was regenerated after the re-close, mob record d095887). No card is filed for it here. It is a candidate for the record checker hardening card or the loop's steps that stop on failure: refuse a close that precedes its record. The next retro should score it.\n\n## Open failures (read from .mob/audits/last.json; the file is not committed and this seat did not touch it)\n\n- Audit 72, 2026-10-31 08:32 UTC, external-audit. Three open FAILs: MD-003 (the record check loopholes), MD-010 (no independent review of the 27 mob-defaults commits), F-071. The file lists 43 open FLAGs.\n- Quoted summary: \"audit 72: origin 2cde140 level, mob-crosscli 56b39bc level; scan+push card (227) filed, unranked; decision-seat card retro done (D167), formal close pending; open FAILs MD-003,MD-010,F-071\".\n- F-071 is the one new FAIL since audit 59. Its text is not in the repository (the ledger is external). Card 227 calls its subject \"the open deletion-ban failure (audit 62)\" and the audit 72 summary says the scan-and-push card was filed, so this note reads F-071 as the deletion-ban failure. That reading is an inference, not a quote; the auditor, not this note, says what F-071 covers.\n- Cards that name these: the safety corrective (227, names \"audit 62\" and the open deletion-ban failure but no finding ID in its text), the record checker hardening (210, names MD-003), the whole-team review (211, names MD-010).\n\n## Is the decision-seat failure (MD-002) fixed now?\n\nYes in code, pending the auditor's verification. Evidence: card 226 closed; criteria 1 to 3 plus three review fixes landed in mob-defaults (8357f14..56b39bc), review approved at 6f73e2e, pre-ship gate 7b1ffde, sign-off f4f2835, five full runs green (466 to 583 OK); the record carries the probe field so an auditor can recompute rotation from git. Audit 72 no longer lists MD-002 among the open FAILs, but its summary says the decision-seat card's formal close was still pending when it ran (08:32 UTC), so I do not treat the drop as the auditor's verdict on the closed card. The card 226 retro's sign-off lens says the same: delivered, but whether it works is open until a later audit. Consequence for ranking: no queued card needs to name the decision-seat finding any more; it stays \"fixed in code, unverified\" until the auditor says so. If a later audit reopens it, a corrective card for it goes first and this note is re-ranked.\n\n## Does the safety corrective (227) go first? Yes\n\n1. The product owner ruled it stop-the-line. Nothing in the evidence argues against that, so the burden is on any other order and none meets it.\n2. The evidence supports it independently: a seat ran a recursive delete on a variable path during card 226 criterion 1 and the reply scan did not flag it. Four seats in the retro (product manager, backend developer, independent reviewer, delivery lead) named it; the stand-down named it and adjusted nothing; no failing test existed; no trust-ladder entry existed. The same shape of command wiped a home folder on 2026-10-08. The cost of a mis-quoted delete reaching a repository is every unpushed commit, and the card's second half (push on every commit with a detector) is what limits that loss.\n3. It is a corrective for an open FAIL, so the corrective-card gate lets it start while the FAILs are open. One condition: the card's text names \"audit 62\" but no finding ID, and the gate starts a card whose issue names an open FAIL. The facilitator should add the first line of the issue body, \"Corrective action for F-071 (recursive deletes on variable paths; every commit pushed)\" (the same form cards 210 and 211 use), or confirm with the auditor which finding the card closes. If the gate still refuses, the product owner's ruling is the authority to start it and the facilitator records that ruling as the reason, the way D162 did for card 219; this note does not widen the exemption.\n4. It unblocks the templates card (216): 227 says 216 carries the push-per-commit rule and the scan, so 216 now waits for 227 and the rule text is written once, with the enforcing code behind it (D161: tooling first, then the template).\n\nSize note for the facilitator at ready (D136): the card has three done checks over two pieces of code (the scan, the unpushed-commit detector) plus a trust-ladder record entry. If it is too big, the split is checks 1 and 2 first (scan and trust-ladder entry, closing the slip's cause), then check 3 (push detector) as the second card; both still go before everything else. D167 applies if adopted as written: check 1 takes a list of command forms, so its slice needs a hostile-input list (relative path, quoted, variable, computed, Remove-Item with and without -Force, shutil.rmtree; a literal path inside a scratch root through safe_delete stays allowed). D166 also applies: the invariant the scan relies on goes in the slice as an assumption line.\n\n## Before and after\n\n- Before (note 12, with 226 now closed): decision seats on a fresh probe (226, done), 210, 211, 216, 220, 221, 222, 223, 224, 225, 213, 217, 218, 212, 215, 206, 207.\n- After: the recursive-delete scan fix and push-on-every-commit (227, new, stop the line), the record checker hardening that refuses an empty task force and empty probes (210), the whole-team review of the mob-defaults rulings commits (211), the default templates carrying the pending process rulings and the feedback-loop lens (216), the loop's corrective-card gate (220), the loop running a card in the repository its Repository line names (221), the loop's retro and re-rank steps that stop on failure (222), the per-card retro from every role (223), the re-rank by the product manager and a Decider (224), card mode reading only role lines (225), the checker rule that rejects an incomplete objection window (213), the acceptance-suite thread-pool flakes (217), the mid-card retro removal that keeps the seat until the retro (218), every mob re-ranks at every loop boundary (212), every mob reviews each previous adjustment at stand-downs and retros (215), the findings file mirroring the audit register (206), the findings file history rules (207).\n- Next card: the recursive-delete scan fix and push-on-every-commit (227), in mob-defaults (delete_guard.py, the reply and command scan, a new unpushed-commit detector, the template rule text).\n- Rationale (one line): the product owner stopped the line for the deletion-ban failure and the push-on-every-commit rule, so that corrective starts first; then the two other corrective cards for open FAILs (record checker hardening, whole-team review), then the templates card, which now carries 227's rules (D161).\n\n## What changed against note 12\n\n- Removed: decision seats on a fresh probe (226), done and signed off; the decision-seat finding is fixed in code, pending the auditor.\n- Added at the head: 227. Reason: product owner ruling, audit 62, and the new open FAIL in audit 72.\n- Unchanged order of the rest: 210, 211, 216, 220, 221, 222, 223, 224, 225, 213, 217, 218, 212, 215, 206, 207. The two other corrective cards (210, 211) stay directly behind 227 because they still name open FAILs (MD-003, MD-010) and are the only other cards the gate starts.\n- Dependency added: 216 waits for 227 (the default templates carry its rules). It already sat behind 210 and 211.\n- Open FAIL list changed: audit 59 listed MD-002, MD-003, MD-010; audit 72 lists MD-003, MD-010, F-071.\n- Carried forward from note 12: the corrective-card gate card (220) cannot start while the FAILs are open unless its issue names an open FAIL (it names F-008, a FLAG); the open point from note 12 still stands. The window-rule checker (213) stays ahead of the flake and loophole cards. The findings file cards (206, 207) stay last.\n\n## Reversals stated\n\n- 227 moves behind nothing unless the product owner lifts the stop-the-line. If the gate refuses it and the facilitator cannot add the finding line, it still starts on the product owner's ruling and the reason is recorded; that is not a reversal of the order.\n- 227 splits (scan and trust-ladder entry first, push detector second) if the facilitator finds it too big for D136 at ready; the order of the rest is unchanged.\n- The record checker hardening (210) swaps with the whole-team review (211) if the facilitator cannot seat an independent reviewer for 211 who authored none of the 27 commits; if neither can start, the next card does not skip to the templates card, it re-ranks.\n- The templates card (216) moves up beside 227 only if 227 is split and its first half lands, because then the scan rule text exists to carry.\n- If the next audit shows a FAIL that no queued card names, a corrective card for it goes first and this note is re-ranked. If it reopens the decision-seat finding, the same.\n- The decision-seat finding (MD-002) is to be considered closed only when the auditor says so; \"fixed in code\" here does not close it.\n\n## Board and window\n\n- Board: no held-record cards remain. The top of Ready is 227, 210, 211, 216, 220, 221, 222, 223, 224, 225.\n- Window rule (D153, F-054): every declared role is polled, not a quorum. Same six non-proposer seats as note 12, each in its own fresh context with its own probe reference: architect, QA engineer, backend developer, delivery lead, independent reviewer (audit lens), product manager (sign-off). The proposer seat (this note) does not vote on itself. Decision seats now start on a fresh probe and rotate by decider.py (card 226), with the seat-use history in .mob/records/seat-use.jsonl. One objection with ONE fixed condition per seat; a condition is adopted as a commitment (D145) or settled in round 2. Each step its own commit: this proposal, each reply with its probe reference, the decision. D158 pre-window checklist at .mob/records/NNN/checklist-... before the window opens (seats, caps, working directory, line endings, probes at 08:39 UTC). Seats do not run recursive deletes on variable paths; the window's stand-down names the rule until 227 enforces it.\n- Open points for the window: (1) does the facilitator gate need the finding ID on 227's issue, and which ID (F-071 is this note's inference)? (2) is 227 sized for one card? (3) the slip: should \"close only after the record commit\" go into the record checker hardening card (210) or the loop's steps that stop on failure (222)?\n- The facilitator records the open FAILs for this window as .mob/records/notes/2026-10-31-open-fails-audit-72.md (the audit-lens seat's standing condition from window 12), quoting audit 72's open FAILs and summary above.\n",
+ "checklist_D158": ".mob/records/226/checklist-226-rerank-13.md",
+ "polled_roles_note": "F-054: all six non-proposer roles polled, one at a time through decider.py's decision-seat gate",
+ "replies": [
+  {
+   "role": "architect",
+   "context": "w13b-architect (ctx-2)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T08:54:11Z",
+   "raw": "NO OBJECTION\n",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "round": 2
+  },
+  {
+   "role": "QA engineer",
+   "context": "w13-qa (ctx-3)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T08:49:40Z",
+   "raw": "NO OBJECTION\n",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "round": 1
+  },
+  {
+   "role": "backend developer",
+   "context": "w13-dev (ctx-4)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T08:50:33Z",
+   "raw": "NO OBJECTION\n\nThe rules are workable from the backend seat. 227 is sized to split cleanly at ready if D136 needs it. The hostile-input list (D167) and the assumption line (D166) are things I can comply with without gaming them. I read none of the repository files, so this rests on the proposal text alone.\n",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "round": 1
+  },
+  {
+   "role": "independent reviewer (audit lens)",
+   "context": "w13-auditlens (ctx-5)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T08:51:24Z",
+   "raw": "NO OBJECTION\n\nI did not check the repository. This reply rests on the proposal text alone.\n\nTwo points for the facilitator, neither a condition:\n- Record the product owner's ruling as the start reason for 227 if the gate refuses it.\n- Ask the auditor to confirm F-071.\n",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "round": 1
+  },
+  {
+   "role": "delivery lead",
+   "context": "w13c-delivery (ctx-6)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T08:57:06Z",
+   "raw": "NO OBJECTION\n\nSplitting the work across thin commits per D136 and D157 is enough. The safety corrective goes first, and the split stays available at ready if 227 proves too big.\n",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "round": 2
+  },
+  {
+   "role": "product manager (signoff)",
+   "context": "w13b-pmsignoff (ctx-7)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T08:56:00Z",
+   "raw": "NO OBJECTION\n\n227 first follows the product owner's stop-the-line ruling and the open-FAILs rule, and it stays a corrective for an open FAIL. Please record the F-071 reading as the auditor's, not an inference, and add the finding line to 227's issue.\n",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "round": 2
+  }
+ ],
+ "attempts": [
+  {
+   "role": "architect",
+   "context": "w13-architect (ctx-2)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T08:48:34Z",
+   "raw": "Yes\n",
+   "attempt": 1,
+   "reply": null,
+   "note": "answered with a vote word (decider.py's vote wrapper) instead of the window line; not counted; re-polled with a stricter format line"
+  },
+  {
+   "role": "delivery lead",
+   "context": "w13-delivery (ctx-6)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T08:52:13Z",
+   "raw": "Yes\n",
+   "attempt": 1,
+   "reply": null,
+   "note": "answered with a vote word (decider.py's vote wrapper) instead of the window line; not counted; re-polled with a stricter format line"
+  },
+  {
+   "role": "delivery lead",
+   "context": "w13b-delivery (ctx-6)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T08:55:01Z",
+   "raw": "OBJECTION\nCONDITION: Adopt the split now: 227 ships checks 1 and 2 (scan and trust-ladder entry) as one thin card, and the push detector becomes a second card, so each commit stays within D136's 15 files and 400 lines.\n",
+   "attempt": 2,
+   "reply": "OBJECTION",
+   "condition": "CONDITION: Adopt the split now: 227 ships checks 1 and 2 (scan and trust-ladder entry) as one thin card, and the push detector becomes a second card, so each commit stays within D136's 15 files and 400 lines.",
+   "handling": "not adopted: it contradicts the product owner's explicit ruling to file ONE corrective card covering both; its purpose (D136 per commit) is met by D136 being per commit and D157 cycles per Done check, and the proposal keeps the split-at-ready reversal; re-polled with this explanation (D145, no new demands)"
+  },
+  {
+   "role": "product manager (signoff)",
+   "context": "w13-pmsignoff (ctx-7)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone, decision-seat gate: own fresh probe, seat-use line, rotation reason)",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (08:39 UTC) and decider.py's own probe per run",
+   "started_at": "2026-10-31T08:53:03Z",
+   "raw": "Yes\n",
+   "attempt": 1,
+   "reply": null,
+   "note": "answered with a vote word (decider.py's vote wrapper) instead of the window line; not counted; re-polled with a stricter format line"
+  }
+ ],
+ "adopted_conditions": [],
+ "decision": {
+  "result": "adopted; all six polled seats NO OBJECTION (three after a stricter format re-poll; the delivery lead's split condition not adoptable against the product owner's one-card ruling, withdrawn on re-poll)",
+  "order": [
+   227,
+   210,
+   211,
+   216,
+   220,
+   221,
+   222,
+   223,
+   224,
+   225,
+   213,
+   217,
+   218,
+   212,
+   215,
+   206,
+   207
+  ],
+  "next": 227
+ },
+ "ended_at": "2026-10-31T08:58:13Z"
+}
