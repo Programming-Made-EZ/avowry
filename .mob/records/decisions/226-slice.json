@@ -12,7 +12,19 @@
  "proposal": "The architect's slice of card 226 is .mob/records/226/turn-slice-architect.md (commit f0c0d63): SHIP AS IS; three numbered criteria, one red-green cycle each (D157); the gate reused through CardRun without a second copy; criterion-by-layer table with doubles; the D166 assumption line with its probe. Two-way door.",
  "checklist_D158": ".mob/records/226/checklist-slice.md",
  "polled_roles_note": "F-054: all six non-proposer roles polled.",
- "replies": [],
+ "replies": [
+  {
+   "round": 1,
+   "role": "product manager (ready)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-1",
+   "started_at": "2026-10-31T01:39:57Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
+  }
+ ],
  "decision": null,
  "ended_at": null
 }
