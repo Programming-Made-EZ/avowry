@@ -1,0 +1,107 @@
+{
+ "decider": "D167",
+ "subject": "hostile-input list in the slice, answered in the red (card 226 retro pick, experiment)",
+ "proposer": "agile coach seat",
+ "result": "PASSED round 1 (3 Yes, 3 Support-it), confirmed by the independent re-run (3 Yes, 3 Support-it)",
+ "claude_seat_reason": "probes show Codex, Copilot, Grok and agy without usable quota",
+ "round1": [
+  {
+   "role": "pm",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d167-pm",
+   "started_at": "2026-10-31T08:13:35Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The four-entry hostile-input list fits the card 226 gap: F1 and F2 were reached only at review, and the proposal moves that check into the slice and red.\nP2: The architect writes the line and the red seat answers it in its own commit body, so each role stays in its own context.\nP3: The reviewer checks the red body first, and \"n/a\" without a reason counts as not run, so the check can be audited.\nP4: \"No list input\" and no new file, seat or meeting keep it light and avoid over-specifying (VISION.md ruling 6).\nP5: It is kept apart from D157, D158, D165 and D166, with its own metric, so credit isn't blurred.\nP6: The metric is input-gap review findings per card (target 0), with a stated baseline of 2, plus counter-metrics for ceremony cost.\nP7: It is a two-way door, scoped to 3 cards, and keep, revise or drop is decided at the retro, so removal waits for the retro.\nP8: The git-visible accountability check lets the auditor tick FAIL a card that skips it, which fits \"open FAILs stop the line\".\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d167-architect",
+   "started_at": "2026-10-31T08:14:30Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: C1 is sound and minimal. One fixed four-entry line is easy to check, and \"n/a: <reason>\" avoids forcing fake cases.\nP2: C2 is enforceable. A test name that exists in that red can be checked mechanically from git.\nP3: C3 is clear. A missing name or a reasonless n/a counts as \"not run\", so a reviewer can apply it without judgment calls.\nP4: C4 is fine. \"no list input\" gives a clean exit, and there is no new file, seat or checker, so no checker false positives are possible.\nP5: C5 keeps the boundaries with D157, D158, D165 and D166 clear. The \"first rule to name it gets the catch\" tie-break prevents double credit.\nP6: The metric, baseline and scope are measurable from the review record. The trial is capped at 3 cards and is a two-way door.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d167-qa",
+   "started_at": "2026-10-31T08:15:22Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 (PICK): The hostile-input list is red-first by construction. Each entry is answered by a test that exists in the red commit, so the check can see it.\nP2 (HYPOTHESIS): It is testable. The count of input-gap review findings per card goes from 2 to 0.\nP3 (C1): The four named entries (disabled, unknown, repeated, reordered) map directly to F1 and F2 from card 226. \"n/a: <reason>\" is an allowed answer, so the rule does not force pointless tests.\nP4 (C2): \"A test name is a test that exists in that red\" can be checked against git. It does not check that the test feeds the input it names, and the reviewer has to catch that.\nP5 (C3): \"No test name and no n/a reason\" and \"n/a with no reason\" both count as not run. That closes the bare-n/a loophole. A thin reason will pass, and the counter-metric tracks those.\nP6 (C4): \"No list input\" is a clear, checkable opt-out, and it adds no new file, seat or meeting.\nP7 (C5): The rule is separated from D165, D166, D157 and D158, so a catch has one owner and no check overlaps another.\nP8 (METRIC): The target is checkable from the review record, and the counter-metrics are recorded as evidence, not targets.\nP9 (TRIAL SCOPE): Three matching cards give a bounded trial with a keep/revise/drop retro.\nP10 (ACCOUNTABILITY CHECK): The auditor can check the slice line and the red-body answers from git. A missing answer counts as not run, which means the check cannot pass bad state silently.\nP11 (BASELINE): The baseline of 2 findings and 37/48/40 minutes is stated, and F3 and R1 are correctly excluded.\nP12 (REVERSIBILITY): It is a two-way door. Deleting the slice line and the red answers is enough.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d167-dev",
+   "started_at": "2026-10-31T08:16:14Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: The pick is workable. A four-entry list in the slice, answered in the red body, is something I can comply with without gaming it.\nP2: The hypothesis and metric are measurable. Input-gap review findings go from 2 to 0 per card, and the baseline is clear.\nP3: C1 is unambiguous. Each of the four entries gets a case or \"n/a: reason\", and criteria with no list write \"no list input\".\nP4: C2 is fair to the work. A test name must exist in that red, and \"n/a\" with a reason is allowed, so I don't have to invent tests for inputs that don't apply.\nP5: C3 and the accountability check are enforceable from git, because an entry with no test name and no reasoned \"n/a\" counts as not run.\nP6: C4 and C5 add no file, seat or meeting. The \"no blur\" attribution rule keeps D166, D165 and D157 credit separate.\nP7: The counter-metrics (slice minutes, red-to-green time, tests added, thin \"n/a\" entries) catch the ceremony risk. The trial is limited to 3 cards and is a two-way door.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d167-auditlens",
+   "started_at": "2026-10-31T08:17:04Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: PICK: it is verifiable from git alone, because the slice line and the red commit body are both committed text.\nP2: Why: the card 226 evidence (F1 and F2 found after 3 clean greens) matches the gap this closes.\nP3: HYPOTHESIS: falling from 2 input-gap findings to 0 per card is measurable from the review record.\nP4: C1: the four-entry line is checkable by string match, so a missing line is visible in git.\nP5: C2: \"a test that exists in that red\" can be checked against the red commit's diff.\nP6: C3: \"n/a\" with no reason counts as not run, which closes the bare-n/a loophole. A thin reason such as \"n/a: not relevant\" still passes the string check, so it relies on the reviewer's judgment and the ceremony counter-metric.\nP7: C4: \"no list input\" is a free escape that git cannot check mechanically. The reviewer has to confirm it against the criterion text, and that should be a stated step of the reviewer check.\nP8: C5: the boundaries with D157, D158, D165 and D166 are clear and keep the rules from overlapping.\nP9: METRIC: the reviewer scores the metric, so it is self-reported by the team. The auditor tick is the independent check.\nP10: COUNTER-METRICS: they are sound, and the red-to-green minutes can be read from commit timestamps.\nP11: TRIAL SCOPE: three cards is enough to decide, but the \"next 3 matching\" count depends on the facilitator classifying cards honestly. The auditor should spot-check the cards classified as \"no list input\".\nP12: ACCOUNTABILITY CHECK: an auditor FAIL on a missing slice line or missing red answers closes the \"pass without the practice\" path.\nP13: NO BLUR: credit goes to the rule that named the input first, which can be told from commit order.\nP14: BASELINE: the figures (2 findings, 37/48/40 minutes) can be verified from the card 226 records.\nP15: REVERSIBILITY: it is a two-way door, with no shared state or earlier D-record changed.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d167-delivery",
+   "started_at": "2026-10-31T08:18:02Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: Fine. The Inputs line is scoped to criteria that take a list or map of names, so it adds one slice line and no meeting.\nP2: Fine. Answering in the red commit body keeps the check in the commit we already write, with no new file.\nP3: Fine. Reviewing the red body first catches gaps before the green, where a fix costs more than it does in the red.\nP4: Fine. \"No list input\" keeps cards without a list criterion free of ceremony.\nP5: Fine. The separation from D157, D158, D165 and D166 keeps each rule's metric clean, and the change is a two-way door.\n"
+  }
+ ],
+ "rerun": [
+  {
+   "role": "coach",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d167rr-coach",
+   "started_at": "2026-10-31T08:18:51Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 PICK: Sized right. It is one slice line and one red-body answer, with no new seat, file or meeting.\nP2 Why: The evidence fits. Card 226's F1 and F2 were input-space gaps that review found after three clean greens.\nP3 HYPOTHESIS: Testable. Gaps are caught before review, and the target is falling from 2 to 0 per card.\nP4 RULE: C1–C4 are small and \"n/a: reason\" keeps the cost down. C5 keeps it separate from D157, D158, D165 and D166.\nP5 METRIC and COUNTER-METRICS: Fine. Slice minutes, red-to-green minutes and thin \"n/a\" entries track the ceremony risk directly.\nP6 TRIAL SCOPE: Three matching cards is enough for a keep, revise or drop call.\nP7 ACCOUNTABILITY and NO BLUR: Git can verify both, and the credit rules stop double-counting.\nP8 BASELINE and REVERSIBILITY: The baseline is stated, and the change is a two-way door.\n"
+  },
+  {
+   "role": "architect",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d167rr-architect",
+   "started_at": "2026-10-31T08:19:45Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The four-entry list (disabled, unknown, repeated, reordered) matches the card 226 gaps F1 and F2 and gives a concrete, bounded way to catch them.\nP2: The architect writes the slice line and the red seat answers it, which puts the input check where the test is written, so it moves the catch earlier than review.\nP3: The reviewer's first check is mechanical: a test name that exists in that red, or \"n/a\" with a reason. That is enforceable without a new checker and has a low false-positive risk.\nP4: \"No list input\" for other criteria keeps the rule from misfiring. \"Takes a list or map of names\" is still a judgment call, so the trial should log any ambiguous cases.\nP5: It sits next to D166's assumption line, but it is distinct enough because it is scoped per criterion and answered in the red, and the NO BLUR tie-break (the catch goes to whichever rule named the input first) handles the overlap.\nP6: The metric (input-gap review findings, baseline 2, target 0) is measurable from the review record. The counter-metrics track the ceremony cost, and the \"thin n/a reason\" counter is subjective but is recorded as evidence only.\nP7: It is a two-way door, with no new file or seat, and the trial covers three cards.\n"
+  },
+  {
+   "role": "qa",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d167rr-qa",
+   "started_at": "2026-10-31T08:20:39Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: The four-entry Inputs line (disabled, unknown, repeated, reordered) turns the card 226 F1 and F2 gaps into named cases, so a red seat can write a failing test for each before any green.\nP2: The architect writes the slice line and the red seat answers each entry in the red commit body. \"A test name that exists in that red\" can be checked mechanically against git.\nP3: The reviewer checks the red body first. An entry with no test name and no reasoned \"n/a\" counts as \"not run\", so a bare \"n/a\" can't pass as an answer.\nP4: \"No list input\" is explicit and adds no new file, seat or meeting.\nP5: The rule is kept separate from D166, D165, D158 and D157, and the credit rule gives a catch to whichever rule named it first. That keeps the metrics testable and stops them overlapping.\nP6: The metric is input-gap review findings per card, with a baseline of 2 and a target of 0. The counter-metrics cover cost and thin \"n/a\" ceremony.\nP7: The trial covers 3 cards and is a two-way door, so it is reversible.\n"
+  },
+  {
+   "role": "dev",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d167rr-dev",
+   "started_at": "2026-10-31T08:21:27Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Four named entries per list criterion is workable, and \"n/a: reason\" lets me skip cases that don't apply without gaming.\nP2: The architect writes the slice line and I answer it in the red body. That puts the awkward inputs in front of me when I write the test, which is when it's cheapest.\nP3: The reviewer's check is unambiguous. An entry with no test name or no reason is \"not run\", and I can comply without padding.\nP4: \"No list input\" is a cheap one-line exit, and the rule adds no file, seat or meeting.\nP5: The separation from D165, D166, D157 and D158 is clear, and answering once in the red, with nothing repeated in the green, keeps the overhead fair.\n"
+  },
+  {
+   "role": "auditlens",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d167rr-auditlens",
+   "started_at": "2026-10-31T08:22:17Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The decider pick is checkable from git alone, because the slice line and the red commit bodies are both committed.\nP2: The \"why\" matches the card 226 record of F1 and F2 surfacing only at review. I read no files for this vote, so I am relying on the proposal's account of that record.\nP3: The hypothesis is falsifiable: input-gap review findings go from 2 to 0 per card.\nP4: C1 and C2 are verifiable by grep for the Inputs line and the four entry answers per red commit. The loophole is that \"no list input\" and \"n/a: <reason>\" are self-declared, so the auditor must spot-check that a criterion marked \"no list input\" really takes no list or map.\nP5: C3 makes an \"n/a\" with no reason count as not run, which closes the empty-answer loophole. A thin but non-empty reason still passes, and only the counter-metric catches that.\nP6: C4 and C5 keep the rule's scope distinct from D157, D158, D165 and D166, and I see no overlap loophole.\nP7: The metric comes from the review record, so it is auditable, but a reviewer who skips the input check would also record 0 gaps. The ACCOUNTABILITY CHECK covers this by requiring the reviewer's check against the red body (C3).\nP8: The counter-metrics are reasonable evidence-only measures.\nP9: Trial scope is bounded at 3 cards, and \"cards outside C1 do not count\" could let the architect dodge by calling a criterion \"no list input\". The auditor FAIL option mitigates this.\nP10: The no-blur attribution rule (first-named wins) is clear and checkable from commit order.\nP11: The baseline is stated with numbers I can compare against.\nP12: The rule is a two-way door, since reverting it means deleting the slice line and the red answers.\n"
+  },
+  {
+   "role": "delivery",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone)",
+   "context": "d167rr-delivery",
+   "started_at": "2026-10-31T08:23:10Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (C1, Inputs line): Fine. Four short entries on only the criteria that take a list or map keeps the slice thin, and \"n/a: reason\" avoids padding.\nP2 (C2, red answers): Fine. It adds about a line per entry to the red body and no new file, seat or meeting. The counter-metric on red-to-green minutes will show if it slows flow.\nP3 (C3, reviewer checks first): Fine. A missing answer counts as \"not run\", which is a cheap check. It also moves the catch from review, about 4 hours after the first red, to the red itself.\nP4 (C4, \"no list input\"): Fine. A one-phrase opt-out keeps ceremony off the other cards.\nP5 (C5, no blur with D157, D158, D165 and D166): Fine. Each rule keeps its own metric and nothing moves into the green.\nP6 (hypothesis and metric): Fine. Input-gap review findings falling from 2 to 0 is measurable from the review record.\nP7 (counter-metrics): Fine. Slice minutes, red-to-green minutes and thin \"n/a\" entries are the right ceremony signals. They are evidence, not targets.\nP8 (trial scope and accountability check): Fine. Three matching cards keeps it short, and the auditor tick can FAIL a missing line.\nP9 (reversibility): Fine. It is a two-way door, and deleting the line and the answers undoes it.\n"
+  }
+ ]
+}

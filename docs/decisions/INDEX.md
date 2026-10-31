@@ -65,6 +65,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D164](process-and-staffing.md#d164) — Correction to card 208: least-recently-used model per seat from a tracked seat-use history, replacing the per-seat ban on Claude (D163)
 - [D165](process-and-staffing.md#d165) — Intent line before the first red, confirmed against recorded direction; feedback-loop lens as a standing retro section (card 208 retro pick)
 - [D166](process-and-staffing.md#d166) — An assumption line with a probe in the slice of any card that changes a rule, the ranking or the checker (card 219 retro pick)
+- [D167](process-and-staffing.md#d167) — A hostile-input list in the slice of any criterion that takes a list or map of names, answered entry by entry in the red (card 226 retro pick)
 
 ### benchmarks-and-measurement
 
@@ -252,3 +253,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D164](process-and-staffing.md#d164) | Correction to card 208: least-recently-used model per seat from a tracked seat-use history, replacing the per-seat ban on Claude (D163) | process-and-staffing | in force |
 | [D165](process-and-staffing.md#d165) | Intent line before the first red, confirmed against recorded direction; feedback-loop lens as a standing retro section (card 208 retro pick) | process-and-staffing | in force |
 | [D166](process-and-staffing.md#d166) | An assumption line with a probe in the slice of any card that changes a rule, the ranking or the checker (card 219 retro pick) | process-and-staffing | in force |
+| [D167](process-and-staffing.md#d167) | A hostile-input list in the slice of any criterion that takes a list or map of names, answered entry by entry in the red (card 226 retro pick) | process-and-staffing | in force |
