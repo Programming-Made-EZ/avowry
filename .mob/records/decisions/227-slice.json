@@ -1,6 +1,6 @@
 {
  "window": "227-slice",
- "category": "slice",
+ "category": "slice decision",
  "rule": "D153 for card 227's slice (D157, D166, D167)",
  "proposed_by": {
   "role": "architect (slice)",
