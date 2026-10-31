@@ -114,6 +114,11 @@
    "by": "backend developer ctx-5",
    "what": "green body says the guards are '+20 lines'; the diff is +19",
    "handling": "recorded, not amended"
+  },
+  {
+   "by": "facilitator",
+   "what": "the facilitator's push helper committed 'MOB.md regenerated (count 3 before a push)' (3c82909) without limiting the commit to MOB.md, so it swept the developer seat's staged trust-ladder entry into that commit; the entry is pushed and correct, but its commit title hides it",
+   "handling": "recorded, not rewritten; both helpers now commit only their own path (git commit -- <path>)"
   }
  ],
  "cycles": [
@@ -142,7 +147,12 @@
    "criterion": 2,
    "repo": "mob-defaults",
    "red": "5cc58d2 (tests/test_trust_ladder.py, 387 lines; 40 tests, 37 failing by assertion, 3 born-green guards shown red)",
-   "note": "ladder lives in mob-defaults mob_process.py next to check_record; the entry and the agreement text are the green's job"
+   "note": "ladder lives in mob-defaults mob_process.py next to check_record; the entry and the agreement text are the green's job",
+   "green": "mob-defaults 79c572e (mob_process.py ladder, ladder_check; template text); avowry 73cdf20 (agreement bullet and Claude ledger sentence) and the card 226 ladder entry in 3c82909",
+   "full_suite": "788 tests OK, 1 skip (13:06:21 to 13:29:17 UTC, 1373.0 s)",
+   "ladder": "avowry: one problem (card 226) before the entry, 'ok' exit 0 after",
+   "mutations": "17 of 17 killed; stated gap: a non-integer card field is untested",
+   "entry": "card 226 criterion 1, backend developer ctx-4, claude: step none (Rung 1 is the lowest; coached through card 227 and a seat brief that says what to use instead)"
   }
  ],
  "stand_downs": [
