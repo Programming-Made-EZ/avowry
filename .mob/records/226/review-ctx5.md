@@ -99,3 +99,26 @@ tests/test_decider_launched.py `test_a_repeated_name_starts_one_voter_exits_0_an
 ### To approve
 
 Make the M4 guard deterministic (R1) and show the mutant red repeatedly. I will then re-read that one test; nothing else is open.
+
+## Second re-check
+
+Seat: Claude (ctx-5, fresh context; the 06:49 UTC probes show Codex, Copilot, Grok and agy without usable quota). Reviewed mob-defaults 43912b7..56b39bc (1 commit, pushed; origin/main equals 56b39bc). Scratch copies only (git archive of 56b39bc, one good and one mutant, under the session scratchpad); neither repository was touched by tests.
+
+### Verdict: APPROVE
+
+R1 is closed: the M4 guard no longer depends on timing and fails on every run with the dedupe removed.
+
+### What changed since 43912b7
+
+- `git diff --name-only 43912b7 56b39bc`: one file, tests/test_decider_launched.py (14 insertions, 4 deletions). No production file, no other test, changed.
+
+### R1 closed
+
+- The guard replaces `decider.vote_seat` with a double that counts calls per seat name under a lock and returns a fixed Yes without a clone, then asserts `calls == {"codex": 1}` plus exit 0 and the kept vote. The count is 2 whenever run() submits the repeated name twice, whatever the thread timing.
+- M4 (line `seats = list(dict.fromkeys(seats))` deleted from decider.py in a scratch copy of 56b39bc): that test alone, 12 runs: 12 FAILED, 0 OK. Good tree, same test, 12 runs: 12 OK, 0 FAILED.
+- Inside the decider modules (launched, pin_scrub, probe, gate, rotation, record, record_units, runner; 154 tests), M4 mutant, 3 runs: each Ran 154, FAILED (failures=1) (the one guard). Good tree: Ran 154, OK.
+- The double does not hide a real defect: it replaces only vote_seat, whose return keys (vote, reason, reply, attempts, wrote_files, model) it mirrors; the vote_seat tests themselves (launch key, pin, scrub, unavailable) are untouched and still run against the real function in the other tests; the check that matters here, how many times run() starts a seat, is the part run() owns. The removed `self.launched == ["codex"]` assertion is replaced by the stronger call count.
+
+### What I ran
+
+- `python -m unittest` over the eight decider modules on the good and the mutant tree (counts above), and the guard alone 12 times on each. The full suite was not run.
