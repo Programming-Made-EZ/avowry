@@ -401,6 +401,14 @@ within the last hour) takes a driver out of rotation, until its next successful 
   benched.
 - **Visible and reviewed:** each driver's rung and per-cycle record are kept in the table below and
   reviewed at every retro under Individual. Applies to every driver, Claude seats included.
+- **Trust-ladder record (checked, from card 226):** every safety deviation in a card record (the `rule` contains "safety") needs one
+  line in `.mob/records/trust-ladder.jsonl`, an append-only file with one JSON object per line: `{"at", "card", "criterion", "seat",
+  "driver", "rule", "evidence", "step", "brief_checked"}` (`card` is a number, `seat` is the deviation's `by`, `evidence` is a commit or
+  record path, `brief_checked` is true or the quoted brief line the seat misread). `step` is `"down to rung N"` or `"none: <the reason none
+  applies>"`, decided from the rules above (a Rung 1 driver that misses stays at Rung 1; a miss the brief caused fixes the brief).
+  `python <mob-defaults>/mob_process.py ladder <repo>` exits 1 naming the card, seat and rule of a deviation with no line, and the line of
+  a line that is not JSON, not an object, or has no valid `step`. The ledger table below is the reading copy; the jsonl is the checked
+  record.
 
 **Driver ledger (the facilitator updates this; commit it with the cycle).**
 
@@ -410,7 +418,7 @@ within the last hour) takes a driver out of rotation, until its next successful 
 | Copilot | 1 | 0/3 | 2026-10-25 authored a47ed6a (specs + fixture, gate 221+1 re-run by facilitator); awaiting independent review | Reviewed cycle 1: APPROVE |
 | Grok | 1 | 0/3 | 2026-10-25 reviewed 59d8a9c+84b5737: CHANGES with red-check evidence (good review) | Drives hardening cycles next |
 | agy | 1 | 0/3 | none | New to this mob; model gemini-4-argon-high (3.1 Pro not offered) |
-| Claude (last resort) | 1 | 0/3 | 2026-10-29 card 195: non-author signoff review (Yes with fixes) and review fixes as a small TAKEOVER (D138) | CLI not signed in (re-checked 2026-10-29); seated as a fresh-context subagent |
+| Claude (last resort) | 1 | 0/3 | 2026-10-29 card 195: non-author signoff review (Yes with fixes) and review fixes as a small TAKEOVER (D138) | CLI not signed in (re-checked 2026-10-29); seated as a fresh-context subagent; 2026-10-31 card 226 criterion 1: backend developer ctx-4 ran a recursive delete on a variable path (safety rule), nothing deleted, self-reported; already at Rung 1, so the rung and the count stay and the driver is coached (line in `.mob/records/trust-ladder.jsonl`, card 226) |
 
 Ledger note (catch-up retro, 2026-10-29): this ledger was not maintained from 2026-10-25 to 2026-10-29; no misreport or safety violation by any driver was found in that period, so the rungs above are unchanged, but the clean-cycle counts do not include the cards of that period. From card 195 on, the per-card trail records in `.mob/records/` carry the evidence for the ledger and each retro updates it.
 
