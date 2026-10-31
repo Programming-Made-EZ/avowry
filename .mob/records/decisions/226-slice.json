@@ -45,6 +45,17 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nYes. The slice is workable for me. The criteria are unambiguous and one red-green cycle each. Reusing CardRun means no second copy. The check/commit split gives clean refusal semantics. Named mutations let me comply without gaming.\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
+  },
+  {
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-5",
+   "started_at": "2026-10-31T01:39:57Z",
+   "reply": "OBJECTION",
+   "condition": "Criterion 3 must record each voter's probe evidence (the ok/evidence result), not only taken_at, in the git-tracked Decider log. Otherwise the probe file stays outside git, and a team could log a probe time without a real probe.",
+   "raw": "OBJECTION\nCONDITION: Criterion 3 must record each voter's probe evidence (the ok/evidence result), not only taken_at, in the git-tracked Decider log. Otherwise the probe file stays outside git, and a team could log a probe time without a real probe.\n\nSupport-it\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
   }
  ],
  "decision": null,
