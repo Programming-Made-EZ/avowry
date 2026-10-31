@@ -299,6 +299,111 @@
    "at": "2026-10-31T11:31:40Z",
    "per": "stand-down 1 adjustment (d823a7e)",
    "decision": "criterion 1 is not closed: its four open plan items (red 1b; command_source.py, the source of executed commands; the run_backend wiring that scans each seat's executed commands; the record check that fails an unscanned seat or a missing command_scans entry from card 227 on) are criterion 1's next increment, red 1b then green 1b, under 'Criterion: 1', before any red for criterion 2 (D157). Criterion 1 closes only when nothing in its plan reads 'not done' and the scan runs on real seats. The Intent line (254e1d9) is already confirmed, so the red seat may launch."
+  },
+  {
+   "by": "facilitator",
+   "at": "2026-10-31T13:53:28Z",
+   "per": "stand-down 2 adjustment (d78bd4e), before the red 3 seat",
+   "decision": "(1) Agent-tool seats: the facilitator runs delete_guard.py scan-transcript on each seat's subagent transcript when the seat returns and records a command_scans entry; the twelve card 227 seats so far are backfilled in this commit (11 clean, 1 false-positive finding). Automating that step for Agent-tool seats is owned by card 228. (2) The three unowned items get card 228 as owner: the README snippet, the Decider log rendering of command_scan, and the scan-transcript dedupe; the false positive (rmtree named inside a read-only command) also goes to card 228. (3) Criterion 3's green follows 'built means called': unpushed and ladder each get a caller outside the tests and a real run pasted in the green body."
+  }
+ ],
+ "command_scans": [
+  {
+   "context": "ctx-1",
+   "status": "clean",
+   "seat": "pm-ready",
+   "transcript": "subagents/agent-aa113d444a9598ad5.jsonl",
+   "commands": 10,
+   "source": "python delete_guard.py scan-transcript <subagent transcript> --seat <name> --root <scratchpad> --root .mob/scratch (mob-defaults 8440697), run by the facilitator at 2026-10-31 about 13:55 UTC"
+  },
+  {
+   "context": "ctx-2",
+   "status": "clean",
+   "seat": "architect-slice",
+   "transcript": "subagents/agent-ae0daad75ba8e349f.jsonl",
+   "commands": 60,
+   "source": "python delete_guard.py scan-transcript <subagent transcript> --seat <name> --root <scratchpad> --root .mob/scratch (mob-defaults 8440697), run by the facilitator at 2026-10-31 about 13:55 UTC"
+  },
+  {
+   "context": "ctx-2",
+   "status": "clean",
+   "seat": "architect-amend",
+   "transcript": "subagents/agent-a37007c5e4e793135.jsonl",
+   "commands": 15,
+   "source": "python delete_guard.py scan-transcript <subagent transcript> --seat <name> --root <scratchpad> --root .mob/scratch (mob-defaults 8440697), run by the facilitator at 2026-10-31 about 13:55 UTC"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "security-slice",
+   "transcript": "subagents/agent-a2fec91736a942430.jsonl",
+   "commands": 17,
+   "source": "python delete_guard.py scan-transcript <subagent transcript> --seat <name> --root <scratchpad> --root .mob/scratch (mob-defaults 8440697), run by the facilitator at 2026-10-31 about 13:55 UTC"
+  },
+  {
+   "context": "ctx-4",
+   "status": "clean",
+   "seat": "red-1",
+   "transcript": "subagents/agent-a839870b709f2f17b.jsonl",
+   "commands": 43,
+   "source": "python delete_guard.py scan-transcript <subagent transcript> --seat <name> --root <scratchpad> --root .mob/scratch (mob-defaults 8440697), run by the facilitator at 2026-10-31 about 13:55 UTC"
+  },
+  {
+   "context": "ctx-4",
+   "status": "clean",
+   "seat": "red-1b",
+   "transcript": "subagents/agent-ad32f58c2e959eb05.jsonl",
+   "commands": 75,
+   "source": "python delete_guard.py scan-transcript <subagent transcript> --seat <name> --root <scratchpad> --root .mob/scratch (mob-defaults 8440697), run by the facilitator at 2026-10-31 about 13:55 UTC"
+  },
+  {
+   "context": "ctx-4",
+   "status": "clean",
+   "seat": "red-2",
+   "transcript": "subagents/agent-aaf7c4054af2e4565.jsonl",
+   "commands": 49,
+   "source": "python delete_guard.py scan-transcript <subagent transcript> --seat <name> --root <scratchpad> --root .mob/scratch (mob-defaults 8440697), run by the facilitator at 2026-10-31 about 13:55 UTC"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green-1",
+   "transcript": "subagents/agent-a95012168c8d6f808.jsonl",
+   "commands": 33,
+   "source": "python delete_guard.py scan-transcript <subagent transcript> --seat <name> --root <scratchpad> --root .mob/scratch (mob-defaults 8440697), run by the facilitator at 2026-10-31 about 13:55 UTC"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green-1b",
+   "transcript": "subagents/agent-a2c5e60fa2de9812e.jsonl",
+   "commands": 48,
+   "source": "python delete_guard.py scan-transcript <subagent transcript> --seat <name> --root <scratchpad> --root .mob/scratch (mob-defaults 8440697), run by the facilitator at 2026-10-31 about 13:55 UTC"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green-2",
+   "transcript": "subagents/agent-a4492bd679bab6e3e.jsonl",
+   "commands": 67,
+   "source": "python delete_guard.py scan-transcript <subagent transcript> --seat <name> --root <scratchpad> --root .mob/scratch (mob-defaults 8440697), run by the facilitator at 2026-10-31 about 13:55 UTC"
+  },
+  {
+   "context": "ctx-7",
+   "status": "findings",
+   "seat": "standdown-1",
+   "transcript": "subagents/agent-a9db5d735a35a0004.jsonl",
+   "commands": null,
+   "source": "python delete_guard.py scan-transcript <subagent transcript> --seat <name> --root <scratchpad> --root .mob/scratch (mob-defaults 8440697), run by the facilitator at 2026-10-31 about 13:55 UTC",
+   "reason": "one finding, shutil.rmtree() inside a read-only command's text (a grep or test-name pattern), not a delete; a false positive of the command-position scan, owned by card 228"
+  },
+  {
+   "context": "ctx-7",
+   "status": "clean",
+   "seat": "standdown-2",
+   "transcript": "subagents/agent-a6ba6db3f05b9fb82.jsonl",
+   "commands": 42,
+   "source": "python delete_guard.py scan-transcript <subagent transcript> --seat <name> --root <scratchpad> --root .mob/scratch (mob-defaults 8440697), run by the facilitator at 2026-10-31 about 13:55 UTC"
   }
  ]
 }
