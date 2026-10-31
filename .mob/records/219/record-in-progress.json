@@ -54,6 +54,18 @@
    "green": "b374ef7 (the slice's staged variant: records added earlier in history, largest card number; criterion 2 stays red as planned)",
    "suite": "tests.test_mob_process 75 OK; whole Python suite 311 OK, 7 skipped",
    "pushed": "about 00:08 UTC"
+  },
+  {
+   "criterion": "2 (with Done check 3)",
+   "repo": "phrase-lang",
+   "red": "55b5794 (fixture order 216, 214, 209 so the staged rule is red; the Done check 3 held-record test born-green, M1 and M5 kill it, M4 killed by the unit table)",
+   "units": [
+    "66904ab (table row: nearest earlier by position, red against the staged rule)"
+   ],
+   "green": "1a08bd6 (nearest strictly-earlier record by history position)",
+   "suite": "tests.test_mob_process 77 OK; whole Python suite 313 OK, 7 skipped; check OK after the green",
+   "gap": "the slice's forged-date guard (M3) was not written; M3 not run",
+   "pushed": "about 00:41 UTC"
   }
  ],
  "stand_downs": [
