@@ -1,0 +1,53 @@
+{
+ "card": 226,
+ "title": "Decision seats start on a fresh probe and rotate like card seats",
+ "status": "in progress (corrective for MD-002 after audit flag F-070); code in mob-defaults",
+ "decisions": {
+  "rank": "re-rank 12 (window 219-rerank-12)",
+  "task_force": "window 226-taskforce"
+ },
+ "task_force": [
+  {
+   "role": "product manager (ready)",
+   "context": "ctx-1"
+  },
+  {
+   "role": "architect (slice)",
+   "context": "ctx-2"
+  },
+  {
+   "role": "QA engineer (red)",
+   "context": "ctx-3"
+  },
+  {
+   "role": "backend developer [author] (green)",
+   "context": "ctx-4"
+  },
+  {
+   "role": "independent reviewer (audit lens) [reviewer]",
+   "context": "ctx-5"
+  },
+  {
+   "role": "delivery lead (ship)",
+   "context": "ctx-6"
+  },
+  {
+   "role": "product manager (signoff)",
+   "context": "ctx-7"
+  }
+ ],
+ "claude_seat_reason": "probes at 01:20 UTC show Codex, Copilot, Grok and agy without usable quota",
+ "metric": "decision seats seated on a stale probe or out of rotation (target 0); Claude share of decision seats while others had capacity",
+ "domain_expert": [
+  {
+   "boundary": "refinement",
+   "answer": "no",
+   "reason": "the change applies card 208's rules inside decider.py, covered by the architect and backend developer",
+   "seat": "product manager (ready)",
+   "context": "ctx-1",
+   "source": "window 226-taskforce proposal"
+  }
+ ],
+ "cycles": [],
+ "stand_downs": []
+}
