@@ -156,6 +156,13 @@
    "full_suite": "583 tests OK, 1 skip (from 05:54:55 UTC, 1353.6 s)",
    "mutations": "7 run, 7 killed",
    "pushed": "about 06:21 UTC"
+  },
+  {
+   "criterion": 2,
+   "fix": "re-check R1",
+   "repo": "mob-defaults",
+   "guard": "56b39bc (vote_seat double counts calls; M4 fails 20 of 20 alone, and in the decider modules 154 ran, 1 failure); 13 modules 245 OK",
+   "pushed": "about 07:00 UTC"
   }
  ],
  "stand_downs": [
@@ -320,6 +327,18 @@
    },
    "probe_object": "accepted, condition: name the field in Done check 3 at close",
    "plan": "fixes outside-in, one criterion per cycle (D157): F1 as a criterion 2 red and green, then F2 and F3 as a criterion 3 red and green, then re-review"
+  },
+  {
+   "seat": "independent reviewer (audit lens) ctx-5",
+   "commit": "5e06fce",
+   "verdict": "CHANGES REQUESTED",
+   "findings": {
+    "F1": "closed",
+    "F2": "closed",
+    "F3": "closed (QA's rotation_reason scrub accepted)",
+    "R1": "open: the M4 guard c65ec21 is racy (6 of 8 runs failed on the mutant)"
+   },
+   "condition_open": "name the probe field in Done check 3 at close"
   }
  ]
 }
