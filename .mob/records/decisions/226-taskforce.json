@@ -74,6 +74,8 @@
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
   }
  ],
- "decision": null,
- "ended_at": null
+ "decision": {
+  "result": "adopted: seven seats ctx-1 to ctx-7, all Claude (probes 01:20 UTC); no objection from all six polled seats"
+ },
+ "ended_at": "2026-10-31T01:33:12Z"
 }
