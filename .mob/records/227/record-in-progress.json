@@ -676,6 +676,22 @@
    "transcript": "subagents/agent-ab01982346ef4824f.jsonl",
    "commands": 50,
    "source": "python delete_guard.py scan-transcript (mob-defaults f8a45da), facilitator; read before recording"
+  },
+  {
+   "context": "ctx-6",
+   "status": "findings",
+   "seat": "recheck-ctx6",
+   "transcript": "subagents/agent-af305741b780ad439.jsonl",
+   "reason": "false positive: every match is a test string passed to delete_guard.scan_command inside a Python heredoc (the string-literal class, card 228 item 8); read by the facilitator before recording; no delete was run",
+   "source": "python delete_guard.py scan-transcript (mob-defaults f8a45da), facilitator"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "recheck-security",
+   "transcript": "subagents/agent-ad18419b0ecbb47b5.jsonl",
+   "commands": 59,
+   "source": "python delete_guard.py scan-transcript (mob-defaults f8a45da), facilitator; read before recording"
   }
  ],
  "reviews": [
@@ -698,6 +714,18 @@
   },
   {
    "plan": "all seven triage increments done (1c to 1f, 2b, 3c, 3d); re-review by both reviewers next"
+  },
+  {
+   "seat": "independent reviewer (audit lens) ctx-6",
+   "commit": "4a1cc50",
+   "verdict": "APPROVE",
+   "note": "F1 to F10 closed or moved to 228 with lines present; condition: 228's false-positive item names the string-literal class (done) and the facilitator reads every findings result before the record commit"
+  },
+  {
+   "seat": "security reviewer ctx-3",
+   "commit": "e5105b1",
+   "verdict": "APPROVE",
+   "note": "17 findings closed or moved to 228; red 1c string flagged by the current scanner; N1 to N4 added to card 228"
   }
  ]
 }
