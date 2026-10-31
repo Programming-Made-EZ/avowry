@@ -33,6 +33,14 @@
    "seat": "architect (slice)",
    "context": "ctx-2",
    "source": "3b04e20"
+  },
+  {
+   "boundary": "after criterion 1 (stand-down 1)",
+   "answer": "no",
+   "reason": "Criterion 2 is the nearest-earlier choice in previous_record, the back-dated and forged-date refusals and the held-record fixture with its add, remove and re-add history, all git-history semantics that the QA engineer, backend developer and independent reviewer already hold; the one fact that could have needed outside knowledge, how a record added, removed and re-added is positioned, was read from the real history at the slice (first-add position; commits 5a3d4af, 2bc05f6, 1c850b0, d02114d), and deterministic commit dating on this machine is already solved by criterion 1's closed_in_order() (75 tests OK). A member can still be added mid-card through a Decider.",
+   "seat": "Delivery lead",
+   "context": "ctx-6",
+   "source": "stand_downs[0]"
   }
  ],
  "cycles": [
@@ -48,7 +56,55 @@
    "pushed": "about 00:08 UTC"
   }
  ],
- "stand_downs": [],
+ "stand_downs": [
+  {
+   "cycle": 1,
+   "boundary": "after Criterion 1 (red 451f4ea, unit ab94601, green b374ef7, record 58e4b81; local main = origin/main = 58e4b81); Criterion 2 next, which also carries Done check 3's held-record fixture",
+   "adjustment_reviews": [
+    {
+     "adjustment": "Card 208 stand-down 2 (cycle 2 of that card): (1) before the red, the QA seat lists in the red body each existing test the criterion will force to change, and the developer updates those fixtures in a unit-layer commit before the green's first full run; (2) before the full suite the developer runs the modules that build the fixtures and pastes the result in the green body; (3) every in-flight line names the source of its cap and a wait line cites its seat-start line for the probe age. Metric: full-suite runs per green (target 1), existing tests changed in the green but not listed in the red (target 0), cap moves per green (target 0).",
+     "issue": "Criterion 2 of card 208 broke one existing test that only the 20-minute full run found: two full runs for one green, 53 minutes red to green, and caps and probe ages that a reader could not check.",
+     "resolved": "unknown for parts (1) and (2); partly for part (3)",
+     "evidence": "Parts (1) and (2): criterion 1 here broke no existing test, so the clause had nothing to list. Green b374ef7 touches scripts/mob_process.py only (1 file, 8 insertions, 2 deletions), unit ab94601 adds one test and the stub, red 451f4ea changes one test file (46 insertions, 1 deletion); the red body lists no existing tests and none changed. tests.test_mob_process (75 OK) ran before the whole suite (311 OK, 7 skipped). Full runs per green = 1 (target 1), existing tests changed but not listed = 0 (target 0), cap moves = 0 (green 17:07:43 PDT = 00:07:43Z, before the developer's cap 00:33:00Z). Red to green 10 min 40 s (23:57:03Z to 00:07:43Z) against 30 on 208 criterion 1 and 53 on criterion 2; a different repository, a pure function and a short suite, so not like for like. Part (3), the three card 219 lines in .mob/records/blockers/in-flight.md: probe age on 3 of 3 (architect 42 min, QA 6, developer 11; they check against the probe rows at 23:03:17Z and 23:47:10Z in probes/2026-10-30.jsonl); a cap with a stated source on 3 of 3 (all 'the seat brief', which is the facilitator's estimate, not a measured time); own second-level stamp consistent with its commit on 2 of 3: architect 23:45:31 (commit f4627fc 23:45:32Z) and QA 23:53:14 (commit 704bb02 23:53:15Z) match, but the developer line is stamped 23:58:00 and its commit 38ff854 is dated 23:57:40Z, 20 seconds before the stamp it carries, and the round :00 says it was typed, not taken from date -u. No wait line exists for the developer's whole-suite run, so the 'wait line cites its seat-start line' clause was not exercised.",
+     "side_effects": "Good: the green's body carries the neighbouring-module result before the whole-suite result, and the three seat lines are checkable against the probe log. Bad: the 208 clauses cost nothing here because nothing broke, so this card cannot say whether they work; 'the seat brief' as a cap source is a name, not a measurement; the developer's suite ran with no wait line at all.",
+     "verdict": "tune (no evidence either way on parts 1 and 2 under D155, so the clause stays for criterion 2, where green 2 replaces the staged 'largest card number' choice of green 1 and so may force a change to a criterion 1 unit row; part 3 tuned in this stand-down's adjustment: the stamp comes from date -u run at the commit, and a suite run gets its own wait line)."
+    },
+    {
+     "adjustment": "D165 intent line before the first red (first use on this card).",
+     "issue": "Red seats writing tests from the card text without a traced statement of what the owner wants and why (a red that tests the wrong thing is found only at review).",
+     "resolved": "unknown",
+     "evidence": "Cost: line bca5510 at 23:53:18Z (4 s after the QA seat-start line 23:53:14) and the facilitator's confirmation e4cda78 at 23:53:32Z, 14 s later; 23 added JSON lines in two commits; no owner question asked. Quality: the line quotes D159 C1 and D162's 'waive', and both quotes match docs/decisions/process-and-staffing.md verbatim (checked now against the D159 and D162 entries). Caught: nothing. The line restates D159 C1, which the slice already quotes (turn-slice-architect.md, 'The change in one place'), so no trace was missing and no scope was added or removed. The red cites the line (451f4ea: 'under the intent line bca5510') and its test is named for D159 C1; review has not happened, so whether the line prevented rework cannot be read yet. Side effect: bca5510 and e4cda78 are 2 of the 6 non-MOB commits (704bb02, bca5510, e4cda78, 451f4ea, 38ff854, ab94601) that made MOB.md 6 commits stale (maximum 3) at the green.",
+     "side_effects": "Good: about 20 seconds of seat time, cheap. Bad: two commits where one carries the line and its confirmation; on a card that implements a voted decision whose clause the slice already quotes the line adds nothing, so its value is on criteria that implement a finding or an MD item.",
+     "verdict": "tune (judged again after one more card: the line and its confirmation go in one commit; where the criterion implements a voted decision with the clause already quoted in the slice, the line cites the clause number and the confirmation is the facilitator's check of the quote)."
+    },
+    {
+     "adjustment": "D158 facilitator pre-window checklist (seats, caps, working directory, line endings, probes).",
+     "issue": "Window and wait drift: a verification run in another repository, caps from estimates, line-ending churn in seat commits.",
+     "resolved": "partly",
+     "evidence": "Two blocks on this card (.mob/records/219/checklist-taskforce.md at 16:41 PDT, checklist-slice.md at 16:47 PDT): every seat present with its id, slice and ship included, proposer named; working directory named (decider.py clones C:/Users/ringe/projects/phrase-lang); gate clause on the taskforce block; both windows decided with every seat polled. Caps are again 'one block, about 5 minutes' with no source. Line endings 'n/a' twice, yet the code seats edited files outside the windows, and git ls-files --eol shows i/lf w/lf for scripts/mob_process.py and tests/test_mob_process.py with no carriage returns in the diffs of 451f4ea, ab94601 and b374ef7, so no churn. The slice block's probe line says 23:46 UTC while the probe rows it relied on are 23:47:02Z to 23:47:10Z (evidence commit 5a2d281 at 23:47:14Z). No wrong-directory run on this card.",
+     "side_effects": "Good: no window or seat on 219 lacked a role. Bad: the blocks are near copies, the cap line has no source, one probe time is a minute off, and the n/a line is a dead clause inside windows.",
+     "verdict": "keep (no change; the retro decides the experiment; a block copies the probe time from the probe row)."
+    }
+   ],
+   "observations": [
+    "(a) Facilitator ending turns while seats ran (card 208 observation): no sign of it on this card. The gaps between commits while a seat ran are 38ff854 23:57:40Z to ab94601 23:59:03Z to b374ef7 00:07:43Z, and the facilitator's own commits follow the green within 70 seconds (fcffe85 00:07:34Z, 21b9cb5 00:08:10Z, 58e4b81 00:08:53Z). Git cannot show an ended turn, so this is 'not contradicted', not 'resolved'; the correction (block with capped waits in the same turn) stays standing and the watchdog stays the detector.",
+    "(b) Order-dependent test pollution (card 208 observation, the shared BACKENDS dict): not met on this card. The whole suite (311 OK, 7 skipped) ran once, clean; the acceptance fixture sets commit dates with mock.patch.dict(os.environ), which restores on exit, instead of editing shared state, and the red's guard MG0 shows the dating is real (renaming the env key makes it fail). The shared dict lives in mob-defaults and this repository's tests do not share one, so there is no evidence here for the template question; it stays with the retro. The criterion 2 forged-date guard and the held-record fixture are the next tests that set environment or repository state, so they use the same patch.dict helper.",
+    "(c) MOB.md staleness blocking a finished green: structural, not a one-off. The green's body: the check's only error was 'MOB.md is 6 non-MOB commits stale (maximum 3)', fixed by the facilitator's regeneration (fcffe85, 9 seconds before the green commit). Counting commits after the last regeneration (79e0892): 704bb02 in-flight, bca5510 intent, e4cda78 confirmation, 451f4ea red, 38ff854 in-flight, ab94601 unit = 6, three of them the facilitator's own and two of them D165's. A cycle always commits at least in-flight QA, red, in-flight developer, unit, green and record = 6 non-MOB commits, so with a maximum of 3 a seat cannot reach its green with a fresh MOB.md unless someone regenerates mid-cycle. Measured cost here was small (the regeneration came 9 seconds before the green commit), but the green's check was not rerun after the regeneration (92 GitHub calls, per the green body), so it was verified by the pre-push hook only; criterion 2 repeats the same commit pattern."
+   ],
+   "worked": "D157 held for the fifth card: red 451f4ea, unit ab94601 and green b374ef7 each carry 'Criterion: 1', the green came before any red for criterion 2, no amend (the reflog shows plain commits and one 'reset: moving to HEAD', a no-op), and everything is pushed (main = origin/main = 58e4b81). The red failed by assertion and named its run (74 tests, 1 failure), the unit layer was red against a stub rather than an import error, and the green carries four mutation runs (M1 5 failures, '<=' 6, not-in-history 1, own-commit unknown 1) and the whole suite once (311 OK). No line-ending churn.",
+   "did_not": "MOB.md went stale during the cycle and the check failed on that alone; D165's two commits and three facilitator commits were half the count. The developer's in-flight stamp (23:58:00) is later than its own commit (23:57:40Z), so 'date -u at the commit' was not followed on one of three lines, and the developer's whole-suite run has no wait line. The green's check was not rerun after the regeneration. M6 (drop the previous-record comparison) could not be run and is open for criterion 2. Criterion 1 cannot say whether the card 208 fixture-list clause works because nothing broke.",
+   "adjustment": "For criterion 2: keep MOB.md fresh by a fixed step, not by the failure. (1) The facilitator regenerates MOB.md when it launches the green seat (right after the red lands) and again when a green is reported, whatever the count, and prints 'MOB.md non-MOB commits since regeneration: n' in the seat-start in-flight line; the seat reruns the check once after any regeneration or states why it did not. (2) The D165 intent line and its confirmation go in one commit (criterion 2 reuses the card's intent line: the confirmation cites it, no second line unless the criterion's purpose differs). (3) An in-flight line is stamped with date -u run at the moment of the commit it rides in, and a suite run gets its own wait line citing its seat-start line. Metric: finished greens held by MOB.md staleness (criterion 1: 1; target 0); non-MOB commits since the last regeneration when the green is checked (criterion 1: 6; target 3 or fewer); in-flight stamps later than their own commit (criterion 1: 1 of 3; target 0). Counter-metrics: MOB.md regeneration commits per cycle (criterion 1: 2; more than 3 means regeneration is itself the churn) and red-to-green minutes (criterion 1: 10.7). The card 208 stand-down 2 clause also applies: the red for criterion 2 lists the existing tests it expects to change (the criterion 1 unit rows if the staged 'largest card number' choice goes) and runs tests.test_mob_process before the whole suite. The next probe is due by 00:37 UTC (50 minutes after the 23:47:10Z probe) before any seat starts.",
+   "domain_expert": {
+    "answer": "no",
+    "reason": "Criterion 2 is the nearest-earlier choice in previous_record, the back-dated and forged-date refusals and the held-record fixture with its add, remove and re-add history, all git-history semantics that the QA engineer, backend developer and independent reviewer already hold; the one fact that could have needed outside knowledge, how a record added, removed and re-added is positioned, was read from the real history at the slice (first-add position; commits 5a3d4af, 2bc05f6, 1c850b0, d02114d), and deterministic commit dating on this machine is already solved by criterion 1's closed_in_order() (75 tests OK). A member can still be added mid-card through a Decider."
+   },
+   "metric_note": "Held records still 2 (209 and 208) until card 219 closes: D159 C6 adds them only after the card's checker commits are on main and the ship-gate rehearsal in the slice (part B) has shown no 'predates' error; criterion 1 is on origin/main (58e4b81) but the held records are not re-added and the real check has not run with them.",
+   "seat": "Delivery lead",
+   "context": "ctx-6",
+   "model": "claude-sonnet subagent",
+   "written_at": "2026-10-31T00:12:31Z"
+  }
+ ],
  "task_force": [
   {
    "role": "product manager (ready)",
