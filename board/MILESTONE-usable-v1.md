@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:79908e00630d2b2be40156aabe3a84c85c7e12cc7331656ed7223810262c9576 -->
+<!-- board-table-sha256:fa095c3183a9f2a5c3541c482553c02332014d032b06d8be030945444eb98a21 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -96,9 +96,9 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 74 | 195 Rename the C# adapter and CLI projects to Avowry.* | Done | 194 |
 | 75 | 205 The facilitator starts only corrective cards while a finding blocks | Done | none (A2, D, C and E depend on this card, in that order) |
 | 76 | 214 The generated API binds its own port in acceptance tests | Done | none |
-| 77 | 209 A task force member leaves only at the retro | Ready | none |
-| 78 | 208 A seat starts only on a fresh, pinned probe, and seats rotate least-recently-used across the available models | Ready | none |
-| 79 | 219 The record checker accepts cards that close out of number order | Ready | none |
+| 77 | 209 A task force member leaves only at the retro | Done | none |
+| 78 | 208 A seat starts only on a fresh, pinned probe, and seats rotate least-recently-used across the available models | Done | none |
+| 79 | 219 The record checker accepts cards that close out of number order | Done | none |
 | 80 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
 | 81 | 211 A whole-team review of the mob-defaults rulings commits | Ready | none |
 | 82 | 216 The default templates carry the pending process rulings | Ready | none |
