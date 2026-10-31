@@ -1,0 +1,74 @@
+{
+ "card": 227,
+ "title": "Recursive deletes on variable paths are blocked and every commit is pushed",
+ "status": "in progress (stop-the-line corrective for F-071 and audit 62; product owner safety ruling 2026-10-31); code in mob-defaults",
+ "decisions": {
+  "rank": "re-rank 13 (window 226-rerank-13)",
+  "task_force": "window 227-taskforce (one adopted condition: the scan sees executed commands)"
+ },
+ "task_force": [
+  {
+   "role": "product manager (ready)",
+   "context": "ctx-1"
+  },
+  {
+   "role": "architect (slice)",
+   "context": "ctx-2"
+  },
+  {
+   "role": "security reviewer (adversarial lens) [reviewer]",
+   "context": "ctx-3"
+  },
+  {
+   "role": "QA engineer (red)",
+   "context": "ctx-4"
+  },
+  {
+   "role": "backend developer [author] (green)",
+   "context": "ctx-5"
+  },
+  {
+   "role": "independent reviewer (audit lens) [reviewer]",
+   "context": "ctx-6"
+  },
+  {
+   "role": "delivery lead (ship)",
+   "context": "ctx-7"
+  },
+  {
+   "role": "product manager (signoff)",
+   "context": "ctx-8"
+  }
+ ],
+ "claude_seat_reason": "probes at 08:39 UTC show Codex, Copilot, Grok and agy without usable quota",
+ "metric": "unflagged recursive deletes on variable paths (target 0); commits unpushed for more than about 5 minutes (target 0); counter-metric: false positives on literal scratch paths through safe_delete, replies reworded to dodge the scan",
+ "domain_expert": [
+  {
+   "boundary": "refinement",
+   "answer": "yes",
+   "reason": "a security reviewer (adversarial lens) joins at the slice and at review: a hard safety item after the 2026-10-08 home-folder wipe",
+   "seat": "product manager (ready)",
+   "context": "ctx-1",
+   "source": "window 227-taskforce proposal"
+  }
+ ],
+ "open_points": [
+  "the slip is not recorded verbatim (card 226 deviation says only 'ran rm -rf once on a variable path, a scratchpad folder that did not exist'); QA reconstructs it from evidence",
+  "the scan (facilitator.scan_safety) reads reply text only; the architect decides where executed commands are scanned",
+  "where the trust-ladder record lives (the ladder is a rule section in TEAM_WORKING_AGREEMENT.md)",
+  "answered: the avowry repository is C:/Users/ringe/projects/phrase-lang"
+ ],
+ "zombies_notes_for_qa": [
+  "Zero: an empty or missing command-scan source must fail (window 227-taskforce)"
+ ],
+ "deviations": [
+  {
+   "by": "facilitator",
+   "what": "commit 5a5659e is titled 'card text from window 227-taskforce' but carries only the earlier F-071 Source-line archive change (a script error left the issue unchanged on the first try); the real card-text change is f817dc5",
+   "handling": "recorded, not amended"
+  }
+ ],
+ "cycles": [],
+ "stand_downs": [],
+ "observations_for_next_stand_down": []
+}
