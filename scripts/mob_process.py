@@ -128,8 +128,9 @@ def previous_record(card, record_commits, commit_order):
     here = commit_order.get(record_commits.get(card))
     if here is None:
         return None
-    # Staged (slice 3b04e20, green 1): the largest card number among the earlier records; the nearest one by position is cycle 2
-    return max((n for n, commit in record_commits.items() if commit_order.get(commit, here) < here), default=None)
+    # D159 C1: of the strictly earlier records, the one added nearest to this card's own record (largest history position), never the largest card number
+    earlier = [(commit_order[commit], n) for n, commit in record_commits.items() if commit_order.get(commit, here) < here]
+    return max(earlier)[1] if earlier else None
 
 
 def check_records(root, issues, git):
