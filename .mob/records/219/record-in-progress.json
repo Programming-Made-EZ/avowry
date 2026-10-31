@@ -35,7 +35,19 @@
    "source": "3b04e20"
   }
  ],
- "cycles": [],
+ "cycles": [
+  {
+   "criterion": 1,
+   "repo": "phrase-lang",
+   "red": "451f4ea",
+   "units": [
+    "ab94601 (previous_record, pure, red against a stub, no doubles)"
+   ],
+   "green": "b374ef7 (the slice's staged variant: records added earlier in history, largest card number; criterion 2 stays red as planned)",
+   "suite": "tests.test_mob_process 75 OK; whole Python suite 311 OK, 7 skipped",
+   "pushed": "about 00:08 UTC"
+  }
+ ],
  "stand_downs": [],
  "task_force": [
   {
@@ -88,5 +100,11 @@
    "note": "the line restates the recorded rule and waiver and adds no scope; no product owner question needed",
    "at": "2026-10-30T23:53:32Z"
   }
- }
+ },
+ "observations_for_next_stand_down": [
+  {
+   "by": "facilitator",
+   "observation": "the developer held a finished green because the record check failed only on MOB.md staleness, which the facilitator's own commits had caused; MOB.md staleness blocks pushes about once an hour today"
+  }
+ ]
 }
