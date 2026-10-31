@@ -88,6 +88,16 @@
    "condition": null,
    "raw": "Yes\n\nNO OBJECTION\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
+  },
+  {
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "ctx-3",
+   "started_at": "2026-10-31T01:41:50Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes. Criterion 3 now has red-able tests, including the log-only auditor test and mutation M3d. Each criterion has a named red-first test and a mutation that the test would catch.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
   }
  ],
  "decision": null,
