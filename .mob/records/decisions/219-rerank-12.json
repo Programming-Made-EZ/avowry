@@ -45,6 +45,17 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nYes. The order is workable: cards that name an open FAIL go first, the decision-seat card 226 leads, and the stated condition gives a clear rule for when to re-rank. I can follow it without gaming anything.\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
+  },
+  {
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "w12-auditlens",
+   "started_at": "2026-10-31T01:20:54Z",
+   "reply": "OBJECTION",
+   "condition": "Commit the audit 59 open-FAIL list (MD-002, MD-003, MD-010) to the repository, or cite a committed file for it, so the \"only these cards may start\" ranking can be checked from git.",
+   "raw": "OBJECTION\nCONDITION: Commit the audit 59 open-FAIL list (MD-002, MD-003, MD-010) to the repository, or cite a committed file for it, so the \"only these cards may start\" ranking can be checked from git.\n\nSupport-it\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
   }
  ],
  "decision": null,
