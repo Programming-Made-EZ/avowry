@@ -716,6 +716,14 @@
    "transcript": "subagents/agent-a16c5ab490f15d6a9.jsonl",
    "commands": 24,
    "source": "python delete_guard.py scan-transcript (mob-defaults f8a45da), facilitator; read before recording"
+  },
+  {
+   "context": "ctx-8",
+   "status": "clean",
+   "seat": "signoff",
+   "transcript": "subagents/agent-a35d06bf32bc7c83b.jsonl",
+   "commands": 21,
+   "source": "python delete_guard.py scan-transcript (mob-defaults f8a45da), facilitator; read before recording"
   }
  ],
  "reviews": [
