@@ -23,6 +23,17 @@
    "condition": null,
    "raw": "NO OBJECTION\n\nYes. The order is sound: only cards naming an open FAIL can start, so they go first. The decision-seat card leads because later windows run on the seats it fixes. The window-rule checker moves up so windows count. I found no design or enforcement problem.\n",
    "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
+  },
+  {
+   "round": 1,
+   "role": "QA engineer",
+   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
+   "context": "w12-qa",
+   "started_at": "2026-10-31T01:20:54Z",
+   "reply": "NO OBJECTION",
+   "condition": null,
+   "raw": "NO OBJECTION\n\nYes. The proposal puts the cards that fix checks first. The record checker hardening (210) and the decision-seat fresh-probe card (226) are the ones that stop bad state from passing. It also moves the window-rule checker up. Each card names an open FAIL that can be tested red first.\n",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
   }
  ],
  "decision": null,
