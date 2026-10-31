@@ -432,6 +432,39 @@
    "seat": "green-3",
    "transcript": "subagents/agent-a69181a29a4bae755.jsonl",
    "source": "python delete_guard.py scan-transcript (mob-defaults 8440697), run by the facilitator when the seat returned"
+  },
+  {
+   "context": "ctx-6",
+   "status": "clean",
+   "seat": "review-ctx6",
+   "transcript": "subagents/agent-a7ba01094a612c823.jsonl",
+   "source": "python delete_guard.py scan-transcript (mob-defaults 8440697), run by the facilitator when the seat returned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "security-review",
+   "transcript": "subagents/agent-ae2e63910d2b074c9.jsonl",
+   "source": "python delete_guard.py scan-transcript (mob-defaults 8440697), run by the facilitator when the seat returned"
+  }
+ ],
+ "reviews": [
+  {
+   "seat": "independent reviewer (audit lens) ctx-6",
+   "commit": "fbe02c3",
+   "file": ".mob/records/227/review-ctx6.md",
+   "verdict": "CHANGES REQUESTED",
+   "blocking": "F1 one-line PowerShell brace blocks; F2 quote-joined bash -c payloads; F3 push_rule_problems never called; F4 scan rule text missing; F5 MOB_WATCHED_REPOS set nowhere"
+  },
+  {
+   "seat": "security reviewer (adversarial lens) ctx-3",
+   "commit": "c165f52",
+   "file": ".mob/records/227/review-security-ctx3.md",
+   "verdict": "CHANGES REQUESTED",
+   "blocking": "findings 1 to 5 (PowerShell script blocks, command substitution, heredocs to an interpreter, inline rmtree, closed wrapper list); 6 to 10 and 14 to follow in 227; the rest card 228"
+  },
+  {
+   "plan": "the architect triages both reviews into fix-in-227 (per criterion, outside-in, one criterion per cycle) and move-to-228, before any fix red"
   }
  ]
 }
