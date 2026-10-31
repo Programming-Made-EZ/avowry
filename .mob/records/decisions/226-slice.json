@@ -1,0 +1,18 @@
+{
+ "window": "226-slice",
+ "category": "slice decision",
+ "rule": "D153 objection window on the architect's slice (D157, D166)",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "claude-sonnet subagent",
+  "context": "ctx-2",
+  "probe_reference": ".mob/records/probes/2026-10-30.jsonl (01:20 UTC)"
+ },
+ "opened_at": "2026-10-31T01:39:51Z",
+ "proposal": "The architect's slice of card 226 is .mob/records/226/turn-slice-architect.md (commit f0c0d63): SHIP AS IS; three numbered criteria, one red-green cycle each (D157); the gate reused through CardRun without a second copy; criterion-by-layer table with doubles; the D166 assumption line with its probe. Two-way door.",
+ "checklist_D158": ".mob/records/226/checklist-slice.md",
+ "polled_roles_note": "F-054: all six non-proposer roles polled.",
+ "replies": [],
+ "decision": null,
+ "ended_at": null
+}
