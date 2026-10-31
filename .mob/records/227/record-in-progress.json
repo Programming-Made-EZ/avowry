@@ -153,6 +153,11 @@
    "ladder": "avowry: one problem (card 226) before the entry, 'ok' exit 0 after",
    "mutations": "17 of 17 killed; stated gap: a non-integer card field is untested",
    "entry": "card 226 criterion 1, backend developer ctx-4, claude: step none (Rung 1 is the lowest; coached through card 227 and a seat brief that says what to use instead)"
+  },
+  {
+   "criterion": 3,
+   "repo": "mob-defaults",
+   "red": "2dbcb29 (tests/test_push_detector.py, 399 lines; 34 tests, 31 failing by assertion, 3 guards shown red); decision e7054a7 cited"
   }
  ],
  "stand_downs": [
@@ -287,6 +292,10 @@
   {
    "by": "facilitator",
    "observation": "criterion 1 closed with every plan item hashed after the stand-down 1 adjustment; card 227's own record needs one command_scans entry per context at close (check_record from 227 on); a stray file C:/Users/ringe/projects/existing_card.out was written outside any repository by a QA seat's mis-directed background command, left in place (no deletes)"
+  },
+  {
+   "by": "QA engineer ctx-4 (self-reported)",
+   "observation": "typed 'rm -f /dev/null' by mistake while copying files to scratch (refused: Operation not permitted; nothing deleted); the second time today a seat ran this exact command (card 226 criterion 3 green was the first); not recursive and not a variable path, so not a ladder deviation, but a pattern for the retro"
   }
  ],
  "follow_up_cards": [
@@ -404,6 +413,13 @@
    "transcript": "subagents/agent-a6ba6db3f05b9fb82.jsonl",
    "commands": 42,
    "source": "python delete_guard.py scan-transcript <subagent transcript> --seat <name> --root <scratchpad> --root .mob/scratch (mob-defaults 8440697), run by the facilitator at 2026-10-31 about 13:55 UTC"
+  },
+  {
+   "context": "ctx-4",
+   "status": "clean",
+   "seat": "red-3",
+   "transcript": "subagents/agent-a34e1d8f2c51f086e.jsonl",
+   "source": "python delete_guard.py scan-transcript (mob-defaults 8440697), run by the facilitator when the seat returned"
   }
  ]
 }
