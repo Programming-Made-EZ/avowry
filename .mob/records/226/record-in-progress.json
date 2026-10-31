@@ -301,6 +301,18 @@
   {
    "by": "facilitator",
    "observation": "left to the independent reviewer: the top-level probe object in decider-result.json and the 'Probe in force' log line go beyond the slice (QA's choice of fields)"
+  },
+  {
+   "by": "watchdog (relayed)",
+   "observation": "the watchdog treated the reviewer's re-check as hung past its 06:50 cap; git shows it was not: the re-check committed 5e06fce at 06:47 UTC (CHANGES REQUESTED, R1) and a fresh reviewer's second re-check committed 6f73e2e at 07:08 UTC (APPROVE); no re-seat needed. The watchdog's view lagged because the facilitator's turn ran for hours and messages could not reach it."
+  },
+  {
+   "by": "product owner (relayed)",
+   "observation": "the facilitator ran single turns for hours, so audit and product-owner messages queued unread (audits 55, 57, 62 and the safety ruling); turns now end at each seat boundary so messages arrive"
+  },
+  {
+   "by": "facilitator",
+   "observation": "product-owner safety ruling applied 2026-10-31: push on every commit, no local batching (the parallel gate and turn-record seats were told not to push, so the facilitator pushed their commits together; that batching stops now); both repositories were already pushed in full when the ruling arrived (main = origin/main in avowry and mob-defaults); corrective card 227 filed for the scan fix, the trust-ladder entry and the unpushed-commit detector"
   }
  ],
  "confirmations": [
