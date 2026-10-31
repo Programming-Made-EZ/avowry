@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:02f416960cb1b72a82d4924e964b8c706e8c8b13f124f3f730bab40f89a1c69a -->
+<!-- board-table-sha256:df47c6b64982535c099994fc63d80819435df16c123bde0615adb34a0967d019 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -99,7 +99,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 77 | 209 A task force member leaves only at the retro | Done | none |
 | 78 | 208 A seat starts only on a fresh, pinned probe, and seats rotate least-recently-used across the available models | Done | none |
 | 79 | 219 The record checker accepts cards that close out of number order | Done | none |
-| 80 | 226 Decision seats start on a fresh probe and rotate like card seats | Ready | none (card 208, which built the rules for card-mode seats, is done) |
+| 80 | 226 Decision seats start on a fresh probe and rotate like card seats | Done | none (card 208, which built the rules for card-mode seats, is done) |
 | 81 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
 | 82 | 211 A whole-team review of the mob-defaults rulings commits | Ready | none |
 | 83 | 216 The default templates carry the pending process rulings | Ready | none |

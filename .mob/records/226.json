@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 226,
+ "title": "Decision seats start on a fresh probe and rotate like card seats",
+ "process": "card-mode rules run by hand; code in Programming-Made-EZ/mob-defaults decider.py; D157 one criterion per red-green cycle; review fixes as new cycles under criteria 2 and 3",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude-sonnet-5-5 (product manager, refinement and task-force declaration; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 01:20 to 06:49 UTC 2026-10-31; decision voters probed by decider.py itself))",
+   "evidence": "64b7fc0"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude-sonnet-5-5 (architect; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 01:20 to 06:49 UTC 2026-10-31; decision voters probed by decider.py itself))",
+   "evidence": "f0c0d63"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude-sonnet-5-5 (QA engineer; red commits in mob-defaults; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 01:20 to 06:49 UTC 2026-10-31; decision voters probed by decider.py itself))",
+   "evidence": "9b5874b"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude-sonnet-5-5 (backend developer, author; green commits in mob-defaults; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 01:20 to 06:49 UTC 2026-10-31; decision voters probed by decider.py itself))",
+   "evidence": "c4a5387"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-6",
+   "model": "claude-sonnet-5-5 (delivery lead, D154 pre-ship gate; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 01:20 to 06:49 UTC 2026-10-31; decision voters probed by decider.py itself))",
+   "evidence": "7b1ffde"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-7",
+   "model": "claude-sonnet-5-5 (product manager, sign-off; Claude Sonnet subagent, fresh context; no other model had usable quota (probes .mob/records/probes/2026-10-30.jsonl, 01:20 to 06:49 UTC 2026-10-31; decision voters probed by decider.py itself))",
+   "evidence": "f4f2835"
+  }
+ ],
+ "retro": "docs/retros/card-226-2026-10-31.md",
+ "notes": "Corrective for MD-002 (decision seats, after audit flag F-070). mob-defaults: criterion 1 8357f14, 372d4b0, ddbf6ff, 2189ca2; structural d3826ea; criterion 2 a54c9d9, df9d9d7, 82d8c2f, 134e25a, a217647, 081281b, 10a6f9d, ed5b0e1; criterion 3 9c8bb71, 2ebedd0, c466110, e6d24bb, 165fde8; review fix F1 4810ed8, fec8489, guard c65ec21; review fix F2 F3 3a0819f, 43912b7; re-check R1 guard 56b39bc. Review 69ff413 (CHANGES REQUESTED), re-check 5e06fce (CHANGES REQUESTED, R1), second re-check 6f73e2e (APPROVE); gate 7b1ffde; sign-off f4f2835; Done check 3 names the probe field at close. Full runs 466, 497, 538, 565, 583 OK. Deviations: a54c9d9's 'stayed green' overstated what was measured; e6d24bb miscounted and held a guard that could not fail (fixed in 165fde8); guard c65ec21 was racy (replaced by 56b39bc); a seat ran rm -rf on a variable path (nothing deleted; corrective card 227). Retro pick D167 (hostile-input list). First real runs of the gate: the seven retro voices and twelve D167 voters (.mob/records/seat-use.jsonl)."
+}
