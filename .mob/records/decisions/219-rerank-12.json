@@ -81,5 +81,15 @@
   }
  ],
  "decision": null,
- "ended_at": null
+ "ended_at": null,
+ "adopted_conditions": [
+  {
+   "from": "independent reviewer (audit lens)",
+   "adopted_as": "note .mob/records/notes/2026-10-31-open-fails-audit-59.md cites audit 59's open FAILs (tick files are never committed or edited by the team)"
+  },
+  {
+   "from": "delivery lead",
+   "adopted_as": "the window-rule checker (213) stays ahead of the flake (217) and loophole (218) cards, and only that card carries the extra window ceremony; every other card follows the standing rules unchanged"
+  }
+ ]
 }
