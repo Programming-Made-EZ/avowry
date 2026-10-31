@@ -174,5 +174,12 @@
    "by": "facilitator",
    "observation": "the developer held a finished green because the record check failed only on MOB.md staleness, which the facilitator's own commits had caused; MOB.md staleness blocks pushes about once an hour today"
   }
- ]
+ ],
+ "ci": {
+  "run": "41152086289",
+  "head": "e60a511 (contains green 1a08bd6)",
+  "conclusion": "success",
+  "read_at": "01:06 UTC by the facilitator",
+  "gate_item_3": "PENDING in f92a913, now resolved by this run"
+ }
 }
