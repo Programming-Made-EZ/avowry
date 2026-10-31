@@ -50,3 +50,52 @@ ACCEPT, no change to the field choice. Reasons: (1) Done check 3 says an auditor
 ## To approve
 
 Close F1 (code and three tests), F2 (test, or the one-line fix) and F3 (scrub and a test). Then re-run the decider and seat modules; I will re-read the diff. F4 and F5 need nothing.
+
+## Re-check
+
+Seat: Claude (ctx-5, fresh context; the 06:10 UTC probes show Codex, Copilot, Grok and agy without usable quota). Reviewed mob-defaults 165fde8..43912b7 (5 commits, pushed; origin/main equals 43912b7). Scratch copies only (git archive of 43912b7 and of 165fde8 under the session scratchpad); the repository was not touched.
+
+### Verdict: CHANGES REQUESTED (one small item: the guard for M4 is not deterministic)
+
+F1, F2 and F3 are closed in the production code and by guards that fail. One new finding (R1) concerns the guard c65ec21 added for the surviving mutation M4: it can pass with the mutant present, so M4 is not reliably killed. Everything else holds.
+
+### R1 (low to medium, guard that cannot be relied on to fail)
+
+tests/test_decider_launched.py `test_a_repeated_name_starts_one_voter_exits_0_and_keeps_that_seats_vote` (c65ec21) depends on a race. With the dedupe in run() (`seats = list(dict.fromkeys(seats))`) deleted, `futures` is a dict comprehension over a list holding "codex" twice, so two `vote_seat` calls run in the pool against the same clone directory; whether the second clone fails ("File exists") and overwrites the vote with "none" depends on thread timing.
+- Evidence: M4 mutant in a scratch copy of 43912b7 (decider.py CRLF kept, the one line removed). That test alone, 8 runs: 6 FAILED, 2 OK (the mutant survived twice). The four-module-plus-runner set (154 tests: launched, pin_scrub, gate, record, record_units, probe, rotation, runner): Ran 154, OK (survived) once. The commit body measured one run and reported a kill; with a race, one kill proves nothing.
+- Why it matters: Criterion 2's repeated-name rule is the part of F1 that has no deterministic guard; the other tests on repeats (`launched`, history, vote names) also read a timing-dependent outcome once the mutant is in.
+- Fix (test only, born green): make the second start observable without timing, e.g. wrap or replace `decider.vote_seat` with a recording double and assert it is called once for `["codex","codex"]` (or assert the backend mock and the clone directory are touched once), then show the mutant red on repeated runs (say 10) and give the count. No production change.
+
+### F1 closed (Criterion 2: red 4810ed8, green fec8489)
+
+- decider.py check_voters now keeps seats in order, without duplicates, whose backend is in backends.json and enabled; the rest keep the vote "seat unavailable" with no line, no record and no pending entry. Five inserted lines, CRLF kept, no second copy of card 208's rule (check_seat and commit_seat remain the judge and writer).
+- Red against the old code: 4810ed8's tests with the 165fde8 decider (scratch copy of 165fde8, tests of 43912b7): tests.test_decider_launched Ran 28, FAILED (failures=26) (25 reds plus the M4 guard, which also fails without any dedupe). Green: the same module at 43912b7, Ran 28, OK.
+- Mutations of the green, one change each, 154 tests (same eight modules), scratch copy: enabled check dropped: FAILED (failures=18); duplicate check in check_voters dropped: FAILED (failures=7); unknown name treated as enabled: FAILED (failures=11). All killed. The run() dedupe (M4) is the R1 case.
+- No new defect found: the filter runs before the Claude ordering, so a disabled or unknown sibling is neither judged nor a pending line (tests cover a disabled codex not making Claude wait); a refusal still leaves the history as found; the vote of a filtered name stays "seat unavailable" from vote_seat; the voter record updates only for names with a record.
+
+### F2 closed (Criterion 3: red 3a0819f, green 43912b7)
+
+- vote_seat launches `cfg.get("probe_model") or "default"`, the key card 208's seat_turn uses; a backend with no pin keeps "default". Mutations: key always "default": FAILED (failures=5); launch key without the fallback: FAILED (failures=2). Both killed.
+- Red against the old code: tests.test_decider_pin_scrub on the 165fde8 decider: Ran 17, FAILED (failures=14), as the red body states; at 43912b7: Ran 17, OK.
+
+### F3 closed (Criterion 3)
+
+- `_scrubbed` reuses mob_summary.scrub (imported already), keeps None as None; applied to the voter record's probe_evidence, to each backend's evidence in the probe object, and (beyond my review, accepted) to a Claude voter's rotation_reason, which quotes other backends' evidence. The Decider log lines render those records, so they are scrubbed with them. Mutations: scrub identity: FAILED (failures=9); rotation_reason unscrubbed: FAILED (failures=4); probe_record unscrubbed: FAILED (failures=5); voter_record unscrubbed: FAILED (failures=5); scrubbing None to "": FAILED (failures=3). All killed.
+- The probe-object condition set in my first review (scrub, F3) is met. The condition to name the "probe" field in the Done check 3 text at card close stays open for the closer.
+
+### Hygiene
+
+- D157 order: red 4810ed8 -> green fec8489 -> guard c65ec21 (Criterion 2) -> red 3a0819f -> green 43912b7 (Criterion 3). Each commit has its Criterion line and the Intent 52d4676; no Criterion 3 red before the Criterion 2 green. The guard c65ec21 sits between green and the next red as a born-green step, which is the recorded way.
+- D136: production changes are 5 and 9+4 lines; the two new test files (284 and 202 lines) are single-concern reds, as accepted before.
+- Line endings: decider.py CRLF in index and worktree, the two test files LF (git ls-files --eol); the cached stats equal the ignore-CR stats as the bodies say. Trailers: 0 of 5 commits carry Co-Authored-By or Signed-off-by.
+- Bodies' claims carry command and count: red and green bodies give the module command, counts and mutation lists; the 583-run and the 565-run full suites are recorded and I did not repeat them. I found no claim without a command. The c65ec21 body's "M4 killed" is the claim R1 qualifies (one run).
+- Invariants: parse_vote, build_prompt, sandbox clones and snapshot code untouched by the diff; no new function beyond `_scrubbed`.
+
+### What I ran
+
+- `python -m unittest` over tests.test_decider_launched, test_decider_pin_scrub, test_decider_probe, test_decider_gate, test_decider_rotation, test_decider_record, test_decider_record_units, test_decider_runner, test_seat_gate, test_seat_rotation, test_seat_rotation_rules, test_quota_first, test_probe_model on 43912b7: Ran 245, OK, 121 s. The full suite was not run.
+- Eleven one-change mutations (list above) over the eight decider modules (154 tests each) in a scratch copy; the repeated runs of the M4 guard in a second copy.
+
+### To approve
+
+Make the M4 guard deterministic (R1) and show the mutant red repeatedly. I will then re-read that one test; nothing else is open.
