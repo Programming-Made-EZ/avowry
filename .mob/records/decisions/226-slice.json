@@ -81,5 +81,10 @@
   }
  ],
  "decision": null,
- "ended_at": null
+ "ended_at": null,
+ "adopted_condition": {
+  "from": "independent reviewer (audit lens) ctx-5",
+  "condition": "criterion 3 records each voter's probe evidence (ok flag and evidence string), not only taken_at, in the git-tracked Decider log",
+  "done": "slice amended 4bb7d00"
+ }
 }
