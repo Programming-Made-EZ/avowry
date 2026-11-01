@@ -4,6 +4,26 @@ This file replaces the earlier resolver handoff (the resolver is long done; earl
 
 Boundary B1: 3b70513504864f668aa8e2f001654eda2ab9cb8f
 
+## Restart here
+
+Read this first. A fresh facilitator context (a restart) reads exactly these five things, in this order, and nothing else before it writes its report:
+
+1. The wiki index, `docs/process-wiki/INDEX.md` (the Routes table lists the pages each brief needs).
+2. This section.
+3. Its brief, `docs/process-wiki/briefs/facilitator-restart.md`, and the pages the brief's Pages line names, just in time.
+4. The newest re-rank note: the last file by name in `.mob/records/reranks/` (it names the next card and the queue).
+5. The card record: `.mob/records/<card>/record-in-progress.json` for the card the re-rank note names first, or for the card in progress.
+
+What to find in them (the facts are in those files, not here, so this section does not go stale):
+
+- Last boundary hash: the highest-numbered line of the form `Boundary B<n>: <hash>` in this file.
+- Open cards: the re-rank note's "After" list, minus any card whose record status is closed.
+- Next card: the "Next card" line of the newest re-rank note, unless a record is still in progress; then that record's card.
+- Next step: the `plan` field of the last entry of `cycles` in the card record.
+- Rules to apply: the page ids of the brief's Pages line that the next step needs.
+
+A restart run reports these fields, one `name: value` line each (or the same names as JSON): `next_card`, `next_step`, `boundary_hash`, `rules_read` (page ids, comma separated), and `subagent_tokens` (the total from its completion report). The facilitator committed its own expectation of the first four before the run (`usage/restart-key-<UTC>.json`), and `scripts/check-restart-record.py` compares the committed report with that key.
+
 ## 0. Required first items, before pulling ANY card
 
 An independent audit of card 195 found violations, and these items are owed. Do them in this order, each through the normal process (Decider, review, records, retro).

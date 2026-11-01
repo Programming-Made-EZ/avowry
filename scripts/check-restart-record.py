@@ -119,6 +119,108 @@ def is_git_repo(root: Path) -> bool:
     except OSError:
         return False
     return result.returncode == 0 and result.stdout.strip() == "true"
+def git_last_touch_commit(root: Path, rel_path: str) -> str | None:
+    """The newest commit that touched the file, or None when git has none (never committed)."""
+    try:
+        result = subprocess.run(
+            ["git", "log", "-n", "1", "--format=%H", "--", rel_path],
+            cwd=str(root), capture_output=True, text=True, encoding="utf-8",
+        )
+    except OSError:
+        return None
+    commit = result.stdout.strip() if result.returncode == 0 else ""
+    return commit if HASH_RE.fullmatch(commit) else None
+def git_is_ancestor(root: Path, older: str, newer: str) -> bool:
+    try:
+        result = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", older, newer],
+            cwd=str(root), capture_output=True, text=True, encoding="utf-8",
+        )
+    except OSError:
+        return False
+    return result.returncode == 0
+KIND_RESTART = "restart"
+KIND_CONTEXT_READING = "context_reading"
+REPORT_FIELDS = ("next_card", "next_step", "boundary_hash", "rules_read")
+REPORT_TOKENS_RE = re.compile(r"subagent_tokens\s*[:=]\s*([0-9][0-9,]*(?:\.[0-9]+)?)(k?)", re.I)
+def _split_rules(value: object) -> set[str]:
+    if isinstance(value, str):
+        return {part.strip() for part in re.split(r"[,;\s]+", value) if part.strip()}
+    if isinstance(value, list):
+        return {item.strip() for item in value if isinstance(item, str) and item.strip()}
+    return set()
+def parse_restart_report(path: Path) -> dict[str, object] | None:
+    """Fields of a restart report: JSON (top level or one nested object) or 'name: value' lines.
+    Keys: tokens (int or None), has_fields (bool), next_card, next_step, boundary_hash, rules_read (set)."""
+    text, ok = read_text_utf8(path)
+    if not ok or text is None:
+        return None
+    out: dict[str, object] = {"tokens": None, "has_fields": False, "next_card": None, "next_step": None,
+                              "boundary_hash": None, "rules_read": set()}
+    if path.suffix.lower() == ".json":
+        try:
+            data = json.loads(text)
+        except json.JSONDecodeError:
+            return None
+        if not isinstance(data, dict):
+            return None
+        flat: dict[str, object] = {}
+        for key, value in data.items():
+            if isinstance(value, dict):
+                for inner_key, inner in value.items():
+                    flat.setdefault(inner_key, inner)
+            else:
+                flat[key] = value
+        for key in ("subagent_tokens", "tokens_used"):
+            if _number(flat.get(key)) is not None:
+                out["tokens"] = _number(flat.get(key))
+                break
+        for key in ("next_card", "next_step", "boundary_hash"):
+            if flat.get(key) is not None:
+                out[key] = str(flat[key]).strip()
+                out["has_fields"] = True
+        rules = flat.get("rules_read", flat.get("rule_pages_read"))
+        if rules is not None:
+            out["rules_read"] = _split_rules(rules)
+            out["has_fields"] = True
+        return out
+    match = REPORT_TOKENS_RE.search(text)
+    if match:
+        number = float(match.group(1).replace(",", ""))
+        out["tokens"] = int(round(number * 1000)) if match.group(2) else int(round(number))
+    rules: set[str] = set()
+    for line in text.splitlines():
+        if ":" not in line:
+            continue
+        name, value = [part.strip() for part in line.split(":", 1)]
+        name = name.lstrip("-* ").lower()
+        if name in ("next_card", "next_step", "boundary_hash"):
+            out[name] = value
+            out["has_fields"] = True
+        elif name in ("rules_read", "rule_page", "rule_pages_read"):
+            rules |= _split_rules(value)
+            out["has_fields"] = True
+    out["rules_read"] = rules
+    return out
+def hashes_agree(left: object, right: object) -> bool:
+    """Two commit hashes agree when one is a prefix of the other (7 characters at least)."""
+    if not isinstance(left, str) or not isinstance(right, str):
+        return False
+    left, right = left.strip().lower(), right.strip().lower()
+    return len(left) >= 7 and len(right) >= 7 and (left.startswith(right) or right.startswith(left))
+def compute_restart_misses(key: dict[str, object], report: dict[str, object]) -> list[str]:
+    """One miss per key rule page the report omits, plus one for a wrong next_step, next_card or boundary_hash."""
+    misses: list[str] = []
+    for page in sorted(_split_rules(key.get("rules_to_apply"))):
+        if page not in report["rules_read"]:
+            misses.append(f"rule {page}")
+    if key.get("expected_boundary_hash") is not None and not hashes_agree(key.get("expected_boundary_hash"), report["boundary_hash"]):
+        misses.append("boundary_hash")
+    if key.get("next_step") is not None and str(key.get("next_step")).strip() != report["next_step"]:
+        misses.append("next_step")
+    if key.get("next_card") is not None and str(key.get("next_card")).strip() != report["next_card"]:
+        misses.append("next_card")
+    return misses
 USAGE_PREFIX = ".mob/records/234/usage/"
 SETUP_BASELINE = 50000
 MEDIAN_BASELINE = 125000
@@ -284,6 +386,68 @@ def validate_seat_metrics(root: Path, record: dict[str, object], findings: list[
                         if isinstance(extra, dict):
                             compare_with_source(root, source, extra.get("source_key"),
                                                 extra.get("tokens"), "unverified_rows", ctx, findings, True)
+def validate_restart_evidence(
+    root: Path, restart: dict[str, object], boundary_hash: object, fac_tokens: object, in_git_repo: bool,
+    findings: list[str], notes: list[str], where: str,
+) -> list[str] | None:
+    """A kind 'restart' entry needs a committed key and a committed report; returns the computed miss list
+    (None when the misses cannot be computed because a file is missing or unreadable)."""
+    path = rel(RECORD_REL)
+    sources: dict[str, Path | None] = {}
+    for field in ("restart_key_source", "restart_report_source"):
+        source_path, source_err = resolve_source(root, restart.get(field))
+        sources[field] = source_path
+        if source_err == "outside":
+            findings.append(f"{path}: source outside root {field} {where}")
+        elif source_path is None:
+            if restart.get(field) is None:
+                findings.append(f"{path}: missing {field} {where}")
+            else:
+                findings.append(f"{path}: source not found {field} {where}")
+    key_path, report_path = sources["restart_key_source"], sources["restart_report_source"]
+    key: dict[str, object] | None = None
+    if key_path is not None:
+        key_text, key_ok = read_text_utf8(key_path)
+        try:
+            loaded = json.loads(key_text) if key_ok and key_text else None
+        except json.JSONDecodeError:
+            loaded = None
+        if isinstance(loaded, dict):
+            key = loaded
+        else:
+            findings.append(f"{path}: restart key not a JSON object {where}")
+    if key is not None:
+        for field in ("expected_boundary_hash", "next_card", "next_step", "rules_to_apply"):
+            if key.get(field) in (None, "", []):
+                findings.append(f"{path}: restart key missing {field} {where}")
+        if not isinstance(key.get("rules_to_apply"), list):
+            findings.append(f"{path}: restart key missing rules_to_apply {where}")
+        if isinstance(boundary_hash, str) and key.get("expected_boundary_hash") and not hashes_agree(key.get("expected_boundary_hash"), boundary_hash):
+            findings.append(f"{path}: restart key boundary mismatch {where}")
+    if key_path is not None and report_path is not None and in_git_repo:
+        key_commit = git_last_touch_commit(root, rel(key_path.relative_to(root.resolve())))
+        report_commit = git_last_touch_commit(root, rel(report_path.relative_to(root.resolve())))
+        if not key_commit or not report_commit:
+            findings.append(f"{path}: restart key or report not committed {where}")
+        elif key_commit == report_commit or not git_is_ancestor(root, key_commit, report_commit):
+            findings.append(f"{path}: key commit is not older than report commit {where}")
+    report = parse_restart_report(report_path) if report_path is not None else None
+    if report_path is not None and report is None:
+        findings.append(f"{path}: restart report not readable {where}")
+    if report is not None and is_token(fac_tokens):
+        if report["tokens"] is None:
+            findings.append(f"{path}: source key not found facilitator_context_tokens {where}")
+        elif report["tokens"] != fac_tokens:
+            findings.append(f"{path}: source mismatch facilitator_context_tokens {where}: record {fac_tokens}, report {report['tokens']}")
+    if key is None or report is None:
+        return None
+    if not report["has_fields"]:
+        if report_path is not None and report_path.suffix.lower() == ".json":
+            notes.append(f"restart report {where} carries no fields: misses not computable")
+            return None
+        findings.append(f"{path}: restart report has no fields {where}")
+        return None
+    return compute_restart_misses(key, report)
 def validate_restart(
     root: Path,
     restart: object,
@@ -292,12 +456,16 @@ def validate_restart(
     markers: dict[str, str],
     in_git_repo: bool,
     findings: list[str],
+    notes: list[str],
 ) -> None:
     path = rel(RECORD_REL)
     where = f"restart {idx}"
     if not isinstance(restart, dict):
         findings.append(f"{path}: missing boundary_marker {where}")
         return
+    kind = restart.get("kind")
+    if kind is not None and kind not in (KIND_RESTART, KIND_CONTEXT_READING):
+        findings.append(f"{path}: bad kind {where}")
     marker = restart.get("boundary_marker")
     marker = marker.strip() if isinstance(marker, str) else ""
     if not marker:
@@ -391,6 +559,9 @@ def validate_restart(
             findings.append(f"{path}: unknown boundary marker {marker} {where}")
         elif isinstance(boundary_hash, str) and HASH_RE.fullmatch(boundary_hash) and boundary_hash != expected:
             findings.append(f"{path}: boundary hash mismatch {marker} {where}")
+    computed: list[str] | None = None
+    if kind == KIND_RESTART:
+        computed = validate_restart_evidence(root, restart, boundary_hash, fac_tokens, in_git_repo, findings, notes, where)
     if "rule_miss_cases" not in restart:
         findings.append(f"{path}: missing rule_miss_cases {where}")
         return
@@ -410,7 +581,13 @@ def validate_restart(
             findings.append(f"{path}: source not found rule_miss_cases_zero_source {where}")
         elif not rel(zero_path.relative_to(root.resolve())).startswith(USAGE_PREFIX):
             findings.append(f"{path}: rule_miss_cases_zero_source not a usage file {where}")
+        elif kind == KIND_RESTART and zero_path != resolve_source(root, restart.get("restart_report_source"))[0]:
+            findings.append(f"{path}: rule_miss_cases_zero_source is not the restart report {where}")
+        if computed:
+            findings.append(f"{path}: rule_miss_cases mismatch {where}: record 0, computed {len(computed)} ({', '.join(computed)})")
         return
+    if computed is not None and len(misses) != len(computed):
+        findings.append(f"{path}: rule_miss_cases mismatch {where}: record {len(misses)}, computed {len(computed)} ({', '.join(computed) or 'none'})")
     for miss_idx, miss in enumerate(misses, start=1):
         if not isinstance(miss, dict):
             findings.append(f"{path}: bad rule miss case {miss_idx} object {where}")
@@ -542,8 +719,10 @@ def run(root: Path) -> int:
                     ) or ["HANDOFF.md"]
                     markers = parse_handoff_markers(root, handoff_refs, findings, warnings)
                     in_git_repo = is_git_repo(root)
+                    if all(isinstance(r, dict) and r.get("kind") == KIND_CONTEXT_READING for r in restarts):
+                        findings.append(f"{rel(RECORD_REL)}: no restart (every entry is a context reading)")
                     for idx, restart in enumerate(restarts, start=1):
-                        validate_restart(root, restart, idx, index_status, markers, in_git_repo, findings)
+                        validate_restart(root, restart, idx, index_status, markers, in_git_repo, findings, notes)
     for line in warnings:
         print(line, file=sys.stderr)
     if findings:
