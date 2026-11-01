@@ -32,6 +32,8 @@ ID_RE = re.compile(
 DECISION_RE = re.compile(r"\bD(\d+)\b")
 LINK_RE = re.compile(r"\[(D\d+)\]\(([^)]+)\)")
 SEPARATOR_RE = re.compile(r"^-{3,}$")
+QUOTE_RE = re.compile(r'Quote: "([^"]+)"')
+ANCHOR_RE = re.compile(r'<a id="d\d+">')
 
 
 def posix_rel(path: Path, root: Path) -> str:
@@ -108,7 +110,7 @@ def check_index(root: Path, findings: list[tuple[str, str]]) -> tuple[list[dict[
 
 
 def extract_tokens_and_links(rule_line: str) -> tuple[list[str], dict[str, list[str]]]:
-    tokens = [match.group(1) for match in DECISION_RE.finditer(rule_line)]
+    tokens = [match.group(1) for match in DECISION_RE.finditer(QUOTE_RE.sub("", rule_line))]
     links: dict[str, list[str]] = {}
     for text, target in LINK_RE.findall(rule_line):
         links.setdefault(text[1:], []).append(target)
@@ -117,6 +119,35 @@ def extract_tokens_and_links(rule_line: str) -> tuple[list[str], dict[str, list[
 
 def anchor_exists(decision_text: str, number: str) -> bool:
     return f'<a id="d{number}">' in decision_text
+
+
+def decision_section(decision_text: str, number: str) -> str:
+    """The text of one decision: from its anchor to the next decision anchor."""
+    start = decision_text.find(f'<a id="d{number}">')
+    nxt = ANCHOR_RE.search(decision_text, start + 1)
+    return decision_text[start:nxt.start() if nxt else len(decision_text)]
+
+
+def check_quotes(
+    rel: str, line: str, sections: dict[str, str], resolved_all: bool, findings: list[tuple[str, str]]
+) -> None:
+    """Each cited decision needs a verbatim Quote from its own text; each Quote must come from a cited one."""
+    quotes = QUOTE_RE.findall(line)
+    numbers = sorted(sections, key=int)
+    if not numbers:
+        return
+    if not quotes:
+        for number in numbers:
+            findings.append((rel, f"missing quote D{number}"))
+        return
+    covered = {n for n in numbers if any(q in sections[n] for q in quotes)}
+    for number in numbers:
+        if number not in covered:
+            findings.append((rel, f"quote not found in D{number}"))
+    if resolved_all and len(covered) == len(numbers):
+        for quote in quotes:
+            if not any(quote in sections[n] for n in numbers):
+                findings.append((rel, "quote not found in " + " or ".join(f"D{n}" for n in numbers)))
 
 
 def check_pages(
@@ -157,6 +188,7 @@ def check_pages(
             if not tokens:
                 findings.append((rel, "missing decision token"))
                 continue
+            sections: dict[str, str] = {}
             for number in tokens:
                 link_targets = links.get(number, [])
                 if not link_targets:
@@ -186,6 +218,9 @@ def check_pages(
                     decision_text = decision_cache[decision_path]
                     if decision_text is None or not anchor_exists(decision_text, number):
                         findings.append((rel, f"broken anchor D{number}"))
+                    else:
+                        sections.setdefault(number, decision_section(decision_text, number))
+            check_quotes(rel, line, sections, len(sections) == len(set(tokens)), findings)
 
     if docs_root.is_dir():
         for page in sorted(docs_root.rglob("*.md")):
