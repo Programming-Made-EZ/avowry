@@ -71,6 +71,31 @@ jobs:
         # Then CI is red, annotations are valid, and the card is named.
         self.assertEqual(1,code); self.assertTrue(all(x.startswith("::error::mob-process: ") for x in out.getvalue().splitlines())); self.assertIn("Card 201 has no trail record",out.getvalue())
 
+    def test_run_check_calls_the_process_wiki_checker_and_fails_closed(self):
+        # Card 234 criterion 2 red, caller pin by behavior: mob_process check must run check-process-wiki.
+        patches = [
+            mock.patch.object(mob, "check_records", return_value=[]),
+            mock.patch.object(mob, "check_retros", return_value=[]),
+            mock.patch.object(mob, "check_legacy", return_value=[]),
+            mock.patch.object(mob, "check_mob", return_value=[]),
+            mock.patch.object(mob, "check_events", return_value=[]),
+            mock.patch.object(mob, "check_workflows", return_value=[]),
+            mock.patch.object(mob, "check_issue_labels", return_value=[]),
+            mock.patch.object(mob, "check_windows", return_value=[]),
+        ]
+        for patcher in patches:
+            patcher.start(); self.addCleanup(patcher.stop)
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            code = mob.run_check(self.root, [], git=self.git)
+        self.assertEqual(1, code)
+        self.assertIn("process-wiki", out.getvalue())
+
+    def test_source_mentions_check_process_wiki_in_run_check(self):
+        # Card 234 criterion 2 red, caller pin by source.
+        source = (Path(__file__).resolve().parents[1] / "scripts/mob_process.py").read_text(encoding="utf-8")
+        self.assertTrue("check-process-wiki.py" in source, "missing check-process-wiki.py call-site marker")
+
     def test_schema_exact_roles_eligibility_and_signoff(self):
         record=self.valid_record(); path=self.root/".mob/records/201.json"; record["seats"].pop(); path.write_text(json.dumps(record),encoding="utf-8")
         self.assertIn("Card 201 must have exactly the six required role seats",mob.check_records(self.root,[issue(201)],self.git))

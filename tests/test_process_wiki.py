@@ -58,6 +58,8 @@ RECORD = ".mob/records/234/record-in-progress.json"
 INDEX = "docs/process-wiki/INDEX.md"
 DECISIONS = "docs/decisions/process-and-staffing.md"
 METHOD_KEYS = ("tokens_per_seat", "facilitator_context_size", "rule_misses")
+TEAM_WORKING_AGREEMENT = "TEAM_WORKING_AGREEMENT.md"
+PROPOSED_FLOOR_SHARE = 0.10  # to confirm in red body if slice/architect did not set one
 CARD_TEXT = (
     "# card 234\n"
     "tokens per seat against about 50K at setup and about 125K median at the end;\n"
@@ -93,6 +95,8 @@ class Tree:
         self.card = CARD_TEXT
         self.methods = {k: "measured from the committed provider usage fields" for k in METHOD_KEYS}
         self.record_text = None
+        self.team_working_agreement = "\n".join(f"- **Rule {n}** line {n}" for n in range(1, 11)) + "\n"
+        self.extra_files = {}
         self.write_index = True
         self.index_override = None
         self.extra_rows = []
@@ -151,10 +155,14 @@ class Tree:
                 put(p.path, body)
         if self.card is not None:
             put(CARD, self.card)
+        if self.team_working_agreement is not None:
+            put(TEAM_WORKING_AGREEMENT, self.team_working_agreement)
         if self.record_text is not None:
             put(RECORD, self.record_text)
         elif self.methods is not None:
             put(RECORD, json.dumps({"card": 234, "measurement_methods": self.methods}, indent=1) + "\n")
+        for rel, text in self.extra_files.items():
+            put(rel, text)
         return root
 
 
@@ -543,6 +551,103 @@ class CardNumbersAndMethods(unittest.TestCase):
         self.assertEqual(code, 1, err)
         self.assertNotIn("Traceback", err)
         self.assertRegex(err, rf"(?m)^{re.escape(RECORD)}: record not valid JSON")
+
+
+class CriterionTwoSeatBriefsAndCoverage(unittest.TestCase):
+    """Card 234, criterion 2 red: seat briefs, role pages, and coverage floor."""
+
+    # ZOMBIES for criterion 2 (seat briefs + floor): Z (no briefs), O (one brief),
+    # M (all task-force briefs), B (disabled/unknown/repeated/reordered Pages ids),
+    # I (finding names file + detail), E (bad brief format), S (line-order invariance).
+    def test_every_task_force_role_needs_a_role_page_and_a_brief(self):
+        tree = Tree()
+        _, code, _, err = check(tree)
+        self.assertEqual(code, 1, err)
+        self.assertRegex(err, r"(?m)^docs/process-wiki/INDEX\.md: missing role page")
+        self.assertRegex(err, r"(?m)^docs/process-wiki/briefs/.*: missing brief")
+
+    def test_a_brief_lists_index_plus_its_role_pages_only(self):
+        tree = Tree()
+        tree.extra_rows.append(
+            "| role/architect-slice | docs/process-wiki/roles/architect-slice.md | enabled | Slice role page. |")
+        tree.extra_files["docs/process-wiki/roles/architect-slice.md"] = (
+            "Slice role page.\n\n- Rule: Scope is fixed before red. "
+            "See [D157](../../decisions/process-and-staffing.md#d157).\n"
+        )
+        tree.extra_files["docs/process-wiki/briefs/architect-slice.md"] = (
+            "Brief for the architect slice seat.\n\n"
+            "Pages: core/index, role/architect-slice, rules/one-criterion\n"
+        )
+        _, code, _, err = check(tree)
+        self.assertEqual(code, 1, err)
+        self.assertRegex(
+            err,
+            r"(?m)^docs/process-wiki/briefs/architect-slice\.md: brief pages must include only core/index and role/")
+
+    def test_the_floor_fails_when_anchored_rule_coverage_is_below_the_share(self):
+        tree = Tree()
+        tree.team_working_agreement = "\n".join(f"- **Rule {n}** baseline." for n in range(1, 21)) + "\n"
+        tree.page("rules/one-criterion").rules = [Tree.rule("Only one anchored rule.", 157)]
+        tree.page("role/qa-red").rules = []
+        _, code, _, err = check(tree)
+        self.assertEqual(code, 1, err)
+        self.assertRegex(err, rf"(?m)^docs/process-wiki/INDEX\.md: coverage floor.*{PROPOSED_FLOOR_SHARE:.2f}")
+
+    def test_the_floor_passes_exactly_at_the_boundary_share(self):
+        tree = Tree()
+        tree.team_working_agreement = "\n".join(f"- **Rule {n}** baseline." for n in range(1, 11)) + "\n"
+        tree.page("rules/one-criterion").rules = [Tree.rule("First.", 157)]
+        tree.page("role/qa-red").rules = [Tree.rule("Second.", 165)]
+        _, code, out, err = check(tree)
+        self.assertEqual((code, err), (0, ""), err)
+        self.assertIn("process-wiki: OK", out)
+
+
+class HostileInputsCriterionTwo(unittest.TestCase):
+    """D167, criterion 2 Inputs: disabled, unknown, repeated, reordered."""
+
+    def _brief_tree(self, pages_line):
+        tree = Tree()
+        tree.extra_rows.append("| role/architect-slice | docs/process-wiki/roles/architect-slice.md | enabled | Slice role page. |")
+        tree.extra_files["docs/process-wiki/roles/architect-slice.md"] = (
+            "Slice role page.\n\n- Rule: Scope is fixed before red. "
+            "See [D157](../../decisions/process-and-staffing.md#d157).\n"
+        )
+        tree.extra_files["docs/process-wiki/briefs/architect-slice.md"] = (
+            "Brief for the architect slice seat.\n\nPages: " + pages_line + "\n"
+        )
+        return tree
+
+    # disabled
+    def test_a_disabled_page_id_in_a_brief_fails_the_brief(self):
+        tree = self._brief_tree("core/index, role/architect-slice")
+        tree.extra_rows.append("| role/technical-writer | docs/process-wiki/roles/technical-writer.md | disabled | Disabled role page. |")
+        _, code, _, err = check(tree)
+        self.assertEqual(code, 1, err)
+        self.assertRegex(err, r"(?m)^docs/process-wiki/briefs/architect-slice\.md: disabled page id")
+
+    # unknown
+    def test_an_unknown_page_id_in_pages_fails_the_brief(self):
+        tree = self._brief_tree("core/index, role/architect-slice, role/no-such-seat")
+        _, code, _, err = check(tree)
+        self.assertEqual(code, 1, err)
+        self.assertRegex(err, r"(?m)^docs/process-wiki/briefs/architect-slice\.md: unknown page id.*role/no-such-seat")
+
+    # repeated
+    def test_a_repeated_page_id_in_pages_is_flagged(self):
+        tree = self._brief_tree("core/index, role/architect-slice, role/architect-slice")
+        _, code, _, err = check(tree)
+        self.assertEqual(code, 1, err)
+        self.assertRegex(err, r"(?m)^docs/process-wiki/briefs/architect-slice\.md: repeated page id.*role/architect-slice")
+
+    # reordered
+    def test_reordered_pages_remain_valid_when_the_set_is_the_same(self):
+        good = self._brief_tree("core/index, role/architect-slice")
+        reordered = self._brief_tree("role/architect-slice, core/index")
+        g_code, _, g_err = check(good)[1:]
+        r_code, _, r_err = check(reordered)[1:]
+        self.assertEqual((g_code, g_err), (0, ""), g_err)
+        self.assertEqual((r_code, r_err), (0, ""), r_err)
 
 
 class ThisRepository(unittest.TestCase):
