@@ -126,4 +126,37 @@ Criterion 3 Inputs: no list input.
 
 Slice verdict: **SHIP AS IS** (evaluation-only slice; no product-code changes).
 
-Size: 9146 bytes
+## Amendment for window 237-slice (ctx-2)
+
+Meets the three adopted conditions of the window (D145, D168). This amendment supersedes the earlier "N=5" and the five-alternative run above; those become the escalation path only.
+
+### 1. Pilot first
+
+- Arms: two. Prototype wiki (docs/process-wiki) against the full-agreement baseline. Same frozen tasks, same repository state, same prompts, same role order.
+- Roles: the six mapped above (ready, slice, red, green, ship, signoff).
+- N: stage A is N=1 per role per arm, so 12 runs. Stage B (only if stage A is ambiguous) adds a second run per role per arm, 12 more runs.
+- Ambiguous means any of: median token delta from 5% up to but not including 20%; wiki misses exceed baseline misses by exactly 1; the token delta and the blocked-message result point opposite ways.
+- Escalation: A clear adopt or reject ends the trial after stage A. Ambiguous goes to stage B. Still ambiguous after B goes to the Decider, who may add alternatives 3 to 5 only by committing a new cap first (condition 3 applies again). No other escalation, no N above 2.
+
+### 2. Pre-trial red check
+
+- Check: scripts/check-wiki-trial.py, committed failing before any run. It reads .mob/records/237/trial/thresholds.json, freeze.json, miss-key.json, ledger.json and recompute.json, and uses git history (`git log` and `git merge-base --is-ancestor`) for ordering.
+- freeze.json: hash of the six frozen task texts and the arm list. miss-key.json: one seeded must-read rule per run, with author seat. recompute.json: the reviewer's own recompute of each ledger row, from committed provider artifacts and run reports only.
+- It fails when: a file is missing; miss-key author is a runner seat (delivery lead, ctx-5) or any seat that wrote the freeze; the key commit is not a descendant of the freeze commit; the key commit is not an ancestor of the first run commit; the thresholds commit is not an ancestor of the first run commit or of the ledger; a ledger row has no committed source; a recompute (counted_tokens, misses, delta, median) differs from the ledger row by any amount; a duplicate, unknown or disabled row key (D167); the sum of counted_tokens exceeds the cap.
+- Self-test: the check ships with its own failing fixtures for each case above, so the red is real and not an absent file.
+
+### 3. Numbers committed before any run (by reviewer and Decider, in thresholds.json)
+
+Basis: card 234 measured full agreement 69701 tokens and brief 49032 tokens: a saving of 20669 per seat turn, 29.7%. One pair of runs is thin evidence, so thresholds sit below it.
+
+- Token delta: adopt needs wiki median counted_tokens at least 20% below baseline, in at least 4 of 6 roles. Margin: 9.7 points below the 29.7% seen, to absorb cache and run variance. Reshape from 5% to under 20%. Reject under 5% (inside noise).
+- Misses: adopt needs wiki misses at or under baseline, and 0 wiki misses of 6 keys in stage A. Reject if wiki misses exceed baseline by 2 or more. A saving that loses rules is not a saving.
+- Blocked messages: a message is blocked when it waits over 600 s (10 minutes) behind a long turn, from event timestamps. Adopt needs wiki count at or under baseline. Reject if wiki is over baseline by 2 or more. Reason: 12 runs cannot give a rate, so this only guards against a regression.
+- Upkeep budget: at most 12400 tokens per card (10% of a 6-seat card's saving, 6 x 20669 = 124014) and at most 10 minutes added retro time (the product owner's counter-metric). Above budget forces reshape. Reason: upkeep must leave 90% of the saving.
+- Total-token cap: stage A 1,000,000 counted tokens, stages A and B together 2,000,000. Estimate: stage A is 6 x 69701 + 6 x 49032 = 712,398; add about 100,000 for the key writer, recompute and tool overhead, and rounding up gives 1,000,000 (worst case, wiki as costly as baseline, is 836,412). Stage B doubles the run share. Payoff: the saving is 124,014 per card, so stage A breaks even in about 8 cards and the full cap in about 16. On reaching the cap the trial stops, unfinished rows are recorded as not-run, and the Decider may not adopt.
+
+### Commit table (replaces the D136 list above; step 0 is new)
+
+0a. Pre-trial red: check-wiki-trial.py with failing fixtures (QA). 0b. thresholds.json and cap (reviewer, Decider). 0c. freeze.json. 0d. miss-key.json by a non-runner; check goes green. Then steps 1 to 6 above unchanged, each run commit after 0d. Verdict stays SHIP AS IS with this amendment.
+
+Size: 13606 bytes
