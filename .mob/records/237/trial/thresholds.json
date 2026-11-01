@@ -1,0 +1,22 @@
+{
+ "card": 237,
+ "author_seat": "ctx-4",
+ "source": ".mob/records/decisions/237-slice.json, amendment section 3 (Numbers committed before any run)",
+ "token_delta_adopt_pct": 20,
+ "token_delta_adopt_min_roles": 4,
+ "token_delta_adopt_of_roles": 6,
+ "token_delta_reshape_from_pct": 5,
+ "token_delta_reject_pct": 5,
+ "misses_adopt": "wiki misses at or under baseline, and 0 wiki misses of 6 keys in stage A",
+ "misses_adopt_max_wiki_stage_a": 0,
+ "misses_reject_excess_over_baseline": 2,
+ "blocked_seconds": 600,
+ "blocked_adopt": "wiki count at or under baseline",
+ "blocked_reject_excess_over_baseline": 2,
+ "upkeep_tokens_per_card": 12400,
+ "upkeep_minutes": 10,
+ "upkeep_over_budget": "forces reshape",
+ "cap_stage_a": 1000000,
+ "cap_stage_ab": 2000000,
+ "cap_reached": "trial stops, unfinished rows recorded as not-run, Decider may not adopt"
+}
