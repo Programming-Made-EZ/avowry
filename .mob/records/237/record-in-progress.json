@@ -4,7 +4,8 @@
  "status": "in progress (product owner priority D172, one-card stop-the-line waiver for the evaluation)",
  "decisions": {
   "rank": "re-rank 16 (product owner direction D172)",
-  "task_force": "window 237-taskforce (one adopted condition: pre-trial commits and an independent ledger recompute)"
+  "task_force": "window 237-taskforce (one adopted condition: pre-trial commits and an independent ledger recompute)",
+  "slice": "window 237-slice (three conditions adopted: pilot first; pre-trial red check; thresholds and token cap committed before any run; slice amended in 8708cc5 at 13606 bytes; round 2 no objection from all five polled seats, each with a valid D171 cite)"
  },
  "task_force": [
   {
@@ -34,7 +35,7 @@
  ],
  "metric": "tokens per seat, facilitator context growth, messages blocked by long turns (from committed sources); counter-metric per the proposal",
  "open_points": [
-  "the record checker requires six roles (ready, slice, red, green, ship, signoff) and this team has no green seat; the slice decides how the closing record maps the roles"
+  "role mapping for the closing record, set in the slice: ready = product manager ctx-1, slice = architect ctx-2, red = QA ctx-3, green = delivery lead ctx-5 (runs the trial, no product code), ship = independent reviewer ctx-4, signoff = decider ctx-6"
  ],
  "command_scans": [
   {
@@ -60,9 +61,20 @@
    "by": "facilitator",
    "what": "the window's round-2 re-poll started while the strict re-poll's last seat still ran, so two decision runs overlapped on the shared seat-use history; no integrity refusal resulted (checked in the logs)",
    "handling": "recorded"
+  },
+  {
+   "by": "facilitator",
+   "what": "the in-flight commit 713a8e5 has a subject cut off mid-parenthesis",
+   "handling": "recorded; no history rewrite"
+  },
+  {
+   "by": "facilitator",
+   "what": "commit ca9f617 recorded the slice window with a category outside the closed list; the pre-push check refused it, so it sat unpushed for a few minutes",
+   "handling": "fixed in the next commit (category: slice decision); no amend"
   }
  ],
  "observations_for_next_stand_down": [
-  "D171's first window: in round 1 four of five Claude seats answered with a vote word plus a valid cite; the facilitator's runner could not re-poll past a gate refusal; all five counted round-2 replies carry a cite found in the proposal; every Copilot seat placed by the gate returned no reply (card 229)"
+  "D171's first window: in round 1 four of five Claude seats answered with a vote word plus a valid cite; the facilitator's runner could not re-poll past a gate refusal; all five counted round-2 replies carry a cite found in the proposal; every Copilot seat placed by the gate returned no reply (card 229)",
+  "D171 in the slice window: two of five round-2 votes were unread (a 2-word cite; a cite not in the proposal). The product manager's re-ask counted. The delivery lead's re-ask cited a commit subject instead of the proposal, so that seat was replaced in least-recently-used order (Copilot placed first, no reply; then Claude, counted). Retro point: does the cite rule catch unread votes, or only format slips?"
  ]
 }

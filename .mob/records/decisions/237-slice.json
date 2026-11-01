@@ -1,6 +1,6 @@
 {
  "window": "237-slice",
- "category": "slice (architect)",
+ "category": "slice decision",
  "rule": "D153/D145 at slice for card 237; D168 slice cap; D171 cite-a-point in force",
  "proposed_by": {
   "role": "architect (slice)",
