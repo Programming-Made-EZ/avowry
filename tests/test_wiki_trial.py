@@ -301,6 +301,33 @@ class WikiTrial(unittest.TestCase):
         c.omit.add("miss-key")
         fails(c, self, "miss-key.json: missing file")
 
+    # Card 237, window 237-amendment-ordering, cycle 1: one missing file must not hide the other findings.
+    def test_order_failure_is_reported_beside_a_missing_file(self):
+        for name in ("freeze", "recompute"):
+            c = Trial()
+            c.omit.add(name)
+            c.after = [["miss-key"]]
+            err = fails(c, self, f"{name}.json: missing file")
+            self.assertIn("miss-key.json: committed or changed at or after the first run", err)
+            self.assertNotIn("check could not run", err)
+
+    def test_other_checks_still_run_beside_a_missing_file(self):
+        for name in ("thresholds", "freeze", "miss-key", "recompute"):
+            c = Trial()
+            c.omit.add(name)
+            c.docs["ledger"]["rows"][0]["disabled"] = True
+            err = fails(c, self, f"{name}.json: missing file")
+            self.assertIn("disabled row key baseline-ready-1", err)
+            self.assertNotIn("check could not run", err)
+
+    def test_order_failure_is_reported_beside_a_malformed_file(self):
+        c = Trial()
+        c.raw["recompute"] = "{not json"
+        c.after = [["freeze"]]
+        err = fails(c, self, "recompute.json: not valid JSON")
+        self.assertIn("freeze.json: committed or changed at or after the first run", err)
+        self.assertNotIn("check could not run", err)
+
     def test_real_trial_folder_is_ready(self):
         """RED until step 0d: the real repo has no committed trial folder yet, so the check must fail."""
         code, out, err = run(REPO)
