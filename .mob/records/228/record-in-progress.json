@@ -7,7 +7,8 @@
   "task_force": "window 228-taskforce (adopted, no conditions)",
   "slice": "turn-slice-architect.md (639c5e2, 14847 bytes): three criteria; T2: Copilot has a command source (events.jsonl), no-source seats are a recorded gap that blocks ship; PM's split confirmed with four changes",
   "slice_window": "window 228-slice (adopted, no conditions)",
-  "agy_seats": "window 228-agy-seats (agy on decision seats now; build seats wait for an agy reader)"
+  "agy_seats": "window 228-agy-seats (agy on decision seats now; build seats wait for an agy reader)",
+  "sshagent_eval": "architect ruling (ruling-sshagent-architect.md): eval \"$(ssh-agent -s)\" stays a recorded finding (fail closed, D169); no clean twin; the next red turn record corrects slice line 63's wording"
  },
  "task_force": [
   {
@@ -37,8 +38,7 @@
  ],
  "open_points": [
   "the proposal's split of the 'Also owned here' items into follow-up cards is confirmed or changed at the slice (D136, D168)",
-  "the T2 question: the real command source per backend, and whether a no-source seat fails closed or is recorded as a gap",
-  "for the architect (from red 1d, 2740568): the slice says eval \"$(ssh-agent -s)\" keeps its card 227 result, but no test pins it and the scan reports it today; decide clean (a green must teach it) or a recorded finding"
+  "the T2 question: the real command source per backend, and whether a no-source seat fails closed or is recorded as a gap"
  ],
  "command_scans": [
   {
@@ -132,6 +132,11 @@
    "seat": "backend developer ctx-5, green 1c",
    "source": "Agent completion report (subagent_tokens)",
    "subagent_tokens": 95339
+  },
+  {
+   "seat": "architect ctx-2, ssh-agent ruling",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 59848
   }
  ],
  "cycles": [
