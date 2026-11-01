@@ -1132,5 +1132,11 @@
     "status": "in force",
     "title": "Product owner ruling: the indexed process wiki (card 234) is the highest priority, with a one-card stop-the-line waiver",
     "order": 161
+  },
+  "D171": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Cite-a-point votes: every vote quotes a point from the proposal, checkable in git; an unread vote does not count (card 234 retro pick)",
+    "order": 162
   }
 }

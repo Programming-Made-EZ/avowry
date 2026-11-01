@@ -1,0 +1,107 @@
+{
+ "decider": "D171",
+ "subject": "cite-a-point votes (card 234 retro pick, experiment)",
+ "proposer": "agile coach seat",
+ "result": "PASSED round 1 (5 Yes, 1 Support-it, 0 No), confirmed by the independent re-run (4 Yes, 2 Support-it, 0 No)",
+ "seat_note": "seats placed by card 226's decision-seat gate; all twelve ran on Claude (the gate refused none)",
+ "round1": [
+  {
+   "role": "pm",
+   "seat": "claude",
+   "context": "d171-pm",
+   "started_at": "2026-11-01T10:45:01Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 (C1, CITE line): One verifiable line per vote is cheap evidence of reading, and it supports accountability to the metric.\nP2 (C2, git check): The reviewer's grep or sed on the window commit is checkable by anyone, and the auditor tick re-checks it.\nP3 (C3, unread votes): Unread votes don't count, there is one re-ask, and then the next seat in least-recently-used order takes over. That keeps every seat in its own context and keeps the line moving.\nP4 (C4, no tooling): Nothing changes in decider.py, a checker or the seat lists, so this doesn't over-specify up front.\nP5 (C5, no blur): D171 gets credit only for a fall in unread votes, so it stays separate from the other D-rules.\nP6 (metrics, trial scope): The target is 0 unread votes against a 3-of-7 baseline. The counter-metrics are window minutes (card 234: 36 and 45), re-asks and ceremony CITE lines. The trial covers 3 windows, and the trial retro decides keep, revise or drop.\nP7 (deferrals, reversibility): The source-trace rule and parallel launch are deferred, not rejected, so one change is tested at a time. Dropping the CITE line undoes the whole thing.\n"
+  },
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "d171-architect",
+   "started_at": "2026-11-01T10:47:20Z",
+   "overall": "Yes",
+   "reply": "Yes\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "d171-qa",
+   "started_at": "2026-11-01T10:49:49Z",
+   "overall": "Yes",
+   "reply": "Yes\n"
+  },
+  {
+   "role": "dev",
+   "seat": "claude",
+   "context": "d171-dev",
+   "started_at": "2026-11-01T10:52:12Z",
+   "overall": "Yes",
+   "reply": "Yes\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "d171-auditlens",
+   "started_at": "2026-11-01T10:54:25Z",
+   "overall": "Yes",
+   "reply": "Yes\n"
+  },
+  {
+   "role": "delivery",
+   "seat": "claude",
+   "context": "d171-delivery",
+   "started_at": "2026-11-01T10:56:53Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (PICK): Cite-a-point votes are a cheap, thin slice, with no file, seat or code change and nothing to build before the line restarts.\nP2 (Why): A silent seat can't be told from a reader. Card 227's 3 of 7 unread votes and 14 of 14 and 7 of 7 missing window lines show a real flow cost.\nP3 (Deferred): Deferring parallel launch and the checker change keeps this to one change per trial. That protects window minutes as the counter-metric.\nP4 (Hypothesis): Unread votes falling from 3 of 7 to 0, with window time up by no more than 5 minutes, is measurable from the votes file and a grep.\nP5 (Rule C1 to C5): One CITE line per vote and one grep or sed check by the reviewer is small. The one re-ask in the same window is the only added wait, and it is bounded.\nP6 (Scope): Three windows is a short trial and ends at a retro decision.\nP7 (Reversibility): It is a two-way door. Dropping the CITE line changes nothing else.\n"
+  }
+ ],
+ "rerun": [
+  {
+   "role": "coach",
+   "seat": "claude",
+   "context": "d171rr-coach",
+   "started_at": "2026-11-01T10:59:14Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (PICK): Sized right. One small rule, with a metric and a counter-metric, and the source-trace rule is correctly deferred.\nP2 (Why): The 3 of 7 unread votes on card 227 and the silent Copilot seats are real evidence that votes aren't being read.\nP3 (Why this cluster): Right call to defer the checker change. It needs its own card and D-number.\nP4 (Why not parallel launch): One change per trial, per the D157 and D158 lesson.\nP5 (Hypothesis): Measurable, with the 5-minute window cap as a guard.\nP6 (C1–C5): Light enough. The re-ask and replace-seat steps in C3 are the only ceremony risk, so watch re-asks per window.\nP7 (Metrics and scope): The ceremony counter-metric, CITE lines that quote only the PICK or title, covers the main gaming risk.\nP8 (Reversibility): Two-way door.\n"
+  },
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "d171rr-architect",
+   "started_at": "2026-11-01T11:01:30Z",
+   "overall": "Yes",
+   "reply": "Yes\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "d171rr-qa",
+   "started_at": "2026-11-01T11:04:00Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 (C1): The CITE line is testable red first: a reply with no CITE line, or a made-up phrase, must fail the check.\nP2 (C2): `git show <window commit>:<path> | grep -F` is a deterministic check that fails on a fabricated quote. It only proves the phrase is in the file, not that it is in the proposal body rather than the title or the VOTING RULE line, so the reviewer must apply the exclusion by hand.\nP3 (C3): Unread, uncited and no-window-line replies are all excluded from the tally, so the check cannot pass bad state. The re-ask-once rule bounds the loop.\nP4 (C4): Doing the check by hand and by grep adds no new tool that could itself be wrong, and the cost is one grep per vote.\nP5 (C5): The CITE line is kept apart from the other D-rules, so a catch can be attributed to this rule alone.\nP6 (metric): Unread votes per window is countable from the votes file and git, and the ceremony counter-metric covers the weak spot where a vote quotes only the PICK.\nP7 (scope and accountability): A window that counts a vote without a found CITE line counts as not run, which gives a clear fail condition that can be tested.\n\nCITE: \"A quote shows the text was seen, not understood; this is a floor on reading, not a measure of it.\"\n"
+  },
+  {
+   "role": "dev",
+   "seat": "claude",
+   "context": "d171rr-dev",
+   "started_at": "2026-11-01T11:06:21Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: C1 is workable. A 6-word exact quote is quick to produce, and a line reference with 4 words is unambiguous.\nP2: C2 is checkable by grep or sed against the window commit. Quoting only the PICK or title is the ceremony risk. The rule excludes the title and VOTING RULE lines, and the counter-metric tracks the rest.\nP3: C3 is fair. A re-ask once is cheap. One gap: Copilot seats returned no window line in 21 of 21 attempts, so \"no window line means no vote\" will keep replacing them until that is addressed. That is existing behavior, and the trial counts it.\nP4: C4 is fine. It is hand and grep only, with no tooling change.\nP5: C5 keeps the rule separate from the other D-rules, so it does not blur them.\n\nCITE: An unread vote does not count in the tally\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "d171rr-auditlens",
+   "started_at": "2026-11-01T11:08:41Z",
+   "overall": "Yes",
+   "reply": "Yes\n"
+  },
+  {
+   "role": "delivery",
+   "seat": "claude",
+   "context": "d171rr-delivery",
+   "started_at": "2026-11-01T11:10:53Z",
+   "overall": "Yes",
+   "reply": "Yes\n"
+  }
+ ]
+}
