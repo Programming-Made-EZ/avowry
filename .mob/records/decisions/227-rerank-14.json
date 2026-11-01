@@ -34,7 +34,8 @@
    "round": 2,
    "role": "architect",
    "reply": "NO OBJECTION",
-   "condition": null
+   "condition": null,
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:35:51.258219Z"
   },
   {
    "seat": "claude",
@@ -51,7 +52,8 @@
    "round": 2,
    "role": "QA engineer",
    "reply": "NO OBJECTION",
-   "condition": null
+   "condition": null,
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:37:04.665498Z"
   },
   {
    "seat": "copilot",
@@ -68,7 +70,8 @@
    "round": 2,
    "role": "backend developer",
    "reply": "NO OBJECTION",
-   "condition": null
+   "condition": null,
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:38:22.947920Z"
   },
   {
    "seat": "claude",
@@ -85,7 +88,8 @@
    "round": 2,
    "role": "independent reviewer (audit lens)",
    "reply": "NO OBJECTION",
-   "condition": null
+   "condition": null,
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:41:03.255081Z"
   },
   {
    "seat": "copilot",
@@ -102,7 +106,8 @@
    "round": 2,
    "role": "delivery lead",
    "reply": "NO OBJECTION",
-   "condition": null
+   "condition": null,
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:45:56.212819Z"
   },
   {
    "seat": "claude",
@@ -119,7 +124,8 @@
    "round": 2,
    "role": "product manager (signoff)",
    "reply": "NO OBJECTION",
-   "condition": null
+   "condition": null,
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:48:36.452656Z"
   }
  ],
  "attempts": [
@@ -138,7 +144,8 @@
    "round": 1,
    "role": "architect",
    "reply": "NO OBJECTION",
-   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner"
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:14:49.156995Z"
   },
   {
    "seat": "claude",
@@ -155,7 +162,8 @@
    "round": 1,
    "role": "architect",
    "reply": "OBJECTION",
-   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:16:23.526600Z"
   },
   {
    "seat": "copilot",
@@ -172,7 +180,8 @@
    "round": 1,
    "role": "QA engineer",
    "reply": "Reviewing the referenced cards and audit entries now to ground the vote in testability risk.",
-   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner"
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:17:55.488956Z"
   },
   {
    "seat": "claude",
@@ -189,7 +198,8 @@
    "round": 1,
    "role": "QA engineer",
    "reply": "No. Card 229 names no open FAIL, so the corrective-card gate would not start it in second place; either have 229 cite the open FAIL it fixes (F-072 or F-074, once confirmed) or move it behind 210 and 211.",
-   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:19:05.223020Z"
   },
   {
    "seat": "copilot",
@@ -206,7 +216,8 @@
    "round": 1,
    "role": "backend developer",
    "reply": "NO OBJECTION",
-   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner"
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:20:54.625564Z"
   },
   {
    "seat": "claude",
@@ -223,7 +234,8 @@
    "round": 1,
    "role": "backend developer",
    "reply": "OBJECTION",
-   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:22:17.101157Z"
   },
   {
    "seat": "copilot",
@@ -240,7 +252,8 @@
    "round": 1,
    "role": "independent reviewer (audit lens)",
    "reply": "Checking the cited cards and audit artifacts, then I’ll return a strict-format decision.",
-   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner"
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:23:51.760590Z"
   },
   {
    "seat": "claude",
@@ -257,7 +270,8 @@
    "round": 1,
    "role": "independent reviewer (audit lens)",
    "reply": "OBJECTION",
-   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:25:42.124059Z"
   },
   {
    "seat": "copilot",
@@ -274,7 +288,8 @@
    "round": 1,
    "role": "delivery lead",
    "reply": "NO OBJECTION",
-   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner"
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:27:24.078958Z"
   },
   {
    "seat": "claude",
@@ -291,7 +306,8 @@
    "round": 1,
    "role": "delivery lead",
    "reply": "OBJECTION",
-   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:29:52.712504Z"
   },
   {
    "seat": "copilot",
@@ -308,7 +324,8 @@
    "round": 1,
    "role": "product manager (signoff)",
    "reply": "NO OBJECTION",
-   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner"
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:31:33.367038Z"
   },
   {
    "seat": "claude",
@@ -325,7 +342,8 @@
    "round": 1,
    "role": "product manager (signoff)",
    "reply": "OBJECTION",
-   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC) and decider.py's own probe at 2026-11-01T01:34:01.860512Z"
   }
  ],
  "decision": {
