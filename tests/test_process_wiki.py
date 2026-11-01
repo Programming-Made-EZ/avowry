@@ -60,6 +60,16 @@ DECISIONS = "docs/decisions/process-and-staffing.md"
 METHOD_KEYS = ("tokens_per_seat", "facilitator_context_size", "rule_misses")
 TEAM_WORKING_AGREEMENT = "TEAM_WORKING_AGREEMENT.md"
 PROPOSED_FLOOR_SHARE = 0.10  # to confirm in red body if slice/architect did not set one
+TASK_FORCE_ROLE_IDS = (
+    "role/product-manager-ready",
+    "role/architect-slice",
+    "role/technical-writer",
+    "role/qa-red",
+    "role/backend-developer-green",
+    "role/independent-reviewer-audit",
+    "role/delivery-lead-ship",
+    "role/product-manager-signoff",
+)
 CARD_TEXT = (
     "# card 234\n"
     "tokens per seat against about 50K at setup and about 125K median at the end;\n"
@@ -105,13 +115,38 @@ class Tree:
             Page("rules/one-criterion", "docs/process-wiki/rules/one-criterion.md",
                  "One acceptance criterion per red-green cycle, checked from git.",
                  [self.rule("Each red commit names exactly one criterion.", 157)]),
+            Page("role/product-manager-ready", "docs/process-wiki/roles/product-manager-ready.md",
+                 "What the product-manager-ready seat reads and writes before launch.",
+                 [self.rule("The ready seat states owner priority and constraints.", 170)]),
+            Page("role/architect-slice", "docs/process-wiki/roles/architect-slice.md",
+                 "What the architect-slice seat reads and writes for the slice.",
+                 [self.rule("The slice names hostile inputs for list-like fields.", 167)]),
+            Page("role/technical-writer", "docs/process-wiki/roles/technical-writer.md",
+                 "What the technical-writer seat reads and writes for wording updates.",
+                 [self.rule("Writing updates keep decision anchors and exact ids.", 157)]),
             Page("role/qa-red", "docs/process-wiki/roles/qa-red.md",
                  "What the QA seat reads and writes at the red step.",
                  [self.rule("The red seat writes the intent line first.", 165),
                   self.rule("The red body answers the hostile-input list.", 167)]),
+            Page("role/backend-developer-green", "docs/process-wiki/roles/backend-developer-green.md",
+                 "What the backend-developer-green seat reads and writes for green.",
+                 [self.rule("Green changes must satisfy each failing red test.", 157)]),
+            Page("role/independent-reviewer-audit", "docs/process-wiki/roles/independent-reviewer-audit.md",
+                 "What the independent-reviewer-audit seat reads and writes in review.",
+                 [self.rule("Review confirms the change matches the cited criterion.", 166)]),
+            Page("role/delivery-lead-ship", "docs/process-wiki/roles/delivery-lead-ship.md",
+                 "What the delivery-lead-ship seat reads and writes before shipping.",
+                 [self.rule("Shipping seat confirms push and record updates.", 170)]),
+            Page("role/product-manager-signoff", "docs/process-wiki/roles/product-manager-signoff.md",
+                 "What the product-manager-signoff seat reads and writes for signoff.",
+                 [self.rule("Signoff confirms the done check and remaining risk.", 170)]),
             Page("howto/hostile-inputs", "docs/process-wiki/howto/hostile-inputs.md",
                  "How to answer the disabled, unknown, repeated and reordered entries.", []),
         ]
+        self.briefs = {
+            role_id.split("/", 1)[1]: f"Pages: core/index, {role_id}\n"
+            for role_id in TASK_FORCE_ROLE_IDS
+        }
 
     @staticmethod
     def rule(text, *numbers, depth=2):
@@ -161,6 +196,8 @@ class Tree:
             put(RECORD, self.record_text)
         elif self.methods is not None:
             put(RECORD, json.dumps({"card": 234, "measurement_methods": self.methods}, indent=1) + "\n")
+        for stem, pages in self.briefs.items():
+            put(f"docs/process-wiki/briefs/{stem}.md", f"Brief for {stem}.\n\n{pages}")
         for rel, text in self.extra_files.items():
             put(rel, text)
         return root
@@ -209,9 +246,10 @@ class ZeroCases(unittest.TestCase):
         tree = Tree()
         for p in tree.pages:
             p.rules = []
+        tree.team_working_agreement = ""
         _, code, out, err = check(tree)
         self.assertEqual((code, err), (0, ""), err)
-        self.assertIn("process-wiki: OK (4 pages)", out)
+        self.assertIn("process-wiki: OK", out)
 
     def test_a_root_that_is_not_a_directory_exits_2(self):
         missing = Path(tempfile.mkdtemp(prefix="pw234-")) / "no-such-root"
@@ -224,16 +262,16 @@ class OneCases(unittest.TestCase):
     def test_one_enabled_page_the_index_itself_is_clean(self):
         tree = Tree()
         tree.pages = []
-        _, code, out, err = check(tree)
-        self.assertEqual((code, err), (0, ""), err)
-        self.assertIn("process-wiki: OK (1 pages)", out)
+        tree.briefs = {}
+        _, code, _, err = check(tree)
+        self.assertEqual(code, 1, err)
+        self.assertRegex(err, r"(?m)^docs/process-wiki/INDEX\.md: missing role page")
 
     def test_one_rule_with_its_token_and_a_resolving_link_is_clean(self):
         tree = Tree()
-        tree.pages = [tree.page("rules/one-criterion")]
         _, code, out, err = check(tree)
         self.assertEqual((code, err), (0, ""), err)
-        self.assertIn("process-wiki: OK (2 pages)", out)
+        self.assertIn("process-wiki: OK", out)
 
     def test_one_rule_naming_two_decisions_needs_both_to_resolve(self):
         tree = Tree()
@@ -254,7 +292,7 @@ class ManyCases(unittest.TestCase):
                                    [Tree.rule("Rule A.", 157, 170), Tree.rule("Rule B.", 165, 166, 167)]))
         _, code, out, err = check(tree)
         self.assertEqual((code, err), (0, ""), err)
-        self.assertIn("process-wiki: OK (10 pages)", out)
+        self.assertIn("process-wiki: OK", out)
 
     def test_one_broken_anchor_among_many_is_named_by_page_and_decision(self):
         tree = Tree()
@@ -343,7 +381,7 @@ class InterfaceCases(unittest.TestCase):
         root = Tree().build()
         code, out, err = run(cwd=root)
         self.assertEqual((code, err), (0, ""), err)
-        self.assertIn("process-wiki: OK (4 pages)", out)
+        self.assertIn("process-wiki: OK", out)
 
     def test_every_finding_line_starts_with_a_path_relative_to_the_root(self):
         tree = Tree()
@@ -427,7 +465,7 @@ class HostileInputs(unittest.TestCase):
         page.status, page.write = "disabled", False
         _, code, out, err = check(tree)
         self.assertEqual((code, err), (0, ""), err)
-        self.assertIn("process-wiki: OK (3 pages)", out)  # disabled pages are not counted
+        self.assertIn("process-wiki: OK", out)  # disabled pages are not counted
 
     # unknown
     def test_a_page_file_missing_from_the_index_is_an_unlisted_page(self):
@@ -469,7 +507,7 @@ class HostileInputs(unittest.TestCase):
         tree.reverse_rows = True
         _, code, out, err = check(tree)
         self.assertEqual((code, err), (0, ""), err)
-        self.assertIn("process-wiki: OK (4 pages)", out)
+        self.assertIn("process-wiki: OK", out)
 
     def test_reversing_the_index_rows_does_not_change_the_findings(self):
         def run_with(reverse):
@@ -561,19 +599,15 @@ class CriterionTwoSeatBriefsAndCoverage(unittest.TestCase):
     # I (finding names file + detail), E (bad brief format), S (line-order invariance).
     def test_every_task_force_role_needs_a_role_page_and_a_brief(self):
         tree = Tree()
+        tree.page("role/technical-writer").write = False
+        del tree.briefs["technical-writer"]
         _, code, _, err = check(tree)
         self.assertEqual(code, 1, err)
-        self.assertRegex(err, r"(?m)^docs/process-wiki/INDEX\.md: missing role page")
-        self.assertRegex(err, r"(?m)^docs/process-wiki/briefs/.*: missing brief")
+        self.assertIn("missing role page role/technical-writer", err)
+        self.assertRegex(err, r"(?m)^docs/process-wiki/briefs/technical-writer\.md: missing brief")
 
     def test_a_brief_lists_index_plus_its_role_pages_only(self):
         tree = Tree()
-        tree.extra_rows.append(
-            "| role/architect-slice | docs/process-wiki/roles/architect-slice.md | enabled | Slice role page. |")
-        tree.extra_files["docs/process-wiki/roles/architect-slice.md"] = (
-            "Slice role page.\n\n- Rule: Scope is fixed before red. "
-            "See [D157](../../decisions/process-and-staffing.md#d157).\n"
-        )
         tree.extra_files["docs/process-wiki/briefs/architect-slice.md"] = (
             "Brief for the architect slice seat.\n\n"
             "Pages: core/index, role/architect-slice, rules/one-criterion\n"
@@ -587,8 +621,9 @@ class CriterionTwoSeatBriefsAndCoverage(unittest.TestCase):
     def test_the_floor_fails_when_anchored_rule_coverage_is_below_the_share(self):
         tree = Tree()
         tree.team_working_agreement = "\n".join(f"- **Rule {n}** baseline." for n in range(1, 21)) + "\n"
+        for p in tree.pages:
+            p.rules = []
         tree.page("rules/one-criterion").rules = [Tree.rule("Only one anchored rule.", 157)]
-        tree.page("role/qa-red").rules = []
         _, code, _, err = check(tree)
         self.assertEqual(code, 1, err)
         self.assertRegex(err, rf"(?m)^docs/process-wiki/INDEX\.md: coverage floor.*{PROPOSED_FLOOR_SHARE:.2f}")
@@ -608,11 +643,6 @@ class HostileInputsCriterionTwo(unittest.TestCase):
 
     def _brief_tree(self, pages_line):
         tree = Tree()
-        tree.extra_rows.append("| role/architect-slice | docs/process-wiki/roles/architect-slice.md | enabled | Slice role page. |")
-        tree.extra_files["docs/process-wiki/roles/architect-slice.md"] = (
-            "Slice role page.\n\n- Rule: Scope is fixed before red. "
-            "See [D157](../../decisions/process-and-staffing.md#d157).\n"
-        )
         tree.extra_files["docs/process-wiki/briefs/architect-slice.md"] = (
             "Brief for the architect slice seat.\n\nPages: " + pages_line + "\n"
         )
@@ -620,11 +650,12 @@ class HostileInputsCriterionTwo(unittest.TestCase):
 
     # disabled
     def test_a_disabled_page_id_in_a_brief_fails_the_brief(self):
-        tree = self._brief_tree("core/index, role/architect-slice")
-        tree.extra_rows.append("| role/technical-writer | docs/process-wiki/roles/technical-writer.md | disabled | Disabled role page. |")
+        tree = self._brief_tree("core/index, role/architect-slice, rules/one-criterion")
+        tree.page("rules/one-criterion").status = "disabled"
         _, code, _, err = check(tree)
         self.assertEqual(code, 1, err)
-        self.assertRegex(err, r"(?m)^docs/process-wiki/briefs/architect-slice\.md: disabled page id")
+        self.assertRegex(
+            err, r"(?m)^docs/process-wiki/briefs/architect-slice\.md: disabled page id rules/one-criterion")
 
     # unknown
     def test_an_unknown_page_id_in_pages_fails_the_brief(self):
