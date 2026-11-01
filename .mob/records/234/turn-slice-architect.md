@@ -85,19 +85,28 @@ Criterion 3 Inputs: disabled: disabled handoff section id is n/a: handoff sectio
 | Criterion | Outside layer (acceptance) | Middle layer | Inner layer |
 |---|---|---|---|
 | 1 | Wiki index and rule pages compile to a complete route map; every rule link resolves to a live D-anchor. | Anchor/link checker over page IDs and D-links. | Anchor source in decision files (`<a id="dNNN">`) and D-number preservation in page text. |
-| 2 | Seat brief for each role-step lists only index + needed pages and records token metrics. | Brief parser validates `Pages:` IDs and required-page set per seat-step. | Record writer persists per-seat setup/end token counts and baseline comparisons. |
-| 3 | Facilitator can restart at boundary from wiki + handoff notes; context and rule-miss metrics recorded. | Restart checker validates boundary marker, required pages, and miss counter entry shape. | Record writer persists facilitator context size and unread-page miss cases. |
+| 2 | Seat brief for each role-step lists only index + needed pages and records token metrics. | Brief parser validates `Pages:` IDs and required-page set per seat-step. | Record writer persists per-seat setup/end token counts with committed provider-usage source refs and baseline comparisons; Copilot rows may be `not_measured` only with reason and available quota evidence. |
+| 3 | Facilitator can restart at boundary from wiki + handoff notes; context and rule-miss metrics recorded. | Restart checker validates boundary marker, required pages, and miss counter entry shape. | Record writer persists facilitator context size from a committed provider-usage source, plus explicit `rule_miss_cases` and its source (including the zero-case source). |
 
 ## D136 commit plan (one concern per commit; criterion order enforced by D157)
 
 1. **Red 1 (Criterion: 1):** failing checks for index/page split plus anchor-resolve integrity and missing-number-or-method guard.
 2. **Green 1 (Criterion: 1):** implement index, page summaries, and anchor-preserving link format.
-3. **Red 2 (Criterion: 2):** failing checks for seat brief `Pages:` routing and token-metric method/number presence.
-4. **Green 2 (Criterion: 2):** implement seat brief page-ID routing + record fields for per-seat token measurements.
-5. **Red 3 (Criterion: 3):** failing checks for restart-from-wiki+handoff, context-size metric capture, and unread-page miss counter.
-6. **Green 3 (Criterion: 3):** implement restart flow and record writers for facilitator context + miss cases.
+3. **Red 2 (Criterion: 2):** failing checks for seat brief `Pages:` routing plus missing committed provider-usage source refs, missing per-seat setup/end token values, or missing Copilot `not_measured` reason/evidence.
+4. **Green 2 (Criterion: 2):** implement seat brief page-ID routing + record fields for per-seat token values, provider-usage source refs, and Copilot `not_measured` handling.
+5. **Red 3 (Criterion: 3):** failing checks for restart-from-wiki+handoff plus missing facilitator token value/source and missing explicit `rule_miss_cases` (including empty-without-source).
+6. **Green 3 (Criterion: 3):** implement restart flow and record writers for facilitator token value/source and explicit `rule_miss_cases` + source.
 7. **Review-fix commits (if needed):** separate, scoped fixes only; no criterion mixing.
 
 Slice verdict: **SHIP AS IS** (three criteria, one concern: indexed process wiki with just-in-time reading and measurable restart/routing behavior).
 
-Size: 9259 bytes
+## Amendment for window 234-slice (ctx-2)
+
+- **Committed provider-usage source for token values:** Claude seats use committed Claude transcript usage fields (`usage.input_tokens`, `usage.output_tokens`) as the provider source; Copilot seat token usage is **not measured** because this repo records no Copilot command source/transcript for seat runs (only quota/account probe evidence and explicit `no command source`/unscanned status).
+- **Where values are committed (file + fields):** Card values are committed in `.mob/records/234/record-in-progress.json` under explicit seat/facilitator metric fields keyed by context. For each seat (`ctx-1`..`ctx-8`): `setup_tokens`, `end_tokens`, `provider_usage_source` (path/ref to committed provider transcript/record), and when applicable `not_measured_reason` + `available_evidence_source` (Copilot quota/account probe path/ref). For facilitator restart runs: `facilitator_context_tokens` and `facilitator_provider_usage_source` in the same card record family.
+- **`rule_miss_cases` shape and source:** The card record must contain explicit `rule_miss_cases` as an array (possibly empty) of objects with at least seat/facilitator context, boundary or restart point, missed required page id, and source ref. If empty, the record must also carry an explicit zero-case source field (for example a checked restart/run reference proving none were observed).
+- **How the git check fails on missing pieces:** fail when (1) any required seat/facilitator token value is missing, (2) any token value lacks a committed provider-usage source ref, (3) a Copilot `not_measured` entry lacks reason or committed evidence source, (4) `rule_miss_cases` field is absent, or (5) `rule_miss_cases` is empty without its stated zero-case source.
+
+Source anchors for this amendment: `.mob/records/decisions/234-slice.json` (`adopted_conditions`), `.mob/records/234/record-in-progress.json` (`task_force` contexts and `command_scans` showing Copilot `no command source`), `.mob/records/probes/2026-10-30.jsonl` (available Copilot quota evidence), and `TEAM_WORKING_AGREEMENT.md` (non-Claude command-source limit statement).
+
+Size: 11876 bytes
