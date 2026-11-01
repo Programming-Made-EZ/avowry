@@ -145,6 +145,11 @@
    "by": "facilitator",
    "what": "every decision seat run by the facilitator through decider.py since green 1b (retro voices, Decider and window voters) used a scratch backends file without command_source or --session-id, so decider.py recorded each voter's command_scan as 'unscanned'; found at the card 227 retro (8 of 8 voices unscanned)",
    "handling": "a new scratch config copies command_source and the session-id invocation from mob-defaults core/backends.json (claude probe_model kept at sonnet pending the product owner's model-family answer); first used for the retro-pick Decider; recorded"
+  },
+  {
+   "by": "facilitator",
+   "what": "committed probe evidence to avowry at 23:57 UTC while a D168 round-2 voter ran, so decider.py's real-tree check refused that vote (exit 5, 'HEAD moved de4b6c4 -> 7345171'); the product manager's round-2 Yes is void and re-run",
+   "handling": "recorded; no commit to a repository while a decision voter runs on it"
   }
  ],
  "cycles": [
@@ -416,6 +421,10 @@
   {
    "by": "facilitator (self-reported)",
    "observation": "ran 'rm -f retro227-runs.txt 2>/dev/null' in the scratchpad at about 23:20 UTC to clear a run log before the retro voices: a literal, non-recursive delete of a file that did not exist, so not the variable-path rule; but it breaks the 'no delete commands of any kind' line the facilitator puts in every seat brief. From now on the facilitator writes a new uniquely named log instead"
+  },
+  {
+   "by": "facilitator",
+   "observation": "at 00:0x UTC on 2026-11-01 Copilot's quota reset (has_quota=True, 1498 of 1500); the card 226 rotation gate then refused Claude decision seats (exit 2, 'copilot has waited longer') with no voter launched, the first real refusal by the gate; seats now rotate between Copilot and Claude by least-recently-used"
   }
  ],
  "follow_up_cards": [
