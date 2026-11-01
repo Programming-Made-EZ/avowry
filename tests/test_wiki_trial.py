@@ -127,6 +127,10 @@ class Trial:
                         sh(root, "checkout", "-q", main_branch)
                     paths = []
                     continue
+                if name == "decoy":  # a file the traversal cases try to reach through the decisions folder
+                    (root / "decoy.json").write_text("{}", encoding="utf-8")
+                    paths.append("decoy.json")
+                    continue
                 if name in ("decision", "decision-untracked"):
                     d = self.write_decision(root)
                     if name == "decision":
@@ -497,6 +501,50 @@ class WikiTrial(unittest.TestCase):
         c.docs["thresholds"].update(cap_stage_a=5000, cap_stage_ab=6000)
         c.amended.update(cap_stage_a=8000, cap_stage_ab=9000)  # raised, but still under the total
         fails(c, self, "cap exceeded")
+
+    # Card 237, window 237-amendment-ordering, cycle 5: cap_amendment names a decision file under
+    # .mob/records/decisions/ that is in git, added before the change commit. Hostile 6, 7, 8 (two ways), 9, 10, 18a.
+    def test_amendment_without_a_cap_amendment(self):  # hostile 6
+        c = Amended()
+        del c.amended["cap_amendment"]
+        fails(c, self, "amendment has no cap_amendment")
+
+    def test_amendment_naming_no_window(self):  # hostile 18, window half
+        c = Amended()
+        c.amended["cap_amendment"] = "raised both caps; ruling commit {ruling}"
+        fails(c, self, "amendment names no decision window")
+
+    def test_amendment_naming_a_decision_file_that_does_not_exist(self):  # hostile 7
+        c = Amended()
+        c.amended["cap_amendment"] = "raised; window 237-nope; ruling commit {ruling}"
+        fails(c, self, "amendment decision file .mob/records/decisions/237-nope.json not in git before the change")
+
+    def test_amendment_with_a_decision_file_only_in_the_working_tree(self):  # hostile 8a
+        c = Amended()
+        c.steps = c.steps[:4] + [["decision-untracked"], ["ruling"], ["amend"]]
+        fails(c, self, "237-cap-fired.json not in git before the change")
+
+    def test_amendment_with_a_decision_file_on_another_branch(self):  # hostile 8b
+        c = Amended()
+        c.steps = c.steps[:4] + [["side-decision"], ["ruling"], ["amend"]]
+        fails(c, self, "237-cap-fired.json not in git before the change")
+
+    def test_amendment_with_a_decision_file_added_after_the_change(self):  # hostile 8c
+        c = Amended()
+        c.steps = c.steps[:4] + [["ruling"], ["amend"], ["decision"]]
+        fails(c, self, "237-cap-fired.json not in git before the change")
+
+    def test_amendment_with_a_decision_file_added_in_the_change_commit(self):  # hostile 9
+        c = Amended()
+        c.steps = c.steps[:4] + [["ruling"], ["decision", "amend"]]
+        fails(c, self, "237-cap-fired.json not in git before the change")
+
+    def test_amendment_window_that_escapes_the_decisions_folder(self):  # hostile 10
+        for window in ("../../../decoy", "/decoy", "sub/../../../../decoy", "237-cap-fired/../../../../decoy"):
+            c = Amended()
+            c.steps = c.steps[:4] + [["decoy"], ["decision"], ["ruling"], ["amend"]]
+            c.amended["cap_amendment"] = f"raised; window {window}; ruling commit {{ruling}}"
+            fails(c, self, "amendment names no decision window")
 
     def test_real_trial_folder_is_ready(self):
         """RED until step 0d: the real repo has no committed trial folder yet, so the check must fail."""
