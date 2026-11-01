@@ -20,7 +20,11 @@
    "board/234-an-indexed-process-wiki-with-just-in-time-reading.md (Source, Invariants, Fails with, Done check 1)",
    "adopted condition of window 234-taskforce (D145)"
   ],
-  "confirmation": "confirmation: pending (facilitator)"
+  "confirmation": {
+   "by": "facilitator",
+   "at": "2026-11-01T04:51:05Z",
+   "text": "Confirmed against D170 and the product owner's priority ruling (the wiki first, one-card waiver, metrics tokens per seat and facilitator context, counter-metric rule misses from an unread page), and the defaults-promotion note (template on a keep verdict)."
+  }
  },
  "task_force": [
   {
@@ -70,11 +74,31 @@
    "status": "unscanned",
    "seat": "slice and slice amendment (Copilot CLI)",
    "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-4",
+   "status": "clean",
+   "seat": "intent and red 1 (Claude)",
+   "commands": 44,
+   "transcript": "subagents/agent-ab3ea2815470fb969.jsonl",
+   "source": "python delete_guard.py scan-transcript (mob-defaults f8a45da), facilitator; read before recording"
   }
  ],
- "cycles": [],
+ "cycles": [
+  {
+   "criterion": 1,
+   "repo": "avowry",
+   "red": "c12f7f2 (tests/test_process_wiki.py; 53 run, 49 failing by assertion, 4 born-green probes shown red)"
+  }
+ ],
  "stand_downs": [],
- "deviations": [],
+ "deviations": [
+  {
+   "by": "facilitator",
+   "what": "the intent confirmation (D165) was committed after red 1 c12f7f2, not before the red seat launched (card 226 stand-down 2 and card 227 stand-down 1 adjustments)",
+   "handling": "recorded"
+  }
+ ],
  "observations_for_next_stand_down": [
   {
    "by": "facilitator",
