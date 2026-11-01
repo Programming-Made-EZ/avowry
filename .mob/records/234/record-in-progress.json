@@ -215,6 +215,37 @@
    "context": "ctx-7",
    "model": "claude-sonnet-5-5",
    "written_at": "2026-11-01T05:08:45Z"
+  },
+  {
+   "cycle": 2,
+   "boundary": "after Criterion 2 (red 570dc5c, fix 707434b, green 042bf79, record 3deedb2; next is Criterion 3, restart from the wiki and handoff notes with context-size and unread-page miss metrics)",
+   "adjustment_reviews": [
+    {
+     "adjustment": "D155 adjustment review: stand-down 1's green Proof block and coverage floor are now reviewed against the criterion-2 green and the red fix.",
+     "issue": "The green body and coverage floor must be counted as actions, not assumed; the red was self-contradictory, and Copilot seats with no command source need an explicit not-measured record.",
+     "resolved": "partly",
+     "evidence": "Green Proof block command count: 1 real-repo checker command recorded for the criterion-2 green, plus 1 rule-line coverage check (44 of 128 = 0.34); no recorded prototype command exists before the green seat to catch the contradiction. Red 570dc5c contradicts itself: a default Tree() is both invalid for the role/brief check and valid for the clean path; zero-rule tests cannot pass with any floor; the disabled-page test names an id not in its brief. Copilot usage is recorded for the red fix only: 938k in and 11.3k out. Copilot seats' unscanned command contexts: ctx-1, ctx-2, and ctx-5 are unscanned (3 of 4 contexts); command count is not measured because no command source exists.",
+     "side_effects": "Good: the Proof block is present in the record and the floor is explicit. Bad: the contradiction escaped until after the green seat, because there is no recorded prototype run or red-seat command trace before the green. Copilot usage is now recorded only for one red fix, not for the whole family.",
+     "verdict": "keep the Proof block and the coverage floor; for criterion 3, require a restart evidence block with a real boundary and a miss count, and keep Copilot seats as not_measured unless a command source exists."
+    }
+   ],
+   "observations": [
+    "1. The criterion-2 green recorded a Proof block and a coverage floor, but no recorded prototype command caught the red's self-contradiction before the green seat.",
+    "2. Copilot usage is now written for one red fix: 938k input and 11.3k output for a fix run, while the remaining Copilot seat contexts remain unscanned with no command source and therefore not measured.",
+    "3. Criterion 3 still needs a concrete restart record: boundary hash, wiki page IDs read, handoff notes used, and an unread-page miss count with source."
+   ],
+   "worked": "The Proof block and floor are now explicit in the criterion-2 record; the red fix has recorded Copilot usage (938k in, 11.3k out); and the red 570dc5c contradiction was identified and corrected before the green final check.",
+   "did_not": "No prototype command was recorded before the green seat, so the contradiction was not caught earlier; the Copilot seat command source still does not exist in the unscanned contexts, so command counts stay not measured; criterion-3 restart evidence and rule_miss_cases are still missing.",
+   "adjustment": "Criterion 3 control: require each facilitator restart to record the boundary hash, the wiki page IDs read, and the handoff note refs used, and count unread-page rule misses as one case per miss with seat context and source. Metric: restart passes with 0 unread-page rule misses at the boundary and facilitator context size recorded against 965K, with the exact token count and source in the card record. Counter-metric: the delta from the 965K baseline and the number of restart-boundary misses logged in rule_miss_cases, with any non-zero count or context-size rise treated as a fail. T2 domain-expert answer: yes — documentation information architecture; the technical writer (ctx-3) remains the domain expert for page taxonomy, summaries, and seat-routing clarity while the facilitator keeps the handoff and restart boundary state.",
+   "domain_expert": {
+    "answer": "yes",
+    "reason": "Documentation information architecture is the needed domain knowledge for the wiki index, page summaries, and seat-routing clarity; the technical writer (ctx-3) is already on the task force and is the appropriate expert for this criterion, while the facilitator records the restart state and boundary notes."
+   },
+   "metric_note": "The metric is a boundary-valid restart evidence block with 0 unread-page misses and a recorded context size against 965K; the counter-metric is the rise in facilitator context or any logged rule_miss_cases. Copilot command counts stay not measured because the unscanned contexts report no command source.",
+   "seat": "Delivery lead",
+   "context": "ctx-7",
+   "model": "copilot (auto)",
+   "written_at": "2026-11-01T06:03:09Z"
   }
  ],
  "deviations": [
