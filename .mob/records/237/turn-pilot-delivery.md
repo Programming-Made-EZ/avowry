@@ -34,3 +34,7 @@ Deviations:
 - Run keys learned via checker membership probe, see above.
 
 Size: see file
+
+## Counting detail (added at the coordinator's request)
+
+The single run's input_total (843759) sums cache reads across 13 agentic turns: 788896 cached (cache_read_input_tokens), 54841 cache creation, 22 fresh input tokens; output 9513. Counted by the slice rule: 843759 + 9513 = 853272. Card 234's basis of about 69701 per seat turn is a different, far smaller figure, so the stage-A cap of 1,000,000 fired after this one run. The trial stops there per thresholds.json. The driver had already exited (it printed TOTAL 853272); no further run started and no process needed to be stopped (no PIDs killed).
