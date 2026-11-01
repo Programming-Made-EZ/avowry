@@ -160,9 +160,7 @@
     "rules/thin-slices"
    ],
    "handoff_refs": [
-    "HANDOFF.md",
-    ".mob/records/reranks/2026-11-01-15.md",
-    ".mob/records/234/record-in-progress.json"
+    "HANDOFF.md"
    ],
    "facilitator_context_tokens": 83666,
    "facilitator_provider_usage_source": ".mob/records/234/usage/restart-report-20261101T093906Z.txt",
@@ -173,7 +171,7 @@
    "restart_report_source": ".mob/records/234/usage/restart-report-20261101T093906Z.txt",
    "rule_miss_cases": [],
    "rule_miss_cases_zero_source": ".mob/records/234/usage/restart-report-20261101T093906Z.txt",
-   "note": "a fresh Claude subagent given only the Restart here reads; it matched the key on next card, next step, boundary and all four rule pages"
+   "note": "a fresh Claude subagent given only the Restart here reads; it matched the key on next card, next step, boundary and all four rule pages; it also read the newest re-rank note and the card record, as HANDOFF.md's Restart here list says (those are named in the report, not as handoff refs)"
   }
  ],
  "command_scans": [
