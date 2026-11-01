@@ -165,6 +165,10 @@ def check_amendment(root, first_run, log, t1, ledger, findings):
         return  # missing or invalid: already a finding
     if json.dumps(t0, sort_keys=True) == json.dumps(t1, sort_keys=True):
         return  # same content as at the first run (a whitespace-only touch is not a change)
+    after = [c for c in log if c != first_run and not is_ancestor(root, c, first_run)]
+    if len(after) > 1:  # one amendment, in one commit
+        findings.append(f"{rel}: committed or changed at or after the first run: "
+                        f"amendment spans {len(after)} thresholds commits")
     missing = object()
     for k in sorted(set(t0) | set(t1)):
         if k in CAP_KEYS or (k == "cap_amendment" and k not in t0):
