@@ -71,6 +71,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D170](process-and-staffing.md#d170) — Product owner ruling: the indexed process wiki (card 234) is the highest priority, with a one-card stop-the-line waiver (corrected by D172: evaluate, not build)
 - [D171](process-and-staffing.md#d171) — Cite-a-point votes: every vote quotes a point from the proposal, checkable in git; an unread vote does not count (card 234 retro pick)
 - [D172](process-and-staffing.md#d172) — Product owner correction: the indexed process wiki is to be evaluated (adopt, reshape or reject by Decider), not built as a mandate; the waiver applies to the evaluation (card 237)
+- [D173](process-and-staffing.md#d173) — Card 237 outcome: reshape the indexed process wiki (slice-route limits, upkeep measure, staleness check, slice-cell re-run in a follow-up card); retro-end wiki review as a three-retro experiment
 
 ### benchmarks-and-measurement
 
@@ -264,3 +265,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D170](process-and-staffing.md#d170) | Product owner ruling: the indexed process wiki (card 234) is the highest priority, with a one-card stop-the-line waiver (corrected by D172: evaluate, not build) | process-and-staffing | in force |
 | [D171](process-and-staffing.md#d171) | Cite-a-point votes: every vote quotes a point from the proposal, checkable in git; an unread vote does not count (card 234 retro pick) | process-and-staffing | in force |
 | [D172](process-and-staffing.md#d172) | Product owner correction: the indexed process wiki is to be evaluated (adopt, reshape or reject by Decider), not built as a mandate; the waiver applies to the evaluation (card 237) | process-and-staffing | in force |
+| [D173](process-and-staffing.md#d173) | Card 237 outcome: reshape the indexed process wiki (slice-route limits, upkeep measure, staleness check, slice-cell re-run in a follow-up card); retro-end wiki review as a three-retro experiment | process-and-staffing | in force |

@@ -1144,5 +1144,11 @@
     "status": "in force",
     "title": "Product owner correction: the indexed process wiki is to be evaluated (adopt, reshape or reject by Decider), not built as a mandate; the waiver applies to the evaluation (card 237)",
     "order": 163
+  },
+  "D173": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Card 237 outcome: reshape the indexed process wiki (slice-route limits, upkeep measure, staleness check, slice-cell re-run in a follow-up card); retro-end wiki review as a three-retro experiment",
+    "order": 164
   }
 }

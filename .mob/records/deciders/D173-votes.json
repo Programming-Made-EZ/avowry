@@ -1,0 +1,121 @@
+{
+ "decider": "D173",
+ "subject": "card 237 evaluation outcome (motion A) and the retro-end wiki review (motion B)",
+ "proposer": "product manager seat (ready, ctx-1), .mob/records/237/assessment-pm.md (d2ad79f)",
+ "result": "BOTH PASSED. Motion A: round 1 6 Yes, 0 Support-it, 0 No; independent re-run 5 Yes, 1 Support-it, 0 No. Motion B: round 1 2 Yes, 4 Support-it, 0 No; independent re-run 1 Yes, 5 Support-it, 0 No.",
+ "seat_note": "seats placed by card 226's decision-seat gate; all twelve ran on Claude; every reply carries a D171 cite found in the proposal; probe 2026-11-01 17:35 UTC",
+ "motion_A": "Card 237 outcome: RESHAPE. The stage A result is accepted as the independent reviewer recomputed it (median token delta 41.74%, five of six roles at or over 20%; one wiki miss against zero baseline misses, caused by the thin-slice limits being absent from the slice route; blocked messages vacuous at 0 and 0; upkeep and facilitator context growth not measured). Adopt is not permitted by the committed thresholds (one wiki miss; upkeep unmeasured) and reject is not (the excess is 1, not 2). No threshold or cap changes. Stage B is not run now. The team orders one follow-up card, ranked by the team, to put the thin-slice limits on the slice route, measure upkeep against the committed budget, add a staleness check, and re-run the slice cell under the same thresholds and an independent recompute. No build is ordered by this motion.",
+ "motion_B": "Retro-end wiki review: RESHAPE and adopt as a time-boxed experiment, only if motion A passes. It runs on the reshaped wiki for a number of retros the Decider names (proposed: the next three). At each retro-end the team records the output of a staleness check (rules changed in the retro but not reflected in the wiki) and the wiki commit it caused, or an explicit 'no changes' note. Metric: wiki staleness. Counter-metric: added retro time, held to the committed 10-minute upkeep line. It ends early if the line is passed, and lapses if motion A fails.",
+ "round1": [
+  {
+   "role": "pmready",
+   "seat": "claude",
+   "context": "d237-pmready",
+   "started_at": "2026-11-01T17:37:02Z",
+   "motion_A": "Yes",
+   "motion_B": "Yes",
+   "reply": "A: Yes\nB: Yes\n\nMotion A (section 5, \"Adopt is not permitted by the committed thresholds\") follows the committed rules as written: one wiki miss and unmeasured upkeep bar adopt, and an excess of 1 bars reject. It moves no thresholds and orders no build. It fixes the known slice gap first, which avoids spending about 8.9M tokens on stage B to re-confirm a cause already known. It also keeps accountability to metrics by naming facilitator context growth as still unmeasured. Motion B is time-boxed, runs only if A passes, and counts staleness by a check rather than by the reviewing seat. It holds retro time to the existing 10-minute line, which meets the Goodhart guard.\n\nCITE: Adopt is not permitted by the committed thresholds\n"
+  },
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "d237-architect",
+   "started_at": "2026-11-01T17:39:23Z",
+   "motion_A": "Yes",
+   "motion_B": "Support-it",
+   "reply": "A: Yes\nB: Support-it\n\nMotion A follows the committed thresholds as written. Adopt is barred by one wiki miss and unmeasured upkeep. Reject is barred because the excess is 1, not 2. Reshape is the minimal permitted outcome, and it moves no threshold.\n\nMotion B is sound in design: the check counts staleness from the rule diff, not from a seat's own list, which guards against Goodhart. I support it, not a full Yes, because \"rules changed in the retro\" has no mechanical definition yet and the check does not exist. That leaves room for false positives, so the reshape card must define it before the experiment starts.\n\nCITE: Adopt is not permitted by the committed thresholds\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "d237-qa",
+   "started_at": "2026-11-01T17:41:47Z",
+   "motion_A": "Yes",
+   "motion_B": "Yes",
+   "reply": "A: Yes\nB: Yes\n\nReasons: Motion A's named defect can be tested red first. The 15-file and 400-line limits sit only on the green page, so a rule-versus-route staleness check, or a slice-cell re-run against the same thresholds, would fail on the current wiki and pass once the slice route carries them. Misses at 1 against 0 do not meet the adopt rule's zero-miss requirement and fall short of the reject line, so reshape follows the thresholds as written. In Motion B the staleness count comes from the rule diff, not the reviewing seat, so it can't be gamed, and the 10-minute line gives a stop condition I can check. One gap in Motion A's text: it doesn't require a fresh miss key from a non-runner seat, though section 3 says the Decider should. The follow-up card should write that in.\n\nCITE: Adopt is barred twice: one wiki miss, and upkeep is unmeasured.\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "d237-auditlens",
+   "started_at": "2026-11-01T17:44:03Z",
+   "motion_A": "Yes",
+   "motion_B": "Support-it",
+   "reply": "A: Yes\nB: Support-it\n\nMotion A can be checked from git. The reviewer's recompute, the ledger and thresholds.json carry the same medians (911895.5 and 531242.5; delta 41.74%), and the excess of 1 puts the outcome in the ambiguous band, so neither adopt nor reject is allowed. No threshold moves, and the follow-up re-runs the slice cell under an independent recompute with a fresh miss key.\n\nMotion B has two loopholes. Added retro time can't be verified from git, so it needs a timestamped record. The \"check finds nothing\" lapse rule is in section 4 but not in the motion text, so it should be added. The staleness check must also be computed from the rule diff, as section 4 says.\n\nCITE: Adopt is not permitted by the committed thresholds\n"
+  },
+  {
+   "role": "delivery",
+   "seat": "claude",
+   "context": "d237-delivery",
+   "started_at": "2026-11-01T17:46:17Z",
+   "motion_A": "Yes",
+   "motion_B": "Support-it",
+   "reply": "A: Yes\nB: Support-it\n\nA: Reshape is the cheapest route to a clean answer. The one failing rule has a known, small fix, which is putting the 15-file and 400-line limits on the slice route. Stage B would cost about 8.9M tokens to re-confirm that gap, and its headless runs still couldn't measure upkeep. The follow-up is one thin card and no build is ordered, so it restarts the line soon.\n\nB: I'm wary of adding ceremony to every retro. It is acceptable because it is time-boxed to three retros, runs only if A passes, is held to the 10-minute line, and uses an automated staleness check instead of a manual read. It ends early if it costs too much.\n\nCITE: Stage B is not run now.\n"
+  },
+  {
+   "role": "decider",
+   "seat": "claude",
+   "context": "d237-decider",
+   "started_at": "2026-11-01T17:48:34Z",
+   "motion_A": "Yes",
+   "motion_B": "Support-it",
+   "reply": "A: Yes\nB: Support-it\n\nMotion A rests on the reviewer's recompute and the committed thresholds. It cites the 41.74% median delta and the one wiki miss against zero baseline misses. It shows that adopt and reject are both barred, so reshape is the only ruling the numbers allow. It also states what stage A could not measure: upkeep, facilitator context growth, and blocked messages (vacuous). Motion B is conditional on A and time-boxed, with a counter-metric. Its staleness check is counted from the rule diff, not by the reviewing seat. I would add a named non-runner seat to author the fresh miss key, and the Decider should name the retro count.\n\nCITE: Adopt is not permitted by the committed thresholds\n"
+  }
+ ],
+ "rerun": [
+  {
+   "role": "coach",
+   "seat": "claude",
+   "context": "d237rr-coach",
+   "started_at": "2026-11-01T17:51:05Z",
+   "motion_A": "Yes",
+   "motion_B": "Support-it",
+   "reply": "A: Yes\nB: Support-it\n\nOn A: reshape is the outcome the committed thresholds allow. Adopt is barred by the wiki miss and the unmeasured upkeep. Reject is barred because the miss excess is 1, not 2. Stage B costs about 8.9M tokens to re-confirm a gap we already know about, and its headless runs can't measure upkeep, context growth or blocked messages. One follow-up card is the right size.\n\nOn B: I support it. Gating it on A, limiting it to three retros, and holding added retro time to the existing 10-minute line keep it from becoming standing ceremony. I'm not voting Yes because the staleness check doesn't exist yet. The first retro or two may have to run on a manual read.\n\nCITE: Reshape fixes the specific cause first and measures what stage A could not\n"
+  },
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "d237rr-architect",
+   "started_at": "2026-11-01T17:53:21Z",
+   "motion_A": "Yes",
+   "motion_B": "Support-it",
+   "reply": "A: Yes\nB: Support-it\n\nA follows the committed thresholds. I checked it against thresholds.json and the reviewer's recompute. One wiki miss is an excess of 1, which is under the reject line of 2. The upkeep rule is unmeasured, which bars adopt. The slice gap is a specific, fixable routing fault. Stage B would re-test the same gap with headless runs.\n\nB is sound as an experiment. Its enforceability depends on a staleness check that doesn't exist yet, and the check could throw false positives for rules that have no wiki route. Its early-end rule (\"the check finds nothing\") is in the section 4 text but not in the motion text. I'd define the rule-to-route mapping first.\n\nCITE: No threshold or cap changes. Stage B is not run now.\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "d237rr-qa",
+   "started_at": "2026-11-01T17:55:39Z",
+   "motion_A": "Yes",
+   "motion_B": "Yes",
+   "reply": "A: Yes\nB: Yes\n\nBoth motions can be tested red first. Motion A re-runs the slice cell against unchanged thresholds. The slice miss is a known failing case, and the fix is verified when that cell goes from 1 miss to 0. The staleness check in Motion B has a ready red test: run it on the current wiki, where it must flag the thin-slice limits missing from the slice route. If it passes the prototype, it is broken. Counting staleness from the rule diff, not from the reviewing seat, keeps the check from passing bad state. I'd ask the follow-up card to write that red test first.\n\nCITE: Adopt is not permitted by the committed thresholds\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "d237rr-auditlens",
+   "started_at": "2026-11-01T17:57:50Z",
+   "motion_A": "Support-it",
+   "motion_B": "Support-it",
+   "reply": "A: Support-it\nB: Support-it\n\nMotion A follows the committed thresholds and can be checked from git. Adopt is barred by the 1 wiki miss against 0 baseline misses and by upkeep being unmeasured. Reject is barred by an excess of 1 against the reject line of 2 (`misses_reject_excess_over_baseline`: 2). No threshold moves, and the independent recompute is retained.\n\nLoophole risk: the amendment raised the cap after cost was seen. Motion A should still require a fresh miss key from a non-runner seat.\n\nFor motion B, the staleness metric must be computed from the rule diff, not by the reviewing seat. That makes it checkable from git. The lapse and early-end conditions are good. I would fix the retro count at three.\n\nCITE: Adopt is not permitted by the committed thresholds\n"
+  },
+  {
+   "role": "delivery",
+   "seat": "claude",
+   "context": "d237rr-delivery",
+   "started_at": "2026-11-01T18:00:08Z",
+   "motion_A": "Yes",
+   "motion_B": "Support-it",
+   "reply": "A: Yes\nB: Support-it\n\nReshape matches the delivery lens. The follow-up card is a thin slice: a small page edit on the slice route, an upkeep measurement, and one cell re-run. That is cheaper than the roughly 8.9M tokens stage B would spend re-confirming a known cause. It adds no ceremony to ordinary cards, and it restarts the line quickly. No threshold moves.\n\nMotion B is acceptable only because it is time-boxed to three retros, capped at the 10-minute line, and gated on motion A. A recurring retro step is ceremony, so I only support it. The automated staleness check keeps the cost low and the experiment must end early if it runs over.\n\nCITE: Reshape fixes the specific cause first and measures what stage A could not.\n"
+  },
+  {
+   "role": "decider",
+   "seat": "claude",
+   "context": "d237rr-decider",
+   "started_at": "2026-11-01T18:02:26Z",
+   "motion_A": "Yes",
+   "motion_B": "Support-it",
+   "reply": "A: Yes\nB: Support-it\n\nMotion A rests on evidence. The reviewer's recompute is the gate and the committed thresholds are applied as written. Adopt is barred twice, by one wiki miss and by unmeasured upkeep. Reject is barred because the excess is 1, not 2. Fixing the one known cause before spending about 8.9M tokens on stage B is sound. A fresh miss key from a non-runner seat is a good guard. Seats for the reshaped trial need to include the reviewer and a non-runner key author.\n\nMotion B is conditional on A and time-boxed. It counts staleness from the rule diff, which guards against Goodhart effects. The staleness check does not exist yet, so the experiment should not start until it does.\n\nCITE: Adopt is not permitted by the committed thresholds\n"
+  }
+ ]
+}
