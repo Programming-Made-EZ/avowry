@@ -1,0 +1,356 @@
+{
+ "window": "227-rerank-14",
+ "category": "loop-boundary re-rank",
+ "rule": "D148 and D153 at the boundary after card 227 closed",
+ "proposed_by": {
+  "role": "product manager",
+  "model": "copilot (auto) via the Copilot CLI, run directly by the facilitator",
+  "context": "pm-rerank-14",
+  "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 01:05 UTC: Copilot available)"
+ },
+ "opened_at": "2026-11-01T01:15:57Z",
+ "proposal": "# Re-rank 14 proposal (D148)\n\n## Before order\n\n210, 211, 216, 220, 221, 222, 223, 224, 225, 213, 217, 218, 212, 215, 206, 207\n\n## After order\n\n228, 229, 210, 211, 216, 220, 221, 222, 223, 224, 225, 213, 217, 218, 212, 215, 206, 207\n\n## Next card\n\n228 — hidden, encoded and non-shell delete forms, plus the contents of files a seat writes, because the deletion-ban corrective remains open and the scan must cover the real forms that slipped past 227 before any other work outruns it.\n\n## One-line rationale\n\nThe 227 corrective is not finished until the scan covers the real deletion forms and the seat-written script cases, and 229 is next because a working Copilot route prevents every decision seat from being wasted while quota is available.\n\n## What changed against note 13\n\n- Card 227 is closed and removed from the active queue.\n- Card 228 is inserted at the front as the direct safety follow-up from the 227 deletion-ban failure, keeping the corrective in the same thread rather than splitting it again.\n- Card 229 is inserted immediately behind it to unblock the Decider gate while Copilot is available; it is a process blocker, not a product card. \n- The rest of the order stays in note 13's sequence, with 210 before 211 because the record-checker conflict and the hash-looking Decider id are still active open defects in the checker path.\n\n## Reversals I state\n\n- I reverse the earlier idea that 210/211 must keep their note-13 order ahead of all new ready cards; 228 and 229 are the new front-rank corrective and gate-fix work.\n- I do not split 228 into a scan card plus a push-detector card; the last re-rank already decided that one corrective card should cover both the deletion-ban failure and the scan follow-up.\n- I do not leave 229 behind the older queue because the decision-seat gate is a hard blocker when Copilot is available; the queue should not waste every decision seat while that is open.\n- If the checker hardening is shown to be materially worse than the prompt-truncation fix in the next audit, 210 may move ahead of 229; as of this rerank, 229's seat-preventing failure is the more immediate blocker.\n\n## Where cards 228 and 229 go\n\n- Card 228 goes first: it is the direct continuation of the 227 corrective and the specific scan blind-spot fix under the product owner's safety ruling.\n- Card 229 goes second: it fixes the decision-seat gate itself, and with Copilot available every other decision seat is wasted until it lands.\n\n## Follow-on note\n\nThis keeps the safety corrective first, then the gate fix, then the open-checker and template work. It preserves note 13's ordering for the rest of the backlog while moving the two newly-ready corrective cards to the front of the queue.\n\n## Facilitator note (open FAILs and the corrective-card gate)\n- Audit 106 (2026-11-01 00:33 UTC, .mob/audits/last.json, read only) lists open FAILs MD-003, MD-010, F-071, F-072 and F-074. Its summary also names a \"collision bug, detect ruling, wiki override unrecorded\". F-072 and F-074 and those three items never reached the facilitator; their ledger text is not in the repository. They are asked of the product owner now, and this note will be corrected when they arrive.\n- The corrective-card gate starts only a card that names an open FAIL. Card 228 names F-071; card 210 names MD-003; card 211 names MD-010. Card 229 names none (it was filed as an MD-002 rotation corrective, and MD-002 is no longer open). If F-072 or F-074 turns out to be the Copilot no-vote, 229 names it and keeps its place; otherwise it waits behind 210 and 211 until the FAILs close.\n\n## Adopted condition (round 1, D145; the architect, backend developer, independent reviewer (audit lens) and delivery lead, one condition in four wordings)\nCard 229 moves behind 210 and 211, because it names no open FAIL and the corrective-card gate would not start it. It moves up again only if F-072 or F-074 is confirmed as the Copilot no-vote and the card names it. After order: 228, 210, 211, 229, 216, 220, 221, 222, 223, 224, 225, 213, 217, 218, 212, 215, 206, 207. Next card: 228. The delivery lead's further point (228 within D136) is the standing commit rule and needs no adoption. The re-poll may not add new demands.\n",
+ "checklist_D158": ".mob/records/227/checklist-227-rerank-14.md",
+ "polled_roles_note": "F-054: all six non-proposer roles polled; round 2 seated by the gate: Copilot for architect, backend developer and delivery lead, Claude for the other three",
+ "adopted_conditions": [
+  {
+   "from": "architect, backend developer, independent reviewer (audit lens), delivery lead and product manager (signoff), one condition",
+   "adopted_as": "card 229 behind 210 and 211 until it names an open FAIL"
+  }
+ ],
+ "replies": [
+  {
+   "seat": "copilot",
+   "context": "w14r2cp1-architect",
+   "started_at": "2026-11-01T01:35:22Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:35:51.258219Z",
+   "round": 2,
+   "role": "architect",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w14r2-qa",
+   "started_at": "2026-11-01T01:36:36Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:37:04.665498Z",
+   "round": 2,
+   "role": "QA engineer",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w14r2cp1-dev",
+   "started_at": "2026-11-01T01:37:54Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:38:22.947920Z",
+   "round": 2,
+   "role": "backend developer",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w14r2-auditlens",
+   "started_at": "2026-11-01T01:39:33Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:41:03.255081Z",
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w14r2cp1-delivery",
+   "started_at": "2026-11-01T01:45:07Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:45:56.212819Z",
+   "round": 2,
+   "role": "delivery lead",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w14r2-pmsignoff",
+   "started_at": "2026-11-01T01:48:08Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe order follows the adopted condition. Card 228 names F-071, and 210 and 211 name open FAILs. Card 229 waits until a FAIL it names is confirmed. The open FAILs still stop the line. The product-owner question on F-072 and F-074 is raised.\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:48:36.452656Z",
+   "round": 2,
+   "role": "product manager (signoff)",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w14cp1-architect",
+   "started_at": "2026-11-01T01:14:20Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:14:49.156995Z",
+   "round": 1,
+   "role": "architect",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner"
+  },
+  {
+   "seat": "claude",
+   "context": "w14-architect",
+   "started_at": "2026-11-01T01:15:57Z",
+   "model": "sonnet",
+   "raw": "OBJECTION\nCONDITION: Place 229 behind 210 and 211, or first show that it names an open FAIL (for example F-072 or F-074 confirmed as the Copilot no-vote), because the corrective-card gate won't start a card that names none.\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:16:23.526600Z",
+   "round": 1,
+   "role": "architect",
+   "reply": "OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w14cp1-qa",
+   "started_at": "2026-11-01T01:17:29Z",
+   "model": "auto",
+   "raw": "Reviewing the referenced cards and audit entries now to ground the vote in testability risk.\n\nI found the card set; next I’ll inspect the specific cards and the cited decision/audit entries for test-red coverage.\n\nSupport-it\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:17:55.488956Z",
+   "round": 1,
+   "role": "QA engineer",
+   "reply": "Reviewing the referenced cards and audit entries now to ground the vote in testability risk.",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner"
+  },
+  {
+   "seat": "claude",
+   "context": "w14-qa",
+   "started_at": "2026-11-01T01:18:36Z",
+   "model": "sonnet",
+   "raw": "No. Card 229 names no open FAIL, so the corrective-card gate would not start it in second place; either have 229 cite the open FAIL it fixes (F-072 or F-074, once confirmed) or move it behind 210 and 211.\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:19:05.223020Z",
+   "round": 1,
+   "role": "QA engineer",
+   "reply": "No. Card 229 names no open FAIL, so the corrective-card gate would not start it in second place; either have 229 cite the open FAIL it fixes (F-072 or F-074, once confirmed) or move it behind 210 and 211.",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w14cp1-dev",
+   "started_at": "2026-11-01T01:20:26Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:20:54.625564Z",
+   "round": 1,
+   "role": "backend developer",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner"
+  },
+  {
+   "seat": "claude",
+   "context": "w14-dev",
+   "started_at": "2026-11-01T01:21:49Z",
+   "model": "sonnet",
+   "raw": "OBJECTION\nCONDITION: Place 229 behind 210 and 211, or move it second only once the card names an open FAIL (F-072 or F-074); the corrective-card gate won't start a card with no FAIL.\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 1,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:22:17.101157Z",
+   "round": 1,
+   "role": "backend developer",
+   "reply": "OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w14cp1-auditlens",
+   "started_at": "2026-11-01T01:23:23Z",
+   "model": "auto",
+   "raw": "Checking the cited cards and audit artifacts, then I’ll return a strict-format decision.\n\n<final_answer>\ndocs/decisions/process-and-staffing.md:500-636\ndocs/decisions/process-and-staffing.md:1-260\ndocs/retros/card-227-2026-10-31.md:1-124\n</final_answer>OBJECTION\nCONDITION: Commit the missing audit ledger evidence to git (including F-072/F-074 and the cited “collision/detect/wiki-override” items) and explicitly link card 229 to one still-open FAIL in its card text before this re-rank is accepted.\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:23:51.760590Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "reply": "Checking the cited cards and audit artifacts, then I’ll return a strict-format decision.",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner"
+  },
+  {
+   "seat": "claude",
+   "context": "w14-auditlens",
+   "started_at": "2026-11-01T01:25:14Z",
+   "model": "sonnet",
+   "raw": "OBJECTION\nCONDITION: Move 229 behind 210 and 211, or amend its card to name an open FAIL in the committed ledger, since the proposal's own corrective-card gate bars starting a card that names none.\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 1,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:25:42.124059Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "reply": "OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w14cp1-delivery",
+   "started_at": "2026-11-01T01:26:55Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:27:24.078958Z",
+   "round": 1,
+   "role": "delivery lead",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner"
+  },
+  {
+   "seat": "claude",
+   "context": "w14-delivery",
+   "started_at": "2026-11-01T01:29:24Z",
+   "model": "sonnet",
+   "raw": "OBJECTION\nCONDITION: Put 229 behind 211 unless it names an open FAIL, since the stated gate won't start it, and cap 228 at D136's 15 files and 400 lines with overflow split off.\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:29:52.712504Z",
+   "round": 1,
+   "role": "delivery lead",
+   "reply": "OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w14cp1-pmsignoff",
+   "started_at": "2026-11-01T01:31:05Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:31:33.367038Z",
+   "round": 1,
+   "role": "product manager (signoff)",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition; a Copilot seat placed by the gate, followed by an extra Claude poll of the same role by the facilitator's runner"
+  },
+  {
+   "seat": "claude",
+   "context": "w14-pmsignoff",
+   "started_at": "2026-11-01T01:33:34Z",
+   "model": "sonnet",
+   "raw": "OBJECTION\nCONDITION: Move 229 behind 210 and 211, or first show that it names an open FAIL (F-072 or F-074). As written, the corrective-card gate says an unnamed card waits, but the order puts it second.\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 1,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T01:34:01.860512Z",
+   "round": 1,
+   "role": "product manager (signoff)",
+   "reply": "OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  }
+ ],
+ "decision": {
+  "result": "adopted with one condition; round 2 no objection from all six polled seats (three Copilot, three Claude)",
+  "order": [
+   228,
+   210,
+   211,
+   229,
+   216,
+   220,
+   221,
+   222,
+   223,
+   224,
+   225,
+   213,
+   217,
+   218,
+   212,
+   215,
+   206,
+   207
+  ],
+  "next": 228
+ },
+ "ended_at": "2026-11-01T01:50:44Z"
+}
