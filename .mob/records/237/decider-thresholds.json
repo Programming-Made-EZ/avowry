@@ -1,0 +1,57 @@
+{
+ "card": 237,
+ "step": "0b decider confirmation of thresholds.json (139f607)",
+ "rule": "adopted condition 3 of window 237-slice; D171 cite-a-point",
+ "proposal": "# Card 237 step 0b: decider confirmation of thresholds.json (commit 139f607)\n\nThe slice (adopted condition 3) says the thresholds and token cap are set by the independent reviewer and the decider before any run. The reviewer committed .mob/records/237/trial/thresholds.json in 139f607 and its turn record in 093ec38. Confirm, or object, that every number in thresholds.json is the number stated in .mob/records/237/turn-slice-architect.md section 3 and its amendment, and that no number was added.\n\nProposal text:\n\n{\n \"card\": 237,\n \"author_seat\": \"ctx-4\",\n \"source\": \".mob/records/decisions/237-slice.json, amendment section 3 (Numbers committed before any run)\",\n \"token_delta_adopt_pct\": 20,\n \"token_delta_adopt_min_roles\": 4,\n \"token_delta_adopt_of_roles\": 6,\n \"token_delta_reshape_from_pct\": 5,\n \"token_delta_reject_pct\": 5,\n \"misses_adopt\": \"wiki misses at or under baseline, and 0 wiki misses of 6 keys in stage A\",\n \"misses_adopt_max_wiki_stage_a\": 0,\n \"misses_reject_excess_over_baseline\": 2,\n \"blocked_seconds\": 600,\n \"blocked_adopt\": \"wiki count at or under baseline\",\n \"blocked_reject_excess_over_baseline\": 2,\n \"upkeep_tokens_per_card\": 12400,\n \"upkeep_minutes\": 10,\n \"upkeep_over_budget\": \"forces reshape\",\n \"cap_stage_a\": 1000000,\n \"cap_stage_ab\": 2000000,\n \"cap_reached\": \"trial stops, unfinished rows recorded as not-run, Decider may not adopt\"\n}\n",
+ "result": "NO OBJECTION: every number matches slice section 3, none added. Counted vote: w237thrb-decider (Claude), cite found in the proposal. The first Claude vote cited the slice instead of the proposal, so it was unread and re-asked once (D171). Both Copilot seats placed by the gate returned no reply.",
+ "attempts": [
+  {
+   "context": "w237thrcp1-decider",
+   "seat": "copilot",
+   "model": "auto",
+   "probe_taken_at": "2026-11-01T13:33:26.689585Z",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "reply": ""
+  },
+  {
+   "context": "w237thr-decider",
+   "seat": "claude",
+   "model": "sonnet",
+   "probe_taken_at": "2026-11-01T13:34:13.225526Z",
+   "command_scan": {
+    "status": "clean",
+    "commands": 1,
+    "findings": []
+   },
+   "reply": "NO OBJECTION\n\nEvery number in thresholds.json matches section 3 of the slice, and none was added. The 12400 upkeep figure is the slice's 10% of 124014, rounded.\n\nCITE: Adopt needs wiki median counted_tokens at least 20% below baseline\n"
+  },
+  {
+   "context": "w237thrbcp1-decider",
+   "seat": "copilot",
+   "model": "auto",
+   "probe_taken_at": "2026-11-01T13:35:49.212574Z",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "reply": ""
+  },
+  {
+   "context": "w237thrb-decider",
+   "seat": "claude",
+   "model": "sonnet",
+   "probe_taken_at": "2026-11-01T13:36:38.049879Z",
+   "command_scan": {
+    "status": "clean",
+    "commands": 1,
+    "findings": []
+   },
+   "reply": "NO OBJECTION\n\nI compared each number in thresholds.json with section 3 of the slice. All match: 20%, 4 of 6, 5%, 600 s, 12400 tokens, 10 minutes, 1,000,000 and 2,000,000. The file adds no numbers.\n\nCITE: \"wiki misses at or under baseline, and 0 wiki misses of 6 keys in stage A\"\n"
+  }
+ ]
+}
