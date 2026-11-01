@@ -34,3 +34,46 @@ Unscanned (command_scans): ctx-1 ready, ctx-2 slice and amendment, ctx-5 green 1
 ## Requested before approval
 
 Findings 1, 2 and 3 (or an honest downgrade of Done checks 2 and 3 to "mechanism built, measurement not made"), then 4 and 5. Findings 6 to 10 may go to the retro if the product owner accepts them.
+
+## Re-check (ctx-6)
+
+Verdict: APPROVE
+
+Re-check scope: first review 3c6181c (R1..R10), triage 060edcb, fixes through 68108b7 and the restart evidence commits, record-in-progress.json, and usage files. I wrote none of the code.
+
+Validation run:
+- `python -m unittest tests.test_process_wiki tests.test_restart_record tests.test_mob_process` -> Ran 267, OK.
+- `python scripts/check-process-wiki.py` -> `process-wiki: OK (18 pages)`.
+- `python scripts/check-restart-record.py` -> `restart-record: OK (2 restarts)` with computed seat_ab and median notes.
+
+Fresh-copy mutations (including the four from the first review) were re-run via `.mob/records/234/mutate-green-2c.py`: clean copy passed; all 10/10 mutations failed as expected, including:
+1. `ctx-4 setup=end=1` -> source mismatch.
+2. `facilitator_context_tokens=5` with recomputed delta -> source mismatch.
+3. `rule_miss_cases_zero_source=HANDOFF.md` -> rejected (not a usage file).
+4. all seats `not_measured` -> rejected when source has numbers.
+
+Restart reality checks:
+- Key/report commit order is correct: key `68108b7` is older than report commit `1bafca7`.
+- Report file is the seat text plus the marked token line (`subagent_tokens: 83666`) appended by facilitator, as stated in the file footer note.
+- Misses are computed, not asserted: mutating the report in a fresh copy to drop `rules/thin-slices` produced `rule_miss_cases mismatch restart 2: record 0, computed 1`.
+
+Measured pair check:
+- `measure-qa-red-full.json` total = `2 + 69003 + 0 + 696 = 69701`.
+- `measure-qa-red-brief.json` total = `2 + 18311 + 30341 + 378 = 49032`.
+- These match `seat_ab.full_tokens`/`brief_tokens` and checker output ratio `0.70`.
+
+Deviations weighing:
+- D136 line/file-limit and push-lag deviations are now explicitly recorded in `deviations` and no longer hidden.
+- The previously open commit-body-proof concern is explicitly split to follow-up card `#235`; this is appropriate because prior commit bodies cannot be amended under this flow.
+
+R1..R10 status:
+1. R1 (no real restart): **closed** (real restart entry present; key-before-report; computed miss check passes).
+2. R2 (checker accepted invented values): **closed** (all first-review and added mutations fail).
+3. R3 (Done check 2 unmeasured): **closed** (measured pair recorded and source-checked; remaining unavailable contexts explicitly marked with source-backed reasons).
+4. R4 (raw token-source unverifiable): **closed** for Done-check gating (source-checked `seat_metrics`/`seat_ab` enforced; unverified rows are explicitly flagged by checker).
+5. R5 (rule_miss_cases zero asserted): **closed** (restart miss count is computed from key/report; zero-source misuse now fails).
+6. R6 (briefs not consumed): **closed** (`seat-prompt` consumer added; routes/brief pages are checked).
+7. R7 (false rule text could pass): **closed** (verbatim quote checks added and enforced).
+8. R8 (oversize reds not recorded): **closed** (deviation recorded in card record).
+9. R9 (green body proof gaps): **moved to card 235** (`board/235-green-commit-bodies-carry-a-checked-proof-block.md`).
+10. R10 (criterion-1 mutations not measured): **closed** (counted mutation evidence now present and re-checkable).
