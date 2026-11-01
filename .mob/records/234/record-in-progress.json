@@ -7,6 +7,21 @@
   "task_force": "window 234-taskforce (one adopted condition: metrics as numbers with method, and a git-checkable test)",
   "slice": "window 234-slice: adopted with one condition (slice 0441cfd, amended 5674a66; 11876 bytes, D168)"
  },
+ "intent": {
+  "line": "Intent: the product owner wants the process split into small pages, each with a one-line summary, under one index, so that each seat reads only the pages its role and step need and the facilitator keeps its state in the wiki and handoff notes, without any rule losing its decision anchor. In the words of D170: \"card 234 ('An indexed process wiki with just-in-time reading') is the highest priority.\" and, for the reason, \"Every turn re-reads the whole context, so fresh seats overpay by reading everything and the long facilitator session overpays on every turn; the wiki cuts both and gives the product owner one readable place for the whole process.\" The card text adds: \"rules keep their decision anchors and history; the decisions index still builds; the checks still read the rules\" (Invariants) and \"a seat that misses a rule because it did not read a page it needed is recorded as a counter-metric case\" (Fails with). Criterion 1 is the first Done check: the process is split into indexed pages with one-line summaries, and every rule still resolves to its decision; the adopted condition of window 234-taskforce makes it git-checkable (numbers and measurement methods present, every decision anchor resolving from its wiki page).",
+  "by": "QA engineer (red) ctx-4",
+  "decisions": [
+   "D170",
+   "D165",
+   "D157"
+  ],
+  "sources": [
+   "D170 in docs/decisions/process-and-staffing.md (product owner ruling 2026-11-01: highest priority, one-card stop-the-line waiver)",
+   "board/234-an-indexed-process-wiki-with-just-in-time-reading.md (Source, Invariants, Fails with, Done check 1)",
+   "adopted condition of window 234-taskforce (D145)"
+  ],
+  "confirmation": "confirmation: pending (facilitator)"
+ },
  "task_force": [
   {
    "role": "product manager (ready)",
