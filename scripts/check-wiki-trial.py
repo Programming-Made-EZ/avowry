@@ -169,6 +169,12 @@ def check_amendment(root, first_run, log, t1, findings):
         a, b = t0.get(k, missing), t1.get(k, missing)
         if a is missing or b is missing or json.dumps(a, sort_keys=True) != json.dumps(b, sort_keys=True):
             findings.append(f"{rel}: committed or changed at or after the first run: amendment changes {k}")
+    for k in CAP_KEYS:  # caps only rise, and stay whole numbers
+        a, b = t0.get(k), t1.get(k)
+        if is_int(a) and not is_int(b):
+            findings.append(f"{rel}: committed or changed at or after the first run: amendment {k} is not an integer")
+        elif is_int(a) and b < a:
+            findings.append(f"{rel}: committed or changed at or after the first run: amendment lowers {k}")
 
 
 def check_order(root, docs, findings):
