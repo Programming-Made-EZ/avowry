@@ -5,7 +5,11 @@
  "decisions": {
   "rank": "re-rank 16 (product owner direction D172)",
   "task_force": "window 237-taskforce (one adopted condition: pre-trial commits and an independent ledger recompute)",
-  "slice": "window 237-slice (three conditions adopted: pilot first; pre-trial red check; thresholds and token cap committed before any run; slice amended in 8708cc5 at 13606 bytes; round 2 no objection from all five polled seats, each with a valid D171 cite)"
+  "slice": "window 237-slice (three conditions adopted: pilot first; pre-trial red check; thresholds and token cap committed before any run; slice amended in 8708cc5 at 13606 bytes; round 2 no objection from all five polled seats, each with a valid D171 cite)",
+  "key_secrecy": "window 237-key-secrecy (runs in sparse clones without the card 237 records; wrapper line; reviewer log check)",
+  "cap": "window 237-cap-fired (raise only the cap after the key-probe ruling 327d635; raise c30b932)",
+  "amendment_ordering": "window 237-amendment-ordering (checker accepts the recorded cap-only raise; eight red/green cycles, 08aff53..3536229)",
+  "outcome": "Decider D173: motion A RESHAPE (follow-up card 238 filed, unranked); motion B retro-end wiki review as a three-retro experiment on the reshaped wiki"
  },
  "task_force": [
   {
@@ -71,10 +75,36 @@
    "by": "facilitator",
    "what": "commit ca9f617 recorded the slice window with a category outside the closed list; the pre-push check refused it, so it sat unpushed for a few minutes",
    "handling": "fixed in the next commit (category: slice decision); no amend"
+  },
+  {
+   "by": "facilitator",
+   "what": "the stage-A cap (1,000,000) fired after one run: the slice estimate took card 234's single-turn figure as a per-run cost (a run was 13 turns)",
+   "handling": "window 237-cap-fired; cap raised once before run 2; all 12 runs finished at 8,868,059 of 15,000,000"
+  },
+  {
+   "by": "delivery lead",
+   "what": "learned the run-key names by probing the checker with a fake ledger",
+   "handling": "reviewer ruling (i), not compromised (327d635), with a guard; the guard check found no read of the key"
+  },
+  {
+   "by": "decider seat",
+   "what": "committed the cap raise although the brief said to stop if the ordering check failed; the check was masked by a missing file",
+   "handling": "masking fixed in cycle 1 of the amendment-ordering work"
+  },
+  {
+   "by": "facilitator",
+   "what": "the Codex probe at 13:53 hung past its 90 s timeout; I stopped my own two Codex processes (PIDs 11092, 32280); later probes left Codex out",
+   "handling": "recorded in the probe commits"
+  },
+  {
+   "by": "facilitator",
+   "what": "the probe commit 17:37 is named one or two minutes after the probe's own timestamp (17:35)",
+   "handling": "recorded"
   }
  ],
  "observations_for_next_stand_down": [
   "D171's first window: in round 1 four of five Claude seats answered with a vote word plus a valid cite; the facilitator's runner could not re-poll past a gate refusal; all five counted round-2 replies carry a cite found in the proposal; every Copilot seat placed by the gate returned no reply (card 229)",
-  "D171 in the slice window: two of five round-2 votes were unread (a 2-word cite; a cite not in the proposal). The product manager's re-ask counted. The delivery lead's re-ask cited a commit subject instead of the proposal, so that seat was replaced in least-recently-used order (Copilot placed first, no reply; then Claude, counted). Retro point: does the cite rule catch unread votes, or only format slips?"
+  "D171 in the slice window: two of five round-2 votes were unread (a 2-word cite; a cite not in the proposal). The product manager's re-ask counted. The delivery lead's re-ask cited a commit subject instead of the proposal, so that seat was replaced in least-recently-used order (Copilot placed first, no reply; then Claude, counted). Retro point: does the cite rule catch unread votes, or only format slips?",
+  "D171 again: in the cap and threshold windows two Claude seats cited the slice instead of the proposal they were shown; the re-ask rule fixed both. Every Copilot seat placed by the gate returned no reply all day (card 229)."
  ]
 }
