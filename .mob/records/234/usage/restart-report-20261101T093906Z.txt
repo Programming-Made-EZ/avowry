@@ -1,0 +1,11 @@
+next_card: 234
+next_step: re-review
+boundary_hash: 3186c15510b1
+rules_read: core/index, role/facilitator-restart, rules/seat-rotation, rules/stand-downs, rules/safety-and-push, rules/thin-slices
+notes:
+- Files read in order: HANDOFF.md, docs/process-wiki/INDEX.md, docs/process-wiki/briefs/facilitator-restart.md, docs/process-wiki/roles/facilitator-restart.md, rules/seat-rotation.md, rules/stand-downs.md, rules/safety-and-push.md, rules/thin-slices.md, .mob/records/reranks/2026-11-01-15.md, .mob/records/234/record-in-progress.json (last cycle and next_step fields only, via a read-only script).
+- Newest re-rank (2026-11-01-15) names 234 first; record 234 is still in progress, so 234 is the card.
+- The last cycle's plan field is a long chain, not one id; I took next_step from the record's next_step field ("re-review", after the green 3b restart commit).
+- subagent_tokens: not available to me. Not read: TEAM_WORKING_AGREEMENT.md and any other file.
+subagent_tokens: 83666
+# the line above was appended by the facilitator, copied verbatim from the restart seat's completion report (subagent_tokens: 83666, tool_uses 18, duration_ms 35964); every line before it is the seat's own report
