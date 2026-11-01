@@ -231,6 +231,14 @@
    "status": "unscanned",
    "seat": "red 2b (Copilot CLI)",
    "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green 2b (Claude)",
+   "transcript": "subagents/agent-a177dfde47072868d.jsonl",
+   "commands": 53,
+   "source": "python delete_guard.py scan-transcript, facilitator"
   }
  ],
  "cycles": [
@@ -285,7 +293,22 @@
    "criterion": 2,
    "increment": "2b (review fix: Routes table, brief builder)",
    "repo": "avowry",
-   "red": "ae04522 (11 run: HEAD failures=11, prototype OK; Copilot seat)"
+   "red": "ae04522 (11 run: HEAD failures=11, prototype OK; Copilot seat)",
+   "green": "b88e0b5 (Routes table, route-checked briefs, seat-prompt builder; 15 existing fixtures given a Routes table, a gap in the red)",
+   "suite": "488 OK, 7 skipped",
+   "sizes_bytes": {
+    "product-manager-ready": 6428,
+    "qa-red": 5951,
+    "architect-slice": 6784,
+    "backend-developer-green": 7659,
+    "independent-reviewer-audit": 6689,
+    "delivery-lead-ship": 7077,
+    "product-manager-signoff": 6075,
+    "technical-writer": 6178,
+    "TEAM_WORKING_AGREEMENT.md": 67072
+   },
+   "mutations": "6 run, 6 caught, control clean",
+   "open": "seat-prompt has no production caller yet; the measurement pair (2c) uses it"
   }
  ],
  "stand_downs": [
