@@ -225,6 +225,12 @@
    "transcript": "subagents/agent-a2c68476d515ae1d3.jsonl",
    "commands": 102,
    "source": "python delete_guard.py scan-transcript, facilitator"
+  },
+  {
+   "context": "ctx-4",
+   "status": "unscanned",
+   "seat": "red 2b (Copilot CLI)",
+   "reason": "Copilot has no command source"
   }
  ],
  "cycles": [
@@ -274,6 +280,12 @@
    "suite": "three modules 249 OK; full Python suite 485 OK, 7 skipped",
    "checker": "process-wiki: OK (17 pages)",
    "mutations": "the red's 7 probes caught 7; 45 extra mutations on page copies caught 45; control clean"
+  },
+  {
+   "criterion": 2,
+   "increment": "2b (review fix: Routes table, brief builder)",
+   "repo": "avowry",
+   "red": "ae04522 (11 run: HEAD failures=11, prototype OK; Copilot seat)"
   }
  ],
  "stand_downs": [
@@ -448,6 +460,13 @@
    "requests": "6 Premium (4m 37s)",
    "tokens_in": "1.6m (1.6m cached)",
    "tokens_out": "16.2k"
+  },
+  {
+   "seat": "red 2b, QA ctx-4 (Copilot CLI)",
+   "source": "Copilot CLI usage lines (scratch red-234-2b.err)",
+   "requests": "6 Premium (16m 55s)",
+   "tokens_in": "3.3m (3.1m cached)",
+   "tokens_out": "22.0k"
   }
  ],
  "reviews": [
