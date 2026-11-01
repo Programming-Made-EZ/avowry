@@ -148,6 +148,9 @@
   "D174's trial scope (next 3 vote windows) is used up with three serial fallbacks and no parallel run; the trial retro decides keep, revise or drop, and a decider.py change for safe parallel launch would be its own card",
   "the full mob-defaults suite takes about 30 minutes; the QA seat's full run overlapped the dev seat's uncommitted green and so passed its own red, which it reported; a red's evidence should be run on committed code only",
   "the dev counted 417 tests in the scan modules against QA's 522: the two seats selected the modules differently; the gate should name the module list",
-  "agy's first three decision seats (window 228-agy-seats) all replied with a valid cite; Copilot's three returned no reply again"
+  "agy's first three decision seats (window 228-agy-seats) all replied with a valid cite; Copilot's three returned no reply again",
+  "Dispatch timing observation for card 237 and the proposal to keep reversible trial parameters to a single decider (queued note 2026-11-01)",
+  "a QA seat's turn-record commit landed on the facilitator's unpushed late-note commit in the shared checkout and the facilitator's push failed once (two writers, one checkout)",
+  "no in-flight lines were written from 12:51 to 22:31 UTC; late note 85854f6"
  ]
 }
