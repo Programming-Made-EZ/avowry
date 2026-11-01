@@ -8,4 +8,4 @@ Change (delete_guard.py): python -c and python heredoc text is now judged by an 
 
 Tests: red 1c 4 tests OK; 14 modules 425 tests OK; full `python -m unittest discover -s tests` 1265 tests OK (skipped=1), 1721 s. The log has the same "SMOKE FAILED" line printed by a smoke test inside the suite; the run itself passed.
 
-Size: 2080 bytes
+Size: 1400 bytes
