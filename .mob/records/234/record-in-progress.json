@@ -277,6 +277,12 @@
    "transcript": "subagents/agent-accf9a242bad6f585.jsonl",
    "commands": 49,
    "source": "python delete_guard.py scan-transcript, facilitator; read"
+  },
+  {
+   "context": "ctx-4",
+   "status": "unscanned",
+   "seat": "red 3b (Copilot CLI)",
+   "reason": "Copilot has no command source"
   }
  ],
  "cycles": [
@@ -357,6 +363,13 @@
    "suite": "494 OK, 7 skipped",
    "measurement": "qa-red one-turn step: full agreement 69701 tokens ($0.28), brief-only 49032 ($0.08); ratio 0.70 by tokens, 0.28 by cost; both include the CLI's fixed system prompt; one pair, no variance claim",
    "mutations": "the red's 6 and 10 more (the reviewer's four plus six), all caught"
+  },
+  {
+   "criterion": 3,
+   "increment": "3b (review fix: real restart against a committed key)",
+   "repo": "avowry",
+   "red": "ef38d5e (13 run, 8 failing at HEAD; prototype: the 6 new pass, 4 need the real key, report, HANDOFF and index lines; Copilot seat)",
+   "plan": "unit commit (checker, HANDOFF 'Restart here', facilitator-restart brief) -> facilitator commits the key -> a fresh restart seat runs from index, HANDOFF and brief only -> report and record committed in the green"
   }
  ],
  "stand_downs": [
@@ -545,6 +558,13 @@
    "requests": "6 Premium (11m 14s)",
    "tokens_in": "2.2m (2.1m cached)",
    "tokens_out": "19.3k (12.3k reasoning)"
+  },
+  {
+   "seat": "red 3b, QA ctx-4 (Copilot CLI)",
+   "source": "Copilot CLI usage lines (scratch red-234-3b.err)",
+   "requests": "6 Premium (13m 42s)",
+   "tokens_in": "2.3m (2.1m cached)",
+   "tokens_out": "18.5k"
   }
  ],
  "reviews": [
