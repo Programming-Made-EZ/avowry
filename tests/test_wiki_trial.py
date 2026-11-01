@@ -409,6 +409,47 @@ class WikiTrial(unittest.TestCase):
         code, out, err = run(c.build())
         self.assertEqual((code, err), (0, ""))
 
+    # Card 237, window 237-amendment-ordering, cycle 3: only cap_stage_a, cap_stage_ab and an ADDED
+    # cap_amendment may differ from thresholds.json at the first run. One test per hostile case (3, 4, 5b).
+    def test_amendment_that_changes_a_delta_threshold(self):
+        c = Amended()
+        c.amended["token_delta_adopt_pct"] = 10
+        fails(c, self, "amendment changes token_delta_adopt_pct")
+
+    def test_amendment_that_changes_blocked_seconds(self):
+        c = Amended()
+        c.amended["blocked_seconds"] = 6000
+        fails(c, self, "amendment changes blocked_seconds")
+
+    def test_amendment_that_changes_cap_reached_text(self):
+        c = Amended()
+        c.docs["thresholds"]["cap_reached"] = "trial stops"
+        c.amended["cap_reached"] = "trial goes on"
+        fails(c, self, "amendment changes cap_reached")
+
+    def test_amendment_that_removes_a_key(self):
+        c = Amended()
+        c.docs["thresholds"]["note"] = "n"
+        pass  # amended was copied before "note" was added, so it already lacks it
+        fails(c, self, "amendment changes note")
+
+    def test_amendment_that_renames_a_key(self):
+        c = Amended()
+        c.docs["thresholds"]["note"] = "n"
+        c.amended["note_renamed"] = "n"
+        err = fails(c, self, "amendment changes note")
+        self.assertIn("amendment changes note_renamed", err)
+
+    def test_amendment_that_adds_another_key(self):
+        c = Amended()
+        c.amended["extra"] = 1
+        fails(c, self, "amendment changes extra")
+
+    def test_amendment_that_edits_a_cap_amendment_present_at_the_first_run(self):
+        c = Amended()
+        c.docs["thresholds"]["cap_amendment"] = "older text"
+        fails(c, self, "amendment changes cap_amendment")
+
     def test_real_trial_folder_is_ready(self):
         """RED until step 0d: the real repo has no committed trial folder yet, so the check must fail."""
         code, out, err = run(REPO)
