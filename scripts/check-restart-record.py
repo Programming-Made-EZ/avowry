@@ -119,6 +119,96 @@ def is_git_repo(root: Path) -> bool:
     except OSError:
         return False
     return result.returncode == 0 and result.stdout.strip() == "true"
+USAGE_PREFIX = ".mob/records/234/usage/"
+SETUP_BASELINE = 50000
+MEDIAN_BASELINE = 125000
+TEXT_NUM_LINE_RE = re.compile(r"^\s*[\w.\-]+\s*:\s*[0-9][0-9,.]*k?\s*$", re.M)
+def _number(value: object) -> int | None:
+    if isinstance(value, int) and not isinstance(value, bool):
+        return value
+    return None
+def _json_lookup(data: object, key: str) -> int | None:
+    cur = data
+    for match in re.finditer(r"([^.\[\]]+)|\[(\d+)\]", key):
+        name, index = match.groups()
+        if index is not None:
+            if not isinstance(cur, list) or int(index) >= len(cur):
+                return None
+            cur = cur[int(index)]
+        else:
+            if not isinstance(cur, dict) or name not in cur:
+                return None
+            cur = cur[name]
+    return _number(cur)
+def _text_lookup(text: str, key: str) -> int | None:
+    match = re.search(r"^\s*" + re.escape(key) + r"\s*:\s*([0-9][0-9,]*(?:\.[0-9]+)?)(k?)\s*$", text, re.M)
+    if not match:
+        return None
+    number = float(match.group(1).replace(",", ""))
+    return int(round(number * 1000)) if match.group(2) else int(round(number))
+def lookup_source_number(path: Path, key: str) -> int | None:
+    """Value a committed file holds under key: JSON dotted key (a+b sums parts) or a 'NAME: N' text line."""
+    text, ok = read_text_utf8(path)
+    if not ok or text is None:
+        return None
+    data = None
+    if path.suffix.lower() == ".json":
+        try:
+            data = json.loads(text)
+        except json.JSONDecodeError:
+            return None
+    total = 0
+    for part in key.split("+"):
+        part = part.strip()
+        value = _json_lookup(data, part) if data is not None else _text_lookup(text, part)
+        if value is None:
+            return None
+        total += value
+    return total
+def source_needs_key(path: Path) -> bool:
+    if path.suffix.lower() == ".json":
+        return True
+    text, ok = read_text_utf8(path)
+    return bool(ok and text and TEXT_NUM_LINE_RE.search(text))
+def compare_with_source(
+    root: Path, source: object, key: object, value: object, field: str, where: str,
+    findings: list[str], require_key: bool = False,
+) -> None:
+    """A recorded number must equal the number its committed source file holds under its key."""
+    path = rel(RECORD_REL)
+    source_path, _err = resolve_source(root, source)
+    if source_path is None:
+        return
+    if key is None:
+        if require_key or source_needs_key(source_path):
+            findings.append(f"{path}: missing {field}_source_key {where}")
+        return
+    if not isinstance(key, str) or not key.strip():
+        findings.append(f"{path}: missing {field}_source_key {where}")
+        return
+    found = lookup_source_number(source_path, key.strip())
+    if found is None:
+        findings.append(f"{path}: source key not found {field} {where}")
+    elif found != value:
+        findings.append(f"{path}: source mismatch {field} {where}: record {value}, source {found}")
+def source_holds_number_for(path: Path, ctx: str, key: object) -> int | None:
+    if isinstance(key, str) and key.strip():
+        found = lookup_source_number(path, key.strip())
+        if found is not None:
+            return found
+    text, ok = read_text_utf8(path)
+    if not ok or text is None:
+        return None
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError:
+        return None
+    rows = data.get("seats") if isinstance(data, dict) else None
+    if isinstance(rows, list):
+        for row in rows:
+            if isinstance(row, dict) and row.get("context") == ctx and _number(row.get("tokens")) is not None:
+                return _number(row.get("tokens"))
+    return None
 def validate_seat_metrics(root: Path, record: dict[str, object], findings: list[str]) -> None:
     record_rel = rel(RECORD_REL)
     task_force = record.get("task_force")
@@ -163,6 +253,10 @@ def validate_seat_metrics(root: Path, record: dict[str, object], findings: list[
                     findings.append(f"{record_rel}: source outside root available_evidence_source {ctx}")
                 elif source_path is None:
                     findings.append(f"{record_rel}: source not found available_evidence_source {ctx}")
+                else:
+                    held = source_holds_number_for(source_path, ctx, entry.get("tokens_source_key"))
+                    if held is not None:
+                        findings.append(f"{record_rel}: not measured but source holds {held} {ctx}")
             continue
         for field in ("setup_tokens", "end_tokens"):
             if field not in entry:
@@ -181,6 +275,15 @@ def validate_seat_metrics(root: Path, record: dict[str, object], findings: list[
                     findings.append(f"{record_rel}: source outside root provider_usage_source {ctx}")
                 elif source_path is None:
                     findings.append(f"{record_rel}: source not found provider_usage_source {ctx}")
+                else:
+                    for field in ("setup_tokens", "end_tokens"):
+                        if is_token(entry.get(field)):
+                            compare_with_source(root, source, entry.get(f"{field}_source_key"),
+                                                entry.get(field), field, ctx, findings)
+                    for extra in entry.get("unverified_rows") or []:
+                        if isinstance(extra, dict):
+                            compare_with_source(root, source, extra.get("source_key"),
+                                                extra.get("tokens"), "unverified_rows", ctx, findings, True)
 def validate_restart(
     root: Path,
     restart: object,
@@ -264,6 +367,9 @@ def validate_restart(
                 findings.append(f"{path}: source outside root facilitator_provider_usage_source {where}")
             elif source_path is None:
                 findings.append(f"{path}: source not found facilitator_provider_usage_source {where}")
+            elif is_token(fac_tokens):
+                compare_with_source(root, source, restart.get("facilitator_context_tokens_source_key"),
+                                    fac_tokens, "facilitator_context_tokens", where, findings)
     baseline = restart.get("baseline_tokens")
     if baseline != BASELINE_TOKENS:
         findings.append(f"{path}: baseline mismatch {where}")
@@ -302,6 +408,8 @@ def validate_restart(
             findings.append(f"{path}: source outside root rule_miss_cases_zero_source {where}")
         elif zero_path is None:
             findings.append(f"{path}: source not found rule_miss_cases_zero_source {where}")
+        elif not rel(zero_path.relative_to(root.resolve())).startswith(USAGE_PREFIX):
+            findings.append(f"{path}: rule_miss_cases_zero_source not a usage file {where}")
         return
     for miss_idx, miss in enumerate(misses, start=1):
         if not isinstance(miss, dict):
@@ -328,9 +436,77 @@ def validate_restart(
         miss_boundary = miss.get("boundary")
         if isinstance(miss_boundary, str) and miss_boundary.strip() and miss_boundary.strip() not in markers:
             findings.append(f"{path}: unknown boundary marker {miss_boundary.strip()} {where}")
+def validate_seat_ab(root: Path, record: dict[str, object], findings: list[str], notes: list[str]) -> None:
+    pairs = record.get("seat_ab")
+    if pairs is None:
+        return
+    path = rel(RECORD_REL)
+    if not isinstance(pairs, list):
+        findings.append(f"{path}: seat_ab not a list")
+        return
+    for idx, pair in enumerate(pairs, start=1):
+        where = f"seat_ab {idx}"
+        if not isinstance(pair, dict):
+            findings.append(f"{path}: bad seat_ab pair {where}")
+            continue
+        if pair.get("setup_baseline_tokens") != SETUP_BASELINE:
+            findings.append(f"{path}: baseline mismatch setup_baseline_tokens {where}")
+        if pair.get("median_baseline_tokens") != MEDIAN_BASELINE:
+            findings.append(f"{path}: baseline mismatch median_baseline_tokens {where}")
+        unverified = pair.get("unverified") is True
+        values = {}
+        for side in ("full", "brief"):
+            tokens = pair.get(f"{side}_tokens")
+            if not is_token(tokens):
+                findings.append(f"{path}: bad token value {side}_tokens {where}")
+                continue
+            values[side] = tokens
+            source = pair.get(f"{side}_source")
+            source_path, source_err = resolve_source(root, source)
+            if source_path is None and unverified:
+                notes.append(f"unverified {side}_tokens {where} ({tokens}): no committed raw source")
+                continue
+            if source_err == "outside":
+                findings.append(f"{path}: source outside root {side}_source {where}")
+            elif source_path is None:
+                findings.append(f"{path}: source not found {side}_source {where}")
+            else:
+                compare_with_source(root, source, pair.get(f"{side}_source_key"), tokens,
+                                    f"{side}_tokens", where, findings, True)
+        if len(values) == 2:
+            ratio = values["brief"] / values["full"]
+            note = (f"{where} {pair.get('step')}: full {values['full']}, brief {values['brief']}, "
+                    f"brief/full {ratio:.2f}; vs {SETUP_BASELINE}: full {values['full'] - SETUP_BASELINE:+d}, "
+                    f"brief {values['brief'] - SETUP_BASELINE:+d}; vs {MEDIAN_BASELINE}: full "
+                    f"{values['full'] - MEDIAN_BASELINE:+d}, brief {values['brief'] - MEDIAN_BASELINE:+d}")
+            if ratio > 1:
+                note += " (brief above full, reported)"
+            notes.append(note)
+def seat_summary(record: dict[str, object], notes: list[str]) -> None:
+    metrics = record.get("seat_metrics")
+    if not isinstance(metrics, dict):
+        return
+    verified_ends = []
+    for ctx, entry in metrics.items():
+        if not isinstance(entry, dict) or not is_token(entry.get("end_tokens")):
+            continue
+        if "end_tokens" in (entry.get("unverified_fields") or []):
+            notes.append(f"unverified end_tokens {ctx} ({entry['end_tokens']}): left out of the median")
+        else:
+            verified_ends.append(entry["end_tokens"])
+        for extra in entry.get("unverified_rows") or []:
+            if isinstance(extra, dict):
+                notes.append(f"unverified row {ctx} {extra.get('source_key')} ({extra.get('tokens')})")
+    if verified_ends:
+        ordered = sorted(verified_ends)
+        mid = len(ordered) // 2
+        median = ordered[mid] if len(ordered) % 2 else (ordered[mid - 1] + ordered[mid]) / 2
+        notes.append(f"median verified end_tokens {median:g} over {len(ordered)} contexts vs {MEDIAN_BASELINE}: "
+                     f"{median - MEDIAN_BASELINE:+g}")
 def run(root: Path) -> int:
     findings: list[str] = []
     warnings: list[str] = []
+    notes: list[str] = []
     index_status = parse_index_status(root, findings)
     record_path = root / RECORD_REL
     if not record_path.is_file():
@@ -349,6 +525,8 @@ def run(root: Path) -> int:
                 findings.append(f"{rel(RECORD_REL)}: record not valid JSON")
             if isinstance(record, dict):
                 validate_seat_metrics(root, record, findings)
+                validate_seat_ab(root, record, findings, notes)
+                seat_summary(record, notes)
                 restarts = record.get("restarts")
                 if not isinstance(restarts, list) or not restarts:
                     findings.append(f"{rel(RECORD_REL)}: no restart")
@@ -380,6 +558,8 @@ def run(root: Path) -> int:
     except (OSError, UnicodeDecodeError, json.JSONDecodeError):
         pass
     print(f"restart-record: OK ({restart_count} restarts)")
+    for line in notes:
+        print(f"restart-record: {line}")
     return 0
 def main() -> int:
     parser = argparse.ArgumentParser(add_help=True)

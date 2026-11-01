@@ -81,20 +81,43 @@
    "available_evidence_source": ".mob/records/234/usage/seats-2026-11-01-0626.json"
   },
   "ctx-4": {
-   "not_measured_reason": "Committed usage sources list seat totals only, not setup/end checkpoints for this context.",
-   "available_evidence_source": ".mob/records/234/usage/seats-2026-11-01-0626.json"
+   "setup_tokens": 123407,
+   "setup_tokens_source_key": "seats[2].tokens",
+   "end_tokens": 142065,
+   "end_tokens_source_key": "seats[10].tokens",
+   "provider_usage_source": ".mob/records/234/usage/seats-2026-11-01-0626.json",
+   "unverified_rows": [
+    {
+     "source_key": "seats[7].tokens",
+     "tokens": 949200,
+     "why": "Copilot red 2 fix: only a scratch .err usage line backs it, no raw file committed"
+    }
+   ],
+   "method": "setup_tokens is the first measured seat-step total and end_tokens the last measured seat-step total for this context (cumulative per step, from the committed seats file); they are not setup/end checkpoints. The setup comparison with 50K is the seat_ab pair."
   },
   "ctx-5": {
-   "not_measured_reason": "Committed usage sources list seat totals only, not setup/end checkpoints for this context.",
-   "available_evidence_source": ".mob/records/234/usage/seats-2026-11-01-0626.json"
+   "setup_tokens": 151676,
+   "setup_tokens_source_key": "seats[6].tokens",
+   "end_tokens": 77112,
+   "end_tokens_source_key": "seats[8].tokens",
+   "provider_usage_source": ".mob/records/234/usage/seats-2026-11-01-0626.json",
+   "method": "setup_tokens is the first measured seat-step total and end_tokens the last measured seat-step total for this context (cumulative per step, from the committed seats file); they are not setup/end checkpoints. The setup comparison with 50K is the seat_ab pair."
   },
   "ctx-6": {
    "not_measured_reason": "Committed usage sources list seat totals only, not setup/end checkpoints for this context.",
    "available_evidence_source": ".mob/records/234/usage/seats-2026-11-01-0626.json"
   },
   "ctx-7": {
-   "not_measured_reason": "Committed usage sources list seat totals only, not setup/end checkpoints for this context.",
-   "available_evidence_source": ".mob/records/234/usage/seats-2026-11-01-0626.json"
+   "setup_tokens": 114056,
+   "setup_tokens_source_key": "seats[4].tokens",
+   "end_tokens": 528400,
+   "end_tokens_source_key": "seats[9].tokens",
+   "unverified_fields": [
+    "end_tokens"
+   ],
+   "end_tokens_unverified_why": "Copilot stand-down 2: only a scratch .err usage line backs it, no raw file committed",
+   "provider_usage_source": ".mob/records/234/usage/seats-2026-11-01-0626.json",
+   "method": "setup_tokens is the first measured seat-step total and end_tokens the last measured seat-step total for this context (cumulative per step, from the committed seats file); they are not setup/end checkpoints. The setup comparison with 50K is the seat_ab pair."
   },
   "ctx-8": {
    "not_measured_reason": "Committed usage sources list seat totals only, not setup/end checkpoints for this context.",
@@ -120,7 +143,8 @@
    "baseline_tokens": 965000,
    "delta_tokens": -182801,
    "rule_miss_cases": [],
-   "rule_miss_cases_zero_source": ".mob/records/234/usage/facilitator-2026-11-01-0624.json"
+   "rule_miss_cases_zero_source": ".mob/records/234/usage/facilitator-2026-11-01-0624.json",
+   "facilitator_context_tokens_source_key": "context.tokens_used"
   }
  ],
  "command_scans": [
@@ -527,6 +551,22 @@
   {
    "plan": "review triage 060edcb (slice 2 of 2, 11107 bytes): criterion 1 (R7 verbatim Quote check, R10 counted mutations), criterion 2 (R2 seat half, R3, R4, R6, W1 to W4: Routes table replaces 'index plus own role page'; same seat step measured twice), criterion 3 (R1 real restart by a fresh seat against a committed key, R2 restart half, R5 computed misses); follow-up for R9 (Proof block checks)",
    "routing_rule_change": "the brief rule 'index plus own role page only' (the criterion 2 slice reading) becomes 'pages equal the Routes row'; Done check 2's board text ('the index and the needed pages') is unchanged; accepted by the facilitator as a slice reading change from the domain-expert review, no Decider"
+  }
+ ],
+ "seat_ab": [
+  {
+   "context": "ctx-4",
+   "step": "qa-red",
+   "question": "Which three rules must a red commit body satisfy on this card?",
+   "method": "claude -p --model sonnet --output-format json, prompt on stdin, run from a neutral directory; full = TEAM_WORKING_AGREEMENT.md as context, brief = output of python scripts/mob_process.py seat-prompt qa-red; one run each, no variance claim; tokens = input + cache creation + cache read + output as the CLI reports them, including the CLI's own fixed system prompt, which both runs carry",
+   "setup_baseline_tokens": 50000,
+   "median_baseline_tokens": 125000,
+   "full_tokens": 69701,
+   "full_source": ".mob/records/234/usage/measure-qa-red-full.json",
+   "full_source_key": "usage.input_tokens+usage.cache_creation_input_tokens+usage.cache_read_input_tokens+usage.output_tokens",
+   "brief_tokens": 49032,
+   "brief_source": ".mob/records/234/usage/measure-qa-red-brief.json",
+   "brief_source_key": "usage.input_tokens+usage.cache_creation_input_tokens+usage.cache_read_input_tokens+usage.output_tokens"
   }
  ]
 }
