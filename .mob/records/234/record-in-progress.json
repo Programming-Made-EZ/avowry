@@ -310,6 +310,20 @@
    "status": "unscanned",
    "seat": "red 3b (Copilot CLI)",
    "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-6",
+   "status": "unscanned",
+   "seat": "re-check (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "writer re-check (Claude)",
+   "commands": 26,
+   "transcript": "subagents/agent-a3a80f2a56836fb17.jsonl",
+   "source": "python delete_guard.py scan-transcript, facilitator; read"
   }
  ],
  "cycles": [
@@ -628,6 +642,18 @@
   {
    "plan": "review triage 060edcb (slice 2 of 2, 11107 bytes): criterion 1 (R7 verbatim Quote check, R10 counted mutations), criterion 2 (R2 seat half, R3, R4, R6, W1 to W4: Routes table replaces 'index plus own role page'; same seat step measured twice), criterion 3 (R1 real restart by a fresh seat against a committed key, R2 restart half, R5 computed misses); follow-up for R9 (Proof block checks)",
    "routing_rule_change": "the brief rule 'index plus own role page only' (the criterion 2 slice reading) becomes 'pages equal the Routes row'; Done check 2's board text ('the index and the needed pages') is unchanged; accepted by the facilitator as a slice reading change from the domain-expert review, no Decider"
+  },
+  {
+   "seat": "independent reviewer ctx-6 (Copilot)",
+   "commit": "9f8ed23",
+   "verdict": "APPROVE",
+   "note": "R1 to R8 and R10 closed; R9 moved to card 235"
+  },
+  {
+   "seat": "technical writer ctx-3 (Claude)",
+   "commit": "039e468",
+   "verdict": "APPROVE",
+   "note": "W1 to W4 and all per-role notes closed; seven minor new gaps N1 to N7 (card 236)"
   }
  ],
  "seat_ab": [
