@@ -191,6 +191,12 @@
    "commands": 47,
    "transcript": "subagents/agent-a9444442c4053b554.jsonl",
    "source": "python delete_guard.py scan-transcript, facilitator; read"
+  },
+  {
+   "context": "ctx-5",
+   "status": "unscanned",
+   "seat": "green 3 (Copilot CLI)",
+   "reason": "Copilot has no command source"
   }
  ],
  "cycles": [
@@ -222,7 +228,11 @@
   {
    "criterion": 3,
    "repo": "avowry",
-   "red": "eb68d95 (tests/test_restart_record.py 98 tests and 4 caller tests; HEAD failures=99, prototype failures=2 needing real files; Claude seat)"
+   "red": "eb68d95 (tests/test_restart_record.py 98 tests and 4 caller tests; HEAD failures=99, prototype failures=2 needing real files; Claude seat)",
+   "green": "9daab9f (check-restart-record.py) and 8c4372d (caller in mob_process check, HANDOFF.md Boundary B1, seat_metrics and the first restarts[] entry citing the committed usage files)",
+   "suite": "targeted 242 OK; full Python suite 478 OK, 7 skipped",
+   "real": "restart-record: OK (1 restarts); process-wiki: OK (17 pages)",
+   "mutations": "2 run in scratch copies inside .mob/records/234/scratch/ (left untracked, not deleted), both caught"
   }
  ],
  "stand_downs": [
@@ -334,6 +344,10 @@
   {
    "by": "facilitator",
    "observation": "in window 234-slice every Copilot seat placed by the gate returned no reply (14 of 14 over two rounds); each cost about 1.5 min and was recorded as an attempt; card 229 evidence. The runner's strict re-poll did not handle a gate refusal (delivery lead), so that role was re-polled through the gate separately"
+  },
+  {
+   "by": "facilitator",
+   "observation": "green 3's Copilot seat used 6.7m input tokens (6.5m cached) in 21 min, against the card's per-seat baseline of 50K setup and 125K median at the end; the Copilot red-fix seat used 938k and the Copilot stand-down 519k; Copilot seats re-read far more than Claude subagents (77k to 152k). This is the experiment's main token signal for review"
   }
  ],
  "confirmations": [
@@ -358,6 +372,13 @@
    "requests": "0.25 Premium (2m 10s)",
    "tokens_in": "519.0k (486.3k cached)",
    "tokens_out": "9.4k (6.7k reasoning)"
+  },
+  {
+   "seat": "green 3, developer ctx-5 (Copilot CLI, without -s)",
+   "source": "the Copilot CLI's usage lines on stderr (scratch green-234-3.err)",
+   "requests": "6 Premium (21m 47s)",
+   "tokens_in": "6.7m (6.5m cached)",
+   "tokens_out": "31.9k"
   }
  ]
 }
