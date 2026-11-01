@@ -1,0 +1,13 @@
+{
+ "expected_boundary_hash": "3186c15510b1",
+ "next_card": 234,
+ "next_step": "re-review",
+ "rules_to_apply": [
+  "rules/seat-rotation",
+  "rules/stand-downs",
+  "rules/safety-and-push",
+  "rules/thin-slices"
+ ],
+ "written_by": "facilitator (session 73298da3), before the restart seat ran",
+ "written_at": "20261101T093721Z"
+}

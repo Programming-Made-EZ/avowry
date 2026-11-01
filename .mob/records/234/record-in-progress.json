@@ -601,5 +601,7 @@
    "brief_source": ".mob/records/234/usage/measure-qa-red-brief.json",
    "brief_source_key": "usage.input_tokens+usage.cache_creation_input_tokens+usage.cache_read_input_tokens+usage.output_tokens"
   }
- ]
+ ],
+ "next_step": "re-review",
+ "next_step_note": "after the green 3b restart commit, both reviewers re-check the review fixes (facilitator state kept in the record, D170)"
 }
