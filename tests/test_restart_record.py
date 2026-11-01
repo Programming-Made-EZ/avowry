@@ -216,6 +216,191 @@ def run_on_repo_copy(prefix, mutate):
     return run("--root", str(root))
 
 
+def git_cmd(root, *args):
+    return subprocess.run(
+        ["git", "-c", "user.name=t", "-c", "user.email=t@example.test", *args],
+        cwd=str(root), capture_output=True, text=True, encoding="utf-8", check=True,
+    ).stdout.strip()
+
+
+def repo_copy_with_git(prefix):
+    root = fresh_repo_copy(prefix=prefix)
+    git_cmd(root, "init", "-q")
+    git_cmd(root, "add", "-A")
+    git_cmd(root, "commit", "-q", "-m", "base")
+    return root
+
+
+def set_handoff_boundary(root, marker, boundary_hash):
+    handoff = (root / HANDOFF).read_text(encoding="utf-8")
+    lines = handoff.splitlines()
+    wanted = f"Boundary {marker}: {boundary_hash}"
+    for idx, line in enumerate(lines):
+        if line.startswith(f"Boundary {marker}:"):
+            lines[idx] = wanted
+            break
+    else:
+        lines.append(wanted)
+    (root / HANDOFF).write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+class CriterionThreeReviewFixesR1R2R5(unittest.TestCase):
+    """Card 234 criterion 3 red 3b: restart key/report evidence and computed misses (ZOMBIES)."""
+
+    def test_zombies_zero_all_context_reading_entries_fail_no_restart(self):
+        def mutate(record, _root):
+            for entry in record["restarts"]:
+                entry["kind"] = "context_reading"
+
+        code, _, err = run_on_repo_copy("rr234-red3b-z0-kind-", mutate)
+        self.assertEqual(code, 1, err)
+
+    def test_zombies_one_restart_entry_requires_key_and_report_sources(self):
+        def mutate(record, _root):
+            restart = record["restarts"][0]
+            restart["kind"] = "restart"
+            restart.pop("restart_key_source", None)
+            restart.pop("restart_report_source", None)
+
+        code, _, err = run_on_repo_copy("rr234-red3b-z1-missing-files-", mutate)
+        self.assertEqual(code, 1, err)
+
+    def test_zombies_many_key_commit_must_be_older_than_report_commit(self):
+        root = repo_copy_with_git("rr234-red3b-zm-order-")
+        usage_dir = root / USAGE
+        usage_dir.mkdir(parents=True, exist_ok=True)
+        key_rel = f"{USAGE}/restart-key-zm.json"
+        report_rel = f"{USAGE}/restart-report-zm.txt"
+        (root / report_rel).write_text("subagent_tokens: 966000\n", encoding="utf-8")
+        git_cmd(root, "add", "--", report_rel)
+        git_cmd(root, "commit", "-q", "-m", "report first")
+        report_commit = git_cmd(root, "rev-parse", "HEAD")
+        (root / key_rel).write_text(
+            json.dumps(
+                {
+                    "expected_boundary_hash": report_commit[:12],
+                    "next_card": 234,
+                    "next_step": "qa-red",
+                    "rules_to_apply": ["rules/seat-rotation"],
+                },
+                indent=1,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        git_cmd(root, "add", "--", key_rel)
+        git_cmd(root, "commit", "-q", "-m", "key second")
+        head = git_cmd(root, "rev-parse", "HEAD")
+        set_handoff_boundary(root, "B1", head[:12])
+        record_path = root / RECORD
+        record = json.loads(record_path.read_text(encoding="utf-8"))
+        restart = record["restarts"][0]
+        restart["kind"] = "restart"
+        restart["boundary_hash"] = head[:12]
+        restart["restart_key_source"] = key_rel
+        restart["restart_report_source"] = report_rel
+        record_path.write_text(json.dumps(record, indent=1) + "\n", encoding="utf-8")
+        code, _, err = run("--root", str(root))
+        self.assertEqual(code, 1, err)
+
+    def test_zombies_boundaries_report_usage_mismatch_fails(self):
+        def mutate(record, root):
+            report_rel = f"{USAGE}/restart-report-zb.txt"
+            (root / report_rel).write_text("subagent_tokens: 1000\n", encoding="utf-8")
+            restart = record["restarts"][0]
+            restart["kind"] = "restart"
+            restart["restart_report_source"] = report_rel
+            restart["restart_key_source"] = f"{USAGE}/restart-key-zb.json"
+            (root / restart["restart_key_source"]).write_text(
+                json.dumps(
+                    {
+                        "expected_boundary_hash": restart["boundary_hash"],
+                        "next_card": 235,
+                        "next_step": "qa-red",
+                        "rules_to_apply": ["rules/seat-rotation", "rules/stand-downs"],
+                    },
+                    indent=1,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+        code, _, err = run_on_repo_copy("rr234-red3b-zb-report-token-", mutate)
+        self.assertEqual(code, 1, err)
+
+    def test_zombies_interface_checker_computes_miss_count_not_typed_zero(self):
+        def mutate(record, root):
+            key_rel = f"{USAGE}/restart-key-zi.json"
+            report_rel = f"{USAGE}/restart-report-zi.txt"
+            restart = record["restarts"][0]
+            restart["kind"] = "restart"
+            restart["restart_key_source"] = key_rel
+            restart["restart_report_source"] = report_rel
+            restart["rule_miss_cases"] = []
+            restart["rule_miss_cases_zero_source"] = report_rel
+            (root / key_rel).write_text(
+                json.dumps(
+                    {
+                        "expected_boundary_hash": restart["boundary_hash"],
+                        "next_card": 236,
+                        "next_step": "architect-slice",
+                        "rules_to_apply": ["rules/seat-rotation", "rules/stand-downs"],
+                    },
+                    indent=1,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (root / report_rel).write_text(
+                "\n".join(
+                    [
+                        "next_card: 236",
+                        "next_step: qa-red",
+                        "boundary_hash: deadbeef",
+                        "rules_read: rules/seat-rotation",
+                        "subagent_tokens: 965000",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+        code, _, err = run_on_repo_copy("rr234-red3b-zi-miss-count-", mutate)
+        self.assertEqual(code, 1, err)
+
+    def test_zombies_exceptions_checker_accepts_report_json_tokens_and_usage_line(self):
+        def mutate(record, root):
+            key_rel = f"{USAGE}/restart-key-ze.json"
+            report_rel = f"{USAGE}/restart-report-ze.json"
+            restart = record["restarts"][0]
+            restart["kind"] = "restart"
+            restart["restart_key_source"] = key_rel
+            restart["restart_report_source"] = report_rel
+            (root / key_rel).write_text(
+                json.dumps(
+                    {
+                        "expected_boundary_hash": restart["boundary_hash"],
+                        "next_card": 236,
+                        "next_step": "qa-red",
+                        "rules_to_apply": ["rules/seat-rotation"],
+                    },
+                    indent=1,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (root / report_rel).write_text(
+                json.dumps({"usage": {"subagent_tokens": restart["facilitator_context_tokens"]}}, indent=1) + "\n",
+                encoding="utf-8",
+            )
+            restart["rule_miss_cases"] = []
+            restart["rule_miss_cases_zero_source"] = report_rel
+
+        code, _, err = run_on_repo_copy("rr234-red3b-ze-json-usage-", mutate)
+        self.assertEqual(code, 0, err)
+
+
+
 class ZeroCases(unittest.TestCase):
     def test_a_tree_with_no_record_fails_with_no_record(self):
         tree = Tree()
@@ -1031,6 +1216,20 @@ class ThisRepository(unittest.TestCase):
     def test_the_handoff_notes_carry_at_least_one_boundary_marker_line(self):
         import re
         self.assertRegex(self.read(HANDOFF), r"(?m)^Boundary B\d+: [0-9a-f]{7,40}\s*$")
+
+    def test_restart_here_section_exists_in_handoff(self):
+        self.assertRegex(self.read(HANDOFF), r"(?mi)^##\s+Restart here\s*$")
+
+    def test_index_lists_the_facilitator_restart_brief(self):
+        index = self.read(INDEX)
+        self.assertIn("briefs/facilitator-restart.md", index)
+
+    def test_the_782199_entry_is_context_reading_not_restart(self):
+        record = json.loads(self.read(RECORD))
+        restarts = record.get("restarts", [])
+        by_tokens = [item for item in restarts if item.get("facilitator_context_tokens") == 782199]
+        self.assertEqual(len(by_tokens), 1)
+        self.assertEqual(by_tokens[0].get("kind"), "context_reading")
 
     def test_the_restart_checker_passes_on_this_repository(self):
         code, out, err = run("--root", str(REAL))
