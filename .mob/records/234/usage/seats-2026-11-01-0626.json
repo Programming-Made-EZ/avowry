@@ -1,0 +1,89 @@
+{
+ "written_at": "2026-11-01T06:22:41Z",
+ "by": "facilitator",
+ "source": "Claude seats: subagent_tokens from each seat's completion report (copied by the facilitator); Copilot seats: the Copilot CLI's own usage lines when run without -s; Copilot seats run with -s print none and are 'not measured'",
+ "baseline_per_seat": {
+  "setup": 50000,
+  "median_at_end": 125000
+ },
+ "seats": [
+  {
+   "context": "ctx-1",
+   "seat": "product manager (ready)",
+   "model": "copilot (auto)",
+   "tokens": null,
+   "why": "run with -s, which prints no usage; not measured"
+  },
+  {
+   "context": "ctx-2",
+   "seat": "architect (slice and amendment)",
+   "model": "copilot (auto)",
+   "tokens": null,
+   "why": "run with -s; not measured"
+  },
+  {
+   "context": "ctx-4",
+   "seat": "QA (intent and red 1)",
+   "model": "claude-sonnet subagent",
+   "tokens": 123407,
+   "why": "subagent_tokens in the Agent tool's completion report"
+  },
+  {
+   "context": "ctx-5",
+   "seat": "developer (green 1)",
+   "model": "copilot (auto)",
+   "tokens": null,
+   "why": "run with -s; not measured"
+  },
+  {
+   "context": "ctx-7",
+   "seat": "delivery lead (stand-down 1)",
+   "model": "claude-sonnet subagent",
+   "tokens": 114056,
+   "why": "subagent_tokens in the Agent tool's completion report"
+  },
+  {
+   "context": "ctx-4",
+   "seat": "QA (red 2)",
+   "model": "copilot (auto)",
+   "tokens": null,
+   "why": "run with -s; not measured"
+  },
+  {
+   "context": "ctx-5",
+   "seat": "developer (green 2 attempt, units)",
+   "model": "claude-sonnet subagent",
+   "tokens": 151676,
+   "why": "subagent_tokens in the Agent tool's completion report"
+  },
+  {
+   "context": "ctx-4",
+   "seat": "QA (red 2 fix)",
+   "model": "copilot (auto)",
+   "tokens": 949200,
+   "why": "the Copilot CLI's usage lines without -s: in 937.9k (881.8k cached), out 11.3k"
+  },
+  {
+   "context": "ctx-5",
+   "seat": "developer (green 2)",
+   "model": "claude-sonnet subagent",
+   "tokens": 77112,
+   "why": "subagent_tokens in the Agent tool's completion report"
+  },
+  {
+   "context": "ctx-7",
+   "seat": "delivery lead (stand-down 2)",
+   "model": "copilot (auto)",
+   "tokens": 528400,
+   "why": "the Copilot CLI's usage lines without -s: in 519.0k (486.3k cached), out 9.4k"
+  },
+  {
+   "context": "ctx-4",
+   "seat": "QA (red 3)",
+   "model": "claude-sonnet subagent",
+   "tokens": 142065,
+   "why": "subagent_tokens in the Agent tool's completion report"
+  }
+ ],
+ "note": "Claude totals are cumulative across the seat's turns (they include re-reading context each turn); Copilot totals are input plus output, with the cached share stated"
+}
