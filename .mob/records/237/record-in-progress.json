@@ -57,6 +57,101 @@
    "requests": "0.25 Premium (1m 41s)",
    "tokens_in": "660.0k (617.0k cached)",
    "tokens_out": "9.8k"
+  },
+  {
+   "seat": "QA engineer ctx-3, pre-trial red (0a)",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 103632
+  },
+  {
+   "seat": "independent reviewer ctx-4, thresholds (0b)",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 75669
+  },
+  {
+   "seat": "architect ctx-2, task freeze (0c)",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 80861
+  },
+  {
+   "seat": "QA engineer ctx-3, miss-test key (0d)",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 97622
+  },
+  {
+   "seat": "delivery lead ctx-5, pilot run 1 and stop",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 110212
+  },
+  {
+   "seat": "architect ctx-2, cap-fired proposal",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 82456
+  },
+  {
+   "seat": "independent reviewer ctx-4, key-probe ruling",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 81024
+  },
+  {
+   "seat": "decider ctx-6, cap raise",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 64562
+  },
+  {
+   "seat": "QA engineer ctx-3, amendment-ordering proposal",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 74737
+  },
+  {
+   "seat": "QA engineer ctx-3, amendment-ordering eight cycles",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 153758
+  },
+  {
+   "seat": "delivery lead ctx-5, pilot runs 2 to 12",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 115459
+  },
+  {
+   "seat": "independent reviewer ctx-4, recompute and grading",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 162792
+  },
+  {
+   "seat": "delivery lead ctx-5, ledger correction",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 68858
+  },
+  {
+   "seat": "product manager ctx-1, assessment",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 85383
+  },
+  {
+   "seat": "independent reviewer ctx-4, pre-ship gate",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 111878
+  },
+  {
+   "seat": "decider ctx-6, sign-off",
+   "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
+   "subagent_tokens": 93830
+  },
+  {
+   "seat": "12 headless pilot runs (claude -p, sonnet)",
+   "source": ".mob/records/237/trial/runs/*.json usage blocks, recomputed by the reviewer",
+   "counted_tokens": 8868059
+  },
+  {
+   "seat": "decision-window and Decider vote seats (decider.py, Claude sonnet; Copilot seats returned no reply)",
+   "source": "decider-result.json files in the facilitator's scratch folder; not committed",
+   "note": "not summed here"
+  },
+  {
+   "seat": "slice-phase seats (task-force and slice windows, the architect's slice and amendment)",
+   "source": "reported before the facilitator's context was summarised",
+   "note": "figures not carried; a gap"
   }
  ],
  "cycles": [],
