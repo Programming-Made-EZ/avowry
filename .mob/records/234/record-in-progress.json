@@ -197,6 +197,20 @@
    "status": "unscanned",
    "seat": "green 3 (Copilot CLI)",
    "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-3",
+   "status": "unscanned",
+   "seat": "writer review (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-6",
+   "status": "clean",
+   "seat": "review (Claude)",
+   "commands": 35,
+   "transcript": "subagents/agent-a7795a80330d5f637.jsonl",
+   "source": "python delete_guard.py scan-transcript, facilitator; read"
   }
  ],
  "cycles": [
@@ -379,6 +393,27 @@
    "requests": "6 Premium (21m 47s)",
    "tokens_in": "6.7m (6.5m cached)",
    "tokens_out": "31.9k"
+  },
+  {
+   "seat": "writer review, technical writer ctx-3 (Copilot CLI, without -s)",
+   "source": "Copilot CLI usage lines (scratch review-234-writer.err)",
+   "requests": "0.25 Premium (4m 5s)",
+   "tokens_in": "1.3m (1.3m cached)",
+   "tokens_out": "17.0k (10.9k reasoning)"
+  }
+ ],
+ "reviews": [
+  {
+   "seat": "independent reviewer (audit lens) ctx-6 (Claude)",
+   "commit": "3c6181c",
+   "verdict": "CHANGES REQUESTED",
+   "blocking": "no real facilitator restart (Done check 3); checkers pass on invented values; no per-seat token measurement and no seat prompt built from the briefs (Done check 2)"
+  },
+  {
+   "seat": "technical writer ctx-3 (Copilot, domain expert)",
+   "commit": "b37a8ad",
+   "verdict": "CHANGES REQUESTED",
+   "blocking": "briefs route only to the index and the role page, so seats never reach the rule pages they need (enforced by the criterion 2 checker); rule coverage gaps"
   }
  ]
 }
