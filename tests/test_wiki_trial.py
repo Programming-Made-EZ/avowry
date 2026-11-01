@@ -589,6 +589,24 @@ class WikiTrial(unittest.TestCase):
         c.amended["cap_amendment"] = "raised; window {window}; ruling commit {side}"
         fails(c, self, "is not an ancestor of the change")
 
+    # Card 237, window 237-amendment-ordering, cycle 7: the change lands before run 2. Hostile 14. A row whose
+    # source was first committed after the first run must come after the change commit.
+    LATE = {"wiki-ready-1", "wiki-slice-1"}
+
+    def test_amendment_that_lands_after_run_2(self):  # hostile 14
+        c = Amended()
+        c.late = set(self.LATE)
+        c.steps = c.steps[:4] + [["runs-late"], ["decision"], ["ruling"], ["amend"]]
+        err = fails(c, self, "amendment lands after run 2")
+        self.assertIn("wiki-ready-1", err)
+
+    def test_pin_amendment_before_run_2_passes(self):  # hostile 14, accept side
+        c = Amended()
+        c.late = set(self.LATE)
+        c.steps = c.steps + [["runs-late"]]
+        code, out, err = run(c.build())
+        self.assertEqual((code, err), (0, ""))
+
     def test_real_trial_folder_is_ready(self):
         """RED until step 0d: the real repo has no committed trial folder yet, so the check must fail."""
         code, out, err = run(REPO)
