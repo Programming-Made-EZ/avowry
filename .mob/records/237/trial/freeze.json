@@ -1,0 +1,62 @@
+{
+ "card": 237,
+ "author_seat": "ctx-2",
+ "frozen_for": "stage A and stage B, both arms, same role order",
+ "source_card": 227,
+ "hash": "sha256 of the task file bytes (LF)",
+ "arms": [
+  {
+   "id": "baseline",
+   "context_pointer": "Read TEAM_WORKING_AGREEMENT.md in full and use it as your only process context. Do not read docs/process-wiki/."
+  },
+  {
+   "id": "wiki",
+   "context_pointer": "Start at docs/process-wiki/INDEX.md, follow the route row for your role's brief, and read only the pages that row lists. Do not read TEAM_WORKING_AGREEMENT.md."
+  }
+ ],
+ "placeholders": [
+  "{RUN_KEY}",
+  "{ARM_CONTEXT}",
+  "{OUTPUT_PATH}"
+ ],
+ "role_order": [
+  "ready",
+  "slice",
+  "red",
+  "green",
+  "ship",
+  "signoff"
+ ],
+ "tasks": [
+  {
+   "role": "ready",
+   "path": ".mob/records/237/trial/tasks/ready.md",
+   "sha256": "44e60f0f840e210a8ae75b05c9aafe629f29afc21c9df207d7fa7042918a9d97"
+  },
+  {
+   "role": "slice",
+   "path": ".mob/records/237/trial/tasks/slice.md",
+   "sha256": "98c4f6ce85519c654e03663c5cb7b3b4566f26df3027a589d65eb2616d38df58"
+  },
+  {
+   "role": "red",
+   "path": ".mob/records/237/trial/tasks/red.md",
+   "sha256": "91b86fafb09d4a07563ce441a8c24515b4a0ac4cc22b17eab2f740c05d7b66bb"
+  },
+  {
+   "role": "green",
+   "path": ".mob/records/237/trial/tasks/green.md",
+   "sha256": "45d775269f23a1407117c1002241c07d721703e19d85c7136705c09bd8a389fa"
+  },
+  {
+   "role": "ship",
+   "path": ".mob/records/237/trial/tasks/ship.md",
+   "sha256": "91d99c2b4606dc6913c9a2d047b7144b27b3205134238a3c6ed8ce386d9a5e3b"
+  },
+  {
+   "role": "signoff",
+   "path": ".mob/records/237/trial/tasks/signoff.md",
+   "sha256": "a0f33f4f770783f15d2dc4cb73b614daabbf0728aec765042dae378ad281f7a3"
+  }
+ ]
+}
