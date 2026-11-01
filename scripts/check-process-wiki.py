@@ -16,6 +16,16 @@ RECORD_REL = Path(".mob/records/234/record-in-progress.json")
 METHOD_KEYS = ("tokens_per_seat", "facilitator_context_size", "rule_misses")
 BASELINES = ("50K", "125K", "965K")
 
+AGREEMENT_REL = Path("TEAM_WORKING_AGREEMENT.md")
+BRIEFS_REL = Path("docs/process-wiki/briefs")
+FLOOR_SHARE = 0.10  # anchored wiki rule lines / agreement bullet-rule lines (red 570dc5c proposal)
+REQUIRED_ROLES = (
+    "role/product-manager-ready", "role/architect-slice", "role/technical-writer", "role/qa-red",
+    "role/backend-developer-green", "role/independent-reviewer-audit", "role/delivery-lead-ship",
+    "role/product-manager-signoff",
+)
+RULE_LINE_RE = re.compile(r"^- \*\*")
+
 ID_RE = re.compile(
     r"^(?:core/index|rules/[a-z0-9-]+|role/[a-z0-9-]+-[a-z0-9-]+|howto/[a-z0-9-]+)$"
 )
@@ -180,9 +190,70 @@ def check_pages(
     if docs_root.is_dir():
         for page in sorted(docs_root.rglob("*.md")):
             rel = posix_rel(page, root)
+            if page.parent == root / BRIEFS_REL:
+                continue
             if rel not in listed_paths:
                 findings.append((rel, "unlisted page"))
     return enabled_count
+
+
+def check_briefs(root: Path, rows: list[dict[str, str]], findings: list[tuple[str, str]]) -> None:
+    status = {row["id"]: row["status"] for row in rows}
+    for role in REQUIRED_ROLES:
+        if status.get(role) != "enabled" or not (root / next(r["path"] for r in rows if r["id"] == role)).is_file():
+            findings.append((INDEX_REL.as_posix(), f"missing role page {role}"))
+        stem = role.split("/", 1)[1]
+        if not (root / BRIEFS_REL / f"{stem}.md").is_file():
+            findings.append(((BRIEFS_REL / f"{stem}.md").as_posix(), "missing brief"))
+    briefs = root / BRIEFS_REL
+    for brief in sorted(briefs.glob("*.md")) if briefs.is_dir() else []:
+        rel = posix_rel(brief, root)
+        text, ok = read_utf8(brief)
+        if not ok or text is None:
+            findings.append((rel, "not valid UTF-8"))
+            continue
+        pages_lines = [ln for ln in text.splitlines() if ln.startswith("Pages:")]
+        if len(pages_lines) != 1:
+            findings.append((rel, "missing Pages line" if not pages_lines else "repeated Pages line"))
+            continue
+        ids = [part.strip() for part in pages_lines[0][len("Pages:"):].split(",") if part.strip()]
+        seen: set[str] = set()
+        for pid in ids:
+            if pid in seen:
+                findings.append((rel, f"repeated page id {pid}"))
+            seen.add(pid)
+            if pid not in status:
+                findings.append((rel, f"unknown page id {pid}"))
+            elif status[pid] != "enabled":
+                findings.append((rel, f"disabled page id {pid}"))
+            elif pid != "core/index" and not pid.startswith("role/"):
+                findings.append((rel, f"brief pages must include only core/index and role/ pages, not {pid}"))
+        own = f"role/{brief.stem}"
+        if "core/index" not in seen:
+            findings.append((rel, "brief pages must include core/index"))
+        if own not in seen:
+            findings.append((rel, f"brief pages must include {own}"))
+        for pid in sorted(seen - {"core/index", own}):
+            if pid.startswith("role/") and pid in status:
+                findings.append((rel, f"brief pages must include only core/index and {own}, not {pid}"))
+
+
+def check_floor(root: Path, rows: list[dict[str, str]], findings: list[tuple[str, str]]) -> None:
+    agreement = root / AGREEMENT_REL
+    text, ok = read_utf8(agreement) if agreement.is_file() else (None, False)
+    if text is None:
+        findings.append((AGREEMENT_REL.as_posix(), "no agreement to measure the coverage floor against"))
+        return
+    total = sum(1 for line in text.splitlines() if RULE_LINE_RE.match(line))
+    anchored = 0
+    for row in rows:
+        page = root / row["path"]
+        if row["status"] == "enabled" and page.is_file():
+            body, ok = read_utf8(page)
+            anchored += sum(1 for line in (body or "").splitlines() if line.startswith("- Rule:"))
+    if total and anchored < FLOOR_SHARE * total:
+        findings.append((INDEX_REL.as_posix(),
+                         f"coverage floor {FLOOR_SHARE:.2f} not met: {anchored} anchored rule lines of {total} agreement rule lines"))
 
 
 def check_card_and_record(root: Path, findings: list[tuple[str, str]]) -> None:
@@ -223,6 +294,9 @@ def run(root: Path) -> int:
     rows, listed_paths = check_index(root, findings)
     enabled_count = check_pages(root, rows, listed_paths, findings) if rows else 0
     check_card_and_record(root, findings)
+    if rows:
+        check_briefs(root, rows, findings)
+        check_floor(root, rows, findings)
     if findings:
         for path, detail in findings:
             print(f"{path}: {detail}", file=sys.stderr)
