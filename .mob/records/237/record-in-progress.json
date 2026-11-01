@@ -9,7 +9,8 @@
   "key_secrecy": "window 237-key-secrecy (runs in sparse clones without the card 237 records; wrapper line; reviewer log check)",
   "cap": "window 237-cap-fired (raise only the cap after the key-probe ruling 327d635; raise c30b932)",
   "amendment_ordering": "window 237-amendment-ordering (checker accepts the recorded cap-only raise; eight red/green cycles, 08aff53..3536229)",
-  "outcome": "Decider D173: motion A RESHAPE (follow-up card 238 filed, unranked); motion B retro-end wiki review as a three-retro experiment on the reshaped wiki"
+  "outcome": "Decider D173: motion A RESHAPE (follow-up card 238 filed, unranked); motion B retro-end wiki review as a three-retro experiment on the reshaped wiki",
+  "ship": "pre-ship gate SHIP by the independent reviewer (ae02695), two non-blocking findings"
  },
  "task_force": [
   {
@@ -100,6 +101,16 @@
    "by": "facilitator",
    "what": "the probe commit 17:37 is named one or two minutes after the probe's own timestamp (17:35)",
    "handling": "recorded"
+  },
+  {
+   "by": "pilot run wiki-red-1 (a headless Claude run in its own sparse clone)",
+   "what": "ran `rm t.tmp` on its own scratch file (tool log seq 14); not recursive, inside the clone, but the no-delete rule for seats covers it",
+   "handling": "recorded; for card 238's re-run, the runner's wrapper should add the no-delete rule (a non-task line, identical in both arms) and the command scan should cover headless runs"
+  },
+  {
+   "by": "delivery lead",
+   "what": "the 12 runs' session logs (*.session.jsonl) are untracked in the main checkout, so the reviewer's session-log guard check cannot be reproduced from git; the committed tool logs suffice for the key-read check",
+   "handling": "recorded; left untracked (they hold full prompts and tool results)"
   }
  ],
  "observations_for_next_stand_down": [
