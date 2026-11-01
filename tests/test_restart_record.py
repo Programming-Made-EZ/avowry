@@ -55,6 +55,7 @@ Fixture trees are made with tempfile.mkdtemp and left in place (no cleanup, by t
 import copy
 import json
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -191,6 +192,28 @@ def check(tree, *extra):
     root = tree.build()
     code, out, err = run("--root", str(root), *extra)
     return root, code, out, err
+
+
+def fresh_repo_copy(prefix):
+    root = Path(tempfile.mkdtemp(prefix=prefix))
+    for rel in (RECORD, USAGE, ".mob/records/234/turn-slice-architect.md", INDEX, HANDOFF):
+        src = REAL / rel
+        dst = root / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        if src.is_dir():
+            shutil.copytree(src, dst, dirs_exist_ok=True)
+        else:
+            shutil.copy2(src, dst)
+    return root
+
+
+def run_on_repo_copy(prefix, mutate):
+    root = fresh_repo_copy(prefix=prefix)
+    record_path = root / RECORD
+    record = json.loads(record_path.read_text(encoding="utf-8"))
+    mutate(record, root)
+    record_path.write_text(json.dumps(record, indent=1) + "\n", encoding="utf-8")
+    return run("--root", str(root))
 
 
 class ZeroCases(unittest.TestCase):
@@ -900,6 +923,95 @@ class SimpleCases(unittest.TestCase):
         _, code, out, err = check(tree)
         self.assertEqual((code, err), (0, ""), err)
         self.assertIn("(2 restarts)", out)
+
+
+class CriterionTwoReviewFixesR2R4(unittest.TestCase):
+    """Card 234 criterion 2 red 2c: the six review mutations now fail."""
+
+    def test_mutation_r2_tokens_of_one_fail_when_source_disagrees(self):
+        def mutate(record, _root):
+            record["seat_metrics"]["ctx-4"] = {
+                "setup_tokens": 1,
+                "end_tokens": 1,
+                "provider_usage_source": f"{USAGE}/seats-2026-11-01-0626.json",
+                "setup_tokens_source_key": "seats[7].tokens",
+                "end_tokens_source_key": "seats[7].tokens",
+            }
+
+        code, _, err = run_on_repo_copy("rr234-r2c-mut-r2-one-", mutate)
+        self.assertEqual(code, 1, err)
+
+    def test_mutation_r2_facilitator_tokens_five_fail_when_source_disagrees(self):
+        def mutate(record, _root):
+            restart = record["restarts"][0]
+            restart["facilitator_context_tokens"] = 5
+            restart["delta_tokens"] = 5 - BASELINE
+
+        code, _, err = run_on_repo_copy("rr234-r2c-mut-r2-five-", mutate)
+        self.assertEqual(code, 1, err)
+
+    def test_mutation_r2_zero_miss_source_on_unrelated_file_fails(self):
+        def mutate(record, _root):
+            record["restarts"][0]["rule_miss_cases_zero_source"] = "HANDOFF.md"
+
+        code, _, err = run_on_repo_copy("rr234-r2c-mut-r2-zero-src-", mutate)
+        self.assertEqual(code, 1, err)
+
+    def test_mutation_r2_all_seats_not_measured_fail_when_sources_hold_numbers(self):
+        def mutate(record, _root):
+            for ctx in list(record["seat_metrics"]):
+                record["seat_metrics"][ctx] = {
+                    "not_measured_reason": "x",
+                    "available_evidence_source": f"{USAGE}/seats-2026-11-01-0626.json",
+                    "tokens_source_key": "seats[2].tokens",
+                }
+
+        code, _, err = run_on_repo_copy("rr234-r2c-mut-r2-all-not-measured-", mutate)
+        self.assertEqual(code, 1, err)
+
+    def test_mutation_extra_seat_pair_baselines_of_one_fail(self):
+        def mutate(record, root):
+            usage_dir = root / USAGE
+            (usage_dir / "ab-ctx4-red-full.txt").write_text("subagent_tokens: 51000\n", encoding="utf-8")
+            (usage_dir / "ab-ctx4-red-brief.txt").write_text("subagent_tokens: 49000\n", encoding="utf-8")
+            record["seat_ab"] = [
+                {
+                    "context": "ctx-4",
+                    "step": "qa-red",
+                    "setup_baseline_tokens": 1,
+                    "median_baseline_tokens": 1,
+                    "full_tokens": 51000,
+                    "full_source": f"{USAGE}/ab-ctx4-red-full.txt",
+                    "full_source_key": "subagent_tokens",
+                    "brief_tokens": 49000,
+                    "brief_source": f"{USAGE}/ab-ctx4-red-brief.txt",
+                    "brief_source_key": "subagent_tokens",
+                }
+            ]
+
+        code, _, err = run_on_repo_copy("rr234-r2c-mut-extra-baseline-", mutate)
+        self.assertEqual(code, 1, err)
+
+    def test_mutation_extra_missing_raw_source_without_unverified_fails(self):
+        def mutate(record, _root):
+            record["seat_ab"] = [
+                {
+                    "context": "ctx-4",
+                    "step": "qa-red",
+                    "setup_baseline_tokens": 50000,
+                    "median_baseline_tokens": 125000,
+                    "full_tokens": 51000,
+                    "full_source": f"{USAGE}/ab-ctx4-red-full.txt",
+                    "full_source_key": "subagent_tokens",
+                    "brief_tokens": 49000,
+                    "brief_source": f"{USAGE}/ab-ctx4-red-brief.txt",
+                    "brief_source_key": "subagent_tokens",
+                    "unverified": False,
+                }
+            ]
+
+        code, _, err = run_on_repo_copy("rr234-r2c-mut-extra-missing-raw-", mutate)
+        self.assertEqual(code, 1, err)
 
 
 class ThisRepository(unittest.TestCase):
