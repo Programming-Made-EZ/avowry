@@ -18,6 +18,10 @@ Inputs (D167): disabled: test_disabled_row_key; unknown: test_unknown_row_key; r
 reordered: test_reordered_rows_still_pass.
 
 Fixture trees are made with tempfile.mkdtemp and left in place (no cleanup, by the safety rule).
+
+Card 237 window 237-amendment-ordering (option a): a post-first-run thresholds change is accepted only as a
+recorded, cap-only raise judged by content against thresholds.json at the first run. Amended() builds the
+c30b932 shape (decision file, ruling commit, then one thresholds commit). One test per hostile case (D167).
 """
 
 import copy
@@ -82,6 +86,11 @@ class Trial:
         self.sources = True
         self.steps = [["thresholds"], ["freeze"], ["miss-key"], ["runs", "ledger", "recompute"]]
         self.after = []  # extra steps: list of names re-written and committed after the build
+        self.late = set()  # run keys whose source files are committed by the "runs-late" step (run 2)
+        self.hashes = {}  # commit hashes recorded while building, substituted for {ruling}, {side} in amend text
+        self.hash_len = 12
+        self.window = "237-cap-fired"
+        self.amends = {}
 
     def build(self):
         root = Path(tempfile.mkdtemp(prefix="wiki-trial-"))
@@ -89,17 +98,47 @@ class Trial:
         (root / "README.md").write_text("x\n")
         sh(root, "add", "README.md")
         sh(root, "commit", "-q", "-m", "base")
+        main_branch = rev(root, "--abbrev-ref", "HEAD")
         for n_step, step in enumerate(self.steps + self.after):
             paths = []
             for name in step:
-                if name == "runs":
+                if name in ("runs", "runs-late"):
                     if self.sources:
+                        late = name == "runs-late"
                         for r in self.docs["ledger"]["rows"]:
+                            if (r["run_key"] in self.late) != late:
+                                continue
                             p = root / r["source"] if isinstance(r.get("source"), str) else None
                             if p and ".." not in p.parts:
                                 p.parent.mkdir(parents=True, exist_ok=True)
                                 p.write_text("usage\n")
                                 paths.append(str(p.relative_to(root)))
+                    continue
+                if name in ("ruling", "side-ruling", "side-decision"):
+                    if name != "ruling":
+                        sh(root, "checkout", "-q", "-b", "side")
+                    if name == "side-decision":
+                        paths.append(self.write_decision(root))
+                        sh(root, "add", "--", *paths)
+                    sh(root, "commit", "-q", "--allow-empty", "-m", name, *(["--", *paths] if paths else []))
+                    self.hashes["ruling" if name != "side-decision" else "side-decision"] = rev(root, "HEAD")
+                    if name != "ruling":
+                        self.hashes["side"] = rev(root, "HEAD")
+                        sh(root, "checkout", "-q", main_branch)
+                    paths = []
+                    continue
+                if name in ("decision", "decision-untracked"):
+                    d = self.write_decision(root)
+                    if name == "decision":
+                        paths.append(d)
+                    continue
+                if name.startswith("amend"):
+                    p = root / T / "thresholds.json"
+                    text = self.raw.get(name) or json.dumps(self.amends[name], indent=1)
+                    for k, v in self.hashes.items():
+                        text = text.replace("{" + k + "}", v[:self.hash_len])
+                    p.write_text(text.replace("{window}", self.window) + "\n", encoding="utf-8")
+                    paths.append(f"{T}/thresholds.json")
                     continue
                 if name in self.omit:
                     continue
@@ -113,6 +152,34 @@ class Trial:
             sh(root, "add", "--", *paths)
             sh(root, "commit", "-q", "--allow-empty", "-m", "step " + "+".join(step), "--", *paths)
         return root
+
+    def write_decision(self, root):
+        rel = f".mob/records/decisions/{self.window}.json"
+        (root / rel).parent.mkdir(parents=True, exist_ok=True)
+        (root / rel).write_text(json.dumps({"window": self.window}), encoding="utf-8")
+        return rel
+
+
+class Amended(Trial):
+    """The c30b932 shape: decision file in git, a ruling commit, then ONE thresholds commit raising both caps."""
+
+    def __init__(self):
+        super().__init__()
+        self.steps += [["decision"], ["ruling"], ["amend"]]
+        th = copy.deepcopy(self.docs["thresholds"])
+        th.update({"cap_stage_a": 15000000, "cap_stage_ab": 30000000,
+                   "cap_amendment": "cap_stage_a 1000000 -> 15000000 and cap_stage_ab 2000000 -> 30000000; "
+                                    "window {window}; ruling commit {ruling} (key-probe deviation ruled first)"})
+        self.amends = {"amend": th}
+
+    @property
+    def amended(self):
+        return self.amends["amend"]
+
+
+def rev(root, *args):
+    return subprocess.run(["git", "rev-parse", *args], cwd=str(root), check=True, capture_output=True,
+                          text=True).stdout.strip()
 
 
 def fails(case, test, keyword):
@@ -327,6 +394,20 @@ class WikiTrial(unittest.TestCase):
         err = fails(c, self, "recompute.json: not valid JSON")
         self.assertIn("freeze.json: committed or changed at or after the first run", err)
         self.assertNotIn("check could not run", err)
+
+    # Card 237, window 237-amendment-ordering, cycle 2: a recorded cap raise is accepted (content comparison).
+    def test_recorded_cap_raise_passes(self):
+        code, out, err = run(Amended().build())
+        self.assertEqual((code, err), (0, ""))
+        self.assertIn("wiki-trial: OK (12 rows)", out)
+
+    def test_whitespace_only_rewrite_after_the_first_run_passes(self):  # hostile 17
+        c = Trial()
+        c.steps.append(["amend"])
+        c.amends = {"amend": c.docs["thresholds"]}
+        c.raw["amend"] = json.dumps(c.docs["thresholds"], indent=4)
+        code, out, err = run(c.build())
+        self.assertEqual((code, err), (0, ""))
 
     def test_real_trial_folder_is_ready(self):
         """RED until step 0d: the real repo has no committed trial folder yet, so the check must fail."""
