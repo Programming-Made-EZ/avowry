@@ -5,7 +5,8 @@
  "decisions": {
   "rank": "re-rank 17 (window rerank-17): first, as the corrective named by F-071",
   "task_force": "window 228-taskforce (adopted, no conditions)",
-  "slice": "turn-slice-architect.md (639c5e2, 14847 bytes): three criteria; T2: Copilot has a command source (events.jsonl), no-source seats are a recorded gap that blocks ship; PM's split confirmed with four changes"
+  "slice": "turn-slice-architect.md (639c5e2, 14847 bytes): three criteria; T2: Copilot has a command source (events.jsonl), no-source seats are a recorded gap that blocks ship; PM's split confirmed with four changes",
+  "slice_window": "window 228-slice (adopted, no conditions)"
  },
  "task_force": [
   {
@@ -75,6 +76,7 @@
   }
  ],
  "observations_for_next_stand_down": [
-  "D174's first two windows (rerank-17, 228-taskforce) ran serially as recorded fallbacks: decider.py's append-only seat-use check blocks parallel runs on one checkout"
+  "D174's first two windows (rerank-17, 228-taskforce) ran serially as recorded fallbacks: decider.py's append-only seat-use check blocks parallel runs on one checkout",
+  "D174's trial scope (next 3 vote windows) is used up with three serial fallbacks and no parallel run; the trial retro decides keep, revise or drop, and a decider.py change for safe parallel launch would be its own card"
  ]
 }

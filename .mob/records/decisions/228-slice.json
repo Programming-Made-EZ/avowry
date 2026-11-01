@@ -1,0 +1,229 @@
+{
+ "window": "228-slice",
+ "category": "slice decision",
+ "rule": "D153/D145 at slice for card 228; D168; D171; D174 (third window: serial FALLBACK)",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "claude (sonnet) subagent",
+  "context": "ctx-2",
+  "probe_reference": "probe 2026-11-01 20:31 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang)"
+ },
+ "opened_at": "2026-11-01T20:33:57Z",
+ "proposal": "# Card 228 slice: architect (ctx-2, Claude seat)\n\nRead: board/228; taskforce-proposal-pm.md; .mob/records/227.json and 227/ (scan, slice); delete_guard.py, command_source.py, core/backends.json, tests/test_command_scan*.py and test_command_source*.py (mob-crosscli); 237/command-scans.json and preship-gate.md; D136, D157, D165 to D169, D171, D174; TEAM_WORKING_AGREEMENT.md (outside-in TDD, ZOMBIES, thin slices). Probe: 2026-11-01 19:59 UTC. Seat started 2026-11-01.\n\nIntent (D165): the product owner's D169 ruling, \"recursive deletes never target anything outside the repository working tree\", so that a mis-quoted delete like the 2026-10-08 home-folder wipe cannot take out work that git cannot restore. Detection after the fact is accepted only inside the tree; outside it nothing can be restored, so the hook (criterion 3) refuses.\n\nAssumption (D166) and probe: the scan can judge an executed command only when it can be resolved to a literal at command position; a form it cannot resolve must be a finding, never clean. Probe, today, read-only: `scan_command(c, [\"scratch\"])` on 18 commands. Reported: `eval \"$cmd\"`, `find . -delete`, `rm -rf /tmp/x`, `rm -rf ../x`, `rm -rf scratch/../..`. Reported CLEAN (the gap): `r\"\"m -rf $D`, `$v=rm; $v -rf x`, `powershell -EncodedCommand ...`, `echo <b64> | base64 -d | sh`, `node -e \"...fs.rmSync(p,{recursive:true})\"`, `perl -e \"unlink glob q(*)\"`, `rsync -a --delete e/ ~/x/`, `python -c \"import os;os.removedirs(p)\"`, `git reset --hard`, `robocopy e x /MIR`, `bash build.sh`, `python cleanup.py`. Second assumption: Copilot leaves a command source. Probe: ~/.copilot/session-state/<id>/events.jsonl holds 3438 `tool.execution_start` records with `toolName` powershell and `arguments.command`, plus `create` (`path`, `file_text`) and `edit`; backends.json says `\"command_source\": \"none\"` for it, which is wrong.\n\n## T2: the real command source per backend (checked on this machine)\n\n| Backend | Source | Today | This card |\n|---|---|---|---|\n| Claude subagent (Agent tool) | `~/.claude/projects/<slug>/<parent session>/subagents/agent-<agentId>.jsonl`, same record shape as a session | Read by hand with `scan-transcript <path>`. The 15 seats of card 237 were \"unscanned\" because the facilitator passed the task OUTPUT file (no assistant record), not this transcript | Path named here; automation is follow-up F1. A seat whose file has no assistant record stays \"no command source\" |\n| `claude -p` (mob-run) | `~/.claude/projects/<slug>/<uuid>.jsonl`, uuid chosen by `--session-id {SESSION}` | Read: `command_source: \"claude\"` | Unchanged; criteria 1 and 2 read more of it |\n| Headless trial runs (card 237 `*.tools.jsonl`: `{seq, tool, input}`) | The run's own tool log; the `rm t.tmp` was found by grep, not by a scan | Not a transcript shape; reader says no assistant record | Out; F1 reads it. Reported here as a source that exists |\n| Copilot CLI | `~/.copilot/session-state/<id>/events.jsonl`; `session.start.data.context.cwd`, `startTime`; no session-id flag | \"none\" | Read (criterion 2): located by cwd and start time, exactly one match or \"no command source\" |\n| Codex | `~/.codex/sessions/Y/M/D/rollout-*.jsonl`; commands sit inside `custom_tool_call` JS text (`tools.exec_command({\"cmd\":...})`) | \"none\" | Out (no quota, shape not pinned against a run): F2 |\n| Grok, agy | none found in `--help` or on disk | \"none\" | Gap |\n| aider (not in backends.json) | `.aider.chat.history.md` is prose, no structured tool call | not configured | Gap if ever added |\n\nAnswer: a seat with no source is a recorded gap that BLOCKS ship, not a clean scan and not a silent skip. This is already enforced by `mob_process._command_scans_problems` (\"unscanned\" and \"no command source\" fail the record, once per seat) and is not rebuilt here. The one change: a backend whose config says \"none\" but for which a reader now exists (Copilot) must say so, and a test pins that the status of a \"none\" backend is still \"unscanned\". Failing closed in the gate would stop work whose commands can be read after the fact; a blocking gap keeps the run going and refuses the close, which is what D169 asks (detect inside the tree, refuse outside it, and never call an unread seat safe).\n\n## The split (D136; D168 C4: moved items are named in the commit body)\n\nD136 limits: three criteria, one concern (\"the scan reads what a seat does, not only visible shell text\"), at most 15 files and 400 lines per commit. The PM's split is CONFIRMED in kind and CHANGED in four places:\n- PM Done check 2 (\"every source accounted for, gaps not clean\") passes today (the line above), so it cannot be a red. Replaced by: the file-content scan plus the Copilot reader, which the card's own Done check 2 names.\n- `git reset --hard` and its kin, `iex`/`Invoke-Expression` and pipeline-fed or splatted Remove-Item are in the card's Observes list: they stay in criterion 1 (the PM had pushed `git reset` out).\n- A script written in an earlier call and run later is the card's own wording: criterion 2, not follow-up.\n- The Codex reader and the subagent automation are named follow-ups with their source shapes above, so the gap is dated, not hidden.\n\nOne-line cards (not filed), each carrying the items it takes:\n- F1: Scan subagent and headless-run seats automatically from `subagents/agent-<id>.jsonl` and `*.tools.jsonl` (card 237 left 15 of 17 seats unscanned), including the legacy non-card loop, the probe, CardRun writing the entry, and an absolute scratch folder as a finding (items 4, 5, and the subagent line).\n- F2: Read Codex rollouts (`exec_command`, `apply_patch`) for the scan, pinned against a recorded run that executed a command.\n- F3: Cut false positives: parse Python text with ast everywhere (criterion 2 does it only for files it newly scans), rmtree named in read-only text, -ErrorAction/-Filter/-Exclude values, `#` words, `find -H`, option spellings (`rm --rec`, `rd/s/q`, `git clean -f -- -n`) (items 3, 2, 8).\n- F4: Residual forms: symlinks and junctions in scratch, backslash as a separator in bash, `robocopy /MIR /PURGE`, `getattr(shutil, \"rmtree\")`, `trap ... EXIT`, PowerShell `@(...)`/`[void](...)`, cmd paren groups and `@rd`, more wrappers and heredocs (items 1, 6, 9, 11).\n- F5: Report plumbing and trust: README snippet, Decider log rendering of `command_scan`, scan-transcript dedupe, and a clean entry whose stored sha256 shows a later edit (items 10 and the \"Also owned\" first line).\n- F6: Git-state detectors: commits on a local branch with no upstream, detached HEAD, stash, patch-id first-seen, a `file://` origin warning, and avowry's `scripts/mob_process.py` lacking `ladder` and `unpushed` (item 7).\nCounter-metric (D168): 6 follow-ups carry the 15 items the card owned; the retro counts them. Criterion 1 raises false-positive risk, so every new detector has a benign twin that must stay clean (below).\n\n## Criteria (D157: one red-green cycle each; each red commit body says \"Criterion: n\"; green n before red n+1)\n\nAllow-list (D169, decided here): the scan's allow-list is UNCHANGED, a literal strict child of `scratch`; the card says so as an invariant, and \"inside the working tree\" is too wide for a detector (a repository's own `src` would pass). The tree rule belongs to the hook: it refuses every recursive delete whose targets are not all literal paths inside the working tree; inside the tree but outside scratch the scan reports and the hook allows.\n\n### Criterion 1: hidden, encoded and non-shell deletes are reported from executed commands\nAcceptance (outside-in), fixture transcript with one tool call per form: `python delete_guard.py scan-transcript <fixture> --seat \"red ctx-3\"` exits 1 and prints one line per form `seat: kind: snippet (source <path>)`; its benign twin exits 0. The seat and source are new on the line.\nZOMBIES: Z a transcript with zero commands is clean, not a finding; a command that is only `echo` is clean. O one `r\"\"m -rf $D` is one finding with the command text. M ten forms in one file give ten lines, duplicates once. B depth: 6 nested wrappers resolve, a 7th is a finding (existing `_MAX_DEPTH`); a command over 500,000 bytes is a finding. I `scan_entry`, the CLI and `facilitator.run_backend` give the same findings for the same file. E undecodable base64, a wrong-encoding `-EncodedCommand`, a verb built from a variable: findings (fail closed); a decoded payload that is itself encoded is followed to depth 6. S the card 227 forms still pass their existing tests untouched.\nLayers and doubles: (1) CLI and `scan_entry`, real fixture; (2) `scan_command`, new `_resolve_verb` (quote removal, `\\`, `${V:-rm}`, an assigned variable in the same clause), `_decode` (base64 UTF-8, `-EncodedCommand` UTF-16LE) and `_interpreter` (node/deno/bun `-e`, perl/ruby/php `-e`, python `-c` through an `ast` walk for calls, not text); (3) each helper alone with the others doubled.\n\n### Criterion 2: contents of files a seat writes then runs are scanned, and Copilot is read\nAcceptance: a Claude fixture where call 3 is a Write of `clean.sh` (`rm -rf \"$D\"`), call 9 is `bash clean.sh`: the scan reports the file's delete with `file clean.sh, written call 3, run call 9`; a Copilot `events.jsonl` fixture (a `create` of `x.ps1` then a `powershell` start running it) reports the same; both benign twins are clean.\nZOMBIES: Z a file written and never run is NOT scanned (writing a test that names `rmtree` is the 5-of-6 false positive class). O one Write then one run. M a file written twice and edited: the run is judged on the last Write plus every later Edit `new_string`. B written in an earlier call than the run, a run before the write is not a hit, the same file name in two directories is two files. I Write, Edit, `cat > f <<EOF`, `tee f`, `>>`, Copilot `create`/`edit`/`apply_patch` all feed one `writes` list from the reader; Copilot `events.jsonl` is found by `cwd` and `startTime`, two matches or none is \"no command source\". E a run file with no content in the transcript is read from disk at scan time (`file_source: disk`), if gone or unreadable: a finding; an unparsable `.py` is scanned as text. S card 227 and criterion 1 tests untouched; backends with `\"none\"` still report \"unscanned\".\nLayers: (1) CLI over both fixtures; (2) `command_source._read_transcript` returns `writes`; new `copilot_reader`; (3) `delete_guard.scan_file(text, kind)` with `_runs_file` (shell, `source`, `.`, python, node, `pwsh -File`, `./f`, `cmd /c f.bat`) as units.\n\n### Criterion 3: an opt-in hook blocks a flagged command before it runs, installed only by a human\nAcceptance: `hooks/delete_guard_hook.py` fed a PreToolUse JSON (`tool_name`, `tool_input.command`, `cwd`) on stdin: exit 2 and the finding on stderr for each criterion 1 form and for a run of a flagged file read from disk; exit 0 for a benign command. No code path writes any settings file: with HOME and APPDATA set to a temp folder, running the hook and `--print-snippet` leaves the folder empty.\nZOMBIES: Z empty stdin or a tool with no command (Read, Glob) exits 0 only when the JSON parsed; unparsable JSON exits 2 (fail closed, opt-in so it cannot block anyone else). O one `rm -rf \"$HOME/x\"` exits 2. M several commands in one clause chain: the worst decides. B working-tree edge: the target `R/a` allowed, `R2/a` (prefix), `R/../x`, `/c/r/a` against `C:/r`: only the first allowed; no git root for `cwd`: exit 2. I the `--print-snippet` text names the settings key and file for a human to paste, and says it is not installed. E a file named by a run that cannot be read: exit 2; a timeout or exception: exit 2. S the hook is not on by default: no `settings.json`, template or `facilitator.py` references the hook path.\nLayers: (1) hook stdin and exit code; (2) `delete_guard.tree_verdict(command, cwd)` over `scan_command` and `scan_file`; (3) the working-tree path comparison unit.\n\n## D167 hostile inputs (each answered in red; one benign twin per row stays clean)\n\nDelete verbs and spellings: `rm`, `RM`, `/bin/rm`, `\\rm`, `command rm`, `\"rm\"`, `r\"\"m`, `r\\m`, `'r'm`, `${RM:-rm}`, `$v=rm; $v -rf x`, `alias d=rm; d -rf x`, `$'\\x72\\x6d'`, `ri`, `del /s`, `rmdir /s`, `rd /s/q`, `rm -r -f`, `rm -fr`, `rm -rf --`, `find -exec rm -rf {} +`, `xargs rm -rf`, `git rm -r`, `git clean -fdx`, `git reset --hard`, `git checkout -f`, `git checkout -- .`. Twins: `rm file.txt` (non-recursive, in tree), `git reset --soft`, `git status`.\nWrappers: `sudo`, `env X=1`, `nohup`, `time`, `timeout 5`, `xargs`, `bash -c`, `sh -c`, `eval`, `cmd /c`, `powershell -Command`, `pwsh -c`, `ssh h`, `wsl`, `busybox rm`, `$(...)`, backticks, `<(...)`, a heredoc into `sh`, `bash < f`, `bash -c \"bash -c '...'\"` nested to depth 7. Twin: `sudo ls`.\nEncodings: `base64 -d | sh`, `base64 --decode | xargs`, `-EncodedCommand`, `-enc`, `-ec`, `-e` (PowerShell prefixes), `[Convert]::FromBase64String`, invalid base64, UTF-8 under `-EncodedCommand`, double encoding, `xxd -r -p | sh`, `printf '\\x72\\x6d' | sh`, `iex (\"Remove\"+\"-Item -Rec x\")`, `Invoke-Expression $s`, `[char]114+[char]109`. Twins: `echo <b64> | base64 -d` with no shell consumer; `eval \"$(ssh-agent -s)\"` keeps its card 227 result.\nInterpreters: `node -e`, `node --eval`, `fs.rmSync(p,{recursive:true})`, `fs.rmdirSync`, `fs.rm`, `rimraf`, `npx rimraf`, `perl -e unlink glob`, `File::Path rmtree`, `ruby -e FileUtils.rm_rf`, `php -r`, `python -c`, `python - <<EOF`, `os.removedirs`, `os.system(\"rm -rf \"+p)`, `subprocess.run([\"rm\",\"-rf\",p])`, `subprocess.run([\"rm\",\"-r\",\"-f\",p])`, `[IO.Directory]::Delete(p,$true)`, `rsync --delete`, `--delete-after`, `--del`, `--remove-source-files`, `awk 'BEGIN{system(...)}'`, `Remove-Item` pipeline-fed (`gci | ri -r`), splatted (`@a`), backtick or `^` line-continued. Twins: `fs.rmSync(file)` (no recursive), `[IO.Directory]::Delete(p)` (empty dir only), `os.rmdir`, `Path.unlink`, `grep rmSync src`, a Python string list naming `rmtree`.\nPath forms: `scratch/x` (allowed), `./scratch/x`, `scratch/../..`, `scratch//`, `scratch/.`, `scratch` itself, `scratch/*`, `~`, `~/x`, `$HOME/x`, `%USERPROFILE%\\x`, `/`, `C:\\`, `C:/Users/x`, `\\\\srv\\share`, `\\\\?\\C:\\x`, `/mnt/c/x`, `/c/Users/x`, `..\\x`, `scratch.` and `scratch ` (Windows trims), `Scratch/x`, `SCRATC~1`, `scratсh/x` (Cyrillic с), `\"\"`, `$()`, a NUL byte. Hook tree set: `R/a` in; `R2/a`, `R/../x`, `/c/r/a` vs `C:/r`, UNC, no git root: as in criterion 3.\n\n## Hard limits and notes\nEach commit stays at 15 files and 400 lines or fewer; criterion 2 splits the Copilot reader into its own commit; if the green for 2 still passes 400 lines the Copilot reader moves to a follow-up card named at that commit. Write no change to this machine's Claude Code settings: the hook is a file and a printed snippet only. The reviewer re-measures with `head -n -1 | wc -c` (D168 C2) and `wc -c`.\n\nSize without this Size line (D168 C2 measure): 14829 bytes\nSize: 14847 bytes\n",
+ "checklist_D158": ".mob/records/228/checklist-228-slice.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "w228sl-pmready",
+   "started_at": "2026-11-01T20:34:46Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe slice implements the standing rules. Every criterion has a red-green cycle and a benign twin. Unreadable seats block ship rather than counting as clean. Out-of-scope items go to named follow-up cards instead of being specified up front.\n\nCITE: a seat with no source is a recorded gap that BLOCKS ship\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 20:31 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T20:35:13.871806Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228sl-qa",
+   "started_at": "2026-11-01T20:37:08Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nCITE: Answer: a seat with no source is a recorded gap that BLOCKS ship\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 20:31 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T20:37:38.863279Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228sl-dev",
+   "started_at": "2026-11-01T20:39:32Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe criteria are workable and each is testable without gaming. Criterion 1 is the largest, and the 400-line limit may force splitting its green into commits per helper. The D136 limits already allow that.\n\nCITE: a seat with no source is a recorded gap\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 20:31 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T20:40:03.498165Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228sl-auditlens",
+   "started_at": "2026-11-01T20:42:01Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe proposal can be checked from git alone. A seat with no command source blocks ship through the existing record check, so the team cannot pass by skipping a seat.\n\nCITE: a seat with no source is a recorded gap that BLOCKS ship\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 20:31 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T20:42:37.076371Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228sl-decider",
+   "started_at": "2026-11-01T20:44:30Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nCITE: a seat with no source is a recorded gap\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 20:31 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T20:44:56.828113Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w228slcp1-pmready",
+   "started_at": "2026-11-01T20:33:57Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 20:31 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T20:34:25.290257Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w228slcp1-qa",
+   "started_at": "2026-11-01T20:36:16Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 20:31 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T20:36:47.885522Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w228slcp1-dev",
+   "started_at": "2026-11-01T20:38:34Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 20:31 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T20:39:09.968320Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w228slcp1-auditlens",
+   "started_at": "2026-11-01T20:41:09Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 20:31 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T20:41:40.867857Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w228slcp1-decider",
+   "started_at": "2026-11-01T20:43:40Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 20:31 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T20:44:09.252048Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "slice adopted without conditions (639c5e2, 14847 bytes). All five polled seats NO OBJECTION with a valid D171 cite on the first reply. Every Copilot seat placed by the gate returned no reply.",
+  "D174_trial": {
+   "status": "fallback, not a pass (third and last trial window; all three were fallbacks)",
+   "reason": "decider.py's append-only seat-use check makes parallel runs on one checkout refuse each other",
+   "window_minutes": "20:33:25 to 20:45:30 UTC, serial"
+  }
+ },
+ "ended_at": "2026-11-01T20:45:55Z"
+}
