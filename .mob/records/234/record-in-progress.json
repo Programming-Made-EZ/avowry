@@ -146,6 +146,34 @@
    "rule_miss_cases": [],
    "rule_miss_cases_zero_source": ".mob/records/234/usage/facilitator-2026-11-01-0624.json",
    "facilitator_context_tokens_source_key": "context.tokens_used"
+  },
+  {
+   "kind": "restart",
+   "boundary_marker": "B2",
+   "boundary_hash": "3186c15510b1",
+   "wiki_pages_read": [
+    "core/index",
+    "role/facilitator-restart",
+    "rules/seat-rotation",
+    "rules/stand-downs",
+    "rules/safety-and-push",
+    "rules/thin-slices"
+   ],
+   "handoff_refs": [
+    "HANDOFF.md",
+    ".mob/records/reranks/2026-11-01-15.md",
+    ".mob/records/234/record-in-progress.json"
+   ],
+   "facilitator_context_tokens": 83666,
+   "facilitator_provider_usage_source": ".mob/records/234/usage/restart-report-20261101T093906Z.txt",
+   "facilitator_context_tokens_source_key": "subagent_tokens",
+   "baseline_tokens": 965000,
+   "delta_tokens": -881334,
+   "restart_key_source": ".mob/records/234/usage/restart-key-20261101T093721Z.json",
+   "restart_report_source": ".mob/records/234/usage/restart-report-20261101T093906Z.txt",
+   "rule_miss_cases": [],
+   "rule_miss_cases_zero_source": ".mob/records/234/usage/restart-report-20261101T093906Z.txt",
+   "note": "a fresh Claude subagent given only the Restart here reads; it matched the key on next card, next step, boundary and all four rule pages"
   }
  ],
  "command_scans": [
