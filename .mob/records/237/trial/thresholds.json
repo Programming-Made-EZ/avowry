@@ -16,7 +16,8 @@
  "upkeep_tokens_per_card": 12400,
  "upkeep_minutes": 10,
  "upkeep_over_budget": "forces reshape",
- "cap_stage_a": 1000000,
- "cap_stage_ab": 2000000,
- "cap_reached": "trial stops, unfinished rows recorded as not-run, Decider may not adopt"
+ "cap_stage_a": 15000000,
+ "cap_stage_ab": 30000000,
+ "cap_reached": "trial stops, unfinished rows recorded as not-run, Decider may not adopt",
+ "cap_amendment": "cap_stage_a 1000000 -> 15000000 and cap_stage_ab 2000000 -> 30000000; window 237-cap-fired; ruling commit 327d635 (key-probe deviation ruled first); the new cap was sized from one baseline run's cost only (853272 counted tokens), no outcome data"
 }
