@@ -4,7 +4,8 @@
  "status": "in progress (product owner priority D170, one-card stop-the-line waiver)",
  "decisions": {
   "rank": "re-rank 15 (window 227-rerank-15)",
-  "task_force": "window 234-taskforce (one adopted condition: metrics as numbers with method, and a git-checkable test)"
+  "task_force": "window 234-taskforce (one adopted condition: metrics as numbers with method, and a git-checkable test)",
+  "slice": "window 234-slice: adopted with one condition (slice 0441cfd, amended 5674a66; 11876 bytes, D168)"
  },
  "task_force": [
   {
@@ -48,10 +49,21 @@
    "status": "unscanned",
    "seat": "pm-ready (Copilot CLI)",
    "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-2",
+   "status": "unscanned",
+   "seat": "slice and slice amendment (Copilot CLI)",
+   "reason": "Copilot has no command source"
   }
  ],
  "cycles": [],
  "stand_downs": [],
  "deviations": [],
- "observations_for_next_stand_down": []
+ "observations_for_next_stand_down": [
+  {
+   "by": "facilitator",
+   "observation": "in window 234-slice every Copilot seat placed by the gate returned no reply (14 of 14 over two rounds); each cost about 1.5 min and was recorded as an attempt; card 229 evidence. The runner's strict re-poll did not handle a gate refusal (delivery lead), so that role was re-polled through the gate separately"
+  }
+ ]
 }
