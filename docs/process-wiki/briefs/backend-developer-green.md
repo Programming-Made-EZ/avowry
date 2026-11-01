@@ -1,3 +1,3 @@
 Seat brief for backend-developer-green: read the index, then only the pages below, just in time.
 
-Pages: core/index, role/backend-developer-green
+Pages: core/index, role/backend-developer-green, rules/one-criterion, rules/outside-in-tdd, rules/thin-slices, rules/safety-and-push

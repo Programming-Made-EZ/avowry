@@ -172,11 +172,8 @@ class Tree:
             "product-manager-signoff": "core/index, role/product-manager-signoff, rules/decisions, rules/stand-downs",
             "technical-writer": "core/index, role/technical-writer, rules/decisions, rules/one-criterion",
         }
-        self.include_routes_table = False
-        self.briefs = {
-            role_id.split("/", 1)[1]: f"Pages: core/index, {role_id}\n"
-            for role_id in TASK_FORCE_ROLE_IDS
-        }
+        self.include_routes_table = True
+        self.briefs = {stem: f"Pages: {pages}\n" for stem, pages in self.route_rows.items()}
 
     @staticmethod
     def rule(text, *numbers, depth=2):
@@ -524,6 +521,9 @@ class HostileInputs(unittest.TestCase):
     # disabled
     def test_a_disabled_row_whose_file_is_missing_is_not_required(self):
         tree = Tree()
+        for stem in ("qa-red", "architect-slice"):
+            tree.route_rows[stem] = tree.route_rows[stem].replace(", howto/hostile-inputs", "")
+            tree.briefs[stem] = f"Pages: {tree.route_rows[stem]}\n"
         page = tree.page("howto/hostile-inputs")
         page.status, page.write = "disabled", False
         _, code, out, err = check(tree)

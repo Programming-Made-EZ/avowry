@@ -55,27 +55,31 @@ def parse_row(line: str) -> list[str] | None:
     if len(cells) < 3 or cells[0] != "" or cells[-1] != "":
         return ["__malformed__"]
     values = cells[1:-1]
-    if len(values) != 4:
+    if len(values) not in {2, 4}:
         return ["__malformed__"]
     return values
 
 
-def check_index(root: Path, findings: list[tuple[str, str]]) -> tuple[list[dict[str, str]], set[str]]:
+def check_index(
+    root: Path, findings: list[tuple[str, str]]
+) -> tuple[list[dict[str, str]], set[str], dict[str, list[str]]]:
     rows: list[dict[str, str]] = []
     listed_paths: set[str] = set()
+    routes: dict[str, list[str]] = {}
     index_path = root / INDEX_REL
     if not index_path.is_file():
         findings.append((INDEX_REL.as_posix(), "no index"))
-        return rows, listed_paths
+        return rows, listed_paths, routes
 
     index_text, ok = read_utf8(index_path)
     if not ok:
         findings.append((INDEX_REL.as_posix(), "not valid UTF-8"))
-        return rows, listed_paths
+        return rows, listed_paths, routes
 
     assert index_text is not None
     seen_id: set[str] = set()
     seen_path: set[str] = set()
+    seen_brief: set[str] = set()
 
     for line in index_text.splitlines():
         parsed = parse_row(line)
@@ -84,29 +88,53 @@ def check_index(root: Path, findings: list[tuple[str, str]]) -> tuple[list[dict[
         if parsed == ["__malformed__"]:
             findings.append((INDEX_REL.as_posix(), "malformed row"))
             continue
-        pid, page_path, status, summary = parsed
-        if pid.lower() == "id" and page_path.lower() == "path":
+        if len(parsed) == 4:
+            pid, page_path, status, summary = parsed
+            if pid.lower() == "id" and page_path.lower() == "path":
+                continue
+            if all(SEPARATOR_RE.fullmatch(part.replace(":", "-")) for part in parsed):
+                continue
+            if not ID_RE.fullmatch(pid):
+                findings.append((INDEX_REL.as_posix(), f"bad id {pid}"))
+            if status not in {"enabled", "disabled"}:
+                findings.append((INDEX_REL.as_posix(), f"unknown status {status}"))
+            if pid in seen_id:
+                findings.append((INDEX_REL.as_posix(), f"duplicate id {pid}"))
+            else:
+                seen_id.add(pid)
+            if page_path in seen_path:
+                findings.append((INDEX_REL.as_posix(), f"duplicate path {page_path}"))
+            else:
+                seen_path.add(page_path)
+            listed_paths.add(page_path)
+            rows.append({"id": pid, "path": page_path, "status": status, "summary": summary})
+            continue
+        brief, pages = parsed
+        if brief.lower() == "brief" and pages.lower() == "pages":
             continue
         if all(SEPARATOR_RE.fullmatch(part.replace(":", "-")) for part in parsed):
             continue
-        if not ID_RE.fullmatch(pid):
-            findings.append((INDEX_REL.as_posix(), f"bad id {pid}"))
-        if status not in {"enabled", "disabled"}:
-            findings.append((INDEX_REL.as_posix(), f"unknown status {status}"))
-        if pid in seen_id:
-            findings.append((INDEX_REL.as_posix(), f"duplicate id {pid}"))
-        else:
-            seen_id.add(pid)
-        if page_path in seen_path:
-            findings.append((INDEX_REL.as_posix(), f"duplicate path {page_path}"))
-        else:
-            seen_path.add(page_path)
-        listed_paths.add(page_path)
-        rows.append({"id": pid, "path": page_path, "status": status, "summary": summary})
+        if brief in seen_brief:
+            findings.append((INDEX_REL.as_posix(), f"duplicate route row {brief}"))
+        seen_brief.add(brief)
+        routes[brief] = [p.strip() for p in pages.split(",") if p.strip()]
 
     if not any(row["status"] == "enabled" for row in rows):
         findings.append((INDEX_REL.as_posix(), "no enabled page"))
-    return rows, listed_paths
+    if not routes:
+        findings.append((INDEX_REL.as_posix(), "missing routes table"))
+    status = {row["id"]: row["status"] for row in rows}
+    for brief, ids in routes.items():
+        seen: set[str] = set()
+        for pid in ids:
+            if pid in seen:
+                findings.append((INDEX_REL.as_posix(), f"repeated route page id {pid}"))
+            seen.add(pid)
+            if pid not in status:
+                findings.append((INDEX_REL.as_posix(), f"unknown route page id {pid}"))
+            elif status[pid] != "enabled":
+                findings.append((INDEX_REL.as_posix(), f"disabled route page id {pid}"))
+    return rows, listed_paths, routes
 
 
 def extract_tokens_and_links(rule_line: str) -> tuple[list[str], dict[str, list[str]]]:
@@ -232,14 +260,19 @@ def check_pages(
     return enabled_count
 
 
-def check_briefs(root: Path, rows: list[dict[str, str]], findings: list[tuple[str, str]]) -> None:
+def check_briefs(
+    root: Path, rows: list[dict[str, str]], routes: dict[str, list[str]], findings: list[tuple[str, str]]
+) -> None:
     status = {row["id"]: row["status"] for row in rows}
     for role in REQUIRED_ROLES:
         if status.get(role) != "enabled" or not (root / next(r["path"] for r in rows if r["id"] == role)).is_file():
             findings.append((INDEX_REL.as_posix(), f"missing role page {role}"))
-        stem = role.split("/", 1)[1]
-        if not (root / BRIEFS_REL / f"{stem}.md").is_file():
-            findings.append(((BRIEFS_REL / f"{stem}.md").as_posix(), "missing brief"))
+    for brief, ids in routes.items():
+        own = f"role/{brief}"
+        if own not in ids:
+            findings.append((INDEX_REL.as_posix(), f"missing role page {own}"))
+        if not (root / BRIEFS_REL / f"{brief}.md").is_file():
+            findings.append(((BRIEFS_REL / f"{brief}.md").as_posix(), "missing brief"))
     briefs = root / BRIEFS_REL
     for brief in sorted(briefs.glob("*.md")) if briefs.is_dir() else []:
         rel = posix_rel(brief, root)
@@ -252,25 +285,12 @@ def check_briefs(root: Path, rows: list[dict[str, str]], findings: list[tuple[st
             findings.append((rel, "missing Pages line" if not pages_lines else "repeated Pages line"))
             continue
         ids = [part.strip() for part in pages_lines[0][len("Pages:"):].split(",") if part.strip()]
-        seen: set[str] = set()
-        for pid in ids:
-            if pid in seen:
-                findings.append((rel, f"repeated page id {pid}"))
-            seen.add(pid)
-            if pid not in status:
-                findings.append((rel, f"unknown page id {pid}"))
-            elif status[pid] != "enabled":
-                findings.append((rel, f"disabled page id {pid}"))
-            elif pid != "core/index" and not pid.startswith("role/"):
-                findings.append((rel, f"brief pages must include only core/index and role/ pages, not {pid}"))
-        own = f"role/{brief.stem}"
-        if "core/index" not in seen:
-            findings.append((rel, "brief pages must include core/index"))
-        if own not in seen:
-            findings.append((rel, f"brief pages must include {own}"))
-        for pid in sorted(seen - {"core/index", own}):
-            if pid.startswith("role/") and pid in status:
-                findings.append((rel, f"brief pages must include only core/index and {own}, not {pid}"))
+        expected = routes.get(brief.stem)
+        if expected is None:
+            findings.append((rel, "missing route row"))
+            continue
+        if ids != expected:
+            findings.append((rel, "pages mismatch route row"))
 
 
 def check_floor(root: Path, rows: list[dict[str, str]], findings: list[tuple[str, str]]) -> None:
@@ -326,11 +346,11 @@ def check_card_and_record(root: Path, findings: list[tuple[str, str]]) -> None:
 
 def run(root: Path) -> int:
     findings: list[tuple[str, str]] = []
-    rows, listed_paths = check_index(root, findings)
+    rows, listed_paths, routes = check_index(root, findings)
     enabled_count = check_pages(root, rows, listed_paths, findings) if rows else 0
     check_card_and_record(root, findings)
     if rows:
-        check_briefs(root, rows, findings)
+        check_briefs(root, rows, routes, findings)
         check_floor(root, rows, findings)
     if findings:
         for path, detail in findings:

@@ -19,3 +19,16 @@ Index of the process wiki: one line per page, each page read just in time.
 | rules/stand-downs | docs/process-wiki/rules/stand-downs.md | enabled | Stand-downs: a micro-retro at each cycle boundary with one adjustment, reviewed at the next. |
 | rules/seat-rotation | docs/process-wiki/rules/seat-rotation.md | enabled | Seat rotation: least-recently-used seating and the facilitator checklist before each window. |
 | rules/safety-and-push | docs/process-wiki/rules/safety-and-push.md | enabled | Safety and push: detect after the fact, commit and push often, delete nothing outside the tree. |
+
+Routes: one row per brief; a brief's Pages line must equal its row, in the same order.
+
+| brief | pages |
+|---|---|
+| product-manager-ready | core/index, role/product-manager-ready, rules/seat-rotation, rules/decisions |
+| qa-red | core/index, role/qa-red, rules/one-criterion, rules/outside-in-tdd, howto/hostile-inputs |
+| architect-slice | core/index, role/architect-slice, rules/thin-slices, rules/one-criterion, howto/hostile-inputs |
+| backend-developer-green | core/index, role/backend-developer-green, rules/one-criterion, rules/outside-in-tdd, rules/thin-slices, rules/safety-and-push |
+| independent-reviewer-audit | core/index, role/independent-reviewer-audit, rules/stand-downs, rules/decisions, rules/safety-and-push |
+| delivery-lead-ship | core/index, role/delivery-lead-ship, rules/stand-downs, rules/safety-and-push, rules/decisions |
+| product-manager-signoff | core/index, role/product-manager-signoff, rules/decisions, rules/stand-downs |
+| technical-writer | core/index, role/technical-writer, rules/decisions, rules/one-criterion |

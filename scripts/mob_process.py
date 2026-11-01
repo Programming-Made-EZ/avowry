@@ -524,15 +524,50 @@ def run_check(root, issues, git=None, skip_regeneration=False):
     return 0
 
 
+def page_path(root, page_id):
+    if page_id == "core/index":
+        return root / "docs/process-wiki/INDEX.md"
+    kind, _, slug = page_id.partition("/")
+    folder = {"role": "roles", "rules": "rules", "howto": "howto"}.get(kind)
+    if not folder or not slug:
+        raise RuntimeError(f"unknown page id: {page_id}")
+    return root / "docs/process-wiki" / folder / f"{slug}.md"
+
+
+def build_seat_prompt(root, brief):
+    brief_path = root / "docs/process-wiki/briefs" / f"{brief}.md"
+    if not brief_path.is_file():
+        raise RuntimeError(f"missing brief: {brief}")
+    pages_line = next((line for line in brief_path.read_text(encoding="utf-8").splitlines() if line.startswith("Pages:")), "")
+    if not pages_line:
+        raise RuntimeError(f"missing Pages line in brief: {brief}")
+    page_ids = [part.strip() for part in pages_line[len("Pages:"):].split(",") if part.strip()]
+    payload = ""
+    for page_id in page_ids:
+        page = page_path(root, page_id)
+        if not page.is_file():
+            raise RuntimeError(f"missing page: {page_id}")
+        payload += page.read_text(encoding="utf-8")
+    print(f"bytes: {len(payload.encode('utf-8'))}")
+    if payload:
+        print(payload, end="" if payload.endswith("\n") else "\n")
+    return 0
+
+
 def main(argv=None, issue_reader=read_issues):
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("check", "write-mob-md"))
+    parser.add_argument("command", choices=("check", "write-mob-md", "seat-prompt"))
+    parser.add_argument("brief", nargs="?")
     parser.add_argument("--root", type=Path)
     parser.add_argument("--skip-regeneration", action="store_true",
                         help="skip only MOB.md's byte-for-byte regeneration comparison")
     args = parser.parse_args(argv)
     root = args.root.resolve() if args.root else Path(__file__).resolve().parents[1]
     try:
+        if args.command == "seat-prompt":
+            if not args.brief:
+                raise RuntimeError("missing brief")
+            return build_seat_prompt(root, args.brief)
         issues = issue_reader()
         git = lambda *values: git_command(root, *values)
         if args.command == "check":
