@@ -198,6 +198,17 @@ def check_citation(root, t1, change, findings):
     if not added or not is_ancestor(root, added, change):
         findings.append(f"{rel}: committed or changed at or after the first run: "
                         f"amendment decision file {decision} not in git before the change")
+    m = re.search(r"(?:^|\s)ruling commit ([0-9a-fA-F]{7,40})(?=[;,.)]|\s|$)", text)
+    if not m:
+        findings.append(f"{rel}: committed or changed at or after the first run: amendment names no ruling commit")
+        return
+    hexs = m.group(1).lower()
+    code, full = git(root, "rev-parse", "--verify", "--quiet", hexs + "^{commit}")
+    if code != 0 or not full.startswith(hexs):  # a ref named like a hash resolves elsewhere: not the commit named
+        findings.append(f"{rel}: committed or changed at or after the first run: amendment ruling commit {hexs} is not a commit")
+    elif not is_ancestor(root, full, change):
+        findings.append(f"{rel}: committed or changed at or after the first run: "
+                        f"amendment ruling commit {hexs} is not an ancestor of the change")
 
 
 def check_order(root, docs, findings):
