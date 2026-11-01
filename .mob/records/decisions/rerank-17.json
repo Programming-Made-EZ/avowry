@@ -1,0 +1,269 @@
+{
+ "window": "rerank-17",
+ "category": "loop-boundary re-rank",
+ "rule": "D148 PM-led re-rank at card 237's boundary; D153; D171 cite-a-point; D174 parallel dispatch (first window under it: run serially as a recorded FALLBACK)",
+ "proposed_by": {
+  "role": "product manager",
+  "model": "claude (sonnet)",
+  "context": "fresh",
+  "probe_reference": "probe 2026-11-01 19:01 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang)"
+ },
+ "opened_at": "2026-11-01T19:35:05Z",
+ "proposal": "# Re-rank note 2026-11-01 (17) PROPOSAL: boundary after card 237 closed; 228 first, then 229 and the reshape card 238\n\n- Status: a proposal by the product manager seat (D148). It is not applied. The team decides it in a loop-boundary re-rank window first; scripts/board/rerank.py is not run.\n- Intent (D165): D173 chose RESHAPE and ordered one follow-up for the team to rank, and D172's waiver covered the evaluation only. The owner wants the open-FAIL correctives to resume (D172), and no new card to jump ahead on a waiver that has ended.\n- Before (note 16): 228, 210, 211, 229, 230, 231, 232, 233, 216, 220, 221, 222, 223, 224, 225, 213, 217, 218, 212, 215, 206, 207. Cards 235, 236 and 238 are unranked.\n- After:\n  1. 228 (names F-071), 210 (MD-003), 211 (MD-010): unchanged, first.\n  2. 229: the Copilot decision seat gets its whole prompt and votes.\n  3. 238: the reshaped wiki carries the slice limits and a measured upkeep.\n  4. 236: the wiki's seven content gaps, plus the user-story and ZOMBIES pages.\n  5. 230, 231, 232, 233, as in note 16.\n  6. 235: green commit bodies carry a checked Proof block.\n  7. Then 216, 220, 221, 222, 223, 224, 225, 213, 217, 218, 212, 215, 206, 207.\n  Full: 228, 210, 211, 229, 238, 236, 230, 231, 232, 233, 235, 216, 220, 221, 222, 223, 224, 225, 213, 217, 218, 212, 215, 206, 207.\n- Next card: 228, in mob-defaults.\n\n## Reasons for each placement\n- Stop-the-line correctives (audit 108: MD-003, MD-010, F-071, F-072, F-074): D172 resumes them after 237, which has closed. 228, 210 and 211 name F-071, MD-003 and MD-010, so they keep the head and are the only cards the corrective gate lets start. F-072 and F-074 still have no ledger text and no card; if either proves to be a collision bug or the Copilot no-vote, the card that names it moves up (230 or 229). Nothing here ranks above a FAIL-naming card.\n- 238 is ranked on value, not on the waiver. D172's waiver ended with the evaluation, and D173 says the team ranks the follow-up. Its value is real but bounded: the stage A median token saving was 41.74% with five of six roles at or over 20%, so the reshape is worth finishing. But no build is ordered and nothing adopted depends on it, so no FAIL should wait behind it. It is also the gate for D173 motion B: the three-retro wiki review starts only after 238 lands, so each card that closes before 238 is a retro the experiment does not cover. That puts it right behind the FAIL cards.\n- 229 goes ahead of 238. Copilot returned no reply in every decision window of card 237 (card 229), and the retro placed it as a Decider item: remove Copilot from gate-placed seats, or fix 229 first. D174 now launches all voters of a window at once, which makes each wasted seat cost parallel capacity, not only time. 238 needs a Decider for its readiness and re-run, so a thin panel hurts it first. It stays behind 228, 210 and 211 because only FAIL-naming cards can start; its own card text names MD-002 rotation, not an open FAIL.\n- 236 sits right behind 238 because both edit the same wiki. If 236 changed a route after 238's re-run, the independent recompute would be stale. 236 ranks lower on value: nothing is adopted, so its gaps cost a miss only if a build is later chosen. Rule for the order: 236 must not touch the slice route 238 re-runs.\n- 230 to 233 keep note 16's order. They name no open FAIL and nothing in card 237 changes their value.\n- 235 goes just before 216 because it enables 216 (the template carries the Proof block rule), and a template card cannot carry a rule the check does not yet enforce. It names no open FAIL. The cost of waiting is small, because Proof-block misses are now caught at review. It can move up if another green lands with no Proof block.\n\n## Recommendations (not applied)\n- Fold, recommended with a limit: 236 into 238 at ready, only for the three user-story and ZOMBIES pages (the auditor's item), if the team judges the combined card within the thin-slice limits. Do not fold N1 to N7. Together they make six done checks, over the card limit of three, and the 238 card text itself says not to fold 236 unless the team does so at ready. If the whole of 236 is folded, withdraw 236 as a separate card.\n- Withdraw: none. 236 is withdrawn only by the fold above. No card is withdrawn on the RESHAPE outcome (D173), which supports keeping the wiki cards.\n- Not filed, per the instruction: the retro's follow-ups (MOB.md regeneration, the Copilot gate removal decision, \"no commit while a voter runs\", the D171 keep, revise or drop motion). The Copilot item should be a Decider in this window; the others can wait for a card.\n\n## Reversals stated\n- 238 moves behind 236 if the team wants 236's pages in the wiki before the re-run, and then 236 must not change the slice route.\n- 229 moves behind 238 if the team removes Copilot from gate-placed seats by Decider, since that closes the waste another way.\n- 235 moves up behind 211 if a green lands with no Proof block before it starts.\n- The open FAILs stay open and owned. A FAIL that no queued card names puts its corrective first.\n\nSize: 5081 bytes\n",
+ "checklist_D158": ".mob/records/reranks/2026-11-01-17.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "wrr17-architect",
+   "started_at": "2026-11-01T19:35:57Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe ranking leaves the FAIL-naming cards 228, 210 and 211 first, and its constraint that 236 must not touch the slice route 238 re-runs is a clear, checkable rule. Nothing in it changes the record format, the checker rules or the findings file.\n\nCITE: Nothing here ranks above a FAIL-naming card.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 19:01 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T19:36:23.739608Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "wrr17-qa",
+   "started_at": "2026-11-01T19:38:06Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nThe ordering is checkable against the board: FAIL-naming cards 228, 210 and 211 stay first, and the reversals each give a testable trigger. The \"236 must not touch the slice route\" rule can be checked by diffing the route before and after.\nCITE: Nothing here ranks above a FAIL-naming card.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 19:01 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T19:38:36.845444Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "wrr17-auditlens",
+   "started_at": "2026-11-01T19:40:33Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: Nothing here ranks above a FAIL-naming card.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 19:01 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T19:41:01.237574Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "wrr17c-delivery",
+   "started_at": "2026-11-01T19:47:34Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe order keeps the FAIL-naming cards first and puts the thin-slice cards 238 and 236 right behind them. The proposal also warns against folding all of 236 into 238, which keeps that card within the three-done-check limit.\n\nCITE: Do not fold N1 to N7.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 19:01 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T19:48:03.049883Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "delivery lead",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "wrr17-decider",
+   "started_at": "2026-11-01T19:45:05Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nCITE: 238 needs a Decider for its readiness and re-run\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 19:01 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T19:45:38.054353Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "wrr17cp1-architect",
+   "started_at": "2026-11-01T19:35:05Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 19:01 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T19:35:37.145284Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "wrr17cp1-qa",
+   "started_at": "2026-11-01T19:37:19Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 19:01 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T19:37:46.742261Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "wrr17cp1-auditlens",
+   "started_at": "2026-11-01T19:39:44Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 19:01 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T19:40:12.822990Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "wrr17cp1-delivery",
+   "started_at": "2026-11-01T19:42:07Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 19:01 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T19:42:34.167297Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "delivery lead",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "claude",
+   "context": "wrr17-delivery",
+   "started_at": "2026-11-01T19:42:53Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: 228, 210, 211: unchanged, first.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 19:01 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T19:43:22.213907Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "delivery lead",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "wrr17ccp1-delivery",
+   "started_at": "2026-11-01T19:46:48Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 19:01 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T19:47:15.637628Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "delivery lead",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "wrr17cp1-decider",
+   "started_at": "2026-11-01T19:44:17Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 19:01 UTC (.mob/records/probes/2026-10-30.jsonl; Codex left out after its 13:53 hang) and decider.py's own probe at 2026-11-01T19:44:45.898688Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "adopted without conditions: 228, 210, 211, 229, 238, 236, 230, 231, 232, 233, 235, 216, then the tail of note 16. All five polled seats NO OBJECTION with a valid D171 cite; the delivery lead's first cite had 5 words and was re-asked once. Every Copilot seat placed by the gate returned no reply.",
+  "D174_trial": {
+   "status": "fallback, not a pass",
+   "reason": "decider.py verifies after each run that the shared seat-use history is what that run last saw or wrote (verify_history, append-only), so parallel runs on one checkout would refuse each other; making the launch safe needs a decider.py change (a card)",
+   "window_minutes": "19:34:32 to 19:48:32 UTC, serial"
+  }
+ },
+ "ended_at": "2026-11-01T19:48:58Z"
+}
