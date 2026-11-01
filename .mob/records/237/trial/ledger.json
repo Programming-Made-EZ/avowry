@@ -71,7 +71,7 @@
    "cached_input": 295686,
    "output_total": 3812,
    "counted_tokens": 328391,
-   "misses": 0,
+   "misses": 1,
    "source": ".mob/records/237/trial/runs/wiki-slice-1.json",
    "report": ".mob/records/237/trial/reports/wiki-slice-1.report.md",
    "tool_log": ".mob/records/237/trial/runs/wiki-slice-1.tools.jsonl",
@@ -228,8 +228,9 @@
  "not_run": [],
  "aggregates": {
   "median_counted_tokens": {
-   "baseline": 853272
+   "baseline": 911895.5,
+   "wiki": 531242.5
   },
-  "delta_pct": null
+  "delta_pct": 41.74
  }
 }
