@@ -607,6 +607,20 @@ class WikiTrial(unittest.TestCase):
         code, out, err = run(c.build())
         self.assertEqual((code, err), (0, ""))
 
+    # Card 237, window 237-amendment-ordering, cycle 8: ONE thresholds commit after the first run. Hostile 15
+    # (two commits, each fine alone) and 5 (cap_amendment edited in a second change).
+    def test_two_amendment_commits_each_fine_alone(self):  # hostile 15
+        c = Amended()
+        c.steps = c.steps + [["amend2"]]
+        c.amends["amend2"] = dict(c.amended, cap_stage_a=20000000, cap_stage_ab=40000000)
+        fails(c, self, "amendment spans 2 thresholds commits")
+
+    def test_cap_amendment_edited_in_a_second_change(self):  # hostile 5
+        c = Amended()
+        c.steps = c.steps + [["amend2"]]
+        c.amends["amend2"] = dict(c.amended, cap_amendment=c.amended["cap_amendment"] + " (reworded)")
+        fails(c, self, "amendment spans 2 thresholds commits")
+
     def test_real_trial_folder_is_ready(self):
         """RED until step 0d: the real repo has no committed trial folder yet, so the check must fail."""
         code, out, err = run(REPO)
