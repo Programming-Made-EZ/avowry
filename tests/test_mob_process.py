@@ -706,8 +706,9 @@ jobs:
         (self.root / "MOB.md").write_bytes(mob.render_mob(self.root, [], self.git).encode("utf-8"))
         def check():
             out = io.StringIO()
-            # Card 234 criterion 2: these tests are about windows, so the process-wiki check (own tests) is held clean here
-            with contextlib.redirect_stdout(out), mock.patch.object(mob, "check_process_wiki", return_value=[]): code = mob.run_check(self.root, [], git=self.git)
+            # Card 234 criteria 2 and 3: these tests are about windows, so process-wiki and restart-record checks are held clean here.
+            with (contextlib.redirect_stdout(out), mock.patch.object(mob, "check_process_wiki", return_value=[]),
+                  mock.patch.object(mob, "check_restart_record", return_value=[])): code = mob.run_check(self.root, [], git=self.git)
             return code, out.getvalue()
         def window(name, **fields):
             data = {"window": name, "category": "slice decision", "ended_at": "2026-10-30T07:38:24Z", "replies": []}
@@ -742,8 +743,9 @@ jobs:
     def test_every_seat_in_a_window_needs_model_context_answer_and_probe_reference(self):
         def check():
             out = io.StringIO()
-            # Card 234 criterion 2: these tests are about windows, so the process-wiki check (own tests) is held clean here
-            with contextlib.redirect_stdout(out), mock.patch.object(mob, "check_process_wiki", return_value=[]): code = mob.run_check(self.root, [], git=self.git)
+            # Card 234 criteria 2 and 3: these tests are about windows, so process-wiki and restart-record checks are held clean here.
+            with (contextlib.redirect_stdout(out), mock.patch.object(mob, "check_process_wiki", return_value=[]),
+                  mock.patch.object(mob, "check_restart_record", return_value=[])): code = mob.run_check(self.root, [], git=self.git)
             return code, out.getvalue()
         path = self.root / ".mob/records/decisions/340-seats.json"
         # Given a complete window (guard), then an objection that carries a condition and an attempts entry that is not a reply (guards), the check passes

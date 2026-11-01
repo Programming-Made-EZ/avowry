@@ -486,6 +486,22 @@ def check_process_wiki(root):
     return [f"process-wiki: {line}" for line in lines] or [f"process-wiki: checker exited {result.returncode} with no findings"]
 
 
+def check_restart_record(root):
+    """Card 234 criterion 3: restart record must pass scripts/check-restart-record.py; run failures fail closed."""
+    script = root / "scripts" / "check-restart-record.py"
+    if not script.is_file():
+        return [f"restart-record: checker script is missing ({script.name})"]
+    try:
+        result = subprocess.run([sys.executable, str(script), "--root", str(root)], capture_output=True, text=True,
+                                encoding="utf-8", timeout=120)
+    except (OSError, subprocess.SubprocessError) as exc:
+        return [f"restart-record: checker could not run: {exc!r}"]
+    if result.returncode == 0:
+        return []
+    lines = [line.strip() for line in result.stderr.splitlines() if line.strip()]
+    return [f"restart-record: {line}" for line in lines] or [f"restart-record: checker exited {result.returncode} with no findings"]
+
+
 def run_check(root, issues, git=None, skip_regeneration=False):
     git = git or (lambda *args: git_command(root, *args))
     legacy = json.loads((root / ".mob/records/LEGACY.json").read_text(encoding="utf-8"))["cards"]
@@ -495,7 +511,7 @@ def run_check(root, issues, git=None, skip_regeneration=False):
     for check in (lambda: check_records(root, issues, git), lambda: check_retros(root, closed_cards | set(legacy), maximum),
                   lambda: check_legacy(root, issues), lambda: check_mob(root, issues, git, skip_regeneration),
                   lambda: check_events(root, issues), lambda: check_workflows(root), lambda: check_issue_labels(issues), lambda: check_windows(root),
-                  lambda: check_process_wiki(root)):
+                  lambda: check_process_wiki(root), lambda: check_restart_record(root)):
         try:
             errors.extend(check())
         except (OSError, ValueError, RuntimeError, TypeError, AttributeError, KeyError) as exc:

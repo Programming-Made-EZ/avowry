@@ -67,6 +67,62 @@
   "facilitator_context_size": "Record facilitator context token counts at each restart boundary from committed provider usage and compare to the 965K baseline.",
   "rule_misses": "Record each unread-required-page miss as a structured case in rule_miss_cases with seat context, boundary, page id, and source reference."
  },
+ "seat_metrics": {
+  "ctx-1": {
+   "not_measured_reason": "Committed usage sources list seat totals only, not setup/end checkpoints for this context.",
+   "available_evidence_source": ".mob/records/234/usage/seats-2026-11-01-0626.json"
+  },
+  "ctx-2": {
+   "not_measured_reason": "Committed usage sources list seat totals only, not setup/end checkpoints for this context.",
+   "available_evidence_source": ".mob/records/234/usage/seats-2026-11-01-0626.json"
+  },
+  "ctx-3": {
+   "not_measured_reason": "Committed usage sources list seat totals only, not setup/end checkpoints for this context.",
+   "available_evidence_source": ".mob/records/234/usage/seats-2026-11-01-0626.json"
+  },
+  "ctx-4": {
+   "not_measured_reason": "Committed usage sources list seat totals only, not setup/end checkpoints for this context.",
+   "available_evidence_source": ".mob/records/234/usage/seats-2026-11-01-0626.json"
+  },
+  "ctx-5": {
+   "not_measured_reason": "Committed usage sources list seat totals only, not setup/end checkpoints for this context.",
+   "available_evidence_source": ".mob/records/234/usage/seats-2026-11-01-0626.json"
+  },
+  "ctx-6": {
+   "not_measured_reason": "Committed usage sources list seat totals only, not setup/end checkpoints for this context.",
+   "available_evidence_source": ".mob/records/234/usage/seats-2026-11-01-0626.json"
+  },
+  "ctx-7": {
+   "not_measured_reason": "Committed usage sources list seat totals only, not setup/end checkpoints for this context.",
+   "available_evidence_source": ".mob/records/234/usage/seats-2026-11-01-0626.json"
+  },
+  "ctx-8": {
+   "not_measured_reason": "Committed usage sources list seat totals only, not setup/end checkpoints for this context.",
+   "available_evidence_source": ".mob/records/234/usage/seats-2026-11-01-0626.json"
+  }
+ },
+ "restarts": [
+  {
+   "boundary_marker": "B1",
+   "boundary_hash": "3b70513504864f668aa8e2f001654eda2ab9cb8f",
+   "wiki_pages_read": [
+    "core/index",
+    "rules/seat-rotation",
+    "rules/stand-downs",
+    "rules/safety-and-push"
+   ],
+   "handoff_refs": [
+    "HANDOFF.md",
+    ".mob/records/234/turn-slice-architect.md"
+   ],
+   "facilitator_context_tokens": 782199,
+   "facilitator_provider_usage_source": ".mob/records/234/usage/facilitator-2026-11-01-0624.json",
+   "baseline_tokens": 965000,
+   "delta_tokens": -182801,
+   "rule_miss_cases": [],
+   "rule_miss_cases_zero_source": ".mob/records/234/usage/facilitator-2026-11-01-0624.json"
+  }
+ ],
  "command_scans": [
   {
    "context": "ctx-1",
