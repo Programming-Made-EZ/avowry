@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 234,
+ "title": "An indexed process wiki with just-in-time reading",
+ "process": "card-mode rules run by hand; product owner priority D170 with a one-card stop-the-line waiver; D157 one criterion per cycle; review fixes as increments 1b, 2b, 2c and 3b; seats alternating Copilot and Claude",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Copilot ctx-1",
+   "model": "copilot (auto) via the Copilot CLI, product manager (ready); evidence is the ready window's D158 checklist commit, as the proposal itself has no Card-named commit; seats rotated between Copilot (its CLI) and Claude (subagents) by least-recently-used; Codex, Grok and agy without quota at every probe of 2026-11-01",
+   "evidence": "ed6838f"
+  },
+  {
+   "role": "slice",
+   "seat": "Copilot ctx-2",
+   "model": "copilot (auto) via the Copilot CLI, architect (slice and amendment); seats rotated between Copilot (its CLI) and Claude (subagents) by least-recently-used; Codex, Grok and agy without quota at every probe of 2026-11-01",
+   "evidence": "0441cfd"
+  },
+  {
+   "role": "red",
+   "seat": "Claude and Copilot ctx-4",
+   "model": "claude-sonnet subagent and copilot (auto), QA engineer; reds alternated by rotation; seats rotated between Copilot (its CLI) and Claude (subagents) by least-recently-used; Codex, Grok and agy without quota at every probe of 2026-11-01",
+   "evidence": "58af0cc"
+  },
+  {
+   "role": "green",
+   "seat": "Claude and Copilot ctx-5",
+   "model": "claude-sonnet subagent and copilot (auto), backend developer, author; seats rotated between Copilot (its CLI) and Claude (subagents) by least-recently-used; Codex, Grok and agy without quota at every probe of 2026-11-01",
+   "evidence": "9432ce2"
+  },
+  {
+   "role": "ship",
+   "seat": "Copilot ctx-7",
+   "model": "copilot (auto) via the Copilot CLI, delivery lead, D154 pre-ship gate; seats rotated between Copilot (its CLI) and Claude (subagents) by least-recently-used; Codex, Grok and agy without quota at every probe of 2026-11-01",
+   "evidence": "371c2ed"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-8",
+   "model": "claude-sonnet subagent, product manager (sign-off); seats rotated between Copilot (its CLI) and Claude (subagents) by least-recently-used; Codex, Grok and agy without quota at every probe of 2026-11-01",
+   "evidence": "39d0c9e"
+  }
+ ],
+ "retro": "docs/retros/card-234-2026-11-01.md",
+ "notes": "Product owner priority D170 (one-card waiver). Signed off; the experiment verdict is REVISE (do not promote to the template yet): measured pair qa-red full 69701 against brief 49032 tokens (one run each); a real restart by a fresh context at 83666 tokens against the 965000 baseline with 0 computed misses against a committed key (one run); Copilot seats 0.9 to 6.7 million input tokens each, mostly cached. Commits: criterion 1 c12f7f2 c941885, review fix eb47780 f8ef376 8f4836e; criterion 2 570dc5c 707434b e724cdf f9a3236 042bf79, review fixes ae04522 b88e0b5 daf3e6d fd6e1fd; criterion 3 eb68d95 9daab9f 8c4372d, review fix ef38d5e 3186c15, key 68108b7, report and evidence. Reviews 3c6181c and b37a8ad (CHANGES REQUESTED), triage 060edcb, re-checks 9f8ed23 and 039e468 (APPROVE); gate 371c2ed; sign-off 39d0c9e. Deviations: D136 breaches c12f7f2, eb68d95 and f8ef376; a self-contradicting red; a seat's git stash on the shared checkout; an unpushed unit for about 7 minutes; a test red on main for about 4 minutes. Retro pick D171 (cite-a-point votes). Follow-ups: card 235 (checked Proof blocks), card 236 (the writer's seven gaps). Command scans: .mob/records/234/command-scans.json (Claude seats clean; Copilot seats unscanned, no command source)."
+}

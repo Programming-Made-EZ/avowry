@@ -1,0 +1,162 @@
+{
+ "card": 234,
+ "command_scans": [
+  {
+   "context": "ctx-1",
+   "status": "unscanned",
+   "seat": "pm-ready (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-2",
+   "status": "unscanned",
+   "seat": "slice and slice amendment (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-4",
+   "status": "clean",
+   "seat": "intent and red 1 (Claude)",
+   "commands": 44,
+   "transcript": "subagents/agent-ab3ea2815470fb969.jsonl",
+   "source": "python delete_guard.py scan-transcript (mob-defaults f8a45da), facilitator; read before recording"
+  },
+  {
+   "context": "ctx-5",
+   "status": "unscanned",
+   "seat": "green 1 (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-4",
+   "status": "unscanned",
+   "seat": "red 2 (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green 2 attempt (Claude)",
+   "commands": 47,
+   "transcript": "subagents/agent-a983312bbf30ddd6d.jsonl",
+   "source": "python delete_guard.py scan-transcript, facilitator; read"
+  },
+  {
+   "context": "ctx-4",
+   "status": "unscanned",
+   "seat": "red 2 fix (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green 2 (Claude)",
+   "transcript": "subagents/agent-a031f1d8981529680.jsonl",
+   "commands": 24,
+   "source": "python delete_guard.py scan-transcript, facilitator; read"
+  },
+  {
+   "context": "ctx-7",
+   "status": "unscanned",
+   "seat": "stand-down 2 (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-4",
+   "status": "clean",
+   "seat": "red 3 (Claude)",
+   "commands": 47,
+   "transcript": "subagents/agent-a9444442c4053b554.jsonl",
+   "source": "python delete_guard.py scan-transcript, facilitator; read"
+  },
+  {
+   "context": "ctx-5",
+   "status": "unscanned",
+   "seat": "green 3 (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-3",
+   "status": "unscanned",
+   "seat": "writer review (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-6",
+   "status": "clean",
+   "seat": "review (Claude)",
+   "commands": 35,
+   "transcript": "subagents/agent-a7795a80330d5f637.jsonl",
+   "source": "python delete_guard.py scan-transcript, facilitator; read"
+  },
+  {
+   "context": "ctx-4",
+   "status": "unscanned",
+   "seat": "red 1b (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green 1b (Claude)",
+   "transcript": "subagents/agent-a2c68476d515ae1d3.jsonl",
+   "commands": 102,
+   "source": "python delete_guard.py scan-transcript, facilitator"
+  },
+  {
+   "context": "ctx-4",
+   "status": "unscanned",
+   "seat": "red 2b (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green 2b (Claude)",
+   "transcript": "subagents/agent-a177dfde47072868d.jsonl",
+   "commands": 53,
+   "source": "python delete_guard.py scan-transcript, facilitator"
+  },
+  {
+   "context": "ctx-4",
+   "status": "unscanned",
+   "seat": "red 2c (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green 2c (Claude)",
+   "transcript": "subagents/agent-accf9a242bad6f585.jsonl",
+   "commands": 49,
+   "source": "python delete_guard.py scan-transcript, facilitator; read"
+  },
+  {
+   "context": "ctx-4",
+   "status": "unscanned",
+   "seat": "red 3b (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-6",
+   "status": "unscanned",
+   "seat": "re-check (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "writer re-check (Claude)",
+   "commands": 26,
+   "transcript": "subagents/agent-a3a80f2a56836fb17.jsonl",
+   "source": "python delete_guard.py scan-transcript, facilitator; read"
+  },
+  {
+   "context": "ctx-7",
+   "status": "unscanned",
+   "seat": "pre-ship gate (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  }
+ ],
+ "note": "beside the closing record because avowry's schema 1 allows exactly seven keys (the conflict is card 210's)"
+}
