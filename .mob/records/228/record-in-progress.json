@@ -88,6 +88,24 @@
    "status": "clean",
    "seat": "dev green 1c (Claude subagent)",
    "detail": "clean: 27 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 1d (Claude subagent)",
+   "detail": "clean: 34 command(s) scanned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "dev green 1d (Claude subagent)",
+   "detail": "clean: 27 command(s) scanned"
+  },
+  {
+   "context": "ctx-2",
+   "status": "clean",
+   "seat": "architect ssh-agent ruling (Claude subagent)",
+   "detail": "clean: 3 command(s) scanned"
   }
  ],
  "token_usage": [
@@ -137,6 +155,11 @@
    "seat": "architect ctx-2, ssh-agent ruling",
    "source": "Agent completion report (subagent_tokens)",
    "subagent_tokens": 59848
+  },
+  {
+   "seat": "QA ctx-3, red 1d",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 86722
   }
  ],
  "cycles": [
@@ -172,6 +195,16 @@
     "b1baedf",
     "61e77ca"
    ]
+  },
+  {
+   "criterion": 1,
+   "increment": "1d",
+   "red": "40555b4 (tests/test_command_scan_gitpipe_1d.py; 12 failures on committed code, 6 born-green guards)",
+   "green": "4e35837 (git reset --hard, checkout -f/--force/-- ., iex/Invoke-Expression and eval of built strings, splatted or continued Remove-Item; red 4/4, 15 modules 429 OK, full suite 1269 OK, 1 skipped)",
+   "turn_records": [
+    "2740568",
+    "9ba855c"
+   ]
   }
  ],
  "stand_downs": [],
@@ -180,6 +213,11 @@
    "by": "facilitator",
    "what": "at card 237's close the facilitator scanned the Agent task output files, which hold no assistant record, and recorded fifteen seats as unscanned",
    "handling": "re-scanned from the subagent transcripts after this card's slice named the right source; card 237's command-scans.json corrected"
+  },
+  {
+   "by": "facilitator",
+   "what": "the architect's ruling seat was launched about one minute before its in-flight line",
+   "handling": "line written late and says so (c5b2e6b)"
   }
  ],
  "observations_for_next_stand_down": [
