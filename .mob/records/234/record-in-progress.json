@@ -269,6 +269,14 @@
    "status": "unscanned",
    "seat": "red 2c (Copilot CLI)",
    "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green 2c (Claude)",
+   "transcript": "subagents/agent-accf9a242bad6f585.jsonl",
+   "commands": 49,
+   "source": "python delete_guard.py scan-transcript, facilitator; read"
   }
  ],
  "cycles": [
@@ -344,7 +352,11 @@
    "criterion": 2,
    "increment": "2c (review fix: source-checked token values, measurement pair)",
    "repo": "avowry",
-   "red": "daf3e6d (CriterionTwoReviewFixesR2R4: 6 run, 6 failing at HEAD; prototype OK; Copilot seat)"
+   "red": "daf3e6d (CriterionTwoReviewFixesR2R4: 6 run, 6 failing at HEAD; prototype OK; Copilot seat)",
+   "green": "fd6e1fd (seat numbers checked against committed sources; not_measured and unverified rules; seat_ab measurement pair; mutation runner committed)",
+   "suite": "494 OK, 7 skipped",
+   "measurement": "qa-red one-turn step: full agreement 69701 tokens ($0.28), brief-only 49032 ($0.08); ratio 0.70 by tokens, 0.28 by cost; both include the CLI's fixed system prompt; one pair, no variance claim",
+   "mutations": "the red's 6 and 10 more (the reviewer's four plus six), all caught"
   }
  ],
  "stand_downs": [
