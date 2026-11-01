@@ -1120,5 +1120,11 @@
     "status": "in force",
     "title": "A slice size cap of 15 KB, larger cards split into numbered slices (card 227 retro pick)",
     "order": 159
+  },
+  "D169": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Product owner ruling: detection after the fact is acceptable for the deletion-ban corrective if work is committed and pushed regularly and no recursive delete targets anything outside the working tree",
+    "order": 160
   }
 }
