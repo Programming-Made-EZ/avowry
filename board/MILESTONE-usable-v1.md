@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:4291715489ba1a8166be7740dd6189d63144bc3963144bb3e4813b5d9148a90d -->
+<!-- board-table-sha256:bd6f9d4c1090204f267bc20f4ea78b97bb09061d441be3ccf10c855edcf22582 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -101,7 +101,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 79 | 219 The record checker accepts cards that close out of number order | Done | none |
 | 80 | 226 Decision seats start on a fresh probe and rotate like card seats | Done | none (card 208, which built the rules for card-mode seats, is done) |
 | 81 | 227 Recursive deletes on variable paths are blocked and every commit is pushed | Done | none |
-| 82 | 234 An indexed process wiki with just-in-time reading | Ready | none |
+| 82 | 234 An indexed process wiki with just-in-time reading | Done | none |
 | 83 | 228 Recursive-delete scan covers hidden, encoded and non-shell forms, and the contents of files a seat writes | Ready | card 227 (its command-position scan, literal-path allow-list and fail-closed coverage) |
 | 84 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
 | 85 | 211 A whole-team review of the mob-defaults rulings commits | Ready | none |
