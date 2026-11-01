@@ -42,6 +42,7 @@ Fixture trees are made with tempfile.mkdtemp and left in place (no cleanup, by t
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -207,6 +208,30 @@ def check(tree, *extra):
     root = tree.build()
     code, out, err = run("--root", str(root), *extra)
     return root, code, out, err
+
+
+def quoted_rule(text, number, quote, depth=2):
+    link = f"[D{number}]({'../' * depth}decisions/process-and-staffing.md#d{number})"
+    return f'- Rule: {text} Quote: "{quote}". See {link}.'
+
+
+def fresh_repo_copy(prefix):
+    root = Path(tempfile.mkdtemp(prefix=prefix))
+    for rel in (
+        "docs/process-wiki",
+        "docs/decisions",
+        "board/234-an-indexed-process-wiki-with-just-in-time-reading.md",
+        ".mob/records/234/record-in-progress.json",
+        "TEAM_WORKING_AGREEMENT.md",
+    ):
+        src = REAL / rel
+        dst = root / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        if src.is_dir():
+            shutil.copytree(src, dst, dirs_exist_ok=True)
+        else:
+            shutil.copy2(src, dst)
+    return root
 
 
 class ZeroCases(unittest.TestCase):
@@ -589,6 +614,120 @@ class CardNumbersAndMethods(unittest.TestCase):
         self.assertEqual(code, 1, err)
         self.assertNotIn("Traceback", err)
         self.assertRegex(err, rf"(?m)^{re.escape(RECORD)}: record not valid JSON")
+
+
+class CriterionOneQuotesAndMutations(unittest.TestCase):
+    """Review fixes R7/R10: rule-line quotes, ZOMBIES probes, and named mutations."""
+
+    @staticmethod
+    def _clear_rules(tree):
+        for page in tree.pages:
+            page.rules = []
+
+    # ZOMBIES for criterion 1 quotes:
+    # Z no rule lines; O one quoted rule; M many quoted rules; B boundary verbatim mismatch;
+    # I finding includes page path; E missing Quote field; S named mutation probes on fresh copies.
+    def test_quote_z_no_rule_lines_is_clean(self):
+        tree = Tree()
+        for page in tree.pages:
+            page.rules = []
+        tree.team_working_agreement = ""
+        _, code, out, err = check(tree)
+        self.assertEqual((code, err), (0, ""), err)
+        self.assertIn("process-wiki: OK", out)
+
+    def test_quote_o_one_line_with_a_verbatim_quote_is_clean(self):
+        tree = Tree()
+        self._clear_rules(tree)
+        tree.page("rules/one-criterion").rules = [
+            quoted_rule("One criterion per cycle.", 157, "Decider D157")
+        ]
+        _, code, out, err = check(tree)
+        self.assertEqual((code, err), (0, ""), err)
+        self.assertIn("process-wiki: OK", out)
+
+    def test_quote_m_harmless_twins_with_the_same_quote_stay_clean(self):
+        tree = Tree()
+        self._clear_rules(tree)
+        tree.page("rules/one-criterion").rules = [
+            quoted_rule("First twin.", 157, "Decider D157"),
+            quoted_rule("Second twin.", 157, "Decider D157"),
+        ]
+        _, code, out, err = check(tree)
+        self.assertEqual((code, err), (0, ""), err)
+        self.assertIn("process-wiki: OK", out)
+
+    def test_quote_b_verbatim_mismatch_fails(self):
+        tree = Tree()
+        self._clear_rules(tree)
+        tree.page("rules/one-criterion").rules = [
+            quoted_rule("One criterion per cycle.", 157, "decider d157")
+        ]
+        _, code, _, err = check(tree)
+        self.assertEqual(code, 1, err)
+        self.assertRegex(err, r"(?m)^docs/process-wiki/rules/one-criterion\.md: quote not found.*D157")
+
+    def test_quote_i_missing_quote_is_named_by_page(self):
+        tree = Tree()
+        self._clear_rules(tree)
+        tree.page("rules/one-criterion").rules = [
+            "- Rule: One criterion per cycle. See [D157](../../decisions/process-and-staffing.md#d157)."
+        ]
+        _, code, _, err = check(tree)
+        self.assertEqual(code, 1, err)
+        self.assertRegex(err, r"(?m)^docs/process-wiki/rules/one-criterion\.md: missing quote.*D157")
+
+    def test_quote_e_a_quote_not_present_in_the_decision_fails(self):
+        tree = Tree()
+        self._clear_rules(tree)
+        tree.page("rules/one-criterion").rules = [
+            quoted_rule("One criterion per cycle.", 157, "ZOMBIES-QUOTE-NOT-IN-DECISION")
+        ]
+        _, code, _, err = check(tree)
+        self.assertEqual(code, 1, err)
+        self.assertRegex(err, r"(?m)^docs/process-wiki/rules/one-criterion\.md: quote not found.*D157")
+
+    def test_quote_s_named_mutation_probes_run_on_fresh_page_copies(self):
+        probes = [
+            ("slice-1b-r7-one-criterion-zombies", "docs/process-wiki/rules/one-criterion.md", 157),
+            ("slice-1b-r7-decisions-zombies", "docs/process-wiki/rules/decisions.md", 153),
+            ("slice-1b-r7-outside-in-tdd-zombies", "docs/process-wiki/rules/outside-in-tdd.md", 137),
+            ("slice-1b-r7-safety-and-push-zombies", "docs/process-wiki/rules/safety-and-push.md", 169),
+            ("slice-1b-r7-seat-rotation-zombies", "docs/process-wiki/rules/seat-rotation.md", 163),
+            ("slice-1b-r7-stand-downs-zombies", "docs/process-wiki/rules/stand-downs.md", 151),
+            ("slice-1b-r7-thin-slices-zombies", "docs/process-wiki/rules/thin-slices.md", 136),
+        ]
+        caught = 0
+        for name, rel, number in probes:
+            root = fresh_repo_copy(prefix=f"pw234-r10-{name}-")
+            page = root / rel
+            original = page.read_text(encoding="utf-8")
+            mutant = (
+                original
+                + "\n"
+                + quoted_rule(
+                    "Probe mutation keeps link but carries a fake quote.",
+                    number,
+                    f"ZOMBIES-{name}-NOT-IN-DECISION",
+                    depth=2,
+                )
+                + "\n"
+            )
+            page.write_text(mutant, encoding="utf-8")
+            code, _, _ = run("--root", str(root))
+            if code == 1:
+                caught += 1
+            with self.subTest(probe=name):
+                self.assertEqual(code, 1, name)
+
+        control = fresh_repo_copy(prefix="pw234-r10-control-harmless-twins-")
+        control_page = control / "docs/process-wiki/rules/one-criterion.md"
+        control_text = control_page.read_text(encoding="utf-8")
+        control_text += "\n" + quoted_rule("Harmless control twin.", 157, "Decider D157") + "\n"
+        control_page.write_text(control_text, encoding="utf-8")
+        control_code, _, control_err = run("--root", str(control))
+        self.assertEqual((control_code, control_err), (0, ""), control_err)
+        self.assertEqual(caught, len(probes), f"mutations run={len(probes)} caught={caught}")
 
 
 class CriterionTwoSeatBriefsAndCoverage(unittest.TestCase):
