@@ -1,0 +1,57 @@
+{
+ "card": 234,
+ "title": "An indexed process wiki with just-in-time reading",
+ "status": "in progress (product owner priority D170, one-card stop-the-line waiver)",
+ "decisions": {
+  "rank": "re-rank 15 (window 227-rerank-15)",
+  "task_force": "window 234-taskforce (one adopted condition: metrics as numbers with method, and a git-checkable test)"
+ },
+ "task_force": [
+  {
+   "role": "product manager (ready)",
+   "context": "ctx-1"
+  },
+  {
+   "role": "architect (slice)",
+   "context": "ctx-2"
+  },
+  {
+   "role": "technical writer",
+   "context": "ctx-3"
+  },
+  {
+   "role": "QA engineer (red)",
+   "context": "ctx-4"
+  },
+  {
+   "role": "backend developer [author] (green)",
+   "context": "ctx-5"
+  },
+  {
+   "role": "independent reviewer (audit lens) [reviewer]",
+   "context": "ctx-6"
+  },
+  {
+   "role": "delivery lead (ship)",
+   "context": "ctx-7"
+  },
+  {
+   "role": "product manager (signoff)",
+   "context": "ctx-8"
+  }
+ ],
+ "seat_reason": "rotation between Copilot and Claude by least-recently-used (Codex, Grok and agy without quota at the 02:59 UTC probe)",
+ "metric": "tokens per seat (baseline about 50K setup, about 125K median at end); facilitator context size (about 965K); counter-metric rule misses from an unread page",
+ "command_scans": [
+  {
+   "context": "ctx-1",
+   "status": "unscanned",
+   "seat": "pm-ready (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  }
+ ],
+ "cycles": [],
+ "stand_downs": [],
+ "deviations": [],
+ "observations_for_next_stand_down": []
+}

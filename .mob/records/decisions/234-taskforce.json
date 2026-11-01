@@ -1,0 +1,382 @@
+{
+ "window": "234-taskforce",
+ "category": "task-force declaration",
+ "rule": "D153 at ready for card 234",
+ "proposed_by": {
+  "role": "product manager (ready)",
+  "model": "copilot (auto) via the Copilot CLI",
+  "context": "ctx-1",
+  "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC)"
+ },
+ "opened_at": "2026-11-01T03:06:33Z",
+ "proposal": "# Card 234: task-force declaration proposal (objection window 234-taskforce)\n\nCategory: task-force declaration. Proposed by: product manager (ready), Copilot seat, ctx-1 of card 234.\nPriority basis: D170 product-owner ruling (highest priority, one-card stop-the-line waiver), ranked first by re-rank 15.\n\n## Task force\n- Product manager (ready): **Copilot** | why: frame the experiment, lock the value/metrics/counter-metric, keep scope to card 234, and set D157 three-check shape | context: **ctx-1**\n- Architect (slice): **Claude** | why: define the wiki information architecture, page boundaries, and page-to-step read map; settle anchor-preservation rules | context: **ctx-2**\n- Technical writer (documentation structure): **Copilot** | why: this card is mostly documentation structure; design page naming, one-line summaries, and cross-link clarity for just-in-time reading | context: **ctx-3**\n- QA engineer (red): **Claude** | why: write failing checks for broken page routing, broken decision anchors, and facilitator restart gaps; enforce one criterion per cycle (D157) | context: **ctx-4**\n- Backend/process developer (green): **Copilot** | why: implement the index, page splits, seat-brief routing, and handoff-note flow in avowry/mob-defaults docs with minimal coupling | context: **ctx-5**\n- Independent reviewer (audit lens): **Claude** | why: verify non-author correctness: anchors still resolve, checkers still read rules, and page routing covers each seat step | context: **ctx-6**\n- Delivery lead (ship): **Copilot** | why: verify checks pass, records are complete, and roll-out path to template is explicit if keep verdict passes | context: **ctx-7**\n- Product manager (signoff): **Claude** | why: fresh-context signoff against all three Done checks and D170 experiment frame | context: **ctx-8**\n\nSeat assignment uses **D163/D164 least-recently-used rotation between Copilot and Claude** at seating time; this roster starts with Copilot because ready ctx-1 was placed to Copilot by LRU.\n\n## Left out\nFrontend, UX, database, language/grammar, security, and DevOps specialist seats are left out because card 234 is a process/documentation-structure change, not a UI, DB, language-runtime, security-hardening, or workflow-runtime change.  \nTechnical writer was considered as a likely omission risk and is **included** (ctx-3) because the core deliverable is navigable documentation architecture.\n\n## Domain-expert question at refinement (T2)\nDo we need a domain expert beyond the core team for this card?  \n**Answer:** yes, documentation-information-architecture expertise is required; the technical writer seat is the domain expert and joins at slice/refinement to shape page taxonomy, naming, and navigation constraints before red.\n\n## Product value, metric, counter-metric\nValue: every seat reads only the pages needed for its role/step while preserving rule integrity and decision traceability, reducing token overhead and facilitator context bloat.\n\nMetrics:\n1. Tokens per seat versus baseline (**~50K** at setup, **~125K** median by end).\n2. Facilitator context size versus current baseline (**~965K**).\n\nCounter-metric:\n1. Rule misses caused by a seat not reading a required page (counted per card/session).\n\n## D157 Done checks (numbered 1 to 3)\n1. Indexed wiki exists with one-line page summaries, and every rule/decision reference still resolves to its decision anchor.\n2. Seat briefs route each seat to the index plus only required pages; measured token use per seat is recorded against the 50K/125K baseline.\n3. Facilitator can restart from wiki + handoff notes at a boundary; facilitator context-size delta and unread-page rule-miss count are recorded against the ~965K baseline.\n\n## Applicability of D165/D166/D167/D168\n- **D165 (Intent line): applies.** Before first red of each behavioral criterion, record intent line tying the criterion to D170 (reduce token/context overhead without losing rule fidelity).\n- **D166 (Assumption line): applies.** Slice must state assumptions and probes for: anchor stability after page split, brief-to-page routing completeness, and handoff restart sufficiency.\n- **D167 (Hostile-input list): applies.** Criteria that take page/seat lists must include disabled, unknown, repeated, and reordered cases (for page names, aliases, and seat-step mappings) with explicit red-test answers.\n- **D168 (15 KB slice cap): applies.** Any slice over 15 KB is split into numbered slices; each slice keeps whole criteria and includes its Size line/check rule.\n\n## Open points this slice must settle\n1. **Wiki location:** avowry only, mob-defaults only, or dual-home with a canonical source and mirror/update rule.\n2. **Decision anchors:** exact method to preserve rule-to-decision anchor continuity after splitting pages.\n3. **Seat brief page naming:** canonical naming convention for “index + required pages” so seats request/read the same pages consistently.\n4. **Facilitator handoff notes:** required structure, storage location, boundary markers, and restart procedure so handoff remains deterministic and low-token.\n\n## Adopted condition (round 1, D145; from the independent reviewer (audit lens))\nDone checks 2 and 3 state their metrics in the card as numbers with a measurement method: tokens per seat against the baseline of about 50K at setup and about 125K median at the end; facilitator context size against about 965K; and the count of rule misses caused by an unread page. A git-checkable test fails if any of these numbers or methods is missing from the card or its record, or if any decision anchor no longer resolves from its wiki page. The re-poll may not add new demands.\n",
+ "checklist_D158": ".mob/records/234/checklist-234-taskforce.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [
+  {
+   "from": "independent reviewer (audit lens)",
+   "adopted_as": "Done checks 2 and 3 state their metrics as numbers with a measurement method (tokens per seat against about 50K at setup and 125K median at the end, facilitator context against about 965K, rule misses from an unread page), and a git-checkable test fails if a number or method is missing or a decision anchor no longer resolves from its wiki page"
+  }
+ ],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "w234tfr2-architect",
+   "started_at": "2026-11-01T03:22:45Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:24:33.437083Z",
+   "round": 2,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w234tfr2-techwriter",
+   "started_at": "2026-11-01T03:27:16Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe adopted condition adds a git-checkable test that fails if a metric number or method is missing, or if an anchor stops resolving. That covers my lens, which is anchors surviving the split and nothing being lost. The one-line page summaries and the index are already in Done check 1.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:27:42.995725Z",
+   "round": 2,
+   "role": "technical writer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w234tfr2cp1-qa",
+   "started_at": "2026-11-01T03:28:35Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:29:00.694494Z",
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w234tfr2-dev",
+   "started_at": "2026-11-01T03:29:52Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:30:28.193082Z",
+   "round": 2,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w234tfr2-auditlens",
+   "started_at": "2026-11-01T03:33:33Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe adopted condition makes Done checks 2 and 3 verifiable from git alone. The numbers and methods must be in the card, and a test fails if any is missing or if a decision anchor stops resolving. I didn't inspect the repository for this re-poll, and I add no new demands.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:35:23.295696Z",
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w234tfr2cp1-delivery",
+   "started_at": "2026-11-01T03:37:08Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:37:33.780779Z",
+   "round": 2,
+   "role": "delivery lead",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w234tfr2-pmsignoff",
+   "started_at": "2026-11-01T03:38:21Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:38:46.700683Z",
+   "round": 2,
+   "role": "product manager (signoff)",
+   "ctx": "ctx-8",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w234tfcp1-architect",
+   "started_at": "2026-11-01T03:06:33Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:07:04.270633Z",
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w234tf-techwriter",
+   "started_at": "2026-11-01T03:07:52Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:08:18.718029Z",
+   "round": 1,
+   "role": "technical writer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234tfr2cp1-techwriter",
+   "started_at": "2026-11-01T03:26:20Z",
+   "model": "auto",
+   "raw": "Support-it\n\n",
+   "first_line": "Support-it",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:26:49.357228Z",
+   "round": 2,
+   "role": "technical writer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234tfcp1-qa",
+   "started_at": "2026-11-01T03:09:15Z",
+   "model": "auto",
+   "raw": "Reviewing the cited governance docs and card file now to ground the QA-lens vote in repository text.\n\nNo  \nI’ll move to yes once the slice commits explicit red-first, executable checkers (with failing fixtures) for each Done check—anchor-resolution integrity, seat-brief routing completeness, and deterministic facilitator restart evidence—so missing/stale metrics or broken mappings cannot pass as compliant.\n\n",
+   "first_line": "Reviewing the cited governance docs and card file now to ground the QA-lens vote in repository text.",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:09:40.207027Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-4",
+   "reply": "Reviewing the cited governance docs and card file now to ground the QA-lens vote in repository text.",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w234tf-qa",
+   "started_at": "2026-11-01T03:10:52Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:11:17.349419Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234tfcp1-dev",
+   "started_at": "2026-11-01T03:12:30Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nThis proposal is consistent with D153, D163-D170, scoped to card 234 only, and the role list/rotation are explicit enough to avoid gaming; the one-card waiver and LRU rule are workable, fair, and bounded.\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:12:57.509840Z",
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w234tf-auditlens",
+   "started_at": "2026-11-01T03:13:56Z",
+   "model": "sonnet",
+   "raw": "OBJECTION\nCONDITION: Done checks 2 and 3 (token use, context delta, unread-page rule-miss count) must be committed in the card as numbers with their measurement method, and a git-checkable test must fail if any are missing or any decision anchor no longer resolves.\n",
+   "first_line": "OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:14:24.805909Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-6",
+   "reply": "OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234tfr2cp1-auditlens",
+   "started_at": "2026-11-01T03:32:27Z",
+   "model": "auto",
+   "raw": "I’ll quickly verify the referenced card and governing decision docs from the repo, then cast the re-poll vote.\n\nYes\n\n",
+   "first_line": "I’ll quickly verify the referenced card and governing decision docs from the repo, then cast the re-poll vote.",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:32:55.586175Z",
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234tfcp1-delivery",
+   "started_at": "2026-11-01T03:15:39Z",
+   "model": "auto",
+   "raw": "Support-it\n\n",
+   "first_line": "Support-it",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:16:08.196459Z",
+   "round": 1,
+   "role": "delivery lead",
+   "ctx": "ctx-7",
+   "reply": "Support-it",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w234tf-delivery",
+   "started_at": "2026-11-01T03:16:33Z",
+   "model": "sonnet",
+   "raw": "Support-it\n",
+   "first_line": "Support-it",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:17:00.911437Z",
+   "round": 1,
+   "role": "delivery lead",
+   "ctx": "ctx-7",
+   "reply": "Support-it",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234tfcp1-pmsignoff",
+   "started_at": "2026-11-01T03:18:48Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:59 UTC) and decider.py's own probe at 2026-11-01T03:19:29.058862Z",
+   "round": 1,
+   "role": "product manager (signoff)",
+   "ctx": "ctx-8",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  }
+ ],
+ "decision": {
+  "result": "adopted with one condition; round 2 no objection from all seven polled seats",
+  "task_force": [
+   "product manager (ready) ctx-1 (Copilot)",
+   "architect ctx-2",
+   "technical writer ctx-3",
+   "QA engineer ctx-4",
+   "backend developer [author] ctx-5",
+   "independent reviewer (audit lens) [reviewer] ctx-6",
+   "delivery lead ctx-7",
+   "product manager (signoff) ctx-8"
+  ],
+  "rotation": "seats rotate between Copilot and Claude by least-recently-used; Agent-tool seats are Claude, Copilot seats run through the Copilot CLI"
+ },
+ "ended_at": "2026-11-01T03:41:37Z"
+}
