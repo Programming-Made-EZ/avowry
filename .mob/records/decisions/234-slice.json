@@ -1,0 +1,599 @@
+{
+ "window": "234-slice",
+ "category": "slice decision",
+ "rule": "D153 for card 234's slice (D157, D166, D167, D168)",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "copilot (auto) via the Copilot CLI",
+  "context": "ctx-2",
+  "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC)"
+ },
+ "opened_at": "2026-11-01T03:51:41Z",
+ "proposal": "# Card 234 slice: architect (ctx-2, Copilot seat)\n\nSources read: board/234-an-indexed-process-wiki-with-just-in-time-reading.md; .mob/records/234/record-in-progress.json; .mob/records/decisions/234-taskforce.json; docs/decisions/process-and-staffing.md (D136, D157, D165, D166, D167, D168, D170); TEAM_WORKING_AGREEMENT.md; docs/decisions/INDEX.md; HANDOFF.md; .mob/records/226/turn-slice-architect.md.\n\n## Scope and T2 domain-expert answer\n\nThis slice covers all three Done checks as numbered criteria (D157), with explicit measurement methods and git-checkable evidence paths, plus page/index structure, anchor guarantees, seat-brief routing, facilitator handoff use, and the delivery plan under D136.\n\nDomain-expert question (T2): should a member with different domain knowledge join now? **Yes**: documentation information architecture. The technical writer seat already present in the declared task force (ctx-3) is the domain expert for page taxonomy, summaries, and seat-routing clarity.\n\n## Criteria (Done checks 1 to 3; D157 numbering)\n\n1. **Indexed process wiki with anchor-preserving rule pages.**  \n   The process corpus is split into indexed pages, each page starts with a one-line summary and every rule reference still resolves to its decision anchor.\n2. **Seat briefs route index + needed pages only, with token metrics.**  \n   Each seat brief names the index and only the pages needed for that role/step, and per-seat token use is recorded against baselines 50K (setup) and 125K (median end).\n3. **Facilitator restart from wiki + handoff notes, with context and miss metrics.**  \n   The facilitator restarts from a boundary using only the wiki and handoff notes; facilitator context size is recorded against baseline 965K; unread-page rule misses are counted.\n\n## Wiki location, page shape, and index\n\n- **Location (now): both repositories, one canonical source.**  \n  Canonical editable wiki pages live in **avowry** so card execution and evidence stay local to the active mob.  \n  **mob-defaults** carries the template mirror only (seed pages for new mobs).  \n  If the experiment gets a keep verdict (Done check 3), avowry pages are promoted into mob-defaults through the normal template-change path and template review (D170).\n- **Index page:** `docs/process-wiki/INDEX.md` in avowry; mirrored as the same path in mob-defaults template.\n- **Page format:** first line is a one-line summary, then body; every rule mention keeps a decision anchor link in `area-file.md#dNNN` form (for process rules, `docs/decisions/process-and-staffing.md#dNNN`).\n\n## Anchor integrity and git-checkable failure test\n\nEach rule keeps its decision anchor by storing both:\n1) visible D-number text (`D157`, `D166`, etc), and  \n2) explicit link target (`...process-and-staffing.md#d157`, etc).\n\nGit-checkable test (red first) fails on any of:\n- missing required metric numbers (`50K`, `125K`, `965K`) or missing measurement-method text in card 234 board file or card 234 record file;\n- missing `DNNN` token next to a rule statement on a wiki page;\n- anchor link target that no longer resolves (link target missing from decision file anchors);\n- unresolved page listed by a seat brief.\n\nOutside-in check shape:\n- parse wiki pages and seat briefs;\n- extract required D-numbers and anchor URLs;\n- verify anchors exist in docs/decisions area files;\n- verify measurement numbers and method sentences exist in board/234 and .mob/records/234 record file;\n- fail closed on unknown page name or broken link.\n\n## Measurement method (adopted condition made concrete)\n\n- **Tokens per seat (Criterion 2):**  \n  For each seat context (`ctx-1` to `ctx-8` in `.mob/records/234/record-in-progress.json`), record provider-reported token totals (`input + output`) at two checkpoints: setup complete and seat done. Store these numbers in the card record under the seat entry. Compare setup values to **50,000** baseline and end values to **125,000** median baseline.\n- **Facilitator context size (Criterion 3):**  \n  At each restart boundary, record facilitator context token count from the facilitator run record (same card record family under `.mob/records/234/`). Compare against baseline **965,000**.\n- **Rule-miss counter-metric (Criterion 3):**  \n  Every case where a seat misses a rule due to an unread required page is logged as one structured case in card 234 record (`rule_miss_cases`), with seat context and missed page.\n\nThese methods are valid only when committed in the card record; if numbers exist without method text, the criterion is not run (adopted condition).\n\n## Seat briefs, handoff notes, and non-wiki boundary\n\n- **Seat brief page naming:** each brief has a `Pages:` line with canonical page IDs, not free text paths:  \n  `core/index`, `rules/<slug>`, `role/<role>-<step>`, `howto/<topic>`.  \n  Resolver map in the index maps IDs to file paths. Unknown ID fails the brief check.\n- **Facilitator handoff notes:** handoff notes stay as operational state and boundary checkpoints (what changed, next boundary, open risks, exact resume point). They are consumed with the wiki at restart; they are not replaced by wiki prose.\n- **Stays outside the wiki:** transient runtime evidence, raw command transcripts, probe logs, in-flight operational artifacts, and audit-only scratch notes. Wiki holds stable process guidance, routing, and anchor-linked rules only.\n\n## D166 assumption lines (one per invariant, with probes)\n\nAssumes: process decision anchors are stable HTML ids in decision files and index links target them directly; probe: `docs/decisions/process-and-staffing.md` contains `<a id=\"d157\">` through `<a id=\"d170\">` and `docs/decisions/INDEX.md` links include `process-and-staffing.md#d157`..`#d170`.\n\nAssumes: card 234 already carries numeric baselines and adopted-condition wording that can be checked from git; probe: board/234 file includes Done checks with 50K, 125K, 965K and the adopted-condition line requiring numbers+method and anchor-resolve failure.\n\nAssumes: facilitator restart context is anchored by committed handoff documentation plus per-card records, not by private memory; probe: `HANDOFF.md` defines takeover/restart behavior and `.mob/records/234/record-in-progress.json` declares contexts and metrics surface for this card.\n\n## D167 hostile-input lines by criterion\n\nCriterion 1 Inputs: disabled: a rule page marked disabled in index must not be assigned by any brief and must not count as required; unknown: a rule id not in index fails routing check; repeated: duplicate rule id in a page map is rejected; reordered: page order differences do not change anchor-resolve result.\n\nCriterion 2 Inputs: disabled: disabled page id in a seat brief fails that brief; unknown: unknown page id in `Pages:` fails that brief; repeated: repeated page id is de-duplicated for reading but flagged in check output; reordered: reordered `Pages:` line remains valid if set equality with required pages holds.\n\nCriterion 3 Inputs: disabled: disabled handoff section id is n/a: handoff sections are not disable-able, only superseded with explicit replacement; unknown: unknown boundary marker in handoff notes fails restart check; repeated: repeated boundary marker uses last-write-wins and records warning; reordered: boundary entries out of order fail if monotonic boundary sequence is broken.\n\n## Criterion-by-layer table (outside-in)\n\n| Criterion | Outside layer (acceptance) | Middle layer | Inner layer |\n|---|---|---|---|\n| 1 | Wiki index and rule pages compile to a complete route map; every rule link resolves to a live D-anchor. | Anchor/link checker over page IDs and D-links. | Anchor source in decision files (`<a id=\"dNNN\">`) and D-number preservation in page text. |\n| 2 | Seat brief for each role-step lists only index + needed pages and records token metrics. | Brief parser validates `Pages:` IDs and required-page set per seat-step. | Record writer persists per-seat setup/end token counts and baseline comparisons. |\n| 3 | Facilitator can restart at boundary from wiki + handoff notes; context and rule-miss metrics recorded. | Restart checker validates boundary marker, required pages, and miss counter entry shape. | Record writer persists facilitator context size and unread-page miss cases. |\n\n## D136 commit plan (one concern per commit; criterion order enforced by D157)\n\n1. **Red 1 (Criterion: 1):** failing checks for index/page split plus anchor-resolve integrity and missing-number-or-method guard.\n2. **Green 1 (Criterion: 1):** implement index, page summaries, and anchor-preserving link format.\n3. **Red 2 (Criterion: 2):** failing checks for seat brief `Pages:` routing and token-metric method/number presence.\n4. **Green 2 (Criterion: 2):** implement seat brief page-ID routing + record fields for per-seat token measurements.\n5. **Red 3 (Criterion: 3):** failing checks for restart-from-wiki+handoff, context-size metric capture, and unread-page miss counter.\n6. **Green 3 (Criterion: 3):** implement restart flow and record writers for facilitator context + miss cases.\n7. **Review-fix commits (if needed):** separate, scoped fixes only; no criterion mixing.\n\nSlice verdict: **SHIP AS IS** (three criteria, one concern: indexed process wiki with just-in-time reading and measurable restart/routing behavior).\n\nSize: 9259 bytes\n\n## Adopted condition (round 1, D145; from the independent reviewer (audit lens))\nThe git check requires committed per-seat and facilitator token values taken from a committed provider-usage source, and an explicit `rule_miss_cases` field. An empty `rule_miss_cases` is allowed only with a stated source. Baselines and method text alone pass trivially, so they do not satisfy the check. The architect amends the slice with this after the window, in its own commit. The re-poll may not add new demands.\n",
+ "checklist_D158": ".mob/records/234/checklist-234-slice.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [
+  {
+   "from": "independent reviewer (audit lens)",
+   "adopted_as": "the git check requires committed per-seat and facilitator token values from a committed provider-usage source and an explicit rule_miss_cases field (empty only with a stated source); the architect amends the slice in its own commit after the window"
+  }
+ ],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "w234slr2-pmready",
+   "started_at": "2026-11-01T04:15:18Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe slice covers all three Done checks with numbered criteria. It ties each to baselines and measurement methods, so the work stays accountable to metrics. The adopted audit condition keeps the check from passing on baselines and method text alone. Ordering is red then green per criterion, and the work stays inside the existing process.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:15:49.629417Z",
+   "round": 2,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w234slr2-techwriter",
+   "started_at": "2026-11-01T04:18:31Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:19:00.219431Z",
+   "round": 2,
+   "role": "technical writer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w234slr2-qa",
+   "started_at": "2026-11-01T04:20:36Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:21:04.455453Z",
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w234slr2-dev",
+   "started_at": "2026-11-01T04:22:43Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:23:09.509644Z",
+   "round": 2,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w234slr2-auditlens",
+   "started_at": "2026-11-01T04:24:45Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:25:10.549291Z",
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w234slr2c-delivery",
+   "started_at": "2026-11-01T04:32:36Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:33:04.813146Z",
+   "round": 2,
+   "role": "delivery lead",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w234slr2-pmsignoff",
+   "started_at": "2026-11-01T04:29:30Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:29:57.323160Z",
+   "round": 2,
+   "role": "product manager (signoff)",
+   "ctx": "ctx-8",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w234slcp1-pmready",
+   "started_at": "2026-11-01T03:51:41Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T03:52:08.024923Z",
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w234sl-pmready",
+   "started_at": "2026-11-01T03:52:23Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe slice meets the standing rules. It has numeric baselines with measurement methods, red-first commits, and per-seat contexts. Reading only the index plus the pages a seat needs keeps context small. The hostile-input lines are heavy, but D167 requires them. It returns to the product value of cheaper restarts.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T03:52:50.014928Z",
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234slr2cp1-pmready",
+   "started_at": "2026-11-01T04:12:49Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:15:03.033792Z",
+   "round": 2,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234slcp1-techwriter",
+   "started_at": "2026-11-01T03:53:42Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T03:54:08.999005Z",
+   "round": 1,
+   "role": "technical writer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w234sl-techwriter",
+   "started_at": "2026-11-01T03:54:24Z",
+   "model": "sonnet",
+   "raw": "Support-it\n",
+   "first_line": "Support-it",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T03:54:48.723923Z",
+   "round": 1,
+   "role": "technical writer",
+   "ctx": "ctx-3",
+   "reply": "Support-it",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234slr2cp1-techwriter",
+   "started_at": "2026-11-01T04:17:50Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:18:16.285187Z",
+   "round": 2,
+   "role": "technical writer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234slcp1-qa",
+   "started_at": "2026-11-01T03:57:07Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T03:57:40.778633Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w234sl-qa",
+   "started_at": "2026-11-01T03:57:56Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T03:58:23.747026Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234slr2cp1-qa",
+   "started_at": "2026-11-01T04:19:53Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:20:21.538997Z",
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234slcp1-dev",
+   "started_at": "2026-11-01T03:59:19Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T03:59:46.101656Z",
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w234sl-dev",
+   "started_at": "2026-11-01T04:00:01Z",
+   "model": "sonnet",
+   "raw": "Yes\n",
+   "first_line": "Yes",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:00:27.910828Z",
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": "Yes",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234slr2cp1-dev",
+   "started_at": "2026-11-01T04:22:03Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:22:28.116822Z",
+   "round": 2,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234slcp1-auditlens",
+   "started_at": "2026-11-01T04:01:48Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:02:15.591761Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w234sl-auditlens",
+   "started_at": "2026-11-01T04:02:30Z",
+   "model": "sonnet",
+   "raw": "OBJECTION\nCONDITION: The git check must require committed per-seat and facilitator token values from a committed provider-usage source, plus an explicit `rule_miss_cases` field (empty allowed only with a stated source). Baselines and method text alone pass trivially, and self-reported zero misses cannot be verified.\n",
+   "first_line": "OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:02:57.520882Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-6",
+   "reply": "OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234slr2cp1-auditlens",
+   "started_at": "2026-11-01T04:24:02Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:24:29.284340Z",
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234slcp1-delivery",
+   "started_at": "2026-11-01T04:04:04Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:04:32.712550Z",
+   "round": 1,
+   "role": "delivery lead",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w234sl-delivery",
+   "started_at": "2026-11-01T04:04:47Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:05:36.550803Z",
+   "round": 1,
+   "role": "delivery lead",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234slr2cp1-delivery",
+   "started_at": "2026-11-01T04:26:13Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:26:41.773249Z",
+   "round": 2,
+   "role": "delivery lead",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "claude",
+   "context": "w234slr2-delivery",
+   "started_at": "2026-11-01T04:26:57Z",
+   "model": "sonnet",
+   "raw": "Yes\n",
+   "first_line": "Yes",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:27:25.291959Z",
+   "round": 2,
+   "role": "delivery lead",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234slr2ccp1-delivery",
+   "started_at": "2026-11-01T04:31:54Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:32:21.372356Z",
+   "round": 2,
+   "role": "delivery lead",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234slcp1-pmsignoff",
+   "started_at": "2026-11-01T04:09:00Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:09:31.056889Z",
+   "round": 1,
+   "role": "product manager (signoff)",
+   "ctx": "ctx-8",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w234sl-pmsignoff",
+   "started_at": "2026-11-01T04:09:46Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:10:18.149798Z",
+   "round": 1,
+   "role": "product manager (signoff)",
+   "ctx": "ctx-8",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w234slr2cp1-pmsignoff",
+   "started_at": "2026-11-01T04:28:47Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 03:43 UTC) and decider.py's own probe at 2026-11-01T04:29:14.522426Z",
+   "round": 2,
+   "role": "product manager (signoff)",
+   "ctx": "ctx-8",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "SHIP WITH ONE AMENDMENT: slice 0441cfd (9259 bytes) adopted with one condition; round 2 no objection from all seven polled seats (Claude; every Copilot seat placed by the gate returned no reply, card 229)"
+ },
+ "ended_at": "2026-11-01T04:33:46Z"
+}
