@@ -1,0 +1,224 @@
+{
+ "window": "237-key-secrecy",
+ "category": "mid-card addition",
+ "rule": "D153 mid-card addition for card 237; D171 cite-a-point in force",
+ "proposed_by": {
+  "role": "QA engineer (key writer, step 0d finding)",
+  "model": "claude (sonnet)",
+  "context": "ctx-3",
+  "probe_reference": "probe 2026-11-01 14:01 UTC (.mob/records/probes/2026-10-30.jsonl; the Codex probe hung and was stopped)"
+ },
+ "opened_at": "2026-11-01T14:02:05Z",
+ "proposal": "# Card 237 mid-card addition: keep the miss-test key out of the pilot runs' reach\n\nFinding (QA seat, .mob/records/237/turn-key-qa.md, commit 23615b0): the frozen tasks forbid only card 227 records and history. A pilot run could read .mob/records/237/trial/miss-key.json or the rest of the card 237 records, which would void the misses metric. The frozen tasks cannot change without breaking the freeze (01b3058).\n\nProposal (two parts, both applied identically to both arms):\n1. Each pilot run works in its own fresh clone of the repository at the run commit, made with a sparse checkout that excludes .mob/records/237/ from the working tree. Nothing is deleted. Each clone sits in a new, uniquely named scratch folder and is left in place.\n2. The runner's wrapper adds the same single line to every run, outside the frozen task text: \"Do not read .mob/records/237/ or the git history of that folder.\" This is a non-task addition, identical in both arms, recorded in the ledger row.\n3. The independent reviewer's recompute also checks each run's tool log for any read of .mob/records/237/ or any git command on it. A run that read it is marked void and rerun once inside the token cap.\n\nAsk: NO OBJECTION, or OBJECTION with a condition. The re-poll may not add new demands.\n",
+ "checklist_D158": ".mob/records/237/turn-key-qa.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "w237sec-pmready",
+   "started_at": "2026-11-01T14:02:53Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe proposal keeps the miss-test key out of reach without touching the frozen tasks. It applies the same treatment to both arms, so the comparison stays fair. The reviewer's tool-log audit and the single void-and-rerun inside the token cap keep the line from stalling.\n\nCITE: A run that read it is marked void and rerun once inside the token cap.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 14:01 UTC (.mob/records/probes/2026-10-30.jsonl; the Codex probe hung and was stopped) and decider.py's own probe at 2026-11-01T14:03:22.384831Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w237sec-architect",
+   "started_at": "2026-11-01T14:05:09Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe design is minimal and applied identically to both arms. The sparse checkout removes the key from the working tree, and the wrapper line covers the git-history route. The tool-log check enforces both, and a single bounded rerun limits cost. I see no false-positive risk in the void rule.\n\nCITE: Each pilot run works in its own fresh clone of the repository\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 14:01 UTC (.mob/records/probes/2026-10-30.jsonl; the Codex probe hung and was stopped) and decider.py's own probe at 2026-11-01T14:05:39.018197Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w237sec-auditlens",
+   "started_at": "2026-11-01T14:07:21Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nFresh clones left in place, the identical added line, and the tool-log recompute make this checkable. The leftover risk is a broad command like `git grep` or `git log -p` that surfaces the folder. That risk is small, and the log check and void rule already cover it.\n\nCITE: The independent reviewer's recompute also checks each run's tool log\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 14:01 UTC (.mob/records/probes/2026-10-30.jsonl; the Codex probe hung and was stopped) and decider.py's own probe at 2026-11-01T14:07:48.083089Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w237sec-delivery",
+   "started_at": "2026-11-01T14:09:44Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: Each pilot run works in its own fresh clone of the repository\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 14:01 UTC (.mob/records/probes/2026-10-30.jsonl; the Codex probe hung and was stopped) and decider.py's own probe at 2026-11-01T14:10:09.374636Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "delivery lead",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w237sec-decider",
+   "started_at": "2026-11-01T14:11:50Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: The independent reviewer's recompute also checks each run's tool log\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 14:01 UTC (.mob/records/probes/2026-10-30.jsonl; the Codex probe hung and was stopped) and decider.py's own probe at 2026-11-01T14:12:18.216485Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w237seccp1-pmready",
+   "started_at": "2026-11-01T14:02:05Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 14:01 UTC (.mob/records/probes/2026-10-30.jsonl; the Codex probe hung and was stopped) and decider.py's own probe at 2026-11-01T14:02:34.136786Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237seccp1-architect",
+   "started_at": "2026-11-01T14:04:23Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 14:01 UTC (.mob/records/probes/2026-10-30.jsonl; the Codex probe hung and was stopped) and decider.py's own probe at 2026-11-01T14:04:51.181962Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237seccp1-auditlens",
+   "started_at": "2026-11-01T14:06:37Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 14:01 UTC (.mob/records/probes/2026-10-30.jsonl; the Codex probe hung and was stopped) and decider.py's own probe at 2026-11-01T14:07:02.913970Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237seccp1-delivery",
+   "started_at": "2026-11-01T14:08:57Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 14:01 UTC (.mob/records/probes/2026-10-30.jsonl; the Codex probe hung and was stopped) and decider.py's own probe at 2026-11-01T14:09:26.268604Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "delivery lead",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237seccp1-decider",
+   "started_at": "2026-11-01T14:11:05Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 14:01 UTC (.mob/records/probes/2026-10-30.jsonl; the Codex probe hung and was stopped) and decider.py's own probe at 2026-11-01T14:11:31.658116Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "adopted without conditions: each pilot run in its own fresh sparse-checkout clone without .mob/records/237/ (no deletes); one identical wrapper line in both arms forbidding that folder and its history, recorded in each ledger row; the reviewer's recompute checks each run's tool log for reads of it (a run that read it is void and rerun once inside the cap). All five polled seats NO OBJECTION with a valid D171 cite; every Copilot seat placed by the gate returned no reply."
+ },
+ "ended_at": "2026-11-01T14:13:04Z"
+}
