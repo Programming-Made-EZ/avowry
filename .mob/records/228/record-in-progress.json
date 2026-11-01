@@ -75,6 +75,18 @@
    "status": "clean",
    "seat": "dev green 1b (Claude subagent)",
    "detail": "clean: 19 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 1c (Claude subagent)",
+   "detail": "clean: 12 command(s) scanned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "dev green 1c (Claude subagent)",
+   "detail": "clean: 27 command(s) scanned"
   }
  ],
  "token_usage": [
@@ -109,6 +121,16 @@
    "seat": "backend developer ctx-5, green 1b",
    "source": "Agent completion report (subagent_tokens)",
    "subagent_tokens": 77773
+  },
+  {
+   "seat": "QA ctx-3, red 1c",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 76673
+  },
+  {
+   "seat": "backend developer ctx-5, green 1c",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 95339
   }
  ],
  "cycles": [
@@ -133,6 +155,17 @@
     "6c2aa7f"
    ],
    "hostile_inputs_covered": "encoded forms; left for later: iex/eval, hex, interpreters, wrappers, alias, pipeline-fed and splatted Remove-Item, git reset/checkout/clean, rsync --delete, path forms"
+  },
+  {
+   "criterion": 1,
+   "increment": "1c",
+   "red": "c743784 (tests/test_command_scan_nonshell_1c.py; 15 failures on committed code)",
+   "green": "9fe3913 (python -c and heredoc python read by ast; node, rimraf, perl, [IO.Directory]::Delete, os.system and subprocess deletes; red 4/4, 14 modules 425 OK, full suite 1265 OK, 1 skipped)",
+   "turn_records": [
+    "1674b13",
+    "b1baedf",
+    "61e77ca"
+   ]
   }
  ],
  "stand_downs": [],
