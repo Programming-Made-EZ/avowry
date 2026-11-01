@@ -68,6 +68,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D167](process-and-staffing.md#d167) — A hostile-input list in the slice of any criterion that takes a list or map of names, answered entry by entry in the red (card 226 retro pick)
 - [D168](process-and-staffing.md#d168) — A slice size cap of 15 KB, larger cards split into numbered slices (card 227 retro pick)
 - [D169](process-and-staffing.md#d169) — Product owner ruling: detection after the fact is acceptable for the deletion-ban corrective if work is committed and pushed regularly and no recursive delete targets anything outside the working tree
+- [D170](process-and-staffing.md#d170) — Product owner ruling: the indexed process wiki (card 234) is the highest priority, with a one-card stop-the-line waiver
 
 ### benchmarks-and-measurement
 
@@ -258,3 +259,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D167](process-and-staffing.md#d167) | A hostile-input list in the slice of any criterion that takes a list or map of names, answered entry by entry in the red (card 226 retro pick) | process-and-staffing | in force |
 | [D168](process-and-staffing.md#d168) | A slice size cap of 15 KB, larger cards split into numbered slices (card 227 retro pick) | process-and-staffing | in force |
 | [D169](process-and-staffing.md#d169) | Product owner ruling: detection after the fact is acceptable for the deletion-ban corrective if work is committed and pushed regularly and no recursive delete targets anything outside the working tree | process-and-staffing | in force |
+| [D170](process-and-staffing.md#d170) | Product owner ruling: the indexed process wiki (card 234) is the highest priority, with a one-card stop-the-line waiver | process-and-staffing | in force |

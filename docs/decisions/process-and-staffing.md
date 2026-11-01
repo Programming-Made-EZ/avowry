@@ -641,3 +641,12 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - Rationale (the product owner's): committed work inside the tree is recoverable, so detect-and-fail is enough there; out-of-tree deletes are the unrecoverable case (the 2026-10-08 wipe). The team decides how to guarantee condition 2; detection alone cannot stop an out-of-tree delete, so the team considers an allow-list of "inside the working tree" rather than "scratch folder only", and a pre-run refusal for out-of-tree deletes (card 228).
 - Follow-up requested by the product owner: a detector for uncommitted work older than about 30 minutes in a watched repository, because the push rule does not catch work that was never committed.
 
+<a id="d170"></a>
+#### Decider D170: product owner ruling (not a team vote): the indexed process wiki is the highest priority, with a one-card stop-the-line waiver
+
+- Date: 2026-11-01. Not a team vote: a product owner priority ruling and an explicit stop-the-line override, the same mechanism as D162 (the one-card waiver for card 219).
+- Ruling: card 234 ("An indexed process wiki with just-in-time reading") is the highest priority. It is ranked first at the next re-rank after card 227 closed and starts immediately, ahead of the open-FAIL correctives (cards 228, 210 and 211). The open FAILs stay open and owned, and their correctives resume right after card 234 closes. The waiver covers card 234 only.
+- Rationale (the product owner's): it is a process change that improves every card from here on, including how the correctives themselves get done. Every turn re-reads the whole context, so fresh seats overpay by reading everything and the long facilitator session overpays on every turn; the wiki cuts both and gives the product owner one readable place for the whole process.
+- Experiment frame: metric tokens per seat (baseline about 50K at setup, about 125K median at the end) and facilitator context size (about 965K); counter-metric rule misses caused by a seat not reading a page it needed. If it passes its keep verdict, the index and the just-in-time pages go to the mob-defaults template through the normal template-change path, including the template review.
+- Reconciliation with stop-the-line: the product owner asked that a conflict be decided by Decider and recorded; the product owner's explicit override settles it, as with D162 (a Decider cannot waive the product owner's own stop-the-line rule, D160). The audit sees it as authorized, not drift.
+

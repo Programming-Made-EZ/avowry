@@ -1126,5 +1126,11 @@
     "status": "in force",
     "title": "Product owner ruling: detection after the fact is acceptable for the deletion-ban corrective if work is committed and pushed regularly and no recursive delete targets anything outside the working tree",
     "order": 160
+  },
+  "D170": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Product owner ruling: the indexed process wiki (card 234) is the highest priority, with a one-card stop-the-line waiver",
+    "order": 161
   }
 }
