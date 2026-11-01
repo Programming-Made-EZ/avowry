@@ -153,7 +153,8 @@ class Tree:
     def rule(text, *numbers, depth=2):
         links = " ".join(
             f"[D{n}]({'../' * depth}decisions/process-and-staffing.md#d{n})" for n in numbers)
-        return f"- Rule: {text} See {links}."
+        quotes = " ".join(f'Quote: "Decider D{n}".' for n in numbers)
+        return f"- Rule: {text} {quotes} See {links}."
 
     def page(self, pid):
         return next(p for p in self.pages if p.pid == pid)
