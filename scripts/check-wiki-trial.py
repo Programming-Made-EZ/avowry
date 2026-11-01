@@ -154,7 +154,7 @@ def show_json(root, rev, rel):
 CAP_KEYS = ("cap_stage_a", "cap_stage_ab")
 
 
-def check_amendment(root, first_run, log, t1, findings):
+def check_amendment(root, first_run, log, t1, ledger, findings):
     """Window 237-amendment-ordering: thresholds are judged by content against the file at the first run."""
     rel = f"{TRIAL}/thresholds.json"
     t0 = show_json(root, first_run, rel)
@@ -179,6 +179,14 @@ def check_amendment(root, first_run, log, t1, findings):
         elif is_int(a) and b < a:
             findings.append(f"{rel}: committed or changed at or after the first run: amendment lowers {k}")
     check_citation(root, t1, log[-1], findings)
+    for row in (ledger or {}).get("rows") or []:  # run 2: a row first committed after the first run
+        src = row.get("source") if isinstance(row, dict) else None
+        if not isinstance(src, str) or not src or Path(src).is_absolute() or ".." in Path(src).parts:
+            continue
+        made = commits_of(root, src)
+        if made and made[0] != first_run and not is_ancestor(root, made[0], first_run)                 and not is_ancestor(root, log[-1], made[0]):
+            findings.append(f"{rel}: committed or changed at or after the first run: "
+                            f"amendment lands after run 2 ({row.get('run_key')})")
 
 
 def check_citation(root, t1, change, findings):
@@ -225,7 +233,7 @@ def check_order(root, docs, findings):
             if log[n] and not is_ancestor(root, log[n][-1], first_run):
                 findings.append(f"{TRIAL}/{n}.json: committed or changed at or after the first run")
         if log["thresholds"]:
-            check_amendment(root, first_run, log["thresholds"], docs["thresholds"], findings)
+            check_amendment(root, first_run, log["thresholds"], docs["thresholds"], docs["ledger"], findings)
     if log["thresholds"] and log["ledger"] and not is_ancestor(root, log["thresholds"][0], log["ledger"][0]):
         findings.append(f"{TRIAL}/thresholds.json: thresholds not committed before the ledger")
     if log["freeze"] and log["miss-key"] and not is_ancestor(root, log["freeze"][-1], log["miss-key"][0]):
