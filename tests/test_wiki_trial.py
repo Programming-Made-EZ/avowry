@@ -450,6 +450,54 @@ class WikiTrial(unittest.TestCase):
         c.docs["thresholds"]["cap_amendment"] = "older text"
         fails(c, self, "amendment changes cap_amendment")
 
+    # Card 237, window 237-amendment-ordering, cycle 4: caps only rise, and stay whole numbers.
+    # Hostile 1 (lowered, each cap), 2 (equal caps pass), 16 (bad cap values), 19 (cap judged on the new value),
+    # 21 (first run falls back to the ledger commit). Tests named "pin" pass at once: the old rules already hold.
+    def test_amendment_that_lowers_cap_stage_a(self):
+        c = Amended()
+        c.amended["cap_stage_a"] = 500000
+        fails(c, self, "amendment lowers cap_stage_a")
+
+    def test_amendment_that_lowers_cap_stage_ab(self):
+        c = Amended()
+        c.amended["cap_stage_a"] = 1200000
+        c.amended["cap_stage_ab"] = 1500000
+        fails(c, self, "amendment lowers cap_stage_ab")
+
+    def test_amendment_with_a_float_cap(self):
+        c = Amended()
+        c.amended["cap_stage_a"] = 15000000.0
+        fails(c, self, "amendment cap_stage_a is not an integer")
+
+    def test_amendment_that_lowers_a_cap_when_the_first_run_is_the_ledger_commit(self):  # hostile 21
+        c = Amended()
+        c.sources = False
+        c.amended["cap_stage_a"] = 500000
+        fails(c, self, "amendment lowers cap_stage_a")
+
+    def test_pin_amendment_with_equal_caps_passes(self):  # hostile 2
+        c = Amended()
+        c.amended["cap_stage_a"] = c.docs["thresholds"]["cap_stage_a"]
+        c.amended["cap_stage_ab"] = c.docs["thresholds"]["cap_stage_ab"]
+        code, out, err = run(c.build())
+        self.assertEqual((code, err), (0, ""))
+
+    def test_pin_amendment_with_bad_cap_values(self):  # hostile 16
+        for bad in ("15000000", True, -5):
+            c = Amended()
+            c.amended["cap_stage_a"] = bad
+            fails(c, self, "bad threshold cap_stage_a")
+
+    def test_pin_raised_cap_is_what_the_total_is_judged_against(self):  # hostile 19
+        c = Amended()
+        c.docs["thresholds"].update(cap_stage_a=5000, cap_stage_ab=6000)  # the old caps are exceeded by 12 rows
+        code, out, err = run(c.build())
+        self.assertEqual((code, err), (0, ""))
+        c = Amended()
+        c.docs["thresholds"].update(cap_stage_a=5000, cap_stage_ab=6000)
+        c.amended.update(cap_stage_a=8000, cap_stage_ab=9000)  # raised, but still under the total
+        fails(c, self, "cap exceeded")
+
     def test_real_trial_folder_is_ready(self):
         """RED until step 0d: the real repo has no committed trial folder yet, so the check must fail."""
         code, out, err = run(REPO)
