@@ -185,5 +185,13 @@
    "by": "facilitator",
    "observation": "in window 234-slice every Copilot seat placed by the gate returned no reply (14 of 14 over two rounds); each cost about 1.5 min and was recorded as an attempt; card 229 evidence. The runner's strict re-poll did not handle a gate refusal (delivery lead), so that role was re-polled through the gate separately"
   }
+ ],
+ "confirmations": [
+  {
+   "by": "facilitator",
+   "at": "2026-11-01T05:12:11Z",
+   "per": "stand-down 1 adjustment (cc2bbc3), before the red 2 seat",
+   "decision": "(1) Caller: scripts/check-process-wiki.py gets its caller in criterion 2's green: scripts/mob_process.py check (the pre-push check every avowry push runs) calls it, so a broken wiki fails the push; red 2 pins that caller. (2) The coverage floor and the role-page rule join red 2 as the stand-down asks; the architect's share is set in the red body from the slice. (3) Copilot usage: whether the Copilot CLI exposes a usage count is measured at red 2 (a direct run with -s and without, recorded); if none exists, Copilot seats' tokens are 'not measured: no usage source' in the record, and Done check 2 says so instead of failing silently. (4) Every green body carries the Proof block; the facilitator returns a green without one."
+  }
  ]
 }
