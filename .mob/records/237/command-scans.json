@@ -110,7 +110,7 @@
    "detail": "each counted vote's command_scan is in its window file under .mob/records/decisions/237-*.json"
   },
   {
-   "correction": "first written at card close (af0a8ce^..) with fifteen Claude seats 'unscanned: no assistant record': the facilitator had scanned the task output files; re-scanned from the subagent transcripts (subagents/agent-<id>.jsonl) on 2026-11-01 20:30 UTC after card 228's slice named the right source"
+   "correction": "first written at card close (7f87b3b) with fifteen Claude seats 'unscanned: no assistant record': the facilitator had scanned the task output files; re-scanned from the subagent transcripts (subagents/agent-<id>.jsonl) on 2026-11-01 20:30 UTC after card 228's slice named the right source"
   }
  ]
 }
