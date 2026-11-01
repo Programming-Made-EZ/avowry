@@ -1,0 +1,178 @@
+{
+ "card": 237,
+ "author_seat": "ctx-3",
+ "written_after_freeze_commit": "01b3058",
+ "note": "Run key format is arm-role-1 for stage A; stage B would use -2. The same rule is seeded for a role in both arms. Finding: every role's wiki route carries its rule, so no wiki miss is recorded in advance.",
+ "keys": [
+  {
+   "run_key": "baseline-ready-1",
+   "arm": "baseline",
+   "role": "ready",
+   "stage": "A",
+   "rule": "Task-force proposal lists every required seat, slice and ship included, each present or removed with a reason (D158).",
+   "lives_in_baseline": "TEAM_WORKING_AGREEMENT.md:145",
+   "lives_in_wiki": [
+    "docs/process-wiki/roles/product-manager-ready.md:4"
+   ],
+   "wiki_route": "product-manager-ready",
+   "wiki_route_carries_rule": true,
+   "grader_test": "Output names the slice seat and the ship seat explicitly, each as present or as removed with a stated reason, and every other left-out role has a reason. A seat list that omits slice or ship, or leaves a role out with no reason, is a miss."
+  },
+  {
+   "run_key": "baseline-slice-1",
+   "arm": "baseline",
+   "role": "slice",
+   "stage": "A",
+   "rule": "Commit plan stays inside the thin-slice limits: card at most 3 acceptance criteria and one concern, each commit at most 15 countable files and 400 changed lines (D136).",
+   "lives_in_baseline": "TEAM_WORKING_AGREEMENT.md:126",
+   "lives_in_wiki": [
+    "docs/process-wiki/roles/architect-slice.md:4",
+    "docs/process-wiki/rules/thin-slices.md:3"
+   ],
+   "wiki_route": "architect-slice",
+   "wiki_route_carries_rule": true,
+   "grader_test": "Output states the limits as numbers (3 criteria, 15 countable files, 400 changed lines) or sizes each planned commit against them, with a verdict of ship as is or split. A plan with no numeric limit, or a commit over 15 files or 400 lines, is a miss."
+  },
+  {
+   "run_key": "baseline-red-1",
+   "arm": "baseline",
+   "role": "red",
+   "stage": "A",
+   "rule": "The red seat writes the intent line first: 'Intent: <what the owner wants and why>', quoting the owner and naming the decision or finding, before the first red (D165).",
+   "lives_in_baseline": "TEAM_WORKING_AGREEMENT.md:142",
+   "lives_in_wiki": [
+    "docs/process-wiki/roles/qa-red.md:3"
+   ],
+   "wiki_route": "qa-red",
+   "wiki_route_carries_rule": true,
+   "grader_test": "Output has a line starting 'Intent:' that quotes or paraphrases the product owner ruling on card 227 and sits before the failing test cases. No Intent line, or one placed after the cases, is a miss."
+  },
+  {
+   "run_key": "baseline-green-1",
+   "arm": "baseline",
+   "role": "green",
+   "stage": "A",
+   "rule": "The green is pushed at once, before any red for the next criterion (D157; push on every commit, D169).",
+   "lives_in_baseline": "TEAM_WORKING_AGREEMENT.md:147",
+   "lives_in_wiki": [
+    "docs/process-wiki/roles/backend-developer-green.md:3"
+   ],
+   "wiki_route": "backend-developer-green",
+   "wiki_route_carries_rule": true,
+   "grader_test": "Output's push step says the green commit is pushed immediately and that no red for criterion 2 starts before that push. A push step that defers pushing to the end of the card, or omits it, is a miss."
+  },
+  {
+   "run_key": "baseline-ship-1",
+   "arm": "baseline",
+   "role": "ship",
+   "stage": "A",
+   "rule": "Before ship, dry-run the closure record check and confirm every commit hash and record path it cites resolves on origin, committing that output under .mob/records/ before the closing commit (D154).",
+   "lives_in_baseline": "TEAM_WORKING_AGREEMENT.md:135",
+   "lives_in_wiki": [
+    "docs/process-wiki/roles/delivery-lead-ship.md:3"
+   ],
+   "wiki_route": "delivery-lead-ship",
+   "wiki_route_carries_rule": true,
+   "grader_test": "Output's checklist has an item for a dry-run of the closure record check and one that every cited hash and record path resolves on origin. Either missing is a miss."
+  },
+  {
+   "run_key": "baseline-signoff-1",
+   "arm": "baseline",
+   "role": "signoff",
+   "stage": "A",
+   "rule": "A change to a standing rule is decided by a full Decider, not by an objection window and not by the product manager alone (D153).",
+   "lives_in_baseline": "TEAM_WORKING_AGREEMENT.md:202",
+   "lives_in_wiki": [
+    "docs/process-wiki/rules/decisions.md:4"
+   ],
+   "wiki_route": "product-manager-signoff",
+   "wiki_route_carries_rule": true,
+   "grader_test": "Output says a rule change needs a full Decider (an independent re-run). Naming only the product manager, an objection window or a vote as the decider of a rule change is a miss."
+  },
+  {
+   "run_key": "wiki-ready-1",
+   "arm": "wiki",
+   "role": "ready",
+   "stage": "A",
+   "rule": "Task-force proposal lists every required seat, slice and ship included, each present or removed with a reason (D158).",
+   "lives_in_baseline": "TEAM_WORKING_AGREEMENT.md:145",
+   "lives_in_wiki": [
+    "docs/process-wiki/roles/product-manager-ready.md:4"
+   ],
+   "wiki_route": "product-manager-ready",
+   "wiki_route_carries_rule": true,
+   "grader_test": "Output names the slice seat and the ship seat explicitly, each as present or as removed with a stated reason, and every other left-out role has a reason. A seat list that omits slice or ship, or leaves a role out with no reason, is a miss."
+  },
+  {
+   "run_key": "wiki-slice-1",
+   "arm": "wiki",
+   "role": "slice",
+   "stage": "A",
+   "rule": "Commit plan stays inside the thin-slice limits: card at most 3 acceptance criteria and one concern, each commit at most 15 countable files and 400 changed lines (D136).",
+   "lives_in_baseline": "TEAM_WORKING_AGREEMENT.md:126",
+   "lives_in_wiki": [
+    "docs/process-wiki/roles/architect-slice.md:4",
+    "docs/process-wiki/rules/thin-slices.md:3"
+   ],
+   "wiki_route": "architect-slice",
+   "wiki_route_carries_rule": true,
+   "grader_test": "Output states the limits as numbers (3 criteria, 15 countable files, 400 changed lines) or sizes each planned commit against them, with a verdict of ship as is or split. A plan with no numeric limit, or a commit over 15 files or 400 lines, is a miss."
+  },
+  {
+   "run_key": "wiki-red-1",
+   "arm": "wiki",
+   "role": "red",
+   "stage": "A",
+   "rule": "The red seat writes the intent line first: 'Intent: <what the owner wants and why>', quoting the owner and naming the decision or finding, before the first red (D165).",
+   "lives_in_baseline": "TEAM_WORKING_AGREEMENT.md:142",
+   "lives_in_wiki": [
+    "docs/process-wiki/roles/qa-red.md:3"
+   ],
+   "wiki_route": "qa-red",
+   "wiki_route_carries_rule": true,
+   "grader_test": "Output has a line starting 'Intent:' that quotes or paraphrases the product owner ruling on card 227 and sits before the failing test cases. No Intent line, or one placed after the cases, is a miss."
+  },
+  {
+   "run_key": "wiki-green-1",
+   "arm": "wiki",
+   "role": "green",
+   "stage": "A",
+   "rule": "The green is pushed at once, before any red for the next criterion (D157; push on every commit, D169).",
+   "lives_in_baseline": "TEAM_WORKING_AGREEMENT.md:147",
+   "lives_in_wiki": [
+    "docs/process-wiki/roles/backend-developer-green.md:3"
+   ],
+   "wiki_route": "backend-developer-green",
+   "wiki_route_carries_rule": true,
+   "grader_test": "Output's push step says the green commit is pushed immediately and that no red for criterion 2 starts before that push. A push step that defers pushing to the end of the card, or omits it, is a miss."
+  },
+  {
+   "run_key": "wiki-ship-1",
+   "arm": "wiki",
+   "role": "ship",
+   "stage": "A",
+   "rule": "Before ship, dry-run the closure record check and confirm every commit hash and record path it cites resolves on origin, committing that output under .mob/records/ before the closing commit (D154).",
+   "lives_in_baseline": "TEAM_WORKING_AGREEMENT.md:135",
+   "lives_in_wiki": [
+    "docs/process-wiki/roles/delivery-lead-ship.md:3"
+   ],
+   "wiki_route": "delivery-lead-ship",
+   "wiki_route_carries_rule": true,
+   "grader_test": "Output's checklist has an item for a dry-run of the closure record check and one that every cited hash and record path resolves on origin. Either missing is a miss."
+  },
+  {
+   "run_key": "wiki-signoff-1",
+   "arm": "wiki",
+   "role": "signoff",
+   "stage": "A",
+   "rule": "A change to a standing rule is decided by a full Decider, not by an objection window and not by the product manager alone (D153).",
+   "lives_in_baseline": "TEAM_WORKING_AGREEMENT.md:202",
+   "lives_in_wiki": [
+    "docs/process-wiki/rules/decisions.md:4"
+   ],
+   "wiki_route": "product-manager-signoff",
+   "wiki_route_carries_rule": true,
+   "grader_test": "Output says a rule change needs a full Decider (an independent re-run). Naming only the product manager, an objection window or a vote as the decider of a rule change is a miss."
+  }
+ ]
+}
