@@ -239,6 +239,12 @@
    "transcript": "subagents/agent-a177dfde47072868d.jsonl",
    "commands": 53,
    "source": "python delete_guard.py scan-transcript, facilitator"
+  },
+  {
+   "context": "ctx-4",
+   "status": "unscanned",
+   "seat": "red 2c (Copilot CLI)",
+   "reason": "Copilot has no command source"
   }
  ],
  "cycles": [
@@ -309,6 +315,12 @@
    },
    "mutations": "6 run, 6 caught, control clean",
    "open": "seat-prompt has no production caller yet; the measurement pair (2c) uses it"
+  },
+  {
+   "criterion": 2,
+   "increment": "2c (review fix: source-checked token values, measurement pair)",
+   "repo": "avowry",
+   "red": "daf3e6d (CriterionTwoReviewFixesR2R4: 6 run, 6 failing at HEAD; prototype OK; Copilot seat)"
   }
  ],
  "stand_downs": [
@@ -490,6 +502,13 @@
    "requests": "6 Premium (16m 55s)",
    "tokens_in": "3.3m (3.1m cached)",
    "tokens_out": "22.0k"
+  },
+  {
+   "seat": "red 2c, QA ctx-4 (Copilot CLI)",
+   "source": "Copilot CLI usage lines (scratch red-234-2c.err)",
+   "requests": "6 Premium (11m 14s)",
+   "tokens_in": "2.2m (2.1m cached)",
+   "tokens_out": "19.3k (12.3k reasoning)"
   }
  ],
  "reviews": [
