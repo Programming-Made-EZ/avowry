@@ -1,0 +1,212 @@
+{
+ "card": 237,
+ "author_seat": "ctx-4",
+ "role": "independent reviewer, audit lens",
+ "stage": "A",
+ "source": "recomputed from .mob/records/237/trial/runs/<run_key>.json usage by the slice rule: input_total = input_tokens + cache_read_input_tokens + cache_creation_input_tokens; counted_tokens = input_total + output_tokens. Misses graded against miss-key.json grader_test on trial/reports/<run_key>.report.md.",
+ "rows": [
+  {
+   "run_key": "baseline-ready-1",
+   "arm": "baseline",
+   "role": "ready",
+   "input_total": 843759,
+   "cached_input": 788896,
+   "output_total": 9513,
+   "counted_tokens": 853272,
+   "misses": 0,
+   "duration_s": 83.7,
+   "over_T": false
+  },
+  {
+   "run_key": "wiki-ready-1",
+   "arm": "wiki",
+   "role": "ready",
+   "input_total": 617256,
+   "cached_input": 557962,
+   "output_total": 6556,
+   "counted_tokens": 623812,
+   "misses": 0,
+   "duration_s": 52.0,
+   "over_T": false
+  },
+  {
+   "run_key": "baseline-slice-1",
+   "arm": "baseline",
+   "role": "slice",
+   "input_total": 763569,
+   "cached_input": 705737,
+   "output_total": 12080,
+   "counted_tokens": 775649,
+   "misses": 0,
+   "duration_s": 104.2,
+   "over_T": false
+  },
+  {
+   "run_key": "wiki-slice-1",
+   "arm": "wiki",
+   "role": "slice",
+   "input_total": 324579,
+   "cached_input": 295686,
+   "output_total": 3812,
+   "counted_tokens": 328391,
+   "misses": 1,
+   "duration_s": 38.9,
+   "over_T": false
+  },
+  {
+   "run_key": "baseline-red-1",
+   "arm": "baseline",
+   "role": "red",
+   "input_total": 1067432,
+   "cached_input": 1001583,
+   "output_total": 13148,
+   "counted_tokens": 1080580,
+   "misses": 0,
+   "duration_s": 124.6,
+   "over_T": false
+  },
+  {
+   "run_key": "wiki-red-1",
+   "arm": "wiki",
+   "role": "red",
+   "input_total": 653098,
+   "cached_input": 614733,
+   "output_total": 7971,
+   "counted_tokens": 661069,
+   "misses": 0,
+   "duration_s": 69.8,
+   "over_T": false
+  },
+  {
+   "run_key": "baseline-green-1",
+   "arm": "baseline",
+   "role": "green",
+   "input_total": 1031626,
+   "cached_input": 971890,
+   "output_total": 8615,
+   "counted_tokens": 1040241,
+   "misses": 0,
+   "duration_s": 77.1,
+   "over_T": false
+  },
+  {
+   "run_key": "wiki-green-1",
+   "arm": "wiki",
+   "role": "green",
+   "input_total": 851467,
+   "cached_input": 810321,
+   "output_total": 7985,
+   "counted_tokens": 859452,
+   "misses": 0,
+   "duration_s": 70.4,
+   "over_T": false
+  },
+  {
+   "run_key": "baseline-ship-1",
+   "arm": "baseline",
+   "role": "ship",
+   "input_total": 954047,
+   "cached_input": 893564,
+   "output_total": 9992,
+   "counted_tokens": 964039,
+   "misses": 0,
+   "duration_s": 83.8,
+   "over_T": false
+  },
+  {
+   "run_key": "wiki-ship-1",
+   "arm": "wiki",
+   "role": "ship",
+   "input_total": 378674,
+   "cached_input": 349872,
+   "output_total": 4455,
+   "counted_tokens": 383129,
+   "misses": 0,
+   "duration_s": 43.4,
+   "over_T": false
+  },
+  {
+   "run_key": "baseline-signoff-1",
+   "arm": "baseline",
+   "role": "signoff",
+   "input_total": 849818,
+   "cached_input": 793386,
+   "output_total": 9934,
+   "counted_tokens": 859752,
+   "misses": 0,
+   "duration_s": 81.8,
+   "over_T": false
+  },
+  {
+   "run_key": "wiki-signoff-1",
+   "arm": "wiki",
+   "role": "signoff",
+   "input_total": 434697,
+   "cached_input": 405912,
+   "output_total": 3976,
+   "counted_tokens": 438673,
+   "misses": 0,
+   "duration_s": 37.7,
+   "over_T": false
+  }
+ ],
+ "aggregates": {
+  "median_counted_tokens": {
+   "baseline": 911895.5,
+   "wiki": 531242.5
+  },
+  "delta_pct": 41.74
+ },
+ "per_role_delta": [
+  {
+   "role": "ready",
+   "baseline": 853272,
+   "wiki": 623812,
+   "delta_pct": 26.89
+  },
+  {
+   "role": "slice",
+   "baseline": 775649,
+   "wiki": 328391,
+   "delta_pct": 57.66
+  },
+  {
+   "role": "red",
+   "baseline": 1080580,
+   "wiki": 661069,
+   "delta_pct": 38.82
+  },
+  {
+   "role": "green",
+   "baseline": 1040241,
+   "wiki": 859452,
+   "delta_pct": 17.38
+  },
+  {
+   "role": "ship",
+   "baseline": 964039,
+   "wiki": 383129,
+   "delta_pct": 60.26
+  },
+  {
+   "role": "signoff",
+   "baseline": 859752,
+   "wiki": 438673,
+   "delta_pct": 48.98
+  }
+ ],
+ "roles_at_or_over_20pct": 5,
+ "total_counted_tokens": 8868059,
+ "runs_over_T_600s": 0,
+ "misses_per_arm": {
+  "baseline": 0,
+  "wiki": 1
+ },
+ "differs_from_ledger": [
+  "wiki-slice-1 misses: ledger 0 (unscored placeholder), recompute 1",
+  "ledger.aggregates is stale (baseline median only, delta_pct null); recompute holds both arm medians and delta_pct"
+ ],
+ "guard": {
+  "result": "no read of .mob/records/237, miss-key.json or git history of that folder found in any of 12 tool logs or 12 session logs; the folder name occurs only in the wrapper line"
+ }
+}
