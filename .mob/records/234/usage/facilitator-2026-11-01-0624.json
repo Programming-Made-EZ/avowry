@@ -1,0 +1,21 @@
+{
+ "read_at": "2026-11-01T06:21:07Z",
+ "seat": "facilitator (session 73298da3, Claude Opus)",
+ "source": "mcp__ccd_session_mgmt__get_usage (the desktop app's own context reading for this session), read by the facilitator",
+ "context": {
+  "tokens_used": 782199,
+  "context_window": 1000000,
+  "percent_used": 78,
+  "auto_compacts_at_percent": 97,
+  "categories": {
+   "Messages": 713419,
+   "System tools": 36991,
+   "MCP tools": 16376,
+   "Skills": 9955,
+   "System prompt": 3658,
+   "MCP server instructions": 1700
+  }
+ },
+ "baseline_from_card": 965000,
+ "note": "one reading at the card 234 criterion 3 boundary, before any restart from the wiki"
+}

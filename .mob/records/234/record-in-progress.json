@@ -127,6 +127,14 @@
    "status": "unscanned",
    "seat": "stand-down 2 (Copilot CLI)",
    "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-4",
+   "status": "clean",
+   "seat": "red 3 (Claude)",
+   "commands": 47,
+   "transcript": "subagents/agent-a9444442c4053b554.jsonl",
+   "source": "python delete_guard.py scan-transcript, facilitator; read"
   }
  ],
  "cycles": [
@@ -154,6 +162,11 @@
    "suite": "tests.test_process_wiki and test_mob_process 140 OK; full Python suite 376 OK, 7 skipped",
    "checker": "process-wiki: OK (17 pages); floor 44 of 128 rule lines (0.34)",
    "mutations": "6 run, 6 caught, control clean"
+  },
+  {
+   "criterion": 3,
+   "repo": "avowry",
+   "red": "eb68d95 (tests/test_restart_record.py 98 tests and 4 caller tests; HEAD failures=99, prototype failures=2 needing real files; Claude seat)"
   }
  ],
  "stand_downs": [
