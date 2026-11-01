@@ -396,7 +396,15 @@
    "increment": "3b (review fix: real restart against a committed key)",
    "repo": "avowry",
    "red": "ef38d5e (13 run, 8 failing at HEAD; prototype: the 6 new pass, 4 need the real key, report, HANDOFF and index lines; Copilot seat)",
-   "plan": "unit commit (checker, HANDOFF 'Restart here', facilitator-restart brief) -> facilitator commits the key -> a fresh restart seat runs from index, HANDOFF and brief only -> report and record committed in the green"
+   "plan": "unit commit (checker, HANDOFF 'Restart here', facilitator-restart brief) -> facilitator commits the key -> a fresh restart seat runs from index, HANDOFF and brief only -> report and record committed in the green",
+   "units": [
+    "3186c15 (checker: key and report sources, key older than report, parsed tokens, computed misses, context reading kind; HANDOFF Restart here; facilitator-restart brief and role page; Claude seat)"
+   ],
+   "key": "68108b7 (facilitator, before the restart: boundary B2 3186c15510b1, next card 234, next step re-review, four rule pages)",
+   "restart": "a fresh Claude subagent read only the Restart here list (10 files, named in its report); report committed; 83666 tokens against the 965000 baseline; 0 misses computed by the checker against the key",
+   "evidence": "the restart entry and its fix (handoff refs HANDOFF.md only)",
+   "suite": "503 OK, 7 skipped",
+   "checker": "restart-record: OK (2 restarts)"
   }
  ],
  "stand_downs": [
@@ -512,6 +520,16 @@
    "by": "backend developer ctx-5",
    "what": "unit commit f8ef376 has 16 files (D136 allows 15): a grep-built file list swept the checker into it; its body says the checker lands in the next commit, which is wrong",
    "handling": "recorded in the green body and here; no amend"
+  },
+  {
+   "by": "facilitator",
+   "what": "the unit commit 3186c15 stayed unpushed for about 7 minutes (the pre-push check correctly refused a record with no real restart; the facilitator finished the key, the restart and the evidence first), over the 5-minute push rule",
+   "handling": "recorded; pushed with the key, report and evidence; no --no-verify"
+  },
+  {
+   "by": "facilitator",
+   "what": "the restart evidence commit named the re-rank note among handoff refs, which a checker test's partial repository copy lacks, so test_zombies_exceptions_checker_accepts_report_json_tokens_and_usage_line failed on main for about 4 minutes",
+   "handling": "fixed in the next commit (handoff refs HANDOFF.md only); full suite 503 OK after"
   }
  ],
  "observations_for_next_stand_down": [
