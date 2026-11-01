@@ -99,6 +99,14 @@
    "status": "unscanned",
    "seat": "red 2 (Copilot CLI)",
    "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green 2 attempt (Claude)",
+   "commands": 47,
+   "transcript": "subagents/agent-a983312bbf30ddd6d.jsonl",
+   "source": "python delete_guard.py scan-transcript, facilitator; read"
   }
  ],
  "cycles": [
@@ -115,7 +123,12 @@
    "criterion": 2,
    "repo": "avowry",
    "red": "570dc5c (seat briefs name their pages, coverage floor, mob_process check calls check-process-wiki; 10 run, 9 failing; one born-green guard red on a scratch copy; Copilot seat)",
-   "copilot_usage": "copilot -p ... -s prints only the reply; without -s it prints usage ('Requests 0.25 Premium', tokens up and down), so Copilot seats' tokens can be recorded by running without -s and capturing the usage lines"
+   "copilot_usage": "copilot -p ... -s prints only the reply; without -s it prints usage ('Requests 0.25 Premium', tokens up and down), so Copilot seats' tokens can be recorded by running without -s and capturing the usage lines",
+   "units": [
+    "e724cdf (13 wiki pages: 7 role pages, 6 rule pages; 44 anchored rule lines against 128 agreement bullets)",
+    "f9a3236 (mob_process.py check runs check-process-wiki and fails closed; two existing window tests patched)"
+   ],
+   "blocked": "the red 570dc5c contradicts itself: the default Tree() must fail the role/brief check and pass clean; zero-rule tests cannot pass with any floor; the disabled-page test names an id its brief never lists (developer ctx-5, Claude). Red fix by the QA role next"
   }
  ],
  "stand_downs": [
