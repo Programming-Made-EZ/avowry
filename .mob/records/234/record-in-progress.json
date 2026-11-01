@@ -107,6 +107,12 @@
    "commands": 47,
    "transcript": "subagents/agent-a983312bbf30ddd6d.jsonl",
    "source": "python delete_guard.py scan-transcript, facilitator; read"
+  },
+  {
+   "context": "ctx-4",
+   "status": "unscanned",
+   "seat": "red 2 fix (Copilot CLI)",
+   "reason": "Copilot has no command source"
   }
  ],
  "cycles": [
@@ -128,7 +134,8 @@
     "e724cdf (13 wiki pages: 7 role pages, 6 rule pages; 44 anchored rule lines against 128 agreement bullets)",
     "f9a3236 (mob_process.py check runs check-process-wiki and fails closed; two existing window tests patched)"
    ],
-   "blocked": "the red 570dc5c contradicts itself: the default Tree() must fail the role/brief check and pass clean; zero-rule tests cannot pass with any floor; the disabled-page test names an id its brief never lists (developer ctx-5, Claude). Red fix by the QA role next"
+   "blocked": "the red 570dc5c contradicts itself: the default Tree() must fail the role/brief check and pass clean; zero-rule tests cannot pass with any floor; the disabled-page test names an id its brief never lists (developer ctx-5, Claude). Red fix by the QA role next",
+   "red_fix": "707434b (default Tree() a complete valid wiki, negative tests remove pieces, zero-rule tests own their agreement text, disabled id named; 61 run: HEAD failures=20, the developer's prototype failures=1, the real-repository test needing the 8 briefs; Copilot seat)"
   }
  ],
  "stand_downs": [
@@ -217,6 +224,15 @@
    "at": "2026-11-01T05:12:11Z",
    "per": "stand-down 1 adjustment (cc2bbc3), before the red 2 seat",
    "decision": "(1) Caller: scripts/check-process-wiki.py gets its caller in criterion 2's green: scripts/mob_process.py check (the pre-push check every avowry push runs) calls it, so a broken wiki fails the push; red 2 pins that caller. (2) The coverage floor and the role-page rule join red 2 as the stand-down asks; the architect's share is set in the red body from the slice. (3) Copilot usage: whether the Copilot CLI exposes a usage count is measured at red 2 (a direct run with -s and without, recorded); if none exists, Copilot seats' tokens are 'not measured: no usage source' in the record, and Done check 2 says so instead of failing silently. (4) Every green body carries the Proof block; the facilitator returns a green without one."
+  }
+ ],
+ "token_usage": [
+  {
+   "seat": "red 2 fix, QA ctx-4 (Copilot CLI, run without -s)",
+   "source": "the Copilot CLI's own usage lines on stderr (scratch red-234-2fix.err)",
+   "requests": "6 Premium (3m 42s)",
+   "tokens_in": "937.9k (881.8k cached)",
+   "tokens_out": "11.3k"
   }
  ]
 }
