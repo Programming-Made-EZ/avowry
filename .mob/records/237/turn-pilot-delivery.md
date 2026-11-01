@@ -85,3 +85,19 @@ Deviations:
 - Run clones are left in place under C:\Users\ringe\AppData\Local\Temp\claude\pilot237-<run_key>-<random> (clone of run 1: pilot237-baseline-ready-1-ec728028).
 - Clones come from origin, so their .git holds the history of the excluded folder; the wrapper line forbids reading it, and no tool log shows a git command against it.
 - No process was stopped; no PIDs killed. No probing of the checker, no change to product code, checker, thresholds, key or freeze.
+
+## Ledger correction
+
+Intent (D165): make ledger.json agree with the independent reviewer's recompute so the checker and tests pass, changing only the misses grade and the aggregates.
+
+Assumption (D166): the reviewer's grade for wiki-slice-1 (1 miss) is authoritative; I did not read the miss key and have no dispute to record. The checker requires aggregates to hold exactly the per-arm medians and delta_pct, so misses per arm and runs over T stay out of that block (they are in recompute.json and follow from the rows: baseline 0, wiki 1, 0 runs over T).
+
+What changed in ledger.json:
+- wiki-slice-1 misses: 0 (placeholder) -> 1, copied from recompute.json. All other rows' misses were already 0, matching the reviewer.
+- aggregates: median_counted_tokens baseline 911895.5, wiki 531242.5; delta_pct 41.74. I recomputed these from the 12 rows and they match recompute.json. Total counted tokens 8868059 unchanged.
+- Nothing else touched (counted_tokens, runs, key, thresholds, freeze, checker).
+
+Checker: `python scripts/check-wiki-trial.py` -> `wiki-trial: OK (12 rows)`.
+Tests: `python -m unittest tests.test_wiki_trial` -> Ran 72 tests in 405.310s, OK.
+
+Commits: ledger ca56511; MOB.md regenerated after the pre-push stale check, 8598be0 (pushed).
