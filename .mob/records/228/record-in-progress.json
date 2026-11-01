@@ -1,0 +1,62 @@
+{
+ "card": 228,
+ "title": "Recursive-delete scan covers hidden, encoded and non-shell forms, and the contents of files a seat writes",
+ "status": "in progress",
+ "decisions": {
+  "rank": "re-rank 17 (window rerank-17): first, as the corrective named by F-071",
+  "task_force": "window 228-taskforce (adopted, no conditions)"
+ },
+ "task_force": [
+  {
+   "role": "product manager (ready)",
+   "context": "ctx-1"
+  },
+  {
+   "role": "architect (slice)",
+   "context": "ctx-2"
+  },
+  {
+   "role": "QA engineer (red)",
+   "context": "ctx-3"
+  },
+  {
+   "role": "backend developer (green)",
+   "context": "ctx-5"
+  },
+  {
+   "role": "independent reviewer (ship)",
+   "context": "ctx-4"
+  },
+  {
+   "role": "decider / sign-off",
+   "context": "ctx-6"
+  }
+ ],
+ "open_points": [
+  "the proposal's split of the 'Also owned here' items into follow-up cards is confirmed or changed at the slice (D136, D168)",
+  "the T2 question: the real command source per backend, and whether a no-source seat fails closed or is recorded as a gap"
+ ],
+ "command_scans": [
+  {
+   "context": "ctx-1",
+   "status": "unscanned",
+   "seat": "pm-ready (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  }
+ ],
+ "token_usage": [
+  {
+   "seat": "pm-ready ctx-1 (Copilot CLI)",
+   "source": "Copilot CLI usage lines (scratch pm-ready-228.err)",
+   "requests": "0.25 Premium (46s)",
+   "tokens_in": "225.2k (188.2k cached)",
+   "tokens_out": "7.1k"
+  }
+ ],
+ "cycles": [],
+ "stand_downs": [],
+ "deviations": [],
+ "observations_for_next_stand_down": [
+  "D174's first two windows (rerank-17, 228-taskforce) ran serially as recorded fallbacks: decider.py's append-only seat-use check blocks parallel runs on one checkout"
+ ]
+}
