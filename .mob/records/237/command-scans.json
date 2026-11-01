@@ -1,0 +1,114 @@
+{
+ "card": 237,
+ "command_scans": [
+  {
+   "context": "ctx-1",
+   "status": "unscanned",
+   "seat": "pm-ready (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-2",
+   "status": "unscanned",
+   "seat": "slice 742a741 (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "delivery lead, pilot run 1 and stop (Claude subagent)",
+   "detail": "65 commands scanned by delete_guard.py scan-transcript"
+  },
+  {
+   "context": "ctx-2",
+   "status": "clean",
+   "seat": "architect, cap-fired proposal (Claude subagent)",
+   "detail": "22 commands scanned"
+  },
+  {
+   "seat": "QA red 0a (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "reviewer thresholds 0b (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "architect freeze 0c (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "QA key 0d (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "reviewer key-probe ruling (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "decider cap raise (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "QA ordering proposal (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "QA ordering eight cycles (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "delivery lead runs 2 to 12 (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "reviewer recompute (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "delivery lead ledger correction (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "PM assessment (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "reviewer gate (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "decider sign-off (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "coach retro (Claude subagent)",
+   "status": "unscanned",
+   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+  },
+  {
+   "seat": "12 headless pilot runs",
+   "status": "finding",
+   "detail": "wiki-red-1 tool log seq 14: rm t.tmp on its own scratch file (not recursive); found by the pre-shipping gate, not by the scanner; recorded as a deviation"
+  },
+  {
+   "seat": "decision windows and Decider votes",
+   "status": "per vote",
+   "detail": "each counted vote's command_scan is in its window file under .mob/records/decisions/237-*.json"
+  }
+ ]
+}

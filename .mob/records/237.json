@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 237,
+ "title": "Evaluate whether an indexed, just-in-time process wiki solves the context problem",
+ "process": "card-mode rules run by hand; product owner correction D172 (evaluate, not build) with a one-card stop-the-line waiver; D157 one criterion per cycle; trial with a committed pre-trial red, thresholds, freeze and a non-runner key; independent recompute; Decider D173 (outcome) and D174 (retro pick)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Copilot ctx-1",
+   "model": "copilot (auto) via the Copilot CLI, product manager (ready); evidence is the ready window's D158 checklist commit; the same role's assessment (d2ad79f) ran as a Claude subagent; seats rotated between Copilot (its CLI) and Claude (subagents) by least-recently-used; Copilot decision seats returned no reply all card (card 229); Codex, Grok and agy without quota at every probe of 2026-11-01",
+   "evidence": "f216dcb"
+  },
+  {
+   "role": "slice",
+   "seat": "Copilot ctx-2",
+   "model": "copilot (auto) via the Copilot CLI, architect (slice); the freeze and the cap-fired proposal ran as Claude subagents; seats rotated between Copilot (its CLI) and Claude (subagents) by least-recently-used; Copilot decision seats returned no reply all card (card 229); Codex, Grok and agy without quota at every probe of 2026-11-01",
+   "evidence": "742a741"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude-sonnet subagent, QA engineer: pre-trial red, key, and the eight amendment-ordering cycles; seats rotated between Copilot (its CLI) and Claude (subagents) by least-recently-used; Copilot decision seats returned no reply all card (card 229); Codex, Grok and agy without quota at every probe of 2026-11-01",
+   "evidence": "744e9e3"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-5",
+   "model": "claude-sonnet subagent, delivery lead running the trial (no product code; the role label maps the trial run, as the slice and the gate state); seats rotated between Copilot (its CLI) and Claude (subagents) by least-recently-used; Copilot decision seats returned no reply all card (card 229); Codex, Grok and agy without quota at every probe of 2026-11-01",
+   "evidence": "0e6cb7d"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-4",
+   "model": "claude-sonnet subagent, independent reviewer (audit lens): thresholds, key-probe ruling, recompute and pre-ship gate; seats rotated between Copilot (its CLI) and Claude (subagents) by least-recently-used; Copilot decision seats returned no reply all card (card 229); Codex, Grok and agy without quota at every probe of 2026-11-01",
+   "evidence": "ae02695"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude-sonnet subagent, decider / sign-off: threshold confirmation, cap raise and sign-off; seats rotated between Copilot (its CLI) and Claude (subagents) by least-recently-used; Copilot decision seats returned no reply all card (card 229); Codex, Grok and agy without quota at every probe of 2026-11-01",
+   "evidence": "c13faa8"
+  }
+ ],
+ "retro": "docs/retros/card-237-2026-11-01.md",
+ "notes": "Product owner correction D172 (evaluate, not build). Outcome Decider D173: RESHAPE (follow-up card 238); retro-end wiki review as a three-retro experiment on the reshaped wiki. Stage A, 12 runs, 8,868,059 counted tokens of a 15,000,000 cap raised once after the 1,000,000 cap fired on run 1 (window 237-cap-fired, raise c30b932): median delta 41.74% for the wiki, 5 of 6 roles at or over 20%, misses wiki 1 baseline 0 (slice route lacks the thin-slice limits), 0 runs over 600 s, upkeep and context growth unmeasured. Retro pick Decider D174: parallel voter dispatch. Trail, token usage and deviations in .mob/records/237/ (record-in-progress.json); command scans in .mob/records/237/command-scans.json; window files .mob/records/decisions/237-*.json."
+}

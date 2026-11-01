@@ -59,6 +59,13 @@
    "tokens_out": "9.8k"
   },
   {
+   "seat": "architect ctx-2, slice 742a741 (Copilot CLI)",
+   "source": "Copilot CLI usage lines (scratch slice-237.err)",
+   "requests": "6 Premium (2m 51s)",
+   "tokens_in": "1.4m (1.3m cached)",
+   "tokens_out": "9.3k"
+  },
+  {
    "seat": "QA engineer ctx-3, pre-trial red (0a)",
    "source": "Agent completion report (subagent_tokens), relayed by the facilitator",
    "subagent_tokens": 103632
@@ -206,6 +213,11 @@
    "by": "delivery lead",
    "what": "the 12 runs' session logs (*.session.jsonl) are untracked in the main checkout, so the reviewer's session-log guard check cannot be reproduced from git; the committed tool logs suffice for the key-read check",
    "handling": "recorded; left untracked (they hold full prompts and tool results)"
+  },
+  {
+   "by": "facilitator",
+   "what": "the 237-slice window record named the proposer's model as Claude; the slice (742a741) ran on the Copilot CLI",
+   "handling": "corrected at card close; the amendment 8708cc5's seat model is not re-verified"
   }
  ],
  "observations_for_next_stand_down": [
