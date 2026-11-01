@@ -140,6 +140,23 @@ def check_recompute(ledger, recompute, rows, findings):
             findings.append(f"{TRIAL}/{name}.json: recompute mismatch aggregates")
 
 
+def show_json(root, rev, rel):
+    """The JSON object stored at rev:rel, or None."""
+    code, out = git(root, "show", f"{rev}:{rel}")
+    try:
+        data = json.loads(out) if code == 0 else None
+    except ValueError:
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def check_amendment(root, first_run, log, findings):
+    """Window 237-amendment-ordering: thresholds are judged by content against the file at the first run."""
+    rel = f"{TRIAL}/thresholds.json"
+    if show_json(root, first_run, rel) is None:
+        findings.append(f"{rel}: committed or changed at or after the first run")
+
+
 def check_order(root, docs, findings):
     key_rel, led_rel = f"{TRIAL}/miss-key.json", f"{TRIAL}/ledger.json"
     log = {n: commits_of(root, f"{TRIAL}/{n}.json") for n in FILES}
@@ -150,10 +167,12 @@ def check_order(root, docs, findings):
     code, out = git(root, "log", "--format=%H", "--reverse", "--diff-filter=A", "--", led_rel, f"{TRIAL}/runs")
     first_run = out.split()[0] if code == 0 and out else (log["ledger"][0] if log["ledger"] else None)
     if first_run:
-        for n in ("thresholds", "freeze", "miss-key"):  # a later edit would be a forged order
+        for n in ("freeze", "miss-key"):  # a later edit would be a forged order
             if log[n] and not is_ancestor(root, log[n][-1], first_run):
                 findings.append(f"{TRIAL}/{n}.json: committed or changed at or after the first run")
-    if log["thresholds"] and log["ledger"] and not is_ancestor(root, log["thresholds"][-1], log["ledger"][0]):
+        if log["thresholds"]:
+            check_amendment(root, first_run, log["thresholds"], findings)
+    if log["thresholds"] and log["ledger"] and not is_ancestor(root, log["thresholds"][0], log["ledger"][0]):
         findings.append(f"{TRIAL}/thresholds.json: thresholds not committed before the ledger")
     if log["freeze"] and log["miss-key"] and not is_ancestor(root, log["freeze"][-1], log["miss-key"][0]):
         findings.append(f"{key_rel}: key not committed after the freeze")
