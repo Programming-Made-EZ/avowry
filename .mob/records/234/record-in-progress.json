@@ -93,6 +93,12 @@
    "status": "unscanned",
    "seat": "green 1 (Copilot CLI)",
    "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-4",
+   "status": "unscanned",
+   "seat": "red 2 (Copilot CLI)",
+   "reason": "Copilot has no command source"
   }
  ],
  "cycles": [
@@ -104,6 +110,12 @@
    "suite": "tests.test_process_wiki 53 OK; full Python suite 366 OK, 7 skipped",
    "checker": "process-wiki: OK (4 pages)",
    "mutations": "not measured (the green body names none)"
+  },
+  {
+   "criterion": 2,
+   "repo": "avowry",
+   "red": "570dc5c (seat briefs name their pages, coverage floor, mob_process check calls check-process-wiki; 10 run, 9 failing; one born-green guard red on a scratch copy; Copilot seat)",
+   "copilot_usage": "copilot -p ... -s prints only the reply; without -s it prints usage ('Requests 0.25 Premium', tokens up and down), so Copilot seats' tokens can be recorded by running without -s and capturing the usage lines"
   }
  ],
  "stand_downs": [
