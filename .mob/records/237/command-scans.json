@@ -5,110 +5,112 @@
    "context": "ctx-1",
    "status": "unscanned",
    "seat": "pm-ready (Copilot CLI)",
-   "reason": "Copilot has no command source"
+   "reason": "no Copilot reader yet (card 228 slice: its events.jsonl is a command source)"
   },
   {
    "context": "ctx-2",
    "status": "unscanned",
    "seat": "slice 742a741 (Copilot CLI)",
-   "reason": "Copilot has no command source"
-  },
-  {
-   "context": "ctx-5",
-   "status": "clean",
-   "seat": "delivery lead, pilot run 1 and stop (Claude subagent)",
-   "detail": "65 commands scanned by delete_guard.py scan-transcript"
-  },
-  {
-   "context": "ctx-2",
-   "status": "clean",
-   "seat": "architect, cap-fired proposal (Claude subagent)",
-   "detail": "22 commands scanned"
+   "reason": "no Copilot reader yet (card 228 slice)"
   },
   {
    "seat": "QA red 0a (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "status": "clean",
+   "detail": "clean: qa-red-ctx3, 36 command(s) scanned"
   },
   {
    "seat": "reviewer thresholds 0b (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "status": "clean",
+   "detail": "clean: thresholds-ctx4, 8 command(s) scanned"
   },
   {
    "seat": "architect freeze 0c (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "status": "clean",
+   "detail": "clean: freeze-ctx2, 17 command(s) scanned"
   },
   {
    "seat": "QA key 0d (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "status": "clean",
+   "detail": "clean: key-ctx3, 29 command(s) scanned"
+  },
+  {
+   "seat": "delivery lead, pilot run 1 and stop (Claude subagent)",
+   "status": "clean",
+   "detail": "clean: pilot1-ctx5, 65 command(s) scanned"
+  },
+  {
+   "seat": "architect, cap-fired proposal (Claude subagent)",
+   "status": "clean",
+   "detail": "clean: capprop-ctx2, 22 command(s) scanned"
   },
   {
    "seat": "reviewer key-probe ruling (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "status": "clean",
+   "detail": "clean: ruling-ctx4, 10 command(s) scanned"
   },
   {
    "seat": "decider cap raise (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "status": "clean",
+   "detail": "clean: capraise-ctx6, 12 command(s) scanned"
   },
   {
    "seat": "QA ordering proposal (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "status": "clean",
+   "detail": "clean: ordprop-ctx3, 16 command(s) scanned"
   },
   {
    "seat": "QA ordering eight cycles (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "status": "clean",
+   "detail": "clean: ordtdd-ctx3, 117 command(s) scanned"
   },
   {
    "seat": "delivery lead runs 2 to 12 (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "status": "clean",
+   "detail": "clean: runs-ctx5, 52 command(s) scanned"
   },
   {
    "seat": "reviewer recompute (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "status": "clean",
+   "detail": "clean: recompute-ctx4, 37 command(s) scanned"
   },
   {
    "seat": "delivery lead ledger correction (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "status": "clean",
+   "detail": "clean: ledger-ctx5, 21 command(s) scanned"
   },
   {
    "seat": "PM assessment (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "status": "clean",
+   "detail": "clean: assess-ctx1, 10 command(s) scanned"
   },
   {
-   "seat": "reviewer gate (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "seat": "reviewer pre-ship gate (Claude subagent)",
+   "status": "finding, false positive",
+   "detail": "4 findings, all the seat's own search regex for delete verbs (rmtree|os.remove|... inside read-only python heredocs and a heredoc writing preship-gate.md); no delete executed; the false-positive class card 228 splits out",
+   "raw": "gate-ctx4: recursive delete on a variable or unresolved path: rmtree|os\\.remove|os\\.unlink|git\\s+(rm|reset\\s+--hard|checko\ngate-ctx4: recursive delete on a variable or unresolved path: rmtree|os\\.remove|os\\.unlink|git\\s+(rm|reset\\s+--hard|checko\ngate-ctx4: recursive delete on a variable or unresolved path: rmtree|os\\.remove|os\\.unlink|git\\s+rm\\b|reset\\s+--hard|git\\s\ngate-ctx4: recursive delete on a variable or unresolved path: rmtree|os\\.remove|os\\.unlink|git\\s+rm\\b|reset\\s+--hard|git\\s"
   },
   {
    "seat": "decider sign-off (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "status": "clean",
+   "detail": "clean: signoff-ctx6, 16 command(s) scanned"
   },
   {
    "seat": "coach retro (Claude subagent)",
-   "status": "unscanned",
-   "reason": "the subagent output file held no assistant record when scanned at card close (delete_guard.py: no command source)"
+   "status": "clean",
+   "detail": "clean: retro-coach, 30 command(s) scanned"
   },
   {
    "seat": "12 headless pilot runs",
    "status": "finding",
-   "detail": "wiki-red-1 tool log seq 14: rm t.tmp on its own scratch file (not recursive); found by the pre-shipping gate, not by the scanner; recorded as a deviation"
+   "detail": "wiki-red-1 tool log seq 14: rm t.tmp on its own scratch file (not recursive); found by the pre-ship gate, not by the scanner; recorded as a deviation"
   },
   {
    "seat": "decision windows and Decider votes",
    "status": "per vote",
    "detail": "each counted vote's command_scan is in its window file under .mob/records/decisions/237-*.json"
+  },
+  {
+   "correction": "first written at card close (af0a8ce^..) with fifteen Claude seats 'unscanned: no assistant record': the facilitator had scanned the task output files; re-scanned from the subagent transcripts (subagents/agent-<id>.jsonl) on 2026-11-01 20:30 UTC after card 228's slice named the right source"
   }
  ]
 }

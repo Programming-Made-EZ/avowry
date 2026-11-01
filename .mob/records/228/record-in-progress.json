@@ -4,7 +4,8 @@
  "status": "in progress",
  "decisions": {
   "rank": "re-rank 17 (window rerank-17): first, as the corrective named by F-071",
-  "task_force": "window 228-taskforce (adopted, no conditions)"
+  "task_force": "window 228-taskforce (adopted, no conditions)",
+  "slice": "turn-slice-architect.md (639c5e2, 14847 bytes): three criteria; T2: Copilot has a command source (events.jsonl), no-source seats are a recorded gap that blocks ship; PM's split confirmed with four changes"
  },
  "task_force": [
   {
@@ -42,6 +43,12 @@
    "status": "unscanned",
    "seat": "pm-ready (Copilot CLI)",
    "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-2",
+   "status": "clean",
+   "seat": "architect slice (Claude subagent)",
+   "detail": "clean: slice228-ctx2, 27 command(s) scanned"
   }
  ],
  "token_usage": [
@@ -51,11 +58,22 @@
    "requests": "0.25 Premium (46s)",
    "tokens_in": "225.2k (188.2k cached)",
    "tokens_out": "7.1k"
+  },
+  {
+   "seat": "architect ctx-2, slice",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 122505
   }
  ],
  "cycles": [],
  "stand_downs": [],
- "deviations": [],
+ "deviations": [
+  {
+   "by": "facilitator",
+   "what": "at card 237's close the facilitator scanned the Agent task output files, which hold no assistant record, and recorded fifteen seats as unscanned",
+   "handling": "re-scanned from the subagent transcripts after this card's slice named the right source; card 237's command-scans.json corrected"
+  }
+ ],
  "observations_for_next_stand_down": [
   "D174's first two windows (rerank-17, 228-taskforce) ran serially as recorded fallbacks: decider.py's append-only seat-use check blocks parallel runs on one checkout"
  ]
