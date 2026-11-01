@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import statistics
 import subprocess
 import sys
@@ -162,6 +163,8 @@ def check_amendment(root, first_run, log, t1, findings):
         return
     if t1 is None:
         return  # missing or invalid: already a finding
+    if json.dumps(t0, sort_keys=True) == json.dumps(t1, sort_keys=True):
+        return  # same content as at the first run (a whitespace-only touch is not a change)
     missing = object()
     for k in sorted(set(t0) | set(t1)):
         if k in CAP_KEYS or (k == "cap_amendment" and k not in t0):
@@ -175,6 +178,26 @@ def check_amendment(root, first_run, log, t1, findings):
             findings.append(f"{rel}: committed or changed at or after the first run: amendment {k} is not an integer")
         elif is_int(a) and b < a:
             findings.append(f"{rel}: committed or changed at or after the first run: amendment lowers {k}")
+    check_citation(root, t1, log[-1], findings)
+
+
+def check_citation(root, t1, change, findings):
+    """cap_amendment must name (as 'window <name>') a decision file added in git before the change commit."""
+    rel = f"{TRIAL}/thresholds.json"
+    text = t1.get("cap_amendment")
+    if not isinstance(text, str) or not text.strip():
+        findings.append(f"{rel}: committed or changed at or after the first run: amendment has no cap_amendment")
+        return
+    m = re.search(r"(?:^|\s)window ([A-Za-z0-9][A-Za-z0-9_-]*)(?=[;,.]|\s|$)", text)
+    if not m:
+        findings.append(f"{rel}: committed or changed at or after the first run: amendment names no decision window")
+        return
+    decision = f".mob/records/decisions/{m.group(1)}.json"
+    code, out = git(root, "log", "--format=%H", "--reverse", "--diff-filter=A", "--", decision)
+    added = out.split()[0] if code == 0 and out else None
+    if not added or not is_ancestor(root, added, change):
+        findings.append(f"{rel}: committed or changed at or after the first run: "
+                        f"amendment decision file {decision} not in git before the change")
 
 
 def check_order(root, docs, findings):
