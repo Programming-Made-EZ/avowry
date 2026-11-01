@@ -150,11 +150,25 @@ def show_json(root, rev, rel):
     return data if isinstance(data, dict) else None
 
 
-def check_amendment(root, first_run, log, findings):
+CAP_KEYS = ("cap_stage_a", "cap_stage_ab")
+
+
+def check_amendment(root, first_run, log, t1, findings):
     """Window 237-amendment-ordering: thresholds are judged by content against the file at the first run."""
     rel = f"{TRIAL}/thresholds.json"
-    if show_json(root, first_run, rel) is None:
+    t0 = show_json(root, first_run, rel)
+    if t0 is None:
         findings.append(f"{rel}: committed or changed at or after the first run")
+        return
+    if t1 is None:
+        return  # missing or invalid: already a finding
+    missing = object()
+    for k in sorted(set(t0) | set(t1)):
+        if k in CAP_KEYS or (k == "cap_amendment" and k not in t0):
+            continue
+        a, b = t0.get(k, missing), t1.get(k, missing)
+        if a is missing or b is missing or json.dumps(a, sort_keys=True) != json.dumps(b, sort_keys=True):
+            findings.append(f"{rel}: committed or changed at or after the first run: amendment changes {k}")
 
 
 def check_order(root, docs, findings):
@@ -171,7 +185,7 @@ def check_order(root, docs, findings):
             if log[n] and not is_ancestor(root, log[n][-1], first_run):
                 findings.append(f"{TRIAL}/{n}.json: committed or changed at or after the first run")
         if log["thresholds"]:
-            check_amendment(root, first_run, log["thresholds"], findings)
+            check_amendment(root, first_run, log["thresholds"], docs["thresholds"], findings)
     if log["thresholds"] and log["ledger"] and not is_ancestor(root, log["thresholds"][0], log["ledger"][0]):
         findings.append(f"{TRIAL}/thresholds.json: thresholds not committed before the ledger")
     if log["freeze"] and log["miss-key"] and not is_ancestor(root, log["freeze"][-1], log["miss-key"][0]):
