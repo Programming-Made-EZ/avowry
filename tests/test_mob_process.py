@@ -96,6 +96,45 @@ jobs:
         source = (Path(__file__).resolve().parents[1] / "scripts/mob_process.py").read_text(encoding="utf-8")
         self.assertTrue("check-process-wiki.py" in source, "missing check-process-wiki.py call-site marker")
 
+    def _hold_other_checks_clean(self):
+        for name in ("check_records", "check_retros", "check_legacy", "check_mob", "check_events", "check_workflows",
+                     "check_issue_labels", "check_windows", "check_process_wiki"):
+            patcher = mock.patch.object(mob, name, return_value=[]); patcher.start(); self.addCleanup(patcher.stop)
+
+    def test_run_check_calls_the_restart_record_checker_and_fails_closed(self):
+        # Card 234 criterion 3 red, caller pin by behavior: mob_process check must run check-restart-record.
+        # The root of this fixture has no card record, so a real call fails closed and says "restart-record".
+        self._hold_other_checks_clean()
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            code = mob.run_check(self.root, [], git=self.git)
+        self.assertEqual(1, code)
+        self.assertIn("restart-record", out.getvalue())
+
+    def test_run_check_reports_each_finding_of_the_restart_record_checker(self):
+        # Card 234 criterion 3 red: the wiring is by the function name check_restart_record, one annotation per finding.
+        self._hold_other_checks_clean()
+        findings = ["restart-record: first finding", "restart-record: second finding"]
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out), mock.patch.object(mob, "check_restart_record", return_value=findings, create=True):
+            code = mob.run_check(self.root, [], git=self.git)
+        self.assertEqual(1, code)
+        self.assertEqual(1, out.getvalue().count("first finding"))
+        self.assertEqual(1, out.getvalue().count("second finding"))
+
+    def test_run_check_is_clean_when_every_check_including_the_restart_record_is_clean(self):
+        # Card 234 criterion 3 red (born-green until the caller is missing): a clean restart check adds no error.
+        self._hold_other_checks_clean()
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out), mock.patch.object(mob, "check_restart_record", return_value=[], create=True):
+            code = mob.run_check(self.root, [], git=self.git)
+        self.assertEqual(0, code, out.getvalue())
+
+    def test_source_mentions_check_restart_record_in_run_check(self):
+        # Card 234 criterion 3 red, caller pin by source.
+        source = (Path(__file__).resolve().parents[1] / "scripts/mob_process.py").read_text(encoding="utf-8")
+        self.assertTrue("check-restart-record.py" in source, "missing check-restart-record.py call-site marker")
+
     def test_schema_exact_roles_eligibility_and_signoff(self):
         record=self.valid_record(); path=self.root/".mob/records/201.json"; record["seats"].pop(); path.write_text(json.dumps(record),encoding="utf-8")
         self.assertIn("Card 201 must have exactly the six required role seats",mob.check_records(self.root,[issue(201)],self.git))
