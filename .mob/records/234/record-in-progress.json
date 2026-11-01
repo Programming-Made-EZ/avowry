@@ -324,6 +324,12 @@
    "commands": 26,
    "transcript": "subagents/agent-a3a80f2a56836fb17.jsonl",
    "source": "python delete_guard.py scan-transcript, facilitator; read"
+  },
+  {
+   "context": "ctx-7",
+   "status": "unscanned",
+   "seat": "pre-ship gate (Copilot CLI)",
+   "reason": "Copilot has no command source"
   }
  ],
  "cycles": [
@@ -624,6 +630,20 @@
    "requests": "6 Premium (13m 42s)",
    "tokens_in": "2.3m (2.1m cached)",
    "tokens_out": "18.5k"
+  },
+  {
+   "seat": "pre-ship gate, delivery lead ctx-7 (Copilot CLI)",
+   "source": "Copilot CLI usage lines (scratch gate-234.err)",
+   "requests": "6 Premium (7m 51s)",
+   "tokens_in": "1.8m (1.7m cached)",
+   "tokens_out": "14.5k"
+  },
+  {
+   "seat": "re-check, independent reviewer ctx-6 (Copilot CLI)",
+   "source": "Copilot CLI usage lines (scratch rereview-234.err)",
+   "requests": "6 Premium (3m 54s)",
+   "tokens_in": "1.0m (901.1k cached)",
+   "tokens_out": "8.9k"
   }
  ],
  "reviews": [
@@ -673,5 +693,10 @@
   }
  ],
  "next_step": "re-review",
- "next_step_note": "after the green 3b restart commit, both reviewers re-check the review fixes (facilitator state kept in the record, D170)"
+ "next_step_note": "after the green 3b restart commit, both reviewers re-check the review fixes (facilitator state kept in the record, D170)",
+ "preship_gate": {
+  "commit": "371c2ed",
+  "seat": "delivery lead ctx-7 (Copilot)",
+  "items": "8 pass or carried; item 1: the only unresolved path is the untracked seat scratch folder .mob/records/234/scratch/ (not evidence; left untracked and not deleted); item 2: the 10 commits after the 503 OK run are record and document commits only; item 3 CI not measured without gh; item 8: ctx-8 (sign-off) not yet seated"
+ }
 }
