@@ -1,0 +1,117 @@
+{
+ "decider": "D174",
+ "subject": "parallel voter dispatch (card 237 retro pick, experiment)",
+ "proposer": "agile coach seat (.mob/records/237/retro-pick-proposal-coach.md, 09d2633)",
+ "result": "PASSED round 1 (1 Yes, 5 Support-it, 0 No), confirmed by the independent re-run (3 Yes, 3 Support-it, 0 No)",
+ "seat_note": "seats placed by card 226's decision-seat gate; all ran on Claude; the decider's first round-1 reply cited the proposal with one letter in a different case, so under D171 it was unread and re-asked once (counted: p237b-decider)",
+ "round1": [
+  {
+   "role": "pmready",
+   "seat": "claude",
+   "context": "p237-pmready",
+   "started_at": "2026-11-01T18:46:33Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nIt meets the standing rules. Each voter runs in its own fresh context. There is a hypothesis, a metric (median minutes per window) and counter-metrics, and an accountability check that can FAIL a window. It is a two-way door with a 3-window scope, and the retro decides keep, revise or drop. It also targets a cost in the gate: windows went from about 3 minutes to 10 to 14. That speeds the path back to product value.\n\nMy reservation is that C1 to C7 specify a lot up front for one small change. The C5 serial fallback also makes the trial record murkier.\n\nCITE: the number of voters and the quorum are unchanged\n"
+  },
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "p237-architect",
+   "started_at": "2026-11-01T18:47:35Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The change is minimal. It alters only when voters start, with no new file, seat or checker, and it is a two-way door.\nP2: The accountability check is git-checkable: one window commit holding every seat-use line before the first voter result. The \"within a few seconds\" start-time test is fuzzy, so the auditor should apply it leniently to avoid false FAILs.\nP3: C5 is the weak point. A collision on the shared seat-use history is only prevented by the launcher, so the serial fallback needs a clear trigger. It is recorded as a fallback rather than a pass, which is sound.\nP4: The metric has a baseline, and D171 stays separate with no blur.\n\nCITE: assigns the whole rotation up front, writes every seat-use line\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "p237-qa",
+   "started_at": "2026-11-01T18:49:50Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (C1 to C3): The check is testable red first. A window launched serially, or with seat-use lines written after a voter started, shows up in git and in the votes file timestamps, so the check can fail it.\nP2 (C5): \"Cannot be made safe\" has no test, so a parallel write collision could pass unnoticed.\nP3 (metric): The median of 5 minutes or fewer is measurable. \"Within a few seconds\" has no number, which weakens the audit.\nP4 (scope): Three windows is thin but fine for a two-way door.\n\nCITE: all voters are launched at the same time, each in its own fresh context through the decision-seat gate\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "p237-auditlens",
+   "started_at": "2026-11-01T18:52:07Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nMostly verifiable from git. The accountability check relies on one window commit that holds every seat-use line and precedes the first voter result. It also relies on start times in the votes file.\n\nLoopholes to watch:\n- Start times are written by the facilitator, so they are self-reported and could be faked.\n- A fallback to serial launch is recorded by the same facilitator who gains from it. The proposal doesn't say whether fallbacks count toward the 3 windows, so serial windows could be excluded from the trial.\n- The median of 5 minutes or fewer could be reached by dropping slow windows.\n\nThe reviewer and auditor re-check should cover these. This is a reversible experiment, so it's worth running.\n\nCITE: all voters are launched at the same time, each in its own fresh context\n"
+  },
+  {
+   "role": "delivery",
+   "seat": "claude",
+   "context": "p237-delivery",
+   "started_at": "2026-11-01T18:55:11Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nFlow is my lens, and a vote window of 10–14 minutes against a 3-minute baseline is a clear flow cost. Parallel launch is the lowest-ceremony fix: it adds no file, seat or meeting. It is a two-way door, scoped to 3 windows, and it names a fallback to serial launch. The C5 write-collision risk on the shared seat-use history is real, but the fallback covers it. I'm not voting a full Yes because the accountability check, which needs start times within seconds, adds audit effort per window. Keep that check cheap.\n\nCITE: parallel voter dispatch for every vote window\n"
+  },
+  {
+   "role": "decider",
+   "seat": "claude",
+   "context": "p237b-decider",
+   "started_at": "2026-11-01T19:02:49Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: The hypothesis is falsifiable. The baseline is measured per window on card 237, with card 234 and the pre-gate figure for comparison. The target is a median of 5 minutes or less.\nP2: Counter-metrics (LRU violations, stale probes, unread votes, collisions, serial fallbacks) are named. Each is scored in its own record, so D171 and this pick do not blur.\nP3: Sign-off is covered. The reviewer checks the window commit and the votes file's start times, and the auditor tick re-checks them. The trial retro decides keep, revise or drop by Decider.\nP4: The change is a two-way door, and C5 makes a serial fallback count as a recorded fallback, not a pass.\nP5: The scope is three windows, which is small, but the adopt/reshape/reject call still rests on recorded timestamps.\n\nCITE: median minutes per vote window fall from 10 to 14\n"
+  }
+ ],
+ "round1_unread": [
+  {
+   "role": "decider",
+   "seat": "claude",
+   "context": "p237-decider",
+   "started_at": "2026-11-01T18:58:48Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nThe decision rests on evidence. Baselines exist for card 237, card 234 and the pre-gate period. The metric, counter-metrics, trial scope and fallback are named. The accountability check is git-verifiable and has a named checker (reviewer, then auditor tick). Reversibility is a two-way door, and the lone Decider-visible risk, the shared seat-use history, is covered by C5's serial fallback, which counts as a fallback and not a pass. The pick also keeps one change per trial and leaves D171's metric separate. All the seats needed for sign-off are present.\n\nCITE: the launcher must not write the shared seat-use history from two runs at the same time\n"
+  }
+ ],
+ "rerun": [
+  {
+   "role": "coach",
+   "seat": "claude",
+   "context": "p237rr-coach",
+   "started_at": "2026-11-01T19:05:07Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nCITE: Before a vote window opens, the facilitator checks that the Codex, Copilot, Grok and agy probes are under 60 minutes old\n"
+  },
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "p237rr-architect",
+   "started_at": "2026-11-01T19:07:45Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP2/C2 and P3/C3: one window commit holds the proposal and all the seat-use lines, and every voter launches after it. That makes the design minimal and checkable in git.\n\nThe check that start times fall \"within a few seconds\" is vague, and a slow gate could trigger a false FAIL. C5's serial fallback also leaves the shared seat-use history exposed if the gate itself writes it. The trial is reversible and adds no new file, seat or meeting, so I'm supporting it.\n\nCITE: launches all voters of the window at the same time\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "p237rr-qa",
+   "started_at": "2026-11-01T19:10:02Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: Parallel launch is testable red first, since the accountability check (the window commit before any voter result, start times within seconds) can fail a serial window.\nP2: The metric (median ≤5 min) and counter-metrics are measurable from git and the votes file.\nP3: C5 is the weak spot. \"Cannot be made safe → fallback\" has no stated red test for concurrent seat-use writes. A fallback also must not count as a pass.\nP4: The stale-probe check is only a pre-window assertion by the facilitator, not an automated gate.\n\nCITE: The facilitator assigns every voter of the window in least-recently-used order in one step\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "p237rr-auditlens",
+   "started_at": "2026-11-01T19:12:15Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (C1, C2): The seat-use lines and skip records sit in one window commit, so git shows that they came before any voter result.\nP2 (C3): The simultaneous start rests on votes-file timestamps. Git alone can't prove those, unless the file is committed and the launcher writes the start times itself.\nP3 (C5): The serial fallback is self-reported, so a team could launch serially and call it parallel. The reviewer should cross-check commit times against the votes file.\nP4: The median over only 3 windows is a thin sample, and the target is easy to reach by luck. The accountability rule (\"counts as not run\") closes the main loophole.\nIt is a two-way door, so I support it.\n\nCITE: launches all voters of the window at the same time\n"
+  },
+  {
+   "role": "delivery",
+   "seat": "claude",
+   "context": "p237rr-delivery",
+   "started_at": "2026-11-01T19:14:28Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nVote windows cost about 10 to 14 minutes each since the gate, against about 3 before it. That is the largest flow cost on the line, and parallel launch is a thin, reversible change. It adds no file, seat or meeting. It reuses the existing commit step, and C5 falls back to serial launch if the shared seat-use history isn't safe. The 3-window trial and the single window commit keep ceremony small. Deferring the cap and preflight bundle follows the one-change-per-trial lesson.\n\nCITE: launches all voters of the window at the same time\n"
+  },
+  {
+   "role": "decider",
+   "seat": "claude",
+   "context": "p237rr-decider",
+   "started_at": "2026-11-01T19:16:47Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nThe evaluation rests on evidence. It has a measured baseline for every window (card 237 at 10 to 14 minutes, card 234 at 36 and 45, pre-gate at about 3). It also has a numeric target and counter-metrics that already exist in the record. The accountability check is git-verifiable. It names who checks it (the reviewer, re-checked by the auditor tick) and the keep, revise or drop decision at the trial retro. The seats needed to sign off are all present: facilitator, voters, reviewer, auditor and Decider. The two-way-door reversibility makes the experiment low-risk. The trial scope of three windows is small, but the metric is clear enough to read from it.\n\nCITE: assigns the whole rotation up front, writes every seat-use line in one commit\n"
+  }
+ ]
+}

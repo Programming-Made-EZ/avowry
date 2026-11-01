@@ -1150,5 +1150,11 @@
     "status": "in force",
     "title": "Card 237 outcome: reshape the indexed process wiki (slice-route limits, upkeep measure, staleness check, slice-cell re-run in a follow-up card); retro-end wiki review as a three-retro experiment",
     "order": 164
+  },
+  "D174": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Parallel voter dispatch: probe once, assign the whole rotation and write every seat-use line in one window commit, launch all voters at once (card 237 retro pick, experiment, next 3 vote windows)",
+    "order": 165
   }
 }
