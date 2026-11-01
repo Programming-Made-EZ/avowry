@@ -37,7 +37,8 @@
  ],
  "open_points": [
   "the proposal's split of the 'Also owned here' items into follow-up cards is confirmed or changed at the slice (D136, D168)",
-  "the T2 question: the real command source per backend, and whether a no-source seat fails closed or is recorded as a gap"
+  "the T2 question: the real command source per backend, and whether a no-source seat fails closed or is recorded as a gap",
+  "for the architect (from red 1d, 2740568): the slice says eval \"$(ssh-agent -s)\" keeps its card 227 result, but no test pins it and the scan reports it today; decide clean (a green must teach it) or a recorded finding"
  ],
  "command_scans": [
   {
