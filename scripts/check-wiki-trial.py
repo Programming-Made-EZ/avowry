@@ -96,14 +96,14 @@ def good_rows(ledger, findings):
 
 def check_rows(root, key, rows, findings):
     rel = f"{TRIAL}/ledger.json"
-    known = {k.get("run_key") for k in (key.get("keys") or []) if isinstance(k, dict)}
+    known = None if key is None else {k.get("run_key") for k in (key.get("keys") or []) if isinstance(k, dict)}
     seen = set()
     for row in rows:
         rk = row["run_key"]
         if rk in seen:
             findings.append(f"{rel}: duplicate row key {rk}")
         seen.add(rk)
-        if rk not in known:
+        if known is not None and rk not in known:
             findings.append(f"{rel}: unknown row key {rk}")
         if row.get("disabled"):
             findings.append(f"{rel}: disabled row key {rk}")
@@ -146,31 +146,33 @@ def check_order(root, docs, findings):
     for n in FILES:
         if not log[n]:
             findings.append(f"{TRIAL}/{n}.json: not committed")
-    if any(not log[n] for n in FILES):
-        return
     # first run commit: the earliest commit adding the ledger or any run report under trial/runs/
     code, out = git(root, "log", "--format=%H", "--reverse", "--diff-filter=A", "--", led_rel, f"{TRIAL}/runs")
-    first_run = out.split()[0] if code == 0 and out else log["ledger"][0]
-    for n in ("thresholds", "freeze", "miss-key"):  # a later edit would be a forged order
-        if not is_ancestor(root, log[n][-1], first_run):
-            findings.append(f"{TRIAL}/{n}.json: committed or changed at or after the first run")
-    if not is_ancestor(root, log["thresholds"][-1], log["ledger"][0]):
+    first_run = out.split()[0] if code == 0 and out else (log["ledger"][0] if log["ledger"] else None)
+    if first_run:
+        for n in ("thresholds", "freeze", "miss-key"):  # a later edit would be a forged order
+            if log[n] and not is_ancestor(root, log[n][-1], first_run):
+                findings.append(f"{TRIAL}/{n}.json: committed or changed at or after the first run")
+    if log["thresholds"] and log["ledger"] and not is_ancestor(root, log["thresholds"][-1], log["ledger"][0]):
         findings.append(f"{TRIAL}/thresholds.json: thresholds not committed before the ledger")
-    if not is_ancestor(root, log["freeze"][-1], log["miss-key"][0]):
+    if log["freeze"] and log["miss-key"] and not is_ancestor(root, log["freeze"][-1], log["miss-key"][0]):
         findings.append(f"{key_rel}: key not committed after the freeze")
-    if not is_ancestor(root, log["miss-key"][-1], first_run):
+    if first_run and log["miss-key"] and not is_ancestor(root, log["miss-key"][-1], first_run):
         findings.append(f"{key_rel}: key not committed before the first run")
     key, freeze, ledger = docs["miss-key"], docs["freeze"], docs["ledger"]
-    author = key.get("author_seat")
-    runners = RUNNER_SEATS | {s for s in (ledger.get("runner_seats") or []) if isinstance(s, str)}
-    if not isinstance(author, str) or not author:
-        findings.append(f"{key_rel}: missing author_seat")
-    elif author in runners:
-        findings.append(f"{key_rel}: key author is a runner seat {author}")
-    elif author == freeze.get("author_seat"):
-        findings.append(f"{key_rel}: key author also wrote the freeze {author}")
-    if docs["recompute"].get("author_seat") in runners:
-        findings.append(f"{TRIAL}/recompute.json: recompute author is a runner seat")
+    if key is not None:
+        author = key.get("author_seat")
+        runners = RUNNER_SEATS | {s for s in ((ledger or {}).get("runner_seats") or []) if isinstance(s, str)}
+        if not isinstance(author, str) or not author:
+            findings.append(f"{key_rel}: missing author_seat")
+        elif author in runners:
+            findings.append(f"{key_rel}: key author is a runner seat {author}")
+        elif freeze is not None and author == freeze.get("author_seat"):
+            findings.append(f"{key_rel}: key author also wrote the freeze {author}")
+    if docs["recompute"] is not None:
+        runners = RUNNER_SEATS | {s for s in ((ledger or {}).get("runner_seats") or []) if isinstance(s, str)}
+        if docs["recompute"].get("author_seat") in runners:
+            findings.append(f"{TRIAL}/recompute.json: recompute author is a runner seat")
 
 
 def check_thresholds(th, rows, findings):
@@ -195,12 +197,15 @@ def run(root):
         print(f"{TRIAL}: not a git repository", file=sys.stderr)
         return 1
     docs = {n: load(root, n, findings) for n in FILES}
-    if not findings:
-        rows = good_rows(docs["ledger"], findings)
+    ledger, key = docs["ledger"], docs["miss-key"]
+    rows = good_rows(ledger, findings) if ledger is not None else []
+    if docs["thresholds"] is not None:
         check_thresholds(docs["thresholds"], rows, findings)
-        check_rows(root, docs["miss-key"], rows, findings)
-        check_recompute(docs["ledger"], docs["recompute"], rows, findings)
-        check_order(root, docs, findings)
+    if ledger is not None:
+        check_rows(root, key, rows, findings)
+    if ledger is not None and docs["recompute"] is not None:
+        check_recompute(ledger, docs["recompute"], rows, findings)
+    check_order(root, docs, findings)  # ordering is judged on whichever files exist
     if findings:
         for line in findings:
             print(line, file=sys.stderr)
