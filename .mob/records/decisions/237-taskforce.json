@@ -1,0 +1,506 @@
+{
+ "window": "237-taskforce",
+ "category": "task-force declaration",
+ "rule": "D153 at ready for card 237 (an evaluation); D171 cite-a-point in force",
+ "proposed_by": {
+  "role": "product manager (ready)",
+  "model": "copilot (auto) via the Copilot CLI",
+  "context": "ctx-1",
+  "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC)"
+ },
+ "opened_at": "2026-11-01T11:38:38Z",
+ "proposal": "Task-force declaration proposal for card 237\n\nPurpose: evaluate whether an indexed, just-in-time process wiki solves the context problem; this is not a build mandate. D172 corrects D170: the wiki is a prototype under evaluation, not a rule to be promoted yet.\n\nTeam (Copilot and Claude rotate by least-recently-used; each seat is fresh-context and named with its context number)\n- PM / Ready: Copilot, ctx-1. Why: defines the product question, keeps the evaluation bounded, records the task force and the domain-expert question, and owns the final value call. Context is the first fresh seat, so it is the question-holder and the guardrail on scope.\n- Architect / Slice: Claude, ctx-2. Why: maps the current context problem to the wiki design, compares the alternative designs, names assumptions and invariants, and keeps the evaluation honest. This is the person who asks what the wiki changes and what it does not.\n- QA Engineer / Red: Copilot, ctx-3. Why: defines the failing conditions and the counter-metric, instruments the comparison, and checks the prototype against real misses rather than polished output. QA is the one who measures failure modes.\n- Independent Reviewer / Audit Lens: Claude, ctx-4. Why: checks evidence provenance, reads the source records, confirms no invented values, and tests whether the wiki is stale or the evidence is weak. This is the evidence skeptic.\n- Delivery Lead / Ship: Copilot, ctx-5. Why: runs the trial, keeps the time/token budget, records the run and the cost ledger, and owns the comparison that the team can trust. This is the person who measures and costs the experiment.\n- Decider / Sign-off: Claude, ctx-6. Why: the team’s final decider under D109; it records the decision, not the build. Product owner remains the one-card stop-the-line holder under D172, but the evaluation itself is decided by the Decider after evidence.\n\nWho measures, who costs, who compares, and who decides\n- Measures: QA + Delivery Lead; they own the data collection: tokens, wait time, restart size, page reads, and rule misses.\n- Costs: Delivery Lead keeps the cost ledger; PM signs off on whether the value justifies the cost.\n- Compares alternatives: Architect + QA compare wiki vs. compact cheat-sheet, vs. decision index, vs. doing nothing, using the same task and the same evidence rules.\n- Decides: Decider / PM chair with the role seats; product owner holds the one-card stop-the-line waiver and can correct the frame, but the team decides on keep/revise/reject after the trial.\n\nWho is left out, and why\n- No backend developer or green seat: this is not a build card; we are not implementing a production feature or changing product logic. A green seat adds implementation cost without adding decision value.\n- No technical writer as a required seat: the prototype already exists in docs/process-wiki/; the evaluation needs an evidence check, not a writing sprint.\n- No UX / frontend / database / security / DevOps seats: the question is process-context cost, not product code or deployment risk.\n- No “true mob” or extra parallel author seats: D172 explicitly says evaluate, not build; the team should stay small and evidence-first.\n\nDomain-expert question (T2)\n- “Do we need a wiki at all, or would a shorter rule index plus stronger handoff notes solve the same context problem with less maintenance?”\n- The answer decides whether the wiki is a durable process primitive or just a convenience layer; if the answer is “not needed,” the card ends as reject and the prototype stays evidence only.\n\nValue, metric, and counter-metric\n- Value: cut wasted re-reading, restart churn, and long-session context drift without adding a slow maintenance burden.\n- Metric: median fresh-seat reading cost to reach the first relevant decision for a representative card, compared against the current baseline and the same card with a compact index or no wiki.\n- Counter-metric: rule misses from unread pages or stale pages, plus added retro time from maintaining the wiki.\n\nThree Done checks (D157), and how each fails on partial work\n1. Indexed pages resolve to the living decision and rule set. Partial work fails because the index points to stale pages, duplicates rules, or omits a rule that later appears in review.\n2. Seat briefs show the needed pages only, with the number traced to a committed source and a baseline comparison. Partial work fails when the brief is basically full context, uses invented token numbers, or cites “no measured value” instead of a real source.\n3. Restart/handoff boundary works, with a measured restart and a counted miss rate. Partial work fails when there is no real restart, no key, no handoff notes, or the misses are asserted instead of computed.\n\nWhich D165-D168 and D171 apply\n- D165 (intent line): apply to any rule-changing or ranking-changing evaluation step; keep it in the red record.\n- D166 (assumption line): apply when the evaluation changes a rule, ranking, or checker.\n- D167 (hostile-input list): apply to list/map criteria in the trial, especially seat lists or model maps.\n- D168 (slice size cap): apply; keep the evaluation slices under 15 KB and split if oversized.\n- D171 (cite-a-point votes): apply to every vote window; unread votes do not count.\n- D169 is not relevant to this evaluation; D170 and D172 govern the frame and the priority correction.\n\nAlternatives to compare, including doing nothing\n- A. Indexed JIT process wiki (the prototype in docs/process-wiki/).\n- B. Compact cheat sheet + decision index, with just-in-time reads only for rules not in the sheet; this is the D88-style “cheat-sheet-plus-index” comparison.\n- C. Current process with HANDOFF and retro notes only; no wiki, no page routing.\n- D. Do nothing: keep the current process and accept the long-session drift.\n- The Decider compares them on the same card under the same task, with the same measure: fresh-seat tokens, restart cost, and miss count.\n\nProduct owner’s retro-end wiki review proposal\n- At the end of each retro, the team reviews the wiki for stale pages and writes a short “wiki update” note with the additions, deletions, and unchanged pages. Evidence is a commit or an explicit “no change” note.\n- Metric: wiki staleness, defined as the number of rules or decisions in the current process whose wording and pages do not match the wiki.\n- Counter-metric: added retro time, because the wiki must not become extra ceremony.\n- The Decider takes it as a keep/revise/reject decision: keep the wiki if stale pages stay low and retro time stays stable; revise if the wiki helps but needs pruning; reject if maintenance cost outruns the context benefit.\n\nOpen points\n- Need one fixed task and one fixed baseline: same card, same pair of seats, same command set.\n- Need a source-backed miss test: a rule the seat must read and apply, not just a page count.\n- Need a consistent counting rule for cached tokens and for Copilot vs Claude; otherwise the comparison is not like-for-like.\n- Need to decide whether the evaluation validates the wiki itself or specifically the wiki-plus-brief workflow; the prototype suggests the latter.\n- Need the product owner to confirm whether the final decision is a template change or just a stay-as-prototype outcome.\n\nDecision frame\n- The evaluation should end with a keep/revise/reject decision, not with an implementation mandate. If it is kept, a later card can build the template change; if it is rejected, the prototype stays as evidence only.\n## Adopted condition (round 1, D145; from the independent reviewer (audit lens))\nBefore the trial starts, the team commits four things: the fixed task, the baseline, the token-counting rule and the miss test. The independent reviewer recomputes the cost and token ledger from those committed sources, so the delivery lead, who runs, costs and compares, cannot self-certify. The re-poll may not add new demands.\n",
+ "checklist_D158": ".mob/records/237/checklist-237-taskforce.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [
+  {
+   "from": "independent reviewer (audit lens), in the strict re-poll w237tfs",
+   "adopted_as": "before the trial, commit the fixed task, the baseline, the token-counting rule and the miss test; the independent reviewer recomputes the ledger from committed sources so the delivery lead cannot self-certify"
+  }
+ ],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "w237tfr2-architect",
+   "started_at": "2026-11-01T12:05:36Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: The independent reviewer recomputes the cost and token ledger from those committed sources\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T12:06:06.761338Z",
+   "round": 2,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w237tfr2-qa",
+   "started_at": "2026-11-01T12:07:53Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe adopted condition gives me what I need: a fixed task, baseline, counting rule and miss test, each committed before the trial. That lets me write failing checks first. The reviewer's recomputation also stops partial or self-certified numbers from passing.\n\nCITE: the fixed task, the baseline, the token-counting rule and the miss test\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T12:08:23.797708Z",
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w237tfr2-auditlens",
+   "started_at": "2026-11-01T12:10:10Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe adopted condition closes my audit loophole. The fixed task, baseline, token rule and miss test get committed before the trial, and I recompute the ledger from those committed sources, so the delivery lead can't self-certify. Git alone can verify all of it.\n\nCITE: The independent reviewer recomputes the cost and token ledger from those committed sources\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T12:10:39.849122Z",
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w237tfr2-delivery",
+   "started_at": "2026-11-01T12:12:20Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nThe adopted condition is a thin pre-trial commit of four items. It adds no ceremony to ordinary cards and lets the line restart soon.\n\nCITE: Before the trial starts, the team commits four things\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T12:12:48.438586Z",
+   "round": 2,
+   "role": "delivery lead",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w237tfr2-decider",
+   "started_at": "2026-11-01T12:14:33Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe adopted condition commits the task, baseline, counting rule and miss test before the trial. It also has the independent reviewer recompute the ledger, so the Decider can rest keep/revise/reject on evidence. Every needed seat is present.\n\nCITE: The independent reviewer recomputes the cost and token ledger from those committed sources\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T12:15:00.634311Z",
+   "round": 2,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w237tfcp1-architect",
+   "started_at": "2026-11-01T11:38:38Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T11:39:07.058113Z",
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w237tf-architect",
+   "started_at": "2026-11-01T11:39:29Z",
+   "model": "sonnet",
+   "raw": "Yes\n\nCITE: the wiki is a prototype under evaluation, not a rule to be promoted yet\n",
+   "first_line": "Yes",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T11:39:59.649464Z",
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": "Yes",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237tfr2cp1-architect",
+   "started_at": "2026-11-01T12:04:42Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T12:05:09.826435Z",
+   "round": 2,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237tfcp1-qa",
+   "started_at": "2026-11-01T11:41:45Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T11:42:11.311948Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w237tf-qa",
+   "started_at": "2026-11-01T11:42:31Z",
+   "model": "sonnet",
+   "raw": "Yes\n\nCITE: Need a source-backed miss test: a rule the seat must read and apply\n",
+   "first_line": "Yes",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T11:42:58.909849Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "Yes",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237tfr2cp1-qa",
+   "started_at": "2026-11-01T12:07:09Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T12:07:34.707742Z",
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237tfcp1-auditlens",
+   "started_at": "2026-11-01T11:44:33Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T11:45:03.233129Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w237tf-auditlens",
+   "started_at": "2026-11-01T11:45:22Z",
+   "model": "sonnet",
+   "raw": "Support-it\n\nCITE: Need one fixed task and one fixed baseline\n",
+   "first_line": "Support-it",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T11:45:55.392953Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": "Support-it",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237tfr2cp1-auditlens",
+   "started_at": "2026-11-01T12:09:24Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T12:09:53.377153Z",
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237tfcp1-delivery",
+   "started_at": "2026-11-01T11:47:29Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T11:47:57.470632Z",
+   "round": 1,
+   "role": "delivery lead",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w237tf-delivery",
+   "started_at": "2026-11-01T11:48:18Z",
+   "model": "sonnet",
+   "raw": "Yes\nNO OBJECTION\nCITE: this is not a build mandate\n",
+   "first_line": "Yes",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T11:48:46.699169Z",
+   "round": 1,
+   "role": "delivery lead",
+   "ctx": "ctx-5",
+   "reply": "Yes",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237tfr2cp1-delivery",
+   "started_at": "2026-11-01T12:11:36Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T12:12:02.885554Z",
+   "round": 2,
+   "role": "delivery lead",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237tfcp1-decider",
+   "started_at": "2026-11-01T11:50:13Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T11:50:56.506281Z",
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w237tf-decider",
+   "started_at": "2026-11-01T11:51:16Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe frame rests on evidence: a keep/revise/reject decision, a metric and counter-metric, and four alternatives compared on one task. Every seat needed to sign off is present. Fix the open points (one fixed task, baseline and token-counting rule) before the trial starts.\n\nCITE: evaluate whether an indexed, just-in-time process wiki solves the context problem\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T11:51:43.398049Z",
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237tfr2cp1-decider",
+   "started_at": "2026-11-01T12:13:46Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 11:31 UTC) and decider.py's own probe at 2026-11-01T12:14:13.796314Z",
+   "round": 2,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line (a vote word or a preamble), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237tfscp1-architect",
+   "started_at": "2026-11-01T11:54:12Z",
+   "round": "1b (strict re-poll)",
+   "role": "architect",
+   "reply": null,
+   "raw": "",
+   "note": "strict re-poll after vote-word replies; superseded by round 2",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:31 UTC) and decider.py's own probe"
+  },
+  {
+   "seat": "claude",
+   "context": "w237tfs-architect",
+   "started_at": "2026-11-01T11:55:04Z",
+   "round": "1b (strict re-poll)",
+   "role": "architect",
+   "reply": null,
+   "raw": "NO OBJECTION\n\nThe frame is sound: it evaluates rather than builds, compares four alternatives, and makes keep/revise/reject the only outcome. The open points (fixed task, miss test, token-counting rule) must be settled before the trial runs, not now.\n\nCITE: Need one fixed task and one fixed baseline\n",
+   "note": "strict re-poll after vote-word replies; superseded by round 2",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:31 UTC) and decider.py's own probe"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237tfscp1-qa",
+   "started_at": "2026-11-01T11:56:41Z",
+   "round": "1b (strict re-poll)",
+   "role": "qa",
+   "reply": null,
+   "raw": "",
+   "note": "strict re-poll after vote-word replies; superseded by round 2",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:31 UTC) and decider.py's own probe"
+  },
+  {
+   "seat": "claude",
+   "context": "w237tfs-qa",
+   "started_at": "2026-11-01T11:57:30Z",
+   "round": "1b (strict re-poll)",
+   "role": "qa",
+   "reply": null,
+   "raw": "NO OBJECTION\n\nThe three Done checks each name how partial work fails, so each can be written as a red test first. The open points (fixed task and baseline, source-backed miss test, token counting rule) are QA's to settle in the red record before any measuring starts.\n\nCITE: Need a source-backed miss test: a rule the seat must read and apply\n",
+   "note": "strict re-poll after vote-word replies; superseded by round 2",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:31 UTC) and decider.py's own probe"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237tfscp1-auditlens",
+   "started_at": "2026-11-01T11:59:11Z",
+   "round": "1b (strict re-poll)",
+   "role": "auditlens",
+   "reply": null,
+   "raw": "",
+   "note": "strict re-poll after vote-word replies; superseded by round 2",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:31 UTC) and decider.py's own probe"
+  },
+  {
+   "seat": "claude",
+   "context": "w237tfs-auditlens",
+   "started_at": "2026-11-01T11:59:59Z",
+   "round": "1b (strict re-poll)",
+   "role": "auditlens",
+   "reply": null,
+   "raw": "OBJECTION\nCONDITION: Before the trial starts, commit the fixed task, baseline, token-counting rule and miss test. The Independent Reviewer must also recompute the ledger from committed sources, so the Delivery Lead, who runs, costs and compares, cannot self-certify.\n\nCITE: Delivery Lead keeps the cost ledger; PM signs off on whether\n",
+   "note": "strict re-poll after vote-word replies; superseded by round 2",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:31 UTC) and decider.py's own probe"
+  },
+  {
+   "seat": "copilot",
+   "context": "w237tfscp1-delivery",
+   "started_at": "2026-11-01T12:01:42Z",
+   "round": "1b (strict re-poll)",
+   "role": "delivery",
+   "reply": null,
+   "raw": "",
+   "note": "strict re-poll after vote-word replies; superseded by round 2",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:31 UTC) and decider.py's own probe"
+  },
+  {
+   "seat": "claude",
+   "context": "w237tfs-delivery",
+   "started_at": "2026-11-01T12:02:30Z",
+   "round": "1b (strict re-poll)",
+   "role": "delivery",
+   "reply": null,
+   "raw": "NO OBJECTION\n\nThe slices stay thin and there is no build. The retro-end wiki review must not add ceremony. The counter-metric on retro time already covers that.\n\nCITE: the team should stay small and evidence-first\n",
+   "note": "strict re-poll after vote-word replies; superseded by round 2",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (11:31 UTC) and decider.py's own probe"
+  }
+ ],
+ "decision": {
+  "result": "adopted with one condition; round 2 no objection from all five polled seats (Claude; every Copilot seat placed by the gate returned no reply); every counted reply carries a D171 cite found in the proposal",
+  "task_force": [
+   "product manager (ready) ctx-1 (Copilot)",
+   "architect ctx-2",
+   "QA engineer ctx-3",
+   "independent reviewer (audit lens) ctx-4",
+   "delivery lead ctx-5",
+   "decider / sign-off ctx-6"
+  ],
+  "note": "no green seat or technical writer: an evaluation, not a build; the record checker's six roles (ready, slice, red, green, ship, signoff) are an open point for the slice"
+ },
+ "ended_at": "2026-11-01T12:16:00Z"
+}

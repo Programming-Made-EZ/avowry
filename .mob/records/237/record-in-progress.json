@@ -1,0 +1,68 @@
+{
+ "card": 237,
+ "title": "Evaluate whether an indexed, just-in-time process wiki solves the context problem",
+ "status": "in progress (product owner priority D172, one-card stop-the-line waiver for the evaluation)",
+ "decisions": {
+  "rank": "re-rank 16 (product owner direction D172)",
+  "task_force": "window 237-taskforce (one adopted condition: pre-trial commits and an independent ledger recompute)"
+ },
+ "task_force": [
+  {
+   "role": "product manager (ready)",
+   "context": "ctx-1"
+  },
+  {
+   "role": "architect (slice)",
+   "context": "ctx-2"
+  },
+  {
+   "role": "QA engineer (red)",
+   "context": "ctx-3"
+  },
+  {
+   "role": "independent reviewer (audit lens)",
+   "context": "ctx-4"
+  },
+  {
+   "role": "delivery lead (ship)",
+   "context": "ctx-5"
+  },
+  {
+   "role": "decider / sign-off",
+   "context": "ctx-6"
+  }
+ ],
+ "metric": "tokens per seat, facilitator context growth, messages blocked by long turns (from committed sources); counter-metric per the proposal",
+ "open_points": [
+  "the record checker requires six roles (ready, slice, red, green, ship, signoff) and this team has no green seat; the slice decides how the closing record maps the roles"
+ ],
+ "command_scans": [
+  {
+   "context": "ctx-1",
+   "status": "unscanned",
+   "seat": "pm-ready (Copilot CLI)",
+   "reason": "Copilot has no command source"
+  }
+ ],
+ "token_usage": [
+  {
+   "seat": "pm-ready ctx-1 (Copilot CLI)",
+   "source": "Copilot CLI usage lines (scratch pm-ready-237.err)",
+   "requests": "0.25 Premium (1m 41s)",
+   "tokens_in": "660.0k (617.0k cached)",
+   "tokens_out": "9.8k"
+  }
+ ],
+ "cycles": [],
+ "stand_downs": [],
+ "deviations": [
+  {
+   "by": "facilitator",
+   "what": "the window's round-2 re-poll started while the strict re-poll's last seat still ran, so two decision runs overlapped on the shared seat-use history; no integrity refusal resulted (checked in the logs)",
+   "handling": "recorded"
+  }
+ ],
+ "observations_for_next_stand_down": [
+  "D171's first window: in round 1 four of five Claude seats answered with a vote word plus a valid cite; the facilitator's runner could not re-poll past a gate refusal; all five counted round-2 replies carry a cite found in the proposal; every Copilot seat placed by the gate returned no reply (card 229)"
+ ]
+}
