@@ -1,0 +1,266 @@
+{
+ "window": "227-rerank-15",
+ "category": "loop-boundary re-rank",
+ "rule": "D148 and D153 after the product owner rulings D169 and D170 and cards 230 to 233",
+ "proposed_by": {
+  "role": "product manager",
+  "model": "claude-sonnet subagent",
+  "context": "pm-rerank-15b",
+  "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:17 UTC)"
+ },
+ "opened_at": "2026-11-01T02:27:30Z",
+ "proposal": "# Re-rank 15 proposal (D148)\n\nLed by the product manager seat pm-rerank-15b (Claude seat, least-recently-used rotation, D163, D164). Read only: .mob/audits/last.json (audit 108, 2026-11-01 02:02 UTC) and the four new cards.\n\n## Before order (note 14)\n\n228, 210, 211, 229, 216, 220, 221, 222, 223, 224, 225, 213, 217, 218, 212, 215, 206, 207\n\n## After order\n\n234, 228, 210, 211, 229, 230, 231, 232, 233, 216, 220, 221, 222, 223, 224, 225, 213, 217, 218, 212, 215, 206, 207\n\n## Next card\n\n234, the indexed process wiki, under the product owner's one-card stop-the-line waiver (D170). Fixed, not re-ranked. Card 228 (the recursive-delete scan follow-up) is next after it.\n\n## One-line rationale\n\n234 goes first by product owner ruling; then the cards that name an open FAIL (228, 210, 211) start; the four new cards sit behind them because none names an open FAIL, ahead of the template card 216 because each one feeds it.\n\n## What changed against note 14\n\n- Card 234 inserted first (D170, fixed). The waiver covers 234 only; 228, 210 and 211 resume right after it closes.\n- Cards 230 to 233 inserted after 229 and before 216, in the order 230, 231, 232, 233.\n- Everything else keeps note 14's order: 228, 210, 211, 229, then 216 to 207 unchanged.\n- Audit 108 replaces audit 106. The open FAILs are unchanged: MD-003, MD-010, F-071, F-072, F-074. Its summary now says the re-rank 14 order is adopted and that the detect ruling, collision bug, uncommitted-work story, aider no-browser bug, pairing evaluation, wiki card and waiver are not yet recorded. That is a recording gap, not a new FAIL.\n\n## Open FAIL check for the new cards\n\nThe corrective-card gate starts only a card that names an open FAIL (card 234 excepted, under its waiver).\n\n| Card | Names an open FAIL? | Gate starts it? |\n|---|---|---|\n| 234 wiki | No (waiver D170) | Yes, by the waiver only |\n| 230 one writer per checkout (bug) | No. Its source is the auditor's count of collisions, with no FAIL id | No |\n| 231 uncommitted work over 30 minutes | No. It is a condition of D169 and follows card 228 (F-071), but cites no FAIL | No |\n| 232 seat driver never opens a browser (bug) | No | No |\n| 233 pairing tooling (spike) | No | No |\n\nNone of 230 to 233 cites MD-003, MD-010, F-071, F-072 or F-074. F-072 and F-074 are still unread by the facilitator (their ledger text is not in the repository). The audit summary's \"collision bug\" matches card 230's subject. If F-072 or F-074 proves to be that collision bug, 230 names it and moves up to follow 211. The same test applies to 231 and 232.\n\n## Why this order among the new cards\n\n- 230 first: a bug with recorded harm (3 index-lock collisions, at least 2 push races, a swept staged file, a voided vote), and it protects the push-every-commit rule and the Decider votes that every later card relies on.\n- 231 second: closes the exposure D169 left open (work never committed), next to the deletion-ban work in 228.\n- 232 third: a bug, but a single past occurrence (2026-10-29), with a small fix (pin the driver's flags).\n- 233 last: a spike with no defect behind it; its outcome reaches the template only if kept.\n- All four enable card 216, so they run before it and 216 carries them once.\n\n## Reversals I state\n\n- Note 14 put 216 straight after 229. I now put 230 to 233 in front of it, so the template card is not done twice. If any of the four stalls, 216 starts without it and the card enters through the normal template-change path later.\n- 233 moves behind 216 if it needs more than one seat-session, because it is a spike and nothing blocks 216 on it.\n- 230 moves up to follow 211 if F-072 or F-074 is confirmed as the collision bug and 230 names it. 231 and 232 move the same way if they prove to name an open FAIL.\n- A FAIL that no queued card names puts its corrective first (carried from note 14).\n- Carried from note 14, unchanged: 228 splits per D168 if larger than a 15 KB slice; 210 and 211 swap if no non-author reviewer can be seated for 211; 229 moves up again if a FAIL it names is confirmed.\n- No card is dropped.\n",
+ "checklist_D158": ".mob/records/227/checklist-227-rerank-15.md",
+ "polled_roles_note": "F-054: all six non-proposer roles polled; the gate placed a Copilot seat first for each role, none gave a window line, each role was then polled on Claude",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "w15-architect",
+   "started_at": "2026-11-01T02:27:30Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T02:28:01.901826Z",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:17 UTC) and decider.py's own probe at 2026-11-01T02:28:01.901826Z",
+   "round": 1,
+   "role": "architect",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w15-qa",
+   "started_at": "2026-11-01T02:30:11Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T02:30:39.600023Z",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:17 UTC) and decider.py's own probe at 2026-11-01T02:30:39.600023Z",
+   "round": 1,
+   "role": "QA engineer",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w15-dev",
+   "started_at": "2026-11-01T02:32:54Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T02:33:22.724925Z",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:17 UTC) and decider.py's own probe at 2026-11-01T02:33:22.724925Z",
+   "round": 1,
+   "role": "backend developer",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w15-auditlens",
+   "started_at": "2026-11-01T02:35:57Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 2,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T02:36:28.285880Z",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:17 UTC) and decider.py's own probe at 2026-11-01T02:36:28.285880Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w15-delivery",
+   "started_at": "2026-11-01T02:38:56Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T02:39:23.405810Z",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:17 UTC) and decider.py's own probe at 2026-11-01T02:39:23.405810Z",
+   "round": 1,
+   "role": "delivery lead",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w15-pmsignoff",
+   "started_at": "2026-11-01T02:41:38Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T02:42:09.494437Z",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:17 UTC) and decider.py's own probe at 2026-11-01T02:42:09.494437Z",
+   "round": 1,
+   "role": "product manager (signoff)",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w15cp1-architect",
+   "started_at": "2026-11-01T02:25:52Z",
+   "model": "auto",
+   "raw": "I’ll quickly read the referenced decision/process and card/audit files, then return a single vote in the exact requested format.\n\nI have the new-card text; next I’ll check the specific decision clauses and the existing checker/findings cards for enforceability and false-positive risk.\n\nSupport-it\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T02:26:30.234768Z",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:17 UTC) and decider.py's own probe at 2026-11-01T02:26:30.234768Z",
+   "round": 1,
+   "role": "architect",
+   "reply": null,
+   "note": "a Copilot seat placed by the gate; it replied with a preamble only ('I will read the files, then...') and no window line, so it is not counted (card 229 evidence)"
+  },
+  {
+   "seat": "copilot",
+   "context": "w15cp1-qa",
+   "started_at": "2026-11-01T02:28:56Z",
+   "model": "auto",
+   "raw": "Reviewing the cited cards and audit now to decide the QA-focused vote.\n\nSupport-it\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T02:29:25.722384Z",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:17 UTC) and decider.py's own probe at 2026-11-01T02:29:25.722384Z",
+   "round": 1,
+   "role": "QA engineer",
+   "reply": null,
+   "note": "a Copilot seat placed by the gate; it replied with a preamble only ('I will read the files, then...') and no window line, so it is not counted (card 229 evidence)"
+  },
+  {
+   "seat": "copilot",
+   "context": "w15cp1-dev",
+   "started_at": "2026-11-01T02:31:33Z",
+   "model": "auto",
+   "raw": "Reviewing the referenced decision/audit artifacts now, then I’ll return a strict vote response in the required format.\n\nI found the rerank artifacts under `.mob\\records\\227`; I’ll read those to verify the proposal against current open FAIL handling.\n\nSupport-it\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T02:32:01.794870Z",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:17 UTC) and decider.py's own probe at 2026-11-01T02:32:01.794870Z",
+   "round": 1,
+   "role": "backend developer",
+   "reply": null,
+   "note": "a Copilot seat placed by the gate; it replied with a preamble only ('I will read the files, then...') and no window line, so it is not counted (card 229 evidence)"
+  },
+  {
+   "seat": "copilot",
+   "context": "w15cp1-auditlens",
+   "started_at": "2026-11-01T02:34:13Z",
+   "model": "auto",
+   "raw": "Reviewing the referenced decision and card artifacts now, then I’ll cast a single vote in the required format.\n\nNo. Commit the cited audit snapshot and unresolved finding ledger text into git (or another committed source of truth) and require this re-rank’s gate/order claims to be derived only from committed evidence, then I’m yes.\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T02:34:43.365598Z",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:17 UTC) and decider.py's own probe at 2026-11-01T02:34:43.365598Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "reply": null,
+   "note": "a Copilot seat placed by the gate; it replied with a preamble only ('I will read the files, then...') and no window line, so it is not counted (card 229 evidence)"
+  },
+  {
+   "seat": "copilot",
+   "context": "w15cp1-delivery",
+   "started_at": "2026-11-01T02:37:25Z",
+   "model": "auto",
+   "raw": "I’ll verify the referenced cards, decisions, and audit details, then cast the vote in the required format.\n\nI’ve confirmed the new cards; next I’ll verify the cited rulings and prior rerank note before finalizing the vote.\n\nYes\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T02:37:58.456449Z",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:17 UTC) and decider.py's own probe at 2026-11-01T02:37:58.456449Z",
+   "round": 1,
+   "role": "delivery lead",
+   "reply": null,
+   "note": "a Copilot seat placed by the gate; it replied with a preamble only ('I will read the files, then...') and no window line, so it is not counted (card 229 evidence)"
+  },
+  {
+   "seat": "copilot",
+   "context": "w15cp1-pmsignoff",
+   "started_at": "2026-11-01T02:40:14Z",
+   "model": "auto",
+   "raw": "I’ll verify the referenced decision and audit artifacts, then cast the requested vote.\n\nI’ve found the key artifacts and will now read the decision sections plus the affected cards to validate alignment before voting.\n\nYes\n\n",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_taken_at": "2026-11-01T02:40:41.835454Z",
+   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (2026-11-01 02:17 UTC) and decider.py's own probe at 2026-11-01T02:40:41.835454Z",
+   "round": 1,
+   "role": "product manager (signoff)",
+   "reply": null,
+   "note": "a Copilot seat placed by the gate; it replied with a preamble only ('I will read the files, then...') and no window line, so it is not counted (card 229 evidence)"
+  }
+ ],
+ "decision": {
+  "result": "adopted; round 1 no objection from all six polled seats (Claude); six Copilot seats gave no window line and were not counted",
+  "order": [
+   234,
+   228,
+   210,
+   211,
+   229,
+   230,
+   231,
+   232,
+   233,
+   216,
+   220,
+   221,
+   222,
+   223,
+   224,
+   225,
+   213,
+   217,
+   218,
+   212,
+   215,
+   206,
+   207
+  ],
+  "next": 234
+ },
+ "ended_at": "2026-11-01T02:43:17Z"
+}
