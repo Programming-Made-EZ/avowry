@@ -113,6 +113,14 @@
    "status": "unscanned",
    "seat": "red 2 fix (Copilot CLI)",
    "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green 2 (Claude)",
+   "transcript": "subagents/agent-a031f1d8981529680.jsonl",
+   "commands": 24,
+   "source": "python delete_guard.py scan-transcript, facilitator; read"
   }
  ],
  "cycles": [
@@ -135,7 +143,11 @@
     "f9a3236 (mob_process.py check runs check-process-wiki and fails closed; two existing window tests patched)"
    ],
    "blocked": "the red 570dc5c contradicts itself: the default Tree() must fail the role/brief check and pass clean; zero-rule tests cannot pass with any floor; the disabled-page test names an id its brief never lists (developer ctx-5, Claude). Red fix by the QA role next",
-   "red_fix": "707434b (default Tree() a complete valid wiki, negative tests remove pieces, zero-rule tests own their agreement text, disabled id named; 61 run: HEAD failures=20, the developer's prototype failures=1, the real-repository test needing the 8 briefs; Copilot seat)"
+   "red_fix": "707434b (default Tree() a complete valid wiki, negative tests remove pieces, zero-rule tests own their agreement text, disabled id named; 61 run: HEAD failures=20, the developer's prototype failures=1, the real-repository test needing the 8 briefs; Copilot seat)",
+   "green": "042bf79 (role and brief checks, Pages validation, coverage floor 0.10; 8 briefs; Proof block in the body)",
+   "suite": "tests.test_process_wiki and test_mob_process 140 OK; full Python suite 376 OK, 7 skipped",
+   "checker": "process-wiki: OK (17 pages); floor 44 of 128 rule lines (0.34)",
+   "mutations": "6 run, 6 caught, control clean"
   }
  ],
  "stand_downs": [
