@@ -122,10 +122,15 @@ class Trial:
                         sh(root, "add", "--", *paths)
                     sh(root, "commit", "-q", "--allow-empty", "-m", name, *(["--", *paths] if paths else []))
                     self.hashes["ruling" if name != "side-decision" else "side-decision"] = rev(root, "HEAD")
+                    self.hashes["tree"] = rev(root, "HEAD^{tree}")
+                    self.hashes["blob"] = rev(root, "HEAD:README.md")
                     if name != "ruling":
                         self.hashes["side"] = rev(root, "HEAD")
                         sh(root, "checkout", "-q", main_branch)
                     paths = []
+                    continue
+                if name == "hexref":  # a branch whose name looks like an abbreviated commit hash
+                    sh(root, "branch", "abcdef0")
                     continue
                 if name == "decoy":  # a file the traversal cases try to reach through the decisions folder
                     (root / "decoy.json").write_text("{}", encoding="utf-8")
@@ -545,6 +550,44 @@ class WikiTrial(unittest.TestCase):
             c.steps = c.steps[:4] + [["decoy"], ["decision"], ["ruling"], ["amend"]]
             c.amended["cap_amendment"] = f"raised; window {window}; ruling commit {{ruling}}"
             fails(c, self, "amendment names no decision window")
+
+    # Card 237, window 237-amendment-ordering, cycle 6: the ruling commit cap_amendment names is a real commit
+    # and a strict ancestor of the change commit. Hostile 11 (missing, too short, tree, blob, ref posing as a
+    # hash), 12 (other branch), 18 (no ruling text). Hostile 13 (ruling equal to the change commit) cannot be
+    # built: the change commit's own hash would have to sit inside its own content; the check is strict anyway.
+    def test_amendment_naming_no_ruling_commit(self):  # hostile 18, ruling half
+        c = Amended()
+        c.amended["cap_amendment"] = "raised both caps; window {window}"
+        fails(c, self, "amendment names no ruling commit")
+
+    def test_amendment_with_a_ruling_commit_that_does_not_exist(self):  # hostile 11a
+        c = Amended()
+        c.amended["cap_amendment"] = "raised; window {window}; ruling commit deadbeefdeadbeef"
+        fails(c, self, "amendment ruling commit deadbeefdeadbeef is not a commit")
+
+    def test_amendment_with_a_too_short_ruling_hash(self):  # hostile 11b
+        c = Amended()
+        c.amended["cap_amendment"] = "raised; window {window}; ruling commit {ruling}"
+        c.hash_len = 6
+        fails(c, self, "amendment names no ruling commit")
+
+    def test_amendment_whose_ruling_is_a_tree_or_a_blob(self):  # hostile 11c
+        for kind in ("tree", "blob"):
+            c = Amended()
+            c.amended["cap_amendment"] = "raised; window {window}; ruling commit {" + kind + "}"
+            fails(c, self, "is not a commit")
+
+    def test_amendment_whose_ruling_is_a_branch_named_like_a_hash(self):  # hostile 11d
+        c = Amended()
+        c.steps = c.steps[:4] + [["decision"], ["ruling"], ["hexref"], ["amend"]]
+        c.amended["cap_amendment"] = "raised; window {window}; ruling commit abcdef0"
+        fails(c, self, "amendment ruling commit abcdef0 is not a commit")
+
+    def test_amendment_whose_ruling_is_not_an_ancestor_of_the_change(self):  # hostile 12
+        c = Amended()
+        c.steps = c.steps[:4] + [["decision"], ["side-ruling"], ["amend"]]
+        c.amended["cap_amendment"] = "raised; window {window}; ruling commit {side}"
+        fails(c, self, "is not an ancestor of the change")
 
     def test_real_trial_folder_is_ready(self):
         """RED until step 0d: the real repo has no committed trial folder yet, so the check must fail."""
