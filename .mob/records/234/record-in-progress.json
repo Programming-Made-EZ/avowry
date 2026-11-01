@@ -121,6 +121,12 @@
    "transcript": "subagents/agent-a031f1d8981529680.jsonl",
    "commands": 24,
    "source": "python delete_guard.py scan-transcript, facilitator; read"
+  },
+  {
+   "context": "ctx-7",
+   "status": "unscanned",
+   "seat": "stand-down 2 (Copilot CLI)",
+   "reason": "Copilot has no command source"
   }
  ],
  "cycles": [
@@ -276,6 +282,13 @@
    "requests": "6 Premium (3m 42s)",
    "tokens_in": "937.9k (881.8k cached)",
    "tokens_out": "11.3k"
+  },
+  {
+   "seat": "stand-down 2, delivery lead ctx-7 (Copilot CLI, run without -s)",
+   "source": "the Copilot CLI's usage lines on stderr (scratch sd2-234.err)",
+   "requests": "0.25 Premium (2m 10s)",
+   "tokens_in": "519.0k (486.3k cached)",
+   "tokens_out": "9.4k (6.7k reasoning)"
   }
  ]
 }
