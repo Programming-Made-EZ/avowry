@@ -217,6 +217,14 @@
    "status": "unscanned",
    "seat": "red 1b (Copilot CLI)",
    "reason": "Copilot has no command source"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "green 1b (Claude)",
+   "transcript": "subagents/agent-a2c68476d515ae1d3.jsonl",
+   "commands": 102,
+   "source": "python delete_guard.py scan-transcript, facilitator"
   }
  ],
  "cycles": [
@@ -258,7 +266,14 @@
    "criterion": 1,
    "increment": "1b (review fix: verbatim quotes, counted mutations)",
    "repo": "avowry",
-   "red": "eb47780 (CriterionOneQuotesAndMutations: 7 run, failures=11 at HEAD; prototype: the 7 pass, the module has 20 failures in existing tests whose fixtures lack Quote lines; Copilot seat)"
+   "red": "eb47780 (CriterionOneQuotesAndMutations: 7 run, failures=11 at HEAD; prototype: the 7 pass, the module has 20 failures in existing tests whose fixtures lack Quote lines; Copilot seat)",
+   "units": [
+    "f8ef376 (verbatim Quote on all 44 rule lines; also carries the checker: 16 files, over D136's 15)"
+   ],
+   "green": "8f4836e (Tree.rule fixture writes quotes; no assertion weakened)",
+   "suite": "three modules 249 OK; full Python suite 485 OK, 7 skipped",
+   "checker": "process-wiki: OK (17 pages)",
+   "mutations": "the red's 7 probes caught 7; 45 extra mutations on page copies caught 45; control clean"
   }
  ],
  "stand_downs": [
@@ -369,6 +384,11 @@
    "by": "QA engineer ctx-4",
    "what": "reds c12f7f2 (603 changed lines) and eb68d95 (969) exceed D136's 400-line limit; found at review (3c6181c R8)",
    "handling": "recorded; every fix red stays at or under 350 lines (triage 060edcb)"
+  },
+  {
+   "by": "backend developer ctx-5",
+   "what": "unit commit f8ef376 has 16 files (D136 allows 15): a grep-built file list swept the checker into it; its body says the checker lands in the next commit, which is wrong",
+   "handling": "recorded in the green body and here; no amend"
   }
  ],
  "observations_for_next_stand_down": [
@@ -379,6 +399,10 @@
   {
    "by": "facilitator",
    "observation": "green 3's Copilot seat used 6.7m input tokens (6.5m cached) in 21 min, against the card's per-seat baseline of 50K setup and 125K median at the end; the Copilot red-fix seat used 938k and the Copilot stand-down 519k; Copilot seats re-read far more than Claude subagents (77k to 152k). This is the experiment's main token signal for review"
+  },
+  {
+   "by": "backend developer ctx-5 (self-reported)",
+   "observation": "a timed-out background command ran git stash and git stash pop on the shared avowry checkout during green 1b; the seat's changes were restored and three older stashes were untouched; stashing in a checkout another writer uses is the two-writer risk card 230 owns"
   }
  ],
  "confirmations": [
