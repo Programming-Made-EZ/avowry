@@ -352,6 +352,11 @@
    "by": "facilitator",
    "what": "the intent confirmation (D165) was committed after red 1 c12f7f2, not before the red seat launched (card 226 stand-down 2 and card 227 stand-down 1 adjustments)",
    "handling": "recorded"
+  },
+  {
+   "by": "QA engineer ctx-4",
+   "what": "reds c12f7f2 (603 changed lines) and eb68d95 (969) exceed D136's 400-line limit; found at review (3c6181c R8)",
+   "handling": "recorded; every fix red stays at or under 350 lines (triage 060edcb)"
   }
  ],
  "observations_for_next_stand_down": [
@@ -414,6 +419,10 @@
    "commit": "b37a8ad",
    "verdict": "CHANGES REQUESTED",
    "blocking": "briefs route only to the index and the role page, so seats never reach the rule pages they need (enforced by the criterion 2 checker); rule coverage gaps"
+  },
+  {
+   "plan": "review triage 060edcb (slice 2 of 2, 11107 bytes): criterion 1 (R7 verbatim Quote check, R10 counted mutations), criterion 2 (R2 seat half, R3, R4, R6, W1 to W4: Routes table replaces 'index plus own role page'; same seat step measured twice), criterion 3 (R1 real restart by a fresh seat against a committed key, R2 restart half, R5 computed misses); follow-up for R9 (Proof block checks)",
+   "routing_rule_change": "the brief rule 'index plus own role page only' (the criterion 2 slice reading) becomes 'pages equal the Routes row'; Done check 2's board text ('the index and the needed pages') is unchanged; accepted by the facilitator as a slice reading change from the domain-expert review, no Decider"
   }
  ]
 }
