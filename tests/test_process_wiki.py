@@ -116,6 +116,24 @@ class Tree:
             Page("rules/one-criterion", "docs/process-wiki/rules/one-criterion.md",
                  "One acceptance criterion per red-green cycle, checked from git.",
                  [self.rule("Each red commit names exactly one criterion.", 157)]),
+            Page("rules/outside-in-tdd", "docs/process-wiki/rules/outside-in-tdd.md",
+                 "Outside-in TDD: one failing acceptance test per criterion, then green in one commit.",
+                 [self.rule("Outside-in cycles keep one failing acceptance test.", 165)]),
+            Page("rules/thin-slices", "docs/process-wiki/rules/thin-slices.md",
+                 "Thin slices: bounded card and commit size limits, measured from git.",
+                 [self.rule("Slice size limits stay explicit in each slice.", 157)]),
+            Page("rules/decisions", "docs/process-wiki/rules/decisions.md",
+                 "Decisions: routine calls use an objection window, rule changes use a Decider.",
+                 [self.rule("Decision calls keep their D-number anchors exact.", 166)]),
+            Page("rules/stand-downs", "docs/process-wiki/rules/stand-downs.md",
+                 "Stand-downs: each loop closes with one adjustment and a next check.",
+                 [self.rule("Stand-down notes include one adjustment and one check.", 166)]),
+            Page("rules/seat-rotation", "docs/process-wiki/rules/seat-rotation.md",
+                 "Seat rotation: least-recently-used seating and context declaration at launch.",
+                 [self.rule("Seat rotation names the seat and context id.", 170)]),
+            Page("rules/safety-and-push", "docs/process-wiki/rules/safety-and-push.md",
+                 "Safety and push: no delete commands, commit and push often, record evidence.",
+                 [self.rule("Safety rules ban delete commands in all seats.", 170)]),
             Page("role/product-manager-ready", "docs/process-wiki/roles/product-manager-ready.md",
                  "What the product-manager-ready seat reads and writes before launch.",
                  [self.rule("The ready seat states owner priority and constraints.", 170)]),
@@ -144,6 +162,17 @@ class Tree:
             Page("howto/hostile-inputs", "docs/process-wiki/howto/hostile-inputs.md",
                  "How to answer the disabled, unknown, repeated and reordered entries.", []),
         ]
+        self.route_rows = {
+            "product-manager-ready": "core/index, role/product-manager-ready, rules/seat-rotation, rules/decisions",
+            "qa-red": "core/index, role/qa-red, rules/one-criterion, rules/outside-in-tdd, howto/hostile-inputs",
+            "architect-slice": "core/index, role/architect-slice, rules/thin-slices, rules/one-criterion, howto/hostile-inputs",
+            "backend-developer-green": "core/index, role/backend-developer-green, rules/one-criterion, rules/outside-in-tdd, rules/thin-slices, rules/safety-and-push",
+            "independent-reviewer-audit": "core/index, role/independent-reviewer-audit, rules/stand-downs, rules/decisions, rules/safety-and-push",
+            "delivery-lead-ship": "core/index, role/delivery-lead-ship, rules/stand-downs, rules/safety-and-push, rules/decisions",
+            "product-manager-signoff": "core/index, role/product-manager-signoff, rules/decisions, rules/stand-downs",
+            "technical-writer": "core/index, role/technical-writer, rules/decisions, rules/one-criterion",
+        }
+        self.include_routes_table = False
         self.briefs = {
             role_id.split("/", 1)[1]: f"Pages: core/index, {role_id}\n"
             for role_id in TASK_FORCE_ROLE_IDS
@@ -165,8 +194,16 @@ class Tree:
         lines += self.extra_rows
         if self.reverse_rows:
             lines.reverse()
-        return (INDEX_SUMMARY + "\n\n| id | path | status | summary |\n|---|---|---|---|\n"
-                + "\n".join(lines) + "\n")
+        text = (INDEX_SUMMARY
+                + "\n\n| id | path | status | summary |\n|---|---|---|---|\n"
+                + "\n".join(lines)
+                + "\n")
+        if self.include_routes_table:
+            route_rows = [f"| {stem} | {pages} |" for stem, pages in self.route_rows.items()]
+            text += ("\nRoutes table: one row per role and step.\n\n| brief | pages |\n|---|---|\n"
+                     + "\n".join(route_rows)
+                     + "\n")
+        return text
 
     def build(self):
         root = Path(tempfile.mkdtemp(prefix="pw234-"))
@@ -732,93 +769,107 @@ class CriterionOneQuotesAndMutations(unittest.TestCase):
 
 
 class CriterionTwoSeatBriefsAndCoverage(unittest.TestCase):
-    """Card 234, criterion 2 red: seat briefs, role pages, and coverage floor."""
+    """Card 234 criterion 2 red (first pair): route rows and brief page equality."""
 
-    # ZOMBIES for criterion 2 (seat briefs + floor): Z (no briefs), O (one brief),
-    # M (all task-force briefs), B (disabled/unknown/repeated/reordered Pages ids),
-    # I (finding names file + detail), E (bad brief format), S (line-order invariance).
-    def test_every_task_force_role_needs_a_role_page_and_a_brief(self):
+    @staticmethod
+    def _route_tree():
         tree = Tree()
-        tree.page("role/technical-writer").write = False
-        del tree.briefs["technical-writer"]
-        _, code, _, err = check(tree)
-        self.assertEqual(code, 1, err)
-        self.assertIn("missing role page role/technical-writer", err)
-        self.assertRegex(err, r"(?m)^docs/process-wiki/briefs/technical-writer\.md: missing brief")
+        tree.include_routes_table = True
+        tree.briefs = {stem: f"Pages: {pages}\n" for stem, pages in tree.route_rows.items()}
+        return tree
 
-    def test_a_brief_lists_index_plus_its_role_pages_only(self):
-        tree = Tree()
-        tree.extra_files["docs/process-wiki/briefs/architect-slice.md"] = (
-            "Brief for the architect slice seat.\n\n"
-            "Pages: core/index, role/architect-slice, rules/one-criterion\n"
-        )
-        _, code, _, err = check(tree)
-        self.assertEqual(code, 1, err)
-        self.assertRegex(
-            err,
-            r"(?m)^docs/process-wiki/briefs/architect-slice\.md: brief pages must include only core/index and role/")
-
-    def test_the_floor_fails_when_anchored_rule_coverage_is_below_the_share(self):
-        tree = Tree()
-        tree.team_working_agreement = "\n".join(f"- **Rule {n}** baseline." for n in range(1, 21)) + "\n"
-        for p in tree.pages:
-            p.rules = []
-        tree.page("rules/one-criterion").rules = [Tree.rule("Only one anchored rule.", 157)]
-        _, code, _, err = check(tree)
-        self.assertEqual(code, 1, err)
-        self.assertRegex(err, rf"(?m)^docs/process-wiki/INDEX\.md: coverage floor.*{PROPOSED_FLOOR_SHARE:.2f}")
-
-    def test_the_floor_passes_exactly_at_the_boundary_share(self):
-        tree = Tree()
-        tree.team_working_agreement = "\n".join(f"- **Rule {n}** baseline." for n in range(1, 11)) + "\n"
-        tree.page("rules/one-criterion").rules = [Tree.rule("First.", 157)]
-        tree.page("role/qa-red").rules = [Tree.rule("Second.", 165)]
+    def _run(self, tree):
         _, code, out, err = check(tree)
+        return code, out, err
+
+    # ZOMBIES for route rows and brief Pages:
+    # Z no routes table; O one matching route; M all rows present; B repeated/unknown/reordered/disabled;
+    # I findings name index or brief path; E bad or missing Pages line; S row-order invariance.
+    def test_route_z_no_routes_table_fails_closed(self):
+        tree = self._route_tree()
+        tree.include_routes_table = False
+        code, _, err = self._run(tree)
+        self.assertEqual(code, 1, err)
+        self.assertRegex(err, r"(?m)^docs/process-wiki/INDEX\.md: missing routes table")
+
+    def test_route_o_one_role_row_and_matching_brief_are_clean(self):
+        tree = self._route_tree()
+        tree.route_rows = {"qa-red": tree.route_rows["qa-red"]}
+        tree.briefs = {"qa-red": f"Pages: {tree.route_rows['qa-red']}\n"}
+        code, out, err = self._run(tree)
+        self.assertEqual((code, err), (0, ""), err)
+        self.assertIn("process-wiki: OK", out)
+
+    def test_route_m_every_role_step_row_and_brief_match_is_clean(self):
+        code, out, err = self._run(self._route_tree())
+        self.assertEqual((code, err), (0, ""), err)
+        self.assertIn("process-wiki: OK", out)
+
+    def test_route_i_a_brief_whose_pages_differ_from_its_route_row_fails(self):
+        tree = self._route_tree()
+        tree.briefs["qa-red"] = "Pages: core/index, role/qa-red\n"
+        code, _, err = self._run(tree)
+        self.assertEqual(code, 1, err)
+        self.assertRegex(err, r"(?m)^docs/process-wiki/briefs/qa-red\.md: pages mismatch route row")
+
+    def test_route_s_reordering_routes_rows_keeps_a_clean_wiki_clean(self):
+        tree = self._route_tree()
+        rows = list(tree.route_rows.items())
+        tree.route_rows = dict(reversed(rows))
+        code, out, err = self._run(tree)
         self.assertEqual((code, err), (0, ""), err)
         self.assertIn("process-wiki: OK", out)
 
 
 class HostileInputsCriterionTwo(unittest.TestCase):
-    """D167, criterion 2 Inputs: disabled, unknown, repeated, reordered."""
+    """D167 hostile inputs for criterion 2 route rows: repeated, unknown, reordered, disabled."""
 
-    def _brief_tree(self, pages_line):
+    def _run(self, tree):
+        _, code, _, err = check(tree)
+        return code, err
+
+    @staticmethod
+    def _route_tree():
         tree = Tree()
-        tree.extra_files["docs/process-wiki/briefs/architect-slice.md"] = (
-            "Brief for the architect slice seat.\n\nPages: " + pages_line + "\n"
-        )
+        tree.include_routes_table = True
+        tree.briefs = {stem: f"Pages: {pages}\n" for stem, pages in tree.route_rows.items()}
         return tree
 
     # disabled
-    def test_a_disabled_page_id_in_a_brief_fails_the_brief(self):
-        tree = self._brief_tree("core/index, role/architect-slice, rules/one-criterion")
+    def test_route_b_disabled_page_in_a_route_row_fails(self):
+        tree = self._route_tree()
         tree.page("rules/one-criterion").status = "disabled"
-        _, code, _, err = check(tree)
+        code, err = self._run(tree)
         self.assertEqual(code, 1, err)
-        self.assertRegex(
-            err, r"(?m)^docs/process-wiki/briefs/architect-slice\.md: disabled page id rules/one-criterion")
+        self.assertRegex(err, r"(?m)^docs/process-wiki/INDEX\.md: disabled route page id rules/one-criterion")
 
     # unknown
-    def test_an_unknown_page_id_in_pages_fails_the_brief(self):
-        tree = self._brief_tree("core/index, role/architect-slice, role/no-such-seat")
-        _, code, _, err = check(tree)
+    def test_route_b_unknown_page_in_a_route_row_fails(self):
+        tree = self._route_tree()
+        tree.route_rows["qa-red"] = tree.route_rows["qa-red"] + ", role/no-such-seat"
+        tree.briefs["qa-red"] = f"Pages: {tree.route_rows['qa-red']}\n"
+        code, err = self._run(tree)
         self.assertEqual(code, 1, err)
-        self.assertRegex(err, r"(?m)^docs/process-wiki/briefs/architect-slice\.md: unknown page id.*role/no-such-seat")
+        self.assertRegex(err, r"(?m)^docs/process-wiki/INDEX\.md: unknown route page id role/no-such-seat")
 
     # repeated
-    def test_a_repeated_page_id_in_pages_is_flagged(self):
-        tree = self._brief_tree("core/index, role/architect-slice, role/architect-slice")
-        _, code, _, err = check(tree)
+    def test_route_b_repeated_page_in_a_route_row_is_flagged(self):
+        tree = self._route_tree()
+        tree.route_rows["qa-red"] = tree.route_rows["qa-red"] + ", role/qa-red"
+        tree.briefs["qa-red"] = f"Pages: {tree.route_rows['qa-red']}\n"
+        code, err = self._run(tree)
         self.assertEqual(code, 1, err)
-        self.assertRegex(err, r"(?m)^docs/process-wiki/briefs/architect-slice\.md: repeated page id.*role/architect-slice")
+        self.assertRegex(err, r"(?m)^docs/process-wiki/INDEX\.md: repeated route page id role/qa-red")
 
     # reordered
-    def test_reordered_pages_remain_valid_when_the_set_is_the_same(self):
-        good = self._brief_tree("core/index, role/architect-slice")
-        reordered = self._brief_tree("role/architect-slice, core/index")
-        g_code, _, g_err = check(good)[1:]
-        r_code, _, r_err = check(reordered)[1:]
-        self.assertEqual((g_code, g_err), (0, ""), g_err)
-        self.assertEqual((r_code, r_err), (0, ""), r_err)
+    def test_route_b_reordered_brief_pages_fail_even_when_members_match(self):
+        tree = self._route_tree()
+        tree.briefs["qa-red"] = (
+            "Pages: role/qa-red, core/index, rules/one-criterion, rules/outside-in-tdd, howto/hostile-inputs\n"
+        )
+        code, err = self._run(tree)
+        self.assertEqual(code, 1, err)
+        self.assertRegex(err, r"(?m)^docs/process-wiki/briefs/qa-red\.md: pages mismatch route row")
 
 
 class ThisRepository(unittest.TestCase):

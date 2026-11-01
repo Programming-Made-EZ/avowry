@@ -1,4 +1,4 @@
-import contextlib, datetime as dt, importlib.util, io, json, os, subprocess, tempfile, unittest
+import contextlib, datetime as dt, importlib.util, io, json, os, re, subprocess, sys, tempfile, unittest
 from pathlib import Path
 from unittest import mock
 
@@ -901,5 +901,52 @@ class CheckWindowsTests(unittest.TestCase):
     def test_interface_the_error_names_the_file_and_the_field(self):
         self.write("304-noend.json", ended_at=""); errors = mob.check_windows(self.root)
         self.assertEqual(1, len(errors)); self.assertIn("304-noend.json", errors[0]); self.assertIn("ended_at", errors[0])
+
+
+class SeatPromptBuilderTests(unittest.TestCase):
+    """Card 234 criterion 2 R6 red: build seat prompt from a brief's Pages list."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.root = Path(self.temp.name)
+        self.addCleanup(self.temp.cleanup)
+        (self.root / "docs/process-wiki/briefs").mkdir(parents=True, exist_ok=True)
+        (self.root / "docs/process-wiki/roles").mkdir(parents=True, exist_ok=True)
+        (self.root / "docs/process-wiki/rules").mkdir(parents=True, exist_ok=True)
+        (self.root / "docs/process-wiki/INDEX.md").write_text("index-page\n", encoding="utf-8")
+        (self.root / "docs/process-wiki/roles/qa-red.md").write_text("qa-role-page\n", encoding="utf-8")
+        (self.root / "docs/process-wiki/rules/one-criterion.md").write_text("criterion-rule-page\n", encoding="utf-8")
+        (self.root / "docs/process-wiki/briefs/qa-red.md").write_text(
+            "Seat brief.\n\nPages: core/index, role/qa-red, rules/one-criterion\n",
+            encoding="utf-8",
+        )
+
+    def run_builder(self, *args):
+        script = Path(__file__).resolve().parents[1] / "scripts/mob_process.py"
+        return subprocess.run(
+            [sys.executable, str(script), "seat-prompt", *args, "--root", str(self.root)],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+
+    def test_seat_prompt_contains_only_brief_pages_and_reports_byte_size(self):
+        result = self.run_builder("qa-red")
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertRegex(result.stdout, r"(?m)^bytes: \d+$")
+        payload = re.sub(r"(?m)^bytes: \d+\n?", "", result.stdout)
+        self.assertIn("index-page", payload)
+        self.assertIn("qa-role-page", payload)
+        self.assertIn("criterion-rule-page", payload)
+        self.assertNotIn("outside-in page that is not listed", payload)
+        reported = int(re.search(r"(?m)^bytes: (\d+)$", result.stdout).group(1))
+        self.assertEqual(reported, len(payload.encode("utf-8")))
+
+    def test_seat_prompt_unknown_brief_fails_closed(self):
+        result = self.run_builder("no-such-brief")
+        self.assertEqual(1, result.returncode)
+        self.assertRegex(result.stdout + result.stderr, r"missing brief|no such brief")
+
 
 if __name__ == "__main__": unittest.main()
