@@ -62,6 +62,11 @@
  ],
  "seat_reason": "rotation between Copilot and Claude by least-recently-used (Codex, Grok and agy without quota at the 02:59 UTC probe)",
  "metric": "tokens per seat (baseline about 50K setup, about 125K median at end); facilitator context size (about 965K); counter-metric rule misses from an unread page",
+ "measurement_methods": {
+  "tokens_per_seat": "Record provider-reported input and output tokens per seat context at setup complete and seat done, then compare setup values to 50K and end values to 125K.",
+  "facilitator_context_size": "Record facilitator context token counts at each restart boundary from committed provider usage and compare to the 965K baseline.",
+  "rule_misses": "Record each unread-required-page miss as a structured case in rule_miss_cases with seat context, boundary, page id, and source reference."
+ },
  "command_scans": [
   {
    "context": "ctx-1",
