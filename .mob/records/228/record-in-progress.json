@@ -50,6 +50,18 @@
    "status": "clean",
    "seat": "architect slice (Claude subagent)",
    "detail": "clean: slice228-ctx2, 27 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 1a (Claude subagent)",
+   "detail": "clean: 26 command(s) scanned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "dev green 1a (Claude subagent)",
+   "detail": "clean: 29 command(s) scanned"
   }
  ],
  "token_usage": [
@@ -64,9 +76,31 @@
    "seat": "architect ctx-2, slice",
    "source": "Agent completion report (subagent_tokens)",
    "subagent_tokens": 122505
+  },
+  {
+   "seat": "QA ctx-3, red 1a",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 85313
+  },
+  {
+   "seat": "backend developer ctx-5, green 1a",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 96112
   }
  ],
- "cycles": [],
+ "cycles": [
+  {
+   "criterion": 1,
+   "increment": "1a",
+   "red": "05a838f (mob-defaults; tests/test_command_scan_hidden_1a.py; 8 failures on HEAD)",
+   "green": "63e4f61 (delete_guard.py; red 4/4, full suite 1257 OK, 1 skipped)",
+   "turn_records": [
+    "eaec1e3",
+    "88f232f"
+   ],
+   "hostile_inputs_covered": "r\"\"m, r\\m, 'r'm, \"rm\", ${RM:-rm}, v=rm; $v -rf, plus benign twins"
+  }
+ ],
  "stand_downs": [],
  "deviations": [
   {
@@ -77,6 +111,8 @@
  ],
  "observations_for_next_stand_down": [
   "D174's first two windows (rerank-17, 228-taskforce) ran serially as recorded fallbacks: decider.py's append-only seat-use check blocks parallel runs on one checkout",
-  "D174's trial scope (next 3 vote windows) is used up with three serial fallbacks and no parallel run; the trial retro decides keep, revise or drop, and a decider.py change for safe parallel launch would be its own card"
+  "D174's trial scope (next 3 vote windows) is used up with three serial fallbacks and no parallel run; the trial retro decides keep, revise or drop, and a decider.py change for safe parallel launch would be its own card",
+  "the full mob-defaults suite takes about 30 minutes; the QA seat's full run overlapped the dev seat's uncommitted green and so passed its own red, which it reported; a red's evidence should be run on committed code only",
+  "the dev counted 417 tests in the scan modules against QA's 522: the two seats selected the modules differently; the gate should name the module list"
  ]
 }
