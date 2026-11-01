@@ -87,13 +87,23 @@
    "commands": 44,
    "transcript": "subagents/agent-ab3ea2815470fb969.jsonl",
    "source": "python delete_guard.py scan-transcript (mob-defaults f8a45da), facilitator; read before recording"
+  },
+  {
+   "context": "ctx-5",
+   "status": "unscanned",
+   "seat": "green 1 (Copilot CLI)",
+   "reason": "Copilot has no command source"
   }
  ],
  "cycles": [
   {
    "criterion": 1,
    "repo": "avowry",
-   "red": "c12f7f2 (tests/test_process_wiki.py; 53 run, 49 failing by assertion, 4 born-green probes shown red)"
+   "red": "c12f7f2 (tests/test_process_wiki.py; 53 run, 49 failing by assertion, 4 born-green probes shown red)",
+   "green": "c941885 (scripts/check-process-wiki.py, docs/process-wiki/INDEX.md and three pages; 6 files, 274 lines; Copilot seat)",
+   "suite": "tests.test_process_wiki 53 OK; full Python suite 366 OK, 7 skipped",
+   "checker": "process-wiki: OK (4 pages)",
+   "mutations": "not measured (the green body names none)"
   }
  ],
  "stand_downs": [],
