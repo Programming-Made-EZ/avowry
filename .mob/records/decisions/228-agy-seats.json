@@ -1,0 +1,205 @@
+{
+ "window": "228-agy-seats",
+ "category": "mid-card addition",
+ "rule": "D153 mid-card addition for card 228 (seat rotation once agy is available); D171; D174 serial",
+ "proposed_by": {
+  "role": "facilitator (seat rotation)",
+  "model": "facilitator",
+  "context": "facilitator",
+  "probe_reference": "probe 2026-11-01 22:06 UTC (.mob/records/probes/2026-10-30.jsonl; agy available)"
+ },
+ "opened_at": "2026-11-01T22:12:24Z",
+ "proposal": "# Card 228 mid-card addition: how agy takes its least-recently-used seats now that it is available\n\nProposer: the facilitator (seat rotation). Facts: the 22:06 UTC probe shows agy available for the first time on 2026-11-01 (.mob/records/probes/2026-10-30.jsonl). The product owner's rule is that rotation evens out by least-recently-used between available models, so agy is owed the next seats. Card 228's adopted slice (639c5e2, T2) says agy has no command source, and that a seat with no source is a recorded gap that blocks ship. Seating agy on a build seat of this card would therefore block card 228's own ship.\n\nProposal:\n1. Decision seats: agy takes its least-recently-used turns in vote and objection windows now, through the decision-seat gate. Its votes are recorded as unscanned with the reason \"agy has no command source\", as Copilot votes are today. A voter only reads and answers.\n2. Build seats (red, green, refactor) on card 228 stay on Claude and Copilot until an agy command reader exists. The agy reader joins the slice's split-out follow-up for backend readers, so the deferral has an owner.\n3. The facilitator reports the deferral to the product owner in plain text, because it departs from the rotation rule for build seats.\n4. If agy's first decision seat returns no reply (as Copilot's do, card 229), it is no vote and is replaced in least-recently-used order, and the record says so.\n\nAsk: NO OBJECTION, or OBJECTION with one fixed condition.\n",
+ "checklist_D158": ".mob/records/228/checklist-228-agy.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "agy",
+   "context": "w228agycp1-pmready",
+   "started_at": "2026-11-01T22:12:24Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nCITE: The agy reader joins the slice's split-out follow-up for backend readers, so the deferral has an owner.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 22:06 UTC (.mob/records/probes/2026-10-30.jsonl; agy available) and decider.py's own probe at 2026-11-01T22:13:03.808293Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228agy-architect",
+   "started_at": "2026-11-01T22:16:04Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe design is minimal. It reuses the existing \"unscanned\" record path for Copilot, adds no new checker rule, and avoids a false-positive block on card 228's ship. The deferral has a named owner, and the no-reply case reuses the existing replacement rule.\n\nCITE: Its votes are recorded as unscanned with the reason \"agy has no command source\"\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 22:06 UTC (.mob/records/probes/2026-10-30.jsonl; agy available) and decider.py's own probe at 2026-11-01T22:16:40.543671Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "agy",
+   "context": "w228agycp1-qa",
+   "started_at": "2026-11-01T22:17:47Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nCITE: Build seats (red, green, refactor) on card 228 stay on Claude and Copilot until an agy command reader exists.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 22:06 UTC (.mob/records/probes/2026-10-30.jsonl; agy available) and decider.py's own probe at 2026-11-01T22:18:24.348736Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228agy-dev",
+   "started_at": "2026-11-01T22:21:01Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: stay on Claude and Copilot until an agy command reader exists\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 22:06 UTC (.mob/records/probes/2026-10-30.jsonl; agy available) and decider.py's own probe at 2026-11-01T22:21:39.207450Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "agy",
+   "context": "w228agycp1-auditlens",
+   "started_at": "2026-11-01T22:22:44Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nCITE: between available models, so agy is owed the next seats\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 22:06 UTC (.mob/records/probes/2026-10-30.jsonl; agy available) and decider.py's own probe at 2026-11-01T22:23:20.614071Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228agy-decider",
+   "started_at": "2026-11-01T22:27:01Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe deferral is framed so the decision rests on evidence. It cites the probe, the T2 rule and a named owner for the follow-up. The decision seats stay covered, and agy's votes are recorded as unscanned with a reason. The product owner is told about the departure from the rotation rule.\n\nCITE: Build seats (red, green, refactor) on card 228 stay on Claude and Copilot until an agy command reader exists.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 22:06 UTC (.mob/records/probes/2026-10-30.jsonl; agy available) and decider.py's own probe at 2026-11-01T22:27:37.506179Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w228agycp1-architect",
+   "started_at": "2026-11-01T22:15:08Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 22:06 UTC (.mob/records/probes/2026-10-30.jsonl; agy available) and decider.py's own probe at 2026-11-01T22:15:46.613063Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w228agycp1-dev",
+   "started_at": "2026-11-01T22:20:08Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 22:06 UTC (.mob/records/probes/2026-10-30.jsonl; agy available) and decider.py's own probe at 2026-11-01T22:20:42.923957Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w228agycp1-decider",
+   "started_at": "2026-11-01T22:26:02Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-01 22:06 UTC (.mob/records/probes/2026-10-30.jsonl; agy available) and decider.py's own probe at 2026-11-01T22:26:43.350840Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "adopted without conditions: agy takes its least-recently-used decision seats now (votes recorded unscanned: no command source); build seats on card 228 stay on Claude and Copilot until an agy reader exists (joins the slice's backend-readers follow-up); the deferral is reported to the product owner. Six NO OBJECTION with valid D171 cites: agy (gemini-4-argon-high) for the product manager, QA and independent reviewer; Claude for the architect, developer and decider after Copilot seats returned no reply.",
+  "window_minutes": "22:11:45 to 22:28:05 UTC, serial"
+ },
+ "ended_at": "2026-11-01T22:28:27Z"
+}

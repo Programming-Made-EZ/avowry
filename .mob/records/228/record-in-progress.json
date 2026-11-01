@@ -6,7 +6,8 @@
   "rank": "re-rank 17 (window rerank-17): first, as the corrective named by F-071",
   "task_force": "window 228-taskforce (adopted, no conditions)",
   "slice": "turn-slice-architect.md (639c5e2, 14847 bytes): three criteria; T2: Copilot has a command source (events.jsonl), no-source seats are a recorded gap that blocks ship; PM's split confirmed with four changes",
-  "slice_window": "window 228-slice (adopted, no conditions)"
+  "slice_window": "window 228-slice (adopted, no conditions)",
+  "agy_seats": "window 228-agy-seats (agy on decision seats now; build seats wait for an agy reader)"
  },
  "task_force": [
   {
@@ -36,8 +37,7 @@
  ],
  "open_points": [
   "the proposal's split of the 'Also owned here' items into follow-up cards is confirmed or changed at the slice (D136, D168)",
-  "the T2 question: the real command source per backend, and whether a no-source seat fails closed or is recorded as a gap",
-  "agy reports available at the 22:06 probe (first time today): by the product owner's least-recently-used rotation it is owed the next seat, but agy has no command source (slice T2), and the adopted slice makes a no-source seat a recorded gap that blocks ship"
+  "the T2 question: the real command source per backend, and whether a no-source seat fails closed or is recorded as a gap"
  ],
  "command_scans": [
   {
@@ -147,6 +147,7 @@
   "D174's first two windows (rerank-17, 228-taskforce) ran serially as recorded fallbacks: decider.py's append-only seat-use check blocks parallel runs on one checkout",
   "D174's trial scope (next 3 vote windows) is used up with three serial fallbacks and no parallel run; the trial retro decides keep, revise or drop, and a decider.py change for safe parallel launch would be its own card",
   "the full mob-defaults suite takes about 30 minutes; the QA seat's full run overlapped the dev seat's uncommitted green and so passed its own red, which it reported; a red's evidence should be run on committed code only",
-  "the dev counted 417 tests in the scan modules against QA's 522: the two seats selected the modules differently; the gate should name the module list"
+  "the dev counted 417 tests in the scan modules against QA's 522: the two seats selected the modules differently; the gate should name the module list",
+  "agy's first three decision seats (window 228-agy-seats) all replied with a valid cite; Copilot's three returned no reply again"
  ]
 }
