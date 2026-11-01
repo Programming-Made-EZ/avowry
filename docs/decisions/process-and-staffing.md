@@ -644,6 +644,8 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 <a id="d170"></a>
 #### Decider D170: product owner ruling (not a team vote): the indexed process wiki is the highest priority, with a one-card stop-the-line waiver
 
+- CORRECTED by D172 (2026-11-01): the product owner's intent was for the team to EVALUATE an indexed, just-in-time process wiki, not to build it as a mandate; the wording "build" below was a relay error by Dispatch. Card 234 built it before the correction arrived; that build is now a prototype under the evaluation (card 237).
+
 - Date: 2026-11-01. Not a team vote: a product owner priority ruling and an explicit stop-the-line override, the same mechanism as D162 (the one-card waiver for card 219).
 - Ruling: card 234 ("An indexed process wiki with just-in-time reading") is the highest priority. It is ranked first at the next re-rank after card 227 closed and starts immediately, ahead of the open-FAIL correctives (cards 228, 210 and 211). The open FAILs stay open and owned, and their correctives resume right after card 234 closes. The waiver covers card 234 only.
 - Rationale (the product owner's): it is a process change that improves every card from here on, including how the correctives themselves get done. Every turn re-reads the whole context, so fresh seats overpay by reading everything and the long facilitator session overpays on every turn; the wiki cuts both and gives the product owner one readable place for the whole process.
@@ -675,4 +677,13 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   BASELINE (card 234): task-force window 03:05 to 03:41 (36 minutes), slice window 03:50 to 04:35 (45 minutes), each with one condition adopted; 21 of 21 Copilot decision-seat attempts returned no window line; unread votes on card 234 were not counted. Card 227 stand-down: 3 of 7 voters had not read the slice.
   REVERSIBILITY: two-way door. Drop the CITE line; no shared state, checker or earlier D-record changes. Votes already counted stay as recorded.
   VOTING RULE: reply first line Yes, Support-it or No, then P1: to Pn: one line each (one per proposal point). A No names ONE fixed condition (CONDITION: ...). A reasonable, reversible condition is adopted and the proposal re-polled; a later round may not add new demands. Only an irreconcilable purpose or model conflict escalates. Independent fresh-seat re-run before recording.
+
+<a id="d172"></a>
+#### Decider D172: product owner correction (not a team vote): the indexed process wiki is to be evaluated, not built as a mandate
+
+- Date: 2026-11-01. Not a team vote: a product owner correction of D170, relayed after card 234 had closed.
+- Correction: the product owner's intent was for the team to EVALUATE the idea. D170's "build" wording was a relay error by Dispatch, not the product owner's intent. The evaluation (card 237): the team assesses whether an indexed, just-in-time process wiki actually solves the problem (tokens per seat, facilitator context growth, messages blocked by long turns); compares alternatives, including doing nothing; estimates the cost; and decides by Decider whether to adopt it, reshape it or reject it.
+- Priority: the top priority and the one-card stop-the-line waiver stay, and now apply to the evaluation itself (card 237), not to a build. If the team decides to build, that becomes its own card, ranked by the team. The defaults promotion (template) applies only if a later build passes.
+- What exists: card 234 built a wiki before this correction (docs/process-wiki/, its checkers and briefs; experiment verdict REVISE, 39d0c9e). It stands as a prototype and evidence for the evaluation, not as an adopted rule.
+- Proposal folded in (product owner proposal, not a directive): at the end of every retro, the team reviews the wiki and records additions, updates and removals, with evidence (a wiki commit or an explicit "no changes" note). The evaluation decides it by Decider, as an experiment if adopted. Metric: wiki staleness (rules changed in retros but not reflected in the wiki). Counter-metric: added retro time. The team may adopt, reshape or reject it.
 
