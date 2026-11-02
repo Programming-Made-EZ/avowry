@@ -296,7 +296,8 @@
    "green": "none needed: the tests stand as regression guards",
    "turn_records": [
     "e9ca438"
-   ]
+   ],
+   "plan": "next: finish green 2a (in flight since 02:09 UTC), then the overdue stand-down (D151) at the criterion-1 and 2a boundary, then red 2b (Copilot reader), green 2b, then criterion 3"
   }
  ],
  "stand_downs": [],
@@ -310,6 +311,16 @@
    "by": "facilitator",
    "what": "the architect's ruling seat was launched about one minute before its in-flight line",
    "handling": "line written late and says so (c5b2e6b)"
+  },
+  {
+   "by": "facilitator",
+   "what": "criterion 1 ran seven increments (1a to 1g); the thin-slice rule allows at most three increments per card",
+   "handling": "capped by window 228-c1-scope after the auditor's FLAG; recorded for the stand-down and the retro"
+  },
+  {
+   "by": "facilitator",
+   "what": "no stand-down was held at card 228's cycle boundaries (D151 requires one at each cycle boundary within a card)",
+   "handling": "stand-down held after green 2a, reviewing the cycles to date; recorded"
   }
  ],
  "observations_for_next_stand_down": [
@@ -322,5 +333,11 @@
   "a QA seat's turn-record commit landed on the facilitator's unpushed late-note commit in the shared checkout and the facilitator's push failed once (two writers, one checkout)",
   "no in-flight lines were written from 12:51 to 22:31 UTC; late note 85854f6",
   "auditor FLAG: criterion 1 grew to six cycles against a one-cycle slice with no cap written; decided in window 228-c1-scope; the retro weighs a written cap on increments per criterion"
- ]
+ ],
+ "working_state": {
+  "criterion1_cap": "CLOSED and capped (window 228-c1-scope): no more criterion-1 cycles on card 228; any new delete form, the path forms included, goes to a follow-up card (F4, residual forms)",
+  "criterion2_plan": "at most two cycles: 2a written-then-run file contents in Claude transcripts (green running); 2b the Copilot events.jsonl reader",
+  "criterion3_plan": "the opt-in hook; aim for one cycle",
+  "in_flight_rule": "an in-flight line (scratch inflight.sh) before every seat or window, including after a context summary"
+ }
 }
