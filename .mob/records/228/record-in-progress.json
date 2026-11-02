@@ -9,7 +9,8 @@
   "slice_window": "window 228-slice (adopted, no conditions)",
   "agy_seats": "window 228-agy-seats (agy on decision seats now; build seats wait for an agy reader)",
   "sshagent_eval": "architect ruling (ruling-sshagent-architect.md): eval \"$(ssh-agent -s)\" stays a recorded finding (fail closed, D169); no clean twin; the next red turn record corrects slice line 63's wording",
-  "criterion1_scope": "window 228-c1-scope: option (b), one capped cycle 1g (I and M ZOMBIES only); path forms to follow-up F4; no further criterion-1 cycle"
+  "criterion1_scope": "window 228-c1-scope: option (b), one capped cycle 1g (I and M ZOMBIES only); path forms to follow-up F4; no further criterion-1 cycle",
+  "criterion1_closed": "criterion 1 closed after 1g per window 228-c1-scope; path forms to follow-up F4"
  },
  "task_force": [
   {
@@ -131,6 +132,12 @@
    "status": "clean",
    "seat": "dev green 1f (Claude subagent)",
    "detail": "clean: 37 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 1g (Claude subagent)",
+   "detail": "clean: red1g-ctx3, 20 command(s) scanned"
   }
  ],
  "token_usage": [
@@ -210,6 +217,11 @@
    "seat": "backend developer ctx-5, green 1f",
    "source": "Agent completion report (subagent_tokens)",
    "subagent_tokens": 106215
+  },
+  {
+   "seat": "QA ctx-3, red 1g",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 93672
   }
  ],
  "cycles": [
@@ -275,6 +287,15 @@
    "turn_records": [
     "79ee245",
     "17b88ef"
+   ]
+  },
+  {
+   "criterion": 1,
+   "increment": "1g (capped, last)",
+   "red": "9fe71ca (tests/test_command_scan_parity_1g.py; born green: the I and M ZOMBIES already hold; 18 modules 447 OK)",
+   "green": "none needed: the tests stand as regression guards",
+   "turn_records": [
+    "e9ca438"
    ]
   }
  ],
