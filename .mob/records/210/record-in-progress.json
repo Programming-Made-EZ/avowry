@@ -1,7 +1,7 @@
 {
  "card": 210,
  "title": "The card record check rejects an empty task force and empty probes",
- "status": "in progress",
+ "status": "closed",
  "decisions": {
   "rank": "re-rank 18 (window rerank-18): first, as the corrective named by MD-003",
   "task_force": "window 210-taskforce (adopted, no conditions)",
@@ -172,6 +172,20 @@
    "requests": "0.25 Premium (8m 26s)",
    "tokens_in": "339.1k (319.7k cached)",
    "tokens_out": "10.3k"
+  },
+  {
+   "seat": "gaps",
+   "note": "not carried: the decision-window voter seats (decider-result.json files in the facilitator's scratch, not committed), the agile coach retro (191736) and sign-off (93463) are added below from completion reports; Copilot and agy voter usage was not measured; the facilitator's own usage is not measured"
+  },
+  {
+   "seat": "sign-off ctx-6",
+   "source": "Agent completion report",
+   "subagent_tokens": 93463
+  },
+  {
+   "seat": "agile coach, retro and pick",
+   "source": "Agent completion report",
+   "subagent_tokens": 191736
   }
  ],
  "cycles": [
@@ -200,8 +214,7 @@
    "turn_records": [
     "56eadb9",
     "e6a6eeb"
-   ],
-   "plan": "next: the pre-ship gate (independent reviewer ctx-4, Copilot per window 210-taskforce)"
+   ]
   }
  ],
  "stand_downs": [],
@@ -228,5 +241,11 @@
  "refactor": [
   "green 1 and green 2: none needed, with a reason (turn-green-dev-2.md line 16, e93cfae)",
   "green 3: none needed, with a reason; BLANK_WORDS repeats the facilitator's placeholder set, left for the retro because merging means editing facilitator.py (e6a6eeb)"
- ]
+ ],
+ "closing": {
+  "full_suite_final": "green on c633d3a in a plain shell (1545 OK, 1 skipped; dev seat and facilitator re-run); two test_mob_summary tests fail only inside the Copilot CLI environment: bug card 268, the one open red",
+  "line_endings": "green 3 rewrote mob_process.py to CRLF: bug card 269",
+  "retro_pick": "Decider D176 (gate reports state their environment)",
+  "superseded": "the gate's 'ctx-1 pending' line is superseded: the ready seat was scanned clean with the Copilot reader"
+ }
 }

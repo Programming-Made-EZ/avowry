@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 210,
+ "title": "The card record check rejects an empty task force and empty probes",
+ "process": "card-mode rules run by hand; corrective for MD-003 (in mob-defaults); first card under D175 (caps 1+1+1, held); D157 one criterion per cycle; greens committed on their own tests with the full suite after; a refactor line per green",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Copilot ctx-1",
+   "model": "copilot (auto) via the Copilot CLI, product manager (ready); seats rotated by least-recently-used among available models (Claude, Copilot, agy); build seats on Claude (command reader), ready and ship on Copilot through its CLI (reader since card 228), decision seats on agy and Claude; Copilot decision seats returned no reply (card 229); Codex and Grok without quota",
+   "evidence": "19feb51"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude-sonnet subagent, architect; seats rotated by least-recently-used among available models (Claude, Copilot, agy); build seats on Claude (command reader), ready and ship on Copilot through its CLI (reader since card 228), decision seats on agy and Claude; Copilot decision seats returned no reply (card 229); Codex and Grok without quota",
+   "evidence": "b0d55fa"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude-sonnet subagent, QA engineer: reds 1 to 3 (code in mob-defaults); seats rotated by least-recently-used among available models (Claude, Copilot, agy); build seats on Claude (command reader), ready and ship on Copilot through its CLI (reader since card 228), decision seats on agy and Claude; Copilot decision seats returned no reply (card 229); Codex and Grok without quota",
+   "evidence": "b84be3a"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-5",
+   "model": "claude-sonnet subagent, backend developer: greens 1 to 3 and the refactor lines (code in mob-defaults); seats rotated by least-recently-used among available models (Claude, Copilot, agy); build seats on Claude (command reader), ready and ship on Copilot through its CLI (reader since card 228), decision seats on agy and Claude; Copilot decision seats returned no reply (card 229); Codex and Grok without quota",
+   "evidence": "358516a"
+  },
+  {
+   "role": "ship",
+   "seat": "Copilot ctx-4",
+   "model": "copilot (auto) via the Copilot CLI, independent reviewer: pre-ship gate HOLD and re-check SHIP; seats rotated by least-recently-used among available models (Claude, Copilot, agy); build seats on Claude (command reader), ready and ship on Copilot through its CLI (reader since card 228), decision seats on agy and Claude; Copilot decision seats returned no reply (card 229); Codex and Grok without quota",
+   "evidence": "d20314c"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude-sonnet subagent, sign-off; seats rotated by least-recently-used among available models (Claude, Copilot, agy); build seats on Claude (command reader), ready and ship on Copilot through its CLI (reader since card 228), decision seats on agy and Claude; Copilot decision seats returned no reply (card 229); Codex and Grok without quota",
+   "evidence": "c9e236a"
+  }
+ ],
+ "retro": "docs/retros/card-210-2026-11-02.md",
+ "notes": "Signed off with conditions, met here. Criteria: 1 non-empty task force and probes (572eb4b/690975a); 2 cycles derived from MOB.md and the seat log (edc0837/1baece8); 3 per-member checks and retro structure (242677e/c633d3a); one cycle each, within the D175 caps. Full suite green on c633d3a in a plain shell; the two test_mob_summary failures inside the Copilot CLI environment are bug card 268, the one open red. Green 3's LF-to-CRLF rewrite of mob_process.py is bug card 269. Retro pick D176. Trail in .mob/records/210/; command scans in .mob/records/210/command-scans.json; windows .mob/records/decisions/210-*.json."
+}
