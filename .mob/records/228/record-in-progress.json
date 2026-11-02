@@ -106,6 +106,18 @@
    "status": "clean",
    "seat": "architect ssh-agent ruling (Claude subagent)",
    "detail": "clean: 3 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 1e (Claude subagent)",
+   "detail": "clean: 18 command(s) scanned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "dev green 1e (Claude subagent)",
+   "detail": "clean: 31 command(s) scanned"
   }
  ],
  "token_usage": [
@@ -160,6 +172,16 @@
    "seat": "QA ctx-3, red 1d",
    "source": "Agent completion report (subagent_tokens)",
    "subagent_tokens": 86722
+  },
+  {
+   "seat": "backend developer ctx-5, green 1d",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 87092
+  },
+  {
+   "seat": "QA ctx-3, red 1e",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 80542
   }
  ],
  "cycles": [
@@ -204,6 +226,17 @@
    "turn_records": [
     "2740568",
     "9ba855c"
+   ]
+  },
+  {
+   "criterion": 1,
+   "increment": "1e",
+   "red": "025b178 (tests/test_command_scan_interp_1e.py; 14 failures on committed code)",
+   "green": "53666c3 (ruby, php, awk, deno, bun, perl unlink glob, rsync deletes; red 4/4, 16 modules 433 OK, full suite 1273 OK, 1 skipped)",
+   "turn_records": [
+    "db0decf",
+    "6244de2",
+    "0556fd0"
    ]
   }
  ],
