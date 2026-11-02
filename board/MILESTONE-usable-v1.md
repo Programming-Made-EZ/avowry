@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:a3fe8eb77fedb8e92ff565937f17541e9330a0a42f09dfa948218beb32057e61 -->
+<!-- board-table-sha256:8c8546fdfb85e3a536abb92c2d479769f228238ab5b244949253173b1f5929ca -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -103,7 +103,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 81 | 227 Recursive deletes on variable paths are blocked and every commit is pushed | Done | none |
 | 82 | 234 An indexed process wiki with just-in-time reading | Done | none |
 | 83 | 237 Evaluate whether an indexed, just-in-time process wiki solves the context problem | Done | card 234 (its prototype and measurements are evidence) |
-| 84 | 228 Recursive-delete scan covers hidden, encoded and non-shell forms, and the contents of files a seat writes | Ready | card 227 (its command-position scan, literal-path allow-list and fail-closed coverage) |
+| 84 | 228 Recursive-delete scan covers hidden, encoded and non-shell forms, and the contents of files a seat writes | Done | card 227 (its command-position scan, literal-path allow-list and fail-closed coverage) |
 | 85 | 210 The card record check rejects an empty task force and empty probes | Ready | none |
 | 86 | 211 A whole-team review of the mob-defaults rulings commits | Ready | none |
 | 87 | 229 A Copilot decision seat receives its whole prompt and casts a vote | Ready | none |
