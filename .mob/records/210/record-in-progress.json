@@ -62,11 +62,41 @@
    "seat": "architect ctx-2, slice",
    "source": "Agent completion report (subagent_tokens)",
    "subagent_tokens": 149486
+  },
+  {
+   "seat": "QA ctx-3, red 1",
+   "source": "Agent completion report",
+   "subagent_tokens": 99354
+  },
+  {
+   "seat": "backend developer ctx-5, green 1",
+   "source": "Agent completion report",
+   "subagent_tokens": 78855
+  },
+  {
+   "seat": "QA ctx-3, red 2",
+   "source": "Agent completion report",
+   "subagent_tokens": 111103
   }
  ],
  "cycles": [
   {
-   "plan": "next: red 1 (QA ctx-3), criterion 1, cap 1 cycle"
+   "criterion": 1,
+   "red": "572eb4b (tests/test_record_task_force_probes.py; 54 failures, 4 errors on committed code)",
+   "green": "690975a (check_record validates task_force and probes; 4 modules 129 OK; pushed 2 s after tests passed; full suite on committed 690975a 1475 OK, 1 skipped)",
+   "turn_records": [
+    "b84be3a",
+    "358516a"
+   ]
+  },
+  {
+   "criterion": 2,
+   "red": "edc0837 (tests/test_record_cycles_evidence.py; 41 failures of 42 on committed code; three test_mob_process fixtures gained a '#### Cycle 1' heading)",
+   "green": "next",
+   "turn_records": [
+    "5de812f"
+   ],
+   "plan": "next: green 2 (backend developer ctx-5), then red 3 and green 3, the gate, sign-off, retro"
   }
  ],
  "stand_downs": [],
