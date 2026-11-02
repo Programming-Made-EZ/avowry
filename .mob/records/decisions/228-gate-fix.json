@@ -1,0 +1,205 @@
+{
+ "window": "228-gate-fix",
+ "category": "mid-card addition",
+ "rule": "pre-ship gate HOLD (be1bc1a); criterion 3 capped by stand-down 1; D153; D171",
+ "proposed_by": {
+  "role": "facilitator (states the options; the team decides)",
+  "model": "facilitator",
+  "context": "facilitator",
+  "probe_reference": "probe 2026-11-02 07:37 UTC (.mob/records/probes/2026-10-30.jsonl)"
+ },
+ "opened_at": "2026-11-02T07:43:26Z",
+ "proposal": "# Card 228 mid-card decision: fixing the pre-ship gate's HOLD\n\nThe pre-ship gate (be1bc1a) says HOLD. Blocking finding: red 3a pins `eval \"$(ssh-agent -s)\"` as allowed by the hook (tests/test_delete_guard_hook_3a.py:147) and green 3a lets it through (delete_guard.py:1129, applied at 1146-1147), against the architect's ruling (ruling-sshagent-architect.md: a recorded finding, fail closed, no clean twin). The reviewer showed a bypass: a shell function or PATH shadow named ssh-agent that echoes `rm -rf ~`, then `eval \"$(ssh-agent -s)\"`, exits 0. Second finding (not blocking alone): locate_copilot accepts a session.start up to 10 s after launch, but 20 of 20 real sessions started 13 to 24 s after the recorded launch, so a live Copilot seat would always report \"no command source\" and criterion 2's live-Copilot claim is unproved. Criterion 3 is capped at two cycles, so any fix needs this window.\n\nOptions:\n(a) One fix cycle: a red flips line 147 so the hook refuses `eval \"$(ssh-agent -s)\"` (the ruling), pins the shadowed-ssh-agent bypass as refused, and pins a Copilot session starting 13 to 24 s after launch as found (with a bound, say 60 s, and two matches still \"no command source\"); a green removes the allow and widens the tolerance. Then the gate re-checks only these.\n(b) Ratify the allow: the architect changes the ruling for the hook and the bypass is recorded as a known limit; the tolerance goes to a follow-up.\n(c) Split: ship with both as follow-up cards.\n\nProposal: option (a). Reason: the card's safety purpose is that a flagged command is blocked, and the reviewer demonstrated a working bypass of exactly that; the locator change is one constant plus a test, with real start offsets already measured.\n\nAsk: NO OBJECTION, or OBJECTION with one fixed condition.\n",
+ "checklist_D158": ".mob/records/228/checklist-228-gatefix.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "agy",
+   "context": "w228gfcp1-pmready",
+   "started_at": "2026-11-02T07:43:26Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nCITE: the card's safety purpose is that a flagged command is blocked\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 07:37 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T07:44:04.443525Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228gf-architect",
+   "started_at": "2026-11-02T07:47:39Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nOption (a) is minimal and enforceable. It follows the ruling's fail-closed rule, and it closes the demonstrated bypass without adding false positives. The 60 s bound together with the two-matches rule keeps the locator unambiguous.\nCITE: a green removes the allow and widens the tolerance\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 07:37 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T07:48:18.088137Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "agy",
+   "context": "w228gfcp1-qa",
+   "started_at": "2026-11-02T07:49:26Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nCITE: locate_copilot accepts a session.start up to 10 s after launch\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 07:37 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T07:50:05.967558Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228gf-dev",
+   "started_at": "2026-11-02T07:52:58Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: the card's safety purpose is that a flagged command is blocked\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 07:37 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T07:53:38.543572Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "agy",
+   "context": "w228gfcp1-auditlens",
+   "started_at": "2026-11-02T07:54:54Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nOption (a) is verifiable from git alone (red/green commits and gate re-check) and closes the fail-open `_SSH_AGENT_EVAL` bypass while preserving fail-closed refusal when multiple Copilot sessions match.\nCITE: the card's safety purpose is that a flagged command is blocked\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 07:37 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T07:55:30.266042Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228gf-decider",
+   "started_at": "2026-11-02T07:58:48Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nOption (a) rests on evidence: the reviewer demonstrated the bypass, and the real session start offsets (13 to 24 s) are already measured. The same independent gate reviewer seat should do the re-check, so sign-off stays with a seat that isn't the proposer.\n\nCITE: the card's safety purpose is that a flagged command is blocked\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 07:37 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T07:59:23.133606Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w228gfcp1-architect",
+   "started_at": "2026-11-02T07:46:40Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 07:37 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T07:47:20.260992Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w228gfcp1-dev",
+   "started_at": "2026-11-02T07:51:59Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 07:37 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T07:52:38.358361Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w228gfcp1-decider",
+   "started_at": "2026-11-02T07:57:45Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 07:37 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T07:58:28.754378Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "option (a) adopted without objection: one fix cycle (red flips the hook's ssh-agent allow to refused per the architect's ruling, pins the shadowed-ssh-agent bypass as refused, pins a Copilot session starting 13 to 24 s after launch as found with a 60 s bound and two matches still no command source; green removes the allow and widens the tolerance); then the gate re-checks only these. Six NO OBJECTION with valid D171 cites: agy for the product manager, QA and independent reviewer; Claude for the architect, developer and decider after Copilot seats returned no reply.",
+  "window_minutes": "07:40:14 to 07:59:54 UTC, serial"
+ },
+ "ended_at": "2026-11-02T08:00:12Z"
+}
