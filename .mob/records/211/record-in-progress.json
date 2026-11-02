@@ -4,7 +4,8 @@
  "status": "in progress",
  "decisions": {
   "rank": "re-rank 19 (window rerank-19): first, the corrective named by MD-010",
-  "task_force": "window 211-taskforce (adopted, no conditions)"
+  "task_force": "window 211-taskforce (adopted, no conditions)",
+  "slice": "turn-slice-architect.md (Copilot ctx-2): caps 1+1+1; T2: Done check 3 cannot be met under the shared identity"
  },
  "task_force": [
   {
@@ -48,15 +49,28 @@
    "requests": "6 Premium (1m 49s)",
    "tokens_in": "577.7k (491.9k cached)",
    "tokens_out": "6.4k"
+  },
+  {
+   "seat": "architect ctx-2, slice (Copilot CLI)",
+   "source": "Copilot CLI usage lines (scratch slice-211c.err)",
+   "requests": "6 Premium (1m 35s)",
+   "tokens_in": "521.0k (412.8k cached)",
+   "tokens_out": "7.5k"
   }
  ],
  "cycles": [
   {
-   "plan": "next: the slice (architect ctx-2, agy as adopted)"
+   "plan": "next: window 211-slice, then criterion 1 (the all-seat Decider on the 27 commits)"
   }
  ],
  "stand_downs": [],
- "deviations": [],
+ "deviations": [
+  {
+   "by": "facilitator (seat placement)",
+   "what": "the adopted architect seat (agy) failed at launch: agy hit its quota ('Individual quota reached', resets in about 145 hours); the seat was re-seated on Copilot, the next available model with a command reader in least-recently-used order",
+   "handling": "recorded; agy also returned no reply once in window 211-taskforce, explained by the same quota"
+  }
+ ],
  "observations_for_next_stand_down": [
   "agy returned no reply once in a decision seat (window 211-taskforce, developer turn); Grok and Copilot returned none in every seat"
  ]
