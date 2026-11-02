@@ -138,6 +138,20 @@
    "status": "clean",
    "seat": "QA red 1g (Claude subagent)",
    "detail": "clean: red1g-ctx3, 20 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "findings, false positives",
+   "seat": "QA red 2a (Claude subagent)",
+   "detail": "scanned with green 2a's file-run scan; 'unreadable file' findings: runs of relative paths (scripts/mob_process.py, run from the records repo) resolved against the scanner's directory, not the call's working directory, so the scan fails closed; one 'shutil.rmtree(p)' finding: a read-only python -c probe passing that text as a string to scan_command, unparsable because of \\$D, so text-matched; no delete executed",
+   "raw": "red2a-ctx3: recursive delete on a variable or unresolved path: shutil.rmtree(p) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-a94d64be2ed7d5a13.jsonl)\nred2a-ctx3: unreadable file: /c/Users/ringe/projects/phrase-lang/.mob/records/228/turn-red-qa-1f.md cannot be read (file /c/Users/ringe/projects/phrase-lang/.mob/records/228/turn-red-qa-1f.md, file_source: disk, run call 5) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-a94d64be2ed7d5a13.jsonl)\nred2a-ctx3: unreadable file: scripts/mob_process.py cannot be read (file scripts/mob_process.py, file_source: disk, run call 17) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-a94d64be2ed7d5a13.jsonl)\nred2a-ctx3: unreadable file: scripts/mob_process.py cannot be read (file scripts/mob_process.py, file_source: disk, run call 19) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-a94d64be2ed7d5a13.jsonl)\nred2a-ctx3: unreadable file: scripts/mob_process.py cannot be read (file scripts/mob_process.py, file_source: disk, run call 20) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-a94d64be2ed7d5a13.jsonl)\nred2a-ctx3: unreadable file: scripts/mob_process.py cannot be read (file scripts/mob_process.py, file_source: disk, run call 25) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-a94d64be2ed7d5a13.jsonl)\nred2a-ctx3: unreadable file: scripts/mob_process.py cannot be read (file scripts/mob_process.py, file_source: disk, run call 26) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-a94d64be2ed7d5a13.jsonl)"
+  },
+  {
+   "context": "ctx-5",
+   "status": "findings, false positives",
+   "seat": "dev green 2a (Claude subagent)",
+   "detail": "scanned with green 2a's file-run scan; 'unreadable file' findings: runs of relative paths (scripts/mob_process.py, run from the records repo) resolved against the scanner's directory, not the call's working directory, so the scan fails closed",
+   "raw": "green2a-ctx5: unreadable file: scripts/mob_process.py cannot be read (file scripts/mob_process.py, file_source: disk, run call 42) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-ac96d138fe50b9f5f.jsonl)\ngreen2a-ctx5: unreadable file: scripts/mob_process.py cannot be read (file scripts/mob_process.py, file_source: disk, run call 44) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-ac96d138fe50b9f5f.jsonl)"
   }
  ],
  "token_usage": [
@@ -222,6 +236,16 @@
    "seat": "QA ctx-3, red 1g",
    "source": "Agent completion report (subagent_tokens)",
    "subagent_tokens": 93672
+  },
+  {
+   "seat": "QA ctx-3, red 2a",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 93924
+  },
+  {
+   "seat": "backend developer ctx-5, green 2a",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 107481
   }
  ],
  "cycles": [
@@ -298,9 +322,66 @@
     "e9ca438"
    ],
    "plan": "next: finish green 2a (in flight since 02:09 UTC), then the overdue stand-down (D151) at the criterion-1 and 2a boundary, then red 2b (Copilot reader), green 2b, then criterion 3"
+  },
+  {
+   "criterion": 2,
+   "increment": "2a",
+   "red": "dc58ebd (tests/test_command_scan_files_2a.py; 27 failures on committed code)",
+   "green": "5ffc494 (command_source.calls_from_transcript and scan_file_runs; delete_guard.scan_file; red 22/22, 19 modules 469 OK, full suite 1309 OK, 1 skipped)",
+   "turn_records": [
+    "115e005",
+    "cfd4af1"
+   ],
+   "plan": "next: red 2b = the Copilot events.jsonl reader AND resolving a run file against its call's working directory (stand-down 1 adjustment); green 2b; then criterion 3"
   }
  ],
- "stand_downs": [],
+ "stand_downs": [
+  {
+   "cycle": "1 (overdue; covers criterion 1, cycles 1a to 1g, and cycle 2a)",
+   "boundary": "after green 2a (5ffc494; mob-defaults main = origin/main; avowry main = origin/main at writing)",
+   "adjustment_reviews": [
+    {
+     "adjustment": "D174 parallel voter dispatch (card 237 retro pick, next 3 vote windows)",
+     "resolved": "unknown",
+     "evidence": "all three trial windows (rerank-17, 228-taskforce, 228-slice) ran serially as recorded fallbacks: decider.py's append-only seat-use check makes parallel runs on one checkout refuse each other",
+     "verdict": "for its trial retro; making parallel launch safe needs a decider.py card"
+    },
+    {
+     "adjustment": "window 228-agy-seats (agy takes decision seats; build seats wait for an agy reader)",
+     "resolved": "yes",
+     "evidence": "nine agy decision seats in windows 228-agy-seats and 228-c1-scope, all with a valid D171 cite; Copilot's six returned no reply",
+     "verdict": "keep"
+    },
+    {
+     "adjustment": "window 228-c1-scope (criterion 1 capped at one more cycle)",
+     "resolved": "yes",
+     "evidence": "1g came back born green; criterion 1 closed with no further cycle",
+     "verdict": "keep"
+    }
+   ],
+   "worked": [
+    "reds run on committed code only after the 1a overlap (every red since states git status)",
+    "every green ran the named module list and the full suite",
+    "seat transcripts scanned from the real subagent files",
+    "fail-closed choices recorded (ssh-agent eval ruling)"
+   ],
+   "did_not_work": [
+    "criterion 1 ran seven increments against a three-increment rule, caught only by the auditor",
+    "no in-flight lines for about 9.5 hours (late note 85854f6)",
+    "no stand-down until now",
+    "the full suite (about 29 minutes) is most of every green's time",
+    "shared-checkout push races and MOB.md staleness (about one regeneration commit per seat)",
+    "green 2a's file-run scan resolves a relative run path against the scanner's directory, so seats that run scripts in another repo now show 'unreadable file' findings"
+   ],
+   "adjustment": {
+    "text": "Criteria 2 and 3 each get at most two cycles; a third cycle on either needs a scope window first. Cycle 2b takes the Copilot reader and also resolving a run file against its call's working directory (the transcript record's cwd plus any cd earlier in the command), with red tests for the two false-positive classes seen in this stand-down's scans.",
+    "decided_by": "facilitator at the stand-down (reversible; within the card's adopted slice and window 228-c1-scope)",
+    "metric": "cycles per criterion; unreadable-file findings on the card's own seat scans",
+    "counter_metric": "defects found at the gate"
+   },
+   "queued_for_this_stand_down": "the Dispatch timing observation (single decider for reversible trial parameters) is a standing-rule change and goes to the retro as a Decider proposal, not decided here"
+  }
+ ],
  "deviations": [
   {
    "by": "facilitator",
