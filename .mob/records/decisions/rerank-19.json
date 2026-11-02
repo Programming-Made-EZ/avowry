@@ -1,0 +1,225 @@
+{
+ "window": "rerank-19",
+ "category": "loop-boundary re-rank",
+ "rule": "D148 PM-led re-rank at card 210's boundary; D153; D171",
+ "proposed_by": {
+  "role": "product manager",
+  "model": "claude (sonnet)",
+  "context": "fresh",
+  "probe_reference": "probe 2026-11-02 18:30 UTC (.mob/records/probes/2026-10-30.jsonl)"
+ },
+ "opened_at": "2026-11-02T18:38:49Z",
+ "proposal": "# Re-rank note 2026-11-02 (19) PROPOSAL: boundary after card 210 closed; FAIL head, then the Copilot and parallel-window fixes, then the three new bugs\n\n- Status: a proposal by the product manager seat (D148). It is not applied. The team decides it in a loop-boundary window first; scripts/board/rerank.py is not run.\n- Intent (D165): keep the cards that name an open audit FAIL first (D172 to D176 change none of this), put the three bugs from card 210 right behind the Copilot and parallel-window fixes so the next gates run in a green, shell-independent suite, and place the rename and the dates story where they do not delay the fixes.\n- Before (note 18 as adopted and carded, 210 now closed): 211, 264, 229, 265, 258, 238, 230, 236, 253, 252, 254, 255, 231, 232, 233, 235, 256, 257, 216, 220, 221, 222, 223, 224, 225, 213, 217, 218, 212, 215, 206, 207. Cards 266 to 269 are unranked.\n- After:\n  1. 211 (MD-010), 264 (audit 123): unchanged, first.\n  2. 229, 265: unchanged.\n  3. 258, then 268, then 269: the three bugs, flaky or portability class.\n  4. 238, 230, 236, 253, 252, 254, 255, 231, 232, 233, 235, 256, 257: as note 18.\n  5. 266, 267 after 257; 216 and the rest as in note 18.\n  Full: 211, 264, 229, 265, 258, 268, 269, 238, 230, 236, 253, 252, 254, 255, 231, 232, 233, 235, 256, 257, 266, 267, 216, 220, 221, 222, 223, 224, 225, 213, 217, 218, 212, 215, 206, 207.\n- Next card: 211, in mob-defaults.\n\n## Reasons for each placement\n- 211 and 264 stay first. 211 names MD-010; 264 is the card for audit 123 (the acceptance test is not flaky). The FAIL head rule holds: neither new card names an open FAIL, so none passes them. 210 closed MD-003, so nothing else leaves the head.\n- 229 and 265 keep their places. The retro (organisation, product manager, developer, coach) asks for them ahead of the rename and the parallel-streams items. Copilot again returned no reply in card 210's windows, and serial windows cost the card about 4 hours 45 minutes.\n- 258 stays, and 268 follows it. Standing rule: flaky tests are bugs, never \"passed on retry\". 258 was ranked straight behind the parallel-window fix; 268 is the same class (a test whose result depends on the environment: two publish tests pass in a plain shell and fail through cmd /c and in the Copilot CLI) and gets the same place. It also fixes the red that card 210's gate reported as a HOLD, and D176 trials a re-check for exactly that case; once 268 lands the trial reads one criterion only. It enables 216, which carries the suite into the templates. Its ready step should widen the check to the other tests that drive git against a remote (retro follow-up).\n- 269 follows 268. It is a small bug (mob_process.py was rewritten from LF to CRLF: 1063 lines for a 57-line change) and the same file is edited by 238's neighbours and by most process cards; a clean one-line diff makes every later gate and sign-off cheaper to read. The retro asks for the bugs (264, 268, 269) ahead of the rename and 230. If 269's .gitattributes rule removes the need, the line-ending check at the gate (retro follow-up) is not filed.\n- 238 stays after the bugs. It gates the D173 three-retro experiment; its windows run faster once 265 lands. 230 stays behind 238 (a bug with no open FAIL, and the enabler for issue 248). 236, 253, 252, 254, 255, 231, 232, 233, 235, 256, 257 keep note 18's order; card 210 changes nothing about them.\n- 266 (the rename) goes after 257, ahead of 216. It touches about 281 markdown files and renames identifiers, so any card in flight will conflict with it; it is a story with no FAIL and no enabling role, and the retro puts it behind the bugs and 230. It sits behind the scan follow-ups so the delete scan's own tests are not rewritten mid-card. It stays ahead of 216 because 216 writes the templates and the rename should reach them first. Its ready step must settle history (verbatim with a \"formerly Phrase\" note, or renamed) before the ZOMBIES.\n- 267 (no dates in mob-defaults) goes right after 266 and before 216. 216 edits the same templates; a check that fails on dates should exist before 216 adds more dated lines, and the card changes one repository and one check. It is a story with no bug and no FAIL, so it waits behind the fixes.\n\n## Proposals: ranked now, or wait for a retro or Decider\n- Ranked as cards now: none. 229 is already a card. The rest are each a standing-rule or design motion, not a build.\n- Decider motions at a retro (the retro lists these): 260 (optional rule retirement, and a real refactor step) as the refactor step motion; 239 (several improvements per retro); 245 (simplicity, which 260 overlaps: take them together); D174 and D171 trial verdicts.\n- Wait for enablers: 248 until 230 and 265 land; 244 until 254 and 255 show the scan's shape; 241 until 238; 240 and 246 until a Decider on the persisted store; 249 (friction log) at its own Decider, since the retro already lists repeat frictions it would track; 251 (Muse Code seat) at its own Decider.\n- Needs the product owner before any card: 261 (side-effect assertions in a spec) changes the language and must be benchmark-tested for tokens against correctness, so it is a Decider and a trial, not a ranked card. 242 (seven concepts) needs a Decider to choose which to try.\n- 262 (the laws page) is documentation for mob-defaults; it can be a story after 267 and 216 if the team wants it. Not ranked now: the rules it justifies are not yet pared by 245 and 260.\n\n## Recommendations (not applied)\n- Fold: none. 268 and 258 share a class, not a cause (a fixed sleep against a shell environment value), so keep them apart.\n- Withdraw: none.\n- Standing rule noted: a flaky test is a bug, never \"passed on retry\". 268 and 258 are filed that way.\n- No MOB.md change beyond regeneration if it is stale.\n\n## Reversals stated\n- 268 moves ahead of 265 if another gate HOLDs on it before 265 is done, since a false HOLD costs a whole gate.\n- 269 moves behind 238 if the churn does not recur.\n- 266 moves behind 216 if a card in flight touches many files.\n- 267 moves ahead of 266 if 216 starts first.\n- Any card the auditor names with an open FAIL (F-072 and F-074 still have none) goes first.\n\nSize: 6159 bytes\n",
+ "checklist_D158": ".mob/records/reranks/checklist-rerank-19.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "wrr19-architect",
+   "started_at": "2026-11-02T18:39:42Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: 268 moves ahead of 265 if another gate HOLDs on it before 265 is done\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 18:30 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T18:40:16.067102Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "agy",
+   "context": "wrr19cp2-qa",
+   "started_at": "2026-11-02T18:42:55Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nCITE: put the three bugs from card 210 right behind the Copilot and parallel-window fixes so the next gates run in a green, shell-independent suite\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 18:30 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T18:43:33.644689Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "wrr19-dev",
+   "started_at": "2026-11-02T18:45:56Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe ordering is workable. The bugs 258, 268 and 269 land before the process cards, so my gates run in a shell-independent suite. The stated reversals leave me room to adjust without gaming anything.\n\nCITE: Standing rule: flaky tests are bugs, never \"passed on retry\".\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 18:30 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T18:46:33.452697Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "agy",
+   "context": "wrr19cp2-auditlens",
+   "started_at": "2026-11-02T18:49:02Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nCITE: The FAIL head rule holds: neither new card names an open FAIL, so none passes them.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 18:30 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T18:49:39.221528Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "wrr19-decider",
+   "started_at": "2026-11-02T18:53:12Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: Any card the auditor names with an open FAIL\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 18:30 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T18:53:50.901515Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "wrr19cp1-architect",
+   "started_at": "2026-11-02T18:38:49Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 18:30 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T18:39:22.256011Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "wrr19cp1-qa",
+   "started_at": "2026-11-02T18:41:26Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 18:30 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T18:42:01.498828Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "wrr19cp1-dev",
+   "started_at": "2026-11-02T18:45:02Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 18:30 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T18:45:36.652271Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "wrr19cp1-auditlens",
+   "started_at": "2026-11-02T18:47:37Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 18:30 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T18:48:10.158336Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "wrr19cp1-decider",
+   "started_at": "2026-11-02T18:52:19Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 18:30 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T18:52:52.918687Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "adopted without objection: 211, 264, 229, 265, 258, 268, 269, 238, 230, 236, 253, 252, 254, 255, 231, 232, 233, 235, 256, 257, 266, 267, then the tail; next card 211. Five NO OBJECTION with valid D171 cites: agy for QA and the independent reviewer (after Grok seats placed by the gate returned no reply), Claude for the architect, developer and decider (after Copilot seats returned no reply).",
+  "window_minutes": "18:38:13 to 18:54:30 UTC, serial"
+ },
+ "ended_at": "2026-11-02T18:54:57Z"
+}
