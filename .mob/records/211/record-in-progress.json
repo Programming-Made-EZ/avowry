@@ -6,7 +6,8 @@
   "rank": "re-rank 19 (window rerank-19): first, the corrective named by MD-010",
   "task_force": "window 211-taskforce (adopted, no conditions)",
   "slice": "turn-slice-architect.md (Copilot ctx-2): caps 1+1+1; T2: Done check 3 cannot be met under the shared identity",
-  "slice_window": "window 211-slice (adopted, no conditions)"
+  "slice_window": "window 211-slice (adopted, no conditions)",
+  "po_ruling_check3": "D177 (product owner ruling, 2026-11-02): Done check 3 WAIVES the different-committing-identity requirement; replacement evidence: a final-state review by a fresh-context seat that authored none of the 27 commits, on a different model from the authors where available, recorded with model, seat or context id, session or events path and the commit range, cited from the Decider and closing records"
  },
  "task_force": [
   {
@@ -35,7 +36,8 @@
   }
  ],
  "open_points": [
-  "product-owner blocker: Done check 3 needs a review committed by an identity that authored none of the 27 commits; all 27 are by Xipooo <xipooo@gmail.com>, the identity every seat commits under; raised with the product owner, criteria 1 and 2 proceed"
+  "settled by D177: the slice's line 'waits on ruling' (criterion 3) is superseded; criterion 3 now follows the D177 replacement evidence",
+  "the product owner asks the team to consider carding a general seat-attribution fix if the same-identity limit recurs (for card 211's retro)"
  ],
  "working_state": {
   "caps": "1+1+1 (D175)",

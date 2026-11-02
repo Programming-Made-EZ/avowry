@@ -783,3 +783,11 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   COST (issue 245): one brief line (C1), one Environment line per test run, and one extra module run when a test fails (about 3 minutes in card 210's case, none when the suite is green). No extra seat or meeting. If the cost shows in the trial it is the first thing the retro cuts.
   REVERSIBILITY: two-way door. Remove the lines from the gate brief and the sign-off checklist; no shared state, checker or earlier D-record changes. C5 reverts to "HOLD on any red suite".
 
+<a id="d177"></a>
+#### Decider D177: product owner ruling (not a team vote): card 211's Done check 3 waives the different-committing-identity requirement
+
+- Date: 2026-11-02 (sent about 11:20 local, also a comment on GitHub issue 211). Not a team vote: a product owner ruling on a blocker card 211's ready seat and slice named (all 27 commits 687410e..e3736d1 and every seat commit under one identity, Xipooo <xipooo@gmail.com>, so a review "committed by an identity that authored none of the 27 commits" cannot be met by seat or context rotation).
+- Ruling: option 3, WAIVE the different-committing-identity requirement for card 211.
+- Replacement evidence: a final-state review by a fresh-context seat that authored none of the 27 commits, on a different model from the authors where available; recorded with seat attribution (model, seat or context id, session or events file path, and the commit range reviewed); cited from the Decider record and the closing record so MD-010 stays auditable.
+- The team owns the mechanics. The product owner asks the team to consider carding a general seat-attribution fix if the same-identity limit recurs.
+

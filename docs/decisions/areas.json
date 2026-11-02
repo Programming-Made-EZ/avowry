@@ -1168,5 +1168,11 @@
     "status": "in force",
     "title": "Pre-ship gate reports state each test run's environment and re-run a failing module the card did not touch in the reference shell before the verdict (card 210 retro pick, experiment, next 3 gates)",
     "order": 167
+  },
+  "D177": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Product owner ruling: card 211 Done check 3 waives the different-committing-identity requirement; replacement evidence is a fresh-context, non-author seat's final-state review with seat attribution, cited from the Decider and closing records",
+    "order": 168
   }
 }

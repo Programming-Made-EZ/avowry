@@ -75,6 +75,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D174](process-and-staffing.md#d174) — Parallel voter dispatch: probe once, assign the whole rotation and write every seat-use line in one window commit, launch all voters at once (card 237 retro pick, experiment, next 3 vote windows)
 - [D175](process-and-staffing.md#d175) — Written cycle cap per acceptance criterion in every slice, hostile forms labelled SEEN or INSURANCE, a scope window before any red past a cap (card 228 retro pick, experiment, next 3 cards)
 - [D176](process-and-staffing.md#d176) — Pre-ship gate reports state each test run's environment and re-run a failing module the card did not touch in the reference shell before the verdict (card 210 retro pick, experiment, next 3 gates)
+- [D177](process-and-staffing.md#d177) — Product owner ruling: card 211 Done check 3 waives the different-committing-identity requirement; replacement evidence is a fresh-context, non-author seat's final-state review with seat attribution, cited from the Decider and closing records
 
 ### benchmarks-and-measurement
 
@@ -272,3 +273,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D174](process-and-staffing.md#d174) | Parallel voter dispatch: probe once, assign the whole rotation and write every seat-use line in one window commit, launch all voters at once (card 237 retro pick, experiment, next 3 vote windows) | process-and-staffing | in force |
 | [D175](process-and-staffing.md#d175) | Written cycle cap per acceptance criterion in every slice, hostile forms labelled SEEN or INSURANCE, a scope window before any red past a cap (card 228 retro pick, experiment, next 3 cards) | process-and-staffing | in force |
 | [D176](process-and-staffing.md#d176) | Pre-ship gate reports state each test run's environment and re-run a failing module the card did not touch in the reference shell before the verdict (card 210 retro pick, experiment, next 3 gates) | process-and-staffing | in force |
+| [D177](process-and-staffing.md#d177) | Product owner ruling: card 211 Done check 3 waives the different-committing-identity requirement; replacement evidence is a fresh-context, non-author seat's final-state review with seat attribution, cited from the Decider and closing records | process-and-staffing | in force |
