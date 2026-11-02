@@ -4,7 +4,8 @@
  "status": "in progress",
  "decisions": {
   "rank": "re-rank 18 (window rerank-18): first, as the corrective named by MD-003",
-  "task_force": "window 210-taskforce (adopted, no conditions)"
+  "task_force": "window 210-taskforce (adopted, no conditions)",
+  "slice": "turn-slice-architect.md (b0d55fa): caps 1+1+1 (D175); T2 answered from write_record"
  },
  "task_force": [
   {
@@ -33,7 +34,7 @@
   }
  ],
  "open_points": [
-  "the proposal's T2 question repeats card 228's; the slice states this card's own domain-expert question and answer"
+  "D168 Size line: the slice reports whole-file wc -c as the facilitator's brief asked; D168 C2 measures the bytes before the Size line (see deviations)"
  ],
  "working_state": {
   "caps": "D175: proposed 1 cycle per criterion; the slice writes the Cap lines",
@@ -55,14 +56,25 @@
    "requests": "0.25 Premium (1m 37s)",
    "tokens_in": "612.4k (560.6k cached)",
    "tokens_out": "11.3k"
+  },
+  {
+   "seat": "architect ctx-2, slice",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 149486
   }
  ],
  "cycles": [
   {
-   "plan": "next: the slice (architect ctx-2, Claude) with Cap lines (D175) and this card's own T2"
+   "plan": "next: window 210-slice, then red 1 (QA ctx-3)"
   }
  ],
  "stand_downs": [],
- "deviations": [],
+ "deviations": [
+  {
+   "by": "facilitator",
+   "what": "seat briefs since card 228 asked for a Size line equal to the whole file's wc -c, but D168 C2 defines N as the bytes before the Size line; this caused the repeated Size mismatches noted at gates",
+   "handling": "briefs use D168 C2 from now on; recorded"
+  }
+ ],
  "observations_for_next_stand_down": []
 }
