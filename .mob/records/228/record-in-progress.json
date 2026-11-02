@@ -621,6 +621,11 @@
    "by": "facilitator",
    "what": "the slice's follow-ups F1 to F6 are not filed yet",
    "handling": "filed at card close"
+  },
+  {
+   "by": "facilitator",
+   "what": "after the laptop restart the agile coach seat was launched at 10:40 UTC on the 08:39 probe (two hours old; the rule is under 60 minutes)",
+   "handling": "re-probed at 10:41 UTC right after launch and recorded; the coach seat writes only records"
   }
  ],
  "observations_for_next_stand_down": [
