@@ -1162,5 +1162,11 @@
     "status": "in force",
     "title": "Written cycle cap per acceptance criterion in every slice, hostile forms labelled SEEN or INSURANCE, a scope window before any red past a cap (card 228 retro pick, experiment, next 3 cards)",
     "order": 166
+  },
+  "D176": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Pre-ship gate reports state each test run's environment and re-run a failing module the card did not touch in the reference shell before the verdict (card 210 retro pick, experiment, next 3 gates)",
+    "order": 167
   }
 }

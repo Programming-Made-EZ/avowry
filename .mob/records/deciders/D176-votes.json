@@ -1,0 +1,107 @@
+{
+ "decider": "D176",
+ "subject": "gate reports state each test run's environment and re-run untouched failing modules in the reference shell (card 210 retro pick, experiment)",
+ "proposer": "agile coach seat (.mob/records/210/retro-pick-proposal-coach.md, 1229090)",
+ "result": "PASSED round 1 (4 Yes, 2 Support-it, 0 No), confirmed by the independent re-run (4 Yes, 2 Support-it, 0 No)",
+ "seat_note": "seats placed by card 226's decision-seat gate; agy for the architect, developer and decider in both rounds, Claude for the rest; every reply carries a valid D171 cite",
+ "round1": [
+  {
+   "role": "pmready",
+   "seat": "claude",
+   "context": "p210-pmready",
+   "started_at": "2026-11-02T17:49:59Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1 (C1): naming the reference shell in the brief restores one verdict per gate and costs one line.\nP2 (C2): an Environment line per run makes evidence checkable, which fits accountability to metrics.\nP3 (C3): re-running only the failing modules is cheap and keeps the full suite to one run.\nP4 (C4): \"environment-unverified\" means HOLD, so open FAILs still stop the line.\nP5 (C5): a SHIP needs the gate's own reference-shell pass, so no real red slips through.\nP6 (C6): the gate seat's independence and the other standing rules stay as they are.\nThe metric, counter-metrics, scope of three gates, and reversibility keep the trial small and removable at the retro.\n\nCITE: the product owner gets one gate verdict per card that does not have to be reversed\n"
+  },
+  {
+   "role": "architect",
+   "seat": "agy",
+   "context": "p210-architect",
+   "started_at": "2026-11-02T17:52:30Z",
+   "overall": "Yes",
+   "reply": "Yes\nP1: Naming the reference shell in the gate brief (C1) reuses recorded state cleanly.\nP2: Requiring an Environment line with shell, directory, HEAD hash, command, count, and seconds (C2) makes provenance deterministic.\nP3: Verifying git touch scope and re-running only failing untouched modules in the reference shell (C3) resolves shell variance in one pass.\nP4: Requiring \"environment-unverified\" HOLDs and separate facilitator attribution when the reference shell cannot start (C4) keeps records honest.\nP5: Allowing \"environment-dependent\" SHIPs only when the gate sees the reference-shell pass and a bug is filed (C5) avoids false HOLDs safely.\nP6: Sign-off and git hash checks (C6) add no files, seats, or checker false positives and remain a two-way door.\nCITE: every pre-ship gate report opens each test run with an Environment line\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "p210-qa",
+   "started_at": "2026-11-02T17:55:57Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nThe checks can be tested red first. Card 210's own gate report has no Environment line, so the sign-off check fails it today. The same report also had no reference-shell result for the two failures. C4 keeps a bad state from passing, because \"environment-unverified\" forces a HOLD. C5 also blocks a SHIP on a pass the gate did not itself see.\n\nMy one reservation is that \"touched by no card commit\" is weak for transitive dependencies. The proposal says \"or what it calls\", but git alone shows that poorly. The both-shells and card-touched HOLD rules are the safeguard, and the counter-metrics should catch a leak.\n\nCITE: A gate that did not itself see the reference-shell pass may not SHIP on it.\n"
+  },
+  {
+   "role": "dev",
+   "seat": "agy",
+   "context": "p210-dev",
+   "started_at": "2026-11-02T17:58:31Z",
+   "overall": "Yes",
+   "reply": "Yes\nP1: Naming the reference shell from the card record reuses what green turns already log with zero extra dev work.\nP2: One Environment line with git rev-parse HEAD, command, count, and seconds is unambiguous and non-gameable.\nP3: Checking git history and re-running only untouched failing modules in the reference shell (~3m) avoids false HOLDs on green commits.\nP4: Marking unstartable reference shells environment-unverified (HOLD) keeps provenance honest.\nP5: Holding on touched or dual-shell reds while filing environment-dependent bugs is fair.\nP6: Leaving red/green commit rules and D175 caps unchanged keeps developer workflow clean.\nCITE: Before each test result the gate report carries one Environment line\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "p210-auditlens",
+   "started_at": "2026-11-02T18:01:01Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nMostly verifiable from git: the hash in each Environment line can be checked against the card's HEAD, and \"no card commit touches it\" can be checked with git log and git show --stat. Two loopholes remain, neither of them blocking.\n\n- The shell claim and the reference-shell pass are self-reported text, and git cannot confirm them. The auditor's FAIL option is the backstop.\n- C3's trigger says \"a module that no commit of the card touches\", while its test says \"or what it calls\". Reading the module test narrowly could let a real regression in a callee be labelled \"environment-dependent\". The facilitator's git check should cover callees explicitly.\n\nThe trial is a reversible two-way door, and the counter-metrics watch for a gate that passes real failures.\n\nCITE: A gate that did not itself see the reference-shell pass may not SHIP on it.\n"
+  },
+  {
+   "role": "decider",
+   "seat": "agy",
+   "context": "p210-decider",
+   "started_at": "2026-11-02T18:03:50Z",
+   "overall": "Yes",
+   "reply": "Yes\nP1: The trial is framed for an evidence-based keep, revise or drop decision: the metric (environment-overturned HOLDs from card 210's baseline of 1 to 0 across 3 gates), four counter-metrics (escaped defects, real HOLDs, gate-seat minutes, open environment bug cards) and the NO BLUR rule cleanly separate C1-C5 from card 268 and D175.\nP2: C2, C3 and C5 close the exact evidence gap noted in signoff-ctx6.md (that the gate relied on the facilitator's plain-shell run rather than its own) by requiring an Environment line per run and a gate-run reference-shell pass before shipping.\nP3: Every seat needed to sign off is already in place: facilitator, independent reviewer, sign-off seat and auditor.\nCITE: A gate that did not itself see the reference-shell pass may not SHIP on it.\n"
+  }
+ ],
+ "rerun": [
+  {
+   "role": "coach",
+   "seat": "claude",
+   "context": "p210rr-coach",
+   "started_at": "2026-11-02T18:09:34Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1-P5: The pick is sized to the problem. It adds one brief line, one Environment line per run, and a module-only re-run when a test fails. It adds no seat, meeting, file or gate, so it passes issue 245's test.\n- The counter-metrics cover the main perspective at risk: a gate that SHIPs past a real red.\n- C4 and C5 keep a HOLD for an unverified or both-shell failure.\n- The trial covers 3 gates and the change is a two-way door. That is proportionate to one 43-minute overturned HOLD.\n- The cost is cut first if it shows. The facilitator's check against the card's HEAD and the sign-off tick are the only added checks.\n\nCITE: the product owner gets one gate verdict per card\n"
+  },
+  {
+   "role": "architect",
+   "seat": "agy",
+   "context": "p210rr-architect",
+   "started_at": "2026-11-02T18:12:11Z",
+   "overall": "Yes",
+   "reply": "Yes\nP1: Naming the reference shell and launch recipe in the gate brief establishes clear provenance from the card record.\nP2: Requiring a single Environment line with HEAD hash, directory, shell, command, count and duration is minimal and auditable.\nP3: Checking git touch-points and re-running only untouched failing modules in the reference shell avoids 25-minute full-suite repeats.\nP4: Holding on environment-unverified preserves gate integrity when the reference shell cannot be started.\nP5: Allowing SHIP only when the gate itself observes the reference-shell pass and files a bug prevents false positives without masking regressions.\nP6: Keeping checker rules, findings files and shared state untouched makes the 3-gate trial a clean two-way door.\nCITE: every pre-ship gate report opens each test run with an Environment line\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "p210rr-qa",
+   "started_at": "2026-11-02T18:14:41Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nEach rule can be checked from the gate report alone, and the checks name their own violations:\n- **C2:** a test run with no Environment line is \"not counted as evidence\", so a missing line is visible.\n- **C3 and C5:** a SHIP needs the gate's own reference-shell pass plus a git check showing no card commit touches the module. That makes a red-first test of the rule possible: a failing module that a commit does touch must still HOLD.\n- **Weak spot:** \"or what it calls\" in C3 is fuzzy, and a gate could pass a real failure through it. I'd tighten it to a named import check, but that doesn't block the pick.\n- **Counter-metrics:** they cover the risk of shipping past a real red.\n\nCITE: A gate that did not itself see the reference-shell pass may not SHIP on it.\n"
+  },
+  {
+   "role": "dev",
+   "seat": "agy",
+   "context": "p210rr-dev",
+   "started_at": "2026-11-02T18:17:14Z",
+   "overall": "Yes",
+   "reply": "Yes\nP1: C1 names the reference shell from the recorded green runs in the gate brief with zero extra burden on red/green turns.\nP2: C2 requires an exact Environment line with commit hash and shell provenance, protecting committed greens from unattributed environment failures.\nP3: C3 verifies by git whether card commits touch a failing module and re-runs only untouched failing modules in the reference shell.\nP4: C4 cleanly separates facilitator fallback runs from the gate's own verification so provenance is never gamed.\nP5: C5 holds on real or card-touched failures while shipping untouched environment-only failures with an immediate bug card.\nP6: C6 preserves the developer's green commit-then-suite rule, D175 caps, and slice limits unchanged.\nCITE: every pre-ship gate report opens each test run with an Environment line\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "p210rr-auditlens",
+   "started_at": "2026-11-02T18:19:46Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The hash in each Environment line can be checked against the card's HEAD in git, and the commit-touch test in C3 uses git log and git show --stat, so those two parts are verifiable.\nP2: The shell and launch method are self-reported text, and git cannot confirm them. Sign-off only checks that the line exists and names the brief's reference shell.\nP3: The C5 SHIP-with-bug path depends on judging \"or what it calls\", which is a loophole risk. Counter-metric 2 (a gate that never HOLDs) and the auditor's FAIL option contain it.\nP4: The change is reversible, cheap and scored on a clear metric, so I support it.\n\nCITE: A gate that did not itself see the reference-shell pass may not SHIP on it.\n"
+  },
+  {
+   "role": "decider",
+   "seat": "agy",
+   "context": "p210rr-decider",
+   "started_at": "2026-11-02T18:22:21Z",
+   "overall": "Yes",
+   "reply": "Yes\nP1: The hypothesis and metric rest on verifiable git/gate evidence (target 0 environment-overturned HOLDs across 3 gates vs card 210's 43-minute `d20314c` to `3d03129` reversal), with an explicit rule if card 268 lands first.\nP2: C1–C5 fix the sign-off weakness (`signoff-ctx6.md` §1, §4) by requiring the gate itself to record `Environment` lines and reference-shell module passes before shipping.\nP3: The four counter-metrics (escaped defects, real HOLDs, gate-seat minutes, open environment bug cards) prevent masking real regressions or shifting cost to the backlog.\nP4: Every seat needed to sign off is in place: independent reviewer at the gate, facilitator hash check, sign-off verification of C1–C5, and auditor re-check.\nP5: No-blur boundaries and two-way-door reversibility keep the trial isolated and cheap.\nCITE: A gate that did not itself see the reference-shell pass may not SHIP on it.\n"
+  }
+ ]
+}
