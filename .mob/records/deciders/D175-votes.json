@@ -1,0 +1,107 @@
+{
+ "decider": "D175",
+ "subject": "written increment cap per criterion in every slice (card 228 retro pick, experiment)",
+ "proposer": "agile coach seat (.mob/records/228/retro-pick-proposal-coach.md, fa84297)",
+ "result": "PASSED round 1 (4 Yes, 2 Support-it, 0 No), confirmed by the independent re-run (4 Yes, 2 Support-it, 0 No)",
+ "seat_note": "seats placed by card 226's decision-seat gate; agy and Claude seats (agy for the architect, developer and decider in both rounds); every reply carries a valid D171 cite; the proposal's Size line reads 9130 for a 9147-byte file",
+ "round1": [
+  {
+   "role": "pmready",
+   "seat": "claude",
+   "context": "p228-pmready",
+   "started_at": "2026-11-02T10:53:46Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1-P2: The pick adds a metric (reds past a cap, target 0) and counter-metrics. It also separates SEEN from INSURANCE forms, which keeps the team from over-specifying up front.\nP3-P5: The reviewer, the auditor and the facilitator each check from their own seat, and it adds no new seat, gate or meeting.\nP6: It sets the cost of a card before work starts, and a cap overrun needs a Decider window before the red.\nP7: It is a two-way door, with a trial retro and a stated cut-first cost.\nRisk: if every window is adopted, the cap becomes theatre. The counter-metrics watch for that.\n\nCITE: every slice carries a written Cap line for each acceptance criterion\n"
+  },
+  {
+   "role": "architect",
+   "seat": "agy",
+   "context": "p228-architect",
+   "started_at": "2026-11-02T10:56:43Z",
+   "overall": "Yes",
+   "reply": "Yes\nP1: Per-criterion Cap lines summing to at most three make D136 enforceable in the slice record.\nP2: Labelling hostile inputs SEEN (with pointer) or INSURANCE prices risk cleanly without false positives.\nP3: Pre-red reviewer checks on Cap lines, sum, and labels are deterministic and unambiguous.\nP4: Requiring a committed scope window before cycle k+1 prevents reactive post-overrun rationalisation.\nP5: Opening red turn records with \"Cycle i of k for criterion n\" aligns record state with git commits.\nP6: Briefing C1-C5 for a 3-card trial before template changes keeps the mechanism minimal and reversible.\nP7: Preserving existing D136, D167, and D168 bounds adds zero new files, seats, or scanner false positives.\nCITE: every slice carries a written Cap line for each acceptance criterion\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "p228-qa",
+   "started_at": "2026-11-02T11:00:04Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (C1 Cap lines): testable red first; the sum ≤3 is checkable by reading the slice.\nP2 (C2 labels): SEEN needs a pointer, so a bad label can be caught. INSURANCE is unverifiable, but it is flagged honestly.\nP3 (C3 slice rejection): this is a clear pass/fail check at slice read.\nP4 (C4 scope window before the red): \"Committed before\" is checkable by commit time, but the check is manual. It could pass a window that was only rubber-stamped, and the counter-metric on refused windows covers that.\nP5 (C5 cycle line): the line is derived from the Cap line and can be compared against git, but it is not mechanically enforced.\n\nThe main weakness is that the checks depend on the reviewer and not on a tool, so a bad state can pass if the reviewer misses it.\n\nCITE: A red that would be cycle k+1 or later for its criterion starts only after a scope window\n"
+  },
+  {
+   "role": "dev",
+   "seat": "agy",
+   "context": "p228-dev",
+   "started_at": "2026-11-02T11:02:51Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nP1: Capping cycles per criterion (sum at most three) and routing overflow INSURANCE forms to follow-ups prevents uncapped D167 lists from forcing 12 increments or pressuring D136's 400-line green limit.\nP2: Requiring a committed scope window before red k+1 and routing mid-cycle forms to follow-ups is unambiguous, so every red handed to the developer is already in scope.\nP3: Adding C1-C5 only to the architect and QA briefs adds zero ceremony to green turns while keeping unit doubles and the commit-then-suite rule intact.\nP4: Watch in the trial that tight caps do not pack oversize reds into one green commit.\n\nCITE: every slice carries a written Cap line for each acceptance criterion\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "p228-auditlens",
+   "started_at": "2026-11-02T11:06:25Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (C1 Cap lines): The cap is written per criterion and checkable from git. The sum of at most three is a clear bound.\nP2 (C2 labels): The SEEN pointer is verifiable. INSURANCE is self-declared, so a team could label everything INSURANCE and skip the evidence. The retro should sample those labels.\nP3 (C4 scope window): \"Committed before the red\" can be read from commit order.\nP4 (C5 and metric): \"Cycle i of k\" and \"Criterion: n\" are commit-message text, so counting works. A window can still be rubber-stamped, and the proposal admits this in its counter-metrics.\nP5 (accountability): The pre-ship reviewer's count is auditable.\n\nCITE: A red past a cap whose window was committed after it counts as not run\n"
+  },
+  {
+   "role": "decider",
+   "seat": "agy",
+   "context": "p228-decider",
+   "started_at": "2026-11-02T11:08:51Z",
+   "overall": "Yes",
+   "reply": "Yes\nP1: C1 sets a git-verifiable per-criterion cycle cap summing to at most three (D136), anchoring the baseline.\nP2: C2 prices hostile inputs upfront via SEEN pointers versus INSURANCE labels, addressing card 228's unpriced transcripts.\nP3: C3 empowers the existing D168 slice reviewer to block uncapped or unlabelled slices before any red starts.\nP4: C4 requires a committed Decider scope window before cycle k+1, turning reactive overruns into explicit prior evidence.\nP5: C5 records cycle i of k in red turn records, making pre-ship gate verification mechanical from git.\nP6: C6-C7 trial the rules via seat briefs as a two-way door with all needed sign-off seats present.\nP7: The metric, five counter-metrics (including rubber-stamped windows and deferred INSURANCE leaks), and three-card scope support an evidence-based keep, revise, or drop decision.\nCITE: every slice carries a written Cap line for each acceptance criterion\n"
+  }
+ ],
+ "rerun": [
+  {
+   "role": "coach",
+   "seat": "claude",
+   "context": "p228rr-coach",
+   "started_at": "2026-11-02T11:13:19Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: A Cap line per criterion tied to D136's three-cycle limit matches the 13-hour overrun, so sizing is addressed.\nP2: SEEN/INSURANCE labels price the hostile forms, which were never priced.\nP3: Reviewer rejection at slice read reuses the D168 check, so it adds no seat.\nP4: Requiring a scope window before the red makes extra cycles an explicit decision.\nP5: Metric and counter-metrics guard against theatre, and a trial of 3 cards is proportionate.\nConcern: it does add per-red ceremony, and the proposal itself says the retro should cut that first if it shows.\n\nCITE: every slice carries a written Cap line for each acceptance criterion\n"
+  },
+  {
+   "role": "architect",
+   "seat": "agy",
+   "context": "p228rr-architect",
+   "started_at": "2026-11-02T11:15:58Z",
+   "overall": "Yes",
+   "reply": "Yes\nP1 (C1-C2): Per-criterion Cap lines (sum at most three) and SEEN/INSURANCE labels with evidence pointers price hostile inputs up front inside the existing slice record.\nP2 (C3-C5): Checking \"Cycle i of k\" and git \"Criterion: n\" commits against Cap lines and pre-red scope window commits is deterministic and enforceable without false positives.\nP3 (C6-C7): Brief-only trial over three cards adds no file, gate, seat, or shared checker state and stays a minimal two-way door.\nCITE: every slice carries a written Cap line for each acceptance criterion\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "p228rr-qa",
+   "started_at": "2026-11-02T11:19:27Z",
+   "overall": "Yes",
+   "reply": "Yes\n\nThe rules can be tested red first, because each one is read from existing artifacts. Cap lines sit in the slice. \"Criterion: n\" sits in red commit messages. The window commit timestamps can be compared with the red commit times. A bad state is caught as specified: a missing Cap line, a sum over three, or an unlabelled item fails the slice read. A red past its cap with a late window counts as not run. One weakness is that the checks are manual, done by the reviewer and re-checked by the auditor, with no script. That is acceptable for a reversible trial. The counter-metrics also guard against sending the risk to later cards.\n\nCITE: A red that would be cycle k+1 or later for its criterion starts only after a scope window\n"
+  },
+  {
+   "role": "dev",
+   "seat": "agy",
+   "context": "p228rr-dev",
+   "started_at": "2026-11-02T11:21:57Z",
+   "overall": "Yes",
+   "reply": "Yes\nP1: Capping criteria at k<=3 total cycles in the slice stops card-228-style 12-increment overruns before red/green starts.\nP2: Labelling D167 hostile inputs SEEN (with pointer) or INSURANCE routes uncapped forms to follow-up rows instead of cramming greens against D136's 400-line limit.\nP3: Pre-red slice rejection on missing caps or labels gives unambiguous scope before build turns.\nP4: Requiring a committed scope window before cycle k+1 prevents reactive mid-card sprawl.\nP5: Opening red records with \"Cycle i of k for criterion n\" is mechanical and git-verifiable.\nP6: Scoping trial rules to architect/QA briefs adds zero overhead to green turns.\nP7: Preserving D136, D167, D168, and commit-then-suite rules keeps green work fair without gaming.\nCITE: every slice carries a written Cap line for each acceptance criterion\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "p228rr-auditlens",
+   "started_at": "2026-11-02T11:24:46Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1-P2: Cap lines and SEEN/INSURANCE labels sit in the slice, which is committed, so they can be checked from git.\nP3: The slice review is a reviewer step, and git can show whether it happened.\nP4-P5: Red commits carry \"Criterion: n\". Window commit times can be compared with red commit times, so a window committed after its red is detectable.\nLoopholes:\n- A red that carries a wrong \"Criterion: n\" label escapes the count.\n- A SEEN pointer is only a reference. Nothing checks that it supports the claim.\n- A rubber-stamp window gets through. The counter-metric on adopted windows is the only guard against that.\n\nThese are tolerable for a reversible trial.\n\nCITE: every slice carries a written Cap line for each acceptance criterion\n"
+  },
+  {
+   "role": "decider",
+   "seat": "agy",
+   "context": "p228rr-decider",
+   "started_at": "2026-11-02T11:27:29Z",
+   "overall": "Yes",
+   "reply": "Yes\nP1 (C1-C2): Per-criterion Cap lines summing to at most three and SEEN/INSURANCE labels with evidence pointers give git-verifiable pre-red baselines.\nP2 (C3-C5): Slice-read rejection, pre-red Decider scope windows, and red turn cycle lines make overruns auditable from git commits before cost is spent.\nP3 (C6-C7): Brief-only trial preserves all seats (architect, reviewer, QA, auditor, Decider sign-off) as a reversible two-way door.\nP4 (Metrics/Trial): Target 0 unapproved overrun reds, baseline 228 numbers, and counter-metrics (including refused windows and escaped INSURANCE forms) give the 3-card trial retro clear evidence to adopt, revise, or drop.\nCITE: every slice carries a written Cap line for each acceptance criterion\n"
+  }
+ ]
+}

@@ -73,6 +73,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D172](process-and-staffing.md#d172) — Product owner correction: the indexed process wiki is to be evaluated (adopt, reshape or reject by Decider), not built as a mandate; the waiver applies to the evaluation (card 237)
 - [D173](process-and-staffing.md#d173) — Card 237 outcome: reshape the indexed process wiki (slice-route limits, upkeep measure, staleness check, slice-cell re-run in a follow-up card); retro-end wiki review as a three-retro experiment
 - [D174](process-and-staffing.md#d174) — Parallel voter dispatch: probe once, assign the whole rotation and write every seat-use line in one window commit, launch all voters at once (card 237 retro pick, experiment, next 3 vote windows)
+- [D175](process-and-staffing.md#d175) — Written cycle cap per acceptance criterion in every slice, hostile forms labelled SEEN or INSURANCE, a scope window before any red past a cap (card 228 retro pick, experiment, next 3 cards)
 
 ### benchmarks-and-measurement
 
@@ -268,3 +269,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D172](process-and-staffing.md#d172) | Product owner correction: the indexed process wiki is to be evaluated (adopt, reshape or reject by Decider), not built as a mandate; the waiver applies to the evaluation (card 237) | process-and-staffing | in force |
 | [D173](process-and-staffing.md#d173) | Card 237 outcome: reshape the indexed process wiki (slice-route limits, upkeep measure, staleness check, slice-cell re-run in a follow-up card); retro-end wiki review as a three-retro experiment | process-and-staffing | in force |
 | [D174](process-and-staffing.md#d174) | Parallel voter dispatch: probe once, assign the whole rotation and write every seat-use line in one window commit, launch all voters at once (card 237 retro pick, experiment, next 3 vote windows) | process-and-staffing | in force |
+| [D175](process-and-staffing.md#d175) | Written cycle cap per acceptance criterion in every slice, hostile forms labelled SEEN or INSURANCE, a scope window before any red past a cap (card 228 retro pick, experiment, next 3 cards) | process-and-staffing | in force |
