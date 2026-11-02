@@ -101,3 +101,32 @@ The seat transcripts of the five decision windows other than Claude and agy ones
 
 ## Hand-off to sign-off
 Clear B1 by a window (option a or b) and record it; then replace the ctx-1 entry (N2), add N1 and N3 to the closing record, and re-run `python scripts/mob_process.py check`. No re-gate is needed if the window picks (b); if (a) is picked, a red/green cycle 3c and its own gate line on the full suite follow.
+
+## Re-check of the fix (window 228-gate-fix)
+
+Seat: ctx-4 (same reviewer seat as the gate above), probe 2026-11-02 07:37 UTC, run against mob-crosscli HEAD `e4f7c29` (green; red `52451b6`; parent `743a4a1`). Scope: the fix only. I changed no code and installed nothing; the hook was fed stdin JSON text and no demonstrated command was executed.
+
+**Verdict: SHIP** for B1 and the Copilot tolerance. One condition, an open item and not a blocker: the developer's full suite on `e4f7c29` is not green (one flaky test in code this change does not touch, see item 3).
+
+| # | Check | Verdict | Evidence |
+|---|-------|---------|----------|
+| 1 | My three B1 bypasses against `e4f7c29` | **PASS, B1 cleared** | Hook fed `{"tool_name":"Bash","tool_input":{"command":...},"cwd":...}`. Plain `eval "$(ssh-agent -s)"` exit **2**; `ssh-agent(){ echo "rm -rf ~"; }; eval "$(ssh-agent -s)"` exit **2**; `PATH=/tmp/evil:$PATH; eval "$(ssh-agent -s)"` exit **2**. Each prints `delete_guard_hook: refused` and the finding `recursive delete on a variable or unresolved path: eval "$(ssh-agent -s)" (not strictly inside the working tree)` on stderr. Control: `ssh-agent -s` alone exits 0. Cause: `_SSH_AGENT_EVAL` and its filter are gone; `delete_guard.py:1143` now takes every `scan_command` finding. `_SSH_AGENT_EVAL` appears nowhere in the tree but the new tests. |
+| 2a | `python -m unittest tests.test_delete_guard_gatefix tests.test_delete_guard_hook_3a tests.test_delete_guard_hook_3b` | **PASS** | `Ran 73 tests`, `OK` (24 s). 13 to 24 s found (`tests/test_delete_guard_gatefix.py:121`), 0 to 10 s still found (`:126`), more than 60 s not found (`:131`), before launch not found (`:136`), two matches still "no command source" (`:141`), neighbours do not make a second match (`:147`), other cwd no match (`:153`), `scan_entry` reads an 18 s session (`:158`). Line 147 of `tests/test_delete_guard_hook_3a.py` no longer lists the eval as benign (`:146-147`). |
+| 2b | The 24 modules of `turn-red-qa-gatefix.md` | **PASS** | 24 = every `test_command_scan*`, `test_command_source*`, `test_delete_guard_hook_3a`, `_3b` plus `test_delete_guard_gatefix`: `Ran 610 tests`, `OK` (98 s), the same count the green turn recorded. |
+| 3 | Full suite (not run by this seat) | **OPEN, not a blocker** | `turn-green-dev-gatefix.md` (records commit `67ef77f`, on origin/main at `64e8a55`) cites the full suite on committed `e4f7c29`: `Ran 1450 tests, FAILED (failures=1, skipped=1)`, 1929 s. The failure is `test_loop_state.LoopStateTests.test_lock_released_when_holder_exits`, a 0.2 s sleep waiting for a child process to take a lock; `loop_state` tests do not appear in `git diff --name-only 743a4a1 e4f7c29`. I ran only `tests.test_loop_state` three times: 8 tests OK each. 1450 = 1434 at `743a4a1` plus the 16 new tests, so nothing else changed the count. My earlier full pass at `743a4a1` was `OK (skipped=1)`. The record plan (`record-in-progress.json`) already says the flake is to be filed as a bug at close; keep that: a sign-off that says "full suite OK" would be false. |
+| 4 | Nothing else moved; size | **PASS** | `git diff --stat 743a4a1 e4f7c29`: 5 files, 174 insertions, 8 deletions. Green `e4f7c29`: `command_source.py:348` (`START_TOLERANCE` 10 s to 60 s, its only use is `_started_near` at `:358`, which still requires `timedelta(0) <=`, so a start before the launch never matches), `delete_guard.py` (-6/+1 around `:1129` and `:1143`), `tests/test_delete_guard_hook_3b.py:163` (the opt-in meta test allows the new gatefix test file to name the hook). Red `52451b6`: new `tests/test_delete_guard_gatefix.py` (170 lines) and the one-line flip in `tests/test_delete_guard_hook_3a.py`; 171 inserted. Both under the 400-line limit (D136). No other source file, no settings file. |
+
+Two notes on the fix, neither blocking. (1) The wider tolerance trades one way: two Copilot sessions in the same folder within 60 s of one launch now count as two matches and give "no command source" (blocking, never a false clean), so it fails safe; the test at `:141` pins it. (2) The `3b` meta-test edit is a one-line allow of a named test file, as the green turn says; QA has not confirmed that reading, which is cosmetic.
+
+### Non-blocking items from the gate, restated
+- **N1** (green 1c stale clean, F3 class): **open**. Record in `working_state.followup_F3_additions` at close.
+- **N2** (ctx-1 Copilot ready entry stale `unscanned`): **open**. The window's Copilot tolerance fix does not replace the entry; the facilitator must replace it with the re-scan (clean, 1 session, 12 calls) before sign-off.
+- **N3** (deviations list only criterion 1; criteria 2 and 3 and twelve increments unnamed): **open**; now fourteen increments counting this fix cycle, to be stated once.
+- **N4** (`fa2351f` 427 lines, unrecorded): **open**.
+- **N5** (Codex rollouts deferred to F2; F1 to F6 are one-line items, not filed): **open**; F1 to F6 are to be filed at close.
+- **N6** (Copilot locator 10 s): **recorded as fixed** by `e4f7c29` (60 s); still no live `run_backend` Copilot seat scanned, so the 60 s is proven only by the 20 recorded 13 to 24 s offsets and the synthetic tests. Check on the first live seat.
+- **N7** (counts differ from my HEAD scan for green 1c, 1d, 1e, 2b): **open**, explanation only.
+- **N8** (9 agy decision seats unscanned, no reader): **open**; sign-off names it as accepted by 228-agy-seats.
+- Disclosure from the gate stands: this seat's own transcript is scanned by the facilitator once it ends.
+
+Hand-off to sign-off: replace the ctx-1 entry (N2), add N1, N3, N4 and the loop-state flake to the closing record, file F1 to F6, and re-run `python scripts/mob_process.py check` (it printed OK, 101 closed cards, when I ran it after the fetch).
