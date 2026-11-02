@@ -12,7 +12,8 @@
   "criterion1_scope": "window 228-c1-scope: option (b), one capped cycle 1g (I and M ZOMBIES only); path forms to follow-up F4; no further criterion-1 cycle",
   "criterion1_closed": "criterion 1 closed after 1g per window 228-c1-scope; path forms to follow-up F4",
   "criterion2_scope": "window 228-c2-scope: one last cycle 2c (reads are not runs; live Copilot seats scanned)",
-  "criterion2_closed": "criterion 2 closed after 2c (window 228-c2-scope); new false-positive classes go to follow-up F3"
+  "criterion2_closed": "criterion 2 closed after 2c (window 228-c2-scope); new false-positive classes go to follow-up F3",
+  "criterion3_closed": "criterion 3 closed after 3b (two cycles, stand-down 1 cap)"
  },
  "task_force": [
   {
@@ -200,6 +201,31 @@
    "status": "finding, false positive",
    "seat": "QA red 2a, re-scanned with green 2c",
    "detail": "the grep-as-run finding is gone; only the known shutil.rmtree(p) string in a read-only probe remains"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 3a (Claude subagent)",
+   "detail": "clean: red3a-ctx3, 15 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 3b (Claude subagent)",
+   "detail": "clean: red3b-ctx3, 18 command(s) scanned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "dev green 3b (Claude subagent)",
+   "detail": "clean: green3b-ctx5, 29 command(s) scanned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "finding, false positive",
+   "seat": "dev green 3a (Claude subagent)",
+   "detail": "1 finding 'rm -rf x': a read-only python -c probe passed 'echo cm0gLXJmIHg= | base64 -d | sh' to scan_command as a string, and the scan decoded it; nothing decoded was run; to follow-up F3",
+   "raw": "green3a-ctx5: recursive delete on a variable or unresolved path: rm -rf x (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-ab501238be720886b.jsonl)"
   }
  ],
  "token_usage": [
@@ -329,6 +355,11 @@
    "seat": "QA ctx-3, red 3b",
    "source": "Agent completion report (subagent_tokens)",
    "subagent_tokens": 89369
+  },
+  {
+   "seat": "backend developer ctx-5, green 3b",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 80170
   }
  ],
  "cycles": [
@@ -452,9 +483,14 @@
   },
   {
    "criterion": 3,
-   "increment": "3b (in progress)",
+   "increment": "3b (last)",
    "red": "07132a0 (tests/test_delete_guard_hook_3b.py; 10 failures of 16 on committed code)",
-   "green": "running"
+   "green": "743a4a1 (--print-snippet prints the PreToolUse snippet for a human, writes nothing; red 16/16, 23 modules 594 OK; pushed 8 s after tests passed; full suite on committed 743a4a1 1434 OK, 1 skipped)",
+   "turn_records": [
+    "19a59dc",
+    "b5190a1"
+   ],
+   "plan": "next: pre-ship gate (independent reviewer ctx-4), which rules on the ssh-agent conflict and the open false-positive findings; then sign-off, retro, close"
   }
  ],
  "stand_downs": [
@@ -545,11 +581,12 @@
  "working_state": {
   "criterion1_cap": "CLOSED and capped (window 228-c1-scope): no more criterion-1 cycles on card 228; any new delete form, the path forms included, goes to a follow-up card (F4, residual forms)",
   "criterion2_plan": "CLOSED after 2c",
-  "criterion3_plan": "the opt-in hook; aim for one cycle",
+  "criterion3_plan": "CLOSED after 3b",
   "in_flight_rule": "an in-flight line (scratch inflight.sh) before every seat or window, including after a context summary",
   "followup_F3_additions": [
    "python options with an argument (-W error, -X, -m module) read as a run file ('unreadable file: error'), seen in the 2c seats' own scans",
-   "a read-only probe passing delete text as a string to scan_command, text-matched when the code does not parse (shutil.rmtree(p) in red 2a's scan)"
+   "a read-only probe passing delete text as a string to scan_command, text-matched when the code does not parse (shutil.rmtree(p) in red 2a's scan)",
+   "a read-only probe passing an encoded delete (echo ...| base64 -d | sh) to scan_command as a string; the scan decodes the string (green 3a seat)"
   ],
   "green_commit_rule": "auditor FLAG (green 2c sat uncommitted 41 min): from green 3a, a green commits and pushes as soon as its red and the named modules pass, then runs the full suite on the committed code; a full-suite failure is fixed by a new commit"
  }
