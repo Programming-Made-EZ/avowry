@@ -1,0 +1,325 @@
+{
+ "window": "211-slice",
+ "category": "slice decision",
+ "rule": "D153/D145 at slice for card 211; D168; D171; D175",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "copilot (auto) via the Copilot CLI (re-seated from agy, out of quota)",
+  "context": "ctx-2",
+  "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44"
+ },
+ "opened_at": "2026-11-02T19:52:25Z",
+ "proposal": "Intent: Deliver the MD-010 corrective as records-only evidence for commits 687410e..e3736d1, proving whole-team ruling, independent re-run, and non-author final-state review without rewriting history.\nAssumes: identity-level independence is required for criterion 3 and cannot be satisfied by context rotation alone when commit identity is shared; probe: git evidence for range 687410e..e3736d1 shows 27 commits by Xipooo <xipooo@gmail.com> and checklist/proposal records state every seat currently commits under that same identity.\n\nCriterion 1 (Done check 1): A Decider record and votes file in mob-defaults rule on 687410e..e3736d1 with one valid vote per declared role seat, each vote attributable to its seat context and carrying a D171-valid CITE; red: the committed record test fails while either file is missing or any seat vote/reason/CITE/context is missing. ZOMBIES: Z no votes file/Decider record; O one seat vote only; M all declared seats vote with reasons; B all but one seat still fails; E uncited, unread, or unattributed vote is refused; I record names the full range. Check plan: verify committed Decider+votes artifacts exist, enumerate declared seats vs votes 1:1, check CITE lines resolve to proposal text, and confirm each vote rules on 687410e..e3736d1.\nCap: criterion 1, at most 1 cycles\n\nCriterion 2 (Done check 2): A non-author context independently re-runs the mob-defaults suite and audit checks on the range endpoints and on head, with commands, commit hashes, and results recorded; red: the committed check fails until that re-run record exists and reproduces range+head evidence. ZOMBIES: Z no independent re-run record; O only one commit/state checked; M whole range endpoints plus head checked; B first commit 687410e and last e3736d1 explicitly included; E failures are recorded as findings (not hidden); I recorded commands reproduce results. Check plan: from committed record, verify non-author context, verify commands and outputs for range and head, and verify audit checks are included and reproducible.\nCap: criterion 2, at most 1 cycles\n\nCriterion 3 (Done check 3): A final-state review record is committed by an identity that authored none of the 27 commits, cites MD-010 and 687410e..e3736d1, and lists author identities from git; red: the committed check fails until a qualifying non-author-identity review commit exists. ZOMBIES: Z no review commit; O one reviewer recorded; M agreement/disagreement can both be recorded if identities qualify; B review by author identity does not count; E review missing explicit commit/range citation is refused; I git identity comparison proves reviewer identity differs from all 27 author identities. Check plan: compare reviewer author+committer identity to git author set for the 27 commits, verify MD-010 and range citation, and verify listed author identities match git log evidence.\nCap: criterion 3, at most 1 cycles\n\nD167 hostile-input list:\n- SEEN: Single-author identity across 27 commits is treated as independent due to seat/context differences. Pointer: board card 211 Given/Context and checklist-211-taskforce line naming all 27 by Xipooo <xipooo@gmail.com>.\n- SEEN: Shared committing identity for all seats is mistaken for non-author review eligibility. Pointer: checklist-211-taskforce and taskforce-proposal-pm blocker text.\n- INSURANCE: Co-authored-by trailers or role labels are misread as committing-identity evidence for criterion 3.\n- INSURANCE: Re-run evidence omits one boundary commit while claiming full range coverage.\n\nDomain-expert (T2) question: Can Done check 3 be satisfied now under shared seat identity, and what do git facts say about the range and commit contents?\nDomain-expert (T2) answer from git-backed records: No, not as written. The reviewed range is 687410e..e3736d1 with 27 commits by one identity (Xipooo <xipooo@gmail.com>), and current seat commits use that same identity, so identity-level non-author review cannot be proven by context rotation. The range content is process/template work in mob-defaults (facilitator/rules/tests/docs paths), including recorded observations that b33793a rewrote tests/test_card_mode.py and the range includes facilitator.py line-ending changes; therefore criterion 3 requires either a true non-author committing identity or a product-owner ruling that changes/waives the identity requirement.\n\nCriterion 3 before product-owner ruling:\n- Can prepare now: review template text, git-log identity extraction script/commands, MD-010/range citation block, and final-state checklist so execution is immediate once ruling lands.\n- Waits on ruling: the actual final-state review commit and any pass/fail claim for criterion 3, because acceptance depends on approved non-author identity path (or explicit waiver/replacement evidence) from the product owner.\n\nD176 note: every gate/suite/audit run used as acceptance evidence must state environment (shell and launch form, working directory, commit hash, command, and timing/test-count context) in the recorded report; runs without environment lines are not counted as gate evidence.\nSize: 5088 bytes\n",
+ "checklist_D158": ".mob/records/211/checklist-211-slice.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "w211sl-pmready",
+   "started_at": "2026-11-02T19:54:32Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe proposal keeps to records-only evidence. It also defers the criterion 3 identity question to the product owner instead of faking independence, which respects the standing rules.\n\nCITE: A non-author context independently re-runs the mob-defaults suite and audit checks\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T19:55:00.775267Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w211sl-qa",
+   "started_at": "2026-11-02T19:58:08Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nEach criterion states a red condition that fails first, and the ZOMBIES boundaries and the D176 environment-line rule make the checks catch the violations they name. Criterion 3 correctly waits on the product-owner ruling instead of passing bad state.\nCITE: review by author identity does not count\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T19:58:34.682569Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w211sl-auditlens",
+   "started_at": "2026-11-02T20:01:45Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nGit can check criterion 3 by comparing author and committer identities, and the shared-identity blocker is stated openly. Criteria 1 and 2 rely on seat and context attribution that git can't verify. This is accepted because criterion 3 carries the identity test.\n\nCITE: A non-author context independently re-runs the mob-defaults suite\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T20:02:13.312672Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w211sl-dev",
+   "started_at": "2026-11-02T20:05:20Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nCriterion 3 is split into work I can prepare now and work that waits on the ruling. That means I can't turn it green without a non-author identity or a waiver. The caps and the D176 environment lines are workable.\nCITE: Waits on ruling: the actual final-state review commit\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T20:05:45.515177Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider facilitator",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w211sl-decider",
+   "started_at": "2026-11-02T20:08:49Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nThe framing rests on git evidence, and the proposal states plainly that criterion 3 waits on a product-owner ruling about a non-author identity.\n\nCITE: identity-level independence is required for criterion 3 and cannot be satisfied by context rotation alone\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T20:09:17.219922Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "grok",
+   "context": "w211slcp1-pmready",
+   "started_at": "2026-11-02T19:52:25Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T19:52:51.284616Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w211slcp2-pmready",
+   "started_at": "2026-11-02T19:53:38Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T19:54:12.257806Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w211slcp1-qa",
+   "started_at": "2026-11-02T19:55:57Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T19:56:31.757984Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w211slcp2-qa",
+   "started_at": "2026-11-02T19:57:21Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T19:57:48.197738Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w211slcp1-auditlens",
+   "started_at": "2026-11-02T19:59:38Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T20:00:08.821938Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "independent reviewer",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w211slcp2-auditlens",
+   "started_at": "2026-11-02T20:00:57Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T20:01:25.387234Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "independent reviewer",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w211slcp1-dev",
+   "started_at": "2026-11-02T20:03:11Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T20:03:37.929719Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider facilitator",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w211slcp2-dev",
+   "started_at": "2026-11-02T20:04:26Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T20:05:00.253691Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider facilitator",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w211slcp1-decider",
+   "started_at": "2026-11-02T20:06:49Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T20:07:15.878137Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w211slcp2-decider",
+   "started_at": "2026-11-02T20:08:02Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl); agy out of quota from 19:44 and decider.py's own probe at 2026-11-02T20:08:29.135746Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "slice adopted without objection (caps 1+1+1; criterion 3 waits on the product-owner ruling on a non-author identity). Five NO OBJECTION with valid D171 cites, all Claude, each after a Grok and a Copilot seat returned no reply (ten empty seats in one window).",
+  "window_minutes": "19:51:47 to 20:09:48 UTC, serial"
+ },
+ "ended_at": "2026-11-02T20:10:11Z"
+}

@@ -5,7 +5,8 @@
  "decisions": {
   "rank": "re-rank 19 (window rerank-19): first, the corrective named by MD-010",
   "task_force": "window 211-taskforce (adopted, no conditions)",
-  "slice": "turn-slice-architect.md (Copilot ctx-2): caps 1+1+1; T2: Done check 3 cannot be met under the shared identity"
+  "slice": "turn-slice-architect.md (Copilot ctx-2): caps 1+1+1; T2: Done check 3 cannot be met under the shared identity",
+  "slice_window": "window 211-slice (adopted, no conditions)"
  },
  "task_force": [
   {
@@ -60,7 +61,7 @@
  ],
  "cycles": [
   {
-   "plan": "next: window 211-slice, then criterion 1 (the all-seat Decider on the 27 commits)"
+   "plan": "next: criterion 1 red (QA ctx-3): a committed check that fails until the all-seat Decider record on 687410e..e3736d1 exists"
   }
  ],
  "stand_downs": [],
