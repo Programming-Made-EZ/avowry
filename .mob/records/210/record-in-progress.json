@@ -48,6 +48,36 @@
    "status": "pending",
    "seat": "pm-ready (Copilot CLI)",
    "reason": "to be scanned with the Copilot reader (card 228) at the gate"
+  },
+  {
+   "context": "ctx-2",
+   "status": "clean",
+   "seat": "architect slice (Claude subagent)",
+   "detail": "clean: slice-210, 37 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 1 (Claude subagent)",
+   "detail": "clean: red1-210, 24 command(s) scanned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "dev green 1 (Claude subagent)",
+   "detail": "clean: green1-210, 19 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 2 (Claude subagent)",
+   "detail": "clean: red2-210, 47 command(s) scanned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "dev green 2 (Claude subagent)",
+   "detail": "clean: green2-210, 31 command(s) scanned"
   }
  ],
  "token_usage": [
@@ -77,6 +107,11 @@
    "seat": "QA ctx-3, red 2",
    "source": "Agent completion report",
    "subagent_tokens": 111103
+  },
+  {
+   "seat": "backend developer ctx-5, green 2",
+   "source": "Agent completion report",
+   "subagent_tokens": 96199
   }
  ],
  "cycles": [
@@ -92,11 +127,12 @@
   {
    "criterion": 2,
    "red": "edc0837 (tests/test_record_cycles_evidence.py; 41 failures of 42 on committed code; three test_mob_process fixtures gained a '#### Cycle 1' heading)",
-   "green": "next",
+   "green": "1baece8 (cycles derived from MOB.md '#### Cycle N' headings and the seat log; facilitator writes the heading, CRLF kept; two earlier test helpers gained a '#### Cycle 1' MOB.md fixture; 5 modules 171 OK; pushed 9 s after tests passed; full suite on committed 1baece8 1517 OK, 1 skipped)",
    "turn_records": [
-    "5de812f"
+    "5de812f",
+    "e93cfae"
    ],
-   "plan": "next: green 2 (backend developer ctx-5), then red 3 and green 3, the gate, sign-off, retro"
+   "plan": "next: red 3 (QA ctx-3), green 3, then the gate"
   }
  ],
  "stand_downs": [],
@@ -105,7 +141,15 @@
    "by": "facilitator",
    "what": "seat briefs since card 228 asked for a Size line equal to the whole file's wc -c, but D168 C2 defines N as the bytes before the Size line; this caused the repeated Size mismatches noted at gates",
    "handling": "briefs use D168 C2 from now on; recorded"
+  },
+  {
+   "by": "facilitator",
+   "what": "the probe commit before green 2 was labelled 14:22 UTC; the probe ran at 14:11",
+   "handling": "recorded"
   }
  ],
- "observations_for_next_stand_down": []
+ "observations_for_next_stand_down": [],
+ "refactor": [
+  "green 1 and green 2: none needed, with a reason (turn-green-dev-2.md line 16, e93cfae)"
+ ]
 }
