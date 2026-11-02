@@ -5,7 +5,8 @@
  "decisions": {
   "rank": "re-rank 18 (window rerank-18): first, as the corrective named by MD-003",
   "task_force": "window 210-taskforce (adopted, no conditions)",
-  "slice": "turn-slice-architect.md (b0d55fa): caps 1+1+1 (D175); T2 answered from write_record"
+  "slice": "turn-slice-architect.md (b0d55fa): caps 1+1+1 (D175); T2 answered from write_record",
+  "slice_window": "window 210-slice (adopted, no conditions)"
  },
  "task_force": [
   {
@@ -65,7 +66,7 @@
  ],
  "cycles": [
   {
-   "plan": "next: window 210-slice, then red 1 (QA ctx-3)"
+   "plan": "next: red 1 (QA ctx-3), criterion 1, cap 1 cycle"
   }
  ],
  "stand_downs": [],
