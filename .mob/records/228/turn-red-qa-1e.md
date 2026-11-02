@@ -18,4 +18,4 @@ Modules run (16 counting the new one: the 15 from turn-red-qa-1d.md plus tests.t
 
 Left in criterion 1 after 1e: for 1f, hex into a shell (xxd -r -p | sh, printf '\x72\x6d' | sh, $'\x72\x6d'), wrappers not yet reported (<(...), bash < f), alias, [char]114+[char]109 (busybox, heredoc into sh, wsl and ssh are reported today and need only guards). For the last cycle: the B ZOMBIES (depth 7 is a finding, a command over 500,000 bytes is a finding), the I ZOMBIE (scan_entry, the CLI and facilitator.run_backend give the same findings), the M ZOMBIE (ten forms in a file, duplicates once) across all cycles, and the D167 path forms (./scratch, scratch/.., Windows trimming, Cyrillic, NUL, UNC, ~, $HOME). Then criteria 2 and 3.
 
-Size: 3268 bytes
+Size: 3269 bytes
