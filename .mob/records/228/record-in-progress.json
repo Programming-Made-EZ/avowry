@@ -47,7 +47,8 @@
   "the proposal's split of the 'Also owned here' items into follow-up cards is confirmed or changed at the slice (D136, D168)",
   "the T2 question: the real command source per backend, and whether a no-source seat fails closed or is recorded as a gap",
   "conflict for the pre-ship gate: red 3a pins eval \"$(ssh-agent -s)\" as ALLOWED by the hook and green 3a lets it through, against the architect's ruling (ruling-sshagent-architect.md: it stays a recorded finding, fail closed, no clean twin); neither seat raised it. Criterion 3 is capped at two cycles, so a fix needs the team's decision",
-  "Copilot locator tolerance: locate_copilot accepts a session.start up to 10 s after launch, but the gate found 20 of 20 real sessions starting 13 to 24 s after the recorded launch time, so a live Copilot seat would report 'no command source' (fails safe, unproved live)"
+  "Copilot locator tolerance: locate_copilot accepts a session.start up to 10 s after launch, but the gate found 20 of 20 real sessions starting 13 to 24 s after the recorded launch time, so a live Copilot seat would report 'no command source' (fails safe, unproved live)",
+  "flaky test (a bug, not ignored): mob-defaults tests/test_loop_state.py LoopStateTests.test_lock_released_when_holder_exits failed once in the full suite on e4f7c29 (a 0.2 s sleep for a child process to take the lock) and passes alone; to be filed as a bug card at close"
  ],
  "command_scans": [
   {
@@ -379,6 +380,16 @@
    "seat": "independent reviewer ctx-4, pre-ship gate",
    "source": "Agent completion report (subagent_tokens)",
    "subagent_tokens": 167920
+  },
+  {
+   "seat": "QA ctx-3, red gate-fix",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 115697
+  },
+  {
+   "seat": "backend developer ctx-5, green gate-fix",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 73078
   }
  ],
  "cycles": [
@@ -510,6 +521,17 @@
     "b5190a1"
    ],
    "plan": "next: window 228-gate-fix (team decides the ssh-agent fix and the Copilot locator tolerance), then the fix cycle, a gate re-check, sign-off, retro, closing record"
+  },
+  {
+   "criterion": 3,
+   "increment": "gate fix (window 228-gate-fix)",
+   "red": "52451b6 (tests/test_delete_guard_gatefix.py plus the line-147 flip; 15 failures of 16 on committed code)",
+   "green": "e4f7c29 (the _SSH_AGENT_EVAL allow removed; Copilot START_TOLERANCE 10 s to 60 s; one allowed-list line in test_delete_guard_hook_3b for the new test file naming the hook, for QA to confirm; red 16/16; pushed about 10 s after tests passed; full suite on committed e4f7c29: 1450 tests, 1 failure (test_loop_state.test_lock_released_when_holder_exits, a 0.2 s timing race, passes alone, unrelated), 1 skipped)",
+   "turn_records": [
+    "a22c8c8",
+    "67ef77f"
+   ],
+   "plan": "next: the gate re-check (running), sign-off, retro, closing record; file the flaky loop-state test as a bug"
   }
  ],
  "stand_downs": [
