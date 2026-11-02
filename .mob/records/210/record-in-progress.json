@@ -78,6 +78,18 @@
    "status": "clean",
    "seat": "dev green 2 (Claude subagent)",
    "detail": "clean: green2-210, 31 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 3 (Claude subagent)",
+   "detail": "clean: red3-210, 26 command(s) scanned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "dev green 3 (Claude subagent)",
+   "detail": "clean: green3-210, 26 command(s) scanned"
   }
  ],
  "token_usage": [
@@ -112,6 +124,16 @@
    "seat": "backend developer ctx-5, green 2",
    "source": "Agent completion report",
    "subagent_tokens": 96199
+  },
+  {
+   "seat": "QA ctx-3, red 3",
+   "source": "Agent completion report",
+   "subagent_tokens": 111177
+  },
+  {
+   "seat": "backend developer ctx-5, green 3",
+   "source": "Agent completion report",
+   "subagent_tokens": 87626
   }
  ],
  "cycles": [
@@ -131,8 +153,17 @@
    "turn_records": [
     "5de812f",
     "e93cfae"
+   ]
+  },
+  {
+   "criterion": 3,
+   "red": "242677e (tests/test_record_members_retro.py; 56 failures, 7 errors in the run, all in the new module)",
+   "green": "c633d3a (_member_problems, _retro_problems, TEMPLATE_ROSTER, BLANK_WORDS, _blank; 6 modules 199 OK; pushed about 1 min after tests passed; full suite on committed c633d3a 1545 OK, 1 skipped)",
+   "turn_records": [
+    "56eadb9",
+    "e6a6eeb"
    ],
-   "plan": "next: red 3 (QA ctx-3), green 3, then the gate"
+   "plan": "next: the pre-ship gate (independent reviewer ctx-4, Copilot per window 210-taskforce)"
   }
  ],
  "stand_downs": [],
@@ -150,6 +181,7 @@
  ],
  "observations_for_next_stand_down": [],
  "refactor": [
-  "green 1 and green 2: none needed, with a reason (turn-green-dev-2.md line 16, e93cfae)"
+  "green 1 and green 2: none needed, with a reason (turn-green-dev-2.md line 16, e93cfae)",
+  "green 3: none needed, with a reason; BLANK_WORDS repeats the facilitator's placeholder set, left for the retro because merging means editing facilitator.py (e6a6eeb)"
  ]
 }
