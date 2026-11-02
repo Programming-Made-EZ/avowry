@@ -1,7 +1,7 @@
 {
  "card": 228,
  "title": "Recursive-delete scan covers hidden, encoded and non-shell forms, and the contents of files a seat writes",
- "status": "in progress",
+ "status": "closed",
  "decisions": {
   "rank": "re-rank 17 (window rerank-17): first, as the corrective named by F-071",
   "task_force": "window 228-taskforce (adopted, no conditions)",
@@ -46,9 +46,7 @@
  "open_points": [
   "the proposal's split of the 'Also owned here' items into follow-up cards is confirmed or changed at the slice (D136, D168)",
   "the T2 question: the real command source per backend, and whether a no-source seat fails closed or is recorded as a gap",
-  "conflict for the pre-ship gate: red 3a pins eval \"$(ssh-agent -s)\" as ALLOWED by the hook and green 3a lets it through, against the architect's ruling (ruling-sshagent-architect.md: it stays a recorded finding, fail closed, no clean twin); neither seat raised it. Criterion 3 is capped at two cycles, so a fix needs the team's decision",
-  "Copilot locator tolerance: locate_copilot accepts a session.start up to 10 s after launch, but the gate found 20 of 20 real sessions starting 13 to 24 s after the recorded launch time, so a live Copilot seat would report 'no command source' (fails safe, unproved live)",
-  "flaky test (a bug, not ignored): mob-defaults tests/test_loop_state.py LoopStateTests.test_lock_released_when_holder_exits failed once in the full suite on e4f7c29 (a 0.2 s sleep for a child process to take the lock) and passes alone; to be filed as a bug card at close"
+  "settled: the ssh-agent conflict and the Copilot locator tolerance were fixed in the gate-fix cycle (e4f7c29) and cleared by the re-check (679144a); the flaky loop-state test is filed as card 258"
  ],
  "command_scans": [
   {
@@ -238,7 +236,7 @@
    "detail": "python -W error::DeprecationWarning read as a run file; recorded clean earlier because it was scanned before green 2a's file-run scan; to follow-up F3"
   },
   {
-   "seat": "nine agy decision seats (windows 228-agy-seats, 228-c1-scope, 228-c2-scope)",
+   "seat": "twelve agy decision seats (windows 228-agy-seats, 228-c1-scope, 228-c2-scope, 228-gate-fix)",
    "status": "unscanned",
    "reason": "agy has no command source; accepted for decision seats by window 228-agy-seats; the voter only reads and answers"
   }
@@ -390,6 +388,25 @@
    "seat": "backend developer ctx-5, green gate-fix",
    "source": "Agent completion report (subagent_tokens)",
    "subagent_tokens": 73078
+  },
+  {
+   "seat": "gaps",
+   "note": "not carried: the decision-window and Decider voter seats (in decider-result.json files in the facilitator's scratch, not committed), the gate re-check (87702), sign-off (115634), coach retro (168011) and the architect's slice-ruling seats are reported here as completion figures where known; Copilot and agy voter usage was not measured"
+  },
+  {
+   "seat": "independent reviewer ctx-4, gate re-check",
+   "source": "Agent completion report",
+   "subagent_tokens": 87702
+  },
+  {
+   "seat": "decider ctx-6, sign-off",
+   "source": "Agent completion report",
+   "subagent_tokens": 115634
+  },
+  {
+   "seat": "agile coach, retro and pick",
+   "source": "Agent completion report",
+   "subagent_tokens": 168011
   }
  ],
  "cycles": [
@@ -650,5 +667,10 @@
    "a read-only probe passing an encoded delete (echo ...| base64 -d | sh) to scan_command as a string; the scan decodes the string (green 3a seat)"
   ],
   "green_commit_rule": "auditor FLAG (green 2c sat uncommitted 41 min): from green 3a, a green commits and pushes as soon as its red and the named modules pass, then runs the full suite on the committed code; a full-suite failure is fixed by a new commit"
+ },
+ "closing": {
+  "full_suite_final": "not fully green: on the final code e4f7c29 the full suite ran 1450 tests with 1 failure (flaky test_loop_state lock race, passes alone, untouched by the card) and 1 skipped; filed as card 258",
+  "followups_filed": "F1 to F6 filed as cards 252 to 257; the Codex reader (card 253, F2) is the open part of Done check 2 as the board words it",
+  "retro_pick": "Decider D175 (written cycle cap per criterion in every slice)"
  }
 }
