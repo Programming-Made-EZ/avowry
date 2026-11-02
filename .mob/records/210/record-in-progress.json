@@ -8,7 +8,8 @@
   "slice": "turn-slice-architect.md (b0d55fa): caps 1+1+1 (D175); T2 answered from write_record",
   "slice_window": "window 210-slice (adopted, no conditions)",
   "preship_gate": "pre-ship gate (Copilot ctx-4): HOLD, full suite on c633d3a ran 1545 tests with 2 failures in tests/test_mob_summary.py (remote-publish tests); card-specific evidence passes",
-  "preship_gate_recheck": "gate re-check (Copilot ctx-4): SHIP; card 210 touched neither tests/test_mob_summary.py nor the publish code; the two failures reproduce inside the Copilot CLI environment both directly and through cmd /c, and pass in a plain shell: card 268"
+  "preship_gate_recheck": "gate re-check (Copilot ctx-4): SHIP; card 210 touched neither tests/test_mob_summary.py nor the publish code; the two failures reproduce inside the Copilot CLI environment both directly and through cmd /c, and pass in a plain shell: card 268",
+  "signoff": "sign-off ctx-6 (c9e236a): SIGNED OFF with four closing-record conditions"
  },
  "task_force": [
   {
@@ -100,6 +101,19 @@
    "seat": "pre-ship gate (Copilot CLI)",
    "detail": "3 'unreadable file' findings: cmd /c \"cd /d ... && python ...\" and git -C ... read as a run of a file named by the quoted string; no delete executed; a new class for card 254 (false positives)",
    "raw": "gate-210-copilot: unreadable file: cd /d C:/Users/ringe/mob-crosscli && python -m unittest discover -s tests cannot be read (file cd /d C:/Users/ringe/mob-crosscli && python -m unittest discover -s tests, file_source: disk, run call 24) (source C:/Users/ringe/.copilot/session-state/56b7c7a7-7352-481a-95bf-b85b3eaaf344/events.jsonl)\ngate-210-copilot: unreadable file: cd /d C:/Users/ringe/projects/phrase-lang && python scripts/mob_process.py check cannot be read (file cd /d C:/Users/ringe/projects/phrase-lang && python scripts/mob_process.py check, file_source: disk, run call 25) (source C:/Users/ringe/.copilot/session-state/56b7c7a7-7352-481a-95bf-b85b3eaaf344/events.jsonl)\ngate-210-copilot: unreadable file: git -C C:/Users/ringe/mob-crosscli --no-pager log --oneline --decorate --format=/ cannot be read (file git -C C:/Users/ringe/mob-crosscli --no-pager log --oneline --decorate --format=/, file_source: disk, run call 38) (source C:/Users/ringe/.copilot/session-state/56b7c7a7-7352-481a-95bf-b85b3eaaf344/events.jsonl)"
+  },
+  {
+   "context": "ctx-4",
+   "status": "findings, false positives",
+   "seat": "gate re-check (Copilot CLI)",
+   "detail": "no delete executed: one 'recursive delete' flag on a bash.exe -lc python heredoc that only wrote the re-check file, and 'unreadable file' flags for cd /d, where, python --version and git log read as runs; to card 254",
+   "raw": "gate-recheck-210-copilot: recursive delete on a variable or unresolved path: bash.exe -lc \"python - (source C:/Users/ringe/.copilot/session-state/9d552b52-6df3-4616-9d20-e3f231f3e923/events.jsonl)\ngate-recheck-210-copilot: unreadable file: cd /d C:/Users/ringe/mob-crosscli && python -m unittest tests.test_mob_summary cannot be read (file cd /d C:/Users/ringe/mob-crosscli && python -m unittest tests.test_mob_summary, file_source: disk, run call 1) (source C:/Users/ringe/.copilot/session-state/9d552b52-6df3-4616-9d20-e3f231f3e923/events.jsonl)\ngate-recheck-210-copilot: unreadable file: where cannot be read (file where, file_source: disk, run call 6) (source C:/Users/ringe/.copilot/session-state/9d552b52-6df3-4616-9d20-e3f231f3e923/events.jsonl)\ngate-recheck-210-copilot: unreadable file: python --version cannot be read (file python --version, file_source: disk, run call 7) (source C:/Users/ringe/.copilot/session-state/9d552b52-6df3-4616-9d20-e3f231f3e923/events.jsonl)\ngate-recheck-210-copilot: unreadable file: cd /d C:/Users/ringe/mob-crosscli && python -m unittest tests.test_mob_summary cannot be read (file cd /d C:/Users/ringe/mob-crosscli && python -m unittest tests.test_mob_summary, file_source: disk, run call 8) (source C:/Users/ringe/.copilot/session-state/9d552b52-6df3-4616-9d20-e3f231f3e923/events.jsonl)\ngate-recheck-210-copilot: unreadable file: cd /c/Users/ringe/mob-crosscli && python -m unittest tests.test_mob_summary cannot be read (file cd /c/Users/ringe/mob-crosscli && python -m unittest tests.test_mob_summary, file_source: disk, run call 10) (source C:/Users/ringe/.copilot/session-state/9d552b52-6df3-4616-9d20-e3f231f3e923/events.jsonl)\ngate-recheck-210-copilot: unreadable file: cd /d C:/Users/ringe/mob-crosscli && python -m unittest tests.test_mob_summary cannot be read (file cd /d C:/Users/ringe/mob-crosscli && python -m unittest tests.test_mob_summary, file_source: disk, run call 10) (source C:/Users/ringe/.copilot/session-state/9d552b52-6df3-4616-9d20-e3f231f3e923/events.jsonl)\ngate-recheck-210-copilot: unreadable file: cd /c/Users/ringe/mob-crosscli && echo '--- log test file ---' && git --no-pager log --oneline --decorate -n 20 -- tests/test_mob_summary.py && echo '--- show c633d3a ---' && git --no-pager show --stat --oneline --decorate --summary c633d3a -- && echo '--- show c633d3a relevant files ---' && git --no-pager show --stat --oneline --decorate --summary c633d3a -- mob_process.py tests/test_mob_summary.py cannot be read (file cd /"
+  },
+  {
+   "context": "ctx-6",
+   "status": "clean",
+   "seat": "sign-off (Claude subagent)",
+   "detail": "clean: signoff-210, 20 command(s) scanned"
   }
  ],
  "token_usage": [
@@ -201,6 +215,11 @@
    "by": "facilitator",
    "what": "the probe commit before green 2 was labelled 14:22 UTC; the probe ran at 14:11",
    "handling": "recorded"
+  },
+  {
+   "by": "backend developer seat (green 3)",
+   "what": "green 3 (c633d3a) rewrote mob_process.py from LF to CRLF (1063 lines changed for a 57-line change) although the brief said to keep line endings; the gate did not report it, sign-off found it",
+   "handling": "filed as bug card 269"
   }
  ],
  "observations_for_next_stand_down": [
