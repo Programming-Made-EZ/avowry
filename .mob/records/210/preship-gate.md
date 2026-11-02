@@ -84,3 +84,26 @@ Evidence:
 ## Final verdict
 
 The card-specific fix for MD-003 is complete and the red/green cycle order is correct, the task-force and proof requirements are documented, and the records repo itself is green. However, the current `main` branch of `mob-crosscli` is not green because the full suite currently fails with 2 test failures in `tests/test_mob_summary.py`, so this review must HOLD the pre-ship gate until that branch-level regression is fixed or triaged.
+## Re-check of the HOLD
+
+- Direct shell: `cd C:\Users\ringe\mob-crosscli && python -m unittest tests.test_mob_summary`
+  Result: FAILED (failures=2) in 193.629s.
+  Failing tests:
+  - `test_updates_are_docs_only_mob_commits_and_they_reach_the_remote`
+  - `test_the_summary_can_be_published_to_another_repo_than_the_one_the_run_is_in`
+
+- `cmd /c "cd /d C:\Users\ringe\mob-crosscli && python -m unittest tests.test_mob_summary"`
+  Result: FAILED (failures=2) in 188.546s.
+  Same two failures as the direct-shell run.
+
+- Git check in `mob-crosscli`:
+  - `git --no-pager log --oneline --decorate -n 20 -- tests/test_mob_summary.py` shows the summary-test file was not touched on the card-210 commit.
+  - `git --no-pager show --stat --oneline --decorate --summary c633d3a --` shows only `mob_process.py` changed for card 210. There was no modification to `tests/test_mob_summary.py` or the summary publishing code it exercises.
+
+- New evidence since the HOLD gate:
+  - Facilitator re-check on c633d3a from a plain bash shell: `1545 tests, OK (skipped=1)`.
+  - `tests.test_mob_summary` alone on c633d3a: `16 OK`.
+  - Green 3 full run on c633d3a: `1545 OK`.
+  - The two failures are shell/environment dependent and are tracked as bug card 268, not a regression for card 210.
+
+Verdict: SHIP.

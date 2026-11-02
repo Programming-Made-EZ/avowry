@@ -7,7 +7,8 @@
   "task_force": "window 210-taskforce (adopted, no conditions)",
   "slice": "turn-slice-architect.md (b0d55fa): caps 1+1+1 (D175); T2 answered from write_record",
   "slice_window": "window 210-slice (adopted, no conditions)",
-  "preship_gate": "pre-ship gate (Copilot ctx-4): HOLD, full suite on c633d3a ran 1545 tests with 2 failures in tests/test_mob_summary.py (remote-publish tests); card-specific evidence passes"
+  "preship_gate": "pre-ship gate (Copilot ctx-4): HOLD, full suite on c633d3a ran 1545 tests with 2 failures in tests/test_mob_summary.py (remote-publish tests); card-specific evidence passes",
+  "preship_gate_recheck": "gate re-check (Copilot ctx-4): SHIP; card 210 touched neither tests/test_mob_summary.py nor the publish code; the two failures reproduce inside the Copilot CLI environment both directly and through cmd /c, and pass in a plain shell: card 268"
  },
  "task_force": [
   {
@@ -37,7 +38,7 @@
  ],
  "open_points": [
   "D168 Size line: the slice reports whole-file wc -c as the facilitator's brief asked; D168 C2 measures the bytes before the Size line (see deviations)",
-  "gate HOLD evidence: the facilitator's full suite on c633d3a from a plain shell is 1545 OK (1 skipped) (evidence/full-suite-recheck-c633d3a.txt), test_mob_summary alone 16 OK; the gate's 2 failures came from a run through cmd /c inside the Copilot CLI; filed as bug card 268; the ship seat re-checks its HOLD"
+  "card 268 refinement for its ready step: the two test_mob_summary failures reproduce inside the Copilot CLI's environment both directly and through cmd /c (not only through cmd /c, as first written)"
  ],
  "working_state": {
   "caps": "D175: proposed 1 cycle per criterion; the slice writes the Cap lines",
@@ -150,6 +151,13 @@
    "requests": "0.25 Premium (28m 24s)",
    "tokens_in": "1.5m (1.4m cached)",
    "tokens_out": "14.2k"
+  },
+  {
+   "seat": "independent reviewer ctx-4, gate re-check (Copilot CLI)",
+   "source": "Copilot CLI usage lines (scratch gate-210-recheck.err)",
+   "requests": "0.25 Premium (8m 26s)",
+   "tokens_in": "339.1k (319.7k cached)",
+   "tokens_out": "10.3k"
   }
  ],
  "cycles": [
