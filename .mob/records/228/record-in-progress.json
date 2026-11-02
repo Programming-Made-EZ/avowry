@@ -486,6 +486,11 @@
    "by": "facilitator",
    "what": "no stand-down was held at card 228's cycle boundaries (D151 requires one at each cycle boundary within a card)",
    "handling": "stand-down held after green 2a, reviewing the cycles to date; recorded"
+  },
+  {
+   "by": "facilitator (seat briefs)",
+   "what": "greens 1a to 2c ran the 30-minute full suite before committing, so each green sat uncommitted for about 30 to 41 minutes (green 2c: 41)",
+   "handling": "auditor FLAG; seat briefs changed from green 3a"
   }
  ],
  "observations_for_next_stand_down": [
@@ -507,6 +512,7 @@
   "followup_F3_additions": [
    "python options with an argument (-W error, -X, -m module) read as a run file ('unreadable file: error'), seen in the 2c seats' own scans",
    "a read-only probe passing delete text as a string to scan_command, text-matched when the code does not parse (shutil.rmtree(p) in red 2a's scan)"
-  ]
+  ],
+  "green_commit_rule": "auditor FLAG (green 2c sat uncommitted 41 min): from green 3a, a green commits and pushes as soon as its red and the named modules pass, then runs the full suite on the committed code; a full-suite failure is fixed by a new commit"
  }
 }
