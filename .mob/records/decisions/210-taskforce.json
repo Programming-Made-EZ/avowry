@@ -1,159 +1,165 @@
 {
  "window": "210-taskforce",
  "category": "task-force declaration",
- "rule": "D153 objection window; card-text changes in the same window (D153 L1)",
+ "rule": "D153 at ready for card 210; D171; D175 in force",
  "proposed_by": {
   "role": "product manager (ready)",
-  "model": "claude-sonnet subagent",
+  "model": "copilot (auto) via the Copilot CLI",
   "context": "ctx-1",
-  "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
+  "probe_reference": "probe 2026-11-02 11:38 UTC (.mob/records/probes/2026-10-30.jsonl)"
  },
- "opened_at": "2026-10-30T16:48:34Z",
- "proposal": "# Card 210: task-force declaration proposal (objection window 210-taskforce)\n\nCategory: task-force declaration. Proposed by: product manager (ready), Claude seat, ctx-1 of card 210.\nProbe reference: .mob/records/probes/2026-10-30.jsonl (16:24 UTC; codex 16:24:53, copilot 16:24:58, grok 16:24:59, agy 16:25:03).\n\n## Task force\n- Product manager (ready): Claude | why: refines card 210 at ready; confirms the MD-003 subject token (corrective commit, F-043) and that the card's ZOMBIES stay as written; applies D157 to the three Done checks | context: ctx-1\n- Architect (slice): Claude | why: slices the card and numbers its acceptance criteria 1 to 3 before red (D157); decides where each check lives in check_record and how cycles are derived from the commits or the seat log; the card-record checker (schema 1) requires a slice seat | context: ctx-2\n- QA engineer (red): Claude | why: turns the card's ZOMBIES into failing tests, one acceptance criterion per red-green cycle (D157), with injected seat log and commit fakes, one red test per loophole (D137) | context: ctx-3\n- Backend developer [author] (green, refactor): Claude | why: changes scripts/mob_process.py in mob-defaults (C:\\Users\\ringe\\mob-crosscli) so each red test passes; the author does not review or QA their own increment | context: ctx-4\n- Independent reviewer (audit lens) [reviewer]: Claude | why: non-author review of the diff against MD-003, looking for a loophole still open (a truthy value still trusted, a self-reported field still read) | context: ctx-5\n- Delivery lead (ship): Claude | why: confirms CI, the card record, the probe lines and the MD-003 subject token before the commit lands; the checker requires a ship seat with its own commit evidence | context: ctx-6\n- Product manager (signoff): Claude | why: a fresh context signs off against the three Done checks, because the refinement seat may not hold the second seat | context: ctx-7\n\nThe card record checker (scripts/mob_process.py, schema 1) requires seats for ready, slice, red, green, ship and signoff, each with distinct commit evidence. Seven seats cover those six roles plus the independent reviewer. The card already lists all seven; this proposal fixes only the wording named in the second section.\n\nThe reviewer seat is named \"Independent reviewer (audit lens)\", never \"auditor\": auditor_seated_problems in mob_process.py refuses any card seat whose role contains \"auditor\", because the auditor is external to the mob and never seated.\n\n## Left out\nUX designer and frontend developer (no user interface); database developer (no such code); security (no new trust boundary; the checker reads local records only); DevOps (no workflow, hook or runner change); technical writer (no document); language designer and grammar designer (no language change); performance engineer (no hot path); agile coach (no process change; D157 and D158 are applied, not changed); separate Python or records expert (see below).\n\n## Domain expert (refinement)\nShould a member with different domain knowledge or context join now? No. The loopholes are inside check_record in mob_process.py, which the architect and the backend developer cover. The independent reviewer (audit lens) is the domain check for MD-003 and the auditable-records rule, so the author does not review their own reading of the loopholes. If the red seat finds a loophole needing knowledge of the seat log or commit format beyond these seats, any member adds an expert through a Decider (mid-card addition, with the Decider id). Adding is unchanged by this card.\n\n## Reason for Claude seats\nProbes at 16:24 UTC (.mob/records/probes/2026-10-30.jsonl) show Codex, Copilot, Grok and agy without usable quota: codex \"usage limit\" until Nov 3 11:16 PM; copilot has_quota=False remaining=-5; grok 402 balance exhausted; agy 429 quota reached (resets in about 53h). Each seat is a distinct fresh context (ready ctx-1, slice ctx-2, red ctx-3, green ctx-4, reviewer ctx-5, ship ctx-6, signoff ctx-7), and nobody reviews or QAs their own increment. Non-Claude models come first again as soon as a fresh probe shows quota. This card does not change how seats are staffed or how probes are taken.\n\n## D157 applies\nOne acceptance criterion per red-green cycle, checked from git (5-card experiment, Decider D157):\n- The slice (architect, ctx-2) numbers the card's criteria 1 to 3 before any red.\n- Each red commit body carries \"Criterion: n\" (n = the Done check number, 1 to 3).\n- The green for criterion n lands before any red for n+1.\n- Greens are pushed at once.\n- The card's ZOMBIES are already in the card for all three Done checks; QA implements them and does not rewrite them (a ZOMBIES change is a card-text fix through this window).\n- Each commit stays within D136, cites MD-003 in the subject (corrective commit) and references D145 and D136; red first (D137).\n\n## D158 applies\nThe facilitator's pre-window checklist (D158) is run before this window opens: the proposal names seats for ready, slice, red, green, ship and signoff; the reviewer seat is not named auditor; the roster is not the template boilerplate; every seat has a domain/why and a distinct context; the Claude reason cites a probe file and time; the card text lines match the proposal; every declared role is listed for polling.\n\n## Window rule\n- Every declared role is polled (F-054): all seven role seats answer (ready ctx-1 is the proposer; slice ctx-2, red ctx-3, green ctx-4, reviewer ctx-5, ship ctx-6, signoff ctx-7), each in its own fresh context.\n- Each seat answers either \"no objection\" or ONE fixed condition per objection (D145). A condition that is simply adopted and re-polled stays in the window; an unsettled objection goes to a full Decider.\n- Card-text changes proposed with this declaration are card-text fixes in the same window (D153 L1).\n\n## Why this is neither a one-way door nor a standing-rule change\nTwo-way door: the declaration ends with the card and can be re-declared; nothing is published, deleted or migrated. It applies TFDD, D157 and D158 as written and changes no agreement, D-record or checker. (The card itself changes the checker, but that is the card's work under its own Done checks, not this declaration.) MD-003 stays an open FAIL until the card lands; D147 allows the start because the issue names it.\n\n---\n\n# Card 210 text changes (exact replacement lines)\n\nThe Done checks, ZOMBIES and the seven member lines stay as they are, apart from the wording below. Member lines in the card already use ctx-1 to ctx-7 in the same order as this proposal.\n\nReplace the \"Assignee note\" line:\nAssignee note: every assignee is a Claude seat because the probes at 16:24 UTC show Codex, Copilot, Grok and agy without usable quota; each seat is a distinct fresh context. The non-Claude models come first again as soon as a fresh probe shows quota.\n\nReplace the \"Left out\" line:\nLeft out: UX designer and frontend developer (no user interface), database developer (no such code), security (no new trust boundary), DevOps (no workflow or hook change), technical writer (no document), language designer and grammar designer (no language change), performance engineer (no hot path), agile coach (no process change; D157 and D158 are applied, not changed).\n\nReplace the \"Domain-expert question\" line:\nDomain-expert question (refinement): should a member with different domain knowledge or context join now? No: the loopholes are inside check_record in mob_process.py, which the architect and backend developer cover. The architect (slice) and delivery lead (ship) seats are required by the card record checker. The independent reviewer (audit lens) is the domain check for MD-003 and the auditable-records rule.\n\nAppend to \"## Context\":\n- D157 applies: one acceptance criterion per red-green cycle (Done checks 1 to 3, numbered by the architect before red); \"Criterion: n\" in each red commit body; the green for criterion n before any red for n+1; greens pushed at once. D158: the facilitator runs the pre-window checklist before the declaration window opens.\n\nReplace the final \"Declaration fix before start\" line:\nDeclaration fix before start (2026-10-30): declared by objection window 210-taskforce; the reviewer seat is named Independent reviewer (audit lens), not auditor, because the mob-defaults rule auditor_seated_problems refuses any card seat named auditor (the auditor is external to the mob and never seated).\n",
- "checklist_D158": ".mob/records/210/checklist-taskforce.md (committed before this window)",
- "polled_roles_note": "F-054: architect ctx-2, QA engineer ctx-3, backend developer ctx-4, independent reviewer ctx-5, delivery lead ctx-6, product manager (signoff) ctx-7; proposer product manager (ready) ctx-1.",
+ "opened_at": "2026-11-02T12:27:31Z",
+ "proposal": "# Card 210 task-force declaration proposal\n\nThis card fixes MD-003 in mob-defaults by hardening the record checker in `mob_process.py`. The team rotates by least-recently-used as required: Copilot, agy and Claude are all in the rotation; build seats remain on command-reader models (Claude and Copilot), per window 228-agy-seats. The current 11:38 UTC probe shows Copilot and agy available; Codex and Grok have no quota.\n\n## Team\n- Product manager (ready): Copilot, ctx-1. Why: defines the card, names the corrective, and keeps the task force and record-check gates honest. Context: ctx-1.\n- Architect (slice): Claude, ctx-2. Why: owns the schema and logic in `check_record`, including the three acceptance criteria and the evidence boundary; this card is a checker change, not product logic. Context: ctx-2.\n- QA engineer (red): Claude, ctx-3. Why: writes the red tests for empty task force, empty probes, bad cycle derivation, and missing member metadata. Context: ctx-3.\n- Backend developer (green): Claude, ctx-5. Why: fixes the checker so each red test passes without weakening the gate. Context: ctx-5.\n- Independent reviewer (ship): Copilot, ctx-4. Why: owns the pre-ship review on a command-reader model; agy remains out because it has no command reader. Context: ctx-4.\n- Product manager (sign-off): Claude, ctx-6. Why: fresh-context sign-off after the green and before ship. Context: ctx-6.\n\n## Left out\n- UX designer and frontend developer: no UI.\n- Database developer: no persistence change.\n- Security reviewer: no new trust boundary beyond record validation.\n- DevOps: no workflow or hook change.\n- Technical writer: no user docs.\n- Language/grammar designers: no language change.\n- Performance engineer: no hot path.\n- agy: off the build team because it has no command reader and is only valid as a decision-only seat under 228-agy-seats.\n\n## Domain-expert question (T2)\nWhat is the real command source per backend, and does a no-source seat fail closed or merely get recorded as a gap? This is the T2 because the task force must not trust empty or self-reported fields when the checker is reading a record.\n\n## Value, metric, counter-metric\n- Value: close the MD-003 loophole that allowed empty `task_force` / `probes` and self-reported cycles to pass, before later cards inherit a bad record.\n- Metric: the number of red tests for MD-003 that pass in one green run, including all four model probes, cycle derivation from evidence, and per-member record completeness.\n- Counter-metric: re-run churn and false refusals; a good outcome stays inside the written cap and does not need a red past a cap without a scope window.\n\n## Done checks (D157)\n1. Non-empty task force and probes. Partial work fails because `task_force: []` or `probes: {}` still counts as truthy, or any non-Claude model is missing a probe timestamp. Cap: `Cap: criterion 1, at most 1 cycle`.\n2. Cycles are evidence-derived. Partial work fails when the record's `cycles` field disagrees with the seat log or commits, or when no evidence exists. Cap: `Cap: criterion 2, at most 1 cycle`.\n3. Per-member completeness and retro structure. Partial work fails when a member lacks domain/why/context, the roster is boilerplate, a Claude seat lacks `quota_reason`, or the retro uses truthy placeholders instead of real `flow_metrics` and `practice_metrics`. Cap: `Cap: criterion 3, at most 1 cycle`.\n\nThe total cap across all criteria is three, matching D175. A scope window is required before any red starts past a cap.\n\n## D165 to D168, D171, D175\n- D165: applies; the intent line goes before the first red.\n- D166: applies only if the slice depends on an assumption line for the checker change.\n- D167: applies; the slice must list hostile forms and label each as SEEN or INSURANCE.\n- D168: applies; the slice must stay under the 15 KB cap and be rejected if it omits required size and scope lines.\n- D171: applies for any vote or re-run window tied to the task-force decision.\n- D175: applies directly; each criterion must carry a `Cap: criterion n, at most k cycles` line, the caps sum to at most three, hostile forms are labeled SEEN or INSURANCE, and a scope window precedes any red beyond a cap.\n\n## Open points\n- Confirm whether a no-source seat is a fail-closed block or a gap that is recorded until a source is found.\n- Confirm the exact fresh-probe boundary and whether the record checker rejects stale probes before the first red.\n- Confirm whether agy can sit as a pure decision-only member in this window without violating the build-seat rule.\n",
+ "checklist_D158": ".mob/records/210/checklist-210-taskforce.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
  "replies": [
   {
+   "seat": "agy",
+   "context": "w210tfcp1-architect",
+   "started_at": "2026-11-02T12:27:31Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\n\nThe record schema, `check_record` validation rules, and evidence-derived cycle checks are minimal, enforceable without false positives, and leave the findings gate unchanged while meeting D157 and D175 caps.\n\nCITE: The total cap across all criteria is three, matching D175.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 11:38 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T12:28:08.384181Z",
+   "cite_ok": true,
    "round": 1,
    "role": "architect",
-   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
-   "context": "ctx-2",
-   "started_at": "2026-10-30T16:48:51Z",
+   "ctx": "ctx-2",
    "reply": "NO OBJECTION",
-   "condition": null,
-   "raw": "NO OBJECTION\n\nYes\n",
-   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
+   "condition": null
   },
   {
+   "seat": "claude",
+   "context": "w210tf-qa",
+   "started_at": "2026-11-02T12:31:38Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe three criteria each name a failing form (`task_force: []`, `probes: {}`, cycles that disagree with the evidence), so a red test can be written for each. The caps sum to three, matching D175. The open points on no-source seats and the stale-probe boundary can be settled in the architect's slice before the first red.\n\nCITE: Partial work fails because `task_force: []` or `probes: {}` still counts as truthy\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 11:38 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T12:32:09.682294Z",
+   "cite_ok": true,
    "round": 1,
    "role": "QA engineer",
-   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
-   "context": "ctx-3",
-   "started_at": "2026-10-30T16:48:51Z",
-   "reply": "OBJECTION",
-   "condition": "Add one ZOMBIES line to Done check 3 for a member whose domain, why, or context is whitespace-only or the string \"true\", so the red test pins the \"truthy value\" loophole the check names.",
-   "raw": "OBJECTION\nCONDITION: Add one ZOMBIES line to Done check 3 for a member whose domain, why, or context is whitespace-only or the string \"true\", so the red test pins the \"truthy value\" loophole the check names.\n\nSupport-it\n",
-   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
   },
   {
+   "seat": "agy",
+   "context": "w210tfcp1-dev",
+   "started_at": "2026-11-02T12:33:15Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nCITE: fixes the checker so each red test passes without weakening the gate.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 11:38 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T12:33:50.449822Z",
+   "cite_ok": true,
    "round": 1,
    "role": "backend developer",
-   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
-   "context": "ctx-4",
-   "started_at": "2026-10-30T16:48:51Z",
+   "ctx": "ctx-5",
    "reply": "NO OBJECTION",
-   "condition": null,
-   "raw": "NO OBJECTION\n\nYes. As the backend developer, I can comply with these rules without gaming them. The criteria are numbered, each red commit carries \"Criterion: n\", and the green for n lands before the red for n+1. The seats are distinct, I don't review my own increment, and the ZOMBIES are fixed in the card.\n",
-   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
+   "condition": null
   },
   {
+   "seat": "claude",
+   "context": "w210tf-auditlens",
+   "started_at": "2026-11-02T12:38:22Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCriterion 2 derives cycles from the seat log and commits, so it can be checked from git alone. I see no loophole that lets the team pass while breaking the practice. The open points (no-source seat, probe freshness) belong in the architect's slice.\n\nCITE: disagrees with the seat log or commits, or when no evidence exists\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 11:38 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T12:38:56.926198Z",
+   "cite_ok": true,
    "round": 1,
    "role": "independent reviewer (audit lens)",
-   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
-   "context": "ctx-5",
-   "started_at": "2026-10-30T16:48:51Z",
+   "ctx": "ctx-4",
    "reply": "NO OBJECTION",
-   "condition": null,
-   "raw": "Yes\nNO OBJECTION\n",
-   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
+   "condition": null
   },
   {
+   "seat": "agy",
+   "context": "w210tfcp1-decider",
+   "started_at": "2026-11-02T12:40:05Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\n\nThe three done checks state what partial work fails, cap each criterion at one cycle under D175, and seat all six required roles in distinct contexts so sign-off rests on evidence.\n\nCITE: The total cap across all criteria is three, matching D175.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 11:38 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T12:40:44.873171Z",
+   "cite_ok": true,
    "round": 1,
-   "role": "delivery lead",
-   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
-   "context": "ctx-6",
-   "started_at": "2026-10-30T16:48:51Z",
+   "role": "sign-off",
+   "ctx": "ctx-6",
    "reply": "NO OBJECTION",
-   "condition": null,
-   "raw": "NO OBJECTION\n\nYes. The seven seats match the checker's required roles, and the thin-slice rules (D136, D157) are applied, not added to. The card gets no new ceremony. Claude-only staffing is justified by the probes and is reversible.\n",
-   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
-  },
+   "condition": null
+  }
+ ],
+ "attempts": [
   {
+   "seat": "copilot",
+   "context": "w210tfcp1-qa",
+   "started_at": "2026-11-02T12:30:46Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 11:38 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T12:31:19.244443Z",
+   "cite_ok": false,
    "round": 1,
-   "role": "product manager (signoff)",
-   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
-   "context": "ctx-7",
-   "started_at": "2026-10-30T16:48:51Z",
-   "reply": "NO OBJECTION",
-   "condition": null,
-   "raw": "NO OBJECTION\n\nYes\n",
-   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
-  },
-  {
-   "round": 2,
-   "role": "architect",
-   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
-   "context": "ctx-2",
-   "started_at": "2026-10-30T16:58:12Z",
-   "reply": "NO OBJECTION",
-   "condition": null,
-   "raw": "NO OBJECTION\n\nYes\n",
-   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
-  },
-  {
-   "round": 2,
    "role": "QA engineer",
-   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
-   "context": "ctx-3",
-   "started_at": "2026-10-30T16:58:12Z",
-   "reply": "NO OBJECTION",
-   "condition": null,
-   "raw": "NO OBJECTION\n\nYes\n",
-   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
   },
   {
-   "round": 2,
-   "role": "backend developer",
-   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
-   "context": "ctx-4",
-   "started_at": "2026-10-30T16:58:13Z",
-   "reply": "NO OBJECTION",
-   "condition": null,
-   "raw": "NO OBJECTION\n\nYes\n",
-   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
-  },
-  {
-   "round": 2,
+   "seat": "copilot",
+   "context": "w210tfcp1-auditlens",
+   "started_at": "2026-11-02T12:37:31Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 11:38 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T12:38:02.349380Z",
+   "cite_ok": false,
+   "round": 1,
    "role": "independent reviewer (audit lens)",
-   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
-   "context": "ctx-5",
-   "started_at": "2026-10-30T16:58:13Z",
-   "reply": "NO OBJECTION",
-   "condition": null,
-   "raw": "NO OBJECTION\n\nSupport-it. The adopted ZOMBIES case is recorded in the decision record, and I found no new demand or breakage.\n",
-   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
-  },
-  {
-   "round": 2,
-   "role": "delivery lead",
-   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
-   "context": "ctx-6",
-   "started_at": "2026-10-30T16:58:13Z",
-   "reply": "NO OBJECTION",
-   "condition": null,
-   "raw": "Yes\n\nNO OBJECTION\n",
-   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
-  },
-  {
-   "round": 2,
-   "role": "product manager (signoff)",
-   "model": "claude-sonnet via claude -p (decider.py sandboxed clone of the repository)",
-   "context": "ctx-7",
-   "started_at": "2026-10-30T16:58:13Z",
-   "reply": "NO OBJECTION",
-   "condition": null,
-   "raw": "NO OBJECTION\n\nYes. The amendment adds the ZOMBIES case for whitespace-only or \"true\" domain, why or context fields to Done check 3, as the adopted condition asked. It adds no new demand and breaks nothing it touched. The standing rules stay intact.\n",
-   "probe_reference": ".mob/records/probes/2026-10-30.jsonl (16:24 UTC)"
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
   }
  ],
  "decision": {
-  "result": "adopted: seven seats as proposed, with the QA engineer's ZOMBIES case; round 2 no objection from all six polled seats",
-  "task_force": "ctx-1 to ctx-7, all Claude (probes 16:24 UTC)"
+  "result": "adopted without objection: product manager ctx-1 (Copilot), architect ctx-2, QA ctx-3, backend developer ctx-5 (Claude), independent reviewer ctx-4 (Copilot proposed; a reader exists since card 228), sign-off ctx-6 (Claude); caps proposed 1 cycle per criterion (D175). Five NO OBJECTION with valid D171 cites: agy for the architect, developer and sign-off; Claude for QA and the reviewer after Copilot seats returned no reply. The proposal's T2 question repeats card 228's (command sources); the slice must state this card's own T2.",
+  "window_minutes": "12:26:51 to 12:42:27 UTC, serial"
  },
- "ended_at": "2026-10-30T17:06:09Z",
- "adopted_condition": {
-  "from": "QA engineer (ctx-3)",
-  "condition": "add a ZOMBIES case to Done check 3 for a member whose domain, why or context is whitespace-only or the string \"true\"",
-  "done": "card-text section of the proposal amended by the product manager (ready) ctx-1; applied to the issue after the window"
- }
+ "ended_at": "2026-11-02T12:42:46Z"
 }
