@@ -6,7 +6,8 @@
   "rank": "re-rank 18 (window rerank-18): first, as the corrective named by MD-003",
   "task_force": "window 210-taskforce (adopted, no conditions)",
   "slice": "turn-slice-architect.md (b0d55fa): caps 1+1+1 (D175); T2 answered from write_record",
-  "slice_window": "window 210-slice (adopted, no conditions)"
+  "slice_window": "window 210-slice (adopted, no conditions)",
+  "preship_gate": "pre-ship gate (Copilot ctx-4): HOLD, full suite on c633d3a ran 1545 tests with 2 failures in tests/test_mob_summary.py (remote-publish tests); card-specific evidence passes"
  },
  "task_force": [
   {
@@ -35,7 +36,8 @@
   }
  ],
  "open_points": [
-  "D168 Size line: the slice reports whole-file wc -c as the facilitator's brief asked; D168 C2 measures the bytes before the Size line (see deviations)"
+  "D168 Size line: the slice reports whole-file wc -c as the facilitator's brief asked; D168 C2 measures the bytes before the Size line (see deviations)",
+  "gate HOLD: test_mob_summary's two remote-publish tests failed in the gate's full run inside the Copilot CLI environment, but passed in green 3's full run on the same commit and pass alone (16 OK); the facilitator re-runs the full suite on c633d3a to decide flaky versus regression"
  ],
  "working_state": {
   "caps": "D175: proposed 1 cycle per criterion; the slice writes the Cap lines",
@@ -134,6 +136,13 @@
    "seat": "backend developer ctx-5, green 3",
    "source": "Agent completion report",
    "subagent_tokens": 87626
+  },
+  {
+   "seat": "independent reviewer ctx-4, pre-ship gate (Copilot CLI)",
+   "source": "Copilot CLI usage lines (scratch gate-210.err)",
+   "requests": "0.25 Premium (28m 24s)",
+   "tokens_in": "1.5m (1.4m cached)",
+   "tokens_out": "14.2k"
   }
  ],
  "cycles": [
