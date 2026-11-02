@@ -1,0 +1,16 @@
+# Card 228 turn: red gate-fix (QA seat red, ctx-3, fresh context; window 228-gate-fix, option (a), pins 1 to 3)
+
+Commit: 52451b6 (mob-crosscli, pushed to origin main; parent 743a4a1). Probe: 2026-11-02 07:37 UTC. Run against committed code only: git status showed the untracked .mob/, the untracked new test file and the one-line edit of tests/test_delete_guard_hook_3a.py (both test files, committed together); no source file was modified. Neither repo had an unpushed commit from another seat (main = origin/main in both after a fetch), so nothing of another seat's was pushed or rewritten. MOB.md was current (mob_process.py check: OK), so it was not regenerated.
+
+Intent (D165): a flagged command must be blocked before it runs: the hook refuses eval "$(ssh-agent -s)" as the architect ruled (ruling-sshagent-architect.md, fail closed, no clean twin), so a shell function or a PATH shadow named ssh-agent cannot carry a delete past it; and a live Copilot seat is found by locate_copilot even though its session.start comes 13 to 24 s after the recorded launch.
+
+Assumption (D166): my pins, beyond the window's three. The refusal is exit 2 with the scan finding kind (recursive delete on a variable or unresolved path) on stderr; the spellings eval $(ssh-agent -s), eval "$(ssh-agent)", the eval after ; or &&, after a PATH assignment, a function (both syntaxes) and an alias are refused too; ssh-agent -s without an eval stays allowed. The old tolerance cases (0 to 10 s) still find; the exact 60 s edge is not pinned (61 s is not found); any start before the launch (-0.5 s and earlier) is not found. Wording is not pinned. The flip of tests/test_delete_guard_hook_3a.py line 147 (eval removed from the benign list) is the point of this red and is said so in the commit body.
+
+File: tests/test_delete_guard_gatefix.py (new, 16 tests) plus the one-line flip in tests/test_delete_guard_hook_3a.py. Fixtures are text fed to the hook or synthetic events.jsonl files in each test's own temp folder; nothing was executed or deleted.
+- SshAgentEval (8): plain eval, function, PATH shadow, alias shadow, spellings (all refused with the finding on stderr); tree_verdict refuses with a reason; born green: the scan still reports it, and ssh-agent -s alone is allowed.
+- CopilotLag (8): 13 to 24 s found (7 offsets), 0 to 10 s still found, 61 s or more not found, before launch not found, two matches still no command source, a late or early neighbour is not a second match, another cwd is not a match, scan_entry reads an 18 s session (clean, 1 command).
+
+Failing output (one line): "Ran 16 tests ... FAILED (failures=15)", e.g. "AssertionError: 0 != 2 : 'eval "$(ssh-agent -s)"' must be refused, stderr: ''" and "the session must be found, locate_copilot said: 0 Copilot sessions under ... match cwd and start time" (offsets 13 to 24 s).
+
+Modules run: 24 = the 23 of turn-red-qa-3b.md (every test_command_scan*, test_command_scans_record* and test_command_source* module plus test_delete_guard_hook_3a and _3b) plus tests.test_delete_guard_gatefix. 610 tests, FAILED (failures=15), all in the new module (101 s). Without the new module (with the line 147 flip): 594 tests OK. Full discover not run. Scratch: C:\Users\ringe\AppData\Local\Temp\claude\qa228-gf-105676702 (left in place; the tests use their own temp folders).
+Size: 3336 bytes
