@@ -7,7 +7,8 @@
   "task_force": "window 211-taskforce (adopted, no conditions)",
   "slice": "turn-slice-architect.md (Copilot ctx-2): caps 1+1+1; T2: Done check 3 cannot be met under the shared identity",
   "slice_window": "window 211-slice (adopted, no conditions)",
-  "po_ruling_check3": "D177 (product owner ruling, 2026-11-02): Done check 3 WAIVES the different-committing-identity requirement; replacement evidence: a final-state review by a fresh-context seat that authored none of the 27 commits, on a different model from the authors where available, recorded with model, seat or context id, session or events path and the commit range, cited from the Decider and closing records"
+  "po_ruling_check3": "D177 (product owner ruling, 2026-11-02): Done check 3 WAIVES the different-committing-identity requirement; replacement evidence: a final-state review by a fresh-context seat that authored none of the 27 commits, on a different model from the authors where available, recorded with model, seat or context id, session or events path and the commit range, cited from the Decider and closing records",
+  "decider_md010": "Decider MD-010 (criterion 1): six role seats, each in its own fresh context through decider.py's gate, all Support-it with valid D171 cites (all on Claude after Grok and Copilot seats returned empty and agy was out of quota); recorded in mob-defaults DECIDERS.md and records/211/votes.json (ed97c75). Most seats voted from the commit list and diffstat without reading the diffs; the sign-off seat said 'team-reviewed' overstates the evidence; the record keeps both."
  },
  "task_force": [
   {
@@ -59,11 +60,42 @@
    "requests": "6 Premium (1m 35s)",
    "tokens_in": "521.0k (412.8k cached)",
    "tokens_out": "7.5k"
+  },
+  {
+   "seat": "QA ctx-3, red 1",
+   "source": "Agent completion report",
+   "subagent_tokens": 84703
+  },
+  {
+   "seat": "decider facilitator ctx-5, green 1",
+   "source": "Agent completion report",
+   "subagent_tokens": 82357
+  },
+  {
+   "seat": "QA ctx-3, red 2",
+   "source": "Agent completion report",
+   "subagent_tokens": 83938
   }
  ],
  "cycles": [
   {
-   "plan": "next: criterion 1 red (QA ctx-3): a committed check that fails until the all-seat Decider record on 687410e..e3736d1 exists"
+   "criterion": 1,
+   "red": "6fccd4a (tests/test_card_211_decider_record.py; fails on the missing record)",
+   "green": "ed97c75 (DECIDERS.md and records/211/votes.json from the six votes verbatim; red 11/11; pushed about 9 s after the test passed; full suite on committed ed97c75 1556 OK, 1 skipped)",
+   "turn_records": [
+    "de13006",
+    "42d3f76"
+   ],
+   "refactor": "none needed: records only"
+  },
+  {
+   "criterion": 2,
+   "red": "53ec0c3 (tests/test_card_211_rerun_record.py; fails on the missing records/211/rerun.json)",
+   "green": "running: the independent re-run (QA ctx-3) on 687410e, e3736d1 and the head in three worktrees",
+   "turn_records": [
+    "81906b0"
+   ],
+   "plan": "next: green 2 lands, then criterion 3 under D177"
   }
  ],
  "stand_downs": [],
@@ -75,6 +107,8 @@
   }
  ],
  "observations_for_next_stand_down": [
-  "agy returned no reply once in a decision seat (window 211-taskforce, developer turn); Grok and Copilot returned none in every seat"
+  "agy returned no reply once in a decision seat (window 211-taskforce, developer turn); Grok and Copilot returned none in every seat",
+  "red 1's test accepts only NO OBJECTION, OBJECTION, Yes or No as a vote word, so green 1 wrote 'Yes' in each vote's main field for six 'Support-it' votes and kept the verbatim word in decider_vote; the test narrowed the Decider's vote words (for the gate)",
+  "the seats named eight defects in the 27 commits (turn-green-1.md): line-ending rewrites of test_card_mode.py and facilitator.py, gates landing with their tests and no red shown, possible duplicate gate logic, hard-coded 45/30/60-minute thresholds, about 3,900 lines that may over-specify, a retroactive ruling without proof of seat independence, a motion that left reshape and reject barely available; the identity point is settled by D177; the code defects are filed as cards at close"
  ]
 }
