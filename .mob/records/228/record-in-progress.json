@@ -10,7 +10,8 @@
   "agy_seats": "window 228-agy-seats (agy on decision seats now; build seats wait for an agy reader)",
   "sshagent_eval": "architect ruling (ruling-sshagent-architect.md): eval \"$(ssh-agent -s)\" stays a recorded finding (fail closed, D169); no clean twin; the next red turn record corrects slice line 63's wording",
   "criterion1_scope": "window 228-c1-scope: option (b), one capped cycle 1g (I and M ZOMBIES only); path forms to follow-up F4; no further criterion-1 cycle",
-  "criterion1_closed": "criterion 1 closed after 1g per window 228-c1-scope; path forms to follow-up F4"
+  "criterion1_closed": "criterion 1 closed after 1g per window 228-c1-scope; path forms to follow-up F4",
+  "criterion2_scope": "window 228-c2-scope: one last cycle 2c (reads are not runs; live Copilot seats scanned)"
  },
  "task_force": [
   {
@@ -152,6 +153,31 @@
    "seat": "dev green 2a (Claude subagent)",
    "detail": "scanned with green 2a's file-run scan; 'unreadable file' findings: runs of relative paths (scripts/mob_process.py, run from the records repo) resolved against the scanner's directory, not the call's working directory, so the scan fails closed",
    "raw": "green2a-ctx5: unreadable file: scripts/mob_process.py cannot be read (file scripts/mob_process.py, file_source: disk, run call 42) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-ac96d138fe50b9f5f.jsonl)\ngreen2a-ctx5: unreadable file: scripts/mob_process.py cannot be read (file scripts/mob_process.py, file_source: disk, run call 44) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-ac96d138fe50b9f5f.jsonl)"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 2b (Claude subagent)",
+   "detail": "clean: red2b-ctx3, 21 command(s) scanned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "dev green 2b (Claude subagent)",
+   "detail": "clean: green2b-ctx5, 38 command(s) scanned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "dev green 2a, re-scanned with green 2b (Claude subagent)",
+   "detail": "clean: green2a-ctx5, 34 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "findings, false positives",
+   "seat": "QA red 2a, re-scanned with green 2b (Claude subagent)",
+   "detail": "the unreadable-file class is gone; two findings remain: the known shutil.rmtree(p) string in a read-only probe, and a grep of turn-red-qa-1f.md judged as a run (escaped \\| in the pattern split as a pipe); the second is the 2c red",
+   "raw": "red2a-ctx3: recursive delete on a variable or unresolved path: shutil.rmtree(p) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-a94d64be2ed7d5a13.jsonl)\nred2a-ctx3: recursive delete on a variable or unresolved path: [char]114+[char]109 (file /c/Users/ringe/projects/phrase-lang/.mob/records/228/turn-red-qa-1f.md, file_source: disk, run call 5) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-a94d64be2ed7d5a13.jsonl)"
   }
  ],
  "token_usage": [
@@ -246,6 +272,16 @@
    "seat": "backend developer ctx-5, green 2a",
    "source": "Agent completion report (subagent_tokens)",
    "subagent_tokens": 107481
+  },
+  {
+   "seat": "QA ctx-3, red 2b",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 113529
+  },
+  {
+   "seat": "backend developer ctx-5, green 2b",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 116893
   }
  ],
  "cycles": [
@@ -333,6 +369,17 @@
     "cfd4af1"
    ],
    "plan": "next: red 2b = the Copilot events.jsonl reader AND resolving a run file against its call's working directory (stand-down 1 adjustment); green 2b; then criterion 3"
+  },
+  {
+   "criterion": 2,
+   "increment": "2b",
+   "red": "fa2351f (tests/test_command_scan_files_2b.py; 30 failures, 12 errors on committed code)",
+   "green": "bc0881e (Copilot events.jsonl reader; run files resolved against the call's cwd and earlier cd; backends.json copilot source; one card 227 pin updated; red 48/48, 20 modules 517 OK, full suite 1357 OK, 1 skipped; real Copilot files' key names checked read-only over 60 sessions: match)",
+   "turn_records": [
+    "31b5734",
+    "7d92e78"
+   ],
+   "plan": "next: red 2c (reads are not runs; run_backend feeds the Copilot reader), green 2c, then criterion 3"
   }
  ],
  "stand_downs": [
@@ -417,7 +464,7 @@
  ],
  "working_state": {
   "criterion1_cap": "CLOSED and capped (window 228-c1-scope): no more criterion-1 cycles on card 228; any new delete form, the path forms included, goes to a follow-up card (F4, residual forms)",
-  "criterion2_plan": "at most two cycles: 2a written-then-run file contents in Claude transcripts (green running); 2b the Copilot events.jsonl reader",
+  "criterion2_plan": "2a and 2b done; 2c is the last criterion-2 cycle (window 228-c2-scope)",
   "criterion3_plan": "the opt-in hook; aim for one cycle",
   "in_flight_rule": "an in-flight line (scratch inflight.sh) before every seat or window, including after a context summary"
  }

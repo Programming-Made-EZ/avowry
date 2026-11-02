@@ -1,0 +1,205 @@
+{
+ "window": "228-c2-scope",
+ "category": "mid-card addition",
+ "rule": "stand-down 1 rule (a third cycle on a criterion needs a scope window); D153; D171",
+ "proposed_by": {
+  "role": "facilitator (states the options; the team decides)",
+  "model": "facilitator",
+  "context": "facilitator",
+  "probe_reference": "probe 2026-11-02 03:25 UTC (.mob/records/probes/2026-10-30.jsonl)"
+ },
+ "opened_at": "2026-11-02T03:49:00Z",
+ "proposal": "# Card 228 mid-card decision: one more criterion-2 cycle for a false positive\n\nFacts: criterion 2's two cycles are done (2a dc58ebd/5ffc494, 2b fa2351f/bc0881e; full suite 1357 OK). Re-scanning this card's own seat transcripts with green 2b: three seats are clean, and the \"unreadable file\" class is gone. One seat (red 2a) still shows a finding of a new false-positive class: a file named only as an argument of `grep -n ... file.md` is judged as a file being run (the file's text mentions [char]114+[char]109, so the scan reports a delete). grep, cat, head, sed -n, wc and similar readers do not run a file. Second fact (green 2b's report, 7d92e78): the Copilot reader exists, but a live Copilot run still reports \"unscanned\", because facilitator.run_backend passes no cwd or startTime to scan_entry and the Copilot invocation names no session. So \"Copilot is read\" holds for a transcript given by hand, not yet for a seat the facilitator launches. Stand-down 1 caps each remaining criterion at two cycles, and a third needs a scope window first.\n\nOptions:\n(a) One more cycle, 2c: a red pins that a file named only as an argument of a reading command (grep, cat, head, tail, sed -n, wc, less, type, Get-Content) is not a run, while bash, sh, source, a leading dot, python, node, pwsh -File and the like stay runs, and that facilitator.run_backend passes a Copilot seat's cwd and start time to scan_entry so a live Copilot seat is scanned (or reported as no command source when no single session matches); a green makes both pass. No other change.\n(b) No more cycles: the grep class and the live-Copilot wiring go to the false-positive follow-up card (F3 in the slice's split), and the pre-ship gate explains each such finding by hand.\n\nProposal: option (a). Reason: criterion 2's acceptance is about files a seat RUNS and about Copilot being read; treating a read as a run, and a reader no launch feeds, are both defects against criterion 2's own acceptance, and without them every grepping seat carries a finding and every live Copilot seat stays unscanned. The cycle is small and it is the last for criterion 2.\n\nAsk: NO OBJECTION, or OBJECTION with one fixed condition.\n",
+ "checklist_D158": ".mob/records/228/checklist-228-c2scope.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "agy",
+   "context": "w228c2cp1-pmready",
+   "started_at": "2026-11-02T03:49:00Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nCITE: facilitator.run_backend passes no cwd or startTime to scan_entry and the Copilot invocation names no session\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 03:25 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T03:49:35.968807Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228c2-architect",
+   "started_at": "2026-11-02T03:52:11Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nOption (a) is bounded to a small, enforceable rule: a closed list of reader commands that never count as a run, with runners staying runs. It also wires the launched Copilot seat's cwd and start time, so the live case is scanned. It fixes defects against criterion 2's own acceptance.\n\nCITE: treating a read as a run, and a reader no launch feeds\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 03:25 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T03:52:44.452361Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "agy",
+   "context": "w228c2cp1-qa",
+   "started_at": "2026-11-02T03:53:45Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nBoth 2c pins test red first on HEAD (`_file_runs` splitting quoted `|` in `grep` arguments, and `facilitator.run_backend` gating `source` on `{SESSION}` without passing `cwd` and `started` to `scan_entry`) while keeping script-runner detection and fail-closed `no command source` checks intact.\nCITE: treating a read as a run, and a reader no launch feeds\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 03:25 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T03:54:28.021705Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228c2-dev",
+   "started_at": "2026-11-02T03:59:35Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nOption (a) is workable and fair to the work. The reading-command list and the run-command list are both named, so I can pin them in a red without gaming. The no-single-session fallback gives the Copilot wiring a clear pass condition. \"No other change\" keeps the scope tight.\n\nCITE: The cycle is small and it is the last for criterion 2.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 03:25 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T04:00:17.609409Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "agy",
+   "context": "w228c2cp1-auditlens",
+   "started_at": "2026-11-02T04:01:24Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nCITE: treating a read as a run, and a reader no launch feeds\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 03:25 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T04:01:58.964725Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228c2-decider",
+   "started_at": "2026-11-02T04:05:50Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe evidence frame holds. Both defects are tied to criterion 2's own acceptance. The scope is bounded and is the last cycle for criterion 2. The reading-command list and the run list are explicit. The Copilot wiring has a fallback (\"no command source\") when no single session matches.\n\nCITE: The cycle is small and it is the last for criterion 2.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 03:25 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T04:06:27.303874Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w228c2cp1-architect",
+   "started_at": "2026-11-02T03:51:13Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 03:25 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T03:51:53.634299Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w228c2cp1-dev",
+   "started_at": "2026-11-02T03:58:32Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 03:25 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T03:59:15.232319Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w228c2cp1-decider",
+   "started_at": "2026-11-02T04:04:47Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 03:25 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T04:05:32.144799Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "option (a) adopted without objection: a last criterion-2 cycle 2c pins that a file named only by a reading command (grep, cat, head, tail, sed -n, wc, less, type, Get-Content) is not a run, while bash, sh, source, a leading dot, python, node, pwsh -File stay runs, and that facilitator.run_backend passes a Copilot seat's cwd and start time so a live Copilot seat is scanned. QA's vote names the cause of the grep case: an escaped \\| in a grep pattern is split as a pipe. Six NO OBJECTION with valid D171 cites: agy for the product manager, QA and independent reviewer; Claude for the architect, developer and decider after Copilot seats returned no reply.",
+  "window_minutes": "03:48:14 to 04:06:59 UTC, serial"
+ },
+ "ended_at": "2026-11-02T04:07:34Z"
+}
