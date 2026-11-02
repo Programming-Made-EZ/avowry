@@ -13,7 +13,8 @@
   "criterion1_closed": "criterion 1 closed after 1g per window 228-c1-scope; path forms to follow-up F4",
   "criterion2_scope": "window 228-c2-scope: one last cycle 2c (reads are not runs; live Copilot seats scanned)",
   "criterion2_closed": "criterion 2 closed after 2c (window 228-c2-scope); new false-positive classes go to follow-up F3",
-  "criterion3_closed": "criterion 3 closed after 3b (two cycles, stand-down 1 cap)"
+  "criterion3_closed": "criterion 3 closed after 3b (two cycles, stand-down 1 cap)",
+  "preship_gate": "pre-ship gate be1bc1a: HOLD (the hook allows eval of ssh-agent output against the architect's ruling; bypass shown with a shadowed ssh-agent)"
  },
  "task_force": [
   {
@@ -44,14 +45,15 @@
  "open_points": [
   "the proposal's split of the 'Also owned here' items into follow-up cards is confirmed or changed at the slice (D136, D168)",
   "the T2 question: the real command source per backend, and whether a no-source seat fails closed or is recorded as a gap",
-  "conflict for the pre-ship gate: red 3a pins eval \"$(ssh-agent -s)\" as ALLOWED by the hook and green 3a lets it through, against the architect's ruling (ruling-sshagent-architect.md: it stays a recorded finding, fail closed, no clean twin); neither seat raised it. Criterion 3 is capped at two cycles, so a fix needs the team's decision"
+  "conflict for the pre-ship gate: red 3a pins eval \"$(ssh-agent -s)\" as ALLOWED by the hook and green 3a lets it through, against the architect's ruling (ruling-sshagent-architect.md: it stays a recorded finding, fail closed, no clean twin); neither seat raised it. Criterion 3 is capped at two cycles, so a fix needs the team's decision",
+  "Copilot locator tolerance: locate_copilot accepts a session.start up to 10 s after launch, but the gate found 20 of 20 real sessions starting 13 to 24 s after the recorded launch time, so a live Copilot seat would report 'no command source' (fails safe, unproved live)"
  ],
  "command_scans": [
   {
    "context": "ctx-1",
-   "status": "unscanned",
+   "status": "clean",
    "seat": "pm-ready (Copilot CLI)",
-   "reason": "Copilot has no command source"
+   "detail": "re-scanned by the independent reviewer at the gate with the Copilot reader (green 2b/2c): 1 command, no delete (be1bc1a)"
   },
   {
    "context": "ctx-2",
@@ -226,6 +228,17 @@
    "seat": "dev green 3a (Claude subagent)",
    "detail": "1 finding 'rm -rf x': a read-only python -c probe passed 'echo cm0gLXJmIHg= | base64 -d | sh' to scan_command as a string, and the scan decoded it; nothing decoded was run; to follow-up F3",
    "raw": "green3a-ctx5: recursive delete on a variable or unresolved path: rm -rf x (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-ab501238be720886b.jsonl)"
+  },
+  {
+   "context": "ctx-5",
+   "status": "finding, false positive",
+   "seat": "dev green 1c (Claude subagent), re-scanned at the gate",
+   "detail": "python -W error::DeprecationWarning read as a run file; recorded clean earlier because it was scanned before green 2a's file-run scan; to follow-up F3"
+  },
+  {
+   "seat": "nine agy decision seats (windows 228-agy-seats, 228-c1-scope, 228-c2-scope)",
+   "status": "unscanned",
+   "reason": "agy has no command source; accepted for decision seats by window 228-agy-seats; the voter only reads and answers"
   }
  ],
  "token_usage": [
@@ -490,7 +503,7 @@
     "19a59dc",
     "b5190a1"
    ],
-   "plan": "next: pre-ship gate (independent reviewer ctx-4), which rules on the ssh-agent conflict and the open false-positive findings; then sign-off, retro, close"
+   "plan": "next: window 228-gate-fix (team decides the ssh-agent fix and the Copilot locator tolerance), then the fix cycle, a gate re-check, sign-off, retro, closing record"
   }
  ],
  "stand_downs": [
@@ -565,6 +578,21 @@
    "by": "facilitator (seat briefs)",
    "what": "greens 1a to 2c ran the 30-minute full suite before committing, so each green sat uncommitted for about 30 to 41 minutes (green 2c: 41)",
    "handling": "auditor FLAG; seat briefs changed from green 3a"
+  },
+  {
+   "by": "QA seat",
+   "what": "red 2b fa2351f is 427 lines against slice line 68's 400-line limit",
+   "handling": "found at the gate; recorded"
+  },
+  {
+   "by": "facilitator",
+   "what": "criteria 2 and 3 also exceeded the thin-slice three-increment rule in total: 12 increments across the card (1a to 1g, 2a to 2c, 3a, 3b), each overrun covered by a scope window or stand-down 1",
+   "handling": "found at the gate; recorded"
+  },
+  {
+   "by": "facilitator",
+   "what": "the slice's follow-ups F1 to F6 are not filed yet",
+   "handling": "filed at card close"
   }
  ],
  "observations_for_next_stand_down": [
