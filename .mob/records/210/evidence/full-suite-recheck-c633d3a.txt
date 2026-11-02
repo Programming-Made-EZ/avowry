@@ -1,0 +1,3 @@
+Ran 1545 tests in 1740.775s
+OK (skipped=1)
+Full suite on c633d3a (mob-crosscli), run by the facilitator from a plain bash shell after the gate HOLD, 2026-11-02 16:13 to 16:43 UTC; tests/test_mob_summary alone: Ran 16 tests, OK.

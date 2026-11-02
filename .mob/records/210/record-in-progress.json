@@ -37,7 +37,7 @@
  ],
  "open_points": [
   "D168 Size line: the slice reports whole-file wc -c as the facilitator's brief asked; D168 C2 measures the bytes before the Size line (see deviations)",
-  "gate HOLD: test_mob_summary's two remote-publish tests failed in the gate's full run inside the Copilot CLI environment, but passed in green 3's full run on the same commit and pass alone (16 OK); the facilitator re-runs the full suite on c633d3a to decide flaky versus regression"
+  "gate HOLD evidence: the facilitator's full suite on c633d3a from a plain shell is 1545 OK (1 skipped) (evidence/full-suite-recheck-c633d3a.txt), test_mob_summary alone 16 OK; the gate's 2 failures came from a run through cmd /c inside the Copilot CLI; filed as bug card 268; the ship seat re-checks its HOLD"
  ],
  "working_state": {
   "caps": "D175: proposed 1 cycle per criterion; the slice writes the Cap lines",
