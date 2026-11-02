@@ -1,0 +1,305 @@
+{
+ "window": "211-taskforce",
+ "category": "task-force declaration",
+ "rule": "D153 at ready for card 211; D171; D175",
+ "proposed_by": {
+  "role": "product manager (ready)",
+  "model": "copilot (auto) via the Copilot CLI",
+  "context": "ctx-1",
+  "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl)"
+ },
+ "opened_at": "2026-11-02T19:19:40Z",
+ "proposal": "# Card 211 task-force declaration proposal\n\nPurpose: corrective for MD-010 on mob-defaults commits `687410e..e3736d1` (27 commits by one identity), producing records only: a Decider with all declared role seats, an independent re-run, and a final-state review committed by an identity that authored none of those 27 commits.\n\n## Team\n- Product manager (ready): **Copilot**, **ctx-1**. Why: owns scope, keeps MD-010 corrective intent explicit, and opens the window with the D165 intent line.\n- Architect (slice): **agy**, **ctx-2**. Why: writes the records-only slice, Done checks, D175 cap lines, and hostile-input labels (SEEN/INSURANCE).\n- QA engineer (independent re-run): **Claude**, **ctx-3**. Why: build seat; runs the independent suite/audit re-run with command-reader evidence.\n- Independent reviewer (final-state review): **Copilot**, **ctx-4**. Why: build/review seat with command reader; writes and verifies the final-state review record against git history.\n- Decider facilitator (decision window): **agy**, **ctx-5**. Why: decision-only seat under 228-agy-seats; runs vote collection and D171 cite checks.\n- Product manager (sign-off): **Claude**, **ctx-6**. Why: fresh-context sign-off and blocker call on unresolved identity constraints.\n\nRotation note: seats rotate by least-recently-used across Copilot, agy, Claude (D163/D164). Build seats stay on command-reader models (Claude/Copilot) per window 228-agy-seats; agy remains decision-only.\n\n## Left out and why\n- Codex: no quota in the current probe window.\n- Grok: no command reader; decision replies were empty in prior windows (card 270), so not used for build/review evidence.\n- Backend/frontend/UX/database/security/devops/technical-writer/language/performance roles: this card is records-only and does not change product code or UI; extra roles would add ceremony without improving the MD-010 corrective evidence.\n\n## Domain-expert question (T2)\nCan Done check 3 (non-author final-state review **by identity**) be satisfied when all seats currently commit under the same git identity, and if not, what approved non-author identity path is allowed?\n\n## Value, metric, counter-metric\n- Value: restore independence/accountability evidence for the 27-commit range without rewriting history.\n- Metric: all three Done checks pass in one recorded trail with no reviewer-identity ambiguity.\n- Counter-metric: decision/review churn (re-opened windows, repeated re-runs, or HOLD-to-SHIP reversals caused by unclear identity evidence).\n\n## Done checks (D157) and D175 caps\n1. **Decider with all role seats**: a Decider record + votes file includes every declared role seat, each with reason/cite and distinct context. Partial work fails if any role seat is missing, uncited, or not attributable to its context.\n   - **Cap: criterion 1, at most 1 cycle**\n2. **Independent re-run**: a non-author context re-runs suite + audit checks for `687410e..e3736d1` and head, with commands/commit/results recorded.\n   Partial work fails if only part of the range is checked, commands are missing, or independence is not evidenced.\n   - **Cap: criterion 2, at most 1 cycle**\n3. **Non-author final-state review in git (identity-level)**: review record is committed by an identity that authored none of the 27 commits, cites MD-010 and range, and lists author identities from git log.\n   Partial work fails if reviewer uses the same committing identity as the 27 commits, even with a different seat/context.\n   - **Cap: criterion 3, at most 1 cycle**\n\nCap total is 3 (D175-compliant). Any red beyond a cap requires a scope window committed before that red.\n\nHostile forms (D167/D175 labeling for the slice):\n- **SEEN**: same git identity authored all 27 commits.\n- **SEEN**: all current seats commit under that same identity.\n- **INSURANCE**: review from a different context but same identity incorrectly treated as independent.\n- **INSURANCE**: co-author/trailer text mistaken for distinct committing identity.\n\n## Which rules apply\n- **D165** applies: include explicit intent line before first red/re-run criterion.\n- **D166** applies: slice must state assumption about identity independence and probe it against git history.\n- **D167** applies: hostile-input list required (with SEEN/INSURANCE labels and entry-by-entry handling).\n- **D168** applies: keep slice under 15 KB and reject missing required slice fields.\n- **D171** applies: vote windows require valid CITE lines; unread votes do not count.\n- **D175** applies directly: cap line per criterion, caps sum <=3, hostile labels, and pre-red scope window for any over-cap cycle.\n\n## Done check 3 feasibility and blocker call\nWith today's single shared committing identity, Done check 3 cannot be met by seat/context rotation alone. Meeting check 3 requires either:\n1) a real non-author committing identity to perform the final-state review, or\n2) a product-owner ruling that changes or waives the identity-level requirement for this corrective.\n\nThis is a **product-owner decision blocker**, not a team-only decision.\n\n## Open points\n- Which approved non-author identity can commit the final-state review now?\n- If no separate identity is available, does the product owner grant a one-card waiver/change for Done check 3?\n- If a waiver is granted, what replacement evidence is required so MD-010 remains auditable?\n- Is a dedicated identity/provenance checker needed in follow-up to prevent recurrence?",
+ "checklist_D158": ".mob/records/211/checklist-211-taskforce.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "agy",
+   "context": "w211tfcp2-architect",
+   "started_at": "2026-11-02T19:21:11Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\n\nThe records-only structure, three Done checks with D175 caps of 1 each, and SEEN/INSURANCE hostile-input labels are minimal, enforceable from git without false positives, and surface the single-identity constraint on Done check 3 as an explicit product-owner blocker.\n\nCITE: all three Done checks pass in one recorded trail with no reviewer-identity ambiguity.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T19:21:49.234861Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w211tf-qa",
+   "started_at": "2026-11-02T19:25:11Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nEach Done check has a red-first failure condition, and check 3 is explicitly red under a shared identity. The blocker is named as a product-owner decision rather than passed by seat rotation. The SEEN/INSURANCE hostile forms cover same-identity and co-author-trailer false passes.\n\nCITE: Partial work fails if reviewer uses the same committing identity\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T19:25:47.910640Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w211tfc-dev",
+   "started_at": "2026-11-02T19:40:46Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: Any red beyond a cap requires a scope window committed before that red.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T19:41:15.615436Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider facilitator (decision window)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w211tf-auditlens",
+   "started_at": "2026-11-02T19:33:00Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nCheck 3 can be verified from git alone (`git log` author and committer lists against the 27 commits). The proposal also names the same-identity and trailer-text loopholes and sends the identity blocker to the product owner.\nCITE: Done check 3 cannot be met by seat/context rotation alone\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T19:33:34.956334Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w211tf-decider",
+   "started_at": "2026-11-02T19:36:46Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe framing rests on evidence. The three Done checks are falsifiable, and each has a cap. The identity constraint is labeled SEEN. The product-owner blocker is named instead of being hidden by seat rotation. The seats cover decision, re-run and review.\n\nCITE: Done check 3 cannot be met by seat/context rotation alone\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T19:37:15.915670Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "grok",
+   "context": "w211tfcp1-architect",
+   "started_at": "2026-11-02T19:19:40Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T19:20:14.770183Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w211tfcp1-qa",
+   "started_at": "2026-11-02T19:24:16Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T19:24:51.669512Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w211tfcp1-dev",
+   "started_at": "2026-11-02T19:27:04Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T19:27:44.951359Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider facilitator (decision window)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "agy",
+   "context": "w211tfcp2-dev",
+   "started_at": "2026-11-02T19:29:02Z",
+   "model": "gemini-4-argon-high",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T19:29:32.191223Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider facilitator (decision window)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w211tfccp1-dev",
+   "started_at": "2026-11-02T19:38:40Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T19:39:09.830178Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider facilitator (decision window)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w211tfccp2-dev",
+   "started_at": "2026-11-02T19:39:57Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T19:40:25.931667Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider facilitator (decision window)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w211tfcp1-auditlens",
+   "started_at": "2026-11-02T19:32:11Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T19:32:40.320196Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w211tfcp1-decider",
+   "started_at": "2026-11-02T19:34:34Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T19:35:02.338838Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w211tfcp2-decider",
+   "started_at": "2026-11-02T19:35:49Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 19:11 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T19:36:23.541969Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "adopted without objection: product manager ctx-1 (Copilot), architect ctx-2 (agy), QA (independent re-run) ctx-3 (Claude), independent reviewer (final-state review) ctx-4 (Copilot), decider facilitator ctx-5 (agy), sign-off ctx-6 (Claude); caps 1+1+1. Done check 3 needs a non-author committing identity: a product-owner blocker, raised. Five NO OBJECTION with valid D171 cites: agy for the architect; Claude for QA, the developer role, the reviewer and sign-off after Grok, Copilot and once agy returned no reply; the developer's turn was re-run once after two empty seats.",
+  "window_minutes": "19:19:05 to 19:41:45 UTC, serial"
+ },
+ "ended_at": "2026-11-02T19:42:07Z"
+}

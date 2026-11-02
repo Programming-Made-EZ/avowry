@@ -1,0 +1,63 @@
+{
+ "card": 211,
+ "title": "A whole-team review of the mob-defaults rulings commits",
+ "status": "in progress",
+ "decisions": {
+  "rank": "re-rank 19 (window rerank-19): first, the corrective named by MD-010",
+  "task_force": "window 211-taskforce (adopted, no conditions)"
+ },
+ "task_force": [
+  {
+   "role": "product manager (ready)",
+   "context": "ctx-1"
+  },
+  {
+   "role": "architect (slice)",
+   "context": "ctx-2"
+  },
+  {
+   "role": "QA engineer (independent re-run)",
+   "context": "ctx-3"
+  },
+  {
+   "role": "independent reviewer (final-state review)",
+   "context": "ctx-4"
+  },
+  {
+   "role": "decider facilitator",
+   "context": "ctx-5"
+  },
+  {
+   "role": "sign-off",
+   "context": "ctx-6"
+  }
+ ],
+ "open_points": [
+  "product-owner blocker: Done check 3 needs a review committed by an identity that authored none of the 27 commits; all 27 are by Xipooo <xipooo@gmail.com>, the identity every seat commits under; raised with the product owner, criteria 1 and 2 proceed"
+ ],
+ "working_state": {
+  "caps": "1+1+1 (D175)",
+  "green_commit_rule": "a green commits on its own tests plus named modules, full suite after",
+  "in_flight_rule": "an in-flight line before every seat or window"
+ },
+ "command_scans": [],
+ "token_usage": [
+  {
+   "seat": "pm-ready ctx-1 (Copilot CLI)",
+   "source": "Copilot CLI usage lines (scratch pm-ready-211.err)",
+   "requests": "6 Premium (1m 49s)",
+   "tokens_in": "577.7k (491.9k cached)",
+   "tokens_out": "6.4k"
+  }
+ ],
+ "cycles": [
+  {
+   "plan": "next: the slice (architect ctx-2, agy as adopted)"
+  }
+ ],
+ "stand_downs": [],
+ "deviations": [],
+ "observations_for_next_stand_down": [
+  "agy returned no reply once in a decision seat (window 211-taskforce, developer turn); Grok and Copilot returned none in every seat"
+ ]
+}
