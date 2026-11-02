@@ -8,7 +8,8 @@
   "slice": "turn-slice-architect.md (639c5e2, 14847 bytes): three criteria; T2: Copilot has a command source (events.jsonl), no-source seats are a recorded gap that blocks ship; PM's split confirmed with four changes",
   "slice_window": "window 228-slice (adopted, no conditions)",
   "agy_seats": "window 228-agy-seats (agy on decision seats now; build seats wait for an agy reader)",
-  "sshagent_eval": "architect ruling (ruling-sshagent-architect.md): eval \"$(ssh-agent -s)\" stays a recorded finding (fail closed, D169); no clean twin; the next red turn record corrects slice line 63's wording"
+  "sshagent_eval": "architect ruling (ruling-sshagent-architect.md): eval \"$(ssh-agent -s)\" stays a recorded finding (fail closed, D169); no clean twin; the next red turn record corrects slice line 63's wording",
+  "criterion1_scope": "window 228-c1-scope: option (b), one capped cycle 1g (I and M ZOMBIES only); path forms to follow-up F4; no further criterion-1 cycle"
  },
  "task_force": [
   {
@@ -118,6 +119,18 @@
    "status": "clean",
    "seat": "dev green 1e (Claude subagent)",
    "detail": "clean: 31 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 1f (Claude subagent)",
+   "detail": "clean: 20 command(s) scanned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "dev green 1f (Claude subagent)",
+   "detail": "clean: 37 command(s) scanned"
   }
  ],
  "token_usage": [
@@ -182,6 +195,21 @@
    "seat": "QA ctx-3, red 1e",
    "source": "Agent completion report (subagent_tokens)",
    "subagent_tokens": 80542
+  },
+  {
+   "seat": "backend developer ctx-5, green 1e",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 87354
+  },
+  {
+   "seat": "QA ctx-3, red 1f",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 90588
+  },
+  {
+   "seat": "backend developer ctx-5, green 1f",
+   "source": "Agent completion report (subagent_tokens)",
+   "subagent_tokens": 106215
   }
  ],
  "cycles": [
@@ -238,6 +266,16 @@
     "6244de2",
     "0556fd0"
    ]
+  },
+  {
+   "criterion": 1,
+   "increment": "1f",
+   "red": "ca59449 (tests/test_command_scan_hexwrap_1f.py; 17 failures on committed code)",
+   "green": "844f083 (hex and escapes to a shell decoded, bash/source <(...), bash < f, alias and Set-Alias, [char] sums; red 6/6, 17 modules 439 OK, full suite 1279 OK, 1 skipped)",
+   "turn_records": [
+    "79ee245",
+    "17b88ef"
+   ]
   }
  ],
  "stand_downs": [],
@@ -261,6 +299,7 @@
   "agy's first three decision seats (window 228-agy-seats) all replied with a valid cite; Copilot's three returned no reply again",
   "Dispatch timing observation for card 237 and the proposal to keep reversible trial parameters to a single decider (queued note 2026-11-01)",
   "a QA seat's turn-record commit landed on the facilitator's unpushed late-note commit in the shared checkout and the facilitator's push failed once (two writers, one checkout)",
-  "no in-flight lines were written from 12:51 to 22:31 UTC; late note 85854f6"
+  "no in-flight lines were written from 12:51 to 22:31 UTC; late note 85854f6",
+  "auditor FLAG: criterion 1 grew to six cycles against a one-cycle slice with no cap written; decided in window 228-c1-scope; the retro weighs a written cap on increments per criterion"
  ]
 }

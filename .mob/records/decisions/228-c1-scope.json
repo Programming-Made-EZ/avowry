@@ -1,0 +1,205 @@
+{
+ "window": "228-c1-scope",
+ "category": "mid-card addition",
+ "rule": "D153 mid-card decision for card 228 on criterion 1's scope (auditor FLAG: six cycles against a one-cycle slice); D157; D171",
+ "proposed_by": {
+  "role": "facilitator (states the options; the team decides)",
+  "model": "facilitator",
+  "context": "facilitator",
+  "probe_reference": "probe 2026-11-02 01:20 UTC (.mob/records/probes/2026-10-30.jsonl)"
+ },
+ "opened_at": "2026-11-02T01:33:24Z",
+ "proposal": "# Card 228 mid-card decision: the scope of criterion 1\n\nRaised by the auditor's FLAG: criterion 1 has grown to six red/green cycles (1a to 1f) against a slice that planned one cycle per criterion (D157), with criteria 2 and 3 not started. The facilitator states the options; the team decides.\n\nFacts from git: 1a hidden verbs (05a838f/63e4f61), 1b encoded (82c1e84/fdff54f), 1c non-shell (c743784/9fe3913), 1d git discard, iex and Remove-Item (40555b4/4e35837), 1e interpreters and rsync (025b178/53666c3), 1f hex, wrappers, alias and [char] (red ca59449, green running). Each green ran the full suite (about 30 minutes). What criterion 1's own acceptance (slice lines 44 to 47) still lacks after 1f: the I ZOMBIE (scan_entry, the CLI and facilitator.run_backend give the same findings for one file) and the M ZOMBIE (ten forms in one file give ten lines, duplicates once). The path forms (slice line 65) are a D167 hostile-input list, not a ZOMBIE of criterion 1.\n\nOptions:\n(a) Finish now: criterion 1 closes after green 1f; the I and M ZOMBIES and the path forms go to a follow-up card.\n(b) Cap it: one last cycle, 1g, limited to the I and M ZOMBIES, which are criterion 1's own acceptance; the path forms go to the slice's residual-forms follow-up (F4). After 1g no further criterion-1 cycle on this card; any new form found later is a follow-up card.\n(c) Split the remainder: criterion 1 closes after 1f, and a new card takes 1g plus the path forms.\n\nProposal: option (b). Reason: the I and M ZOMBIES are the acceptance the team adopted for criterion 1, so closing without them leaves criterion 1 unmet, while the path forms are a separate surface the slice already routes to F4. Then criterion 2, then criterion 3. The pre-ship gate counts the cycles per criterion and the retro weighs the increment rule (slice under D157 allowed increments, but no cap was written).\n\nAsk: NO OBJECTION, or OBJECTION with one fixed condition (for example, name option (a) or (c) instead).\n",
+ "checklist_D158": ".mob/records/228/checklist-228-c1scope.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "agy",
+   "context": "w228c1cp1-pmready",
+   "started_at": "2026-11-02T01:33:24Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nCapping criterion 1 at 1g finishes its adopted I and M ZOMBIES (slice lines 44-47) while routing path forms to F4 (line 35), advancing to criteria 2-3 and product value (VISION.md ruling 6).\nCITE: the I and M ZOMBIES are the acceptance the team adopted for criterion 1\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 01:20 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T01:34:01.554895Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228c1-architect",
+   "started_at": "2026-11-02T01:36:47Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nOption (b) is sound. The I and M ZOMBIES are criterion 1's own acceptance, and the path forms are a separate surface that F4 already routes elsewhere.\n\nCITE: the I and M ZOMBIES are the acceptance the team adopted for criterion 1\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 01:20 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T01:37:31.968955Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "agy",
+   "context": "w228c1cp1-qa",
+   "started_at": "2026-11-02T01:38:41Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nCITE: the I and M ZOMBIES are the acceptance the team adopted for criterion 1\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 01:20 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T01:39:17.445007Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228c1-dev",
+   "started_at": "2026-11-02T01:42:14Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nCITE: After 1g no further criterion-1 cycle on this card\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 01:20 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T01:42:50.424014Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "agy",
+   "context": "w228c1cp1-auditlens",
+   "started_at": "2026-11-02T01:43:58Z",
+   "model": "gemini-4-argon-high",
+   "raw": "NO OBJECTION\nOption (b) is verifiable from git alone: cycle 1g covers the remaining I and M ZOMBIES in turn-slice-architect.md (lines 44-47), routes line 65 path forms to F4 (line 35), and caps criterion 1 before criteria 2 and 3.\nCITE: the I and M ZOMBIES are the acceptance the team adopted for criterion 1\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 01:20 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T01:44:33.783273Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w228c1-decider",
+   "started_at": "2026-11-02T01:47:27Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nCITE: the I and M ZOMBIES are the acceptance the team adopted for criterion 1\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 01:20 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T01:48:01.551758Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w228c1cp1-architect",
+   "started_at": "2026-11-02T01:35:53Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 01:20 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T01:36:29.417102Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w228c1cp1-dev",
+   "started_at": "2026-11-02T01:41:21Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 01:20 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T01:41:56.510437Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w228c1cp1-decider",
+   "started_at": "2026-11-02T01:46:33Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-02 01:20 UTC (.mob/records/probes/2026-10-30.jsonl) and decider.py's own probe at 2026-11-02T01:47:09.585286Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "option (b) adopted without objection: one capped cycle 1g limited to criterion 1's own I ZOMBIE (scan_entry, CLI and facilitator.run_backend parity) and M ZOMBIE (ten forms, ten lines, duplicates once); the path forms (slice line 65) go to the residual-forms follow-up F4; no further criterion-1 cycle on card 228, any new form is a follow-up card; then criteria 2 and 3. Six NO OBJECTION with valid D171 cites: agy for the product manager, QA and independent reviewer; Claude for the architect, developer and decider after Copilot seats returned no reply.",
+  "window_minutes": "01:32:31 to 01:48:29 UTC, serial"
+ },
+ "ended_at": "2026-11-02T01:48:55Z"
+}
