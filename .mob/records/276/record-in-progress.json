@@ -55,6 +55,12 @@
    "seat": "Copilot ctx-4 (resumed)",
    "model": "copilot (auto) via the Copilot CLI; command scan clean, 18 commands; refactor 21 commands, clean",
    "evidence": "mob-defaults d3a9787 (Card 276 green 2: 60 named tests OK) and refactor c71c05f (one shared not-signed-in classifier)"
+  },
+  {
+   "role": "red",
+   "seat": "Copilot ctx-3 (resumed)",
+   "model": "copilot (auto) via the Copilot CLI; command scans clean (24 and 31 commands)",
+   "evidence": "mob-defaults ac5a5a2 (Card 276 red 3: 13 tests, 12 failing) corrected by fd09aaf (red 3b: 12 tests, all failing)"
   }
  ],
  "deviations": [
@@ -66,13 +72,15 @@
   "the facilitator's Git Bash tool shell fails 633 subprocess tests with OSError WinError 6 (the handle is invalid) on stdin duplication; that shell is not used as gate evidence, and the reference run is PowerShell",
   "red 1 (5ef4b8f) was plain pytest functions, so the reference runner `python -m unittest discover -s tests` collected none of it: the reference run on 5ef4b8f was Ran 1581 tests in 1631.850s, OK (skipped=1), PowerShell, worktree at 5ef4b8f (suite-276-red1.log). Found by the facilitator; green 1 was stopped before committing; the QA seat rewrote red 1 as unittest with the missing ZOMBIES (red 1b, 970118c: Ran 11, errors=11), pushed at about 03:21 UTC",
   "the facilitator's first PowerShell reference run on 5ef4b8f (02:22 to 02:49 UTC, 1606 s) kept only its last six lines, so its counts were lost; re-run in a worktree with full output",
-  "green 1 (2196c58) carries a 'Co-authored-by: Copilot' trailer added by the Copilot CLI; the mob's commits carry no co-author trailers; no history rewrite, so it stays and later briefs forbid it (refactor 41ecf78 has none)"
+  "green 1 (2196c58) carries a 'Co-authored-by: Copilot' trailer added by the Copilot CLI; the mob's commits carry no co-author trailers; no history rewrite, so it stays and later briefs forbid it (refactor 41ecf78 has none)",
+  "red 3 (ac5a5a2) used Claude-transcript-shaped fixtures where the slice and Muse's docs give an envelope stream, and its long-prompt test only checked the invocation string; found by the facilitator before green; corrected by the QA seat in red 3b (fd09aaf), whose payload shape is a stated assumption to check against the first signed-in session",
+  "red 3b dropped red 3's 'muse backend stays disabled' and 'unknown pin' tests (13 to 12); the green 3 brief requires the backend to stay disabled; for the reviewer"
  ],
  "notes": {
   "red1_zombies_drift": "for the reviewer: red 1 maps M to the live install, not to the slice's several-PATH-hits case; I, E (slash and backslash) and S (other backends unchanged) are not clearly covered; the six case tests skip until the helper module exists (importorskip) (red 1b adds M several PATH hits, I, E and S)",
   "muse_not_on_path": "Resolved 2026-11-03 about 03:35 UTC: Dispatch appended %LOCALAPPDATA%\\Programs\\muse to the user PATH (append only). In a fresh shell `muse` resolves to %LOCALAPPDATA%\\Programs\\muse\\muse.cmd and the live-install case runs and passes (11 tests, no skip).",
   "red2_required_cases": "from the facilitator's read of green 1, named in refactor 41ecf78: (a) _detect_sign_in tests 'signed in' before 'not signed in', so a not-signed-in reply reads as signed-in; (b) a version mismatch is appended to problems twice. Criterion 1's cap (1 cycle) is spent, so both go to red 2 (criterion 2 owns the not-signed-in state).",
   "red3_required_cases": "green 2's muse backend invocation is 'muse -p {PROMPT} --model {MODEL}', but Muse has no -p flag (`muse --help`): its headless mode is `muse exec`, which has --prompt-file <PATH> (avoids the .CMD shim's 8191-character command-line limit, the cause of the empty Grok and Copilot votes), --session-id <UUID> (pins the session log the reader locates) and --json. The backend is disabled, so nothing misfires now; red 3 must pin a working invocation with {SESSION}.",
-  "commit_author": "green 2 d3a9787 and refactor 2 c71c05f are authored by the Copilot CLI's own identity (see git log %an), not the shared identity: relevant to card 275 (seat attribution)"
+  "commit_author": "from green 1 (2196c58) on, every Copilot seat commit is authored by the Copilot CLI's own identity ('Copilot', see git log %an); red 1 (5ef4b8f) and red 1b (970118c) carry the shared identity Xipooo. Relevant to card 275 (seat attribution)"
  }
 }
