@@ -819,3 +819,11 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   COST (issue 245): one Breaker line per trip or return, and at most one probe per tripped model per day (one short prompt; an empty one costs about 1 to 2 minutes). No extra seat, file or meeting. If the cost shows, the probe is the first thing the retro cuts.
   REVERSIBILITY: two-way door. Stop writing the lines and place seats as before; no shared state, checker or earlier D-record changes.
 
+<a id="d179"></a>
+#### Decider D179: product owner ruling (not a team vote): card the Muse Code trial and rank it next after card 211
+
+- Date: 2026-11-03 (also posted on GitHub issue 251). Not a team vote: a product owner priority ruling. Reason given: the Muse Code subscription is active and unused, agy is out of quota, and Copilot and Grok decision votes come back empty.
+- Ruled: card the trial (card 276) and rank it next, right after card 211 closes.
+- First slice named by the product owner: (1) install the Muse Code CLI and settle the Windows question with an install test; (2) sign-in: if interactive, use a device-code or URL flow and put the code or URL in the report to Dispatch so the product owner can finish it from a phone, without blocking on it; (3) a Muse availability and quota probe; (4) then the event-log reader, voting seats first, build seats later.
+- The team owns the mechanics, the ZOMBIES acceptance criteria and the trust-ladder placement; only the priority is ruled.
+

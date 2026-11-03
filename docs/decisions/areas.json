@@ -1180,5 +1180,11 @@
     "status": "in force",
     "title": "A breaker for decision-seat rotation: a model that returns two empty or voteless replies in a row, or reports its quota reached, leaves decision seats until a probe vote parses; per path, so it keeps voice, ready, review and gate seats (card 211 retro pick, experiment, next 3 decision windows)",
     "order": 169
+  },
+  "D179": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Product owner ruling: card the Muse Code trial (card 276) and rank it next after card 211; first slice install, device-code sign-in, probe, event-log reader (voting seats first)",
+    "order": 170
   }
 }

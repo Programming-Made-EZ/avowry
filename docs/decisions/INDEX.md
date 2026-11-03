@@ -77,6 +77,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D176](process-and-staffing.md#d176) — Pre-ship gate reports state each test run's environment and re-run a failing module the card did not touch in the reference shell before the verdict (card 210 retro pick, experiment, next 3 gates)
 - [D177](process-and-staffing.md#d177) — Product owner ruling: card 211 Done check 3 waives the different-committing-identity requirement; replacement evidence is a fresh-context, non-author seat's final-state review with seat attribution, cited from the Decider and closing records
 - [D178](process-and-staffing.md#d178) — A breaker for decision-seat rotation: a model that returns two empty or voteless replies in a row, or reports its quota reached, leaves decision seats until a probe vote parses; per path, so it keeps voice, ready, review and gate seats (card 211 retro pick, experiment, next 3 decision windows)
+- [D179](process-and-staffing.md#d179) — Product owner ruling: card the Muse Code trial (card 276) and rank it next after card 211; first slice install, device-code sign-in, probe, event-log reader (voting seats first)
 
 ### benchmarks-and-measurement
 
@@ -276,3 +277,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D176](process-and-staffing.md#d176) | Pre-ship gate reports state each test run's environment and re-run a failing module the card did not touch in the reference shell before the verdict (card 210 retro pick, experiment, next 3 gates) | process-and-staffing | in force |
 | [D177](process-and-staffing.md#d177) | Product owner ruling: card 211 Done check 3 waives the different-committing-identity requirement; replacement evidence is a fresh-context, non-author seat's final-state review with seat attribution, cited from the Decider and closing records | process-and-staffing | in force |
 | [D178](process-and-staffing.md#d178) | A breaker for decision-seat rotation: a model that returns two empty or voteless replies in a row, or reports its quota reached, leaves decision seats until a probe vote parses; per path, so it keeps voice, ready, review and gate seats (card 211 retro pick, experiment, next 3 decision windows) | process-and-staffing | in force |
+| [D179](process-and-staffing.md#d179) | Product owner ruling: card the Muse Code trial (card 276) and rank it next after card 211; first slice install, device-code sign-in, probe, event-log reader (voting seats first) | process-and-staffing | in force |
