@@ -134,11 +134,10 @@
    "evidence": "no commit: the scope-3 stop rule fired"
   },
   {
-   "role": "QA engineer (fresh stand-in)",
-   "context": "ctx-6",
-   "driver": "Copilot CLI, --model auto",
-   "session": "50624fa6-f771-4af9-a508-5885ac19dfde",
-   "turns": "red 4b"
+   "role": "red",
+   "seat": "Copilot ctx-6 (fresh QA stand-in; ctx-3 compacted and lost the brief), --add-dir for the records repo and the Muse sessions folder",
+   "model": "copilot (auto), session 50624fa6-f771-4af9-a508-5885ac19dfde; command scan clean, 18 commands",
+   "evidence": "red 4b 25d50b8"
   }
  ],
  "deviations": [
