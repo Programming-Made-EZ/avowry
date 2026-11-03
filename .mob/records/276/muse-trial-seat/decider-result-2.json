@@ -1,0 +1,57 @@
+{
+  "result": "failed",
+  "prompt_sha": "9f7c0fac8b2744fbf96731a98b73a432df3d35680481f65256279dc149fd0335",
+  "probe": {
+    "taken_at": "2026-11-03T07:01:09.426422Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026M. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 3rd, 2026 11:16 PM."
+      },
+      "copilot": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "grok": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "agy": {
+        "ok": false,
+        "evidence": "\u2026our subscription to increase your limits. Resets in 134h24m28s.\",\"status\":\"RESOURCE_EXHAUSTED\",\"error_code\":429,\"code_kind\":\"http\",\"retryable\":true,\"error_id\":\"e90cf131-2a70-4bb4-9ff9-b7012ebdbbc8-1\"}"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      }
+    }
+  },
+  "votes": {
+    "muse": {
+      "vote": "No",
+      "reason": "OBJECTION Minimal and bounded: one invocation-string fix, cycle 3 of 3, stop on second refusal, committed cited evidence. CITE: Drop `--model`/`{MODEL}` from the muse invocation. muse: workspace root: C:\\Users\\<user> (cwd default) muse: Age",
+      "reply": "NO OBJECTION\nMinimal and bounded: one invocation-string fix, cycle 3 of 3, stop on second refusal, committed cited evidence.\nCITE: Drop `--model`/`{MODEL}` from the muse invocation.\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "default",
+      "command_scan": {
+        "status": "no command source",
+        "commands": 0,
+        "findings": []
+      },
+      "probe_taken_at": "2026-11-03T07:01:09.426422Z",
+      "probe_ok": true,
+      "probe_evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "line_index": 711
+    }
+  },
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  }
+}

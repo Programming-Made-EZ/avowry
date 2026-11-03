@@ -1,0 +1,24 @@
+{
+ "seat": "muse trial voter (card 276, window 276-scope-2 proposal, not counted toward adoption)",
+ "probe_state": {
+  "ok": true,
+  "taken_at": "2026-11-03T07:01:09.426422Z",
+  "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+  "state": "available"
+ },
+ "vote_reply": "NO OBJECTION\nMinimal and bounded: one invocation-string fix, cycle 3 of 3, stop on second refusal, committed cited evidence.\nCITE: Drop `--model`/`{MODEL}` from the muse invocation.\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n",
+ "session_id": "e338c0ee-ba55-4c61-9106-2b2546c9f686",
+ "session_log_path": "%USERPROFILE%\\.local\\share\\muse\\sessions\\2026\\11\\02\\e338c0ee-ba55-4c61-9106-2b2546c9f686\\session.jsonl",
+ "command_scan": {
+  "status": "no command source",
+  "commands": 0,
+  "findings": []
+ },
+ "run": "2026-11-03 06:59 to 07:02 UTC, decider.py --seats muse from PowerShell with muse on PATH, head 2f34856 (muse exec --session-id {SESSION} --prompt-file {PROMPT_FILE})",
+ "reply_first_line": "NO OBJECTION",
+ "cite": "Drop `--model`/`{MODEL}` from the muse invocation.",
+ "cite_found_verbatim_in_proposal": true,
+ "decider_summary_note": "decider.parse_vote maps 'NO OBJECTION' to 'No' because it expects Yes/No votes; the window answer is read from the reply's first line",
+ "scan_note": "status 'no command source' although the log was located: the real log records tool calls as tool_batch.effect.started with tool_name (here only read_file, no shell command), not the payload.command shape red 3b assumed; the reader fails safe (never clean) but does not read the real shape. Probe session aa498735-f49e-470b-994a-31338cc0a8d2.",
+ "decider_result": "decider-result-2.json"
+}
