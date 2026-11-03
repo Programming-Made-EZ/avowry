@@ -11,7 +11,8 @@
   "slice": "turn-slice-architect.md (Grok ctx-2, grok -p in plan mode, read-only; sessions 01a19f0b-c944-7563-be4f-85c64f74a327 continued twice with -c): caps 1+1+1; the Windows session-log root is found from XDG_DATA_HOME, else HOME, else USERPROFILE plus .local/share; a cited Muse vote waits on sign-in",
   "slice_window": "window 276-slice (adopted, no conditions; one D171 re-ask of the dev seat)",
   "criterion_1": "green 1 2196c58: red 1b's 11 tests pass (10 ok, the live case skipped where Muse is not on PATH). With %LOCALAPPDATA%\\Programs\\muse put on PATH for one process, the live case passes: version 1.4.14, launcher %LOCALAPPDATA%\\Programs\\muse\\muse.CMD, no problems, sign-in unknown. Refactor 41ecf78 (behaviour kept). Full reference suite on 2196c58 running in a worktree (suite-276-green1.log).",
-  "criterion_2": "red 2 dbe2e1c, green 2 d3a9787, refactor 2 c71c05f: the probe has a distinct not-signed-in state (no known_reset, no quota credit), disabled and unknown-pin states; the two defects carried from green 1 are fixed. The muse backend is added disabled."
+  "criterion_2": "red 2 dbe2e1c, green 2 d3a9787, refactor 2 c71c05f: the probe has a distinct not-signed-in state (no known_reset, no quota credit), disabled and unknown-pin states; the two defects carried from green 1 are fixed. The muse backend is added disabled.",
+  "criterion_3": "red 3 ac5a5a2 and red 3b fd09aaf, green 3 40d0d08, refactor 3 5157e3f: command_source reads Muse envelope logs (locate_muse, no-source for missing, unreadable, unresolved-root, empty, unparsable, Claude-shaped or command-less logs); run_backend has a {PROMPT_FILE} placeholder so long prompts never travel on the command line; the muse backend runs `muse exec --session-id {SESSION} --model {MODEL} --prompt-file {PROMPT_FILE} --json` with command_source muse, still disabled until sign-in"
  },
  "seats": [
   {
@@ -61,6 +62,12 @@
    "seat": "Copilot ctx-3 (resumed)",
    "model": "copilot (auto) via the Copilot CLI; command scans clean (24 and 31 commands)",
    "evidence": "mob-defaults ac5a5a2 (Card 276 red 3: 13 tests, 12 failing) corrected by fd09aaf (red 3b: 12 tests, all failing)"
+  },
+  {
+   "role": "green",
+   "seat": "Copilot ctx-4 (resumed)",
+   "model": "copilot (auto) via the Copilot CLI; command scans clean (28 and 34 commands)",
+   "evidence": "mob-defaults 40d0d08 (Card 276 green 3: 125 named tests OK) and refactor 5157e3f (one prompt-file helper)"
   }
  ],
  "deviations": [
@@ -74,13 +81,15 @@
   "the facilitator's first PowerShell reference run on 5ef4b8f (02:22 to 02:49 UTC, 1606 s) kept only its last six lines, so its counts were lost; re-run in a worktree with full output",
   "green 1 (2196c58) carries a 'Co-authored-by: Copilot' trailer added by the Copilot CLI; the mob's commits carry no co-author trailers; no history rewrite, so it stays and later briefs forbid it (refactor 41ecf78 has none)",
   "red 3 (ac5a5a2) used Claude-transcript-shaped fixtures where the slice and Muse's docs give an envelope stream, and its long-prompt test only checked the invocation string; found by the facilitator before green; corrected by the QA seat in red 3b (fd09aaf), whose payload shape is a stated assumption to check against the first signed-in session",
-  "red 3b dropped red 3's 'muse backend stays disabled' and 'unknown pin' tests (13 to 12); the green 3 brief requires the backend to stay disabled; for the reviewer"
+  "red 3b dropped red 3's 'muse backend stays disabled' and 'unknown pin' tests (13 to 12); the green 3 brief requires the backend to stay disabled; for the reviewer",
+  "green 2 (d3a9787) broke tests.test_command_scan_wiring (RealBackendsConfig pins the exact command_source map; the new muse entry is not in it). The seat committed on its named tests, which did not include that module, and the facilitator's full-suite run on c71c05f was still in progress when greens 3 and refactor 3 landed. Line stopped: no new red until the fix lands"
  ],
  "notes": {
   "red1_zombies_drift": "for the reviewer: red 1 maps M to the live install, not to the slice's several-PATH-hits case; I, E (slash and backslash) and S (other backends unchanged) are not clearly covered; the six case tests skip until the helper module exists (importorskip) (red 1b adds M several PATH hits, I, E and S)",
   "muse_not_on_path": "Resolved 2026-11-03 about 03:35 UTC: Dispatch appended %LOCALAPPDATA%\\Programs\\muse to the user PATH (append only). In a fresh shell `muse` resolves to %LOCALAPPDATA%\\Programs\\muse\\muse.cmd and the live-install case runs and passes (11 tests, no skip).",
   "red2_required_cases": "from the facilitator's read of green 1, named in refactor 41ecf78: (a) _detect_sign_in tests 'signed in' before 'not signed in', so a not-signed-in reply reads as signed-in; (b) a version mismatch is appended to problems twice. Criterion 1's cap (1 cycle) is spent, so both go to red 2 (criterion 2 owns the not-signed-in state).",
   "red3_required_cases": "green 2's muse backend invocation is 'muse -p {PROMPT} --model {MODEL}', but Muse has no -p flag (`muse --help`): its headless mode is `muse exec`, which has --prompt-file <PATH> (avoids the .CMD shim's 8191-character command-line limit, the cause of the empty Grok and Copilot votes), --session-id <UUID> (pins the session log the reader locates) and --json. The backend is disabled, so nothing misfires now; red 3 must pin a working invocation with {SESSION}.",
-  "commit_author": "from green 1 (2196c58) on, every Copilot seat commit is authored by the Copilot CLI's own identity ('Copilot', see git log %an); red 1 (5ef4b8f) and red 1b (970118c) carry the shared identity Xipooo. Relevant to card 275 (seat attribution)"
+  "commit_author": "from green 1 (2196c58) on, every Copilot seat commit is authored by the Copilot CLI's own identity ('Copilot', see git log %an); red 1 (5ef4b8f) and red 1b (970118c) carry the shared identity Xipooo. Relevant to card 275 (seat attribution)",
+  "gate_gaps": "for the gate and the sign-in follow-up: (1) the muse invocation uses --json, so the reply is JSONL events while decider.parse_vote reads a plain first line, so a Muse vote would be voteless until the output is cleaned or --json dropped; (2) --model {MODEL} with models default='default' is unverified against `muse exec`; (3) locate_muse uses only Path.home(), not the slice's XDG_DATA_HOME, then HOME, then USERPROFILE rule; (4) red 3b dropped the disabled and unknown-pin tests. None can be proven before sign-in except (3) and (4)."
  }
 }
