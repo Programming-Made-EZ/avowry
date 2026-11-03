@@ -1,0 +1,32 @@
+{
+ "card": 276,
+ "title": "Muse Code joins the mob as a trial driver",
+ "status": "in progress",
+ "decisions": {
+  "rank": "D179 (product-owner ruling, 2026-11-02): ranked next after card 211",
+  "task_force": "window 276-taskforce (adopted with one QA condition: criterion 3 carries a red-first no-source test for a missing, unreadable or Windows-path-unresolved session log, and a D167 hostile-input list; round 2 no objection from five seats). First attempt withdrawn (stale re-poll note).",
+  "install": "Dispatch installed Muse Code 1.4.14 natively on Windows at the product owner's request (.mob/records/276/dispatch-install-note.md); no seat re-runs install.ps1",
+  "sign_in": "Dispatch-owned: Dispatch runs muse login (device code) when the product owner says ready; the team does not block on it",
+  "d178": "per the product owner's coach-don't-bench principle, only quota or unavailability excludes a model (card 277); agy excluded (quota), Grok and Copilot stay in rotation",
+  "slice": "turn-slice-architect.md (Grok ctx-2, grok -p in plan mode, read-only; sessions 01a19f0b-c944-7563-be4f-85c64f74a327 continued twice with -c): caps 1+1+1; the Windows session-log root is found from XDG_DATA_HOME, else HOME, else USERPROFILE plus .local/share; a cited Muse vote waits on sign-in"
+ },
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Copilot ctx-1",
+   "evidence": ".mob/records/276/taskforce-proposal-pm.md"
+  },
+  {
+   "role": "slice",
+   "seat": "Grok ctx-2",
+   "model": "grok-4.6 via grok -p --permission-mode plan (Grok has no command reader, so the seat was read-only; its reply was written to file by the facilitator unchanged except the Size line, which the seat itself corrected from 10911 to 9866 on a re-ask)",
+   "evidence": "turn-slice-architect.md"
+  }
+ ],
+ "deviations": [
+  "window 276-taskforce first attempt (00:32 UTC) launched with a stale card-237 re-poll note and the card-237 architect lens; stopped and re-run as a first poll (facilitator)",
+  "slice seat first launched without grok's -p flag, so it ran as a full-screen TUI (stdout 0 bytes, stderr about 1 MB of control codes); stopped and relaunched headless (facilitator)",
+  "slice seat's first headless run ended after a web fetch without writing the slice; continued in the same session (-c) with web search off",
+  "slice seat's Size line read 10911; the measured bytes before it were 9866 (D168 C2); corrected by the seat on a re-ask"
+ ]
+}
