@@ -1,0 +1,52 @@
+{
+ "schema": 1,
+ "card": 276,
+ "title": "Muse Code joins the mob as a trial driver",
+ "process": "card-mode rules run by hand; product owner ruling D179 (voting seats first) and D180 (held open until Muse's Windows sandbox was set up; the clean scan not waived); slice caps 1+1+1, criterion 3 raised by windows 276-scope to 276-scope-4 to a final 1+1+6 = 8, with cycles 5 and 6 run past cap 4 before a window and ratified after the fact (audit 195); D176 gate environment lines; first gate HOLD, re-gate SHIP; code in mob-defaults 5ef4b8f..839380b",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Copilot ctx-1",
+   "model": "copilot (auto) via the Copilot CLI, product manager (ready): task-force proposal and D158 checklist; seats placed by the facilitator by role (the task force window 276-taskforce); Grok and Copilot decision seats returned empty (cmd.exe line limit; cards 229, 270, 277), so window votes fell to Claude; Muse Code a trial voter only (D179), uncounted",
+   "evidence": "5519b9a"
+  },
+  {
+   "role": "slice",
+   "seat": "Grok ctx-2",
+   "model": "grok-4.6 via grok -p --permission-mode plan (read-only), architect: slice and the four scope proposals in one continued session; seats placed by the facilitator by role (the task force window 276-taskforce); Grok and Copilot decision seats returned empty (cmd.exe line limit; cards 229, 270, 277), so window votes fell to Claude; Muse Code a trial voter only (D179), uncounted",
+   "evidence": "80db212"
+  },
+  {
+   "role": "red",
+   "seat": "Copilot ctx-3",
+   "model": "copilot (auto) via the Copilot CLI, QA engineer: reds 1 to 3 and cycles 2 to 4 (with the one Muse capture, a7505b9d); Copilot ctx-7, a fresh stand-in after ctx-3 compacted at 128k, wrote red 4b (cycle 5), red 4c (cycle 6) and fix 839380b; seats placed by the facilitator by role (the task force window 276-taskforce); Grok and Copilot decision seats returned empty (cmd.exe line limit; cards 229, 270, 277), so window votes fell to Claude; Muse Code a trial voter only (D179), uncounted",
+   "evidence": "0ca51fc"
+  },
+  {
+   "role": "green",
+   "seat": "Copilot ctx-4",
+   "model": "copilot (auto) via the Copilot CLI, backend developer: every green (commits authored Copilot); seats placed by the facilitator by role (the task force window 276-taskforce); Grok and Copilot decision seats returned empty (cmd.exe line limit; cards 229, 270, 277), so window votes fell to Claude; Muse Code a trial voter only (D179), uncounted",
+   "evidence": "ed1307d"
+  },
+  {
+   "role": "refactor",
+   "seat": "Copilot ctx-4",
+   "model": "copilot (auto) via the Copilot CLI, backend developer: refactors 41ecf78, c71c05f, 5157e3f, fdfa821; seats placed by the facilitator by role (the task force window 276-taskforce); Grok and Copilot decision seats returned empty (cmd.exe line limit; cards 229, 270, 277), so window votes fell to Claude; Muse Code a trial voter only (D179), uncounted",
+   "evidence": "f082c6e"
+  },
+  {
+   "role": "ship",
+   "seat": "Copilot ctx-5",
+   "model": "copilot (auto) via the Copilot CLI, independent reviewer: first gate HOLD (no --add-dir), re-gate SHIP in a fresh session (cbd622dc) with its own scan_entry on the real Muse logs; seats placed by the facilitator by role (the task force window 276-taskforce); Grok and Copilot decision seats returned empty (cmd.exe line limit; cards 229, 270, 277), so window votes fell to Claude; Muse Code a trial voter only (D179), uncounted",
+   "evidence": "c60e047"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off: SIGNED OFF with six conditions, met here; it verified the clean scan and the fixture provenance itself; seats placed by the facilitator by role (the task force window 276-taskforce); Grok and Copilot decision seats returned empty (cmd.exe line limit; cards 229, 270, 277), so window votes fell to Claude; Muse Code a trial voter only (D179), uncounted",
+   "evidence": "3e6bc30"
+  }
+ ],
+ "retro": "docs/retros/card-276-2026-11-03.md",
+ "notes": "Signed off with conditions (.mob/records/276/signoff-ctx6.md), met here. Criteria: 1 install and sign-in (Muse 1.4.14 installed and signed in by Dispatch; 2196c58); 2 the probe with distinct not-signed-in, disabled and unknown states (d3a9787, c71c05f); 3 the event-log reader and the first seat: a Muse trial voter (session e338c0ee, window 276-scope-2 proposal, uncounted) was probed, cast a cited vote, and its log scans clean (0 commands, 3 read-only tools) by the reader at 839380b, checked by the re-gate and the sign-off each with its own scan_entry; the run-time scan was 'no command source' and is kept in evidence.json beside the re-scan; each fixture equals its live log with only the user path scrubbed. D180 is met without a waiver. Cap story (sign-off condition 1): criterion 3 went to caps 2, 3 and 4 by windows adopted before their reds; cycle 4 closed at green 2e56d9f; red 25d50b8 with green 7c04e2e, and red 58b5c26 with green 0000715, were cycles 5 and 6, run past cap 4 with no window before them; window 276-scope-4 ratified cap 6 after the fact. The D175 metric is hit (two reds past the cap without a prior window). The bodies of 25d50b8, 7c04e2e, 58b5c26 and 0000715 say 'Cycle 4 of 4 ... red amendment 4b/4c' and are cycles 5 and 6 of 6; no amend, by rule. The retro pick D181 (a lettered red ends at the first passing green) closes the loophole. Corrections (condition 2): the 'no cap change' deviation is marked superseded; the missing seats are added to record-in-progress.json; evidence.json carries the re-scan beside the original; greens 7c04e2e and 0000715 had no full suite of their own (full suites on 2e56d9f 1633 OK and 839380b 1643 OK cover the final state). Trust-ladder placement (condition 5): Muse is a trial voter only; it is enabled in core/backends.json and listed in facilitator.MOB_BACKENDS but sits in no role fallback chain, and no counted seat ran on it; no build seat until card 285 (its sandboxed shell does not complete a command) and a trust-ladder decision. Product owner told (condition 3): the clean scan arrived at cycle 6, past the cap 4 that D180 named, ratified by the team after the fact. Cards filed: 277 (reshaped), 279 to 283, 285 to 287; card 279 is delivered by this card and is to close at re-rank 20. Not carded: the facilitator's scratch window runner reads a literal first line (a facilitator tool, not mob-defaults). Scans (condition 6): every seat's transcript scanned (command-scans.json); the one flag, a read-only python -c in Copilot session 50624fa6 at 17:04:32 UTC, is a delete-guard false positive (card 283); the sign-off seat scans clean (29 commands); check re-run after this record."
+}

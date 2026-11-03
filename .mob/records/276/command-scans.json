@@ -1,0 +1,179 @@
+{
+ "card": 276,
+ "command_scans": [
+  {
+   "seat": "ready",
+   "context": "Copilot ctx-1",
+   "status": "see detail",
+   "detail": ""
+  },
+  {
+   "seat": "slice",
+   "context": "Grok ctx-2",
+   "status": "see detail",
+   "detail": "grok-4.6 via grok -p --permission-mode plan (Grok has no command reader, so the seat was read-only; its reply was written to file by the facilitator unchanged except the Size line, which the seat itse"
+  },
+  {
+   "seat": "red",
+   "context": "Copilot ctx-3",
+   "status": "clean",
+   "detail": "command scan clean, 11 commands"
+  },
+  {
+   "seat": "red",
+   "context": "Copilot ctx-3 (resumed, session 11891944-1713-4b02-b514-174a88d313f1)",
+   "status": "clean",
+   "detail": "command scan clean, 15 commands"
+  },
+  {
+   "seat": "green",
+   "context": "Copilot ctx-4",
+   "status": "see detail",
+   "detail": "copilot (auto) via the Copilot CLI: window 276-taskforce named Grok for green, but a build seat needs a command reader (window 228-agy-seats) and Grok has none; Copilot is the least-recently-used mode"
+  },
+  {
+   "seat": "red",
+   "context": "Copilot ctx-3 (resumed)",
+   "status": "clean",
+   "detail": "command scan clean, 20 commands"
+  },
+  {
+   "seat": "green",
+   "context": "Copilot ctx-4 (resumed)",
+   "status": "clean",
+   "detail": "command scan clean, 18 commands"
+  },
+  {
+   "seat": "red",
+   "context": "Copilot ctx-3 (resumed)",
+   "status": "clean",
+   "detail": "command scans clean (24 and 31 commands)"
+  },
+  {
+   "seat": "green",
+   "context": "Copilot ctx-4 (resumed)",
+   "status": "clean",
+   "detail": "command scans clean (28 and 34 commands)"
+  },
+  {
+   "seat": "red",
+   "context": "Copilot ctx-3 (resumed)",
+   "status": "clean",
+   "detail": "command scan clean, 36 commands"
+  },
+  {
+   "seat": "red",
+   "context": "Copilot ctx-3 (resumed)",
+   "status": "clean",
+   "detail": "command scan clean, 47 commands"
+  },
+  {
+   "seat": "red",
+   "context": "Copilot ctx-3 (resumed)",
+   "status": "clean",
+   "detail": "command scan clean, 50 commands"
+  },
+  {
+   "seat": "green",
+   "context": "Copilot ctx-4 (resumed twice)",
+   "status": "clean",
+   "detail": "command scans clean (43 and 47 commands)"
+  },
+  {
+   "seat": "red",
+   "context": "Copilot ctx-3 (resumed)",
+   "status": "clean",
+   "detail": "command scan clean, 60 commands"
+  },
+  {
+   "seat": "green",
+   "context": "Copilot ctx-4 (resumed)",
+   "status": "clean",
+   "detail": "command scan clean, 51 commands"
+  },
+  {
+   "seat": "ship",
+   "context": "Copilot ctx-5 (fresh session ba1bafec-48a3-4fcd-a385-142a0621507f)",
+   "status": "clean",
+   "detail": "command scan clean, 14 commands"
+  },
+  {
+   "seat": "red",
+   "context": "Copilot ctx-3 (resumed, --add-dir for the records repo)",
+   "status": "clean",
+   "detail": "command scan clean, 73 commands"
+  },
+  {
+   "seat": "red",
+   "context": "Copilot ctx-7 (fresh QA stand-in; ctx-3 compacted and lost the brief), --add-dir for the records repo and the Muse sessions folder",
+   "status": "clean",
+   "detail": "command scan clean, 18 commands"
+  },
+  {
+   "seat": "red",
+   "context": "Copilot ctx-3 (resumed), --add-dir for the records repo and the Muse sessions folder",
+   "status": "clean",
+   "detail": "command scan clean, 98 commands"
+  },
+  {
+   "seat": "green",
+   "context": "Copilot ctx-4 (resumed)",
+   "status": "clean",
+   "detail": "command scan clean, 61 commands"
+  },
+  {
+   "seat": "green",
+   "context": "Copilot ctx-4 (resumed)",
+   "status": "clean",
+   "detail": "command scan clean, 84 commands"
+  },
+  {
+   "seat": "red",
+   "context": "Copilot ctx-7 (fresh QA stand-in, resumed)",
+   "status": "flag: delete-guard false positive (card 283)",
+   "detail": "command scan: one flag at 17:04:32 UTC, a read-only python -c (delete-guard false positive, card 283), otherwise clean"
+  },
+  {
+   "seat": "green",
+   "context": "Copilot ctx-4 (resumed)",
+   "status": "clean",
+   "detail": "command scan clean, 87 commands"
+  },
+  {
+   "seat": "refactor",
+   "context": "Copilot ctx-4 (resumed)",
+   "status": "clean",
+   "detail": "command scan clean, 89 commands"
+  },
+  {
+   "seat": "fix",
+   "context": "Copilot ctx-7 (resumed)",
+   "status": "clean",
+   "detail": "its 6 commands since 17:20 UTC scan clean"
+  },
+  {
+   "seat": "proposer (scope-4)",
+   "context": "Grok ctx-2 (continued), -p --permission-mode plan",
+   "status": "see detail",
+   "detail": "grok-4.6; read-only plan mode, no command reader"
+  },
+  {
+   "seat": "re-gate",
+   "context": "Copilot ctx-5 (fresh session), --add-dir for mob-crosscli",
+   "status": "clean",
+   "detail": "command scan clean, 14 commands"
+  },
+  {
+   "seat": "sign-off",
+   "context": "Claude ctx-6 (fresh subagent context)",
+   "status": "clean",
+   "detail": "command scan clean, 29 commands (.scan-signoff-276)"
+  },
+  {
+   "seat": "trial voter (not counted)",
+   "context": "Muse Code 1.4.14, decider.py --seats muse, window 276-scope-2 proposal",
+   "status": "see detail",
+   "detail": "muse (default model), session e338c0ee-ba55-4c61-9106-2b2546c9f686; scan at run time 'no command source'; re-scan at 839380b clean, 0 commands, 3 other tools"
+  }
+ ]
+}
