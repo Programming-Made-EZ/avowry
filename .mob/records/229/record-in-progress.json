@@ -7,7 +7,8 @@
   "task_force": "window 229-taskforce (adopted with one condition: Done check 1 needs a committed over-limit prompt test for Copilot and Grok AND a live Copilot and Grok vote with a valid cite and committed evidence); caps 1+1+1",
   "fold_270": "card 270 is closed as folded into 229 when 229 ships; 229 carries 270's Done checks",
   "slice": "turn-slice-architect.md (architect ctx-2, fresh Claude subagent; scan clean, 31 commands): grok --prompt-file, copilot via node plus npm-loader.js; caps 1+1+1; live non-counted Copilot and Grok votes; stop rule",
-  "slice_window": "window 229-slice (adopted, no conditions; six NO OBJECTION)"
+  "slice_window": "window 229-slice (adopted, no conditions; six NO OBJECTION)",
+  "red_1": "red 1 ab8f4a5 (QA ctx-3, fresh Claude subagent; scan clean, 29 commands; pushed): tests/test_launch_long_prompt.py, 20 tests, 15 fail (18 entries with subtests) for the named reasons (cmd.exe 'The command line is too long.', WinError 206, no named refusal, grok still -p, cmd.exe mangling '&'), 5 ZOMBIES guards pass; four guard suites pass (55); fixture tests/fixtures/long_window_prompt.txt. Probe: grok --prompt-file one-line prompt, rc 0, stdout OK, single-turn, no TUI, 4.5 s. Finding: the round-2 window proposal alone is 7232 characters; the live step must measure the whole seat prompt decider.py sends (role text, header and proposal) and record that it exceeds 8191"
  },
  "seats": [
   {
@@ -21,6 +22,12 @@
    "seat": "Claude ctx-2",
    "model": "claude, a fresh subagent context, architect (read-only); command scan clean, 31 commands",
    "evidence": ".mob/records/229/turn-slice-architect.md"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, a fresh subagent context, QA engineer; command scan clean, 29 commands",
+   "evidence": "red 1 ab8f4a5"
   }
  ],
  "deviations": [
