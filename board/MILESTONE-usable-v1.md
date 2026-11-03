@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:54fc1f026f117c72ac138e35541ad2415545d1173333336b78cea3056d9f5881 -->
+<!-- board-table-sha256:762b90c727aa4ceb6e0aebc826c5d4614f575d2bc3dc1c82cf68b50e70bc3d66 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -106,7 +106,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 84 | 228 Recursive-delete scan covers hidden, encoded and non-shell forms, and the contents of files a seat writes | Done | card 227 (its command-position scan, literal-path allow-list and fail-closed coverage) |
 | 85 | 210 The card record check rejects an empty task force and empty probes | Done | none |
 | 86 | 211 A whole-team review of the mob-defaults rulings commits | Done | none |
-| 87 | 276 Muse Code joins the mob as a trial driver | Ready | none |
+| 87 | 276 Muse Code joins the mob as a trial driver | Done | none |
 | 88 | 264 The read-and-modify acceptance test is not flaky | Ready | none |
 | 89 | 229 A Copilot decision seat receives its whole prompt and casts a vote | Ready | none |
 | 90 | 265 Decision windows launch voters in parallel safely | Ready | card 226 (the decision-seat gate) |
