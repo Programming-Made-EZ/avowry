@@ -1,5 +1,34 @@
-# Card 276 retro inputs
+# Card 276 retro input (facilitator; facts only)
 
+Card: Muse Code joins the mob as a trial driver (D179; voting seats first). Code in mob-defaults, 25 commits 5ef4b8f..839380b; signed off with conditions (.mob/records/276/signoff-ctx6.md).
+
+## Flow metrics (UTC, from commits)
+- Ruling D179 00:24, task-force proposal 00:29, first red 02:18, sign-off 18:22 on 2026-11-03: about 18 hours. That includes about 7 hours blocked (08:50 to 16:05) on the product owner's ruling D180 and the elevated Muse sandbox setup by Dispatch.
+- Caps: slice 1+1+1; criterion 3 raised by four scope windows to 2, 3, 4 and 6 (final 1+1+6 = 8). Cycles 5 and 6 ran past cap 4 without a window and were ratified after the fact (audit 195; window 276-scope-4).
+- Windows: 276-taskforce (two rounds, first run withdrawn), 276-slice, 276-scope, 276-scope-2, 276-scope-3 (two rounds), 276-scope-4. Every Claude seat in each window first paid an empty Grok and an empty Copilot attempt (the cmd.exe line limit; cards 229, 270, 277).
+- Gates: first gate HOLD (Done check 3 partly met; the gate seat had no --add-dir); re-gate SHIP with its own scan.
+- Full suites (PowerShell worktree): 1581, 1592, 1601 with 1 failure (regression, fixed by e3608ae), 1613, 1623, 1626, 1633, 1643; all OK otherwise.
+
+## Adjustments to review first (D155)
+1. D175 written cycle caps and scope windows: four raises on one criterion, then two cycles past the cap under lettered names.
+2. D176 gate environment lines: the first gate could not run its subject tests (no --add-dir); the re-gate ran them and its own scan.
+3. D178 decision-seat breaker (card 211 retro pick, experiment for the next 3 decision windows): no detector in decider.py, so it never fired; reshaped by the product owner's coach-don't-bench principle into card 277.
+4. Green commit rule and the refactor line per green: greens 7c04e2e and 0000715 had no full suite of their own; refactors after each green except where noted.
+
+## Observations
+- Muse: installed and signed in by Dispatch; the probe, the reader and one cited trial vote landed; the vote log scans clean only after the reader learned Muse's real tool records (three red-green pairs after the first real capture). Muse's sandboxed shell still does not complete a command (card 285). A model id was never validated (`--model default` refused).
+- Fixtures: a trimmed red fixture let a green pass while real logs failed; whole real logs then exceeded the Windows path limit in deep checkouts (fixed flat, guard test added).
+- Seats: a resumed Copilot QA context compacted at 128k and lost its brief (fresh ctx-7 stood in); --model auto picked mai-code-1.1-flash; Grok plan-mode early stops were traced to a cancelled byte-counting tool call and fixed in the brief.
+- A delete-guard false positive on a read-only command (card 283).
+- Cards filed on this card: 277 (reshaped), 279 to 283, 285 to 287. Card 279 is delivered by this card.
+
+## Queued inputs to weigh
+- Proposal issues 278 (the cmd.exe line-limit fix ranked next) and 284 (drift resistance as a benefit, with a measure) go to re-rank 20, not this retro; .mob/records/notes/2026-11-03-empty-decision-votes-root-cause.md.
+
+## Standing section: the feedback-loop lens (D165)
+Each voice names, for the 7 loops, who or what gives the feedback, its latency, what the team does with it, and MISSING where none exists.
+
+## Retro notes recorded during the card
 ## Grok single-turn runs stop after reading, before writing (Dispatch note, 2026-11-03)
 
 - Seen twice on card 276. The slice seat (`grok -p ... --permission-mode plan`, about 01:35 UTC) exited 0 after reading, with only narration on stdout. So did the scope seat (04:31 UTC). Each time the facilitator continued the same session (`grok -p "...write it now..." -c`), which worked. The scope continuation added "Do not run more tools".
