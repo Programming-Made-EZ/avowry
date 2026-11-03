@@ -1198,5 +1198,11 @@
     "status": "in force",
     "title": "A lettered red is allowed only before any green has passed the red it corrects; after that the next red is a new cycle under the D175 cap and window; one window may set the remaining cap but never ratifies cycles already run (card 276 retro pick, experiment, next 3 capped cards)",
     "order": 172
+  },
+  "D182": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Re-rank 20: the cmd.exe vote fix first (278); drift resistance named as a direction with its measure to pre-register (284, in part); a cut line replacing line 36's process-first rule, conditional on the product owner's confirmation (288); card 279 closed as delivered by 276; next card 229",
+    "order": 173
   }
 }

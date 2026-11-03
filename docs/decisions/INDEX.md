@@ -80,6 +80,7 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 - [D179](process-and-staffing.md#d179) — Product owner ruling: card the Muse Code trial (card 276) and rank it next after card 211; first slice install, device-code sign-in, probe, event-log reader (voting seats first)
 - [D180](process-and-staffing.md#d180) — Product owner ruling: card 276 stays open (clean scan not waived) until Muse's Windows shell sandbox is set up by Dispatch; then cycle 4 runs as adopted and the card is re-gated
 - [D181](process-and-staffing.md#d181) — A lettered red is allowed only before any green has passed the red it corrects; after that the next red is a new cycle under the D175 cap and window; one window may set the remaining cap but never ratifies cycles already run (card 276 retro pick, experiment, next 3 capped cards)
+- [D182](process-and-staffing.md#d182) — Re-rank 20: the cmd.exe vote fix first (278); drift resistance named as a direction with its measure to pre-register (284, in part); a cut line replacing line 36's process-first rule, conditional on the product owner's confirmation (288); card 279 closed as delivered by 276; next card 229
 
 ### benchmarks-and-measurement
 
@@ -282,3 +283,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D179](process-and-staffing.md#d179) | Product owner ruling: card the Muse Code trial (card 276) and rank it next after card 211; first slice install, device-code sign-in, probe, event-log reader (voting seats first) | process-and-staffing | in force |
 | [D180](process-and-staffing.md#d180) | Product owner ruling: card 276 stays open (clean scan not waived) until Muse's Windows shell sandbox is set up by Dispatch; then cycle 4 runs as adopted and the card is re-gated | process-and-staffing | in force |
 | [D181](process-and-staffing.md#d181) | A lettered red is allowed only before any green has passed the red it corrects; after that the next red is a new cycle under the D175 cap and window; one window may set the remaining cap but never ratifies cycles already run (card 276 retro pick, experiment, next 3 capped cards) | process-and-staffing | in force |
+| [D182](process-and-staffing.md#d182) | Re-rank 20: the cmd.exe vote fix first (278); drift resistance named as a direction with its measure to pre-register (284, in part); a cut line replacing line 36's process-first rule, conditional on the product owner's confirmation (288); card 279 closed as delivered by 276; next card 229 | process-and-staffing | in force |

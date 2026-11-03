@@ -1,0 +1,69 @@
+{
+ "decider": "D182",
+ "subject": "re-rank 20 (proposal .mob/records/reranks/2026-11-03-20.md): product-owner proposals 278, 284 and 288, and the order",
+ "proposer": "product manager seat (fresh Claude context)",
+ "result": "PASSED (1 Yes, 5 Support-it, 0 No; every seat 278: Yes, 284: Yes, 288: Yes; every reply with a valid D171 cite)",
+ "seat_note": "seats placed by the decision-seat gate; all six counted votes on Claude, each after empty Grok and Copilot seats (the waste 278 targets)",
+ "votes": [
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "rr20-architect",
+   "started_at": "2026-11-03T20:24:07Z",
+   "overall": "Support-it",
+   "per_proposal": "278: Yes; 284: Yes; 288: Yes",
+   "cite": "rank only process cards that block safe, honest product work",
+   "reply": "Support-it\n278: Yes; 284: Yes; 288: Yes\n\nThe design is mostly sound and enforceable. The fix-before-diagnosis order (229/270 before 277) is right. The two-to-one product/process interleave is mechanical, so rerank.py can check it without false positives. Splitting 284 is also right: the VISION line is added, but the criterion waits for a pre-registered measure.\n\nTwo reservations, neither placement-changing:\n- The cut-line test \"blocks safe, honest product work\" is judgment-based. Record a one-line justification per above-cut card so the rule can be checked. Otherwise the cut drifts.\n- The 288 replacement needs the product owner's confirmation (D161) before line 36 is edited. Until then the old line 36 stands.\n\nIf 265 is still slow after 229/270, I would move it above the cut, as the proposal already states. Closing 279 as Superseded is fine.\n\nCITE: rank only process cards that block safe, honest product work\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "rr20-qa",
+   "started_at": "2026-11-03T20:27:54Z",
+   "overall": "Support-it",
+   "per_proposal": "278: Yes; 284: Yes; 288: Yes",
+   "cite": "Every re-rank draws a cut line. Above it rank only process cards that block safe, honest product work",
+   "reply": "Support-it\n278: Yes; 284: Yes; 288: Yes\n\nI support the order. I would change two things so the checks catch violations instead of passing bad state.\n\n- **288 cut line:** The replacement text for line 36 must be testable red first. A rank check should fail when a non-blocking process card sits above the cut line, and it should fail when a card that names an open audit FAIL is not first. Otherwise the cut line is a rule with no detector.\n- **278 and 270:** Put the empty-vote guard in the test before the fix lands. An empty attempt must fail instead of counting as a vote, and every counted vote must still carry a valid cite. Otherwise 229 and 270 could pass while still hiding the stderr.\n\nI agree with 277 coming after the fix, so its trips are tested on real causes. I also agree with deferring the drift criterion until its measure is pre-registered.\n\nCITE: Every re-rank draws a cut line. Above it rank only process cards that block safe, honest product work\n"
+  },
+  {
+   "role": "dev",
+   "seat": "claude",
+   "context": "rr20-dev",
+   "started_at": "2026-11-03T20:31:48Z",
+   "overall": "Yes",
+   "per_proposal": "278: Yes; 284: Yes; 288: Yes",
+   "cite": "stop paying the empty-vote tax in every window",
+   "reply": "Yes\n278: Yes; 284: Yes; 288: Yes\n\nAs the seat that works under these rules every card, I find them workable. The cut line is concrete, with a named admission test (safety, vote correctness, flaky tests, open FAILs) and a fixed two-product-to-one-process rhythm. I can follow that without gaming it. The jump rule is also unambiguous: only a card that blocks the next product card or names an open FAIL moves up.\n\nPutting 229 and 270 first removes the empty Grok and Copilot attempts that tax every window. 264 and 258 above the cut spare every product gate a flaky test.\n\nPlacements I would keep: 266 right after 196 and 197, since WIP is one at that point. 284 is correctly split, with the VISION text now and the criterion only after a Decider pre-registers the measure.\n\nOne condition: 288's replacement for line 36 takes effect only with the product owner's confirmation (D161). Without it, the cut-line trial doesn't start.\n\nCITE: stop paying the empty-vote tax in every window\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "rr20-auditlens",
+   "started_at": "2026-11-03T20:35:28Z",
+   "overall": "Support-it",
+   "per_proposal": "278: Yes; 284: Yes; 288: Yes",
+   "cite": "stop paying the empty-vote tax in every window",
+   "reply": "Support-it\n278: Yes; 284: Yes; 288: Yes\n\nPlacements 278 and 288 can be checked from git, but the cut-line wording leaves loopholes. These are the changes I'd want:\n- **288 \"blocks\":** \"Blocks safe, honest product work\" is judgment, not a git fact. Require each above-cut card to cite a named FAIL, a failing test, or a reproduced record. Otherwise any process card can claim to block and jump the queue.\n- **288 guard:** \"Product cards closed per day\" is Goodhart-able, since small cards raise it. Pair it with a check that each closed product card carries its record and retro.\n- **288 rule change:** Replacing line 36 must be committed only with the product owner's confirmation in git (D161).\n- **279:** Closing it as Superseded needs a committed record that cites commits 25d50b8 to 0000715, not just the archive row.\n- **284(c):** The new card must stay out of card 153's criteria until its own Decider.\n\nCITE: stop paying the empty-vote tax in every window\n"
+  },
+  {
+   "role": "decider",
+   "seat": "claude",
+   "context": "rr20-decider",
+   "started_at": "2026-11-03T20:39:01Z",
+   "overall": "Support-it",
+   "per_proposal": "278: Yes; 284: Yes; 288: Yes",
+   "cite": "stop paying the empty-vote tax in every window",
+   "reply": "Support-it\n278: Yes; 284: Yes; 288: Yes\nThe framing is mostly evidence-based. Each position has a stated measure, guards and reversal triggers, and 284 declines to turn drift resistance into a success criterion before it has a pre-registered measure. I have two conditions.\n\n1. **288 sign-off seat:** the replacement for line 36 is product owner direction under D161, so the Decider's adoption must be recorded as conditional on the product owner's confirmation. If that confirmation is missing, line 36 stays and the cut-line order is not applied.\n2. **264 placement:** whether audit 123 is open is unverified. The facilitator should check it before applying the order, because 264 moves to rank 1 if it is open.\n\nI would also have the audit seat name cards for the four open FAILs (F-072, F-074, F-078 and F-086). That makes the \"no open FAIL\" guard testable rather than assumed.\n\nCITE: stop paying the empty-vote tax in every window\n"
+  },
+  {
+   "role": "coach",
+   "seat": "claude",
+   "context": "rr20-coach",
+   "started_at": "2026-11-03T20:42:43Z",
+   "overall": "Support-it",
+   "per_proposal": "278: Yes; 284: Yes; 288: Yes",
+   "cite": "stop paying the empty-vote tax in every window",
+   "reply": "Support-it\n278: Yes; 284: Yes; 288: Yes\n\nThe task force looks right-sized for this. Fixing the empty Grok and Copilot votes (278) restores real independence, and independence is the point of a Decider. The 9-card cut line is short enough to be honest. The two-product-then-one-process cadence is also a clear process, with a measure and guards that revert it if they fail.\n\nPlacements I would change:\n- 284: it is right to hold it back from card 153's criteria until a Decider pre-registers the measure. I would not rank the new measurement card ahead of any product card.\n- 288: adoption must wait for the product owner's confirmation of D161, as the proposal says.\n- 275, a Decider-only card, should stay at a retro and not take a pull slot.\n- The process stream has about 45 cards. That is a backlog, so I would let the review at re-rank 23 prune it.\n\nCITE: stop paying the empty-vote tax in every window\n"
+  }
+ ]
+}
