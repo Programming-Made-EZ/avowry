@@ -35,7 +35,9 @@
   "cycle_count_ruling": "Facilitator's answer to audit 195 (Dispatch note, 2026-11-03 ~17:22 UTC): red 4b and red 4c are NOT amendments within cycle 4. In substance they are cycles 5 and 6 of criterion 3, past scope-3's cap of 4, and they ran without the D175 scope window that must come before any red past a cap. Reason: the earlier lettered reds (1b, 3b) corrected a red before any green had passed it, so the cycle never closed. Here green 2e56d9f had passed red 5b3292e, so cycle 4 closed. Red 4b (25d50b8) and green 7c04e2e were a new red-green pair, and so were red 4c (58b5c26) and green 0000715. Both stayed inside scope-3's adopted scope (the reader's real shape and the allowlist condition, no new behaviour), but staying in scope does not waive the cap. The note asked for this record before the green for 4c; that green (0000715, 17:10 UTC) and its refactor (fdfa821, 17:16 UTC) had already landed, so this is recorded after them. Remedy: no further red on card 276 until a D175 scope window (276-scope-4, category mid-card addition) rules on cycles 5 and 6. If adopted, the cap goes from 4 to 6 with no more cycles; if refused, the code returns to green 2e56d9f by revert commits (no history rewrite) and the real-log gap goes to card 279. The fixture-path fix in flight (a test-only move with no behaviour change, precedent fix e3608ae) is not a cycle; it is named in the window too.",
   "suite_839380b": "full reference suite on 839380b (PowerShell, a fresh worktree at a 116-character scratch path, which now checks out): Ran 1643 tests in 1646.721s, OK (skipped=1), the baseline skip",
   "scope_window_4": "window 276-scope-4 (17:41 to 17:59 UTC, .mob/records/decisions/276-scope-4.json; proposal .mob/records/276/turn-scope4-architect.md, architect ctx-2 on Grok): adopted (A), no conditions. Criterion 3 cap 4 to 6 (caps 1+1+6 = 8); cycles 5 and 6 ratified after the fact; no further red; next the re-gate with its own scan_entry on the real-log fixtures and --add-dir for mob-crosscli; a vote-log scan other than clean means HOLD, with the remainder to card 279",
-  "gate_2": "SHIP (18:09 UTC, .mob/records/276/preship-regate.md): independent reviewer ctx-5, fresh Copilot CLI session cbd622dc-041a-47b0-b05c-07e4c598e3e3 with --add-dir for mob-crosscli; its own scan_entry at 839380b: vote log e338c0ee clean, commands 0, other_tools 3; capture log a7505b9d clean, commands 3; 14 named modules Ran 169 OK (skipped 1); mob_process check OK; Done checks 1 to 3 met; no blocker; card 279 overlaps what shipped. The gate could not prove the fixtures' bytes equal the live logs. Facilitator check after the gate: each fixture equals its live log with only the user path scrubbed (C:<sep>Users<sep>ringe to <user>), so the vote evidence's provenance holds. Seat scan clean, 14 commands"
+  "gate_2": "SHIP (18:09 UTC, .mob/records/276/preship-regate.md): independent reviewer ctx-5, fresh Copilot CLI session cbd622dc-041a-47b0-b05c-07e4c598e3e3 with --add-dir for mob-crosscli; its own scan_entry at 839380b: vote log e338c0ee clean, commands 0, other_tools 3; capture log a7505b9d clean, commands 3; 14 named modules Ran 169 OK (skipped 1); mob_process check OK; Done checks 1 to 3 met; no blocker; card 279 overlaps what shipped. The gate could not prove the fixtures' bytes equal the live logs. Facilitator check after the gate: each fixture equals its live log with only the user path scrubbed (C:<sep>Users<sep>ringe to <user>), so the vote evidence's provenance holds. Seat scan clean, 14 commands",
+  "green_full_suites": "greens 7c04e2e and 0000715 ran only their named modules; full suites ran on 2e56d9f (1633 OK) and on 839380b (1643 OK), which covers the final state. The green-commit rule was not met for those two commits",
+  "signoff": "SIGNED OFF with conditions (18:22 UTC, .mob/records/276/signoff-ctx6.md, Claude ctx-6 fresh subagent; scan clean, 29 commands): cap story stated in the closing record; stale entries corrected (this commit); the product owner told the clean scan came at cycle 6; card 279 closed as delivered at the re-rank and new cards for the uncarded defects; Muse placed as trial voter only; scan and check after the closing record"
  },
  "seats": [
   {
@@ -145,6 +147,72 @@
    "seat": "Copilot ctx-7 (fresh QA stand-in; ctx-3 compacted and lost the brief), --add-dir for the records repo and the Muse sessions folder",
    "model": "copilot (auto), session 50624fa6-f771-4af9-a508-5885ac19dfde; command scan clean, 18 commands",
    "evidence": "red 4b 25d50b8"
+  },
+  {
+   "role": "red",
+   "seat": "Copilot ctx-3 (resumed), --add-dir for the records repo and the Muse sessions folder",
+   "model": "copilot (auto), session 11891944-1713-4b02-b514-174a88d313f1; command scan clean, 98 commands; one muse exec capture a7505b9d",
+   "evidence": "cycle 4 red 5b3292e"
+  },
+  {
+   "role": "green",
+   "seat": "Copilot ctx-4 (resumed)",
+   "model": "copilot (auto), session ae576973-c725-4cfd-a911-cd394be81112; command scan clean, 61 commands",
+   "evidence": "cycle 4 green 2e56d9f (full suite 1633 OK on it)"
+  },
+  {
+   "role": "green",
+   "seat": "Copilot ctx-4 (resumed)",
+   "model": "copilot (auto), session ae576973-c725-4cfd-a911-cd394be81112; command scan clean, 84 commands",
+   "evidence": "cycle 5 green 7c04e2e (named modules only; no full suite on this commit)"
+  },
+  {
+   "role": "red",
+   "seat": "Copilot ctx-7 (fresh QA stand-in, resumed)",
+   "model": "copilot (auto), session 50624fa6-f771-4af9-a508-5885ac19dfde; command scan: one flag at 17:04:32 UTC, a read-only python -c (delete-guard false positive, card 283), otherwise clean",
+   "evidence": "cycle 6 red 58b5c26"
+  },
+  {
+   "role": "green",
+   "seat": "Copilot ctx-4 (resumed)",
+   "model": "copilot (auto), session ae576973-c725-4cfd-a911-cd394be81112; command scan clean, 87 commands",
+   "evidence": "cycle 6 green 0000715 (named modules only; no full suite on this commit)"
+  },
+  {
+   "role": "refactor",
+   "seat": "Copilot ctx-4 (resumed)",
+   "model": "copilot (auto), session ae576973-c725-4cfd-a911-cd394be81112; command scan clean, 89 commands",
+   "evidence": "refactor fdfa821"
+  },
+  {
+   "role": "fix",
+   "seat": "Copilot ctx-7 (resumed)",
+   "model": "copilot (auto), session 50624fa6-f771-4af9-a508-5885ac19dfde; its 6 commands since 17:20 UTC scan clean",
+   "evidence": "fix 839380b (full suite 1643 OK on it)"
+  },
+  {
+   "role": "proposer (scope-4)",
+   "seat": "Grok ctx-2 (continued), -p --permission-mode plan",
+   "model": "grok-4.6; read-only plan mode, no command reader",
+   "evidence": ".mob/records/276/turn-scope4-architect.md"
+  },
+  {
+   "role": "re-gate",
+   "seat": "Copilot ctx-5 (fresh session), --add-dir for mob-crosscli",
+   "model": "copilot (auto), session cbd622dc-041a-47b0-b05c-07e4c598e3e3; command scan clean, 14 commands",
+   "evidence": ".mob/records/276/preship-regate.md (SHIP)"
+  },
+  {
+   "role": "sign-off",
+   "seat": "Claude ctx-6 (fresh subagent context)",
+   "model": "claude (the facilitator's model, as a subagent); command scan clean, 29 commands (.scan-signoff-276)",
+   "evidence": ".mob/records/276/signoff-ctx6.md (SIGNED OFF with conditions)"
+  },
+  {
+   "role": "trial voter (not counted)",
+   "seat": "Muse Code 1.4.14, decider.py --seats muse, window 276-scope-2 proposal",
+   "model": "muse (default model), session e338c0ee-ba55-4c61-9106-2b2546c9f686; scan at run time 'no command source'; re-scan at 839380b clean, 0 commands, 3 other tools",
+   "evidence": ".mob/records/276/muse-trial-seat/evidence.json"
   }
  ],
  "deviations": [
@@ -165,7 +233,7 @@
   "green 3 cycle 2 kept --model default on a check that cannot fail (model-profile show resolves any string); the live seat refused the id",
   "gate seat launched without --add-dir for mob-crosscli, so its targeted test run was refused by the Copilot CLI's permission prompt (no interactive user); a re-gate adds the directory",
   "cycle 4 resumed red (16:10 to 16:13 UTC): the QA seat's one muse exec passed both --prompt-file and inline prompt text and was refused at argument parsing ('--prompt-file cannot be used with inline prompt text', exit 2; session 5b9d7a16-0fd0-4d39-b886-baf51f8005af never created). Nothing ran, so the scope-3 stop rule (no shell-command record from a capture) was not reached; the facilitator coached the seat with the correct form and resumed it for one capture. The seat also reported the command text at payload.event.tool_calls[0].args.command in the earlier failed capture's log 93b23003, to be confirmed on a real run",
-  "cycle 4: red 5b3292e trimmed the real logs to selected rows, so green 2e56d9f passed the fixture while both real logs still scan no-source (same class as red 3b's Claude-shaped fixtures). Corrected in-cycle by a red amendment (red 4b) that commits the two whole real session logs, scrubbed, as fixtures; no cap change, as with red 1b and red 3b",
+  "cycle 4: red 5b3292e trimmed the real logs to selected rows, so green 2e56d9f passed the fixture while both real logs still scan no-source (same class as red 3b's Claude-shaped fixtures). Corrected in-cycle by a red amendment (red 4b) that commits the two whole real session logs, scrubbed, as fixtures; no cap change, as with red 1b and red 3b [SUPERSEDED by decisions.cycle_count_ruling and window 276-scope-4: red 4b was cycle 5, not an in-cycle amendment; the cap changed from 4 to 6]",
   "red 4b, attempt 1 (16:41 to 16:45 UTC, QA ctx-3 resumed, Copilot --model auto): the brief arrived intact, but the session compacted at its 128k threshold during the run (186 messages removed; model chosen by auto: mai-code-1.1-flash). The seat lost the brief, re-validated green 2e56d9f, and committed nothing. Diagnosis: a long resumed context near its limit. Fix: a fresh QA context (ctx-7) with a self-contained brief; retro item: resumed seats near the context limit, and auto picking a flash model for a red",
   "after refactor fdfa821 (17:17 UTC): the suite worktree under the scratchpad failed to check out, 'Filename too long'. Red 4b's fixtures under tests/fixtures/muse_real/... reach 146 characters (the longest tracked path before was 48), so any checkout deeper than about 114 characters (scratch worktrees, the Decider's throwaway clones, gate worktrees) fails on Windows. The suite launched on the partial worktree was stopped by the facilitator. Fix (QA ctx-7): flat short fixture names, the Muse layout built in a temp dir at test time, and a guard test that caps tracked paths at 80 characters; no behaviour change in command_source",
   "cycles 5 and 6 of criterion 3 (red 4b, green 7c04e2e; red 4c, green 0000715) ran past scope-3's cap of 4 under lettered names, without a D175 scope window; raised by audit 195; window 276-scope-4 to rule before any further red, the gate or sign-off",

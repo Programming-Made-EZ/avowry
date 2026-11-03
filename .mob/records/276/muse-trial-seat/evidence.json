@@ -20,5 +20,12 @@
  "cite_found_verbatim_in_proposal": true,
  "decider_summary_note": "decider.parse_vote maps 'NO OBJECTION' to 'No' because it expects Yes/No votes; the window answer is read from the reply's first line",
  "scan_note": "status 'no command source' although the log was located: the real log records tool calls as tool_batch.effect.started with tool_name (here only read_file, no shell command), not the payload.command shape red 3b assumed; the reader fails safe (never clean) but does not read the real shape. Probe session aa498735-f49e-470b-994a-31338cc0a8d2.",
- "decider_result": "decider-result-2.json"
+ "decider_result": "decider-result-2.json",
+ "command_scan_rescan": {
+  "at": "mob-crosscli 839380b, 2026-11-03 (re-gate 18:09 UTC and sign-off 18:17 UTC, each its own scan_entry)",
+  "status": "clean",
+  "commands": 0,
+  "other_tools": 3,
+  "note": "the original command_scan above is the run-time result and is kept; the re-scan applies the cycle 4 to 6 reader to the same bytes (fixture tests/fixtures/muse_real/e338c0ee.jsonl equals the live log with the user path scrubbed)"
+ }
 }
