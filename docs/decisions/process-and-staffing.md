@@ -903,3 +903,10 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   - Process cards crowded out product work: the first product card sat about 37th behind process and tooling cards, and the process queue grew faster than it drained (card 276 alone produced nine follow-up cards in one day).
   - An improvement tied to the story it serves proves itself on a real outcome, instead of on its own process metric.
 - Effects: D182's cut-line order and interleave rule are not applied; D182's head (cards 229, 270, 282, 277) stands, and card 229 continues as a decision-vote bug. The sorting runs at the next re-rank, after card 229. D182's measure and guards (product cards closed per day; open FAILs and findings per card must not rise) are for that re-rank to carry or replace.
+- Merit review (2026-11-03, after the D161 gate): seats product manager, architect, QA, backend developer, audit lens and decider: 0 Yes, 6 Support-it, 0 No, each with a condition; votes in .mob/records/deciders/D183-merit-votes.json. Adopted as the procedure for the sort at the next re-rank:
+  1. A real defect in safety, decision votes or tests is a failing check, a reproduced wrong vote or safety outcome, or a named incident (architect, QA).
+  2. The sort is committed first as a git-visible list, one line per existing process card: its disposition (bug or retro experiment), a one-line reason, and for each card kept as a bug the named failing check, reproduction or incident; a card without one leaves the board (audit lens, QA).
+  3. Each card's disposition is judged by a seat other than the card's proposer, recorded card by card (decider).
+  4. Each retro experiment is recorded in the retro log with an owner, its proof (the story and the measure), and a review date or story trigger (product manager, architect, developer).
+  5. The re-rank carries D182's measure and guards forward (product cards closed per day; open FAILs and findings per card must not rise) or replaces them explicitly (product manager).
+  Not adopted, raised for the product owner because it narrows the principle: at most one process change per story's diff (developer).

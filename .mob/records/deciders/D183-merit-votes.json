@@ -1,0 +1,68 @@
+{
+ "decider": "D183 merit review",
+ "subject": "D183 on its merits (process improvements serve the story being worked; the board holds only user stories and bugs)",
+ "result": "SUPPORTED by all six seats (0 Yes, 6 Support-it, 0 No), each with a condition; every reply with a valid D171 cite",
+ "seat_note": "all six on Claude, each after empty Grok and Copilot seats (card 229)",
+ "votes": [
+  {
+   "role": "pmready",
+   "seat": "claude",
+   "context": "d183m-pmready",
+   "started_at": "2026-11-03T22:52:37Z",
+   "overall": "Support-it",
+   "condition": "Each process card that leaves the board must be recorded in the retro log as an experiment with a named owner, a metric and a review date, and the re-rank must carry D182's measure and guards forward rather than leave them open.",
+   "cite": "The board holds only user stories and bugs.",
+   "reply": "Support-it\nCONDITION: Each process card that leaves the board must be recorded in the retro log as an experiment with a named owner, a metric and a review date, and the re-rank must carry D182's measure and guards forward rather than leave them open.\n\nThis returns the board to product value, and it fits the standing rules. Process changes are tied to a story, so the product cards-closed measure judges them. Real safety, decision-vote and test defects stay as bugs, so open FAILs still stop the line. Removals happen at the retro and re-rank, not ad hoc. It also avoids over-specifying: the team does not design process work up front. It improves what a story makes relevant.\n\nThe risk is accountability. \"The story's outcome is the proof\" could let experiments drift without a metric, and demoted process cards could simply vanish. The condition fixes both. The sort rule is also vague on what counts as a \"real defect\", so the re-rank should write that test down.\n\nCITE: The board holds only user stories and bugs.\n"
+  },
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "d183m-architect",
+   "started_at": "2026-11-03T22:56:23Z",
+   "overall": "Support-it",
+   "condition": "Define \"real defect in safety, decision votes or tests\" in the sort as a failing check, a reproduced wrong vote or safety outcome, or a named incident, and give every process card moved off the board one retro-experiment entry that records its owner story trigger.",
+   "cite": "process improvements serve the user story being worked and are not board cards",
+   "reply": "Support-it\nCONDITION: Define \"real defect in safety, decision votes or tests\" in the sort as a failing check, a reproduced wrong vote or safety outcome, or a named incident, and give every process card moved off the board one retro-experiment entry that records its owner story trigger.\n\nThe principle is sound. A board of user stories and bugs is the product backlog. The 37th-place evidence and card 276's nine follow-ups are strong reasons to stop process cards crowding out product work.\n\nTwo enforcement gaps remain. \"Real defect\" is a judgment call, so the sort can drift either way: process cards get relabelled as bugs, or true defects get demoted. Demoted cards also have no home with a trigger, so they would quietly vanish from tracking. A short definition and a retro-experiment entry with a trigger make both gaps checkable without false positives. D182's measure and guards are left open for the re-rank, which is acceptable.\n\nCITE: process improvements serve the user story being worked and are not board cards\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "d183m-qa",
+   "started_at": "2026-11-03T23:00:07Z",
+   "overall": "Support-it",
+   "condition": "Add a testable sort rule: each existing process card gets a written outcome, \"bug\" or \"retro experiment\", with a named failing check for every card kept as a bug, and any card without one leaves the board.",
+   "cite": "process improvements serve the user story being worked and are not board cards",
+   "reply": "Support-it\nCONDITION: Add a testable sort rule: each existing process card gets a written outcome, \"bug\" or \"retro experiment\", with a named failing check for every card kept as a bug, and any card without one leaves the board.\n\nAs worded, \"real defects in safety, decision votes or tests\" can't be tested red first. Nothing says what makes a defect \"real,\" so the sort could pass bad state in either direction. Cards might be kept without a failing check, or real defects might be demoted and lose their tracking. A retro experiment also has no stated pickup trigger and no proof test, so \"the story's outcome is the proof\" can't be falsified. A named failing check per kept bug fixes the first problem. D182's guards (open FAILs and findings per card must not rise) should also be carried into the re-rank explicitly.\n\nThe principle itself is sound. A product backlog should hold things users get, and the 37th-place evidence supports that.\n\nCITE: process improvements serve the user story being worked and are not board cards\n"
+  },
+  {
+   "role": "dev",
+   "seat": "claude",
+   "context": "d183m-dev",
+   "started_at": "2026-11-03T23:03:45Z",
+   "overall": "Support-it",
+   "condition": "Each retro experiment gets a named owner and a stated proof (the story and the measure), recorded in the retro file when it is picked up, and a story's diff may carry at most one process change.",
+   "cite": "process improvements serve the user story being worked and are not board cards",
+   "reply": "Support-it\nCONDITION: Each retro experiment gets a named owner and a stated proof (the story and the measure), recorded in the retro file when it is picked up, and a story's diff may carry at most one process change.\n\nAs the seat that works under these rules every card, I find the principle workable. A process change tied to a story I'm already in is easier to comply with than a standalone process card, and the story's outcome is a proof I can't game by tuning a process metric.\n\nTwo risks remain:\n- \"Relevant\" is loose. Without a cap, I could attach a process change to any story and call it relevant, and slice limits would blur.\n- Experiments that leave the board have no owner and no definition of proven. They could sit unpicked or be declared proven with no check.\n\nThe condition closes both gaps. Keeping real defects in safety, decision votes and tests as bugs is fair, and card 229 stays.\n\nCITE: process improvements serve the user story being worked and are not board cards\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "d183m-auditlens",
+   "started_at": "2026-11-03T23:07:24Z",
+   "overall": "Support-it",
+   "condition": "Require the sort at the next re-rank to be committed as a git-visible list, with one line per existing process card showing its disposition (bug, or retro experiment) and a one-line reason, before any card leaves the board.",
+   "cite": "process improvements serve the user story being worked",
+   "reply": "Support-it\nCONDITION: Require the sort at the next re-rank to be committed as a git-visible list, with one line per existing process card showing its disposition (bug, or retro experiment) and a one-line reason, before any card leaves the board.\n\nReasons: The principle is sound. The board should hold what users get, and the card-276 pile-up shows the cost of the old way. The audit weakness is that \"real defect\" and \"relevant to the story\" are judgments with no git-checkable trail. A process card could be dropped from the board with no record, and a story could be closed while carrying a loosely related process change. The condition makes the sort checkable from git, so a dropped card can be traced. Retro experiments also need a recorded owner and a recorded story where they were picked up and proven. Otherwise \"retro experiment\" turns into a place where process work disappears.\n\nCITE: process improvements serve the user story being worked\n"
+  },
+  {
+   "role": "decider",
+   "seat": "claude",
+   "context": "d183m-decider",
+   "started_at": "2026-11-03T23:11:00Z",
+   "overall": "Support-it",
+   "condition": "Before the sort at the next re-rank, name who judges each card as a \"real defect in safety, decision votes or tests\" (a seat other than the card's proposer), and record that card by card.",
+   "cite": "process improvements serve the user story being worked and are not board cards",
+   "reply": "Support-it\nCONDITION: Before the sort at the next re-rank, name who judges each card as a \"real defect in safety, decision votes or tests\" (a seat other than the card's proposer), and record that card by card.\n\nReasons: The principle is sound. The board should hold what users get, and the evidence is concrete (the first product card sat about 37th, and card 276 produced nine follow-up cards in one day). The risk is in the sort. \"Real defect\" has no judge. A proposer could label a process card a bug to keep it on the board, or leave a real safety or vote defect off it. Open FAILs and findings, such as F-072, F-074, F-078 and F-086, must not lose tracking when cards leave the board. Retro experiments also need an owner and a proof story, or they get dropped. D182's guards are left to the re-rank, so the evaluation still rests on evidence.\n\nCITE: process improvements serve the user story being worked and are not board cards\n"
+  }
+ ]
+}
