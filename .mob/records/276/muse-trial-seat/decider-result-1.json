@@ -1,0 +1,52 @@
+{
+  "result": "failed",
+  "prompt_sha": "11ea30a499786b056e57bd7e6cf742438ab7ad2a91b13c865ca71c453581937f",
+  "probe": {
+    "taken_at": "2026-11-03T06:11:09.908612Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026M. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 3rd, 2026 11:16 PM."
+      },
+      "copilot": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "grok": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "agy": {
+        "ok": false,
+        "evidence": "\u2026our subscription to increase your limits. Resets in 135h14m20s.\",\"status\":\"RESOURCE_EXHAUSTED\",\"error_code\":429,\"code_kind\":\"http\",\"retryable\":true,\"error_id\":\"c4769d55-70de-46c7-82bc-00fceef58983-1\"}"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "[facilitator] could not resolve executable 'muse' on PATH or in known install dirs; set \"executable\" for muse in backends.json"
+      }
+    }
+  },
+  "votes": {
+    "muse": {
+      "vote": "none",
+      "reason": "no response",
+      "reply": "",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "default",
+      "probe_taken_at": "2026-11-03T06:11:09.908612Z",
+      "probe_ok": false,
+      "probe_evidence": "[facilitator] could not resolve executable 'muse' on PATH or in known install dirs; set \"executable\" for muse in backends.json",
+      "line_index": 692
+    }
+  },
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  }
+}

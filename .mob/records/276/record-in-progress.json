@@ -14,7 +14,9 @@
   "criterion_2": "red 2 dbe2e1c, green 2 d3a9787, refactor 2 c71c05f: the probe has a distinct not-signed-in state (no known_reset, no quota credit), disabled and unknown-pin states; the two defects carried from green 1 are fixed. The muse backend is added disabled.",
   "criterion_3": "red 3 ac5a5a2 and red 3b fd09aaf, green 3 40d0d08, refactor 3 5157e3f: command_source reads Muse envelope logs (locate_muse, no-source for missing, unreadable, unresolved-root, empty, unparsable, Claude-shaped or command-less logs); run_backend has a {PROMPT_FILE} placeholder so long prompts never travel on the command line; the muse backend runs `muse exec --session-id {SESSION} --model {MODEL} --prompt-file {PROMPT_FILE} --json` with command_source muse, still disabled until sign-in",
   "regression_fix": "full reference run on c71c05f (PowerShell, worktree): Ran 1601 tests in 1683.891s, FAILED (failures=1, skipped=1), the single failure being test_command_scan_wiring's pinned command_source map; fixed by e3608ae (the pin now includes muse -> muse and the muse --session-id {SESSION}); full run on e3608ae (PowerShell, worktree, Muse on PATH and signed in): Ran 1613 tests in 1660.961s, OK (skipped=1), the same single skip as the baseline; line restored",
-  "scope_window": "window 276-scope (D175): criterion 3 cap raised from 1 to 2 (total 4; sign-in landed after the caps were spent), with one adopted audit-lens condition: the live Muse vote evidence is committed under .mob/records/276/ with session id and log path; items (1) sign-in text and (6) untrusted workspace go to follow-up cards; (5) dropped"
+  "scope_window": "window 276-scope (D175): criterion 3 cap raised from 1 to 2 (total 4; sign-in landed after the caps were spent), with one adopted audit-lens condition: the live Muse vote evidence is committed under .mob/records/276/ with session id and log path; items (1) sign-in text and (6) untrusted workspace go to follow-up cards; (5) dropped",
+  "criterion_3_cycle_2": "red 244678b, red 2b c0354cb, green cefaf4e. Refactor: none needed (the change is short and direct). A smell is noted for a follow-up: locate_muse accepts an injected root meaning either a home or a data root, because the cycle-1 fixtures pass a home and cycle 2 a data root; removing it changes tests. Full reference suite on cefaf4e in progress (suite-276-c3c2.log).",
+  "metric_attempt_1": "06:09 to 06:15 UTC, decider.py --seats muse on the adopted scope proposal as a trial voter (not counted): vote none, no response (.mob/records/276/muse-trial-seat/). Cause 1, facilitator environment: the facilitator's tool shell predates the user PATH change, so decider's probe could not resolve muse. Cause 2, the code: reproduced with muse on PATH, run_backend got 'agent loop failed: model failed: model `default` does not exist or you lack access' (rc nonzero; scan 'no command source', session 633ab116-3065-40f3-9307-09761bd6020d). Green 3 cycle 2's check (`muse model-profile show default`) resolves any string, so it did not validate the id. The adopted scope's stop rule applies ('--model default refusal (stop)'; 'a new Muse CLI shape ... ends the cycle; a later window'). Cycle 2 of 2 is spent, so the metric is unmet in this cycle."
  },
  "seats": [
   {
@@ -82,6 +84,18 @@
    "seat": "Copilot ctx-3 (resumed)",
    "model": "copilot (auto) via the Copilot CLI; command scan clean, 47 commands; spent the one allowed `muse exec` (plain and --json pong captures in the commit body)",
    "evidence": "mob-defaults 244678b (Card 276 red 3 cycle 2: 10 tests, 4 failures and 2 errors)"
+  },
+  {
+   "role": "red",
+   "seat": "Copilot ctx-3 (resumed)",
+   "model": "copilot (auto) via the Copilot CLI; command scan clean, 50 commands",
+   "evidence": "mob-defaults c0354cb (Card 276 red 3 cycle 2b: the shipped-config guard pins muse as enabled)"
+  },
+  {
+   "role": "green",
+   "seat": "Copilot ctx-4 (resumed twice)",
+   "model": "copilot (auto) via the Copilot CLI; command scans clean (43 and 47 commands)",
+   "evidence": "mob-defaults cefaf4e (Card 276 green 3 cycle 2: muse enabled, plain-text prompt-file exec, XDG/HOME/USERPROFILE roots, the vote-evidence builder; 96 named tests OK)"
   }
  ],
  "deviations": [
@@ -97,7 +111,9 @@
   "red 3 (ac5a5a2) used Claude-transcript-shaped fixtures where the slice and Muse's docs give an envelope stream, and its long-prompt test only checked the invocation string; found by the facilitator before green; corrected by the QA seat in red 3b (fd09aaf), whose payload shape is a stated assumption to check against the first signed-in session",
   "red 3b dropped red 3's 'muse backend stays disabled' and 'unknown pin' tests (13 to 12); the green 3 brief requires the backend to stay disabled; for the reviewer",
   "green 2 (d3a9787) broke tests.test_command_scan_wiring (RealBackendsConfig pins the exact command_source map; the new muse entry is not in it). The seat committed on its named tests, which did not include that module, and the facilitator's full-suite run on c71c05f was still in progress when greens 3 and refactor 3 landed. Line stopped: no new red until the fix lands",
-  "the facilitator's first Muse probe line at 04:22 UTC claimed available with evidence 'muse: command not found' (Git Bash cannot run muse.cmd by bare name); removed from the uncommitted probe file before commit and replaced by a real `muse.cmd usage` reading"
+  "the facilitator's first Muse probe line at 04:22 UTC claimed available with evidence 'muse: command not found' (Git Bash cannot run muse.cmd by bare name); removed from the uncommitted probe file before commit and replaced by a real `muse.cmd usage` reading",
+  "green 3 cycle 2's seat timed out (1400 s) running a wide module sweep the facilitator's brief asked for; resumed with a narrowed list. It then stopped rather than change tests/test_probe_model.py, whose guard pinned the enabled set; the QA seat amended the red (c0354cb)",
+  "green 3 cycle 2 kept --model default on a check that cannot fail (model-profile show resolves any string); the live seat refused the id"
  ],
  "notes": {
   "red1_zombies_drift": "for the reviewer: red 1 maps M to the live install, not to the slice's several-PATH-hits case; I, E (slash and backslash) and S (other backends unchanged) are not clearly covered; the six case tests skip until the helper module exists (importorskip) (red 1b adds M several PATH hits, I, E and S)",
@@ -107,6 +123,7 @@
   "commit_author": "from green 1 (2196c58) on, every Copilot seat commit is authored by the Copilot CLI's own identity ('Copilot', see git log %an); red 1 (5ef4b8f) and red 1b (970118c) carry the shared identity Xipooo. Relevant to card 275 (seat attribution)",
   "gate_gaps": "for the gate and the sign-in follow-up: (1) the muse invocation uses --json, so the reply is JSONL events while decider.parse_vote reads a plain first line, so a Muse vote would be voteless until the output is cleaned or --json dropped; (2) --model {MODEL} with models default='default' is unverified against `muse exec`; (3) locate_muse uses only Path.home(), not the slice's XDG_DATA_HOME, then HOME, then USERPROFILE rule; (4) red 3b dropped the disabled and unknown-pin tests. None can be proven before sign-in except (3) and (4).",
   "past_cap_items": "after sign-in, items past the D175 caps (each criterion spent its 1 cycle), for a scope window before any red: (1) muse_install._detect_sign_in reports 'unknown' for the signed-in usage text (Tier/Window/Weekly), and Dispatch notes a fresh subscription prints 'No usage data (server_sent_no_usage)', which must read as signed in with unknown quota, never not-signed-in; (2) --json reply versus decider.parse_vote; (3) enabling the muse backend and the card's metric, one Muse voting seat probed, scanned and casting a cited vote in a decision window; (4) locate_muse ignores XDG_DATA_HOME and USERPROFILE; (5) red 3b dropped the disabled and unknown-pin tests; (6) 'Agent delegation: auto unavailable: workspace is untrusted' outside a repo (Dispatch)",
-  "muse_plain_output": "muse exec without --json prints 'muse: workspace root: <cwd> (cwd default)' and 'muse: Agent delegation: auto unavailable: workspace is untrusted.' before the answer; decider.parse_vote searches for the first sentence-start vote word, so the lines do not void a vote; the facilitator's window runner, which checks a literal first line, must skip them for a Muse seat"
+  "muse_plain_output": "muse exec without --json prints 'muse: workspace root: <cwd> (cwd default)' and 'muse: Agent delegation: auto unavailable: workspace is untrusted.' before the answer; decider.parse_vote searches for the first sentence-start vote word, so the lines do not void a vote; the facilitator's window runner, which checks a literal first line, must skip them for a Muse seat",
+  "model_facts_for_next_window": "Dispatch's smoke test `muse exec \"Reply with exactly: pong\"` used no --model and returned pong; QA's red capture did the same. `muse model-profile show <model>` names catalog ids like muse-spark-1.3 but resolves any string. Options: drop --model (and {MODEL}) from the muse invocation, or pin a catalog id verified by a real call."
  }
 }
