@@ -33,7 +33,7 @@ accountability are under Practices, Task force before every card.
 
 ## Current goal (product owner direction, D161)
 
-The mob process keeps drifting, so it comes first: lock it down, enforce it with tooling, save it into the mob-defaults template, then build product work on it. Every re-rank ranks the work that gets the rules enforced in the template and the loop runner first. Reports to the product owner describe cards, decisions and findings by what they are or do; an ID only in parentheses.
+Process improvements serve the user story being worked. They are not board cards. While working a story, the team may improve any part of the process that's relevant to that story, not only what blocks it. The improvement is made as part of the story, or as retro follow-through, and proven by that story's outcome. The board holds only user stories and bugs. At the next re-rank, the existing process cards are sorted: real defects in safety, decision votes or tests stay as bugs, and the rest leave the board and become retro experiments, picked up when a story makes them relevant (product owner, D183). Reports to the product owner describe cards, decisions and findings by what they are or do; an ID only in parentheses.
 
 ## 1. Values
 

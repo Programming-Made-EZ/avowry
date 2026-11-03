@@ -19,3 +19,7 @@ Queued by the facilitator, 2026-11-03. Re-rank 20 does not interrupt card 276.
 ## Deferred while card 276 is held (facilitator, 2026-11-03 16:05 UTC)
 
 D180 holds card 276 open, and the product owner did not rule on the re-rank. The facilitator defers re-rank 20 for three reasons. First, D148 places a re-rank at a loop boundary (a card's Done and retro, before the next pull), and card 276 has not reached one. Second, the working agreement keeps WIP at one card and has no rule for parking a blocked card, so a re-rank now would rank a pull the team cannot make. Third, Dispatch routed issue 278 to the re-rank after card 276 closes. If the hold outlasts the in-flight cap (2026-11-04 04:05 UTC), the facilitator will put a 'park a card blocked on an outside action' proposal to the Decider instead of pulling early.
+
+## After re-rank 20 (facilitator, 2026-11-03 22:25 UTC)
+
+The product owner confirmed D182's condition on 288 in the product owner's own wording (D183, issue 288 comment). Line 36 now says process improvements serve the story being worked and the board holds only user stories and bugs. The next re-rank, after card 229, sorts the existing process cards: real defects in safety, decision votes or tests stay as bugs; the rest leave the board and become retro experiments.
