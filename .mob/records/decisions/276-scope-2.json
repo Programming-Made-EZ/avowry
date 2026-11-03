@@ -1,0 +1,385 @@
+{
+ "window": "276-scope-2",
+ "category": "mid-card addition",
+ "rule": "D175 second scope window for card 276 (the stop rule of window 276-scope fired); D153/D145; D171",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "grok-4.6 via grok -p --permission-mode plan (read-only), continued session",
+  "context": "ctx-2",
+  "probe_reference": "probe 2026-11-03 05:28 UTC (.mob/records/probes/2026-10-30.jsonl)"
+ },
+ "opened_at": "2026-11-03T06:28:05Z",
+ "proposal": "# SCOPE PROPOSAL: window 276-scope-2\n\nIntent: Finish D179's voting-seat metric on this card: one Muse decision seat, probed and scanned, returns a cited vote. Source: board 276 \"One observable behaviour\"; D179 \"voting seats first\"; Dispatch sign-in about 04:20 UTC. Cycle 2 enabled the backend; the live trial then refused `--model default`.\n\nAssumes: dropping `--model`/`{MODEL}` is the working invocation; probe: Dispatch smoke `muse exec \"Reply with exactly: pong\"` (no `--model`) returned pong (record `sign_in`, about 04:20 UTC); QA red 244678b used no `--model`. Also assumes live `muse exec --model default` is refused; probe: metric_attempt_1 \"model `default` does not exist or you lack access\" (session 633ab116-3065-40f3-9307-09761bd6020d).\n\n## Choice: (A) add C3 cycle 3\n\nCycle 2 of 2 is spent. The previous stop (`--model default` refusal; a new Muse CLI shape ends the cycle; a later window) fired as written. This is that later window.\n\nKeep the metric on card 276. Closing now leaves muse enabled with a refusing invocation, so live Muse seats fail until a follow-up, and Done check 3 stays unproven (D175/D168: meeting the cap by sending the risk later). Green cefaf4e already shipped enablement, prompt-file, env roots, and the vote-evidence builder. Remaining work is one invocation string plus the live trial the adopted audit-lens condition already required.\n\nDrop `--model`/`{MODEL}` from the muse invocation. Dispatch and QA already proved that shape. A catalog id needs a live `--model <id>` call that does not exist; `muse model-profile show` resolves any string and did not catch `default`.\n\nRaise C3 from Cap 2 to Cap 3. Adopt cycle 3 of 3 before its red. Caps 1+1+3 = 5.\n\nWhy the total may exceed 3 (and the prior 4): the slice spent 1+1+1 before sign-in; window 276-scope added cycle 2 after sign-in. Cycle 2's stop probed `--model default`; omit-the-flag is now proven. One extra cycle finishes Done check 3 here. D136 stays at three criteria. Cut: catalog-id pinning; `--model` alias map; items (1) and (6) stay on follow-up cards.\n\n## Cycles used\n\nC1: 1 of 1 (5ef4b8f / 970118c, 2196c58, 41ecf78). C2: 1 of 1 (dbe2e1c, d3a9787, c71c05f). C3: 2 of 2 (ac5a5a2 / fd09aaf, 40d0d08, 5157e3f; 244678b / c0354cb, cefaf4e). Named fix e3608ae.\n\nA stop now leaves muse enabled with `--model default` refused, Done check 3 unmet, and live Muse seats failing.\n\n## Smallest scope\n\nC3 cycle 3 (Done check 3 remainder).\nAcceptance: muse invocation is `muse exec --session-id {SESSION} --prompt-file {PROMPT_FILE}` with no `--model`/`{MODEL}`; stdout shape parse_vote already reads (plain, no `--json`); one Muse voting seat probed available, scanned, first-line vote word plus D171 CITE, committed under `.mob/records/276/` with session id and log path (adopted audit-lens condition). Trust-ladder Rung 1. No seat runs `muse login`.\nCap: criterion 3, at most 3 cycles (this window adopts cycle 3 of 3).\nStop: a live `muse exec` refusal after dropping `--model` ends the cycle and the card; Done check 3 unmet, metric to a follow-up. Quota or unavailability still excludes (card 277). No catalog-id hunt.\n\nZOMBIES: Z `--model default` still on the muse line. O one Muse window seat available, scanned, cited, evidence committed. M no `--model`/`{MODEL}` on muse. B second live refusal after the drop (stop). I scan_entry source=muse still locates the session; parse_vote sees run_backend stdout. E unusable data_root => no-source (kept). S other backends' `{MODEL}` pins and role fallback_chain unchanged.\n\nInputs: disabled: n/a: cycle 2 enabled muse (c0354cb / cefaf4e). unknown pin: probe_model missing => unknown-pin, CLI not launched. SEEN: C2 test_s. repeated: two muse keys. INSURANCE (JSON keys unique). reordered: models map order leaves the pin unchanged. SEEN: C2 reordered test.\n\nAsk: NO OBJECTION, or OBJECTION with one fixed condition.\nSize: 3864 bytes\n",
+ "checklist_D158": ".mob/records/276/record-in-progress.json",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "w276sc2-pmready",
+   "started_at": "2026-11-03T06:30:11Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe scope is small, tied to the metric, and it already carries its own stop rule. One invocation fix plus a live trial returns to product value.\n\nCITE: Closing now leaves muse enabled with a refusing invocation\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:30:38.581194Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w276sc2ra-qa",
+   "started_at": "2026-11-03T06:49:33Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nEvery rule in the proposal can be tested red first: the Z, M and B cases are checkable, and a second live refusal stops the card.\n\nCITE: Dispatch and QA already proved that shape\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:50:02.502784Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w276sc2-dev",
+   "started_at": "2026-11-03T06:37:20Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe remaining work is one invocation string plus a live trial. Cycle 3 is bounded by a clear stop rule, and I can comply without gaming it. A refusal after dropping `--model` ends the card.\n\nCITE: Remaining work is one invocation string plus the live trial\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:37:48.067770Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w276sc2-auditlens",
+   "started_at": "2026-11-03T06:40:52Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: one Muse voting seat probed available, scanned, first-line vote word plus D171 CITE, committed under `.mob/records/276/` with session id and log path\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:41:19.648810Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w276sc2-decider",
+   "started_at": "2026-11-03T06:44:25Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nDropping `--model` is backed by two prior probes (the Dispatch smoke test and QA red 244678b). The stop rule is explicit. The live Muse seat trial with committed evidence gives the decision something to rest on.\n\nCITE: Closing now leaves muse enabled with a refusing invocation\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:44:55.687873Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "grok",
+   "context": "w276sc2cp1-pmready",
+   "started_at": "2026-11-03T06:28:05Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:28:32.199044Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276sc2cp2-pmready",
+   "started_at": "2026-11-03T06:29:23Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:29:50.545949Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w276sc2cp1-qa",
+   "started_at": "2026-11-03T06:31:36Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:32:05.447109Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "claude",
+   "context": "w276sc2-qa",
+   "started_at": "2026-11-03T06:33:44Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nThe invocation rule can be tested red first: a test asserting no `--model`/`sonnet` on the muse line fails while `default` is still there. The live trial has a stop condition, and the evidence is committed.\n\nCITE: Drop `--model`/`sonnet` from the muse invocation.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:34:16.424728Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276sc2cp2-qa",
+   "started_at": "2026-11-03T06:32:53Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:33:24.051008Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w276sc2racp1-qa",
+   "started_at": "2026-11-03T06:47:28Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:47:55.474901Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276sc2racp2-qa",
+   "started_at": "2026-11-03T06:48:43Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:49:13.618025Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w276sc2cp1-dev",
+   "started_at": "2026-11-03T06:35:14Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:35:42.956842Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276sc2cp2-dev",
+   "started_at": "2026-11-03T06:36:30Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:37:00.530043Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w276sc2cp1-auditlens",
+   "started_at": "2026-11-03T06:38:46Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:39:13.436115Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276sc2cp2-auditlens",
+   "started_at": "2026-11-03T06:40:04Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:40:32.446478Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w276sc2cp1-decider",
+   "started_at": "2026-11-03T06:42:21Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:42:48.916485Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276sc2cp2-decider",
+   "started_at": "2026-11-03T06:43:37Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 05:28 UTC: Copilot, Grok and Muse available; agy quota reached and decider.py's own probe at 2026-11-03T06:44:06.019948Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "adopted without objection: criterion 3 cap 2 to 3 (total 5, reason stated), cycle 3 drops --model/{MODEL} from the muse invocation and re-runs the live trial seat with committed evidence; stop on a second live refusal (card closes with Done check 3 unmet, metric to a follow-up). Five NO OBJECTION, all Claude. The QA seat's first cite quoted 'sonnet' where the proposal reads '{MODEL}', because the launch tooling substitutes placeholders inside prompts (facilitator._launch_backend replaces {MODEL} and {SESSION} after inserting the prompt); one D171 re-ask (w276sc2ra) counted. Every seat first paid an empty Grok and a Copilot attempt (12).",
+  "window_minutes": "06:27:36 to 06:45:27 UTC, serial, plus the QA re-ask from 06:45:51"
+ },
+ "ended_at": "2026-11-03T06:50:51Z"
+}
