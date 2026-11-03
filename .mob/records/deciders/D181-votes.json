@@ -1,0 +1,131 @@
+{
+ "decider": "D181",
+ "subject": "a lettered red ends at the first passing green (card 276 retro pick, experiment)",
+ "proposer": "agile coach seat (.mob/records/276/retro-pick-proposal-coach.md)",
+ "result": "PASSED round 1 (3 Yes, 3 Support-it, 0 No; the decider seat counted on its D171 re-ask), confirmed by the independent re-run with the agile coach in place of the product manager (4 Yes, 2 Support-it, 0 No)",
+ "seat_note": "seats placed by the decision-seat gate; all counted votes on Claude, each after empty Grok and Copilot seats (cards 229, 270, 277; issue 278); every counted reply carries a valid D171 cite",
+ "round1": [
+  {
+   "role": "pmready",
+   "seat": "claude",
+   "context": "p276-pmready",
+   "started_at": "2026-11-03T18:58:40Z",
+   "overall": "Yes",
+   "cite": "allowed only before any green has passed the red it corrects",
+   "reply": "Yes\n\nThe pick serves the product owner's accountability rule. It makes a card past its D175 cap visible before the extra cycle is spent, not in an audit afterwards. The change is small: one commit-body line, one git-log look and one gate line. It adds no new seat, file or meeting. It leaves the caps, metric and standing rules alone. The trial covers three capped cards and can be dropped, so it stays two-way.\n\nThe metric is concrete, with 2 misses on card 276 and a target of 0. The counter-metrics guard against it adding waiting or letters used as silent amendments. Deferring the ledger and the pre-check keeps the up-front specification small, in line with VISION.md ruling 6.\n\nCITE: allowed only before any green has passed the red it corrects\n"
+  },
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "p276-architect",
+   "started_at": "2026-11-03T19:00:58Z",
+   "overall": "Support-it",
+   "cite": "is allowed only before any green has passed",
+   "reply": "Support-it\n\nThe core rule is minimal and fits the architect lens. A green has either passed a red or it hasn't, and anyone can read that from git. It closes the 4b/4c loophole without a new file, seat or tool. It's a two-way door, and the checker is correctly deferred until the rule holds.\n\nTwo risks remain. C1's \"passed green\" depends on commit-body conventions that a person has to read, so false negatives are possible until the git-log checker exists. C4's remaining-cap form adds a second concept, so I'd cut it first, as the proposal already allows.\n\nCITE: is allowed only before any green has passed\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "p276-qa",
+   "started_at": "2026-11-03T19:04:31Z",
+   "overall": "Support-it",
+   "cite": "a lettered red (4b, 4c) is allowed only before any green has passed the red it corrects",
+   "reply": "Support-it\n\nC1 and C2 can be tested red first. \"Green passed\" is a git-log fact: a commit for the criterion, after the red, with the red's tests passing. A violation shows as a lettered red whose criterion already has a green after the corrected red. The metric is countable from git (25d50b8 and 58b5c26 are the two known misses). My reservation is that C5 is a human check with the git-log checker deferred, so a skipped look would pass bad state silently. The reviewer's gate line and the auditor's re-check offset that, and the trial is two-way. I would want the checker card queued with a red-first fixture built from the card 276 hashes.\n\nCITE: a lettered red (4b, 4c) is allowed only before any green has passed the red it corrects\n"
+  },
+  {
+   "role": "dev",
+   "seat": "claude",
+   "context": "p276-dev",
+   "started_at": "2026-11-03T19:08:01Z",
+   "overall": "Yes",
+   "cite": "allowed only before any green has passed the red it corrects",
+   "reply": "Yes\n\nAs the seat that works under these rules every card, I can comply without gaming. C1 gives a mechanical test for \"passed green\": a commit for the same criterion, after the red, with its tests passing on the named run. C2 puts the cost in one commit-body line, and I can check it with git log before I write a lettered red. It's also fair to the work. A failure on real evidence after green is a new cycle, and the window comes first. Only the 2 reds that ran past the cap (25d50b8 and 58b5c26) are hit. The pick leaves D175's caps and D157 unchanged. C4's remaining-cap form adds complexity, so cut it first if the cost shows, as the proposal already says.\n\nCITE: allowed only before any green has passed the red it corrects\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "p276-auditlens",
+   "started_at": "2026-11-03T19:11:47Z",
+   "overall": "Support-it",
+   "cite": "a lettered red ends at the first passing green",
+   "reply": "Support-it\n\nThe rule can mostly be checked from git. A red is lettered only if no green came after the red it corrects, and the commit body must say \"Corrects red <hash>; no green since\". The auditor can re-check that with git log. It also closes the gap that let reds 25d50b8 and 58b5c26 pass as cycle 4.\n\nTwo loopholes remain:\n- C5 is a manual check by the facilitator and the gate reviewer, and the git-log checker is deferred.\n- C1's \"tests passing on its named run\" is not visible in git, and the letter text is self-declared.\n\nI support it as a trial because it is a two-way door and counter-metric 4 watches for letters turning into silent amendments.\n\nCITE: a lettered red ends at the first passing green\n"
+  },
+  {
+   "role": "decider",
+   "seat": "claude",
+   "context": "p276-decider",
+   "started_at": "2026-11-03T19:15:01Z",
+   "overall": "Yes",
+   "cite": "a lettered red is allowed only before any green has passed the red it corrects",
+   "reply": "Yes\n\nThe record backs the framing. The cycle_count_ruling and signoff-ctx6 section 3 show the breach: reds 4b and 4c ran as cycles 5 and 6 after green 2e56d9f had passed red 5b3292e, with no window before them. The metric is concrete and has a clear baseline (2, target 0). The counter-metrics guard against gaming: windows per card, time to the next red, and a count of lettered reds. The three-card trial has a keep, revise or drop decision, so the verdict will rest on data. The sign-off seat itself asks for this rule. The cost is small and the change can be undone. A weak point is that a card with no red after a passed green gives no reading, which the proposal already acknowledges.\n\nCITE: a lettered red is allowed only before any green has passed the red it corrects\n",
+   "counted": false,
+   "note": "D171: its CITE dropped '(4b, 4c)' and did not match the proposal; replaced by the re-ask"
+  },
+  {
+   "role": "decider",
+   "seat": "claude",
+   "context": "p276rb-decider",
+   "started_at": "2026-11-03T19:24:10Z",
+   "overall": "Yes",
+   "cite": "a lettered red (4b, 4c) is allowed only before any green has passed the red it corrects",
+   "reply": "Yes\n\nThe decision will rest on evidence. The metric is concrete (reds past the cap with no prior window: 2 now, target 0). The counter-metrics guard against Goodhart effects. The trial is bounded to 3 capped cards, and the retro states in advance what to do if a card gives no reading. Every seat needed to sign off already exists: the facilitator checks before a lettered red, the gate reviewer lists each one, and the auditor re-checks from git. The door is two-way, and the deferrals are explained.\n\nCITE: a lettered red (4b, 4c) is allowed only before any green has passed the red it corrects\n",
+   "note": "D171 re-ask (p276ra paid 3 refused Claude placements and 3 empty Copilot attempts first; the old re-ask runner always fell back to Copilot)"
+  }
+ ],
+ "rerun": [
+  {
+   "role": "coach",
+   "seat": "claude",
+   "context": "p276rr-coach",
+   "started_at": "2026-11-03T19:29:53Z",
+   "overall": "Yes",
+   "cite": "a lettered red (4b, 4c) is allowed only before any green has passed",
+   "reply": "Yes\n\nThe pick is sized to the problem. It closes one loophole: lettering made reds 25d50b8 and 58b5c26 look like cycle 4 after a green had passed. It adds no seat, file or meeting. The cost is one commit-body line per lettered red, one git-log look and one gate line. It is a two-way door with a 3-card trial, and the metric is clear (2 → 0). The counter-metrics guard against Goodhart effects. Deferring the ledger and the launchability pre-check avoids padding. C4's remaining-cap form is the one piece of extra ceremony, and the proposal already says to cut it first if the cost shows.\n\nCITE: a lettered red (4b, 4c) is allowed only before any green has passed\n"
+  },
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "p276rr-architect",
+   "started_at": "2026-11-03T19:33:41Z",
+   "overall": "Yes",
+   "cite": "a lettered red ends at the first passing green",
+   "reply": "Yes\n\nThe rule is minimal and enforceable from git. \"No green since\" is a single lookup in git log, so a person can check it without ambiguity. C1 states that a later real-evidence failure does not reopen a green, which removes the main source of false positives. It reuses D175's cap and window and adds no new seat, file or tool. That matches my view that the ledger and checker should wait until this definition holds. C4's remaining-cap form is the loosest part, but the proposal already names it as the first thing to cut.\n\nCITE: a lettered red ends at the first passing green\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "p276rr-qa",
+   "started_at": "2026-11-03T19:37:06Z",
+   "overall": "Support-it",
+   "cite": "allowed only before any green has passed the red",
+   "reply": "Support-it\n\nThe rule is testable red first. C1 and C2 reduce to a git-log question: is there a green commit for criterion n after red n? C2 also requires the body line \"Corrects red <hash>; no green since\", so a mislabeled commit shows up in `git log`. That is the gap that let 25d50b8 and 58b5c26 pass as cycle 4.\n\nMy concerns are small:\n- C5 is a human check, so it could pass bad state if the facilitator skips it. The checker is deferred, but it should be written red first as promised.\n- \"Tests passing on its named run\" in C1 needs a stable record field to read.\n- Counter-metric 4 is the right guard against silent letters.\n\nThe trial is a two-way door, and the cost is small.\n\nCITE: allowed only before any green has passed the red\n"
+  },
+  {
+   "role": "dev",
+   "seat": "claude",
+   "context": "p276rr-dev",
+   "started_at": "2026-11-03T19:40:53Z",
+   "overall": "Yes",
+   "cite": "A red may carry a letter (nb) only if no green has passed red n.",
+   "reply": "Yes\n\nAs the developer who works under these rules every card, I find the rule workable and hard to game. C1 defines \"passed green\" as a commit for the same criterion, after the red, with the red's tests passing on its named run. A later failure on real evidence does not reopen it. That removes the ambiguity that let 4b and 4c pass as cycle 4 on card 276. A one-line \"Corrects red <hash>; no green since\" costs me nothing to comply with. It is also fair to the work, because a red fixed before any green was never a new cycle. I would cut C4's remaining-cap form first if the cost shows, as the proposal says.\n\nCITE: A red may carry a letter (nb) only if no green has passed red n.\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "p276rr-auditlens",
+   "started_at": "2026-11-03T19:44:24Z",
+   "overall": "Yes",
+   "cite": "a lettered red (4b, 4c) is allowed only before any green has passed the red it corrects",
+   "reply": "Yes\n\nThe rule can be audited from git alone. C2 puts \"Corrects red <hash>; no green since\" in the commit body. The auditor can check that against `git log` for the criterion, so no private record is needed. C1 also closes the real-evidence loophole: green 2e56d9f counts as passed even after a later failure, so a team can't call a red lettered to avoid the cap. The weak point is that the facilitator, who is a team member, runs the C5 check before each lettered red. The auditor's re-check from git and the gate reviewer's list of lettered reds cover that. Counter-metric (4) watches for letters turning into silent amendments.\n\nCITE: a lettered red (4b, 4c) is allowed only before any green has passed the red it corrects\n"
+  },
+  {
+   "role": "decider",
+   "seat": "claude",
+   "context": "p276rr-decider",
+   "started_at": "2026-11-03T19:48:16Z",
+   "overall": "Support-it",
+   "cite": "a lettered red (4b, 4c) is allowed only before any green has passed the red it corrects",
+   "reply": "Support-it\n\nThe rule closes a real loophole. Lettered reds 25d50b8 and 58b5c26 passed as \"cycle 4\" after green 2e56d9f, and scope-4 ratified them only afterwards. The metric is concrete (2 → 0), the counter-metrics guard against it being gamed, and the trial is bounded to 3 capped cards.\n\nTwo weak spots keep me at Support-it instead of Yes:\n- The check depends on the facilitator running git log by hand until the checker exists.\n- C4's remaining-cap form edges toward the \"all adopted\" theatre that counter-metric (1) warns about.\n\nThe sign-off seats are covered: the gate reviewer, the auditor and a Decider-owned trial retro.\n\nCITE: a lettered red (4b, 4c) is allowed only before any green has passed the red it corrects\n"
+  }
+ ]
+}

@@ -1192,5 +1192,11 @@
     "status": "in force",
     "title": "Product owner ruling: card 276 stays open (clean scan not waived) until Muse's Windows shell sandbox is set up by Dispatch; then cycle 4 runs as adopted and the card is re-gated",
     "order": 171
+  },
+  "D181": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "A lettered red is allowed only before any green has passed the red it corrects; after that the next red is a new cycle under the D175 cap and window; one window may set the remaining cap but never ratifies cycles already run (card 276 retro pick, experiment, next 3 capped cards)",
+    "order": 172
   }
 }
