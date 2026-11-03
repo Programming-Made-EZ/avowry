@@ -1,0 +1,107 @@
+{
+ "decider": "D178",
+ "subject": "a breaker for decision-seat rotation (card 211 retro pick, experiment)",
+ "proposer": "agile coach seat (.mob/records/211/retro-pick-proposal-coach.md, 56d74e3)",
+ "result": "PASSED round 1 (0 Yes, 6 Support-it, 0 No), confirmed by the independent re-run (0 Yes, 6 Support-it, 0 No)",
+ "seat_note": "seats placed by card 226's decision-seat gate; all twelve counted votes on Claude, each after empty Grok and Copilot seats (the waste the pick targets); every reply carries a valid D171 cite",
+ "round1": [
+  {
+   "role": "pmready",
+   "seat": "claude",
+   "context": "p211-pmready",
+   "started_at": "2026-11-02T23:28:02Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nThe pick keeps the standing rules. Quota-limited models drop out first and Claude fills the seats, which matches \"quota first then Claude\". It has a baseline of 9 and 10 empty attempts per window, a target of 0, counter-metrics, and a sign-off check, so it is accountable to metrics. It is a two-way door, and it adds no new seat, file or meeting. Open FAILs and the retro-only removal rule are untouched. It is more detailed than I'd like (C1 to C6), but the facilitator applies it by hand and the probe is the first thing the retro cuts. Its main cost is that model diversity reads near 0 while all three models are tripped, and the proposal says so openly.\n\nCITE: A tripped model is placed in no decision seat\n"
+  },
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "p211-architect",
+   "started_at": "2026-11-02T23:30:15Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nThe design is small and reversible. It adds no new file, seat or checker rule, and the trial runs by hand before any decider.py change. Trip definitions are mostly mechanical: two empties in a row, or \"quota reached\" text. A reply with any vote word never trips, so a No or OBJECTION can't cause a false trip. The probe and the false-trip counter-metric bound the cost of a wrong trip to one day. The accountability check can be run from the window json. One weakness: \"voteless\" depends on what each window accepts as a vote word, which could cause false trips. The rule would be tighter if it named a single parser.\n\nCITE: A reply with a vote word is a reply whatever the vote\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "p211-qa",
+   "started_at": "2026-11-02T23:33:49Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The trip rule is testable from the window json. Two consecutive empty or voteless replies, or \"quota reached\", can be counted and checked red first. A reply with a vote word never trips, so No and OBJECTION cannot hide behind it.\nP2: The accountability check catches the violation it names, an attempt on a tripped model with no \"Breaker:\" return line before it. A failing window counts as not run, so it cannot pass with bad state.\nP3: The by-hand trial has no automated test. The auditor's re-check from the json stands in for one, and the decider.py follow-up card needs red tests first.\nP4: The probe and quota-reset conditions are checkable from timestamps.\n\nCITE: decision-seat rotation gets a breaker. A model trips when two decision-seat replies in a row\n"
+  },
+  {
+   "role": "dev",
+   "seat": "claude",
+   "context": "p211-dev",
+   "started_at": "2026-11-02T23:37:20Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nThe rules are workable. C1 defines empty and voteless by the CLI output and the window's accepted vote words. A No or OBJECTION never trips, so nobody has a reason to game votes. C2 and C3 keep the Copilot CLI seats where Copilot works. The probe is cheap and capped at one per model per day.\n\nTwo things are ambiguous. \"Two in a row\" doesn't say whether a probe's empty reply counts toward the streak. \"Next least-recently-used model not tripped\" has no fallback when only Claude is untripped. The facilitator can settle both by hand during the trial, so neither blocks a Yes.\n\nCITE: A tripped model is placed in no decision seat\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "p211-auditlens",
+   "started_at": "2026-11-02T23:41:01Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (trip rule): The trip rule is checkable from the window json, since empty and voteless are objective and a No never trips.\nP2 (starting state): Tripping all three non-Claude models up front makes the metric of 0 empties meet its target by construction. The proposal does admit this in counter-metric 1, but the metric alone can't show the practice working.\nP3 (hand application): The facilitator applies the rule by hand and writes the Breaker and probe lines, so those lines are self-reported. The auditor's re-check from the window json is the real control, and the \"counts as not run\" clause keeps it honest.\nP4 (reversibility): It is a two-way door, so I support it.\n\nCITE: A tripped model is placed in no decision seat\n"
+  },
+  {
+   "role": "decider",
+   "seat": "claude",
+   "context": "p211-decider",
+   "started_at": "2026-11-02T23:44:33Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nFraming is mostly evidence-based. It has baselines (9, 10 and 6 empty attempts), a target of 0 in each of the next 3 windows, counter-metrics, and an accountability check by the sign-off seat and the auditor. Two gaps keep this from a clean Yes:\n- If the models are untripped by then, the trial has no reading.\n- The sign-off seat is Claude, and Claude is also the only model voting. So the sign-off is not independent while the other models are tripped.\n\nI'd want the trial retro to name a non-Claude check of the Breaker lines. This is not a condition.\n\nCITE: decision-seat rotation gets a breaker. A model trips when two decision-seat replies in a row\n"
+  }
+ ],
+ "rerun": [
+  {
+   "role": "coach",
+   "seat": "claude",
+   "context": "p211rr-coach",
+   "started_at": "2026-11-02T23:50:57Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (sizing): The rule removes pure waste, which was 19 empty attempts and about 2 minutes 10 seconds per slice seat. It adds no seat, file or meeting, so it isn't padded with ceremony.\nP2 (missing perspective): Starting with all three non-Claude models tripped leaves a Claude-only Decider. The proposal admits this and counts it as a reading, not a target.\nP3 (ceremony risk): Five counter-metrics and hand-kept Breaker lines are near the upper limit of what this needs. The proposal already names the probe as the first thing to cut.\nP4 (reversibility): It is a two-way door, and the trial is capped at three windows.\n\nCITE: A tripped model is placed in no decision seat\n"
+  },
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "p211rr-architect",
+   "started_at": "2026-11-02T23:54:39Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: The trip rule is simple and objective. A vote word is a reply whatever the vote, so a No never trips.\nP2: Breaker state is derived from the seat-use lines, so it adds no new file or shared state.\nP3: It is checkable from the window json at sign-off, and the auditor can re-check it.\nP4: One weakness. Starting with all three non-Claude models tripped makes the \"0 empties\" target trivially met, so the metric measures the breaker's own effect and not an improvement. Counter-metrics 1 and 2 and the \"no reading\" clause partly cover this.\nP5: A manual trial with a two-way door is the right size. Automating it in decider.py should wait for the trial retro.\n\nCITE: A tripped model is placed in no decision seat\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "p211rr-qa",
+   "started_at": "2026-11-02T23:58:18Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1: Trip and return rules (C1, C3) are testable red first. Feed two empty replies, or a \"quota reached\" text, and a bad reply must trip. A No or OBJECTION reply must not trip.\nP2: The accountability check (no attempt on a tripped model without a preceding \"Breaker:\" return line) catches violations from the window json. A failing window counts as not run.\nRisk: C5 starts all three models tripped, so the 0-empties target passes vacuously. The proposal admits there may be no reading, which is acceptable. A hand-applied rule has no automated red test until the decider.py card.\n\nCITE: A tripped model is placed in no decision seat\n"
+  },
+  {
+   "role": "dev",
+   "seat": "claude",
+   "context": "p211rr-dev",
+   "started_at": "2026-11-03T00:01:58Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nThe rules are workable, and I can follow them without gaming. Empty and voteless are defined, a No never trips, and the trigger counts per model over decider.py seats. Probing at most once per 24 hours is cheap. Hand-applying C1 to C4 is tolerable for a trial, and the decider.py change is correctly left as a follow-up card. Two small risks: \"voteless\" depends on each window's accepted vote words, and a model could trip across windows with different rules. Neither blocks the trial. The trial is reversible, and the Breaker lines supply the per-model call counts a budget would need.\n\nCITE: A tripped model is placed in no decision seat\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "p211rr-auditlens",
+   "started_at": "2026-11-03T00:05:23Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nGit can verify the trial. Each \"Breaker:\" line, probe line and attempt sits in the window json and seat-use lines. The sign-off and auditor checks name a failure state: the window counts as not run. The metric is easy to game. With Grok, Copilot and agy all tripped at the start, \"0 empty attempts\" holds trivially, and the proposal admits this by saying \"no reading\". Because the facilitator applies the rule by hand, a missing Breaker line is detectable but not preventable. Probe replies are counted apart, so they could hide empties. The two-way door keeps the risk low.\n\nCITE: A tripped model is placed in no decision seat\n"
+  },
+  {
+   "role": "decider",
+   "seat": "claude",
+   "context": "p211rr-decider",
+   "started_at": "2026-11-03T00:09:19Z",
+   "overall": "Support-it",
+   "reply": "Support-it\n\nP1 (trip and return): The rule is testable, reversible and recorded in Breaker lines. It has an accountability check by the sign-off seat and the auditor, so the decision to keep, revise or drop can rest on evidence.\nP2 (metric): The target of 0 empty attempts is nearly guaranteed when Grok, Copilot and agy start tripped. The trial retro should treat that as weak evidence and weigh the false-trip, return-lag and diversity counters.\nP3 (seats): Sign-off, auditor and Decider seats all exist, so no seat is missing. Without a non-Claude vote, though, the sign-off is effectively all Claude.\n\nCITE: The breaker cannot create model diversity; it stops paying for its absence.\n"
+  }
+ ]
+}
