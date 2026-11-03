@@ -12,3 +12,5 @@
 - Proposal for the retro: Grok plan-mode briefs say "do not run tools to measure; the facilitator measures the Size line", and decision and seat runs use --output-format json so the stop reason is recorded. The earlier wrong Size lines (8 bytes high) were estimates from turns that could not measure.
 
 - Red 4b attempt 1 (2026-11-03 16:41 UTC): the resumed QA context (Copilot, --model auto picked mai-code-1.1-flash) compacted at its 128k threshold during the run, dropped the brief and committed nothing. Question for the retro: cap resumed-seat context size, or seat fresh contexts by default for reds; pin a model instead of auto.
+
+- Lettered sub-cycles (audit 195, 2026-11-03): red 4b and 4c followed greens that had passed, so they were new cycles (5 and 6) past the cap, run without a scope window. Proposal for the retro: a lettered red is allowed only before any green has passed the red it corrects; once a green passes, the next red is a new cycle and counts against the cap.
