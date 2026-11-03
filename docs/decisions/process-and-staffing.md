@@ -909,4 +909,4 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   3. Each card's disposition is judged by a seat other than the card's proposer, recorded card by card (decider).
   4. Each retro experiment is recorded in the retro log with an owner, its proof (the story and the measure), and a review date or story trigger (product manager, architect, developer).
   5. The re-rank carries D182's measure and guards forward (product cards closed per day; open FAILs and findings per card must not rise) or replaces them explicitly (product manager).
-  Not adopted, raised for the product owner because it narrows the principle: at most one process change per story's diff (developer).
+  Not adopted: at most one process change per story's diff (developer). Reasons: the principle allows any improvement relevant to the story; a cap of one per story would make relevant improvements queue, which recreates the backlog the principle removes; and small, attributable diffs are already covered by the existing size limits (D136's numeric limits, D168's slice size cap) and by each improvement's own proof, the story's outcome.
