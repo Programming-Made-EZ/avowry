@@ -1186,5 +1186,11 @@
     "status": "in force",
     "title": "Product owner ruling: card the Muse Code trial (card 276) and rank it next after card 211; first slice install, device-code sign-in, probe, event-log reader (voting seats first)",
     "order": 170
+  },
+  "D180": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Product owner ruling: card 276 stays open (clean scan not waived) until Muse's Windows shell sandbox is set up by Dispatch; then cycle 4 runs as adopted and the card is re-gated",
+    "order": 171
   }
 }

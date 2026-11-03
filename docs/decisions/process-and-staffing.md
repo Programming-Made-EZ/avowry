@@ -827,3 +827,12 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - First slice named by the product owner: (1) install the Muse Code CLI and settle the Windows question with an install test; (2) sign-in: if interactive, use a device-code or URL flow and put the code or URL in the report to Dispatch so the product owner can finish it from a phone, without blocking on it; (3) a Muse availability and quota probe; (4) then the event-log reader, voting seats first, build seats later.
 - The team owns the mechanics, the ZOMBIES acceptance criteria and the trust-ladder placement; only the priority is ruled.
 
+<a id="d180"></a>
+#### Decider D180: product owner ruling (not a team vote): card 276 stays open until Muse's Windows shell sandbox is set up, then cycle 4 runs as adopted
+
+- Date: 2026-11-03 (relayed by Dispatch). Not a team vote: a product owner ruling on the blocker card 276's pre-ship gate HOLD and cycle 4's stop named (Done check 3 partly met: the Muse seat was probed and cast a cited vote, but its scan is "no command source"; the capture's shell call failed with "sandbox enforcement unavailable: windows_elevated setup_required").
+- Ruling: option 2. HOLD card 276 open; the clean scan is not waived. Option 1 (waive the clean scan for this trial as D177 did, close 276 and move the scan to a follow-up) is declined.
+- Unblock condition: Dispatch runs the elevated `muse sandbox windows setup`, with the product owner's approval at a Windows admin prompt; the team does not run it. Card 276 resumes when `muse sandbox windows check` reports ready (state at the ruling: status=setup_required, sandbox_users_ready=false, wfp_ready=false, C:\ProgramData\muse missing).
+- Then cycle 4 runs as adopted in window 276-scope-3 (criterion 3 cap 4, the reader's real shape with the allowlist condition, the same stop rule), followed by a re-gate.
+- Not ruled: whether re-rank 20 runs while card 276 is held; the product owner left that to the team under the working agreement.
+
