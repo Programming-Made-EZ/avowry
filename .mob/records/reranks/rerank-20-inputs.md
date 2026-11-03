@@ -12,7 +12,7 @@ Queued by the facilitator, 2026-11-03. Re-rank 20 does not interrupt card 276.
 
 ## Cards to place
 
-- 266, 267, 270 to 275, 277, and the card 276 follow-ups filed 2026-11-03: 279 (the Muse reader reads real tool records; depends on the Windows sandbox setup), 280 (Muse usage text sign-in states), 281 (Muse seat workspace trust), 282 (seat prompts reach seats without placeholder rewriting).
+- 266, 267, 270 to 275, 277, and the card 276 follow-ups filed 2026-11-03: 279 (the Muse reader reads real tool records; depends on the Windows sandbox setup), 280 (Muse usage text sign-in states), 281 (Muse seat workspace trust), 282 (seat prompts reach seats without placeholder rewriting), 283 (the delete guard does not flag a read-only python command; filed in cycle 4). Card 279 may be folded into 276: cycle 4 read the real tool records.
 
 ## Deferred while card 276 is held (facilitator, 2026-11-03 16:05 UTC)
 
