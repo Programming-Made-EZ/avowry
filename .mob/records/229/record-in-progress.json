@@ -5,7 +5,9 @@
  "decisions": {
   "rank": "D182 (re-rank 20): ranked first; 270 folded in at ready",
   "task_force": "window 229-taskforce (adopted with one condition: Done check 1 needs a committed over-limit prompt test for Copilot and Grok AND a live Copilot and Grok vote with a valid cite and committed evidence); caps 1+1+1",
-  "fold_270": "card 270 is closed as folded into 229 when 229 ships; 229 carries 270's Done checks"
+  "fold_270": "card 270 is closed as folded into 229 when 229 ships; 229 carries 270's Done checks",
+  "slice": "turn-slice-architect.md (architect ctx-2, fresh Claude subagent; scan clean, 31 commands): grok --prompt-file, copilot via node plus npm-loader.js; caps 1+1+1; live non-counted Copilot and Grok votes; stop rule",
+  "slice_window": "window 229-slice (adopted, no conditions; six NO OBJECTION)"
  },
  "seats": [
   {
@@ -13,6 +15,12 @@
    "seat": "Copilot ctx-1",
    "model": "copilot (auto) via the Copilot CLI, session 4dd925c3-d337-4828-8d39-fb58d5e07e58; command scan clean, 5 commands",
    "evidence": ".mob/records/229/taskforce-proposal-pm.md"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect (read-only); command scan clean, 31 commands",
+   "evidence": ".mob/records/229/turn-slice-architect.md"
   }
  ],
  "deviations": [

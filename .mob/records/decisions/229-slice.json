@@ -1,0 +1,385 @@
+{
+ "window": "229-slice",
+ "category": "slice decision",
+ "rule": "D153 slice decision for card 229 (270 folded in); D175 caps; D182 QA condition; D171",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "claude, a fresh subagent context (read-only)",
+  "context": "ctx-2",
+  "probe_reference": "probe 2026-11-03 22:02 UTC (.mob/records/probes/2026-10-30.jsonl)"
+ },
+ "opened_at": "2026-11-03T22:12:53Z",
+ "proposal": "Intent: Copilot and Grok decision seats get their whole window prompt on Windows and cast a parsed, cited vote; a launch that cannot deliver the prompt fails loud with exit status and stderr, never as a silent \"no response\" (cards 229 and 270, one root cause, first in D182's order).\nAssumes: the empty votes are cmd.exe refusing lines over 8191 characters on the npm .CMD shims, not the models. Probe: .mob/records/notes/2026-11-03-empty-decision-votes-root-cause.md (rc 1, stderr \"The command line is too long.\", 9412-char line); decider.py:136 `reply = text if ok else \"\"`, then line 142 \"no response\"; facilitator._launch_backend collapses newlines and splices the prompt into the template with str.replace, so `{MODEL}` inside a prompt is rewritten.\n\nDomain-expert (T2) question: for copilot and grok on Windows, which input path passes a long multi-line prompt whole: stdin, a prompt-file option, or the real entry point instead of the .CMD shim?\n\nDomain-expert (T2) answer:\n- Grok: prompt file. Verified: `grok --help` (grok 1.0.46) lists `--prompt-file <PATH>  Single-turn prompt from a file` beside `-p, --single`. The shim line stays short. Assumption, probed in red 1: `--prompt-file` without -p is single-turn and prints to stdout (no TUI; card 276 saw one when -p was missing) and reads the UTF-8 file _write_prompt_file writes.\n- Copilot: real entry point. Verified: `copilot --help` (1.0.105) has no prompt-file option (only `-p <text>`, `-i`, and `--attach` for images or documents); stdin appears only in the `--fleet` line (\"combine with -i, -p, or piped stdin\"). C:\\Users\\ringe\\nodejs20\\copilot.cmd ends `\"%_prog%\" \"%dp0%\\node_modules\\@github\\copilot\\npm-loader.js\" %*`; npm-loader.js spawnSyncs copilot-win32-x64\\copilot.exe with process.argv.slice(2). The Git Bash sh shim runs the same node plus npm-loader.js, which is why the 7082-char prompt worked from bash. node.exe plus that script via CreateProcess raises the limit to 32767. Assumption, probed in red 1: a 9.4K multi-line argument survives node's Windows argv quoting byte-equal.\n- Stdin: not verified for either CLI, not used (_launch_backend sets stdin=DEVNULL).\n\nThis card proves: C1 delivery (committed over-limit test plus a live Copilot and Grok vote), C2 failure honesty and the empty guard (red first, D182 QA), C3 placeholder literals survive (card 282 coupling). Not here: Copilot's command source; the D178 diagnosis rule (card 277).\n\nCriterion 1 (Done check 1): a window prompt above 8191 characters reaches Copilot and Grok whole, in a test and in a live window.\nAcceptance: (a) committed tests/test_launch_long_prompt.py: a fake npm-shaped .CMD shim and a fake JS entry that writes its argv and any --prompt-file content to a file; the prompt is a committed real window prompt over 8191 chars with newlines. Red: today's launch returns rc 1 \"The command line is too long.\" Green: grok invocation and readonly_invocation become `grok --prompt-file {PROMPT_FILE} -m {MODEL} --always-approve` (readonly adds `--permission-mode plan`); a resolved .cmd in npm shim shape launches as node.exe plus its script, prompt raw with newlines; the fake receives it byte-equal for each. A cmd.exe line still over 8191, or any line over 32767, is refused before Popen: \"launch refused: command line n chars over limit m\". A refusal alone does not meet this check. (b) the live step below passes.\nZOMBIES: Z empty prompt still launches. O one 9.4K multi-line prompt byte-equal per CLI. M prompts of 8191, 8192, 32767 chars. B shim not in npm shape: named refusal, never run over the limit. I seat-use line, prompt sha and received bytes agree. E node.exe missing beside the shim: `node` on PATH or a named refusal; `\"`, `%`, `^`, `&`, non-ASCII in the prompt. S claude, agy, codex, muse argv unchanged.\nCap: criterion 1, at most 1 cycles\nInputs (D167, labels D175 C2): disabled backend: SEEN tests/test_probe_model.py; unknown shim shape: INSURANCE; repeated seat: SEEN decider.py dict.fromkeys; reordered backends map: INSURANCE.\nSize: S (two invocation strings, one resolver, one guard).\n\nLive step for (b). Who: the facilitator, after greens 1 and 2 are committed, before the pre-ship gate. Proposal: the adopted 229-taskforce round-2 proposal (.mob/records/decisions/229-taskforce.json, \"proposal\") in the standard window prompt with the D171 CITE instruction, the prompt whose Copilot and Grok attempts were empty at 21:33 to 21:57 UTC; its length is recorded and must exceed 8191. Seating: Copilot and Grok as NON-COUNTED trial seats, through decider.py's gate with the readonly invocations, one run each (`--seats copilot`, then `--seats grok`). Why non-counted: the declaration keeps them out of counted seats until the fix lands, the window is decided and not reopened, and the fix's subject should not count on its own proof. They rejoin counted rotation at the first window after card 229 is Done. Committed (phrase-lang): .mob/records/229/live/prompt.txt; .mob/records/229/live/copilot/decider-result.json; .mob/records/229/live/grok/decider-result.json; .mob/records/229/live/evidence.md (prompt chars and sha256, CLI versions, both seat-use.jsonl lines quoted with line numbers, the Copilot path %USERPROFILE%\\.copilot\\session-state\\<id>\\events.jsonl, the Grok session folder under %USERPROFILE%\\.grok\\sessions\\<encoded clone cwd>\\, each vote's first line, CITE and cite_ok); the appended .mob/records/seat-use.jsonl. The auditor re-checks from git.\n\nCriterion 2 (Done check 2): failed launches keep status and text; an empty attempt fails red and is not counted.\nAcceptance: run_backend returns the exit status with the failure text; decider.vote_seat stores per attempt `rc` and `failure_excerpt`, reason \"launch failed: rc 1: The command line is too long.\" or \"empty reply (rc 0)\", never a bare \"no response\". An attempt with no parsed vote is never counted. QA condition (D182): red 2 is committed before green 1 (fake over-limit seat: vote \"none\", reason names rc and stderr, not counted in the result); every counted vote in this card's evidence carries a CITE found verbatim in the proposal (cite_ok true).\nZOMBIES: Z rc 0, blank stdout: \"empty reply\", not counted. O one rc 1 with stderr: reason carries it. M two failed attempts, both recorded in order. B stderr over 300 chars trimmed by failure_excerpt; rate-limit text still reads as quota. I decider-result.json reason equals the attempt text. E timeout and stall keep their reasons. S a parsed vote records as today.\nCap: criterion 2, at most 1 cycles\nSize: S.\n\nCriterion 3 (Done check 3): placeholder literals in a prompt are not rewritten; template placeholders still fill.\nAcceptance: the template is filled ({MODEL}, {SESSION}, {PROMPT_FILE}) and split first; the prompt then goes in as one argv element or into the prompt file, never through str.replace. A prompt with literal `{MODEL}`, `{SESSION}`, `{PROMPT_FILE}`, `{PROMPT}` arrives byte-equal.\nZOMBIES: Z template without placeholders: argv as written. O one literal survives. M all four, repeated. B literal at prompt start and end. I prompt-file bytes equal argv bytes. E template with neither {PROMPT} nor {PROMPT_FILE}: named refusal. S tests/test_muse_command_source.py prompt-file test green.\nCap: criterion 3, at most 1 cycles\nSize: S.\n\nCaps: 1+1+1 = 3 (D175). D181: a red after a passed green is a new cycle and needs a window first.\n\nStop rule: if after greens 1 and 2 a live Copilot or Grok seat still returns empty or no parsed vote in decider.py's two attempts, the facilitator does not retry by hand, does not count a substitute and does not ship. The record names rc and stderr (C2). If probe or stderr shows quota or unavailability (D178), re-run that seat once when its probe passes, no new red. Otherwise Done check 1 is unmet: commit the failing evidence and open a D175 C4 scope window naming it before any further red. Copilot and Grok stay out of counted seats meanwhile.\n",
+ "checklist_D158": ".mob/records/229/checklist-229-slice.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "w229sl-pmready",
+   "started_at": "2026-11-03T22:14:54Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe card goes straight at the product value: two decision seats that silently returned nothing now get the full prompt, and a failed launch is reported loudly. Caps of 1+1+1, red-first tests, and a stop rule with no hand retries all fit the standing rules. Keeping Copilot and Grok non-counted until the fix lands is also consistent with them.\n\nCITE: a window prompt above 8191 characters reaches Copilot and Grok whole\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:15:21.974712Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w229sl-qa",
+   "started_at": "2026-11-03T22:18:32Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: An attempt with no parsed vote is never counted.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:18:59.921195Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w229sl-dev",
+   "started_at": "2026-11-03T22:22:25Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nAs the backend developer I can comply with all three criteria without gaming them. Red comes first for each, and the 1+1+1 caps are workable. Refusing before Popen, and requiring a live vote on top of that refusal, keeps the work honest.\n\nCITE: Copilot and Grok decision seats get their whole window prompt\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:22:53.444488Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w229sl-auditlens",
+   "started_at": "2026-11-03T22:25:56Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nGit alone can check this: the committed over-limit test, the red-before-green order, and the live evidence with prompt sha, seat-use lines, and cite_ok. The stop rule closes the retry-by-hand loophole.\n\nCITE: An attempt with no parsed vote is never counted.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:26:26.199859Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w229sl-decider",
+   "started_at": "2026-11-03T22:29:40Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: Stop rule: if after greens 1 and 2 a live Copilot\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:30:09.131637Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w229sl-coach",
+   "started_at": "2026-11-03T22:33:18Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nThe task force is sized to the task. Three S-sized criteria with one-cycle caps fit one root cause. The domain-expert (T2) question covers the missing perspective. The non-counted live trial seats and the stop rule keep the fix's own proof from voting on itself. I see no padding.\nCITE: Copilot and Grok stay out of counted seats meanwhile.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:33:50.446087Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w229slcp1-pmready",
+   "started_at": "2026-11-03T22:12:53Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:13:20.839613Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229slcp2-pmready",
+   "started_at": "2026-11-03T22:14:08Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:14:33.759982Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229slcp1-qa",
+   "started_at": "2026-11-03T22:16:19Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:16:52.375462Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229slcp2-qa",
+   "started_at": "2026-11-03T22:17:43Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:18:12.485510Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229slcp1-dev",
+   "started_at": "2026-11-03T22:20:17Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:20:49.121734Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229slcp2-dev",
+   "started_at": "2026-11-03T22:21:38Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:22:04.743618Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229slcp1-auditlens",
+   "started_at": "2026-11-03T22:23:49Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:24:20.138443Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229slcp2-auditlens",
+   "started_at": "2026-11-03T22:25:09Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:25:36.201257Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229slcp1-decider",
+   "started_at": "2026-11-03T22:27:27Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:27:55.373998Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229slcp2-decider",
+   "started_at": "2026-11-03T22:28:46Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:29:18.310254Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229slcp1-coach",
+   "started_at": "2026-11-03T22:31:11Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:31:38.089230Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229slcp2-coach",
+   "started_at": "2026-11-03T22:32:28Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 22:02 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T22:32:57.850924Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "adopted, no conditions: caps 1+1+1; criterion 1 a window prompt over 8191 characters reaches Copilot (node plus npm-loader.js, not the .CMD shim) and Grok (--prompt-file) whole, in a committed test and in a live window with non-counted Copilot and Grok seats and committed evidence; criterion 2 failed launches keep rc and failure text, an empty attempt is never counted, red 2 before green 1 (D182 QA); criterion 3 placeholder literals in prompts arrive unchanged (card 282's defect); stop rule: no hand retry, no substitute count, no ship if a live seat stays empty; a scope window before any further red. Six NO OBJECTION, all Claude, valid D171 cites. Every seat first paid empty Grok and Copilot attempts.",
+  "window_minutes": "22:11 to the end recorded in the scratch files, serial"
+ },
+ "ended_at": "2026-11-03T22:37:28Z"
+}
