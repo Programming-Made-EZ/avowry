@@ -1,0 +1,607 @@
+{
+ "window": "276-taskforce",
+ "category": "task-force declaration",
+ "rule": "D153/D145 task-force window for card 276; D171 cites; D179 (product-owner ruling); D178 as reshaped on the product owner's coach-don't-bench principle (card 277)",
+ "proposed_by": {
+  "role": "product manager (ready)",
+  "model": "copilot (auto) via the Copilot CLI",
+  "context": "ctx-1",
+  "probe_reference": "probe 2026-11-02 23:48 UTC (.mob/records/probes/2026-10-30.jsonl)"
+ },
+ "opened_at": "2026-11-03T00:42:55Z",
+ "proposal": "# Card 276 task-force declaration proposal\n\nIntent line (D165): Deliver the ruled first slice for Muse Code safely on Windows: official install method resolved by install test, browser/device-friendly sign-in path for product-owner phone completion, availability/quota probe wiring, and event-log reader for voting seats first.\n\nAssumption line (D166): The current probe (23:48 UTC) is authoritative for seating in this window (Copilot and Grok available; agy out of quota; Codex without quota), and a voting-seat-first trial can proceed without build seats.\n\n## Team roles, models, context numbers, and why\n\n- Ready / product manager — **Copilot**, **ctx-1**: current seated role; owns scope, safety constraints, and declaration quality for card 276.\n- Slice / architect — **Grok**, **ctx-2**: defines the minimal first-slice contract and keeps to D168/D175 limits.\n- Red / QA engineer — **Copilot**, **ctx-3**: writes acceptance checks for install test evidence, sign-in evidence, probe evidence, and reader evidence.\n- Green / backend developer — **Grok**, **ctx-4**: implements backend probe and command-source reader integration for Muse.\n- Review / independent reviewer — **Copilot**, **ctx-5**: non-author check on evidence, citations, and safety invariants.\n- Gate / sign-off lens — **Grok**, **ctx-6**: pre-ship evidence review with D176 environment reporting once build seats are in scope.\n\nWho is left out and why:\n- **agy** is left out now: currently out of quota per probe.\n- **Codex** is left out now: currently without quota per probe.\n- Build seats are intentionally deferred by ruling D179 (voting seats first).\n\n## Domain-expert question (T2)\n\nFor `mob-crosscli` (backends, `facilitator.py run_backend`, `probe_drivers`, and `command_source.py`): what is the minimal, auditable event schema needed from Muse session logs so a vote reader can extract command executions and final vote text without false \"clean\" states when a command source is missing?\n\n## Value, metric, counter-metric\n\nValue: restore a second usable decision-seat path by adding Muse as a trial driver under explicit trust controls.\n\nMetric: one Muse voting seat can be probed, scanned, and return a cited vote in a decision window.\n\nCounter-metric: added false positives/no-source gaps in command scanning and additional window minutes.\n\n## Done checks with D175 caps (sum <= 3)\n\n1. **Install + sign-in evidence** (Cap: criterion 1, at most 1 cycle)\n   - Official Windows install command source recorded.\n   - Sign-in flow documented as browser/URL-capable and product-owner handoff-compatible.\n2. **Availability/quota probe evidence** (Cap: criterion 2, at most 1 cycle)\n   - Muse probe path defined alongside existing drivers and evidence format fixed.\n3. **Event-log reader for voting seats** (Cap: criterion 3, at most 1 cycle)\n   - Reader contract specified for voting seats first; build-seat reader work explicitly deferred.\n\nCap sum: **1 + 1 + 1 = 3** (meets D175).\n\n## Trust-ladder placement\n\n- **Lowest rung (Rung 1 / Probation)** for Muse trial seats.\n- **Voting seats first**, build seats later, per D179 first-slice ruling.\n\n## Which decisions apply\n\n- **D165** applies: explicit intent line required before red.\n- **D166** applies: explicit assumption line and probe-backed assumption.\n- **D167** applies: hostile-input list required for list/map-like command-reader criteria.\n- **D168** applies: keep slice within 15 KB and split if needed.\n- **D171** applies: cite-a-point voting; unread votes do not count.\n- **D175** applies: written cycle caps per criterion, total <= 3.\n- **D176** applies at gate time: environment lines and untouched-failure handling in gate report.\n- **D178** applies: decision-seat rotation breaker behavior if a model returns empty/voteless or quota-reached outcomes.\n\n## Findings (a) to (d) with sources\n\n### (a) Official Windows install method\n\n- **Command:** `irm https://dev.meta.ai/install.ps1 | iex`\n- **Source:** https://dev.meta.ai/docs/muse-code (also mirrored at https://dev.meta.ai/docs/muse-code.md and quickstart at https://dev.meta.ai/docs/quickstart)\n- **Officiality verification:** source is Meta’s official docs domain (`dev.meta.ai`) under \"Meta Model API\" and the Muse Code product page; this satisfies the \"official site\" requirement. No separate official package-registry install entry was found in these official docs for the CLI itself.\n\n### (b) Sign-in flow (device code or URL)\n\n- **Documented:** browser sign-in (URL/browser approval flow) and API-key flow.\n- **Not documented in official pages reviewed:** explicit OAuth device-code flow wording.\n- **Source:** https://dev.meta.ai/docs/muse-code/auth and https://dev.meta.ai/docs/muse-code (first-run section).\n\n### (c) Event-log location and format\n\n- **Documented location:** `${XDG_DATA_HOME:-$HOME/.local/share}/muse/sessions/YYYY/MM/DD/<session-id>/session.jsonl`\n- **Documented format:** append-only JSONL; each line envelope includes `{sequence, recorded_at, record_type, durability, payload_type, payload}`.\n- **Windows note:** official docs reviewed do not publish a Windows-specific path mapping for this session log.\n- **Source:** https://dev.meta.ai/docs/cookbook/deterministic-replay (Find Recorded Sessions section); supporting model statement in https://dev.meta.ai/docs/muse-code/interactive (event-sourced append-only session log).\n\n### (d) Pre-execution hook\n\n- **Yes, documented:** hook lifecycle supports `PreToolUse`, and hooks can block actions before execution.\n- **Hook sources/placement:** project hooks at `<project-root>/.muse/hooks.json`, user hooks in settings hooks block, managed hooks via `managed_hooks_path`.\n- **Source:** https://dev.meta.ai/docs/muse-code/extending (Hooks and Lifecycle events) and https://dev.meta.ai/docs/muse-code/configuration (settings hooks block).\n\n## Open points\n\n1. Does Muse publish a Windows-native session-log path equivalent to the documented XDG path, or should we treat Windows path discovery as a local probe outcome in criterion 3?\n2. Is an explicit device-code flow available but undocumented, or is browser URL approval the only supported interactive method?\n3. Which event fields are stable enough for `command_source.py` parsing contract (and what fallback behavior is required when missing)?\n4. Should D178 breaker thresholds be pre-configured for Muse decision seats from day one, or inherit default decision-seat breaker behavior first and tune after first window evidence?\n## Facilitator context added after the proposal was written (facts, not part of the proposal)\n\n- Dispatch has already installed Muse Code at the product owner's request, after reviewing install.ps1. The facilitator checked it read-only: `muse.cmd --version` printed \"Muse Code 1.4.14 (1.4.14-R7309.1)\", at %LOCALAPPDATA%\\Programs\\muse\\muse.cmd, on the user PATH. No seat re-runs install.ps1. Criterion 1 becomes an install test of the existing install. (.mob/records/276/dispatch-install-note.md)\n- `muse login` does give a device code (https://auth.meta.com/oauth/device/?code=XXXX-XXXX, expiring after about 10 minutes). That answers open point 2. Sign-in is Dispatch-owned: Dispatch runs it when the product owner says \"ready\". No seat runs login, and the slice does not block on it. Muse is not signed in now.\n- `muse usage` reports the subscription allowance, and `muse exec` runs one headless prompt.\n- D178 is adopted, but decider.py has no detector for it yet; a card is being filed. The gate still names Grok and Copilot for decision seats, and both returned no reply in this card's first (withdrawn) window attempt.\n- This is a first poll. An earlier attempt at this window was withdrawn because the facilitator wrongly marked it a re-poll.\n\n## Adopted condition (round 1, QA engineer seat, w276tf2-qa)\n\n- Criterion 3 (the event-log reader) includes a red-first test showing that a missing, unreadable or Windows-path-unresolved Muse session log gives a \"no-source\" result, never \"clean\". It also includes a hostile-input fixture list (D167). Adopted as reasonable and reversible; the slice carries it into criterion 3's Done check.\n",
+ "checklist_D158": ".mob/records/276/checklist-276-taskforce.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [
+  {
+   "from": "QA engineer, round 1 (w276tf2-qa)",
+   "adopted_as": "criterion 3 includes a red-first test that a missing, unreadable or Windows-path-unresolved Muse session log gives a no-source result, never clean, and a hostile-input fixture list (D167)"
+  }
+ ],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "w276tf2r2-architect276",
+   "started_at": "2026-11-03T01:05:50Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe slice is minimal and safe. Sign-in stays with Dispatch, the install is only tested, and build seats are deferred. The QA condition for the \"no-source\" case is carried into criterion 3.\n\nCITE: Build seats are intentionally deferred by ruling D179\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:06:22.876164Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "architect (slice)",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w276tf2r2-qa",
+   "started_at": "2026-11-03T01:09:41Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe adopted condition covers my lens. Criterion 3 now requires a red-first no-source test and a hostile-input fixture list, so a missing log can't pass as clean.\n\nCITE: Criterion 3 (the event-log reader) includes a red-first test\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:10:08.605686Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w276tf2r2-dev",
+   "started_at": "2026-11-03T01:13:15Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe adopted condition (a red-first \"no-source\" test plus a hostile-input fixture list in criterion 3) is workable for me. I can write it red-first without gaming it. The 1-cycle cap per criterion is tight but fair for this slice.\n\nCITE: Sign-in is Dispatch-owned: Dispatch runs it when the product owner says \"ready\".\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:13:48.791505Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w276tf2r2-auditlens",
+   "started_at": "2026-11-03T01:17:02Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe install note and the adopted no-source red-first test are both committed, so git can verify them. The remaining gaps are acceptable and visible: sign-in is Dispatch-owned and Muse is not signed in, and decider.py has no D178 detector yet.\n\nCITE: Criterion 3 (the event-log reader) includes a red-first test\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:17:37.767468Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w276tf2r2-decider",
+   "started_at": "2026-11-03T01:20:35Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: Reader contract specified for voting seats first\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:21:03.529963Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w276tf2cp1-architect276",
+   "started_at": "2026-11-03T00:42:55Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T00:43:21.598662Z",
+   "round": 1,
+   "role": "architect (slice)",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w276tf2-architect276",
+   "started_at": "2026-11-03T00:43:42Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe design is minimal: Muse is only a probation voting seat, and the build seats stay on Grok and Copilot, which have command readers (the 228 precedent). Sign-in stays with Dispatch, so the slice doesn't block on it.\n\nCITE: Build seats are intentionally deferred by ruling D179\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T00:44:15.446821Z",
+   "round": 1,
+   "role": "architect (slice)",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w276tf2r2cp1-architect276",
+   "started_at": "2026-11-03T01:03:35Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:04:03.559600Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "architect (slice)",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276tf2r2cp2-architect276",
+   "started_at": "2026-11-03T01:05:05Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:05:29.726250Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "architect (slice)",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w276tf2cp1-qa",
+   "started_at": "2026-11-03T00:45:18Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T00:45:43.786424Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w276tf2-qa",
+   "started_at": "2026-11-03T00:47:19Z",
+   "model": "sonnet",
+   "raw": "OBJECTION\nCONDITION: Criterion 3 must include a red-first test that a missing, unreadable or Windows-path-unresolved session log gives a \"no-source\" result, never \"clean\". It must also include a hostile-input fixture list (D167).\n\nCITE: Reader contract specified for voting seats first\n",
+   "first_line": "OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T00:47:58.105430Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276tf2cp2-qa",
+   "started_at": "2026-11-03T00:46:32Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T00:46:58.701642Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w276tf2r2cp1-qa",
+   "started_at": "2026-11-03T01:07:23Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:07:58.352387Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276tf2r2cp2-qa",
+   "started_at": "2026-11-03T01:08:52Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:09:19.451367Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w276tf2cp1-dev",
+   "started_at": "2026-11-03T00:49:11Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T00:49:41.524915Z",
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w276tf2-dev",
+   "started_at": "2026-11-03T00:51:18Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe three one-cycle caps are workable for the reader slice, and I can comply without gaming them. The Windows session-log path is still an open point, so I'll treat it as a probe outcome inside criterion 3.\n\nCITE: Reader contract specified for voting seats first; build-seat reader work explicitly deferred.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T00:51:43.039990Z",
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276tf2cp2-dev",
+   "started_at": "2026-11-03T00:50:30Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T00:50:57.313119Z",
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w276tf2r2cp1-dev",
+   "started_at": "2026-11-03T01:11:07Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:11:34.151703Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276tf2r2cp2-dev",
+   "started_at": "2026-11-03T01:12:21Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:12:54.991218Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w276tf2cp1-auditlens",
+   "started_at": "2026-11-03T00:52:40Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T00:53:05.469220Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w276tf2-auditlens",
+   "started_at": "2026-11-03T00:54:39Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThis can be verified from git alone, provided the install, probe and reader evidence is committed under `.mob/records/276/`. Muse is not signed in, so a missing command source must count as unscanned, never clean. Both points are already covered by the hostile-input list (D167) and the reader criterion.\n\nCITE: Reader contract specified for voting seats first\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T00:55:12.000022Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276tf2cp2-auditlens",
+   "started_at": "2026-11-03T00:53:53Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T00:54:19.593422Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w276tf2r2cp1-auditlens",
+   "started_at": "2026-11-03T01:14:45Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:15:17.287143Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276tf2r2cp2-auditlens",
+   "started_at": "2026-11-03T01:16:15Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:16:41.977161Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w276tf2cp1-decider",
+   "started_at": "2026-11-03T00:56:14Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T00:56:41.824858Z",
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w276tf2-decider",
+   "started_at": "2026-11-03T00:58:31Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nThe three capped criteria give evidence for an adopt, reshape or reject call, and the seats needed to sign off exist. One caveat: Muse is not signed in, so the cited-vote metric can't be shown until Dispatch runs login.\nCITE: Build seats are intentionally deferred by ruling D179 (voting seats first).\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T00:58:59.914781Z",
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276tf2cp2-decider",
+   "started_at": "2026-11-03T00:57:42Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T00:58:11.152941Z",
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w276tf2r2cp1-decider",
+   "started_at": "2026-11-03T01:18:34Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:19:01.294176Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276tf2r2cp2-decider",
+   "started_at": "2026-11-03T01:19:50Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached (resets in about 140 h) and decider.py's own probe at 2026-11-03T01:20:15.713579Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "adopted with one condition (QA engineer: criterion 3's no-source red test and the D167 hostile-input list); round 2 no objection from all five polled seats, every counted reply Claude with a D171 cite found in the proposal. Every seat first paid an empty Grok and/or Copilot attempt placed by the decision-seat gate (9 in round 1, 10 in round 2): the known cost until cards 229, 270 and 277 land.",
+  "task_force": [
+   "product manager (ready) ctx-1 (Copilot)",
+   "architect (slice) ctx-2 (Grok, run read-only in plan mode: Grok has no command reader)",
+   "QA engineer (red) ctx-3 (Copilot)",
+   "backend developer (green) ctx-4 (Grok in the proposal; a build seat needs a command reader per window 228-agy-seats, so the facilitator re-places it at green)",
+   "independent reviewer ctx-5 (Copilot)",
+   "gate / sign-off ctx-6 (Grok)"
+  ],
+  "window_minutes": "round 1 00:42:24 to 00:59:33 UTC, round 2 01:02 to 01:21:34 UTC, serial",
+  "withdrawn_attempt": "w276tf (00:32 to 00:40 UTC) was stopped by the facilitator and not counted: it was launched with a stale re-poll note from card 237 telling seats it was a re-poll on which they may not add demands, and with the card 237 architect lens. Two seats had answered NO OBJECTION. Recorded as a facilitator deviation.",
+  "d178_note": "Per the product owner's coach-don't-bench principle (card 277), only agy (quota reached) is excluded; Grok and Copilot stay in rotation and their empty decision votes are diagnosed under cards 229, 270 and 277. The checklist's pre-launch line that D178 trips Grok and Copilot is superseded by that principle.",
+  "context_added": "After the proposal was written, the facilitator appended a context section (Dispatch's install, the device-code sign-in owned by Dispatch, D178 state) and the adopted condition; both are in the recorded proposal text."
+ },
+ "ended_at": "2026-11-03T01:21:45Z"
+}
