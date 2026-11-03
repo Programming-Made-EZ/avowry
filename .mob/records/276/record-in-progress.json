@@ -10,7 +10,8 @@
   "d178": "per the product owner's coach-don't-bench principle, only quota or unavailability excludes a model (card 277); agy excluded (quota), Grok and Copilot stay in rotation",
   "slice": "turn-slice-architect.md (Grok ctx-2, grok -p in plan mode, read-only; sessions 01a19f0b-c944-7563-be4f-85c64f74a327 continued twice with -c): caps 1+1+1; the Windows session-log root is found from XDG_DATA_HOME, else HOME, else USERPROFILE plus .local/share; a cited Muse vote waits on sign-in",
   "slice_window": "window 276-slice (adopted, no conditions; one D171 re-ask of the dev seat)",
-  "criterion_1": "green 1 2196c58: red 1b's 11 tests pass (10 ok, the live case skipped where Muse is not on PATH). With %LOCALAPPDATA%\\Programs\\muse put on PATH for one process, the live case passes: version 1.4.14, launcher %LOCALAPPDATA%\\Programs\\muse\\muse.CMD, no problems, sign-in unknown. Refactor 41ecf78 (behaviour kept). Full reference suite on 2196c58 running in a worktree (suite-276-green1.log)."
+  "criterion_1": "green 1 2196c58: red 1b's 11 tests pass (10 ok, the live case skipped where Muse is not on PATH). With %LOCALAPPDATA%\\Programs\\muse put on PATH for one process, the live case passes: version 1.4.14, launcher %LOCALAPPDATA%\\Programs\\muse\\muse.CMD, no problems, sign-in unknown. Refactor 41ecf78 (behaviour kept). Full reference suite on 2196c58 running in a worktree (suite-276-green1.log).",
+  "criterion_2": "red 2 dbe2e1c, green 2 d3a9787, refactor 2 c71c05f: the probe has a distinct not-signed-in state (no known_reset, no quota credit), disabled and unknown-pin states; the two defects carried from green 1 are fixed. The muse backend is added disabled."
  },
  "seats": [
   {
@@ -42,6 +43,18 @@
    "model": "copilot (auto) via the Copilot CLI: window 276-taskforce named Grok for green, but a build seat needs a command reader (window 228-agy-seats) and Grok has none; Copilot is the least-recently-used model with a reader",
    "evidence": "mob-defaults 2196c58 (Card 276 green 1, session ae576973-c725-4cfd-a911-cd394be81112, command scan clean, 9 commands); refactor 41ecf78 (same context, 12 commands, clean)",
    "note": "first green launch (session 3638b2ba-c163-4acf-9ba3-d593e1b71c88, command scan clean, 8 commands) stopped by the facilitator before it committed; its unfinished muse_install.py was moved to the scratchpad (green-276-1-stopped), not committed"
+  },
+  {
+   "role": "red",
+   "seat": "Copilot ctx-3 (resumed)",
+   "model": "copilot (auto) via the Copilot CLI; command scan clean, 20 commands",
+   "evidence": "mob-defaults dbe2e1c (Card 276 red 2: 9 tests, 7 failing; uses the real unsigned-in text 'muse usage: not logged in: run `muse login` first')"
+  },
+  {
+   "role": "green",
+   "seat": "Copilot ctx-4 (resumed)",
+   "model": "copilot (auto) via the Copilot CLI; command scan clean, 18 commands; refactor 21 commands, clean",
+   "evidence": "mob-defaults d3a9787 (Card 276 green 2: 60 named tests OK) and refactor c71c05f (one shared not-signed-in classifier)"
   }
  ],
  "deviations": [
@@ -57,7 +70,9 @@
  ],
  "notes": {
   "red1_zombies_drift": "for the reviewer: red 1 maps M to the live install, not to the slice's several-PATH-hits case; I, E (slash and backslash) and S (other backends unchanged) are not clearly covered; the six case tests skip until the helper module exists (importorskip) (red 1b adds M several PATH hits, I, E and S)",
-  "muse_not_on_path": "Muse is NOT on the user PATH (HKCU Environment Path has no muse entry; no profile adds one), although .mob/records/276/dispatch-install-note.md says it is. The launcher exists at %LOCALAPPDATA%\\Programs\\muse\\muse.cmd. Raised to Dispatch; the facilitator does not change PATH (a system setting).",
-  "red2_required_cases": "from the facilitator's read of green 1, named in refactor 41ecf78: (a) _detect_sign_in tests 'signed in' before 'not signed in', so a not-signed-in reply reads as signed-in; (b) a version mismatch is appended to problems twice. Criterion 1's cap (1 cycle) is spent, so both go to red 2 (criterion 2 owns the not-signed-in state)."
+  "muse_not_on_path": "Resolved 2026-11-03 about 03:35 UTC: Dispatch appended %LOCALAPPDATA%\\Programs\\muse to the user PATH (append only). In a fresh shell `muse` resolves to %LOCALAPPDATA%\\Programs\\muse\\muse.cmd and the live-install case runs and passes (11 tests, no skip).",
+  "red2_required_cases": "from the facilitator's read of green 1, named in refactor 41ecf78: (a) _detect_sign_in tests 'signed in' before 'not signed in', so a not-signed-in reply reads as signed-in; (b) a version mismatch is appended to problems twice. Criterion 1's cap (1 cycle) is spent, so both go to red 2 (criterion 2 owns the not-signed-in state).",
+  "red3_required_cases": "green 2's muse backend invocation is 'muse -p {PROMPT} --model {MODEL}', but Muse has no -p flag (`muse --help`): its headless mode is `muse exec`, which has --prompt-file <PATH> (avoids the .CMD shim's 8191-character command-line limit, the cause of the empty Grok and Copilot votes), --session-id <UUID> (pins the session log the reader locates) and --json. The backend is disabled, so nothing misfires now; red 3 must pin a working invocation with {SESSION}.",
+  "commit_author": "green 2 d3a9787 and refactor 2 c71c05f are authored by the Copilot CLI's own identity (see git log %an), not the shared identity: relevant to card 275 (seat attribution)"
  }
 }
