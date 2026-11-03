@@ -9,7 +9,9 @@
   "slice": "turn-slice-architect.md (architect ctx-2, fresh Claude subagent; scan clean, 31 commands): grok --prompt-file, copilot via node plus npm-loader.js; caps 1+1+1; live non-counted Copilot and Grok votes; stop rule",
   "slice_window": "window 229-slice (adopted, no conditions; six NO OBJECTION)",
   "red_1": "red 1 ab8f4a5 (QA ctx-3, fresh Claude subagent; scan clean, 29 commands; pushed): tests/test_launch_long_prompt.py, 20 tests, 15 fail (18 entries with subtests) for the named reasons (cmd.exe 'The command line is too long.', WinError 206, no named refusal, grok still -p, cmd.exe mangling '&'), 5 ZOMBIES guards pass; four guard suites pass (55); fixture tests/fixtures/long_window_prompt.txt. Probe: grok --prompt-file one-line prompt, rc 0, stdout OK, single-turn, no TUI, 4.5 s. Finding: the round-2 window proposal alone is 7232 characters; the live step must measure the whole seat prompt decider.py sends (role text, header and proposal) and record that it exceeds 8191",
-  "red_2": "red 2 858649b (QA ctx-3 continued, Claude subagent; pushed), committed before any green (D182 QA condition): tests/test_launch_failure_honesty.py and tests/fakes/fake_launch_seat.py, 23 tests, 20 fail (reasons read 'no response' or the new fields are missing), 3 pass; red 1 unchanged at 18 failures; three guard suites pass (43). There is no cite check today: the test expects attempt_log, counted, cite_ok and counted_seats"
+  "red_2": "red 2 858649b (QA ctx-3 continued, Claude subagent; pushed), committed before any green (D182 QA condition): tests/test_launch_failure_honesty.py and tests/fakes/fake_launch_seat.py, 23 tests, 20 fail (reasons read 'no response' or the new fields are missing), 3 pass; red 1 unchanged at 18 failures; three guard suites pass (43). There is no cite check today: the test expects attempt_log, counted, cite_ok and counted_seats",
+  "green_1": "green 1 4674d19 (backend developer ctx-4, fresh Claude subagent; scan clean, 16 commands; pushed): grok invocations use --prompt-file {PROMPT_FILE}; an npm-shaped .cmd shim launches as node plus its script with the prompt as one raw argument; a line over 8191 (cmd.exe) or 32767 (CreateProcess) is refused before Popen with a named reason; the prompt file is written with LF line ends. Named modules: launch_long_prompt 20 OK, decider_launched 28, command_scan_wiring 14, muse_command_source 12, muse_cycle2_scope 10, muse_cycle3_scope 3, probe_model 16, quota_first 24, repo_path_lengths 1; launch_failure_honesty still 20 failures (red 2)",
+  "refactor_1": "none needed after green 1, reasoned: the one fragile step (mapping the prompt's argv slot by template token position) is the step criterion 3 rebuilds (fill and split the template first, then pass the prompt as one argv element), so a refactor now would be redone by green 3"
  },
  "seats": [
   {
@@ -29,6 +31,12 @@
    "seat": "Claude ctx-3",
    "model": "claude, a fresh subagent context, QA engineer; command scan clean, 29 commands",
    "evidence": "red 1 ab8f4a5, red 2 858649b"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, backend developer; command scan clean, 16 commands",
+   "evidence": "green 1 4674d19"
   }
  ],
  "deviations": [
