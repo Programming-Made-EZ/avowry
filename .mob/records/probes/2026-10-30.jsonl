@@ -143,3 +143,5 @@
 {"driver": "grok", "probed_at": "2026-11-03T22:02:00Z", "available": true, "exit": 0, "command": "grok <one-line prompt> Reply with exactly the word OK -m grok-4.6 --permission-mode plan", "evidence": "OK"}
 {"driver": "copilot", "probed_at": "2026-11-03T23:18:22Z", "available": true, "exit": 0, "command": "gh api copilot_internal/user (quota read, spends none)", "evidence": "has_quota=True remaining=854 entitlement=1500 reset=2026-12-01T00:00:00.000Z"}
 {"driver": "grok", "probed_at": "2026-11-03T23:18:22Z", "available": true, "exit": 0, "command": "grok <one-line prompt> Reply with exactly the word OK -m grok-4.6 --permission-mode plan", "evidence": "OK"}
+{"driver": "copilot", "probed_at": "2026-11-03T23:51:30Z", "available": true, "exit": 0, "command": "gh api copilot_internal/user (quota read, spends none)", "evidence": "has_quota=True remaining=854 entitlement=1500 reset=2026-12-01T00:00:00.000Z"}
+{"driver": "grok", "probed_at": "2026-11-03T23:51:31Z", "available": true, "exit": 0, "command": "grok <one-line prompt> Reply with exactly the word OK -m grok-4.6 --permission-mode plan", "evidence": "OK"}
