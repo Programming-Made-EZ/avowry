@@ -1,0 +1,386 @@
+{
+ "window": "276-slice",
+ "category": "slice decision",
+ "rule": "D153/D145 at slice for card 276; D168; D171; D175; D179",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "grok-4.6 via grok -p --permission-mode plan (read-only)",
+  "context": "ctx-2",
+  "probe_reference": "probe 2026-11-03 00:42 UTC (.mob/records/probes/2026-10-30.jsonl)"
+ },
+ "opened_at": "2026-11-03T01:46:47Z",
+ "proposal": "Intent: Deliver D179's first Muse Code slice on the shared Windows laptop: assert the existing native install (version, PATH, launcher) with sign-in as a Dispatch-owned state, add a Muse availability and quota probe that records \"not signed in\" as its own state, and give voting seats a Muse event-log reader whose missing, unreadable, or Windows-path-unresolved session log is \"no command source\", never \"clean\".\nAssumes: a named command_source reader whose log cannot be used already reports \"no command source\", and a backend with command_source \"none\" reports \"unscanned\"; this card extends that contract to Muse. Probe: tests/test_command_source.py::test_no_usable_transcript_raises_never_an_empty_clean_result; command_source.scan_entry (source outside (\"claude\",\"copilot\") is unscanned); facilitator.run_backend passes {SESSION} into scan_entry only when the invocation contains {SESSION}. Also assumes Muse Code 1.4.14 is installed here and unsigned-in, and Dispatch owns `muse login`. Probe: .mob/records/276/dispatch-install-note.md; facilitator read-only `muse.cmd --version` printed \"Muse Code 1.4.14 (1.4.14-R7309.1)\" at %LOCALAPPDATA%\\Programs\\muse\\muse.cmd on the user PATH.\n\nDomain-expert (T2) question: For mob-crosscli (backends, facilitator.run_backend / probe_drivers, command_source.py), what is the minimal, auditable event schema needed from Muse session logs so a vote reader can extract command executions and final vote text without a false \"clean\" when the command source is missing?\n\nDomain-expert (T2) answer: Reuse the existing reader contract. Claude transcripts need an assistant record and tool_use.input.command; Copilot events.jsonl needs tool.execution_start with arguments.command; missing, empty, unparsable, or assistant-less files raise NoCommandSource. Muse's documented log is append-only JSONL, envelope `{sequence, recorded_at, record_type, durability, payload_type, payload}`, path `${XDG_DATA_HOME:-$HOME/.local/share}/muse/sessions/YYYY/MM/DD/<session-id>/session.jsonl` (task-force finding (c)). On this Windows install the data root is %USERPROFILE%\\.local\\share\\muse\\ (local-tracing present; sessions/ absent while unsigned-in). Criterion 3 locates data_root from XDG_DATA_HOME, else HOME\\.local\\share, else USERPROFILE\\.local\\share, then muse\\sessions\\YYYY\\MM\\DD\\<session-id>\\session.jsonl. Tests inject `root`. `muse exec --session-id {SESSION}` pins the id so run_backend's uuid matches locate_muse. Schema: stream envelopes; a command is a payload with a tool name and a string command; vote text is run_backend stdout. Missing file, OSError, unusable data_root, or a log with no run/command-bearing record is \"no command source\".\n\nThis card proves without sign-in: C1 install facts, C2 unsigned-in probe state, C3 fixture reader and no-source cases. Waits on Dispatch `muse login` (product owner says ready): a cited Muse vote in a window. Also waits: build seats (D179); D178's detector (card 277; an empty vote opens a diagnosis, and only quota or unavailability excludes a model).\n\nCriterion 1 (Done check 1): Install test of the existing Windows install.\nAcceptance: a committed test in mob-defaults asserts muse.cmd on PATH, version \"Muse Code 1.4.14 (1.4.14-R7309.1)\", and launcher %LOCALAPPDATA%\\Programs\\muse\\muse.cmd (that folder holds .muse-launcher.ps1 and muse-bin-1.4.14-R7309.1.exe). Sign-in is a separate Dispatch-owned state, currently \"not signed in\". No seat, red, or green runs install.ps1 or `muse login`.\nZOMBIES: Z PATH has no muse → install-missing recorded. O one resolved muse.cmd at the launcher path with that version passes. M several PATH hits: the resolved Get-Command/where.exe path is asserted. B version mismatch; launcher outside %LOCALAPPDATA%\\Programs\\muse; cmd shim without the exe. I PATH lookup and the absolute launcher path agree. E unreadable launcher; empty PATH; slash vs backslash. S other backends.json entries unchanged.\nTest plan: red tests/test_muse_install.py fails until a helper returns version, resolved PATH, and launcher; green implements that helper against the live install (read-only). The run carries a D176 Environment line.\nCap: criterion 1, at most 1 cycles\nno list input\n\nCriterion 2 (Done check 2): Muse availability and quota probe.\nAcceptance: core/backends.json has enabled muse; probe_drivers records it with the other drivers. \"not signed in\" is its own result state; it is distinct from quota-reached and from unavailable, and it does not set known_reset. The probe may call `muse --version` and `muse usage`. Unsigned-in Muse does not count as having quota for claude_only_problem or quota_first. Invocation includes {SESSION}.\nZOMBIES: Z muse disabled → evidence \"disabled in backends.json\", CLI not launched. O one muse result in state not-signed-in. M muse present with claude, copilot, grok, agy, codex in probes.json. B four outcomes: unsigned-in, quota-reached, unavailable, disabled. I backends.json pin, probe_backend, and probes.results[\"muse\"] agree. E usage timeout or unreadable output is unavailable with that evidence, still distinct from quota. S tests/test_probe_model.py and tests/test_quota_first.py stay green.\nTest plan: red tests/test_muse_probe.py with a fake CLI fails while unsigned-in is stored as quota or as available; a second case keeps quota-reached as quota. Green adds the muse backend with probe_model a key of its models map and classifies unsigned-in from usage/login text.\nCap: criterion 2, at most 1 cycles\nInputs: disabled: muse enabled false → disabled evidence; unknown: probe_model pin missing from models → probe fails and launches nothing; repeated: two muse-named backends (JSON object keys unique; n/a duplicate key); reordered: models map order leaves the pin unchanged.\n\nCriterion 3 (Done check 3): Event-log reader for voting seats (adopted QA condition).\nAcceptance: command_source source \"muse\". Windows session log path: %USERPROFILE%\\.local\\share\\muse\\sessions\\YYYY\\MM\\DD\\<session-id>\\session.jsonl. Finding it: data_root = XDG_DATA_HOME, else HOME\\.local\\share, else USERPROFILE\\.local\\share; then muse\\sessions\\YYYY\\MM\\DD\\<session-id>\\session.jsonl. locate_muse(session, root=None) uses that layout; tests pass root. Missing, unreadable, or Windows-path-unresolved (no usable data_root from those variables) → NoCommandSource and scan_entry status \"no command source\", never \"clean\". backends.json command_source \"muse\". Voting seats only. A cited Muse vote in a window waits on sign-in.\nZOMBIES: Z missing session.jsonl → no-source. O one fixture envelope with a string command yields that command. M several envelopes; a repeat counted twice. B unresolved Windows root; mixed separators; empty jsonl; unparsable lines and no run record. I scan_entry(..., source=\"muse\") and locate_muse share the path rule. E OSError; two matches; session id outside PLAIN_NAME; no file when logging was off. S claude and copilot readers, and source \"none\" → unscanned, stay as they are.\nTest plan: red tests/test_command_source_muse.py first: missing, unreadable, and unresolved-root each assert no-source; then the D167 fixtures. Green: locate_muse plus an envelope reader that takes string commands from payload; scan_entry accepts \"muse\". Fixtures only.\nCap: criterion 3, at most 1 cycles\nInputs: disabled: muse omitted or command_source \"none\" → unscanned; unknown: unknown record_type/payload_type with no string command, and no run record → no-source; repeated: two folders for one session id → no-source; reordered: JSON field order ignored, commands in jsonl file order.\n\nD167 hostile-input list (labels D175 C2; red answers each):\n- disabled (C2): muse enabled false. SEEN: tests/test_probe_model.py disabled backend; tests/test_quota_first.py::test_guard_a_disabled_backend_counts_as_no_quota.\n- unknown pin (C2): probe_model not a models key. SEEN: tests/test_probe_model.py AnUnusablePinFailsTheProbeAndLaunchesNothing.\n- reordered models (C2): pin stable. SEEN: tests/test_probe_model.py::test_reordering_the_models_does_not_change_the_probe_model.\n- repeated muse key (C2): INSURANCE (JSON object keys unique).\n- disabled/none reader (C3): command_source \"none\" → unscanned. SEEN: core/backends.json grok/agy/codex \"none\"; tests/test_command_scan_files_2b.py::test_S_a_none_backend_is_still_unscanned.\n- unknown envelope (C3): INSURANCE.\n- repeated Muse session (C3): two matches → no-source. SEEN for Copilot (locate_copilot; tests/test_command_scan_files_2b.py two matches). INSURANCE for Muse.\n- reordered envelopes (C3): file order. SEEN for Claude: tests/test_command_source.py::test_commands_come_back_in_file_order_with_a_repeat_counted_twice. INSURANCE for Muse.\n- missing session.jsonl (C3, adopted): no-source. SEEN: tests/test_command_source.py missing_transcript.jsonl; adopted condition QA w276tf2-qa in .mob/records/decisions/276-taskforce.json.\n- unreadable log (C3, adopted): OSError → no-source. SEEN: command_source._read_transcript OSError branch. INSURANCE for a real Muse session.jsonl (none on disk).\n- Windows-path-unresolved (C3, adopted): no usable data_root → no-source. SEEN as the unpublished Windows mapping: 276 task-force finding (c); on this machine %USERPROFILE%\\.local\\share\\muse\\ exists. The env-root failure is the fixture.\n\nD176 note: every gate or suite run used as acceptance evidence opens with an Environment line (shell and launch form, working directory, git rev-parse HEAD, command, test count, seconds). A run without that line is not evidence. The reference shell is the one named in the gate brief from the greens and the facilitator.\n\nCap sum: 1 + 1 + 1 = 3 (D175). Work lands in mob-crosscli: core/backends.json, facilitator.probe_backend / probe_drivers, command_source.py, tests/. Muse trial seats sit on trust-ladder Rung 1 (Probation). No seat runs install.ps1 or muse login. D178's detector is card 277.\nSize: 9866 bytes\n",
+ "checklist_D158": ".mob/records/276/record-in-progress.json",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "w276sl-pmready",
+   "started_at": "2026-11-03T01:48:47Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: Muse trial seats sit on trust-ladder Rung 1 (Probation)\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T01:49:17.448184Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w276sl-qa",
+   "started_at": "2026-11-03T01:52:34Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: Missing, unreadable, or Windows-path-unresolved (no usable data_root from those variables)\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T01:53:05.491312Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w276slra-dev",
+   "started_at": "2026-11-03T02:08:46Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe caps of one cycle each are workable. Every case has a named fixture or a seen test, and no one has to run `install.ps1` or `muse login`. A missing, unreadable or unresolved log gives \"no command source\", never \"clean\", so I can comply without gaming it.\n\nCITE: Muse trial seats sit on trust-ladder Rung 1\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T02:09:14.980386Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w276sl-auditlens",
+   "started_at": "2026-11-03T01:59:53Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe missing, unreadable and unresolved-root cases each map to \"no command source\" and are tested first, and the D176 Environment line makes the live-install test auditable. One residual risk: a log that has a run record but no commands reads as \"clean\", which is plausible but unverified until a real signed-in session exists.\n\nCITE: missing, unreadable, and unresolved-root each assert no-source\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T02:00:23.287654Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w276sl-decider",
+   "started_at": "2026-11-03T02:03:43Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe slice separates what can be proved without sign-in (C1 to C3) from what waits on it (a cited Muse vote in a window). A missing log reads as \"no command source\", never \"clean\". The named seats (build, D178's detector) are already listed.\n\nCITE: Muse trial seats sit on trust-ladder Rung 1 (Probation)\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T02:04:10.406834Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "grok",
+   "context": "w276slcp1-pmready",
+   "started_at": "2026-11-03T01:46:47Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T01:47:14.431166Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276slcp2-pmready",
+   "started_at": "2026-11-03T01:48:02Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T01:48:28.802356Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w276slcp1-qa",
+   "started_at": "2026-11-03T01:50:33Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T01:51:01.180016Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276slcp2-qa",
+   "started_at": "2026-11-03T01:51:47Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T01:52:15.730342Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w276slcp1-dev",
+   "started_at": "2026-11-03T01:54:11Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T01:54:41.577111Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "claude",
+   "context": "w276sl-dev",
+   "started_at": "2026-11-03T01:56:22Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe rules are workable. Red and green are separable, the cap of 1 cycle per criterion is achievable with fixtures, and the live-install test is read-only. The \"no command source\" path can't be gamed into \"clean\". One small thing to tidy: the card says the install test lives in mob-defaults, but the work lands in mob-crosscli.\n\nCITE: missing, unreadable, or Windows-path-unresolved (no usable data_root from those variables) → NoCommandSource\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T01:56:47.589971Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276slcp2-dev",
+   "started_at": "2026-11-03T01:55:30Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T01:56:02.820886Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w276slracp1-dev",
+   "started_at": "2026-11-03T02:06:37Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T02:07:03.978994Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276slracp2-dev",
+   "started_at": "2026-11-03T02:07:54Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T02:08:27.562944Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w276slcp1-auditlens",
+   "started_at": "2026-11-03T01:57:45Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T01:58:16.002377Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276slcp2-auditlens",
+   "started_at": "2026-11-03T01:59:07Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T01:59:34.229552Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w276slcp1-decider",
+   "started_at": "2026-11-03T02:01:34Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T02:02:09.569568Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w276slcp2-decider",
+   "started_at": "2026-11-03T02:02:57Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 01:44 UTC (.mob/records/probes/2026-10-30.jsonl): Copilot and Grok available, agy quota reached and decider.py's own probe at 2026-11-03T02:03:23.930908Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "slice adopted without objection (caps 1+1+1; a cited Muse vote waits on Dispatch's sign-in). Five NO OBJECTION with valid D171 cites, all Claude. The dev seat's first cite differed from the proposal by letter case and did not count; one D171 re-ask (w276slra) counted. Every seat first paid an empty Grok and a Copilot attempt (12 in all): the cmd.exe 8191-character limit on the .CMD shims (.mob/records/notes/2026-11-03-empty-decision-votes-root-cause.md), the known cost until card 229 or 270 lands.",
+  "window_minutes": "01:46:17 to 02:04:41 UTC, serial, plus the dev re-ask from 02:05",
+  "seat_notes": "dev seat: the card says mob-defaults but work lands in mob-crosscli; these are one repository (mob-crosscli is the local checkout of mob-defaults), so no change"
+ },
+ "ended_at": "2026-11-03T02:10:08Z"
+}

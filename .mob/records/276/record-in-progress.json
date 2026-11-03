@@ -8,7 +8,8 @@
   "install": "Dispatch installed Muse Code 1.4.14 natively on Windows at the product owner's request (.mob/records/276/dispatch-install-note.md); no seat re-runs install.ps1",
   "sign_in": "Dispatch-owned: Dispatch runs muse login (device code) when the product owner says ready; the team does not block on it",
   "d178": "per the product owner's coach-don't-bench principle, only quota or unavailability excludes a model (card 277); agy excluded (quota), Grok and Copilot stay in rotation",
-  "slice": "turn-slice-architect.md (Grok ctx-2, grok -p in plan mode, read-only; sessions 01a19f0b-c944-7563-be4f-85c64f74a327 continued twice with -c): caps 1+1+1; the Windows session-log root is found from XDG_DATA_HOME, else HOME, else USERPROFILE plus .local/share; a cited Muse vote waits on sign-in"
+  "slice": "turn-slice-architect.md (Grok ctx-2, grok -p in plan mode, read-only; sessions 01a19f0b-c944-7563-be4f-85c64f74a327 continued twice with -c): caps 1+1+1; the Windows session-log root is found from XDG_DATA_HOME, else HOME, else USERPROFILE plus .local/share; a cited Muse vote waits on sign-in",
+  "slice_window": "window 276-slice (adopted, no conditions; one D171 re-ask of the dev seat)"
  },
  "seats": [
   {
