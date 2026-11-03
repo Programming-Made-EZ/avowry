@@ -30,10 +30,17 @@
    "evidence": "mob-defaults 5ef4b8f (Card 276 red 1)"
   },
   {
+   "role": "red",
+   "seat": "Copilot ctx-3 (resumed, session 11891944-1713-4b02-b514-174a88d313f1)",
+   "model": "copilot (auto) via the Copilot CLI; command scan clean, 15 commands",
+   "evidence": "mob-defaults 970118c (Card 276 red 1b)"
+  },
+  {
    "role": "green",
    "seat": "Copilot ctx-4",
    "model": "copilot (auto) via the Copilot CLI: window 276-taskforce named Grok for green, but a build seat needs a command reader (window 228-agy-seats) and Grok has none; Copilot is the least-recently-used model with a reader",
-   "evidence": "pending"
+   "evidence": "pending",
+   "note": "first green launch (session 3638b2ba-c163-4acf-9ba3-d593e1b71c88, command scan clean, 8 commands) stopped by the facilitator before it committed; its unfinished muse_install.py was moved to the scratchpad (green-276-1-stopped), not committed"
   }
  ],
  "deviations": [
@@ -42,9 +49,11 @@
   "slice seat's first headless run ended after a web fetch without writing the slice; continued in the same session (-c) with web search off",
   "slice seat's Size line read 10911; the measured bytes before it were 9866 (D168 C2); corrected by the seat on a re-ask",
   "red 1 (5ef4b8f) was committed about 02:14 UTC and pushed at 02:40, over the 5-minute rule (audit 181). The hold was the facilitator checking the seat's reported 68 collection errors: the seat ran bare `python -m pytest`, which also collects the mutation copies under scratch/. The reference command is `python -m unittest discover -s tests`. Its own tests were verified at about 02:20 (1 failed, the missing-helper contract test; 6 skipped until the helper exists), so the push should have followed then (card 227 corrective)",
-  "the facilitator's Git Bash tool shell fails 633 subprocess tests with OSError WinError 6 (the handle is invalid) on stdin duplication; that shell is not used as gate evidence, and the reference run is PowerShell"
+  "the facilitator's Git Bash tool shell fails 633 subprocess tests with OSError WinError 6 (the handle is invalid) on stdin duplication; that shell is not used as gate evidence, and the reference run is PowerShell",
+  "red 1 (5ef4b8f) was plain pytest functions, so the reference runner `python -m unittest discover -s tests` collected none of it: the reference run on 5ef4b8f was Ran 1581 tests in 1631.850s, OK (skipped=1), PowerShell, worktree at 5ef4b8f (suite-276-red1.log). Found by the facilitator; green 1 was stopped before committing; the QA seat rewrote red 1 as unittest with the missing ZOMBIES (red 1b, 970118c: Ran 11, errors=11), pushed at about 03:21 UTC",
+  "the facilitator's first PowerShell reference run on 5ef4b8f (02:22 to 02:49 UTC, 1606 s) kept only its last six lines, so its counts were lost; re-run in a worktree with full output"
  ],
  "notes": {
-  "red1_zombies_drift": "for the reviewer: red 1 maps M to the live install, not to the slice's several-PATH-hits case; I, E (slash and backslash) and S (other backends unchanged) are not clearly covered; the six case tests skip until the helper module exists (importorskip)"
+  "red1_zombies_drift": "for the reviewer: red 1 maps M to the live install, not to the slice's several-PATH-hits case; I, E (slash and backslash) and S (other backends unchanged) are not clearly covered; the six case tests skip until the helper module exists (importorskip) (red 1b adds M several PATH hits, I, E and S)"
  }
 }
