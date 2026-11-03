@@ -1,0 +1,792 @@
+{
+ "window": "229-taskforce",
+ "category": "task-force declaration",
+ "rule": "D153 task-force declaration for card 229 (ranked first by re-rank 20, D182); D145 re-poll after one adopted condition; D171",
+ "proposed_by": {
+  "role": "product manager (ready)",
+  "model": "copilot (auto) via the Copilot CLI, session 4dd925c3-d337-4828-8d39-fb58d5e07e58",
+  "context": "ctx-1",
+  "probe_reference": "probe 2026-11-03 21:00 UTC (.mob/records/probes/2026-10-30.jsonl)"
+ },
+ "opened_at": "2026-11-03T21:09:29Z",
+ "proposal": "# Card 229 task-force declaration proposal (ctx-1, PM ready)\n\n## Fold decision (229 + 270)\n\n**Fold card 270 into card 229 at ready.**  \nReason: both cards share one reproduced root cause and one launch path (`facilitator._launch_backend` / `run_backend` to `.CMD` shims; cmd.exe >8191 chars fails before CLI starts), and both are amplified by the same decider behavior (`decider.py` around line 119 dropping failed-call text into \"no response\").\n\nIf folded: close **#270** as **Folded into #229 (one root cause, one fix path)** when #229 ships; #229 carries all #270 Done checks:\n1. Cause named with failing reproduction.\n2. Grok decision seat returns a parseable vote on a real window prompt.\n3. Empty reply records exit status + stderr/failure excerpt (not bare \"no response\").\n\n## Roles, models, and contexts\n\n1. **PM (ready), model: Claude sonnet, context: ctx-1** — owns declaration, value metric, and D182 ordering compliance.\n2. **Architect, model: Claude sonnet, context: ctx-2** — owns launch-path design choice (stdin/prompt-file/real entrypoint) and invariant checks.\n3. **QA, model: Claude sonnet, context: ctx-3** — owns red-first guard: empty attempt fails (not counted), and counted votes keep valid D171 cites.\n4. **Backend dev, model: Claude sonnet, context: ctx-4** — owns facilitator/decider implementation details and backend-specific wiring.\n5. **Audit lens, model: Claude sonnet, context: ctx-5** — owns evidence trail quality (failure text, seat-use lines, diagnosis traceability).\n6. **Decider, model: Claude sonnet, context: ctx-6** — owns vote-window validity and rule conformance on counted votes.\n7. **Agile coach, model: Claude sonnet, context: ctx-7** — owns D175/D181 cap discipline and anti-theatre checks.\n\nLeft out of counted decision seats for this card: **Copilot and Grok** until this fix lands (known empty-vote launch failure, not quota/unavailability); **Muse/agy** not in this root-cause path.\n\n## Domain-expert (T2) question\n\nFor each decision CLI backend (copilot, grok), what is the supported and stable long-prompt input path on Windows (**stdin**, **prompt file**, or **non-.CMD real entrypoint**) that preserves full prompt bytes and returns non-zero + stderr on launch failure?\n\n## Value, metric, counter-metric\n\n- **Value:** restore real multi-model decision voting and remove empty-seat tax.\n- **Primary metric:** empty or voteless counted attempts per decision window (baseline observed: about two per seat; target: near 0).\n- **Counter-metrics:** (a) every counted vote still has a valid D171 cite, (b) window minutes do not regress, (c) diagnosis records keep launch-failure evidence.\n\n## Done checks with D175 caps (sum <= 3)\n\n1. **Launch path correctness (Cap 1):** prompts above cmd.exe limit still reach Copilot/Grok decision seats whole (or are refused pre-seat with named reason) on real window-shaped prompts.\n2. **Failure honesty + empty guard (Cap 1):** failed launches persist status + failure text in vote records; empty attempts fail red and are not counted.\n3. **Neighbor consistency (Cap 1):** placeholder literals in prompts are not rewritten by launcher logic (card 282 coupling), while template placeholders still fill.\n\n**Total cap: 3.**\n\n## Applicable Deciders\n\n- **D165:** apply (intent line before first red).\n- **D166:** apply (assumption/probe lines: Windows shim path and prompt-delivery assumptions).\n- **D167:** apply (hostile inputs list for backend/model maps and placeholder literals).\n- **D168:** apply (slice size cap).\n- **D171:** apply (counted-vote cite validity guard).\n- **D175:** apply (written per-check caps; total <=3).\n- **D176:** apply to gate evidence reporting for environment-sensitive failures.\n- **D178:** apply as the diagnosis/exclusion boundary this fix must satisfy.\n- **D181:** apply (no post-green lettered-red cap bypass).\n- **D182:** apply (ordering: 229/270, then 282, then 277; QA red-first empty guard condition).\n\n## Open points\n\n1. Backend-by-backend decision on **stdin vs prompt-file vs direct non-.CMD entrypoint** for Copilot and Grok.\n2. Whether each CLI reliably accepts that path in current installed versions.\n3. Exact pre-seat refusal rule when full prompt cannot be passed (must fail before seat starts, with named reason).\n4. Vote-record schema location for failure evidence (exit code + stderr/failure excerpt) so diagnosis in 277 can consume it directly.\n\n## Adopted condition (round 1, for this re-poll)\n\nFrom the independent reviewer (audit lens), round 1, adopted as one condition on Done check 1, joined with the cards' own live check that the declaration had dropped (card 229 Done check 2, \"A Copilot Decider voter returns a parsed vote on a real run\"; card 270 Done check 2, a Grok decision seat \"returns a parseable vote on a real window prompt\"):\n\nDone check 1 is met only when BOTH hold. (a) A git-committed test shows that at least one real window-shaped prompt, above the cmd.exe 8191-character limit, reaches each of Copilot and Grok whole; \"refused pre-seat with named reason\" alone does not satisfy it. (b) In a live decision window, a real Copilot seat and a real Grok seat each cast a parsed vote with a valid D171 cite, with committed evidence: the decider-result.json for each, the seat-use lines, and each CLI's session or events file path. Unit tests alone do not meet the check: the symptom is the empty vote in a live window, and card 276 showed that a green on trimmed fixtures can pass while the real symptom survives.\n\nThe caps stay 1+1+1.\n",
+ "checklist_D158": ".mob/records/229/checklist-229-taskforce.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [
+  {
+   "from": "independent reviewer (audit lens), round 1 (w229tf-auditlens)",
+   "adopted_as": "Done check 1 is met only when both hold: (a) a git-committed test shows at least one real window-shaped prompt above the cmd.exe 8191-character limit reaches each of Copilot and Grok whole, and a pre-seat refusal alone does not satisfy it; (b) in a live decision window a real Copilot seat and a real Grok seat each cast a parsed vote with a valid D171 cite, with committed evidence (decider-result.json for each, the seat-use lines, each CLI's session or events path). Part (b) restores the cards' own live checks (229 Done check 2, 270 Done check 2), which the declaration had dropped; raised by the facilitator from Dispatch's note and the checklist point 3"
+  }
+ ],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "w229tfr2-architect",
+   "started_at": "2026-11-03T21:35:40Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nThe adopted condition is minimal and checkable: (a) is a committed test on an oversized prompt, and (b) is committed live evidence. Both close the trimmed-fixture gap from card 276. One note, not a condition: the live window should say whether Copilot and Grok are seated as non-counted trials while excluded from counted seats.\nCITE: Done check 1 is met only when BOTH hold.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:36:13.472901Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "architect (slice)",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w229tfr2-qa",
+   "started_at": "2026-11-03T21:39:15Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: empty attempts fail red and are not counted\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:39:42.982807Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w229tfr2-dev",
+   "started_at": "2026-11-03T21:42:45Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: Unit tests alone do not meet the check\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:43:15.798122Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w229tfr2-auditlens",
+   "started_at": "2026-11-03T21:46:20Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe adopted condition makes Done check 1 checkable from git. It needs a committed test on an over-limit prompt and committed live evidence for each seat: the decider-result.json, the seat-use lines, and the session or events file path. The caps stay at 1+1+1, and I add no new demands.\n\nCITE: Unit tests alone do not meet the check\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:46:48.227642Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w229tfr2-decider",
+   "started_at": "2026-11-03T21:49:54Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe adopted condition ties Done check 1 to committed live evidence from a real Copilot seat and a real Grok seat. That puts the decision on evidence. The seat roster is adequate for sign-off.\n\nCITE: Unit tests alone do not meet the check\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:50:21.233294Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w229tfcr2-coach",
+   "started_at": "2026-11-03T21:57:15Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe caps stay at 1+1+1 and the adopted condition adds no new ceremony. Seven seats, with Copilot and Grok left out of counted votes until the fix lands, is proportionate for a launch-path fix that spans two backends and a decider guard.\n\nCITE: Done check 1 is met only when BOTH hold.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:57:41.867443Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w229tfcp1-architect",
+   "started_at": "2026-11-03T21:09:29Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:09:58.168943Z",
+   "round": 1,
+   "role": "architect (slice)",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w229tf-architect",
+   "started_at": "2026-11-03T21:11:32Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe design is minimal. Each of the three checks has a cap of 1, so the total stays at 3. The empty-attempt guard is red-first and checkable. Folding 270 into 229 keeps a single fix path. The vote-record schema location is still an open point, but it can be settled during implementation.\n\nCITE: empty attempts fail red and are not counted\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:12:02.265035Z",
+   "round": 1,
+   "role": "architect (slice)",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w229tfcp2-architect",
+   "started_at": "2026-11-03T21:10:45Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:11:13.323460Z",
+   "round": 1,
+   "role": "architect (slice)",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229tfr2cp1-architect",
+   "started_at": "2026-11-03T21:33:32Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:34:03.481854Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "architect (slice)",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229tfr2cp2-architect",
+   "started_at": "2026-11-03T21:34:51Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:35:20.280736Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "architect (slice)",
+   "ctx": "ctx-2",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229tfcp1-qa",
+   "started_at": "2026-11-03T21:13:00Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:13:27.512206Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w229tf-qa",
+   "started_at": "2026-11-03T21:15:07Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe three checks can each be tested red first: an empty attempt fails and isn't counted, an over-limit prompt either arrives whole or is refused before the seat starts, and the placeholder literal check is a plain input-to-output test. I did not open the repo files, so this rests on the proposal text alone.\n\nCITE: Failure honesty + empty guard (Cap 1): failed launches persist status + failure text in vote records\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:15:37.688081Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w229tfcp2-qa",
+   "started_at": "2026-11-03T21:14:17Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:14:47.539165Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229tfr2cp1-qa",
+   "started_at": "2026-11-03T21:37:13Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:37:40.897662Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229tfr2cp2-qa",
+   "started_at": "2026-11-03T21:38:28Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:38:54.891649Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229tfcp1-dev",
+   "started_at": "2026-11-03T21:16:38Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:17:03.947980Z",
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w229tf-dev",
+   "started_at": "2026-11-03T21:18:43Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe three caps of 1 are workable. Each check names a testable behavior, so I can write red tests first without gaming them. The open points (stdin vs prompt file, pre-seat refusal rule, failure-record schema) are design work for the architect and me, not blockers.\n\nCITE: prompts above cmd.exe limit still reach Copilot/Grok decision seats whole\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:19:08.010298Z",
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w229tfcp2-dev",
+   "started_at": "2026-11-03T21:17:50Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:18:23.424269Z",
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229tfr2cp1-dev",
+   "started_at": "2026-11-03T21:40:41Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:41:10.340865Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229tfr2cp2-dev",
+   "started_at": "2026-11-03T21:41:58Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:42:24.614151Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229tfcp1-auditlens",
+   "started_at": "2026-11-03T21:20:09Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:20:39.493148Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w229tf-auditlens",
+   "started_at": "2026-11-03T21:22:17Z",
+   "model": "sonnet",
+   "raw": "OBJECTION\nCONDITION: Done check 1 must require that at least one real window-shaped prompt reaches each of Copilot and Grok whole, proven by a git-committed test, so that \"refused pre-seat with named reason\" cannot satisfy it alone.\n\nCITE: prompts above cmd.exe limit still reach Copilot/Grok decision seats whole (or are refused pre-seat with named reason)\n",
+   "first_line": "OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:22:50.930953Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w229tfcp2-auditlens",
+   "started_at": "2026-11-03T21:21:29Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:21:57.532822Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229tfr2cp1-auditlens",
+   "started_at": "2026-11-03T21:44:16Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:44:44.140747Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229tfr2cp2-auditlens",
+   "started_at": "2026-11-03T21:45:33Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:45:59.920159Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229tfcp1-decider",
+   "started_at": "2026-11-03T21:24:09Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:24:34.510604Z",
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w229tf-decider",
+   "started_at": "2026-11-03T21:26:08Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe decision rests on evidence: a baseline (about two empty attempts per seat), a target, three counter-metrics and D175 caps. All seven seats are named, including a decider.\n\nCITE: Fold card 270 into card 229 at ready.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:26:34.851066Z",
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w229tfcp2-decider",
+   "started_at": "2026-11-03T21:25:23Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:25:48.304093Z",
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229tfr2cp1-decider",
+   "started_at": "2026-11-03T21:47:50Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:48:16.538645Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229tfr2cp2-decider",
+   "started_at": "2026-11-03T21:49:07Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:49:33.758202Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229tfcp1-coach",
+   "started_at": "2026-11-03T21:27:49Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:28:16.027519Z",
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w229tf-coach",
+   "started_at": "2026-11-03T21:29:52Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe task force fits the work: one root cause with a single fix path, 270 folded into 229, and a total cap of 3. The six seats after the product manager match the D153 declaration. Folding 270 avoids a second window, and cutting Copilot and Grok from counted seats until the fix lands removes empty-vote waste.\n\nCITE: Fold card 270 into card 229 at ready.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:30:19.329023Z",
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w229tfcp2-coach",
+   "started_at": "2026-11-03T21:29:04Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:29:31.852365Z",
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229tfr2cp1-coach",
+   "started_at": "2026-11-03T21:51:22Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:51:48.824366Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "claude",
+   "context": "w229tfr2-coach",
+   "started_at": "2026-11-03T21:53:18Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe seat count is high for three capped checks. But the roles map to distinct duties (launch design, red-first guard, evidence trail, vote validity), and caps stay at 1+1+1. The adopted live-window check adds real evidence rather than ceremony. A re-poll may not add new demands, so I add none.\n\nCITE: The caps stay 1+1+1.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:53:48.127616Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229tfr2cp2-coach",
+   "started_at": "2026-11-03T21:52:33Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:52:57.614158Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229tfcr2cp1-coach",
+   "started_at": "2026-11-03T21:55:09Z",
+   "model": "auto",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:55:39.468747Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229tfcr2cp2-coach",
+   "started_at": "2026-11-03T21:56:29Z",
+   "model": "grok-4.6",
+   "raw": "",
+   "first_line": "",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 21:00 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T21:56:55.505818Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "adopted with one condition: card 270 folded into 229; seven declared roles, all on Claude (Copilot and Grok decision seats are the subject); caps 1+1+1; Done check 1 carries delivery (a committed over-limit prompt test) and a live Copilot and Grok vote in a real window with committed evidence. Round 1: five NO OBJECTION, one OBJECTION with a condition (audit lens); the QA seat's cite carried markdown bold markers and did not count. Round 2: six NO OBJECTION, the coach's counted on a D171 re-ask (its first cite had four words). Every seat first paid empty Grok and Copilot attempts (the cmd.exe line limit this card fixes). Open point from the architect, not a condition: the live window should say whether Copilot and Grok are seated as non-counted or counted voters.",
+  "window_minutes": "round 1 21:08:55 to 21:30:53 UTC; round 2 from 21:31 UTC; re-ask after"
+ },
+ "ended_at": "2026-11-03T21:58:34Z"
+}
