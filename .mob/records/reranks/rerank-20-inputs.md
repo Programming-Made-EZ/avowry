@@ -13,3 +13,7 @@ Queued by the facilitator, 2026-11-03. Re-rank 20 does not interrupt card 276.
 ## Cards to place
 
 - 266, 267, 270 to 275, 277, and the card 276 follow-ups filed 2026-11-03: 279 (the Muse reader reads real tool records; depends on the Windows sandbox setup), 280 (Muse usage text sign-in states), 281 (Muse seat workspace trust), 282 (seat prompts reach seats without placeholder rewriting).
+
+## Deferred while card 276 is held (facilitator, 2026-11-03 16:05 UTC)
+
+D180 holds card 276 open, and the product owner did not rule on the re-rank. The facilitator defers re-rank 20 for three reasons. First, D148 places a re-rank at a loop boundary (a card's Done and retro, before the next pull), and card 276 has not reached one. Second, the working agreement keeps WIP at one card and has no rule for parking a blocked card, so a re-rank now would rank a pull the team cannot make. Third, Dispatch routed issue 278 to the re-rank after card 276 closes. If the hold outlasts the in-flight cap (2026-11-04 04:05 UTC), the facilitator will put a 'park a card blocked on an outside action' proposal to the Decider instead of pulling early.
