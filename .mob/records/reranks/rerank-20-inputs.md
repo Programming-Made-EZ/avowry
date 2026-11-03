@@ -12,4 +12,4 @@ Queued by the facilitator, 2026-11-03. Re-rank 20 does not interrupt card 276.
 
 ## Cards to place
 
-- 266, 267, 270 to 275, 277, and the card 276 follow-ups from window 276-scope: Muse usage text reads as signed-in or unknown-quota (item 1), and muse exec in an untrusted workspace (item 6). The follow-ups get filed at card 276's close.
+- 266, 267, 270 to 275, 277, and the card 276 follow-ups filed 2026-11-03: 279 (the Muse reader reads real tool records; depends on the Windows sandbox setup), 280 (Muse usage text sign-in states), 281 (Muse seat workspace trust), 282 (seat prompts reach seats without placeholder rewriting).
