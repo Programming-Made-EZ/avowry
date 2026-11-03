@@ -1,7 +1,7 @@
 {
  "card": 211,
  "title": "A whole-team review of the mob-defaults rulings commits",
- "status": "in progress",
+ "status": "closed",
  "decisions": {
   "rank": "re-rank 19 (window rerank-19): first, the corrective named by MD-010",
   "task_force": "window 211-taskforce (adopted, no conditions)",
@@ -10,7 +10,8 @@
   "po_ruling_check3": "D177 (product owner ruling, 2026-11-02): Done check 3 WAIVES the different-committing-identity requirement; replacement evidence: a final-state review by a fresh-context seat that authored none of the 27 commits, on a different model from the authors where available, recorded with model, seat or context id, session or events path and the commit range, cited from the Decider and closing records",
   "decider_md010": "Decider MD-010 (criterion 1): six role seats, each in its own fresh context through decider.py's gate, all Support-it with valid D171 cites (all on Claude after Grok and Copilot seats returned empty and agy was out of quota); recorded in mob-defaults DECIDERS.md and records/211/votes.json (ed97c75). Most seats voted from the commit list and diffstat without reading the diffs; the sign-off seat said 'team-reviewed' overstates the evidence; the record keeps both.",
   "final_review_model": "criterion 3 final-state review (D177) ran on Copilot (auto) via the Copilot CLI, in a fresh context, 2026-11-02 21:57 to 21:59 UTC, session ~/.copilot/session-state/b4bfd6c9-0a9a-46cc-a82a-08cacda5bced/events.jsonl; why: D177 asks for a model different from the authors where available; the 27 commits came through Claude sessions; agy was out of quota; Grok and Copilot return empty decision-seat votes (cards 229, 270), but Copilot as a CLI seat produced full results (card 210's gate twice, card 211's ready and slice), so a Copilot CLI seat was available; Claude was not the default. Verdict ACCEPT WITH FINDINGS (9 findings), filed by green 3 into records/211/final-review.json.",
-  "preship_gate": "pre-ship gate (Copilot ctx-4): SHIP, no blocking findings (session ~/.copilot/session-state/13c05418-5271-4885-8397-0f7288d66b37)"
+  "preship_gate": "pre-ship gate (Copilot ctx-4): SHIP, no blocking findings (session ~/.copilot/session-state/13c05418-5271-4885-8397-0f7288d66b37)",
+  "signoff": "sign-off ctx-6 (f51f9a4): SIGNED OFF with conditions, met in the closing record"
  },
  "task_force": [
   {
@@ -108,6 +109,12 @@
    "status": "clean",
    "seat": "pre-ship gate (Copilot CLI)",
    "detail": "clean: gate-211-copilot, 8 command(s) scanned"
+  },
+  {
+   "context": "ctx-6",
+   "status": "clean",
+   "seat": "sign-off (Claude subagent)",
+   "detail": "clean: signoff-211, 22 command(s) scanned"
   }
  ],
  "token_usage": [
@@ -168,6 +175,20 @@
    "requests": "0.25 Premium (3m 27s)",
    "tokens_in": "1.7m (1.6m cached)",
    "tokens_out": "16.2k"
+  },
+  {
+   "seat": "sign-off ctx-6",
+   "source": "Agent completion report",
+   "subagent_tokens": 103643
+  },
+  {
+   "seat": "agile coach, retro and pick",
+   "source": "Agent completion report",
+   "subagent_tokens": 161813
+  },
+  {
+   "seat": "gaps",
+   "note": "not carried: the decision-window and Decider voter seats (decider-result.json files in the facilitator's scratch, not committed), the empty Grok and Copilot attempts, the facilitator's own usage; Claude completion figures have no input/output split"
   }
  ],
  "cycles": [
@@ -199,8 +220,7 @@
     "65102e5",
     "7be54ed"
    ],
-   "refactor": "none needed: records only",
-   "plan": "next: sign-off (ctx-6)"
+   "refactor": "none needed: records only"
   }
  ],
  "stand_downs": [],
@@ -217,5 +237,13 @@
   "the seats named eight defects in the 27 commits (turn-green-1.md): line-ending rewrites of test_card_mode.py and facilitator.py, gates landing with their tests and no red shown, possible duplicate gate logic, hard-coded 45/30/60-minute thresholds, about 3,900 lines that may over-specify, a retroactive ruling without proof of seat independence, a motion that left reshape and reject barely available; the identity point is settled by D177; the code defects are filed as cards at close",
   "red 3's test accepts only confirm, add and dispute: green 3 stored the reviewer's 3 'unclear' findings as 'adds' (original kind kept) and the verdict as 'accepted-with-findings' (verbatim kept); with red 1's vote-word narrowing, two record tests narrowed the team's own words",
   "green 3's commit body says '3 confirm'; the true split is 2 confirm, 3 dispute, 1 add, 3 unclear (noted in its turn record; no amend)"
- ]
+ ],
+ "closing": {
+  "review_evidence_D177": "criterion 3's final-state review (D177): records/211/final-review.json in mob-defaults (f6fb952), by a fresh-context Copilot CLI seat (context review-copilot; the events file shows model mai-code-1.1-flash under 'auto'), session ~/.copilot/session-state/b4bfd6c9-0a9a-46cc-a82a-08cacda5bced/events.jsonl, range 687410e..e3736d1; it reviewed head fe4c092, the commit before the final state; cited from DECIDERS.md's MD-010 entry",
+  "decider_depth": "the MD-010 Decider (criterion 1) rests on seats that mostly did not read the diffs; the final-state reviewer read them",
+  "range_note": "687410e..e3736d1 in git's notation excludes 687410e (26 commits); the card, votes and re-run count 27 inclusive",
+  "cards_filed": "270 (Grok empty votes), 271 (thresholds as parameters), 272 (line endings of facilitator.py and test_card_mode.py), 273 (a red run per gate), 274 (record tests keep the team's words), 275 (decide unproven defects 4, 6, 8 and the seat-attribution question)",
+  "commit_body_slip": "green 3's body (f6fb952) says '3 confirm'; the true split is 2 confirm, 3 dispute, 1 add, 3 unclear",
+  "retro_pick": "Decider D178 (decision-seat breaker)"
+ }
 }

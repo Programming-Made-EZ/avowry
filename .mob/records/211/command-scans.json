@@ -1,0 +1,72 @@
+{
+ "card": 211,
+ "command_scans": [
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 1",
+   "detail": "clean: red1-211, 13 command(s) scanned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "decider facilitator green 1",
+   "detail": "clean: green1-211, 27 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 2",
+   "detail": "clean: red2-211, 16 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "clean",
+   "seat": "QA red 3",
+   "detail": "clean: red3-211, 11 command(s) scanned"
+  },
+  {
+   "context": "ctx-5",
+   "status": "clean",
+   "seat": "decider facilitator green 3",
+   "detail": "clean: green3-211, 17 command(s) scanned"
+  },
+  {
+   "context": "ctx-1",
+   "status": "clean",
+   "seat": "pm-ready (Copilot CLI)",
+   "detail": "clean: ready-211-copilot, 1 command(s) scanned"
+  },
+  {
+   "context": "ctx-2",
+   "status": "clean",
+   "seat": "architect slice (Copilot CLI)",
+   "detail": "clean: slice-211-copilot, 6 command(s) scanned"
+  },
+  {
+   "context": "review-copilot",
+   "status": "clean",
+   "seat": "final-state reviewer (Copilot CLI)",
+   "detail": "clean: review-211-copilot, 6 command(s) scanned"
+  },
+  {
+   "context": "ctx-3",
+   "status": "findings, not deletes",
+   "seat": "QA independent re-run green 2 (Claude subagent)",
+   "detail": "'unreadable file' for runs of files that do not exist at that path (scripts/mob_process.py is avowry's layout; mob_process.py is absent at 687410e); the commands failed and nothing ran; the scan fails closed on a missing run target, as designed",
+   "raw": "green2-211: unreadable file: scripts/mob_process.py cannot be read (file scripts/mob_process.py, file_source: disk, run call 1) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-a3546c6d88855642b.jsonl)\ngreen2-211: unreadable file: mob_process.py cannot be read (file mob_process.py, file_source: disk, run call 9) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-a3546c6d88855642b.jsonl)\ngreen2-211: unreadable file: mob_process.py cannot be read (file mob_process.py, file_source: disk, run call 12) (source C:/Users/ringe/.claude/projects/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/subagents/agent-a3546c6d88855642b.jsonl)"
+  },
+  {
+   "context": "ctx-4",
+   "status": "clean",
+   "seat": "pre-ship gate (Copilot CLI)",
+   "detail": "clean: gate-211-copilot, 8 command(s) scanned"
+  },
+  {
+   "context": "ctx-6",
+   "status": "clean",
+   "seat": "sign-off (Claude subagent)",
+   "detail": "clean: signoff-211, 22 command(s) scanned"
+  }
+ ]
+}
