@@ -9,7 +9,8 @@
   "sign_in": "Dispatch-owned: Dispatch runs muse login (device code) when the product owner says ready; the team does not block on it",
   "d178": "per the product owner's coach-don't-bench principle, only quota or unavailability excludes a model (card 277); agy excluded (quota), Grok and Copilot stay in rotation",
   "slice": "turn-slice-architect.md (Grok ctx-2, grok -p in plan mode, read-only; sessions 01a19f0b-c944-7563-be4f-85c64f74a327 continued twice with -c): caps 1+1+1; the Windows session-log root is found from XDG_DATA_HOME, else HOME, else USERPROFILE plus .local/share; a cited Muse vote waits on sign-in",
-  "slice_window": "window 276-slice (adopted, no conditions; one D171 re-ask of the dev seat)"
+  "slice_window": "window 276-slice (adopted, no conditions; one D171 re-ask of the dev seat)",
+  "criterion_1": "green 1 2196c58: red 1b's 11 tests pass (10 ok, the live case skipped where Muse is not on PATH). With %LOCALAPPDATA%\\Programs\\muse put on PATH for one process, the live case passes: version 1.4.14, launcher %LOCALAPPDATA%\\Programs\\muse\\muse.CMD, no problems, sign-in unknown. Refactor 41ecf78 (behaviour kept). Full reference suite on 2196c58 running in a worktree (suite-276-green1.log)."
  },
  "seats": [
   {
@@ -39,7 +40,7 @@
    "role": "green",
    "seat": "Copilot ctx-4",
    "model": "copilot (auto) via the Copilot CLI: window 276-taskforce named Grok for green, but a build seat needs a command reader (window 228-agy-seats) and Grok has none; Copilot is the least-recently-used model with a reader",
-   "evidence": "pending",
+   "evidence": "mob-defaults 2196c58 (Card 276 green 1, session ae576973-c725-4cfd-a911-cd394be81112, command scan clean, 9 commands); refactor 41ecf78 (same context, 12 commands, clean)",
    "note": "first green launch (session 3638b2ba-c163-4acf-9ba3-d593e1b71c88, command scan clean, 8 commands) stopped by the facilitator before it committed; its unfinished muse_install.py was moved to the scratchpad (green-276-1-stopped), not committed"
   }
  ],
@@ -51,9 +52,12 @@
   "red 1 (5ef4b8f) was committed about 02:14 UTC and pushed at 02:40, over the 5-minute rule (audit 181). The hold was the facilitator checking the seat's reported 68 collection errors: the seat ran bare `python -m pytest`, which also collects the mutation copies under scratch/. The reference command is `python -m unittest discover -s tests`. Its own tests were verified at about 02:20 (1 failed, the missing-helper contract test; 6 skipped until the helper exists), so the push should have followed then (card 227 corrective)",
   "the facilitator's Git Bash tool shell fails 633 subprocess tests with OSError WinError 6 (the handle is invalid) on stdin duplication; that shell is not used as gate evidence, and the reference run is PowerShell",
   "red 1 (5ef4b8f) was plain pytest functions, so the reference runner `python -m unittest discover -s tests` collected none of it: the reference run on 5ef4b8f was Ran 1581 tests in 1631.850s, OK (skipped=1), PowerShell, worktree at 5ef4b8f (suite-276-red1.log). Found by the facilitator; green 1 was stopped before committing; the QA seat rewrote red 1 as unittest with the missing ZOMBIES (red 1b, 970118c: Ran 11, errors=11), pushed at about 03:21 UTC",
-  "the facilitator's first PowerShell reference run on 5ef4b8f (02:22 to 02:49 UTC, 1606 s) kept only its last six lines, so its counts were lost; re-run in a worktree with full output"
+  "the facilitator's first PowerShell reference run on 5ef4b8f (02:22 to 02:49 UTC, 1606 s) kept only its last six lines, so its counts were lost; re-run in a worktree with full output",
+  "green 1 (2196c58) carries a 'Co-authored-by: Copilot' trailer added by the Copilot CLI; the mob's commits carry no co-author trailers; no history rewrite, so it stays and later briefs forbid it (refactor 41ecf78 has none)"
  ],
  "notes": {
-  "red1_zombies_drift": "for the reviewer: red 1 maps M to the live install, not to the slice's several-PATH-hits case; I, E (slash and backslash) and S (other backends unchanged) are not clearly covered; the six case tests skip until the helper module exists (importorskip) (red 1b adds M several PATH hits, I, E and S)"
+  "red1_zombies_drift": "for the reviewer: red 1 maps M to the live install, not to the slice's several-PATH-hits case; I, E (slash and backslash) and S (other backends unchanged) are not clearly covered; the six case tests skip until the helper module exists (importorskip) (red 1b adds M several PATH hits, I, E and S)",
+  "muse_not_on_path": "Muse is NOT on the user PATH (HKCU Environment Path has no muse entry; no profile adds one), although .mob/records/276/dispatch-install-note.md says it is. The launcher exists at %LOCALAPPDATA%\\Programs\\muse\\muse.cmd. Raised to Dispatch; the facilitator does not change PATH (a system setting).",
+  "red2_required_cases": "from the facilitator's read of green 1, named in refactor 41ecf78: (a) _detect_sign_in tests 'signed in' before 'not signed in', so a not-signed-in reply reads as signed-in; (b) a version mismatch is appended to problems twice. Criterion 1's cap (1 cycle) is spent, so both go to red 2 (criterion 2 owns the not-signed-in state)."
  }
 }
