@@ -22,4 +22,4 @@ D180 holds card 276 open, and the product owner did not rule on the re-rank. The
 
 ## After re-rank 20 (facilitator, 2026-11-03 22:25 UTC)
 
-The product owner confirmed D182's condition on 288 in the product owner's own wording (D183, issue 288 comment). Line 36 now says process improvements serve the story being worked and the board holds only user stories and bugs. The next re-rank, after card 229, sorts the existing process cards: real defects in safety, decision votes or tests stay as bugs; the rest leave the board and become retro experiments.
+D182's condition on 288 was met, and D183 replaces the cut-line text: line 36 now says process improvements serve the story being worked and the board holds only user stories and bugs. The next re-rank, after card 229, sorts the existing process cards: real defects in safety, decision votes or tests stay as bugs; the rest leave the board and become retro experiments.

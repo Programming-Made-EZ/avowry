@@ -891,12 +891,15 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   - Card 279: closed as Superseded/Withdrawn, delivered by card 276 (commits 25d50b8 to 0000715; .mob/records/276.json).
   - Card 264: whether audit 123 is still open is unverified; audit 200 lists open FAILs F-072, F-074, F-078 and F-086 and no card names them. If audit 123's FAIL is open, 264 goes first.
 - Next card: 229 (mob-defaults), with 270 folded in at ready if the team agrees.
-- Superseded in part by D183 (2026-11-03): the product owner confirmed the condition on 288 in the product owner's own wording; the cut-line text and order are replaced, the head stands.
+- Superseded in part by D183 (2026-11-03): the cut-line text and order are replaced by D183's principle; the head stands.
 
 <a id="d183"></a>
-#### Decider D183: product owner ruling (not a team vote): process improvements serve the story being worked; the board holds only user stories and bugs
+#### Decider D183: process improvements serve the user story being worked; the board holds only user stories and bugs
 
-- Date: 2026-11-03 (comment on GitHub issue 288, 22:21 UTC, relayed by Dispatch). Not a team vote: the product owner's confirmation of D182's condition on proposal 288, in the product owner's own wording, which replaces the cut-line text proposed in re-rank 20. It replaces the process-first sentences of TEAM_WORKING_AGREEMENT.md line 36 (D161).
-- Ruled (verbatim): "Process improvements serve the user story being worked. They are not board cards. While working a story, the team may improve any part of the process that's relevant to that story, not only what blocks it. The improvement is made as part of the story, or as retro follow-through, and proven by that story's outcome. The board holds only user stories and bugs. At the next re-rank, the existing process cards are sorted: real defects in safety, decision votes or tests stay as bugs, and the rest leave the board and become retro experiments, picked up when a story makes them relevant."
-- Rationale given: the board is the product backlog; process work filed as cards crowded out product work and the process queue grew faster than it drained; tying each improvement to the story it serves keeps the process improving while product ships, and makes every improvement prove itself on a real outcome.
+- Date: 2026-11-03. Replaces the process-first sentences of TEAM_WORKING_AGREEMENT.md line 36 and the cut-line text proposed for 288 in re-rank 20 (D182's condition). D161's gate for changing line 36 was met by the product owner's confirmation (issue 288). A Decider merit review follows (seats free to object or condition it); its result is recorded here.
+- Principle: process improvements serve the user story being worked and are not board cards. While working a story, the team may improve any part of the process that is relevant to it, not only what blocks it, as part of the story or as retro follow-through, and the story's outcome is the proof. The board holds only user stories and bugs. At the next re-rank the existing process cards are sorted: real defects in safety, decision votes or tests stay as bugs; the rest leave the board and become retro experiments, picked up when a story makes them relevant.
+- Reasons, on the merits:
+  - The board is the product backlog; a card on it should be something a user gets.
+  - Process cards crowded out product work: the first product card sat about 37th behind process and tooling cards, and the process queue grew faster than it drained (card 276 alone produced nine follow-up cards in one day).
+  - An improvement tied to the story it serves proves itself on a real outcome, instead of on its own process metric.
 - Effects: D182's cut-line order and interleave rule are not applied; D182's head (cards 229, 270, 282, 277) stands, and card 229 continues as a decision-vote bug. The sorting runs at the next re-rank, after card 229. D182's measure and guards (product cards closed per day; open FAILs and findings per card must not rise) are for that re-rank to carry or replace.

@@ -1208,7 +1208,7 @@
   "D183": {
     "area": "process-and-staffing",
     "status": "in force",
-    "title": "Product owner ruling: process improvements serve the user story being worked and are not board cards; the board holds only user stories and bugs; the next re-rank sorts existing process cards (real safety, decision-vote and test defects stay as bugs, the rest become retro experiments)",
+    "title": "Process improvements serve the user story being worked and are not board cards; the board holds only user stories and bugs; the next re-rank sorts existing process cards (real safety, decision-vote and test defects stay as bugs, the rest become retro experiments); merit review by Decider follows",
     "order": 174
   }
 }
