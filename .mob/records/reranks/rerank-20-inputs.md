@@ -5,6 +5,7 @@ Queued by the facilitator, 2026-11-03. Re-rank 20 does not interrupt card 276.
 ## Proposals for the Decider
 
 - Issue 278 (label proposal, from the product owner; a proposal, not a ruling): rank the cmd.exe line-limit fix right after card 276. That fix is cards 229 (Copilot), 270 (Grok) and 277 (diagnosis; exclude only for quota or unavailability).
+- Issue 284 (label proposal, from the product owner; a proposal, not a ruling): name drift resistance (code vs requirements, docs vs behaviour, model output across versions) as an Avowry benefit, with a pre-registered, Goodhart-guarded measure: planted unintended changes flagged by generated checks against a plain-language baseline, reported with the false-alarm rate, pre-registered like cards 149 to 151. The Decider decides whether to add it to VISION and the verdict page's success criteria, and whether to card a measurement design.
   - Evidence: audit 187. Window 276-scope paid 20 empty Grok and Copilot attempts across two rounds, about 38 minutes of wall clock for about 20 minutes of votes.
   - Root cause: .mob/records/notes/2026-11-03-empty-decision-votes-root-cause.md.
   - This goes to the Decider at re-rank 20 as a proposal.
