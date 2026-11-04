@@ -1,0 +1,8 @@
+# D158 pre-window checklist: window 230-scope-3 (facilitator)
+
+- Proposal: .mob/records/230/turn-scope3-architect.md (architect, ctx-2 continued, Codex CLI read-only, 23:32 to about 23:40 UTC; premises read on 1cc249d through cmd and quoted).
+- Trigger: the product owner's direction, recorded in .mob/records/230/record-in-progress.json decisions.po_direction_trunk: trunk-based development with no per-seat worktrees or branches; seats commit on main in the one checkout under the single-writer lock; the facilitator waits while a seat holds it; the worktree path is removed. Rationale on the merits: continuous integration lands every change on trunk at once; short-lived seat branches step away from that; the lock gives the card's safety.
+- Category: scope window (D175 C4) with the Done checks restated: criterion 1 cycle 3, caps 2+1+2 to 3+1+2. Seats polled: product manager, QA engineer, backend developer, independent reviewer (audit lens), decider, agile coach; the proposer does not sit. D171 cites verbatim; one re-ask for an unread vote. Grok disabled.
+- Facilitator's notes, facts only: the full suite on 1cc249d (worktree design) is still running and is data only. From this window on, the card's own seats commit directly on main in the mob-crosscli checkout while the facilitator writes nothing there during their turn. The green's file list includes core/process.md and role briefs only where they tell seats to use worktrees or integration. Green 3's second-run vote-lock gap stays for the gate.
+- No commit to avowry while a voter runs.
+- Probe: 2026-11-04 23:06 UTC, plus decider.py's own probe per run.
