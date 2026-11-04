@@ -1,0 +1,185 @@
+{
+ "window": "290-scope-2",
+ "category": "mid-card addition",
+ "rule": "D175 C4 second scope window for card 290: criterion 1 cycle 2 (D181: green 1 93c4f62 passed red 1); D184; D171",
+ "proposed_by": {
+  "role": "architect",
+  "model": "claude, a fresh subagent context (read-only; D184 probe on HEAD 3d503c8)",
+  "context": "ctx-2",
+  "probe_reference": "probe 2026-11-04 12:10 UTC"
+ },
+ "opened_at": "2026-11-04T12:15:45Z",
+ "proposal": "# SCOPE PROPOSAL: card 290, D175 C4 window (criterion 1, cycle 2)\n\nIntent (D165): a vote counts only with a vote line and a D171-valid CITE; any other reply is left out of the result (task force 290). A seat that never answered is not a reply, and still fails the result.\n\nAssumes (D184, run on HEAD 3d503c8 in C:\\Users\\ringe\\mob-crosscli, read-only):\n\n```\npython -c \"import decider as d; print(d.result_of({'a':'Yes','b':'Yes'})); print(d.result_of({'a':'Yes','b':'Yes','c':'none'}))\"\n```\nOutput: `passed`, then `failed`.\n\n- A1. result_of already fails on \"none\" (decider.py:81); no change there.\n- A2. The call site is decider.py:353 on HEAD (340 at 93c4f62): `result_of({... if v[\"counted\"]})`, and counted is False for \"none\" (line 352), so \"none\" never reaches result_of.\n- A3. Unrun: test_a_seat_that_never_answers_counts_as_no_response_and_fails gets \"passed\" once the doubles cite (green 3 attempt 1, stated in the record).\n\n## Gap\n\nGreen 1 (93c4f62) left out \"did not answer\" with uncited replies. No red covered a missing seat beside cited votes.\n\n## Smallest scope (criterion 1, cycle 2)\n\nRed 1c (tests only): with cited Yes votes from the other seats, a seat with vote \"none\" makes the result \"failed\"; an uncited No beside cited Yes votes still gives \"passed\".\nGreen 1b: at the same call site, pass a vote to result_of when it is counted or its vote is \"none\". No other decider.py change.\n\nAcceptance: red 1c, red 1, red 1b, red 2 pass; the five required modules stay green; the other failures change only by the never-answers case.\n\nZOMBIES (call site):\n- Z: every seat \"none\": failed. No seat counted, none missing: \"failed: no counted votes\".\n- O: one \"none\" beside cited Yes: failed.\n- M: two \"none\" plus cited Yes: failed.\n- B: uncited No plus \"none\": failed (from \"none\" only).\n- I: uncited Yes/Support-it/No alone beside cited Yes: passed.\n- E: a seat that timed out records \"none\": failed.\n- S: all cited Yes: passed (as today).\n\nCap: criterion 1 from 1 to 2 cycles; total 2+1+1 = 4. Size: S (one line plus tests).\n\n## Stop rule\n\nIf green 1b needs any decider.py change beyond line 353, or a test outside red 1c and the fixed never-answers case changes result, the developer stops, commits nothing, records names, and the facilitator opens a new C4 window. No test is skipped or deleted.\n\n## After this: green 3\n\nGreen 3 re-applies .mob/records/290/green3-attempt-1.diff (the fake_voter change) and re-runs; the runner must then exit 1 for a never-answering seat, so that test passes. No production change in green 3.\n\n## Cut\n\n- Changing result_of or cite_ok.\n- Reworking the \"unread\" record field.\n- Cards 286 and 291.\n",
+ "checklist_D158": ".mob/records/290/checklist-290-scope-2.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "copilot",
+   "context": "w290sc2cp1-pmready",
+   "started_at": "2026-11-04T12:15:45Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: A seat that never answered is not a reply\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 12:10 UTC: Copilot and Codex available; Grok disabled and decider.py's own probe at 2026-11-04T12:16:10.008373Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w290sc2-qa",
+   "started_at": "2026-11-04T12:16:50Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nCITE: A seat that never answered is not a reply, and still fails the result.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 12:10 UTC: Copilot and Codex available; Grok disabled and decider.py's own probe at 2026-11-04T12:17:16.283315Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w290sc2cp1-dev",
+   "started_at": "2026-11-04T12:18:19Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nThe one-line production boundary, explicit test cases, zombies, acceptance set, and stop rule are workable and constrain compliance without inviting scope games.\nCITE: No test is skipped or deleted.\n[facilitator: the Codex CLI banner and prompt echo that followed here were trimmed; the vote and cite above are unchanged]",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 12:10 UTC: Copilot and Codex available; Grok disabled and decider.py's own probe at 2026-11-04T12:18:45.915660Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w290sc2-auditlens",
+   "started_at": "2026-11-04T12:22:12Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nThe change is verifiable from git: red 1c and the committed diff show it, and the stop rule bounds the scope to line 353. I don't see a loophole in the \"none\" path. A timed-out seat records \"none\" (Z/E), and uncited replies are still left out, which matches the D165 intent.\nCITE: A seat that never answered is not a reply, and still fails the result.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 12:10 UTC: Copilot and Codex available; Grok disabled and decider.py's own probe at 2026-11-04T12:22:37.780019Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w290sc2cp1-decider",
+   "started_at": "2026-11-04T12:23:37Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nThe red/green acceptance, zombie matrix, and stop rule provide adequate evidence boundaries and preserve task-force sign-off.\nCITE: No test is skipped or deleted.\n[facilitator: the Codex CLI banner and prompt echo that followed here were trimmed; the vote and cite above are unchanged]",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 12:10 UTC: Copilot and Codex available; Grok disabled and decider.py's own probe at 2026-11-04T12:24:03.890968Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w290sc2c-coach",
+   "started_at": "2026-11-04T12:26:33Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe task force is sized to a one-line fix: a tests-only red step, a single-line green step, and a stop rule. Nothing is missing or padded.\n\nCITE: Cap: criterion 1 from 1 to 2 cycles; total 2+1+1 = 4.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 12:10 UTC: Copilot and Codex available; Grok disabled and decider.py's own probe at 2026-11-04T12:27:01.390728Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w290sc2cp1-auditlens",
+   "started_at": "2026-11-04T12:19:46Z",
+   "model": "auto",
+   "raw": "I’ll verify the cited decisions and code paths directly from the repository and then issue an audit-lens objection/no-objection call.\n\nI found the card record and checklist; next I’ll locate the exact D171/D175/D181/D184 text and current decider call-site behavior to test the loophole claim.\n\n<final_answer>\nC:/home/<user>\nC:/home/<user>\nC:/home/<user>\nC:/home/<user>\nC:/home/<user>\nC:/home/<user>\nC:/home/<user>\nC:/home/<user>\nC:/home/<user>\n</final_answer>OBJECTION\nCONDITION: Replace A1/A2 with reachable in-repo git evidence (`git show <hash>:decider.py` for result_of and call-site filter), or mark them unrun; otherwise this can pass on unverifiable premises.\nCITE: A seat that never answered is not a reply, and still fails the result.\n\n",
+   "first_line": "I’ll verify the cited decisions and code paths directly from the repository and then issue an audit-lens objection/no-objection call.",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 12:10 UTC: Copilot and Codex available; Grok disabled and decider.py's own probe at 2026-11-04T12:20:10.209667Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w290sc2cp1-coach",
+   "started_at": "2026-11-04T12:25:05Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: is this task force sized to the task\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 12:10 UTC: Copilot and Codex available; Grok disabled and decider.py's own probe at 2026-11-04T12:25:31.981167Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "adopted, no conditions: criterion 1 cap 1 to 2 (total 2+1+1 = 4); red 1c (a seat that never answered fails the result beside cited Yes votes; an uncited reply is still left out); green 1b at the same call site passes a vote to result_of when it is counted or its vote is 'none', no other decider.py change; then green 3 re-applies .mob/records/290/green3-attempt-1.diff. Six NO OBJECTION with valid cites (the coach's counted on a D171 re-ask, its first cite quoting its role prompt); Grok disabled.",
+  "window_minutes": "12:12 to about 12:35 UTC, serial; re-ask after"
+ },
+ "ended_at": "2026-11-04T12:27:50Z"
+}
