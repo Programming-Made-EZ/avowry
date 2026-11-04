@@ -20,7 +20,10 @@
   "red_2_cycle_2": "red 7c26629 (QA ctx-3 continued; pushed; criterion 2 cycle 2 of 2, adopted by window 229-scope): tests/test_launch_failure_honesty.py now 38 tests, 10 fail on a2bb1d4 (tokens and home paths stored raw; an uncited Yes still passes), 28 pass (red 2's 23 and 5 cycle-2 guards); the fake seat helper now writes UTF-8 so it can emit non-ASCII stderr (named in the commit body); five other suites pass (89). Not void",
   "green_2_cycle_2": "NO COMMIT (backend developer ctx-4 continued; scan clean, 33 commands; the attempt was reverted without a delete or reset, tree equals 7c26629; diff kept at .mob/records/229/green2-cycle2-attempt.diff). Both scope premises failed in code: (1) scrub-then-trim: mob_summary.scrub masks any 48-character run of letters and digits as a token, and two of red 2's 300-character tests use such runs ('x' * 296), so they fail; the scope's probe 'scrub leaves its inputs unchanged' was wrong; (2) result counts only cited votes: test doubles across six decider modules vote an uncited Yes, so 27 tests fail (decider_launched 3, gate 7, pin_scrub 2, record 7, record_units 1, runner 7). The scope's stop rule applies: no cycle 3; the failing evidence is committed here and a new window comes first; nothing ships meanwhile",
   "scope_window_2": "window 229-scope-2 (.mob/records/decisions/229-scope-2.json): adopted, no conditions; criterion 2 cap 2 to 3 (total 1+3+1 = 5); scrub-then-trim with spaced test inputs; the cited-only result rule moved to bug card 290, filed before the red",
-  "red_2_cycle_3": "red d13148e (QA ctx-3 continued; pushed; criterion 2 cycle 3 of 3, window 229-scope-2): the two length tests on spaced-word inputs (pass on a2bb1d4); the two uncited-Yes result cases removed and moved to bug card 290 (named in the body); the class docstring reworded; 36 tests, 8 fail (the scrub cases), 28 pass; five other suites pass (89)"
+  "red_2_cycle_3": "red d13148e (QA ctx-3 continued; pushed; criterion 2 cycle 3 of 3, window 229-scope-2): the two length tests on spaced-word inputs (pass on a2bb1d4); the two uncited-Yes result cases removed and moved to bug card 290 (named in the body); the class docstring reworded; 36 tests, 8 fail (the scrub cases), 28 pass; five other suites pass (89)",
+  "green_2_cycle_3": "green cda02f2 (backend developer ctx-4 continued; scan clean, 36 commands; pushed): failure_excerpt returns one_line(scrub(text), 300); result_of unchanged (the cited-only rule is card 290). Named modules all pass (launch_failure_honesty 36, launch_long_prompt 20, decider_launched 28, repo_path_lengths 1, decider importers as in the commit body)",
+  "refactor_2": "none needed after green 2 cycle 3, reasoned: the change is one call wrapped in scrub plus its docstring; no duplication or naming issue to clean",
+  "nohome_check": ".mob/records/229/nohome-check/ (window 229-scope's condition): at cda02f2 a fake failing copilot seat's stderr home path and token are masked in failure_excerpt and reason; the only contains_secret match in the file is prompt_sha (a SHA-256), not a secret"
  },
  "seats": [
   {
@@ -45,7 +48,7 @@
    "role": "green",
    "seat": "Claude ctx-4",
    "model": "claude, a fresh subagent context, backend developer; command scan clean, 16 commands",
-   "evidence": "green 1 4674d19"
+   "evidence": "green 1 4674d19, green 2 a2bb1d4, green 2 cycle 3 cda02f2"
   }
  ],
  "deviations": [
