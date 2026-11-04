@@ -25,7 +25,8 @@
   "refactor_1b": "none needed after green 1b, reasoned: one call-site expression",
   "green_3": "green 3 73eea8a (backend developer ctx-4 continued; scan clean, 50 commands; pushed): tests/fakes/fake_voter.py gains default_vote (a counted Yes with a D171 cite) and the six decider modules' doubles cite; 7 files, 36 insertions, 15 deletions, no change under --ignore-all-space. Rewritten to the new rule (slice C3 ZOMBIE E), named in the body: test_decider_record NoVoter test_a_run_with_no_voter_records_the_probe_and_no_voter_line expects a zero-voter run not to pass (exit 1). All 12 modules pass (270 tests). The seat had stopped first on that test; the facilitator pointed it to the slice's E case (no window: the adopted slice already allows it)",
   "refactor_3": "none needed after green 3, reasoned: the doubles use one shared helper; no production code changed",
-  "suite_73eea8a": "full reference suite on green 3 73eea8a (PowerShell worktree, registry PATH): Ran 1788 tests in 1701.618s, OK (skipped=1), the baseline skip"
+  "suite_73eea8a": "full reference suite on green 3 73eea8a (PowerShell worktree, registry PATH): Ran 1788 tests in 1701.618s, OK (skipped=1), the baseline skip",
+  "gate": "SHIP (13:40 UTC, .mob/records/290/preship-gate.md): independent reviewer ctx-5, fresh Copilot CLI session f213aa45-b7d0-40b5-9130-684ee91f6d92 with --add-dir mob-crosscli; Done checks met; the three recorded readings judged honest and acceptable; no blocker. Its transcript scan flags 'recursive delete ... rmtree' on the python -c command that wrote the gate report: the word sits inside the report text (its safety section); nothing was deleted (a scanner false finding, cards 254 and 283)"
  },
  "seats": [
   {
@@ -51,6 +52,12 @@
    "seat": "Claude ctx-4",
    "model": "claude, a fresh subagent context, backend developer; command scans clean (13 and 16 commands)",
    "evidence": "green 1 93c4f62, green 1b 640c41e, green 3 73eea8a"
+  },
+  {
+   "role": "ship",
+   "seat": "Copilot ctx-5",
+   "model": "copilot (auto) via the Copilot CLI, independent reviewer, fresh session f213aa45; scan: one false finding (the word rmtree inside the report text it wrote)",
+   "evidence": ".mob/records/290/preship-gate.md (SHIP)"
   }
  ],
  "deviations": [
