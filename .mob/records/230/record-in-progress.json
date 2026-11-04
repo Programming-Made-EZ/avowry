@@ -12,7 +12,8 @@
   "full_suite_green_1": "0e1e5f3: Ran 1806, FAILED (failures=2, skipped=1): tests.test_smoke test_healthy_seats_pass_every_check and test_windows_quoting_with_spaces_and_quotes ('toy card ran to Done: exit 0; done.flag missing or wrong'). tests.test_smoke on 73eea8a: Ran 12 OK; on 0e1e5f3: 2 failures, so green 1 caused it (criterion 1's S case broken). Stop rule: green 2 held; a scope window opens before any further work.",
   "scope": ".mob/records/decisions/230-scope.json (adopted with one joined condition: criterion 1 cycle 2, caps 2+1+1; worktrees only with a usable integration path, else in place under the Writers claim)",
   "red_1c": "b1034e7 (criterion 1 cycle 2, window 230-scope): InPlaceFallback in tests/test_writer_isolation.py, 13 tests: 7 fail (seat_cwd picks a worktree without --ship, remote, ship attribute, origin, a non-blank origin URL, or when the remote query fails), 2 fail (the joined condition: an in-place seat holds no Writers claim), 4 labelled guards pass; module Ran 31, 9 failures; tests.test_card_mode Ran 137 OK. Note for green: three red 1b tests build CardRun without args.ship and must set it (the file is permitted by the scope).",
-  "green_1b": "9e84bd1 (facilitator.py; one setUp line in tests/test_writer_isolation.py setting args.ship, permitted by window 230-scope): a seat gets its own worktree only with --ship, own root, HEAD and a non-blank remote.origin.url (git config --get); otherwise, or on a git query error, it runs in the repo holding the Writers claim for its whole turn, so any other writer, the facilitator included, gets WriterRefused before a git write. tests.test_writer_isolation Ran 31 OK; tests.test_smoke Ran 12 OK (the two cases green 1 broke); tests.test_card_mode Ran 137 OK. Refactor after green 1 and 1b: none needed (the change is confined to the Writers class and seat_cwd; the full suite decides)."
+  "green_1b": "9e84bd1 (facilitator.py; one setUp line in tests/test_writer_isolation.py setting args.ship, permitted by window 230-scope): a seat gets its own worktree only with --ship, own root, HEAD and a non-blank remote.origin.url (git config --get); otherwise, or on a git query error, it runs in the repo holding the Writers claim for its whole turn, so any other writer, the facilitator included, gets WriterRefused before a git write. tests.test_writer_isolation Ran 31 OK; tests.test_smoke Ran 12 OK (the two cases green 1 broke); tests.test_card_mode Ran 137 OK. Refactor after green 1 and 1b: none needed (the change is confined to the Writers class and seat_cwd; the full suite decides).",
+  "green_2": "495774a (facilitator.py only): Writers.commit uses git commit -- <paths>, so it commits only its own paths and another writer's staged files stay staged; integration with a staged index saves the staged diff, resets the index with git read-tree HEAD (working tree untouched), merges, and re-applies it with git apply --cached, also after a failed merge, so foreign staged blob SHAs are identical; on failure the error names the saved index tree. No stash, no reset --hard. tests.test_writer_staging Ran 9 OK; test_writer_isolation 31 OK; test_smoke 12 OK; test_card_mode 137 OK. Refactor: none needed (one function each for commit and integrate)."
  },
  "seats": [
   {
@@ -37,7 +38,7 @@
    "role": "green",
    "seat": "Claude ctx-4",
    "model": "claude, a fresh subagent context, backend developer, in its own worktree (18:42 to about 19:05 UTC); attempt 1 on Codex could not launch a shell (card 297)",
-   "evidence": "green 1 0e1e5f3, green 1b 9e84bd1"
+   "evidence": "green 1 0e1e5f3, green 1b 9e84bd1, green 2 495774a"
   }
  ],
  "deviations": [
