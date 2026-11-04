@@ -1,0 +1,24 @@
+diff --git a/decider.py b/decider.py
+index b13958b..cd7f8d1 100644
+--- a/decider.py
++++ b/decider.py
+@@ -117,8 +117,8 @@ _CITE = re.compile(r"^\s*CITE:\s*(.+?)\s*$", re.MULTILINE)
+ 
+ 
+ def failure_excerpt(text):
+-    """A failed attempt's text on one line: whole up to 300 characters, else an ellipsis plus the last 300."""
+-    return facilitator.one_line(text, EXCERPT_CHARS)
++    """A failed attempt's text, scrubbed first, on one line: whole up to 300 characters, else an ellipsis plus the last 300."""
++    return facilitator.one_line(scrub(text), EXCERPT_CHARS)
+ 
+ 
+ def attempt_reason(ok, rc, excerpt, reply):
+@@ -337,7 +337,7 @@ def run(args):
+     for v in votes.values():
+         v["cite_ok"] = cite_ok(v.get("reply", ""), proposal)
+         v["counted"] = v["vote"] != "none" and v["cite_ok"]
+-    result = result_of({s: v["vote"] for s, v in votes.items()})
++    result = result_of({s: v["vote"] if v["counted"] else "none" for s, v in votes.items()})
+     changes = diff_snapshots(before, after)
+     try:
+         verify_history(gate)
