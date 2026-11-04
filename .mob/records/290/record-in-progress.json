@@ -12,7 +12,9 @@
   "red_1": "red 1 38b8eb5 (QA ctx-3, fresh Claude subagent; scan clean, 21 commands; pushed): tests/test_decider_counted_result.py, 20 tests, 15 fail on assertions, 5 guards pass; five other modules OK (107). Second skip: environmental (on unchanged HEAD in the seat's shell, skipped=2: the symlink test without symlink privilege, and the Muse live check with Muse not on PATH); nothing depends on result_of or cites. Finding: the B cases (a cite under D171's six-word minimum is uncounted) need cite_ok to enforce the word minimum, which is outside result_of: the slice's premise P5 (the real change is two lines in result_of) is false, and its stop rule sends this to a D175 C4 scope window before the green",
   "scope_window": "window 290-scope (adopted, no conditions): criterion 1 includes cite_ok enforcing D171 as written; red 1b in the same cycle; caps stay 1+1+1",
   "red_1b": "red 1b 7e0f200 (QA ctx-3 continued; pushed): 26 cite_ok unit cases, 11 fail on assertions, 15 guards pass; module total 46 (26 fail, 20 pass); five other modules OK (107). Found today: an empty CITE counts, and so does one whose phrase sits on the next line. Extra spaces inside 'line N:' are accepted (the scope gave no expected result; the seat chose lenient)",
-  "green_1_attempt_1": "NO COMMIT, stopped under window 290-scope's stop rule (backend developer ctx-4, fresh Claude subagent): result_of is called at decider.py:340 with {seat: vote} only, so dropping uncounted votes needs a one-line change at that call site (pass counted), which is outside result_of and cite_ok. Trials in scratch copies: result_of and cite_ok alone pass all 26 red 1b cases but none of red 1's 15; with the call-site line, the five required modules pass (117 tests, 1 skipped) and the six decider modules fail 29 of 124 (launched 3, gate 7, pin_scrub 2, record 8, record_units 1, runner 8), all in criterion 3's file list (the earlier probe measured 27). Next: a declaration-fix window for the call-site line"
+  "green_1_attempt_1": "NO COMMIT, stopped under window 290-scope's stop rule (backend developer ctx-4, fresh Claude subagent): result_of is called at decider.py:340 with {seat: vote} only, so dropping uncounted votes needs a one-line change at that call site (pass counted), which is outside result_of and cite_ok. Trials in scratch copies: result_of and cite_ok alone pass all 26 red 1b cases but none of red 1's 15; with the call-site line, the five required modules pass (117 tests, 1 skipped) and the six decider modules fail 29 of 124 (launched 3, gate 7, pin_scrub 2, record 8, record_units 1, runner 8), all in criterion 3's file list (the earlier probe measured 27). Next: a declaration-fix window for the call-site line",
+  "green_1": "green 1 93c4f62 (backend developer ctx-4 continued; scan clean, 16 commands; pushed): decider.py only, 18 insertions and 5 deletions, CRLF kept: cite_ok enforces D171 as written (first CITE line; outer quotes stripped; 6 or more verbatim words, or a correct 'line N: w1 w2 w3 w4'); result_of gets counted votes only via the call site at decider.py:340 (window 290-declfix), and with none counted the result is 'failed: no counted votes'. The five required modules pass (117); the six decider modules fail 29 of 124, all uncited doubles in criterion 3's files (launched 3, gate 7, pin_scrub 2, record 8, record_units 1, runner 8)",
+  "refactor_1": "none needed after green 1, reasoned: two functions and one call line, each read top to bottom; criterion 3 rewrites only test doubles"
  },
  "seats": [
   {
@@ -32,13 +34,20 @@
    "seat": "Claude ctx-3",
    "model": "claude, a fresh subagent context, QA engineer; command scan clean, 21 commands",
    "evidence": "red 1 38b8eb5, red 1b 7e0f200"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, backend developer; command scans clean (13 and 16 commands)",
+   "evidence": "green 1 93c4f62"
   }
  ],
  "deviations": [
   "the audit lens's round 2 cite had four words and counted on a D171 re-ask",
   "slice attempt 1 ran 46 minutes against a 30-minute cap and was stopped; it built the fix instead of the slice",
   "F-087 (audit 210): the 09:44 UTC in-flight commit was pushed only at 10:03, past the 5-minute rule: inflight.sh's push failure was hidden because the facilitator read only its last output line; the script now verifies the push, retries (also with ControlMaster off and after regenerating MOB.md) and prints PUSH FAILED",
-  "the slice seat's transcript scan reports 'unreadable file' for its read-only test command (the file-run check took the whole piped command line for a script path): a scanner false finding of the kind cards 254 and 283 cover"
+  "the slice seat's transcript scan reports 'unreadable file' for its read-only test command (the file-run check took the whole piped command line for a script path): a scanner false finding of the kind cards 254 and 283 cover",
+  "the facilitator's declaration-fix text (window 290-declfix) said an uncounted vote goes into result_of 'as none'; that contradicts the adopted task-force condition, the slice and red 1 (an uncounted vote is left out of the result; 'none' would make an uncited No fail a cited-Yes decision). Green 1 follows the task-force condition and leaves uncounted votes out, and its commit body says so. The fix text was the facilitator's drafting error; the window's purpose (the call site is in scope) holds"
  ],
  "notes": [
   "Codex seats returned (quota reset); their stored replies carry Codex CLI banner text after the CITE line"
