@@ -5,7 +5,8 @@
  "decisions": {
   "taskforce": ".mob/records/decisions/230-taskforce.json (adopted with one joined condition; caps 1+1+1; a worktree per seat with the facilitator integrating)",
   "slice": ".mob/records/decisions/230-slice.json (adopted with QA's condition on criterion 2; caps 1+1+1)",
-  "red_1": "9b9e162 (tests/test_writer_isolation.py: 13 tests, 10 fail on the missing facilitator.Writers, 3 labelled guards; regression of six facilitator modules Ran 245 OK). The seat worked in its own worktree on branch card230-red1; the facilitator fast-forwarded main and pushed. The red pins Writers but not its wiring into CardRun.turn and the ship path, which the slice's criterion 1 acceptance names; the facilitator continues the QA seat with red 1b in the same cycle (D181: no green has passed)."
+  "red_1": "9b9e162 (tests/test_writer_isolation.py: 13 tests, 10 fail on the missing facilitator.Writers, 3 labelled guards; regression of six facilitator modules Ran 245 OK). The seat worked in its own worktree on branch card230-red1; the facilitator fast-forwarded main and pushed. The red pins Writers but not its wiring into CardRun.turn and the ship path, which the slice's criterion 1 acceptance names; the facilitator continues the QA seat with red 1b in the same cycle (D181: no green has passed).",
+  "red_1b": "bee9606 (same cycle, D181: no green had passed): CardRun.writers, CardRun.seat_checkout(role) gives each role its own worktree (never self.repo), writing seats run there through seat_turn and turn, and turn('ship') calls writers.integrate once as the only push. tests.test_writer_isolation Ran 18, 15 fail on the missing Writers, 3 guards pass; tests.test_card_mode Ran 137 OK. Integrated by fast-forward from the seat's worktree."
  },
  "seats": [
   {
@@ -24,7 +25,7 @@
    "role": "red",
    "seat": "Claude ctx-3",
    "model": "claude, a fresh subagent context, QA engineer, in its own worktree (17:34 to about 18:10 UTC)",
-   "evidence": "red 1 9b9e162"
+   "evidence": "red 1 9b9e162, red 1b bee9606"
   }
  ],
  "deviations": [
