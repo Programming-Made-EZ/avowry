@@ -24,7 +24,8 @@
   "green_1b": "green 1b 640c41e (backend developer ctx-4 continued; scan clean, 39 commands; pushed; criterion 1 cycle 2): decider.py call site only (2 insertions, 1 deletion): a vote reaches result_of when counted, or when it is a seat that never answered (vote 'none' with an empty reply). The five required modules pass (137); remaining failures are red 3's list (six decider modules 29; fake_voter_cites 11)",
   "refactor_1b": "none needed after green 1b, reasoned: one call-site expression",
   "green_3": "green 3 73eea8a (backend developer ctx-4 continued; scan clean, 50 commands; pushed): tests/fakes/fake_voter.py gains default_vote (a counted Yes with a D171 cite) and the six decider modules' doubles cite; 7 files, 36 insertions, 15 deletions, no change under --ignore-all-space. Rewritten to the new rule (slice C3 ZOMBIE E), named in the body: test_decider_record NoVoter test_a_run_with_no_voter_records_the_probe_and_no_voter_line expects a zero-voter run not to pass (exit 1). All 12 modules pass (270 tests). The seat had stopped first on that test; the facilitator pointed it to the slice's E case (no window: the adopted slice already allows it)",
-  "refactor_3": "none needed after green 3, reasoned: the doubles use one shared helper; no production code changed"
+  "refactor_3": "none needed after green 3, reasoned: the doubles use one shared helper; no production code changed",
+  "suite_73eea8a": "full reference suite on green 3 73eea8a (PowerShell worktree, registry PATH): Ran 1788 tests in 1701.618s, OK (skipped=1), the baseline skip"
  },
  "seats": [
   {
