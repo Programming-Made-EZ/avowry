@@ -1,0 +1,1424 @@
+[
+ {
+  "rank": "90",
+  "card": "282",
+  "title": "A seat's prompt reaches it without placeholder rewriting",
+  "shape": "Contract",
+  "type": "bug",
+  "repo": "mob-defaults (mob-crosscli)",
+  "author": ""
+ },
+ {
+  "rank": "91",
+  "card": "277",
+  "title": "An empty decision vote opens a diagnosis; only quota or unavailability excludes a model",
+  "shape": "Contract",
+  "type": "tooling",
+  "repo": "mob-defaults (mob-crosscli)",
+  "author": ""
+ },
+ {
+  "rank": "92",
+  "card": "264",
+  "title": "The read-and-modify acceptance test is not flaky",
+  "shape": "Contract",
+  "type": "bug (corrective for an open audit FAIL, audit 123)",
+  "repo": "avowry (product tests)",
+  "author": ""
+ },
+ {
+  "rank": "93",
+  "card": "265",
+  "title": "Decision windows launch voters in parallel safely",
+  "shape": "Contract",
+  "type": "tooling",
+  "repo": "mob-defaults (decider.py) and the facilitator's window runne",
+  "author": ""
+ },
+ {
+  "rank": "94",
+  "card": "258",
+  "title": "The loop-state lock test is not flaky",
+  "shape": "Contract",
+  "type": "bug",
+  "repo": "mob-defaults (mob-crosscli)",
+  "author": ""
+ },
+ {
+  "rank": "95",
+  "card": "268",
+  "title": "The mob summary publish tests pass in every shell",
+  "shape": "Contract",
+  "type": "bug",
+  "repo": "mob-defaults (mob-crosscli)",
+  "author": ""
+ },
+ {
+  "rank": "96",
+  "card": "269",
+  "title": "mob_process.py keeps LF line endings",
+  "shape": "Contract",
+  "type": "bug",
+  "repo": "mob-defaults (mob-crosscli)",
+  "author": ""
+ },
+ {
+  "rank": "97",
+  "card": "238",
+  "title": "The reshaped process wiki carries the slice limits and a measured upkeep",
+  "shape": "Contract",
+  "type": "process (follow-up ordered by Decider D173, card 237's evalu",
+  "repo": "avowry (docs/process-wiki/, scripts/check-process-wiki.py, .",
+  "author": ""
+ },
+ {
+  "rank": "98",
+  "card": "230",
+  "title": "The facilitator and seats never write the same checkout at once",
+  "shape": "Contract",
+  "type": "bug (flaky-is-a-bug; product owner ruling 2026-11-01)",
+  "repo": "mob-defaults and avowry process tooling (facilitator.py, the",
+  "author": ""
+ },
+ {
+  "rank": "99",
+  "card": "236",
+  "title": "The process wiki closes the writer's seven content gaps",
+  "shape": "Contract",
+  "type": "process (follow-up from card 234's writer re-check, 039e468)",
+  "repo": "avowry (docs/process-wiki/, HANDOFF.md)",
+  "author": ""
+ },
+ {
+  "rank": "100",
+  "card": "253",
+  "title": "Codex rollouts are read by the delete scan",
+  "shape": "Contract",
+  "type": "tooling (follow-up split from card 228)",
+  "repo": "mob-defaults (mob-crosscli)",
+  "author": ""
+ },
+ {
+  "rank": "101",
+  "card": "252",
+  "title": "Seat transcripts are scanned automatically for subagent and headless seats",
+  "shape": "Contract",
+  "type": "tooling (follow-up split from card 228)",
+  "repo": "mob-defaults (mob-crosscli)",
+  "author": ""
+ },
+ {
+  "rank": "102",
+  "card": "254",
+  "title": "The delete scan cuts its known false positives",
+  "shape": "Contract",
+  "type": "tooling (follow-up split from card 228)",
+  "repo": "mob-defaults (mob-crosscli)",
+  "author": ""
+ },
+ {
+  "rank": "103",
+  "card": "255",
+  "title": "The delete scan covers the residual forms and the path forms",
+  "shape": "Contract",
+  "type": "tooling (follow-up split from card 228)",
+  "repo": "mob-defaults (mob-crosscli)",
+  "author": ""
+ },
+ {
+  "rank": "104",
+  "card": "231",
+  "title": "Uncommitted work in a watched repository older than about 30 minutes fails the checks",
+  "shape": "Contract",
+  "type": "tooling (product owner request 2026-11-01, follow-up to D169",
+  "repo": "mob-defaults (mob_process.py, the audit and the per-seat sca",
+  "author": ""
+ },
+ {
+  "rank": "105",
+  "card": "232",
+  "title": "A seat driver never opens a browser or other UI on the shared machine",
+  "shape": "Contract",
+  "type": "bug (product owner request 2026-11-01)",
+  "repo": "mob-defaults (the local-model seat driver that runs aider, a",
+  "author": ""
+ },
+ {
+  "rank": "106",
+  "card": "233",
+  "title": "Evaluate side-by-side pairing tooling before building pairing",
+  "shape": "Contract",
+  "type": "spike (product owner request 2026-11-01)",
+  "repo": "mob-defaults (evaluation notes; no product code)",
+  "author": ""
+ },
+ {
+  "rank": "107",
+  "card": "235",
+  "title": "Green commit bodies carry a checked Proof block",
+  "shape": "Contract",
+  "type": "tooling (follow-up from card 234's review, 3c6181c R9)",
+  "repo": "avowry and mob-defaults (a commit-message check run by the p",
+  "author": ""
+ },
+ {
+  "rank": "108",
+  "card": "256",
+  "title": "Command-scan reports are readable and trusted",
+  "shape": "Contract",
+  "type": "tooling (follow-up split from card 228)",
+  "repo": "mob-defaults (mob-crosscli)",
+  "author": ""
+ },
+ {
+  "rank": "109",
+  "card": "257",
+  "title": "Git-state detectors catch unpushed and hidden work",
+  "shape": "Contract",
+  "type": "tooling (follow-up split from card 228)",
+  "repo": "mob-defaults (mob-crosscli) and avowry scripts",
+  "author": ""
+ },
+ {
+  "rank": "110",
+  "card": "266",
+  "title": "Docs and code consistently use the name Avowry",
+  "shape": "Story",
+  "type": "story",
+  "repo": "avowry (docs and code) and mob-defaults references",
+  "author": ""
+ },
+ {
+  "rank": "111",
+  "card": "267",
+  "title": "mob-defaults docs contain no dates",
+  "shape": "Story",
+  "type": "process (template content principle, product owner)",
+  "repo": "mob-defaults (mob-crosscli: templates/ and its agreement)",
+  "author": ""
+ },
+ {
+  "rank": "112",
+  "card": "216",
+  "title": "The default templates carry the pending process rulings",
+  "shape": "Contract",
+  "type": "tooling (mob-defaults card; docs and templates only)",
+  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "author": ""
+ },
+ {
+  "rank": "113",
+  "card": "220",
+  "title": "The loop runner starts a corrective card while a finding blocks",
+  "shape": "Contract",
+  "type": "tooling (corrective for F-008; gap 5 of card 208's runner ga",
+  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "author": ""
+ },
+ {
+  "rank": "114",
+  "card": "221",
+  "title": "The loop runs a card in the repository its Repository line names",
+  "shape": "Contract",
+  "type": "tooling (corrective for F-008; gap 2 of card 208's runner ga",
+  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "author": ""
+ },
+ {
+  "rank": "115",
+  "card": "222",
+  "title": "The loop wires its retro and re-rank steps from the repository and stops when one fails",
+  "shape": "Contract",
+  "type": "tooling (corrective for F-008; the wiring half of gap 3 of c",
+  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "author": ""
+ },
+ {
+  "rank": "116",
+  "card": "223",
+  "title": "The loop takes the per-card retro from every role, each in its own context",
+  "shape": "Contract",
+  "type": "tooling (corrective for F-008; the retro half of gap 3 of ca",
+  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "author": ""
+ },
+ {
+  "rank": "117",
+  "card": "224",
+  "title": "The loop re-ranks Ready through the product manager and a Decider after every card",
+  "shape": "Contract",
+  "type": "tooling (corrective for F-008; the re-rank half of gap 3 of ",
+  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "author": ""
+ },
+ {
+  "rank": "118",
+  "card": "225",
+  "title": "Card mode reads only role lines as the task force",
+  "shape": "Contract",
+  "type": "tooling (corrective for F-008; gap 1 of card 208's runner ga",
+  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "author": ""
+ },
+ {
+  "rank": "119",
+  "card": "213",
+  "title": "The checker rejects an incomplete objection window",
+  "shape": "Contract",
+  "type": "tooling (checker rule)",
+  "repo": "phrase-lang (C:\\Users\\ringe\\projects\\phrase-lang), scripts/m",
+  "author": ""
+ },
+ {
+  "rank": "120",
+  "card": "217",
+  "title": "Acceptance tests do not starve the thread pool",
+  "shape": "Contract",
+  "type": "bug (flaky tests; flaky tests are bugs)",
+  "repo": "phrase-lang (C:\\Users\\ringe\\projects\\phrase-lang), tests/Phr",
+  "author": ""
+ },
+ {
+  "rank": "121",
+  "card": "218",
+  "title": "A mid-card retro removal does not drop the seat before the retro",
+  "shape": "Contract",
+  "type": "tooling (corrective for the card 209 refusal; a loophole in ",
+  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "author": ""
+ },
+ {
+  "rank": "122",
+  "card": "212",
+  "title": "Every mob re-ranks at every loop boundary",
+  "shape": "Contract",
+  "type": "tooling (mob-defaults card)",
+  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "author": ""
+ },
+ {
+  "rank": "123",
+  "card": "215",
+  "title": "Every mob reviews each previous adjustment at stand-downs and retros",
+  "shape": "Contract",
+  "type": "tooling (mob-defaults card)",
+  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "author": ""
+ },
+ {
+  "rank": "124",
+  "card": "206",
+  "title": "The findings file mirrors the audit register",
+  "shape": "Contract",
+  "type": "tooling (S; D145 card A1b of A1a, A1b, A2, D, C, E; split by",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "125",
+  "card": "207",
+  "title": "The findings file history rules are checked",
+  "shape": "Contract",
+  "type": "tooling (S; D145 card A1c of A1a, A1b, A1c, A2, D, C, E; spl",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "126",
+  "card": "196",
+  "title": "Rename the two test projects to Avowry.*.Tests",
+  "shape": "Story",
+  "type": "tests (S; Avowry rename 7 of 9)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "127",
+  "card": "197",
+  "title": "Rename the solution, CI jobs, scripts and paths to Avowry",
+  "shape": "Story",
+  "type": "tooling (S; Avowry rename 8 of 9)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "128",
+  "card": "162",
+  "title": "Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check",
+  "shape": "Story",
+  "type": "docs (a re-freeze under Decider D72; the scored documents ch",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "129",
+  "card": "201",
+  "title": "Migrate the sealed holdouts to avow and record a new baseline",
+  "shape": "Story",
+  "type": "tooling (S; Avowry rename, owner-run)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "130",
+  "card": "189",
+  "title": "An unsupported construct is a diagnostic, not an unhandled exception",
+  "shape": "Story",
+  "type": "bug (found by the card 174 fixture corpus; the compiler must",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "132",
+  "card": "176",
+  "title": "Package the CLI as a dotnet tool and version it",
+  "shape": "Story",
+  "type": "tooling (M; v0.1 bar 1)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "133",
+  "card": "178",
+  "title": "A prerequisites page that matches what CI tests",
+  "shape": "Story",
+  "type": "docs (S; v0.1 bar 1)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "134",
+  "card": "179",
+  "title": "Rewrite the README and write the getting-started guide",
+  "shape": "Story",
+  "type": "docs (M; v0.1 bar 2)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "135",
+  "card": "186",
+  "title": "Pre-publication checks: name, licences, history, vendor terms",
+  "shape": "Story",
+  "type": "tooling (S; v0.1 bar 7)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "137",
+  "card": "169",
+  "title": "The map bytes do not depend on the culture",
+  "shape": "Story",
+  "type": "tooling (thin slice; split from card 161 by Decider D113)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "138",
+  "card": "171",
+  "title": "The CLI reads method and type names from the adapter; Program.cs is tidy",
+  "shape": "Story",
+  "type": "tooling (thin slice; split from card 161 by Decider D113)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "139",
+  "card": "172",
+  "title": "Trace hardening follow-ups and one shared test process helper",
+  "shape": "Story",
+  "type": "tooling (small; found by the card 167 and 168 reviews)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "140",
+  "card": "165",
+  "title": "Failure observer: the generated API raises a neutral failure event; tracing plugs in outsi",
+  "shape": "Story",
+  "type": "feature (thin slice; split from card 161 by Decider D112)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "141",
+  "card": "166",
+  "title": "Move the generated [Phrase] link into the source map; the grammar and the bench scorer fol",
+  "shape": "Story",
+  "type": "feature (sequenced with card 162 by the Decider; touches the",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "142",
+  "card": "177",
+  "title": "CI installs the packed tool on Windows and Linux",
+  "shape": "Story",
+  "type": "tooling (S; v0.1 bar 1)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "143",
+  "card": "200",
+  "title": "An avowry fmt command that rewrites sources to the canonical form",
+  "shape": "Story",
+  "type": "tooling (S; Avowry rename, language step 3)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "144",
+  "card": "180",
+  "title": "A test that runs the getting-started guide's commands",
+  "shape": "Story",
+  "type": "tooling (S; v0.1 bar 2)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "145",
+  "card": "181",
+  "title": "A cold model completes the getting-started guide",
+  "shape": "Story",
+  "type": "tooling (S; v0.1 bar 2)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "146",
+  "card": "187",
+  "title": "A known-limitations page",
+  "shape": "Story",
+  "type": "docs (S; v0.1 bar 8)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "147",
+  "card": "188",
+  "title": "Publish the first version",
+  "shape": "Story",
+  "type": "tooling (S; v0.1 bar 1; ONE-WAY DOOR for the product owner)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "148",
+  "card": "163",
+  "title": "Generated endpoint files are named *.cs.cs: decide and document the convention",
+  "shape": "Story",
+  "type": "tooling (small; found by the card 160 re-review)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "149",
+  "card": "182",
+  "title": "Actionable messages on the getting-started path",
+  "shape": "Story",
+  "type": "feature (M; v0.1 bar 4)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "150",
+  "card": "164",
+  "title": "line directives: the debugger and C# compiler errors point at .phrase lines",
+  "shape": "Story",
+  "type": "feature (thin slice; weighed separately from the source map ",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "151",
+  "card": "184",
+  "title": "Version 0.1.0 and a changelog",
+  "shape": "Story",
+  "type": "docs (S; v0.1 bar 7)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "152",
+  "card": "153",
+  "title": "Verdict page states the success criteria",
+  "shape": "Story",
+  "type": "feature (thin slice; one line)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "153",
+  "card": "185",
+  "title": "An issues route, a contributing note and a security note",
+  "shape": "Story",
+  "type": "docs (S; v0.1 bar 7)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "154",
+  "card": "155",
+  "title": "Verdict page as a judgment backed by data",
+  "shape": "Story",
+  "type": "feature (thin slice; report wording and structure)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "155",
+  "card": "156",
+  "title": "Personas capture the same ten fields",
+  "shape": "Story",
+  "type": "docs (small card; a persona template and a backfill)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "157",
+  "card": "145",
+  "title": "Store operations as Phrase steps, not native code",
+  "shape": "Story",
+  "type": "feature (thin slice; the first vocabulary the prototype need",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "158",
+  "card": "146",
+  "title": "Validation rules as Phrase: not blank and a maximum length",
+  "shape": "Story",
+  "type": "feature (thin slice)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "159",
+  "card": "147",
+  "title": "A list endpoint without a fake flag",
+  "shape": "Story",
+  "type": "feature (thin slice)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "160",
+  "card": "148",
+  "title": "Composite steps: a phrase calls a phrase and changes one field of a record",
+  "shape": "Story",
+  "type": "feature (thin slice)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "161",
+  "card": "134",
+  "title": "ZOMBIES spec-coverage warnings",
+  "shape": "Story",
+  "type": "feature (thin slice; compiler warnings, never errors)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "162",
+  "card": "149",
+  "title": "Undetected-defect rate: planted defects against Phrase specs and model-written C# tests",
+  "shape": "Story",
+  "type": "data (a pre-registered study; extends the mutation check of ",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "163",
+  "card": "150",
+  "title": "Intent recovery: can a fresh reader state what each unit must do",
+  "shape": "Story",
+  "type": "data (a pre-registered study)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "164",
+  "card": "151",
+  "title": "Review speed and accuracy: approving and rejecting AI-written changes",
+  "shape": "Story",
+  "type": "data (a pre-registered study)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "165",
+  "card": "289",
+  "title": "Drift resistance: planted unintended changes across edits and model regenerations",
+  "shape": "Story",
+  "type": "data (a pre-registered study, shaped like cards 149 to 151)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "166",
+  "card": "139",
+  "title": "Loop step: re-probe unavailable drivers and restore them",
+  "shape": "Story",
+  "type": "tooling (thin slice; code in mob-defaults, tracked on this b",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "167",
+  "card": "140",
+  "title": "Cheat sheet plus library index: the hybrid prompt, measured",
+  "shape": "Story",
+  "type": "data (a pre-registered measurement; hypothesis from the prod",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "168",
+  "card": "143",
+  "title": "Split the documentation: a smaller core cheat sheet and a web sheet",
+  "shape": "Story",
+  "type": "docs (thin slice; re-freezes the scored documentation)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "169",
+  "card": "144",
+  "title": "Rerun Copilot's unavailable holdout rows after its quota returns",
+  "shape": "Story",
+  "type": "data (thin slice; a measurement run, supplements never-score",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "171",
+  "card": "107",
+  "title": "Spec to code with a model: does a Phrase spec get verified-correct code more reliably",
+  "shape": "Story",
+  "type": "data (thin slice; an experiment, no frozen number until a De",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "172",
+  "card": "108",
+  "title": "A second target's Specs project from the same specs",
+  "shape": "Story",
+  "type": "feature (thin slice; test generation only)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "173",
+  "card": "109",
+  "title": "C# implementation emission one phrase kind at a time",
+  "shape": "Story",
+  "type": "feature (thin slice; the second phase after test generation)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "174",
+  "card": "115",
+  "title": "Which cheaper models can each CLI run headless and cold",
+  "shape": "Story",
+  "type": "data (thin slice; a feasibility probe, no scored rows)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "175",
+  "card": "116",
+  "title": "Pre-register the cheaper-model experiment before any row",
+  "shape": "Story",
+  "type": "data (thin slice; a pre-registration Decider)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "176",
+  "card": "117",
+  "title": "Run the cheaper models in both arms",
+  "shape": "Story",
+  "type": "data (thin slice; a measurement run)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "177",
+  "card": "118",
+  "title": "Cost per passing task: the cheaper-model report",
+  "shape": "Story",
+  "type": "feature (thin slice; a report script)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "180",
+  "card": "120",
+  "title": "Pre-register the codebase-size experiment before any row",
+  "shape": "Story",
+  "type": "data (thin slice; a pre-registration Decider)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "183",
+  "card": "123",
+  "title": "Run the codebase-size experiment in both arms",
+  "shape": "Story",
+  "type": "data (thin slice; a measurement run)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "184",
+  "card": "124",
+  "title": "Codebase-size report: how cost and pass rate change with size",
+  "shape": "Story",
+  "type": "feature (thin slice; a report script)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "185",
+  "card": "125",
+  "title": "Choose and pin public C# repositories for the real-code tier",
+  "shape": "Story",
+  "type": "data (thin slice; a selection Decider and a pin file)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "186",
+  "card": "126",
+  "title": "Port a representative slice of the pinned public repo to Phrase",
+  "shape": "Story",
+  "type": "feature (thin slice; a private port)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "187",
+  "card": "127",
+  "title": "Write the growth-study backlog and pre-register the study",
+  "shape": "Story",
+  "type": "data (thin slice; a backlog and a pre-registration Decider)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "188",
+  "card": "128",
+  "title": "Run the growth study in both arms from shared checkpoints",
+  "shape": "Story",
+  "type": "data (thin slice; a measurement run)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "189",
+  "card": "129",
+  "title": "Growth-study curve: cost and pass rate against codebase size",
+  "shape": "Story",
+  "type": "feature (thin slice; a report script)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "195",
+  "card": "089",
+  "title": "Option and nested-record fields compile",
+  "shape": "Story",
+  "type": "feature (thin slice; exempt from the hypothesis rule)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "196",
+  "card": "065",
+  "title": "Loop: run one card with a pinned toolchain",
+  "shape": "",
+  "type": "tooling (thin slice; the code lives in mob-defaults; authore",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "197",
+  "card": "066",
+  "title": "Loop: bounded retry, park and split on failure",
+  "shape": "",
+  "type": "tooling (thin slice; the code lives in mob-defaults; authore",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "198",
+  "card": "078",
+  "title": "Ready check: reject a role-only story before the product manager is asked",
+  "shape": "",
+  "type": "tooling (mob-defaults `facilitator.py`); thin slice; authore",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "199",
+  "card": "067",
+  "title": "Loop: on Done run the retro step and re-rank, then the next card",
+  "shape": "",
+  "type": "tooling (thin slice; the code lives in mob-defaults; authore",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "200",
+  "card": "053",
+  "title": "Docs: one diagnostics table, not two",
+  "shape": "",
+  "type": "docs (thin slice from card 018; exempt from the hypothesis r",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "201",
+  "card": "062",
+  "title": "Atomic runs: a card runs in a fresh worktree and ends landed or discarded",
+  "shape": "",
+  "type": "tooling (thin slice; the code lives in mob-defaults, `facili",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "202",
+  "card": "068",
+  "title": "Loop: liveness, publish, STOP file and the Needs-product-owner file",
+  "shape": "",
+  "type": "tooling (thin slice; the code lives in mob-defaults; authore",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "203",
+  "card": "072",
+  "title": "Loop: pace the work against the finite driver allotments",
+  "shape": "",
+  "type": "tooling (thin slice; the code lives in mob-defaults; authore",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "204",
+  "card": "069",
+  "title": "Loop: resume after a crash or reboot (logon task)",
+  "shape": "",
+  "type": "tooling (thin slice; the code lives in mob-defaults; authore",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "205",
+  "card": "070",
+  "title": "Loop: run every card atomically (land or discard)",
+  "shape": "",
+  "type": "tooling (thin slice; the code lives in mob-defaults; authore",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "206",
+  "card": "054",
+  "title": "Benchmark task 005 gets a failure-path spec (suite change, versioned)",
+  "shape": "",
+  "type": "data (thin slice; exempt from the hypothesis rule)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "208",
+  "card": "056",
+  "title": "An endpoint with an output cannot say `succeeds` (PH333)",
+  "shape": "",
+  "type": "feature (thin slice; exempt from the hypothesis rule)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "210",
+  "card": "022",
+  "title": "Keyword model ADR: what a keyword is",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "211",
+  "card": "058",
+  "title": "A validation phrase returns its validated value (first slice, language decision first)",
+  "shape": "",
+  "type": "feature (thin slice; exempt from the hypothesis rule)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "212",
+  "card": "013",
+  "title": "Make GRAMMAR.md say what the resolver does",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "213",
+  "card": "019",
+  "title": "Publish exact diagnostic message templates in GRAMMAR.md",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "214",
+  "card": "014",
+  "title": "Document the native C# environment and show passing-guard examples",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "215",
+  "card": "046",
+  "title": "Docs: GRAMMAR and README name the adapter contract and the HTTP status mapping",
+  "shape": "",
+  "type": "docs (thin slice; exempt from the hypothesis rule)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "216",
+  "card": "017",
+  "title": "Benchmark v1: score by running the generated specs",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "217",
+  "card": "024",
+  "title": "Pattern discovery: find the recurring patterns worth a keyword",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "218",
+  "card": "027",
+  "title": "Benchmark: catalogue tasks that measure LLM work removed and learnability",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "219",
+  "card": "060",
+  "title": "Catalogue tasks for concurrent work and event publication (measure the demand)",
+  "shape": "",
+  "type": "data (thin; exempt from the hypothesis rule except 060, whic",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "220",
+  "card": "081",
+  "title": "Measure stored and published outcomes under today's grammar",
+  "shape": "Story",
+  "type": "data (benchmark task pack; suite change, versioned); thin sl",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "221",
+  "card": "020",
+  "title": "Did-you-mean suggestions for failure codes and other unknown names",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "222",
+  "card": "052",
+  "title": "phrase build reports errors as file:line:col and names its target",
+  "shape": "",
+  "type": "feature (thin slice; exempt from the hypothesis rule)",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "223",
+  "card": "023",
+  "title": "Ordinary control flow: if/else and loops",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "224",
+  "card": "033",
+  "title": "Generic type parameters on phrases",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "225",
+  "card": "034",
+  "title": "Behavioral holes and spec test doubles",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "226",
+  "card": "059",
+  "title": "ADR: deterministic asynchronous and event semantics",
+  "shape": "",
+  "type": "decision (thin; exempt from the hypothesis rule except 060, ",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "227",
+  "card": "082",
+  "title": "ADR: a spec actor is who observes an outcome",
+  "shape": "Story",
+  "type": "decision; thin slice; authored by the driver rotation, revie",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "228",
+  "card": "025",
+  "title": "Base library v0: structure and a seed of about 12 keywords, with C# adapter implementation",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "230",
+  "card": "015",
+  "title": "Proposal: make the spec `when` line optional",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "231",
+  "card": "021",
+  "title": "Proposal: consistent given/responds syntax",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "232",
+  "card": "035",
+  "title": "Proposal: parameterizable failure codes",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "237",
+  "card": "038",
+  "title": "Dogfood: the mob status API, written in Phrase",
+  "shape": "",
+  "type": "feature (dogfood; exempt from the hypothesis rule); second d",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "238",
+  "card": "026",
+  "title": "Catalogue dedup linter: flag near-duplicate keywords",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "239",
+  "card": "061",
+  "title": "Spike: a scripted scheduler, fake clock and event capture make an async spec deterministic",
+  "shape": "",
+  "type": "spike (thin; exempt from the hypothesis rule except 060, whi",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "240",
+  "card": "083",
+  "title": "Spike: an in-memory store and an event capture assert one scripted observation",
+  "shape": "Story",
+  "type": "spike; thin slice; authored by the driver rotation, reviewed",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "241",
+  "card": "028",
+  "title": "Second adapter spike: prove the keyword model is language-neutral",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "242",
+  "card": "029",
+  "title": "LLM-as-compiler with hash pinning for keywords without an adapter implementation",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "243",
+  "card": "030",
+  "title": "Synthesize Phrase from existing code (spike: C# to Phrase)",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": "244",
+  "card": "031",
+  "title": "Converter between LLM-optimized Phrase and a human-friendly rendering (spike)",
+  "shape": "",
+  "type": "",
+  "repo": "",
+  "author": ""
+ },
+ {
+  "rank": null,
+  "card": "003",
+  "title": "Adapter contract and C# adapter: types and runtime",
+  "status": "SUPERSEDED 2026-10-26 by thin ",
+  "shape": "",
+  "type": "",
+  "repo": ""
+ },
+ {
+  "rank": null,
+  "card": "004",
+  "title": "C# adapter: phrases, effects and failures",
+  "status": "SUPERSEDED 2026-10-26 by thin ",
+  "shape": "",
+  "type": "",
+  "repo": ""
+ },
+ {
+  "rank": null,
+  "card": "005",
+  "title": "C# adapter: FastEndpoints endpoints and Program",
+  "status": "SUPERSEDED 2026-10-26 by thin ",
+  "shape": "",
+  "type": "",
+  "repo": ""
+ },
+ {
+  "rank": null,
+  "card": "006",
+  "title": "C# adapter: specs as xUnit, and the first acceptance test goes green",
+  "status": "SUPERSEDED 2026-10-26 by thin ",
+  "shape": "",
+  "type": "",
+  "repo": ""
+ },
+ {
+  "rank": null,
+  "card": "007",
+  "title": "Phrase CLI: one command compiles a program",
+  "status": "SUPERSEDED 2026-10-26 by thin ",
+  "shape": "",
+  "type": "",
+  "repo": ""
+ },
+ {
+  "rank": null,
+  "card": "063",
+  "title": "Loop: pick the next eligible card from the board",
+  "status": "SUPERSEDED 2026-10-26 by card ",
+  "shape": "",
+  "type": "tooling (thin slice; the code lives in mob-defaults; authore",
+  "repo": ""
+ },
+ {
+  "rank": null,
+  "card": "071",
+  "title": "Loop: when Ready runs low, discover new cards instead of stopping",
+  "status": "WITHDRAWN 2026-10-26 (the prod",
+  "shape": "",
+  "type": "tooling (thin slice; the code lives in mob-defaults; authore",
+  "repo": ""
+ },
+ {
+  "rank": null,
+  "card": "202",
+  "title": "A native block that fails with an undeclared code is a diagnostic",
+  "status": "Ready",
+  "shape": "Story",
+  "type": "compiler (S)",
+  "repo": ""
+ },
+ {
+  "rank": null,
+  "card": "203",
+  "title": "Names reserved by generated code are rejected or escaped",
+  "status": "Ready",
+  "shape": "Story",
+  "type": "compiler (S)",
+  "repo": ""
+ },
+ {
+  "rank": null,
+  "card": "204",
+  "title": "Reconcile the personas with the v0.1 bar in Avowry terms, then rerun the LLM check for Ari",
+  "status": "Ready",
+  "shape": "Story",
+  "type": "docs (M)",
+  "repo": ""
+ },
+ {
+  "rank": null,
+  "card": "271",
+  "title": "The loop and audit thresholds are parameters",
+  "status": "Draft",
+  "shape": "Contract",
+  "type": "tooling",
+  "repo": "mob-defaults (mob-crosscli)"
+ },
+ {
+  "rank": null,
+  "card": "272",
+  "title": "facilitator.py and test_card_mode.py keep their line endings",
+  "status": "Draft",
+  "shape": "Contract",
+  "type": "bug",
+  "repo": "mob-defaults (mob-crosscli)"
+ },
+ {
+  "rank": null,
+  "card": "273",
+  "title": "Each gate has a red run that proves its test catches a broken gate",
+  "status": "Draft",
+  "shape": "Contract",
+  "type": "tooling",
+  "repo": "mob-defaults (mob-crosscli)"
+ },
+ {
+  "rank": null,
+  "card": "274",
+  "title": "The final-review record can say unclear and keep the reviewer's verdict",
+  "status": "Draft",
+  "shape": "Contract",
+  "type": "tooling",
+  "repo": "mob-defaults (mob-crosscli)"
+ },
+ {
+  "rank": null,
+  "card": "275",
+  "title": "Decide whether card 211's unproven defects close, and whether seat attribution needs a car",
+  "status": "Draft",
+  "shape": "Contract",
+  "type": "process",
+  "repo": "mob-defaults (mob-crosscli)"
+ },
+ {
+  "rank": null,
+  "card": "280",
+  "title": "Muse usage text reads as signed in, or signed in with unknown quota",
+  "status": "Draft",
+  "shape": "Contract",
+  "type": "bug",
+  "repo": "mob-defaults (mob-crosscli)"
+ },
+ {
+  "rank": null,
+  "card": "281",
+  "title": "Muse seats run with a known workspace trust",
+  "status": "Draft",
+  "shape": "Contract",
+  "type": "tooling",
+  "repo": "mob-defaults (mob-crosscli)"
+ },
+ {
+  "rank": null,
+  "card": "283",
+  "title": "The delete guard does not flag a read-only python command",
+  "status": "Draft",
+  "shape": "Contract",
+  "type": "bug",
+  "repo": "mob-defaults (mob-crosscli)"
+ },
+ {
+  "rank": null,
+  "card": "285",
+  "title": "Muse's sandboxed shell completes a command on the shared Windows laptop",
+  "status": "Draft",
+  "shape": "Contract",
+  "type": "bug",
+  "repo": "mob-defaults (mob-crosscli)"
+ },
+ {
+  "rank": null,
+  "card": "286",
+  "title": "A NO OBJECTION reply is stored as no objection, not as a No vote",
+  "status": "Draft",
+  "shape": "Contract",
+  "type": "bug",
+  "repo": "mob-defaults (mob-crosscli)"
+ },
+ {
+  "rank": null,
+  "card": "287",
+  "title": "locate_muse takes one kind of root",
+  "status": "Draft",
+  "shape": "Contract",
+  "type": "tooling",
+  "repo": "mob-defaults (mob-crosscli)"
+ },
+ {
+  "rank": null,
+  "card": "290",
+  "title": "The decider's result counts only votes with a valid cite",
+  "status": "Draft",
+  "shape": "Contract",
+  "type": "bug",
+  "repo": "mob-defaults (mob-crosscli: decider.py result_of and its tes"
+ },
+ {
+  "rank": null,
+  "card": "291",
+  "title": "A Grok decision seat ends its turn with a vote, and a vote after narration is read",
+  "status": "Draft",
+  "shape": "Contract",
+  "type": "bug",
+  "repo": "mob-defaults (mob-crosscli: the Grok backend invocation and "
+ }
+]
