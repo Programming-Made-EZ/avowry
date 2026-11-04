@@ -1,0 +1,20 @@
+{
+ "card": 230,
+ "title": "The facilitator and seats never write the same checkout at once",
+ "status": "in progress",
+ "decisions": {
+  "taskforce": ".mob/records/decisions/230-taskforce.json (adopted with one joined condition; caps 1+1+1; a worktree per seat with the facilitator integrating)"
+ },
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Copilot ctx-1",
+   "model": "copilot (auto) via the Copilot CLI, session 9cf42fcf; command scan clean (1 command)",
+   "evidence": ".mob/records/230/taskforce-proposal-pm.md"
+  }
+ ],
+ "deviations": [
+  "the ready seat wrote its proposal over card 290's committed proposal in the shared avowry checkout before writing its own file, against its brief (no repository edits); the facilitator saved the change as .mob/records/230/ready-seat-stray-edit.diff and restored the file. An instance of this card's defect"
+ ],
+ "notes": []
+}
