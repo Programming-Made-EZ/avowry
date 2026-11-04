@@ -16,7 +16,8 @@
   "green_2_review": "facilitator diff review: (1) the new attempt_log failure_excerpt and reason are stored unscrubbed in decider-result.json (every other stored text goes through mob_summary.scrub, which masks secrets, tokens and home paths); the seat skipped scrub because it broke red 2's 300-character test. This card's live step commits decider-result.json, so this must be fixed before it. (2) The decider's overall result still ignores counted, so a vote without a valid cite still counts toward the result. Under D181 a red after the passed green 2 is criterion 2 cycle 2, past its cap of 1, so a D175 scope window comes first",
   "suite_4674d19": "full reference suite on green 1 4674d19 (PowerShell worktree, registry PATH): Ran 1686 tests in 1691.344s, FAILED (failures=20, skipped=1); the 20 failures are exactly red 2's tests (tests.test_launch_failure_honesty), which green 1 does not address; no other failure",
   "scope_window": "window 229-scope (.mob/records/decisions/229-scope.json): adopted with one condition (commit the no-home-path check on a fake failing seat's decider-result.json before the live step); criterion 2 cap 1 to 2, total 1+2+1 = 4",
-  "first_live_copilot_votes": "window 229-scope ran on mob-crosscli with green 1 (and 2): Copilot decision seats returned parsed, cited votes through decider.py (round 1: product manager, developer, coach; round 2: developer, decider), the first since card 226's rotation gate; Grok seats launched through --prompt-file but every attempt returned only narration (it reads, then stops), so criterion 1's live Grok vote is not met yet. These are not criterion 1 (b) evidence: that is the dedicated live step"
+  "first_live_copilot_votes": "window 229-scope ran on mob-crosscli with green 1 (and 2): Copilot decision seats returned parsed, cited votes through decider.py (round 1: product manager, developer, coach; round 2: developer, decider), the first since card 226's rotation gate; Grok seats launched through --prompt-file but every attempt returned only narration (it reads, then stops), so criterion 1's live Grok vote is not met yet. These are not criterion 1 (b) evidence: that is the dedicated live step",
+  "red_2_cycle_2": "red 7c26629 (QA ctx-3 continued; pushed; criterion 2 cycle 2 of 2, adopted by window 229-scope): tests/test_launch_failure_honesty.py now 38 tests, 10 fail on a2bb1d4 (tokens and home paths stored raw; an uncited Yes still passes), 28 pass (red 2's 23 and 5 cycle-2 guards); the fake seat helper now writes UTF-8 so it can emit non-ASCII stderr (named in the commit body); five other suites pass (89). Not void"
  },
  "seats": [
   {
@@ -35,7 +36,7 @@
    "role": "red",
    "seat": "Claude ctx-3",
    "model": "claude, a fresh subagent context, QA engineer; command scan clean, 29 commands",
-   "evidence": "red 1 ab8f4a5, red 2 858649b"
+   "evidence": "red 1 ab8f4a5, red 2 858649b, red 2 cycle 2 7c26629"
   },
   {
    "role": "green",
