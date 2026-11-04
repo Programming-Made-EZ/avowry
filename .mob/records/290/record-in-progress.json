@@ -14,7 +14,9 @@
   "red_1b": "red 1b 7e0f200 (QA ctx-3 continued; pushed): 26 cite_ok unit cases, 11 fail on assertions, 15 guards pass; module total 46 (26 fail, 20 pass); five other modules OK (107). Found today: an empty CITE counts, and so does one whose phrase sits on the next line. Extra spaces inside 'line N:' are accepted (the scope gave no expected result; the seat chose lenient)",
   "green_1_attempt_1": "NO COMMIT, stopped under window 290-scope's stop rule (backend developer ctx-4, fresh Claude subagent): result_of is called at decider.py:340 with {seat: vote} only, so dropping uncounted votes needs a one-line change at that call site (pass counted), which is outside result_of and cite_ok. Trials in scratch copies: result_of and cite_ok alone pass all 26 red 1b cases but none of red 1's 15; with the call-site line, the five required modules pass (117 tests, 1 skipped) and the six decider modules fail 29 of 124 (launched 3, gate 7, pin_scrub 2, record 8, record_units 1, runner 8), all in criterion 3's file list (the earlier probe measured 27). Next: a declaration-fix window for the call-site line",
   "green_1": "green 1 93c4f62 (backend developer ctx-4 continued; scan clean, 16 commands; pushed): decider.py only, 18 insertions and 5 deletions, CRLF kept: cite_ok enforces D171 as written (first CITE line; outer quotes stripped; 6 or more verbatim words, or a correct 'line N: w1 w2 w3 w4'); result_of gets counted votes only via the call site at decider.py:340 (window 290-declfix), and with none counted the result is 'failed: no counted votes'. The five required modules pass (117); the six decider modules fail 29 of 124, all uncited doubles in criterion 3's files (launched 3, gate 7, pin_scrub 2, record 8, record_units 1, runner 8)",
-  "refactor_1": "none needed after green 1, reasoned: two functions and one call line, each read top to bottom; criterion 3 rewrites only test doubles"
+  "refactor_1": "none needed after green 1, reasoned: two functions and one call line, each read top to bottom; criterion 3 rewrites only test doubles",
+  "red_2": "red 2 78ab63b (QA ctx-3 continued; pushed): 10 pinned tests for criterion 2, passing on HEAD and on the commit before green 1, by design (the slice's criterion 2 pins behaviour); tests/test_decider_counted_result.py 56 OK",
+  "red_3": "red 3 3d503c8 (pushed): tests/test_fake_voter_cites.py 9 tests, 7 fail (11 with subtests), 2 guards pass; the 29 failing tests in the six decider modules listed by module in the body; some runner tests send their own uncited 'Yes', so green 3 edits those files too"
  },
  "seats": [
   {
@@ -33,7 +35,7 @@
    "role": "red",
    "seat": "Claude ctx-3",
    "model": "claude, a fresh subagent context, QA engineer; command scan clean, 21 commands",
-   "evidence": "red 1 38b8eb5, red 1b 7e0f200"
+   "evidence": "red 1 38b8eb5, red 1b 7e0f200, red 2 78ab63b, red 3 3d503c8"
   },
   {
    "role": "green",
