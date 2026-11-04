@@ -26,7 +26,8 @@
   "green_3": "green 3 73eea8a (backend developer ctx-4 continued; scan clean, 50 commands; pushed): tests/fakes/fake_voter.py gains default_vote (a counted Yes with a D171 cite) and the six decider modules' doubles cite; 7 files, 36 insertions, 15 deletions, no change under --ignore-all-space. Rewritten to the new rule (slice C3 ZOMBIE E), named in the body: test_decider_record NoVoter test_a_run_with_no_voter_records_the_probe_and_no_voter_line expects a zero-voter run not to pass (exit 1). All 12 modules pass (270 tests). The seat had stopped first on that test; the facilitator pointed it to the slice's E case (no window: the adopted slice already allows it)",
   "refactor_3": "none needed after green 3, reasoned: the doubles use one shared helper; no production code changed",
   "suite_73eea8a": "full reference suite on green 3 73eea8a (PowerShell worktree, registry PATH): Ran 1788 tests in 1701.618s, OK (skipped=1), the baseline skip",
-  "gate": "SHIP (13:40 UTC, .mob/records/290/preship-gate.md): independent reviewer ctx-5, fresh Copilot CLI session f213aa45-b7d0-40b5-9130-684ee91f6d92 with --add-dir mob-crosscli; Done checks met; the three recorded readings judged honest and acceptable; no blocker. Its transcript scan flags 'recursive delete ... rmtree' on the python -c command that wrote the gate report: the word sits inside the report text (its safety section); nothing was deleted (a scanner false finding, cards 254 and 283)"
+  "gate": "SHIP (13:40 UTC, .mob/records/290/preship-gate.md): independent reviewer ctx-5, fresh Copilot CLI session f213aa45-b7d0-40b5-9130-684ee91f6d92 with --add-dir mob-crosscli; Done checks met; the three recorded readings judged honest and acceptable; no blocker. Its transcript scan flags 'recursive delete ... rmtree' on the python -c command that wrote the gate report: the word sits inside the report text (its safety section); nothing was deleted (a scanner false finding, cards 254 and 283)",
+  "signoff": "SIGNED OFF with conditions (.mob/records/290/signoff-ctx6.md, Claude ctx-6 fresh subagent; scan clean, 29 commands): Done check 1's second half ('an uncited Yes beside cited votes fails') is met by ruling (the adopted rule leaves the uncited Yes out, so the cited votes decide); the understated deviations added (done here); a bug card for cite_ok reading a Codex prompt echo; retro experiments logged"
  },
  "seats": [
   {
@@ -58,6 +59,12 @@
    "seat": "Copilot ctx-5",
    "model": "copilot (auto) via the Copilot CLI, independent reviewer, fresh session f213aa45; scan: one false finding (the word rmtree inside the report text it wrote)",
    "evidence": ".mob/records/290/preship-gate.md (SHIP)"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off; command scan clean, 29 commands",
+   "evidence": ".mob/records/290/signoff-ctx6.md (SIGNED OFF with conditions)"
   }
  ],
  "deviations": [
@@ -66,7 +73,11 @@
   "F-087 (audit 210): the 09:44 UTC in-flight commit was pushed only at 10:03, past the 5-minute rule: inflight.sh's push failure was hidden because the facilitator read only its last output line; the script now verifies the push, retries (also with ControlMaster off and after regenerating MOB.md) and prints PUSH FAILED",
   "the slice seat's transcript scan reports 'unreadable file' for its read-only test command (the file-run check took the whole piped command line for a script path): a scanner false finding of the kind cards 254 and 283 cover",
   "the facilitator's declaration-fix text (window 290-declfix) said an uncounted vote goes into result_of 'as none'; that contradicts the adopted task-force condition, the slice and red 1 (an uncounted vote is left out of the result; 'none' would make an uncited No fail a cited-Yes decision). Green 1 follows the task-force condition and leaves uncounted votes out, and its commit body says so. The fix text was the facilitator's drafting error; the window's purpose (the call site is in scope) holds",
-  "green 1 (93c4f62) dropped 'did not answer' votes along with uncited ones, a regression no red caught until green 3; found by green 3's stop"
+  "green 1 (93c4f62) dropped 'did not answer' votes along with uncited ones, a regression no red caught until green 3; found by green 3's stop",
+  "window 290-scope-2: the Copilot audit-lens reply was an OBJECTION with a CONDITION (replace A1 and A2 with git evidence or mark them unrun) behind a line of narration; the first-line runner dropped it as unread and a Claude seat took the role, so the decision text's 'six NO OBJECTION' understates it. On substance A1 holds (decider.py:76-81 fails on 'none'), as the sign-off checked in code. The same narration-first defect as card 291, here on Copilot",
+  "the slice seat edited its slice file after its turn (recorded in decisions.p6_result); the window voted on the committed text",
+  "green 3 attempt 1 left an uncommitted change in the shared tree; the facilitator saved it as .mob/records/290/green3-attempt-1.diff and restored the file",
+  "red 1's Environment line reads 'commit before 2d4d24d' although 2d4d24d was its parent commit"
  ],
  "notes": [
   "Codex seats returned (quota reset); their stored replies carry Codex CLI banner text after the CITE line"
