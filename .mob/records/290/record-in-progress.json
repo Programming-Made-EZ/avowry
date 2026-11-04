@@ -1,0 +1,24 @@
+{
+ "card": 290,
+ "title": "The decider's result counts only votes with a valid cite",
+ "status": "in progress",
+ "decisions": {
+  "rank": "D185 (re-rank 21): ranked first",
+  "task_force": "window 290-taskforce (adopted with one condition: a vote counts only with a recognised vote line and a verbatim D171 CITE; every other reply is unread and left out, uncited No and Support-it included, proven by tests); caps 1+1+1",
+  "grok_skip": "adopted in window 290-taskforce: Grok is skipped in this card's counted windows until card 291 lands; later windows of card 290 run with a backends file in which Grok is disabled (facilitator scratch backends-nogrok.json); cost: model diversity"
+ },
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Copilot ctx-1",
+   "model": "copilot (auto) via the Copilot CLI; command scan clean",
+   "evidence": ".mob/records/290/taskforce-proposal-pm.md"
+  }
+ ],
+ "deviations": [
+  "the audit lens's round 2 cite had four words and counted on a D171 re-ask"
+ ],
+ "notes": [
+  "Codex seats returned (quota reset); their stored replies carry Codex CLI banner text after the CITE line"
+ ]
+}

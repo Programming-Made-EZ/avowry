@@ -1,0 +1,362 @@
+{
+ "window": "290-taskforce",
+ "category": "task-force declaration",
+ "rule": "D153 task-force declaration for card 290 (ranked first by re-rank 21, D185); D145 re-poll after one adopted condition; D171",
+ "proposed_by": {
+  "role": "product manager (ready)",
+  "model": "copilot (auto) via the Copilot CLI",
+  "context": "ctx-1",
+  "probe_reference": "probe 2026-11-04 07:59 UTC (.mob/records/probes/2026-10-30.jsonl)"
+ },
+ "opened_at": "2026-11-04T08:10:29Z",
+ "proposal": "# Task-force declaration proposal: card 290\n\nContext: D185 re-rank 21 ranked card 290 first. D183 says user stories and bugs stay on the board; card 290 is a bug in decider result counting. Copilot may sit counted decision seats again after card 229 sign-off. Grok stays non-counted until card 291. In card 229 windows, 8 of 10 Grok attempts ended without a vote.\n\n## Task force\n- Ready: Copilot CLI, ctx-1. Why: product owner and queue owner; keeps the card moving and records the proposal.\n- Architect: Claude, ctx-2. Why: checks invariants, scope premise, and the counted-vote contract.\n- QA: Claude, ctx-3. Why: writes the red tests and ZOMBIES for uncited-Yes and counted-vote behavior.\n- Backend developer: Claude, ctx-4. Why: owns decider.py and tests/fakes/fake_voter.py, the result fixer and helper path.\n- Audit lens: Copilot, ctx-5. Why: re-checks the result path and the vote-reader logic before sign-off.\n- Decider: Claude, ctx-6. Why: final yes/support-it/no vote on the bug and any scope window.\n- Agile coach: Claude, ctx-7. Why: holds the retro and the process guardrails.\n\nLeft out: Grok in counted windows until card 291 lands. Reason: 8 of 10 attempts in card 229 stopped after narration or returned no vote; counted roles should not spend minutes on a known non-vote. Dispatch proposal to weigh: skip Grok in counted roles until 291, via a per-window backend-disabled list or a backends override file for the affected windows. Cost: lower model diversity while the defect is open; acceptable tradeoff to avoid empty-seat churn.\n\n## Domain-expert T2 question\nWhat evidence makes a vote valid enough to change a decision result: a valid proposal cite, the vote line, or both?\n\n## Value\nDecision results should reflect only cited, read votes; uncited Yes values must not pass a decision.\n\nMetric: zero uncited votes change the decider result.\nCounter-metric: extra window minutes and loss of model diversity from skipping Grok.\n\n## Done checks and caps\nCap total: 1 + 1 + 1 = 3.\n1. Uncited Yes is not counted and does not pass the result.\n2. Cited Yes passes and No fails, unchanged from today.\n3. The 27 doubles use valid cites, or the fake_voter default is replaced by a helper that injects a valid CITE line before the result is evaluated.\n\n## Applicable rules\n- D171: cite-a-point votes apply; every vote needs CITE.\n- D175: cycle cap per criterion applies; keep total cap to 3.\n- D183: this is a bug on the board, not a retro-experiment card.\n- D184: run each scope premise in code on HEAD before the window.\n- D185: re-rank 21 ranked card 290 first.\n- D181: if a lettered red is needed, it must stop at the first passed green.\n- D165-D168: no direct process-pick trial on this card.\n- D176: no direct gate-report issue here.\n\n## Open points\n- Decide whether the 27 doubles get valid cites individually or whether they vote through a helper that adds a valid CITE line.\n- Decide whether this card also fixes card 286 (NO OBJECTION stored as No) or leaves it separate; keep 291 separate unless the same parser fix is required.\n- Keep the fix narrow: the bug is in result_of and counted-vote semantics, not in the general parser policy for objection windows.\n\n## Adopted condition (round 1, for this re-poll)\n\nFrom the architect and the independent reviewer (audit lens), round 1, adopted as one condition on Done checks 1 and 2: a vote counts in the decider's result only when it has both a recognised vote line and a D171-valid CITE (found verbatim in the proposal). Any other reply is recorded as unread and left out of the result, whatever its vote word, an uncited No and an uncited Support-it included. Tests prove that every uncited vote value (Yes, Support-it, No) is uncounted and cannot change the result.\n",
+ "checklist_D158": ".mob/records/290/checklist-290-taskforce.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [
+  {
+   "from": "architect and independent reviewer (audit lens), round 1 (w290tf-architect, w290tf-auditlens, both Codex seats)",
+   "adopted_as": "a vote counts in the decider's result only when it has both a recognised vote line and a D171-valid CITE found verbatim in the proposal; any other reply is recorded as unread and left out of the result, whatever its vote word, an uncited No and an uncited Support-it included; tests prove every uncited vote value (Yes, Support-it, No) is uncounted and cannot change the result"
+  }
+ ],
+ "replies": [
+  {
+   "seat": "codex",
+   "context": "w290tfr2cp1-architect",
+   "started_at": "2026-11-04T08:31:33Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nThe adopted condition is symmetric, enforceable, and testable without expanding parser policy.\nCITE: both a recognised vote line and a D171-valid CITE\n[facilitator: the Codex CLI banner and prompt echo that followed here were trimmed; the vote, condition and cite above are unchanged]",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:32:05.593570Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "architect (slice)",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w290tfr2cp1-qa",
+   "started_at": "2026-11-04T08:37:01Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: Tests prove that every uncited vote value (Yes, Support-it, No) is uncounted and cannot change the result.\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:37:30.548498Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w290tfr2-dev",
+   "started_at": "2026-11-04T08:40:40Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe adopted condition is workable and unambiguous for me. A recognised vote line plus a valid cite is checkable in `result_of`, and I can add tests for each uncited value without gaming anything. Either route for the 27 doubles (individual cites or a helper) satisfies it.\n\nCITE: Uncited Yes is not counted and does not pass the result.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:41:15.560470Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w290tfcr2cp1-auditlens",
+   "started_at": "2026-11-04T08:50:20Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nCITE: a vote counts in the decider's result only when\n[facilitator: the Codex CLI banner and prompt echo that followed here were trimmed; the vote, condition and cite above are unchanged]",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:50:52.552904Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w290tfr2cp1-decider",
+   "started_at": "2026-11-04T08:44:04Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: Decision results should reflect only cited, read votes\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:44:35.530806Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w290tfr2-coach",
+   "started_at": "2026-11-04T08:48:31Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe seats cover the perspectives this bug needs, and the cap of 3 keeps the work narrow. The adopted condition tightens the done checks without adding ceremony.\n\nCITE: Decision results should reflect only cited, read votes\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:48:59.896615Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "codex",
+   "context": "w290tfcp1-architect",
+   "started_at": "2026-11-04T08:10:29Z",
+   "model": "gpt-5.6-sol",
+   "raw": "OBJECTION\nCONDITION: Define a counted vote as requiring both a recognized vote line and a D171-valid CITE; otherwise record it as unread and exclude it from the result, including uncited No.\nCITE: uncited Yes values must not pass a decision.\n[facilitator: the Codex CLI banner and prompt echo that followed here were trimmed; the vote, condition and cite above are unchanged]",
+   "first_line": "OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:10:56.687369Z",
+   "round": 1,
+   "role": "architect (slice)",
+   "ctx": "ctx-2",
+   "reply": "OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w290tfcp1-qa",
+   "started_at": "2026-11-04T08:13:09Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: zero uncited votes change the decider result.\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:13:39.849210Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w290tfcp1-dev",
+   "started_at": "2026-11-04T08:14:48Z",
+   "model": "grok-4.6",
+   "raw": "I'll read the proposal files and related records first, then answer as the backend-developer seat in the objection window.I'll read the decision text, cards 290/291, and the task-force records next.I'll check card 291, the doubles, and the slice-limit rules so the backend seat can judge whether the caps are workable.NO OBJECTION\nCaps 1+1+1, red then green with doubles, and the narrow result_of plus helper-or-cites path are workable and fair. I can comply without gaming: counted doubles get cites; uncited-Yes reds stay uncited.\nCITE: Keep the fix narrow: the bug is in result_of and counted-vote semantics\n",
+   "first_line": "I'll read the proposal files and related records first, then answer as the backend-developer seat in the objection window.I'll read the decision text, cards 290/291, and the task-force records next.I'll check card 291, the doubles, and the slice-limit rules so the backend seat can judge whether the caps are workable.NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:15:17.405361Z",
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "I'll read the proposal files and related records first, then answer as the backend-developer seat in the objection window.I'll read the decision text, cards 290/291, and the task-force records next.I'll check card 291, the doubles, and the slice-limit rules so the backend seat can judge whether the caps are workable.NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w290tf-dev",
+   "started_at": "2026-11-04T08:17:56Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe caps, the three done checks, and the narrow scope are workable for me. The helper-or-27-cites choice is left open, so I can decide it in the red/unit step without gaming the rules.\n\nCITE: Uncited Yes is not counted and does not pass the result.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:18:27.521544Z",
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w290tfr2cp1-dev",
+   "started_at": "2026-11-04T08:38:33Z",
+   "model": "grok-4.6",
+   "raw": "I'll read the decision docs, card 290, and the task-force checklist so I can answer this objection window as the backend seat.I’ll pull the cited decisions, card 290, the task-force checklist, and the backend files those rules would bind.NO OBJECTION\nThree-cap checks, both-line-and-CITE counting, and the doubles-or-helper path are workable. I can red, unit-commit, and green without gaming.\nCITE: uncited Yes values must not pass a decision\n",
+   "first_line": "I'll read the decision docs, card 290, and the task-force checklist so I can answer this objection window as the backend seat.I’ll pull the cited decisions, card 290, the task-force checklist, and the backend files those rules would bind.NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:38:59.448049Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "codex",
+   "context": "w290tfcp1-auditlens",
+   "started_at": "2026-11-04T08:19:32Z",
+   "model": "gpt-5.6-sol",
+   "raw": "OBJECTION\nCONDITION: Require tests proving every uncited vote value—including No and Support-it—is uncounted and cannot change the result.\nCITE: Decision results should reflect only cited, read votes\n[facilitator: the Codex CLI banner and prompt echo that followed here were trimmed; the vote, condition and cite above are unchanged]",
+   "first_line": "OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:20:02.212376Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "codex",
+   "context": "w290tfr2cp1-auditlens",
+   "started_at": "2026-11-04T08:42:30Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nCITE: every vote needs CITE.\n[facilitator: the Codex CLI banner and prompt echo that followed here were trimmed; the vote, condition and cite above are unchanged]",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:42:59.843880Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w290tfcp1-decider",
+   "started_at": "2026-11-04T08:21:40Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: Ready: Copilot CLI, ctx-1. Why: product owner and queue owner\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:22:11.867167Z",
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w290tfcp1-coach",
+   "started_at": "2026-11-04T08:23:34Z",
+   "model": "grok-4.6",
+   "raw": "I'll read the cited process decisions, cards 290/291, and the task-force records, then answer as Agile Coach in the objection-window format.The repo is a scratch copy; next I’ll open the cited process docs, cards 290/291, and the task-force records.\n",
+   "first_line": "I'll read the cited process decisions, cards 290/291, and the task-force records, then answer as Agile Coach in the objection-window format.The repo is a scratch copy; next I’ll open the cited process docs, cards 290/291, and the task-force records.",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:24:02.490523Z",
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "I'll read the cited process decisions, cards 290/291, and the task-force records, then answer as Agile Coach in the objection-window format.The repo is a scratch copy; next I’ll open the cited process docs, cards 290/291, and the task-force records.",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w290tf-coach",
+   "started_at": "2026-11-04T08:27:43Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nThe roles each map to a distinct concern: scope, red tests, the fix, and audit. The cap of 3 keeps ceremony low. Skipping Grok is justified by the 8-of-10 empty seats.\nCITE: Decision results should reflect only cited, read votes\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:28:20.974069Z",
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w290tfr2cp1-coach",
+   "started_at": "2026-11-04T08:46:10Z",
+   "model": "grok-4.6",
+   "raw": "I'll read the cited process docs and card 290 materials first, then answer as Agile Coach in the objection-window format.I’ll pull D153 staffing rules, the card 290 files, and the task-force checklist next.NO OBJECTION\nThe seven roles fit this three-check result_of bug. Leaving Grok out of counted windows follows the measured empty-seat cost.\nCITE: skip Grok in counted roles until 291\n",
+   "first_line": "I'll read the cited process docs and card 290 materials first, then answer as Agile Coach in the objection-window format.I’ll pull D153 staffing rules, the card 290 files, and the task-force checklist next.NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 07:59 UTC: Copilot and Grok available; Codex placed by decider.py's own probe and decider.py's own probe at 2026-11-04T08:46:38.804669Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "adopted with one condition: seven declared roles (Copilot for ready and audit lens, Claude for the rest); caps 1+1+1; Grok is skipped in this card's counted windows until card 291 lands (a backends file with Grok disabled), at a cost to model diversity. Round 1: four NO OBJECTION, two OBJECTION with compatible conditions from Codex seats (architect, audit lens), joined into one. Round 2: six NO OBJECTION with valid cites, the audit lens's counted on a D171 re-ask (its first cite had four words). Codex seats returned for the first time since its quota ran out; their stored replies carry Codex CLI banner text after the CITE.",
+  "window_minutes": "round 1 08:08 to about 08:28 UTC; round 2 from 08:29; re-ask after"
+ },
+ "ended_at": "2026-11-04T08:51:32Z"
+}
