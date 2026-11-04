@@ -24,7 +24,8 @@
   "green_2_cycle_3": "green cda02f2 (backend developer ctx-4 continued; scan clean, 36 commands; pushed): failure_excerpt returns one_line(scrub(text), 300); result_of unchanged (the cited-only rule is card 290). Named modules all pass (launch_failure_honesty 36, launch_long_prompt 20, decider_launched 28, repo_path_lengths 1, decider importers as in the commit body)",
   "refactor_2": "none needed after green 2 cycle 3, reasoned: the change is one call wrapped in scrub plus its docstring; no duplication or naming issue to clean",
   "nohome_check": ".mob/records/229/nohome-check/ (window 229-scope's condition): at cda02f2 a fake failing copilot seat's stderr home path and token are masked in failure_excerpt and reason; the only contains_secret match in the file is prompt_sha (a SHA-256), not a secret",
-  "red_3": "red 3 cef48a7 (QA ctx-3 continued; pushed): tests/test_prompt_placeholders.py, 14 tests, 8 fail (11 entries with subtests), 6 pass as guards; the rewrite hits CLIs launched without a shim (claude, codex, agy shapes); copilot and grok already receive the literals whole after green 1; five other suites pass (97)"
+  "red_3": "red 3 cef48a7 (QA ctx-3 continued; pushed): tests/test_prompt_placeholders.py, 14 tests, 8 fail (11 entries with subtests), 6 pass as guards; the rewrite hits CLIs launched without a shim (claude, codex, agy shapes); copilot and grok already receive the literals whole after green 1; five other suites pass (97)",
+  "suite_cda02f2": "full reference suite on green 2 cycle 3 cda02f2 (PowerShell worktree, registry PATH): Ran 1699 tests in 1672.597s, OK (skipped=1), the baseline skip"
  },
  "seats": [
   {
