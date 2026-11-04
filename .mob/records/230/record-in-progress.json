@@ -6,7 +6,8 @@
   "taskforce": ".mob/records/decisions/230-taskforce.json (adopted with one joined condition; caps 1+1+1; a worktree per seat with the facilitator integrating)",
   "slice": ".mob/records/decisions/230-slice.json (adopted with QA's condition on criterion 2; caps 1+1+1)",
   "red_1": "9b9e162 (tests/test_writer_isolation.py: 13 tests, 10 fail on the missing facilitator.Writers, 3 labelled guards; regression of six facilitator modules Ran 245 OK). The seat worked in its own worktree on branch card230-red1; the facilitator fast-forwarded main and pushed. The red pins Writers but not its wiring into CardRun.turn and the ship path, which the slice's criterion 1 acceptance names; the facilitator continues the QA seat with red 1b in the same cycle (D181: no green has passed).",
-  "red_1b": "bee9606 (same cycle, D181: no green had passed): CardRun.writers, CardRun.seat_checkout(role) gives each role its own worktree (never self.repo), writing seats run there through seat_turn and turn, and turn('ship') calls writers.integrate once as the only push. tests.test_writer_isolation Ran 18, 15 fail on the missing Writers, 3 guards pass; tests.test_card_mode Ran 137 OK. Integrated by fast-forward from the seat's worktree."
+  "red_1b": "bee9606 (same cycle, D181: no green had passed): CardRun.writers, CardRun.seat_checkout(role) gives each role its own worktree (never self.repo), writing seats run there through seat_turn and turn, and turn('ship') calls writers.integrate once as the only push. tests.test_writer_isolation Ran 18, 15 fail on the missing Writers, 3 guards pass; tests.test_card_mode Ran 137 OK. Integrated by fast-forward from the seat's worktree.",
+  "green_1": "0e1e5f3 (facilitator.py only, +200 -12): Writers keyed by the normalised git toplevel refuses a second writer before any git write; each writing role works in <repo>.mob-worktrees/<card>/<role> on branch mob/<card>/<role>; before each writing seat the facilitator merges the other seats' worktrees into it; seats commit and never push; after ship the facilitator commits the audit trail and writers.integrate merges (not cherry-picks) and pushes once. Fallback: a repo with no commit or not its own checkout root keeps the old in-place behaviour (the existing card-mode fixtures). tests.test_writer_isolation Ran 18 OK; seven-module regression Ran 263 OK. Integrated by fast-forward from the seat's worktree."
  },
  "seats": [
   {
@@ -26,13 +27,20 @@
    "seat": "Claude ctx-3",
    "model": "claude, a fresh subagent context, QA engineer, in its own worktree (17:34 to about 18:10 UTC)",
    "evidence": "red 1 9b9e162, red 1b bee9606"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, backend developer, in its own worktree (18:42 to about 19:05 UTC); attempt 1 on Codex could not launch a shell (card 297)",
+   "evidence": "green 1 0e1e5f3"
   }
  ],
  "deviations": [
   "the ready seat wrote its proposal over card 290's committed proposal in the shared avowry checkout before writing its own file, against its brief (no repository edits); the facilitator saved the change as .mob/records/230/ready-seat-stray-edit.diff and restored the file. An instance of this card's defect",
   "red 1 is authored 'Copilot' (the repo's configured identity; card 275's known defect)",
   "audit 219: the avowry facilitator's push-retry loop regenerated MOB.md after every refused push, whatever the reason; while closed issue 294 lacked a not-card label, four 'MOB.md regenerated' commits (09:57 to 10:03 PST) piled up and the oldest unpushed commit passed the 5-minute rule. Not a tooling defect (the check excludes MOB.md-only commits from staleness). Fixed: push_retry.sh regenerates only when the refusal names a stale MOB.md and otherwise prints PUSH FAILED with the reason; inflight.sh uses it. The not-card label did not exist; the facilitator created it and labelled issue 294",
-  "green 1 attempt 1 (Codex gpt-5.6-sol, workspace-write sandbox, 18:39 UTC) could not run any shell command: Windows refused every launch (CreateProcessAsUserW failed: 1920) before it executed; no file changed and no commit. The only other Codex mode is the unsandboxed bypass, and the delete scan cannot read Codex transcripts yet (card 253), so the facilitator seated green 1 on a fresh Claude context (still ctx-4) with the same brief; the declaration placed Codex there"
+  "green 1 attempt 1 (Codex gpt-5.6-sol, workspace-write sandbox, 18:39 UTC) could not run any shell command: Windows refused every launch (CreateProcessAsUserW failed: 1920) before it executed; no file changed and no commit. The only other Codex mode is the unsandboxed bypass, and the delete scan cannot read Codex transcripts yet (card 253), so the facilitator seated green 1 on a fresh Claude context (still ctx-4) with the same brief; the declaration placed Codex there",
+  "audit 220 (F-085): both green 1 seats started on a probe 65 to 69 minutes old (17:32 UTC), past the 50-minute re-probe point; re-probed before the next seat"
  ],
  "notes": [
   "Dispatch idea (2026-11-04), logged as a retro experiment in docs/retros/experiments.md, not an issue or card (issue 294 closed as not planned): when round 1 has no No and one seat's condition, fold it in and re-ask that seat plus any seat whose cited point it touches; full re-poll only for a real No or conflicting conditions. Owner: agile coach; trigger: the next card's decision windows; weighed at the card 230 retro. Windows 230-taskforce and 230-slice are data for it.",

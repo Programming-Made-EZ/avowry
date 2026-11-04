@@ -7,4 +7,4 @@
   - architect: Copilot, session 4af2f746 (split; card 028 is a spike, not a supported adapter; flag on the CLI synthesize path; rank after 030 for the capture slice only). Scan clean.
 - Result: card 295 (capture, Morgan) and card 296 (portability, Dana), both Draft, flag default-off. The facilitator folded every review fix into the drafts.
 - Placement on the product owner's direction relayed by Dispatch ("rank it on the board by value"; rerank.py allows a placement on that direction): 295 and 296 right after card 030 (ranks 197 and 198; 57 cards below moved down two). Card 296 sits after 295 rather than after card 028, because 028 ranks above 030 and 296 depends on 295.
-- Open, one word: widen Morgan to inherited code in any language (yes or no)? If no, card 295 needs a new persona.
+- Persona, decided: Morgan is widened to inherited C# code (PERSONAS.md), matching the one supported adapter; other source languages come into scope as their adapters exist. Card 295 keeps Morgan and states that boundary in its story, out-of-scope line and context (issue body edited the same day).

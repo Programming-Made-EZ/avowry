@@ -24,7 +24,7 @@ A developer who owns a service outcome and directs an LLM agent (Ari) to create 
 
 ## Morgan: maintainer and reviewer
 
-A person, or a second model with a fresh context, who reads or inherits Phrase source and generated code after the author has moved on.
+A person, or a second model with a fresh context, who reads or inherits Phrase source and generated code after the author has moved on, or inherits existing C# code to characterize before changing it. Other source languages join as their adapters exist.
 
 - **Goals:** infer intent from phrase names, types and Given/When/Then specs; verify what is returned, stored, emitted and responded, including failure paths; trace generated behaviour back to one Phrase construct; extend the program without breaking it.
 - **Pain points:** names that overpromise; specs that merely say it succeeds; two copies of the same table; target-specific hooks hidden in the core; a declared failure that arrives as a generic 500; large changes that bundle several independently reviewable behaviours.
