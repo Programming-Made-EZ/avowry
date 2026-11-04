@@ -1,0 +1,144 @@
+{
+ "window": "290-declfix",
+ "category": "card-text or declaration fix",
+ "rule": "D153 declaration fix for card 290's scope (window 290-scope): the result_of call site at decider.py:340; D171",
+ "proposed_by": {
+  "role": "facilitator",
+  "model": "the facilitator (declaration fix from green 1's stop)",
+  "context": "facilitator",
+  "probe_reference": "probe 2026-11-04 10:41 UTC"
+ },
+ "opened_at": "2026-11-04T11:23:10Z",
+ "proposal": "# Declaration fix for card 290 (window 290-scope): the call site that hands votes to result_of\n\nCategory: card-text or declaration fix (D153). Proposer: the facilitator, from green 1's stop (record decisions.green_1_attempt_1).\n\nThe adopted scope (window 290-scope) says green 1 changes result_of and cite_ok only, and its stop rule stops the green for any decider.py change outside them. Green 1 stopped under that rule, committing nothing: result_of is called at decider.py:340 as `result = result_of({s: v[\"vote\"] for s, v in votes.items()})`, so it never sees the counted flag that the line above computes (`v[\"counted\"] = v[\"vote\"] != \"none\" and v[\"cite_ok\"]`). Red 1's 15 cases cannot pass through result_of and cite_ok alone (the green's trial: red 1b's 26 cases pass, red 1's 15 do not).\n\nFix: the scope's \"result_of counts only counted votes\" includes this one call site. Green 1 may change decider.py:340 so that only counted votes reach result_of, an uncounted vote going in as \"none\" (the existing \"did not answer\" rule). No other decider.py line is added to the scope; the stop rule stands for anything else.\n\nMeasured with the call-site line (the green's trial in a scratch copy): the five required modules pass (117 tests, 1 skipped); the six decider modules fail 29 of 124 (launched 3, gate 7, pin_scrub 2, record 8, record_units 1, runner 8), all in criterion 3's file list, which criterion 3 fixes next. The slice measured 27 earlier; the two extra failures are in the record and runner modules, inside that list.\n\nCaps unchanged: 1+1+1. No cycle is spent: green 1 has not committed.\n",
+ "checklist_D158": ".mob/records/290/checklist-290-scope.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "copilot",
+   "context": "w290dfcp1-pmready",
+   "started_at": "2026-11-04T11:23:10Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: the scope's \"result_of counts only counted votes\"\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:41 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T11:23:37.481471Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w290df-qa",
+   "started_at": "2026-11-04T11:24:21Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: Red 1's 15 cases cannot pass through result_of and cite_ok alone\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:41 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T11:24:47.923719Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w290dfcp1-dev",
+   "started_at": "2026-11-04T11:25:43Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nThe call-site inclusion is narrow, testable, and preserves the existing stop rule and caps.\nCITE: No other decider.py line is added to the scope\n[facilitator: the Codex CLI banner and prompt echo that followed here were trimmed; the vote and cite above are unchanged]",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:41 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T11:26:10.029620Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w290dfcp1-auditlens",
+   "started_at": "2026-11-04T11:27:17Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: Green 1 may change decider.py:340 so that only counted votes reach result_of\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:41 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T11:27:46.366197Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w290df-decider",
+   "started_at": "2026-11-04T11:28:19Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe fix is narrow and rests on a measured trial: the five required modules pass, and the 29 decider-module failures all fall inside criterion 3's file list. The stop rule still covers every other decider.py line, no cycle is spent, and the caps are unchanged. I see no seat missing for sign-off.\n\nCITE: No other decider.py line is added to the scope\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:41 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T11:28:44.239016Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w290dfcp1-coach",
+   "started_at": "2026-11-04T11:29:53Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nThe 1+1+1 task force is proportionate; the narrowly evidenced call-site clarification needs no additional perspective or ceremony.\nCITE: No other decider.py line is added to the scope\n[facilitator: the Codex CLI banner and prompt echo that followed here were trimmed; the vote and cite above are unchanged]",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:41 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T11:30:18.730327Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [],
+ "decision": {
+  "result": "adopted, no conditions: the scope's 'result_of counts only counted votes' includes the one call site at decider.py:340, so only counted votes reach result_of (an uncounted vote goes in as 'none'); no other decider.py line is added; the stop rule stands; caps stay 1+1+1 (green 1 had not committed). Six NO OBJECTION with valid cites (Claude for QA and decider, Copilot for product manager and audit lens, Codex for developer and coach); Grok disabled.",
+  "window_minutes": "11:19 to about 11:35 UTC, serial"
+ },
+ "ended_at": "2026-11-04T11:31:16Z"
+}
