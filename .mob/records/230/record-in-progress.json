@@ -4,7 +4,8 @@
  "status": "in progress",
  "decisions": {
   "taskforce": ".mob/records/decisions/230-taskforce.json (adopted with one joined condition; caps 1+1+1; a worktree per seat with the facilitator integrating)",
-  "slice": ".mob/records/decisions/230-slice.json (adopted with QA's condition on criterion 2; caps 1+1+1)"
+  "slice": ".mob/records/decisions/230-slice.json (adopted with QA's condition on criterion 2; caps 1+1+1)",
+  "red_1": "9b9e162 (tests/test_writer_isolation.py: 13 tests, 10 fail on the missing facilitator.Writers, 3 labelled guards; regression of six facilitator modules Ran 245 OK). The seat worked in its own worktree on branch card230-red1; the facilitator fast-forwarded main and pushed. The red pins Writers but not its wiring into CardRun.turn and the ship path, which the slice's criterion 1 acceptance names; the facilitator continues the QA seat with red 1b in the same cycle (D181: no green has passed)."
  },
  "seats": [
   {
@@ -18,10 +19,18 @@
    "seat": "Codex ctx-2",
    "model": "codex gpt-5.6-sol via the Codex CLI, read-only sandbox, 16:51 to 16:55 UTC; it wrote nothing (reply extracted)",
    "evidence": ".mob/records/230/turn-slice-architect.md"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, a fresh subagent context, QA engineer, in its own worktree (17:34 to about 18:10 UTC)",
+   "evidence": "red 1 9b9e162"
   }
  ],
  "deviations": [
-  "the ready seat wrote its proposal over card 290's committed proposal in the shared avowry checkout before writing its own file, against its brief (no repository edits); the facilitator saved the change as .mob/records/230/ready-seat-stray-edit.diff and restored the file. An instance of this card's defect"
+  "the ready seat wrote its proposal over card 290's committed proposal in the shared avowry checkout before writing its own file, against its brief (no repository edits); the facilitator saved the change as .mob/records/230/ready-seat-stray-edit.diff and restored the file. An instance of this card's defect",
+  "red 1 is authored 'Copilot' (the repo's configured identity; card 275's known defect)",
+  "audit 219: the avowry facilitator's push-retry loop regenerated MOB.md after every refused push, whatever the reason; while closed issue 294 lacked a not-card label, four 'MOB.md regenerated' commits (09:57 to 10:03 PST) piled up and the oldest unpushed commit passed the 5-minute rule. Not a tooling defect (the check excludes MOB.md-only commits from staleness). Fixed: push_retry.sh regenerates only when the refusal names a stale MOB.md and otherwise prints PUSH FAILED with the reason; inflight.sh uses it. The not-card label did not exist; the facilitator created it and labelled issue 294"
  ],
  "notes": [
   "Dispatch idea (2026-11-04), logged as a retro experiment in docs/retros/experiments.md, not an issue or card (issue 294 closed as not planned): when round 1 has no No and one seat's condition, fold it in and re-ask that seat plus any seat whose cited point it touches; full re-poll only for a real No or conflicting conditions. Owner: agile coach; trigger: the next card's decision windows; weighed at the card 230 retro. Windows 230-taskforce and 230-slice are data for it."
