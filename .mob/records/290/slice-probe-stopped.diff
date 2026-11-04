@@ -1,0 +1,922 @@
+diff --git a/decider.py b/decider.py
+index 9ac7b69..96833f1 100644
+--- a/decider.py
++++ b/decider.py
+@@ -1,392 +1,392 @@
+-#!/usr/bin/env python3
+-"""Sandboxed Decider runner.
+-
+-Voters never run in the real working tree. Each seat gets its own throwaway clone of the repository (committed files only,
+-no remote, hardlinks off), the same full prompt, and the CLI's read-only or restricted invocation where one exists. Votes are
+-parsed in one place. Afterwards the real tree and HEAD are verified unchanged, and any file a voter wrote inside its clone is
+-reported as a violation. The clones are removed with safe_delete.
+-
+-  python decider.py --repo R --proposal-file P [--seats codex,copilot,grok,agy] [--out DIR] [--ref D13 --title T --log DECIDERS.md]
+-
+-Exit codes: 0 passed, 1 failed (an outlier or no response), 2 usage error, a meaningless proposal, or no fresh probe (the start
+-probe or a repeat of a stale one failed: no voter was started), 5 the real tree changed.
+-"""
+-
+-import argparse
+-import concurrent.futures
+-import hashlib
+-import json
+-import re
+-import subprocess
+-import sys
+-import tempfile
+-from datetime import datetime, timezone
+-from pathlib import Path
+-from types import SimpleNamespace
+-
+-HERE = Path(__file__).resolve().parent
+-sys.path.insert(0, str(HERE))
+-
+-from delete_guard import safe_delete  # noqa: E402
+-from mob_process import STALE_PROBE_MINUTES, rotation_reason  # noqa: E402
+-from mob_summary import scrub  # noqa: E402
+-import facilitator  # noqa: E402
+-
+-VOTES = {"yes": "Yes", "no": "No", "absolutely no": "ABSOLUTELY NO", "support-it": "Support-it"}
+-_VOTE = re.compile(r"(?:^|[.\n!?:;])\s*(ABSOLUTELY NO|Support-it|Yes|No)\b", re.IGNORECASE)
+-_NARRATED_NO = re.compile(r"\bNo (?:files?|changes?) (?:will be|were|are|have been) (?:changed|modified|written|made)\b[^.\n]*\.?", re.IGNORECASE)
+-SEAT_NAMES = {"codex": "Codex", "copilot": "Copilot", "grok": "Grok", "agy": "agy", "claude": "Claude"}
+-
+-
+-# ---------------------------------------------------------------------------------------------------- parsing
+-def parse_vote(text):
+-    """(vote, reason). The vote is the first sentence-start Yes, Support-it, No or ABSOLUTELY NO. Three traps are handled:
+-    narration before the answer, conditional text after a No ('No. I would vote yes if ...'), and a CLI that echoes the whole
+-    prompt and transcript around its answer (codex)."""
+-    text = (text or "").replace("\r", "")
+-    if "\ncodex\n" in text:
+-        text = text.rsplit("\ncodex\n", 1)[1].split("\ntokens used", 1)[0]
+-    text = re.sub(r"[^\x00-\x7f]+", "'", text).strip()
+-    text = _NARRATED_NO.sub("", text)  # "No files will be changed." is narration, not a vote
+-    m = _VOTE.search(text)
+-    if not m:
+-        return "none", ""
+-    vote = VOTES[m.group(1).lower()]
+-    reason = " ".join(text[m.end():].split()).lstrip(".,:;- ")
+-    return vote, scrub(reason)[:240]
+-
+-
+-def build_muse_vote_evidence(seat_name, probe_state, vote_reply, session_id, session_log_path, command_scan):
+-    if not seat_name or not session_id or not session_log_path or not vote_reply:
+-        raise ValueError("missing critical Muse vote evidence fields")
+-    if not isinstance(probe_state, dict) or not probe_state:
+-        raise ValueError("missing critical Muse vote evidence fields")
+-    if not isinstance(command_scan, dict) or not command_scan:
+-        raise ValueError("missing critical Muse vote evidence fields")
+-    return {
+-        "seat": seat_name,
+-        "probe_state": probe_state,
+-        "vote_reply": vote_reply,
+-        "session_id": session_id,
+-        "session_log_path": session_log_path,
+-        "command_scan": command_scan,
+-    }
+-
+-
+-def result_of(votes):
+-    """passed unless any seat voted No or ABSOLUTELY NO, or did not answer."""
+-    return "failed" if any(v in ("No", "ABSOLUTELY NO", "none") for v in votes.values()) else "passed"
+-
+-
+-# ---------------------------------------------------------------------------------------------------- prompt
+-def build_prompt(proposal):
+-    return ("DECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed "
+-            "files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes "
+-            "anything. You may read files and run git log, git show and git diff.\n\n"
+-            f"PROPOSAL:\n{proposal}\n\n"
+-            "Vote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first "
+-            "words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.")
+-
+-
+-# ---------------------------------------------------------------------------------------------------- git helpers
+-def git(cwd, *args, timeout=120):
+-    return subprocess.run(["git", *args], cwd=str(cwd), capture_output=True, text=True, encoding="utf-8", errors="replace",
+-                          timeout=timeout, stdin=subprocess.DEVNULL)
+-
+-
+-def snapshot(repo):
+-    """HEAD plus the porcelain status lines of the real tree (the facilitator's own .mob/ and published MOB.md excluded)."""
+-    head = git(repo, "rev-parse", "HEAD").stdout.strip()
+-    lines = [l for l in git(repo, "status", "--porcelain", "--untracked-files=all").stdout.splitlines()
+-             if ".mob/" not in l and not l.endswith("MOB.md")]
+-    return {"head": head, "status": sorted(lines)}
+-
+-
+-def diff_snapshots(before, after):
+-    changes = []
+-    if before["head"] != after["head"]:
+-        changes.append(f"HEAD moved {before['head'][:7]} -> {after['head'][:7]}")
+-    changes += [f"+ {l}" for l in after["status"] if l not in before["status"]]
+-    changes += [f"- {l}" for l in before["status"] if l not in after["status"]]
+-    return changes
+-
+-
+-# ---------------------------------------------------------------------------------------------------- one seat
+-EXCERPT_CHARS = 300
+-_CITE = re.compile(r"^\s*CITE:\s*(.+?)\s*$", re.MULTILINE)
+-
+-
+-def failure_excerpt(text):
+-    """A failed attempt's text, scrubbed first, on one line: whole up to 300 characters, else an ellipsis plus the last 300."""
+-    return facilitator.one_line(scrub(text), EXCERPT_CHARS)
+-
+-
+-def attempt_reason(ok, rc, excerpt, reply):
+-    """Why an attempt gave no vote, never a bare "no response": the exit status and its text when the launch failed, the
+-    facilitator's own text (timeout, stall, refusal, quota) when there is no failing exit status."""
+-    if not ok:
+-        return f"launch failed: rc {rc}: {excerpt}" if rc else excerpt
+-    return "no vote in the reply" if reply.strip() else f"empty reply (rc {0 if rc is None else rc})"
+-
+-
+-def cite_ok(reply, proposal):
+-    """D171: True only when the reply's CITE: line holds a phrase found verbatim in the proposal."""
+-    match = _CITE.search((reply or "").replace("\r", ""))
+-    return bool(match and match.group(1) and match.group(1) in proposal)
+-
+-
+-def vote_seat(seat, backends, prompt, repo, run_dir, timeout, attempts=2):
+-    out = {"vote": "none", "reason": "", "reply": "", "attempts": 0, "wrote_files": False, "model": ""}
+-    cfg = backends.get(seat)
+-    if not cfg or not cfg.get("enabled", False):
+-        out["reason"] = "seat unavailable"
+-        return out
+-    clone = run_dir / seat
+-    done = subprocess.run(["git", "clone", "--quiet", "--local", "--no-hardlinks", str(repo), str(clone)], capture_output=True,
+-                          text=True, encoding="utf-8", errors="replace", timeout=300, stdin=subprocess.DEVNULL)
+-    if done.returncode != 0:
+-        out["reason"] = "could not clone: " + scrub(done.stderr.strip())[:120]
+-        return out
+-    git(clone, "remote", "remove", "origin")
+-    seat_cfg = dict(cfg, invocation=cfg.get("readonly_invocation") or cfg["invocation"])
+-    reply = ""
+-    scans = []
+-    out["attempt_log"] = []
+-    for n in range(1, attempts + 1):
+-        out["attempts"] = n
+-        launch = facilitator.run_backend(seat, seat_cfg, cfg.get("probe_model") or "default", prompt, cwd=clone,
+-                                         timeout=timeout, scan_out=scans)
+-        ok, model, text = launch
+-        rc = launch[3] if len(launch) > 3 else None
+-        out["model"] = model
+-        reply = text if ok else ""
+-        vote, reason = parse_vote(reply)
+-        out["reply"] = scrub(reply)[:20000]
+-        excerpt = "" if ok else failure_excerpt(text)
+-        if vote == "none":
+-            reason = attempt_reason(ok, rc, excerpt, reply)
+-        out["attempt_log"].append({"rc": rc, "failure_excerpt": excerpt, "reason": reason})
+-        out["reason"] = reason
+-        if vote != "none":
+-            out["vote"] = vote
+-            break
+-    out["wrote_files"] = bool(git(clone, "status", "--porcelain", "--untracked-files=all").stdout.strip())
+-    if scans:
+-        out["command_scan"] = command_scan(scans)
+-    return out
+-
+-
+-def command_scan(scans):
+-    """What the seat executed over all of its attempts: {status, commands, findings}. Commands are summed, findings are
+-    distinct and scrubbed; the status is the worst of the attempts (findings, no command source, unscanned, clean). It is a
+-    record: a vote and the exit code do not change."""
+-    order = ("findings", "no command source", "unscanned", "clean")
+-    status = min((s.get("status") for s in scans), key=lambda s: order.index(s) if s in order else 0)
+-    findings = list(dict.fromkeys(scrub(f) for s in scans for f in s.get("findings", [])))
+-    return {"status": status, "commands": sum(s.get("commands", 0) for s in scans), "findings": findings}
+-
+-
+-# ---------------------------------------------------------------------------------------------------- the probe
+-def open_run(repo, ref, backends, run_dir, timeout, clock=None, probe_fn=None):
+-    """Builds the card 208 CardRun that holds the gate rules (staleness, history, rotation) for this decision and takes
+-    the start probe through it. Its probe evidence goes to run_dir, in scratch, and its seat-use history stays the shared
+-    <repo>/.mob/records/seat-use.jsonl. SeatRefused when the probe cannot be taken or its evidence cannot be kept."""
+-    cli = SimpleNamespace(repo=Path(repo), dry_run=False, probe_max_age_minutes=STALE_PROBE_MINUTES, talk_timeout=timeout,
+-                          stall_seconds=timeout, card=None)
+-    run = facilitator.CardRun(SimpleNamespace(id=ref or "decider", text=""), cli, {"backends": backends},
+-                              clock=clock, probe_fn=probe_fn)
+-    run.run_dir, run.mob_path = run_dir, run_dir / "MOB.md"
+-    try:
+-        run.probe_drivers("decider start")
+-    except Exception as exc:
+-        raise facilitator.SeatRefused(f"the start probe could not be taken or its evidence could not be written "
+-                                      f"({type(exc).__name__}: {exc}). No voter starts without a fresh probe.") from exc
+-    return run
+-
+-
+-def check_voters(run, seats):
+-    """Before any voter launches, and writing nothing: each voter is judged by card 208's CardRun.check_seat, which repeats a
+-    probe 60 minutes old or more (the clock read at each voter's turn), reads the shared seat-use history and, for a Claude
+-    voter, applies the rotation rule (D164). The non-Claude voters are judged first and count as just seated when Claude is
+-    judged: a model voting in this run has not "waited longer". facilitator.SeatRefused names the voter and the reason.
+-    Returns [(Seat, outcome)] in judgment order for commit_voters."""
+-    # only a voter that would launch is judged and seated: in order, no repeat, backend in backends.json and enabled; the
+-    # others write no line, get no record and are no pending entry (their vote stays "seat unavailable" in vote_seat)
+-    known = (run.backends or {}).get("backends", {})
+-    seats = [s for n, s in enumerate(seats) if s not in seats[:n] and known.get(s) and known[s].get("enabled", False)]
+-    ordered = [s for s in seats if s != "claude"] + [s for s in seats if s == "claude"]
+-    checked, pending = [], []
+-    for seat in ordered:
+-        voter = facilitator.Seat(f"{run.card.id}-{seat}", seat, "decider voter")
+-        checked.append((voter, run.check_seat(voter, voter.role, pending=pending)))
+-        pending.append({"seat": seat})
+-    return checked
+-
+-
+-def commit_voters(run, checked):
+-    """One seat-use line per voter, in judgment order, through CardRun.commit_seat (card 208's line and reason)."""
+-    for voter, outcome in checked:
+-        run.commit_seat(voter.role, outcome)
+-
+-
+-def start_voters(run, seats):
+-    """Check every voter, then write their lines: a refusal for any voter leaves the history as it was. Returns the
+-    record of each voter ({seat: voter_record}, judgment order), built from the history as it stands once the lines are
+-    written, so a Claude voter's reason names the lines of the voters seated in this same run."""
+-    checked = check_voters(run, seats)
+-    commit_voters(run, checked)
+-    if not checked:
+-        return {}
+-    written = run.read_seat_use("decider voter", run.card.id)
+-    first = len(checked[0][1][1])
+-    return {voter.backend: voter_record(run.probes, voter.backend, first + n, written[:first + n])
+-            for n, (voter, _) in enumerate(checked)}
+-
+-
+-def verify_history(run):
+-    """After the voters ran: the history must be what this run last saw or wrote (CardRun.read_seat_use, append-only)."""
+-    run.read_seat_use("decider voter", run.card.id)
+-
+-
+-# ---------------------------------------------------------------------------------------------------- the record
+-def _scrubbed(evidence):
+-    """Probe evidence is the CLI's own output (may hold a home-directory path): scrub a string, keep None as None."""
+-    return scrub(evidence) if isinstance(evidence, str) else evidence
+-
+-
+-def voter_record(probes, seat, line_index, before):
+-    """What an auditor recomputes a voter's turn from: the probe time, the ok flag and evidence the probe in force holds for
+-    the voter's backend (None, never False, when it holds no result), the voter's 0-based line in the seat-use history and,
+-    for a Claude voter only, card 208's rotation_reason over the lines before its own line (never typed by a seat)."""
+-    result = ((probes or {}).get("results") or {}).get(seat)
+-    result = result if isinstance(result, dict) else {}
+-    record = {"probe_taken_at": (probes or {}).get("taken_at"), "probe_ok": result.get("ok"),
+-              "probe_evidence": _scrubbed(result.get("evidence")), "line_index": line_index}
+-    if seat == "claude":
+-        record["rotation_reason"] = _scrubbed(rotation_reason(probes, before))
+-    return record
+-
+-
+-def probe_record(probes):
+-    """The probe in force narrowed to taken_at and each backend's ok flag and evidence (None when absent)."""
+-    results = (probes or {}).get("results") or {}
+-    return {"taken_at": (probes or {}).get("taken_at"),
+-            "results": {name: {"ok": r.get("ok"), "evidence": _scrubbed(r.get("evidence"))} if isinstance(r, dict)
+-                        else {"ok": None, "evidence": None} for name, r in results.items()}}
+-
+-
+-# ---------------------------------------------------------------------------------------------------- the run
+-RECORD_KEYS = ("model", "probe_taken_at", "probe_ok", "probe_evidence", "line_index", "rotation_reason")
+-
+-
+-def append_log(path, ref, title, seats, votes, result, probe=None):
+-    names = "; ".join(f"{SEAT_NAMES.get(s, s)} {v['vote']}" for s, v in votes.items())
+-    outliers = [f"{SEAT_NAMES.get(s, s)}: {v['reason']}" for s, v in votes.items() if v["vote"] in ("No", "ABSOLUTELY NO", "none")]
+-    body = (f"\n#### Decider {ref}: {title}\n\n"
+-            f"- Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}. Seats: {', '.join(SEAT_NAMES.get(s, s) for s in seats)} "
+-            "(parallel, read-only, each in a sandboxed scratch clone).\n"
+-            f"- Votes: {names}.\n"
+-            f"- Result: {result}. Outliers: {'; '.join(outliers) if outliers else 'none'}.\n")
+-    for s, v in votes.items():
+-        if "line_index" in v:     # a vote of the old shape has no record to render
+-            body += f"- Rotation record {s}: {json.dumps({k: v[k] for k in RECORD_KEYS if k in v})}\n"
+-    if probe is not None:
+-        body += f"- Probe in force: {json.dumps(probe)}\n"
+-    with open(path, "a", encoding="utf-8") as f:
+-        f.write(body)
+-
+-
+-def discard(run_dir, scratch_root):
+-    try:
+-        safe_delete(run_dir, [scratch_root])
+-    except Exception as exc:  # cleanup trouble must be visible, never fatal to the vote
+-        print(f"warning: could not remove the scratch clones: {exc}", file=sys.stderr)
+-
+-
+-def run(args):
+-    repo = Path(args.repo).resolve()
+-    proposal = Path(args.proposal_file).read_text(encoding="utf-8").strip() if args.proposal_file else ""
+-    if len(proposal) < 40:
+-        print("error: the proposal is missing or too short to be a real proposal (at least 40 characters); no seat was started.",
+-              file=sys.stderr)
+-        return 2
+-    seats = [s.strip() for s in args.seats.split(",") if s.strip()]
+-    backends_path = Path(args.backends) if args.backends else HERE / "core" / "backends.json"
+-    backends = json.loads(backends_path.read_text(encoding="utf-8")).get("backends", {})
+-    prompt = build_prompt(proposal)
+-    prompt_sha = hashlib.sha256(" ".join(prompt.split()).encode("utf-8")).hexdigest()
+-
+-    scratch_root = Path(args.scratch_root) if args.scratch_root else Path(tempfile.gettempdir()) / "mob-deciders"
+-    scratch_root.mkdir(parents=True, exist_ok=True)
+-    run_dir = Path(tempfile.mkdtemp(prefix="run-", dir=scratch_root))
+-    try:
+-        gate = open_run(repo, args.ref, backends, run_dir, args.timeout)
+-        records = start_voters(gate, seats)
+-    except facilitator.SeatRefused as exc:
+-        print(f"error: {exc} No voter was started.", file=sys.stderr)
+-        discard(run_dir, scratch_root)
+-        return 2
+-    before = snapshot(repo)
+-    seats = list(dict.fromkeys(seats))     # a repeated name starts one voter
+-    with concurrent.futures.ThreadPoolExecutor(max_workers=max(1, len(seats))) as pool:
+-        futures = {seat: pool.submit(vote_seat, seat, backends, prompt, repo, run_dir, args.timeout) for seat in seats}
+-        votes = {seat: f.result() for seat, f in futures.items()}
+-    after = snapshot(repo)
+-    discard(run_dir, scratch_root)
+-
+-    for v in votes.values():
+-        v["cite_ok"] = cite_ok(v.get("reply", ""), proposal)
+-        v["counted"] = v["vote"] != "none" and v["cite_ok"]
+-    result = result_of({s: v["vote"] for s, v in votes.items()})
+-    changes = diff_snapshots(before, after)
+-    try:
+-        verify_history(gate)
+-    except facilitator.SeatRefused as exc:
+-        changes.append(str(exc))
+-    violations = [s for s, v in votes.items() if v["wrote_files"]]
+-    for seat, rec in records.items():
+-        if seat in votes:
+-            votes[seat].update(rec)
+-    probe = probe_record(gate.probes)
+-    record = {"result": result, "prompt_sha": prompt_sha, "probe": probe, "votes": votes,
+-              "counted_seats": [s for s in seats if votes[s]["counted"]], "violations": violations,
+-              "integrity": {"ok": not changes, "changes": changes}}
+-    out_dir = Path(args.out) if args.out else Path(tempfile.gettempdir()) / "mob-deciders-results"
+-    out_dir.mkdir(parents=True, exist_ok=True)
+-    (out_dir / "decider-result.json").write_text(json.dumps(record, indent=2), encoding="utf-8")
+-
+-    print(f"Decider: {result}")
+-    for seat, v in votes.items():
+-        print(f"  {SEAT_NAMES.get(seat, seat)}: {v['vote']}" + (f" ({v['reason']})" if v["reason"] and v["vote"] != "Yes" else ""))
+-    if violations:
+-        print("  voters that wrote files inside their sandbox (contained, but a violation of read-only): "
+-              + ", ".join(SEAT_NAMES.get(s, s) for s in violations))
+-    if args.log and args.ref and args.title:
+-        append_log(args.log, args.ref, args.title, seats, votes, result, probe=probe)
+-    if changes:
+-        print("INTEGRITY: the real working tree or HEAD changed while the vote ran (a voter escaped its sandbox, or another "
+-              "process is writing here):", file=sys.stderr)
+-        for c in changes[:15]:
+-            print("  " + c, file=sys.stderr)
+-        print("  " + " ".join(changes[:15]))
+-        return 5
+-    return 0 if result == "passed" else 1
+-
+-
+-def main(argv=None):
+-    ap = argparse.ArgumentParser(description="Run a Decider vote in sandboxed scratch clones.")
+-    ap.add_argument("--repo", required=True)
+-    ap.add_argument("--proposal-file", required=True)
+-    ap.add_argument("--seats", default="codex,copilot,grok,agy")
+-    ap.add_argument("--backends", help="backends.json (default: core/backends.json)")
+-    ap.add_argument("--out", help="directory for decider-result.json")
+-    ap.add_argument("--scratch-root", help="parent directory of the throwaway clones (default: temp/mob-deciders)")
+-    ap.add_argument("--timeout", type=int, default=900, help="seconds per seat per attempt")
+-    ap.add_argument("--ref")
+-    ap.add_argument("--title")
+-    ap.add_argument("--log", help="append the standard Decider record to this file (needs --ref and --title)")
+-    return run(ap.parse_args(argv))
+-
+-
+-if __name__ == "__main__":
+-    sys.exit(main())
++#!/usr/bin/env python3
++"""Sandboxed Decider runner.
++
++Voters never run in the real working tree. Each seat gets its own throwaway clone of the repository (committed files only,
++no remote, hardlinks off), the same full prompt, and the CLI's read-only or restricted invocation where one exists. Votes are
++parsed in one place. Afterwards the real tree and HEAD are verified unchanged, and any file a voter wrote inside its clone is
++reported as a violation. The clones are removed with safe_delete.
++
++  python decider.py --repo R --proposal-file P [--seats codex,copilot,grok,agy] [--out DIR] [--ref D13 --title T --log DECIDERS.md]
++
++Exit codes: 0 passed, 1 failed (an outlier or no response), 2 usage error, a meaningless proposal, or no fresh probe (the start
++probe or a repeat of a stale one failed: no voter was started), 5 the real tree changed.
++"""
++
++import argparse
++import concurrent.futures
++import hashlib
++import json
++import re
++import subprocess
++import sys
++import tempfile
++from datetime import datetime, timezone
++from pathlib import Path
++from types import SimpleNamespace
++
++HERE = Path(__file__).resolve().parent
++sys.path.insert(0, str(HERE))
++
++from delete_guard import safe_delete  # noqa: E402
++from mob_process import STALE_PROBE_MINUTES, rotation_reason  # noqa: E402
++from mob_summary import scrub  # noqa: E402
++import facilitator  # noqa: E402
++
++VOTES = {"yes": "Yes", "no": "No", "absolutely no": "ABSOLUTELY NO", "support-it": "Support-it"}
++_VOTE = re.compile(r"(?:^|[.\n!?:;])\s*(ABSOLUTELY NO|Support-it|Yes|No)\b", re.IGNORECASE)
++_NARRATED_NO = re.compile(r"\bNo (?:files?|changes?) (?:will be|were|are|have been) (?:changed|modified|written|made)\b[^.\n]*\.?", re.IGNORECASE)
++SEAT_NAMES = {"codex": "Codex", "copilot": "Copilot", "grok": "Grok", "agy": "agy", "claude": "Claude"}
++
++
++# ---------------------------------------------------------------------------------------------------- parsing
++def parse_vote(text):
++    """(vote, reason). The vote is the first sentence-start Yes, Support-it, No or ABSOLUTELY NO. Three traps are handled:
++    narration before the answer, conditional text after a No ('No. I would vote yes if ...'), and a CLI that echoes the whole
++    prompt and transcript around its answer (codex)."""
++    text = (text or "").replace("\r", "")
++    if "\ncodex\n" in text:
++        text = text.rsplit("\ncodex\n", 1)[1].split("\ntokens used", 1)[0]
++    text = re.sub(r"[^\x00-\x7f]+", "'", text).strip()
++    text = _NARRATED_NO.sub("", text)  # "No files will be changed." is narration, not a vote
++    m = _VOTE.search(text)
++    if not m:
++        return "none", ""
++    vote = VOTES[m.group(1).lower()]
++    reason = " ".join(text[m.end():].split()).lstrip(".,:;- ")
++    return vote, scrub(reason)[:240]
++
++
++def build_muse_vote_evidence(seat_name, probe_state, vote_reply, session_id, session_log_path, command_scan):
++    if not seat_name or not session_id or not session_log_path or not vote_reply:
++        raise ValueError("missing critical Muse vote evidence fields")
++    if not isinstance(probe_state, dict) or not probe_state:
++        raise ValueError("missing critical Muse vote evidence fields")
++    if not isinstance(command_scan, dict) or not command_scan:
++        raise ValueError("missing critical Muse vote evidence fields")
++    return {
++        "seat": seat_name,
++        "probe_state": probe_state,
++        "vote_reply": vote_reply,
++        "session_id": session_id,
++        "session_log_path": session_log_path,
++        "command_scan": command_scan,
++    }
++
++
++def result_of(votes):
++    """passed unless any seat voted No or ABSOLUTELY NO, or did not answer."""
++    return "failed" if any(v in ("No", "ABSOLUTELY NO", "none") for v in votes.values()) else "passed"
++
++
++# ---------------------------------------------------------------------------------------------------- prompt
++def build_prompt(proposal):
++    return ("DECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed "
++            "files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes "
++            "anything. You may read files and run git log, git show and git diff.\n\n"
++            f"PROPOSAL:\n{proposal}\n\n"
++            "Vote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first "
++            "words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.")
++
++
++# ---------------------------------------------------------------------------------------------------- git helpers
++def git(cwd, *args, timeout=120):
++    return subprocess.run(["git", *args], cwd=str(cwd), capture_output=True, text=True, encoding="utf-8", errors="replace",
++                          timeout=timeout, stdin=subprocess.DEVNULL)
++
++
++def snapshot(repo):
++    """HEAD plus the porcelain status lines of the real tree (the facilitator's own .mob/ and published MOB.md excluded)."""
++    head = git(repo, "rev-parse", "HEAD").stdout.strip()
++    lines = [l for l in git(repo, "status", "--porcelain", "--untracked-files=all").stdout.splitlines()
++             if ".mob/" not in l and not l.endswith("MOB.md")]
++    return {"head": head, "status": sorted(lines)}
++
++
++def diff_snapshots(before, after):
++    changes = []
++    if before["head"] != after["head"]:
++        changes.append(f"HEAD moved {before['head'][:7]} -> {after['head'][:7]}")
++    changes += [f"+ {l}" for l in after["status"] if l not in before["status"]]
++    changes += [f"- {l}" for l in before["status"] if l not in after["status"]]
++    return changes
++
++
++# ---------------------------------------------------------------------------------------------------- one seat
++EXCERPT_CHARS = 300
++_CITE = re.compile(r"^\s*CITE:\s*(.+?)\s*$", re.MULTILINE)
++
++
++def failure_excerpt(text):
++    """A failed attempt's text, scrubbed first, on one line: whole up to 300 characters, else an ellipsis plus the last 300."""
++    return facilitator.one_line(scrub(text), EXCERPT_CHARS)
++
++
++def attempt_reason(ok, rc, excerpt, reply):
++    """Why an attempt gave no vote, never a bare "no response": the exit status and its text when the launch failed, the
++    facilitator's own text (timeout, stall, refusal, quota) when there is no failing exit status."""
++    if not ok:
++        return f"launch failed: rc {rc}: {excerpt}" if rc else excerpt
++    return "no vote in the reply" if reply.strip() else f"empty reply (rc {0 if rc is None else rc})"
++
++
++def cite_ok(reply, proposal):
++    """D171: True only when the reply's CITE: line holds a phrase found verbatim in the proposal."""
++    match = _CITE.search((reply or "").replace("\r", ""))
++    return bool(match and len(match.group(1).split()) >= 6 and match.group(1) in proposal)
++
++
++def vote_seat(seat, backends, prompt, repo, run_dir, timeout, attempts=2):
++    out = {"vote": "none", "reason": "", "reply": "", "attempts": 0, "wrote_files": False, "model": ""}
++    cfg = backends.get(seat)
++    if not cfg or not cfg.get("enabled", False):
++        out["reason"] = "seat unavailable"
++        return out
++    clone = run_dir / seat
++    done = subprocess.run(["git", "clone", "--quiet", "--local", "--no-hardlinks", str(repo), str(clone)], capture_output=True,
++                          text=True, encoding="utf-8", errors="replace", timeout=300, stdin=subprocess.DEVNULL)
++    if done.returncode != 0:
++        out["reason"] = "could not clone: " + scrub(done.stderr.strip())[:120]
++        return out
++    git(clone, "remote", "remove", "origin")
++    seat_cfg = dict(cfg, invocation=cfg.get("readonly_invocation") or cfg["invocation"])
++    reply = ""
++    scans = []
++    out["attempt_log"] = []
++    for n in range(1, attempts + 1):
++        out["attempts"] = n
++        launch = facilitator.run_backend(seat, seat_cfg, cfg.get("probe_model") or "default", prompt, cwd=clone,
++                                         timeout=timeout, scan_out=scans)
++        ok, model, text = launch
++        rc = launch[3] if len(launch) > 3 else None
++        out["model"] = model
++        reply = text if ok else ""
++        vote, reason = parse_vote(reply)
++        out["reply"] = scrub(reply)[:20000]
++        excerpt = "" if ok else failure_excerpt(text)
++        if vote == "none":
++            reason = attempt_reason(ok, rc, excerpt, reply)
++        out["attempt_log"].append({"rc": rc, "failure_excerpt": excerpt, "reason": reason})
++        out["reason"] = reason
++        if vote != "none":
++            out["vote"] = vote
++            break
++    out["wrote_files"] = bool(git(clone, "status", "--porcelain", "--untracked-files=all").stdout.strip())
++    if scans:
++        out["command_scan"] = command_scan(scans)
++    return out
++
++
++def command_scan(scans):
++    """What the seat executed over all of its attempts: {status, commands, findings}. Commands are summed, findings are
++    distinct and scrubbed; the status is the worst of the attempts (findings, no command source, unscanned, clean). It is a
++    record: a vote and the exit code do not change."""
++    order = ("findings", "no command source", "unscanned", "clean")
++    status = min((s.get("status") for s in scans), key=lambda s: order.index(s) if s in order else 0)
++    findings = list(dict.fromkeys(scrub(f) for s in scans for f in s.get("findings", [])))
++    return {"status": status, "commands": sum(s.get("commands", 0) for s in scans), "findings": findings}
++
++
++# ---------------------------------------------------------------------------------------------------- the probe
++def open_run(repo, ref, backends, run_dir, timeout, clock=None, probe_fn=None):
++    """Builds the card 208 CardRun that holds the gate rules (staleness, history, rotation) for this decision and takes
++    the start probe through it. Its probe evidence goes to run_dir, in scratch, and its seat-use history stays the shared
++    <repo>/.mob/records/seat-use.jsonl. SeatRefused when the probe cannot be taken or its evidence cannot be kept."""
++    cli = SimpleNamespace(repo=Path(repo), dry_run=False, probe_max_age_minutes=STALE_PROBE_MINUTES, talk_timeout=timeout,
++                          stall_seconds=timeout, card=None)
++    run = facilitator.CardRun(SimpleNamespace(id=ref or "decider", text=""), cli, {"backends": backends},
++                              clock=clock, probe_fn=probe_fn)
++    run.run_dir, run.mob_path = run_dir, run_dir / "MOB.md"
++    try:
++        run.probe_drivers("decider start")
++    except Exception as exc:
++        raise facilitator.SeatRefused(f"the start probe could not be taken or its evidence could not be written "
++                                      f"({type(exc).__name__}: {exc}). No voter starts without a fresh probe.") from exc
++    return run
++
++
++def check_voters(run, seats):
++    """Before any voter launches, and writing nothing: each voter is judged by card 208's CardRun.check_seat, which repeats a
++    probe 60 minutes old or more (the clock read at each voter's turn), reads the shared seat-use history and, for a Claude
++    voter, applies the rotation rule (D164). The non-Claude voters are judged first and count as just seated when Claude is
++    judged: a model voting in this run has not "waited longer". facilitator.SeatRefused names the voter and the reason.
++    Returns [(Seat, outcome)] in judgment order for commit_voters."""
++    # only a voter that would launch is judged and seated: in order, no repeat, backend in backends.json and enabled; the
++    # others write no line, get no record and are no pending entry (their vote stays "seat unavailable" in vote_seat)
++    known = (run.backends or {}).get("backends", {})
++    seats = [s for n, s in enumerate(seats) if s not in seats[:n] and known.get(s) and known[s].get("enabled", False)]
++    ordered = [s for s in seats if s != "claude"] + [s for s in seats if s == "claude"]
++    checked, pending = [], []
++    for seat in ordered:
++        voter = facilitator.Seat(f"{run.card.id}-{seat}", seat, "decider voter")
++        checked.append((voter, run.check_seat(voter, voter.role, pending=pending)))
++        pending.append({"seat": seat})
++    return checked
++
++
++def commit_voters(run, checked):
++    """One seat-use line per voter, in judgment order, through CardRun.commit_seat (card 208's line and reason)."""
++    for voter, outcome in checked:
++        run.commit_seat(voter.role, outcome)
++
++
++def start_voters(run, seats):
++    """Check every voter, then write their lines: a refusal for any voter leaves the history as it was. Returns the
++    record of each voter ({seat: voter_record}, judgment order), built from the history as it stands once the lines are
++    written, so a Claude voter's reason names the lines of the voters seated in this same run."""
++    checked = check_voters(run, seats)
++    commit_voters(run, checked)
++    if not checked:
++        return {}
++    written = run.read_seat_use("decider voter", run.card.id)
++    first = len(checked[0][1][1])
++    return {voter.backend: voter_record(run.probes, voter.backend, first + n, written[:first + n])
++            for n, (voter, _) in enumerate(checked)}
++
++
++def verify_history(run):
++    """After the voters ran: the history must be what this run last saw or wrote (CardRun.read_seat_use, append-only)."""
++    run.read_seat_use("decider voter", run.card.id)
++
++
++# ---------------------------------------------------------------------------------------------------- the record
++def _scrubbed(evidence):
++    """Probe evidence is the CLI's own output (may hold a home-directory path): scrub a string, keep None as None."""
++    return scrub(evidence) if isinstance(evidence, str) else evidence
++
++
++def voter_record(probes, seat, line_index, before):
++    """What an auditor recomputes a voter's turn from: the probe time, the ok flag and evidence the probe in force holds for
++    the voter's backend (None, never False, when it holds no result), the voter's 0-based line in the seat-use history and,
++    for a Claude voter only, card 208's rotation_reason over the lines before its own line (never typed by a seat)."""
++    result = ((probes or {}).get("results") or {}).get(seat)
++    result = result if isinstance(result, dict) else {}
++    record = {"probe_taken_at": (probes or {}).get("taken_at"), "probe_ok": result.get("ok"),
++              "probe_evidence": _scrubbed(result.get("evidence")), "line_index": line_index}
++    if seat == "claude":
++        record["rotation_reason"] = _scrubbed(rotation_reason(probes, before))
++    return record
++
++
++def probe_record(probes):
++    """The probe in force narrowed to taken_at and each backend's ok flag and evidence (None when absent)."""
++    results = (probes or {}).get("results") or {}
++    return {"taken_at": (probes or {}).get("taken_at"),
++            "results": {name: {"ok": r.get("ok"), "evidence": _scrubbed(r.get("evidence"))} if isinstance(r, dict)
++                        else {"ok": None, "evidence": None} for name, r in results.items()}}
++
++
++# ---------------------------------------------------------------------------------------------------- the run
++RECORD_KEYS = ("model", "probe_taken_at", "probe_ok", "probe_evidence", "line_index", "rotation_reason")
++
++
++def append_log(path, ref, title, seats, votes, result, probe=None):
++    names = "; ".join(f"{SEAT_NAMES.get(s, s)} {v['vote']}" for s, v in votes.items())
++    outliers = [f"{SEAT_NAMES.get(s, s)}: {v['reason']}" for s, v in votes.items() if v["vote"] in ("No", "ABSOLUTELY NO", "none")]
++    body = (f"\n#### Decider {ref}: {title}\n\n"
++            f"- Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}. Seats: {', '.join(SEAT_NAMES.get(s, s) for s in seats)} "
++            "(parallel, read-only, each in a sandboxed scratch clone).\n"
++            f"- Votes: {names}.\n"
++            f"- Result: {result}. Outliers: {'; '.join(outliers) if outliers else 'none'}.\n")
++    for s, v in votes.items():
++        if "line_index" in v:     # a vote of the old shape has no record to render
++            body += f"- Rotation record {s}: {json.dumps({k: v[k] for k in RECORD_KEYS if k in v})}\n"
++    if probe is not None:
++        body += f"- Probe in force: {json.dumps(probe)}\n"
++    with open(path, "a", encoding="utf-8") as f:
++        f.write(body)
++
++
++def discard(run_dir, scratch_root):
++    try:
++        safe_delete(run_dir, [scratch_root])
++    except Exception as exc:  # cleanup trouble must be visible, never fatal to the vote
++        print(f"warning: could not remove the scratch clones: {exc}", file=sys.stderr)
++
++
++def run(args):
++    repo = Path(args.repo).resolve()
++    proposal = Path(args.proposal_file).read_text(encoding="utf-8").strip() if args.proposal_file else ""
++    if len(proposal) < 40:
++        print("error: the proposal is missing or too short to be a real proposal (at least 40 characters); no seat was started.",
++              file=sys.stderr)
++        return 2
++    seats = [s.strip() for s in args.seats.split(",") if s.strip()]
++    backends_path = Path(args.backends) if args.backends else HERE / "core" / "backends.json"
++    backends = json.loads(backends_path.read_text(encoding="utf-8")).get("backends", {})
++    prompt = build_prompt(proposal)
++    prompt_sha = hashlib.sha256(" ".join(prompt.split()).encode("utf-8")).hexdigest()
++
++    scratch_root = Path(args.scratch_root) if args.scratch_root else Path(tempfile.gettempdir()) / "mob-deciders"
++    scratch_root.mkdir(parents=True, exist_ok=True)
++    run_dir = Path(tempfile.mkdtemp(prefix="run-", dir=scratch_root))
++    try:
++        gate = open_run(repo, args.ref, backends, run_dir, args.timeout)
++        records = start_voters(gate, seats)
++    except facilitator.SeatRefused as exc:
++        print(f"error: {exc} No voter was started.", file=sys.stderr)
++        discard(run_dir, scratch_root)
++        return 2
++    before = snapshot(repo)
++    seats = list(dict.fromkeys(seats))     # a repeated name starts one voter
++    with concurrent.futures.ThreadPoolExecutor(max_workers=max(1, len(seats))) as pool:
++        futures = {seat: pool.submit(vote_seat, seat, backends, prompt, repo, run_dir, args.timeout) for seat in seats}
++        votes = {seat: f.result() for seat, f in futures.items()}
++    after = snapshot(repo)
++    discard(run_dir, scratch_root)
++
++    for v in votes.values():
++        v["cite_ok"] = cite_ok(v.get("reply", ""), proposal)
++        v["counted"] = v["vote"] != "none" and v["cite_ok"]
++    result = result_of({s: v["vote"] if v["counted"] else "none" for s, v in votes.items()})
++    changes = diff_snapshots(before, after)
++    try:
++        verify_history(gate)
++    except facilitator.SeatRefused as exc:
++        changes.append(str(exc))
++    violations = [s for s, v in votes.items() if v["wrote_files"]]
++    for seat, rec in records.items():
++        if seat in votes:
++            votes[seat].update(rec)
++    probe = probe_record(gate.probes)
++    record = {"result": result, "prompt_sha": prompt_sha, "probe": probe, "votes": votes,
++              "counted_seats": [s for s in seats if votes[s]["counted"]], "violations": violations,
++              "integrity": {"ok": not changes, "changes": changes}}
++    out_dir = Path(args.out) if args.out else Path(tempfile.gettempdir()) / "mob-deciders-results"
++    out_dir.mkdir(parents=True, exist_ok=True)
++    (out_dir / "decider-result.json").write_text(json.dumps(record, indent=2), encoding="utf-8")
++
++    print(f"Decider: {result}")
++    for seat, v in votes.items():
++        print(f"  {SEAT_NAMES.get(seat, seat)}: {v['vote']}" + (f" ({v['reason']})" if v["reason"] and v["vote"] != "Yes" else ""))
++    if violations:
++        print("  voters that wrote files inside their sandbox (contained, but a violation of read-only): "
++              + ", ".join(SEAT_NAMES.get(s, s) for s in violations))
++    if args.log and args.ref and args.title:
++        append_log(args.log, args.ref, args.title, seats, votes, result, probe=probe)
++    if changes:
++        print("INTEGRITY: the real working tree or HEAD changed while the vote ran (a voter escaped its sandbox, or another "
++              "process is writing here):", file=sys.stderr)
++        for c in changes[:15]:
++            print("  " + c, file=sys.stderr)
++        print("  " + " ".join(changes[:15]))
++        return 5
++    return 0 if result == "passed" else 1
++
++
++def main(argv=None):
++    ap = argparse.ArgumentParser(description="Run a Decider vote in sandboxed scratch clones.")
++    ap.add_argument("--repo", required=True)
++    ap.add_argument("--proposal-file", required=True)
++    ap.add_argument("--seats", default="codex,copilot,grok,agy")
++    ap.add_argument("--backends", help="backends.json (default: core/backends.json)")
++    ap.add_argument("--out", help="directory for decider-result.json")
++    ap.add_argument("--scratch-root", help="parent directory of the throwaway clones (default: temp/mob-deciders)")
++    ap.add_argument("--timeout", type=int, default=900, help="seconds per seat per attempt")
++    ap.add_argument("--ref")
++    ap.add_argument("--title")
++    ap.add_argument("--log", help="append the standard Decider record to this file (needs --ref and --title)")
++    return run(ap.parse_args(argv))
++
++
++if __name__ == "__main__":
++    sys.exit(main())
+diff --git a/tests/fakes/fake_voter.py b/tests/fakes/fake_voter.py
+index 8d6d91f..a753020 100644
+--- a/tests/fakes/fake_voter.py
++++ b/tests/fakes/fake_voter.py
+@@ -40,7 +40,8 @@ def main():
+             return 0  # an empty reply the first time
+ 
+     votes = json.loads(os.environ.get("FAKE_VOTES", "{}"))
+-    reply = votes.get(backend, "Yes")
++    proposal = prompt.split("PROPOSAL:", 1)[-1]  # PROBE: cite the proposal's own first words
++    reply = votes.get(backend, "Yes\nCITE: " + " ".join(proposal.split()[:8]))
+     if (backend == "codex" and os.environ.get("FAKE_ECHO")) or os.environ.get("FAKE_ECHO_SEAT") == backend:
+         print("OpenAI Codex v0\nuser\n" + prompt + "\ncodex\n" + reply + "\ntokens used\n123")
+     else:
+diff --git a/tests/test_decider_gate.py b/tests/test_decider_gate.py
+index bec461d..7f234f0 100644
+--- a/tests/test_decider_gate.py
++++ b/tests/test_decider_gate.py
+@@ -71,7 +71,7 @@ class GateCase(RunnerCase):
+ 
+         def backend(seat, cfg, model_key, prompt, **kw):
+             self.events.append(("backend", seat))
+-            return True, "fake-model", "Yes"
++            return True, "fake-model", "Yes\nCITE: the emitter will turn specs into tests"
+ 
+         argv = ["--repo", str(self.repo), "--proposal-file", str(self.proposal), "--seats", ",".join(seats),
+                 "--backends", str(self.backends), "--out", str(self.out), "--scratch-root", str(self.scratch),
+@@ -187,7 +187,7 @@ class RotationCase(RunnerCase):
+             self.launched.append(seat)
+             if during:
+                 during()
+-            return True, "fake-model", "Yes"
++            return True, "fake-model", "Yes\nCITE: the emitter will turn specs into tests"
+ 
+         argv = ["--repo", str(self.repo), "--proposal-file", str(self.proposal), "--seats", ",".join(seats),
+                 "--backends", str(self.backends), "--out", str(self.out), "--scratch-root", str(self.scratch),
+diff --git a/tests/test_decider_launched.py b/tests/test_decider_launched.py
+index 05624eb..d2d04f3 100644
+--- a/tests/test_decider_launched.py
++++ b/tests/test_decider_launched.py
+@@ -125,7 +125,7 @@ class One(LaunchedCase):
+         def vote_seat(seat, *args, **kwargs):
+             with lock:
+                 calls[seat] = calls.get(seat, 0) + 1
+-            return {"vote": "Yes", "reason": "", "reply": "Yes", "attempts": 1, "wrote_files": False, "model": "fake-model"}
++            return {"vote": "Yes", "reason": "", "reply": "Yes\nCITE: the emitter will turn specs into tests", "attempts": 1, "wrote_files": False, "model": "fake-model"}
+ 
+         with mock.patch.object(decider, "vote_seat", vote_seat):
+             code, out, err = self.drive(["codex", "codex"])
+diff --git a/tests/test_decider_pin_scrub.py b/tests/test_decider_pin_scrub.py
+index ef87060..717fe0b 100644
+--- a/tests/test_decider_pin_scrub.py
++++ b/tests/test_decider_pin_scrub.py
+@@ -63,7 +63,7 @@ class PinCase(RecordCase):
+         def backend(seat, cfg, model_key, prompt, **kw):
+             models = cfg["models"]
+             self.keys[seat], self.ran[seat] = model_key, models.get(model_key, next(iter(models.values())))
+-            return True, self.ran[seat], "Yes"
++            return True, self.ran[seat], "Yes\nCITE: the emitter will turn specs into tests"
+ 
+         argv = ["--repo", str(self.repo), "--proposal-file", str(self.proposal), "--seats", ",".join(seats),
+                 "--backends", str(self.backends), "--out", str(self.out), "--scratch-root", str(self.scratch),
+diff --git a/tests/test_decider_record.py b/tests/test_decider_record.py
+index b8a1bc3..bd00115 100644
+--- a/tests/test_decider_record.py
++++ b/tests/test_decider_record.py
+@@ -62,7 +62,7 @@ class RecordCase(RotationCase):
+ 
+         def backend(seat, cfg, model_key, prompt, **kw):
+             self.launched.append(seat)
+-            ok, text = (replies or {}).get(seat, (True, "Yes"))
++            ok, text = (replies or {}).get(seat, (True, "Yes\nCITE: the emitter will turn specs into tests"))
+             return ok, f"{seat}-model-x", text
+ 
+         argv = ["--repo", str(self.repo), "--proposal-file", str(self.proposal), "--seats", ",".join(seats),
+diff --git a/tests/test_decider_record_units.py b/tests/test_decider_record_units.py
+index bd8364b..9edac96 100644
+--- a/tests/test_decider_record_units.py
++++ b/tests/test_decider_record_units.py
+@@ -56,7 +56,7 @@ class RunComposes(RunnerCase):
+             self.calls["append_log"].append({"votes": json.loads(json.dumps(votes)), "probe": probe})
+ 
+         def vote_seat(seat, backends, prompt, repo, run_dir, timeout, attempts=2):
+-            return {"vote": "Yes", "reason": f"{seat} says so", "reply": "", "attempts": 1, "wrote_files": False, "model": f"{seat}-m"}
++            return {"vote": "Yes", "reason": f"{seat} says so", "reply": "Yes\nCITE: the emitter will turn specs into tests", "attempts": 1, "wrote_files": False, "model": f"{seat}-m"}
+ 
+         argv = ["--repo", str(self.repo), "--proposal-file", str(self.proposal), "--seats", seats,
+                 "--backends", str(self.backends), "--out", str(self.out), "--scratch-root", str(self.scratch),
+diff --git a/tests/test_decider_runner.py b/tests/test_decider_runner.py
+index 99f3b9a..d4720e0 100644
+--- a/tests/test_decider_runner.py
++++ b/tests/test_decider_runner.py
+@@ -111,7 +111,7 @@ class Running(RunnerCase):
+     def test_all_yes_passes_and_every_seat_voted(self):
+         # Given four seats that vote Yes
+         # When the Decider runs
+-        proc = self.run_runner(env={"FAKE_VOTES": json.dumps({"codex": "Yes", "copilot": "Support-it", "grok": "Yes", "agy": "Yes"})})
++        proc = self.run_runner(env={"FAKE_VOTES": json.dumps({"codex": "Yes\nCITE: the emitter will turn specs into tests", "copilot": "Support-it\nCITE: the emitter will turn specs into tests", "grok": "Yes\nCITE: the emitter will turn specs into tests", "agy": "Yes\nCITE: the emitter will turn specs into tests"})})
+ 
+         # Then it passes (exit 0) with four recorded votes
+         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+@@ -121,7 +121,7 @@ class Running(RunnerCase):
+                          {"codex": "Yes", "copilot": "Support-it", "grok": "Yes", "agy": "Yes"})
+ 
+     def test_an_outlier_fails_the_proposal_and_its_reason_is_kept(self):
+-        proc = self.run_runner(env={"FAKE_VOTES": json.dumps({"grok": "No. I would vote yes if the bar tested the real thing."})})
++        proc = self.run_runner(env={"FAKE_VOTES": json.dumps({"grok": "No. I would vote yes if the bar tested the real thing.\nCITE: the emitter will turn specs into tests"})})
+         self.assertEqual(proc.returncode, 1, proc.stdout + proc.stderr)
+         res = self.result()
+         self.assertEqual(res["result"], "failed")
+@@ -135,7 +135,7 @@ class Running(RunnerCase):
+ 
+     def test_the_full_reply_is_kept_for_feedback_written_before_the_vote(self):
+         # Given a seat that gives feedback first and votes last (a retro asks for that)
+-        long_feedback = "Product: the spine is the long pole. " + "word " * 100 + ". Yes."
++        long_feedback = "Product: the spine is the long pole. " + "word " * 100 + ". Yes.\nCITE: the emitter will turn specs into tests"
+         proc = self.run_runner(env={"FAKE_VOTES": json.dumps({"grok": long_feedback})})
+ 
+         # Then the whole reply is in the result (scrubbed, capped), not only the short text after the vote
+@@ -143,11 +143,11 @@ class Running(RunnerCase):
+         self.assertIn("the long pole", self.result()["votes"]["grok"]["reply"])
+ 
+     def test_an_absolute_no_fails_even_when_everyone_else_agrees(self):
+-        proc = self.run_runner(env={"FAKE_VOTES": json.dumps({"copilot": "ABSOLUTELY NO. Verify privacy first."})})
++        proc = self.run_runner(env={"FAKE_VOTES": json.dumps({"copilot": "ABSOLUTELY NO. Verify privacy first.\nCITE: the emitter will turn specs into tests"})})
+         self.assertEqual(proc.returncode, 1, proc.stdout + proc.stderr)
+ 
+     def test_a_codex_transcript_echo_does_not_confuse_the_vote(self):
+-        proc = self.run_runner(env={"FAKE_ECHO": "1", "FAKE_VOTES": json.dumps({"codex": "Yes"})})
++        proc = self.run_runner(env={"FAKE_ECHO": "1", "FAKE_VOTES": json.dumps({"codex": "Yes\nCITE: the emitter will turn specs into tests"})})
+         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+         self.assertEqual(self.result()["votes"]["codex"]["vote"], "Yes")
+ 

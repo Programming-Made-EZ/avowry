@@ -5,7 +5,8 @@
  "decisions": {
   "rank": "D185 (re-rank 21): ranked first",
   "task_force": "window 290-taskforce (adopted with one condition: a vote counts only with a recognised vote line and a verbatim D171 CITE; every other reply is unread and left out, uncited No and Support-it included, proven by tests); caps 1+1+1",
-  "grok_skip": "adopted in window 290-taskforce: Grok is skipped in this card's counted windows until card 291 lands; later windows of card 290 run with a backends file in which Grok is disabled (facilitator scratch backends-nogrok.json); cost: model diversity"
+  "grok_skip": "adopted in window 290-taskforce: Grok is skipped in this card's counted windows until card 291 lands; later windows of card 290 run with a backends file in which Grok is disabled (facilitator scratch backends-nogrok.json); cost: model diversity",
+  "slice_attempt_1": "STOPPED by the facilitator at about 46 minutes (08:53 to 09:40 UTC), past its 30-minute cap and the 45-minute check: the architect seat (ctx-2, fresh Claude subagent) ran D184 premises in a throwaway worktree, then went on to build the fix itself (405 changed lines across 8 files) and sweep wider test sets, without writing the slice. Scan clean, 38 commands. Its measured results (kept as evidence; the diff is .mob/records/290/slice-probe-stopped.diff): the six decider modules pass at HEAD (Ran 201, OK); result_of counting only counted votes fails 27 of them (confirms card 229's figure); with cites added to the test doubles they pass again (Ran 201, OK); but wider modules then failed too (Ran 73: 2 failures; Ran 81: 9 failures), so uncited test doubles exist outside the six decider modules. Next: a narrower slice brief from these measured premises"
  },
  "seats": [
   {
@@ -16,7 +17,8 @@
   }
  ],
  "deviations": [
-  "the audit lens's round 2 cite had four words and counted on a D171 re-ask"
+  "the audit lens's round 2 cite had four words and counted on a D171 re-ask",
+  "slice attempt 1 ran 46 minutes against a 30-minute cap and was stopped; it built the fix instead of the slice"
  ],
  "notes": [
   "Codex seats returned (quota reset); their stored replies carry Codex CLI banner text after the CITE line"
