@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:279638a110d7415d1e796a52447558d7b2873776482812bab12b81af6276252d -->
+<!-- board-table-sha256:4c059841169bf8feba890f845948839e49a4084a8581b1b54a6532e093baced2 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -108,7 +108,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 86 | 211 A whole-team review of the mob-defaults rulings commits | Done | none |
 | 87 | 276 Muse Code joins the mob as a trial driver | Done | none |
 | 88 | 229 A Copilot decision seat receives its whole prompt and casts a vote | Done | none |
-| 89 | 290 The decider's result counts only votes with a valid cite | Ready | card 229 (counted and cite_ok exist from green a2bb1d4) |
+| 89 | 290 The decider's result counts only votes with a valid cite | Done | card 229 (counted and cite_ok exist from green a2bb1d4) |
 | 90 | 230 The facilitator and seats never write the same checkout at once | Ready | none |
 | 91 | 264 The read-and-modify acceptance test is not flaky | Ready | none |
 | 92 | 217 Acceptance tests do not starve the thread pool | Ready | none |
