@@ -6,7 +6,9 @@
   "rank": "D185 (re-rank 21): ranked first",
   "task_force": "window 290-taskforce (adopted with one condition: a vote counts only with a recognised vote line and a verbatim D171 CITE; every other reply is unread and left out, uncited No and Support-it included, proven by tests); caps 1+1+1",
   "grok_skip": "adopted in window 290-taskforce: Grok is skipped in this card's counted windows until card 291 lands; later windows of card 290 run with a backends file in which Grok is disabled (facilitator scratch backends-nogrok.json); cost: model diversity",
-  "slice_attempt_1": "STOPPED by the facilitator at about 46 minutes (08:53 to 09:40 UTC), past its 30-minute cap and the 45-minute check: the architect seat (ctx-2, fresh Claude subagent) ran D184 premises in a throwaway worktree, then went on to build the fix itself (405 changed lines across 8 files) and sweep wider test sets, without writing the slice. Scan clean, 38 commands. Its measured results (kept as evidence; the diff is .mob/records/290/slice-probe-stopped.diff): the six decider modules pass at HEAD (Ran 201, OK); result_of counting only counted votes fails 27 of them (confirms card 229's figure); with cites added to the test doubles they pass again (Ran 201, OK); but wider modules then failed too (Ran 73: 2 failures; Ran 81: 9 failures), so uncited test doubles exist outside the six decider modules. Next: a narrower slice brief from these measured premises"
+  "slice_attempt_1": "STOPPED by the facilitator at about 46 minutes (08:53 to 09:40 UTC), past its 30-minute cap and the 45-minute check: the architect seat (ctx-2, fresh Claude subagent) ran D184 premises in a throwaway worktree, then went on to build the fix itself (405 changed lines across 8 files) and sweep wider test sets, without writing the slice. Scan clean, 38 commands. Its measured results (kept as evidence; the diff is .mob/records/290/slice-probe-stopped.diff): the six decider modules pass at HEAD (Ran 201, OK); result_of counting only counted votes fails 27 of them (confirms card 229's figure); with cites added to the test doubles they pass again (Ran 201, OK); but wider modules then failed too (Ran 73: 2 failures; Ran 81: 9 failures), so uncited test doubles exist outside the six decider modules. Next: a narrower slice brief from these measured premises",
+  "slice": "turn-slice-architect.md (attempt 2, narrow brief; caps 1+1+1); window 290-slice adopted, no conditions (six NO OBJECTION; Grok disabled)",
+  "p6_result": "after the window opened, the slice seat's one permitted run finished on the probe tree (result_of counting only counted votes, cites added to the doubles in the six decider modules): Ran 1713 tests in 1712.868s, OK (skipped=2), no FAIL or ERROR. So only tests/fakes/fake_voter.py and the six modules' test files need cites. Every earlier full suite had skipped=1: red 3 must name the second skip and show it is not caused by the change (the slice's stop rule forbids reaching OK by skipping). The seat also edited its slice file after its turn; the window voted on the committed text, and this result is recorded here instead"
  },
  "seats": [
   {
@@ -14,11 +16,19 @@
    "seat": "Copilot ctx-1",
    "model": "copilot (auto) via the Copilot CLI; command scan clean",
    "evidence": ".mob/records/290/taskforce-proposal-pm.md"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, fresh subagent contexts: attempt 1 stopped (scan clean, 38 commands), attempt 2 (scan: one false 'unreadable file' finding on a read-only test command)",
+   "evidence": ".mob/records/290/turn-slice-architect.md"
   }
  ],
  "deviations": [
   "the audit lens's round 2 cite had four words and counted on a D171 re-ask",
-  "slice attempt 1 ran 46 minutes against a 30-minute cap and was stopped; it built the fix instead of the slice"
+  "slice attempt 1 ran 46 minutes against a 30-minute cap and was stopped; it built the fix instead of the slice",
+  "F-087 (audit 210): the 09:44 UTC in-flight commit was pushed only at 10:03, past the 5-minute rule: inflight.sh's push failure was hidden because the facilitator read only its last output line; the script now verifies the push, retries (also with ControlMaster off and after regenerating MOB.md) and prints PUSH FAILED",
+  "the slice seat's transcript scan reports 'unreadable file' for its read-only test command (the file-run check took the whole piped command line for a script path): a scanner false finding of the kind cards 254 and 283 cover"
  ],
  "notes": [
   "Codex seats returned (quota reset); their stored replies carry Codex CLI banner text after the CITE line"

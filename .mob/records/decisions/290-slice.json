@@ -1,0 +1,144 @@
+{
+ "window": "290-slice",
+ "category": "slice decision",
+ "rule": "D153 slice decision for card 290; D175 caps; D184 premise block; D171",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "claude, a fresh subagent context (slice attempt 2, narrow brief)",
+  "context": "ctx-2",
+  "probe_reference": "probe 2026-11-04 10:03 UTC"
+ },
+ "opened_at": "2026-11-04T10:08:47Z",
+ "proposal": "Intent: decider.py's result counts a vote only when it has a recognised vote line and a D171-valid CITE found verbatim in the proposal; any other reply is unread and left out, whatever its vote word, so an uncited Yes never makes a Decider pass (card 290, adopted window 290-taskforce).\n\n## Premises (D184)\n\nSource for P1 to P5: .mob/records/290/record-in-progress.json decisions.slice_attempt_1 and .mob/records/290/slice-probe-stopped.diff (first slice attempt, stopped). Committed as given; not re-run in this turn.\n\n- P1. The six decider modules (decider_launched, gate, pin_scrub, record, record_units, runner) pass at HEAD: 201 tests, OK.\n- P2. result_of counting only counted votes fails 27 of those 201 (doubles in tests/fakes/fake_voter.py vote a bare \"Yes\").\n- P3. With cites added to the doubles in the six modules, the 201 pass again.\n- P4. Wider modules then failed: one run of 73 tests had 2 failures, one of 81 tests had 9.\n- P5. The real decider.py change is two lines; the rest of that diff is line-ending churn.\n- P6 (run this turn, probe worktree wt-290-probe holding P2 and P3's changes):\n\n```\npython -m unittest discover -s tests -p \"test_*.py\" 2>&1 | findstr /B /C:\"FAIL:\" /C:\"ERROR:\" /C:\"Ran \" /C:\"OK\" /C:\"FAILED\"\n```\nOutput:\n```\nunrun: no summary line after about 15 minutes (the architect's turn budget);\nthe run was left going, not killed. Output file: tasks/bdljq3ham.output.\n```\nIf P6 stays unrun: red 3's first step is this command on HEAD plus the\nresult_of change, and its FAIL/ERROR names become the C3 file list.\n\nIf P5 is false (the change is wider than result_of), the green stops and the stop rule applies.\n\n## Domain-expert (T2) answer\n\nQuestion: what evidence makes a vote valid enough to change a decision result: a valid proposal cite, the vote line, or both?\n\nAnswer: both. A vote changes the result only when (a) its reply carries a recognised vote line (Yes, Support-it, No, or the window's OBJECTION / NO OBJECTION) and (b) its CITE meets D171 and is found verbatim in the proposal (cite_ok true). A vote line without a valid cite is unread: recorded with its vote and cite_ok false, counted false, and left out of result_of. A cite without a vote line is unread too. Symmetric: an uncited No cannot fail a decision.\n\nThis card proves: C1 uncited votes are uncounted, C2 cited votes count as today, C3 the doubles carry cites and every decider test passes. Not here: card 286 (NO OBJECTION stored as No); card 291 (Grok vote parsing).\n\n## Criterion 1 (Done check 1): an uncited vote is not counted and cannot change the result\n\nAcceptance: result_of reads only votes with counted true (vote line and cite_ok). The two cases moved from card 229's red 7c26629: an uncited Yes alone does not pass; an uncited Yes beside cited votes cannot tip the result. Per the adopted condition, tests also prove an uncited Support-it and an uncited No are uncounted and do not change the result. Each uncounted seat is named in a finding with its vote and cite_ok.\nZOMBIES: Z no counted votes: not passed, \"no counted votes\". O one uncited Yes: not passed. M uncited Yes, Support-it and No beside cited votes: result equals the cited-only result. B a CITE one character off the proposal text: cite_ok false, uncounted; a cite under the D171 word minimum: uncounted. I finding names seat, vote and cite_ok; counted_seats excludes it. E vote line present, CITE line missing; CITE present, vote line missing. S cited-only runs unchanged.\nCap: criterion 1, at most 1 cycles\nSize: S (two lines in result_of, one red module).\n\n## Criterion 2 (Done check 2): a cited Yes passes and a cited No fails, as today\n\nAcceptance: with every vote cited and found in the proposal, result_of returns what HEAD returns for the same votes: all-cited Yes and Support-it passes; a cited No fails. A pinned test per case, green at HEAD and after the change.\nZOMBIES: Z n/a (covered by C1 Z). O one cited Yes passes. M cited Yes, Support-it, No mixes match HEAD's result. B cite equal to the whole proposal line. I result field and counted_seats agree. E none. S decider-result.json shape unchanged.\nCap: criterion 2, at most 1 cycles\nSize: XS.\n\n## Criterion 3 (Done check 3): the doubles carry valid cites, and every decider test module passes\n\nAcceptance: every double that means a counted vote emits a CITE found verbatim in its test's proposal (per file or through one fake_voter helper; the developer picks, the window left it open). Doubles that mean an uncited vote stay uncited. The full discovery run above reports OK with no FAIL or ERROR line. Files to change (from P6 and P3):\n- known (P2, P3): tests/fakes/fake_voter.py and the test_* files of the six modules (decider_launched, gate, pin_scrub, record, record_units, runner).\n- outside the six: unknown, because P6 is unrun. P4 measured 2 + 9 failures in wider runs, with no names recorded. Red 3 names them from the P6 command before any edit.\nZOMBIES: Z a test with no proposal text: its double still counts only if it cites. O one double cited. M all 27 in the six modules plus the files above. B a double whose cite is the first or last proposal line. I the full discovery count is unchanged from HEAD (no test deleted or skipped). E a test that asserts an uncited vote counted: rewritten to assert the new rule, named in the green. S window recorders untouched.\nCap: criterion 3, at most 1 cycles\nSize: S (test doubles only).\n\nCaps: 1+1+1 = 3 (D175). D181: a red after a passed green is a new cycle and needs a window first.\n\n## Out of scope\n\n- Card 286: NO OBJECTION stored as No. Not fixed here even if seen in a double.\n- Card 291: Grok narration before the vote line. Grok stays out of counted seats.\n\n## Stop rule\n\nIf after green 1 any test outside the files listed in C3 fails, or the decider.py change grows past result_of, the developer stops, commits nothing further, records the failing names, and the facilitator opens a D175 C4 scope window before any further red. No test is skipped or deleted to reach OK.\n",
+ "checklist_D158": ".mob/records/290/checklist-290-slice.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "copilot",
+   "context": "w290slcp1-pmready",
+   "started_at": "2026-11-04T10:08:47Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: result_of counting only counted votes fails\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:03 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T10:09:14.704717Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w290sl-qa",
+   "started_at": "2026-11-04T10:10:03Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe stop rule covers the unrun P6, and the C1 ZOMBIES list (a cite one character off, a vote line without a CITE, a CITE without a vote line) can each be written red first. C2 is pinned green at HEAD, so the change can't pass on bad state unnoticed.\n\nCITE: A vote line without a valid cite is unread\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:03 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T10:10:38.317413Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w290slcp1-dev",
+   "started_at": "2026-11-04T10:11:38Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nThe bounded cycles, dynamic C3 file list, and stop rule are workable and prevent scope gaming.\nCITE: the developer stops, commits nothing further, records the failing names\n[facilitator: the Codex CLI banner and prompt echo that followed here were trimmed; the vote and cite above are unchanged]",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:03 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T10:12:06.262888Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w290slcp1-auditlens",
+   "started_at": "2026-11-04T10:13:13Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: an uncited Yes alone does not pass\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:03 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T10:13:40.229601Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w290sl-decider",
+   "started_at": "2026-11-04T10:14:19Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nThe evidence is framed well. P6 is honestly marked unrun, red 3 names the unknown files before any edit, and the stop rule covers a wider scope. The both-evidence rule (vote line and valid cite) is clear, and no seat appears to be missing.\n\nCITE: Red 3 names them from the P6 command before any edit.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:03 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T10:14:43.469192Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w290slcp1-coach",
+   "started_at": "2026-11-04T10:15:43Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nThe perspectives cover scope, tests, implementation, audit, and process; the three-cycle cap prevents ceremony. The stop rule handles unknown wider failures without adding a premature seat.\nCITE: the full discovery count is unchanged from HEAD\n[facilitator: the Codex CLI banner and prompt echo that followed here were trimmed; the vote and cite above are unchanged]",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:03 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T10:16:11.073636Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [],
+ "decision": {
+  "result": "adopted, no conditions: caps 1+1+1; a vote changes the result only with a recognised vote line and a D171-valid verbatim CITE, for every vote word; C3's file list named by red 3 first (P6 unrun at proposal time); stop rule against skipping or deleting tests. Six NO OBJECTION with valid cites (Claude for QA and decider, Copilot for product manager and audit lens, Codex for developer and coach). Grok disabled for this window (window 290-taskforce).",
+  "window_minutes": "10:05 to about 10:25 UTC, serial"
+ },
+ "ended_at": "2026-11-04T10:17:19Z"
+}
