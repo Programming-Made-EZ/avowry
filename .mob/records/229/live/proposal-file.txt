@@ -1,0 +1,55 @@
+You are seated as the ARCHITECT (fresh context). Your lens: is the design of the record, the checker rules and the findings file sound, minimal and enforceable without false positives?
+
+
+DECIDER (full vote, re-rank 20). Context: .mob/records/reranks/rerank-20-inputs.md, .mob/records/reranks/checklist-rerank-20.md, gh issue view 278 / 284 / 288 (product-owner proposals, not rulings), TEAM_WORKING_AGREEMENT.md line 36, board/MILESTONE-usable-v1.md, docs/retros/card-276-2026-11-03.md. Reply format: first line exactly "Yes", "Support-it" or "No" (your vote on the whole re-rank 20 proposal: positions and order); second line exactly "278: Yes|No; 284: Yes|No; 288: Yes|No" with one word chosen for each; then at most 150 words of reasons (name any placement you would change); last line "CITE: <at least 6 consecutive words copied exactly from the proposal below>" (D171). Proposal:
+
+# Re-rank note 2026-11-03 (20) PROPOSAL: boundary after card 276 closed; vote fixes first, a cut line, then product starting with the rename
+
+- Status: a proposal by the product manager seat (D148). It is not applied. The team decides it by a Decider; scripts/board/rerank.py is not run.
+- Intent (D165): stop paying the empty-vote tax in every window (issue 278), restart product work behind a short cut line of truly blocking process cards (issue 288), and give drift resistance a pre-registered measure before it becomes a success criterion (issue 284).
+- Before (note 19 as applied; 211 and 276 closed): 264, 229, 265, 258, 268, 269, 238, 230, 236, 253, 252, 254, 255, 231, 232, 233, 235, 256, 257, 266, 267, 216, 220, 221, 222, 223, 224, 225, 213, 217, 218, 212, 215, 206, 207, 196, 197, 162, 201, 189, then the product cards in archive order. Unranked: 270 to 275, 277, 279 to 283, 285 to 287.
+- After:
+  1. Above the cut (9): 229, 270, 282, 277, 264, 258, 268, 230, 252.
+  2. Below the cut: two product cards, then one process card, repeated. Product stream: 196, 197, 266, then the archive's product order from 162. Process stream: 217, 265, 286, 253, 283, 269, 272, 238, 236, 254, 255, 231, 232, 233, 235, 256, 257, 267, 271, 273, 274, 275, 216, 220 to 225, 213, 218, 212, 215, 206, 207, 285, 280, 281, 287.
+  3. 279: closed as Superseded/Withdrawn (delivered by 276), not ranked.
+- Full (process cards in bold): 229, 270, 282, 277, 264, 258, 268, 230, 252, 196, 197, **217**, 266, 162, **265**, 201, 189, **286**, 176, 178, **253**, 179, 186, **283**, 169, 171, **269**, 172, 165, **272**, 166, 177, **238**, 200, 180, **236**, 181, 187, **254**, 188, 163, **255**, 182, 164, **231**, 184, 153, **232**, 185, 155, **233**, 156, 145, **235**, 146, 147, **256**, 148, 134, **257**, 149, 150, **267**, 151, 139, **271**, 140, 143, **273**, 144, 107, **274**, 108, 109, **275**, 115, 116, **216**, 117, 118, **220**, 120, 123, **221**, 124, 125, **222**, 126, 127, **223**, 128, 129, **224**, 089, 065, **225**, 066, 078, **213**, 067, 053, **218**, 062, 068, **212**, 072, 069, **215**, 070, 054, **206**, 056, 022, **207**, 058, 013, **285**, 019, 014, **280**, 046, 017, **281**, 024, 027, **287**, then the rest of the archive's Ready order unchanged (060 to 031).
+- Next card: 229 (mob-defaults), with 270 folded into it at ready if the team agrees: one root cause, one fix.
+
+## Position on the proposals
+- **278: support.** Evidence: audit 187 counted 20 empty Grok and Copilot attempts in window 276-scope (about 38 minutes for about 20 minutes of votes). The root cause is known and reproduced (.mob/records/notes/2026-11-03-empty-decision-votes-root-cause.md: the .CMD shim's 8191-character cmd.exe limit, and decider.py:119 discarding the stderr). The card 276 retro says four voices want it high and that every seat paid an empty Grok and Copilot attempt first. Order: 229 and 270 (the fix) before 277 (the diagnosis rule). The retro's QA voice wants a failing test first for 277, and with the fix landed its first trips can be tested on real causes. 278's own guard is adopted: empty attempts per window near 0, *and* every counted vote still carries a valid cite.
+- **284: support in part.** (a) VISION: yes. Add drift resistance under ruling 7 as a named benefit, the ongoing form of "intent vanishes with the prompt", with status "direction, not yet measured". (b) Verdict page success criteria (card 153): not yet. Ruling 7 says each measure "is pre-registered by a Decider before any row"; a criterion with no pre-registered measure invites a Goodhart claim. (c) Card a measurement design now: "Pre-register the drift-resistance measure". Planted unintended changes across edits and model regenerations, flagged by generated checks versus a plain-language baseline, reported with the false-alarm rate, shaped like 149 to 151. Rank it straight after 151, since it depends on 134 like they do. It joins card 153's criteria only after its Decider. The facilitator files it if the Decider adopts this.
+- **288: support, and it changes the rule.** Line 36 ("Every re-rank ranks the work that gets the rules enforced in the template and the loop runner first") cannot stand beside a cut line that puts the rename ahead of 216 and 220 to 225. D161 is product owner direction, so the Decider adopts the replacement only with the product owner's confirmation. Replacement for that sentence:
+  > Every re-rank draws a cut line. Above it rank only process cards that block safe, honest product work: safety, decision-vote correctness, flaky tests, and any card that names an open audit FAIL. Below it, two product cards are followed by one process card, taken in the order of the process stream; that stream keeps template and loop-runner enforcement as its direction. A process card jumps the queue only when it blocks the next product card or names an open FAIL. New process follow-ups join the end of the process stream unless they block safety or honesty.
+  - Measure: product cards closed per day, and hours to the first product card Done. Guards: open FAILs (4 at audit 200) must not rise, audit findings per card must not rise, and the 278 measure must hold. Review it at re-rank 23 or after six product cards, whichever comes first.
+
+## Reasons for each placement
+- 229, 270: the 278 fix; Grok and Copilot votes count again, so Deciders regain independence.
+- 282: the same function (facilitator._launch_backend) rewrites {MODEL} inside prompts and fails D171 cites through no fault of the seat; it is a vote-correctness fix, small, and best done beside 229/270.
+- 277: the D178 breaker gets a detector (the retro and audit lens call a rule with no detector theatre); it runs after the fix so its tests see real trips.
+- 264, 258, 268: the flaky-test rule (a flaky test is a bug); 264 taxes every product gate, 268 caused a false HOLD.
+- 230, 252: safety, as 288 names (two writers on one checkout; the delete scan for subagent and headless seats).
+- 196, 197, 266: the rename first, as 288 asks; 266 (about 281 files) right after, while WIP is one and nothing else is in flight.
+- 217: first process slot, because product cards now run the acceptance suite it protects.
+- 265, 286: decision-window speed and honest vote records (a NO OBJECTION stored as No).
+- 253, 283: the delete scan's remaining reader and its false positive (a detector that flags reads trains people to ignore it); 283 sits beside 254.
+- 269, 272: line-ending churn, siblings; they make later diffs readable.
+- 238, 236, 254, 255, 231, 232, 233, 235, 256, 257, 267: note 19's relative order, unchanged.
+- 271, 273, 274, 275: card 211's follow-ups. 271, 273 and 274 enable 216, so they go before it. 275 is a Decider only and can run at a retro without a pull.
+- 216, 220 to 225, 213, 218, 212, 215, 206, 207: note 19's relative order; template and loop-runner enforcement stays the stream's direction.
+- 285: Muse build seats wait on it, but it needs an elevated step by the product owner or Dispatch, and Muse is a trial voter only (retro section 3).
+- 280, 281, 287: small Muse cleanups, not blocking.
+- 279: Superseded/Withdrawn. The 276 closing record and retro (section 2, Product) say 276 delivered it in commits 25d50b8 to 0000715. A Done status would need its own record and retro. Card 192 (absorbed by 199) appears to be the precedent.
+
+## FAIL head
+- Audit 200 (.mob/audits/last.json) lists open FAILs F-072, F-074, F-078 and F-086. No card in board/ or the records names any of them, so the FAIL-head rule moves nothing to the front. If the auditor names a card for one, that card goes first.
+
+## Reversals stated
+- 264 goes to rank 1 if audit 123 (which note 19 called an open FAIL) is still open. Audit 200's list does not show it, and I could not verify whether it closed.
+- 277 moves ahead of 229 if the ready step finds the fix needs the diagnosis capture first.
+- 265 moves above the cut if window wall-clock stays high after 229 and 270.
+- If a guard rises, the cut-line trial stops at the next re-rank and line 36 returns.
+
+## Not verified
+- The text of F-072, F-074, F-078 and F-086 (not in the repository), and whether audit 123 is closed.
+- Whether the archive's lower product rows (from 139 on) are all product cards; I kept them as they are.
+- Card 279's GitHub status. Card files show "Draft" while the archive shows Ready; I used the archive.

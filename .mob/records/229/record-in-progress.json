@@ -27,7 +27,8 @@
   "red_3": "red 3 cef48a7 (QA ctx-3 continued; pushed): tests/test_prompt_placeholders.py, 14 tests, 8 fail (11 entries with subtests), 6 pass as guards; the rewrite hits CLIs launched without a shim (claude, codex, agy shapes); copilot and grok already receive the literals whole after green 1; five other suites pass (97)",
   "suite_cda02f2": "full reference suite on green 2 cycle 3 cda02f2 (PowerShell worktree, registry PATH): Ran 1699 tests in 1672.597s, OK (skipped=1), the baseline skip",
   "green_3": "green 3 2d4d24d (backend developer ctx-4 continued; scan clean, 45 commands; pushed): the template is filled and split first and the prompt goes in as one argv element at the slot that is exactly {PROMPT}, or into the prompt file; a template with neither placeholder is refused by name; green 1's shim launch and limits unchanged; named modules and 17 launch-path modules pass (494 tests)",
-  "refactor_3": "none needed after green 3, reasoned: green 3 itself replaced green 1's position-matching step (the refactor deferred at refactor_1); the remaining code is one fill helper and one loop"
+  "refactor_3": "none needed after green 3, reasoned: green 3 itself replaced green 1's position-matching step (the refactor deferred at refactor_1); the remaining code is one fill helper and one loop",
+  "live_step": "criterion 1 (b) MET (.mob/records/229/live/): at mob-crosscli 2d4d24d a real Copilot seat (session 6d00324b) and a real Grok seat (grok-4.6) each cast a parsed Support-it with a verbatim CITE (cite_ok true, counted true in their own records), non-counted, on a 9774-character prompt (61 lines) over cmd.exe's limit. Deviation: the re-rank 20 Decider prompt was used, not the 229-taskforce proposal the slice named, which builds to 7161 characters. Finding: Grok's reply runs narration into the vote word on the same line; decider.py parses it, the facilitator's first-line window runner would not"
  },
  "seats": [
   {
@@ -58,7 +59,8 @@
  "deviations": [
   "the QA seat's round 1 cite carried markdown bold markers (not verbatim) and did not count; the coach's round 2 cite had four words and counted on a D171 re-ask",
   "window 229-scope round 2 was launched without its in-flight line (no voter was running at that moment, so the line could have been written); recorded here",
-  "window 229-scope counted two Copilot votes (developer, decider) placed by decider.py's seat gate, although window 229-taskforce left Copilot and Grok out of counted seats until this card's fix lands; the outcome does not depend on them (every seat NO OBJECTION); for the retro: the gate has no per-card exclusion, and the declaration could not be enforced by hand"
+  "window 229-scope counted two Copilot votes (developer, decider) placed by decider.py's seat gate, although window 229-taskforce left Copilot and Grok out of counted seats until this card's fix lands; the outcome does not depend on them (every seat NO OBJECTION); for the retro: the gate has no per-card exclusion, and the declaration could not be enforced by hand",
+  "live step prompt: the re-rank 20 Decider prompt (9774 characters as built) replaced the slice's 229-taskforce round-2 proposal (7161 as built, under the limit); recorded in live/evidence.md"
  ],
  "notes": [
   "Dispatch note (2026-11-03): the user-observable outcome is a real Copilot seat and a real Grok seat casting a parsed vote in a live window; kept as part (b) of the adopted condition"
