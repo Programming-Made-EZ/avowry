@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:4e65d1ea93090f11ff36d9462b9d0014374782626aec9423c31875e38f41a59b -->
+<!-- board-table-sha256:524474aeb5fd64f8107c92a0eb44cad18164f4e1217d34d8ff6c2e9c50ca6116 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -107,8 +107,8 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 85 | 210 The card record check rejects an empty task force and empty probes | Done | none |
 | 86 | 211 A whole-team review of the mob-defaults rulings commits | Done | none |
 | 87 | 276 Muse Code joins the mob as a trial driver | Done | none |
-| 88 | 229 A Copilot decision seat receives its whole prompt and casts a vote | Ready | none |
-| 89 | 270 A Grok decision seat receives its whole prompt and casts a vote | Ready | none (card 229 is the Copilot twin; the team may fold the two at ready) |
+| 88 | 229 A Copilot decision seat receives its whole prompt and casts a vote | Done | none |
+| 89 | 270 A Grok decision seat receives its whole prompt and casts a vote | Superseded/Withdrawn | none (card 229 is the Copilot twin; the team may fold the two at ready) |
 | 90 | 282 A seat's prompt reaches it without placeholder rewriting | Ready | none |
 | 91 | 277 An empty decision vote opens a diagnosis; only quota or unavailability excludes a model | Ready | none |
 | 92 | 264 The read-and-modify acceptance test is not flaky | Ready | none |
