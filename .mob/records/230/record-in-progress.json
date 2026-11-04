@@ -3,7 +3,8 @@
  "title": "The facilitator and seats never write the same checkout at once",
  "status": "in progress",
  "decisions": {
-  "taskforce": ".mob/records/decisions/230-taskforce.json (adopted with one joined condition; caps 1+1+1; a worktree per seat with the facilitator integrating)"
+  "taskforce": ".mob/records/decisions/230-taskforce.json (adopted with one joined condition; caps 1+1+1; a worktree per seat with the facilitator integrating)",
+  "slice": ".mob/records/decisions/230-slice.json (adopted with QA's condition on criterion 2; caps 1+1+1)"
  },
  "seats": [
   {
@@ -11,6 +12,12 @@
    "seat": "Copilot ctx-1",
    "model": "copilot (auto) via the Copilot CLI, session 9cf42fcf; command scan clean (1 command)",
    "evidence": ".mob/records/230/taskforce-proposal-pm.md"
+  },
+  {
+   "role": "slice",
+   "seat": "Codex ctx-2",
+   "model": "codex gpt-5.6-sol via the Codex CLI, read-only sandbox, 16:51 to 16:55 UTC; it wrote nothing (reply extracted)",
+   "evidence": ".mob/records/230/turn-slice-architect.md"
   }
  ],
  "deviations": [
