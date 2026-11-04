@@ -1,0 +1,284 @@
+{
+ "window": "230-scope-2",
+ "category": "card-text or declaration fix",
+ "rule": "D175 C4 scope window before a red past criterion 3's cap (the stop rule after the full suite on green 3 failed two pins); D145 re-poll; D171 (one re-ask); Grok disabled",
+ "proposed_by": {
+  "role": "architect (scope)",
+  "model": "codex gpt-5.6-sol via the Codex CLI, read-only sandbox (PowerShell refused, card 297; commands through cmd)",
+  "context": "ctx-2",
+  "probe_reference": "probe 2026-11-04 21:09 UTC"
+ },
+ "opened_at": "2026-11-04T22:41:21Z",
+ "proposal": "Card 230 — criterion 3, cycle 2 scope (caps 2+1+2)\n\nPremises on `bf3e4ab80ec53d4a9290a785d8a86e6d2dd0787b`:\n\n- Command:\n  `findstr /n \".*\" tests\\test_decider_counted_result.py`\n  \n  Quoted output:\n  `340:RESULT_KEYS = {\"result\", \"prompt_sha\", \"probe\", \"votes\", \"counted_seats\", \"violations\", \"integrity\"}`\n  \n  Thus card 290’s exact shape pin omits only the newly adopted `head_start` and `head_end`.\n\n- Command:\n  `findstr /n \".*\" mob_summary.py`\n  \n  Quoted output:\n  `24: re.compile(r\"\\bgh[pousr]_[A-Za-z0-9]{20,}\\b\"),`\n  `26: re.compile(r\"\\bsk-[A-Za-z0-9_\\-]{16,}\\b\"),`\n  `27: re.compile(r\"\\bAKIA[0-9A-Z]{16}\\b\"),`\n  `28: re.compile(r\"\\bxox[abprs]-[A-Za-z0-9\\-]{10,}\\b\"),`\n  `29: re.compile(r\"\\bAIza[0-9A-Za-z_\\-]{30,}\\b\"),`\n  `32: re.compile(r\"\\b[A-Fa-f0-9]{40,}\\b\"),`\n  \n  No enumerated real credential form is a bare 40-character lowercase hexadecimal string; only the generic catch-all has that shape, so it also matches Git object IDs.\n\n- In `CycleTwoInterfaces`, `strings_in()` recursively yields every string key and value. The test removes only `prompt_sha`, then runs `mob_summary.contains_secret()` and the home-path regex over every remaining yielded string; it separately checks the raw JSON for the actual home directory and fixture leaks.\n\n- Command:\n  `git cat-file -t bf3e4ab80ec53d4a9290a785d8a86e6d2dd0787b`\n  \n  Quoted output:\n  `commit`\n\n- The supplied full-suite result is:\n  `Ran 1836 tests`\n  `FAILED (failures=2)`\n  \n  The two failures are the exact-shape pin reporting `head_start`/`head_end` as extra and the generic 40-hex detector reporting the stored Git SHA as a secret. A direct rerun in this read-only seat could not create `TemporaryDirectory`, so no contrary runtime result was produced.\n\nCause: criterion 3 deliberately added full commit IDs, but two older contract tests still interpret the new fields as schema drift and generic secret-shaped text.\n\nFix/window:\n\n1. Red may touch only:\n   - `tests/test_decider_counted_result.py`\n   - `tests/test_launch_failure_honesty.py`\n\n   Update the exact result-key pin by adding exactly `head_start` and `head_end`.\n\n   Make the privacy test traverse named fields, exempting only `head_start` and `head_end` when the value matches exactly `^[0-9a-f]{40}$` and `git cat-file -t <value>` in the test repository succeeds with exactly `commit`. Keep `prompt_sha`’s existing exact 64-hex assertion. Every non-exempt key/value still passes through the unchanged secret and home-path checks; the identical 40-hex string stored under any other field must still fail.\n\n2. Green may touch only:\n   - `decider.py`\n   - `facilitator.py`\n\n   No production edit is expected if the adopted output already satisfies the corrected tests. If the red exposes a contract defect, make only the smallest change needed to emit the two full, repository-resolvable commit IDs.\n\nZOMBIES: Z equal start/end on a stable vote; O only one approved head field; M changed start/end commits; B 39/41 hex, uppercase hex, missing object, or non-commit object; I the same valid SHA under another field still trips secret detection; E real token and home-path fixtures remain rejected everywhere.\n\nStop rule: stop at the first full-suite pass with exactly the adopted two fields and unchanged privacy coverage. Stop and return to scope if passing requires another schema change, an exemption by value alone, skipping unresolved/non-commit SHAs, weakening `contains_secret` globally, touching files outside the stated red/green sets, or exceeding caps 2+1+2.\n\n## Round 2: condition from round 1's audit lens (met, stated as fact)\nThe reviewed commit is reachable: green 3, bf3e4ab80ec53d4a9290a785d8a86e6d2dd0787b, is on mob-crosscli's origin main (https://github.com/Programming-Made-EZ/mob-defaults.git; git ls-remote origin refs/heads/main returns it, and git branch -r --contains bf3e4ab lists origin/main). Every premise above can be rerun from a clean clone at that commit. The red and green of this cycle are pushed the same way, each before its record. Caps 2+1+2; files and stop rule unchanged.\n",
+ "checklist_D158": ".mob/records/230/checklist-230-scope-2.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [
+  {
+   "from": "independent reviewer (audit lens), round 1 (w230sc2-auditlens, Codex)",
+   "adopted_as": "the reviewed commit is reachable and the premises rerunnable from a clean clone: bf3e4ab is on mob-crosscli origin main (git ls-remote); this cycle's red and green are pushed before their records"
+  }
+ ],
+ "replies": [
+  {
+   "seat": "codex",
+   "context": "w230sc2r2cp1-pmready",
+   "started_at": "2026-11-04T22:54:24Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nCITE: Stop rule: stop at the first full-suite pass\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1a8c5-f1bd-7342-a417-b2521c1cfc4d\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the PRODUCT MANAGER (fresh context). Your lens: does this implement the product owner's standing rules (accountability to metrics, every role in its own context, quota first then Claude, task-force driven development with removals only at the retro, open FAILs stop the line) and get back to product value without over-specifying up front (VISION.md ruling 6)? Standing rules are not votable.\n\n\nFORMAT (overrides any vote words around this text): this is an objection window, not a vote. Your FIRST line must be exactly NO OBJECTION or exactly OBJECTION (with OBJECTION add one line CONDITION: ...). Do not answer Yes, Support-it or No.\nD171 (in force): after your answer lines, end your reply with exactly one line \"CITE: <point>\", where <point> is a phrase of at least 6 words copied exactly from the proposal below, or \"line N: <first 4 words of that line>\". A reply with no matching CITE line does not count.\n\nRE-POLL after an adopted condition (see the last section of the proposal); per D145 a re-poll may not add new demands. OBJECTION WINDOW (D153), not a vote: read the proposal below (D153, D145, D171, D175 in docs/decisions/process-and-staffing.md, board/230-*.md, .mob/records/230/checklist-230-scope-2.md). Reply on the first line exactly NO OBJECTION or OBJECTION, nothing else on that line; if OBJECTION add exactly one line CONDITION: one fixed condition that would remove it. Under 60 words.\n\nCard 230 — criterion 3, cycle 2 scope (caps 2+1+2)\n\nPremises on `[redacted]`:\n\n- Command:\n  `findstr /n \".*\" tests\\test_decider_counted_result.py`\n  \n  Quoted output:\n  `340:RESULT_KEYS = {\"result\", \"prompt_sha\", \"probe\", \"votes\", \"counted_seats\", \"violations\", \"integrity\"}`\n  \n  Thus card 290’s exact shape pin omits only the newly adopted `head_start` and `head_end`.\n\n- Command:\n  `findstr /n \".*\" mob_summary.py`\n  \n  Quoted output:\n  `24: re.compile(r\"\\bgh[pousr]_[A-Za-z0-9]{20,}\\b\"),`\n  `26: re.compile(r\"\\bsk-[A-Za-z0-9_\\-]{16,}\\b\"),`\n  `27: re.compile(r\"\\bAKIA[0-9A-Z]{16}\\b\"),`\n  `28: re.compile(r\"\\bxox[abprs]-[A-Za-z0-9\\-]{10,}\\b\"),`\n  `29: re.compile(r\"\\bAIza[0-9A-Za-z_\\-]{30,}\\b\"),`\n  `32: re.compile(r\"\\b[A-Fa-f0-9]{40,}\\b\"),`\n  \n  No enumerated real credential form is a bare 40-character lowercase hexadecimal string; only the generic catch-all has that shape, so it also matches Git object IDs.\n\n- In `CycleTwoInterfaces`, `strings_in()` recursively yields every string key and value. The test removes only `prompt_sha`, then runs `mob_summary.contains_secret()` and the home-path regex over every remaining yielded string; it separately checks the raw JSON for the actual home directory and fixture leaks.\n\n- Command:\n  `git cat-file -t [redacted]`\n  \n  Quoted output:\n  `commit`\n\n- The supplied full-suite result is:\n  `Ran 1836 tests`\n  `FAILED (failures=2)`\n  \n  The two failures are the exact-shape pin reporting `head_start`/`head_end` as extra and the generic 40-hex detector reporting the stored Git SHA as a secret. A direct rerun in this read-only seat could not create `TemporaryDirectory`, so no contrary runtime result was produced.\n\nCause: criterion 3 deliberately added full commit IDs, but two older contract tests still interpret the new fields as schema drift and generic secret-shaped text.\n\nFix/window:\n\n1. Red may touch only:\n   - `tests/test_decider_counted_result.py`\n   - `tests/test_launch_failure_honesty.py`\n\n   Update the exact result-key pin by adding exactly `head_start` and `head_end`.\n\n   Make the privacy test traverse named fields, exempting only `head_start` and `head_end` when the value matches exactly `^[0-9a-f]{40}$` and `git cat-file -t <value>` in the test repository succeeds with exactly `commit`. Keep `prompt_sha`’s existing exact 64-hex assertion. Every non-exempt key/value still passes through the unchanged secret and home-path checks; the identical 40-hex string stored under any other field must still fail.\n\n2. Green may touch only:\n   - `decider.py`\n   - `facilitator.py`\n\n   No production edit is expected if the adopted output already satisfies the corrected tests. If the red exposes a contract defect, make only the smallest change needed to emit the two full, repository-resolvable commit IDs.\n\nZOMBIES: Z equal start/end on a stable vote; O only one approved head field; M changed start/end commits; B 39/41 hex, uppercase hex, missing object, or non-commit object; I the same valid SHA under another field still trips secret detection; E real token and home-path fixtures remain rejected everywhere.\n\nStop rule: stop at the first full-suite pass with exactly the adopted two fields and unchanged privacy coverage. Stop and return to scope if passing requires another schema change, an exemption by value alone, skipping unresolved/non-commit SHAs, weakening `contains_secret` globally, touching files outside the stated red/green sets, or exceeding caps 2+1+2.\n\n## Round 2: condition from round 1's audit lens (met, stated as fact)\nThe reviewed commit is reachable: green 3, [redacted], is on mob-crosscli's origin main (https://github.com/Programming-Made-EZ/mob-defaults.git; git ls-remote origin refs/heads/main returns it, and git branch -r --contains bf3e4ab lists origin/main). Every premise above can be rerun from a clean clone at that commit. The red and green of this cycle are pushed the same way, each before its record. Caps 2+1+2; files and stop rule unchanged.\n\nVote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.\ncodex\nI’m checking the cited standing rules and re-poll constraints against the proposed scope.\n2026-11-04T22:55:13.979865Z ERROR codex_core::tools::router: error=exec_command failed for `\"C:\\\\Users\\\\ringe\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\pwsh.exe\" -Command 'Get-Content docs/decisions/process-and-staffing.md; Get-Content board/230-*.md; Get-Content .mob/records/230/checklist-230-scope-2.md; Get-Content VISION.md'`: CreateProcess { message: \"Rejected(\\\"Failed to create unified exec process: CreateProcessWithLogonW failed: 267\\\")\" }\ncodex\nNO OBJECTION\nCITE: Stop rule: stop at the first full-suite pass\ntokens used\n2,906\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 21:09 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-04T22:54:49.171080Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w230sc2r2cp1-qa",
+   "started_at": "2026-11-04T22:55:50Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: The red and green of this cycle are pushed the same way\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 21:09 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-04T22:56:13.103751Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w230sc2r2-dev",
+   "started_at": "2026-11-04T22:56:53Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe window is workable and unambiguous. The exemption is keyed to field name, an exact 40-hex pattern and a resolvable commit, so I can comply without gaming it. The identical SHA under any other field still fails.\n\nCITE: the identical 40-hex string stored under any other field must still fail\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 21:09 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-04T22:57:18.966189Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w230sc2r2cp1-auditlens",
+   "started_at": "2026-11-04T22:58:18Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nCITE: Every premise above can be rerun from a clean clone at that commit.\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1a8c9-7fd0-71a2-b370-383c9cc7c805\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the INDEPENDENT REVIEWER WITH THE AUDIT LENS (fresh context; the external auditor is never a mob seat). Your lens: can this be verified from git alone, and does it leave a loophole that lets the team pass while breaking the practice?\n\n\nFORMAT (overrides any vote words around this text): this is an objection window, not a vote. Your FIRST line must be exactly NO OBJECTION or exactly OBJECTION (with OBJECTION add one line CONDITION: ...). Do not answer Yes, Support-it or No.\nD171 (in force): after your answer lines, end your reply with exactly one line \"CITE: <point>\", where <point> is a phrase of at least 6 words copied exactly from the proposal below, or \"line N: <first 4 words of that line>\". A reply with no matching CITE line does not count.\n\nRE-POLL after an adopted condition (see the last section of the proposal); per D145 a re-poll may not add new demands. OBJECTION WINDOW (D153), not a vote: read the proposal below (D153, D145, D171, D175 in docs/decisions/process-and-staffing.md, board/230-*.md, .mob/records/230/checklist-230-scope-2.md). Reply on the first line exactly NO OBJECTION or OBJECTION, nothing else on that line; if OBJECTION add exactly one line CONDITION: one fixed condition that would remove it. Under 60 words.\n\nCard 230 — criterion 3, cycle 2 scope (caps 2+1+2)\n\nPremises on `[redacted]`:\n\n- Command:\n  `findstr /n \".*\" tests\\test_decider_counted_result.py`\n  \n  Quoted output:\n  `340:RESULT_KEYS = {\"result\", \"prompt_sha\", \"probe\", \"votes\", \"counted_seats\", \"violations\", \"integrity\"}`\n  \n  Thus card 290’s exact shape pin omits only the newly adopted `head_start` and `head_end`.\n\n- Command:\n  `findstr /n \".*\" mob_summary.py`\n  \n  Quoted output:\n  `24: re.compile(r\"\\bgh[pousr]_[A-Za-z0-9]{20,}\\b\"),`\n  `26: re.compile(r\"\\bsk-[A-Za-z0-9_\\-]{16,}\\b\"),`\n  `27: re.compile(r\"\\bAKIA[0-9A-Z]{16}\\b\"),`\n  `28: re.compile(r\"\\bxox[abprs]-[A-Za-z0-9\\-]{10,}\\b\"),`\n  `29: re.compile(r\"\\bAIza[0-9A-Za-z_\\-]{30,}\\b\"),`\n  `32: re.compile(r\"\\b[A-Fa-f0-9]{40,}\\b\"),`\n  \n  No enumerated real credential form is a bare 40-character lowercase hexadecimal string; only the generic catch-all has that shape, so it also matches Git object IDs.\n\n- In `CycleTwoInterfaces`, `strings_in()` recursively yields every string key and value. The test removes only `prompt_sha`, then runs `mob_summary.contains_secret()` and the home-path regex over every remaining yielded string; it separately checks the raw JSON for the actual home directory and fixture leaks.\n\n- Command:\n  `git cat-file -t [redacted]`\n  \n  Quoted output:\n  `commit`\n\n- The supplied full-suite result is:\n  `Ran 1836 tests`\n  `FAILED (failures=2)`\n  \n  The two failures are the exact-shape pin reporting `head_start`/`head_end` as extra and the generic 40-hex detector reporting the stored Git SHA as a secret. A direct rerun in this read-only seat could not create `TemporaryDirectory`, so no contrary runtime result was produced.\n\nCause: criterion 3 deliberately added full commit IDs, but two older contract tests still interpret the new fields as schema drift and generic secret-shaped text.\n\nFix/window:\n\n1. Red may touch only:\n   - `tests/test_decider_counted_result.py`\n   - `tests/test_launch_failure_honesty.py`\n\n   Update the exact result-key pin by adding exactly `head_start` and `head_end`.\n\n   Make the privacy test traverse named fields, exempting only `head_start` and `head_end` when the value matches exactly `^[0-9a-f]{40}$` and `git cat-file -t <value>` in the test repository succeeds with exactly `commit`. Keep `prompt_sha`’s existing exact 64-hex assertion. Every non-exempt key/value still passes through the unchanged secret and home-path checks; the identical 40-hex string stored under any other field must still fail.\n\n2. Green may touch only:\n   - `decider.py`\n   - `facilitator.py`\n\n   No production edit is expected if the adopted output already satisfies the corrected tests. If the red exposes a contract defect, make only the smallest change needed to emit the two full, repository-resolvable commit IDs.\n\nZOMBIES: Z equal start/end on a stable vote; O only one approved head field; M changed start/end commits; B 39/41 hex, uppercase hex, missing object, or non-commit object; I the same valid SHA under another field still trips secret detection; E real token and home-path fixtures remain rejected everywhere.\n\nStop rule: stop at the first full-suite pass with exactly the adopted two fields and unchanged privacy coverage. Stop and return to scope if passing requires another schema change, an exemption by value alone, skipping unresolved/non-commit SHAs, weakening `contains_secret` globally, touching files outside the stated red/green sets, or exceeding caps 2+1+2.\n\n## Round 2: condition from round 1's audit lens (met, stated as fact)\nThe reviewed commit is reachable: green 3, [redacted], is on mob-crosscli's origin main (https://github.com/Programming-Made-EZ/mob-defaults.git; git ls-remote origin refs/heads/main returns it, and git branch -r --contains bf3e4ab lists origin/main). Every premise above can be rerun from a clean clone at that commit. The red and green of this cycle are pushed the same way, each before its record. Caps 2+1+2; files and stop rule unchanged.\n\nVote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.\ncodex\nNO OBJECTION\nCITE: Every premise above can be rerun from a clean clone at that commit.\ntokens used\n2,449\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 21:09 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-04T22:58:42.275773Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w230sc2cr2cp1-decider",
+   "started_at": "2026-11-04T23:03:50Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nCITE: Every premise above can be rerun from a clean clone at that commit.\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1a8ce-8dd8-76b0-adc8-a2067d110290\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the DECIDER / SIGN-OFF seat (fresh context, not the proposer). Your lens: is the evaluation framed so its decision (adopt, reshape or reject) will rest on evidence, and does the team have every seat it needs to sign off?\n\n\nD171 RE-ASK: your earlier CITE had fewer than 6 words. Copy at least 6 consecutive words exactly from the proposal.\n\nFORMAT (overrides any vote words around this text): this is an objection window, not a vote. Your FIRST line must be exactly NO OBJECTION or exactly OBJECTION (with OBJECTION add one line CONDITION: ...). Do not answer Yes, Support-it or No.\nD171 (in force): after your answer lines, end your reply with exactly one line \"CITE: <point>\", where <point> is a phrase of at least 6 words copied exactly from the proposal below, or \"line N: <first 4 words of that line>\". A reply with no matching CITE line does not count.\n\nRE-POLL after an adopted condition (see the last section of the proposal); per D145 a re-poll may not add new demands. OBJECTION WINDOW (D153), not a vote: read the proposal below (D153, D145, D171 in docs/decisions/process-and-staffing.md, board/230-*.md). Reply on the first line exactly NO OBJECTION or OBJECTION, nothing else on that line; if OBJECTION add exactly one line CONDITION: one fixed condition that would remove it. Under 60 words.\n\nCard 230 — criterion 3, cycle 2 scope (caps 2+1+2)\n\nPremises on `[redacted]`:\n\n- Command:\n  `findstr /n \".*\" tests\\test_decider_counted_result.py`\n  \n  Quoted output:\n  `340:RESULT_KEYS = {\"result\", \"prompt_sha\", \"probe\", \"votes\", \"counted_seats\", \"violations\", \"integrity\"}`\n  \n  Thus card 290’s exact shape pin omits only the newly adopted `head_start` and `head_end`.\n\n- Command:\n  `findstr /n \".*\" mob_summary.py`\n  \n  Quoted output:\n  `24: re.compile(r\"\\bgh[pousr]_[A-Za-z0-9]{20,}\\b\"),`\n  `26: re.compile(r\"\\bsk-[A-Za-z0-9_\\-]{16,}\\b\"),`\n  `27: re.compile(r\"\\bAKIA[0-9A-Z]{16}\\b\"),`\n  `28: re.compile(r\"\\bxox[abprs]-[A-Za-z0-9\\-]{10,}\\b\"),`\n  `29: re.compile(r\"\\bAIza[0-9A-Za-z_\\-]{30,}\\b\"),`\n  `32: re.compile(r\"\\b[A-Fa-f0-9]{40,}\\b\"),`\n  \n  No enumerated real credential form is a bare 40-character lowercase hexadecimal string; only the generic catch-all has that shape, so it also matches Git object IDs.\n\n- In `CycleTwoInterfaces`, `strings_in()` recursively yields every string key and value. The test removes only `prompt_sha`, then runs `mob_summary.contains_secret()` and the home-path regex over every remaining yielded string; it separately checks the raw JSON for the actual home directory and fixture leaks.\n\n- Command:\n  `git cat-file -t [redacted]`\n  \n  Quoted output:\n  `commit`\n\n- The supplied full-suite result is:\n  `Ran 1836 tests`\n  `FAILED (failures=2)`\n  \n  The two failures are the exact-shape pin reporting `head_start`/`head_end` as extra and the generic 40-hex detector reporting the stored Git SHA as a secret. A direct rerun in this read-only seat could not create `TemporaryDirectory`, so no contrary runtime result was produced.\n\nCause: criterion 3 deliberately added full commit IDs, but two older contract tests still interpret the new fields as schema drift and generic secret-shaped text.\n\nFix/window:\n\n1. Red may touch only:\n   - `tests/test_decider_counted_result.py`\n   - `tests/test_launch_failure_honesty.py`\n\n   Update the exact result-key pin by adding exactly `head_start` and `head_end`.\n\n   Make the privacy test traverse named fields, exempting only `head_start` and `head_end` when the value matches exactly `^[0-9a-f]{40}$` and `git cat-file -t <value>` in the test repository succeeds with exactly `commit`. Keep `prompt_sha`’s existing exact 64-hex assertion. Every non-exempt key/value still passes through the unchanged secret and home-path checks; the identical 40-hex string stored under any other field must still fail.\n\n2. Green may touch only:\n   - `decider.py`\n   - `facilitator.py`\n\n   No production edit is expected if the adopted output already satisfies the corrected tests. If the red exposes a contract defect, make only the smallest change needed to emit the two full, repository-resolvable commit IDs.\n\nZOMBIES: Z equal start/end on a stable vote; O only one approved head field; M changed start/end commits; B 39/41 hex, uppercase hex, missing object, or non-commit object; I the same valid SHA under another field still trips secret detection; E real token and home-path fixtures remain rejected everywhere.\n\nStop rule: stop at the first full-suite pass with exactly the adopted two fields and unchanged privacy coverage. Stop and return to scope if passing requires another schema change, an exemption by value alone, skipping unresolved/non-commit SHAs, weakening `contains_secret` globally, touching files outside the stated red/green sets, or exceeding caps 2+1+2.\n\n## Round 2: condition from round 1's audit lens (met, stated as fact)\nThe reviewed commit is reachable: green 3, [redacted], is on mob-crosscli's origin main (https://github.com/Programming-Made-EZ/mob-defaults.git; git ls-remote origin refs/heads/main returns it, and git branch -r --contains bf3e4ab lists origin/main). Every premise above can be rerun from a clean clone at that commit. The red and green of this cycle are pushed the same way, each before its record. Caps 2+1+2; files and stop rule unchanged.\n\nVote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.\ncodex\nNO OBJECTION\nCITE: Every premise above can be rerun from a clean clone at that commit.\ntokens used\n2,360\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 21:09 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-04T23:04:13.696397Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w230sc2r2-coach",
+   "started_at": "2026-11-04T23:00:43Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe scope is small and proportionate to the task. It has two test files, an optional production edit, and caps of 2+1+2. The stop rule is clear and the red/green order is respected. The ZOMBIES cases cover the real risks. I see no missing perspective and no padding.\n\nCITE: Stop and return to scope if passing requires another schema change\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 21:09 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-04T23:01:08.914908Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "codex",
+   "context": "w230sc2cp1-pmready",
+   "started_at": "2026-11-04T22:41:21Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nThe narrow window restores the adopted contract, preserves privacy coverage, and stops at verified product value without speculative production work.\nCITE: Stop rule: stop at the first full-suite pass\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1a8ba-0220-77a0-b429-1f6736262f9b\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the PRODUCT MANAGER (fresh context). Your lens: does this implement the product owner's standing rules (accountability to metrics, every role in its own context, quota first then Claude, task-force driven development with removals only at the retro, open FAILs stop the line) and get back to product value without over-specifying up front (VISION.md ruling 6)? Standing rules are not votable.\n\n\nFORMAT (overrides any vote words around this text): this is an objection window, not a vote. Your FIRST line must be exactly NO OBJECTION or exactly OBJECTION (with OBJECTION add one line CONDITION: ...). Do not answer Yes, Support-it or No.\nD171 (in force): after your answer lines, end your reply with exactly one line \"CITE: <point>\", where <point> is a phrase of at least 6 words copied exactly from the proposal below, or \"line N: <first 4 words of that line>\". A reply with no matching CITE line does not count.\n\nOBJECTION WINDOW (D153), not a vote: read the proposal below (D153, D171, D175, D181 in docs/decisions/process-and-staffing.md, board/230-*.md, .mob/records/230/checklist-230-scope-2.md). Reply on the first line exactly NO OBJECTION or OBJECTION, nothing else on that line; if OBJECTION add exactly one line CONDITION: one fixed condition that would remove it. Under 60 words.\n\nCard 230 — criterion 3, cycle 2 scope (caps 2+1+2)\n\nPremises on `[redacted]`:\n\n- Command:\n  `findstr /n \".*\" tests\\test_decider_counted_result.py`\n  \n  Quoted output:\n  `340:RESULT_KEYS = {\"result\", \"prompt_sha\", \"probe\", \"votes\", \"counted_seats\", \"violations\", \"integrity\"}`\n  \n  Thus card 290’s exact shape pin omits only the newly adopted `head_start` and `head_end`.\n\n- Command:\n  `findstr /n \".*\" mob_summary.py`\n  \n  Quoted output:\n  `24: re.compile(r\"\\bgh[pousr]_[A-Za-z0-9]{20,}\\b\"),`\n  `26: re.compile(r\"\\bsk-[A-Za-z0-9_\\-]{16,}\\b\"),`\n  `27: re.compile(r\"\\bAKIA[0-9A-Z]{16}\\b\"),`\n  `28: re.compile(r\"\\bxox[abprs]-[A-Za-z0-9\\-]{10,}\\b\"),`\n  `29: re.compile(r\"\\bAIza[0-9A-Za-z_\\-]{30,}\\b\"),`\n  `32: re.compile(r\"\\b[A-Fa-f0-9]{40,}\\b\"),`\n  \n  No enumerated real credential form is a bare 40-character lowercase hexadecimal string; only the generic catch-all has that shape, so it also matches Git object IDs.\n\n- In `CycleTwoInterfaces`, `strings_in()` recursively yields every string key and value. The test removes only `prompt_sha`, then runs `mob_summary.contains_secret()` and the home-path regex over every remaining yielded string; it separately checks the raw JSON for the actual home directory and fixture leaks.\n\n- Command:\n  `git cat-file -t [redacted]`\n  \n  Quoted output:\n  `commit`\n\n- The supplied full-suite result is:\n  `Ran 1836 tests`\n  `FAILED (failures=2)`\n  \n  The two failures are the exact-shape pin reporting `head_start`/`head_end` as extra and the generic 40-hex detector reporting the stored Git SHA as a secret. A direct rerun in this read-only seat could not create `TemporaryDirectory`, so no contrary runtime result was produced.\n\nCause: criterion 3 deliberately added full commit IDs, but two older contract tests still interpret the new fields as schema drift and generic secret-shaped text.\n\nFix/window:\n\n1. Red may touch only:\n   - `tests/test_decider_counted_result.py`\n   - `tests/test_launch_failure_honesty.py`\n\n   Update the exact result-key pin by adding exactly `head_start` and `head_end`.\n\n   Make the privacy test traverse named fields, exempting only `head_start` and `head_end` when the value matches exactly `^[0-9a-f]{40}$` and `git cat-file -t <value>` in the test repository succeeds with exactly `commit`. Keep `prompt_sha`’s existing exact 64-hex assertion. Every non-exempt key/value still passes through the unchanged secret and home-path checks; the identical 40-hex string stored under any other field must still fail.\n\n2. Green may touch only:\n   - `decider.py`\n   - `facilitator.py`\n\n   No production edit is expected if the adopted output already satisfies the corrected tests. If the red exposes a contract defect, make only the smallest change needed to emit the two full, repository-resolvable commit IDs.\n\nZOMBIES: Z equal start/end on a stable vote; O only one approved head field; M changed start/end commits; B 39/41 hex, uppercase hex, missing object, or non-commit object; I the same valid SHA under another field still trips secret detection; E real token and home-path fixtures remain rejected everywhere.\n\nStop rule: stop at the first full-suite pass with exactly the adopted two fields and unchanged privacy coverage. Stop and return to scope if passing requires another schema change, an exemption by value alone, skipping unresolved/non-commit SHAs, weakening `contains_secret` globally, touching files outside the stated red/green sets, or exceeding caps 2+1+2.\n\nVote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.\ncodex\nI’ll verify the standing-rule fit and the cited process constraints from the committed repository, using read-only inspection only.\n2026-11-04T22:42:11.185705Z ERROR codex_core::tools::router: error=exec_command failed for `\"C:\\\\Users\\\\ringe\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\pwsh.exe\" -Command \"git show [redacted]:docs/decisions/process-and-staffing.md | Select-String -Pattern 'D153|D171|D175|D181' -Context 0,8; Get-ChildItem board -Filter '230-*.md' | ForEach-Object { Write-Output \"'$_.FullName; Get-Content -LiteralPath $_.FullName }; Get-Content -LiteralPath .mob/records/230/checklist-230-scope-2.md; Get-Content -LiteralPath VISION.md'`: CreateProcess { message: \"Rejected(\\\"Failed to create unified exec process: CreateProcessWithLogonW failed: 267\\\")\" }\n2026-11-04T22:42:13.092302Z ERROR codex_core::tools::router: error=exec_command failed for `\"C:\\\\Users\\\\ringe\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\pwsh.exe\" -Command 'Get-Location; Get-ChildItem'`: CreateProcess { message: \"Rejected(\\\"Failed to create unified exec process: CreateProcessWithLogonW failed: 267\\\")\" }\ncodex\nNO OBJECTION\nThe narrow window restores the adopted contract, preserves privacy coverage, and stops at verified product value without speculative production work.\nCITE: Stop rule: stop at the first full-suite pass\ntokens used\n3,374\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 21:09 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-04T22:41:45.475843Z",
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w230sc2cp1-qa",
+   "started_at": "2026-11-04T22:42:54Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nThis stays red-first, keeps the red/green touch lists compliant, and preserves the named privacy/watch checks without accepting bad state.\nCITE: the same valid SHA under another field still trips secret detection\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 21:09 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-04T22:43:20.378767Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w230sc2-dev",
+   "started_at": "2026-11-04T22:44:12Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe window is workable. Red touches two test files, green touches two production files, and the stop rule is unambiguous. I can comply without gaming it: the 40-hex exemption is narrowed by field name and by a `git cat-file -t` check, and the same SHA under any other field still fails.\n\nCITE: stop at the first full-suite pass with exactly the adopted two fields\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 21:09 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-04T22:44:35.627111Z",
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "codex",
+   "context": "w230sc2cp1-auditlens",
+   "started_at": "2026-11-04T22:45:36Z",
+   "model": "gpt-5.6-sol",
+   "raw": "OBJECTION\nCONDITION: Make `[redacted]` reachable in the reviewed Git repository so every premise and proposed test exemption is independently inspectable.\nCITE: A direct rerun in this read-only seat could not create `TemporaryDirectory`\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1a8be-7e74-70e1-8890-ae95cc9117a1\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the INDEPENDENT REVIEWER WITH THE AUDIT LENS (fresh context; the external auditor is never a mob seat). Your lens: can this be verified from git alone, and does it leave a loophole that lets the team pass while breaking the practice?\n\n\nFORMAT (overrides any vote words around this text): this is an objection window, not a vote. Your FIRST line must be exactly NO OBJECTION or exactly OBJECTION (with OBJECTION add one line CONDITION: ...). Do not answer Yes, Support-it or No.\nD171 (in force): after your answer lines, end your reply with exactly one line \"CITE: <point>\", where <point> is a phrase of at least 6 words copied exactly from the proposal below, or \"line N: <first 4 words of that line>\". A reply with no matching CITE line does not count.\n\nOBJECTION WINDOW (D153), not a vote: read the proposal below (D153, D171, D175, D181 in docs/decisions/process-and-staffing.md, board/230-*.md, .mob/records/230/checklist-230-scope-2.md). Reply on the first line exactly NO OBJECTION or OBJECTION, nothing else on that line; if OBJECTION add exactly one line CONDITION: one fixed condition that would remove it. Under 60 words.\n\nCard 230 — criterion 3, cycle 2 scope (caps 2+1+2)\n\nPremises on `[redacted]`:\n\n- Command:\n  `findstr /n \".*\" tests\\test_decider_counted_result.py`\n  \n  Quoted output:\n  `340:RESULT_KEYS = {\"result\", \"prompt_sha\", \"probe\", \"votes\", \"counted_seats\", \"violations\", \"integrity\"}`\n  \n  Thus card 290’s exact shape pin omits only the newly adopted `head_start` and `head_end`.\n\n- Command:\n  `findstr /n \".*\" mob_summary.py`\n  \n  Quoted output:\n  `24: re.compile(r\"\\bgh[pousr]_[A-Za-z0-9]{20,}\\b\"),`\n  `26: re.compile(r\"\\bsk-[A-Za-z0-9_\\-]{16,}\\b\"),`\n  `27: re.compile(r\"\\bAKIA[0-9A-Z]{16}\\b\"),`\n  `28: re.compile(r\"\\bxox[abprs]-[A-Za-z0-9\\-]{10,}\\b\"),`\n  `29: re.compile(r\"\\bAIza[0-9A-Za-z_\\-]{30,}\\b\"),`\n  `32: re.compile(r\"\\b[A-Fa-f0-9]{40,}\\b\"),`\n  \n  No enumerated real credential form is a bare 40-character lowercase hexadecimal string; only the generic catch-all has that shape, so it also matches Git object IDs.\n\n- In `CycleTwoInterfaces`, `strings_in()` recursively yields every string key and value. The test removes only `prompt_sha`, then runs `mob_summary.contains_secret()` and the home-path regex over every remaining yielded string; it separately checks the raw JSON for the actual home directory and fixture leaks.\n\n- Command:\n  `git cat-file -t [redacted]`\n  \n  Quoted output:\n  `commit`\n\n- The supplied full-suite result is:\n  `Ran 1836 tests`\n  `FAILED (failures=2)`\n  \n  The two failures are the exact-shape pin reporting `head_start`/`head_end` as extra and the generic 40-hex detector reporting the stored Git SHA as a secret. A direct rerun in this read-only seat could not create `TemporaryDirectory`, so no contrary runtime result was produced.\n\nCause: criterion 3 deliberately added full commit IDs, but two older contract tests still interpret the new fields as schema drift and generic secret-shaped text.\n\nFix/window:\n\n1. Red may touch only:\n   - `tests/test_decider_counted_result.py`\n   - `tests/test_launch_failure_honesty.py`\n\n   Update the exact result-key pin by adding exactly `head_start` and `head_end`.\n\n   Make the privacy test traverse named fields, exempting only `head_start` and `head_end` when the value matches exactly `^[0-9a-f]{40}$` and `git cat-file -t <value>` in the test repository succeeds with exactly `commit`. Keep `prompt_sha`’s existing exact 64-hex assertion. Every non-exempt key/value still passes through the unchanged secret and home-path checks; the identical 40-hex string stored under any other field must still fail.\n\n2. Green may touch only:\n   - `decider.py`\n   - `facilitator.py`\n\n   No production edit is expected if the adopted output already satisfies the corrected tests. If the red exposes a contract defect, make only the smallest change needed to emit the two full, repository-resolvable commit IDs.\n\nZOMBIES: Z equal start/end on a stable vote; O only one approved head field; M changed start/end commits; B 39/41 hex, uppercase hex, missing object, or non-commit object; I the same valid SHA under another field still trips secret detection; E real token and home-path fixtures remain rejected everywhere.\n\nStop rule: stop at the first full-suite pass with exactly the adopted two fields and unchanged privacy coverage. Stop and return to scope if passing requires another schema change, an exemption by value alone, skipping unresolved/non-commit SHAs, weakening `contains_secret` globally, touching files outside the stated red/green sets, or exceeding caps 2+1+2.\n\nVote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.\ncodex\nI’ll audit the cited decisions, board record, checklist, and relevant committed tests strictly through Git/read-only inspection, then assess whether the scope is independently verifiable and loophole-free.\n2026-11-04T22:47:05.666157Z ERROR codex_core::tools::router: error=exec_command failed for `\"C:\\\\Users\\\\ringe\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\pwsh.exe\" -Command 'rg -n \"D153|D171|D175|D181\" docs/decisions/process-and-staffing.md; rg --files board .mob/records/230; git status --short; git show [redacted]:tests/test_decider_counted_result.py | Select-Object -Skip 300 -First 100; git show [redacted]:tests/test_launch_failure_honesty.py | Select-Object -First 260'`: CreateProcess { message: \"Rejected(\\\"Failed to create unified exec process: runner failed during SpawnChild: CreateProcessAsUserW failed: 1920 (The file cannot be accessed by the system.) | cwd=C:\\\\\\\\Users\\\\\\\\ringe\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\mob-deciders\\\\\\\\run-y1iqii3f\\\\\\\\codex | cmd=C:\\\\\\\\Users\\\\\\\\ringe\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Microsoft\\\\\\\\WindowsApps\\\\\\\\pwsh.exe -NoProfile -Command \\\\\\\"try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}\\\\nrg -n \\\\\\\\\\\\\\\"D153|D171|D175|D181\\\\\\\\\\\\\\\" docs/decisions/process-and-staffing.md; rg --files board .mob/records/230; git status --short; git show [redacted]:tests/test_decider_counted_result.py | Select-Object -Skip 300 -First 100; git show [redacted]:tests/test_launch_failure_honesty.py | Select-Object -First 260\\\\\\\" | env_u16_len=6592 | si_flags=256 | creation_flags=525312 (Windows error 1920)\\\")\" }\ncodex\nThe read-only shell could not start because the configured PowerShell executable is inaccessible. I’m retrying with the system command shell; this does not alter the repository.\nexec\n\"C:\\\\WINDOWS\\\\system32\\\\cmd.exe\" /c \"rg -n \\\"D153|D171|D175|D181\\\" docs\\\\decisions\\\\process-and-staffing.md && rg --files board .mob\\\\records\\\\230 && git status --short && git show [redacted]:tests/test_decider_counted_result.py && git show [redacted]:tests/test_launch_failure_honesty.py\" in C:\\Users\\<user>\n exited 128 in 61ms:\nfatal: path 'tests/test_decider_counted_result.py' does not exist in '[redacted]'\n\nexec\n\"C:\\\\WINDOWS\\\\system32\\\\cmd.exe\" /c 'git ls-tree -r --name-only [redacted] | rg \"test_decider_counted|test_launch_failure|decider_counted|launch_failure\" && git log --all --oneline -- tests/test_decider_counted_result.py tests/test_launch_failure_honesty.py && git show HEAD:docs/decisions/process-and-staffing.md | rg -n -A 28 -B 3 \"Decider D153|Decider D171|Decider D175|Decider D181\" && git show HEAD:board/230-the-facilitator-and-seats-never-write-the-same-checkout-at-once.md && git show HEAD:.mob/records/230/checklist-230-scope-2.md' in C:\\Users\\<user>\n exited 1 in 0ms:\nfatal: not a tree object\n\nexec\n\"C:\\\\WINDOWS\\\\system32\\\\cmd.exe\" /c 'git rev-parse --verify HEAD & git cat-file -t [redacted] & git log --all --oneline -- tests/test_decider_counted_result.py tests/test_launch_failure_honesty.py & git show HEAD:docs/decisions/process-and-staffing.md | rg -n -A 28 -B 3 \"Decider D153|Decider D171|Decider D175|Decider D181\" & git show HEAD:board/230-the-facilitator-and-seats-never-write-the-same-checkout-at-once.md & git show HEAD:.mob/records/230/checklist-230-scope-2.md' in C:\\Users\\<user>\n succeeded in 971ms:\nrg: D153|Decider: The filename, directory name, or volume label syntax is incorrect. (os error 123)\nrg: D171|Decider: The filename, directory name, or volume label syntax is incorrect. (os error 123)\nrg: D175|Decider: The filename, directory name, or volume label syntax is incorrect. (os error 123)\nrg: D181\": The filename, directory name, or volume label syntax is incorrect. (os error 123)\n# The facilitator and seats never write the same checkout at once\n<!-- GENERATED from the Phrase Board (issue #230, sha256:[redacted]). Do not edit this file: edit the issue. -->\n\n\n- **Status:** Draft\n- **Shape:** Contract\n- **Type:** bug (flaky-is-a-bug; product owner ruling 2026-11-01)\n- **Repository:** mob-defaults and avowry process tooling (facilitator.py, the seat briefs, the facilitator's helpers)\n- **Source:** the auditor counted 3 index-lock collisions on avowry in about 32 hours (2026-10-30 01:09 PDT and 18:41 PDT, 2026-10-31 09:14 PDT) and at least 2 push races on 2026-10-31, each with the facilitator and a seat writing the same checkout. A facilitator helper commit also swept a seat's staged file (3c82909), and a facilitator commit moved HEAD under a running Decider voter and voided its vote. Root cause: two writers, one checkout. 'Retry is safe' does not close it.\n- **Depends on:** none\n- **Actor:** the facilitator and any seat that commits\n- **Given:** the facilitator and a seat, or two seats, both able to commit or push to one repository checkout during a card\n- **Observes:** at most one writer commits or pushes to a checkout at a time (for example each seat works in its own worktree or clone and the facilitator integrates, or a lock the runner owns), and no commit sweeps another writer's staged file\n- **Fails with:** a second writer is refused with a named reason before it writes, instead of retrying after a collision\n- **Invariants:** git history and the pushed state unchanged; push on every commit (card 227) still holds\n- **Enables:** card 216 (the default templates carry the one-writer rule)\n- **One observable behaviour:** At most one writer commits or pushes to a checkout at a time (for example each seat works in its own worktree or clone and the facilitator integrates, or a lock the runner owns), and no commit sweeps another writer's staged file.\n- **Done checks (at most 3, each failing on partial work):**\n  1. Two writers in one checkout cannot collide: a red reproduces an index-lock collision and a push race between the facilitator and a seat. ZOMBIES to be written by QA at ready.\n  2. No commit includes a file another writer staged. ZOMBIES to be written by QA at ready.\n  3. A decision voter's real-tree check never sees a facilitator commit during its vote. ZOMBIES to be written by QA at ready.\n- **Not in this card:** anything the source does not name.\n\n## Context\n\n- Filed by the facilitator on 2026-11-01 at the card 227 boundary from the product owner's queued messages; ranked by the next re-rank.\n# D158 pre-window checklist: window 230-scope-2 (facilitator)\n\n- Proposal: .mob/records/230/turn-scope2-architect.md (architect, ctx-2 continued, Codex CLI read-only, 22:34 to about 22:40 UTC; premises read on bf3e4ab through cmd and quoted; its own rerun could not create a TemporaryDirectory in the read-only sandbox, so the failures are the facilitator's full-suite result).\n- Trigger: the stop rule. The full suite on green 3 (bf3e4ab): Ran 1836, 2 failures, both older pins that conflict with criterion 3's adopted condition (full head_start and head_end in decider-result.json): card 290's exact result-key pin, and the privacy test whose generic 40-hex pattern reads a git sha as a secret.\n- Category: scope window (D175 C4): criterion 3 cycle 2, caps 2+1+1 to 2+1+2. Seats polled: product manager, QA engineer, backend developer, independent reviewer (audit lens), decider, agile coach; the proposer does not sit. D171 cites verbatim; one re-ask for an unread vote. Grok disabled.\n- Also for the gate, not this window: green 3's body names an untested gap (a second decider run that starts while another holds the vote lock runs without taking it).\n- No commit to avowry while a voter runs.\n- Probe: 2026-11-04 21:09 UTC, plus decider.py's own probe per run.\n\ncodex\nOBJECTION\nCONDITION: Make `[redacted]` reachable in the reviewed Git repository so every premise and proposed test exemption is independently inspectable.\nCITE: A direct rerun in this read-only seat could not create `TemporaryDirectory`\ntokens used\n13,777\n",
+   "first_line": "OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 21:09 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-04T22:46:02.164932Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w230sc2cp1-decider",
+   "started_at": "2026-11-04T22:47:58Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: criterion 3 deliberately added full commit IDs\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 21:09 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-04T22:48:21.380598Z",
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w230sc2r2cp1-decider",
+   "started_at": "2026-11-04T22:59:34Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: the evaluation framed so its decision\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 21:09 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-04T22:59:58.073426Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "claude",
+   "context": "w230sc2-coach",
+   "started_at": "2026-11-04T22:49:10Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe task force is sized to the task. The change is two test files plus an optional green step, with no production edit expected. The ZOMBIES list is a proportionate test checklist, and the stop rule bounds the scope. I see no missing perspective and no padding.\n\nCITE: Stop rule: stop at the first full-suite pass with exactly the adopted two fields\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 21:09 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-04T22:49:33.627892Z",
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  }
+ ],
+ "decision": {
+  "result": "adopted with one condition (met as stated): criterion 3 cycle 2, caps 2+1+1 to 2+1+2; red touches only tests/test_decider_counted_result.py (the result-key pin adds exactly head_start and head_end) and tests/test_launch_failure_honesty.py (the privacy scan exempts only head_start and head_end whose value is an exact 40-hex sha git resolves to a commit; the same string elsewhere still fails; prompt_sha's 64-hex check unchanged); green may touch decider.py and facilitator.py. Round 1: five NO OBJECTION, one OBJECTION with a condition (audit lens). Round 2: six NO OBJECTION; the decider's cite quoted its prompt and counted on a D171 re-ask.",
+  "window_minutes": "round 1 22:39 to 22:50 UTC; round 2 22:51 to 23:01; re-ask 23:02 to about 23:05"
+ },
+ "ended_at": "2026-11-04T23:04:57Z"
+}
