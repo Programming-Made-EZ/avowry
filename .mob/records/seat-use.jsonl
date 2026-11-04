@@ -916,3 +916,12 @@
 {"seat": "copilot", "role": "decider voter", "context": "decider-copilot", "card": "decider", "ts": "2026-11-04T00:31:38.655100Z", "probe_taken_at": "2026-11-04T00:31:38.649156Z"}
 {"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-04T00:33:09.359174Z", "probe_taken_at": "2026-11-04T00:33:09.346392Z"}
 {"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-04T00:35:25.472964Z", "probe_taken_at": "2026-11-04T00:35:25.464583Z"}
+{"seat": "copilot", "role": "decider voter", "context": "decider-copilot", "card": "decider", "ts": "2026-11-04T01:00:50.231974Z", "probe_taken_at": "2026-11-04T01:00:50.223484Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-04T01:02:31.833473Z", "probe_taken_at": "2026-11-04T01:02:31.826417Z"}
+{"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-04T01:04:43.300207Z", "probe_taken_at": "2026-11-04T01:04:43.293412Z"}
+{"seat": "copilot", "role": "decider voter", "context": "decider-copilot", "card": "decider", "ts": "2026-11-04T01:06:11.846521Z", "probe_taken_at": "2026-11-04T01:06:11.841362Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-04T01:07:48.133613Z", "probe_taken_at": "2026-11-04T01:07:48.114989Z"}
+{"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-04T01:09:31.872068Z", "probe_taken_at": "2026-11-04T01:09:31.865712Z"}
+{"seat": "copilot", "role": "decider voter", "context": "decider-copilot", "card": "decider", "ts": "2026-11-04T01:11:02.408074Z", "probe_taken_at": "2026-11-04T01:11:02.400118Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-04T01:12:51.951725Z", "probe_taken_at": "2026-11-04T01:12:51.940555Z"}
+{"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-04T01:17:28.365497Z", "probe_taken_at": "2026-11-04T01:17:28.354552Z"}
