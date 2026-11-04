@@ -1,0 +1,119 @@
+{
+ "decider": "D184",
+ "subject": "each scope premise is run in code on HEAD before its window (card 229 retro pick, experiment)",
+ "proposer": "agile coach seat (.mob/records/229/retro-pick-proposal-coach.md)",
+ "result": "PASSED round 1 (1 Yes, 5 Support-it, 0 No), confirmed by the independent re-run with the agile coach in place of the product manager (3 Yes, 3 Support-it, 0 No)",
+ "seat_note": "seats placed by the decision-seat gate; Copilot counted (product manager and decider in round 1; QA and decider in the re-run), allowed after card 229's sign-off; every reply with a valid D171 cite",
+ "round1": [
+  {
+   "role": "pmready",
+   "seat": "copilot",
+   "context": "p229-pmready",
+   "started_at": "2026-11-04T03:25:01Z",
+   "overall": "Support-it",
+   "cite": "running each scope premise in code before its window",
+   "reply": "Support-it\nThis pick enforces evidence-before-window, keeps scope proposals tied to HEAD, marks unrun premises, and preserves stop rules. It directly addresses the card’s biggest avoidable cost: wrong premises surviving into scope windows. The metric and counter-metrics are explicit, the trial is limited to three cards, and it adds no seat, file type, or workflow. It respects the product-owner rules by making accountability visible and stopping drift early.\nCITE: running each scope premise in code before its window\n\n"
+  },
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "p229-architect",
+   "started_at": "2026-11-04T03:27:12Z",
+   "overall": "Support-it",
+   "cite": "each premise a scope proposal rests on is run in code on HEAD before the scope window opens",
+   "reply": "Support-it\n\nThe design is minimal. It adds no seat, file or meeting, and the facilitator's check (C4) is a mechanical read of the proposal file in git: each premise line has a command, a HEAD hash and an output line, or the word \"unrun\". The \"unrun\" label is a sound release valve. It also has the 229-scope-2 evidence behind it.\n\nThe weak point is C1. Whether a line \"states how existing code or tests behave\" is a judgment call, so a proposer can leave a premise out without the check noticing. Counter-metric 3 covers this only after the fact. I'd tighten it by requiring every Assumes or Probe line to carry a command or \"unrun\", with no exemption for lines the proposer calls non-premises.\n\nCITE: each premise a scope proposal rests on is run in code on HEAD before the scope window opens\n"
+  },
+  {
+   "role": "qa",
+   "seat": "claude",
+   "context": "p229-qa",
+   "started_at": "2026-11-04T03:32:38Z",
+   "overall": "Support-it",
+   "cite": "each premise a scope proposal rests on is run in code on HEAD",
+   "reply": "Support-it\n\nThe rule fits the card 229 failure. Running red 2 with scrub-then-trim would have shown both disproved premises before the window opened. The trial is a two-way door, and counter-metric 3 guards against premise lines being dropped.\n\nMy reservations are about what the check can catch:\n- C4 checks the form of a premise line, not whether the quoted output is true. A made-up output line would pass the facilitator's look, and only the auditor's re-check from git would catch it.\n- The \"unrun\" label is open to overuse. Counter-metric 3 only catches premise lines disappearing, not premises being labelled unrun.\n- The metric starts from a baseline of one event.\n\nNone of these should block a trial.\n\nCITE: each premise a scope proposal rests on is run in code on HEAD\n"
+  },
+  {
+   "role": "dev",
+   "seat": "claude",
+   "context": "p229-dev",
+   "started_at": "2026-11-04T03:39:14Z",
+   "overall": "Yes",
+   "cite": "each premise a scope proposal rests on is run in code on HEAD before the scope window opens",
+   "reply": "Yes\n\nAs the developer, I can comply with this without gaming it. A probe per premise is one command, such as a `python -c` line or the existing red run with my change applied locally and discarded. That is cheap next to a second scope window. C1 limits premises to lines about how existing code or tests behave, so I'm not asked to probe opinions. C3's \"unrun\" label plus a stated fallback is an honest release valve, so I don't have to fake output. Counter-metric 3 guards against fewer premise lines being passed off as fewer risks. The one wrinkle: \"HEAD hash\" may drift if HEAD moves before the window, but that is minor.\n\nCITE: each premise a scope proposal rests on is run in code on HEAD before the scope window opens\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "p229-auditlens",
+   "started_at": "2026-11-04T03:44:38Z",
+   "overall": "Support-it",
+   "cite": "each premise a scope proposal rests on is run in code on HEAD",
+   "reply": "Support-it\n\nThe practice is mostly checkable from git alone. The proposal file has to carry a command, a HEAD hash and an output line, or \"unrun\", for each premise. A missing one sends it back before any vote, and the auditor re-checks from git.\n\nThere are two loopholes:\n- **Unrun label:** \"unrun\" is a free pass. Counter-metric 3 only catches premises that go unstated, not ones that are never run.\n- **Quoted output:** git can't show that the output was really produced. The auditor can re-run the command at the quoted HEAD, so the sign-off should say to do that for at least one premise per card.\n\nNeither blocks a reversible, three-card trial.\n\nCITE: each premise a scope proposal rests on is run in code on HEAD\n"
+  },
+  {
+   "role": "decider",
+   "seat": "copilot",
+   "context": "p229-decider",
+   "started_at": "2026-11-04T03:51:24Z",
+   "overall": "Support-it",
+   "cite": "it changes how a scope proposal is written",
+   "reply": "Support-it\nThe proposal is evidence-framed: it ties scope-window adoption to code runs on HEAD, requires quoted commands/output, labels unrun premises, and keeps the facilitator/auditor checks explicit. The card record already shows the failure mode: two wrong scope premises were not run before the window, and the sign-off records confirm the process change is narrow, reversible, and adds no new seat, file type, or card. It also preserves D181/D183 and keeps the intended trial scope to three cards, which makes the decision reviewable and the sign-off seats sufficient.\nCITE: it changes how a scope proposal is written\n\n"
+  }
+ ],
+ "rerun": [
+  {
+   "role": "coach",
+   "seat": "claude",
+   "context": "p229rr-coach",
+   "started_at": "2026-11-04T03:54:16Z",
+   "overall": "Yes",
+   "cite": "each premise a scope proposal rests on is run in code on HEAD",
+   "reply": "Yes\n\nThe pick fits the size of the problem. It deals with the card's biggest avoidable cost, a second scope window caused by premises nobody ran. It adds no seat, file or meeting. The \"unrun\" label limits the cost, and counter-metric 3 guards against theatre. The seven-voice retro had full coverage, and four voices converged on this pick. The evidence is one card, but the trial is bounded to three cards and is a two-way door. The deferred items correctly stay as brief lines rather than new process.\n\nCITE: each premise a scope proposal rests on is run in code on HEAD\n"
+  },
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "p229rr-architect",
+   "started_at": "2026-11-04T03:57:52Z",
+   "overall": "Support-it",
+   "cite": "each premise a scope proposal rests on is run in code on HEAD",
+   "reply": "Support-it\n\nThe design is minimal. It adds no seat, file or meeting, and it changes only what a scope proposal carries. The facilitator's check in C4 can be made from git: each premise line has a command, a HEAD hash and an output line, or it says \"unrun\". That check tests the presence of evidence, not whether the premise is true, so it should give few false positives.\n\nMy reservations are small:\n- C1's definition of a premise, \"states how existing code or tests behave\", is a judgment call. Premises can be left out of the proposal quietly, and counter-metric 3 only partly catches that.\n- \"Unrun\" is a cheap escape hatch, so the trial should watch how often it is used.\n- The evidence is one event on one card. That is acceptable for a two-way-door experiment.\n\nCITE: each premise a scope proposal rests on is run in code on HEAD\n"
+  },
+  {
+   "role": "qa",
+   "seat": "copilot",
+   "context": "p229rr-qa",
+   "started_at": "2026-11-04T04:04:37Z",
+   "overall": "Yes",
+   "cite": "each premise a scope proposal rests on is run in code on HEAD before the scope window opens",
+   "reply": "Yes\n\nThis is testable red-first and enforceable. C2 turns every behavioral premise into executable evidence on HEAD with command+output, so violations can be reproduced before scope opens. C3 prevents silent assumptions by forcing “unrun” labeling plus an explicit fail-path, which is auditable. C4 adds a concrete gate check (facilitator pre-window, auditor from git) that should catch missing or non-evidenced premises instead of allowing them through. The counter-metrics also guard against “compliance theatre” by watching latency and premise-line collapse, not just fewer windows. From a QA lens, this directly targets false-premise scope drift with checks that can fail loudly.\n\nCITE: each premise a scope proposal rests on is run in code on HEAD before the scope window opens\n\n"
+  },
+  {
+   "role": "dev",
+   "seat": "claude",
+   "context": "p229rr-dev",
+   "started_at": "2026-11-04T04:06:06Z",
+   "overall": "Yes",
+   "cite": "each premise a scope proposal rests on is run in code on HEAD before the scope window opens",
+   "reply": "Yes\n\nI work under these rules every card, and this one is workable. A premise is any Assumes or Probe line about how existing code behaves. I run it as a `python -c` line or an existing red with the change applied and discarded, then quote the command, HEAD and one output line. That is cheap and has an obvious pass state, so I can comply without gaming it. The \"unrun\" label with a stated stop rule is a fair release valve for the time cost. Counter-metric 3 (premise lines per proposal) would show if \"unrun\" were overused. The pick adds no seat, file or meeting, and it can be reversed.\n\nCITE: each premise a scope proposal rests on is run in code on HEAD before the scope window opens\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "p229rr-auditlens",
+   "started_at": "2026-11-04T04:10:06Z",
+   "overall": "Support-it",
+   "cite": "each premise a scope proposal rests on is run in code on HEAD",
+   "reply": "Support-it\n\nThe practice can mostly be checked from git. The proposal file must carry a command, a HEAD hash and an output line per premise, so the auditor can check out that hash and re-run the command.\n\nThere is one loophole. \"Unrun\" is free, because C3 sets no cap and no reason requirement. A team could label every premise \"unrun\" and pass C4 while still breaking the practice. Counter-metric 3 only catches premises that go unstated. It doesn't catch ones marked \"unrun\".\n\nTwo fixes would close it. The sign-off should count unrun premises per proposal, and the auditor should flag any premise marked \"unrun\" that could have been run in seconds. Also, \"caused by a premise\" is a judgment call, so the sign-off should name the disproving test or commit.\n\nCITE: each premise a scope proposal rests on is run in code on HEAD\n"
+  },
+  {
+   "role": "decider",
+   "seat": "copilot",
+   "context": "p229rr-decider",
+   "started_at": "2026-11-04T04:16:56Z",
+   "overall": "Support-it",
+   "cite": "The proposal quotes the command, HEAD hash and the output line",
+   "reply": "Support-it\nThe proposal is evidence-framed: each premise must run on HEAD, quote the command and output, and be checked before the window opens. That makes scope windows rest on verified code, not memory or after-the-fact green correction. The team already has the needed seats for sign-off—proposer, facilitator, auditor, and sign-off—without adding roles, files, or cards. The trial is bounded by three cards, explicit counter-metrics, and an “unrun” release valve; the experiment is reversible and tied to the real cost shown in card 229.\nCITE: The proposal quotes the command, HEAD hash and the output line\n\n"
+  }
+ ]
+}

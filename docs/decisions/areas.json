@@ -1210,5 +1210,11 @@
     "status": "in force",
     "title": "Process improvements serve the user story being worked and are not board cards; the board holds only user stories and bugs; the next re-rank sorts existing process cards (real safety, decision-vote and test defects stay as bugs, the rest become retro experiments); merit review by Decider follows",
     "order": 174
+  },
+  "D184": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Each premise a scope proposal rests on is run in code on HEAD before its window, with the command and output quoted, or labelled unrun with what the green does if it is false (card 229 retro pick, experiment)",
+    "order": 175
   }
 }

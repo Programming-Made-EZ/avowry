@@ -32,7 +32,8 @@
   "suite_2d4d24d": "full reference suite on green 3 2d4d24d (PowerShell worktree, registry PATH): Ran 1713 tests in 1664.000s, OK (skipped=1)",
   "gate": "SHIP (02:45 UTC, .mob/records/229/preship-gate.md): independent reviewer ctx-5, fresh Copilot CLI session 934f4d5a-8d53-412a-8577-a241fd0f8d68 with --add-dir mob-crosscli; scan clean, 33 commands; Done checks 1 to 3 met (it re-measured the live prompt: 9774 characters on 61 lines); 151 targeted tests OK at 2d4d24d; mob_process check OK; no blocker; follow-ups: card 290 stays open, card 270 closes with 229, Grok narration before the vote word against first-line readers",
   "signoff": "SIGNED OFF with conditions (.mob/records/229/signoff-ctx6.md): the unrecorded deviations go in the record (done here); a bug card for Grok's narration-then-stop and the first-line runner dropping a vote after narration; card 270 closes as folded in, card 290 stays open; Copilot rejoins counted seats, Grok stays non-counted until that bug is fixed. The 'NO OBJECTION stored as No' point is card 286",
-  "green_seat_scans": "green continuations scanned clean: green 2 cycle 2 attempt 33 commands, green 2 cycle 3 36, green 3 45"
+  "green_seat_scans": "green continuations scanned clean: green 2 cycle 2 attempt 33 commands, green 2 cycle 3 36, green 3 45",
+  "retro_pick": "D184 (each scope premise is run in code on HEAD before its window), adopted; retro docs/retros/card-229-2026-11-04.md"
  },
  "seats": [
   {
@@ -92,7 +93,8 @@
   "the pre-ship gate (ctx-5) ran on Copilot, the card's own subject, before Done, although the declaration placed every role on Claude; the Claude sign-off re-checked every Done check",
   "windows 229-scope and 229-scope-2 said Grok 'returned only narration' in every attempt; in fact 8 of 10 Grok attempts stopped after narration with no vote, and 2 (w229scr2cp1-coach, w229sc2cp1-coach) ended with NO OBJECTION and a valid CITE after the narration, which the facilitator's first-line window runner dropped",
   "the slice named live/prompt.txt; only proposal-file.txt was committed; the built prompt is reproducible with decider.build_prompt (9774 characters, sha256 1efdfc02...34bcc, matching both records)",
-  "every subject commit is authored 'Copilot' although the seats were Claude subagents (the identity question of card 275)"
+  "every subject commit is authored 'Copilot' although the seats were Claude subagents (the identity question of card 275)",
+  "the D184 independent re-run was launched without its in-flight line (no voter was running at that moment); recorded here"
  ],
  "notes": [
   "Dispatch note (2026-11-03): the user-observable outcome is a real Copilot seat and a real Grok seat casting a parsed vote in a live window; kept as part (b) of the adopted condition"
