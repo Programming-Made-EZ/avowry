@@ -1216,5 +1216,11 @@
     "status": "in force",
     "title": "Each premise a scope proposal rests on is run in code on HEAD before its window, with the command and output quoted, or labelled unrun with what the green does if it is false (card 229 retro pick, experiment)",
     "order": 175
+  },
+  "D185": {
+    "area": "process-and-staffing",
+    "status": "in force",
+    "title": "Re-rank 21: the D183 sort applied (98 product, 16 process bugs stay; 40 retro experiments to docs/retros/experiments.md with trigger keys; 282 delivered; 067, 063, 071, 003 to 007 superseded); next card 290",
+    "order": 176
   }
 }

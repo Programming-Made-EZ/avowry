@@ -962,3 +962,11 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   - Built-prompt sha before a live vote (architect): trigger, the next live-vote card.
   - Seat policy and per-card backend exclusion, a gate seat off the subject (audit lens, decider): trigger, the next card whose subject is a decision backend.
   - Probe-age alert (developer): a brief item.
+
+<a id="d185"></a>
+#### Decider D185: re-rank 21 (after card 229 closed): the D183 sort applied, the vote, safety and flaky-test bugs first, then the rename
+
+- Date: 2026-11-04. Proposer: product manager seat (fresh context), .mob/records/reranks/2026-11-04-21.md, on the sort .mob/records/reranks/rerank-21-sort.md (judge: independent reviewer, a fresh context that proposed none of the cards); D158 checklist .mob/records/reranks/checklist-rerank-21.md. Seats architect, QA, backend developer, audit lens, decider and agile coach: 0 Yes, 5 Support-it, 1 No (QA). Votes in .mob/records/deciders/D185-votes.json.
+- Result: PASSED. Card 264 at rank 3 is confirmed: its defect, GitHub issue 243 (an intermittent flaky acceptance test), is still open. Next card: 290.
+- Adopted with the order: 98 product cards and 16 process bugs stay; 40 retro experiments leave the board for docs/retros/experiments.md (one entry each: owner, proof, a machine-matchable trigger key such as a file path or card tag, and the status open, taken by card N, or dropped by retro), each withdrawn with a status line naming its entry; F-008's corrective owner (the audit lens) is recorded in that committed log; card 282 closes as delivered by card 229; cards 067, 063, 071 and 003 to 007 close as superseded; D182's measure and guards are carried forward as the proposal states.
+- Recorded for re-rank 22, not adopted now (they pull in different directions or add new rules): card 252 ahead of rank 20 (audit lens); 268, 274, 286, 231 and 254 behind the first product cards (coach); at most three live retro experiments per card (developer); a failing test or named detector for each retro rule and reversal (QA's No).

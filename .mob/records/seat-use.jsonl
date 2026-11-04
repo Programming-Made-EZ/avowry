@@ -959,3 +959,14 @@
 {"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-04T04:12:53.810693Z", "probe_taken_at": "2026-11-04T04:12:53.805867Z"}
 {"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-04T04:16:21.326176Z", "probe_taken_at": "2026-11-04T04:16:21.307304Z"}
 {"seat": "copilot", "role": "decider voter", "context": "decider-copilot", "card": "decider", "ts": "2026-11-04T04:17:49.839953Z", "probe_taken_at": "2026-11-04T04:17:49.833484Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-04T05:04:52.385861Z", "probe_taken_at": "2026-11-04T05:04:52.379242Z"}
+{"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-04T05:09:31.230000Z", "probe_taken_at": "2026-11-04T05:09:31.223497Z"}
+{"seat": "copilot", "role": "decider voter", "context": "decider-copilot", "card": "decider", "ts": "2026-11-04T05:11:02.417248Z", "probe_taken_at": "2026-11-04T05:11:02.411774Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-04T05:12:56.616156Z", "probe_taken_at": "2026-11-04T05:12:56.608902Z"}
+{"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-04T05:18:03.669729Z", "probe_taken_at": "2026-11-04T05:18:03.664925Z"}
+{"seat": "copilot", "role": "decider voter", "context": "decider-copilot", "card": "decider", "ts": "2026-11-04T05:19:32.696918Z", "probe_taken_at": "2026-11-04T05:19:32.689339Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-04T05:21:45.980755Z", "probe_taken_at": "2026-11-04T05:21:45.974050Z"}
+{"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-04T05:29:56.841658Z", "probe_taken_at": "2026-11-04T05:29:56.817924Z"}
+{"seat": "copilot", "role": "decider voter", "context": "decider-copilot", "card": "decider", "ts": "2026-11-04T05:31:26.865149Z", "probe_taken_at": "2026-11-04T05:31:26.857474Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-04T05:33:05.723938Z", "probe_taken_at": "2026-11-04T05:33:05.719626Z"}
+{"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-04T05:36:37.396739Z", "probe_taken_at": "2026-11-04T05:36:37.390256Z"}

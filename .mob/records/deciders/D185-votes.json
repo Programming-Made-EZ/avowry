@@ -1,0 +1,63 @@
+{
+ "decider": "D185",
+ "subject": "re-rank 21 (proposal .mob/records/reranks/2026-11-04-21.md) on the D183 sort .mob/records/reranks/rerank-21-sort.md",
+ "proposer": "product manager seat (fresh Claude context)",
+ "result": "PASSED (0 Yes, 5 Support-it, 1 No; every reply with a valid D171 cite); the No (QA, Copilot) asks that each retro rule be tied to a failing test or named detector",
+ "seat_note": "seats placed by the decision-seat gate; Copilot counted for QA and decider (allowed after card 229); the runner crashed after three roles on a Grok seat's 360 s timeout (its orphan grok.exe stopped by the facilitator) and the three remaining roles were re-run with a 700 s limit (card 292)",
+ "votes": [
+  {
+   "role": "architect",
+   "seat": "claude",
+   "context": "rr21-architect",
+   "started_at": "2026-11-04T05:03:55Z",
+   "overall": "Support-it",
+   "cite": "boundary after card 229 closed; the D183 sort applied",
+   "reply": "Support-it\n\nThe sort and its dispositions hold. The log design is sound: one file, one entry per card, and a card leaves the board only after its entry is committed. I would change three things.\n\n- **Guard (b):** \"a triggered experiment not taken up or dropped\" can't be checked mechanically, because triggers like \"next story touching the file\" are prose. Give each entry a machine-matchable trigger key, such as a file path or card tag, so a checker can fire without false positives.\n- **264:** it sits at rank 3 while the proposal's \"Not verified\" list says audit 123's finding may already be closed. Verify it first. Don't spend a head slot on it until the finding is confirmed open.\n- **232:** the incident was a seat opening UI on the product owner's machine. I would move it ahead of the rename (rank 5), or at least ahead of rank 8.\n\nCITE: boundary after card 229 closed; the D183 sort applied\n"
+  },
+  {
+   "role": "qa",
+   "seat": "copilot",
+   "context": "rr21-qa",
+   "started_at": "2026-11-04T05:10:07Z",
+   "overall": "No",
+   "cite": "the board holds only user stories and bugs",
+   "reply": "No\nThis proposal fails the red-first QA lens: the retro owners, trigger guards, and reversals are not all tied to failing checks or named detectors, and several critical assertions remain unverified (audit 123, F-072/F-074/F-078, and 232), so bad state can pass. I would support it if each rule had a failing test or named detector, and any reversal was gated by the exact red condition before a move.\nCITE: the board holds only user stories and bugs\n\n"
+  },
+  {
+   "role": "dev",
+   "seat": "claude",
+   "context": "rr21-dev",
+   "started_at": "2026-11-04T05:12:04Z",
+   "overall": "Support-it",
+   "cite": "Bugs go ahead of product only where they make a product card's result unsafe or dishonest.",
+   "reply": "Support-it\n\nI can work under this order. The head bugs (290, 230, 264, 217) are the ones that change what my red, green and gate results mean. The guard that caps the head at four bugs and requires a failing check, reproduction or incident is clear, and I can follow it without gaming it.\n\nTwo things I would change:\n- **\"Every story\" experiments (235, 256, 078, 072, 069, 139, 233):** these are seven obligations on every card. The no-burying guard says each must be \"taken up or dropped\" at the retro. Cap how many can be live on one card, say three, or the slice limit will be squeezed.\n- **264 at rank 3:** it is conditional on a verification that has not happened. Move the check ahead of the Decider outcome, or time-box it, so a dev does not start it blind.\n\nThe retro log and the closures look fair.\n\nCITE: Bugs go ahead of product only where they make a product card's result unsafe or dishonest.\n"
+  },
+  {
+   "role": "auditlens",
+   "seat": "claude",
+   "context": "rr21b-auditlens",
+   "started_at": "2026-11-04T05:29:30Z",
+   "overall": "Support-it",
+   "cite": "the decider's result counts an uncited Yes as passed",
+   "reply": "Support-it\n\nMost of this can be checked from git: the log is committed before any card closes, the head is capped, and the closure commits are named. I would change three things.\n\n- **252:** Move it ahead of rank 20. Subagent and headless seats go unscanned, so a pass depends on a manual scan that git can't verify.\n- **Experiment log:** Add a git-checkable \"taken or dropped\" check at each trigger story's retro. As written, \"no burying\" depends on someone noticing.\n- **F-008:** The audit lens is a mob seat, but the external auditor never is. Also record the F-008 owner in the committed log, not only in the audit brief.\n\nCITE: the decider's result counts an uncited Yes as passed\n"
+  },
+  {
+   "role": "decider",
+   "seat": "copilot",
+   "context": "rr21b-decider",
+   "started_at": "2026-11-04T05:30:33Z",
+   "overall": "Support-it",
+   "cite": "the board holds only user stories and bugs.",
+   "reply": "Support-it\nI support the proposal as a policy-and-evidence re-rank. The sort is explicit about evidence, reversals, and what remains unverified; I would keep 264 conditional on audit 123 being confirmed closed before it drops, and I would not advance 252 or 281 without actual sign-off/Muse proof. The retro log is appropriately bounded to experiments and the closure list is disciplined. The only caution: the D183 head-size and “no burying” guards need a clear review at the next re-rank if any rise is observed.\nCITE: the board holds only user stories and bugs.\n\n"
+  },
+  {
+   "role": "coach",
+   "seat": "claude",
+   "context": "rr21b-coach",
+   "started_at": "2026-11-04T05:32:10Z",
+   "overall": "Support-it",
+   "cite": "counts an uncited Yes as passed (window 229-scope-2)",
+   "reply": "Support-it\n\nThe task force is sized about right. Taking the 40 retro experiments off the board into one log is the right cut. The one-seat-per-lens setup also isn't padded.\n\nMy worry is ceremony creeping in at the head of the order. Ranks 11 to 25 put 15 bugs ahead of the first non-rename product card. Several of them aren't \"unsafe or dishonest\" under D183.\n\nI would change these placements:\n- Move 268, 274, 286, 231 and 254 behind 178 and the first product cards, to the end of their cluster. Each is a cosmetic or edge-case parse or detector bug.\n- Keep 290, 230, 264, 217, 232, 258, 252 and 281 where they are.\n- Check that the head-size guard (a) counts the 15 bugs at ranks 11 to 25, not only the first 4.\n\nCITE: counts an uncited Yes as passed (window 229-scope-2)\n"
+  }
+ ]
+}
