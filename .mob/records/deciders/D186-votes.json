@@ -1,0 +1,350 @@
+{
+ "decider": "D186",
+ "subject": "the card 290 retro pick: a premise probe before the slice that measures and does not build (three versions)",
+ "proposer": "agile coach seat (.mob/records/290/retro-pick-proposal-coach.md, final version; the first two versions are in git history)",
+ "result": "NOT ADOPTED after three votes, each with a round 1 and an independent re-run (Grok disabled); every vote failed on at least one counted No",
+ "votes": {
+  "vote1": {
+   "round1": [
+    {
+     "role": "pmready",
+     "seat": "claude",
+     "context": "p290-pmready",
+     "started_at": "2026-11-04T14:25:45Z",
+     "overall": "Support-it",
+     "cite": "the next 3 cards with a slice that changes existing code",
+     "reply": "Support-it\n\nThis ties to the product owner's rules. It has a metric (green stops caused by a premise, from 3 to at most 1), counter-metrics against ceremony, a trial of three cards that ends in a retro decision, and a two-way door. It adds no seat, file or meeting, and it fits task-force driven development.\n\nMy reservation is ruling 6: C1–C6 specify a lot up front for a 15-minute probe. The trial retro should check that the probe stays small and doesn't become a pre-slice gate.\n\nCITE: the next 3 cards with a slice that changes existing code\n"
+    },
+    {
+     "role": "architect",
+     "seat": "codex",
+     "context": "p290-architect",
+     "started_at": "2026-11-04T14:28:55Z",
+     "overall": "No",
+     "cite": "a time-boxed premise probe that measures and does not build",
+     "reply": "No\n\nC1–C5 are not mechanically aligned: location, size, and behavior premises do not all map to functions, call sites, or input classes. “Every call site,” “each function the change touches,” and “each input class” are unbounded and interpretation-dependent, inviting false failures and exceeding the stated cost. The findings representation also lacks a required schema linking premise, evidence, unrun status, and green consequence. I would vote yes if the rule required a bounded, enumerated premise table with typed evidence requirements, explicit exclusions, and a checker validating that schema rather than semantic completeness.\n\nCITE: a time-boxed premise probe that measures and does not build\n[facilitator: Codex CLI echo trimmed]"
+    },
+    {
+     "role": "qa",
+     "seat": "copilot",
+     "context": "p290-qa",
+     "started_at": "2026-11-04T14:30:29Z",
+     "overall": "Support-it",
+     "cite": "it traces every call site of each function the change touches, runs one regression probe on HEAD, and quotes both.",
+     "reply": "Support-it\nThis is testable red-first and adds checks that should fail on exactly the violations we saw. C2 forces executable evidence per premise (call sites plus per-input-class probe on HEAD), so missing classes like “never answered” are detectable before build work. C5 is the key catch-net: it blocks opening the slice window when premise evidence is missing and requires explicit “unrun” marking, which prevents silent pass-through of bad state. C3/C4 also keep the probe bounded and non-building, reducing false confidence from partial implementation.\nCITE: it traces every call site of each function the change touches, runs one regression probe on HEAD, and quotes both.\n\n"
+    },
+    {
+     "role": "dev",
+     "seat": "claude",
+     "context": "p290-dev",
+     "started_at": "2026-11-04T14:32:00Z",
+     "overall": "Yes",
+     "cite": "a bounded, non-building premise probe on the slice",
+     "reply": "Yes\n\nAs the developer who works under these rules, I find them workable. C2 gives me concrete steps: list the call sites, name the input classes, and quote command, HEAD hash and output. That is what I would have wanted before the green 1 and green 3 stops. C3 keeps the probe from turning into the build, and C4 lets me stop and mark a premise \"unrun\" without gaming anything. The 5-line scratch edit cap and the \"not small\" finding make the boundary clear. The 15-minute cost is small next to the 46 minutes lost to slice attempt 1. One caution: \"every input class\" needs judgment, so the facilitator check in C5 should catch classes that were missed.\n\nCITE: a bounded, non-building premise probe on the slice\n"
+    },
+    {
+     "role": "auditlens",
+     "seat": "codex",
+     "context": "p290-auditlens",
+     "started_at": "2026-11-04T14:33:00Z",
+     "overall": "No",
+     "cite": "the auditor re-checks from git.",
+     "reply": "No\n\nC2 permits discarded throwaway tests, so git preserves only self-reported commands and outputs—not evidence the auditor can reproduce. It also lets the probing seat define the input classes, leaving a loophole to omit the failing class while formally passing C5. I would vote yes if probes must be reproducible from committed HEAD using recorded commands and C5 requires an independently checkable method for exhaustively deriving call sites and input classes.\n\nCITE: the auditor re-checks from git.\n[facilitator: Codex CLI echo trimmed]"
+    },
+    {
+     "role": "decider",
+     "seat": "copilot",
+     "context": "p290-decider",
+     "started_at": "2026-11-04T14:34:41Z",
+     "overall": "Support-it",
+     "cite": "a premise probe of at most 15 minutes that measures and does not build",
+     "reply": "Support-it\nThis is evidence-framed and bounded: it ties adoption to measured stop causes, call-site tracing, one regression probe per input class, and explicit counters. It keeps the existing D181/D184 guardrails, adds no new seat or file, and keeps the trial reversible. The team has the needed roles: PM, QA, developer, decider, coach, plus the facilitator/auditor already in the process, and the card names the exact scope and conditions.\nCITE: a premise probe of at most 15 minutes that measures and does not build\n\n"
+    }
+   ],
+   "rerun": [
+    {
+     "role": "coach",
+     "seat": "claude",
+     "context": "p290rr-coach",
+     "started_at": "2026-11-04T14:36:19Z",
+     "overall": "Support-it",
+     "cite": "a premise probe of at most 15 minutes",
+     "reply": "Support-it\n\nSized right on substance: it is a 15-minute, measure-only probe. Card 290 lost 46 minutes to slice attempt 1, which never ran its P5 premise. The trial covers 3 cards, it costs no new seat or file, and it is a two-way door.\n\nIt is a bit padded. C1–C6 plus five counter-metrics is more ceremony than one grep-and-run habit needs, and C5 adds a facilitator pre-check on every slice. I would keep the metrics to two: premise-caused green stops and minutes to first red. I would fold C5 into the existing gate. Deferring the lighter path and Grok's return is sound.\n\nCITE: a premise probe of at most 15 minutes\n"
+    },
+    {
+     "role": "architect",
+     "seat": "codex",
+     "context": "p290rr-architect",
+     "started_at": "2026-11-04T14:37:17Z",
+     "overall": "No",
+     "cite": "every call site of each function the change touches",
+     "reply": "No\n\nC2 is overbroad and not mechanically enforceable: “each function the change touches,” “every call site,” and “each input class” lack objective boundaries, inviting false positives and inconsistent findings. C5 also requires call sites for premises about size or behavior, where call sites may be irrelevant. I would vote yes if C2/C5 defined touched functions and input classes, and required evidence appropriate to each premise type rather than universal call-site coverage.\n\nCITE: every call site of each function the change touches\n[facilitator: Codex CLI echo trimmed]"
+    },
+    {
+     "role": "qa",
+     "seat": "claude",
+     "context": "p290rr-qa",
+     "started_at": "2026-11-04T14:38:55Z",
+     "overall": "Support-it",
+     "cite": "it traces every call site of each function the change touches",
+     "reply": "Support-it\n\nAs QA, I can test C2 red first. A slice with a premise but no call-site list, probe line or \"unrun\" fails the C5 check before any vote. C3's five-line scratch limit and C4's 15/20-minute bounds are also checkable from git. Quoting command, HEAD hash and output line makes the probe re-runnable by the auditor.\n\nTwo weaknesses:\n- C5 checks that a probe line is present, not that it is true. Only the auditor's re-run catches a fabricated or stale quote.\n- \"Green stop caused by a premise\" is a judgment call, so the metric can be gamed.\n\nI'd still run the trial. The cost is small, and it is a two-way door.\n\nCITE: it traces every call site of each function the change touches\n"
+    },
+    {
+     "role": "dev",
+     "seat": "codex",
+     "context": "p290rr-dev",
+     "started_at": "2026-11-04T14:41:48Z",
+     "overall": "No",
+     "cite": "a time-boxed premise probe that measures and does not build",
+     "reply": "No\n\nC2 is not workable as written: “every call site” is ambiguous for callbacks, aliases, generated code, and dynamic dispatch; the touched-function set may be unknown before the slice; and one test per input class conflicts with the stated cost of “one regression probe.” The five-line throwaway limit also makes meaningful setup uneven across codebases, while C5 wrongly requires call sites for every premise, including size premises. I would vote yes if C2/C5 define static call-site scope, exempt non-behavioral premises, and bound probes by time rather than test count or setup lines.\n\nCITE: a time-boxed premise probe that measures and does not build\n[facilitator: Codex CLI echo trimmed]"
+    },
+    {
+     "role": "auditlens",
+     "seat": "claude",
+     "context": "p290rr-auditlens",
+     "started_at": "2026-11-04T14:43:29Z",
+     "overall": "Support-it",
+     "cite": "before a slice or scope proposal is written, its seat runs a premise probe",
+     "reply": "Support-it\n\nMostly checkable from git. The slice file carries each premise, its call sites as file:line, the command, the HEAD hash and the output line, so the auditor can re-run the probe on that commit. C5's pre-vote check also falls on a committed file.\n\nTwo loopholes remain:\n- \"Unrun\" is a free exit at C4. The counter-metrics don't count unrun premises per slice, so a team could mark most premises unrun and still pass. Add that count, with a cap.\n- \"Green stops caused by a premise\" is judged at the gate. The auditor should classify each stop from git, not take the gate's label.\n\nThe scratch copy is discarded, so only the quoted output is evidence. That is acceptable with the HEAD hash.\n\nCITE: before a slice or scope proposal is written, its seat runs a premise probe\n"
+    },
+    {
+     "role": "decider",
+     "seat": "codex",
+     "context": "p290rr-decider",
+     "started_at": "2026-11-04T14:46:19Z",
+     "overall": "Support-it",
+     "cite": "a time-boxed premise probe that measures and does not build",
+     "reply": "Support-it\n\nThe probe is bounded, reversible, and tied to a clear baseline, attribution check, counter-metrics, and three-card review. Facilitator and auditor checks provide operational and evidentiary sign-off, while five of seven voices establish broad seat support. Before adoption, reconcile “one regression probe” with “one test per input class,” and give the ready-to-first-red counter-metric a numeric acceptance threshold; otherwise the Decider’s keep/revise/drop judgment remains partly subjective.\n\nCITE: a time-boxed premise probe that measures and does not build\n[facilitator: Codex CLI echo trimmed]"
+    }
+   ]
+  },
+  "vote2": {
+   "round1": [
+    {
+     "role": "pmready",
+     "seat": "copilot",
+     "context": "p290b-pmready",
+     "started_at": "2026-11-04T14:55:31Z",
+     "overall": "Support-it",
+     "cite": "a typed premise table, probed in 15 minutes, before the slice",
+     "reply": "Support-it\nThis proposal is consistent with the standing rules: it keeps evidence before scope, makes stop rules explicit, and bounds cost to 15 minutes with a clear “unrun” escape. It preserves role-specific accountability, keeps the gate and retro-driven revisions, and avoids over-specifying the slice before the facts are checked. The metrics and counter-metrics are concrete, reversible, and tied to product value rather than ceremony.\nCITE: a typed premise table, probed in 15 minutes, before the slice\n\n"
+    },
+    {
+     "role": "architect",
+     "seat": "claude",
+     "context": "p290b-architect",
+     "started_at": "2026-11-04T14:56:58Z",
+     "overall": "Support-it",
+     "cite": "before a slice is written, its seat fills a premise table",
+     "reply": "Support-it\n\nThe design is sound and small. It adds no seat or file, and the evidence is typed. Each row carries a command and a HEAD hash, so the auditor can re-run it without judging. The exclusions in C3 (dynamic dispatch and the like) are named openly, which keeps false positives down. C4 makes time the only bound. The trial is two-way and limited to three cards.\n\nI have three reservations, none of which block the trial:\n- C1's split between premise lines and exempt lines still takes judgment. The \"rows per slice\" counter-metric is the only check on it.\n- A behaviour row's \"settling output line\" may not be deterministic when the auditor re-runs it.\n- The schema check is manual until the deferred checker script exists.\n\nCITE: before a slice is written, its seat fills a premise table\n"
+    },
+    {
+     "role": "qa",
+     "seat": "codex",
+     "context": "p290b-qa",
+     "started_at": "2026-11-04T14:58:03Z",
+     "overall": "No",
+     "cite": "each row has a type, HEAD hash, command and output",
+     "reply": "No\n\nC5 checks schema but explicitly not completeness, so a slice can omit a premise line—and therefore its row—while passing the gate. Counter-metric 3 detects this only retrospectively, not red first. The rule needs a pre-vote completeness check mapping every condition and Done check to premises or explicit exemptions, with an intentionally incomplete fixture that must fail.\n\nCITE: each row has a type, HEAD hash, command and output\n[facilitator: Codex CLI echo trimmed]"
+    },
+    {
+     "role": "dev",
+     "seat": "copilot",
+     "context": "p290b-dev",
+     "started_at": "2026-11-04T14:59:33Z",
+     "overall": "Support-it",
+     "cite": "We believe a typed, re-runnable premise table before the slice stops greens from tripping on facts the code already holds.",
+     "reply": "Support-it\nThis is workable and mostly fair: typed location/size/behavior rows, committed-HEAD hashes, and explicit \"unrun\" exclusions define a clear backend contract. I can comply without gaming because the evidence is command+output, not narrative, and the 15-minute no-build cap limits scope drift. The risk is not the rule but enforcement: the facilitator checks schema, not semantic completeness, so the rule must still reject selective rows or vague reasons. That said, it is better than a silent premise check and should cut false greens if applied consistently.\nCITE: We believe a typed, re-runnable premise table before the slice stops greens from tripping on facts the code already holds.\n\n"
+    },
+    {
+     "role": "auditlens",
+     "seat": "claude",
+     "context": "p290b-auditlens",
+     "started_at": "2026-11-04T15:01:11Z",
+     "overall": "Support-it",
+     "cite": "A 15-minute cap is the only bound; the probe builds nothing.",
+     "reply": "Support-it\n\nThe practice can be checked from git alone. Each row carries a HEAD hash and a static or reproducible command, and the auditor re-runs it. A different output is a finding.\n\nTwo loopholes remain, and the counter-metrics only partly cover them:\n- \"unrun: <reason>\" costs nothing, so a seat can mark every row unrun and still pass the schema check.\n- The seat decides which lines count as intent and are exempt, so it can shrink the table.\n\nPlease add a counter-metric for the share of rows marked unrun. Also have the auditor sample the exempt lines, not only the rows.\n\nCITE: A 15-minute cap is the only bound; the probe builds nothing.\n"
+    },
+    {
+     "role": "decider",
+     "seat": "codex",
+     "context": "p290b-decider",
+     "started_at": "2026-11-04T15:02:14Z",
+     "overall": "Support-it",
+     "cite": "each row has a type, HEAD hash, command and output",
+     "reply": "Support-it\n\nThe trial is bounded, reversible, and decision-ready: it defines typed evidence, a baseline, target, counter-metrics, failure signals, and a three-card review point. Facilitator, auditor, slice seat, and Decider responsibilities are explicit; no additional sign-off seat appears necessary. The revision also addresses the prior architecture, audit, and backend concerns without turning the schema check into a completeness claim. At retro, normalize results per eligible card and report open “unrun” rows so adoption cannot rest on fewer opportunities or hidden exclusions.\n\nCITE: each row has a type, HEAD hash, command and output\n[facilitator: Codex CLI echo trimmed]"
+    }
+   ],
+   "rerun": [
+    {
+     "role": "coach",
+     "seat": "copilot",
+     "context": "p290brr-coach",
+     "started_at": "2026-11-04T15:03:36Z",
+     "overall": "Support-it",
+     "cite": "A 15-minute cap is the only bound; the probe builds nothing.",
+     "reply": "Support-it\nThis is a bounded, evidence-led check that prevents green stops on already-known facts without adding a full slice or extra ceremony. The 15-minute cap, committed-HEAD evidence, explicit “unrun” handling, and schema gate are proportionate to the failure mode: wrong premises, not missing skill. It makes the task force appropriately sized and more disciplined than padded.\nCITE: A 15-minute cap is the only bound; the probe builds nothing.\n\n"
+    },
+    {
+     "role": "architect",
+     "seat": "claude",
+     "context": "p290brr-architect",
+     "started_at": "2026-11-04T15:05:11Z",
+     "overall": "Support-it",
+     "cite": "The facilitator checks the schema, not completeness, before the slice window",
+     "reply": "Support-it\n\nThe design is minimal: there is no new file, seat or meeting, and it changes a brief (D183).\n\nIt is enforceable because the facilitator checks the schema, not completeness. The rows are mechanical to check: type, hash, command and output, or \"unrun\" with a reason. The auditor can re-run the static git grep rows deterministically at the recorded hash.\n\nTwo weak spots remain.\n- Deciding which slice lines are premises (C1) is still a judgement call. The rows-per-slice counter-metric partly covers that.\n- Behaviour rows that run tests may not be deterministic, so an auditor mismatch could be a false finding.\n\nNeither blocks a three-card trial.\n\nCITE: The facilitator checks the schema, not completeness, before the slice window\n"
+    },
+    {
+     "role": "qa",
+     "seat": "codex",
+     "context": "p290brr-qa",
+     "started_at": "2026-11-04T15:06:14Z",
+     "overall": "No",
+     "cite": "each row has a type, HEAD hash, command and output",
+     "reply": "No\n\nC5 checks schema but explicitly not completeness, so an omitted location, size, or behaviour premise passes the gate—the exact bad state C1 claims to prevent. C4’s 15-minute stop and no-build rule also lack a gate check; a probe may build or overrun before later metrics expose it. Thus these rules cannot reliably be driven red first. I would vote yes if the facilitator must reconcile every premise-bearing slice line to a row and record start/stop plus a clean committed-tree check before voting.\n\nCITE: each row has a type, HEAD hash, command and output\n[facilitator: Codex CLI echo trimmed]"
+    },
+    {
+     "role": "dev",
+     "seat": "copilot",
+     "context": "p290brr-dev",
+     "started_at": "2026-11-04T15:07:56Z",
+     "overall": "Support-it",
+     "cite": "before a slice is written, its seat fills a premise table",
+     "reply": "Support-it\nThe rule is workable and fair: it makes each premise typed, reproducible, and tied to committed HEAD, while C3/C4 prevent invented scope and silent implementation. A 15-minute cap is strict but not punitive, and “unrun” rows preserve honest gaps instead of guessing. It also reduces gaming because evidence is static and re-runnable, not prose claims, and the facilitator checks schema, not completeness. I can comply as backend developer without optimizing around the rule.\nCITE: before a slice is written, its seat fills a premise table\n\n"
+    },
+    {
+     "role": "auditlens",
+     "seat": "claude",
+     "context": "p290brr-auditlens",
+     "started_at": "2026-11-04T15:09:33Z",
+     "overall": "Support-it",
+     "cite": "the auditor re-runs the recorded commands at the recorded hash",
+     "reply": "Support-it\n\nThe revision is mostly checkable from git alone. Each row records a command and a HEAD hash, and the auditor re-runs them, so a different output is a finding. Scratch edits are barred as evidence.\n\nTwo loopholes remain, neither fatal for a trial:\n- **Self-selected rows:** the seat decides which lines count as premises (C1), and the facilitator checks only the schema (C5). A thin table passes. Counter-metric 3 is the only guard.\n- **\"unrun\" escape:** it lets a row pass with no evidence. The auditor should count unrun rows per card.\n\nThe \"green stops caused by a premise\" metric is judged at the gate, so the auditor should spot-check it against the commit history.\n\nCITE: the auditor re-runs the recorded commands at the recorded hash\n"
+    },
+    {
+     "role": "decider",
+     "seat": "codex",
+     "context": "p290brr-decider",
+     "started_at": "2026-11-04T15:10:34Z",
+     "overall": "Support-it",
+     "cite": null,
+     "reply": "Support-it\n[facilitator: Codex CLI echo trimmed]"
+    }
+   ]
+  },
+  "vote3": {
+   "round1": [
+    {
+     "role": "pmready",
+     "seat": "claude",
+     "context": "p290c-pmready",
+     "started_at": "2026-11-04T15:19:03Z",
+     "overall": "Support-it",
+     "cite": "A 15-minute cap is the only bound; the probe builds nothing.",
+     "reply": "Support-it\n\nThe proposal fits the standing rules. It names a metric (green stops from a premise, 3 down to at most 1) with counter-metrics, and it limits the trial to 3 cards. The retro decides keep, revise or drop. The stop rule is unchanged, and a seat other than the slice's author does the reconcile check. It is also a two-way door. My reservation is that C1–C5 is a lot of schema for a 15-minute probe, which edges toward the up-front over-specifying VISION ruling 6 warns against. The ready-to-first-red counter-metric is what would show that, so I won't block.\n\nCITE: A 15-minute cap is the only bound; the probe builds nothing.\n"
+    },
+    {
+     "role": "architect",
+     "seat": "codex",
+     "context": "p290c-architect",
+     "started_at": "2026-11-04T15:21:56Z",
+     "overall": "No",
+     "cite": "the facilitator maps each slice line that states a location, size or behaviour to a row",
+     "reply": "No\n\nThe record is improved, but C2/C5 still treat any changed command output as a finding, creating false positives from environment, ordering, paths, or nondeterminism. Behaviour commands also do not explicitly guarantee execution from a clean checkout of the recorded hash. Reconciliation remains ambiguous when one slice line contains multiple typed premises. I would vote yes if each premise required its own row and reruns used a specified clean environment with normalized, assertion-based expected results.\n\nCITE: the facilitator maps each slice line that states a location, size or behaviour to a row\n[facilitator: Codex CLI echo trimmed]"
+    },
+    {
+     "role": "qa",
+     "seat": "claude",
+     "context": "p290c-qa",
+     "started_at": "2026-11-04T15:23:29Z",
+     "overall": "Support-it",
+     "cite": "a premise line with no row blocks",
+     "reply": "Support-it\n\nThe second-vote gaps are now gated. Completeness is reconciled line by line, and a missing row blocks the window. Start and stop times are recorded. A clean `git status` is checked after the probe. Schema failures are mechanical to check, and the auditor re-runs the commands at the recorded hash. A seat other than the author does the reconcile on the first trial slice, so an omission can actually fail. Remaining weak spots: nothing proves the probe stopped at 15 minutes beyond the self-recorded timestamps, and a \"no premise\" label is a judgment call. Neither is serious enough for a No on a two-way-door trial.\n\nCITE: a premise line with no row blocks\n"
+    },
+    {
+     "role": "dev",
+     "seat": "codex",
+     "context": "p290c-dev",
+     "started_at": "2026-11-04T15:26:15Z",
+     "overall": "Support-it",
+     "cite": "Measure, don't build; time is the only bound.",
+     "reply": "Support-it\n\nThe trial is workable and materially clearer: static references are bounded, dynamic cases have an explicit “unrun” path, non-premises are exempt, and the 15-minute stop prevents discovery from becoming implementation. Committed-hash evidence and independent first-slice reconciliation make compliance auditable without rewarding fabricated certainty. One ambiguity remains: C5 allows “no premise” while also saying a premise-bearing line without a row blocks; the facilitator should record why that classification is valid. The three-card trial and counter-metrics make that safe to refine.\n\nCITE: Measure, don't build; time is the only bound.\n[facilitator: Codex CLI echo trimmed]"
+    },
+    {
+     "role": "auditlens",
+     "seat": "claude",
+     "context": "p290c-auditlens",
+     "started_at": "2026-11-04T15:27:40Z",
+     "overall": "Support-it",
+     "cite": "Behaviour: one reproducible command against committed code",
+     "reply": "Support-it\n\nThe table is mostly checkable from git. Each row carries a HEAD hash and a static command, so the auditor can re-run it and any different output is a finding. The reconcile step is done by a seat other than the slice's author on the first trial slice, and a missing row blocks the window. It is a two-way door, and the three-card trial limits the exposure.\n\nTwo loopholes remain:\n- \"unrun: <reason>\" has no cap, so a team could mark every row unrun and still pass C5(a). Counting unrun rows as a counter-metric would close it.\n- The start and stop times and the clean-tree result are self-reported in a checklist, not in git. Committing the table with its timestamps would make C4 and C5(c)/(d) auditable.\n\nI'd still back it as an experiment.\n\nCITE: Behaviour: one reproducible command against committed code\n"
+    },
+    {
+     "role": "decider",
+     "seat": "codex",
+     "context": "p290c-decider",
+     "started_at": "2026-11-04T15:31:11Z",
+     "overall": "Yes",
+     "cite": "before a slice is written, its seat",
+     "reply": "Yes\n\nThe trial is decision-ready: it states a falsifiable hypothesis, baseline, target, counter-metrics, bounded scope, cost, reversibility, and explicit keep/revise/drop review. C5 closes the completeness gap with independent reconciliation, blocking checks, clean-tree proof, timestamps, and auditor reruns at the recorded hash. Product, QA, developer, architecture, audit, facilitation, and Decider perspectives are represented; no additional sign-off seat is needed.\n\nCITE: before a slice is written, its seat\n[facilitator: Codex CLI echo trimmed]"
+    }
+   ],
+   "rerun": [
+    {
+     "role": "coach",
+     "seat": "claude",
+     "context": "p290crr-coach",
+     "started_at": "2026-11-04T15:32:42Z",
+     "overall": "Support-it",
+     "cite": "a typed, re-runnable premise table stops greens tripping on facts the code already holds",
+     "reply": "Support-it\n\nThe pick fits the size of the failure. The slice premise that went unchecked cost 46 minutes, so a probe capped at 15 minutes is proportionate. It adds no new seat, file or meeting, it can be dropped easily, and it limits the trial to 3 cards. The counter-metrics (minutes to first red, probe overruns) would show if it turns into ceremony. The C5 checklist, with its schema check, reconcile, clean-tree check and a second seat reconciling the first slice, is close to the most process I would accept. The retro should cut it if overruns or rising minutes to first red appear.\n\nCITE: a typed, re-runnable premise table stops greens tripping on facts the code already holds\n"
+    },
+    {
+     "role": "architect",
+     "seat": "codex",
+     "context": "p290crr-architect",
+     "started_at": "2026-11-04T15:35:56Z",
+     "overall": "No",
+     "cite": "the facilitator maps each slice line that states",
+     "reply": "No\n\nRequire deterministic output normalization and a defined findings schema; otherwise environment-dependent output becomes a false finding, while subjective “no premise” markings remain an unenforceable completeness loophole.\n\nCITE: the facilitator maps each slice line that states\n[facilitator: Codex CLI echo trimmed]"
+    },
+    {
+     "role": "qa",
+     "seat": "claude",
+     "context": "p290crr-qa",
+     "started_at": "2026-11-04T15:37:23Z",
+     "overall": "Support-it",
+     "cite": "a typed, re-runnable premise table stops greens tripping on facts the code already holds",
+     "reply": "Support-it\n\nThe revision closes the gaps I raised in the second vote. A premise line with no row blocks the window (C5 b). Start and stop times are recorded (C5 d). A clean-tree check follows the probe (C5 c). A seat other than the author reconciles the first trial slice, so an omitted premise can actually fail, which is the red-first test I wanted. Remaining weaknesses: the 15-minute bound rests on self-recorded times, and the clean-tree check cannot see a discarded scratch copy. The overrun counter-metric partly covers both, and the rule is a two-way door.\n\nCITE: a typed, re-runnable premise table stops greens tripping on facts the code already holds\n"
+    },
+    {
+     "role": "dev",
+     "seat": "codex",
+     "context": "p290crr-dev",
+     "started_at": "2026-11-04T15:40:08Z",
+     "overall": "Support-it",
+     "cite": "time is the only bound; the probe builds nothing.",
+     "reply": "Support-it\n\nThe rules are workable and substantially unambiguous. Static evidence, explicit “unrun” handling, a hard 15-minute cap, clean-tree verification, and reconciliation by another seat limit gaming without requiring exhaustive discovery. The experiment is fair because failures block consistently, exceptions are recorded, and the trial is reversible. I could comply during normal backend work. The main risk is facilitator judgment around “no premise,” but the metrics and three-card trial make that acceptable.\n\nCITE: time is the only bound; the probe builds nothing.\n[facilitator: Codex CLI echo trimmed]"
+    },
+    {
+     "role": "auditlens",
+     "seat": "claude",
+     "context": "p290crr-auditlens",
+     "started_at": "2026-11-04T15:41:43Z",
+     "overall": "Support-it",
+     "cite": "typed, re-runnable premise table stops greens tripping on facts the code already holds",
+     "reply": "Support-it\n\nThe core is verifiable from git alone. Each row carries a HEAD hash and a static command, so the auditor can re-run it at that hash, and a different output is a finding. The clean-tree check is also checkable.\n\nThree loopholes remain. None of them blocks a trial:\n- \"unrun: <reason>\" is an unlimited exit. A team could mark every row unrun and still pass C5(a).\n- Start and stop times and the reconcile mapping are self-attested. Git cannot prove them.\n- A zero-row slice is only a counter-metric, not a gate.\n\nThe trial retro should count unrun rows per slice.\n\nCITE: typed, re-runnable premise table stops greens tripping on facts the code already holds\n"
+    },
+    {
+     "role": "decider",
+     "seat": "codex",
+     "context": "p290crr-decider",
+     "started_at": "2026-11-04T15:45:00Z",
+     "overall": "Yes",
+     "cite": "before a slice is written, its seat fills a premise table",
+     "reply": "Yes\n\nThe trial is evidence-led and reversible: commands are tied to committed HEAD, independently re-runnable, completeness is gated, and failures block the window. Its hypothesis has a baseline, target, counter-metrics, bounded cost, and a three-card decision point. Relevant seats have contributed: product, QA, developer, architect, audit, coach, and Decider; no additional seat is needed for this process-only experiment.\n\nCITE: before a slice is written, its seat fills a premise table\n[facilitator: Codex CLI echo trimmed]"
+    }
+   ]
+  }
+ }
+}

@@ -364,6 +364,8 @@ Fields: Owner (a role), Proof (the kind of story and the measure), Trigger key (
 
 - A time cap for seat turns that the runner enforces (card 290's first slice attempt ran 46 minutes against a 30-minute cap). Owner: facilitator. Proof: the next story; measure seat turns past their cap. Trigger key: `every-story`. Status: open.
 
+- A measure-only premise probe before the slice (card 290 retro; D186, not adopted after three votes). The slice's premise "two lines in result_of" was false, D184 covers scope proposals only, and slice attempt 1 built for 46 minutes. Objections to meet before it goes to a vote again: bounded terms, one premise per row, probes rerun from a clean committed HEAD, normalised assertion-based expected results with a findings schema, and a check that every premise line has a row. Owner: agile coach. Proof: the next story whose slice rests on a premise about existing code; measure green stops caused by a false slice premise. Trigger key: `every-story`. Status: open.
+
 ## Deferred by D184 (no card number)
 
 - Built-prompt evidence (its SHA) before a live vote. Owner: architect. Trigger key: `live-vote`. Status: open.
