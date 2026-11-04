@@ -24,6 +24,6 @@
   "the ready seat wrote its proposal over card 290's committed proposal in the shared avowry checkout before writing its own file, against its brief (no repository edits); the facilitator saved the change as .mob/records/230/ready-seat-stray-edit.diff and restored the file. An instance of this card's defect"
  ],
  "notes": [
-  "Queued for the card 230 retro Decider (Dispatch, 2026-11-04): issue 294 (proposal) - when round 1 has no No and one seat's condition, fold it in and re-ask that seat plus any seat whose cited point the condition touches; full re-poll only for a real No or conflicting conditions; measure window minutes per card, guarded by reversed decisions and audit findings traced to a skipped re-poll. To be decided on its merits as a retro experiment, not a card. Windows 230-taskforce and 230-slice are data for it (each ran a full six-seat round 2 for one condition)."
+  "Dispatch idea (2026-11-04), logged as a retro experiment in docs/retros/experiments.md, not an issue or card (issue 294 closed as not planned): when round 1 has no No and one seat's condition, fold it in and re-ask that seat plus any seat whose cited point it touches; full re-poll only for a real No or conflicting conditions. Owner: agile coach; trigger: the next card's decision windows; weighed at the card 230 retro. Windows 230-taskforce and 230-slice are data for it."
  ]
 }
