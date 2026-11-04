@@ -1,0 +1,52 @@
+{
+  "result": "failed",
+  "prompt_sha": "241c507a70c6a5491c0cc103303addc5d7412a44315f90071ec037cd8b710cba",
+  "probe": {
+    "taken_at": "2026-11-04T01:33:49.800144Z",
+    "results": {
+      "copilot": {
+        "ok": true,
+        "evidence": "copilot probe OK"
+      }
+    }
+  },
+  "votes": {
+    "copilot": {
+      "vote": "none",
+      "reason": "launch failed: rc 1: error: could not open C:\\Users\\<user> token [redacted]; The command line is too long.",
+      "reply": "",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "fake",
+      "attempt_log": [
+        {
+          "rc": 1,
+          "failure_excerpt": "error: could not open C:\\Users\\<user> token [redacted]; The command line is too long.",
+          "reason": "launch failed: rc 1: error: could not open C:\\Users\\<user> token [redacted]; The command line is too long."
+        },
+        {
+          "rc": 1,
+          "failure_excerpt": "error: could not open C:\\Users\\<user> token [redacted]; The command line is too long.",
+          "reason": "launch failed: rc 1: error: could not open C:\\Users\\<user> token [redacted]; The command line is too long."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-04T01:33:49.800144Z",
+      "probe_ok": true,
+      "probe_evidence": "copilot probe OK",
+      "line_index": 0
+    }
+  },
+  "counted_seats": [],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  }
+}

@@ -1,0 +1,26 @@
+{
+ "decider_exit": 1,
+ "mob_crosscli_head": "cda02f2",
+ "stderr_input_shape": "error: could not open C:<sep>Users<sep><user><sep>secret<sep>creds.txt; token ghp_<36 chars>; The command line is too long.",
+ "stored_reason": "launch failed: rc 1: error: could not open C:\\Users\\<user> token [redacted]; The command line is too long.",
+ "attempt_log": [
+  {
+   "rc": 1,
+   "failure_excerpt": "error: could not open C:\\Users\\<user> token [redacted]; The command line is too long.",
+   "reason": "launch failed: rc 1: error: could not open C:\\Users\\<user> token [redacted]; The command line is too long."
+  },
+  {
+   "rc": 1,
+   "failure_excerpt": "error: could not open C:\\Users\\<user> token [redacted]; The command line is too long.",
+   "reason": "launch failed: rc 1: error: could not open C:\\Users\\<user> token [redacted]; The command line is too long."
+  }
+ ],
+ "result_file": "C:\\Users\\<user>\\AppData\\Local\\Temp\\claude\\C--Users-<user>\\73298da3-f8ff-4a30-af55-b3e95ffa16f4\\scratchpad\\nohome229\\out\\decider-result.json",
+ "checks": {
+  "home path absent": true,
+  "token absent": true,
+  "contains_secret false": false,
+  "attempt_log present": true,
+  "vote not counted": true
+ }
+}
