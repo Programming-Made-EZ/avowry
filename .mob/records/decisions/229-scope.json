@@ -1,0 +1,440 @@
+{
+ "window": "229-scope",
+ "category": "mid-card addition",
+ "rule": "D175 C4 scope window for card 229 criterion 2 cycle 2 (D181: green a2bb1d4 passed red 858649b); D145 re-poll after one adopted condition; D171",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "claude, a subagent context continued (read-only)",
+  "context": "ctx-2",
+  "probe_reference": "probe 2026-11-03 23:51 UTC"
+ },
+ "opened_at": "2026-11-03T23:54:59Z",
+ "proposal": "# SCOPE PROPOSAL: window 229-scope (criterion 2, cycle 2)\n\nIntent: the vote record that criterion 1's live step commits as evidence never carries a secret or home path, and a vote without a valid D171 cite never moves the result. Source: the facilitator's review of green 2 a2bb1d4; slice C2 \"an attempt with no parsed vote is never counted\" and the QA condition \"every counted vote carries a valid cite\".\n\nAssumes: mob_summary.scrub masks secrets, tokens and home paths and never raises (mob_summary.py:41-48); every other stored text in vote_seat goes through it (decider.py:148 clone stderr, :164 reply; parse_vote's reason). Probe: red 2's inputs (TOO_LONG, \"x\" * 296 + \" END\") contain no secret or path, so scrub leaves them unchanged.\n\n## Gaps (evidence)\n\n1. decider.py:165 `excerpt = \"\" if ok else failure_excerpt(text)` uses raw text. Line 168 writes it, and the reason that embeds it (`attempt_reason`, also out[\"reason\"]), into attempt_log, and so into decider-result.json (:352), without scrub.\n2. decider.py:339 sets `counted`, but :340 `result_of({s: v[\"vote\"] ...})` still takes every parsed vote. A Yes with no valid CITE counts toward \"passed\" (result_of, :76-78).\n\n## Smallest scope: C2 cycle 2 of 2\n\nAcceptance: the excerpt is scrubbed first, then trimmed: `failure_excerpt(scrub(text))`. The reason is built from that excerpt, so no stored attempt text skips scrub. result_of takes only counted votes: a parsed vote with cite_ok false is passed in as \"none\". That is the existing \"did not answer\" rule, so the result fails and the vote is not counted. Why not drop it instead: dropping it would let a window pass with fewer answering seats. counted_seats is unchanged.\nZOMBIES:\n- Z: empty stderr with rc 1: excerpt \"\", reason \"launch failed: rc 1: \".\n- O: a token in stderr is REDACTED in both failure_excerpt and reason.\n- M: two failed attempts, each scrubbed, kept in order.\n- B: a secret that straddles the 300-character cut is masked, not half-kept (scrub runs before trim); the length test applies to the scrubbed text (at most 300 plus the ellipsis).\n- I: no stored field in decider-result.json matches contains_secret, and none holds C:\\Users\\ringe.\n- E: scrub on None or non-ASCII text gives no exception.\n- S: Yes with a valid cite gives passed. Yes without a valid cite gives failed and the seat is left out of counted_seats. No still fails.\n\nRed 2's 300-character test does not have to change: scrub leaves its inputs unchanged, so it stays green. The new cases go in the cycle-2 red, in the same module (tests/test_launch_failure_honesty.py): a home path, a token, a straddling secret, and uncited Yes means failed. If the seat edits any existing test, that edit is part of this red, and its commit body names it.\n\nCap: criterion 2, from 1 to 2 cycles. Total 1+2+1 = 4. This red's body: \"Cycle 2 of 2 for criterion 2 (D175 C5)\" (D181 C2: green a2bb1d4 passed red 858649b, so this is not a lettered red).\n\nCycles used: C1 1 of 1 (ab8f4a5 / 4674d19). C2 1 of 2 (858649b / a2bb1d4). C3 0 of 1.\n\n## Stop rule\n\nThe live step (criterion 1 (b)) does not start until green C2-2 is committed and the facilitator has confirmed that a decider-result.json from a fake failing seat holds no home path. If red C2-2 already passes on a2bb1d4, the cycle is void: no green, and the cap returns to 1. If green C2-2 does not pass its red, there is no cycle 3. The facilitator stops, commits the failing evidence and opens a new window. Nothing ships meanwhile.\n\n## Cut\n\nOut of scope:\n- scrubbing inside facilitator.run_backend\n- a stdout excerpt\n- changes to cite_ok's matching rule\n- re-asking an uncited seat (the D171 re-ask stays with the facilitator)\n- the live step itself\n- criterion 3\n\nSize: about 3.4 KB. One red module edit and about 4 lines of decider.py.\n\n## Adopted condition (round 1, for this re-poll)\n\nFrom the independent reviewer (audit lens), round 1: the facilitator's check that a decider-result.json from a fake failing seat holds no home path (and no secret) is committed as evidence before the live step, so git shows the stop rule was met. The file goes under .mob/records/229/ with the fake seat's stderr input, the resulting decider-result.json and the check's result.\n",
+ "checklist_D158": ".mob/records/229/checklist-229-scope.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [
+  {
+   "from": "independent reviewer (audit lens), round 1 (w229sc-auditlens)",
+   "adopted_as": "the facilitator's check that a decider-result.json from a fake failing seat holds no home path and no secret is committed as evidence under .mob/records/229/ (the fake seat's stderr input, the resulting decider-result.json and the check's result) before the live step"
+  }
+ ],
+ "replies": [
+  {
+   "seat": "claude",
+   "context": "w229scr2-pmready",
+   "started_at": "2026-11-04T00:17:36Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe scope stays small, and it ties each change to a metric: a scrubbed record, and counted votes that carry a cite. The stop rule keeps a failing cycle from shipping.\n\nCITE: does not start until green C2-2 is committed\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:18:12.646753Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w229scr2-qa",
+   "started_at": "2026-11-04T00:23:28Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nEvery rule has a red test that can fail first: a home path, a token, a straddling secret, and an uncited Yes. Scrubbing before trimming is the right order, and the committed evidence file makes the stop rule checkable.\nCITE: scrub runs before trim); the length test applies to the scrubbed text\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:23:55.394010Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w229scr2cp1-dev",
+   "started_at": "2026-11-04T00:24:54Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: an attempt with no parsed vote is never counted\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:25:28.888371Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w229scr2-auditlens",
+   "started_at": "2026-11-04T00:29:41Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe adopted condition covers my audit lens. The fake-seat input, the resulting file and the check's result will be committed under `.mob/records/229/`, so git alone can show the stop rule was met before the live step. I read only the proposal text and did not open the repo files.\n\nCITE: a decider-result.json from a fake failing seat holds no home path\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:30:12.150779Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w229scr2cp1-decider",
+   "started_at": "2026-11-04T00:31:12Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: the vote record that criterion 1's live step commits as evidence never carries a secret or home path\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:31:38.649156Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w229scr2-coach",
+   "started_at": "2026-11-04T00:34:56Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe scope is sized to the task: one red module edit and about 4 lines of code, with a hard cap and a clear stop rule. The adopted evidence condition is small and adds no new ceremony.\n\nCITE: If green C2-2 does not pass its red, there is no cycle 3.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:35:25.464583Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w229sccp1-pmready",
+   "started_at": "2026-11-03T23:54:59Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: the vote record that criterion 1's live step commits as evidence\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T23:55:25.523600Z",
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w229scr2cp1-pmready",
+   "started_at": "2026-11-04T00:14:22Z",
+   "model": "grok-4.6",
+   "raw": "I'll read the standing process docs and the 229 record so I can answer this objection window as product manager.I'll pull the cited decisions, the 229 checklist, and VISION ruling 6 next.I'll read VISION ruling 6, D175, and the decider paths the proposal names.I'll locate `decider.py` and confirm the two gaps against the standing-rule text.\n",
+   "first_line": "I'll read the standing process docs and the 229 record so I can answer this objection window as product manager.I'll pull the cited decisions, the 229 checklist, and VISION ruling 6 next.I'll read VISION ruling 6, D175, and the decider paths the proposal names.I'll locate `decider.py` and confirm the two gaps against the standing-rule text.",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:14:52.465757Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229sccp1-qa",
+   "started_at": "2026-11-03T23:56:29Z",
+   "model": "grok-4.6",
+   "raw": "I'll read the proposal sources and the code they cite, then judge whether every named rule can fail red first.I'll pull the decision docs, checklist, and the cited `decider.py` lines next.The cited runner lives outside this tree; I'll locate `decider.py` and the honesty tests so I can check the red-first claims.\n",
+   "first_line": "I'll read the proposal sources and the code they cite, then judge whether every named rule can fail red first.I'll pull the decision docs, checklist, and the cited `decider.py` lines next.The cited runner lives outside this tree; I'll locate `decider.py` and the honesty tests so I can check the red-first claims.",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T23:56:58.712515Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "I'll read the proposal sources and the code they cite, then judge whether every named rule can fail red first.I'll pull the decision docs, checklist, and the cited `decider.py` lines next.The cited runner lives outside this tree; I'll locate `decider.py` and the honesty tests so I can check the red-first claims.",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w229sc-qa",
+   "started_at": "2026-11-03T23:58:22Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nEach named rule maps to a red case that can fail on a2bb1d4: a home path, a token, a straddling secret, and an uncited Yes. The stop rule voids the cycle if red C2-2 already passes.\n\nCITE: a Yes with no valid CITE counts toward \"passed\"\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-03T23:58:52.995120Z",
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229scr2cp1-qa",
+   "started_at": "2026-11-04T00:19:10Z",
+   "model": "auto",
+   "raw": "I’ll quickly verify the cited code paths and current tests to assess whether the proposed red-first checks are sufficient.\n\nNO OBJECTION\nCITE: an attempt with no parsed vote is never counted\n\n",
+   "first_line": "I’ll quickly verify the cited code paths and current tests to assess whether the proposed red-first checks are sufficient.",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:19:36.920627Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "grok",
+   "context": "w229scr2cp2-qa",
+   "started_at": "2026-11-04T00:20:58Z",
+   "model": "grok-4.6",
+   "raw": "I'll read the cited decisions, the 229 record, and the current decider/test code so the QA check is on the actual rules, not the proposal text.\n",
+   "first_line": "I'll read the cited decisions, the 229 record, and the current decider/test code so the QA check is on the actual rules, not the proposal text.",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:21:24.820252Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229sccp1-dev",
+   "started_at": "2026-11-03T23:59:53Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: the vote record that criterion 1's live step commits as evidence\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:00:20.501620Z",
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w229sccp1-auditlens",
+   "started_at": "2026-11-04T00:01:50Z",
+   "model": "grok-4.6",
+   "raw": "I'll read the cited decision docs and vote-record files first, then check git history for the C2 cycle so the audit is from the repo alone.The workspace listing skipped dot-dirs, so I’ll open the 229 record files and the cited decision sections next.I’ll read D175/D181 clauses and the cited `decider.py` and test lines so the gaps can be checked from git.The cited `decider.py` is outside this tree, so I’ll confirm the C2 commits in git and locate the source those line numbers point at.\n",
+   "first_line": "I'll read the cited decision docs and vote-record files first, then check git history for the C2 cycle so the audit is from the repo alone.The workspace listing skipped dot-dirs, so I’ll open the 229 record files and the cited decision sections next.I’ll read D175/D181 clauses and the cited `decider.py` and test lines so the gaps can be checked from git.The cited `decider.py` is outside this tree, so I’ll confirm the C2 commits in git and locate the source those line numbers point at.",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:02:19.222782Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "I'll read the cited decision docs and vote-record files first, then check git history for the C2 cycle so the audit is from the repo alone.The workspace listing skipped dot-dirs, so I’ll open the 229 record files and the cited decision sections next.I’ll read D175/D181 clauses and the cited `decider.py` and test lines so the gaps can be checked from git.The cited `decider.py` is outside this tree, so I’ll confirm the C2 commits in git and locate the source those line numbers point at.",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w229sc-auditlens",
+   "started_at": "2026-11-04T00:03:38Z",
+   "model": "sonnet",
+   "raw": "OBJECTION\nCONDITION: The facilitator's check that a fake failing seat's decider-result.json holds no home path must be committed as evidence before the live step. Otherwise git cannot show the stop rule was met.\n\nCITE: the facilitator has confirmed that a decider-result.json from a fake failing seat holds no home path\n",
+   "first_line": "OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:04:05.289338Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w229scr2cp1-auditlens",
+   "started_at": "2026-11-04T00:26:25Z",
+   "model": "grok-4.6",
+   "raw": "I'll read the cited decision records and code so the objection window is based on git evidence.I'll check the cited records, the adopted condition, and the decider paths the proposal names.I'll verify the cited `decider.py` lines and the cycle-2 tests against the adopted condition.\n",
+   "first_line": "I'll read the cited decision records and code so the objection window is based on git evidence.I'll check the cited records, the adopted condition, and the decider paths the proposal names.I'll verify the cited `decider.py` lines and the cycle-2 tests against the adopted condition.",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:26:56.640383Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229sccp1-decider",
+   "started_at": "2026-11-04T00:05:19Z",
+   "model": "auto",
+   "raw": "Checking the cited policy points to confirm the objection-window framing and required sign-off seats.\n\nNO OBJECTION\nCITE: a vote without a valid D171 cite never moves the result.\n\n",
+   "first_line": "Checking the cited policy points to confirm the objection-window framing and required sign-off seats.",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:05:47.892803Z",
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "Checking the cited policy points to confirm the objection-window framing and required sign-off seats.",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "claude",
+   "context": "w229sc-decider",
+   "started_at": "2026-11-04T00:10:52Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nThe evidence framing is sound. The stop rule ties the live step to a committed green plus a checked decider-result.json. The cap and the void rule keep the decision tied to results.\n\nCITE: does not start until green C2-2 is committed\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:11:22.306536Z",
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w229sccp2-decider",
+   "started_at": "2026-11-04T00:06:54Z",
+   "model": "grok-4.6",
+   "raw": "I'll read the in-force decisions and the window 229 record so the objection call rests on those documents.I'll open the in-force decisions and the window 229 record next.I’ll read the window 229 record, the D175/D181/D182 rules, and the sign-off lens next.I’ll check the cited code, the slice, and the green-2 review so the sign-off call is evidence-based.The cited `decider.py` lines may live outside this tree; I’ll locate them and verify the gaps.I'll check git history and whether `decider.py` is reachable so the cited gaps can be confirmed.\n",
+   "first_line": "I'll read the in-force decisions and the window 229 record so the objection call rests on those documents.I'll open the in-force decisions and the window 229 record next.I’ll read the window 229 record, the D175/D181/D182 rules, and the sign-off lens next.I’ll check the cited code, the slice, and the green-2 review so the sign-off call is evidence-based.The cited `decider.py` lines may live outside this tree; I’ll locate them and verify the gaps.I'll check git history and whether `decider.py` is reachable so the cited gaps can be confirmed.",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:07:19.219628Z",
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "I'll read the in-force decisions and the window 229 record so the objection call rests on those documents.I'll open the in-force decisions and the window 229 record next.I’ll read the window 229 record, the D175/D181/D182 rules, and the sign-off lens next.I’ll check the cited code, the slice, and the green-2 review so the sign-off call is evidence-based.The cited `decider.py` lines may live outside this tree; I’ll locate them and verify the gaps.I'll check git history and whether `decider.py` is reachable so the cited gaps can be confirmed.",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "copilot",
+   "context": "w229sccp1-coach",
+   "started_at": "2026-11-04T00:12:21Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: the vote record that criterion 1's live step commits as evidence\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:12:49.056485Z",
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "note": "round 1; superseded by the round-2 re-poll after the adopted condition"
+  },
+  {
+   "seat": "grok",
+   "context": "w229scr2cp1-coach",
+   "started_at": "2026-11-04T00:32:43Z",
+   "model": "grok-4.6",
+   "raw": "I'll read the in-force decisions and the 229-scope record so I can object or pass on size, not ceremony.I'll read the 229-scope record, D175/D181, and the code the proposal cites.I'll locate `decider.py` and confirm the cited gaps, then check D175 C4 against this extra cycle.NO OBJECTION\nCycle 2 is one small C2 fix: scrub then trim, uncited Yes as none. Existing seats cover it. The adopted record under .mob/records/229/ makes the stop rule checkable. Cap 1+2+1 is D175 C4.\nCITE: If red C2-2 already passes on a2bb1d4, the cycle is void\n",
+   "first_line": "I'll read the in-force decisions and the 229-scope record so I can object or pass on size, not ceremony.I'll read the 229-scope record, D175/D181, and the code the proposal cites.I'll locate `decider.py` and confirm the cited gaps, then check D175 C4 against this extra cycle.NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-03 23:51 UTC: Copilot and Grok available and decider.py's own probe at 2026-11-04T00:33:09.346392Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "adopted with one condition: criterion 2 cap 1 to 2 (total 1+2+1 = 4); cycle 2 scrubs the failure text before trimming it, so no stored attempt text skips scrub, and the result counts only counted votes (a parsed vote with cite_ok false is passed to result_of as 'none'); the live step waits for green C2-2 and the committed no-home-path check; the cycle is void if its red already passes on a2bb1d4. Round 1: five NO OBJECTION (Copilot counted for product manager, developer and coach), one OBJECTION with a condition (audit lens); the QA seat's cite started with a lower-case 'a' and did not count. Round 2: six NO OBJECTION with valid cites (Claude for product manager, QA, audit lens and coach; Copilot for developer and decider). Grok seats launched through --prompt-file but returned only narration (read-then-stop) in every attempt.",
+  "window_minutes": "round 1 23:53 to about 00:13 UTC; round 2 after"
+ },
+ "ended_at": "2026-11-04T00:36:24Z"
+}
