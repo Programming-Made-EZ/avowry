@@ -23,7 +23,8 @@
   "red_2_cycle_3": "red d13148e (QA ctx-3 continued; pushed; criterion 2 cycle 3 of 3, window 229-scope-2): the two length tests on spaced-word inputs (pass on a2bb1d4); the two uncited-Yes result cases removed and moved to bug card 290 (named in the body); the class docstring reworded; 36 tests, 8 fail (the scrub cases), 28 pass; five other suites pass (89)",
   "green_2_cycle_3": "green cda02f2 (backend developer ctx-4 continued; scan clean, 36 commands; pushed): failure_excerpt returns one_line(scrub(text), 300); result_of unchanged (the cited-only rule is card 290). Named modules all pass (launch_failure_honesty 36, launch_long_prompt 20, decider_launched 28, repo_path_lengths 1, decider importers as in the commit body)",
   "refactor_2": "none needed after green 2 cycle 3, reasoned: the change is one call wrapped in scrub plus its docstring; no duplication or naming issue to clean",
-  "nohome_check": ".mob/records/229/nohome-check/ (window 229-scope's condition): at cda02f2 a fake failing copilot seat's stderr home path and token are masked in failure_excerpt and reason; the only contains_secret match in the file is prompt_sha (a SHA-256), not a secret"
+  "nohome_check": ".mob/records/229/nohome-check/ (window 229-scope's condition): at cda02f2 a fake failing copilot seat's stderr home path and token are masked in failure_excerpt and reason; the only contains_secret match in the file is prompt_sha (a SHA-256), not a secret",
+  "red_3": "red 3 cef48a7 (QA ctx-3 continued; pushed): tests/test_prompt_placeholders.py, 14 tests, 8 fail (11 entries with subtests), 6 pass as guards; the rewrite hits CLIs launched without a shim (claude, codex, agy shapes); copilot and grok already receive the literals whole after green 1; five other suites pass (97)"
  },
  "seats": [
   {
@@ -42,7 +43,7 @@
    "role": "red",
    "seat": "Claude ctx-3",
    "model": "claude, a fresh subagent context, QA engineer; command scan clean, 29 commands",
-   "evidence": "red 1 ab8f4a5, red 2 858649b, red 2 cycle 2 7c26629, red 2 cycle 3 d13148e"
+   "evidence": "red 1 ab8f4a5, red 2 858649b, red 2 cycle 2 7c26629, red 2 cycle 3 d13148e, red 3 cef48a7"
   },
   {
    "role": "green",
