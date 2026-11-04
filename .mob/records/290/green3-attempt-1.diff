@@ -1,0 +1,47 @@
+diff --git a/tests/fakes/fake_voter.py b/tests/fakes/fake_voter.py
+index 8d6d91f..ac806f5 100644
+--- a/tests/fakes/fake_voter.py
++++ b/tests/fakes/fake_voter.py
+@@ -2,7 +2,7 @@
+ """Fake voter CLI for decider runner tests. Invoked as: python fake_voter.py <backend> <prompt...>
+ 
+ Env:
+-  FAKE_VOTES         JSON {backend: reply text}; default 'Yes'
++  FAKE_VOTES         JSON {backend: reply text}, printed as given; default 'Yes' with a D171 CITE from the prompt's proposal
+   FAKE_ECHO          if set, the codex backend echoes its prompt and a transcript around the reply, as the real codex does
+   FAKE_WRITE_FILE    if set, the voter writes this file into its working directory (a write attempt inside the sandbox)
+   FAKE_TOUCH_REAL    if set, the voter writes this absolute path (an escape from the sandbox)
+@@ -13,11 +13,24 @@ Env:
+ 
+ import hashlib
+ import json
++import re
+ import os
+ import sys
+ from pathlib import Path
+ 
+ 
++def default_vote(prompt):
++    """A counted Yes: 'Yes' plus a CITE that decider.cite_ok accepts for the proposal inside the prompt (D171): the first
++    six words, verbatim, of the proposal's first line that has six. The facilitator launches a seat with the prompt on one
++    line (newlines turned to spaces), so then the proposal's first six words are cited."""
++    proposal = re.split(r"PROPOSAL:\s", prompt, maxsplit=1)[-1].split("Vote exactly one of:", 1)[0]
++    for line in proposal.replace("\r", "").split("\n"):
++        six = re.match(r"\s*(\S+(?:[ \t]+\S+){5})", line)
++        if six:
++            return "Yes\nCITE: " + six.group(1)
++    return "Yes"
++
++
+ def main():
+     backend, prompt = sys.argv[1], " ".join(sys.argv[2:])
+     log = os.environ.get("FAKE_LOG")
+@@ -40,7 +53,7 @@ def main():
+             return 0  # an empty reply the first time
+ 
+     votes = json.loads(os.environ.get("FAKE_VOTES", "{}"))
+-    reply = votes.get(backend, "Yes")
++    reply = votes[backend] if backend in votes else default_vote(prompt)
+     if (backend == "codex" and os.environ.get("FAKE_ECHO")) or os.environ.get("FAKE_ECHO_SEAT") == backend:
+         print("OpenAI Codex v0\nuser\n" + prompt + "\ncodex\n" + reply + "\ntokens used\n123")
+     else:
