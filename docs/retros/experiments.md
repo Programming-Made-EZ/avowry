@@ -353,6 +353,10 @@ Fields: Owner (a role), Proof (the kind of story and the measure), Trigger key (
 - Source: card 275, re-rank 21 sort: A pending decision, not a defect card.
 - Status: open
 
+## Added after re-rank 21 (no card number)
+
+- Board scripts fetch the board once per run. scripts/board/edit_card.py (and set_fields.read_board) re-fetch the whole issue list with bodies, the project, its fields and all items on every edit, about 90 GraphQL points each; 27 edits spent the hourly budget during re-rank 21, while one paged fetch costs 3 points and a direct updateProjectV2ItemFieldValue mutation about 1 (the lean script rr21_apply_lean.py, recorded in .mob/records/reranks/2026-11-04-21.md). Owner: backend developer. Proof: the next story that edits many cards (a re-rank or a sort) applies them within the hourly budget; measure GraphQL points per edited card. Trigger key: `file file:scripts/board/edit_card.py`. Status: open.
+
 ## Deferred by D184 (no card number)
 
 - Built-prompt evidence (its SHA) before a live vote. Owner: architect. Trigger key: `live-vote`. Status: open.
