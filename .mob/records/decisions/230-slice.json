@@ -1,6 +1,6 @@
 {
  "window": "230-slice",
- "category": "slice",
+ "category": "slice decision",
  "rule": "D153 slice window for card 230; D145 re-poll after one adopted condition; D171 (one re-ask); Grok disabled (backends-nogrok.json)",
  "proposed_by": {
   "role": "architect (slice)",
