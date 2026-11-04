@@ -25,7 +25,9 @@
   "refactor_2": "none needed after green 2 cycle 3, reasoned: the change is one call wrapped in scrub plus its docstring; no duplication or naming issue to clean",
   "nohome_check": ".mob/records/229/nohome-check/ (window 229-scope's condition): at cda02f2 a fake failing copilot seat's stderr home path and token are masked in failure_excerpt and reason; the only contains_secret match in the file is prompt_sha (a SHA-256), not a secret",
   "red_3": "red 3 cef48a7 (QA ctx-3 continued; pushed): tests/test_prompt_placeholders.py, 14 tests, 8 fail (11 entries with subtests), 6 pass as guards; the rewrite hits CLIs launched without a shim (claude, codex, agy shapes); copilot and grok already receive the literals whole after green 1; five other suites pass (97)",
-  "suite_cda02f2": "full reference suite on green 2 cycle 3 cda02f2 (PowerShell worktree, registry PATH): Ran 1699 tests in 1672.597s, OK (skipped=1), the baseline skip"
+  "suite_cda02f2": "full reference suite on green 2 cycle 3 cda02f2 (PowerShell worktree, registry PATH): Ran 1699 tests in 1672.597s, OK (skipped=1), the baseline skip",
+  "green_3": "green 3 2d4d24d (backend developer ctx-4 continued; scan clean, 45 commands; pushed): the template is filled and split first and the prompt goes in as one argv element at the slot that is exactly {PROMPT}, or into the prompt file; a template with neither placeholder is refused by name; green 1's shim launch and limits unchanged; named modules and 17 launch-path modules pass (494 tests)",
+  "refactor_3": "none needed after green 3, reasoned: green 3 itself replaced green 1's position-matching step (the refactor deferred at refactor_1); the remaining code is one fill helper and one loop"
  },
  "seats": [
   {
@@ -50,7 +52,7 @@
    "role": "green",
    "seat": "Claude ctx-4",
    "model": "claude, a fresh subagent context, backend developer; command scan clean, 16 commands",
-   "evidence": "green 1 4674d19, green 2 a2bb1d4, green 2 cycle 3 cda02f2"
+   "evidence": "green 1 4674d19, green 2 a2bb1d4, green 2 cycle 3 cda02f2, green 3 2d4d24d"
   }
  ],
  "deviations": [
