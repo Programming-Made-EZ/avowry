@@ -1,0 +1,144 @@
+{
+ "window": "290-scope",
+ "category": "mid-card addition",
+ "rule": "D175 C4 scope window for card 290 before green 1 (the slice's premise P5 false); D181; D184; D171",
+ "proposed_by": {
+  "role": "architect",
+  "model": "claude, a fresh subagent context (read-only; D184 probes run on HEAD 38b8eb5)",
+  "context": "ctx-2",
+  "probe_reference": "probe 2026-11-04 10:41 UTC"
+ },
+ "opened_at": "2026-11-04T10:46:59Z",
+ "proposal": "# SCOPE PROPOSAL: card 290, D175 C4 window (criterion 1, before green 1)\n\nIntent (D165): decider.py counts a vote only when it has a vote line and a CITE that meets D171 as written (6+ words verbatim, or \"line N: <first 4 words>\"); any other reply is uncounted.\n\nAssumes (D184, run on HEAD 38b8eb5 in C:\\Users\\ringe\\mob-crosscli, read-only):\n\n```\npython -c \"import decider; p='alpha beta gamma delta epsilon zeta eta\\ntheta iota kappa lambda mu'\nfor c in [5 words, 6 words, 'line 2: theta iota kappa lambda', 'line 1: alpha beta gamma delta', 'a']: print(c, decider.cite_ok('Yes\\nCITE: '+c, p))\"\n```\nOutput: 5 words True; 6 words True; line 2 form False; line 1 form False; 'a' True.\nAlso: a 6-word phrase in double quotes gives False (quotes kept in the match).\n\n- A1. cite_ok (decider.py:132) is a substring test only: no word minimum, so one letter passes.\n- A2. The \"line N:\" form is always False today, even when correct.\n- A3. A quoted phrase, which D171 C1 names, is always False today.\n- A4. P5 (\"two lines in result_of\") is false: red 1's B 5-word cases fail on cite_ok, not result_of (red 1 commit body says so).\n\n## Gap\n\nRed 1 (38b8eb5) needs cite_ok to enforce the 6-word minimum. The \"line N:\" form is untested and wrong today, so a correct line cite would be uncounted after result_of changes.\n\n## Smallest scope (criterion 1 only)\n\nRed 1b (tests only, cycle 1): cite_ok unit cases below, in tests/test_decider_counted_result.py.\nGreen 1: result_of counts only counted votes (two lines), and cite_ok accepts a CITE when either\n- the phrase, outer double quotes stripped, has 6+ words and is found verbatim in the proposal, or\n- it is \"line N: w1 w2 w3 w4\", N is a line of the proposal (1-based), and its first 4 words equal w1..w4.\n\nAcceptance: red 1 and red 1b pass; the 5 guards stay green.\n\nZOMBIES (cite_ok):\n- Z: no CITE line, or empty CITE: False.\n- O: 6 verbatim words: True; same in double quotes: True.\n- M: two CITE lines: the first is read (as today).\n- B: 5 words: False; 6: True; one character off: False; line N past the end, or N = 0: False; line form with 3 words: False.\n- I: correct line form: True; wrong 4th word: False.\n- E: CRLF reply; extra spaces inside \"line N:\"; non-ASCII words.\n- S: cites already valid today stay True.\n\nCap: criterion 1, at most 1 cycles (unchanged; no green has run, red 1b is the same cycle). Total 1+1+1 = 3. Size: S to M (cite_ok about 10 lines plus 2 in result_of).\n\n## Stop rule\n\nIf green 1 needs decider.py changes outside result_of and cite_ok, or any test outside red 1, red 1b and the C3 file list fails, the developer stops, commits nothing further, records the names, and the facilitator opens a new C4 window. No test is skipped or deleted.\n\n## Cut\n\n- D171's \"title line and VOTING RULE line do not count\" (needs the proposal's structure; a later card).\n- Changes to how D171 is checked by hand (C2).\n- Doubles and fake_voter (criterion 3).\n- Card 286 (NO OBJECTION stored as No) and card 291 (Grok parsing).\n",
+ "checklist_D158": ".mob/records/290/checklist-290-scope.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "copilot",
+   "context": "w290sccp1-pmready",
+   "started_at": "2026-11-04T10:46:59Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: A1. cite_ok (decider.py:132) is a substring test only:\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:41 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T10:47:26.436896Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w290sc-qa",
+   "started_at": "2026-11-04T10:48:07Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe zombies cover the 5-word, 6-word, quoted and line-form boundaries, and red 1b fails against today's cite_ok. The stop rule keeps the 5 guards green.\n\nCITE: cite_ok accepts a CITE when either\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:41 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T10:48:36.036140Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w290sccp1-dev",
+   "started_at": "2026-11-04T10:49:38Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nCITE: no word minimum, so one letter passes.\n[facilitator: the Codex CLI banner and prompt echo that followed here were trimmed; the vote and cite above are unchanged]",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:41 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T10:50:06.430303Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w290sccp1-auditlens",
+   "started_at": "2026-11-04T10:51:08Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nGit-verifiable through test outcomes and diff review; this scope closes the practical loopholes that let invalid CITE formats count while preserving bounded change control.\nCITE: the phrase, outer double quotes stripped, has 6+ words and is found verbatim in the proposal\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:41 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T10:51:33.097699Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w290sc-decider",
+   "started_at": "2026-11-04T10:53:23Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe scope is evidence-framed: it has a stated gap, falsifiable acceptance (red 1 and red 1b pass, the 5 guards stay green), ZOMBIES coverage, and a stop rule that reopens a C4 window. The decider.py scope is limited to result_of and cite_ok, so I see no sign-off seat missing.\n\nCITE: cite_ok accepts a CITE when either\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:41 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T10:53:48.398317Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w290sccp1-coach",
+   "started_at": "2026-11-04T10:54:49Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nThe three-seat task force is proportionate to this small, bounded change, with implementation, verification, and facilitation covered without excess ceremony.\nCITE: cite_ok unit cases below, in tests/test_decider_counted_result.py.\n[facilitator: the Codex CLI banner and prompt echo that followed here were trimmed; the vote and cite above are unchanged]",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-04 10:41 UTC: Copilot and Codex available; Grok disabled for this card's windows and decider.py's own probe at 2026-11-04T10:55:13.247434Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [],
+ "decision": {
+  "result": "adopted, no conditions: criterion 1 includes cite_ok enforcing D171 as written (six or more verbatim words, outer double quotes stripped; or a correct line N: first-four-words form) besides result_of counting only counted votes; red 1b (tests only) in the same cycle (no green has run, D181); caps stay 1+1+1; stop rule: any decider.py change outside result_of and cite_ok, or any failure outside the listed tests, stops the green for a new window. Six NO OBJECTION with valid cites (Claude for QA and decider, Copilot for product manager and audit lens, Codex for developer and coach); Grok disabled.",
+  "window_minutes": "10:43 to about 11:00 UTC, serial"
+ },
+ "ended_at": "2026-11-04T10:56:07Z"
+}
