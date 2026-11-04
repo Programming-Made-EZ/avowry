@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 229,
+ "title": "A Copilot decision seat receives its whole prompt and casts a vote",
+ "process": "card-mode rules run by hand; ranked first by re-rank 20 (D182); card 270 (the Grok twin) folded in at ready; slice caps 1+1+1, criterion 2 raised to 3 by windows 229-scope and 229-scope-2, each committed before its red (D181); D182's QA condition held (the empty-vote guard red before green 1); Done check 1 carried a live Copilot and Grok vote with committed evidence (window 229-taskforce's condition); code in mob-defaults ab8f4a5..2d4d24d",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Copilot ctx-1",
+   "model": "copilot (auto) via the Copilot CLI, product manager (ready), session 4dd925c3; seats placed by the facilitator by role (window 229-taskforce put every role on Claude; the decision-seat gate still placed Copilot in some window seats and in the gate); Copilot votes parse after this card, Grok stays non-counted until card 291",
+   "evidence": "1ce1348"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect (read-only): slice and both scope proposals; seats placed by the facilitator by role (window 229-taskforce put every role on Claude; the decision-seat gate still placed Copilot in some window seats and in the gate); Copilot votes parse after this card, Grok stays non-counted until card 291",
+   "evidence": "60456f7"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, a fresh subagent context continued, QA engineer: reds 1, 2, 2 cycle 2, 2 cycle 3 and 3; seats placed by the facilitator by role (window 229-taskforce put every role on Claude; the decision-seat gate still placed Copilot in some window seats and in the gate); Copilot votes parse after this card, Grok stays non-counted until card 291",
+   "evidence": "abeb69c"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context continued, backend developer: greens 1, 2, 2 cycle 3 and 3, and the green 2 cycle 2 attempt that could not pass; seats placed by the facilitator by role (window 229-taskforce put every role on Claude; the decision-seat gate still placed Copilot in some window seats and in the gate); Copilot votes parse after this card, Grok stays non-counted until card 291",
+   "evidence": "232e997"
+  },
+  {
+   "role": "ship",
+   "seat": "Copilot ctx-5",
+   "model": "copilot (auto) via the Copilot CLI, independent reviewer, fresh session 934f4d5a: pre-ship gate SHIP (on the card's own subject backend, recorded as a deviation); seats placed by the facilitator by role (window 229-taskforce put every role on Claude; the decision-seat gate still placed Copilot in some window seats and in the gate); Copilot votes parse after this card, Grok stays non-counted until card 291",
+   "evidence": "02fa480"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off: SIGNED OFF with conditions, met here; it re-checked the live evidence itself; seats placed by the facilitator by role (window 229-taskforce put every role on Claude; the decision-seat gate still placed Copilot in some window seats and in the gate); Copilot votes parse after this card, Grok stays non-counted until card 291",
+   "evidence": "edc81cc"
+  }
+ ],
+ "retro": "docs/retros/card-229-2026-11-04.md",
+ "notes": "Signed off with conditions (.mob/records/229/signoff-ctx6.md), met here. Criteria: 1 a window prompt over 8191 characters reaches Copilot (node plus npm-loader.js, not the .CMD shim) and Grok (--prompt-file) whole: committed test (ab8f4a5, 4674d19) and the live step (.mob/records/229/live/: a real Copilot seat and a real Grok seat each cast a parsed Support-it with a verbatim cite on a 9774-character prompt, non-counted); 2 a failed or empty launch keeps its exit status and its scrubbed failure text and is never counted (858649b, a2bb1d4, then cycles 2 and 3: 7c26629 with no green, d13148e, cda02f2; the no-home-path check in .mob/records/229/nohome-check/); 3 placeholder text inside a prompt reaches the seat unchanged (cef48a7, 2d4d24d; card 282's defect). Full suite on 2d4d24d: 1713 OK. Cap story: criterion 2 went 1 to 2 (window 229-scope) and 2 to 3 (window 229-scope-2), each window committed before its red; green 2 cycle 2 could not pass its red because both scope premises were wrong in code, its stop rule held (no commit, evidence committed); D181's metric for this card: 0 reds past a cap without a prior window. Deviations corrected by the sign-off: the gate ran on Copilot, the card's subject; the gate counted Copilot in 8 window seats (229-scope rounds 1 and 2, 229-scope-2) although the declaration left it out; Grok stopped after narration in 8 of 10 window attempts and voted after narration in 2, which the facilitator's first-line runner dropped; the live step used the re-rank 20 Decider prompt because the slice's named prompt builds to 7161 characters; subject commits are authored 'Copilot' (card 275). Two window rounds and one re-run were launched without their in-flight lines. Placement: Copilot rejoins counted decision seats; Grok stays non-counted until card 291. Cards: 270 closed as folded into 229; filed 290 (the decider's result counts only votes with a valid cite) and 291 (a Grok decision seat ends with a vote; a vote after narration is read); card 286 already covers NO OBJECTION stored as No. Retro pick D184 (each scope premise is run in code on HEAD before its window). Scans: every seat's transcript scanned clean; check re-run after this record."
+}
