@@ -18,7 +18,9 @@
   "red_2": "red 2 78ab63b (QA ctx-3 continued; pushed): 10 pinned tests for criterion 2, passing on HEAD and on the commit before green 1, by design (the slice's criterion 2 pins behaviour); tests/test_decider_counted_result.py 56 OK",
   "red_3": "red 3 3d503c8 (pushed): tests/test_fake_voter_cites.py 9 tests, 7 fail (11 with subtests), 2 guards pass; the 29 failing tests in the six decider modules listed by module in the body; some runner tests send their own uncited 'Yes', so green 3 edits those files too",
   "green_3_attempt_1": "NO COMMIT, stopped under the stop rule (backend developer ctx-4 continued; scan clean, 36 commands): with the doubles citing, test_decider_runner test_a_seat_that_never_answers_counts_as_no_response_and_fails gets 'passed' (exit 0, expected 1). Cause: green 1's call site (93c4f62) leaves out every uncounted vote, including a seat that never answered ('none'), so a missing seat no longer fails the result. The adopted condition was about uncited replies, not missing ones. Suggested fix (production, outside green 3's scope): keep 'none' among the votes passed to result_of. Red 3 passes with the fake_voter change. The seat left that change uncommitted in the shared tree: the facilitator saved it as .mob/records/290/green3-attempt-1.diff (verified to re-apply cleanly) and restored the file. Under D181 the fix is criterion 1 cycle 2 (green 1 passed red 1), past its cap of 1: a D175 C4 scope window comes first",
-  "scope_window_2": "window 290-scope-2 (adopted, no conditions): criterion 1 cap 1 to 2 (total 2+1+1 = 4); red 1c, green 1b at the call site, then green 3 re-applies the saved fake_voter change"
+  "scope_window_2": "window 290-scope-2 (adopted, no conditions): criterion 1 cap 1 to 2 (total 2+1+1 = 4); red 1c, green 1b at the call site, then green 3 re-applies the saved fake_voter change",
+  "red_1c": "red 1c 8f88c93 (QA ctx-3 continued; pushed; criterion 1 cycle 2): 10 call-site cases, 7 fail on HEAD for the stated reason, 3 guards pass; the 18 other failures are all in red 3's list. Caution for green 1b: a reply with a CITE line and no vote line also parses as vote 'none', and red 1's E cases require it to be left out; a seat that never answered has an empty stored reply",
+  "green_1b_brief": "the facilitator briefs green 1b to implement window 290-scope-2's Intent ('A seat that never answered is not a reply, and still fails the result') on the same call-site line: a vote reaches result_of when it is counted, or when its vote is 'none' with an empty reply (a seat that never answered). This narrows the scope's literal wording ('counted or its vote is none'), which would break red 1's E cases (a CITE with no vote line is unread and left out); recorded for the gate to judge"
  },
  "seats": [
   {
@@ -37,7 +39,7 @@
    "role": "red",
    "seat": "Claude ctx-3",
    "model": "claude, a fresh subagent context, QA engineer; command scan clean, 21 commands",
-   "evidence": "red 1 38b8eb5, red 1b 7e0f200, red 2 78ab63b, red 3 3d503c8"
+   "evidence": "red 1 38b8eb5, red 1b 7e0f200, red 2 78ab63b, red 3 3d503c8, red 1c 8f88c93"
   },
   {
    "role": "green",
