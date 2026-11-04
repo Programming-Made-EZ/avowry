@@ -22,7 +22,9 @@
   "red_1c": "red 1c 8f88c93 (QA ctx-3 continued; pushed; criterion 1 cycle 2): 10 call-site cases, 7 fail on HEAD for the stated reason, 3 guards pass; the 18 other failures are all in red 3's list. Caution for green 1b: a reply with a CITE line and no vote line also parses as vote 'none', and red 1's E cases require it to be left out; a seat that never answered has an empty stored reply",
   "green_1b_brief": "the facilitator briefs green 1b to implement window 290-scope-2's Intent ('A seat that never answered is not a reply, and still fails the result') on the same call-site line: a vote reaches result_of when it is counted, or when its vote is 'none' with an empty reply (a seat that never answered). This narrows the scope's literal wording ('counted or its vote is none'), which would break red 1's E cases (a CITE with no vote line is unread and left out); recorded for the gate to judge",
   "green_1b": "green 1b 640c41e (backend developer ctx-4 continued; scan clean, 39 commands; pushed; criterion 1 cycle 2): decider.py call site only (2 insertions, 1 deletion): a vote reaches result_of when counted, or when it is a seat that never answered (vote 'none' with an empty reply). The five required modules pass (137); remaining failures are red 3's list (six decider modules 29; fake_voter_cites 11)",
-  "refactor_1b": "none needed after green 1b, reasoned: one call-site expression"
+  "refactor_1b": "none needed after green 1b, reasoned: one call-site expression",
+  "green_3": "green 3 73eea8a (backend developer ctx-4 continued; scan clean, 50 commands; pushed): tests/fakes/fake_voter.py gains default_vote (a counted Yes with a D171 cite) and the six decider modules' doubles cite; 7 files, 36 insertions, 15 deletions, no change under --ignore-all-space. Rewritten to the new rule (slice C3 ZOMBIE E), named in the body: test_decider_record NoVoter test_a_run_with_no_voter_records_the_probe_and_no_voter_line expects a zero-voter run not to pass (exit 1). All 12 modules pass (270 tests). The seat had stopped first on that test; the facilitator pointed it to the slice's E case (no window: the adopted slice already allows it)",
+  "refactor_3": "none needed after green 3, reasoned: the doubles use one shared helper; no production code changed"
  },
  "seats": [
   {
@@ -47,7 +49,7 @@
    "role": "green",
    "seat": "Claude ctx-4",
    "model": "claude, a fresh subagent context, backend developer; command scans clean (13 and 16 commands)",
-   "evidence": "green 1 93c4f62, green 1b 640c41e"
+   "evidence": "green 1 93c4f62, green 1b 640c41e, green 3 73eea8a"
   }
  ],
  "deviations": [
