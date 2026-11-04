@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 290,
+ "title": "The decider's result counts only votes with a valid cite",
+ "process": "card-mode rules run by hand; ranked first by re-rank 21 (D185); Grok skipped in counted windows (window 290-taskforce); D184's first card (scope premises run in code on HEAD); slice caps 1+1+1, criterion 1 raised to 2 by window 290-scope-2, committed before its red (D181); windows 290-taskforce, 290-slice, 290-scope, 290-declfix, 290-scope-2, all adopted; code in mob-defaults 38b8eb5..73eea8a",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Copilot ctx-1",
+   "model": "copilot (auto) via the Copilot CLI; command scan clean; .mob/records/290/taskforce-proposal-pm.md",
+   "evidence": "4997e87"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, fresh subagent contexts: attempt 1 stopped (scan clean, 38 commands), attempt 2 (scan: one false 'unreadable file' finding on a read-only test command); .mob/records/290/turn-slice-architect.md",
+   "evidence": "620301b"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, a fresh subagent context, QA engineer; command scan clean, 21 commands; red 1 38b8eb5, red 1b 7e0f200, red 2 78ab63b, red 3 3d503c8, red 1c 8f88c93",
+   "evidence": "41a82b8"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, backend developer; command scans clean (13 and 16 commands); green 1 93c4f62, green 1b 640c41e, green 3 73eea8a",
+   "evidence": "5ed6cc2"
+  },
+  {
+   "role": "ship",
+   "seat": "Copilot ctx-5",
+   "model": "copilot (auto) via the Copilot CLI, independent reviewer, fresh session f213aa45; scan: one false finding (the word rmtree inside the report text it wrote); .mob/records/290/preship-gate.md (SHIP)",
+   "evidence": "171784f"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off; command scan clean, 29 commands; .mob/records/290/signoff-ctx6.md (SIGNED OFF with conditions)",
+   "evidence": "3344e1a"
+  }
+ ],
+ "retro": "docs/retros/card-290-2026-11-04.md",
+ "notes": "Signed off with conditions (.mob/records/290/signoff-ctx6.md), met here. Criteria: 1 an uncited vote is not counted and cannot change the result (red 1 38b8eb5, red 1b 7e0f200, green 1 93c4f62; cycle 2 red 1c 8f88c93, green 1b 640c41e: a seat that never answered still fails). Done check 1 is met for its second half by ruling (sign-off condition 1): the card's text and card 229's moved case expected an uncited Yes beside cited votes to fail; window 290-taskforce's adopted condition leaves an uncited vote out, so the result is the cited-only result, and the slice restated the check as 'cannot tip the result'. 2 a cited Yes passes and a cited No fails as today (red 2 78ab63b pins, green at HEAD and after). 3 the doubles carry valid cites and every decider module passes (red 3 3d503c8, green 3 73eea8a; the zero-voter test now expects exit 1 per slice C3 ZOMBIE E). Full suite on 73eea8a: 1788 OK (skipped=1). Deviations (sign-off condition 2 adds the understated ones): the audit lens's round 2 cite had four words and counted on a D171 re-ask; slice attempt 1 ran 46 minutes against a 30-minute cap and was stopped; it built the fix instead of the slice; F-087 (audit 210): the 09:44 UTC in-flight commit was pushed only at 10:03, past the 5-minute rule: inflight.sh's push failure was hidden because the facilitator read only its last output line; the script now verifies the push, retries (also with ControlMaster off and after regenerating MOB.md) and prints PUSH FAILED; the slice seat's transcript scan reports 'unreadable file' for its read-only test command (the file-run check took the whole piped command line for a script path): a scanner false finding of the kind cards 254 and 283 cover; the facilitator's declaration-fix text (window 290-declfix) said an uncounted vote goes into result_of 'as none'; that contradicts the adopted task-force condition, the slice and red 1 (an uncounted vote is left out of the result; 'none' would make an uncited No fail a cited-Yes decision). Green 1 follows the task-force condition and leaves uncounted votes out, and its commit body says so. The fix text was the facilitator's drafting error; the window's purpose (the call site is in scope) holds; green 1 (93c4f62) dropped 'did not answer' votes along with uncited ones, a regression no red caught until green 3; found by green 3's stop; window 290-scope-2: the Copilot audit-lens reply was an OBJECTION with a CONDITION (replace A1 and A2 with git evidence or mark them unrun) behind a line of narration; the first-line runner dropped it as unread and a Claude seat took the role, so the decision text's 'six NO OBJECTION' understates it. On substance A1 holds (decider.py:76-81 fails on 'none'), as the sign-off checked in code. The same narration-first defect as card 291, here on Copilot; the slice seat edited its slice file after its turn (recorded in decisions.p6_result); the window voted on the committed text; green 3 attempt 1 left an uncommitted change in the shared tree; the facilitator saved it as .mob/records/290/green3-attempt-1.diff and restored the file; red 1's Environment line reads 'commit before 2d4d24d' although 2d4d24d was its parent commit; the second pick vote started with the facilitator's last probe 56 minutes old, past the 50-minute re-probe point (decider.py probes each seat itself); re-probed before the third vote. Cards filed: 293 (sign-off condition 3). Retro experiments logged (condition 4): a counted quorum, a CITE in build_prompt, a seat time cap, the stored Codex echo. Retro pick D186 not adopted after three votes; logged as a retro experiment. Codex seats returned (quota reset); their stored replies carry Codex CLI banner text after the CITE line."
+}
