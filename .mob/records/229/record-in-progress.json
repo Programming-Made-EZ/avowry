@@ -30,7 +30,9 @@
   "refactor_3": "none needed after green 3, reasoned: green 3 itself replaced green 1's position-matching step (the refactor deferred at refactor_1); the remaining code is one fill helper and one loop",
   "live_step": "criterion 1 (b) MET (.mob/records/229/live/): at mob-crosscli 2d4d24d a real Copilot seat (session 6d00324b) and a real Grok seat (grok-4.6) each cast a parsed Support-it with a verbatim CITE (cite_ok true, counted true in their own records), non-counted, on a 9774-character prompt (61 lines) over cmd.exe's limit. Deviation: the re-rank 20 Decider prompt was used, not the 229-taskforce proposal the slice named, which builds to 7161 characters. Finding: Grok's reply runs narration into the vote word on the same line; decider.py parses it, the facilitator's first-line window runner would not",
   "suite_2d4d24d": "full reference suite on green 3 2d4d24d (PowerShell worktree, registry PATH): Ran 1713 tests in 1664.000s, OK (skipped=1)",
-  "gate": "SHIP (02:45 UTC, .mob/records/229/preship-gate.md): independent reviewer ctx-5, fresh Copilot CLI session 934f4d5a-8d53-412a-8577-a241fd0f8d68 with --add-dir mob-crosscli; scan clean, 33 commands; Done checks 1 to 3 met (it re-measured the live prompt: 9774 characters on 61 lines); 151 targeted tests OK at 2d4d24d; mob_process check OK; no blocker; follow-ups: card 290 stays open, card 270 closes with 229, Grok narration before the vote word against first-line readers"
+  "gate": "SHIP (02:45 UTC, .mob/records/229/preship-gate.md): independent reviewer ctx-5, fresh Copilot CLI session 934f4d5a-8d53-412a-8577-a241fd0f8d68 with --add-dir mob-crosscli; scan clean, 33 commands; Done checks 1 to 3 met (it re-measured the live prompt: 9774 characters on 61 lines); 151 targeted tests OK at 2d4d24d; mob_process check OK; no blocker; follow-ups: card 290 stays open, card 270 closes with 229, Grok narration before the vote word against first-line readers",
+  "signoff": "SIGNED OFF with conditions (.mob/records/229/signoff-ctx6.md): the unrecorded deviations go in the record (done here); a bug card for Grok's narration-then-stop and the first-line runner dropping a vote after narration; card 270 closes as folded in, card 290 stays open; Copilot rejoins counted seats, Grok stays non-counted until that bug is fixed. The 'NO OBJECTION stored as No' point is card 286",
+  "green_seat_scans": "green continuations scanned clean: green 2 cycle 2 attempt 33 commands, green 2 cycle 3 36, green 3 45"
  },
  "seats": [
   {
@@ -62,13 +64,35 @@
    "seat": "Copilot ctx-5",
    "model": "copilot (auto) via the Copilot CLI, independent reviewer, fresh session 934f4d5a-8d53-412a-8577-a241fd0f8d68; command scan clean, 33 commands",
    "evidence": ".mob/records/229/preship-gate.md (SHIP)"
+  },
+  {
+   "role": "live voter (not counted)",
+   "seat": "Copilot (decider seat)",
+   "model": "copilot (auto), session 6d00324b-1a36-4669-98e1-d5be520d6628; command scan clean, 0 commands",
+   "evidence": ".mob/records/229/live/copilot/decider-result.json"
+  },
+  {
+   "role": "live voter (not counted)",
+   "seat": "Grok (decider seat)",
+   "model": "grok-4.6; command source none (unscanned)",
+   "evidence": ".mob/records/229/live/grok/decider-result.json"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off; command scan clean, 34 commands",
+   "evidence": ".mob/records/229/signoff-ctx6.md (SIGNED OFF with conditions)"
   }
  ],
  "deviations": [
   "the QA seat's round 1 cite carried markdown bold markers (not verbatim) and did not count; the coach's round 2 cite had four words and counted on a D171 re-ask",
   "window 229-scope round 2 was launched without its in-flight line (no voter was running at that moment, so the line could have been written); recorded here",
-  "window 229-scope counted two Copilot votes (developer, decider) placed by decider.py's seat gate, although window 229-taskforce left Copilot and Grok out of counted seats until this card's fix lands; the outcome does not depend on them (every seat NO OBJECTION); for the retro: the gate has no per-card exclusion, and the declaration could not be enforced by hand",
-  "live step prompt: the re-rank 20 Decider prompt (9774 characters as built) replaced the slice's 229-taskforce round-2 proposal (7161 as built, under the limit); recorded in live/evidence.md"
+  "window 229-scope counted two Copilot votes (developer, decider) placed by decider.py's seat gate, although window 229-taskforce left Copilot and Grok out of counted seats until this card's fix lands; the outcome does not depend on them (every seat NO OBJECTION); for the retro: the gate has no per-card exclusion, and the declaration could not be enforced by hand [CORRECTED by the sign-off: Copilot counted 3 in 229-scope round 1 (product manager, developer, coach), 2 in round 2 (developer, decider) and 3 in 229-scope-2 (product manager, developer, decider); no outcome depends on them]",
+  "live step prompt: the re-rank 20 Decider prompt (9774 characters as built) replaced the slice's 229-taskforce round-2 proposal (7161 as built, under the limit); recorded in live/evidence.md",
+  "the pre-ship gate (ctx-5) ran on Copilot, the card's own subject, before Done, although the declaration placed every role on Claude; the Claude sign-off re-checked every Done check",
+  "windows 229-scope and 229-scope-2 said Grok 'returned only narration' in every attempt; in fact 8 of 10 Grok attempts stopped after narration with no vote, and 2 (w229scr2cp1-coach, w229sc2cp1-coach) ended with NO OBJECTION and a valid CITE after the narration, which the facilitator's first-line window runner dropped",
+  "the slice named live/prompt.txt; only proposal-file.txt was committed; the built prompt is reproducible with decider.build_prompt (9774 characters, sha256 1efdfc02...34bcc, matching both records)",
+  "every subject commit is authored 'Copilot' although the seats were Claude subagents (the identity question of card 275)"
  ],
  "notes": [
   "Dispatch note (2026-11-03): the user-observable outcome is a real Copilot seat and a real Grok seat casting a parsed vote in a live window; kept as part (b) of the adopted condition"
