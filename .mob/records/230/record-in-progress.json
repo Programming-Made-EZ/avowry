@@ -23,7 +23,8 @@
   "green_3b": "no production change: red 3b passes on bf3e4ab's decider.py and facilitator.py, as window 230-scope-2 allowed",
   "po_direction_trunk": "Product owner direction (2026-11-04, relayed by Dispatch, after red 3b): trunk-based development with no per-seat worktrees or branches. Seats work and commit directly on main in the one checkout; collisions are prevented by the single-writer lock (one writer, seat or facilitator, holds it at a time; the facilitator waits to write while a seat holds it); green 1b's in-place path under the Writers claim becomes the only path and the worktree path is removed. Rationale: continuous integration lands every change on trunk at once; short-lived seat branches, even integrated within minutes, step away from that, and the lock already gives the safety the card exists for. Handled by a scope window before any further red, with the criteria and Done checks restated to the lock-on-main design.",
   "scope_3": ".mob/records/decisions/230-scope-3.json (adopted: lock-on-main, criterion 1 cycle 3, caps 3+1+2)",
-  "full_suite_1cc249d": "Ran 1842, OK (skipped=1) on the worktree design, before the trunk-based direction: data only"
+  "full_suite_1cc249d": "Ran 1842, OK (skipped=1) on the worktree design, before the trunk-based direction: data only",
+  "red_1d": "ab11f1f (criterion 1 cycle 3, window 230-scope-3; committed directly on main in the one checkout): removed the worktree object-store test, both push-race tests, the five CardRunWiring tests, criterion 2's FacilitatorIntegration pair and ShipAuditTrail; rewrote the single-writer, serialized-push, sequential-seat, scan_pushes and two seat-selection tests to the one checkout; LiveVote's integrate attempt is now a push attempt. 10 fail today (seats launch in a worktree; git worktree add and a mob/ branch run; the facilitator is not refused mid-turn; ship does not push exactly once; a real shipped run leaves extra worktrees and branches), including a real-repository history check (one worktree, only main, no merge commits). Three modules Ran 65, 10 failures; test_card_mode and test_smoke Ran 149 OK."
  },
  "seats": [
   {
@@ -42,7 +43,7 @@
    "role": "red",
    "seat": "Claude ctx-3",
    "model": "claude, a fresh subagent context, QA engineer, in its own worktree (17:34 to about 18:10 UTC)",
-   "evidence": "red 1 9b9e162, red 1b bee9606, red 2 f544074, red 1c b1034e7, red 3 c21b738, red 3b 1cc249d"
+   "evidence": "red 1 9b9e162, red 1b bee9606, red 2 f544074, red 1c b1034e7, red 3 c21b738, red 3b 1cc249d, red 1d ab11f1f"
   },
   {
    "role": "green",
