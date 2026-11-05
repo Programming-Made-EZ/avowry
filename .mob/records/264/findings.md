@@ -23,3 +23,11 @@ Every Phrase.Bench acceptance child now starts through `tests/Phrase.Acceptance.
 
 - After: `python .mob/records/264/diag-concurrent-builds.py` printed six children `exit=3 history=True seconds=1.8` and `anomalies=0`.
 - Before (legacy, same tree): `DIAG_LEGACY=1 python .mob/records/264/diag-concurrent-builds.py` printed `round=1 child=2 exit=1 history=False` and `round=2 child=2 exit=1 history=False` with `process cannot access the file '...tools\Phrase.Bench\obj\Debug\net8.0\Phrase.Bench.dll' because it is being used by another process`, and `anomalies=2`.
+
+## The 11:27 run
+
+Run 41341801479 (2026-11-01T19:27:14Z, sha f682823) failed, but its `test` job succeeded; the failing job was `mob-process` ("Check mob process"). Is it this test? No: a different job failed, not this test, so the card does not widen. The evidence is committed in `.mob/records/264/ci-evidence.md`, which also notes a second workflow run, `mob-process` (41341813972), on the same sha that also failed; the facilitator decides at closure whether that mob-process failure is already owned or needs a separate card.
+
+Contrast with the 11:34 run 41342389875, which failed the 004-read-phrase row with a missing history.jsonl file; that is the failure this card investigates.
+
+If the CI log later expires, the committed evidence and the sha f682823 are the fallback.
