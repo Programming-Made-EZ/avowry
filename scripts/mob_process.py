@@ -502,6 +502,22 @@ def check_restart_record(root):
     return [f"restart-record: {line}" for line in lines] or [f"restart-record: checker exited {result.returncode} with no findings"]
 
 
+def check_repeat_evidence(root):
+    """Card 264 criterion 1: the committed 20-run record must pass scripts/check-repeat-evidence.py; run failures fail closed."""
+    script = root / "scripts" / "check-repeat-evidence.py"
+    if not script.is_file():
+        return [f"repeat-evidence: checker script is missing ({script.name})"]
+    try:
+        result = subprocess.run([sys.executable, str(script), "--root", str(root)], capture_output=True, text=True,
+                                encoding="utf-8", timeout=120)
+    except (OSError, subprocess.SubprocessError) as exc:
+        return [f"repeat-evidence: checker could not run: {exc!r}"]
+    if result.returncode == 0:
+        return []
+    lines = [line.strip() for line in result.stderr.splitlines() if line.strip()]
+    return [f"repeat-evidence: {line}" for line in lines] or [f"repeat-evidence: checker exited {result.returncode} with no findings"]
+
+
 def run_check(root, issues, git=None, skip_regeneration=False):
     git = git or (lambda *args: git_command(root, *args))
     legacy = json.loads((root / ".mob/records/LEGACY.json").read_text(encoding="utf-8"))["cards"]
@@ -511,7 +527,8 @@ def run_check(root, issues, git=None, skip_regeneration=False):
     for check in (lambda: check_records(root, issues, git), lambda: check_retros(root, closed_cards | set(legacy), maximum),
                   lambda: check_legacy(root, issues), lambda: check_mob(root, issues, git, skip_regeneration),
                   lambda: check_events(root, issues), lambda: check_workflows(root), lambda: check_issue_labels(issues), lambda: check_windows(root),
-                  lambda: check_process_wiki(root), lambda: check_restart_record(root)):
+                  lambda: check_process_wiki(root), lambda: check_restart_record(root),
+                  lambda: check_repeat_evidence(root)):
         try:
             errors.extend(check())
         except (OSError, ValueError, RuntimeError, TypeError, AttributeError, KeyError) as exc:

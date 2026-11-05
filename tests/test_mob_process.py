@@ -126,7 +126,7 @@ jobs:
         # Card 234 criterion 3 red (born-green until the caller is missing): a clean restart check adds no error.
         self._hold_other_checks_clean()
         out = io.StringIO()
-        with contextlib.redirect_stdout(out), mock.patch.object(mob, "check_restart_record", return_value=[], create=True):
+        with contextlib.redirect_stdout(out), mock.patch.object(mob, "check_restart_record", return_value=[], create=True), mock.patch.object(mob, "check_repeat_evidence", return_value=[]):
             code = mob.run_check(self.root, [], git=self.git)
         self.assertEqual(0, code, out.getvalue())
 
@@ -708,7 +708,7 @@ jobs:
             out = io.StringIO()
             # Card 234 criteria 2 and 3: these tests are about windows, so process-wiki and restart-record checks are held clean here.
             with (contextlib.redirect_stdout(out), mock.patch.object(mob, "check_process_wiki", return_value=[]),
-                  mock.patch.object(mob, "check_restart_record", return_value=[])): code = mob.run_check(self.root, [], git=self.git)
+                  mock.patch.object(mob, "check_restart_record", return_value=[]), mock.patch.object(mob, "check_repeat_evidence", return_value=[])): code = mob.run_check(self.root, [], git=self.git)
             return code, out.getvalue()
         def window(name, **fields):
             data = {"window": name, "category": "slice decision", "ended_at": "2026-10-30T07:38:24Z", "replies": []}
@@ -745,7 +745,7 @@ jobs:
             out = io.StringIO()
             # Card 234 criteria 2 and 3: these tests are about windows, so process-wiki and restart-record checks are held clean here.
             with (contextlib.redirect_stdout(out), mock.patch.object(mob, "check_process_wiki", return_value=[]),
-                  mock.patch.object(mob, "check_restart_record", return_value=[])): code = mob.run_check(self.root, [], git=self.git)
+                  mock.patch.object(mob, "check_restart_record", return_value=[]), mock.patch.object(mob, "check_repeat_evidence", return_value=[])): code = mob.run_check(self.root, [], git=self.git)
             return code, out.getvalue()
         path = self.root / ".mob/records/decisions/340-seats.json"
         # Given a complete window (guard), then an objection that carries a condition and an attempts entry that is not a reply (guards), the check passes

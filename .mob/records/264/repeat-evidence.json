@@ -1,0 +1,200 @@
+{
+  "card": 264,
+  "class": "PhraseExecutedOutcomesAcceptance",
+  "repeat_command": "for i in $(seq 20); do dotnet test tests/Phrase.Acceptance.Tests --no-build --filter FullyQualifiedName~PhraseExecutedOutcomesAcceptance; done (after one `dotnet build tests/Phrase.Acceptance.Tests`; each repetition runs beside the load)",
+  "load": {
+    "class": "BenchmarkHarnessAcceptance",
+    "concurrency": 2,
+    "command": "dotnet test tests/Phrase.Acceptance.Tests --no-build --filter FullyQualifiedName~BenchmarkHarnessAcceptance (started at the same time as each repetition; 2 concurrent dotnet test processes)"
+  },
+  "timeout_boundary_seconds": 600,
+  "timeout_note": "outer per-process boundary enforced by scripts/repeat-run-264.py: a child past it is killed by its own PID (taskkill /PID /T); no timeout was added to any product test",
+  "slowest_seconds_meaning": "slowest single test row of the class under test in that run (from the TRX)",
+  "runs": [
+    {
+      "run": 1,
+      "passed": true,
+      "slowest_seconds": 37.44,
+      "wall_seconds": 303.8,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 2,
+      "passed": true,
+      "slowest_seconds": 36.01,
+      "wall_seconds": 291.8,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 3,
+      "passed": true,
+      "slowest_seconds": 36.36,
+      "wall_seconds": 287.7,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 4,
+      "passed": true,
+      "slowest_seconds": 34.01,
+      "wall_seconds": 273.5,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 5,
+      "passed": true,
+      "slowest_seconds": 34.18,
+      "wall_seconds": 272.5,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 6,
+      "passed": true,
+      "slowest_seconds": 36.59,
+      "wall_seconds": 284.9,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 7,
+      "passed": true,
+      "slowest_seconds": 40.65,
+      "wall_seconds": 281.9,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 8,
+      "passed": true,
+      "slowest_seconds": 34.57,
+      "wall_seconds": 268.8,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 9,
+      "passed": true,
+      "slowest_seconds": 34.06,
+      "wall_seconds": 267.1,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 10,
+      "passed": true,
+      "slowest_seconds": 33.89,
+      "wall_seconds": 269.1,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 11,
+      "passed": true,
+      "slowest_seconds": 34.01,
+      "wall_seconds": 268.1,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 12,
+      "passed": true,
+      "slowest_seconds": 34.03,
+      "wall_seconds": 267.1,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 13,
+      "passed": true,
+      "slowest_seconds": 33.82,
+      "wall_seconds": 266.9,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 14,
+      "passed": true,
+      "slowest_seconds": 34.0,
+      "wall_seconds": 280.2,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 15,
+      "passed": true,
+      "slowest_seconds": 34.52,
+      "wall_seconds": 268.5,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 16,
+      "passed": true,
+      "slowest_seconds": 33.92,
+      "wall_seconds": 266.9,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 17,
+      "passed": true,
+      "slowest_seconds": 33.89,
+      "wall_seconds": 270.3,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 18,
+      "passed": true,
+      "slowest_seconds": 33.85,
+      "wall_seconds": 267.9,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 19,
+      "passed": true,
+      "slowest_seconds": 33.75,
+      "wall_seconds": 267.7,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    },
+    {
+      "run": 20,
+      "passed": true,
+      "slowest_seconds": 46.32,
+      "wall_seconds": 280.0,
+      "rows": 17,
+      "load_exit_code": 0,
+      "load_killed": false
+    }
+  ],
+  "summary": {
+    "total": 20,
+    "passed": 20,
+    "failed": 0
+  }
+}
