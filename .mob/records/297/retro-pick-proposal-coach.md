@@ -4,7 +4,7 @@ Card 297 retro, 2026-11-05, revision 1. Proposer: agile coach seat. For a Decide
 
 Decider (number set at recording), the card 297 retro process pick, as a working-agreement experiment (D183: not a card)
 
-PICK: the facilitator's in-flight command (inflight.sh) exits with an error and writes no in-flight line when the newest probe in .mob/records/probes/ is older than 50 minutes (F-085). No seat starts without an in-flight line, so no seat starts on a stale probe. Proposed by six of seven voices (all but the architect, whose reply was cut off by the Codex shell error); the product manager, QA, developer and coach asked for the check to be mechanical.
+PICK: the facilitator's in-flight command (inflight.sh) exits with an error and writes no in-flight line when the newest probe in .mob/records/probes/ is older than 50 minutes (F-085). No seat starts without an in-flight line, so no seat starts on a stale probe. Proposed by all seven voices (product manager, architect, QA, developer, audit lens, decider, coach), each asking for a mechanical check in some form (a refusal at seat launch or placement, or a runner-enforced expiry).
 
 User benefit: the product owner's cards stop running red and green seats on a driver state nobody re-checked; a Codex seat that has gone unavailable shows up before it wastes a seat, not at the retro.
 
