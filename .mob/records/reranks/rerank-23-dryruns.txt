@@ -1,0 +1,41 @@
+# Re-rank 23 dry-run evidence (facilitator; generated 2026-11-05T20:45Z at HEAD 79acfe3; nothing applied)
+
+## Ranks before (board/MILESTONE-usable-v1.md, the generated table)
+| 92 | 264 The read-and-modify acceptance test is not flaky | Done | none |
+| 93 | 217 Acceptance tests do not starve the thread pool | Ready | none |
+| 94 | 298 A second decision run on the same checkout never votes unprotected | Ready | card 230 (the vote lock) |
+| 95 | 299 A second writer on one checkout is refused across processes | Ready | card 230 (Writers and the vote lock) |
+| 96 | 196 Rename the two test projects to Avowry.*.Tests | Ready | 195 |
+| 97 | 197 Rename the solution, CI jobs, scripts and paths to Avowry | Ready | 196 |
+| 98 | 266 Docs and code consistently use the name Avowry | Ready |  |
+| 99 | 300 A legacy turn on a Codex machine whose shell cannot start is refused before launch | Ready | card 297 (the co
+| 100 | 301 The command probe cannot be passed by copying its nonce from the prompt | Ready | card 297 (the command prob
+| 101 | 232 A seat driver never opens a browser or other UI on the shared machine | Ready | none |
+| 102 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
+| 103 | 201 Migrate the sealed holdouts to avow and record a new baseline | Ready | 199 |
+| 104 | 258 The loop-state lock test is not flaky | Ready | none |
+
+## Command 1: PYTHONPATH=. python scripts/board/rerank.py --after 217 --cards 303 (dry run; first 8 lines of the would: output)
+would: (303) rank None -> 94
+would: (298) rank 94 -> 95
+would: (299) rank 95 -> 96
+would: (196) rank 96 -> 97
+would: (197) rank 97 -> 98
+would: (266) rank 98 -> 99
+would: (300) rank 99 -> 100
+would: (301) rank 100 -> 101
+(total would: lines: 168)
+
+## Command 2: PYTHONPATH=. python scripts/board/rerank.py --after 266 --cards 302 (dry run from the CURRENT state, not cumulative with command 1; it must run after command 1 is applied; first 8 lines)
+would: (302) rank None -> 99
+would: (300) rank 99 -> 100
+would: (301) rank 100 -> 101
+would: (232) rank 101 -> 102
+would: (162) rank 102 -> 103
+would: (201) rank 103 -> 104
+would: (258) rank 104 -> 105
+would: (268) rank 105 -> 106
+(total would: lines: 163)
+
+## Head-size guard arithmetic (re-rank 21: at most 4 bugs above the first product card)
+After both commands: 93 card 217 (bug), 94 card 303 (bug), 95 card 298 (bug), 96 card 299 (bug), 97 card 196 (the rename, the first product card). Bugs above it: 4. Card 302 lands below the rename (rank 100).
