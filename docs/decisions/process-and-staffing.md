@@ -988,3 +988,13 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - Why: on card 230, three windows ran a full six-seat round 2 for one seat's condition (about 10 to 12 minutes each); one condition narrows the text the others already accepted.
 - Metric: window wall-clock per card against card 230's baseline (five windows, nine rounds of six seats, three single-seat re-asks). Counter-metric: decisions later reversed, and audit or sign-off findings traced to a skipped re-poll; any one ends the trial at once and restores the full re-poll.
 - Scope: the decision windows of the next three cards; the third card's retro decides keep or revert. Owner: agile coach.
+
+<a id="d188"></a>
+#### Decider D188: card 297 retro pick: the in-flight command refuses a seat start on a stale probe (experiment, next three cards)
+
+- Date: 2026-11-05. Proposer: agile coach seat, from the card 297 retro (docs/retros/card-297-2026-11-05.md), proposed by all seven voices; the idea was queued as "a probe-age alert before an in-flight line" after card 229. Round 1 through decider.py's decision-seat gate with Grok disabled: Yes 1, Support-it 5, no No, every cite valid; no independent re-run. Votes in .mob/records/deciders/D188-votes.json.
+- Rule for the trial: the facilitator's in-flight command prints "PROBE TOO OLD (N min): run probe_drivers.py first" and exits 1, writing, committing and pushing nothing, when the newest probe in .mob/records/probes/ is older than 50 minutes (F-085), when no probe exists, or when its timestamp is in the future. A seat that needs no driver may start on an explicit override, INFLIGHT_STALE_OK set to a non-empty reason (an empty value counts as unset); the line then carries "stale probe override: <reason>". Overrides are counted. The probe cadence, the 50 minutes, D175 caps and the seat launcher's own 60-minute check for command probes are unchanged.
+- Why: on card 297, 8 of the 14 seat starts recorded a last-probe age above 50 minutes (66 to 145); the same crossing happened twice on card 229; a reminder did not hold.
+- Metric: seats started on a probe older than 50 minutes without an override, from the in-flight lines (card 297: 8 of 14); target 0. Review separates refused attempts, compliant starts and overrides, since a zero is partly true by construction. Counter-metrics: probes per card, overrides per card (more than one means the override became the easy path), minutes added between seats.
+- Deferred from the votes (retro log): check that seat-start commits match in-flight lines one to one (audit lens: a seat started with no line is never counted).
+- Scope: the next three cards; the third card's retro decides keep, revise or drop. Owner: facilitator.

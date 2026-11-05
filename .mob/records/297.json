@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 297,
+ "title": "A Codex seat on Windows runs shell commands in its sandbox, and the probe proves it",
+ "process": "card-mode rules run by hand; next after card 230 in the order of the board head; Grok skipped in counted windows; no cap raised; windows 297-taskforce and 297-slice, both adopted (D187: one coach re-ask, then a full re-poll for two conditions); code in mob-defaults 63180c2..a092d9f",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude, a fresh subagent context, product manager (ready); command scan clean, 2 commands; .mob/records/297/taskforce-proposal-pm.md",
+   "evidence": "7db29a9"
+  },
+  {
+   "role": "slice",
+   "seat": "Codex ctx-2",
+   "model": "codex gpt-5.6-sol via the Codex CLI, read-only sandbox (commands through cmd.exe), architect; it wrote nothing (reply extracted); .mob/records/297/turn-slice-architect.md",
+   "evidence": "50d5e34"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, a fresh subagent context, QA engineer, continued across the card; command scans clean (16 and 40 commands); red 1 63180c2, red 2 6c10f91, red 2 cycle 2 ecd4fb8, red 3 7b08dee, red 3 cycle 2 e3d6a45, red 3 cycle 3 a092d9f",
+   "evidence": "d15c958"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, backend developer, continued across the card; command scan clean, 43 commands; green 1 ebf22e8, green 2 f951bde, green 2 cycle 2 1a90fa6, green 3 668ec09, green 3 cycle 2 2caf7bd",
+   "evidence": "a666ad2"
+  },
+  {
+   "role": "ship",
+   "seat": "Copilot ctx-5",
+   "model": "copilot (auto) via the Copilot CLI, independent reviewer, read-only; .mob/records/297/preship-gate.md (SHIP, with two facilitator corrections)",
+   "evidence": "f340571"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off; attempt 1 was killed by a laptop reboot; attempt 2 command scan clean, 15 commands; .mob/records/297/signoff-ctx6.md (SIGNED OFF with conditions)",
+   "evidence": "f40742d"
+  }
+ ],
+ "retro": "docs/retros/card-297-2026-11-05.md",
+ "notes": "Signed off with conditions (.mob/records/297/signoff-ctx6.md). Criteria: 1 a blocked Codex shell fails the command probe naming shell path, sandbox mode and 1920; 2 a working shell passes with path and mode recorded, and a Codex driver is placed only on a fresh command probe under the invocation's sandbox mode, with no bypass flag; 3 voting, navigating and read-only seats are still placed when only the command probe fails (red 1 63180c2, green 1 ebf22e8; reds 6c10f91 and ecd4fb8, greens f951bde and 1a90fa6; reds 7b08dee, e3d6a45 and a092d9f, greens 668ec09 and 2caf7bd). Limits stated in the sign-off: check 2's lock and commit-on-main half rests on card 230's tests, and no test runs a Codex driver through probe, placement, command and commit together; the machine fix is not applied, so Codex build seats stay refused on this PC until the product owner approves a non-Store PowerShell or Codex set to use cmd; shell_path pwsh.exe in core/backends.json is a placeholder; the legacy non-card turn path is not command-gated; the probe nonce also appears in the prompt text; the card's setup-notes part is not implemented. Done check 2 reads: commits on main in the one checkout under the single-writer lock. Follow-up bug cards are filed for the legacy path and the nonce. Deviations: the sign-off seat was killed by a reboot and re-run; F-085 was breached on 8 of 14 seat starts (66 to 145 minutes); the pre-ship gate reported a wrong HEAD (corrected in its record); the retro pick had one vote round and no independent re-run."
+}

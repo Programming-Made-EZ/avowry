@@ -375,4 +375,11 @@ Fields: Owner (a role), Proof (the kind of story and the measure), Trigger key (
 
 - Built-prompt evidence (its SHA) before a live vote. Owner: architect. Trigger key: `live-vote`. Status: open.
 - One seat policy, a per-card backend exclusion in the decision-seat gate, and a gate seat that is not the card's subject. Owner: decider. Trigger key: `live-vote`. Status: open.
-- A probe-age alert before an in-flight line (two crossings on card 229). Owner: facilitator. Trigger key: `every-story`. Status: open.
+- A probe-age alert before an in-flight line (two crossings on card 229). Owner: facilitator. Trigger key: `every-story`. Status: adopted as D188 (card 297 retro, trial for the next three cards).
+
+## Added after card 297 (no card number)
+
+- Seat-start commits match in-flight lines one to one (card 297 pick vote, audit lens): a seat started with no in-flight line is never counted by D188's metric. Owner: audit lens. Proof: the next story; compare red/green/ship commits with in-flight lines. Trigger key: `every-story`. Status: open.
+- An integration-test voice for driver, probe, placement, command and commit together (card 297 sign-off condition 1; retro developer voice). Owner: QA. Proof: the next card that changes seat placement. Trigger key: `every-story`. Status: open.
+- Monitors armed on a shared output file can report a false completion (card 297: a Monitor read an earlier command's output after a reboot). Owner: facilitator. Proof: the next story; count false completion events. Trigger key: `every-story`. Status: open.
+- Trial dropping one voting seat in the windows of a bug card of this size (card 297 coach voice; no condition was raised in any window). Owner: agile coach. Trigger: a bug card whose task-force window raises no condition. Trigger key: `story-retro`. Status: open.

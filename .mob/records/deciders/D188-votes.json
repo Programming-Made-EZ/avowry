@@ -1,0 +1,64 @@
+{
+ "decider": "D188",
+ "subject": "the card 297 retro pick: the in-flight command refuses a seat start on a probe older than 50 minutes (F-085)",
+ "proposer": "agile coach seat (.mob/records/297/retro-pick-proposal-coach.md), proposed by all seven voices",
+ "result": "ADOPTED (trial): round 1 Yes 1, Support-it 5; no No; every cite valid; Grok disabled; no independent re-run (round 1 only)",
+ "votes": {
+  "round1": [
+   {
+    "role": "product manager",
+    "seat": "codex",
+    "context": "pk297-pm",
+    "started_at": "2026-11-05T09:07:46Z",
+    "overall": "Support-it",
+    "cite": "Making the line impossible to write without a fresh probe",
+    "reply": "Support-it\n\nThis is a small, reversible, task-force-backed trial that enforces F-085 mechanically and measures the breach directly, with counter-metrics guarding ceremony. It preserves role contexts, staffing, quota-first placement, and stop-the-line behavior. The three-card scope fits VISION ruling 6: test the minimum control, then keep, revise, or drop it at retro. The override is narrow, visible, reasoned, and counted. Deferred product and integration FAILs must remain open and blocking where applicable; this process pick must not imply they are resolved.\n\nCITE: Making the line impossible to write without a fresh probe\n[facilitator: Codex CLI echo trimmed]"
+   },
+   {
+    "role": "architect",
+    "seat": "copilot",
+    "context": "pk297-architect",
+    "started_at": "2026-11-05T09:10:10Z",
+    "overall": "Support-it",
+    "cite": "the in-flight command refuses a seat start on a stale probe",
+    "reply": "Support-it\nThe design is minimal and enforceable: it turns a documented drift into a hard gate at seat launch, matching the 50-minute rule and preserving the override only for a no-driver read-only case. It does not change the underlying probe cadence, freshness threshold, or command-probe behavior; it only blocks stale evidence before writing anything. The evidence in card 297 shows actual stale probes caused user-visible risk, while the override is narrow, logged, and limited to real exceptions. This is low false-positive risk and easy to reverse.\nCITE: the in-flight command refuses a seat start on a stale probe"
+   },
+   {
+    "role": "QA",
+    "seat": "claude",
+    "context": "pk297-qa",
+    "started_at": "2026-11-05T09:12:25Z",
+    "overall": "Yes",
+    "cite": "inflight.sh) exits with an error and writes no in-flight line when",
+    "reply": "Yes\n\nThe rule is testable red first. A fixture probe file aged 51 minutes must give exit 1, the message text, and a clean git state with nothing written, committed or pushed. A 49-minute probe must pass. Because the refusal comes before any write, a bad line can't get through the check.\n\nTwo cases the red tests should cover: a missing or empty probes directory, and a probe timestamp in the future. Both must refuse and not pass. The override should also be tested: the reason text must be present in the line, and an empty `INFLIGHT_STALE_OK` must not count as set.\n\nThe metric, 8 of 14, can be counted from existing lines.\n\nCITE: inflight.sh) exits with an error and writes no in-flight line when"
+   },
+   {
+    "role": "backend developer",
+    "seat": "codex",
+    "context": "pk297-dev",
+    "started_at": "2026-11-05T09:13:58Z",
+    "overall": "Support-it",
+    "cite": "No seat starts without an in-flight line",
+    "reply": "Support-it\n\nThe refusal is workable and fair: it centralizes F-085 enforcement before any backend seat starts, adds no seat ceremony when the probe is fresh, and preserves a narrow, counted escape hatch for genuinely driverless work. The three-card trial, latency counter-metric, and override count expose gaming. C2 should specify how the mandatory override reason is supplied; the variable shown carries only authorization, not the reason required in the line. That ambiguity is small enough to resolve during implementation.\n\nCITE: No seat starts without an in-flight line\n[facilitator: Codex CLI echo trimmed]"
+   },
+   {
+    "role": "audit lens",
+    "seat": "claude",
+    "context": "pk297-auditlens",
+    "started_at": "2026-11-05T09:16:26Z",
+    "overall": "Support-it",
+    "cite": "exits with an error and writes no in-flight line when the newest probe",
+    "reply": "Support-it\n\nThe metric can be checked from git alone. The committed in-flight lines record last-probe age, and card 297's 8 of 14 is a count you can re-derive. The refusal also moves the rule into the tool.\n\nTwo loopholes remain. The first is a seat started with no in-flight line, so the line never exists. Then it can't count as stale, and the metric reads 0. Add a check that seat-start commits match in-flight lines one to one. The second is INFLIGHT_STALE_OK=1, whose reason is free text. Count overrides with a grep on \"stale probe override\", and make them fail review if the seat did use a driver.\n\nCITE: exits with an error and writes no in-flight line when the newest probe"
+   },
+   {
+    "role": "decider",
+    "seat": "codex",
+    "context": "pk297-decider",
+    "started_at": "2026-11-05T09:21:48Z",
+    "overall": "Support-it",
+    "cite": "No seat starts without an in-flight line",
+    "reply": "Support-it\n\nThe baseline is concrete and auditable: 8 of 14 starts exceeded F-085, with recorded ages and repeated reminder failures. The three-card trial, counter-metrics, override count, and reversible enforcement support an evidence-based keep/revise/drop decision. All seven required perspectives contributed, and independent sign-off remains intact. At review, distinguish refused attempts, compliant starts, and overrides; otherwise “zero stale starts” is partly guaranteed by construction. C2 should also require a nonempty reason through a defined input, so overrides remain measurable rather than becoming an undocumented escape hatch.\n\nCITE: No seat starts without an in-flight line\n[facilitator: Codex CLI echo trimmed]"
+   }
+  ]
+ }
+}
