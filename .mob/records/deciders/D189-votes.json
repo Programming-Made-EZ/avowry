@@ -1,0 +1,64 @@
+{
+ "decider": "D189",
+ "subject": "the card 264 retro pick: every number a slice states carries the command that produced it (trial, next three bug cards)",
+ "proposer": "agile coach seat (.mob/records/264/retro-pick-proposal-coach.md), proposed in some form by five of seven voices",
+ "result": "ADOPTED (trial): round 1 Yes 1, Support-it 5; no No; every cite valid; Grok disabled; no independent re-run (round 1 only)",
+ "votes": {
+  "round1": [
+   {
+    "role": "product manager",
+    "seat": "codex",
+    "context": "pk264-pm",
+    "started_at": "2026-11-05T19:21:03Z",
+    "overall": "Yes",
+    "cite": "a claim with no command and no \"unrun\" blocks the window",
+    "reply": "Yes\n\nThis is a narrow, reversible three-card experiment tied to a concrete product cost and measurable outcome. It preserves stop-the-line behavior, keeps accountability with existing roles, and lets the task force decide retention at retro. The “unrun” path avoids forcing premature certainty, while its required fallback keeps slices honest. Counter-metrics guard against ceremony, so this returns quickly to product value without recreating D186’s up-front probe.\n\nCITE: a claim with no command and no \"unrun\" blocks the window\n[facilitator: Codex CLI echo trimmed]"
+   },
+   {
+    "role": "architect",
+    "seat": "copilot",
+    "context": "pk264-architect",
+    "started_at": "2026-11-05T19:23:33Z",
+    "overall": "Support-it",
+    "cite": "a numeric claim that carries its command cannot be wrong unseen",
+    "reply": "Support-it\nThis is the right minimal lever: it narrows to numeric claims, keeps the existing D158 checklist, and avoids the broader D186 probe/table burden. It directly addresses the failure mode seen in card 264: an unverified “4 rows” claim caused a stopped green and a scope window. It is enforceable by a checklist rule and a missing-command block. The main caveat is governance: scope-window cap/category handling should remain explicit, but that’s a small tuning issue, not a reason to reject the pick.\nCITE: a numeric claim that carries its command cannot be wrong unseen"
+   },
+   {
+    "role": "QA",
+    "seat": "claude",
+    "context": "pk264-qa",
+    "started_at": "2026-11-05T19:26:35Z",
+    "overall": "Support-it",
+    "cite": "a slice states a count, size or row number only with the command and output that produced it",
+    "reply": "Support-it\n\nThe rule can be tested red first. Replay card 264's slice against the checklist: the \"four rows\" claim has no command, so the window blocks. That is a concrete failing case.\n\nTwo weaknesses remain. Nothing verifies that the pasted output was really run on HEAD, so a stale or invented output would pass. \"Each numeric claim\" also depends on the facilitator spotting every number, and that is a judgment call. Counter-metric 3 will show whether the checklist misses any, and the trial is cheap and reversible.\n\nCITE: a slice states a count, size or row number only with the command and output that produced it"
+   },
+   {
+    "role": "backend developer",
+    "seat": "codex",
+    "context": "pk264-dev",
+    "started_at": "2026-11-05T19:28:23Z",
+    "overall": "Support-it",
+    "cite": "a slice states a count, size or row number only with the command and output that produced it",
+    "reply": "Support-it\n\nThe trial is bounded, reversible, and hard to game because “unrun” requires both a reason and fallback behavior. Commands on committed HEAD make row, test, file, and call-site counts reproducible before green. The checklist gate adds modest overhead and fairly assigns correction to the architect. However, “each numeric claim” should be interpreted as testable delivery premises, excluding identifiers, policy references, caps, and estimates; durations also need environment context to remain meaningful.\n\nCITE: a slice states a count, size or row number only with the command and output that produced it\n[facilitator: Codex CLI echo trimmed]"
+   },
+   {
+    "role": "audit lens",
+    "seat": "claude",
+    "context": "pk264-auditlens",
+    "started_at": "2026-11-05T19:31:12Z",
+    "overall": "Support-it",
+    "cite": "slice checklist lists the numeric claims it found",
+    "reply": "Support-it\n\nGit can verify part of this. The checklist is committed before the window, so a missing claim-to-command line shows up in history. The slice lines are also committed, so their presence can be checked.\n\nGit cannot verify that the quoted output came from committed HEAD. A pasted output block can be stale or hand-typed, and nothing in the proposal ties it to a commit hash.\n\n\"unrun: <reason>\" is also an easy way to pass. The cap of two per slice is only a counter-metric, not a gate.\n\nI would like the slice line to record the HEAD short hash the command ran on, and a hard cap on \"unrun\" claims. The trial is two-way and cheap, so I support it.\n\nCITE: slice checklist lists the numeric claims it found"
+   },
+   {
+    "role": "decider",
+    "seat": "codex",
+    "context": "pk264-decider",
+    "started_at": "2026-11-05T19:35:23Z",
+    "overall": "Support-it",
+    "cite": "a slice states a count, size or row number",
+    "reply": "Support-it\n\nThe evaluation is decision-ready: it names a causal baseline, attributable outcome metric, explicit target, counter-metrics for ceremony and loopholes, three-card scope, and a keep/revise/drop decision. Card 264 supplies concrete evidence that an unchecked numeric premise caused the counted stop and window; sign-off also found a five-versus-six call-site mismatch. All seven relevant voices contributed, and existing facilitator, architect, audit, QA, developer, product, and Decider responsibilities cover enforcement and sign-off without a new seat. Attribution should remain strict because three cards provide limited statistical evidence.\n\nCITE: a slice states a count, size or row number\n[facilitator: Codex CLI echo trimmed]"
+   }
+  ]
+ }
+}

@@ -1240,5 +1240,11 @@
     "status": "experiment",
     "title": "Card 297 retro pick: the in-flight command refuses a seat start on a probe older than 50 minutes (F-085), next three cards",
     "order": 179
+  },
+  "D189": {
+    "area": "process-and-staffing",
+    "status": "experiment",
+    "title": "Card 264 retro pick: a slice's numbers carry the commands that produced them, next three bug cards",
+    "order": 180
   }
 }

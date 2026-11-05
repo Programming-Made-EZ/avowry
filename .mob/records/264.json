@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 264,
+ "title": "The read-and-modify acceptance test is not flaky",
+ "process": "card-mode rules run by hand; ranked first at re-rank 22's head (an open audit FAIL, audit 123); Grok skipped in counted windows; windows 264-taskforce, 264-slice, 264-scope and 264-scope-2, all adopted (D187: a targeted re-ask of the audit lens in 264-scope; full re-polls where two conditions were raised); caps 1+1+1 raised to 2+2+1 by the two scope windows; code in this repo 08b76a7..ca7a8f9",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude, a fresh subagent context, product manager (ready); one narrow dotnet test run (4 of 4 passed); .mob/records/264/taskforce-proposal-pm.md",
+   "evidence": "2504444"
+  },
+  {
+   "role": "slice",
+   "seat": "Codex ctx-2",
+   "model": "codex gpt-5.6-sol via the Codex CLI, read-only sandbox (commands through cmd.exe), architect: the slice and both scope proposals (three turns); it wrote nothing (replies extracted); .mob/records/264/turn-slice-architect.md",
+   "evidence": "e1ea4e5"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, a fresh subagent context, QA engineer, a fresh subagent for each red; reds on main in the one checkout; red 1 08b76a7, red 2 c0cb398, red 2b 18327f3, red 3 e5cc3f4",
+   "evidence": "08b76a7"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, backend developer, a fresh subagent for each green; attempt 1 of green 1 stopped without a commit; green 1a e06c101, green 2 a7ad8c5, green 2b dc1c39c, green 2c 2f331cd, green 3 b7c1958, cycle 1b 55cb037; the 20-run batch was a facilitator machine job, not a seat",
+   "evidence": "e06c101"
+  },
+  {
+   "role": "ship",
+   "seat": "Copilot ctx-5",
+   "model": "copilot (auto) via the Copilot CLI, independent reviewer, read-only; .mob/records/264/preship-gate.md (SHIP, with the facilitator's corrections)",
+   "evidence": "deeaa0b"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off, read-only; command scan clean; .mob/records/264/signoff-ctx6.md (SIGNED OFF with conditions)",
+   "evidence": "d544c9d"
+  }
+ ],
+ "retro": "docs/retros/card-264-2026-11-05.md",
+ "notes": "Signed off with conditions (.mob/records/264/signoff-ctx6.md). Criteria: 1 the class PhraseExecutedOutcomesAcceptance, with BenchmarkHarnessAcceptance beside it (two concurrent dotnet test processes), passed 20 of 20 consecutive runs on the fixed tree (.mob/records/264/repeat-evidence.json; slowest row 46.3 s; checker scripts/check-repeat-evidence.py wired into the process check; red 08b76a7, greens e06c101 and 55cb037); 2 the root cause is named (findings.md: the harness read the results before the child's exit; concurrent dotnet run builds of Phrase.Bench collide on the shared obj output, demonstrated locally, anomalies 2 before and 0 after) and fixed through one no-build launcher for the Phrase.Bench children (reds c0cb398, 18327f3; greens a7ad8c5, dc1c39c, 2f331cd); 3 the 11:27 run was a different job (mob-process), not this test (red e5cc3f4, green b7c1958). Limits stated in the sign-off: the CI failure of 2026-11-01 was never reproduced locally, the trigger is inferred from a local reproduction of the same defect class; the card stays open for the CI evidence of a green run on main. Deviations: green 1 attempt 1 stopped (the class has 17 rows, not 4: a slice premise not run in code); green 2 was pushed after one class and CI was red on the process-start guard from 14:44 to 15:49 UTC (fixed by 2f331cd); the pre-ship gate missed eight CRLF seat-written files (two restored to LF in ca7a8f9) and gave a later HEAD; a stale background command committed an out-of-order probe line (c380122, noted in deeaa0b); the caps sum is 5 against the D175 limit of 3 through two scope windows. Follow-up bug cards: 302 (Phrase.BenchCs children still start build-capable) and 303 (two C# baseline tests fail only on the Windows development machine); the failed mob-process run 41341813972 of 2026-11-01 has no owner."
+}
