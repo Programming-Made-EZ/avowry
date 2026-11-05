@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:b8508b24024973891b6ff00f9a833cec2b8de44fd01c94a07c7823f1f9911a59 -->
+<!-- board-table-sha256:351d2fa339373e1a3f3d85c50bdbeafa92abe0e19ce2b8fb9fb40a5b76f1a3ff -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -110,7 +110,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 88 | 229 A Copilot decision seat receives its whole prompt and casts a vote | Done | none |
 | 89 | 290 The decider's result counts only votes with a valid cite | Done | card 229 (counted and cite_ok exist from green a2bb1d4) |
 | 90 | 230 The facilitator and seats never write the same checkout at once | Done | none |
-| 91 | 297 A Codex seat on Windows runs shell commands in its sandbox, and the probe proves it | Ready | none |
+| 91 | 297 A Codex seat on Windows runs shell commands in its sandbox, and the probe proves it | Done | none |
 | 92 | 264 The read-and-modify acceptance test is not flaky | Ready | none |
 | 93 | 217 Acceptance tests do not starve the thread pool | Ready | none |
 | 94 | 196 Rename the two test projects to Avowry.*.Tests | Ready | 195 |
