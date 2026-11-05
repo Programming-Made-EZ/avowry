@@ -1,0 +1,165 @@
+{
+ "window": "297-taskforce",
+ "category": "task-force declaration",
+ "rule": "D153 objection window on the card 297 task-force declaration; D171 (one re-ask); D187 targeted re-ask (not needed if no condition); Grok disabled",
+ "proposed_by": {
+  "role": "product manager (ready)",
+  "model": "claude-sonnet (fresh subagent)",
+  "context": "ctx-1",
+  "probe_reference": "probe 2026-11-05 04:10 UTC"
+ },
+ "opened_at": "2026-11-05T04:19:07Z",
+ "proposal": "# Card 297 task-force declaration proposal (PM)\n\nCard: a Codex seat on Windows runs shell commands in its sandbox, and the probe proves it. Shape: Contract, bug. The probe only asks for the word OK, so it reports Codex available while the sandboxed shell cannot start (Store alias pwsh, error 1920).\n\n## Task force\n- Product manager (ready): Copilot, ctx-1. Domain: queue, scope, ready gate. Why: keeps the card to the probe/placement behaviour and records the ready check.\n- Architect (slice): Codex (read-only, cmd.exe path), ctx-2. Domain: Codex CLI sandbox modes, Windows process launch, driver probe design. Why: chooses where the command probe lives and proves the premise (blocked shell fails, cmd path works) before any window.\n- QA engineer (red): Claude, ctx-3. Domain: deterministic test design, fake-shell fixtures. Why: writes one red per done check, with no dependency on this machine's real Store alias.\n- Backend developer (green): Claude, ctx-4. Domain: probe and seat-placement code in mob-crosscli. Why: Codex cannot run shell commands on this card, so product-owner priority puts Claude in every coding seat.\n- Independent reviewer (ship): Copilot, ctx-5. Domain: git-level review, sandbox-not-bypassed invariant. Why: did not author; checks that no sandbox is bypassed and that voting/read-only still place.\n- Signoff / Decider: Claude, ctx-6 (a context that did not write the green). Why: final decision and integration under the single-writer lock.\n\nPlacement facts: Claude fills every coding seat (red, green) while Codex cannot run shell commands. Copilot and Codex (read-only/cmd.exe path) can take ready, ship and voting. Grok stays out of counted windows until card 291. Whoever authors never reviews.\n\nLeft out: UX, frontend, database (no user interface or data); security (no sandbox change, the invariant is checked by the reviewer); technical writer (setup note is one line inside the green); DevOps (the machine fix is a product-owner decision, not work in this card); domain expert (see below); agile coach (observer only, not counted).\n\n## Domain-expert question (refinement)\nShould an agent with different domain knowledge or context join? No. The work is probe and placement logic with a fake shell; Windows sandbox knowledge is already in the card's evidence (reproduced, error 1920) and the architect's premise run covers it. Revisit at each cycle boundary: if the real Codex sandbox behaves differently from the fake, propose a Windows/Codex sandbox specialist through the Decider.\n\n## Ready check\nSHIP AS IS. One concern (a command-running Codex seat is placed only when a shell probe passes). Three increments: probe runs a command under the seat's sandbox mode; placement gates on it; voting/read-only skip the gate. Three criteria. Scope note: the card says the machine fix (non-Store PowerShell, or Codex set to use cmd) needs product-owner approval, so only probe and placement behaviour is in scope. Done check 2 is proven with a fake/fixture shell; applying the fix on this machine is not done here. If check 2 turns out to need the real machine change, that part waits on the product owner and the card does not stall on it.\n\n## ZOMBIES, one criterion per cycle\nCycle 1, check 1 (blocked shell fails the probe with details):\n- Z: no shell path resolvable. Probe fails naming \"no shell\" (reason kept as the empty case).\n- O: one blocked shell, error 1920. Probe fails, message has shell path, sandbox mode, 1920.\n- M: several sandbox modes (workspace-write, read-only) each name their own mode.\n- B: error code other than 1920 still reports the code; empty output; timeout (as observed in the repro) reports a timeout, not a pass.\n- I: probe is called by the same entry point the placement uses.\n- E: probe process itself crashes or hangs: fails closed with a reason.\n- S: simple blocked-shell run, happy failure path.\n\nCycle 2, check 2 (fix applied, probe passes, green commits):\n- Z: nothing to commit. Green runs a command, no commit, no lock taken wrongly.\n- O: one command, one commit on main under the single-writer lock.\n- M: two successive commands/commits keep the single lock.\n- B: probe passes via cmd.exe path as well as a non-Store pwsh.\n- I: probe result recorded where placement reads it.\n- E: lock held by another writer: green waits or refuses, no second writer.\n- S: probe passes, command echo returns its output.\n\nCycle 3, check 3 (voting/read-only still placed):\n- Z: no command-probe result at all: voting seat still placed.\n- O: one voting seat, probe failed, placed.\n- M: voting plus read-only seats both placed; a build seat in the same run is refused.\n- B: probe passes: all three placed; probe fails: only the build seat is refused.\n- I: placement output names why the build seat was refused and why the others were not.\n- E: probe errors out: build seat refused, others placed.\n- S: simple one-seat voting placement.\n\n## Value, metric, counter-metric\nValue: Codex can return to build seats on Windows when it truly can run commands, and a seat that cannot is refused up front instead of wasting a window (card 230 green 1 attempt 1 cost a timeout).\nMetric: 0 build-seat windows that start and cannot run a command; probe failure messages carry all three facts (path, mode, 1920) in 100% of blocked cases.\nCounter-metric: Codex voting or read-only seats wrongly refused (must stay 0), and probe time added to every placement (should stay a single short command).\n",
+ "checklist_D158": ".mob/records/297/checklist-297-taskforce.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "copilot",
+   "context": "w297tfcp1-architect",
+   "started_at": "2026-11-05T04:19:07Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: a command-running Codex seat is placed only when a shell probe passes\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-05 04:10 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-05T04:19:31.522806Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "architect (slice)",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w297tf-qa",
+   "started_at": "2026-11-05T04:20:06Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nEach criterion has a red-first ZOMBIES case on a fake shell, and the timeout and crash cases fail closed. One note for the red author: Cycle 2's lock and commit cases test the green-commit rule, not the probe, so they need their own fixtures.\n\nCITE: Done check 2 is proven with a fake/fixture shell\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-05 04:10 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-05T04:20:32.298926Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer (red)",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w297tfcp1-dev",
+   "started_at": "2026-11-05T04:21:39Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\n\nCITE: Green runs a command, no commit, no lock taken wrongly.\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1a9f1-9388-71c2-800e-9c89a4b0db5a\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the BACKEND DEVELOPER (fresh context). Your lens: you are the seat that works under these rules every card (red, unit commits with doubles, green, flags, slice limits). Are they workable, unambiguous and fair to the work, and can you comply without gaming them?\n\n\nFORMAT (overrides any vote words around this text): this is an objection window, not a vote. Your FIRST line must be exactly NO OBJECTION or exactly OBJECTION (with OBJECTION add one line CONDITION: ...). Do not answer Yes, Support-it or No.\nD171 (in force): after your answer lines, end your reply with exactly one line \"CITE: <point>\", where <point> is a phrase of at least 6 words copied exactly from the proposal below, or \"line N: <first 4 words of that line>\". A reply with no matching CITE line does not count.\n\nOBJECTION WINDOW (D153), not a vote: read the proposal below (card 297 task-force declaration). Reply on the first line exactly NO OBJECTION or OBJECTION, nothing else on that line; if OBJECTION add exactly one line CONDITION: one fixed condition that would remove it. Under 60 words.\n\n# Card 297 task-force declaration proposal (PM)\n\nCard: a Codex seat on Windows runs shell commands in its sandbox, and the probe proves it. Shape: Contract, bug. The probe only asks for the word OK, so it reports Codex available while the sandboxed shell cannot start (Store alias pwsh, error 1920).\n\n## Task force\n- Product manager (ready): Copilot, ctx-1. Domain: queue, scope, ready gate. Why: keeps the card to the probe/placement behaviour and records the ready check.\n- Architect (slice): Codex (read-only, cmd.exe path), ctx-2. Domain: Codex CLI sandbox modes, Windows process launch, driver probe design. Why: chooses where the command probe lives and proves the premise (blocked shell fails, cmd path works) before any window.\n- QA engineer (red): Claude, ctx-3. Domain: deterministic test design, fake-shell fixtures. Why: writes one red per done check, with no dependency on this machine's real Store alias.\n- Backend developer (green): Claude, ctx-4. Domain: probe and seat-placement code in mob-crosscli. Why: Codex cannot run shell commands on this card, so product-owner priority puts Claude in every coding seat.\n- Independent reviewer (ship): Copilot, ctx-5. Domain: git-level review, sandbox-not-bypassed invariant. Why: did not author; checks that no sandbox is bypassed and that voting/read-only still place.\n- Signoff / Decider: Claude, ctx-6 (a context that did not write the green). Why: final decision and integration under the single-writer lock.\n\nPlacement facts: Claude fills every coding seat (red, green) while Codex cannot run shell commands. Copilot and Codex (read-only/cmd.exe path) can take ready, ship and voting. Grok stays out of counted windows until card 291. Whoever authors never reviews.\n\nLeft out: UX, frontend, database (no user interface or data); security (no sandbox change, the invariant is checked by the reviewer); technical writer (setup note is one line inside the green); DevOps (the machine fix is a product-owner decision, not work in this card); domain expert (see below); agile coach (observer only, not counted).\n\n## Domain-expert question (refinement)\nShould an agent with different domain knowledge or context join? No. The work is probe and placement logic with a fake shell; Windows sandbox knowledge is already in the card's evidence (reproduced, error 1920) and the architect's premise run covers it. Revisit at each cycle boundary: if the real Codex sandbox behaves differently from the fake, propose a Windows/Codex sandbox specialist through the Decider.\n\n## Ready check\nSHIP AS IS. One concern (a command-running Codex seat is placed only when a shell probe passes). Three increments: probe runs a command under the seat's sandbox mode; placement gates on it; voting/read-only skip the gate. Three criteria. Scope note: the card says the machine fix (non-Store PowerShell, or Codex set to use cmd) needs product-owner approval, so only probe and placement behaviour is in scope. Done check 2 is proven with a fake/fixture shell; applying the fix on this machine is not done here. If check 2 turns out to need the real machine change, that part waits on the product owner and the card does not stall on it.\n\n## ZOMBIES, one criterion per cycle\nCycle 1, check 1 (blocked shell fails the probe with details):\n- Z: no shell path resolvable. Probe fails naming \"no shell\" (reason kept as the empty case).\n- O: one blocked shell, error 1920. Probe fails, message has shell path, sandbox mode, 1920.\n- M: several sandbox modes (workspace-write, read-only) each name their own mode.\n- B: error code other than 1920 still reports the code; empty output; timeout (as observed in the repro) reports a timeout, not a pass.\n- I: probe is called by the same entry point the placement uses.\n- E: probe process itself crashes or hangs: fails closed with a reason.\n- S: simple blocked-shell run, happy failure path.\n\nCycle 2, check 2 (fix applied, probe passes, green commits):\n- Z: nothing to commit. Green runs a command, no commit, no lock taken wrongly.\n- O: one command, one commit on main under the single-writer lock.\n- M: two successive commands/commits keep the single lock.\n- B: probe passes via cmd.exe path as well as a non-Store pwsh.\n- I: probe result recorded where placement reads it.\n- E: lock held by another writer: green waits or refuses, no second writer.\n- S: probe passes, command echo returns its output.\n\nCycle 3, check 3 (voting/read-only still placed):\n- Z: no command-probe result at all: voting seat still placed.\n- O: one voting seat, probe failed, placed.\n- M: voting plus read-only seats both placed; a build seat in the same run is refused.\n- B: probe passes: all three placed; probe fails: only the build seat is refused.\n- I: placement output names why the build seat was refused and why the others were not.\n- E: probe errors out: build seat refused, others placed.\n- S: simple one-seat voting placement.\n\n## Value, metric, counter-metric\nValue: Codex can return to build seats on Windows when it truly can run commands, and a seat that cannot is refused up front instead of wasting a window (card 230 green 1 attempt 1 cost a timeout).\nMetric: 0 build-seat windows that start and cannot run a command; probe failure messages carry all three facts (path, mode, 1920) in 100% of blocked cases.\nCounter-metric: Codex voting or read-only seats wrongly refused (must stay 0), and probe time added to every placement (should stay a single short command).\n\nVote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.\ncodex\nNO OBJECTION\n\nCITE: Green runs a command, no commit, no lock taken wrongly.\ntokens used\n2,468\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-05 04:10 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-05T04:22:04.191168Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w297tfcp1-auditlens",
+   "started_at": "2026-11-05T04:23:01Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nGit can verify this: fixture-based probe outcomes, placement gating by seat type, and explicit refusal reasons; scope also prevents counting machine remediation as done, limiting loopholes.\nCITE: a command-running Codex seat is placed only when a shell probe passes\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-05 04:10 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-05T04:23:25.539546Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w297tf-decider",
+   "started_at": "2026-11-05T04:24:03Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nCITE: Codex cannot run shell commands on this card\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-05 04:10 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-05T04:24:28.290560Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w297tfr2cp1-coach",
+   "started_at": "2026-11-05T04:27:39Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: One concern (a command-running Codex seat is placed only when a shell probe passes).\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-05 04:10 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-05T04:28:02.717462Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "codex",
+   "context": "w297tfcp1-coach",
+   "started_at": "2026-11-05T04:25:41Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nThe task force is proportionate: distinct architecture, test, implementation, independent review, and decision roles, with irrelevant specialties explicitly excluded.\nCITE: Whoever authors never reviews.\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1a9f5-43c4-75e3-94a7-9cc38484c9c1\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the AGILE COACH (fresh context). Your lens: is this task force sized to the task, neither missing a perspective nor padded with ceremony?\n\n\nFORMAT (overrides any vote words around this text): this is an objection window, not a vote. Your FIRST line must be exactly NO OBJECTION or exactly OBJECTION (with OBJECTION add one line CONDITION: ...). Do not answer Yes, Support-it or No.\nD171 (in force): after your answer lines, end your reply with exactly one line \"CITE: <point>\", where <point> is a phrase of at least 6 words copied exactly from the proposal below, or \"line N: <first 4 words of that line>\". A reply with no matching CITE line does not count.\n\nOBJECTION WINDOW (D153), not a vote: read the proposal below (card 297 task-force declaration). Reply on the first line exactly NO OBJECTION or OBJECTION, nothing else on that line; if OBJECTION add exactly one line CONDITION: one fixed condition that would remove it. Under 60 words.\n\n# Card 297 task-force declaration proposal (PM)\n\nCard: a Codex seat on Windows runs shell commands in its sandbox, and the probe proves it. Shape: Contract, bug. The probe only asks for the word OK, so it reports Codex available while the sandboxed shell cannot start (Store alias pwsh, error 1920).\n\n## Task force\n- Product manager (ready): Copilot, ctx-1. Domain: queue, scope, ready gate. Why: keeps the card to the probe/placement behaviour and records the ready check.\n- Architect (slice): Codex (read-only, cmd.exe path), ctx-2. Domain: Codex CLI sandbox modes, Windows process launch, driver probe design. Why: chooses where the command probe lives and proves the premise (blocked shell fails, cmd path works) before any window.\n- QA engineer (red): Claude, ctx-3. Domain: deterministic test design, fake-shell fixtures. Why: writes one red per done check, with no dependency on this machine's real Store alias.\n- Backend developer (green): Claude, ctx-4. Domain: probe and seat-placement code in mob-crosscli. Why: Codex cannot run shell commands on this card, so product-owner priority puts Claude in every coding seat.\n- Independent reviewer (ship): Copilot, ctx-5. Domain: git-level review, sandbox-not-bypassed invariant. Why: did not author; checks that no sandbox is bypassed and that voting/read-only still place.\n- Signoff / Decider: Claude, ctx-6 (a context that did not write the green). Why: final decision and integration under the single-writer lock.\n\nPlacement facts: Claude fills every coding seat (red, green) while Codex cannot run shell commands. Copilot and Codex (read-only/cmd.exe path) can take ready, ship and voting. Grok stays out of counted windows until card 291. Whoever authors never reviews.\n\nLeft out: UX, frontend, database (no user interface or data); security (no sandbox change, the invariant is checked by the reviewer); technical writer (setup note is one line inside the green); DevOps (the machine fix is a product-owner decision, not work in this card); domain expert (see below); agile coach (observer only, not counted).\n\n## Domain-expert question (refinement)\nShould an agent with different domain knowledge or context join? No. The work is probe and placement logic with a fake shell; Windows sandbox knowledge is already in the card's evidence (reproduced, error 1920) and the architect's premise run covers it. Revisit at each cycle boundary: if the real Codex sandbox behaves differently from the fake, propose a Windows/Codex sandbox specialist through the Decider.\n\n## Ready check\nSHIP AS IS. One concern (a command-running Codex seat is placed only when a shell probe passes). Three increments: probe runs a command under the seat's sandbox mode; placement gates on it; voting/read-only skip the gate. Three criteria. Scope note: the card says the machine fix (non-Store PowerShell, or Codex set to use cmd) needs product-owner approval, so only probe and placement behaviour is in scope. Done check 2 is proven with a fake/fixture shell; applying the fix on this machine is not done here. If check 2 turns out to need the real machine change, that part waits on the product owner and the card does not stall on it.\n\n## ZOMBIES, one criterion per cycle\nCycle 1, check 1 (blocked shell fails the probe with details):\n- Z: no shell path resolvable. Probe fails naming \"no shell\" (reason kept as the empty case).\n- O: one blocked shell, error 1920. Probe fails, message has shell path, sandbox mode, 1920.\n- M: several sandbox modes (workspace-write, read-only) each name their own mode.\n- B: error code other than 1920 still reports the code; empty output; timeout (as observed in the repro) reports a timeout, not a pass.\n- I: probe is called by the same entry point the placement uses.\n- E: probe process itself crashes or hangs: fails closed with a reason.\n- S: simple blocked-shell run, happy failure path.\n\nCycle 2, check 2 (fix applied, probe passes, green commits):\n- Z: nothing to commit. Green runs a command, no commit, no lock taken wrongly.\n- O: one command, one commit on main under the single-writer lock.\n- M: two successive commands/commits keep the single lock.\n- B: probe passes via cmd.exe path as well as a non-Store pwsh.\n- I: probe result recorded where placement reads it.\n- E: lock held by another writer: green waits or refuses, no second writer.\n- S: probe passes, command echo returns its output.\n\nCycle 3, check 3 (voting/read-only still placed):\n- Z: no command-probe result at all: voting seat still placed.\n- O: one voting seat, probe failed, placed.\n- M: voting plus read-only seats both placed; a build seat in the same run is refused.\n- B: probe passes: all three placed; probe fails: only the build seat is refused.\n- I: placement output names why the build seat was refused and why the others were not.\n- E: probe errors out: build seat refused, others placed.\n- S: simple one-seat voting placement.\n\n## Value, metric, counter-metric\nValue: Codex can return to build seats on Windows when it truly can run commands, and a seat that cannot is refused up front instead of wasting a window (card 230 green 1 attempt 1 cost a timeout).\nMetric: 0 build-seat windows that start and cannot run a command; probe failure messages carry all three facts (path, mode, 1920) in 100% of blocked cases.\nCounter-metric: Codex voting or read-only seats wrongly refused (must stay 0), and probe time added to every placement (should stay a single short command).\n\nVote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.\ncodex\nNO OBJECTION\nThe task force is proportionate: distinct architecture, test, implementation, independent review, and decision roles, with irrelevant specialties explicitly excluded.\nCITE: Whoever authors never reviews.\ntokens used\n4,694\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-05 04:10 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-05T04:26:06.266703Z",
+   "cite_ok": false,
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "adopted, no condition: the card 297 task force as proposed (Copilot product manager and independent reviewer; Codex architect through the read-only cmd.exe path; Claude QA, backend developer and sign-off/decider in separate contexts; SHIP AS IS). Six NO OBJECTION. Re-asked (D171, targeted per D187): the agile coach only, whose first CITE had 4 words ('Whoever authors never reviews.'); its re-ask was NO OBJECTION with a verbatim cite. No other seat was re-asked. QA's note for the red author: the lock and commit cases of check 2 test the green-commit rule, not the probe, so they need their own fixtures.",
+  "window_minutes": "about 04:30 to 05:10 UTC; the facilitator wrote no in-flight line before this window (a slip, corrected from the next seat on)"
+ },
+ "ended_at": "2026-11-05T04:28:54Z"
+}
