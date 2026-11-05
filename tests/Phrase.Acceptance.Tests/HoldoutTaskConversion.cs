@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.IO;
+using Phrase.Acceptance.Tests.Support;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -10,7 +11,7 @@ public class HoldoutTaskConversion
 {
     [Fact]
     [Trait("Slice", "112")]
-    public void The_python_holdout_task_test_suite_passes()
+    public async Task The_python_holdout_task_test_suite_passes()
     {
         // Given an invented holdout task file and a temp output directory outside the repo
         var repoRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", ".."));
@@ -26,11 +27,9 @@ public class HoldoutTaskConversion
         start.ArgumentList.Add("tests.test_make_holdout_tasks");
 
         // When the task test suite runs
-        using var process = Process.Start(start);
-        Assert.NotNull(process);
-        process.WaitForExit(120000);
+        var result = await ProcessRunner.RunAsync(start, TimeSpan.FromMilliseconds(120000));
 
         // Then it exits cleanly and proves the generator matches the fair-wrapper contract
-        Assert.Equal(0, process.ExitCode);
+        Assert.Equal(0, result.ExitCode);
     }
 }

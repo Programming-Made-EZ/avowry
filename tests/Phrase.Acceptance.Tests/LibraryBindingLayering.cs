@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.IO;
+using Phrase.Acceptance.Tests.Support;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -11,7 +12,7 @@ public class LibraryBindingLayering
 {
     [Fact]
     [Trait("Slice", "152")]
-    public void The_library_binding_layering_check_passes()
+    public async Task The_library_binding_layering_check_passes()
     {
         // Given the library-binding ADR and the checker that reads it
         var repoRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", ".."));
@@ -27,13 +28,9 @@ public class LibraryBindingLayering
         start.ArgumentList.Add("tests.test_library_binding_layering");
 
         // When the library-binding tests run
-        using var process = Process.Start(start);
-        Assert.NotNull(process);
-        var stdout = process.StandardOutput.ReadToEnd();
-        var stderr = process.StandardError.ReadToEnd();
-        process.WaitForExit(120000);
+        var result = await ProcessRunner.RunAsync(start, TimeSpan.FromMilliseconds(120000));
 
         // Then the ADR defines the layers, the FastEndpoints audit and the second-binding rule
-        Assert.True(process.ExitCode == 0, stdout + stderr);
+        Assert.True(result.ExitCode == 0, result.Stdout + result.Stderr);
     }
 }

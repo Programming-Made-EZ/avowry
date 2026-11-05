@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.IO;
+using Phrase.Acceptance.Tests.Support;
 
 namespace Phrase.Acceptance.Tests;
 
@@ -9,7 +10,7 @@ public class HeadToHeadVerdict
 {
     [Fact]
     [Trait("Slice", "103")]
-    public void The_python_verdict_test_suite_passes()
+    public async Task The_python_verdict_test_suite_passes()
     {
         // Given invented WIN, LOSS, TIE, INCONCLUSIVE and token-failure benchmark rows
         var repoRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", ".."));
@@ -25,11 +26,9 @@ public class HeadToHeadVerdict
         start.ArgumentList.Add("tests.test_verdict");
 
         // When the verdict acceptance suite runs
-        using var process = Process.Start(start);
-        Assert.NotNull(process);
-        process.WaitForExit(120000);
+        var result = await ProcessRunner.RunAsync(start, TimeSpan.FromMilliseconds(120000));
 
         // Then every frozen-bar scenario produces its expected totals-only verdict
-        Assert.Equal(0, process.ExitCode);
+        Assert.Equal(0, result.ExitCode);
     }
 }

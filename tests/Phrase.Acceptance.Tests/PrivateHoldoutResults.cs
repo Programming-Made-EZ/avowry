@@ -73,7 +73,7 @@ public sealed class PrivateHoldoutResults
         var csharpPrivateRow = JsonDocument.Parse(privateLines.Single(line => line.Contains("fixture-csharp-v1", StringComparison.Ordinal)));
 
         var summary = Path.Combine(workspace.Root, "summary.json");
-        var summarized = RunPython(RepoPaths.Find("scripts", "summarize-private-results.py"), privateRows, "--out", summary);
+        var summarized = await RunPython(RepoPaths.Find("scripts", "summarize-private-results.py"), privateRows, "--out", summary);
         Assert.True(summarized.ExitCode == 0, summarized.Stdout + summarized.Stderr);
         AssertNumbersOnly(summary, phrasePrivateRow.RootElement.GetProperty("prompt_hash").GetString()!);
         using var live = JsonDocument.Parse(File.ReadAllText(summary));
@@ -99,7 +99,7 @@ public sealed class PrivateHoldoutResults
         var docsRows = Path.Combine(workspace.Root, "private", "docs-rows.jsonl");
         File.WriteAllText(docsRows, DocsRows);
         var docsSummary = Path.Combine(workspace.Root, "docs-summary.json");
-        var docsRun = RunPython(RepoPaths.Find("scripts", "summarize-private-results.py"), docsRows, "--out", docsSummary);
+        var docsRun = await RunPython(RepoPaths.Find("scripts", "summarize-private-results.py"), docsRows, "--out", docsSummary);
         Assert.True(docsRun.ExitCode == 0, docsRun.Stdout + docsRun.Stderr);
         AssertNumbersOnly(docsSummary, "unused-prompt-hash");
         using var docs = JsonDocument.Parse(File.ReadAllText(docsSummary));
@@ -146,14 +146,14 @@ public sealed class PrivateHoldoutResults
 
     [Fact]
     [Trait("Slice", "113")]
-    public void repository_check_passes_here_and_fails_on_a_tracked_holdout_path()
+    public async Task repository_check_passes_here_and_fails_on_a_tracked_holdout_path()
     {
         // Given the repository check wired with the other public-repo checks
         var hook = File.ReadAllText(RepoPaths.Find(".githooks", "pre-commit"));
         Assert.Contains("scripts/check-no-holdout-in-tracked-files.py", hook, StringComparison.Ordinal);
 
         // When it runs on this repo and on a temp git repo that tracks a holdout path
-        var suite = RunPython("-m", "unittest", "tests.test_no_holdout_in_tracked_files");
+        var suite = await RunPython("-m", "unittest", "tests.test_no_holdout_in_tracked_files");
 
         // Then this repo passes and the temp repo fails
         Assert.True(suite.ExitCode == 0, suite.Stdout + suite.Stderr);
@@ -293,7 +293,7 @@ public sealed class PrivateHoldoutResults
         return (process.ExitCode, await stdout, await stderr);
     }
 
-    private static (int ExitCode, string Stdout, string Stderr) RunPython(params string[] arguments)
+    private static async Task<(int ExitCode, string Stdout, string Stderr)> RunPython(params string[] arguments)
     {
         var info = new ProcessStartInfo("python")
         {
@@ -305,11 +305,8 @@ public sealed class PrivateHoldoutResults
         info.Environment["MSBUILDDISABLENODEREUSE"] = "1";
         foreach (var argument in arguments)
             info.ArgumentList.Add(argument);
-        using var process = Process.Start(info)!;
-        var stdout = process.StandardOutput.ReadToEnd();
-        var stderr = process.StandardError.ReadToEnd();
-        process.WaitForExit();
-        return (process.ExitCode, stdout, stderr);
+        var result = await ProcessRunner.RunAsync(info);
+        return (result.ExitCode, result.Stdout, result.Stderr);
     }
 
     private static readonly string[] CommittedHistories =

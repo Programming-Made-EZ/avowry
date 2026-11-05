@@ -152,7 +152,7 @@ public sealed class LlmCustomerCheck
 
     [Fact]
     [Trait("Slice", "137")]
-    public void Runner_unit_tests_pass()
+    public async Task Runner_unit_tests_pass()
     {
         // Given the Python checks for the LLM-customer runner
         var info = new ProcessStartInfo(PythonExecutable)
@@ -167,13 +167,10 @@ public sealed class LlmCustomerCheck
         info.ArgumentList.Add("tests.test_run_llm_check");
 
         // When Ari's gate runs those checks
-        using var process = Process.Start(info) ?? throw new InvalidOperationException("Could not start python.");
-        var stdout = process.StandardOutput.ReadToEnd();
-        var stderr = process.StandardError.ReadToEnd();
-        process.WaitForExit(180000);
+        var result = await ProcessRunner.RunAsync(info, TimeSpan.FromMilliseconds(180000));
 
         // Then every runner finding has a passing test
-        Assert.True(process.ExitCode == 0, stdout + Environment.NewLine + stderr);
+        Assert.True(result.ExitCode == 0, result.Stdout + Environment.NewLine + result.Stderr);
     }
 
     private static void AssertTotalsOnly(JsonElement root, string text)
