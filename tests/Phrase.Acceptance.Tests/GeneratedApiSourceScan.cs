@@ -25,7 +25,7 @@ public class GeneratedApiSourceScan
         "HeadToHeadVerdict.cs", "HoldoutTaskConversion.cs", "LibraryBindingLayering.cs", "LlmCustomerCheck.cs", "MatchingCodebases.cs",
         "MobProcessAccountability.cs", "PhraseCheatSheet.cs", "PhraseEndpointExecutedOutcomes.cs",
         "PrivateHoldoutResults.cs", "RecordUpdateFormCompiles.cs", "SourceMapDeployment.cs", "SourceMapTraceCommand.cs",
-        "Support/BenchChild.cs", "Support/DotnetCli.cs", "Support/GeneratedApi.cs", "Support/PhraseCli.cs", "TasksDemoApp.cs", "TasksDemoReadme.cs", "UsableV1.cs",
+        "Support/BenchChild.cs", "Support/DotnetCli.cs", "Support/GeneratedApi.cs", "Support/PhraseCli.cs", "Support/ProcessRunner.cs", "TasksDemoApp.cs", "TasksDemoReadme.cs", "UsableV1.cs",
     ];
 
     [Fact]
