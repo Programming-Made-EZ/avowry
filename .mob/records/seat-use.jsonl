@@ -1223,3 +1223,4 @@
 {"seat": "codex", "role": "decider voter", "context": "decider-codex", "card": "decider", "ts": "2026-11-05T12:16:32.892876Z", "probe_taken_at": "2026-11-05T12:16:32.883882Z"}
 {"seat": "copilot", "role": "decider voter", "context": "decider-copilot", "card": "decider", "ts": "2026-11-05T12:18:25.603046Z", "probe_taken_at": "2026-11-05T12:18:25.594513Z"}
 {"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-05T12:20:03.837016Z", "probe_taken_at": "2026-11-05T12:20:03.823777Z"}
+{"seat": "codex", "role": "decider voter", "context": "decider-codex", "card": "decider", "ts": "2026-11-05T12:26:09.090863Z", "probe_taken_at": "2026-11-05T12:26:09.084545Z"}
