@@ -28,7 +28,8 @@
   "po_direction_voting": "Product owner clarification (2026-11-04): parallelism only for voting; all writing (seats and facilitator) serial on main under the single-writer lock; voters are read-only and may run in parallel on the one checkout with no copies, worktrees or branches; criterion 3's vote lock fits (nobody writes during a vote, so every voter reads the same HEAD). Rationale: copies exist only to isolate writers; with writes serialized and votes read-only nothing needs isolating. Recorded as a working-agreement principle (TEAM_WORKING_AGREEMENT.md, beside the trunk-based line) and on retro experiment rx-265 (card 265 was withdrawn at re-rank 21). decider.py's per-voter scratch clones are not changed by card 230.",
   "green_1c": "1732a82 (facilitator.py only; committed directly on main): removed Writers.catch_up and Writers.integrate (with green 2's index set-aside around merges and the _git_bytes helper), worktrees_available, seat_checkout, seat_checkouts, work_checkout, the worktree branch of seat_cwd, the worktree prompt text and the integration half of integrate_ship. seat_cwd always returns the repo; every writing turn holds seat_claim for its whole turn, released on exception; after the ship seat's claim is released, ship_push commits the audit trail with explicit paths and pushes once (no origin URL: 'Not pushed' in MOB.md). One sentence added to the ship ask (commit with explicit paths; do not push). core/process.md and the role briefs never mention worktrees, so untouched. Seven modules OK (31, 7, 27, 66, 42, 137, 12). Refactor: none needed (a removal).",
   "full_suite_1732a82": "1732a82 (final, lock-on-main): Ran 1840 tests in 1819.8s, OK (skipped=1, the baseline environmental skip); run in the one mob-crosscli checkout with TEMP in the scratchpad; the tree stayed clean (only the pre-existing untracked .mob/).",
-  "gate": ".mob/records/230/preship-gate.md: SHIP (attempt 2, Copilot session 0b1ad032, ctx-5; scan clean). All three Done checks met as restated by 230-scope-3. Follow-ups: (c) a second decider run votes unprotected after the first releases the lock: bug card 298; (e) the Writers registry is per CardRun process, so a hand-run facilitator and seats writing one checkout outside a CardRun are not covered: a process matter for the retro. The facilitator corrected the gate's run note (it called the current tests stale and gave no counts): the same three modules on 1732a82 Ran 65 OK."
+  "gate": ".mob/records/230/preship-gate.md: SHIP (attempt 2, Copilot session 0b1ad032, ctx-5; scan clean). All three Done checks met as restated by 230-scope-3. Follow-ups: (c) a second decider run votes unprotected after the first releases the lock: bug card 298; (e) the Writers registry is per CardRun process, so a hand-run facilitator and seats writing one checkout outside a CardRun are not covered: superseded by the sign-off, which made it bug card 299. The facilitator corrected the gate's run note (it called the current tests stale and gave no counts): the same three modules on 1732a82 Ran 65 OK.",
+  "signoff": ".mob/records/230/signoff-ctx6.md: SIGNED OFF with conditions (Claude ctx-6; its own run of the three writer and decider modules on 1732a82: 65 OK). Conditions met in the closing record: check 1's push-race half met by ruling; the stated limits; bug card 299; the understated deviations; card 297's Done check 2 amended; the seat entries corrected."
  },
  "seats": [
   {
@@ -46,13 +47,13 @@
   {
    "role": "red",
    "seat": "Claude ctx-3",
-   "model": "claude, a fresh subagent context, QA engineer, in its own worktree (17:34 to about 18:10 UTC)",
+   "model": "claude, a fresh subagent context, QA engineer, continued across the card: reds 1, 1b, 2, 1c, 3 and 3b each in their own seat worktree (17:34 UTC on 2026-11-04 to about 23:16), then red 1d committed directly on main in the one checkout (00:00 to 00:32 UTC on 2026-11-05) after the trunk-based direction",
    "evidence": "red 1 9b9e162, red 1b bee9606, red 2 f544074, red 1c b1034e7, red 3 c21b738, red 3b 1cc249d, red 1d ab11f1f"
   },
   {
    "role": "green",
    "seat": "Claude ctx-4",
-   "model": "claude, a fresh subagent context, backend developer, in its own worktree (18:42 to about 19:05 UTC); attempt 1 on Codex could not launch a shell (card 297)",
+   "model": "claude, a fresh subagent context, backend developer, continued across the card: greens 1, 1b, 2 and 3 each in their own seat worktree (18:42 UTC on 2026-11-04 to about 22:00), green 3b no production change, then green 1c committed directly on main in the one checkout (00:35 to 01:02 UTC on 2026-11-05); attempt 1 of green 1 was on Codex and could not launch a shell (card 297)",
    "evidence": "green 1 0e1e5f3, green 1b 9e84bd1, green 2 495774a, green 3 bf3e4ab, green 1c 1732a82"
   },
   {
@@ -60,6 +61,12 @@
    "seat": "Copilot ctx-5",
    "model": "copilot (auto) via the Copilot CLI, independent reviewer; attempt 1 session fa77c645 timed out (scan clean, 8 commands); attempt 2 session 0b1ad032 (scan clean, 4 commands)",
    "evidence": ".mob/records/230/preship-gate.md (SHIP)"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off",
+   "evidence": ".mob/records/230/signoff-ctx6.md (SIGNED OFF with conditions)"
   }
  ],
  "deviations": [
@@ -70,10 +77,15 @@
   "audit 220 (F-085): both green 1 seats started on a probe 65 to 69 minutes old (17:32 UTC), past the 50-minute re-probe point; re-probed before the next seat",
   "red 2 (f544074) was written and integrated while the full suite on green 1 was still running; the smoke regression was known only after it landed. Red 2 is criterion 2 and does not touch the regression; the stop rule held from the moment the result arrived (green 2 not started)",
   "at 19:46 UTC the facilitator's own record push and its in-flight script's push raced from the same avowry checkout: one was refused with 'cannot lock ref refs/heads/main'; both commits reached origin and nothing was lost (an instance of this card's defect, by two facilitator processes)",
-  "pre-ship gate attempt 1 (Copilot, session fa77c645, 01:40 to 02:12 UTC) hit its 30-minute timeout running seven test modules and wrote no gate file; scan clean (8 commands). Re-run on a fresh Copilot session with the run list narrowed to the three writer and decider modules; the rest attested from the recorded full suite"
+  "pre-ship gate attempt 1 (Copilot, session fa77c645, 01:40 to 02:12 UTC) hit its 30-minute timeout running seven test modules and wrote no gate file; scan clean (8 commands). Re-run on a fresh Copilot session with the run list narrowed to the three writer and decider modules; the rest attested from the recorded full suite",
+  "left-over seat copies (sign-off): 14 card-230 worktrees under the scratchpad (wt-230-red1, red2, red1c, red3, red3b, green1, green1b, green2, green2b, green3, and the full-suite copies g1full, g1bfull, g3full, finalfull) and 10 local card230-* branches remain in mob-crosscli, against the working agreement's one-checkout line; all are clean and merged into main, none pushed. Owed cleanup, held for the product owner's confirmation (a removal deletes directories)",
+  "the pre-ship gate's line citations predate green 1c and are wrong at 1732a82 (it cites facilitator.py:1271-1321, 1297-1308, 1338-1370 and decider.py:338-396; the code is seat_cwd at 1212, ship_push at 1217, hold_vote_lock at 313-344); it decided checks 2 and 3 from the record rather than its own run, and its safety section says the record notes no delete or stash actions, which it does not",
+  "the ready seat's stray edit and the 19:46 UTC push race were recorded as instances of this card's defect, but the shipped lock (one CardRun process) would not have prevented either: bug card 299",
+  "core/roles/devops-engineer.md:7 still tells the ship seat to pull --rebase --autostash and push; only a sentence in the ship prompt (facilitator.py:1340) overrides it"
  ],
  "notes": [
   "Dispatch idea (2026-11-04), logged as a retro experiment in docs/retros/experiments.md, not an issue or card (issue 294 closed as not planned): when round 1 has no No and one seat's condition, fold it in and re-ask that seat plus any seat whose cited point it touches; full re-poll only for a real No or conflicting conditions. Owner: agile coach; trigger: the next card's decision windows; weighed at the card 230 retro. Windows 230-taskforce and 230-slice are data for it.",
-  "Codex sandbox diagnosis (Dispatch: diagnose, do not bench): Codex 0.149.1 with [windows] sandbox = elevated launches pwsh from C:\\Users\\ringe\\AppData\\Local\\Microsoft\\WindowsApps\\pwsh.exe, a Store app alias the sandboxed token cannot open (CreateProcessAsUserW failed: 1920). Reproduced at 18:49 UTC in scratchpad codex-ws-repro: codex exec 'Run the shell command: echo hello ...' -m gpt-5.6-sol -s workspace-write --skip-git-repo-check timed out after the error; -s read-only replied with the error. Commands routed through C:\\WINDOWS\\system32\\cmd.exe succeed: the card 230 slice seat's premise commands (more +1100 facilitator.py, more +330 decider.py, rg via cmd) ran, so its premises stand. Bug card 297 filed."
+  "Codex sandbox diagnosis (Dispatch: diagnose, do not bench): Codex 0.149.1 with [windows] sandbox = elevated launches pwsh from C:\\Users\\ringe\\AppData\\Local\\Microsoft\\WindowsApps\\pwsh.exe, a Store app alias the sandboxed token cannot open (CreateProcessAsUserW failed: 1920). Reproduced at 18:49 UTC in scratchpad codex-ws-repro: codex exec 'Run the shell command: echo hello ...' -m gpt-5.6-sol -s workspace-write --skip-git-repo-check timed out after the error; -s read-only replied with the error. Commands routed through C:\\WINDOWS\\system32\\cmd.exe succeed: the card 230 slice seat's premise commands (more +1100 facilitator.py, more +330 decider.py, rg via cmd) ran, so its premises stand. Bug card 297 filed.",
+  "Limits of the shipped lock (sign-off): the seat claim lives only in memory (facilitator.py:1131-1132), so a seat's own git commands are not mediated and protection comes from serial turns in one process; the vote lock binds only writes through Writers, so a plain git commit during a vote is detected (exit 5), not refused. Done check 1's push-race half is met by ruling (window 230-scope-3: with one checkout and only the facilitator pushing there are no two stale tips)."
  ]
 }
