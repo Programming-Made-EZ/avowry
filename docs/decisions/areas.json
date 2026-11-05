@@ -1228,5 +1228,11 @@
     "status": "not adopted",
     "title": "Card 290 retro pick (a measure-only premise probe before the slice): not adopted after three votes; logged as a retro experiment with its objections",
     "order": 177
+  },
+  "D187": {
+    "area": "process-and-staffing",
+    "status": "experiment",
+    "title": "Card 230 retro pick: trial the targeted re-ask (one condition, no No) in the next three cards' decision windows",
+    "order": 178
   }
 }

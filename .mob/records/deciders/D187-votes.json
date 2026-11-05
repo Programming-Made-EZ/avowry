@@ -1,0 +1,120 @@
+{
+ "decider": "D187",
+ "subject": "the card 230 retro pick: trial the targeted re-ask in the next three cards' decision windows",
+ "proposer": "agile coach seat (.mob/records/230/retro-pick-proposal-coach.md), proposed by six of seven voices",
+ "result": "ADOPTED (trial): round 1 Yes 1, Support-it 5; re-run Yes 1, Support-it 5; no No; every cite valid; Grok disabled",
+ "votes": {
+  "round1": [
+   {
+    "role": "pmready",
+    "seat": "codex",
+    "context": "p230-pmready",
+    "started_at": "2026-11-05T02:59:20Z",
+    "overall": "Yes",
+    "cite": "any one such finding ends the trial at once",
+    "reply": "Yes\n\nThis is a bounded, task-force-approved experiment that preserves seat accountability while reducing repeated work. It names an owner, establishes a baseline and value metric, guards against Goodhart effects, and immediately stops on any traced audit or sign-off failure. Real Nos still trigger a full re-poll, so open FAILs continue to stop the line. The three-card trial avoids over-specifying the permanent process; the third retro retains authority to keep or revert it.\n\nCITE: any one such finding ends the trial at once\n[facilitator: Codex CLI echo trimmed]"
+   },
+   {
+    "role": "architect",
+    "seat": "copilot",
+    "context": "p230-architect",
+    "started_at": "2026-11-05T03:00:55Z",
+    "overall": "Support-it",
+    "cite": "A full six-seat re-poll stays for any real No",
+    "reply": "Support-it\nThis is a minimal, reversible trial: it narrows only the one-condition/no-No case, keeps the full re-poll for real No/conflict, and adds a hard stop on reversed decisions or findings traced to skipped re-polls. The record is explicit about which seats were re-asked and why, and the checker can enforce that without false positives. It aligns with D171’s cited-point discipline and preserves auditability.\nCITE: A full six-seat re-poll stays for any real No\n\n"
+   },
+   {
+    "role": "qa",
+    "seat": "claude",
+    "context": "p230-qa",
+    "started_at": "2026-11-05T03:02:32Z",
+    "overall": "Support-it",
+    "cite": "re-asks only that seat, plus every seat whose cited point the joined text changes",
+    "reply": "Support-it\n\nThis is a process trial with a stop rule, not code. Its triggers are mostly checkable from the window record: no No, exactly one condition, and the facilitator naming which seats were re-asked and why. The part that needs judgement is \"every seat whose cited point the joined text changes\". That can't be tested red first, so a wrongly skipped re-poll would only show up afterwards.\n\nThe counter-metric covers that gap. Any one finding traced to a skipped re-poll ends the trial and restores the full re-poll. The trial is capped at three cards, and card 230 is a concrete baseline.\n\nCITE: re-asks only that seat, plus every seat whose cited point the joined text changes\n"
+   },
+   {
+    "role": "dev",
+    "seat": "codex",
+    "context": "p230-dev",
+    "started_at": "2026-11-05T03:03:33Z",
+    "overall": "Support-it",
+    "cite": "A full six-seat re-poll stays for any real No",
+    "reply": "Support-it\n\nThe bounded three-card trial is workable and fair: it preserves full re-polls for real No votes, multiple or conflicting conditions, records facilitator reasoning, and has an immediate stop rule. From the backend seat, I can comply without gaming it. The only interpretive risk is deciding whether joined text changes another seat’s cited point; recording that judgment makes the risk auditable enough for a trial.\n\nCITE: A full six-seat re-poll stays for any real No\n[facilitator: Codex CLI echo trimmed]"
+   },
+   {
+    "role": "auditlens",
+    "seat": "claude",
+    "context": "p230-auditlens",
+    "started_at": "2026-11-05T03:05:01Z",
+    "overall": "Support-it",
+    "cite": "any one such finding ends the trial at once",
+    "reply": "Support-it\n\nThe record rule lets git show each trial window: the window record must name the seats re-asked and why the others were not. The stop rule and the counter-metric, which counts findings traced to a skipped re-poll, can also be checked. The remaining loophole is judgement. The facilitator decides what counts as \"exactly one seat's condition\" and which seats' cited points the joined text changes. Because of that, a record could show a narrow re-ask that git alone can't tell was warranted. The sign-off audit should check each trial window for this.\n\nCITE: any one such finding ends the trial at once\n"
+   },
+   {
+    "role": "decider",
+    "seat": "codex",
+    "context": "p230-decider",
+    "started_at": "2026-11-05T03:07:53Z",
+    "overall": "Support-it",
+    "cite": "any one such finding ends the trial at once",
+    "reply": "Support-it\n\nThe trial is bounded, owned, measurable, and has a strong stop rule. It preserves every materially affected seat’s sign-off while avoiding unnecessary full re-polls. The baseline and counter-metric make adopt, reshape, or reject evidence-based after three cards.\n\nCITE: any one such finding ends the trial at once\n[facilitator: Codex CLI echo trimmed]"
+   }
+  ],
+  "rerun": [
+   {
+    "role": "coach",
+    "seat": "copilot",
+    "context": "p230rr-coach",
+    "started_at": "2026-11-05T03:11:04Z",
+    "overall": "Support-it",
+    "cite": "a single condition narrows the text the other seats already accepted",
+    "reply": "Support-it\nThis is the right-sized trial: it narrows re-polls only for single-seat, non-conflicting conditions, keeps full six-seat re-polls for real No/conflict, and has a stop rule if reversed decisions or skipped re-poll findings rise. It matches D153’s lighter routine path and D171’s targeted re-ask precedent without padding ceremony or losing a perspective. The facilitator must record who was re-asked and why.\nCITE: a single condition narrows the text the other seats already accepted\n\n"
+   },
+   {
+    "role": "architect",
+    "seat": "claude",
+    "context": "p230rr-architect",
+    "started_at": "2026-11-05T03:12:44Z",
+    "overall": "Yes",
+    "cite": "A cite that is not verbatim is still re-asked alone",
+    "reply": "Yes\n\nThe design is minimal. It adds no new checker rule or findings file. It only narrows an existing re-poll, and it can be audited from one line per window record: which seats were re-asked and why the others were not. The full re-poll stays for any No, for two or more conditions, and for conflicting conditions, which are the cases where skipping seats could hide a problem. The stop rule is also enforceable. One audit or sign-off finding traced to a skipped re-poll ends the trial at once, which guards against Goodhart drift. The one soft spot is \"every seat whose cited point the joined text changes,\" which is a facilitator judgement. The mandatory per-window record and the counter-metric cover it.\n\nCITE: A cite that is not verbatim is still re-asked alone\n"
+   },
+   {
+    "role": "qa",
+    "seat": "codex",
+    "context": "p230rr-qa",
+    "started_at": "2026-11-05T03:13:47Z",
+    "overall": "Support-it",
+    "cite": "any one such finding ends the trial",
+    "reply": "Support-it\n\nThe trigger, exceptions, logging requirement, baseline, metric, counter-metric, and immediate stop rule are independently auditable. Naming re-asked seats and reasons should expose improper skips, while preserving full re-polls for multiple, conflicting, or real-No conditions. This is a bounded three-card trial with a clear rollback, so violations should not silently pass as valid process state.\n\nCITE: any one such finding ends the trial\n[facilitator: Codex CLI echo trimmed]"
+   },
+   {
+    "role": "dev",
+    "seat": "copilot",
+    "context": "p230rr-dev",
+    "started_at": "2026-11-05T03:15:13Z",
+    "overall": "Support-it",
+    "cite": "when a window's round 1 has no No and exactly one seat's condition",
+    "reply": "Support-it\nThis is a bounded, reversible trial with explicit stop conditions, seat scoping, and audit guardrails. The rule is specific about when to fold/re-ask, when to full re-poll, and why. It preserves the current No/objection path and prevents gaming with a counter-metric tied to reversed decisions/findings. The record requirement improves auditability.\nCITE: when a window's round 1 has no No and exactly one seat's condition\n\n"
+   },
+   {
+    "role": "auditlens",
+    "seat": "claude",
+    "context": "p230rr-auditlens",
+    "started_at": "2026-11-05T03:16:49Z",
+    "overall": "Support-it",
+    "cite": "the other seats' NO OBJECTION stands",
+    "reply": "Support-it\n\nThe trial is checkable from git. Each window record has to name the seats re-asked and why the others weren't, and the counter-metric is traceable through later reversals and audit findings. One loophole remains. Whether a condition is \"single\", or whether it changes another seat's cited point, is the facilitator's own call. A facilitator could stretch that call to skip polls and still pass. I'd want the window record to quote the folded condition and the diff of the text. An auditor could then check the skip decisions from git alone. The one-finding stop rule limits the damage.\n\nCITE: the other seats' NO OBJECTION stands\n"
+   },
+   {
+    "role": "decider",
+    "seat": "codex",
+    "context": "p230rr-decider",
+    "started_at": "2026-11-05T03:17:51Z",
+    "overall": "Support-it",
+    "cite": "A full six-seat re-poll stays for any real No",
+    "reply": "Support-it\n\nThe trial is reversible, bounded to three cards, and has an immediate stop rule tied to reversals and audit/sign-off findings. D153 supports lighter routine windows, while D145 and D171 preserve fixed-condition and citation accountability. The affected-seat rule and required record explainability retain the necessary sign-off lenses. The wall-clock comparison is somewhat confounded by differing window counts and complexity, so eligible-window duration should be reported alongside per-card totals, but the guard evidence is sufficient for a trial.\n\nCITE: A full six-seat re-poll stays for any real No\n[facilitator: Codex CLI echo trimmed]"
+   }
+  ]
+ }
+}
