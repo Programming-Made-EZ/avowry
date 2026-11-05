@@ -231,6 +231,7 @@ Fields: Owner (a role), Proof (the kind of story and the measure), Trigger key (
 ### RX-265: Decision windows launch voters in parallel safely
 
 - Owner, proof and trigger (from the sort): Backend developer; proof: a story with a multi-voter window; measure window minutes with seat-use.jsonl still valid; trigger: a window over its cap from serial launches
+  - Model to assume (working agreement, 2026-11-04): voters run in parallel on the one checkout with no per-voter copies, worktrees or branches; writing is serial under the single-writer lock, and card 230's vote lock keeps HEAD fixed for the vote. decider.py today gives each voter a scratch clone (its Isolation tests); a parallel launch under this model drops those copies, and that is a change for the story that takes this experiment, not for card 230.
 - Trigger key: `live-vote`
 - Source: card 265, re-rank 21 sort: Speed improvement; no lost or corrupted vote named.
 - Status: open
