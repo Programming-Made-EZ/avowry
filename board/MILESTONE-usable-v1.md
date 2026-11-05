@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:3c623d5a8f51665e1fa23fc5ddf8d1b4e544329c54645273c87e1db4589dade6 -->
+<!-- board-table-sha256:3a41c072332f347103e9f17020240076436ed72e3f2544455977268003ee2e13 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -111,7 +111,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 89 | 290 The decider's result counts only votes with a valid cite | Done | card 229 (counted and cite_ok exist from green a2bb1d4) |
 | 90 | 230 The facilitator and seats never write the same checkout at once | Done | none |
 | 91 | 297 A Codex seat on Windows runs shell commands in its sandbox, and the probe proves it | Done | none |
-| 92 | 264 The read-and-modify acceptance test is not flaky | Ready | none |
+| 92 | 264 The read-and-modify acceptance test is not flaky | Done | none |
 | 93 | 217 Acceptance tests do not starve the thread pool | Ready | none |
 | 94 | 298 A second decision run on the same checkout never votes unprotected | Ready | card 230 (the vote lock) |
 | 95 | 299 A second writer on one checkout is refused across processes | Ready | card 230 (Writers and the vote lock) |
