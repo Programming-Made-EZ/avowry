@@ -27,7 +27,8 @@
   "red_1d": "ab11f1f (criterion 1 cycle 3, window 230-scope-3; committed directly on main in the one checkout): removed the worktree object-store test, both push-race tests, the five CardRunWiring tests, criterion 2's FacilitatorIntegration pair and ShipAuditTrail; rewrote the single-writer, serialized-push, sequential-seat, scan_pushes and two seat-selection tests to the one checkout; LiveVote's integrate attempt is now a push attempt. 10 fail today (seats launch in a worktree; git worktree add and a mob/ branch run; the facilitator is not refused mid-turn; ship does not push exactly once; a real shipped run leaves extra worktrees and branches), including a real-repository history check (one worktree, only main, no merge commits). Three modules Ran 65, 10 failures; test_card_mode and test_smoke Ran 149 OK.",
   "po_direction_voting": "Product owner clarification (2026-11-04): parallelism only for voting; all writing (seats and facilitator) serial on main under the single-writer lock; voters are read-only and may run in parallel on the one checkout with no copies, worktrees or branches; criterion 3's vote lock fits (nobody writes during a vote, so every voter reads the same HEAD). Rationale: copies exist only to isolate writers; with writes serialized and votes read-only nothing needs isolating. Recorded as a working-agreement principle (TEAM_WORKING_AGREEMENT.md, beside the trunk-based line) and on retro experiment rx-265 (card 265 was withdrawn at re-rank 21). decider.py's per-voter scratch clones are not changed by card 230.",
   "green_1c": "1732a82 (facilitator.py only; committed directly on main): removed Writers.catch_up and Writers.integrate (with green 2's index set-aside around merges and the _git_bytes helper), worktrees_available, seat_checkout, seat_checkouts, work_checkout, the worktree branch of seat_cwd, the worktree prompt text and the integration half of integrate_ship. seat_cwd always returns the repo; every writing turn holds seat_claim for its whole turn, released on exception; after the ship seat's claim is released, ship_push commits the audit trail with explicit paths and pushes once (no origin URL: 'Not pushed' in MOB.md). One sentence added to the ship ask (commit with explicit paths; do not push). core/process.md and the role briefs never mention worktrees, so untouched. Seven modules OK (31, 7, 27, 66, 42, 137, 12). Refactor: none needed (a removal).",
-  "full_suite_1732a82": "1732a82 (final, lock-on-main): Ran 1840 tests in 1819.8s, OK (skipped=1, the baseline environmental skip); run in the one mob-crosscli checkout with TEMP in the scratchpad; the tree stayed clean (only the pre-existing untracked .mob/)."
+  "full_suite_1732a82": "1732a82 (final, lock-on-main): Ran 1840 tests in 1819.8s, OK (skipped=1, the baseline environmental skip); run in the one mob-crosscli checkout with TEMP in the scratchpad; the tree stayed clean (only the pre-existing untracked .mob/).",
+  "gate": ".mob/records/230/preship-gate.md: SHIP (attempt 2, Copilot session 0b1ad032, ctx-5; scan clean). All three Done checks met as restated by 230-scope-3. Follow-ups: (c) a second decider run votes unprotected after the first releases the lock: bug card 298; (e) the Writers registry is per CardRun process, so a hand-run facilitator and seats writing one checkout outside a CardRun are not covered: a process matter for the retro. The facilitator corrected the gate's run note (it called the current tests stale and gave no counts): the same three modules on 1732a82 Ran 65 OK."
  },
  "seats": [
   {
@@ -53,6 +54,12 @@
    "seat": "Claude ctx-4",
    "model": "claude, a fresh subagent context, backend developer, in its own worktree (18:42 to about 19:05 UTC); attempt 1 on Codex could not launch a shell (card 297)",
    "evidence": "green 1 0e1e5f3, green 1b 9e84bd1, green 2 495774a, green 3 bf3e4ab, green 1c 1732a82"
+  },
+  {
+   "role": "ship",
+   "seat": "Copilot ctx-5",
+   "model": "copilot (auto) via the Copilot CLI, independent reviewer; attempt 1 session fa77c645 timed out (scan clean, 8 commands); attempt 2 session 0b1ad032 (scan clean, 4 commands)",
+   "evidence": ".mob/records/230/preship-gate.md (SHIP)"
   }
  ],
  "deviations": [
