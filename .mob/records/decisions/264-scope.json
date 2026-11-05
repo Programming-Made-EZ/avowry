@@ -1,0 +1,169 @@
+{
+ "window": "264-scope",
+ "category": "scope window",
+ "rule": "D153 objection window and D175 scope window for card 264 (criterion 1 raised from 1 to 2 cycles; caps 2+1+1); D184 premise correction; D171 (cites verbatim, case-sensitive); D187 (one condition: only the objecting seat re-asked); Grok disabled (backends-nogrok.json)",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "codex gpt-5.6-sol via the Codex CLI, read-only sandbox (commands through cmd.exe)",
+  "context": "ctx-2",
+  "probe_reference": "probe 2026-11-05 13:47 UTC (.mob/records/probes/2026-10-30.jsonl)"
+ },
+ "opened_at": "2026-11-05T13:51:45Z",
+ "proposal": "# Card 264 scope proposal turn (architect, Codex ctx-2, read-only; commands through cmd.exe; reply extracted)\n\nFacilitator notes (facts): the seat wrote nothing (its reply is the text below, with the Codex CLI banner, prompt echo and a trailing shell-cwd line trimmed). Its Size line says 5537 bytes; the facilitator measured 5536 before that line. Trigger: green 1 attempt 1 (Claude ctx-4) stopped after one run: the class has 17 rows, a loaded run took 339 s, 20 runs are about 112 minutes. Nothing was committed by that attempt; its checker, helper and a partial record sit untracked in the working tree (the partial record must not be committed).\n\n---\n\n# D175 scope proposal — card 264\n\n## D184 premise corrections\n\n```text\n> git rev-parse HEAD\nca0868ed3f5b3a8306dac9c47b33b593e9effd19\n```\n\n1. The repeat target is not four rows. It has two four-row Theories, seven Facts, and one two-row Theory: 17 rows.\n\n```text\n> findstr /n /c:Theory /c:Fact /c:InlineData tests\\Phrase.Acceptance.Tests\\PhraseExecutedOutcomesAcceptance.cs\n18:    [Theory]\n20:    [InlineData(\"004-read-phrase\", \"read\")]\n21:    [InlineData(\"005-read-failure\", \"read\")]\n22:    [InlineData(\"007-modify-return\", \"modify\")]\n23:    [InlineData(\"008-modify-type\", \"modify\")]\n45:    [Theory]\n47:    [InlineData(\"004-read-phrase\", \"read\")]\n48:    [InlineData(\"005-read-failure\", \"read\")]\n49:    [InlineData(\"007-modify-return\", \"modify\")]\n50:    [InlineData(\"008-modify-type\", \"modify\")]\n72:    [Fact]\n91:    [Fact]\n107:    [Fact]\n161:    [Fact]\n196:    [Fact]\n215:    [Fact]\n462:    [Fact]\n495:    [Theory]\n497:    [InlineData(\"010-fix-trigger\")]\n498:    [InlineData(\"011-fix-type\")]\n```\n\n2. A loaded class run is about 339 seconds. The partial record is not acceptance evidence—the old helper falsely marked this passing run failed—but its measurements are useful.\n\n```text\n> findstr /n /c:\"wall_seconds\" /c:\"slowest_seconds\" /c:\"rows\" /c:\"passed\" .mob\\records\\264\\repeat-evidence.json\n16:      \"passed\": false,\n17:      \"slowest_seconds\": 36.55,\n18:      \"wall_seconds\": 339.4,\n19:      \"rows\": 17,\n33:    \"passed\": 0,\n```\n\nThe same record's captured process output says `Passed: 17, Failed: 0`; the helper expectation bug is fixed in the untracked helper. Twenty runs project to about 112 minutes, beyond the 60-minute seat cap.\n\n3. Final criterion-1 evidence must describe the tree that ships. Criterion 2 changes the harness, and the board requires the corrective change on main before closure.\n\n```text\n> findstr /n /c:\"corrective change is merged on main\" board\\264-*.md\n24:  2. The root cause is named ... Card 264 and audit FAIL 123 stay open until the corrective change is merged on main, the same reproduction passes on it, and the evidence with its commands and results is committed; ...\n```\n\nTherefore a record taken before criterion 2 would need repeating after it.\n\n## Amendment and cycle order\n\nAmend criterion 1 into two cycles, ordered **1a, 2, 3, 1b**.\n\n- **1a — green:** commit `scripts/check-repeat-evidence.py` and `scripts/repeat-run-264.py`. The 19 fixture tests in `tests/test_repeat_evidence.py` pass. Its two real-record tests intentionally stay red on main until 1b because no truthful fixed-tree record exists. This is acceptable here because CI runs no Python unit tests; only the process check is enforced, and this checker is not wired into it. It cannot look finished: the committed tests name the missing evidence, criterion 1 remains unsatisfied, the card/audit stay open, and the guardrail forbids closure before fixed-tree evidence is committed and checked.\n- **2, then 3:** fix/diagnose the harness and commit findings; classify 11:27.\n- **1b — record:** after 2 and 3 are green and merged, the facilitator starts the 20-run helper on that fixed commit as a machine job, not an LLM seat turn. It has a hard outer boundary per process and kills only the process tree belonging to its own PID. A seat verifies and commits the real `.mob/records/264/repeat-evidence.json`; both real-record tests then pass.\n\nRaise criterion 1 from 1 cycle to 2. The sum becomes 4, above D175's limit of 3. The window is asked to approve exactly one extra cycle and the staged two-test red. Cost: one evidence review/commit cycle plus about 112 minutes of unattended machine execution, with no seat waiting.\n\n## Batch load and scope\n\nKeep `BenchmarkHarnessAcceptance` beside the target, using exactly two concurrent `dotnet test` processes: one filtered to `PhraseExecutedOutcomesAcceptance`, one to `BenchmarkHarnessAcceptance`. Build once, then use `--no-build`; record exact commands, concurrency, boundary, per-run TRXs, and timings.\n\nDo not narrow to the Theory rows named on the card. Done check 1 says the class, now known to be 17 rows. Narrowing weakens the contract and removes some class-level process/parallel pressure. A Theory-only batch requires explicit window approval of that weakening; this proposal does not request it.\n\n## Failure semantics\n\nRecord a failed run truthfully with run number, row, process exit, stdout/stderr, history existence, timing, and load result. The helper may continue to preserve the planned observation, but the batch no longer proves 20 consecutive passes: the card stays open and criterion 2's findings file must account for the failure.\n\nThe facilitator must not re-run to replace or hide a failure, select a later clean sequence, delete the failed entry, or trim/relabel the 20. A new batch is justified only by a committed correction or a documented helper/infrastructure defect; retain the failed batch.\n\n## Reversal triggers and cost\n\nReverse to the three-cycle scope if the fixed-tree batch proves safe within a normal seat, CI starts enforcing the two real-record tests before 1b, or the window rejects the temporary red or fourth cycle. Re-slice if criteria 2 or 3 change the target, load, command, concurrency, or harness semantics. Stop and return to findings on any batch failure, timeout, missing/corrupt TRX, helper misclassification, load failure, or evidence that the job killed a PID it did not start.\n\nExpected cost: about 112 minutes of machine time, no seat time waiting, then one bounded seat cycle to validate and commit the record.\nSize: 5537 bytes\n\n## Adopted condition (round 1 of the window; this is the text re-asked of one seat, D187 and D145: no new demands)\n\nRound 1: NO OBJECTION from the product manager, QA engineer, backend developer, decider and agile coach; OBJECTION from the independent reviewer (audit lens) with one condition: closure must be blocked by committed CI checks that verify the committed repeat-evidence.json and both real-record tests on main, so passing cannot rely on untracked helpers or facilitator-only machine runs.\n\nAdopted as: in cycle 1b, in the same commit that adds the real record, the seat wires scripts/check-repeat-evidence.py into scripts/mob_process.py check, so the CI job and the blocking pre-push check fail on main without a valid committed record, and the two real-record tests pass on a clean checkout with no untracked file. The wiring is not done earlier, because the record does not exist before 1b and the check would fail every push in between; that is why cycle 1a leaves it out. Closing issue 264 and audit FAIL 123 waits for that 1b commit and a green process check on main.\n",
+ "checklist_D158": ".mob/records/264/checklist-264-scope.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [
+  {
+   "from": "independent reviewer (audit lens), round 1 (w264sc-auditlens, Copilot)",
+   "adopted_as": "in cycle 1b, in the same commit that adds the real record, the seat wires scripts/check-repeat-evidence.py into scripts/mob_process.py check, so the CI job and the blocking pre-push check fail on main without a valid committed record, and the two real-record tests pass on a clean checkout with no untracked file; closing issue 264 and audit FAIL 123 waits for that commit and a green process check on main"
+  }
+ ],
+ "replies": [
+  {
+   "seat": "copilot",
+   "context": "w264sccp1-pmready",
+   "started_at": "2026-11-05T13:51:45Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: The repeat target is not four rows. It has\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-05 13:47 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-05T13:52:12.366635Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w264sc-qa",
+   "started_at": "2026-11-05T13:53:11Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe 19 fixture tests cover the checker red first. The two real-record tests stay red until 1b, so the missing evidence can't be mistaken for done. The no-rerun and failure-retention rules keep a bad batch from passing as clean.\n\nCITE: The facilitator must not re-run to replace or hide a failure\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-05 13:47 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-05T13:53:34.889802Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w264sccp1-dev",
+   "started_at": "2026-11-05T13:54:55Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nCITE: The facilitator must not re-run to replace or hide a failure\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1abfe-ae28-7601-b08c-2cd14115b1f0\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the BACKEND DEVELOPER (fresh context). Your lens: you are the seat that works under these rules every card (red, unit commits with doubles, green, flags, slice limits). Are they workable, unambiguous and fair to the work, and can you comply without gaming them?\n\n\nD171 RE-ASK (the earlier replies for this role copied a phrase with different capitalisation from the proposal, so the cite did not match): the match is exact and case-sensitive. Copy at least 6 consecutive words character for character from the proposal below, keeping its capital letters, or use the line form \"line N: w1 w2 w3 w4\" (N is the 1-based line number in the proposal below, w1 to w4 are that line's first four words).\n\nFORMAT (overrides any vote words around this text): this is an objection window, not a vote. Your FIRST line must be exactly NO OBJECTION or exactly OBJECTION (with OBJECTION add one line CONDITION: ...). Do not answer Yes, Support-it or No.\nD171 (in force): after your answer lines, end your reply with exactly one line \"CITE: <point>\". A reply with no matching CITE line does not count.\n\nOBJECTION WINDOW (D153), not a vote: read the proposal below (context: .mob/records/264/checklist-264-scope.md, .mob/records/264/turn-slice-architect.md, board/264-*.md, docs/decisions/process-and-staffing.md (D153, D157, D175, D181, D184, D171, D187)). Reply on the first line exactly NO OBJECTION or OBJECTION, nothing else on that line; if OBJECTION add exactly one line CONDITION: one fixed condition that would remove it. Under 60 words.\n\n# Card 264 scope proposal turn (architect, Codex ctx-2, read-only; commands through cmd.exe; reply extracted)\n\nFacilitator notes (facts): the seat wrote nothing (its reply is the text below, with the Codex CLI banner, prompt echo and a trailing shell-cwd line trimmed). Its Size line says 5537 bytes; the facilitator measured 5536 before that line. Trigger: green 1 attempt 1 (Claude ctx-4) stopped after one run: the class has 17 rows, a loaded run took 339 s, 20 runs are about 112 minutes. Nothing was committed by that attempt; its checker, helper and a partial record sit untracked in the working tree (the partial record must not be committed).\n\n---\n\n# D175 scope proposal — card 264\n\n## D184 premise corrections\n\n```text\n> git rev-parse HEAD\n[redacted]\n```\n\n1. The repeat target is not four rows. It has two four-row Theories, seven Facts, and one two-row Theory: 17 rows.\n\n```text\n> findstr /n /c:Theory /c:Fact /c:InlineData tests\\Phrase.Acceptance.Tests\\PhraseExecutedOutcomesAcceptance.cs\n18:    [Theory]\n20:    [InlineData(\"004-read-phrase\", \"read\")]\n21:    [InlineData(\"005-read-failure\", \"read\")]\n22:    [InlineData(\"007-modify-return\", \"modify\")]\n23:    [InlineData(\"008-modify-type\", \"modify\")]\n45:    [Theory]\n47:    [InlineData(\"004-read-phrase\", \"read\")]\n48:    [InlineData(\"005-read-failure\", \"read\")]\n49:    [InlineData(\"007-modify-return\", \"modify\")]\n50:    [InlineData(\"008-modify-type\", \"modify\")]\n72:    [Fact]\n91:    [Fact]\n107:    [Fact]\n161:    [Fact]\n196:    [Fact]\n215:    [Fact]\n462:    [Fact]\n495:    [Theory]\n497:    [InlineData(\"010-fix-trigger\")]\n498:    [InlineData(\"011-fix-type\")]\n```\n\n2. A loaded class run is about 339 seconds. The partial record is not acceptance evidence—the old helper falsely marked this passing run failed—but its measurements are useful.\n\n```text\n> findstr /n /c:\"wall_seconds\" /c:\"slowest_seconds\" /c:\"rows\" /c:\"passed\" .mob\\records\\264\\repeat-evidence.json\n16:      \"passed\": false,\n17:      \"slowest_seconds\": 36.55,\n18:      \"wall_seconds\": 339.4,\n19:      \"rows\": 17,\n33:    \"passed\": 0,\n```\n\nThe same record's captured process output says `Passed: 17, Failed: 0`; the helper expectation bug is fixed in the untracked helper. Twenty runs project to about 112 minutes, beyond the 60-minute seat cap.\n\n3. Final criterion-1 evidence must describe the tree that ships. Criterion 2 changes the harness, and the board requires the corrective change on main before closure.\n\n```text\n> findstr /n /c:\"corrective change is merged on main\" board\\264-*.md\n24:  2. The root cause is named ... Card 264 and audit FAIL 123 stay open until the corrective change is merged on main, the same reproduction passes on it, and the evidence with its commands and results is committed; ...\n```\n\nTherefore a record taken before criterion 2 would need repeating after it.\n\n## Amendment and cycle order\n\nAmend criterion 1 into two cycles, ordered **1a, 2, 3, 1b**.\n\n- **1a — green:** commit `scripts/check-repeat-evidence.py` and `scripts/repeat-run-264.py`. The 19 fixture tests in `tests/test_repeat_evidence.py` pass. Its two real-record tests intentionally stay red on main until 1b because no truthful fixed-tree record exists. This is acceptable here because CI runs no Python unit tests; only the process check is enforced, and this checker is not wired into it. It cannot look finished: the committed tests name the missing evidence, criterion 1 remains unsatisfied, the card/audit stay open, and the guardrail forbids closure before fixed-tree evidence is committed and checked.\n- **2, then 3:** fix/diagnose the harness and commit findings; classify 11:27.\n- **1b — record:** after 2 and 3 are green and merged, the facilitator starts the 20-run helper on that fixed commit as a machine job, not an LLM seat turn. It has a hard outer boundary per process and kills only the process tree belonging to its own PID. A seat verifies and commits the real `.mob/records/264/repeat-evidence.json`; both real-record tests then pass.\n\nRaise criterion 1 from 1 cycle to 2. The sum becomes 4, above D175's limit of 3. The window is asked to approve exactly one extra cycle and the staged two-test red. Cost: one evidence review/commit cycle plus about 112 minutes of unattended machine execution, with no seat waiting.\n\n## Batch load and scope\n\nKeep `BenchmarkHarnessAcceptance` beside the target, using exactly two concurrent `dotnet test` processes: one filtered to `PhraseExecutedOutcomesAcceptance`, one to `BenchmarkHarnessAcceptance`. Build once, then use `--no-build`; record exact commands, concurrency, boundary, per-run TRXs, and timings.\n\nDo not narrow to the Theory rows named on the card. Done check 1 says the class, now known to be 17 rows. Narrowing weakens the contract and removes some class-level process/parallel pressure. A Theory-only batch requires explicit window approval of that weakening; this proposal does not request it.\n\n## Failure semantics\n\nRecord a failed run truthfully with run number, row, process exit, stdout/stderr, history existence, timing, and load result. The helper may continue to preserve the planned observation, but the batch no longer proves 20 consecutive passes: the card stays open and criterion 2's findings file must account for the failure.\n\nThe facilitator must not re-run to replace or hide a failure, select a later clean sequence, delete the failed entry, or trim/relabel the 20. A new batch is justified only by a committed correction or a documented helper/infrastructure defect; retain the failed batch.\n\n## Reversal triggers and cost\n\nReverse to the three-cycle scope if the fixed-tree batch proves safe within a normal seat, CI starts enforcing the two real-record tests before 1b, or the window rejects the temporary red or fourth cycle. Re-slice if criteria 2 or 3 change the target, load, command, concurrency, or harness semantics. Stop and return to findings on any batch failure, timeout, missing/corrupt TRX, helper misclassification, load failure, or evidence that the job killed a PID it did not start.\n\nExpected cost: about 112 minutes of machine time, no seat time waiting, then one bounded seat cycle to validate and commit the record.\nSize: 5537 bytes\n\nVote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.\ncodex\nNO OBJECTION\nCITE: The facilitator must not re-run to replace or hide a failure\ntokens used\n3,313\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-05 13:47 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-05T13:55:22.592769Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w264scr2cp1-auditlens",
+   "started_at": "2026-11-05T14:05:57Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nAdopted 1b wiring blocks closure on main with committed evidence and clean-checkout passing real-record tests, closing the loophole around untracked helpers or facilitator-only runs.\nCITE: the CI job and the blocking pre-push check fail on main without a valid committed record\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-05 13:47 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-05T14:06:28.348118Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w264sc-decider",
+   "started_at": "2026-11-05T13:58:17Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe proposal rests the decision on evidence. It corrects the premise to 17 rows and one 339 s run, and it asks the window to approve the fourth cycle and the temporary red tests. Its failure rules and reversal triggers are explicit. I did not check the claim that CI runs no Python tests.\n\nCITE: The window is asked to approve exactly one extra cycle and the staged two-test red.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-05 13:47 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-05T13:58:41.013200Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w264sccp1-coach",
+   "started_at": "2026-11-05T14:00:06Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nThe fourth cycle is proportionate: unattended execution avoids wasting a seat, while one bounded review preserves evidence quality without adding ceremony.\nCITE: one bounded seat cycle to validate and commit the record\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1ac03-7da8-7390-ae95-ad770c92133b\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the AGILE COACH (fresh context). Your lens: is this task force sized to the task, neither missing a perspective nor padded with ceremony?\n\n\nD171 RE-ASK (the earlier replies for this role copied a phrase with different capitalisation from the proposal, so the cite did not match): the match is exact and case-sensitive. Copy at least 6 consecutive words character for character from the proposal below, keeping its capital letters, or use the line form \"line N: w1 w2 w3 w4\" (N is the 1-based line number in the proposal below, w1 to w4 are that line's first four words).\n\nFORMAT (overrides any vote words around this text): this is an objection window, not a vote. Your FIRST line must be exactly NO OBJECTION or exactly OBJECTION (with OBJECTION add one line CONDITION: ...). Do not answer Yes, Support-it or No.\nD171 (in force): after your answer lines, end your reply with exactly one line \"CITE: <point>\". A reply with no matching CITE line does not count.\n\nOBJECTION WINDOW (D153), not a vote: read the proposal below (context: .mob/records/264/checklist-264-scope.md, .mob/records/264/turn-slice-architect.md, board/264-*.md, docs/decisions/process-and-staffing.md (D153, D157, D175, D181, D184, D171, D187)). Reply on the first line exactly NO OBJECTION or OBJECTION, nothing else on that line; if OBJECTION add exactly one line CONDITION: one fixed condition that would remove it. Under 60 words.\n\n# Card 264 scope proposal turn (architect, Codex ctx-2, read-only; commands through cmd.exe; reply extracted)\n\nFacilitator notes (facts): the seat wrote nothing (its reply is the text below, with the Codex CLI banner, prompt echo and a trailing shell-cwd line trimmed). Its Size line says 5537 bytes; the facilitator measured 5536 before that line. Trigger: green 1 attempt 1 (Claude ctx-4) stopped after one run: the class has 17 rows, a loaded run took 339 s, 20 runs are about 112 minutes. Nothing was committed by that attempt; its checker, helper and a partial record sit untracked in the working tree (the partial record must not be committed).\n\n---\n\n# D175 scope proposal — card 264\n\n## D184 premise corrections\n\n```text\n> git rev-parse HEAD\n[redacted]\n```\n\n1. The repeat target is not four rows. It has two four-row Theories, seven Facts, and one two-row Theory: 17 rows.\n\n```text\n> findstr /n /c:Theory /c:Fact /c:InlineData tests\\Phrase.Acceptance.Tests\\PhraseExecutedOutcomesAcceptance.cs\n18:    [Theory]\n20:    [InlineData(\"004-read-phrase\", \"read\")]\n21:    [InlineData(\"005-read-failure\", \"read\")]\n22:    [InlineData(\"007-modify-return\", \"modify\")]\n23:    [InlineData(\"008-modify-type\", \"modify\")]\n45:    [Theory]\n47:    [InlineData(\"004-read-phrase\", \"read\")]\n48:    [InlineData(\"005-read-failure\", \"read\")]\n49:    [InlineData(\"007-modify-return\", \"modify\")]\n50:    [InlineData(\"008-modify-type\", \"modify\")]\n72:    [Fact]\n91:    [Fact]\n107:    [Fact]\n161:    [Fact]\n196:    [Fact]\n215:    [Fact]\n462:    [Fact]\n495:    [Theory]\n497:    [InlineData(\"010-fix-trigger\")]\n498:    [InlineData(\"011-fix-type\")]\n```\n\n2. A loaded class run is about 339 seconds. The partial record is not acceptance evidence—the old helper falsely marked this passing run failed—but its measurements are useful.\n\n```text\n> findstr /n /c:\"wall_seconds\" /c:\"slowest_seconds\" /c:\"rows\" /c:\"passed\" .mob\\records\\264\\repeat-evidence.json\n16:      \"passed\": false,\n17:      \"slowest_seconds\": 36.55,\n18:      \"wall_seconds\": 339.4,\n19:      \"rows\": 17,\n33:    \"passed\": 0,\n```\n\nThe same record's captured process output says `Passed: 17, Failed: 0`; the helper expectation bug is fixed in the untracked helper. Twenty runs project to about 112 minutes, beyond the 60-minute seat cap.\n\n3. Final criterion-1 evidence must describe the tree that ships. Criterion 2 changes the harness, and the board requires the corrective change on main before closure.\n\n```text\n> findstr /n /c:\"corrective change is merged on main\" board\\264-*.md\n24:  2. The root cause is named ... Card 264 and audit FAIL 123 stay open until the corrective change is merged on main, the same reproduction passes on it, and the evidence with its commands and results is committed; ...\n```\n\nTherefore a record taken before criterion 2 would need repeating after it.\n\n## Amendment and cycle order\n\nAmend criterion 1 into two cycles, ordered **1a, 2, 3, 1b**.\n\n- **1a — green:** commit `scripts/check-repeat-evidence.py` and `scripts/repeat-run-264.py`. The 19 fixture tests in `tests/test_repeat_evidence.py` pass. Its two real-record tests intentionally stay red on main until 1b because no truthful fixed-tree record exists. This is acceptable here because CI runs no Python unit tests; only the process check is enforced, and this checker is not wired into it. It cannot look finished: the committed tests name the missing evidence, criterion 1 remains unsatisfied, the card/audit stay open, and the guardrail forbids closure before fixed-tree evidence is committed and checked.\n- **2, then 3:** fix/diagnose the harness and commit findings; classify 11:27.\n- **1b — record:** after 2 and 3 are green and merged, the facilitator starts the 20-run helper on that fixed commit as a machine job, not an LLM seat turn. It has a hard outer boundary per process and kills only the process tree belonging to its own PID. A seat verifies and commits the real `.mob/records/264/repeat-evidence.json`; both real-record tests then pass.\n\nRaise criterion 1 from 1 cycle to 2. The sum becomes 4, above D175's limit of 3. The window is asked to approve exactly one extra cycle and the staged two-test red. Cost: one evidence review/commit cycle plus about 112 minutes of unattended machine execution, with no seat waiting.\n\n## Batch load and scope\n\nKeep `BenchmarkHarnessAcceptance` beside the target, using exactly two concurrent `dotnet test` processes: one filtered to `PhraseExecutedOutcomesAcceptance`, one to `BenchmarkHarnessAcceptance`. Build once, then use `--no-build`; record exact commands, concurrency, boundary, per-run TRXs, and timings.\n\nDo not narrow to the Theory rows named on the card. Done check 1 says the class, now known to be 17 rows. Narrowing weakens the contract and removes some class-level process/parallel pressure. A Theory-only batch requires explicit window approval of that weakening; this proposal does not request it.\n\n## Failure semantics\n\nRecord a failed run truthfully with run number, row, process exit, stdout/stderr, history existence, timing, and load result. The helper may continue to preserve the planned observation, but the batch no longer proves 20 consecutive passes: the card stays open and criterion 2's findings file must account for the failure.\n\nThe facilitator must not re-run to replace or hide a failure, select a later clean sequence, delete the failed entry, or trim/relabel the 20. A new batch is justified only by a committed correction or a documented helper/infrastructure defect; retain the failed batch.\n\n## Reversal triggers and cost\n\nReverse to the three-cycle scope if the fixed-tree batch proves safe within a normal seat, CI starts enforcing the two real-record tests before 1b, or the window rejects the temporary red or fourth cycle. Re-slice if criteria 2 or 3 change the target, load, command, concurrency, or harness semantics. Stop and return to findings on any batch failure, timeout, missing/corrupt TRX, helper misclassification, load failure, or evidence that the job killed a PID it did not start.\n\nExpected cost: about 112 minutes of machine time, no seat time waiting, then one bounded seat cycle to validate and commit the record.\nSize: 5537 bytes\n\nVote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.\ncodex\nNO OBJECTION\nThe fourth cycle is proportionate: unattended execution avoids wasting a seat, while one bounded review preserves evidence quality without adding ceremony.\nCITE: one bounded seat cycle to validate and commit the record\ntokens used\n3,296\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-05 13:47 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-05T14:00:38.372971Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "w264sccp1-auditlens",
+   "started_at": "2026-11-05T13:56:38Z",
+   "model": "auto",
+   "raw": "OBJECTION\nCONDITION: Require closure to be blocked by committed CI checks that verify committed repeat-evidence.json and both real-record tests on main, so passing cannot rely on untracked helpers or facilitator-only machine runs.\nCITE: the board requires the corrective change on main before closure\n\n",
+   "first_line": "OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-05 13:47 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-05T13:57:03.657202Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "OBJECTION",
+   "note": "round 1 OBJECTION with a condition; superseded by the targeted re-ask after the condition was adopted (D187)"
+  }
+ ],
+ "decision": {
+  "result": "adopted with one condition: criterion 1 is split into two cycles ordered 1a (the checker and the helper; the 19 fixture tests pass, the two real-record tests stay red on main), 2, 3, 1b (the 20-run batch on the fixed tree, taken as a facilitator-started machine job and not a seat turn; a seat commits the real record and wires the checker into the process check); caps become 2+1+1, one extra cycle above the D175 limit of 3; the load class stays BenchmarkHarnessAcceptance beside the class, two concurrent dotnet test processes, no narrowing to the Theory rows; a failed batch run is recorded truthfully and never replaced. The premise correction (the class has 17 rows, not 4; a loaded run takes 339 s; 20 runs are about 112 minutes) stands. Round 1: five NO OBJECTION, one OBJECTION with a condition (audit lens). Targeted re-ask of the audit lens alone (D187): NO OBJECTION with a valid cite; the other five seats' round 1 replies stand and each cited a point the added section does not change.",
+  "window_minutes": "round 1 13:49 to 14:01 UTC; re-ask 14:02 to about 14:04"
+ },
+ "ended_at": "2026-11-05T14:08:21Z"
+}
