@@ -1,6 +1,6 @@
 {
  "window": "264-scope",
- "category": "scope window",
+ "category": "mid-card addition",
  "rule": "D153 objection window and D175 scope window for card 264 (criterion 1 raised from 1 to 2 cycles; caps 2+1+1); D184 premise correction; D171 (cites verbatim, case-sensitive); D187 (one condition: only the objecting seat re-asked); Grok disabled (backends-nogrok.json)",
  "proposed_by": {
   "role": "architect (slice)",
