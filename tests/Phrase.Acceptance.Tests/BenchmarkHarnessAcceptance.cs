@@ -1413,15 +1413,12 @@ public class BenchmarkHarnessAcceptance
     private static async Task<(int ExitCode, string Stdout, string Stderr)> RunBenchmarkArm(
         string projectName, string suite, string model, string modelCommand, int timeoutMs)
     {
-        var project = RepoPaths.Find("tools", projectName, projectName + ".csproj");
-        var info = new ProcessStartInfo("dotnet") { RedirectStandardOutput = true, RedirectStandardError = true };
-        foreach (var argument in new[]
+        var info = BenchLauncher.CreateStartInfoFor(projectName, new[]
         {
-            "run", "--project", project, "--", "run", "--suite", suite,
+            "run", "--suite", suite,
             "--model", model, "--model-command", modelCommand, "--timeout-ms", timeoutMs.ToString(),
             "--private-results", Path.Combine(Path.GetDirectoryName(suite)!, "results", "history.jsonl"),
-        })
-            info.ArgumentList.Add(argument);
+        });
         using var process = Process.Start(info)!;
         var stdout = process.StandardOutput.ReadToEndAsync();
         var stderr = process.StandardError.ReadToEndAsync();
@@ -1497,14 +1494,7 @@ public class BenchmarkHarnessAcceptance
     private static async Task<(int ExitCode, string Stdout, string Stderr)> RunBenchmarkProcess(
         params string[] benchmarkArguments)
     {
-        var runner = RepoPaths.Find("tools", "Phrase.Bench", "Phrase.Bench.csproj");
-        var startInfo = new System.Diagnostics.ProcessStartInfo("dotnet")
-        {
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-        };
-        foreach (var argument in new[] { "run", "--project", runner, "--" }.Concat(benchmarkArguments))
-            startInfo.ArgumentList.Add(argument);
+        var startInfo = BenchLauncher.CreateStartInfo(benchmarkArguments);
         using var process = System.Diagnostics.Process.Start(startInfo)!;
         var stdout = await process.StandardOutput.ReadToEndAsync();
         var stderr = await process.StandardError.ReadToEndAsync();

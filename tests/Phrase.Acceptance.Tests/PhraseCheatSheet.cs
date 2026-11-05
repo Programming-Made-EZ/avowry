@@ -271,16 +271,8 @@ public class PhraseCheatSheet
             "--private-results", Path.Combine(suiteDirectory, "results", "history.jsonl"),
         };
         arguments.AddRange(additionalArguments);
-        var runner = RepoPaths.Find("tools", "Phrase.Bench", "Phrase.Bench.csproj");
-        var startInfo = new ProcessStartInfo("dotnet")
-        {
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            WorkingDirectory = RepoPaths.Root,
-        };
-        foreach (var argument in new[] { "run", "--project", runner, "--" }.Concat(arguments))
-            startInfo.ArgumentList.Add(argument);
+        var startInfo = BenchLauncher.CreateStartInfo(arguments);
+        startInfo.WorkingDirectory = RepoPaths.Root;
         startInfo.Environment["MSBUILDDISABLENODEREUSE"] = "1";
         var dotnetRoot = Environment.GetEnvironmentVariable("DOTNET_ROOT");
         if (string.IsNullOrEmpty(dotnetRoot))

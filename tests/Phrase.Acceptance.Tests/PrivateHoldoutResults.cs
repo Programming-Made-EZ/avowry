@@ -270,25 +270,16 @@ public sealed class PrivateHoldoutResults
     private static async Task<(int ExitCode, string Stdout, string Stderr)> RunArm(
         string project, string suite, string model, string command, string? privateResults)
     {
-        var projectPath = RepoPaths.Find("tools", project, project + ".csproj");
-        var info = new ProcessStartInfo("dotnet")
+        var info = BenchLauncher.CreateStartInfoFor(project, new[]
         {
-            WorkingDirectory = RepoPaths.Root,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-        };
+            "run", "--suite", suite, "--model", model, "--model-command", command,
+            "--label", HoldoutLabel, "--timeout-ms", "60000",
+        }, ["--disable-build-servers"]);
+        info.WorkingDirectory = RepoPaths.Root;
         info.Environment["MSBUILDDISABLENODEREUSE"] = "1";
         info.Environment["DOTNET_ROLL_FORWARD"] = "Major";
         foreach (var name in new[] { "MSBUILD_EXE_PATH", "MSBuildExtensionsPath", "MSBuildSDKsPath", "MSBuildLoadMicrosoftTargetsReadOnly" })
             info.Environment.Remove(name);
-        foreach (var argument in new[]
-        {
-            "run", "--disable-build-servers", "--project", projectPath, "--",
-            "run", "--suite", suite, "--model", model, "--model-command", command,
-            "--label", HoldoutLabel, "--timeout-ms", "60000",
-        })
-            info.ArgumentList.Add(argument);
         if (privateResults is not null)
         {
             info.ArgumentList.Add("--private-results");

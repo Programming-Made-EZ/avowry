@@ -329,18 +329,12 @@ public class PhraseExecutedOutcomesAcceptance
     private static async Task<(int ExitCode, string Stdout, string Stderr)> Run(
         string suite, string command, string model, params string[] extra)
     {
-        var project = RepoPaths.Find("tools", "Phrase.Bench", "Phrase.Bench.csproj");
-        var info = new System.Diagnostics.ProcessStartInfo("dotnet")
-        {
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-        };
+        var info = BenchLauncher.CreateStartInfo(
+            ["run", "--suite", suite, "--model", model, "--model-command", command],
+            ["--disable-build-servers"]);
         // A reused build server inherits this pipe and keeps ReadToEnd from finishing.
         info.Environment["MSBUILDDISABLENODEREUSE"] = "1";
         info.Environment["DOTNET_ROLL_FORWARD"] = "Major";
-        foreach (var argument in new[] { "run", "--disable-build-servers", "--project", project, "--", "run", "--suite", suite, "--model", model, "--model-command", command })
-            info.ArgumentList.Add(argument);
         info.ArgumentList.Add("--private-results");
         info.ArgumentList.Add(Path.Combine(Path.GetDirectoryName(suite)!, "results", "history.jsonl"));
         foreach (var argument in extra)

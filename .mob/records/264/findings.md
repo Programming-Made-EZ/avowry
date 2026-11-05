@@ -16,3 +16,10 @@ Root cause: the acceptance harness read results/history.jsonl before looking at 
 Reproduction: not reproduced locally for the CI failure itself; the observation is CI run 41342389875 (DirectoryNotFoundException at ReadHistory line 359, row 004-read-phrase). The masking defect is forced by the BenchRunHarness tests (red c0cb398: no `BenchChild` seam; green: 7 passed) and the early-exit trigger is forced by the diagnostic helper above.
 
 Status: the harness fix makes an early child exit report its exit code, stdout, stderr and history path; it does not stop two builds colliding. The collision itself (isolating Phrase.Bench build output per invocation, or building once and using --no-build) is not fixed here, so this card stays open under the adopted closure condition and the flake is not claimed fixed.
+
+## After the fix (green 2b)
+
+Every Phrase.Bench acceptance child now starts through `tests/Phrase.Acceptance.Tests/Support/BenchLauncher.cs`: `dotnet run --no-build -c <configuration of the test assembly> --project tools/Phrase.Bench/Phrase.Bench.csproj -- ...`; missing or stale output throws before any process starts and nothing builds in a child. The diagnostic helper now exercises that shape (one serial `dotnet build -c Debug` of Phrase.Bench per round after the touch, then two concurrent `--no-build -c Debug` children); `DIAG_LEGACY=1` keeps the old concurrent-build shape.
+
+- After: `python .mob/records/264/diag-concurrent-builds.py` printed six children `exit=3 history=True seconds=1.8` and `anomalies=0`.
+- Before (legacy, same tree): `DIAG_LEGACY=1 python .mob/records/264/diag-concurrent-builds.py` printed `round=1 child=2 exit=1 history=False` and `round=2 child=2 exit=1 history=False` with `process cannot access the file '...tools\Phrase.Bench\obj\Debug\net8.0\Phrase.Bench.dll' because it is being used by another process`, and `anomalies=2`.
