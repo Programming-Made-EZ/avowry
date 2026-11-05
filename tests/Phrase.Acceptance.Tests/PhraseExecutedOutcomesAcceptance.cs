@@ -345,18 +345,17 @@ public class PhraseExecutedOutcomesAcceptance
         info.ArgumentList.Add(Path.Combine(Path.GetDirectoryName(suite)!, "results", "history.jsonl"));
         foreach (var argument in extra)
             info.ArgumentList.Add(argument);
-        using var process = System.Diagnostics.Process.Start(info)!;
-        var stdoutTask = process.StandardOutput.ReadToEndAsync();
-        var stderrTask = process.StandardError.ReadToEndAsync();
-        await process.WaitForExitAsync();
-        return (process.ExitCode, await stdoutTask, await stderrTask);
+        // The child's real result is kept before any history read; a legitimate scoring exit (3) that wrote history stays valid.
+        var history = Path.Combine(Path.GetDirectoryName(suite)!, "results", "history.jsonl");
+        var result = await BenchChild.RunAsync(info, history, 0, 3);
+        return (result.ExitCode, result.Stdout, result.Stderr);
     }
 
     private static Dictionary<string, string> ReadHistory(string suite)
     {
         var history = Path.Combine(Path.GetDirectoryName(suite)!, "results", "history.jsonl");
         var rows = new Dictionary<string, string>(StringComparer.Ordinal);
-        foreach (var line in File.ReadAllLines(history))
+        foreach (var line in BenchChild.ReadHistoryLines(history))
         {
             using var document = JsonDocument.Parse(line);
             rows[document.RootElement.GetProperty("task").GetString()!] = line;
