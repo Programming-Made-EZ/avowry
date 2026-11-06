@@ -295,3 +295,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D189](process-and-staffing.md#d189) | Card 264 retro pick: a slice's numbers carry the commands that produced them, next three bug cards | process-and-staffing | experiment |
 | [D190](process-and-staffing.md#d190) | Card 217 retro pick: a pre-ship gate says SHIP only on commands it ran or named, next three cards with a gate | process-and-staffing | experiment |
 | [D191](process-and-staffing.md#d191) | Card 303 retro pick: adopt the product-owner inbox as the decision channel (fails the strict count: one unresolved No), re-voted as D192 | process-and-staffing | not adopted |
+| [D192](process-and-staffing.md#d192) | Card 303 retro pick re-vote: adopt the product-owner inbox with a committed log and a mechanical check (fails: one unresolved No; escalated to the product owner) | process-and-staffing | not adopted |

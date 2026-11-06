@@ -1,0 +1,92 @@
+{
+ "decider": "D192",
+ "subject": "the card 303 retro pick, re-vote after D191 failed the strict count: adopt the product-owner inbox as the decision channel with a committed log and a mechanical check (experiment, three cards)",
+ "proposer": "agile coach seat (.mob/records/303/retro-pick-proposal-coach-d192.md, revision 2 after round 1)",
+ "result": "NOT ADOPTED (strict count): round 1 Yes 1 (developer), Support-it 4 (product manager, architect, QA, decider), No 1 (audit lens, no cite); the architect's cite did not match (capital letter) and was re-asked; amended (C6b) for the audit lens's condition; D187 re-ask of the architect and the audit lens alone: architect Support-it (cite verbatim), audit lens No again with a new condition (a complete snapshot authenticated against immutable source evidence from git alone), unresolved after the amendment, so the proposal fails. Grok disabled.",
+ "votes": {
+  "round1": [
+   {
+    "role": "product manager",
+    "seat": "claude",
+    "context": "pk192-pm",
+    "started_at": "2026-11-06T18:58:43Z",
+    "overall": "Support-it",
+    "cite": "The 60 minutes is a number to review at the trial's retro, not a standing rule.",
+    "cite_verbatim": true,
+    "reply": "Support-it\n\nThe proposal resolves the architect's one condition and adds nothing else (D145). It also serves the product owner's accountability rule: decisions are acknowledged in a committed log and checked against a metric. It keeps the Decider protocol exactly as written and keeps the board unchanged. The script must go red before green, and the trial counts only from the card after it lands, so the rule isn't judged before its check exists.\n\nMy concern is over-specification (VISION ruling 6). Six rejection rules and a 60-minute threshold are a lot for a file-read experiment. The 60 minutes is explicitly open to review, and counter-metric 4 flags more than 5 minutes per boundary as ceremony. That is acceptable for a three-card trial.\n\nCITE: The 60 minutes is a number to review at the trial's retro, not a standing rule.\n"
+   },
+   {
+    "role": "architect",
+    "seat": "copilot",
+    "context": "pk192-architect",
+    "started_at": "2026-11-06T19:00:34Z",
+    "overall": "Support-it",
+    "cite": "the script rejects: a log line with a missing field;",
+    "cite_verbatim": false,
+    "reply": "Support-it\nThe audit trail is now mechanically observable and bounded: read-time, ack-time, boundary, destination, and identity are defined; late, duplicate, missing, and destination-less entries are rejected. The 60-minute window and the explicit “entry arrives when first read” rule keep the experiment narrow and enforceable without false positives from human interpretation. The trial is time-boxed and records all exceptions as evidence instead of silent drift. It is minimal: one inbox, one log, one checker, and a three-card test.\nCITE: the script rejects: a log line with a missing field;\n\n"
+   },
+   {
+    "role": "QA engineer",
+    "seat": "codex",
+    "context": "pk192-qa",
+    "started_at": "2026-11-06T19:03:15Z",
+    "overall": "Support-it",
+    "cite": "with a committed log and a script that checks the log mechanically",
+    "cite_verbatim": true,
+    "reply": "Support-it\n\nC6 is red-first testable with isolated fixtures for every named rejection, including inbox reconciliation. The checker must parse timestamps strictly and test boundary values at exactly 60 minutes, duplicate IDs, nonexistent paths, and acknowledged headings absent from the log. A passing state can still cite an unrelated existing repository path, so destination existence proves presence, not semantic correctness; acceptable for a three-card experiment, but the retro should inspect this gap. “Fixed or explained” must not turn a rejected log into a successful check.\n\nCITE: with a committed log and a script that checks the log mechanically"
+   },
+   {
+    "role": "backend developer",
+    "seat": "claude",
+    "context": "pk192-dev",
+    "started_at": "2026-11-06T19:05:59Z",
+    "overall": "Yes",
+    "cite": "a log line with a missing field",
+    "cite_verbatim": true,
+    "reply": "Yes\n\nThe script is a normal card for me: tests fail first, then green, which is how I already work. Its rejection rules are mechanical and checkable. The 60-minute limit is labelled as a number to review, not a standing rule. The one weak spot is that `read_at` is self-reported by the facilitator, but the log's `filed` field shows lateness against the product owner's own date. The script costs me no extra ceremony per card.\n\nCITE: a log line with a missing field\n"
+   },
+   {
+    "role": "independent reviewer (audit lens)",
+    "seat": "copilot",
+    "context": "pk192-auditlens",
+    "started_at": "2026-11-06T19:07:43Z",
+    "overall": "No",
+    "cite": "",
+    "cite_verbatim": false,
+    "reply": "No\n\nI would move to yes if each boundary commit includes an immutable in-repo snapshot or hash list of acknowledged inbox headings that `check-inbox-log.py` must cross-validate, so the practice is fully auditable from git alone and cannot pass while omitting external inbox entries.\n\n"
+   },
+   {
+    "role": "decider",
+    "seat": "codex",
+    "context": "pk192-decider",
+    "started_at": "2026-11-06T19:10:45Z",
+    "overall": "Support-it",
+    "cite": "with a committed log and a script that checks the log mechanically",
+    "cite_verbatim": true,
+    "reply": "Support-it\n\nThe experiment is evidence-ready: immutable IDs, timestamps, boundaries, destinations, failure cases, baseline, target, counter-metrics, and a three-card decision point support keep/revise/drop. C6 resolves the prior architect’s condition without changing the channel. The full set of product, architecture, QA, implementation, audit, Decider, and coaching seats is represented. At the final retro, distinguish script compliance from actual delivery: an accepted log line and existing destination prove routing, not that the decision reached and influenced the team.\n\nCITE: with a committed log and a script that checks the log mechanically"
+   }
+  ],
+  "round2_reask": [
+   {
+    "role": "architect",
+    "seat": "claude",
+    "context": "pk192r2-architect",
+    "started_at": "2026-11-06T19:14:08Z",
+    "overall": "Support-it",
+    "cite": "The script cross-validates the two committed files, so it no longer needs the external file",
+    "cite_verbatim": true,
+    "reply": "Support-it\n\nThe design resolves my D191 condition. Entry identity is a hash of the heading, and the boundary is recorded in git. The script mechanically rejects missing, duplicate, late and destination-less lines. The snapshot file makes the check run on committed data alone, and the append-only comparison against `git show HEAD:` is enforceable.\n\nTwo residual risks, neither blocking:\n- A renamed heading changes `entry_id`, which could cause false positives.\n- A `destination` that is a card or closure record rather than a file path needs a defined mapping, or the \"path exists\" rule will misfire.\n\nSettle both during the red-then-green tests.\n\nCITE: The script cross-validates the two committed files, so it no longer needs the external file\n"
+   },
+   {
+    "role": "independent reviewer (audit lens)",
+    "seat": "codex",
+    "context": "pk192r2-auditlens",
+    "started_at": "2026-11-06T19:16:09Z",
+    "overall": "No",
+    "cite": "Each boundary commit that touches the log also appends",
+    "cite_verbatim": true,
+    "reply": "No\n\nGit cannot prove that each snapshot contains every external inbox heading: an omitted entry can remain absent from both committed files, letting the checker and metric pass while C1–C2 are broken. I would vote yes if each boundary commits a mechanically produced, complete snapshot authenticated against immutable source evidence that later audits can verify from git alone.\n\nCITE: Each boundary commit that touches the log also appends"
+   }
+  ]
+ }
+}
