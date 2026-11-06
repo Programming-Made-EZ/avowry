@@ -2,7 +2,7 @@
  "decider": "D191",
  "subject": "the card 303 retro pick: adopt the product-owner inbox as the decision channel (experiment, next three cards)",
  "proposer": "agile coach seat (.mob/records/303/retro-pick-proposal-coach.md, revision 2 after round 1)",
- "result": "PASSED (experiment) with one unresolved outlier: round 1 Yes 2, Support-it 2, No 2 (QA, audit lens; condition: committed evidence); amended (C1b, C2b) and fully re-polled (D187): round 2 Yes 1, Support-it 4, No 1 (architect, new condition: a mechanical checker); every cite verbatim; Grok disabled",
+ "result": "NOT ADOPTED (strict count, product owner ruling 2026-11-06): round 1 Yes 2, Support-it 2, No 2 (QA, audit lens); amended (C1b, C2b) and fully re-polled (D187): round 2 Yes 1, Support-it 4, No 1 (architect, unresolved after the amendment, so the proposal fails); every cite verbatim; Grok disabled. Re-voted as D192.",
  "votes": {
   "round1": [
    {

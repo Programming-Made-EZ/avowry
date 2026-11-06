@@ -1255,8 +1255,8 @@
   },
   "D191": {
     "area": "process-and-staffing",
-    "status": "experiment",
-    "title": "Card 303 retro pick: adopt the product-owner inbox as the decision channel, next three cards",
+    "status": "not adopted",
+    "title": "Card 303 retro pick: adopt the product-owner inbox as the decision channel (fails the strict count: one unresolved No), re-voted as D192",
     "order": 182
   }
 }
