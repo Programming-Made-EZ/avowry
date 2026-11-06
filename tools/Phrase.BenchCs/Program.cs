@@ -227,7 +227,8 @@ static async Task<Score> Score(IReadOnlyList<SourceFile> sources, BenchmarkTask 
         </Project>
         """);
     const string trxName = "results.trx";
-    using var process = StartProcess("dotnet", project, "test", "Verification.csproj", "--nologo", "--verbosity", "quiet", "--logger", $"trx;LogFileName={trxName}");
+    var dotnet = Environment.GetEnvironmentVariable("PHRASE_BENCHCS_DOTNET");
+    using var process = StartProcess(string.IsNullOrWhiteSpace(dotnet) ? "dotnet" : dotnet, project, "test", "Verification.csproj", "--nologo", "--verbosity", "quiet", "--logger", $"trx;LogFileName={trxName}");
     var stdout = process.StandardOutput.ReadToEndAsync();
     var stderr = process.StandardError.ReadToEndAsync();
     using var cancellation = new CancellationTokenSource(timeout);
@@ -243,8 +244,10 @@ static async Task<Score> Score(IReadOnlyList<SourceFile> sources, BenchmarkTask 
     if (!File.Exists(trxPath))
         return new(false, CompactFailureSummary(output), 0, 0);
     var result = ReadTestResult(trxPath);
-    if ((!endpoint && result.ModelTests == 0) || result.HarnessTests < outcomes.Count)
+    if (!endpoint && result.ModelTests == 0)
         return new(false, "tests_did_not_run", result.ModelTests, result.HarnessTests);
+    if (result.HarnessTests < outcomes.Count)
+        return new(false, $"tests_did_not_run: {output.Trim()}", result.ModelTests, result.HarnessTests);
     return process.ExitCode == 0
         ? new(true, "", result.ModelTests, result.HarnessTests)
         : new(false, result.Failures, result.ModelTests, result.HarnessTests);

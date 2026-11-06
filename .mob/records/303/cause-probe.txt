@@ -1,0 +1,44 @@
+Date: 2026-11-06T00:33:01.7470877-08:00
+
+Generated verification project directory:
+C:\Users\ringe\.mob-codex-tmp\phrase-bench-cs\4c99f0cff6bd4623999662419d71ee64\verification-42b8074730f442c5b80d489ca64566e0
+
+Captured copy used for the probe:
+C:\Users\ringe\.mob-codex-tmp\card303-verification-probe-20261106-003237-133
+
+Exact command:
+dotnet test C:\Users\ringe\.mob-codex-tmp\card303-verification-probe-20261106-003237-133\Verification.csproj --nologo --logger "trx;LogFileName=probe.trx"
+
+Complete output:
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Verification -> C:\Users\ringe\.mob-codex-tmp\card303-verification-probe-20261106-003237-133\bin\Debug\net8.0\Verification.dll
+Test run for C:\Users\ringe\.mob-codex-tmp\card303-verification-probe-20261106-003237-133\bin\Debug\net8.0\Verification.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+Testhost process for source(s) 'C:\Users\ringe\.mob-codex-tmp\card303-verification-probe-20261106-003237-133\bin\Debug\net8.0\Verification.dll' exited with error: You must install or update .NET to run this application.
+App: C:\Users\ringe\.mob-codex-tmp\card303-verification-probe-20261106-003237-133\bin\Debug\net8.0\testhost.exe
+Architecture: x64
+Framework: 'Microsoft.AspNetCore.App', version '8.0.0' (x64)
+.NET location: C:\Program Files\dotnet
+The following frameworks were found:
+  10.0.14 at [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Learn more:
+https://aka.ms/dotnet/app-launch-failed
+To install missing framework, download:
+https://aka.ms/dotnet-core-applaunch?framework=Microsoft.AspNetCore.App&framework_version=8.0.0&arch=x64&rid=win-x64&os=win10
+. Please check the diagnostic logs for more information.
+WARNING: Overwriting results file: C:\Users\ringe\.mob-codex-tmp\card303-verification-probe-20261106-003237-133\TestResults\probe.trx
+Results File: C:\Users\ringe\.mob-codex-tmp\card303-verification-probe-20261106-003237-133\TestResults\probe.trx
+
+Test Run Aborted.
+
+Captured error lines:
+Testhost process for source(s) 'C:\Users\ringe\.mob-codex-tmp\card303-verification-probe-20261106-003237-133\bin\Debug\net8.0\Verification.dll' exited with error: You must install or update .NET to run this application.
+Framework: 'Microsoft.AspNetCore.App', version '8.0.0' (x64)
+  10.0.14 at [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+
+What the output shows
+"Testhost process for source(s) 'C:\Users\ringe\.mob-codex-tmp\card303-verification-probe-20261106-003237-133\bin\Debug\net8.0\Verification.dll' exited with error: You must install or update .NET to run this application."
+"Framework: 'Microsoft.AspNetCore.App', version '8.0.0' (x64)"
+"  10.0.14 at [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]"
+The missing ASP.NET Core 8 runtime lead is supported.

@@ -1,0 +1,29 @@
+Comparison: the Windows host probe in cause-probe.txt is compared with the Linux test job's per-test outcomes for both endpoint acceptance tests and the overall CI run conclusion in run 42146757413 attempts 1 and 2.
+
+Command:
+gh run view 42146757413 --attempt 1
+
+Outcome:
+Run conclusion: success (shown as "✓ main ci").
+Linux test job: success (shown as "✓ test in 8m35s (ID 127659984503)").
+
+Command used to inspect the Linux test job's per-test outcomes:
+gh run view 42146757413 --job 127659984503 --log | Select-String -Pattern 'endpoint_reply_passes_when_response_record_and_status_match|endpoint_reply_fails_when_response_record_or_status_are_wrong|Passed!|Failed!'
+
+Per-test outcomes:
+Passed Phrase.Acceptance.Tests.CSharpBaselineAcceptance.endpoint_reply_fails_when_response_record_or_status_are_wrong [8 s]
+Passed Phrase.Acceptance.Tests.CSharpBaselineAcceptance.endpoint_reply_passes_when_response_record_and_status_match [2 s]
+
+Command:
+gh run view 42146757413 --attempt 2
+
+Outcome:
+Run conclusion: success (shown as "✓ main ci").
+Linux test job: success (shown as "✓ test in 8m21s (ID 127663195417)").
+
+Command used to inspect the Linux test job's per-test outcomes:
+gh run view 42146757413 --job 127663195417 --log | Select-String -Pattern 'endpoint_reply_passes_when_response_record_and_status_match|endpoint_reply_fails_when_response_record_or_status_are_wrong|Passed!|Failed!'
+
+Per-test outcomes:
+Passed Phrase.Acceptance.Tests.CSharpBaselineAcceptance.endpoint_reply_fails_when_response_record_or_status_are_wrong [8 s]
+Passed Phrase.Acceptance.Tests.CSharpBaselineAcceptance.endpoint_reply_passes_when_response_record_and_status_match [2 s]

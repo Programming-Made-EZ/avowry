@@ -1,0 +1,15 @@
+Command:
+dotnet --list-runtimes
+
+Output:
+Microsoft.AspNetCore.App 10.0.14 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.NETCore.App 8.0.33 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 10.0.14 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.WindowsDesktop.App 8.0.33 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 10.0.14 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+
+Command:
+dotnet --list-sdks
+
+Output:
+10.0.403 [C:\Program Files\dotnet\sdk]
