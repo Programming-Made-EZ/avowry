@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 298,
+ "title": "A second decision run on the same checkout never votes unprotected",
+ "process": "card-mode rules run by hand; ranked first at re-rank 25; window 298-taskforce adopted (the Codex green seat with a Claude fallback); D189 and D190 in force; the strict Decider reading followed exactly; the retro pick D193 adopted after one amendment and a full re-poll (Support-it 6)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude, a fresh subagent context, product manager (ready); one allowed run, disclosed twice; .mob/records/298/taskforce-proposal-pm.md",
+   "evidence": "5c3b260"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md (one holder file per run in mob-decider.lock.d, three cycles)",
+   "evidence": "1162d12"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, fresh subagent contexts, QA engineer: red 1 0cd4830 and 1b 4b05fa6 (cycle 1), cycle 2 tests d0a232f with mutation evidence (no red), red 3 1c55362 (mob-crosscli)",
+   "evidence": "ebca474"
+  },
+  {
+   "role": "green",
+   "seat": "Codex ctx-4",
+   "model": "codex gpt-5.6-sol via the machine-local launcher, danger-full-access, --json: green 1 stopped on an over-asserting red and fd4c702 was committed by the facilitator; green 3 (18 commands, no delete, explicit git add, no push) 1590679 (mob-crosscli); green1-codex-run-2026-11-06.md, green-codex-events.jsonl, green3-codex-events.jsonl",
+   "evidence": "cd51656"
+  },
+  {
+   "role": "ship",
+   "seat": "Copilot ctx-5",
+   "model": "copilot (auto) via copilot.cmd from a script, independent reviewer, read-only; SHIP, but it did not run the adjacent narrow suites and its race review was record-only; preship-gate.md",
+   "evidence": "104bb4e"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off, read-only; reran the overlap tests and injected failures; SIGNED OFF with conditions; signoff-ctx6.md",
+   "evidence": "a42f9a8"
+  }
+ ],
+ "retro": "docs/retros/card-298-2026-11-06.md",
+ "notes": "Signed off with conditions (.mob/records/298/signoff-ctx6.md). Done checks met: 1 a commit and push after the first overlapping run ends are refused while the second votes and both records carry equal full heads (LiveVoteOverlap, 7 tests OK); 2 either end order keeps the checkout refused until the last run ends and leaves no lock or holders directory (tests pass on green 1; each fails under two mutations, cycle2-mutation-evidence.md); 3 a dead-only lock and a dead legacy file are swept, one dead plus one live entry still refuse, a live legacy file refuses (four tests). Conditions: the three defects the sign-off found are bug cards 313, 314 and 315 (filed). The whole mob-crosscli suite had one failure, tests.test_loop_state.test_lock_released_when_holder_exits, identical on the base commit e40962c. Product-owner rulings applied this card: process changes are story issues (stories 308 to 312, 316). Code is in mob-crosscli (mob-defaults), pushed."
+}

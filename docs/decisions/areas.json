@@ -1264,5 +1264,11 @@
     "status": "not adopted",
     "title": "Card 303 retro pick re-vote: adopt the product-owner inbox with a committed log and a mechanical check (fails: one unresolved No; escalated to the product owner)",
     "order": 183
+  },
+  "D193": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 298 retro pick: the gate runs the changed area's narrow suites and checks each step's failure path; a cycle with no red carries a mutation pair (three-card trial; story 316)",
+    "order": 184
   }
 }
