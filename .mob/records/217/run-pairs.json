@@ -1,0 +1,74 @@
+{
+  "card": 217,
+  "head": "2bb2f306c686692097fe33a41a867f244ea4a24f",
+  "min_tests": 300,
+  "environments": {
+    "local": {
+      "runs": [
+        {
+          "outcomes": ".mob/records/217/runs/local-floorC-1.outcomes.json",
+          "head": "2bb2f306c686692097fe33a41a867f244ea4a24f",
+          "id": {
+            "trx": "floorC1.trx",
+            "timestamp": "2026-11-05T17:45:43.1697698-08:00"
+          },
+          "temp": "C:/Users/ringe/AppData/Local/Temp/claude/green217d",
+          "tmp": "C:/Users/ringe/AppData/Local/Temp/claude/green217d"
+        },
+        {
+          "outcomes": ".mob/records/217/runs/local-floorC-2.outcomes.json",
+          "head": "2bb2f306c686692097fe33a41a867f244ea4a24f",
+          "id": {
+            "trx": "floorC2.trx",
+            "timestamp": "2026-11-05T17:56:58.0319107-08:00"
+          },
+          "temp": "C:/Users/ringe/AppData/Local/Temp/claude/green217d",
+          "tmp": "C:/Users/ringe/AppData/Local/Temp/claude/green217d"
+        }
+      ],
+      "allowed_failures": [
+        {
+          "test": "Phrase.Acceptance.Tests.UsableV1.Bar6_a_model_that_never_saw_the_app_can_add_an_endpoint_from_the_docs_alone",
+          "owner_card": 162
+        },
+        {
+          "test": "Phrase.Acceptance.Tests.CSharpBaselineAcceptance.endpoint_reply_fails_when_response_record_or_status_are_wrong",
+          "owner_card": 303
+        },
+        {
+          "test": "Phrase.Acceptance.Tests.CSharpBaselineAcceptance.endpoint_reply_passes_when_response_record_and_status_match",
+          "owner_card": 303
+        }
+      ]
+    },
+    "ci": {
+      "runs": [
+        {
+          "outcomes": ".mob/records/217/runs/ci-floorC-1.outcomes.json",
+          "head": "2bb2f306c686692097fe33a41a867f244ea4a24f",
+          "id": {
+            "github_run_id": "42146757413",
+            "run_attempt": 1,
+            "job_id": "127659984503",
+            "head_sha": "2bb2f306c686692097fe33a41a867f244ea4a24f"
+          }
+        },
+        {
+          "outcomes": ".mob/records/217/runs/ci-floorC-2.outcomes.json",
+          "head": "2bb2f306c686692097fe33a41a867f244ea4a24f",
+          "id": {
+            "github_run_id": "42146757413",
+            "run_attempt": 2,
+            "job_id": "127663195417",
+            "head_sha": "2bb2f306c686692097fe33a41a867f244ea4a24f"
+          }
+        }
+      ],
+      "allowed_failures": []
+    }
+  },
+  "floor_decision": {
+    "decision": "kept",
+    "reason": "The floor stays. With ThreadPoolFloor.cs removed (commit A d6e8f262f5f2a226d1569422e42d29f64c490efa), local no-floor run 1 failed two tests outside the three owned F-065 tests: GeneratedApiBoundAddress.I_readiness_comes_from_the_childs_own_output_before_any_connection_and_not_before_the_gate (20 s) and GeneratedApiHazards.Guard_two_parallel_starts_get_distinct_base_urls (32 s), the card-214 thread-pool starvation symptom (committed list .mob/records/217/runs/local-nofloor-1.outcomes.json); local no-floor run 2 failed only the three F-065 tests (local-nofloor-2.outcomes.json), so the no-floor pair is not identical and Criterion 3's removal condition is not met. The CI no-floor attempts on commit A (run 42142783699, attempts 1 and 2) both passed 315 of 315 (ci-nofloor-1/2.outcomes.json), so CI did not show the starvation. Ceiling of what was shown: the floor still matters locally; the remaining blocking in the generated-API harness (outside the seven converted sites) is a follow-up. With the floor restored at head 2bb2f306c686692097fe33a41a867f244ea4a24f, the local pair (floorC-1, floorC-2: 316 tests, 313 passed, the same 3 F-065 failures) and the CI pair (run 42146757413 attempts 1 and 2: 315 of 315 passed) are green and identical."
+  }
+}

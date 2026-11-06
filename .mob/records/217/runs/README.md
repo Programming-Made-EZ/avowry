@@ -44,3 +44,19 @@ twice, consecutively, cwd `C:/Users/ringe/projects/phrase-lang`. `TEMP` and `TMP
 Run 1 failed the three F-065 tests and also `GeneratedApiBoundAddress.I_readiness_comes_from_the_childs_own_output_before_any_connection_and_not_before_the_gate`
 (20 s) and `GeneratedApiHazards.Guard_two_parallel_starts_get_distinct_base_urls` (32 s). Run 2 failed only the three F-065 tests.
 The two no-floor lists therefore differ (the two extra tests); nothing was fixed or retried.
+
+## With the thread-pool floor restored (commit C, cycle 3b)
+
+Head `2bb2f306c686692097fe33a41a867f244ea4a24f` (commit C restores `ThreadPoolFloor.cs` byte-identical to 3c5712e; clean tracked tree).
+Local: `dotnet build` once, then two consecutive full runs as above, `TEMP` and `TMP` both `C:/Users/ringe/AppData/Local/Temp/claude/green217d`.
+
+| file | source | sha256 of the TRX / log | result |
+| --- | --- | --- | --- |
+| `local-floorC-1.outcomes.json` | `floorC1.trx` | `bd2c676b36315b2d06d8435594549d2622b20988e0263bf17b8d38809e5e16bf` | 316 tests, 313 passed, 3 failed (the F-065 tests), 11 m 12 s |
+| `local-floorC-2.outcomes.json` | `floorC2.trx` | `e4ab5a2d812ca0ecce126fd9ba013ee03d1a3c14dbcd61c12952799f164dec67` | 316 tests, 313 passed, 3 failed (the F-065 tests), 11 m 9 s |
+| `ci-floorC-1.outcomes.json` | CI run 42146757413, attempt 1, job test 127659984503 | in the file | 315 of 315 passed |
+| `ci-floorC-2.outcomes.json` | CI run 42146757413, attempt 2, job test 127663195417 | in the file | 315 of 315 passed |
+
+CI no-floor evidence on commit A (`d6e8f262f5f2a226d1569422e42d29f64c490efa`), run 42142783699: `ci-nofloor-1.outcomes.json` (attempt 1, job 127646923033)
+and `ci-nofloor-2.outcomes.json` (attempt 2, job 127652566364) both 315 of 315 passed; CI did not show the starvation that local no-floor run 1 showed.
+The decision is in `run-pairs.json`: floor kept.
