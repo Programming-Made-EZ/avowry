@@ -1,0 +1,286 @@
+{
+ "schema": 1,
+ "window": "rerank-26",
+ "valid_consumers": [
+  "product owner",
+  "Morgan",
+  "Dana",
+  "Ari"
+ ],
+ "close": [
+  {
+   "issue": 231,
+   "kind": "waste",
+   "reason": "the card names only the process checker and the audit and no consumer outcome; what the product owner, Morgan, Dana or Ari lose without it is not stated"
+  },
+  {
+   "issue": 252,
+   "kind": "waste",
+   "reason": "a scan record for the mob's own use; the only card it enables (216) is internal; no consumer named"
+  },
+  {
+   "issue": 253,
+   "kind": "waste",
+   "reason": "extends an internal scan to another backend; no harm to a consumer is described (card 305 carries the Codex build seat scan with its consumer value)"
+  },
+  {
+   "issue": 254,
+   "kind": "waste",
+   "reason": "fewer false findings in the mob's own scan reach no consumer"
+  },
+  {
+   "issue": 258,
+   "kind": "waste",
+   "reason": "a flaky test in the mob's own loop-state tooling suite; the card names no one who relies on that result (its Avowry-facing counterparts 302 and 304 stay)"
+  },
+  {
+   "issue": 268,
+   "kind": "waste",
+   "reason": "shell-dependent tests of the mob summary publisher; the card says publish behaviour is unchanged and traces no consumer"
+  },
+  {
+   "issue": 274,
+   "kind": "waste",
+   "reason": "record-format vocabulary in the mob's own final-review records; no wrong record reached a reader"
+  },
+  {
+   "issue": 281,
+   "kind": "waste",
+   "reason": "sets the trust posture of a trial driver seat; no consumer benefit stated (the Muse trial is card 310)"
+  },
+  {
+   "issue": 283,
+   "kind": "waste",
+   "reason": "a false-positive detector in the mob's tooling; no consumer outcome"
+  },
+  {
+   "issue": 291,
+   "kind": "waste",
+   "reason": "a candidate backend cannot yet sit in counted seats; missing votes are recorded as none and fail the result, so no wrong decision is stored; the benefit is only that Grok can join the mob"
+  },
+  {
+   "issue": 292,
+   "kind": "waste",
+   "reason": "a runner crash that loses votes is a mob-tooling robustness problem; votes were re-run and no wrong record was stored"
+  },
+  {
+   "issue": 306,
+   "kind": "waste",
+   "reason": "the uncapped diagnostic still names the host error; no result is wrong or misreported and no consumer is misled"
+  },
+  {
+   "issue": 314,
+   "kind": "waste",
+   "reason": "a leftover temporary file does not change any lock decision and affects no record; housekeeping (reopen if a stale temporary file is shown to change what the lock reads)"
+  },
+  {
+   "issue": 250,
+   "kind": "waste",
+   "reason": "the same flaky loop-state test as 258, which is closed as waste; no consumer relies on that result"
+  },
+  {
+   "issue": 239,
+   "kind": "waste",
+   "reason": "changes how many process tweaks a retro may adopt; no consumer named or traceable"
+  },
+  {
+   "issue": 240,
+   "kind": "waste",
+   "reason": "architecture for the mob's own memory; actors are the facilitator, auditor and retros"
+  },
+  {
+   "issue": 241,
+   "kind": "waste",
+   "reason": "cross-links two designs for reuse; no one who benefits is named"
+  },
+  {
+   "issue": 242,
+   "kind": "waste",
+   "reason": "a brainstorm menu of concepts for the mob's tooling; each item still needs a benefit that is not given"
+  },
+  {
+   "issue": 244,
+   "kind": "waste",
+   "reason": "an umbrella of detector classes with no stated consumer harm; a class with a real incident can return as a product-owner story (a credential or secret leaked or committed by a seat)"
+  },
+  {
+   "issue": 245,
+   "kind": "waste",
+   "reason": "a process-hygiene principle measured by process overhead; no consumer outcome"
+  },
+  {
+   "issue": 248,
+   "kind": "waste",
+   "reason": "a throughput idea for the mob (cards per day); depends on withdrawn work; no consumer named"
+  },
+  {
+   "issue": 249,
+   "kind": "waste",
+   "reason": "retro bookkeeping that depends on the store; the real pains it cites have their own cards"
+  },
+  {
+   "issue": 260,
+   "kind": "waste",
+   "reason": "rule retirement and a visible refactor step are mob hygiene; no consumer named"
+  },
+  {
+   "issue": 262,
+   "kind": "waste",
+   "reason": "a documentation page justifying the mob's own rules; no consumer outcome"
+  },
+  {
+   "issue": 278,
+   "kind": "waste",
+   "reason": "a ranking request for re-rank 20, not a deliverable; the consumer value belongs to the cards it names"
+  },
+  {
+   "issue": 288,
+   "kind": "waste",
+   "reason": "a ranking instruction for re-rank 20, not a deliverable"
+  },
+  {
+   "issue": 243,
+   "kind": "duplicate",
+   "survivor": 264,
+   "reason": "duplicate of 264"
+  },
+  {
+   "issue": 247,
+   "kind": "duplicate",
+   "survivor": 265,
+   "reason": "duplicate of 265"
+  },
+  {
+   "issue": 251,
+   "kind": "duplicate",
+   "survivor": 310,
+   "reason": "duplicate of 310"
+  },
+  {
+   "issue": 259,
+   "kind": "duplicate",
+   "survivor": 266,
+   "reason": "duplicate of 266"
+  },
+  {
+   "issue": 263,
+   "kind": "duplicate",
+   "survivor": 267,
+   "reason": "duplicate of 267"
+  },
+  {
+   "issue": 284,
+   "kind": "duplicate",
+   "survivor": 289,
+   "reason": "duplicate of 289"
+  }
+ ],
+ "edit_contract": [
+  {
+   "issue": 232,
+   "consumer": "product owner",
+   "value": "so that the laptop is never disrupted by a browser window or other UI that a seat driver opened (seen once on 2026-10-29)."
+  },
+  {
+   "issue": 286,
+   "consumer": "product owner",
+   "value": "so that recorded objection-window decisions can be trusted: a NO OBJECTION is not stored as its opposite, a No vote."
+  },
+  {
+   "issue": 293,
+   "consumer": "product owner",
+   "value": "so that every counted decision vote really carried a citation from the seat's own answer, and a bare Yes is never counted as cited."
+  },
+  {
+   "issue": 299,
+   "consumer": "product owner",
+   "value": "so that committed work (such as a card proposal) is never overwritten and pushes do not collide, so the board keeps moving without a nudge."
+  },
+  {
+   "issue": 300,
+   "consumer": "product owner",
+   "value": "so that a seat that must run commands is never started where it cannot, and the board does not stall on a dead turn."
+  },
+  {
+   "issue": 301,
+   "consumer": "product owner",
+   "value": "so that the command probe really keeps seats whose shell is blocked off command-running work, and the board does not stall on them."
+  },
+  {
+   "issue": 302,
+   "consumer": "Morgan",
+   "value": "so that acceptance results fail only on real regressions, not on a file-lock flake, and CI can be trusted when extending the program."
+  },
+  {
+   "issue": 304,
+   "consumer": "Morgan",
+   "value": "so that acceptance results agree between runs, and a red run means a real regression, not load on the development machine."
+  },
+  {
+   "issue": 305,
+   "consumer": "product owner",
+   "value": "so that the decision to run Codex build seats in full-access mode keeps every safety guard, and a recursive or hidden delete by such a seat is flagged like any other driver's."
+  },
+  {
+   "issue": 307,
+   "consumer": "product owner",
+   "value": "so that decision records carry a right integrity verdict: no false failure when runs overlap, and none missed when a seat-use line is really lost."
+  },
+  {
+   "issue": 313,
+   "consumer": "product owner",
+   "value": "so that decisions cannot be disturbed by a commit mid-vote: the checkout is refused for the whole of every run's vote."
+  },
+  {
+   "issue": 315,
+   "consumer": "product owner",
+   "value": "so that a vote is never silently run on an unprotected checkout: a run that cannot register refuses or warns loudly and notes it in the record."
+  }
+ ],
+ "edit_story": [
+  {
+   "issue": 309,
+   "story_line": "As Steve, I want every card written in the format that readers misread least, so that I can see on my phone who a card is for and what it delivers, and rank it or answer in one word without asking what it means."
+  },
+  {
+   "issue": 316,
+   "story_line": "As Steve, I want the pre-ship gate to run the changed area's narrow test suites and check each step's failure path, so that defects in the mob tooling I own are caught before a card ships, not found afterward as follow-up bugs like 313 to 315."
+  }
+ ],
+ "edit_unshaped": [
+  {
+   "issue": 246,
+   "story_line": "As Steve, I want a read-only, phone-readable view of the current card, the ranked board, open FAILs and CI status, so that I can see what the mob is doing without asking anyone to relay it. (To be shaped at ready; check overlap with closed card 036; cut the team-facing radiator menu and the dependency on the store in 240.)"
+  },
+  {
+   "issue": 261,
+   "story_line": "As Ari, I want a spec to assert a stored, emitted or sent effect alongside its one primary outcome, so that I write each behaviour's checks once and spend fewer tokens without losing correctness. (To be shaped at ready; adopt only if tokens fall and defect detection holds.)"
+  }
+ ],
+ "order": {
+  "after": 298,
+  "first_product_card": 196,
+  "max_bugs_above": 4,
+  "cards": [
+   313,
+   315,
+   299,
+   307,
+   316,
+   317,
+   305,
+   196,
+   197,
+   312,
+   304,
+   266,
+   311,
+   310,
+   308,
+   302,
+   300,
+   301,
+   309
+  ]
+ }
+}

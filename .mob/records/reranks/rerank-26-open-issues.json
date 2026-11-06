@@ -1,0 +1,1833 @@
+{
+ "schema": 1,
+ "taken": "2026-11-06 (after story 317 was filed, before any closure or edit)",
+ "issues": {
+  "8": {
+   "title": "(008) Close the language gaps the demo app exposes",
+   "state": "open",
+   "status": "Superseded 2026-10-28 by the prototype-f",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Dana, I want Phrase to support the lookup, update, list, delete and validation behavior of a real CRUD API, so that I can describe a complete small service w",
+   "body_sha256": "c98d0fca094006ab5152af8ddf1f073c469255bc62e0d2be491c464dd39598f1"
+  },
+  "9": {
+   "title": "(009) Demo app: a Tasks API written entirely in .phrase",
+   "state": "open",
+   "status": "Superseded 2026-10-28 by the prototype-f",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As the product owner (and any engineer), I want a small real app written only in .phrase, so that I can see the language build something useful.",
+   "body_sha256": "2ede0c2800296a9c18a38ce5d02246b8eca194d5219e6dc13d156292fce062ae"
+  },
+  "10": {
+   "title": "(010) End-to-end: real HTTP behaves as the specs say",
+   "state": "open",
+   "status": "Superseded 2026-10-28 by the prototype-f",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Dana, I want the generated app to run and respond over real HTTP as its specs say, so that I can trust the specified behavior is what consumers receive from",
+   "body_sha256": "8088bc9782dfdfd52f46a83f7c4dfa86dbe50d2ac7da53ac6a99d3e66b0e9f18"
+  },
+  "11": {
+   "title": "(011) LLM-customer check: a model adds an endpoint from the docs alone",
+   "state": "open",
+   "status": "Superseded 2026-10-28 by the prototype-f",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Ari, I want to extend an unfamiliar Phrase app using only GRAMMAR.md and the documentation, so that I can deliver a working endpoint without repository-speci",
+   "body_sha256": "380faf3b6b0e4cfe624ee75b8f47fd2cf4b955036d7bb470411aa96eb52c3176"
+  },
+  "12": {
+   "title": "(012) Usable v1: acceptance test passes on main and gates CI",
+   "state": "open",
+   "status": "Superseded 2026-10-28 by the prototype-f",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Steve, I want one automated test that says whether Phrase is usable to build an application, so that usable is detected rather than guessed.",
+   "body_sha256": "f7592d81dfd60976f23ab0d6e441f54d22ae2255b2b88f7d199db258cf47f157"
+  },
+  "13": {
+   "title": "(013) Make GRAMMAR.md say what the resolver does",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Ari, I want the EBNF and prose to describe the same accepted syntax, so that I can write valid Phrase without guessing which documentation is right.",
+   "body_sha256": "dda393b30600d2f94bc1a3f733df9bb3a5dff5ff35eedcdb0cd56cb715ee81eb"
+  },
+  "14": {
+   "title": "(014) Document the native C# environment and show passing-guard examples",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Ari, I want the callable environment and type mappings of a `native csharp` block documented with passing-guard examples, so that I can write a working leaf",
+   "body_sha256": "31b6033a85e0c3655cf7fedab57ddec3892286e9a93a3f02402ba7db61993394"
+  },
+  "15": {
+   "title": "(015) Proposal: make the spec `when` line optional",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Ari, I want to omit a redundant spec `when` line when the unit kind determines the action, so that I spend fewer tokens and avoid introducing a contradictory",
+   "body_sha256": "725b8efe8554d8c356578e27aa973d1784d2b31aff3595f51e423bf9cf65a941"
+  },
+  "17": {
+   "title": "(017) Benchmark v1: score by running the generated specs",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Riley, I want benchmark tasks scored by whether their generated specs pass, so that I can see whether a model produced the requested behavior rather than mer",
+   "body_sha256": "eae82c633c7b989732496fd12794ca541dd21482100f9f81abaab8de14904ef3"
+  },
+  "19": {
+   "title": "(019) Publish exact diagnostic message templates in GRAMMAR.md",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Ari, I want the exact message template for each diagnostic in GRAMMAR.md, so that I can understand and fix a failing program without opening the compiler.",
+   "body_sha256": "5f34deb8da5a7082b7a0a8486bf346215d7313a3e645c632e7e0ca6a432531ac"
+  },
+  "20": {
+   "title": "(020) Did-you-mean suggestions for failure codes and other unknown names",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Ari, I want an unknown failure code or name to include the closest valid suggestion, so that I can fix a typo in one attempt.",
+   "body_sha256": "789f64362636611f1e4c90c8fb464ba019d65b55231db1743d0e0cf44880cea4"
+  },
+  "21": {
+   "title": "(021) Proposal: consistent given/responds syntax",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Ari, I want bindings and responses to use one consistent syntax shape, so that I can write specs without losing attempts to a dropped `=` or `with`.",
+   "body_sha256": "8e48d6754a709ca62ca2d586a8c584f9e2942f862f172062357d1b3c0dcf042d"
+  },
+  "22": {
+   "title": "(022) Keyword model ADR: what a keyword is",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Morgan, I want one written definition of a keyword across the grammar, catalogue and adapters, so that I can review a keyword without reconciling conflicting",
+   "body_sha256": "a8e84b4621a07b582f9cc42ce327328364ce873927c4ca73601c64ee085c0685"
+  },
+  "23": {
+   "title": "(023) Ordinary control flow: if/else and loops",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Ari, I want plain, obvious constructs for if/else and loops, so that I can express ordinary logic without inventing native code.",
+   "body_sha256": "0e8fd2fb8e20cb016628c7e8a0b7726fdc386ce6fe10d11c50d4e6523cc0f2cf"
+  },
+  "24": {
+   "title": "(024) Pattern discovery: find the recurring patterns worth a keyword",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Riley, I want a repeatable way to find recurring patterns in real codebases and LLM task logs, so that I can propose vocabulary that removes demonstrated wor",
+   "body_sha256": "04bc98551165db9394787803e216e09e5ec75d96e99c904e05f50783841e43a0"
+  },
+  "25": {
+   "title": "(025) Base library v0: structure and a seed of about 12 keywords, with C# adapter implementations",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Ari, I want a documented base library of spec-backed universal patterns that work through the C# adapter, so that I can reuse a known keyword instead of writ",
+   "body_sha256": "8c59545340028be9dc446e5d2f0e618dae59d08fd614d7b9a3558aac0e3fa776"
+  },
+  "26": {
+   "title": "(026) Catalogue dedup linter: flag near-duplicate keywords",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Ari, I want near-duplicate catalogue keywords flagged, so that I can choose the right pattern without spending context distinguishing equivalent names.",
+   "body_sha256": "f53876b10a22838b3d6e6c15f4146ff33669dbaff545ee0d4bfebbbaa7fa7554"
+  },
+  "27": {
+   "title": "(027) Benchmark: catalogue tasks that measure LLM work removed and learnability",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Riley, I want benchmark tasks to measure work removed and whether a cold model finds the right keyword, so that I can judge catalogue coverage by useful task",
+   "body_sha256": "44d25f65a65d318c17a74469c76479b8aa54a157350928ffd5e0090599a99486"
+  },
+  "28": {
+   "title": "(028) Second adapter spike: prove the keyword model is language-neutral",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Dana, I want the seed catalogue to produce the same specified behavior through a TypeScript adapter, so that I can choose another target language without rew",
+   "body_sha256": "f0842e837e0e594870e8bbc1d7c1060faf4dcea8ba68d1a9cf673ba14cdd4872"
+  },
+  "29": {
+   "title": "(029) LLM-as-compiler with hash pinning for keywords without an adapter implementation",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Dana, I want a keyword without a hand-written target implementation to produce reproducible, spec-verified code, so that I can use the behavior in a new targ",
+   "body_sha256": "e47e8e84ab2109eca709189aedea5d98a1716967d524c30dff2e9b303afe1457"
+  },
+  "30": {
+   "title": "(030) Synthesize Phrase from existing code (spike: C# to Phrase)",
+   "state": "open",
+   "status": "Ready, FUTURE (rank: see `board/MILESTON",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Dana, I want an existing C# codebase translated into Phrase through keyword mapping, so that I can adopt Phrase without paying for a manual rewrite of existi",
+   "body_sha256": "e74cf4a6a66401b6083f3a9d62d60cea3f4834339964e9bfeb62018746a2352e"
+  },
+  "31": {
+   "title": "(031) Converter between LLM-optimized Phrase and a human-friendly rendering (spike)",
+   "state": "open",
+   "status": "Ready, FUTURE (rank: see `board/MILESTON",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Morgan, I want bidirectional conversion between LLM-optimized Phrase and a human-friendly rendering, so that I can read and edit the behavior an agent mainta",
+   "body_sha256": "934c09ab94a1a6342fd8abb0fbbee6158ca46df4972af788f6cc1f01c51ed870"
+  },
+  "33": {
+   "title": "(033) Generic type parameters on phrases",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Ari, I want reusable phrases to accept type parameters such as `phrase<T>`, so that I can apply one known keyword to different domain types without cloning i",
+   "body_sha256": "ccf2941d6c6ba4cf2e8cf9cfc2c5aa4ad1643d74136d93498534df484291a954"
+  },
+  "34": {
+   "title": "(034) Behavioral holes and spec test doubles",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Dana, I want keywords such as retry, transaction and idempotent-execute to accept an action that specs can control, so that I can rely on their effectful beh",
+   "body_sha256": "548e553f68c7c867e1cde1a37d2b24073a57ff5ac2133105c919345469a437d5"
+  },
+  "35": {
+   "title": "(035) Proposal: parameterizable failure codes",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "As Ari, I want a reusable guard's caller to supply its failure code, so that I can use one guard pattern while preserving each domain's observable failure.",
+   "body_sha256": "592bb57e049436d39dc652a2f0c91ff3eb61dc79ce9b5d37a1cc1cc70384c453"
+  },
+  "38": {
+   "title": "(038) Dogfood: the mob status API, written in Phrase",
+   "state": "open",
+   "status": "Ready, after the Usable v1 path (rank: s",
+   "shape": "",
+   "type": "feature",
+   "actor_or_story": "As Riley, I want our mob-run status API written entirely in Phrase with real validation and failure paths, so that I can use it daily and expose language gaps t",
+   "body_sha256": "5a80dda92c635faa4a030f681d8ee9046db964b69dcbd76cd5ed5856f93e576c"
+  },
+  "46": {
+   "title": "(046) Docs: GRAMMAR and README name the adapter contract and the HTTP status mapping",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "docs",
+   "actor_or_story": "As Morgan, I want the documentation to name `ITargetAdapter` and show the failure-to-HTTP-status mapping, so that I can trace target extension and endpoint fail",
+   "body_sha256": "fcdcebbbf62c8b4b4c5fc15813a4ef15b80dea6d4b064ae6026aed5ad10f7a5c"
+  },
+  "52": {
+   "title": "(052) phrase build reports errors as file:line:col and names its target",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "feature",
+   "actor_or_story": "As Morgan, I want build errors to identify file, location and diagnostic while target selection names valid adapters and uses distinct exits, so that I can tell",
+   "body_sha256": "de63ebb80fbd52a60e9c5212c33d480a3d86a73fd878bfbd1ffb8e9c4e131f4a"
+  },
+  "53": {
+   "title": "(053) Docs: one diagnostics table, not two",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "docs",
+   "actor_or_story": "As Ari, I want one authoritative diagnostics table in the documentation, so that I can act on an error without reconciling conflicting copies.",
+   "body_sha256": "7f4d67e9910423b99f64bb5f1b2dad80d555b6cda4794ce8ab5f79c1c4650038"
+  },
+  "54": {
+   "title": "(054) Benchmark task 005 gets a failure-path spec (suite change, versioned)",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "data",
+   "actor_or_story": "As Ari, I want benchmark task 005 to declare and demonstrate its `MissingName` failure in a versioned spec, so that the example teaches me to preserve the failu",
+   "body_sha256": "ef26989c3149e3d8a6ac3629790b2678b1b643c429e363c2368a12c3d3436842"
+  },
+  "55": {
+   "title": "(055) A declared failure with no failure-path spec is an error (PH336)",
+   "state": "open",
+   "status": "Superseded 2026-10-28 by card 134 (Decid",
+   "shape": "",
+   "type": "feature",
+   "actor_or_story": "As Morgan, I want PH336 to name any phrase and declared failure code missing a failure-path spec, so that I can detect unverified consumer-visible failures duri",
+   "body_sha256": "89ab4c5f169f9509f988e6a681d3055f053c0f3c3fefea83daf0dbf8b6caef18"
+  },
+  "56": {
+   "title": "(056) An endpoint with an output cannot say `succeeds` (PH333)",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "feature",
+   "actor_or_story": "As Morgan, I want PH333 to reject `then succeeds` for an endpoint with output while allowing it for a no-output endpoint, so that I can rely on endpoint specs t",
+   "body_sha256": "39b033a7c0a9f6c66ae34b799342efe862cf3535fb605095ac7a5f5986aec861"
+  },
+  "57": {
+   "title": "(057) Docs: the consumer-observable outcome rule is written down",
+   "state": "open",
+   "status": "Superseded 2026-10-28 by the prototype-f",
+   "shape": "",
+   "type": "docs",
+   "actor_or_story": "As Ari, I want the documentation to distinguish returned values, responses and declared failures from valid no-output success, so that I can write specs that as",
+   "body_sha256": "0ad0d53a71505f602662fccd42cfd1db15a2a896634b23fff10846e54b0f8550"
+  },
+  "58": {
+   "title": "(058) A validation phrase returns its validated value (first slice, language decision first)",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "feature",
+   "actor_or_story": "As Dana, I want a validation phrase to return its validated value on success and its declared code on invalid input, so that I can pass the verified value onwar",
+   "body_sha256": "db4ae1f53a64ad8af6602f1f3dd899acdd43f8e1ed7126dddb89ecf5faffeb03"
+  },
+  "59": {
+   "title": "(059) ADR: deterministic asynchronous and event semantics",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "decision",
+   "actor_or_story": "As Ari, I want documented portable semantics for asynchronous work, parallel collection, bounded concurrency, timeouts, cancellation and events, so that I can e",
+   "body_sha256": "eaa53620f6d480d9ff578738325113065d25bf6c0c11861daad4a28ce158efb2"
+  },
+  "60": {
+   "title": "(060) Catalogue tasks for concurrent work and event publication (measure the demand)",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "data",
+   "actor_or_story": "As Riley, I want benchmark tasks that require parallel collection, bounded concurrency, publication and timeout or cancellation, so that I can measure recurring",
+   "body_sha256": "374753791552d3a514f8a34fe0c0d41a7057ce09fb4d6c5c87a340b31abcc60b"
+  },
+  "61": {
+   "title": "(061) Spike: a scripted scheduler, fake clock and event capture make an async spec deterministic",
+   "state": "open",
+   "status": "Ready (rank: see `board/MILESTONE-usable",
+   "shape": "",
+   "type": "spike",
+   "actor_or_story": "As Morgan, I want timeout-and-cancel and event-capture specs to produce the same C# trace on every run without real waiting, so that I can review asynchronous b",
+   "body_sha256": "67ffb7523736d413d7202a26cdb7726ce1f5859faa71ceb75b264a74ed401eca"
+  },
+  "62": {
+   "title": "(062) Atomic runs: a card runs in a fresh worktree and ends landed or discarded",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "",
+   "type": "tooling",
+   "actor_or_story": "As Riley, I want each card run in a fresh worktree from current main and finish either landed or discarded, so that I can retry from a clean state without one a",
+   "body_sha256": "ef481141b40d1593fffb9199cf960095e909f02ca8036fe5cd2ef74c8750b6b8"
+  },
+  "65": {
+   "title": "(065) Loop: run one card with a pinned toolchain",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "",
+   "type": "tooling",
+   "actor_or_story": "As Riley, I want the loop to run each picked card with the checked-in toolchain and record its classified result, so that I can reproduce runs and diagnose fail",
+   "body_sha256": "d245e864209d0d01e8899f9269e5fe1dcb0281c13c30f5bc244333beaa24e6cf"
+  },
+  "66": {
+   "title": "(066) Loop: bounded retry, park and split on failure",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "",
+   "type": "tooling",
+   "actor_or_story": "As Riley, I want a failed card retried once, then parked with a split proposal while independent work continues, so that I can avoid repeated stalls without aba",
+   "body_sha256": "e535798d0164bdcd4568116a6f6416e9a79e020e08b1d5ff7b83b929ba9e6b93"
+  },
+  "67": {
+   "title": "(067) Loop: on Done run the retro step and re-rank, then the next card",
+   "state": "open",
+   "status": "Superseded 2026-11-04 (delivered by card",
+   "shape": "",
+   "type": "tooling",
+   "actor_or_story": "As Steve, I want each completed card followed exactly once by a retro, re-rank and next-card pick, so that I can trust the board keeps learning and advancing wi",
+   "body_sha256": "89b0146e5bb13cbb4227895ca1a5ba87f3f3b9297ac5cb3874a008af34b35b66"
+  },
+  "68": {
+   "title": "(068) Loop: liveness, publish, STOP file and the Needs-product-owner file",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "",
+   "type": "tooling",
+   "actor_or_story": "As Steve, I want live loop status published to my phone with clean stopping and one-word escalation paths, so that I can see progress and answer only decisions",
+   "body_sha256": "0d9f1d1126079fba45af442d81562147d041950b11a01659c11ee1eec687b708"
+  },
+  "69": {
+   "title": "(069) Loop: resume after a crash or reboot (logon task)",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "",
+   "type": "tooling",
+   "actor_or_story": "As Steve, I want the loop to resume its recorded work safely after a crash or reboot, so that the mob continues without waiting for me to restart or reconstruct",
+   "body_sha256": "1ffa0ef9d97c74b66d1d055850ee838db7552cf93caeb17e45501bf558078206"
+  },
+  "70": {
+   "title": "(070) Loop: run every card atomically (land or discard)",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "",
+   "type": "tooling",
+   "actor_or_story": "As Riley, I want every loop attempt to finish landed or discarded before the next pick or retry, so that I can keep card runs isolated and recover from failure",
+   "body_sha256": "0f208dfe0cd37b036029188c7c1eab8e67d2bd7cb3468a5b1d15b9a5f6287944"
+  },
+  "72": {
+   "title": "(072) Loop: pace the work against the finite driver allotments",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "",
+   "type": "tooling",
+   "actor_or_story": "As Steve, I want the loop to rotate around depleted drivers and pause safely when all allotments are exhausted, so that I can keep the mob productive without un",
+   "body_sha256": "8762da5c7e16df1dfceb339e8f52bc3bb7e986011e44b41f6350ab9fb78c666f"
+  },
+  "78": {
+   "title": "(078) Ready check: reject a role-only story before the product manager is asked",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "",
+   "type": "tooling",
+   "actor_or_story": "As Steve, I want a card whose first story line is a role-only story never reaches the product-manager turn, and I get a one-line reason on my phone-sized summar",
+   "body_sha256": "dc3210fcddc67e651b27a277f524cb1a316daadd274359012c362c7323d280c0"
+  },
+  "81": {
+   "title": "(081) Measure stored and published outcomes under today's grammar",
+   "state": "open",
+   "status": "Ready (rank: see `<phrase-lang>\\board\\MI",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Riley, I want development benchmark tasks that ask for a stored-record outcome and a published-event outcome, run under today's grammar, so that I can see wh",
+   "body_sha256": "b6e30681d31cde9b9aab92ae56acc0c17a2c0e93dd8aba6edb0c96335906d401"
+  },
+  "82": {
+   "title": "(082) ADR: a spec actor is who observes an outcome",
+   "state": "open",
+   "status": "Ready (rank: see `<phrase-lang>\\board\\MI",
+   "shape": "Story",
+   "type": "decision",
+   "actor_or_story": "As Morgan, I want one written decision on named actors in specs: the name (actor), the closed catalogue, the then forms and what each adapter must provide, so t",
+   "body_sha256": "6f5e978192c4d3467feff502dffdef1ac08718cc70890fb5c141d697dda228f8"
+  },
+  "83": {
+   "title": "(083) Spike: an in-memory store and an event capture assert one scripted observation",
+   "state": "open",
+   "status": "Ready (rank: see `<phrase-lang>\\board\\MI",
+   "shape": "Story",
+   "type": "spike",
+   "actor_or_story": "As Riley, I want a C# spec that supplies an in-memory store and an event capture as actors and asserts one scripted observation, with the same trace every run,",
+   "body_sha256": "db7aa1f1776ba532153127c6237ebd94e9906b93ab9c8d8dbde2429972c1e759"
+  },
+  "88": {
+   "title": "(088) Head-to-head: Phrase vs plain C# on the frozen bar",
+   "state": "open",
+   "status": "Superseded 2026-10-27 by cards 098 to 10",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Steve, I want one page that judges Phrase against plain C# on the frozen bar, so that I can decide whether vocabulary work continues.",
+   "body_sha256": "adc738d156d2f3bb2571e4ba1af718f8ca1b2e3b1d8b7a62ffb3f88df643a87d"
+  },
+  "89": {
+   "title": "(089) Option and nested-record fields compile",
+   "state": "open",
+   "status": "Ready (rank: see `<phrase-lang>\\board\\MI",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Ari, I want a declared model with an optional value and a nested record to compile into usable C# types, so that I can represent realistic request data witho",
+   "body_sha256": "be48246725125fe71c3b79faea10063a25fe177a75a6cec66af5c052133f0276"
+  },
+  "107": {
+   "title": "(107) Spec to code with a model: does a Phrase spec get verified-correct code more reliably",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Steve, I want a cold model to write C# from the Phrase spec of orders.phrase and from the same behaviour as a plain-English spec, with the generated specs ju",
+   "body_sha256": "c9b6913b4086c145356e8d5a3915c81713abd767797eac6a7ac42065c5f879a0"
+  },
+  "108": {
+   "title": "(108) A second target's Specs project from the same specs",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Dana, I want the same spec to produce an equivalent test in a second target language, so that the behaviour I specified is judged the same way wherever the c",
+   "body_sha256": "87b584c795e8c69d3f15a7c7c270e59ee3f2e633f31f7292cb99ebc30cb445a3"
+  },
+  "109": {
+   "title": "(109) C# implementation emission one phrase kind at a time",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Ari, I want a phrase that today needs a native C# block to compile to C# implementation code from the Phrase itself, so that I can write behaviour once and g",
+   "body_sha256": "7af1fd22779692d2e374b687d8962c059e2dbe64c808da05089bdf241914f58e"
+  },
+  "115": {
+   "title": "(115) Which cheaper models can each CLI run headless and cold",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Steve, I want to know which low-cost models the Codex, Copilot and Grok CLIs can run headless and cold in this harness and what their list prices are, so tha",
+   "body_sha256": "46fc65d2b5776dc742f77f35e6dc3ee486a1d11ee84ba24d2c3f04d61b0c0ced"
+  },
+  "116": {
+   "title": "(116) Pre-register the cheaper-model experiment before any row",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Steve, I want the pass bar, the models, N, the price source and the rule for the cheapest clearing model fixed by a Decider before any result row, so that th",
+   "body_sha256": "badf2115c775d0c4706378a33aa4cb2019d0a65d30a50bdda183806d7c09f6eb"
+  },
+  "117": {
+   "title": "(117) Run the cheaper models in both arms",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Riley, I want the candidate cheaper models run cold in both arms on the development tasks and the holdouts at the pre-registered N, so that the cheapest mode",
+   "body_sha256": "388972ae1f102ff4a3406f8c203fbfe6b2d4ed3a6fc1c058a81029c747f90e76"
+  },
+  "118": {
+   "title": "(118) Cost per passing task: the cheaper-model report",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Steve, I want one page that shows dollars per passing task and tokens per task side by side for each model and arm, with the cheapest model that clears the p",
+   "body_sha256": "64dedc9f9adc4dc2cf53e4c1c217ae86417d1080f3f339509c6999b5967e8b01"
+  },
+  "120": {
+   "title": "(120) Pre-register the codebase-size experiment before any row",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Steve, I want the sizes, tasks, models, N, bar and price rules fixed by a Decider before any codebase-size row, so that the result cannot be tuned after it i",
+   "body_sha256": "c948e2da1eb7bb013effed2ccd08d858fc787a9961a82b9fb0b0c6ed95d78828"
+  },
+  "121": {
+   "title": "(121) Snapshot a real project slice privately and scrub it",
+   "state": "open",
+   "status": "Superseded 2026-10-27 by cards 125 and 1",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Steve, I want a representative slice of one of my real projects copied read-only into a private folder and scrubbed, so that the experiment can use real code",
+   "body_sha256": "392894a914585d665c02be543f7d3037892093d7b09f76f8757f51f72db762d0"
+  },
+  "122": {
+   "title": "(122) Port the real slice to Phrase in the private folder",
+   "state": "open",
+   "status": "Superseded 2026-10-27 by cards 125 and 1",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Ari, I want the scrubbed slice written in Phrase beside its C# original, so that a modify or fix task on real code can be given in both languages.",
+   "body_sha256": "31a297ecaaa0f178e69ad8e3d1b9efdb73de8151516f960d7dfeb45482388506"
+  },
+  "123": {
+   "title": "(123) Run the codebase-size experiment in both arms",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Riley, I want the pre-registered modify and fix tasks run cold in both arms at each codebase size, so that cost and pass rate can be compared as the codebase",
+   "body_sha256": "4cbcbb42f43868e879fc5a283f4404add74a4942678645e4389431f1d5d9fccb"
+  },
+  "124": {
+   "title": "(124) Codebase-size report: how cost and pass rate change with size",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Steve, I want one page that shows how Phrase's tokens, attempts, pass rate and dollars per passing task compare with plain C# at each codebase size, so that",
+   "body_sha256": "2f12924e055ce2a742c7bb4a3821c33acf6382668c111df88e1577c8863e4404"
+  },
+  "125": {
+   "title": "(125) Choose and pin public C# repositories for the real-code tier",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Steve, I want one or two public open-source C# web APIs chosen by stated criteria and pinned to an exact commit, so that the real-code tier uses real code th",
+   "body_sha256": "6e5cbd9f740070dad624c3ac41ddf5bd13e5a5ddfc635b91dd6a4f0743a2b12d"
+  },
+  "126": {
+   "title": "(126) Port a representative slice of the pinned public repo to Phrase",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Ari, I want a representative slice of the pinned public repository written in Phrase beside its C# original, so that modify and fix tasks on real code can be",
+   "body_sha256": "7ef344d15347e6fa5c832886f8444324cd11db87c5e9d65b40b9c8dd69cf3e83"
+  },
+  "127": {
+   "title": "(127) Write the growth-study backlog and pre-register the study",
+   "state": "open",
+   "status": "Ready (Decider D86: its backlog starts w",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Steve, I want an ordered feature backlog with specs written up front and a pre-registered plan for growing two projects feature by feature, so that cost and",
+   "body_sha256": "c921c3a42524acdbe332c5f509c5e153f9d35c7c227210aeb1369eb753d00fc3"
+  },
+  "128": {
+   "title": "(128) Run the growth study in both arms from shared checkpoints",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Riley, I want the two arms grown feature by feature from the same checkpoints by cold models, so that tokens, attempts and pass rate can be compared at each",
+   "body_sha256": "f08de5fb88272a7022d87a9921ae35e0364db01191fb5b23bc1e26d43e224cd1"
+  },
+  "129": {
+   "title": "(129) Growth-study curve: cost and pass rate against codebase size",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Steve, I want one page with the cost and pass-rate curve of both arms against codebase size, so that I can see whether the relative cost falls as the codebas",
+   "body_sha256": "e5cb1fdddb52df4b335841b4695706b5c9b8d352718e0c7503bac9f11f1db2c8"
+  },
+  "134": {
+   "title": "(134) ZOMBIES spec-coverage warnings",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Ari, I want the compiler to tell me which ZOMBIES categories (Zero, One, Many, Boundaries, Interface, Exceptions, Simple scenarios) each phrase's specs cover",
+   "body_sha256": "dc54ec0cd06fab0c27c937d1534c2b0a864abd6c38092915913693dca0408725"
+  },
+  "139": {
+   "title": "(139) Loop step: re-probe unavailable drivers and restore them",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Steve, I want the loop to re-probe every unavailable driver at each card boundary and on a timer, and to restore its seats and rerun its unavailable rows whe",
+   "body_sha256": "dddb34c918e1de8302a5ba74bad88566da82b02bc3019f886380e28e0ba979ed"
+  },
+  "140": {
+   "title": "(140) Cheat sheet plus library index: the hybrid prompt, measured",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Steve, I want to know whether a compact cheat sheet for the core plus an index of phrase signatures for the library, with full definitions pulled on demand,",
+   "body_sha256": "b9580233784fa1e1840b2b939333bc7f6eeb42e9a4151ec09ebd9c6d7f19fe1a"
+  },
+  "143": {
+   "title": "(143) Split the documentation: a smaller core cheat sheet and a web sheet",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "docs",
+   "actor_or_story": "As Ari, I want the core cheat sheet to hold only domain-neutral language and a separate web sheet to hold the web constructs, so that a project loads only the d",
+   "body_sha256": "c9ec3246f6a56c13b7039d648ecdb55ef70f9b54ae7fae6dc645454667f126d1"
+  },
+  "144": {
+   "title": "(144) Rerun Copilot's unavailable holdout rows after its quota returns",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Riley, I want Copilot's 30 unavailable holdout rows run once its quota is back, under exactly the original rules, so that the holdout call has all three mode",
+   "body_sha256": "01fbe24ae2a2d4abff8afa8241f7d44f6d95c866c594eb307f2170ff4a4128ad"
+  },
+  "145": {
+   "title": "(145) Store operations as Phrase steps, not native code",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Ari, I want to find, save, list and remove stored items with Phrase steps, so that my phrases say what happens instead of hiding it in native C#.",
+   "body_sha256": "f943a25da3cf13d29182f9e952b1d0d97edb18ec9de54dd17b606096c632c3a1"
+  },
+  "146": {
+   "title": "(146) Validation rules as Phrase: not blank and a maximum length",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Ari, I want to state that a text must not be blank and must not exceed a length, so that validation is part of my phrase and not native code.",
+   "body_sha256": "4dc2687bd80f536b6aedd6740c23e5dd8c8f38b3a375865fdacff4b281ca8fc9"
+  },
+  "147": {
+   "title": "(147) A list endpoint without a fake flag",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Dana, I want a list endpoint that lists without any extra input, so that a client calls it the way a real client would.",
+   "body_sha256": "197337c932dbb753bf6ebc44efe966dbc0006be3a62844de19cf84f420f53c5a"
+  },
+  "148": {
+   "title": "(148) Composite steps: a phrase calls a phrase and changes one field of a record",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Ari, I want a phrase to call other phrases and to build a record with one field changed, so that complete task reads as steps instead of native code.",
+   "body_sha256": "900fe68695e133ee9cdfea58b6f8d204b159442f7a9e156ba5e2761027b44a60"
+  },
+  "149": {
+   "title": "(149) Undetected-defect rate: planted defects against Phrase specs and model-written C# tests",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Steve, I want to know how often a planted defect in AI-written code survives Phrase's generated specs compared with the tests a model writes for plain C#, so",
+   "body_sha256": "cc8e47716252485952d2420069e22de936485471a7609b561c15c03cf4234e66"
+  },
+  "150": {
+   "title": "(150) Intent recovery: can a fresh reader state what each unit must do",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Steve, I want a fresh model, and later a human, to read a codebase in each form and state what each unit is supposed to do, including edge and failure cases,",
+   "body_sha256": "b4c563a3267c1028b161604e9d214a1a8c67e8feb12370ed3c80c991f9558d2d"
+  },
+  "151": {
+   "title": "(151) Review speed and accuracy: approving and rejecting AI-written changes",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Steve, I want to know how fast and how accurately a reviewer approves correct AI-written changes and rejects subtly wrong ones in each form, so that I can se",
+   "body_sha256": "0596aa3e02c630b368af5200733e9b67038b2a17e09f484b9a780d9a69cf1bd7"
+  },
+  "153": {
+   "title": "(153) Verdict page states the success criteria",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Steve, I want the verdict page to say what Phrase's success criteria are, so that nobody reads the head-to-head numbers as the success measure.",
+   "body_sha256": "6624546200ba439d80190c46b0dd78d032be8d55a2de2a498bbe88ff079b3e32"
+  },
+  "155": {
+   "title": "(155) Verdict page as a judgment backed by data",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Steve, I want the results page to say what improved, what got worse and by how much, and to give a plain judgment of whether the intended value was delivered",
+   "body_sha256": "b07b762d36c7e66fb34a9d186a4b649dbd0203f1911b8e9a20a1af1657bbf3c0"
+  },
+  "156": {
+   "title": "(156) Personas capture the same ten fields",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "docs",
+   "actor_or_story": "As Morgan, I want every persona to state the same ten things, including what a good outcome looks like to that user, so that a card can state its value and its",
+   "body_sha256": "065f748ec758fb3b818c3e05d4e790915a9663030f47daf1773fc26d73d83227"
+  },
+  "162": {
+   "title": "(162) Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "docs",
+   "actor_or_story": "As Ari, I want the grammar and the cheat sheet to describe the ensure step and the record update form, so that a cold model can use them from the documentation",
+   "body_sha256": "599c21b88fb97ff194c12a35e2571c73c569dc421163597bc827ba271d0854c4"
+  },
+  "163": {
+   "title": "(163) Generated endpoint files are named *.cs.cs: decide and document the convention",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Morgan, I want generated files named as ordinary C# files, so that tools, reviewers and analyzers treat the output like any other project.",
+   "body_sha256": "b248d1f12bb9b6b20552d5c2ccb46aeb13dd936d7b1867205f66c9c16efab59d"
+  },
+  "164": {
+   "title": "(164) #line directives: the debugger and C# compiler errors point at .phrase lines",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Morgan, I want the C# compiler and debugger to point at .phrase lines for generated code, so that a stack trace or a build error leads straight to the spec.",
+   "body_sha256": "b7b2975700e96b941a6a82e658fd5f15ab9afa6cb59585d353a1e3a4fb24aaee"
+  },
+  "165": {
+   "title": "(165) Failure observer: the generated API raises a neutral failure event; tracing plugs in outside the runtime",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Morgan, I want a production failure log line to carry a neutral failure code, endpoint name, opaque step id and build id, so that I can resolve it to the spe",
+   "body_sha256": "ce3b634eb740a91551f5c9ac7a50ae5d52a0c74edfee88eab8637358da04c744"
+  },
+  "166": {
+   "title": "(166) Move the generated [Phrase] link into the source map; the grammar and the bench scorer follow",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Morgan, I want the link from a generated symbol back to its phrase to live in the source map and not in the generated C#, so that the runtime stays ignorant",
+   "body_sha256": "7679748f0752061f9ec9c23b59df99bcbc4fdde2fe3b00dd0b2151c65380a172"
+  },
+  "169": {
+   "title": "(169) The map bytes do not depend on the culture",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Morgan, I want the same source to give the same map bytes under any culture, so that a map made on one machine matches a map made on another.",
+   "body_sha256": "7e3c4fe4df52327212e7194ce8912eaa602472eae86fc7ca6663308886ce3b06"
+  },
+  "171": {
+   "title": "(171) The CLI reads method and type names from the adapter; Program.cs is tidy",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Morgan, I want the command line to know nothing about the C# layout, so that a second adapter does not need changes in the CLI.",
+   "body_sha256": "93d4072c76d67135be1d6cb445bcc32c4e2756df1ce314d2db5743780038b174"
+  },
+  "172": {
+   "title": "(172) Trace hardening follow-ups and one shared test process helper",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Morgan, I want trace to report a missing generated file and refuse paths that leave the output folder, and I want one tested place for starting and stopping",
+   "body_sha256": "97530e82f50d9490b7e66092bce8dc9d7e4799a1928401132e4cc96598a62a58"
+  },
+  "176": {
+   "title": "(176) Package the CLI as a dotnet tool and version it",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Dana, I want to install the Phrase CLI with one dotnet tool command, so that I can try Phrase without building it from source.",
+   "body_sha256": "243434d76f07218565290dd3f99c32d489f78777f6a0705ea1531cae9ab1a3a0"
+  },
+  "177": {
+   "title": "(177) CI installs the packed tool on Windows and Linux",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Dana, I want proof that the tool installs and runs on both systems I might use, so that the install step does not fail on my machine for a reason the mob cou",
+   "body_sha256": "c5b134a597a9a5b84b05401c4a34a6d775869e0ed1e21922e9345682d66d56b7"
+  },
+  "178": {
+   "title": "(178) A prerequisites page that matches what CI tests",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "docs",
+   "actor_or_story": "As Dana, I want the supported .NET SDK version, operating systems and architecture stated in one place, so that I know before installing whether it will work fo",
+   "body_sha256": "ffb96e3a6f42634d90b189a95e2ae6d250a2be76489c95b01dfe788f0b88929d"
+  },
+  "179": {
+   "title": "(179) Rewrite the README and write the getting-started guide",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "docs",
+   "actor_or_story": "As Dana, I want a README that tells me in one screen what Phrase is and who it is for, and a guide that takes me from install to a running spec-first API, so th",
+   "body_sha256": "4700d774fef85dc124bc41531696ec329a531ddacfa4b8655e46a3068ebab1ea"
+  },
+  "180": {
+   "title": "(180) A test that runs the getting-started guide's commands",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Dana, I want the guide to be true today and to stay true, so that I never follow a step that no longer works.",
+   "body_sha256": "21359931ffeac6cd062f9f0687e50238f4977e7d801892e7b39ddff0f7de5100"
+  },
+  "181": {
+   "title": "(181) A cold model completes the getting-started guide",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Ari, a model that has never seen Phrase, I want to complete the guide using only its text, so that the guide is usable by an AI agent as well as by a person.",
+   "body_sha256": "e5d96fa09be1a99cc8e3e8c71ec807f9c424853cf4f349ebf48b19203b00d410"
+  },
+  "182": {
+   "title": "(182) Actionable messages on the getting-started path",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Dana, I want the likely failures on the guide's path to say what went wrong, where, and what to do next, so that I can fix a typo or a missing prerequisite w",
+   "body_sha256": "3994d880fb81f6bf9f1eb9ee9c1e54ab160c58f9d91c63e8b23c9e276fd4102a"
+  },
+  "184": {
+   "title": "(184) Version 0.1.0 and a changelog",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "docs",
+   "actor_or_story": "As Dana, I want a clear version and a record of what changed, so that I know what I am running.",
+   "body_sha256": "8f319efe757ee24d8e0f3c3d45d81b842a882af67f2c7037bffb3e3d8457a521"
+  },
+  "185": {
+   "title": "(185) An issues route, a contributing note and a security note",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "docs",
+   "actor_or_story": "As Dana, I want to know where to report a problem and how to report a security issue, so that I can help Phrase improve safely.",
+   "body_sha256": "8753d87d94a980e60b27f99b14eecb33beec3b6e66743b9350b3704aa416bc68"
+  },
+  "186": {
+   "title": "(187) A known-limitations page",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "docs",
+   "actor_or_story": "As Dana, I want to read what does not work yet, so that I do not discover it by surprise.",
+   "body_sha256": "2d3aaea98b93eef2b2e5347852dd85de49281854ff8b8b8e1beee56304a57e4d"
+  },
+  "187": {
+   "title": "(188) Publish the first version",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Dana, I want the preview to be installable from the package feed, so that I can try it.",
+   "body_sha256": "aca52ed407790565634e2a9e655fe82720b8b9276772c37b9d80461875598f20"
+  },
+  "188": {
+   "title": "(186) Pre-publication checks: name, licences, history, vendor terms",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Steve, I want the checks that cannot be undone after publishing to be done first, so that nothing public needs to be taken back.",
+   "body_sha256": "a4542e08f1b92731fa96f0adb27da99fd528c5161530d08374a797168f808599"
+  },
+  "189": {
+   "title": "(189) An unsupported construct is a diagnostic, not an unhandled exception",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "bug",
+   "actor_or_story": "As Dana, I want a clear message when I use something the C# target cannot do yet, so that I know it is a limitation and not a crash.",
+   "body_sha256": "9f30a35387157edaec9d4e50d6a4766fa7a60a7c3781ffc020c0925646448c99"
+  },
+  "192": {
+   "title": "(192) Source files end in .avowry; the repository's own sources switch in the same card",
+   "state": "open",
+   "status": "Superseded/Withdrawn 2026-10-29 (merged ",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Dana, I want my specs in .avowry files, so that the file name matches the product.",
+   "body_sha256": "4d70e9b7033f90e46bbdb3debac03fd9f4aff86a03c9747db87c35440a8eaa16"
+  },
+  "196": {
+   "title": "(196) Rename the two test projects to Avowry.*.Tests",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "tests",
+   "actor_or_story": "As Morgan, I want the test projects named after the product, so that a search for the old name finds nothing under tests/.",
+   "body_sha256": "698bd0bae055f2ca83ee8cb263d97d2a986be8c9e8b4269779788c4195426439"
+  },
+  "197": {
+   "title": "(197) Rename the solution, CI jobs, scripts and paths to Avowry",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Morgan, I want the solution file, CI workflow names, scripts and build property names to say Avowry, so that nothing the contributor touches uses the old nam",
+   "body_sha256": "f1e6e9d85f6c56060a24829ff24d69f8b48f1135e8cc99d124f050fb977345f5"
+  },
+  "200": {
+   "title": "(200) An avowry fmt command that rewrites sources to the canonical form",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Dana, I want one command that rewrites my sources to the canonical form, so that diffs stay reviewable even when authors use filler variants or the old keywo",
+   "body_sha256": "3dd617851fa905148077c0f7caa559b5a4506e9a5bec8a8475413227f05aa646"
+  },
+  "201": {
+   "title": "(201) Migrate the sealed holdouts to avow and record a new baseline",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Ari, a model taking the benchmark, I want the sealed holdout tasks written in the current language, so that the hidden scores still mean something after the",
+   "body_sha256": "3c10e2c23b61e9d332eb2f8f9e99c8dd6d370eef982e7f3bd8fce79db8164eed"
+  },
+  "202": {
+   "title": "(202) A native block that fails with an undeclared code is a diagnostic",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "compiler",
+   "actor_or_story": "As Morgan, I want a native block that raises a failure code its phrase never declared to be reported at build time, so that a failure cannot reach an endpoint w",
+   "body_sha256": "3fa88fc216bc92e0fab2fad708cbea64584e5de87867809307e1450e9bdc0435"
+  },
+  "203": {
+   "title": "(203) Names reserved by generated code are rejected or escaped",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "compiler",
+   "actor_or_story": "As Dana, I want a clear language diagnostic when a name I chose collides with a name the generated code needs, so that I do not meet an unexplained C# error.",
+   "body_sha256": "027f720e2c353a1eb57858c77d00a121ce6bcfc830b78a3b2e5fc1fbbcefd2e6"
+  },
+  "204": {
+   "title": "(204) Reconcile the personas with the v0.1 bar in Avowry terms, then rerun the LLM check for Ari",
+   "state": "open",
+   "status": "Ready",
+   "shape": "Story",
+   "type": "docs",
+   "actor_or_story": "As Ari, a model that has never seen Avowry, I want the personas and the release bar to describe me and the other people the product serves in the same terms, so",
+   "body_sha256": "c59db225d1e1af8784fad99b68e8ffdcb219362f6cb7668e27f9280e9a8369a3"
+  },
+  "206": {
+   "title": "(206) The findings file mirrors the audit register",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "scripts/mob_process.py check (a system actor: the repository's process check, run by the auditor and by CI)",
+   "body_sha256": "5694aa2f5b640499693d111ae8371e7ca9e1f657825bc56ba8e001a2a0006265"
+  },
+  "207": {
+   "title": "(207) The findings file history rules are checked",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "scripts/mob_process.py check (a system actor: the repository's process check, with its history reader, ancestry check and auditor rule), and the checklist test",
+   "body_sha256": "fb058c44326734a8dce51fb3be3ce2c81456a5258567158fcbd6a31cbe56e3fc"
+  },
+  "212": {
+   "title": "(212) Every mob re-ranks at every loop boundary",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the mob-defaults loop runner (loop.py --rerank-cmd and loop_runner.py), with the working-agreement template (templates/TEAM_WORKING_AGREEMENT.default.md) and th",
+   "body_sha256": "34fe00c0a4ce9fd286a0574fa70e3dd5ef556f47d80475a5fe6d12a207bb6864"
+  },
+  "213": {
+   "title": "(213) The checker rejects an incomplete objection window",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the record checker (python scripts/mob_process.py check) run by the facilitator and in CI",
+   "body_sha256": "368b98e787014161987289530ced9024f61f22aa98b801ba1a77b3cd5a099d7c"
+  },
+  "215": {
+   "title": "(215) Every mob reviews each previous adjustment at stand-downs and retros",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the mob-defaults loop runner (loop.py and its card-record writer), with the working-agreement template (templates/TEAM_WORKING_AGREEMENT.default.md) and the ret",
+   "body_sha256": "fd8bf8049443ef5bb33ef82db35509c8df8bdd4647dabb6ccc2d975e5280f9d6"
+  },
+  "216": {
+   "title": "(216) The default templates carry the pending process rulings",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "a new mob created from mob-defaults (its facilitator reads templates/TEAM_WORKING_AGREEMENT.default.md and its external auditor reads templates/AUDIT_CHECKLIST.",
+   "body_sha256": "f65dad36538530fc6f48bab5a6edf615080073119065903e7ae021ce25d5a44f"
+  },
+  "218": {
+   "title": "(218) A mid-card retro removal does not drop the seat before the retro",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the mob-defaults card-mode facilitator (facilitator.py), through mob_seats and the task force sync",
+   "body_sha256": "1ba7e277399b26ffdd29cf828e52ad7ed8b65082fe5f051bc947b979c32298f8"
+  },
+  "220": {
+   "title": "(220) The loop runner starts a corrective card while a finding blocks",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the mob-defaults loop runner (loop_runner.py run_loop, started by loop.py --run)",
+   "body_sha256": "9ec613d52984b67f0c114e6afa3b8604570f46f0a4e6d112e056a70bbe277bb6"
+  },
+  "221": {
+   "title": "(221) The loop runs a card in the repository its Repository line names",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the mob-defaults loop runner (loop.py --run, loop_runner.py card_command) and facilitator.py card mode",
+   "body_sha256": "fc10e2128e87fb8083a867ec6d6feb3d2e64076aa65ac9d6342034570db904b9"
+  },
+  "222": {
+   "title": "(222) The loop wires its retro and re-rank steps from the repository and stops when one fails",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the mob-defaults loop runner (loop.py --run, loop_runner.py run_loop and default_deps)",
+   "body_sha256": "6bc52914c3ff816cc7b0ab6c1d007283403f8dc274cae3006329d120544300ab"
+  },
+  "223": {
+   "title": "(223) The loop takes the per-card retro from every role, each in its own context",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the mob-defaults retro command (retro.py, named in .mob/loop.json) run by the loop after a Done card",
+   "body_sha256": "bbf86289f9c9f2f7e767aa8d5e883bebf6af07b5ba6a544865a1ac542c19c3d7"
+  },
+  "224": {
+   "title": "(224) The loop re-ranks Ready through the product manager and a Decider after every card",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the mob-defaults re-rank command (rerank.py, named in .mob/loop.json) run by the loop after the retro",
+   "body_sha256": "baa96559460f0511aa725fe2953ff308bac3c69a64c01b9be1374cc5f6a0fa27"
+  },
+  "225": {
+   "title": "(225) Card mode reads only role lines as the task force",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "facilitator.py card mode (parse_task_force, check_task_force, mob_seats, write_record)",
+   "body_sha256": "0e26a9512f8ed8ec84c87f2eac99035deb5180476b62092ba1e5266a81daf9d0"
+  },
+  "231": {
+   "title": "(231) Uncommitted work in a watched repository older than about 30 minutes fails the checks",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "mob_process.py (a new check beside unpushed) and run_audit",
+   "body_sha256": "5bbc34351f75594a9900d5e5adb13ed4afe9d9d5bf79b4ce0566f7d47a433e41"
+  },
+  "232": {
+   "title": "(232) A seat driver never opens a browser or other UI on the shared machine",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "the local-model seat driver and its probe",
+   "body_sha256": "8efc3d374766f08e09fc4e8634e51464ff7ea70bb4df7d01f8e2c45c0c3a04de"
+  },
+  "233": {
+   "title": "(233) Evaluate side-by-side pairing tooling before building pairing",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "spike",
+   "actor_or_story": "the evaluating seats",
+   "body_sha256": "29952e1c29bd6b2e2db782cd7645b9ab320bb5fc1f69dcf7af9ef9b5a5aac710"
+  },
+  "235": {
+   "title": "(235) Green commit bodies carry a checked Proof block",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the pre-push check",
+   "body_sha256": "64573ab8b60ccb7a7a3416be66420faca790c7f943d7681b8cf2e4b99a13f5ce"
+  },
+  "236": {
+   "title": "(236) The process wiki closes the writer's seven content gaps",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "process",
+   "actor_or_story": "the wiki pages and the checker",
+   "body_sha256": "e2d86d223ac6936a36473dfb244ae7872f2f9acc8dbd77c9de56dd5f179284f2"
+  },
+  "238": {
+   "title": "(238) The reshaped process wiki carries the slice limits and a measured upkeep",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "process",
+   "actor_or_story": "the process wiki, its staleness check and the trial checker",
+   "body_sha256": "155027a285d0bb646eec93b6df3d3ab3e0bb31933d14137296206c6204dff27f"
+  },
+  "239": {
+   "title": "Proposal: allow several independent process improvements per retro during lock-down",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "e56a07b613c7d9a5e2810f12fce7066c5fa8ea495a0d2624fec9f2deb15fe8a3"
+  },
+  "240": {
+   "title": "Proposal: persisted shared mob context in a data store (wiki + append-only logs), stateless facilitator",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "6adf0a8dfdb5f0df5196d42a59acb3c8c7f99bf3a61de6a022e4bca743ec30cc"
+  },
+  "241": {
+   "title": "Proposal: link the process wiki and Avowry's indexed-extension design",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "3ecd589fdfd26e9df8770318e2a813ff7b39c0e6b9bde62bee266ab02c244061"
+  },
+  "242": {
+   "title": "Proposal: evaluate seven language/framework concepts for the mob process",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "b043a4352d0fcd46a5402e3e7d0487aa087c75f5083beeb578f82e57d6aa5cea"
+  },
+  "243": {
+   "title": "Flaky acceptance test: PhraseExecutedOutcomesAcceptance read/modify replies (intermittent push-CI failure)",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "39b21f3feddd5effa23499869f0609eb408056a98ca04fefd451adff6a848fce"
+  },
+  "244": {
+   "title": "Proposal: widen the command scan beyond rm -rf into a general safety scan",
+   "state": "open",
+   "status": "",
+   "shape": "consider",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "270f8be0257cb7f1e0bccb8623623400109e4a6c569afcd8b0136edd1405febd"
+  },
+  "245": {
+   "title": "Proposal: simplicity as a standing mob principle - rules must earn their place, retros retire rules",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "89a3f2269d1333b68071729f5cc8f2568f690cdc52bf43fc9546edce10cca94f"
+  },
+  "246": {
+   "title": "Proposal: mob-process UI and XP information radiators (phone-first, rendered from the persisted store)",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "39919e84c331ea09cc97d109518d1483611aa6cf47684186c613a7a30e2d8960"
+  },
+  "247": {
+   "title": "Decision windows launch voters in parallel safely (decider.py seat-use history blocks D174)",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "7328b2cac56f1b90a32499ee39cb4b0f6eded8e076d0d7989533b4488d9251d0"
+  },
+  "248": {
+   "title": "Proposal: parallel streams for independent (atomistic) cards, after worktree-per-stream and parallel-safe seats",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "7a642011d36eacf9155327cbcd005dd41b856fb2842df07e7cd8d2e1235a0db2"
+  },
+  "249": {
+   "title": "Proposal: friction log - every named pain gets a fix, an owner and a measured outcome (Goodhart-guarded); retros review the log",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "7a2f2a568f53ff3adfd3f2a3e0fafbe95583005c2a456896a7e194367ab6b7ec"
+  },
+  "250": {
+   "title": "Flaky test: test_loop_state test_lock_released_when_holder_exits (timing race, mob-crosscli)",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "a7a7800926cfcd7a96c4022ffdd3411462be827616aa5ef8cf8368eba0ccf551"
+  },
+  "251": {
+   "title": "Proposal: trial Meta Muse Code as a new driver seat (model diversity, prepaid quota, auditable log)",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "f7de8b5d6573216945463109cfb6494a95d1fce2786b682b3aa7a91621ab40d9"
+  },
+  "252": {
+   "title": "(252) Seat transcripts are scanned automatically for subagent and headless seats",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the facilitator and CardRun",
+   "body_sha256": "4616abfa8cf2284b7d9769dd21cf40dcad9688d75b82342d37dd49f5d441b791"
+  },
+  "253": {
+   "title": "(253) Codex rollouts are read by the delete scan",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "command_source and the Codex backend",
+   "body_sha256": "803abb565849c0d11b665ec8e5dc9af67d02c50f6989daae222b6ac86d850378"
+  },
+  "254": {
+   "title": "(254) The delete scan cuts its known false positives",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "delete_guard.scan_command and the file-run scan",
+   "body_sha256": "f3ee5c8d48d9026a5c172825765426dc5b504fc472dd3c3a9d1c53f0df8daf20"
+  },
+  "255": {
+   "title": "(255) The delete scan covers the residual forms and the path forms",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "delete_guard.scan_command and inside_tree",
+   "body_sha256": "578945e9fa10048fec833aa5649deee2ec34ee4cfe6b8b54e2d9ec429adeea9b"
+  },
+  "256": {
+   "title": "(256) Command-scan reports are readable and trusted",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the scan's report plumbing",
+   "body_sha256": "f323c6335075102ce6482ea745e511ff13e8695041fbaebc19d0d5f249ff917c"
+  },
+  "257": {
+   "title": "(257) Git-state detectors catch unpushed and hidden work",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "mob_process and the facilitator's detectors",
+   "body_sha256": "029765e3ea23591139a73382a4aea7290e0365cc3bae71e086afa19cc5dd03c2"
+  },
+  "258": {
+   "title": "(258) The loop-state lock test is not flaky",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "the loop-state lock test",
+   "body_sha256": "cefff3e56d8073b0e22c269f73cd0ddcb03157d3127ef33a302442af241fddba"
+  },
+  "259": {
+   "title": "Docs and code consistently use the name Avowry (281 markdown files still say Phrase)",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "018ddba06a05415d44ba379ef5aaabdd9f68ae061d99b7c6c71abdb21baa0e2c"
+  },
+  "260": {
+   "title": "Proposal: optional rule retirement (no quota) + make the refactor step real (commit or reasoned 'none needed', auditor-checked)",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "b563f2ada299ff6aa7e25e7146990cd448c8b9b59ac4b560da65fed752efde76"
+  },
+  "261": {
+   "title": "Language proposal: allow side-effect assertions alongside one primary outcome per spec (benchmark-tested for tokens vs correctness)",
+   "state": "open",
+   "status": "",
+   "shape": "one",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "b25c028025e92d39ec3fd25a125fca7dbf279917fbb0d9c2ec8ab74d8be8dc19"
+  },
+  "262": {
+   "title": "Proposal: 'laws we design by' page for mob-defaults (Little, Amdahl, ToC, Brooks, Gall, Parkinson, Hyrum, Conway, Triviality, Chesterton) - each paired with the rule it justifies",
+   "state": "open",
+   "status": "",
+   "shape": "one",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "bf1560ece0da9c76e077d5c6220002c43a145e2a2fa01b7683b82305aa2d0479"
+  },
+  "263": {
+   "title": "mob-defaults docs contain no dates (template reads as timeless, history stays in git)",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "0833d6576991f7b7c386160dd754a5198605c9d6e0c0d546828fb25d5f597314"
+  },
+  "265": {
+   "title": "(265) Decision windows launch voters in parallel safely",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "decider.py and the window launcher",
+   "body_sha256": "9688d0ad6fcdbfd800dbba0ce6e0d03b57ab48d0896e9520238fd6640d4c4b38"
+  },
+  "266": {
+   "title": "(266) Docs and code consistently use the name Avowry",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Story",
+   "type": "story",
+   "actor_or_story": "As Ari, a cold-start coding agent reading the docs, I want one consistent name, Avowry, in the live docs and code, so that I use and search for the language I a",
+   "body_sha256": "026c8b580258b00b625eb0251038bcc5663b4dbf3d4a76dd0da1c5ff790365ac"
+  },
+  "267": {
+   "title": "(267) mob-defaults docs contain no dates",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Story",
+   "type": "process",
+   "actor_or_story": "As Riley, a mob adopting mob-defaults for a new project, I want the default documentation to read as timeless rules with no calendar dates, so that I can apply",
+   "body_sha256": "2c98805c40d2b228ff3376ede6d3ca5e934fffa43c8081784ccea04702b8c686"
+  },
+  "268": {
+   "title": "(268) The mob summary publish tests pass in every shell",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "the mob summary publish tests",
+   "body_sha256": "2faba86276940e341aa3babe99f072bd77809beda83cf0f5f2b8e92de1b4c98b"
+  },
+  "269": {
+   "title": "(269) mob_process.py keeps LF line endings",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "the repository's line-ending rules and mob_process.py",
+   "body_sha256": "7956d8b6a104dc2f68de1180c328b7f2e00f1b58afb977be3a2a2d3068b48f9a"
+  },
+  "270": {
+   "title": "(270) A Grok decision seat receives its whole prompt and casts a vote",
+   "state": "open",
+   "status": "Superseded 2026-11-04 (folded into card ",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "decider.py's Grok voter launch",
+   "body_sha256": "e071dc20c957fd19ed9b98e06916b99e2ac647e4aa8be95de0c6492c7e0162dc"
+  },
+  "271": {
+   "title": "(271) The loop and audit thresholds are parameters",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "mob_process.py and loop_runner.py",
+   "body_sha256": "4f5a038f33339b40b25dadd0b1db06e6733797997781d553ce79eb2669ab6493"
+  },
+  "272": {
+   "title": "(272) facilitator.py and test_card_mode.py keep their line endings",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "facilitator.py, tests/test_card_mode.py",
+   "body_sha256": "e9889e62b173e8432cd6c7ced325ff0d243300e4e35ed6afa597da1bd9a0cc71"
+  },
+  "273": {
+   "title": "(273) Each gate has a red run that proves its test catches a broken gate",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the gates in mob_process.py and loop_runner.py and their tests",
+   "body_sha256": "4b9cbb3bb6341e80ca97a76c2aa631f85a2207445eb438dda81ab35091624819"
+  },
+  "274": {
+   "title": "(274) The final-review record can say unclear and keep the reviewer's verdict",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "records/<card>/final-review.json and its test",
+   "body_sha256": "cee2a847b763dd6f79547c5b4e863974f8b3b828ee73d67b234cbb7d6d0e4528"
+  },
+  "275": {
+   "title": "(275) Decide whether card 211's unproven defects close, and whether seat attribution needs a card",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "process",
+   "actor_or_story": "the team (a Decider)",
+   "body_sha256": "e4c808be3af292307ddeb344d7f6dfffcda566e4f3239ca3398eda511f675f97"
+  },
+  "277": {
+   "title": "(277) An empty decision vote opens a diagnosis; only quota or unavailability excludes a model",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "decider.py, the decision-seat gate, and its seat-use records (.mob/records/seat-use.jsonl)",
+   "body_sha256": "e11cdb155ace19a08e77b21d76a368804429b417cb03fc502b0998686e5bb14a"
+  },
+  "278": {
+   "title": "Proposal: rank the cmd.exe line-limit fix (229/270/277) right after 276",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "0704b1e3850513e280a4f71021334c88ee64cd980f10ebde5243e7c310c34270"
+  },
+  "279": {
+   "title": "(279) The Muse reader reads Muse's real tool records",
+   "state": "open",
+   "status": "Superseded 2026-11-03 (delivered by card",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "command_source (locate_muse, the Muse envelope reader, scan_entry with source \"muse\")",
+   "body_sha256": "51c6a5287181f607d6810166c42c3e4483aac1205ac31996402156724a11f315"
+  },
+  "280": {
+   "title": "(280) Muse usage text reads as signed in, or signed in with unknown quota",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "muse_install's sign-in classifier (shared with facilitator.probe_state_for since refactor c71c05f)",
+   "body_sha256": "3d9af1595c8554ba41cee21f3edec1b6aa87def9c545c9dd74d1dcfd38828f60"
+  },
+  "281": {
+   "title": "(281) Muse seats run with a known workspace trust",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the muse backend in core/backends.json and decider.vote_seat",
+   "body_sha256": "e4a64e76b89455a511769ebdf4a158f1c2ffdbd52dae15e981887dd6683dac8f"
+  },
+  "282": {
+   "title": "(282) A seat's prompt reaches it without placeholder rewriting",
+   "state": "open",
+   "status": "Superseded 2026-11-04 (delivered by card",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "facilitator._launch_backend",
+   "body_sha256": "0352334af7931b12de56c967f6aead241bd420247e756c46ef2b53eb1a27245f"
+  },
+  "283": {
+   "title": "(283) The delete guard does not flag a read-only python command",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "delete_guard.scan_command (shared by command_source and scan-transcript)",
+   "body_sha256": "efde05393afc088d0bff739ddb829a0a0c8d94b44a6efa9619c948a5e359d13d"
+  },
+  "284": {
+   "title": "Proposal: name drift resistance as an Avowry benefit (with a measure)",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "e338c2103d4b9b25f3c3c52bc6616b605ed906657983b090af38daebee861dda"
+  },
+  "285": {
+   "title": "(285) Muse's sandboxed shell completes a command on the shared Windows laptop",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "the muse backend and Muse's Windows sandbox on the shared laptop",
+   "body_sha256": "020401960095c41c374a6383b892293098c43cd9564dcaed461a8082c5273993"
+  },
+  "286": {
+   "title": "(286) A NO OBJECTION reply is stored as no objection, not as a No vote",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "decider.parse_vote and the decider-result.json it writes",
+   "body_sha256": "dff2c20cacd3b5e66205a870e9f78b9e2f2825c8583db3ed89e3ed58ddb19e65"
+  },
+  "287": {
+   "title": "(287) locate_muse takes one kind of root",
+   "state": "open",
+   "status": "WITHDRAWN 2026-11-04 (re-rank 21, D183, ",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "command_source.locate_muse and _resolve_muse_data_root",
+   "body_sha256": "8e39d8bf1049365fd1f89a591f1154c7350cde601ac46b17380d9b030001a6ba"
+  },
+  "288": {
+   "title": "Proposal: a cut line so product work restarts (block-only process above, interleave the rest)",
+   "state": "open",
+   "status": "",
+   "shape": "",
+   "type": "",
+   "actor_or_story": "",
+   "body_sha256": "0ed12f6b575a3d8202f708b1463d0b62afcedcd51076d54e44af071dc0a525de"
+  },
+  "289": {
+   "title": "(289) Drift resistance: planted unintended changes across edits and model regenerations",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Story",
+   "type": "data",
+   "actor_or_story": "As Steve, I want to know how often an unintended behaviour change, planted over a sequence of edits or model regenerations, is flagged by Avowry's generated che",
+   "body_sha256": "b29cb6b4f743ac7bbcd71e75eb8e38560ef9e3bc7ac25c80e12bdea03a6f209a"
+  },
+  "291": {
+   "title": "(291) A Grok decision seat ends its turn with a vote, and a vote after narration is read",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "the Grok backend invocation (core/backends.json) and every reader of a seat's vote (decider.parse_vote and the window runner's first-line check)",
+   "body_sha256": "72a7b14a5a8b30d16f6a8dc67bc7ff405d808ae253c49b2801c5e8f26cdbe59d"
+  },
+  "292": {
+   "title": "(292) A seat timeout is recorded as an empty attempt and never stops a decision window",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "the window and vote runner (moved into mob-defaults) and decider.py's per-seat timeout",
+   "body_sha256": "de23b056f4c4e214daabcccf528c6cc0d7ad6d490c65cb0294355e88270feee5"
+  },
+  "293": {
+   "title": "(293) A vote's cite is read from the seat's reply, not from an echo of the prompt",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "decider.cite_ok",
+   "body_sha256": "514d6ae8137edff230571d0e25db576d101360dd13fc91400dd052679ac1f8d5"
+  },
+  "295": {
+   "title": "(295) A legacy system's exercised behaviour is pinned as reviewable avowries before anyone changes it",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Morgan, I want an inherited C# system's exercised behaviour captured as avowries that pass on the unchanged code, so that I can change it and see at once whi",
+   "body_sha256": "90ea2fc9192a5e8a59ead881dc76d243c9bef8f1781aa1f0c0bd2a6542fd466c"
+  },
+  "296": {
+   "title": "(296) Behaviour characterized from a legacy system runs the same on a second target",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Story",
+   "type": "feature",
+   "actor_or_story": "As Dana, I want the avowries that pin a legacy system's behaviour to generate and pass on a second target, so that I can move the system to another language wit",
+   "body_sha256": "02f82823976c0489311fe6b43e174329774871d4bd61ebf0c2da03762357b489"
+  },
+  "299": {
+   "title": "(299) A second writer on one checkout is refused across processes",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "any writer to a checkout: Writers, the facilitator's helper scripts, and seats",
+   "body_sha256": "bec9a717ab29cfee0ef7164d72d2f5b1cb86ae13584c1a681f89736df1e15a87"
+  },
+  "300": {
+   "title": "(300) A legacy turn on a Codex machine whose shell cannot start is refused before launch",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "the facilitator's legacy turn path placing a command-running seat on Codex",
+   "body_sha256": "b348415f4910473683bb1fc2020383f5a8384743e7f3383154b9b094bade8ce8"
+  },
+  "301": {
+   "title": "(301) The command probe cannot be passed by copying its nonce from the prompt",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "the command probe for a command-capable seat",
+   "body_sha256": "1eceedaaceeb7b7f60d38ffed4f92b1cfcdc83b27c75555b01deddce00cd3954"
+  },
+  "302": {
+   "title": "(302) The C# baseline benchmark children never build concurrently",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "the acceptance suite run by dotnet test, locally and in CI",
+   "body_sha256": "b692b01decd0f80896098cc36b0e4f7c7785e88d25b883ee7bcebc93ad15451c"
+  },
+  "304": {
+   "title": "(304) The two card-214 readiness tests pass without the thread-pool floor on the development machine",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "the acceptance suite run by dotnet test on the Windows development machine",
+   "body_sha256": "fcd8009012b1fd1426f504ae4c1ef25747c59f4a807615bd2cb71031ea4cd654"
+  },
+  "305": {
+   "title": "(305) A Codex build seat's commands go through the delete scan",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "tooling",
+   "actor_or_story": "the delete scan, run by the facilitator on a seat's executed commands after the seat's turn, and the record check that requires a scan entry for every seat",
+   "body_sha256": "d831a6a10edb30f8c9ad761932dc1e2b7143de834324591e63fdb6273d26ee8f"
+  },
+  "306": {
+   "title": "(306) The zero-harness-tests diagnostic is capped like the other failure summaries",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "a developer or the benchmark harness reading a result's `diagnostics`",
+   "body_sha256": "de56eb785c25e62895bd28ea4a6b2930885ea1189f5934bf26fd0b82e6c86668"
+  },
+  "307": {
+   "title": "(307) Two overlapping decision runs on one checkout do not fail each other's seat-use history check",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "decider.py's seat-use history check (the run's integrity record)",
+   "body_sha256": "fe04eb88436272680bea7265c39ee1540cb702c86d49d0e8ae90d4d546b33404"
+  },
+  "308": {
+   "title": "(308) The product owner's rulings and the team's replies are recorded where a check can verify them",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Steve, I want each of my rulings, and the team's reply to it, recorded in a repository file that a mechanical check verifies, so that I can see in git what w",
+   "body_sha256": "c4e6b360ff2070c3bdbc87c1834958933f19abcfc55f15265cc3b0c69a9852fd"
+  },
+  "309": {
+   "title": "(309) A reviewer reads a card cold in the format that gives the fewest misreads",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Morgan, I want every card written in the format that a fresh-context reader misreads least, so that I can review a card or its change without reconstructing",
+   "body_sha256": "e09718662721c21c9ec86924f8989eb2e35a8b606f4350a44262e67dbfa15df6"
+  },
+  "310": {
+   "title": "(310) The board keeps moving when one driver's quota runs out, with Muse trialled as a fourth driver",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Steve, I want a fourth driver (Muse) trialled in the rotation, so that when one driver's quota is exhausted the board keeps moving without a nudge from me.",
+   "body_sha256": "d065de1f9a7a100cbbfb3ccfa1582074fbb03bcba30c187ee905530b631777cb"
+  },
+  "311": {
+   "title": "(311) A Decider vote is scored as written and the agile coach flags any deviation at the vote",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Steve, I want the agile coach to flag at the vote any departure from the Decider protocol as written, so that no proposal is scored by interpretation and I d",
+   "body_sha256": "24215261008ee8a4821ed81b9f1c9fd0d28f9ccd92e0df7b7f44323637fe0da8"
+  },
+  "312": {
+   "title": "(312) A Decider record is rejected when its result does not follow from its votes",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Steve, I want a check that fails a Decider record whose result does not follow from its votes under the protocol as written, so that a wrongly passed proposa",
+   "body_sha256": "f16391521505b4a53077e1cf2422f9fee15ad8cee1aa57db0bcc9d3092c36ea5"
+  },
+  "313": {
+   "title": "(313) A decision run that starts as another run ends can be left without a vote lock",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "the vote lock's registration step in decider.py hold_vote_lock, run by two overlapping decision runs",
+   "body_sha256": "7065c93df8938699b5bfb8d2b0ef0d148d1552063ce50b237833b3afac9e068f"
+  },
+  "314": {
+   "title": "(314) A holder's temporary file left by a crashed run is never cleaned up",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "the vote lock's holders directory sweep and release in decider.py hold_vote_lock",
+   "body_sha256": "48a3cd1bdd63e6cc2614997ce7f59e884fec0feb48438e6fd71231b5788342a2"
+  },
+  "315": {
+   "title": "(315) A decision run that cannot register its vote lock starts without any warning",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Contract",
+   "type": "bug",
+   "actor_or_story": "the vote lock's registration step in decider.py hold_vote_lock when the holders directory cannot be created or written",
+   "body_sha256": "4ad3ad45c9ab7e72593e1ab228c1cc8eba8e51be08949a0bbc4fc5dd6e0ae584"
+  },
+  "316": {
+   "title": "(316) The gate runs the changed area's narrow suites and checks each step's failure path",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Morgan, I want the pre-ship gate to run the changed area's narrow test suites and to check each step's failure path, so that the defects a fresh reader would",
+   "body_sha256": "46099233da467288446a4094647449ff86072c8285d6862eae16e637927bdb72"
+  },
+  "317": {
+   "title": "(317) A card that names no consumer value cannot reach Ready",
+   "state": "open",
+   "status": "Draft",
+   "shape": "Story",
+   "type": "tooling",
+   "actor_or_story": "As Steve, I want a card that names no consumer value, or names a mob role as its actor, to be refused before it can be Ready, so that no work is spent on waste",
+   "body_sha256": "d2e4a2c997efc74736553a34ddae433a91193f9574717893cb042c77bd78adff"
+  }
+ }
+}
