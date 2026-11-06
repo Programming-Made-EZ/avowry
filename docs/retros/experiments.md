@@ -427,3 +427,7 @@ Question for Decider at the retro, with fresh seats: how does the coach catch th
 
 ## Process evidence from card 298's ready step (2026-11-06): the probe script's Codex half hung for 18 minutes
 The facilitator's probe script (scratchpad, not in the repo) launched plain `codex exec`, which stalls on this machine (the Store alias and the huge Temp folder, card 297); it hung from 11:26 to 11:44 PST until the facilitator stopped its own three processes by PID (probe python, node wrapper, codex.exe; nothing else was touched). Fix applied: the probe now goes through the machine-local launcher (codex_nostore.py), and the Codex probe then passed in seconds (19:44 UTC). Lesson for the retro: every facilitator tool that starts Codex goes through the launcher and carries a hard timeout; a bounded wait would have caught this in minutes.
+
+## Converted to story issues, 2026-11-06 (product-owner ruling)
+
+The open process items below are now board stories with a persona and Gherkin criteria, to be refined and ranked: the card-format question (card 309), the Muse rotation trial (card 310), the coach protocol-conformance finding (card 311), the tally checker (card 312), and the decision-channel question left by D191/D192 (card 308). Their earlier experiment entries stay as history; the story is the live item.
