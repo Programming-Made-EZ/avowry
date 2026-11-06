@@ -122,6 +122,49 @@ public sealed class CSharpBaselineAcceptance
         Assert.Contains(diagnostics, text => text.Contains("greets_ada", StringComparison.Ordinal));
     }
 
+    // Seam (the green's job): PHRASE_BENCHCS_DOTNET names the executable that runs the generated project's `dotnet test`; absent means `dotnet`.
+    // Feature: A run that executes no harness tests says why
+    //   As a developer on any machine, I want the diagnostic for a verification run that wrote a trx with zero harness tests
+    //   to carry the captured dotnet output, so that the cause of the run not executing is visible instead of a bare label.
+    [Fact]
+    [Trait("Slice", "303")]
+    public async Task zero_harness_tests_diagnostic_carries_the_captured_dotnet_output()
+    {
+        // Given the endpoint task and a stand-in for dotnet that prints a marker and writes a trx with no test results
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteEndpointSuite(workspace.Root, EndpointOutcomes);
+        var reply = WriteReply(workspace.Root, "greetings-endpoint.cs", CorrectEndpointReply);
+        const string marker = "FAKE_DOTNET_OUTPUT_303";
+        var emptyTrx = Path.Combine(workspace.Root, "empty.trx");
+        File.WriteAllText(emptyTrx, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<TestRun xmlns=\"http://microsoft.com/schemas/VisualStudio/TeamTest/2010\"><Results /></TestRun>\n");
+        string fakeDotnet;
+        if (OperatingSystem.IsWindows())
+        {
+            fakeDotnet = Path.Combine(workspace.Root, "fake-dotnet.cmd");
+            File.WriteAllText(fakeDotnet, $"@echo off\r\nif not exist TestResults mkdir TestResults\r\ncopy /y \"{emptyTrx}\" TestResults\\results.trx > nul\r\necho {marker}\r\nexit /b 1\r\n");
+        }
+        else
+        {
+            fakeDotnet = Path.Combine(workspace.Root, "fake-dotnet.sh");
+            File.WriteAllText(fakeDotnet, $"#!/bin/sh\nmkdir -p TestResults\ncp '{emptyTrx}' TestResults/results.trx\necho {marker}\nexit 1\n");
+            File.SetUnixFileMode(fakeDotnet, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        }
+
+        // When the plain C# arm runs that reply with the stand-in as its dotnet
+        var run = await RunWithDotnet(suite, PrintFileCommand(reply), "zero-harness-v1", fakeDotnet);
+
+        // Then the row fails and its first diagnostic is tests_did_not_run: followed by the captured output
+        Assert.True(run.ExitCode == 3, FailureDetail(suite, "zero-harness-v1", run));
+        using var result = ReadResult(suite, "zero-harness-v1");
+        Assert.False(result.RootElement.GetProperty("passed").GetBoolean());
+        var diagnostics = result.RootElement.GetProperty("diagnostics").EnumerateArray().Select(item => item.GetString() ?? "").ToArray();
+        var first = diagnostics.First();
+        Assert.True(first.StartsWith("tests_did_not_run:", StringComparison.Ordinal), FailureDetail(suite, "zero-harness-v1", run));
+        var captured = first["tests_did_not_run:".Length..];
+        Assert.False(string.IsNullOrWhiteSpace(captured), FailureDetail(suite, "zero-harness-v1", run));
+        Assert.Contains(marker, captured, StringComparison.Ordinal);
+    }
+
     [Fact]
     [Trait("Slice", "110")]
     public void committed_outcomes_keep_the_existing_then_kinds()
@@ -872,6 +915,22 @@ public sealed class CSharpBaselineAcceptance
         info.ArgumentList.Add("--private-results");
         info.ArgumentList.Add(Path.Combine(Path.GetDirectoryName(suite)!, "results", "history.jsonl"));
         if (cold) info.ArgumentList.Add("--cold");
+        using var process = Process.Start(info)!;
+        var stdout = await process.StandardOutput.ReadToEndAsync();
+        var stderr = await process.StandardError.ReadToEndAsync();
+        await process.WaitForExitAsync();
+        return (process.ExitCode, stdout, stderr);
+    }
+
+    private static async Task<(int ExitCode, string Stdout, string Stderr)> RunWithDotnet(string suite, string command, string model, string dotnetCommand)
+    {
+        var project = RepoPaths.Find("tools", "Phrase.BenchCs", "Phrase.BenchCs.csproj");
+        var info = new ProcessStartInfo("dotnet") { RedirectStandardOutput = true, RedirectStandardError = true };
+        foreach (var argument in new[] { "run", "--project", project, "--", "run", "--suite", suite, "--model", model, "--model-command", command, "--timeout-ms", "180000" })
+            info.ArgumentList.Add(argument);
+        info.ArgumentList.Add("--private-results");
+        info.ArgumentList.Add(Path.Combine(Path.GetDirectoryName(suite)!, "results", "history.jsonl"));
+        info.Environment["PHRASE_BENCHCS_DOTNET"] = dotnetCommand;
         using var process = Process.Start(info)!;
         var stdout = await process.StandardOutput.ReadToEndAsync();
         var stderr = await process.StandardError.ReadToEndAsync();
