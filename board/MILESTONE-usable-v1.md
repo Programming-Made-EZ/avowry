@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:2ca8e5691b245c02aab5042c8770b71efa333005928e00cb2f1fcaa5d09cf76b -->
+<!-- board-table-sha256:43057af2b0d0c2af5d841c92cba00b7aef5783ae9ac1b3be7a403a5e6a14b8b2 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -112,7 +112,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 90 | 230 The facilitator and seats never write the same checkout at once | Done | none |
 | 91 | 297 A Codex seat on Windows runs shell commands in its sandbox, and the probe proves it | Done | none |
 | 92 | 264 The read-and-modify acceptance test is not flaky | Done | none |
-| 93 | 217 Acceptance tests do not starve the thread pool | Ready | none |
+| 93 | 217 Acceptance tests do not starve the thread pool | Done | none |
 | 94 | 303 The C# baseline endpoint tests pass on the Windows development machine | Ready | none |
 | 95 | 298 A second decision run on the same checkout never votes unprotected | Ready | card 230 (the vote lock) |
 | 96 | 299 A second writer on one checkout is refused across processes | Ready | card 230 (Writers and the vote lock) |
