@@ -1,0 +1,209 @@
+{
+ "window": "rerank-24",
+ "category": "loop-boundary re-rank",
+ "rule": "D148 PM-led re-rank at the boundary after cards 264 and 217; D153 objection window; D145; D171 (cites verbatim, case-sensitive; one re-ask, then the seat replaced); D187 (one condition: only the objecting seat re-asked); Grok disabled (backends-nogrok.json)",
+ "proposed_by": {
+  "role": "product manager",
+  "model": "claude (general-purpose subagent), read-only reply committed by the facilitator",
+  "context": "fresh",
+  "probe_reference": "probe 2026-11-06 04:51 UTC (.mob/records/probes/2026-10-30.jsonl)"
+ },
+ "opened_at": "2026-11-06T05:05:11Z",
+ "proposal": "# Re-rank note 2026-11-06 (24) PROPOSAL: boundary after cards 264 and 217 closed; the local flaky-test bug (304) goes behind the single-writer holes (298, 299) and ahead of the rename\n\n- Status: PROPOSAL, not applied. It needs an objection window (D153, D148) before the facilitator applies it.\n- Why this is not a one-way door: the move is one rank edit on one unranked card. A later re-rank reverses it with the same placement call. Nothing is closed, withdrawn or deleted.\n- Why this is not a standing-rule change: no rule, guard or head-size limit is edited. The head-size guard from re-rank 21 (at most 4 bugs above the first product card) is applied as written.\n- Intent (D183): the board holds only user stories and bugs. A bug goes ahead of product work where it makes a product card's result unsafe or dishonest. Among bugs, the ones that fail every run or break every card's write path go first.\n- Inputs: the card 217 retro and sign-off, issues 304, 303, 298, 299 and 196, the last proposal, and two dry runs of rerank.py (committed in .mob/records/reranks/rerank-24-dryruns.txt).\n- Author: product manager seat, fresh Claude context (read-only reply, committed by the facilitator).\n\n## Before (top of Ready)\n\n94 card 303, 95 card 298, 96 card 299, 97 card 196, 98 card 197, 99 card 266, 100 card 302, 101 card 300, 102 card 301, 103 card 232 and later. Card 304 is unranked.\n\n## After (only moved and first cards)\n\n- 94 card 303 (unchanged, first and the next pull)\n- 95 card 298, 96 card 299 (unchanged)\n- 97 card 304: the two card-214 readiness tests pass without the thread-pool floor\n- 98 card 196 and later: one place lower, same order\n\n## Reasons, on merit\n\n- 303 stays first. It fails on every local full run today and hides real failures; 304 fails only under load and only without the floor.\n- 304 goes after 299, not right after 303. The floor is kept, so the with-floor suite is green apart from the owned F-065 tests. The 304 symptom is masked, and its failure was seen once in two runs. Cards 298 and 299 close live holes in the single-writer rule that every card relies on. Collisions have recurred (index-lock, push races, a swept staged file). A masked flake ranks below an unmasked collision.\n- 304 goes ahead of the rename (196). It is the root cause of why a full local run can still fail without the floor, and D183 treats a flaky test as a bug. The rename is a story whose done check compares test counts, and counts stay trustworthy with the floor in place. Its weaker case is that no open audit FAIL names it alone (F-063 stays with 217, whose Done checks were met literally), so it does not go ahead of 298 and 299.\n- 304's first step: I recommend the diagnosis the sign-off asked for, a trx or thread dump of the two tests, before any fix, and the slice decides. Its done check 1 already requires the cause to be named, including whether it is starvation at all. 304 and 303 both concern the local suite, but neither blocks the other; 304's done check 3 uses 217's checker, which already lists the owned F-065 tests.\n\n## Head-size guard\n\nBugs above the first product card (196): 303, 298, 299, 304, which is 4, the guard as written. The dry-run default (after 303) gives the same count, so the guard does not decide between them; the merits above do. Any further bug needs a reversal first.\n\n## What is NOT changed\n\n- No card is closed, renamed or edited; 304 stays Draft and QA writes its ZOMBIES at ready.\n- The order of 303, 298, 299, 196, 197, 266, 302, 300, 301, 232 and later is unchanged.\n- The head-size guard, the other guards and the experiments log are unchanged.\n- Cards 300 and 301 (Codex-only gaps) stay low. Card 297's machine fix lets Codex run commands but not commit (.git read-only), so Codex still takes no build seat. How Codex work is committed is an open question and not a card.\n\n## Reversals stated\n\n- 304 moves to rank 95 (the dry-run default, right behind 303) if a local full run fails again without the floor on a head that has the floor, or if 303's slice shows its cause is the same as 304's.\n- 304 moves below the rename if the head must drop to 3 bugs, or if 298 or 299 needs a second slice.\n\n## Dry run\n\n`PYTHONPATH=. python scripts/board/rerank.py --after 303 --cards 304` printed 169 lines (no --apply): 304 at rank 95. The proposed command, `--after 299 --cards 304`, printed 167 lines: 304 at rank 97, and every later card shifts down by one.\n\n## Not verified\n\n- GitHub issue states beyond the issue text.\n- The texts of the open audit FAILs.\n\n## Adopted condition (round 1 of the window; this is the text re-asked of one seat, D187 and D145: no new demands)\n\nRound 1: NO OBJECTION from the architect, QA engineer, backend developer, decider and agile coach; OBJECTION from the independent reviewer (audit lens) with one condition: commit one git-contained evidence pack that captures the issue-text snapshots and the exact failing-run artifacts used for the ordering and reversal logic, because key merit claims otherwise rest on external issue state and the proposal cannot be checked from git.\n\nAdopted as: the committed file .mob/records/reranks/rerank-24-evidence.md, generated by the facilitator, holding (1) pointers to and extracts of the failing-run artifacts already committed under card 217 (the two tests that differed between the two no-floor local runs, the three owned failures of the with-floor local lists, the floor decision in run-pairs.json) and (2) the title, state and full body of cards 303, 304, 298, 299 and 196 as `gh issue view` printed them at generation time. The window decides on that pack; the placement is unchanged.\n",
+ "checklist_D158": ".mob/records/reranks/checklist-rerank-24.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [
+  {
+   "from": "independent reviewer (audit lens), round 1 (rr24-auditlens, Copilot)",
+   "adopted_as": "the committed file .mob/records/reranks/rerank-24-evidence.md holds pointers to and extracts of the failing-run artifacts already committed under card 217 and the title, state and full body of cards 303, 304, 298, 299 and 196 as gh printed them at generation time; the window decides on that pack and the placement is unchanged"
+  }
+ ],
+ "replies": [
+  {
+   "seat": "copilot",
+   "context": "rr24cp1-architect",
+   "started_at": "2026-11-06T05:05:11Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: 304 goes after 299, not right after 303.\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 04:51 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T05:05:38.911544Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "architect",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "rr24-qa",
+   "started_at": "2026-11-06T05:06:53Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe move is one rank edit, it is reversible, and the guard count is checked against the dry run. 304 stays Draft, and QA writes its ZOMBIES at ready. Its done check 1 requires diagnosis first, so a fix can't pass while the flake stays unexplained.\n\nCITE: head-size guard from re-rank 21 (at most 4 bugs\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 04:51 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T05:07:21.112188Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-2",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "rr24cp1-dev",
+   "started_at": "2026-11-06T05:09:08Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nCITE: the move is one rank edit on one unranked card.\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1af43-b60a-71b2-abfd-1f7663f5ec2a\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the BACKEND DEVELOPER (fresh context). Your lens: you are the seat that works under these rules every card (red, unit commits with doubles, green, flags, slice limits). Are they workable, unambiguous and fair to the work, and can you comply without gaming them?\n\n\nD171 RE-ASK (your earlier CITE did not match the proposal text below): the match is exact and case-sensitive, character for character, INCLUDING punctuation, backticks and capital letters, and the phrase must come from the PROPOSAL below, not from these instructions. Copy at least 6 consecutive words from the proposal, or use the line form \"line N: w1 w2 w3 w4\" (N is the 1-based line number in the proposal below, w1 to w4 are that line's first four words).\n\nFORMAT (overrides any vote words around this text): this is an objection window, not a vote. Your FIRST line must be exactly NO OBJECTION or exactly OBJECTION (with OBJECTION add one line CONDITION: ...). Do not answer Yes, Support-it or No.\nD171 (in force): after your answer lines, end your reply with exactly one line \"CITE: <point>\". A reply with no matching CITE line does not count.\n\nOBJECTION WINDOW (D153), not a vote: read the proposal below (context: .mob/records/reranks/checklist-rerank-24.md, .mob/records/reranks/rerank-24-dryruns.txt, docs/retros/card-217-2026-11-06.md, docs/decisions/process-and-staffing.md (D148, D153, D171, D187)). Reply on the first line exactly NO OBJECTION or OBJECTION, nothing else on that line; if OBJECTION add exactly one line CONDITION: one fixed condition that would remove it. Under 60 words.\n\n# Re-rank note 2026-11-06 (24) PROPOSAL: boundary after cards 264 and 217 closed; the local flaky-test bug (304) goes behind the single-writer holes (298, 299) and ahead of the rename\n\n- Status: PROPOSAL, not applied. It needs an objection window (D153, D148) before the facilitator applies it.\n- Why this is not a one-way door: the move is one rank edit on one unranked card. A later re-rank reverses it with the same placement call. Nothing is closed, withdrawn or deleted.\n- Why this is not a standing-rule change: no rule, guard or head-size limit is edited. The head-size guard from re-rank 21 (at most 4 bugs above the first product card) is applied as written.\n- Intent (D183): the board holds only user stories and bugs. A bug goes ahead of product work where it makes a product card's result unsafe or dishonest. Among bugs, the ones that fail every run or break every card's write path go first.\n- Inputs: the card 217 retro and sign-off, issues 304, 303, 298, 299 and 196, the last proposal, and two dry runs of rerank.py (committed in .mob/records/reranks/rerank-24-dryruns.txt).\n- Author: product manager seat, fresh Claude context (read-only reply, committed by the facilitator).\n\n## Before (top of Ready)\n\n94 card 303, 95 card 298, 96 card 299, 97 card 196, 98 card 197, 99 card 266, 100 card 302, 101 card 300, 102 card 301, 103 card 232 and later. Card 304 is unranked.\n\n## After (only moved and first cards)\n\n- 94 card 303 (unchanged, first and the next pull)\n- 95 card 298, 96 card 299 (unchanged)\n- 97 card 304: the two card-214 readiness tests pass without the thread-pool floor\n- 98 card 196 and later: one place lower, same order\n\n## Reasons, on merit\n\n- 303 stays first. It fails on every local full run today and hides real failures; 304 fails only under load and only without the floor.\n- 304 goes after 299, not right after 303. The floor is kept, so the with-floor suite is green apart from the owned F-065 tests. The 304 symptom is masked, and its failure was seen once in two runs. Cards 298 and 299 close live holes in the single-writer rule that every card relies on. Collisions have recurred (index-lock, push races, a swept staged file). A masked flake ranks below an unmasked collision.\n- 304 goes ahead of the rename (196). It is the root cause of why a full local run can still fail without the floor, and D183 treats a flaky test as a bug. The rename is a story whose done check compares test counts, and counts stay trustworthy with the floor in place. Its weaker case is that no open audit FAIL names it alone (F-063 stays with 217, whose Done checks were met literally), so it does not go ahead of 298 and 299.\n- 304's first step: I recommend the diagnosis the sign-off asked for, a trx or thread dump of the two tests, before any fix, and the slice decides. Its done check 1 already requires the cause to be named, including whether it is starvation at all. 304 and 303 both concern the local suite, but neither blocks the other; 304's done check 3 uses 217's checker, which already lists the owned F-065 tests.\n\n## Head-size guard\n\nBugs above the first product card (196): 303, 298, 299, 304, which is 4, the guard as written. The dry-run default (after 303) gives the same count, so the guard does not decide between them; the merits above do. Any further bug needs a reversal first.\n\n## What is NOT changed\n\n- No card is closed, renamed or edited; 304 stays Draft and QA writes its ZOMBIES at ready.\n- The order of 303, 298, 299, 196, 197, 266, 302, 300, 301, 232 and later is unchanged.\n- The head-size guard, the other guards and the experiments log are unchanged.\n- Cards 300 and 301 (Codex-only gaps) stay low. Card 297's machine fix lets Codex run commands but not commit (.git read-only), so Codex still takes no build seat. How Codex work is committed is an open question and not a card.\n\n## Reversals stated\n\n- 304 moves to rank 95 (the dry-run default, right behind 303) if a local full run fails again without the floor on a head that has the floor, or if 303's slice shows its cause is the same as 304's.\n- 304 moves below the rename if the head must drop to 3 bugs, or if 298 or 299 needs a second slice.\n\n## Dry run\n\n`PYTHONPATH=. python scripts/board/rerank.py --after 303 --cards 304` printed 169 lines (no --apply): 304 at rank 95. The proposed command, `--after 299 --cards 304`, printed 167 lines: 304 at rank 97, and every later card shifts down by one.\n\n## Not verified\n\n- GitHub issue states beyond the issue text.\n- The texts of the open audit FAILs.\n\nVote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.\n2026-11-06T05:10:17.746494Z ERROR codex_models_manager::manager: failed to refresh available models: timeout waiting for child process to exit\ncodex\nNO OBJECTION\nCITE: the move is one rank edit on one unranked card.\ntokens used\n4,876\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 04:51 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T05:09:37.358728Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "rr24r2rbcp1-auditlens",
+   "started_at": "2026-11-06T05:32:04Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nThe adopted pack closes the auditability gap by preserving issue snapshots and failing-run artifacts in git.\nCITE: commit one git-contained evidence pack that captures\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1af59-134f-7ff1-b2e3-bacef87ac3d8\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the INDEPENDENT REVIEWER WITH THE AUDIT LENS (fresh context; the external auditor is never a mob seat). Your lens: can this be verified from git alone, and does it leave a loophole that lets the team pass while breaking the practice?\n\n\nD171 RE-ASK (your earlier CITE did not match the proposal text below): the match is exact and case-sensitive, character for character, INCLUDING punctuation, backticks and capital letters, and the phrase must come from the PROPOSAL below, not from these instructions. Copy at least 6 consecutive words from the proposal, or use the line form \"line N: w1 w2 w3 w4\" (N is the 1-based line number in the proposal below, w1 to w4 are that line's first four words).\n\nFORMAT (overrides any vote words around this text): this is an objection window, not a vote. Your FIRST line must be exactly NO OBJECTION or exactly OBJECTION (with OBJECTION add one line CONDITION: ...). Do not answer Yes, Support-it or No.\nD171 (in force): after your answer lines, end your reply with exactly one line \"CITE: <point>\". A reply with no matching CITE line does not count.\n\nOBJECTION WINDOW (D153), not a vote: read the proposal below (context: .mob/records/reranks/checklist-rerank-24.md, .mob/records/reranks/rerank-24-evidence.md, .mob/records/reranks/rerank-24-dryruns.txt, docs/decisions/process-and-staffing.md (D171)). Reply on the first line exactly NO OBJECTION or OBJECTION, nothing else on that line; if OBJECTION add exactly one line CONDITION: one fixed condition that would remove it. Under 60 words.\n\n# Re-rank note 2026-11-06 (24) PROPOSAL: boundary after cards 264 and 217 closed; the local flaky-test bug (304) goes behind the single-writer holes (298, 299) and ahead of the rename\n\n- Status: PROPOSAL, not applied. It needs an objection window (D153, D148) before the facilitator applies it.\n- Why this is not a one-way door: the move is one rank edit on one unranked card. A later re-rank reverses it with the same placement call. Nothing is closed, withdrawn or deleted.\n- Why this is not a standing-rule change: no rule, guard or head-size limit is edited. The head-size guard from re-rank 21 (at most 4 bugs above the first product card) is applied as written.\n- Intent (D183): the board holds only user stories and bugs. A bug goes ahead of product work where it makes a product card's result unsafe or dishonest. Among bugs, the ones that fail every run or break every card's write path go first.\n- Inputs: the card 217 retro and sign-off, issues 304, 303, 298, 299 and 196, the last proposal, and two dry runs of rerank.py (committed in .mob/records/reranks/rerank-24-dryruns.txt).\n- Author: product manager seat, fresh Claude context (read-only reply, committed by the facilitator).\n\n## Before (top of Ready)\n\n94 card 303, 95 card 298, 96 card 299, 97 card 196, 98 card 197, 99 card 266, 100 card 302, 101 card 300, 102 card 301, 103 card 232 and later. Card 304 is unranked.\n\n## After (only moved and first cards)\n\n- 94 card 303 (unchanged, first and the next pull)\n- 95 card 298, 96 card 299 (unchanged)\n- 97 card 304: the two card-214 readiness tests pass without the thread-pool floor\n- 98 card 196 and later: one place lower, same order\n\n## Reasons, on merit\n\n- 303 stays first. It fails on every local full run today and hides real failures; 304 fails only under load and only without the floor.\n- 304 goes after 299, not right after 303. The floor is kept, so the with-floor suite is green apart from the owned F-065 tests. The 304 symptom is masked, and its failure was seen once in two runs. Cards 298 and 299 close live holes in the single-writer rule that every card relies on. Collisions have recurred (index-lock, push races, a swept staged file). A masked flake ranks below an unmasked collision.\n- 304 goes ahead of the rename (196). It is the root cause of why a full local run can still fail without the floor, and D183 treats a flaky test as a bug. The rename is a story whose done check compares test counts, and counts stay trustworthy with the floor in place. Its weaker case is that no open audit FAIL names it alone (F-063 stays with 217, whose Done checks were met literally), so it does not go ahead of 298 and 299.\n- 304's first step: I recommend the diagnosis the sign-off asked for, a trx or thread dump of the two tests, before any fix, and the slice decides. Its done check 1 already requires the cause to be named, including whether it is starvation at all. 304 and 303 both concern the local suite, but neither blocks the other; 304's done check 3 uses 217's checker, which already lists the owned F-065 tests.\n\n## Head-size guard\n\nBugs above the first product card (196): 303, 298, 299, 304, which is 4, the guard as written. The dry-run default (after 303) gives the same count, so the guard does not decide between them; the merits above do. Any further bug needs a reversal first.\n\n## What is NOT changed\n\n- No card is closed, renamed or edited; 304 stays Draft and QA writes its ZOMBIES at ready.\n- The order of 303, 298, 299, 196, 197, 266, 302, 300, 301, 232 and later is unchanged.\n- The head-size guard, the other guards and the experiments log are unchanged.\n- Cards 300 and 301 (Codex-only gaps) stay low. Card 297's machine fix lets Codex run commands but not commit (.git read-only), so Codex still takes no build seat. How Codex work is committed is an open question and not a card.\n\n## Reversals stated\n\n- 304 moves to rank 95 (the dry-run default, right behind 303) if a local full run fails again without the floor on a head that has the floor, or if 303's slice shows its cause is the same as 304's.\n- 304 moves below the rename if the head must drop to 3 bugs, or if 298 or 299 needs a second slice.\n\n## Dry run\n\n`PYTHONPATH=. python scripts/board/rerank.py --after 303 --cards 304` printed 169 lines (no --apply): 304 at rank 95. The proposed command, `--after 299 --cards 304`, printed 167 lines: 304 at rank 97, and every later card shifts down by one.\n\n## Not verified\n\n- GitHub issue states beyond the issue text.\n- The texts of the open audit FAILs.\n\n## Adopted condition (round 1 of the window; this is the text re-asked of one seat, D187 and D145: no new demands)\n\nRound 1: NO OBJECTION from the architect, QA engineer, backend developer, decider and agile coach; OBJECTION from the independent reviewer (audit lens) with one condition: commit one git-contained evidence pack that captures the issue-text snapshots and the exact failing-run artifacts used for the ordering and reversal logic, because key merit claims otherwise rest on external issue state and the proposal cannot be checked from git.\n\nAdopted as: the committed file .mob/records/reranks/rerank-24-evidence.md, generated by the facilitator, holding (1) pointers to and extracts of the failing-run artifacts already committed under card 217 (the two tests that differed between the two no-floor local runs, the three owned failures of the with-floor local lists, the floor decision in run-pairs.json) and (2) the title, state and full body of cards 303, 304, 298, 299 and 196 as `gh issue view` printed them at generation time. The window decides on that pack; the placement is unchanged.\n\nVote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.\n2026-11-06T05:33:37.863181Z ERROR codex_models_manager::manager: failed to refresh available models: timeout waiting for child process to exit\ncodex\nNO OBJECTION\nThe adopted pack closes the auditability gap by preserving issue snapshots and failing-run artifacts in git.\nCITE: commit one git-contained evidence pack that captures\ntokens used\n3,091\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 04:51 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T05:32:57.715301Z",
+   "cite_ok": true,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "rr24-decider",
+   "started_at": "2026-11-06T05:13:04Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe change is one reversible rank edit with stated reversal triggers. The proposal rests on dry-run evidence, and 304's first step is a diagnosis before any fix. The head-size guard is applied as written. No seat is missing for sign-off.\n\nCITE: the move is one rank edit on one unranked card\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 04:51 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T05:13:52.639264Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "rr24cp1-coach",
+   "started_at": "2026-11-06T05:15:36Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nCITE: the move is one rank edit on one unranked card.\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1af49-9be8-7e02-87cf-9329e1ce8561\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the AGILE COACH (fresh context). Your lens: is this task force sized to the task, neither missing a perspective nor padded with ceremony?\n\n\nD171 RE-ASK (your earlier CITE did not match the proposal text below): the match is exact and case-sensitive, character for character, INCLUDING punctuation, backticks and capital letters, and the phrase must come from the PROPOSAL below, not from these instructions. Copy at least 6 consecutive words from the proposal, or use the line form \"line N: w1 w2 w3 w4\" (N is the 1-based line number in the proposal below, w1 to w4 are that line's first four words).\n\nFORMAT (overrides any vote words around this text): this is an objection window, not a vote. Your FIRST line must be exactly NO OBJECTION or exactly OBJECTION (with OBJECTION add one line CONDITION: ...). Do not answer Yes, Support-it or No.\nD171 (in force): after your answer lines, end your reply with exactly one line \"CITE: <point>\". A reply with no matching CITE line does not count.\n\nOBJECTION WINDOW (D153), not a vote: read the proposal below (context: .mob/records/reranks/checklist-rerank-24.md, .mob/records/reranks/rerank-24-dryruns.txt, docs/retros/card-217-2026-11-06.md, docs/decisions/process-and-staffing.md (D148, D153, D171, D187)). Reply on the first line exactly NO OBJECTION or OBJECTION, nothing else on that line; if OBJECTION add exactly one line CONDITION: one fixed condition that would remove it. Under 60 words.\n\n# Re-rank note 2026-11-06 (24) PROPOSAL: boundary after cards 264 and 217 closed; the local flaky-test bug (304) goes behind the single-writer holes (298, 299) and ahead of the rename\n\n- Status: PROPOSAL, not applied. It needs an objection window (D153, D148) before the facilitator applies it.\n- Why this is not a one-way door: the move is one rank edit on one unranked card. A later re-rank reverses it with the same placement call. Nothing is closed, withdrawn or deleted.\n- Why this is not a standing-rule change: no rule, guard or head-size limit is edited. The head-size guard from re-rank 21 (at most 4 bugs above the first product card) is applied as written.\n- Intent (D183): the board holds only user stories and bugs. A bug goes ahead of product work where it makes a product card's result unsafe or dishonest. Among bugs, the ones that fail every run or break every card's write path go first.\n- Inputs: the card 217 retro and sign-off, issues 304, 303, 298, 299 and 196, the last proposal, and two dry runs of rerank.py (committed in .mob/records/reranks/rerank-24-dryruns.txt).\n- Author: product manager seat, fresh Claude context (read-only reply, committed by the facilitator).\n\n## Before (top of Ready)\n\n94 card 303, 95 card 298, 96 card 299, 97 card 196, 98 card 197, 99 card 266, 100 card 302, 101 card 300, 102 card 301, 103 card 232 and later. Card 304 is unranked.\n\n## After (only moved and first cards)\n\n- 94 card 303 (unchanged, first and the next pull)\n- 95 card 298, 96 card 299 (unchanged)\n- 97 card 304: the two card-214 readiness tests pass without the thread-pool floor\n- 98 card 196 and later: one place lower, same order\n\n## Reasons, on merit\n\n- 303 stays first. It fails on every local full run today and hides real failures; 304 fails only under load and only without the floor.\n- 304 goes after 299, not right after 303. The floor is kept, so the with-floor suite is green apart from the owned F-065 tests. The 304 symptom is masked, and its failure was seen once in two runs. Cards 298 and 299 close live holes in the single-writer rule that every card relies on. Collisions have recurred (index-lock, push races, a swept staged file). A masked flake ranks below an unmasked collision.\n- 304 goes ahead of the rename (196). It is the root cause of why a full local run can still fail without the floor, and D183 treats a flaky test as a bug. The rename is a story whose done check compares test counts, and counts stay trustworthy with the floor in place. Its weaker case is that no open audit FAIL names it alone (F-063 stays with 217, whose Done checks were met literally), so it does not go ahead of 298 and 299.\n- 304's first step: I recommend the diagnosis the sign-off asked for, a trx or thread dump of the two tests, before any fix, and the slice decides. Its done check 1 already requires the cause to be named, including whether it is starvation at all. 304 and 303 both concern the local suite, but neither blocks the other; 304's done check 3 uses 217's checker, which already lists the owned F-065 tests.\n\n## Head-size guard\n\nBugs above the first product card (196): 303, 298, 299, 304, which is 4, the guard as written. The dry-run default (after 303) gives the same count, so the guard does not decide between them; the merits above do. Any further bug needs a reversal first.\n\n## What is NOT changed\n\n- No card is closed, renamed or edited; 304 stays Draft and QA writes its ZOMBIES at ready.\n- The order of 303, 298, 299, 196, 197, 266, 302, 300, 301, 232 and later is unchanged.\n- The head-size guard, the other guards and the experiments log are unchanged.\n- Cards 300 and 301 (Codex-only gaps) stay low. Card 297's machine fix lets Codex run commands but not commit (.git read-only), so Codex still takes no build seat. How Codex work is committed is an open question and not a card.\n\n## Reversals stated\n\n- 304 moves to rank 95 (the dry-run default, right behind 303) if a local full run fails again without the floor on a head that has the floor, or if 303's slice shows its cause is the same as 304's.\n- 304 moves below the rename if the head must drop to 3 bugs, or if 298 or 299 needs a second slice.\n\n## Dry run\n\n`PYTHONPATH=. python scripts/board/rerank.py --after 303 --cards 304` printed 169 lines (no --apply): 304 at rank 95. The proposed command, `--after 299 --cards 304`, printed 167 lines: 304 at rank 97, and every later card shifts down by one.\n\n## Not verified\n\n- GitHub issue states beyond the issue text.\n- The texts of the open audit FAILs.\n\nVote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.\ncodex\nNO OBJECTION\nCITE: the move is one rank edit on one unranked card.\ntokens used\n2,961\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 04:51 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T05:16:03.339997Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [
+  {
+   "seat": "copilot",
+   "context": "rr24cp1-auditlens",
+   "started_at": "2026-11-06T05:11:01Z",
+   "model": "auto",
+   "raw": "OBJECTION\nCONDITION: Commit one git-contained evidence pack that captures the issue-text snapshots and the exact failing-run artifacts used for this ordering/reversal logic; without that, key merit claims are not independently auditable from git alone and leave a pass-through loophole.\nCITE: the local flaky-test bug (304) goes behind the single-writer holes (298, 299) and ahead of the rename\n\n",
+   "first_line": "OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 04:51 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T05:11:37.572392Z",
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": "OBJECTION",
+   "note": "round 1 OBJECTION with a condition; superseded by the targeted re-ask after the condition was adopted (D187)"
+  },
+  {
+   "seat": "copilot",
+   "context": "rr24r2cp1-auditlens",
+   "started_at": "2026-11-06T05:22:52Z",
+   "model": "auto",
+   "raw": "Checking the referenced records now to confirm whether the adopted condition closes the audit loophole from a git-only perspective.\n\nNO OBJECTION\nAdopted condition appears met: the committed evidence pack includes issue-text snapshots plus failing-run artifacts and pointers, making the ordering and reversal basis auditable from git without relying on live external issue state.\nCITE: the proposal can be checked from git alone.\n\n",
+   "first_line": "Checking the referenced records now to confirm whether the adopted condition closes the audit loophole from a git-only perspective.",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 04:51 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T05:23:30.155926Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  },
+  {
+   "seat": "claude",
+   "context": "rr24r2-auditlens",
+   "started_at": "2026-11-06T05:24:34Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\nCITE: line 3: - Why this is not a one-way door:\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 1,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 04:51 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T05:25:24.238447Z",
+   "cite_ok": false,
+   "round": 2,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-4",
+   "reply": null,
+   "note": "not counted: no window line on its first line, no D171 cite found in the proposal (unread: re-asked once, then the seat replaced), or a later seat for a role already answered"
+  }
+ ],
+ "decision": {
+  "result": "adopted with one condition (the evidence pack): card 304 after card 299 (rank 97), the later cards one place lower in the same order; the command is `rerank.py --after 299 --cards 304`; the head-size guard holds at 4 bugs above the first product card (303, 298, 299, 304). Round 1: five NO OBJECTION, one OBJECTION with a condition (audit lens). Targeted re-ask of the audit lens alone (D187): the first re-ask seat narrated and its second reply's cite named line 3 of the file (the Status line), so it did not match; the seat was replaced and the replacement gave NO OBJECTION with a valid cite. The other five seats' round 1 replies stand and each cited a point the added section does not change.",
+  "window_minutes": "round 1 05:01 to 05:16 UTC; re-ask 05:18 to about 05:30"
+ },
+ "ended_at": "2026-11-06T05:34:32Z"
+}
