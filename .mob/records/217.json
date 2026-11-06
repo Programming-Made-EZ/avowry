@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 217,
+ "title": "Acceptance tests do not starve the thread pool",
+ "process": "card-mode rules run by hand; ranked first at re-rank 23's head; Grok skipped in counted windows; windows 217-taskforce, 217-slice and 217-scope, all adopted (D187: a full re-poll in the slice window for a condition from two seats); D189 in force for the slice (its numeric-claims table); caps 1+1+1 raised to 1+1+2 by window 217-scope; code and tests in this repo a546ebe..b15edf0",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude, a fresh subagent context, product manager (ready); counts run in code on HEAD 082d2f5; .mob/records/217/taskforce-proposal-pm.md",
+   "evidence": "6a0af60"
+  },
+  {
+   "role": "slice",
+   "seat": "Codex ctx-2",
+   "model": "codex gpt-5.6-sol via the Codex CLI, read-only sandbox (commands through cmd.exe), architect: the slice and the scope proposal (two turns); it wrote nothing (replies extracted); .mob/records/217/turn-slice-architect.md",
+   "evidence": "472364f"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, a fresh subagent context, QA engineer, a fresh subagent for each red; reds on main in the one checkout; red 1 a546ebe, red 2 a536e13, red 3 da3c8bd",
+   "evidence": "a546ebe"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, backend developer, a fresh subagent for each green; green 1 197cdb4, green 2 3c5712e, green 3a d6e8f26 and 594074a, green 3b 2bb2f30 and b15edf0; the facilitator ran the whole acceptance project before pushing green 2 and the second with-floor local run as a machine job",
+   "evidence": "197cdb4"
+  },
+  {
+   "role": "ship",
+   "seat": "Copilot ctx-5",
+   "model": "copilot (auto) via the Copilot CLI, independent reviewer, read-only; shell execution was blocked in its session so it ran no command; .mob/records/217/preship-gate.md (SHIP, with the facilitator's notes and checks)",
+   "evidence": "c684ec9"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off, read-only; command scan clean; .mob/records/217/signoff-ctx6.md (SIGNED OFF with conditions)",
+   "evidence": "7a25949"
+  }
+ ],
+ "retro": "docs/retros/card-217-2026-11-06.md",
+ "notes": "Signed off with conditions (.mob/records/217/signoff-ctx6.md). Done checks met as written, not in spirit: 1 the isolated starvation probe (red 1 a546ebe, green 1 197cdb4) is deterministic under the adopted admission protocol and models the pool seam; it does not run the real runner against the real suite; 2 no blocking waits: the shared async ProcessRunner and the guard NoBlockingProcessWaits (red 2 a536e13, green 2 3c5712e) with the seven sites migrated and the interpolation-hole, Process.Start, Thread.Sleep and file I/O gaps stated; 3 run pairs: .mob/records/217/run-pairs.json checked by scripts/check-run-pairs-217.py (red 3 da3c8bd, greens d6e8f26, 594074a, 2bb2f30, b15edf0): local pair on 2bb2f30 316 tests, 313 passed, the same three F-065 tests failed (owners cards 162 and 303); CI pair 315 of 315; the thread-pool floor KEPT with a recorded reason: with it removed, local run 1 failed two card-214 readiness tests while run 2 and both CI attempts passed. The card's observable (a test's result does not depend on the load beside it) is not shown locally; the remaining cause is not identified and is the follow-up card 304. Limits and deviations: the pre-ship gate ran no command (the facilitator ran the checks); green 3a took about 90 minutes against the 60-minute cap and the facilitator wrote a 75-minute cap for 3b without a window; the caps sum 4 above the D175 limit of 3; red 1 and red 2 were pushed with failing CI on main for about an hour; the CI-versus-local split (Bar6 is Pending in CI; CI ran 315 tests against 316 locally; the two C# baseline tests fail only on the Windows development machine); HoldoutTaskConversion.cs stays CRLF; the card text should record the limits (a proposal for the next card-text window). Follow-up cards: 304 (identify and remove the remaining local starvation, then retire the floor), 303, 302, 162."
+}

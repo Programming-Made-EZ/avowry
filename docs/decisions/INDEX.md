@@ -293,3 +293,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D187](process-and-staffing.md#d187) | Card 230 retro pick: trial the targeted re-ask (one condition, no No) in the next three cards' decision windows | process-and-staffing | experiment |
 | [D188](process-and-staffing.md#d188) | Card 297 retro pick: the in-flight command refuses a seat start on a probe older than 50 minutes (F-085), next three cards | process-and-staffing | experiment |
 | [D189](process-and-staffing.md#d189) | Card 264 retro pick: a slice's numbers carry the commands that produced them, next three bug cards | process-and-staffing | experiment |
+| [D190](process-and-staffing.md#d190) | Card 217 retro pick: a pre-ship gate says SHIP only on commands it ran or named, next three cards with a gate | process-and-staffing | experiment |

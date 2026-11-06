@@ -1246,5 +1246,11 @@
     "status": "experiment",
     "title": "Card 264 retro pick: a slice's numbers carry the commands that produced them, next three bug cards",
     "order": 180
+  },
+  "D190": {
+    "area": "process-and-staffing",
+    "status": "experiment",
+    "title": "Card 217 retro pick: a pre-ship gate says SHIP only on commands it ran or named, next three cards with a gate",
+    "order": 181
   }
 }

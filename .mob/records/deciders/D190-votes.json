@@ -1,0 +1,64 @@
+{
+ "decider": "D190",
+ "subject": "the card 217 retro pick: a pre-ship gate says SHIP only on commands it ran or named (trial, next three cards with a gate)",
+ "proposer": "agile coach seat (.mob/records/217/retro-pick-proposal-coach.md), proposed in this form by six of seven voices",
+ "result": "ADOPTED (trial): round 1 Yes 2, Support-it 4; no No; every cite valid; Grok disabled; no independent re-run (round 1 only)",
+ "votes": {
+  "round1": [
+   {
+    "role": "product manager",
+    "seat": "claude",
+    "context": "pk217-pm",
+    "started_at": "2026-11-06T03:10:54Z",
+    "overall": "Yes",
+    "cite": "the product owner can rely on a SHIP",
+    "reply": "Yes\n\nThis implements the standing rules without over-specifying. It has a metric (SHIP gates resting on an unlabelled or blocked command: 1 of 1 on card 217, target 0 over three cards). It has counter-metrics against ceremony and gaming. It is limited to the next three gated cards, and its retro decides keep, revise or drop. It is a two-way door.\n\nIt also supports \"open FAILs stop the line\": a gate with no evidence becomes HOLD, not SHIP. That fits the product owner's accountability rule. The cost is small: one labelled list and one read of it. It adds no seat, no file and no up-front design, so the team returns to product value. The deferred checker and the seat-time cap are rightly left for later.\n\nCITE: the product owner can rely on a SHIP"
+   },
+   {
+    "role": "architect",
+    "seat": "codex",
+    "context": "pk217-architect",
+    "started_at": "2026-11-06T03:12:48Z",
+    "overall": "Support-it",
+    "cite": "every check in a pre-ship gate report is labelled",
+    "reply": "Support-it\n\nThe trial is minimal, reversible, and addresses a demonstrated evidence gap. Labels make review claims auditable without adding a seat or file. Before automation, tighten C1 to require exact command, exit status, and relevant output; otherwise silent-success commands and selectively pasted lines create ambiguity. Also reconcile C2’s “rerun” requirement with “record-only,” and define whether facilitator-run evidence satisfies the gate or replaces its verdict. Those are specification issues, not reasons to block the trial.\n\nCITE: every check in a pre-ship gate report is labelled\n[facilitator: Codex CLI echo trimmed]"
+   },
+   {
+    "role": "QA",
+    "seat": "claude",
+    "context": "pk217-qa",
+    "started_at": "2026-11-06T03:15:30Z",
+    "overall": "Support-it",
+    "cite": "We believe a gate that must label each check cannot say SHIP on air.",
+    "reply": "Support-it\n\nThe rule is testable red first. Replaying the card 217 gate (every command blocked, verdict \"SHIP\") must fail under C2, and a gate with pasted output must pass. The trial is also a cheap two-way door.\n\nTwo gaps remain:\n- The rule and C2 disagree. The PICK says \"all blocked or unlabelled\" means HOLD, while C2 says \"no rerun line for any required command\". A gate with one rerun and five record-only checks could pass either way.\n- Nothing checks that the pasted output lines are real. The facilitator reads labels by eye, and the machine checker is deferred. The card 264 unsupported safety claim would also slip through if it is labelled record-only.\n\nI'd tighten the wording before the first trial gate.\n\nCITE: We believe a gate that must label each check cannot say SHIP on air."
+   },
+   {
+    "role": "backend developer",
+    "seat": "codex",
+    "context": "pk217-dev",
+    "started_at": "2026-11-06T03:19:49Z",
+    "overall": "Support-it",
+    "cite": "every check in a pre-ship gate report",
+    "reply": "Support-it\n\nThe labels are workable, lightweight, and hard to game: every required command gets an explicit evidence state, while blocked environments have a defined fallback. This is fair to backend work because it distinguishes execution evidence from committed records and does not add a seat or artifact. One ambiguity remains: C3 has the facilitator write the verdict while C4 says reviewer independence is unchanged; the trial should clarify that boundary. The time and re-seat counter-metrics make the experiment safely reversible.\n\nCITE: every check in a pre-ship gate report\n[facilitator: Codex CLI echo trimmed]"
+   },
+   {
+    "role": "audit lens",
+    "seat": "claude",
+    "context": "pk217-auditlens",
+    "started_at": "2026-11-06T03:22:09Z",
+    "overall": "Support-it",
+    "cite": "The facilitator's checklist reads the labels before the sign-off seat is briefed",
+    "reply": "Support-it\n\nThe labels are committed in the gate report, so git can show whether each check was labelled. Two loopholes remain.\n\n- **C2 is too weak.** It only blocks SHIP when no required command was rerun. One rerun line plus several \"blocked\" or unlabelled checks still passes. It should require that every required command is rerun, or record-only with the committed file named, or blocked with a HOLD verdict.\n- **A \"rerun\" label can't be checked from git.** Pasted output could be invented. A checker that rejects a gate record with no command output lines is the better fix. It is already on the deferred list, so I'd move it up.\n- **C3 is self-attested.** \"SHIP on facilitator-run output\" rests on the facilitator's own notes.\n\nCITE: The facilitator's checklist reads the labels before the sign-off seat is briefed"
+   },
+   {
+    "role": "decider",
+    "seat": "codex",
+    "context": "pk217-decider",
+    "started_at": "2026-11-06T03:26:37Z",
+    "overall": "Yes",
+    "cite": "every check in a pre-ship gate report is labelled",
+    "reply": "Yes\n\nThe trial is evidence-framed: explicit labels, a falsifiable baseline and target, bounded scope, counter-metrics, and a keep/revise/drop decision. C2–C3 prevent unsupported SHIP while preserving blocked reviewers through transparent facilitator-run evidence. Independence, sign-off, and D175 remain intact; no additional seat is needed. The cited voices cover product, architecture, QA, implementation, audit, facilitation, and Decider judgment.\n\nCITE: every check in a pre-ship gate report is labelled\n[facilitator: Codex CLI echo trimmed]"
+   }
+  ]
+ }
+}
