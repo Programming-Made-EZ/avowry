@@ -1,0 +1,144 @@
+{
+ "window": "217-scope",
+ "category": "mid-card addition",
+ "rule": "D153 objection window and D175 scope window for card 217 (criterion 3 split into 3a and 3b; caps become 1+1+2); D184 premises; D189; D171 (cites verbatim, case-sensitive); D187; Grok disabled (backends-nogrok.json)",
+ "proposed_by": {
+  "role": "architect (slice)",
+  "model": "codex gpt-5.6-sol via the Codex CLI, read-only sandbox (commands through cmd.exe)",
+  "context": "ctx-2",
+  "probe_reference": "probe 2026-11-06 00:18 UTC (.mob/records/probes/2026-10-30.jsonl)"
+ },
+ "opened_at": "2026-11-06T00:31:09Z",
+ "proposal": "# Card 217 scope proposal turn (architect, Codex ctx-2, read-only; commands through cmd.exe; reply extracted)\n\nFacilitator notes (facts): the seat wrote nothing (its reply is the text below, with the Codex CLI banner, prompt echo and a trailing shell-cwd line trimmed). Its Size line says 4809 bytes; the facilitator measured 4808 before that line. Trigger: criterion 3 needs a checker cycle and a CI-evidence cycle (a seat cannot push or wait for CI); the same shape as card 264 criterion 1. The seat ran on HEAD e9f708f. The facilitator holds a with-floor local TRX of the full acceptance project on 3c5712e (316 tests, 313 passed, 3 failed, 11 m 1 s; TEMP and TMP set to a scratch folder) under the scratch run folder, not yet committed.\n\n---\n\n# D175 scope proposal — card 217\n\n## Premises\n\nAll observations are from committed HEAD `e9f708f`.\n\n- `git log --oneline -12` includes `197cdb4 Card 217 green 1`, `3c5712e Card 217 green 2`, and `da3c8bd Card 217 red 3`: criteria 1 and 2 are green and pushed; criterion 3 is red.\n- `type tests\\test_run_pairs_217.py` specifies the checker and record, one head, two runs each for `local` and `ci`, complete outcome JSON, allowed failures with owners, TEMP/TMP, CI identity, and a `removed|kept` floor decision. Its real-record test stays red until the record exists.\n- `type tests\\Phrase.Acceptance.Tests\\Support\\ThreadPoolFloor.cs` shows `[ModuleInitializer]` and worker/I/O minima of 128.\n- `type .github\\workflows\\ci.yml` shows job `test` runs `dotnet test Phrase.sln --no-build -c Release --filter \"Status!=Pending\" --logger \"console;verbosity=normal\"`; no TRX/artifact is uploaded. CI outcomes therefore come from the acceptance-project block of the Test-step console log. A workflow re-run is the second execution at the same head.\n- `type .mob\\records\\217\\turn-slice-architect-r2.md` and the slice decision show criterion 3 capped at one cycle and caps 1+1+1.\n- Local full run on `3c5712e`: unrun by this read-only seat; facilitator output is 316 tests, 313 passed, the three F-065 tests failed, 11 m 1 s.\n- Current CI outcomes/duration: unrun: network is blocked. Planning datum: about 16 minutes per execution.\n- `type .mob\\records\\264\\scope-proposal-architect-r2.md` and its decision establish the precedent: split a long-job criterion into checker and record cycles, approving one extra cycle above D175.\n\n## Amendment\n\nSplit criterion 3, ordered **3a then 3b**.\n\n**3a — checker and experiment.** A seat implements the checker plus strict TRX-to-outcomes and CI-console-to-outcomes extractors. Each emits `{fully-qualified-test: outcome}`, rejects missing/duplicate/malformed names, and records source identity. The CI extractor accepts only the acceptance-project section and checks its count against that section's summary.\n\nEstablish a with-floor baseline first, avoiding another round if removal fails. Reuse the `3c5712e` local run only if its TRX, complete outcomes, TEMP/TMP and exact 40-hex head survive; obtain its second local run and the same-head push CI run plus one facilitator-started workflow re-run. Otherwise obtain missing pair members.\n\nThen remove `ThreadPoolFloor.cs` in the 3a commit and take two consecutive full local runs on that tree (about 22 machine minutes), retaining TRXs and derived lists. Fixture tests pass; the real-record test intentionally stays red because no no-floor CI pair exists yet.\n\n**3b — remote evidence and decision.** The facilitator pushes 3a, waits for its push workflow, starts one workflow re-run at that head, and waits. A seat obtains both attempts with `gh run view <id> --log` or `gh api` job logs and extracts outcomes. Since a re-run retains the run ID, the record/checker also distinguishes `run_attempt` while retaining `github_run_id` and `head_sha`.\n\nThe seat writes `.mob/records/217/run-pairs.json` and four no-floor outcome lists with common head, identities, allowed failures/owners, TEMP/TMP and floor decision. The checker and real-record test pass.\n\nNew caps: criterion 1 one, criterion 2 one, criterion 3 two; sum **4**. The window is asked to approve exactly one cycle above D175's limit of 3 and the staged real-record red between 3a and 3b.\n\n## Failure semantics\n\nA pair is green only if its maps are identical and every non-passing outcome is one of the three F-065 tests owned by card 162 or 303. Never replace a failed execution with a cleaner one.\n\nIf either no-floor pair differs or has a non-allowed failure, restore the floor in a commit and record `kept`, the reason, and the evidence. The card closes on `kept` only when the with-floor local and CI pairs are green. If the baseline was incomplete, obtain a new pair on the restored-floor head; never combine heads.\n\nIf both no-floor pairs are green, record `removed`. Log truncation, missing boundaries, count mismatch, wrong head, or indistinguishable attempts is an evidence defect, not a test result: retain it and rerun only that collection with the reason recorded.\n\n## Reversal triggers and cost\n\nReverse to one criterion-3 cycle only if all four same-head records exist without waiting. If CI logs lack complete outcomes, re-slice to add TRX logging/artifact upload in 3a. Return to findings if owners are stale, inventory changes, or restoration changes outcomes.\n\nNo-floor cost: about **22 local machine minutes**, **32 CI minutes**, and **2 seat cycles**, with no seat waiting. A missing with-floor baseline adds up to **22 local** and **32 CI minutes**; the surviving run can save **11 minutes**. The facilitator owns pushes, CI waits and re-runs.\nSize: 4809 bytes\n",
+ "checklist_D158": ".mob/records/217/checklist-217-scope.md",
+ "polled_roles_note": "F-054: all non-proposer declared roles polled; seats placed by the decision-seat gate (Copilot or Claude, least-recently-used)",
+ "adopted_conditions": [],
+ "replies": [
+  {
+   "seat": "copilot",
+   "context": "w217sccp1-pmready",
+   "started_at": "2026-11-06T00:31:09Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nCITE: Split criterion 3, ordered **3a then 3b**.\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 00:18 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T00:31:34.725536Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "product manager (ready)",
+   "ctx": "ctx-1",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w217sc-qa",
+   "started_at": "2026-11-06T00:32:55Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe rules can each be tested red first. The checker has fixture tests, the real-record test stays red until the record exists, and the rule against swapping in a cleaner execution blocks a bad pass.\n\nCITE: Never replace a failed execution with a cleaner one.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 00:18 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T00:33:35.857805Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "QA engineer",
+   "ctx": "ctx-3",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w217sccp1-dev",
+   "started_at": "2026-11-06T00:35:26Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nCITE: The facilitator owns pushes, CI waits and re-runs.\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1ae49-bcf8-79d2-aff7-ad5848832e3d\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the BACKEND DEVELOPER (fresh context). Your lens: you are the seat that works under these rules every card (red, unit commits with doubles, green, flags, slice limits). Are they workable, unambiguous and fair to the work, and can you comply without gaming them?\n\n\nD171 RE-ASK (your earlier CITE did not match the proposal text below): the match is exact and case-sensitive, character for character, INCLUDING punctuation, backticks and capital letters, and the phrase must come from the PROPOSAL below, not from these instructions. Copy at least 6 consecutive words from the proposal, or use the line form \"line N: w1 w2 w3 w4\" (N is the 1-based line number in the proposal below, w1 to w4 are that line's first four words).\n\nFORMAT (overrides any vote words around this text): this is an objection window, not a vote. Your FIRST line must be exactly NO OBJECTION or exactly OBJECTION (with OBJECTION add one line CONDITION: ...). Do not answer Yes, Support-it or No.\nD171 (in force): after your answer lines, end your reply with exactly one line \"CITE: <point>\". A reply with no matching CITE line does not count.\n\nOBJECTION WINDOW (D153), not a vote: read the proposal below (context: .mob/records/217/checklist-217-scope.md, board/217-*.md, docs/decisions/process-and-staffing.md (D153, D157, D175, D184, D189, D171, D187)). Reply on the first line exactly NO OBJECTION or OBJECTION, nothing else on that line; if OBJECTION add exactly one line CONDITION: one fixed condition that would remove it. Under 60 words.\n\n# Card 217 scope proposal turn (architect, Codex ctx-2, read-only; commands through cmd.exe; reply extracted)\n\nFacilitator notes (facts): the seat wrote nothing (its reply is the text below, with the Codex CLI banner, prompt echo and a trailing shell-cwd line trimmed). Its Size line says 4809 bytes; the facilitator measured 4808 before that line. Trigger: criterion 3 needs a checker cycle and a CI-evidence cycle (a seat cannot push or wait for CI); the same shape as card 264 criterion 1. The seat ran on HEAD e9f708f. The facilitator holds a with-floor local TRX of the full acceptance project on 3c5712e (316 tests, 313 passed, 3 failed, 11 m 1 s; TEMP and TMP set to a scratch folder) under the scratch run folder, not yet committed.\n\n---\n\n# D175 scope proposal — card 217\n\n## Premises\n\nAll observations are from committed HEAD `e9f708f`.\n\n- `git log --oneline -12` includes `197cdb4 Card 217 green 1`, `3c5712e Card 217 green 2`, and `da3c8bd Card 217 red 3`: criteria 1 and 2 are green and pushed; criterion 3 is red.\n- `type tests\\test_run_pairs_217.py` specifies the checker and record, one head, two runs each for `local` and `ci`, complete outcome JSON, allowed failures with owners, TEMP/TMP, CI identity, and a `removed|kept` floor decision. Its real-record test stays red until the record exists.\n- `type tests\\Phrase.Acceptance.Tests\\Support\\ThreadPoolFloor.cs` shows `[ModuleInitializer]` and worker/I/O minima of 128.\n- `type .github\\workflows\\ci.yml` shows job `test` runs `dotnet test Phrase.sln --no-build -c Release --filter \"Status!=Pending\" --logger \"console;verbosity=normal\"`; no TRX/artifact is uploaded. CI outcomes therefore come from the acceptance-project block of the Test-step console log. A workflow re-run is the second execution at the same head.\n- `type .mob\\records\\217\\turn-slice-architect-r2.md` and the slice decision show criterion 3 capped at one cycle and caps 1+1+1.\n- Local full run on `3c5712e`: unrun by this read-only seat; facilitator output is 316 tests, 313 passed, the three F-065 tests failed, 11 m 1 s.\n- Current CI outcomes/duration: unrun: network is blocked. Planning datum: about 16 minutes per execution.\n- `type .mob\\records\\264\\scope-proposal-architect-r2.md` and its decision establish the precedent: split a long-job criterion into checker and record cycles, approving one extra cycle above D175.\n\n## Amendment\n\nSplit criterion 3, ordered **3a then 3b**.\n\n**3a — checker and experiment.** A seat implements the checker plus strict TRX-to-outcomes and CI-console-to-outcomes extractors. Each emits `{fully-qualified-test: outcome}`, rejects missing/duplicate/malformed names, and records source identity. The CI extractor accepts only the acceptance-project section and checks its count against that section's summary.\n\nEstablish a with-floor baseline first, avoiding another round if removal fails. Reuse the `3c5712e` local run only if its TRX, complete outcomes, TEMP/TMP and exact 40-hex head survive; obtain its second local run and the same-head push CI run plus one facilitator-started workflow re-run. Otherwise obtain missing pair members.\n\nThen remove `ThreadPoolFloor.cs` in the 3a commit and take two consecutive full local runs on that tree (about 22 machine minutes), retaining TRXs and derived lists. Fixture tests pass; the real-record test intentionally stays red because no no-floor CI pair exists yet.\n\n**3b — remote evidence and decision.** The facilitator pushes 3a, waits for its push workflow, starts one workflow re-run at that head, and waits. A seat obtains both attempts with `gh run view <id> --log` or `gh api` job logs and extracts outcomes. Since a re-run retains the run ID, the record/checker also distinguishes `run_attempt` while retaining `github_run_id` and `head_sha`.\n\nThe seat writes `.mob/records/217/run-pairs.json` and four no-floor outcome lists with common head, identities, allowed failures/owners, TEMP/TMP and floor decision. The checker and real-record test pass.\n\nNew caps: criterion 1 one, criterion 2 one, criterion 3 two; sum **4**. The window is asked to approve exactly one cycle above D175's limit of 3 and the staged real-record red between 3a and 3b.\n\n## Failure semantics\n\nA pair is green only if its maps are identical and every non-passing outcome is one of the three F-065 tests owned by card 162 or 303. Never replace a failed execution with a cleaner one.\n\nIf either no-floor pair differs or has a non-allowed failure, restore the floor in a commit and record `kept`, the reason, and the evidence. The card closes on `kept` only when the with-floor local and CI pairs are green. If the baseline was incomplete, obtain a new pair on the restored-floor head; never combine heads.\n\nIf both no-floor pairs are green, record `removed`. Log truncation, missing boundaries, count mismatch, wrong head, or indistinguishable attempts is an evidence defect, not a test result: retain it and rerun only that collection with the reason recorded.\n\n## Reversal triggers and cost\n\nReverse to one criterion-3 cycle only if all four same-head records exist without waiting. If CI logs lack complete outcomes, re-slice to add TRX logging/artifact upload in 3a. Return to findings if owners are stale, inventory changes, or restoration changes outcomes.\n\nNo-floor cost: about **22 local machine minutes**, **32 CI minutes**, and **2 seat cycles**, with no seat waiting. A missing with-floor baseline adds up to **22 local** and **32 CI minutes**; the surviving run can save **11 minutes**. The facilitator owns pushes, CI waits and re-runs.\nSize: 4809 bytes\n\nVote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.\ncodex\nNO OBJECTION\nCITE: The facilitator owns pushes, CI waits and re-runs.\ntokens used\n2,661\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 00:18 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T00:36:35.869129Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "backend developer (green)",
+   "ctx": "ctx-4",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "copilot",
+   "context": "w217sccp1-auditlens",
+   "started_at": "2026-11-06T00:37:53Z",
+   "model": "auto",
+   "raw": "NO OBJECTION\nGit-auditable safeguards are concrete: same-head evidence, attempt disambiguation, strict outcome extraction, and explicit no-substitution failure handling.\nCITE: A pair is green only if its maps are identical\n\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 00:18 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T00:38:17.864220Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "independent reviewer (audit lens)",
+   "ctx": "ctx-5",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "claude",
+   "context": "w217sc-decider",
+   "started_at": "2026-11-06T00:39:40Z",
+   "model": "sonnet",
+   "raw": "NO OBJECTION\n\nThe split rests on evidence. Pairs must be identical and share one head, failures must be owned, and a failed run is never replaced. Both outcomes are defined: `removed` or `kept`. The facilitator and a seat cover the push and CI steps, and the staged red is declared.\n\nCITE: Never replace a failed execution with a cleaner one.\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "clean",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 00:18 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T00:40:25.944340Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "decider / sign-off",
+   "ctx": "ctx-6",
+   "reply": "NO OBJECTION",
+   "condition": null
+  },
+  {
+   "seat": "codex",
+   "context": "w217sccp1-coach",
+   "started_at": "2026-11-06T00:42:16Z",
+   "model": "gpt-5.6-sol",
+   "raw": "NO OBJECTION\nCITE: Split criterion 3, ordered **3a then 3b**.\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1ae4f-520a-7f43-9287-a3ee0eb4dda3\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the AGILE COACH (fresh context). Your lens: is this task force sized to the task, neither missing a perspective nor padded with ceremony?\n\n\nD171 RE-ASK (your earlier CITE did not match the proposal text below): the match is exact and case-sensitive, character for character, INCLUDING punctuation, backticks and capital letters, and the phrase must come from the PROPOSAL below, not from these instructions. Copy at least 6 consecutive words from the proposal, or use the line form \"line N: w1 w2 w3 w4\" (N is the 1-based line number in the proposal below, w1 to w4 are that line's first four words).\n\nFORMAT (overrides any vote words around this text): this is an objection window, not a vote. Your FIRST line must be exactly NO OBJECTION or exactly OBJECTION (with OBJECTION add one line CONDITION: ...). Do not answer Yes, Support-it or No.\nD171 (in force): after your answer lines, end your reply with exactly one line \"CITE: <point>\". A reply with no matching CITE line does not count.\n\nOBJECTION WINDOW (D153), not a vote: read the proposal below (context: .mob/records/217/checklist-217-scope.md, board/217-*.md, docs/decisions/process-and-staffing.md (D153, D157, D175, D184, D189, D171, D187)). Reply on the first line exactly NO OBJECTION or OBJECTION, nothing else on that line; if OBJECTION add exactly one line CONDITION: one fixed condition that would remove it. Under 60 words.\n\n# Card 217 scope proposal turn (architect, Codex ctx-2, read-only; commands through cmd.exe; reply extracted)\n\nFacilitator notes (facts): the seat wrote nothing (its reply is the text below, with the Codex CLI banner, prompt echo and a trailing shell-cwd line trimmed). Its Size line says 4809 bytes; the facilitator measured 4808 before that line. Trigger: criterion 3 needs a checker cycle and a CI-evidence cycle (a seat cannot push or wait for CI); the same shape as card 264 criterion 1. The seat ran on HEAD e9f708f. The facilitator holds a with-floor local TRX of the full acceptance project on 3c5712e (316 tests, 313 passed, 3 failed, 11 m 1 s; TEMP and TMP set to a scratch folder) under the scratch run folder, not yet committed.\n\n---\n\n# D175 scope proposal — card 217\n\n## Premises\n\nAll observations are from committed HEAD `e9f708f`.\n\n- `git log --oneline -12` includes `197cdb4 Card 217 green 1`, `3c5712e Card 217 green 2`, and `da3c8bd Card 217 red 3`: criteria 1 and 2 are green and pushed; criterion 3 is red.\n- `type tests\\test_run_pairs_217.py` specifies the checker and record, one head, two runs each for `local` and `ci`, complete outcome JSON, allowed failures with owners, TEMP/TMP, CI identity, and a `removed|kept` floor decision. Its real-record test stays red until the record exists.\n- `type tests\\Phrase.Acceptance.Tests\\Support\\ThreadPoolFloor.cs` shows `[ModuleInitializer]` and worker/I/O minima of 128.\n- `type .github\\workflows\\ci.yml` shows job `test` runs `dotnet test Phrase.sln --no-build -c Release --filter \"Status!=Pending\" --logger \"console;verbosity=normal\"`; no TRX/artifact is uploaded. CI outcomes therefore come from the acceptance-project block of the Test-step console log. A workflow re-run is the second execution at the same head.\n- `type .mob\\records\\217\\turn-slice-architect-r2.md` and the slice decision show criterion 3 capped at one cycle and caps 1+1+1.\n- Local full run on `3c5712e`: unrun by this read-only seat; facilitator output is 316 tests, 313 passed, the three F-065 tests failed, 11 m 1 s.\n- Current CI outcomes/duration: unrun: network is blocked. Planning datum: about 16 minutes per execution.\n- `type .mob\\records\\264\\scope-proposal-architect-r2.md` and its decision establish the precedent: split a long-job criterion into checker and record cycles, approving one extra cycle above D175.\n\n## Amendment\n\nSplit criterion 3, ordered **3a then 3b**.\n\n**3a — checker and experiment.** A seat implements the checker plus strict TRX-to-outcomes and CI-console-to-outcomes extractors. Each emits `{fully-qualified-test: outcome}`, rejects missing/duplicate/malformed names, and records source identity. The CI extractor accepts only the acceptance-project section and checks its count against that section's summary.\n\nEstablish a with-floor baseline first, avoiding another round if removal fails. Reuse the `3c5712e` local run only if its TRX, complete outcomes, TEMP/TMP and exact 40-hex head survive; obtain its second local run and the same-head push CI run plus one facilitator-started workflow re-run. Otherwise obtain missing pair members.\n\nThen remove `ThreadPoolFloor.cs` in the 3a commit and take two consecutive full local runs on that tree (about 22 machine minutes), retaining TRXs and derived lists. Fixture tests pass; the real-record test intentionally stays red because no no-floor CI pair exists yet.\n\n**3b — remote evidence and decision.** The facilitator pushes 3a, waits for its push workflow, starts one workflow re-run at that head, and waits. A seat obtains both attempts with `gh run view <id> --log` or `gh api` job logs and extracts outcomes. Since a re-run retains the run ID, the record/checker also distinguishes `run_attempt` while retaining `github_run_id` and `head_sha`.\n\nThe seat writes `.mob/records/217/run-pairs.json` and four no-floor outcome lists with common head, identities, allowed failures/owners, TEMP/TMP and floor decision. The checker and real-record test pass.\n\nNew caps: criterion 1 one, criterion 2 one, criterion 3 two; sum **4**. The window is asked to approve exactly one cycle above D175's limit of 3 and the staged real-record red between 3a and 3b.\n\n## Failure semantics\n\nA pair is green only if its maps are identical and every non-passing outcome is one of the three F-065 tests owned by card 162 or 303. Never replace a failed execution with a cleaner one.\n\nIf either no-floor pair differs or has a non-allowed failure, restore the floor in a commit and record `kept`, the reason, and the evidence. The card closes on `kept` only when the with-floor local and CI pairs are green. If the baseline was incomplete, obtain a new pair on the restored-floor head; never combine heads.\n\nIf both no-floor pairs are green, record `removed`. Log truncation, missing boundaries, count mismatch, wrong head, or indistinguishable attempts is an evidence defect, not a test result: retain it and rerun only that collection with the reason recorded.\n\n## Reversal triggers and cost\n\nReverse to one criterion-3 cycle only if all four same-head records exist without waiting. If CI logs lack complete outcomes, re-slice to add TRX logging/artifact upload in 3a. Return to findings if owners are stale, inventory changes, or restoration changes outcomes.\n\nNo-floor cost: about **22 local machine minutes**, **32 CI minutes**, and **2 seat cycles**, with no seat waiting. A missing with-floor baseline adds up to **22 local** and **32 CI minutes**; the surviving run can save **11 minutes**. The facilitator owns pushes, CI waits and re-runs.\nSize: 4809 bytes\n\nVote exactly one of: Yes, Support-it, No, or ABSOLUTELY NO. Your reply must start with that vote as its first words. Only if you vote No or ABSOLUTELY NO, add ONE sentence saying what would bring you to yes. Nothing else.\ncodex\nNO OBJECTION\nCITE: Split criterion 3, ordered **3a then 3b**.\ntokens used\n18,073\n",
+   "first_line": "NO OBJECTION",
+   "command_scan": {
+    "status": "unscanned",
+    "commands": 0,
+    "findings": []
+   },
+   "probe_reference": "probe 2026-11-06 00:18 UTC: Copilot and Codex available and decider.py's own probe at 2026-11-06T00:42:41.665124Z",
+   "cite_ok": true,
+   "round": 1,
+   "role": "agile coach",
+   "ctx": "ctx-7",
+   "reply": "NO OBJECTION",
+   "condition": null
+  }
+ ],
+ "attempts": [],
+ "decision": {
+  "result": "adopted as proposed: criterion 3 is split into cycle 3a (a seat: the run-pair checker, strict TRX and CI-console extractors that emit {fully-qualified test: outcome} and reject missing, duplicate or malformed names and record their source identity, the with-floor baseline pair reusing the local run on 3c5712e only if its TRX, complete outcomes, TEMP and TMP and exact head survive, the removal of ThreadPoolFloor.cs, and two consecutive full local runs on the no-floor tree) and cycle 3b (the facilitator pushes 3a, waits for the push workflow and starts one workflow re-run at that head; a seat fetches both attempts with gh, writes run-pairs.json with the four outcome lists, the identities (run id, run_attempt, head sha), the allowed failures with owners and the floor decision); caps become 1+1+2 (sum 4, one above the D175 limit of 3; the window approves the extra cycle and the staged real-record red between 3a and 3b); failure semantics: a pair is green only if its outcome maps are identical and every non-passing outcome is one of the three F-065 tests owned by cards 162 and 303; a failed execution is never replaced; if a no-floor pair differs or has a non-allowed failure the floor is restored in a commit and 'kept' is recorded with the reason and evidence, and the card closes on 'kept' only when the with-floor pairs are green. Round 1: six NO OBJECTION, every cite valid; no re-poll.",
+  "window_minutes": "00:27 to about 00:44 UTC"
+ },
+ "ended_at": "2026-11-06T00:44:13Z"
+}
