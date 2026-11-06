@@ -1,0 +1,19 @@
+# Re-rank 25 dry runs (facilitator, HEAD b7d82ee, 2026-11-06T18:22Z)
+
+## python scripts/board/rerank.py --after 299 --cards 306,304,305 (the proposed order; only moved cards and first cards)
+would: (306) rank None -> 97
+would: (304) rank 97 -> 98
+would: (305) rank None -> 99
+would: (196) rank 98 -> 100
+would: (197) rank 99 -> 101
+would: (266) rank 100 -> 102
+would: (302) rank 101 -> 103
+would: (300) rank 102 -> 104
+
+## python scripts/board/rerank.py --after 303 --cards 306,305 (default placement, for comparison; 303 is closed so the anchor is not valid if rejected)
+would: (306) rank None -> 96
+would: (305) rank None -> 97
+would: (299) rank 96 -> 98
+would: (304) rank 97 -> 99
+would: (196) rank 98 -> 100
+would: (197) rank 99 -> 101
