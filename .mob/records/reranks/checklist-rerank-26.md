@@ -10,3 +10,7 @@
 ## Revision 2 (after the product owner's value rule arrived, 2026-11-06)
 - The window started on the first proposal was stopped by its own process ids (run_window.py and its decider child, killed as a tree) before any seat replied; no vote of it counts.
 - The new proposal is .mob/records/reranks/2026-11-06-26-r2.md (verdicts from three fresh read-only seats merged by the facilitator; the order revised for them); the verdicts are the sections of the note; its dry run is rerank-26-dryruns-r2.txt. Same six voters, a full poll (the proposal changed in substance). Inbox read at this boundary: the value-rule entry, acknowledged after the window passes.
+
+## Revision 3 (round 2 of the window)
+- Round 1 on revision 2 (tag w26b): architect, developer, decider, agile coach NO OBJECTION; QA OBJECTION (red-first checks for invalid actors, missing consumer value, head-size excess, closure or edit failures); audit lens OBJECTION (a git-tracked script and artifact mapping the snapshot to every closure, edit and rank move). Strict reading: an unresolved objection fails, so both conditions are adopted in revision 3 (.mob/records/reranks/2026-11-06-26-r3.md) and, as they came from two seats, all six are re-polled (D187).
+- The script and the artifact are preconditions of the apply step; they are built test-first after the window passes, before anything is closed.
