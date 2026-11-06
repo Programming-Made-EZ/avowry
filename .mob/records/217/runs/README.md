@@ -27,3 +27,20 @@ The three failures in both runs are the F-065 tests: `UsableV1.Bar6_a_model_that
 (owner card 162), `CSharpBaselineAcceptance.endpoint_reply_fails_when_response_record_or_status_are_wrong` and
 `CSharpBaselineAcceptance.endpoint_reply_passes_when_response_record_and_status_match` (owner card 303). The two lists are
 identical.
+
+## Without the thread-pool floor (commit A, after cycle 3a removed `ThreadPoolFloor.cs`)
+
+Head `d6e8f262f5f2a226d1569422e42d29f64c490efa` (commit A, clean tracked tree; unrelated untracked files only). Windows 11 Pro
+10.0.26300, dotnet 10.0.403, `dotnet build tests/Phrase.Acceptance.Tests` once, then
+`dotnet test tests/Phrase.Acceptance.Tests --no-build --results-directory <TEMP>/trx --logger "trx;LogFileName=nofloorN.trx"`
+twice, consecutively, cwd `C:/Users/ringe/projects/phrase-lang`. `TEMP` and `TMP` both
+`C:/Users/ringe/AppData/Local/Temp/claude/green217c`; the TRX files are in `<TEMP>/trx` (outside the repo; they stay there).
+
+| file | TRX | sha256 of the TRX | run (local time, UTC-8) | result |
+| --- | --- | --- | --- | --- |
+| `local-nofloor-1.outcomes.json` | `nofloor1.trx` | `6d39cfc1c1735c41a0cdd0f25aa997a6740d0b80cdf3feab92322df30304c3d9` | 2026-11-05 17:10:13 to 17:21:20 | 316 tests, 311 passed, 5 failed, 11 m 6 s |
+| `local-nofloor-2.outcomes.json` | `nofloor2.trx` | `f2d5c85211263874eb7975c6bd9b4449b81f98870b93903c823359357af846c8` | 2026-11-05 17:21:21 to 17:32:10 | 316 tests, 313 passed, 3 failed, 10 m 48 s |
+
+Run 1 failed the three F-065 tests and also `GeneratedApiBoundAddress.I_readiness_comes_from_the_childs_own_output_before_any_connection_and_not_before_the_gate`
+(20 s) and `GeneratedApiHazards.Guard_two_parallel_starts_get_distinct_base_urls` (32 s). Run 2 failed only the three F-065 tests.
+The two no-floor lists therefore differ (the two extra tests); nothing was fixed or retried.
