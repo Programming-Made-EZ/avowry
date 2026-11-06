@@ -1,0 +1,36 @@
+# Re-rank 24 dry-run evidence (facilitator; generated 2026-11-06T04:58Z at HEAD 50aa080; nothing applied)
+
+## Ranks before (board/MILESTONE-usable-v1.md, the generated table)
+| 93 | 217 Acceptance tests do not starve the thread pool | Done | none |
+| 94 | 303 The C# baseline endpoint tests pass on the Windows development machine | Ready | none |
+| 95 | 298 A second decision run on the same checkout never votes unprotected | Ready | card 230 (the vote loc
+| 96 | 299 A second writer on one checkout is refused across processes | Ready | card 230 (Writers and the vot
+| 97 | 196 Rename the two test projects to Avowry.*.Tests | Ready | 195 |
+| 98 | 197 Rename the solution, CI jobs, scripts and paths to Avowry | Ready | 196 |
+| 99 | 266 Docs and code consistently use the name Avowry | Ready |  |
+| 100 | 302 The C# baseline benchmark children never build concurrently | Ready | card 264 (the launcher) |
+| 101 | 300 A legacy turn on a Codex machine whose shell cannot start is refused before launch | Ready | card 
+| 102 | 301 The command probe cannot be passed by copying its nonce from the prompt | Ready | card 297 (the co
+| 103 | 232 A seat driver never opens a browser or other UI on the shared machine | Ready | none |
+| 104 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready
+
+## Command A (the dry-run default): PYTHONPATH=. python scripts/board/rerank.py --after 303 --cards 304 (first 6 would: lines)
+would: (304) rank None -> 95
+would: (298) rank 95 -> 96
+would: (299) rank 96 -> 97
+would: (196) rank 97 -> 98
+would: (197) rank 98 -> 99
+would: (266) rank 99 -> 100
+(total would: lines: 169)
+
+## Command B (proposed): PYTHONPATH=. python scripts/board/rerank.py --after 299 --cards 304 (first 6 would: lines)
+would: (304) rank None -> 97
+would: (196) rank 97 -> 98
+would: (197) rank 98 -> 99
+would: (266) rank 99 -> 100
+would: (302) rank 100 -> 101
+would: (300) rank 101 -> 102
+(total would: lines: 167)
+
+## Head-size guard arithmetic (re-rank 21: at most 4 bugs above the first product card)
+After command B: 94 card 303, 95 card 298, 96 card 299, 97 card 304 (bugs), 98 card 196 (the rename, the first product card). Bugs above it: 4.
