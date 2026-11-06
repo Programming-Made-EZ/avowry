@@ -1360,3 +1360,11 @@
 {"seat": "copilot", "role": "decider voter", "context": "decider-copilot", "card": "decider", "ts": "2026-11-06T17:20:42.994413Z", "probe_taken_at": "2026-11-06T17:20:42.986730Z"}
 {"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-06T17:23:58.529271Z", "probe_taken_at": "2026-11-06T17:23:58.519376Z"}
 {"seat": "codex", "role": "decider voter", "context": "decider-codex", "card": "decider", "ts": "2026-11-06T17:28:29.509498Z", "probe_taken_at": "2026-11-06T17:28:29.503246Z"}
+{"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-06T18:26:11.785694Z", "probe_taken_at": "2026-11-06T18:26:11.776938Z"}
+{"seat": "copilot", "role": "decider voter", "context": "decider-copilot", "card": "decider", "ts": "2026-11-06T18:29:14.740349Z", "probe_taken_at": "2026-11-06T18:29:14.731620Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-06T18:31:44.468429Z", "probe_taken_at": "2026-11-06T18:31:44.460297Z"}
+{"seat": "codex", "role": "decider voter", "context": "decider-codex", "card": "decider", "ts": "2026-11-06T18:35:24.603446Z", "probe_taken_at": "2026-11-06T18:35:24.596932Z"}
+{"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-06T18:37:16.591013Z", "probe_taken_at": "2026-11-06T18:37:16.567893Z"}
+{"seat": "copilot", "role": "decider voter", "context": "decider-copilot", "card": "decider", "ts": "2026-11-06T18:40:07.080885Z", "probe_taken_at": "2026-11-06T18:40:07.069798Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-06T18:43:48.941748Z", "probe_taken_at": "2026-11-06T18:43:48.935245Z"}
+{"seat": "codex", "role": "decider voter", "context": "decider-codex", "card": "decider", "ts": "2026-11-06T18:47:32.159978Z", "probe_taken_at": "2026-11-06T18:47:32.154386Z"}
