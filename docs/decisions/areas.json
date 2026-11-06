@@ -1252,5 +1252,11 @@
     "status": "experiment",
     "title": "Card 217 retro pick: a pre-ship gate says SHIP only on commands it ran or named, next three cards with a gate",
     "order": 181
+  },
+  "D191": {
+    "area": "process-and-staffing",
+    "status": "experiment",
+    "title": "Card 303 retro pick: adopt the product-owner inbox as the decision channel, next three cards",
+    "order": 182
   }
 }

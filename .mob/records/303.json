@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 303,
+ "title": "The C# baseline endpoint tests pass on the Windows development machine",
+ "process": "card-mode rules run by hand; ranked first at re-rank 24's head; Grok and Muse out of counted windows; window 303-taskforce adopted (round 1 five NO OBJECTION and one OBJECTION with a condition; round 2 a full re-poll of the amended text, six NO OBJECTION; the coach's cite counted on a D171 re-ask) with the product owner's Codex-green-seat decision applied as a polled amendment (D187); D189 and D190 in force; the retro pick is Decider D191",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude, a fresh subagent context, product manager (ready); one allowed run of the failing test; .mob/records/303/taskforce-proposal-pm.md and -r2.md",
+   "evidence": "e8fdc61"
+  },
+  {
+   "role": "slice",
+   "seat": "Codex ctx-2",
+   "model": "codex gpt-5.6-sol via the Codex CLI through the machine-local launcher, read-only; Muse (trial, no reply) and Grok (narration only, card 291) were tried first; it wrote nothing (reply extracted); .mob/records/303/slice-architect.md and driver-trials-2026-11-06.md",
+   "evidence": "41783c9"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, a fresh subagent context, QA engineer; red 1 b9e38ca (machine-independent test against the PHRASE_BENCHCS_DOTNET seam; committed locally and pushed with the green)",
+   "evidence": "b9e38ca"
+  },
+  {
+   "role": "green",
+   "seat": "Codex ctx-4",
+   "model": "codex gpt-5.6-sol via the Codex CLI through the machine-local launcher, backend developer, danger-full-access with codex exec --json: the first real-card Codex build seat (15 commands, no delete; probe records, seam, diagnostic, edit, explicit git add, commit 30c9e84 and push through the pre-push hook); .mob/records/303/green1-codex-run-2026-11-06.md and green-codex-events.jsonl",
+   "evidence": "30c9e84"
+  },
+  {
+   "role": "ship",
+   "seat": "Copilot ctx-5",
+   "model": "copilot (auto) via the Copilot CLI (copilot.cmd from a script), independent reviewer, read-only; its own dotnet test was blocked (Done check 2 record-only; facilitator rerun in the notes); .mob/records/303/preship-gate.md (SHIP)",
+   "evidence": "053bd2d"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off, read-only; command scan clean (15 commands, zero deletes); .mob/records/303/signoff-ctx6.md (SIGNED OFF with conditions)",
+   "evidence": "053bd2d"
+  }
+ ],
+ "retro": "docs/retros/card-303-2026-11-06.md",
+ "notes": "Signed off with conditions (.mob/records/303/signoff-ctx6.md). Done checks met: 1 the cause is the missing Microsoft.AspNetCore.App 8.0.0 (x64) runtime (cause-probe.txt, runtimes.txt, ci-comparison.txt); 2 the two endpoint tests passed locally (2 of 2, 31 s) after the product owner installed the runtime (8.0.33), and failed before it with the host's error now in the diagnostic (the whole project 316 of 316 is a facilitator rerun, record-only for the gate); 3 CI on the green commit (run 42192200361) is green and the Linux per-test outcome lists for the endpoint tests are unchanged (the sign-off diffed one earlier attempt only). Conditions: A recorded here (the 316 pass and the one-attempt Linux diff are record-only for the reviewers); B the uncapped diagnostic is bug card 306. Product-owner machine action: the ASP.NET Core 8 x64 runtime install. First real-card Codex build seat: edit, commit and push worked under the single-writer lock. UsableV1.Bar6 (card 162) is not part of this card."
+}

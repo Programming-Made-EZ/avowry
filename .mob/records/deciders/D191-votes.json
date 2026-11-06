@@ -1,0 +1,132 @@
+{
+ "decider": "D191",
+ "subject": "the card 303 retro pick: adopt the product-owner inbox as the decision channel (experiment, next three cards)",
+ "proposer": "agile coach seat (.mob/records/303/retro-pick-proposal-coach.md, revision 2 after round 1)",
+ "result": "PASSED (experiment) with one unresolved outlier: round 1 Yes 2, Support-it 2, No 2 (QA, audit lens; condition: committed evidence); amended (C1b, C2b) and fully re-polled (D187): round 2 Yes 1, Support-it 4, No 1 (architect, new condition: a mechanical checker); every cite verbatim; Grok disabled",
+ "votes": {
+  "round1": [
+   {
+    "role": "product manager",
+    "seat": "codex",
+    "context": "pk303-pm",
+    "started_at": "2026-11-06T15:56:01Z",
+    "overall": "Yes",
+    "cite": "the product owner's decisions reach the team within a cycle",
+    "cite_verbatim": true,
+    "reply": "Yes\n\nThis is a bounded, measurable experiment tied directly to product value. It preserves task-force governance, board accountability, role boundaries, and full polling for mid-window amendments. The one-cycle acknowledgement target addresses the demonstrated delivery delay without over-specifying implementation. Three cards provide evidence before keep, revise, or drop at retro; counter-metrics expose bypasses and policy churn. It changes no standing rule and leaves open FAIL behavior intact.\n\nCITE: the product owner's decisions reach the team within a cycle"
+   },
+   {
+    "role": "architect",
+    "seat": "claude",
+    "context": "pk303-architect",
+    "started_at": "2026-11-06T16:03:35Z",
+    "overall": "Support-it",
+    "cite": "product-owner decisions to the team within one cycle instead of hours",
+    "cite_verbatim": true,
+    "reply": "Support-it\n\nThe design is minimal. It adds no seat, file type, card or checker, and it fits D183 because the inbox is not filed as issues. The experiment's metric is evidence only, so it can't produce a false-positive block.\n\nTwo tunes:\n- Define \"cycle\" and \"arrival\" concretely. For example, count arrival from the timestamp of the first read, and acknowledge by the next boundary. Without that, \"within one cycle\" can't be checked.\n- The inbox sits outside the repo, so enforcement rests on the facilitator's self-report. Copy each acknowledgement line into the card or closure record, so the retro can verify it from committed files.\n\nC4 is sound. It matches the polled-amendment precedent in D187.\n\nCITE: product-owner decisions to the team within one cycle instead of hours\n"
+   },
+   {
+    "role": "QA engineer",
+    "seat": "codex",
+    "context": "pk303-qa",
+    "started_at": "2026-11-06T16:05:54Z",
+    "overall": "No",
+    "cite": "each at the boundary where it was read",
+    "cite_verbatim": true,
+    "reply": "No\n\nThe external mutable file has no committed arrival evidence, cycle identifier, or automated check, so a late, fabricated, or incomplete acknowledgement can still satisfy the metric. C1–C4 name obligations but provide no red-first detector for missed boundary reads, issue misuse, absent records, or quiet mid-window edits. The cited voice and in-progress files are also absent from committed HEAD. I would vote yes if each rule had a failing fixture and a committed checker reconciling immutable arrival/boundary timestamps, acknowledgement destinations, issue creation, and amendment polls.\n\nCITE: each at the boundary where it was read"
+   },
+   {
+    "role": "backend developer",
+    "seat": "claude",
+    "context": "pk303-dev",
+    "started_at": "2026-11-06T16:16:19Z",
+    "overall": "Yes",
+    "cite": "adopt the product-owner inbox file (outside the repo",
+    "cite_verbatim": true,
+    "reply": "Yes\n\nThis rule doesn't touch my red, unit-commit, green, flags or slice-limit workflow. It only changes how the facilitator relays product-owner decisions. C4 helps me most: a rule change mid-window arrives as a polled amendment, not a quiet edit under my feet. I can comply without gaming it, because the acknowledgement is the facilitator's act, not mine.\n\nOne watch item: \"cycle\" in C2 isn't defined, and the metric's count (3 of 3, but \"four\" for the retro input) is loose. Tighten both at the next retro.\n\nCITE: adopt the product-owner inbox file (outside the repo\n"
+   },
+   {
+    "role": "independent reviewer (audit lens)",
+    "seat": "codex",
+    "context": "pk303-auditlens",
+    "started_at": "2026-11-06T16:17:54Z",
+    "overall": "No",
+    "cite": "every entry is acknowledged inside the cycle it arrived in.",
+    "cite_verbatim": true,
+    "reply": "No\n\nThe channel, arrival time, acknowledgement, and UTC timestamp all live outside the repository, so neither C1/C2 compliance nor the metric can be verified from git. The cited retro voices and in-progress record are also absent from committed HEAD. This leaves a decisive loophole: entries can be omitted, backdated, or acknowledged after the cycle while the committed retro still claims 100%. I would vote yes if each inbox arrival and acknowledgement were append-only committed evidence with card/cycle identifiers and timestamps, while sensitive content could remain external.\n\nCITE: every entry is acknowledged inside the cycle it arrived in."
+   },
+   {
+    "role": "decider",
+    "seat": "claude",
+    "context": "pk303-decider",
+    "started_at": "2026-11-06T16:30:52Z",
+    "overall": "Support-it",
+    "cite": "gets product-owner decisions to the team within one cycle",
+    "cite_verbatim": true,
+    "reply": "Support-it\n\nThe experiment is cheap, reversible and time-boxed. It also has counter-metrics and a named keep, revise or drop decision at the card 3 retro, so the decision will rest on evidence.\n\nTwo weaknesses to tune:\n- The metric measures the facilitator's compliance with their own rule, with no independent check. The product owner should confirm receipt, or the entry timestamps should be auditable.\n- The baseline is anecdotal (\"hours\"). Record the arrival-to-delivery time for the earlier incident so \"within one cycle\" can be compared with something.\n\nSeats look sufficient: the Decider signs off, and the product owner is the channel's user.\n\nCITE: gets product-owner decisions to the team within one cycle\n"
+   }
+  ],
+  "round2": [
+   {
+    "role": "product manager",
+    "seat": "copilot",
+    "context": "pk303r2-pm",
+    "started_at": "2026-11-06T16:52:33Z",
+    "overall": "Yes",
+    "cite": "the product owner's decisions reach the team within a cycle",
+    "cite_verbatim": true,
+    "reply": "Yes\nThis matches the standing rules: metric-based and bounded, keeps owner decisions in one channel, and records evidence in git so the team can audit arrival and acknowledgement. It preserves role-based context, keeps removals for retro, and does not over-specify before value is proven. The added inbox-log line fixes the earlier no-evidence gap without reopening an unbounded policy debate.\nCITE: the product owner's decisions reach the team within a cycle\n\n"
+   },
+   {
+    "role": "architect",
+    "seat": "codex",
+    "context": "pk303r2-architect",
+    "started_at": "2026-11-06T16:55:49Z",
+    "overall": "No",
+    "cite": "The line is committed in the same boundary's commit",
+    "cite_verbatim": true,
+    "reply": "No\n\nDefining arrival as first read makes the latency metric self-starting and unable to detect delayed or skipped boundary reads. The committed log proves only what the facilitator recorded; without boundary identifiers, source-entry identity, or a checker, omissions and duplicate acknowledgements remain unenforceable.\n\nWhat would bring me to yes: record each boundary and immutable entry identity in git, then mechanically reject missing, duplicate, late, or destination-less acknowledgements.\n\nCITE: The line is committed in the same boundary's commit"
+   },
+   {
+    "role": "QA engineer",
+    "seat": "claude",
+    "context": "pk303r2-qa",
+    "started_at": "2026-11-06T17:04:11Z",
+    "overall": "Support-it",
+    "cite": "adopt the product-owner inbox as the decision channel",
+    "cite_verbatim": true,
+    "reply": "Support-it\n\nThe amendment fixes what made me vote No in round 1. Arrival and acknowledgement now leave committed evidence in `.mob/records/inbox-log.jsonl`. The rule that a missing line counts as unacknowledged catches the omission case. It is also the red check I'd want: an entry the inbox shows as acknowledged but with no log line fails the metric.\n\nOne gap remains. The facilitator writes both `read_at` and `acknowledged_at`, so a backdated or wrong timestamp would pass. There is still no failing-fixture checker, so the log is not yet tested red first. Logging the checker as the named follow-up is acceptable for a three-card trial.\n\nCITE: adopt the product-owner inbox as the decision channel\n"
+   },
+   {
+    "role": "backend developer",
+    "seat": "codex",
+    "context": "pk303r2-dev",
+    "started_at": "2026-11-06T17:06:10Z",
+    "overall": "Support-it",
+    "cite": "Each acknowledgement is also appended, as one line, to the committed file",
+    "cite_verbatim": true,
+    "reply": "Support-it\n\nThe amendment makes the trial workable: “arrival” and “cycle” are defined, acknowledgements become committed evidence, and mid-window changes require a boundary or full poll. The facilitator—not the backend seat—owns the extra write, so it does not distort red/unit/green commits or slice limits. The missing automated checker is acceptable for a three-card experiment because omissions count against the metric and trigger reconsideration. Remaining risk is facilitator-controlled `read_at`, but the rule is explicit enough to follow without gaming.\n\nCITE: Each acknowledgement is also appended, as one line, to the committed file"
+   },
+   {
+    "role": "independent reviewer (audit lens)",
+    "seat": "claude",
+    "context": "pk303r2-auditlens",
+    "started_at": "2026-11-06T17:16:50Z",
+    "overall": "Support-it",
+    "cite": "Each acknowledgement is also appended, as one line, to the committed file",
+    "cite_verbatim": true,
+    "reply": "Support-it\n\nRound 1's objection is mostly met. The committed `.mob/records/inbox-log.jsonl` gives git history acknowledgement-side evidence, and \"a line missing counts as unacknowledged\" closes the cheapest loophole.\n\nOne gap remains: `read_at` is self-declared and defined as arrival. So the metric can never show the hour-plus delivery lag that is the stated baseline. A team that reads the inbox late still passes. The tune is to also log the entry's own file timestamp, or an inbox file hash, so lateness shows up in the log. The checker follow-up is acceptable as logged.\n\nCITE: Each acknowledgement is also appended, as one line, to the committed file\n"
+   },
+   {
+    "role": "decider",
+    "seat": "codex",
+    "context": "pk303r2-decider",
+    "started_at": "2026-11-06T17:18:43Z",
+    "overall": "Support-it",
+    "cite": "The retro of the third card decides keep, revise or drop.",
+    "cite_verbatim": true,
+    "reply": "Support-it\n\nThe amendment adds committed, reviewable acknowledgements, explicit cycle boundaries, destinations, counter-metrics, a three-card scope, and a full re-poll with all necessary seats represented. However, defining “arrival” as the facilitator’s first read means the metric cannot test the stated benefit—reducing elapsed time from the product owner’s submission to team receipt—or compare meaningfully with the hour-plus baseline. The experiment can support adoption for boundary-handling reliability, but its final decision should distinguish that evidence from end-to-end delivery latency.\n\nCITE: The retro of the third card decides keep, revise or drop."
+   }
+  ]
+ }
+}
