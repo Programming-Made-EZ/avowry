@@ -31,8 +31,8 @@
   {
    "role": "ship",
    "seat": "Copilot ctx-5",
-   "model": "copilot (auto) via the Copilot CLI (copilot.cmd from a script), independent reviewer, read-only; its own dotnet test was blocked (Done check 2 record-only; facilitator rerun in the notes); .mob/records/303/preship-gate.md (SHIP)",
-   "evidence": "053bd2d"
+   "model": "copilot (auto) via the Copilot CLI (copilot.cmd from a script), independent reviewer, read-only; its own dotnet test was blocked (Done check 2 record-only; facilitator rerun in the notes); .mob/records/303/preship-gate.md (SHIP); evidence commit 98fc51e is the rerun records the gate reviewed, the gate report itself landed with the sign-off in 053bd2d",
+   "evidence": "98fc51e"
   },
   {
    "role": "signoff",
