@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:c1d856805c3815211a8a3857e3d16a68e3b0ac0c3d528b9b052bc2c96cc06351 -->
+<!-- board-table-sha256:15f17d23e0cc20fdc74267f13e7912953d6b3e585670061fecb9793a3a3f9b07 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -113,7 +113,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 91 | 297 A Codex seat on Windows runs shell commands in its sandbox, and the probe proves it | Done | none |
 | 92 | 264 The read-and-modify acceptance test is not flaky | Done | none |
 | 93 | 217 Acceptance tests do not starve the thread pool | Done | none |
-| 94 | 303 The C# baseline endpoint tests pass on the Windows development machine | Ready | none |
+| 94 | 303 The C# baseline endpoint tests pass on the Windows development machine | Done | none |
 | 95 | 298 A second decision run on the same checkout never votes unprotected | Ready | card 230 (the vote lock) |
 | 96 | 299 A second writer on one checkout is refused across processes | Ready | card 230 (Writers and the vote lock) |
 | 97 | 304 The two card-214 readiness tests pass without the thread-pool floor on the development machine | Ready | card 217 (the shared async runner, the guard and the run-pair record) |
