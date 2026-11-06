@@ -1,0 +1,22 @@
+# Card 297: the removal of the sandbox bypass is reversed for Codex build seats (product owner decision of 2026-11-06)
+
+Date: 2026-11-06. Source: the product owner's inbox decision "Codex build seats run with the sandbox bypass", the answer to the open question left by .mob/records/297/machine-fix-2026-11-06.md. Rode as a second card 297 follow-up, not a new card. Code commit in mob-defaults: e40962c (core/backends.json, tests/test_launch_long_prompt.py), pushed.
+
+## What card 297 had decided, and what is reversed
+
+Card 297 removed the `--dangerously-bypass-approvals-and-sandbox` flag from the Codex build invocation: a command-running Codex seat ran in its declared sandbox mode (workspace-write), "no sandbox is bypassed to make the probe pass". That invariant is reversed for the Codex build seat. The read-only invocation (voting, read-only seats) is unchanged and still read-only.
+
+## Rationale (the product owner's, with the facts that led to it)
+
+Codex's workspace-write sandbox keeps `.git` read-only, and no configuration lifts that: `git add` and `git commit` fail with `Unable to create '.git/index.lock': Permission denied`; `icacls .git` shows a DENY entry for the sandbox principal; `--add-dir <repo>/.git` and `-c sandbox_workspace_write.writable_roots=["<repo>/.git"]` (the key is accepted) do not lift it. The other drivers already have full machine access by deliberate product-owner approval. The decision: Codex build seats may run without the sandbox again so that they can `git add` and `git commit` like the other drivers.
+
+## What was done
+
+- core/backends.json, codex entry: `sandbox_mode` is now `danger-full-access`, passed as `-s {SANDBOX_MODE}` (the declared mode that the command probe shares), instead of `workspace-write`. The literal flag `--dangerously-bypass-approvals-and-sandbox` was not added back: `codex exec` runs with approval never, so `-s danger-full-access` gives the same capability and keeps the declared mode, the probe and the card 297 mode-mismatch refusal consistent. If the product owner wants the literal flag, it is a one-line change. The PowerShell 5.1 launcher and the small TEMP stay (as the decision says).
+- tests/test_launch_long_prompt.py: the pinned codex argv carries `danger-full-access`.
+- Evidence (2026-11-06, Windows 11 Pro 10.0.26300, codex-cli 0.149.1): the real command probe, `facilitator.probe_backend("codex", <core/backends.json codex entry>, ...)`: ok true, `OK: shell started; shell_path=C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe sandbox_mode=danger-full-access`, 16 s. A Codex seat through the launcher in a scratch git repository with a local bare remote: `echo built4 > out4.txt`, `git add out4.txt`, `git commit -m codex_full_access_commit`, `git push origin main`, `git log --oneline -2` all exit 0 (34 s), and the commit is in the remote. 106 tests OK (test_driver_command_probe, test_command_seat_gate, test_command_driver_wiring, test_launch_long_prompt, test_seat_gate, test_decider_launched, test_decider_pin_scrub, test_command_scan_wiring).
+- Not yet done, because it needs a real card: an end-to-end edit, commit and push from a Codex build seat in the mob's own checkout under the single-writer lock, as a seat of a card (the test above ran in a scratch repository). The first card that assigns Codex a build seat is that test.
+
+## One guard does not apply to Codex yet (stated so the decision's "all existing safety guards still apply" is true or known to be false)
+
+The delete scan reads the commands a seat executed from a per-driver command source (core/backends.json `command_source`): `claude`, `copilot` and `muse` have one; `codex`, `grok` and `agy` are `none`. So the scan cannot read a Codex seat's commands, and with full access nothing else stops a delete in a Codex seat. The working agreement already says a non-Claude seat without a command source is "not covered" and its record entry reads `no command source`. Other guards do apply to a Codex seat: the working-agreement rules in the brief, push every commit (the facilitator pushes), the WIP-of-one rule, the single-writer claim, and the facilitator's own read of the diff. A story card was filed for the missing piece (a Codex seat's executed commands, which `codex exec --json` prints as command_execution events, go through the delete scan). Until it lands, or until the product owner says to proceed without the scan, Codex is not assigned a build seat.
