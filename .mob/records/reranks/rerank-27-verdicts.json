@@ -1,0 +1,84 @@
+{
+ "schema": 1,
+ "window": "rerank-27",
+ "valid_consumers": [
+  "product owner",
+  "Morgan",
+  "Dana",
+  "Ari"
+ ],
+ "close": [],
+ "edit_contract": [],
+ "edit_story": [
+  {
+   "issue": 17,
+   "story_line": "As Steve, I want benchmark tasks scored by whether their generated specs pass, so that I can see whether a model produced the requested behavior rather than merely resolvable code, and decide about Avowry on honest numbers."
+  },
+  {
+   "issue": 24,
+   "story_line": "As Ari, I want the vocabulary to grow from recurring patterns mined from real codebases and LLM task logs, so that the keywords I find remove work I would otherwise write by hand, in fewer tokens."
+  },
+  {
+   "issue": 27,
+   "story_line": "As Steve, I want benchmark tasks that measure the work each keyword removes and whether a cold model finds the right keyword, so that I can judge catalogue coverage by useful task outcomes instead of keyword count."
+  },
+  {
+   "issue": 60,
+   "story_line": "As Steve, I want benchmark tasks that require parallel collection, bounded concurrency, publication and timeout or cancellation, so that I can see whether there is recurring demand and whether named keywords reduce agent work before I direct the language to grow them."
+  },
+  {
+   "issue": 81,
+   "story_line": "As Steve, I want development benchmark tasks that ask for a stored-record outcome and a published-event outcome, run under today's grammar, so that I can see whether cold models write specs that state the stored record or the event, or hide behind succeeds, before I approve changing the grammar."
+  },
+  {
+   "issue": 83,
+   "story_line": "As Morgan, I want a generated spec that supplies an in-memory store and an event capture and asserts the stored record and the published event, with the same trace every run, so that I can verify what a program stores and emits from the spec alone, without real infrastructure or flaky results."
+  },
+  {
+   "issue": 117,
+   "story_line": "As Steve, I want the candidate cheaper models run cold in both arms on the development tasks and the holdouts at the pre-registered N, so that I can see the cheapest model that clears the pass bar per arm and decide whether Phrase saves money through cheaper models."
+  },
+  {
+   "issue": 123,
+   "story_line": "As Steve, I want the pre-registered modify and fix tasks run cold in both arms at each codebase size, so that I can compare cost and pass rate as the codebase grows and decide whether Phrase's edge widens at scale."
+  },
+  {
+   "issue": 128,
+   "story_line": "As Steve, I want the two arms grown feature by feature from the same checkpoints by cold models, so that I can compare tokens, attempts and pass rate at each codebase size and decide whether Phrase pays off as a codebase grows."
+  },
+  {
+   "issue": 144,
+   "story_line": "As Steve, I want Copilot's 30 unavailable holdout rows run once its quota is back, under exactly the original rules, so that the holdout verdict I use to judge Avowry has all three models."
+  }
+ ],
+ "edit_unshaped": [],
+ "order": {
+  "after": 313,
+  "first_product_card": 196,
+  "max_bugs_above": 4,
+  "cards": [
+   321,
+   320,
+   322,
+   315,
+   299,
+   307,
+   316,
+   317,
+   305,
+   196,
+   197,
+   312,
+   319,
+   304,
+   266,
+   311,
+   310,
+   308,
+   318,
+   302,
+   300,
+   301
+  ]
+ }
+}
