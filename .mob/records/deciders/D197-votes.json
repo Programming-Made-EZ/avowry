@@ -1,0 +1,140 @@
+{
+ "decider": "D197",
+ "subject": "re-rank 27 (product first, revision 2): process issues closed and moved, the order of product stories and bugs",
+ "result": "ADOPTED",
+ "first_draft_history": "the first draft (2026-11-07-27.md) was withdrawn before it was recorded: round 1 two No votes (files not committed), round 2 Yes 5 and Support-it 1, its independent re-run stopped when the product-first ruling arrived; the first product-first proposal's vote (tag rr27d) was stopped when the next ruling arrived (process improvements are not issues); three of six seats had replied and none counts",
+ "run1": {
+  "architect": [
+   {
+    "tag": "rr27e",
+    "seat": "agy",
+    "vote": "Yes",
+    "cite": "The head has one bug above the first product story",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nThe record, checker constraints, and experiment log entries committed at `c45791d` are sound, minimal, and mechanically enforceable without false positives:\n\n- [`rerank-27-verdicts.json`](file:///C:/home/<user>) satisfies all [`validate()`](file:///C:/home/<user>) invariants against [`rerank-27-open-issues.json`](file:///C:/home/<user>): the 12 closed process issues (`305`–`322`) are disjoint from the 104-card rank order, the 10 re-pointed Riley stories name valid consumer actors with expli"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "rr27e",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "The note and its artifacts are committed on main",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\n\nThe order is testable: the dry run reports each rank change, and the head-size guard of 4 bugs is met with a single bug above the first product story. Reversal is one `rerank.py` call.\n\nOne gap: the risk line on card 299 is a manual `gh issue edit` step made after the vote, and the apply script has no \"risk line\" operation. Nothing red-first checks that the line was written before 299 sits above product work. A check that fails if a bug above the first product story lacks a \"Risk:\" l"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "rr27e",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "Product comes first. Product stories (a consumer actor, product value) rank above process, tooling and mob-internal cards.",
+    "cite_verbatim": false,
+    "reply_head": "Support-it\nThe note matches the working agreement: product stories rank above process/tooling, only bugs with user-data/safety/shipping risk may sit above them, and process work is explicitly not board work. The proposal also preserves the head-size guard and the reversal path, and its closed/converted cards align with the product-owner ruling that process improvements are retro proposals, not issues. It is workable, fair, and reversible without gaming.\nCITE: Product comes first. Product stories"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "rr27e",
+    "seat": "agy",
+    "vote": "Yes",
+    "cite": "then the 94 product cards in their current order",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nVerified from git at commit `c45791d`: `.mob/records/reranks/2026-11-07-27-product-first.md`, `.mob/records/reranks/checklist-rerank-27.md`, `.mob/records/reranks/rerank-27-verdicts.json`, `TEAM_WORKING_AGREEMENT.md`, and `docs/retros/experiments.md` are all committed on `main` and match the proposal claims. The verdict file cleanly validates against `rerank-27-open-issues.json`: all 12 closed process issues are absent from the 104-card rank order and recorded in `docs/retros/experiments.md"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "rr27e",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "the at-risk bug 299 first, then the product stories in their current order",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nThe decision rests on evidence. Card 299 is the only bug placed above product work, and its harm is cited: committed work was lost twice, in card 230 (the card 290 proposal was overwritten, and a push failed on 2026-11-04). The head-size guard holds, with one bug against a limit of four. The change is reversible with one `rerank.py` call using the Before order. Every seat the decision needs has voted: the product manager classified the cards, and the product owner's two rulings (product fir"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "rr27e",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "Only bugs that put user data, safety or the team's ability to ship at risk may sit above them",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\nThis note keeps the board product-first, preserves the bug guard, and makes the risk-based exception explicit. It recognizes that only 299 and 305 meet the stated bug rule, keeps product work ahead of process/tooling, and folds process cards into the product stories they serve. It also records the product-owner ruling and makes the head-size and reversal conditions clear, reducing churn without changing the board’s live scope. It is appropriately scoped and not padded.\nCITE: Only bugs"
+   }
+  ]
+ },
+ "run1_cite_reask": {
+  "dev": {
+   "tag": "rr27f",
+   "seat": "agy",
+   "vote": "Yes",
+   "cite": "the board holds only product stories and product bugs",
+   "cite_verbatim": true,
+   "reply_head": "Yes\n\nPulling bug 299 first stops concurrent writers from overwriting committed red, unit, and green work on the shared checkout, directly protecting trunk-based TDD cycles. Ranking the 94 product stories next (starting with 196) while closing the twelve process issues as `not-card` and moving them to `docs/retros/experiments.md` (with adopted trials D193 and D196 and ruling 320 applied in `TEAM_WORKING_AGREEMENT.md`) keeps the rules unambiguous, workable, and fair without forcing developers to g"
+  }
+ },
+ "independent_rerun": {
+  "architect": [
+   {
+    "tag": "rr27g",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "the at-risk bug 299 first, then the product stories",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nThe design is sound and minimal. It is one `rerank.py` call, and the same call with the Before order reverses it. The head holds one bug, 299, against a guard of four, and that bug has evidenced harm (committed work lost twice). Closing the twelve process cards through the committed script, with their substance moved to `experiments.md`, matches the product owner's ruling. The artifact (12 closures, 10 Riley re-points, 104 cards) is validated by the dry run.\n\nOne weakness is not blocking. T"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "rr27g",
+    "seat": "agy",
+    "vote": "Yes",
+    "cite": "Only bugs that put user data, safety or the team's ability to ship at risk may sit above them",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nVerified on committed HEAD (`c45791d` / `c86c70f`): `rerank-27-verdicts.json` and `rerank-27-open-issues.json` pass all `apply_value_verdicts.py` validation checks (12 open process issues closed with reasons and excluded from the 104-card rank order, 10 Riley story edits with valid consumer actors and `so that` clauses, and only at-risk bug 299 ranked above first product card 196 against the 4-bug cap). Each of the 12 process items moved to `docs/retros/experiments.md` preserves concrete re"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "rr27g",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "The head has one bug above the first product story",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nAs the seat that works these cards, I find the order workable. The head holds one bug (299) against a guard of four. Its risk is stated, evidenced twice and checkable, so I can comply without gaming it. Moving process cards to experiments.md stops me from being asked to treat tooling tweaks as card work. The remaining tooling bugs (315, 307 and the others) sit below the product work, so a stalled vote path won't block a story. If one does, the proposal's reversal conditions let it move up. "
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "rr27g",
+    "seat": "agy",
+    "vote": "Yes",
+    "cite": "The head has one bug above the first product story",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nVerified from git (`c45791d` and `c86c70f`): `.mob/records/reranks/2026-11-07-27-product-first.md`, `checklist-rerank-27.md`, `rerank-27-verdicts.json`, `rerank-27-open-issues.json`, `docs/retros/experiments.md`, and `TEAM_WORKING_AGREEMENT.md` are all committed on `main`. The 12 process issues (305, 308, 310, 311, 312, 316, 317, 318, 319, 320, 321, 322) are closed in `rerank-27-verdicts.json`, omitted from the 104-card rank order, and recorded in `docs/retros/experiments.md` (with 316, 320"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "rr27g",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "the at-risk bug 299 first, then the product stories",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nThe decision rests on evidence. Card 299 has two cited recurrences (card 230: the card 290 proposal overwritten, and the failed push on 2026-11-04). It is the only bug above product work, and the head-size guard of 4 holds. The classification explains why each other bug ranks below product work. The reversal conditions are stated, and a rank edit is one `rerank.py` call. The product owner's ruling is applied, with the substance of the converted process cards kept in experiments.md. The prod"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "rr27g",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "Order the open board so product stories come first",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\nThis is well-scoped, product-first, and consistent with the working agreement’s Value and Product-first rules. It reduces ceremony by treating process work as retro/experiment items rather than board cards, and it keeps only the proven at-risk bugs above product work. I support the intent and the head-size guard, though the proposal still carries a few not-fully-verified judgments (for example some old blank-Type assignments and fold-ins), so I would not treat it as a full endorsement"
+   }
+  ]
+ }
+}

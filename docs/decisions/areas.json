@@ -1288,5 +1288,11 @@
     "status": "adopted",
     "title": "Card 313 retro pick: the cite check stops costing rounds on format (three-card trial; story 322)",
     "order": 187
+  },
+  "D197": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Re-rank 27: product first; process improvements moved off the board; the order of product stories and bugs",
+    "order": 188
   }
 }
