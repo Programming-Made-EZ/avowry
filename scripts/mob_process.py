@@ -518,10 +518,15 @@ def check_repeat_evidence(root):
     return [f"repeat-evidence: {line}" for line in lines] or [f"repeat-evidence: checker exited {result.returncode} with no findings"]
 
 
+def closed_card_numbers(issues):
+    """Closed card issues that need a retro Cards entry: a card issue closed as not planned carries not-card, as check_records already treats it."""
+    return {card_number(i) for i in issues if "card" in labels(i) and "not-card" not in labels(i) and card_number(i)}
+
+
 def run_check(root, issues, git=None, skip_regeneration=False):
     git = git or (lambda *args: git_command(root, *args))
     legacy = json.loads((root / ".mob/records/LEGACY.json").read_text(encoding="utf-8"))["cards"]
-    closed_cards = {card_number(i) for i in issues if "card" in labels(i) and card_number(i)}
+    closed_cards = closed_card_numbers(issues)
     errors = []
     maximum = max((item["number"] for item in issues), default=0) + 50
     for check in (lambda: check_records(root, issues, git), lambda: check_retros(root, closed_cards | set(legacy), maximum),
