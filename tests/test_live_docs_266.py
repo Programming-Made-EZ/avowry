@@ -14,9 +14,11 @@ import difflib
 import posixpath
 import re
 import subprocess
+import sys
 import tempfile
 import unittest
 import urllib.parse
+from unittest import mock
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -318,10 +320,11 @@ def working_bytes(path):
 
 
 def newest_green_commit():
-    """The newest commit whose subject starts `Card 266 green`, or None (then the working tree is compared)."""
+    """The newest commit whose subject starts `Card 266 green 1` (the card's own green; a later commit such as
+    `Card 266 green record` is not it), or None (then the working tree is compared)."""
     for line in git("log", "--format=%H%x09%s").decode("utf-8").splitlines():
         commit, _, subject = line.partition("\t")
-        if subject.startswith("Card 266 green"):
+        if subject.startswith("Card 266 green 1"):
             return commit
     return None
 
@@ -520,6 +523,49 @@ class GuardScan266(unittest.TestCase):
 
         # Then nothing else changed in either file
         self.assertEqual([], problems)
+
+    def test_byte_rules_read_the_green_commit_not_the_working_tree(self):
+        # Given a scratch clone of the repository in which, after green 1, a legitimate later commit (subject
+        # `Card 266 green record ...`, like the ledger edit 4fcb9ff) edited a scoped sed file, and the working tree
+        # of two more scoped files was edited without a commit
+        green = git("log", "-1", "--format=%H", "--grep=^Card 266 green 1").decode("ascii").strip()
+        self.assertTrue(green, "no commit whose subject starts `Card 266 green 1`")
+        paths = SED_FILES + ("README.md", "VISION.md")
+        want = {path: git("show", f"{green}:{path}") for path in paths}
+        with tempfile.TemporaryDirectory() as scratch:
+            clone = Path(scratch) / "clone"
+            subprocess.run(["git", "clone", "-q", "--shared", "--no-checkout", str(REPO), str(clone)], check=True, capture_output=True)
+            ident = ["-c", "user.name=scratch", "-c", "user.email=scratch@example.invalid", "-c", "commit.gpgsign=false"]
+
+            def in_clone(*args):
+                subprocess.run(["git", *ident, *args], cwd=clone, check=True, capture_output=True)
+
+            in_clone("read-tree", "HEAD")
+            in_clone("checkout", "-q", "HEAD", "--","TEAM_WORKING_AGREEMENT.md", "README.md", "VISION.md")
+            agreement = clone / "TEAM_WORKING_AGREEMENT.md"
+            agreement.write_bytes(agreement.read_bytes() + b"\nA later ledger line.\n")
+            in_clone("add", "TEAM_WORKING_AGREEMENT.md")
+            in_clone("commit", "-q", "--no-verify", "-m", "Card 266 green record (scratch)")
+            for name in ("README.md", "VISION.md"):
+                (clone / name).write_bytes((clone / name).read_bytes() + b"\nan uncommitted later line\n")
+
+            # When the helpers behind the byte rules (T8) and the hand-edit rules (T9) read the files, with the
+            # module pointed at the clone (git() and working_bytes() read the module's REPO)
+            module = sys.modules[__name__]
+            with mock.patch.object(module, "REPO", clone):
+                got = {path: committed_bytes(path) for path in paths}
+                sed_ok = [path for path in SED_FILES if apply_rules(base_bytes(path)) == got[path]]
+                readme_ok = [l for l in got["README.md"].decode("utf-8").split("\n") if l.strip()] == [
+                    l for l in expected_readme(base_bytes("README.md")).split("\n") if l.strip()
+                ]
+                vision_ok = got["VISION.md"] == expected_vision(base_bytes("VISION.md"))
+
+        # Then they still report the green commit's bytes, which satisfy every rule
+        wrong = [path for path in paths if got[path] != want[path]]
+        self.assertEqual([], wrong, f"the helper did not return the green 1 blobs of: {wrong}")
+        self.assertEqual(sorted(SED_FILES), sorted(sed_ok), "the byte rules do not hold for the green 1 blobs")
+        self.assertTrue(readme_ok, "the README hand-edit rule does not hold for the green 1 blob")
+        self.assertTrue(vision_ok, "the VISION hand-edit rule does not hold for the green 1 blob")
 
     def put_back_fails_the_scan(self, path, number):
         """In a scratch copy of the nine files put `Phrase` back on line `number` of `path`; the scan must say so."""

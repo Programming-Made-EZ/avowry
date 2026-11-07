@@ -1,8 +1,12 @@
 diff --git a/README.md b/README.md
-index 54c679e..122d1ad 100644
+index 65029f8..8619447 100644
 --- a/README.md
 +++ b/README.md
-@@ -5,3 +5,2 @@ A programming language for LLMs where **names are descriptions** and **specs are
+@@ -4,7 +4,6 @@ A programming language for LLMs where **names are descriptions** and **specs are
+ 
  The current implementation uses the `avowry` command and still uses the `.avowry` file extension.
+ 
 -Avowry was named Phrase until 2026-10-29; older records keep the old name.
  
+ - **Purpose and north star: [VISION.md](VISION.md)** (a vocabulary of common patterns an LLM reads and writes for free, in any language; both a spec and a library)
+ - Grammar and resolution rules: [docs/GRAMMAR.md](docs/GRAMMAR.md)
