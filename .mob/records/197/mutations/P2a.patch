@@ -1,0 +1,13 @@
+diff --git a/tests/Avowry.Acceptance.Tests/Support/RepoPaths.cs b/tests/Avowry.Acceptance.Tests/Support/RepoPaths.cs
+index e15ea62..a6fa5c1 100644
+--- a/tests/Avowry.Acceptance.Tests/Support/RepoPaths.cs
++++ b/tests/Avowry.Acceptance.Tests/Support/RepoPaths.cs
+@@ -10,7 +10,7 @@ public static class RepoPaths
+     {
+         for (var dir = new DirectoryInfo(AppContext.BaseDirectory); dir is not null; dir = dir.Parent)
+         {
+-            if (File.Exists(Path.Combine(dir.FullName, "Avowry.sln")))
++            if (File.Exists(Path.Combine(dir.FullName, "Phrase.sln")))
+                 return dir.FullName;
+         }
+         throw new DirectoryNotFoundException("Could not find Avowry.sln above the test output directory.");

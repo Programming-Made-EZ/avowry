@@ -5,16 +5,21 @@ live line that names them rewritten and every other byte untouched.
 One class per cycle, so later cycles add a class and never edit an earlier one:
   RenameCycle1     Criterion 1 (Z, E, B): no old name in live lines, the new paths are tracked with exact case,
                    a single put-back is caught, and the rename commit is the old bytes under the rules (byte parity)
+  ListsAndPaths    Criterion 2 (O, M, I): the solution projects, the two test lists, the bench self-check, the five
+                   path-bound python modules and the path strings in scripts, the ADR and the C# helpers survive
 
 The old names are built from fragments below, so this file never contains the literal old names and the scan
 never matches itself.
 
-Run: python -m unittest tests.test_rename_197.RenameCycle1
+Run: python -m unittest tests.test_rename_197
 No test deletes anything: copies live in tempfile.TemporaryDirectory.
 """
 
 import re
+import shlex
+import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -305,6 +310,160 @@ class RenameCycle1(unittest.TestCase):
             [], differences,
             f"{len(differences)} differences between {commit[:7]}^ under the rules and {commit[:7]}:\n  " + "\n  ".join(differences),
         )
+
+
+BASELINE = REPO / ".mob" / "records" / "197" / "baseline"
+_SOURCE_ROW = re.compile(r'\(source: ".*$')
+FIVE_MODULES = (
+    ("tests.test_bench_launcher_scan_264", 6),
+    ("tests.test_outcome_extractors_217", 17),
+    ("tests.test_repeat_evidence", 21),
+    ("tests.test_run_pairs_217", 36),
+    ("tests.test_readme_reference_status", 4),
+)
+
+
+def normalised_test_list(project):
+    """`dotnet test tests/<project> --list-tests` reduced to its 4-space rows, the rows that embed the checkout path
+    rewritten to 'source: <path>)', sorted, duplicates kept."""
+    result = subprocess.run(["dotnet", "test", f"tests/{project}", "--list-tests"], cwd=REPO, capture_output=True, check=True)
+    rows = []
+    for line in result.stdout.decode("utf-8", "replace").splitlines():
+        if line.startswith("    ") and line.strip():
+            rows.append(_SOURCE_ROW.sub("(source: <path>)", line.rstrip()))
+    return sorted(rows)
+
+
+def baseline_rows(file_name):
+    rows = [line.rstrip() for line in (BASELINE / file_name).read_text(encoding="utf-8").splitlines() if line.strip()]
+    return sorted(rows)
+
+
+def multiset_difference(expected, actual, limit=8):
+    from collections import Counter
+
+    missing = list((Counter(expected) - Counter(actual)).elements())
+    extra = list((Counter(actual) - Counter(expected)).elements())
+    return (
+        f"expected {len(expected)} rows, listed {len(actual)}; {len(missing)} missing, {len(extra)} extra.\n"
+        f"missing (first {limit}): {missing[:limit]}\nextra (first {limit}): {extra[:limit]}"
+    )
+
+
+def project_lines(path):
+    return [line.rstrip("\r") for line in path.read_bytes().decode("utf-8-sig").split("\n") if line.startswith("Project(")]
+
+
+def program_paths(path):
+    """Every 'tools/<project>/Program.cs' path named in the file."""
+    return sorted(set(re.findall(r"tools/[\w.]+/Program\.cs", path.read_text(encoding="utf-8"))))
+
+
+class ListsAndPaths(unittest.TestCase):
+    """Criterion 2. ZOMBIES: O one (a single solution, one script, one path each), M many (the 10 projects, the two
+    test lists, the five modules), I interface (the path strings that scripts, the ADR and C# helpers share).
+    Born green: they pass on the finished rename, and each has a put-back under .mob/records/197/mutations/."""
+
+    def test_solution_projects(self):
+        baseline = [apply_rules(line.encode()).decode() for line in project_lines(BASELINE / "project-lines.txt")]
+        actual = project_lines(REPO / NEW_SOLUTION)
+        self.assertEqual(10, len(baseline), "the committed baseline holds the 10 Project lines")
+        self.assertEqual(baseline, actual, f"the {NEW_SOLUTION} Project lines must be the baseline under the rules")
+        tracked = set(tracked_files())
+        paths = [re.search(r'"([^"]+\.csproj)"', line).group(1).replace("\\", "/") for line in actual if ".csproj" in line]
+        self.assertEqual(7, len(paths))
+        self.assertEqual([], [p for p in paths if p not in tracked], "every csproj path in the solution is a tracked file, exact case")
+
+    def test_lists_equal_baseline(self):
+        for project, file_name, count in (
+            ("Avowry.Compiler.Tests", "compiler-tests.list.txt", 284),
+            ("Avowry.Acceptance.Tests", "acceptance-tests.list.txt", 317),
+        ):
+            with self.subTest(project=project):
+                expected = baseline_rows(file_name)
+                actual = normalised_test_list(project)
+                self.assertEqual(count, len(expected), "the committed baseline must hold the stated count")
+                self.assertEqual(count, len(actual), multiset_difference(expected, actual))
+                self.assertEqual(expected, actual, multiset_difference(expected, actual))
+
+    def test_bench_self_check(self):
+        """The bench/README.md self-check command, run exactly in a copy of the tracked files (it is cheap, about 6 s
+        warm, and it writes under bench/results/self-check, so it never runs in the checkout)."""
+        readme = (REPO / "bench" / "README.md").read_text(encoding="utf-8")
+        commands = re.findall(r"^(dotnet run --project tools/Avowry\.Bench -- --self-check)\s*$", readme, re.MULTILINE)
+        self.assertEqual(1, len(commands), "bench/README.md names the self-check command once")
+        with tempfile.TemporaryDirectory() as temp:
+            for rel in tracked_files():
+                source = REPO / rel
+                if source.is_file():
+                    (Path(temp) / rel).parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(source, Path(temp) / rel)
+            build = subprocess.run(["dotnet", "build", "tools/Avowry.Bench", "--nologo", "-v", "q"], cwd=temp, capture_output=True)
+            self.assertEqual(0, build.returncode, build.stdout.decode("utf-8", "replace")[-1500:])
+            dlls = sorted((Path(temp) / "tools" / "Avowry.Bench" / "bin").rglob("Avowry.Bench.dll"))
+            self.assertEqual(1, len(dlls), f"one Avowry.Bench.dll under tools/Avowry.Bench/bin: {dlls}")
+            check = subprocess.run(shlex.split(commands[0]), cwd=temp, capture_output=True)
+            self.assertEqual(
+                0, check.returncode,
+                check.stdout.decode("utf-8", "replace")[-1500:] + check.stderr.decode("utf-8", "replace")[-500:],
+            )
+
+    def test_five_modules(self):
+        for module, count in FIVE_MODULES:
+            with self.subTest(module=module):
+                run = subprocess.run([sys.executable, "-m", "unittest", module], cwd=REPO, capture_output=True)
+                text = run.stderr.decode("utf-8", "replace")
+                self.assertIn(f"Ran {count} tests", text, text[-800:])
+                self.assertEqual(0, run.returncode, text[-800:])
+                self.assertTrue(text.rstrip().endswith("OK"), text[-800:])
+
+    def test_launcher_scan_not_vacuous(self):
+        """TARGETS_BENCH must still match files; if the regex stops matching, bench_start_sites passes vacuously."""
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("scan_264", REPO / "tests" / "test_bench_launcher_scan_264.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        matching = []
+        for path in sorted(module.ACCEPTANCE.rglob("*.cs")):
+            relative = path.relative_to(module.ACCEPTANCE)
+            if relative in (module.LAUNCHER, module.CONTRACT) or "obj" in relative.parts or "bin" in relative.parts:
+                continue
+            if module.TARGETS_BENCH.search(path.read_text(encoding="utf-8")):
+                matching.append(relative.as_posix())
+        self.assertEqual(
+            ["BenchmarkHarnessAcceptance.cs", "PrivateHoldoutResults.cs"], matching,
+            f"TARGETS_BENCH matches {len(matching)} acceptance files outside the launcher and contract "
+            "(2 expected on HEAD): the launcher scan passes vacuously otherwise",
+        )
+
+    def test_triple_agree(self):
+        adr = program_paths(REPO / "docs" / "adr" / "ADR-library-binding-layering.md")
+        script = program_paths(REPO / "scripts" / "check-library-binding-layering.py")
+        tests = program_paths(REPO / "tests" / "test_library_binding_layering.py")
+        expected = ["tools/Avowry.Bench/Program.cs", "tools/Avowry.BenchCs/Program.cs"]
+        self.assertEqual(
+            {"adr": expected, "script": expected, "test": expected},
+            {"adr": adr, "script": script, "test": tests},
+            "the ADR, the layering script and its test must name the same two Bench paths",
+        )
+        tracked = set(tracked_files())
+        self.assertEqual([], [p for p in expected if p not in tracked], "the named Bench paths are tracked files")
+
+    def test_run_llm_check_path(self):
+        text = (REPO / "scripts" / "run-llm-check.py").read_text(encoding="utf-8")
+        found = re.findall(r'repo / "tools" / "([^"]+)" / "([^"]+)"', text)
+        self.assertEqual([("Avowry.Bench", "Avowry.Bench.csproj")], found, "run-llm-check.py names the Bench project once")
+        self.assertIn("tools/Avowry.Bench/Avowry.Bench.csproj", set(tracked_files()))
+
+    def test_probe_matches_solution(self):
+        solutions = [p for p in tracked_files() if p.endswith(".sln") and "/" not in p]
+        self.assertEqual([NEW_SOLUTION], solutions, "exactly one tracked root .sln, and it is Avowry.sln")
+        probes = [p for p in tracked_files() if p.startswith("tests/") and p.endswith("/RepoPaths.cs")]
+        self.assertEqual(1, len(probes), f"one RepoPaths.cs under tests/: {probes}")
+        for rel in (probes[0], "tests/Avowry.Acceptance.Tests/BenchLauncherContract.cs"):
+            named = sorted(set(re.findall(r"[\w.-]+\.sln\b", (REPO / rel).read_text(encoding="utf-8"))))
+            self.assertEqual(solutions, named, f"{rel} names a .sln that is not the tracked root solution")
 
 
 if __name__ == "__main__":

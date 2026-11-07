@@ -1,0 +1,16 @@
+diff --git a/Avowry.sln b/Avowry.sln
+index 42e6155..1071712 100644
+--- a/Avowry.sln
++++ b/Avowry.sln
+@@ -17,9 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avowry.Compiler.Tests", "te
+ EndProject
+ Project("{2150E333-8FDC-42A3-9474-00C04F79EFBC}") = "tools", "tools", "{7960200C-61F1-4C9C-9B54-E9B0CE0D1BD3}"
+ EndProject
+-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avowry.Bench", "tools\Avowry.Bench\Avowry.Bench.csproj", "{16FFAB0C-B9DF-49E3-A15C-48D34A39DBF9}"
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avowry.Bench", "tools\Avowry.Bench\Avowry.Bench.csproj", "{BB7FDE05-8976-4C15-A828-EE882665A980}"
+ EndProject
+-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avowry.BenchCs", "tools\Avowry.BenchCs\Avowry.BenchCs.csproj", "{BB7FDE05-8976-4C15-A828-EE882665A980}"
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avowry.BenchCs", "tools\Avowry.BenchCs\Avowry.BenchCs.csproj", "{16FFAB0C-B9DF-49E3-A15C-48D34A39DBF9}"
+ EndProject
+ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avowry.Cli", "src\Avowry.Cli\Avowry.Cli.csproj", "{66AC61D2-A63C-4185-A821-44714DF8A1FC}"
+ EndProject

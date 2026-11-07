@@ -1,0 +1,13 @@
+diff --git a/scripts/run-llm-check.py b/scripts/run-llm-check.py
+index d605900..d0922ef 100644
+--- a/scripts/run-llm-check.py
++++ b/scripts/run-llm-check.py
+@@ -496,7 +496,7 @@ def run_check(args: argparse.Namespace) -> int:
+             wrapped = write_capture_wrapper(work, command)
+             private_results = work / "private" / "history.jsonl"
+             private_results.parent.mkdir(parents=True, exist_ok=True)
+-            bench_project = repo / "tools" / "Avowry.Bench" / "Avowry.Bench.csproj"
++            bench_project = repo / "tools" / "Phrase.Bench" / "Phrase.Bench.csproj"
+             argv = [
+                 "dotnet",
+                 "run",
