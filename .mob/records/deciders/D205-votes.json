@@ -1,0 +1,141 @@
+{
+ "decider": "D205",
+ "subject": "card 266 task-force declaration, the five decisions, the split into 266 and two new cards, and the card text",
+ "result": "ADOPTED",
+ "run1": {
+  "architect": [
+   {
+    "tag": "d205",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Generated outputs and benchmarks are not renamed.",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe design is sound and minimal. History is left alone, the rewrite is limited to nine live prose files, and the work is split into three cards. The named-exception guard and the byte-parity test (criterion 3) make the checker enforceable without false positives.\n\nTwo refinements for the slice:\n- Pin each guard exception by path plus exact line content, not by line number. Line numbers shift, and the facilitator's HANDOFF lines 53, 74, 83 and 99 would make a number-pinned guard britt"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d205",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Pre-ship gate: rerun criteria 1 and 2 against the pre-change tree",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe red plan holds up. Criteria 1 and 2 are watched failing on HEAD, and the byte-parity test is honestly labelled characterisation. The pre-ship gate also reruns both reds against the pre-change tree. I have three conditions for the build.\n- Scenario [E] needs a real mutation check: put \"Phrase\" back in a scoped file and watch the guard fail naming the file and line.\n- The guard's exceptions must be pinned by path and line, so an exception cannot hide a new violation.\n- The `/tmp/av"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d205",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Nothing committed that a test compares holds the name",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe split is workable from the developer seat. The guard test (cycle 1) and the demo-test edit (cycle 2) each get a real red-first, then a separate green. The byte-parity characterisation is declared as one rather than passed off as a red, so nobody has to game the rules. My concerns are fixable in the slice:\n- The scan count is unreconciled: the card says about 38 lines, while the facilitator counted 77 live markdown lines.\n- Exceptions should be pinned by path and line, as the faci"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d205",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Pre-ship gate: rerun criteria 1 and 2 against the pre-change tree",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe practice is mostly checkable from git. The commit order is visible in `git log`, and the byte-parity characterisation test is committed before the greens. The pre-ship gate reruns the red tests on the pre-change tree. Four loopholes should be closed first:\n\n1. The guard's exceptions must be pinned by path and line, including the README's own \"named Phrase until 2026-10-29\" sentence. The HANDOFF history lines (53, 74, 83, 99) need the same pinning.\n2. The scan must cover \"Phrase\" "
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d205",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "the seat did not trace the hash set beyond finding no README dependency",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe evaluation is framed so the decision will rest on evidence. Each criterion has a red or characterisation plan, the byte-parity check is concrete, and the CI path is stated. Splitting out cards A and B, and letting the Decider close B as waste, keeps the adopt, reshape or reject choice open.\n\nThe seating is adequate for a docs-only card. A cold-reader seat and a fresh Claude sign-off are both included.\n\nThree gaps remain:\n- The 55 versus 77 line count is still unreconciled.\n- The "
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d205",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "so the facilitator re-runs every claim",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe force is mostly sized right. This is a docs-only card, and the proposal covers the perspectives it needs: PM, slice, red-first QA, build, and a cold reader who stands in for Ari. Leaving out UX, security and a domain expert is sound.\n\nThere is some padding. The non-author reviewer, the cold-reader seat and the fresh Claude sign-off overlap, and a full Decider sits on top of them. I'd merge the reviewer and the sign-off into one seat. The three red-green cycles for about 38 lines "
+   }
+  ]
+ },
+ "independent_rerun": {
+  "architect": [
+   {
+    "tag": "d205r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Generated outputs and benchmarks are not renamed.",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe split is sound and minimal. Docs-only scope, three criteria with the right red or characterisation labels, and a guard that fails on a put-back (scenario E). It is enforceable if the exceptions are pinned by path and line, as the facilitator's correction (2) says, and a bare \"Phrase Board\" or \"noun phrase\" allow-list would not be safe.\n\nReservations:\n- Line-pinned exceptions are brittle, so key them on content plus file.\n- The unreconciled count (14 vs 15 files) is harmless.\n- Ch"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d205r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Phrase Board\" and its constants, the PH prefix",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nEvery criterion has a defined red. Criteria 1 and 2 are new-state reds watched failing at HEAD 5069587. Criterion 3 is declared a characterisation, so it isn't passed off as a red. Scenario [E] gives the scan a mutation check.\n\nI'm not voting a plain Yes for these reasons:\n- The exception allow-list must be pinned by path and line, not by phrase alone. Otherwise a stray \"Phrase Board\" can hide a violation.\n- The scan must match `Phrase[A-Za-z]` and `phrase-xxx` and handle names broke"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d205r",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "Generated outputs and benchmarks are not renamed.",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nThe cycles are workable and I can comply without gaming them. Each red is watched failing on the pre-change tree (the guard test, then the demo-test edit). The byte-parity test is declared as a characterisation that passes at HEAD, so no one has to fake a red. Scope is small and the exceptions are named, with HANDOFF's lines to be pinned by path and line, so the guard test is unambiguous. Splitting diagnostics (A) and identifiers (B) into separate cards keeps each slice honest. The main ris"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d205r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Generated outputs and benchmarks are not renamed.",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe practice is verifiable from git. The red-first commit order shows in `git log`. The byte-parity test compares against the base commit. The D202 undo check and the pre-change-tree rerun are both mechanical.\n\nConditions on the slice:\n- Pin every guard exception by path and line, not by phrase alone. A global \"Phrase Board\" allowance would let the old name back in anywhere.\n- Make criterion 1 an exact hit count, not \"about 38\".\n- Reconcile the 55 vs 77 line count and rerun the VISIO"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d205r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "The bar 6 hashes and the benchmark prompt hashes cover",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe framing rests on evidence. Counts were re-run at HEAD by the facilitator. Criteria 1 and 2 must fail on the pre-change tree. A byte-parity characterisation test is committed before the greens. The sign-off seat is covered by a fresh Claude, and a cold-reader seat and a non-author reviewer are included.\n\nReservations, to settle before Ready:\n- The 55 vs 77 live-markdown line count is unreconciled.\n- VISION's \"open phrase\" quote absence in GRAMMAR.md was not rerun.\n- Risk 4 admits "
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d205r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "fresh model reads the README and the demo README",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe force is about right, with two padding concerns. The cold-reader seat is the one perspective that fits a docs card whose consumer is Ari. PM, architect, QA, build, reviewer and sign-off are the usual set. Leaving out UX, security and domain expert is correct for a docs-only card of about 38 lines.\n\n- **Padding:** the full 11-minute dotnet gate and a separate non-author reviewer plus fresh Claude sign-off are heavy for a docs-only card. I'd run the gate only if the docs-pinned tes"
+   }
+  ]
+ }
+}
