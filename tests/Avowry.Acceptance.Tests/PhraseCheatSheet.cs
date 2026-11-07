@@ -187,7 +187,7 @@ public class PhraseCheatSheet
             yield return match.Groups["source"].Value.Replace("\r\n", "\n", StringComparison.Ordinal);
     }
 
-    // Same estimator as tools/Phrase.Bench/Program.cs. Ceiling of length over four, and at least one.
+    // Same estimator as tools/Avowry.Bench/Program.cs. Ceiling of length over four, and at least one.
     private static int EstimateTokens(string text) => Math.Max(1, (int)Math.Ceiling(text.Length / 4d));
 
     private static string DocumentationBlock(string grammar, string example)

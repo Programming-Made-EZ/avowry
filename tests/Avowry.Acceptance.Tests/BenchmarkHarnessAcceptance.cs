@@ -26,8 +26,8 @@ public class BenchmarkHarnessAcceptance
 
         foreach (var arm in new[]
         {
-            (Project: "Phrase.Bench", Suite: Path.Combine(phraseSuite, "suite.json"), Model: "tree-phrase-v1"),
-            (Project: "Phrase.BenchCs", Suite: csharpSuite, Model: "tree-csharp-v1"),
+            (Project: "Avowry.Bench", Suite: Path.Combine(phraseSuite, "suite.json"), Model: "tree-phrase-v1"),
+            (Project: "Avowry.BenchCs", Suite: csharpSuite, Model: "tree-csharp-v1"),
         })
         {
             var grandchildPidPath = Path.Combine(workspace.Root, arm.Model + "-grandchild.pid");
@@ -74,7 +74,7 @@ public class BenchmarkHarnessAcceptance
     public void v1_benchmark_harness_files_exist_for_the_cli_contract()
     {
         var suite = RepoPaths.Find("bench", "suite.json");
-        var runner = RepoPaths.Find("tools", "Phrase.Bench", "Phrase.Bench.csproj");
+        var runner = RepoPaths.Find("tools", "Avowry.Bench", "Avowry.Bench.csproj");
         var resultsDir = RepoPaths.Find("bench", "results");
         var history = RepoPaths.Find("bench", "results", "history.jsonl");
 

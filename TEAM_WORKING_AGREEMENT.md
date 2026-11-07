@@ -523,7 +523,7 @@ Each experiment states its hypothesis, the metric, a trial length with its unit,
   typed holes, specified by Given/When/Then specs that are the source of truth, and compiled through an IR
   to C#/FastEndpoints first. Users are engineers and LLMs writing and maintaining Phrase programs.
 - **Toolchain and the gate:** .NET 8 SDK (user-scope install in `%USERPROFILE%\.dotnet`; set `DOTNET_ROOT`
-  and put it first on `PATH` for runs). Green means `dotnet test Phrase.sln --filter "Status!=Pending"`
+  and put it first on `PATH` for runs). Green means `dotnet test Avowry.sln --filter "Status!=Pending"`
   passes with zero warnings (`TreatWarningsAsErrors` is on). Tests marked `Status=Pending` are the to-do
   list; remove the trait in the same commit that turns a class green.
 - **Board:** the Phrase Board on GitHub Projects (project 1 under Programming-Made-EZ, private) is the single source of truth. `board/` is a generated read-only archive (`scripts/board/generate_archive.py`), one `NNN-slug.md` per card. Card text is edited on the issue. The loop and the retro re-rank hook write Rank and Status to the project only, after a passed Decider, skipping any card whose Rank is newer than the Decider's snapshot. Cards carry a Connextra story, ZOMBIES acceptance criteria and a "Done when" command list the facilitator runs.

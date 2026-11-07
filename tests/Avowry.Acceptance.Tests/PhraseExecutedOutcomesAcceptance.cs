@@ -93,8 +93,8 @@ public class PhraseExecutedOutcomesAcceptance
     public void Phrase_and_csharp_rows_name_change_metadata_the_same_way()
     {
         // Given the stored result contracts for the Phrase and plain C# arms
-        var phraseFields = ResultFields(RepoPaths.Find("tools", "Phrase.Bench", "Program.cs"));
-        var csharpFields = ResultFields(RepoPaths.Find("tools", "Phrase.BenchCs", "Program.cs"));
+        var phraseFields = ResultFields(RepoPaths.Find("tools", "Avowry.Bench", "Program.cs"));
+        var csharpFields = ResultFields(RepoPaths.Find("tools", "Avowry.BenchCs", "Program.cs"));
 
         // When their change-task metadata is compared
         var expected = new HashSet<string>(["Kind", "ExistingCodeTokens"], StringComparer.Ordinal);

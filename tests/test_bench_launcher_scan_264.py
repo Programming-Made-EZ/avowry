@@ -1,9 +1,9 @@
-"""Card 264 red 2b (D157 Criterion 2): no acceptance test starts `dotnet run` against Phrase.Bench except through
+"""Card 264 red 2b (D157 Criterion 2): no acceptance test starts `dotnet run` against Avowry.Bench except through
 the shared launcher (tests/Avowry.Acceptance.Tests/Support/BenchLauncher.cs).
 
-A start site is a line containing the literal "--project" in an acceptance test .cs file that targets Phrase.Bench
-(the file mentions Phrase.Bench.csproj, RunArm("Phrase.Bench", ... or Project: "Phrase.Bench"). The launcher file
-(and the BenchLauncherContract.cs test that only inspects its argument list) are the only allowed places. Phrase.BenchCs (the C# baseline) is a different project and is not matched.
+A start site is a line containing the literal "--project" in an acceptance test .cs file that targets Avowry.Bench
+(the file mentions Avowry.Bench.csproj, RunArm("Avowry.Bench", ... or Project: "Avowry.Bench"). The launcher file
+(and the BenchLauncherContract.cs test that only inspects its argument list) are the only allowed places. Avowry.BenchCs (the C# baseline) is a different project and is not matched.
 
 Run narrowly: python -m unittest tests.test_bench_launcher_scan_264
 Fixture trees use tempfile.mkdtemp and are left in place (no cleanup, by the safety rule).
@@ -19,11 +19,11 @@ REPO = Path(__file__).resolve().parent.parent
 ACCEPTANCE = REPO / "tests" / "Avowry.Acceptance.Tests"
 LAUNCHER = Path("Support") / "BenchLauncher.cs"
 CONTRACT = Path("BenchLauncherContract.cs")  # asserts on the argument list; starts nothing
-TARGETS_BENCH = re.compile(r'Phrase\.Bench\.csproj|RunArm\("Phrase\.Bench"|Project: "Phrase\.Bench"')
+TARGETS_BENCH = re.compile(r'Avowry\.Bench\.csproj|RunArm\("Avowry\.Bench"|Project: "Avowry\.Bench"')
 
 
 def bench_start_sites(acceptance_dir):
-    """Return 'File.cs:line' for every Phrase.Bench `--project` start outside the launcher."""
+    """Return 'File.cs:line' for every Avowry.Bench `--project` start outside the launcher."""
     sites = []
     for path in sorted(Path(acceptance_dir).rglob("*.cs")):
         relative = path.relative_to(acceptance_dir)
@@ -52,20 +52,20 @@ class ScannerBehaviour(unittest.TestCase):
         self.assertEqual([], bench_start_sites(tree({})))
 
     def test_one_direct_start_is_flagged_with_its_line(self):
-        root = tree({"A.cs": 'var p = "Phrase.Bench.csproj";\nnew[] { "run", "--project", p };\n'})
+        root = tree({"A.cs": 'var p = "Avowry.Bench.csproj";\nnew[] { "run", "--project", p };\n'})
         self.assertEqual(["A.cs:2"], bench_start_sites(root))
 
     def test_many_starts_in_many_files_are_all_flagged(self):
-        src = 'x("Phrase.Bench.csproj");\ny("run", "--project", p);\nz("run", "--project", p);\n'
+        src = 'x("Avowry.Bench.csproj");\ny("run", "--project", p);\nz("run", "--project", p);\n'
         root = tree({"A.cs": src, "B.cs": src})
         self.assertEqual(["A.cs:2", "A.cs:3", "B.cs:2", "B.cs:3"], bench_start_sites(root))
 
     def test_boundary_launcher_file_is_allowed(self):
-        root = tree({"Support/BenchLauncher.cs": 'x("Phrase.Bench.csproj"); y("--project");\n'})
+        root = tree({"Support/BenchLauncher.cs": 'x("Avowry.Bench.csproj"); y("--project");\n'})
         self.assertEqual([], bench_start_sites(root))
 
     def test_boundary_bench_cs_baseline_is_not_a_bench_start(self):
-        root = tree({"C.cs": 'x("Phrase.BenchCs.csproj"); y("run", "--project", p);\n'})
+        root = tree({"C.cs": 'x("Avowry.BenchCs.csproj"); y("run", "--project", p);\n'})
         self.assertEqual([], bench_start_sites(root))
 
 
@@ -74,7 +74,7 @@ class RealTree(unittest.TestCase):
         sites = bench_start_sites(ACCEPTANCE)
         self.assertEqual(
             [], sites,
-            f"{len(sites)} direct Phrase.Bench dotnet run start site(s) outside Support/BenchLauncher.cs: " + ", ".join(sites))
+            f"{len(sites)} direct Avowry.Bench dotnet run start site(s) outside Support/BenchLauncher.cs: " + ", ".join(sites))
 
 
 if __name__ == "__main__":

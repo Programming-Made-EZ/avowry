@@ -68,8 +68,8 @@ AUDIT_PLACES = (
 
 AUDIT_FILES = (
     "src/Avowry.Adapters.CSharp/CSharpProvider.cs",
-    "tools/Phrase.BenchCs/Program.cs",
-    "tools/Phrase.Bench/Program.cs",
+    "tools/Avowry.BenchCs/Program.cs",
+    "tools/Avowry.Bench/Program.cs",
 )
 
 HARDWIRE_NEEDLES = (

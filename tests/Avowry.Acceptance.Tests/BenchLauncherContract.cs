@@ -2,25 +2,25 @@ using Avowry.Acceptance.Tests.Support;
 
 namespace Avowry.Acceptance.Tests;
 
-// Card 264 red 2b (D157 Criterion 2, cycle 2b): every Phrase.Bench child must be started through ONE shared launcher
+// Card 264 red 2b (D157 Criterion 2, cycle 2b): every Avowry.Bench child must be started through ONE shared launcher
 // that never lets `dotnet run` build the child. Concurrent children that each built the same Debug obj output collided
-// (one exit 1, no history). The outer test build already built Phrase.Bench through a ProjectReference, so the child
+// (one exit 1, no history). The outer test build already built Avowry.Bench through a ProjectReference, so the child
 // runs `--no-build` in the configuration of the running test assembly.
 //
 // Proposed seam (the green creates it): tests/Avowry.Acceptance.Tests/Support/BenchLauncher.cs
 //   internal static class BenchLauncher
 //     ProcessStartInfo CreateStartInfo(string repoRoot, string testBaseDirectory, IEnumerable<string> benchArguments)
-//       -> FileName "dotnet"; ArgumentList: run --no-build -c <Configuration> --project <repoRoot>/tools/Phrase.Bench/Phrase.Bench.csproj -- <benchArguments...>
+//       -> FileName "dotnet"; ArgumentList: run --no-build -c <Configuration> --project <repoRoot>/tools/Avowry.Bench/Avowry.Bench.csproj -- <benchArguments...>
 //          (redirects stdout/stderr, UseShellExecute=false). Throws BenchLauncherException BEFORE any process exists
 //          when output is missing or stale. Never runs a build.
 //     ProcessStartInfo CreateStartInfo(IEnumerable<string> benchArguments)   // RepoPaths.Root + AppContext.BaseDirectory
 //     string ConfigurationOf(string testBaseDirectory)   // "Debug" or "Release": the path segment named so, case-insensitive
 //   internal sealed class BenchLauncherException : Exception
-//       message names the configuration, the expected output directory <repoRoot>/tools/Phrase.Bench/bin/<Configuration>,
-//       the word "stale" when stale, and a remediation containing "dotnet build Phrase.sln -c <Configuration>".
-// Output location: tools/Phrase.Bench/bin/<Configuration>/<any TFM>/Phrase.Bench.dll.
-// Freshness rule: Phrase.Bench.dll's last write time must be >= the newest last write time among
-//   tools/Phrase.Bench/**/*.cs and Phrase.Bench.csproj (excluding bin/ and obj/); older than that is stale. Equal is fresh.
+//       message names the configuration, the expected output directory <repoRoot>/tools/Avowry.Bench/bin/<Configuration>,
+//       the word "stale" when stale, and a remediation containing "dotnet build Avowry.sln -c <Configuration>".
+// Output location: tools/Avowry.Bench/bin/<Configuration>/<any TFM>/Avowry.Bench.dll.
+// Freshness rule: Avowry.Bench.dll's last write time must be >= the newest last write time among
+//   tools/Avowry.Bench/**/*.cs and Avowry.Bench.csproj (excluding bin/ and obj/); older than that is stale. Equal is fresh.
 // Tests use a temp layout (no dotnet run, no build) so they do not depend on how the suite itself was built.
 public class BenchLauncherContract
 {
@@ -56,7 +56,7 @@ public class BenchLauncherContract
 
         var args = BenchLauncher.CreateStartInfo(layout.Root, layout.TestBase, ModelArguments).ArgumentList.ToList();
 
-        var project = Path.Combine(layout.Root, "tools", "Phrase.Bench", "Phrase.Bench.csproj");
+        var project = Path.Combine(layout.Root, "tools", "Avowry.Bench", "Avowry.Bench.csproj");
         Assert.Equal(project, args[args.IndexOf("--project") + 1]);
         var separator = args.IndexOf("--");
         Assert.True(separator > args.IndexOf("--project"));
@@ -108,8 +108,8 @@ public class BenchLauncherContract
         var failure = Assert.Throws<BenchLauncherException>(() => BenchLauncher.CreateStartInfo(layout.Root, layout.TestBase, ModelArguments));
 
         Assert.Contains(configuration, failure.Message);
-        Assert.Contains(Path.Combine(layout.Root, "tools", "Phrase.Bench", "bin", configuration), failure.Message);
-        Assert.Contains($"dotnet build Phrase.sln -c {configuration}", failure.Message);
+        Assert.Contains(Path.Combine(layout.Root, "tools", "Avowry.Bench", "bin", configuration), failure.Message);
+        Assert.Contains($"dotnet build Avowry.sln -c {configuration}", failure.Message);
         Assert.Equal(before, layout.Snapshot()); // nothing was built or created
     }
 
@@ -121,7 +121,7 @@ public class BenchLauncherContract
 
         var failure = Assert.Throws<BenchLauncherException>(() => BenchLauncher.CreateStartInfo(layout.Root, layout.TestBase, ModelArguments));
 
-        Assert.Contains("dotnet build Phrase.sln -c Release", failure.Message);
+        Assert.Contains("dotnet build Avowry.sln -c Release", failure.Message);
         Assert.DoesNotContain("-c Debug", failure.Message);
     }
 
@@ -138,8 +138,8 @@ public class BenchLauncherContract
 
         Assert.Contains("stale", failure.Message, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("Debug", failure.Message);
-        Assert.Contains(Path.Combine(layout.Root, "tools", "Phrase.Bench", "bin", "Debug"), failure.Message);
-        Assert.Contains("dotnet build Phrase.sln -c Debug", failure.Message);
+        Assert.Contains(Path.Combine(layout.Root, "tools", "Avowry.Bench", "bin", "Debug"), failure.Message);
+        Assert.Contains("dotnet build Avowry.sln -c Debug", failure.Message);
         Assert.Equal(before, layout.Snapshot());
     }
 
@@ -192,19 +192,19 @@ public class BenchLauncherContract
         internal static Layout Create(string testConfiguration, string[] benchOutputFor)
         {
             var root = Path.Combine(Path.GetTempPath(), "bench-launcher-" + Guid.NewGuid().ToString("N"), "repo");
-            var bench = Path.Combine(root, "tools", "Phrase.Bench");
+            var bench = Path.Combine(root, "tools", "Avowry.Bench");
             var testBase = Path.Combine(root, "tests", "Avowry.Acceptance.Tests", "bin", testConfiguration, "net8.0");
             Directory.CreateDirectory(bench);
             Directory.CreateDirectory(testBase);
-            File.WriteAllText(Path.Combine(root, "Phrase.sln"), "");
-            File.WriteAllText(Path.Combine(bench, "Phrase.Bench.csproj"), "<Project/>");
+            File.WriteAllText(Path.Combine(root, "Avowry.sln"), "");
+            File.WriteAllText(Path.Combine(bench, "Avowry.Bench.csproj"), "<Project/>");
             File.WriteAllText(Path.Combine(bench, "Program.cs"), "class P {}");
             foreach (var f in Directory.GetFiles(bench)) File.SetLastWriteTimeUtc(f, T0);
             foreach (var cfg in benchOutputFor)
             {
                 var dir = Path.Combine(bench, "bin", cfg, "net8.0");
                 Directory.CreateDirectory(dir);
-                var dll = Path.Combine(dir, "Phrase.Bench.dll");
+                var dll = Path.Combine(dir, "Avowry.Bench.dll");
                 File.WriteAllText(dll, "");
                 File.SetLastWriteTimeUtc(dll, T0.AddSeconds(10));
             }
@@ -212,14 +212,14 @@ public class BenchLauncherContract
         }
 
         internal void SetDllTime(string configuration, DateTime utc) =>
-            File.SetLastWriteTimeUtc(Path.Combine(Root, "tools", "Phrase.Bench", "bin", configuration, "net8.0", "Phrase.Bench.dll"), utc);
+            File.SetLastWriteTimeUtc(Path.Combine(Root, "tools", "Avowry.Bench", "bin", configuration, "net8.0", "Avowry.Bench.dll"), utc);
 
         internal void SetSourceTime(string file, DateTime utc) =>
-            File.SetLastWriteTimeUtc(Path.Combine(Root, "tools", "Phrase.Bench", file), utc);
+            File.SetLastWriteTimeUtc(Path.Combine(Root, "tools", "Avowry.Bench", file), utc);
 
         internal void AddCs(string relative, DateTime utc)
         {
-            var path = Path.Combine(Root, "tools", "Phrase.Bench", relative);
+            var path = Path.Combine(Root, "tools", "Avowry.Bench", relative);
             Directory.CreateDirectory(Path.GetDirectoryName(path)!);
             File.WriteAllText(path, "");
             File.SetLastWriteTimeUtc(path, utc);

@@ -22,7 +22,7 @@ const string ColdPreamble = "There is no workspace and no files to read; answer 
 
 if (args.Length == 0)
 {
-    Console.Error.WriteLine("Usage: Phrase.Bench run --suite <path> --model <id> --model-command <command> [--mode zero-shot|docs-in-context] [--docs-root <path>] [--custom-docs] [--cold] [--scoring parse-resolve|executed] [--private-results <path>] [--max-attempts <n>] | --self-check [--suite <path>]");
+    Console.Error.WriteLine("Usage: Avowry.Bench run --suite <path> --model <id> --model-command <command> [--mode zero-shot|docs-in-context] [--docs-root <path>] [--custom-docs] [--cold] [--scoring parse-resolve|executed] [--private-results <path>] [--max-attempts <n>] | --self-check [--suite <path>]");
     return 1;
 }
 

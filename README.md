@@ -25,8 +25,8 @@ reference/csharp                   hand-written target output (FastEndpoints + x
 ## Running
 
 ```bash
-dotnet test Phrase.sln                                # everything; the acceptance test is red by design
-dotnet test Phrase.sln --filter "Status!=Pending"     # what CI gates on
+dotnet test Avowry.sln                                # everything; the acceptance test is red by design
+dotnet test Avowry.sln --filter "Status!=Pending"     # what CI gates on
 ```
 
 ## Test status

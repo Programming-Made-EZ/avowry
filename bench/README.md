@@ -13,7 +13,7 @@ Tasks marked `holdout: false` form the development suite. Holdout tasks are rese
 Run the deterministic harness check with:
 
 ```text
-dotnet run --project tools/Phrase.Bench -- --self-check
+dotnet run --project tools/Avowry.Bench -- --self-check
 ```
 
 A normal run invokes one model profile headlessly, extracts Phrase source from a plain reply or a fenced block, and compiles that source. Compiler diagnostics are returned for bounded retries. A reply containing no Phrase is recorded with `no_phrase_found`; an authentication, quota, launch, or timeout failure is recorded as `unavailable`, not as a language failure.

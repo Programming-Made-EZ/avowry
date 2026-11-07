@@ -2,7 +2,7 @@
 """Card 264 criterion 1: run PhraseExecutedOutcomesAcceptance N times under load and write the evidence record.
 
 Builds the acceptance project once, then for each run starts two `dotnet test --no-build` processes at the same
-time (the class under test, and a load class that also starts `dotnet run` children so Phrase.Bench builds can
+time (the class under test, and a load class that also starts `dotnet run` children so Avowry.Bench builds can
 overlap). Each process has an outer timeout boundary; past it only that child's own process tree is killed (by
 PID). Nothing is retried: a failure is recorded as it happened and the loop continues to the last run.
 

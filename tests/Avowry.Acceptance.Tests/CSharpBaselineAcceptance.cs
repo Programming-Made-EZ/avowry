@@ -10,8 +10,8 @@ public sealed class CSharpBaselineAcceptance
     [Fact]
     public void cold_profile_literals_cannot_drift_between_benchmark_arms()
     {
-        var phrase = File.ReadAllText(RepoPaths.Find("tools", "Phrase.Bench", "Program.cs"));
-        var csharp = File.ReadAllText(RepoPaths.Find("tools", "Phrase.BenchCs", "Program.cs"));
+        var phrase = File.ReadAllText(RepoPaths.Find("tools", "Avowry.Bench", "Program.cs"));
+        var csharp = File.ReadAllText(RepoPaths.Find("tools", "Avowry.BenchCs", "Program.cs"));
 
         static string Literal(string source, string name) => Regex.Match(source,
             $"const string {name} = \\\"(?<value>[^\\\"]*)\\\";").Groups["value"].Value;
@@ -483,7 +483,7 @@ public sealed class CSharpBaselineAcceptance
         Assert.Equal("none", result.RootElement.GetProperty("proof_level").GetString());
     }
 
-    // Phrase.Bench scores read tasks at parse-resolve only: it does not check that comments were added.
+    // Avowry.Bench scores read tasks at parse-resolve only: it does not check that comments were added.
     // These twins keep that level for the comment text, and execute the spec cases the Phrase prompt states.
     [Fact]
     public void read_and_modify_outcomes_match_the_phrase_prompts()
@@ -908,7 +908,7 @@ public sealed class CSharpBaselineAcceptance
 
     private static async Task<(int ExitCode, string Stdout, string Stderr)> Run(string suite, string command, string model, int timeoutMs = 30000, bool cold = false)
     {
-        var project = RepoPaths.Find("tools", "Phrase.BenchCs", "Phrase.BenchCs.csproj");
+        var project = RepoPaths.Find("tools", "Avowry.BenchCs", "Avowry.BenchCs.csproj");
         var info = new ProcessStartInfo("dotnet") { RedirectStandardOutput = true, RedirectStandardError = true };
         foreach (var argument in new[] { "run", "--project", project, "--", "run", "--suite", suite, "--model", model, "--model-command", command, "--timeout-ms", timeoutMs.ToString() })
             info.ArgumentList.Add(argument);
@@ -924,7 +924,7 @@ public sealed class CSharpBaselineAcceptance
 
     private static async Task<(int ExitCode, string Stdout, string Stderr)> RunWithDotnet(string suite, string command, string model, string dotnetCommand)
     {
-        var project = RepoPaths.Find("tools", "Phrase.BenchCs", "Phrase.BenchCs.csproj");
+        var project = RepoPaths.Find("tools", "Avowry.BenchCs", "Avowry.BenchCs.csproj");
         var info = new ProcessStartInfo("dotnet") { RedirectStandardOutput = true, RedirectStandardError = true };
         foreach (var argument in new[] { "run", "--project", project, "--", "run", "--suite", suite, "--model", model, "--model-command", command, "--timeout-ms", "180000" })
             info.ArgumentList.Add(argument);

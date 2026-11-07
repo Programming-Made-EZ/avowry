@@ -3,7 +3,7 @@
 
   python scripts/ci-log-outcomes-217.py LOG [--job NAME] [--meta key=value]... [--out OUT.json]
 
-LOG is the saved output of `dotnet test Phrase.sln ... --logger "console;verbosity=normal"` (for example
+LOG is the saved output of `dotnet test Avowry.sln ... --logger "console;verbosity=normal"` (for example
 `gh run view <id> --repo <repo> --log`, which prefixes each line with "job<TAB>step<TAB>timestamp"; the log is
 never saved in the repo). Real shape (run 42079881523): the Compiler and Acceptance projects run concurrently and
 their result lines interleave, each project ends with the legacy summary block

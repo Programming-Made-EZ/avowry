@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location(
     "check_phrase_executed_complete",
-    ROOT / "scripts" / "check-phrase-executed-complete.py",
+    ROOT / "scripts" / "check-avowry-executed-complete.py",
 )
 check = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(check)

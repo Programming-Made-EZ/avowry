@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace Avowry.Acceptance.Tests.Support;
 
 /// <summary>
-/// Card 264 (D157 Criterion 2): runs a Phrase.Bench child and keeps its real result (exit code, stdout, stderr) and the
+/// Card 264 (D157 Criterion 2): runs a Avowry.Bench child and keeps its real result (exit code, stdout, stderr) and the
 /// history path before anything reads history, so an early child exit or a failed build is reported as itself and is not
 /// masked by a DirectoryNotFoundException on results/history.jsonl.
 /// </summary>

@@ -12,7 +12,7 @@ const string ColdPreamble = "There is no workspace and no files to read; answer 
 
 if (args.Length == 0 || args[0] != "run")
 {
-    Console.Error.WriteLine("Usage: Phrase.BenchCs run --suite <path> --model <id> --model-command <command> [--label <label>] [--timeout-ms <milliseconds>] [--cold] [--private-results <path>]");
+    Console.Error.WriteLine("Usage: Avowry.BenchCs run --suite <path> --model <id> --model-command <command> [--label <label>] [--timeout-ms <milliseconds>] [--cold] [--private-results <path>]");
     return args.Length == 0 ? 1 : 2;
 }
 
@@ -269,7 +269,7 @@ static int CountModelTests(string source) => string.IsNullOrWhiteSpace(source)
     ? 0
     : Regex.Matches(source, @"\[\s*(?:(?:global::)?Xunit\.)?(?:Fact|Theory)(?:Attribute)?\s*(?:\([^\]]*\))?\s*\]", RegexOptions.IgnoreCase).Count;
 
-// Read tasks keep Phrase.Bench's check level for comments: that scorer never checks comment text.
+// Read tasks keep Avowry.Bench's check level for comments: that scorer never checks comment text.
 // The executed check is the spec case in the Phrase prompt, plus a reply that still compiles.
 static string GenerateTests(BenchmarkTask task, IReadOnlyList<Outcome> outcomes)
 {

@@ -3,7 +3,7 @@ using Avowry.Acceptance.Tests.Support;
 
 namespace Avowry.Acceptance.Tests;
 
-// Card 264 red 2 (D157 Criterion 2): the harness that runs the Phrase.Bench child must preserve the
+// Card 264 red 2 (D157 Criterion 2): the harness that runs the Avowry.Bench child must preserve the
 // child's real result (exit code, stdout, stderr) and the history path BEFORE it reads history, so an early
 // child exit is reported as itself and not masked by DirectoryNotFoundException on results/history.jsonl.
 //

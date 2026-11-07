@@ -3,15 +3,15 @@ using System.Diagnostics;
 namespace Avowry.Acceptance.Tests.Support;
 
 /// <summary>
-/// Card 264 (D157 Criterion 2, cycle 2b): the one place that builds the start of a Phrase.Bench child. The child is
+/// Card 264 (D157 Criterion 2, cycle 2b): the one place that builds the start of a Avowry.Bench child. The child is
 /// `dotnet run --no-build -c &lt;configuration of the running test assembly&gt;`: the outer test build already built
-/// Phrase.Bench through a ProjectReference, so a child never builds (concurrent children that each built the same obj
+/// Avowry.Bench through a ProjectReference, so a child never builds (concurrent children that each built the same obj
 /// output collided and one exited 1 with no history). Missing or stale output throws BenchLauncherException before any
-/// process exists; this class never starts a build and never drops --no-build for Phrase.Bench.
+/// process exists; this class never starts a build and never drops --no-build for Avowry.Bench.
 /// </summary>
 internal static class BenchLauncher
 {
-    private const string BenchProject = "Phrase.Bench";
+    private const string BenchProject = "Avowry.Bench";
     private static readonly char[] Separators = [(char)92, '/'];
 
     internal static ProcessStartInfo CreateStartInfo(IEnumerable<string> benchArguments, IEnumerable<string>? runOptions = null) =>
@@ -39,7 +39,7 @@ internal static class BenchLauncher
     }
 
     /// <summary>
-    /// For a site shared with another benchmark project (the C# baseline arm): Phrase.Bench goes through the no-build
+    /// For a site shared with another benchmark project (the C# baseline arm): Avowry.Bench goes through the no-build
     /// launcher; any other project keeps its existing build-capable `dotnet run` (it is not built by the test assembly).
     /// </summary>
     internal static ProcessStartInfo CreateStartInfoFor(string projectName, IEnumerable<string> benchArguments, IEnumerable<string>? runOptions = null)
@@ -84,7 +84,7 @@ internal static class BenchLauncher
     {
         var benchDirectory = Path.Combine(repoRoot, "tools", BenchProject);
         var outputDirectory = Path.Combine(benchDirectory, "bin", configuration);
-        var remedy = $"Build it first with `dotnet build Phrase.sln -c {configuration}`; the launcher never builds.";
+        var remedy = $"Build it first with `dotnet build Avowry.sln -c {configuration}`; the launcher never builds.";
 
         var dlls = Directory.Exists(outputDirectory)
             ? Directory.GetFiles(outputDirectory, BenchProject + ".dll", SearchOption.AllDirectories)

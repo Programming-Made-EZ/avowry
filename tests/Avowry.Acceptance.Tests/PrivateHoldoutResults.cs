@@ -32,8 +32,8 @@ public sealed class PrivateHoldoutResults
         var committedBefore = SnapshotCommittedHistories();
 
         // When both arms run with a private results path
-        var phrasePrivate = await RunArm("Phrase.Bench", phraseSuite, "fixture-phrase-v1", WriteFakeModel(workspace.Root, "phrase-private.cmd", "phrase-private.sh", phraseReply, phrasePrivateCapture), privateRows);
-        var csharpPrivate = await RunArm("Phrase.BenchCs", csharpSuite, "fixture-csharp-v1", WriteFakeModel(workspace.Root, "csharp-private.cmd", "csharp-private.sh", csharpReply, csharpPrivateCapture), privateRows);
+        var phrasePrivate = await RunArm("Avowry.Bench", phraseSuite, "fixture-phrase-v1", WriteFakeModel(workspace.Root, "phrase-private.cmd", "phrase-private.sh", phraseReply, phrasePrivateCapture), privateRows);
+        var csharpPrivate = await RunArm("Avowry.BenchCs", csharpSuite, "fixture-csharp-v1", WriteFakeModel(workspace.Root, "csharp-private.cmd", "csharp-private.sh", csharpReply, csharpPrivateCapture), privateRows);
 
         // Then the committed history files stay byte-identical and the private file holds the rows
         Assert.True(phrasePrivate.ExitCode == 0, phrasePrivate.Stdout + phrasePrivate.Stderr);
@@ -50,8 +50,8 @@ public sealed class PrivateHoldoutResults
         Assert.Contains(HoldoutLabel, privateText, StringComparison.Ordinal);
 
         // When the same holdout-looking arms run again without the private path
-        var phraseDefault = await RunArm("Phrase.Bench", phraseSuite, "fixture-phrase-v1", WriteFakeModel(workspace.Root, "phrase-default.cmd", "phrase-default.sh", phraseReply, phraseDefaultCapture), privateResults: null);
-        var csharpDefault = await RunArm("Phrase.BenchCs", csharpSuite, "fixture-csharp-v1", WriteFakeModel(workspace.Root, "csharp-default.cmd", "csharp-default.sh", csharpReply, csharpDefaultCapture), privateResults: null);
+        var phraseDefault = await RunArm("Avowry.Bench", phraseSuite, "fixture-phrase-v1", WriteFakeModel(workspace.Root, "phrase-default.cmd", "phrase-default.sh", phraseReply, phraseDefaultCapture), privateResults: null);
+        var csharpDefault = await RunArm("Avowry.BenchCs", csharpSuite, "fixture-csharp-v1", WriteFakeModel(workspace.Root, "csharp-default.cmd", "csharp-default.sh", csharpReply, csharpDefaultCapture), privateResults: null);
 
         // Then both arms refuse before launching a model or publishing any task-derived row
         Assert.NotEqual(0, phraseDefault.ExitCode);
@@ -128,7 +128,7 @@ public sealed class PrivateHoldoutResults
             var committedBefore = SnapshotCommittedHistories();
 
             // When the Phrase arm is run without --private-results
-            var result = await RunArm("Phrase.Bench", suite, "fixture-phrase-v1", WriteFakeModel(root, "ignored.cmd", "ignored.sh", reply, capture), privateResults: null);
+            var result = await RunArm("Avowry.Bench", suite, "fixture-phrase-v1", WriteFakeModel(root, "ignored.cmd", "ignored.sh", reply, capture), privateResults: null);
 
             // Then the ignored-path rule refuses without exposing task text or launching the model
             Assert.NotEqual(0, result.ExitCode);

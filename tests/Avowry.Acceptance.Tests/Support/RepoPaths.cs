@@ -10,9 +10,9 @@ public static class RepoPaths
     {
         for (var dir = new DirectoryInfo(AppContext.BaseDirectory); dir is not null; dir = dir.Parent)
         {
-            if (File.Exists(Path.Combine(dir.FullName, "Phrase.sln")))
+            if (File.Exists(Path.Combine(dir.FullName, "Avowry.sln")))
                 return dir.FullName;
         }
-        throw new DirectoryNotFoundException("Could not find Phrase.sln above the test output directory.");
+        throw new DirectoryNotFoundException("Could not find Avowry.sln above the test output directory.");
     }
 }

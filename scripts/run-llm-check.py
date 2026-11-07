@@ -496,7 +496,7 @@ def run_check(args: argparse.Namespace) -> int:
             wrapped = write_capture_wrapper(work, command)
             private_results = work / "private" / "history.jsonl"
             private_results.parent.mkdir(parents=True, exist_ok=True)
-            bench_project = repo / "tools" / "Phrase.Bench" / "Phrase.Bench.csproj"
+            bench_project = repo / "tools" / "Avowry.Bench" / "Avowry.Bench.csproj"
             argv = [
                 "dotnet",
                 "run",

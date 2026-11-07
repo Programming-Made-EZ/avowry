@@ -69,7 +69,7 @@ def check(root):
 
 def good_rows(overrides=None, drop=None):
     rows = {
-        "shared build": ("`dotnet build tools/Phrase.Bench` twice concurrently: both succeeded", "ruled out"),
+        "shared build": ("`dotnet build tools/Avowry.Bench` twice concurrently: both succeeded", "ruled out"),
         "thread-pool starvation": ("`ThreadPoolFloor` probe output: min threads 32", "ruled out"),
         "external dependency": ("CI log run 41341801479: restore ok", "ruled out"),
         "timing and ordering": ("`dotnet test --filter X` x3 output: order unchanged", "ruled out"),

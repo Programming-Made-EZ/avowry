@@ -15,8 +15,8 @@ spec.loader.exec_module(check)
 def passing_text():
     places = "\n".join(
         f"| {place} | `src/Avowry.Adapters.CSharp/CSharpProvider.cs` line 1; "
-        f"`tools/Phrase.BenchCs/Program.cs` line 1; "
-        f"`tools/Phrase.Bench/Program.cs` line 1 | the HTTP binding seam |"
+        f"`tools/Avowry.BenchCs/Program.cs` line 1; "
+        f"`tools/Avowry.Bench/Program.cs` line 1 | the HTTP binding seam |"
         for place in check.AUDIT_PLACES
     )
     return f"""# ADR: Library bindings and project profile

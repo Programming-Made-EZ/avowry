@@ -386,7 +386,7 @@ def project_guids(text):
 
 class PathBound(unittest.TestCase):
     """Criterion 3. I integration (scripts and tests that resolve a project by name or path do real work, not
-    vacuous work), S solution (Phrase.sln pairs each project with its own GUID, the fixture link resolves, and every
+    vacuous work), S solution (Avowry.sln pairs each project with its own GUID, the fixture link resolves, and every
     changed file is the old file's bytes under the one anchored rewrite)."""
 
     def test_five_modules(self):
@@ -436,16 +436,16 @@ class PathBound(unittest.TestCase):
                 name, guid = line.split()
                 wanted[name.replace(_OLD_STEM + ".", "Avowry.", 1)] = guid.upper()
         self.assertEqual({NEW_ACCEPTANCE, NEW_COMPILER}, set(wanted), "the baseline must hold both project GUIDs")
-        solution = project_guids((REPO / "Phrase.sln").read_text(encoding="utf-8"))
+        solution = project_guids((REPO / "Avowry.sln").read_text(encoding="utf-8"))
         wrong = []
         for name, guid in sorted(wanted.items()):
             expected_path = f"tests\\{name}\\{name}.csproj"
             found = solution.get(name)
             if found is None:
-                wrong.append(f"{name}: no Project line in Phrase.sln")
+                wrong.append(f"{name}: no Project line in Avowry.sln")
                 continue
             if found != (expected_path, guid):
-                wrong.append(f"{name}: Phrase.sln says {found}, expected {(expected_path, guid)}")
+                wrong.append(f"{name}: Avowry.sln says {found}, expected {(expected_path, guid)}")
             if not (REPO / expected_path.replace("\\", "/")).is_file():
                 wrong.append(f"{name}: {expected_path} does not exist")
         self.assertEqual([], wrong, "\n".join(wrong))
