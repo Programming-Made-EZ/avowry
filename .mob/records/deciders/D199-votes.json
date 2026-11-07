@@ -1,0 +1,129 @@
+{
+ "decider": "D199",
+ "subject": "card 299 retro pick: the Experimental section; six lines adopted, three dropped, sixteen moved",
+ "result": "ADOPTED",
+ "run1": {
+  "pm": [
+   {
+    "tag": "d199",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "nothing stays on trial by neglect",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nIt fits the standing rules. The removals (D187, D165 and the D153 lighter path) are proposed at the retro, so that rule holds. Every trial now has a hypothesis, a metric with its unit, and a start date, which supports accountability to metrics. The section also forces an adopt, revise or drop decision at the next retro. That shortens the agreement and stops experiments lingering. The six adoptions rest on evidence, not on up-front over-specification. The proposal leaves the standing rules a"
+   }
+  ],
+  "architect": [
+   {
+    "tag": "d199",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "an experiment past its trial length is decided at the next retro",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\n\nThe design is sound. One section with a fixed shape (hypothesis, metric with unit, trial length, start date) and one forced decision is minimal. Adopting six and dropping three also shortens the permanent text.\n\nTwo weaknesses:\n- Many trial lengths are conditional (\"3 cards that change a rule, the ranking or the checker\"), so \"past trial and undecided\" is hard to check mechanically without false positives.\n- Extending sixteen trials at this retro moves the count to 0 by renewal. The "
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d199",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "forcing a decision when a trial ends keeps the agreement short enough to read",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\n\nEvery entry now has a hypothesis, a metric with a unit, a trial length and a start date, so each one can be checked red first. The \"past trial and undecided\" count can be read straight off the entries.\n\nTwo weaknesses:\n- Trial lengths are in cards, not dates, and no check exists. The target of 0 depends on someone counting by hand at the retro.\n- The \"standing text no longer than today's\" goal looks doubtful. Six adopted lines add permanent text, and the Experimental section keeps lo"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d199",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "an experiment past its trial length is decided at the next retro by Decider",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\n\nAs the developer I'd welcome this. Forcing a decision when a trial ends is fair to the work, and a rule on trial that shows its hypothesis and metric is one I can comply with without gaming it. Adopting the lettered red, cycle cap and cite-a-point lines into permanent text removes ambiguity I currently work around. Dropping the D153 lighter path is fine. I'm not voting a full Yes for two reasons. Sixteen lines moving at once is a lot to check in one patch. And \"decided at the next re"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d199",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "an experiment past its trial length is decided at the next retro by Decider",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\n\nThe mechanism can be checked from git. The patch and candidate text are committed, and each entry carries a start date, a trial length and a unit, so \"past trial and undecided\" can be counted from the commits and the section.\n\nOne loophole remains. \"Decided at the next retro\" has no check that a Decider vote and its recorded evidence exist. A team could \"revise and extend\" every expired trial indefinitely and still show a count of 0. I'd cap extensions at one, or require a commit tha"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d199",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "forcing a decision when a trial ends keeps the agreement short enough to read",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nThe evaluation rests on evidence. The inventory counts 24 experiment lines, 14 of them expired, and none ever decided by a Decider. The pick gives each line a hypothesis, a metric with its unit, and a trial length. Its target is 0 undecided lines past their trial. Its counter-metrics are a defect after an adopt or drop, and a lost rule. The next three retros are the checkpoint.\n\nOne gap: the sign-off seat is not named. I'd have the Decider own the retro-time decision for each expired entry."
+   }
+  ]
+ },
+ "independent_rerun": {
+  "pm": [
+   {
+    "tag": "d199r",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "the agreement keeps one Experimental section",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\nThis fits the standing rules: it creates one short experimental section, makes every trial state a hypothesis, metric and unit, and forces a retro decision when its trial expires. That keeps accountability to evidence, stops stale experiments lingering, and preserves the product-first principle without over-specifying up front. It also keeps decisions in role-appropriate context and avoids broadening process beyond the tested rule. The adopted/dropped lines are narrow, evidence-based,"
+   }
+  ],
+  "architect": [
+   {
+    "tag": "d199r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "forcing a decision when a trial ends keeps the agreement short enough to read",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\n\nThe design is sound and minimal. It uses one section, four fields per entry (hypothesis, metric and unit, trial length, start date) and one forcing rule. It adds no checker rule, so it can't produce false positives. The patch is net shorter: 65 lines added, 33 removed.\n\nThe weakness is enforceability. \"Past trial and undecided\" is checked by hand at retro, and no mechanical check, such as a date lint, backs it. The adopt/drop calls rest on the inventory's evidence. I would add a lint"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d199r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "experiment lines past their trial and undecided (target 0)",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\n\nThe metric is testable. \"Experiment lines past their trial and undecided\" can be counted from each entry's trial length and start date, and \"standing text no longer than today's\" is a line or word count. Each entry also has a hypothesis, a unit and a target, so a retro can fail it.\n\nTwo gaps keep this from a Yes:\n- No automated check counts lines past their trial. Trials are in cards, gates or windows, not dates, so \"past trial\" is a judgement call. A script with a red-first test wou"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d199r",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "an experiment past its trial length is decided at the next retro",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nThe change makes the rules I work under shorter and clearer. Each experiment now states its hypothesis, metric and trial length. Six rules I already follow (stand-down, lettered red, scope premise, pinned numbers, cycle cap, cite-a-point) become permanent, so I no longer have to wonder whether they still apply. Dropping the pre-red intent line and the lighter path removes steps that gave me nothing, and I can comply with the rest without gaming them. The forced decision at trial end stops s"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d199r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "an experiment past its trial length is decided at the next retro by Decider",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\n\nMostly verifiable from git. The patch, the retro and the inventory are committed. Each entry carries a start date, a unit and a \"from git\" metric, and the target of 0 past-trial lines is countable by diff.\n\nTwo loopholes keep this from a full Yes:\n- \"Revise and extend\" has no cap, so a team can extend an expired trial at every retro and still count it as decided. I'd cap extensions at one, or require new evidence for each.\n- Six adoptions go into the permanent text while the claim is"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d199r",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "the agreement short enough to read and stops expired experiments lingering",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\nThis proposal is framed by the retro evidence: 24 experiment lines, 14 expired by count, no prior Decider decisions, and a trial-length rule tied to a next-retro decision. It also adds a clear evidence standard (metric + unit, adoption/revise/drop decision with evidence) and preserves the existing protocol while moving only the scattered trials into one experimental section. The team has the needed seats: PM, QA, architect, developer, audit lens, Decider, agile coach, and the product "
+   }
+  ]
+ }
+}

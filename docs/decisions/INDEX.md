@@ -302,3 +302,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D196](process-and-staffing.md#d196) | Card 313 retro pick: the cite check stops costing rounds on format (three-card trial; story 322) | process-and-staffing | adopted |
 | [D197](process-and-staffing.md#d197) | Re-rank 27: product first; process improvements moved off the board; the order of product stories and bugs | process-and-staffing | adopted |
 | [D198](process-and-staffing.md#d198) | Card 299 task-force declaration: the cross-process writer lock, split from the git hooks | process-and-staffing | adopted |
+| [D199](process-and-staffing.md#d199) | Card 299 retro pick: the Experimental section, six lines adopted, three dropped, sixteen moved | process-and-staffing | adopted |
