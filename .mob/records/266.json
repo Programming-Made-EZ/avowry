@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 266,
+ "title": "Live docs and the README use the name Avowry",
+ "process": "card-mode rules run by hand; ranked first after card 197 closed (product first); the Ready rewrite into Connextra, Gherkin and ZOMBIES with the scope-premise check and the split of the original docs-and-code card into 266, 324 and 325 by the task-force Decider D205 (adopted); ordinary red-green cycles per criterion with the permanent red-first rule (criterion 1 and 2 new-state with watched reds, criterion 3 and the link check declared characterisation); the green seat (Codex, the declared fallback after agy's quota error) in its own worktree; a cold-reader seat at the gate; the retro pick D206 adopted (guard tests read committed blobs; a cold-reader seat and the story-promise check for docs cards; a red a CI test wraps is pushed with its green)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude, a fresh subagent context, product manager (ready), read-only; taskforce-proposal-pm.md and checklist-d205.md; premise facts rerun by the facilitator",
+   "evidence": "6d8c923"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md (39 hit lines, nine pinned exceptions, commit order characterisation 3, red 2, green 2, red 1, green 1)",
+   "evidence": "ca852bb"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, fresh subagent contexts, QA engineer: characterisation 3 2d5cf01, red 2 20175e4, red 1 7c36847 and the review fix 9dfade1; red-record-1.md, red-record-2.md, characterisation-record.md, review-fix-record.md",
+   "evidence": "7c36847"
+  },
+  {
+   "role": "green",
+   "seat": "Codex ctx-4",
+   "model": "codex gpt-5.6-sol via codex exec --json in its own git worktree: green 2 (9675b3c) and green 1 (29efd59), both byte-exact on the facilitator's recompute; green-record.md, green1-codex-events.jsonl, green2-codex-events.jsonl, author-probe.md",
+   "evidence": "29efd59"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent reviewer, read-only; SHIP WITH CONDITIONS (answered); preship-gate.md; with a cold-reader seat (a fresh model reading only the two READMEs as Ari, cold-reader.md)",
+   "evidence": "b347a94"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off, read-only; SIGNED OFF WITH CONDITIONS (retro findings only); signoff-ctx6.md",
+   "evidence": "efe340c"
+  }
+ ],
+ "retro": "docs/retros/card-266-2026-11-07.md",
+ "notes": "Signed off with conditions that are retro findings only (.mob/records/266/signoff-ctx6.md). Done checks met: 1 the live docs have no old name outside nine pinned exceptions, the README Layout names real paths, the README note appears once and the VISION quote reads open avow (red 1 watched failing, 11 of 13; green 1); 2 the demo README's output folder is /tmp/avowry-tasks (red 2 watched failing, also at gate level; green 2) and the link check passes (declared characterisation); 3 every tracked file outside the nine scoped files, the two test files, .mob/, board/266-* and docs/decisions is byte-identical to the base 0fa5b22 (characterisation, committed first). The full gate equals the baseline in the isolated runs (313 of 316, the same three known failures; the card 304 timing guard passed). CI green on the pushed tip; the red-2 commit alone turned CI red by construction (the retro's finding). No born-green test and no production change before its red (the permanent red-first rule); the T8 and T9 guard defect was found at the gate and fixed red-first. Code is on main in phrase-lang; the worktree wt-266-green and its branch are removed. Follow-ups: card 326 (README status, prerequisites and layout, Draft, unranked), cards 324 and 325 ranked after 266, the Codex ledger catch-up."
+}

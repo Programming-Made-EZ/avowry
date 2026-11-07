@@ -1,0 +1,141 @@
+{
+ "decider": "D206",
+ "subject": "card 266 retro pick: guard tests read committed blobs; a cold-reader seat and the story-promise check for docs cards; a red a CI test wraps is pushed with its green",
+ "result": "ADOPTED",
+ "run1": {
+  "architect": [
+   {
+    "tag": "d206",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "a red commit that a CI test wraps",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe design is sound, and each rule traces to a card-266 defect. The prefix selector matched a later commit, and the working-tree read broke after the ledger edit. P1 is a bundle of six sub-rules, though, and its exception for live-state guards is a good boundary. P1 should be split into a \"committed blobs and exact selector\" rule and a \"mutation patch hygiene\" rule if it ever needs trimming. Nothing in the agreement checks the blob-reading rule mechanically, so it relies on review. T"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d206",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "a mutation patch is run and shown failing before it is filed",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nP1 is testable red first: it requires one red that adds a later look-alike commit and an uncommitted edit and must stay green, and it requires every mutation patch to be run and shown failing before it is filed. Both are checks that catch the violation they name. Card 266 shows the defect: T8 read the working tree and failed at HEAD. The metric (guard-test defects at review, target 0) and the counter-metric are measurable. P2 and P3 are cheap and carry trial metrics. The one gap is that P2'"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d206",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "never the working tree, and selects its commit by a hash recorded in the card's record",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nAs the seat that writes these guards every card, I find P1 workable and fair. Reading committed blobs and selecting by hash or exact subject removes the two defects I'd have hit on card 266 (T8 failing after a ledger edit, and the prefix selector matching the later record commit). The \"reads the working tree on purpose\" carve-out for live-state scans keeps it from being over-applied. P3 is a plain description of how CI behaves, so I can comply with it without gaming it.\n\nTwo reservat"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d206",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "guard tests read committed blobs, a cold-reader seat for docs cards",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nThe proposal can be checked from git alone. P1 makes guards read committed blobs and select by hash or exact subject, so a later record commit can't break them. The M3 and M4 mutation patches are shown failing before they are filed, and 9dfade1 and the red-2 commit 20175e4 are traceable. P3 closes a real hole, because a wrapped red that is pushed alone turns main's CI red by construction.\n\nThe remaining loophole is in P2. The cold-reader seat and the Ready-time promise check are procedural "
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d206",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "a red commit that a CI test wraps",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe evaluation is framed to rest on evidence. P1 and P2 each have a hypothesis, a metric with a card-266 baseline, a counter-metric, a three-card trial and a named owner. The adopt, reshape or reject call after the trial can use those numbers. P3 has no metric, but it is a one-line fact about CI that card 266 already demonstrated, so I don't hold it against the pick. The seats look sufficient: six voices converged on P1, and P2 adds the missing cold-reader seat. A target of 0 from a "
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d206",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "it carries one red that adds a later look-alike commit and an uncommitted edit",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nThe task force is sized correctly here. P2 adds one perspective that was missing, a cold reader, and the card 266 evidence is concrete: it found in 40 seconds what the criteria missed. It is also cheap, at under a minute, and applies only to docs cards whose story makes a promise. P1 and P3 add no seats. They tighten existing guard tests and one CI line, with measurable hypotheses, counter-metrics and a three-card trial. That keeps ceremony down. P1 is wordy, but each clause traces to a car"
+   }
+  ]
+ },
+ "independent_rerun": {
+  "architect": [
+   {
+    "tag": "d206r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "guard tests read committed blobs, a cold-reader seat for docs cards",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe design is sound. Reading committed blobs and selecting commits by hash or exact subject can be enforced without false positives. The \"one red that adds a later look-alike commit and an uncommitted edit\" gives each guard a built-in false-positive check. The live-state exception is explicit. P3 is a one-line, correct rule. P2's cold-reader seat is cheap, and the Ready-time promise check closes a real gap. I'm not voting Yes because P1 is a long compound entry that bundles five rule"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d206r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "never the working tree, and selects its commit by a hash recorded",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nP1 is the strongest from a QA view. It names a concrete red: a later look-alike commit plus an uncommitted edit must stay green. It also requires the mutation patch to be shown failing before it is filed. That would have caught T8, T9 and the M3/M4 mislabels from card 266. P3 is a testable fact, since a wrapped red turns CI red by construction. P2 is the weakest. The cold-reader seat and the Ready-time promise check have no red-first form, and \"found late\" is judged by people. The tr"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d206r",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "turns main's CI red by construction, so it is pushed together with its green",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nThese rules are workable from the developer seat. Reading committed blobs and selecting by hash or exact subject is easy to comply with. The one look-alike-commit red plus an uncommitted edit is a single test, well inside the stated 10-minute budget. Saying that a guard on live state reads the working tree on purpose removes the ambiguity. Mutation patches that are shown failing and named for what they do cost little and can't be gamed. P3 matches what CI actually does: a red wrapped by a C"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d206r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "guard tests read committed blobs, a cold-reader seat for docs cards",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe proposal is mostly checkable from git. P1 is checkable because the selector is a recorded hash or exact subject, the red is a committed test, and `git show <sha>:path` can be re-run by anyone. P3 is a plain line with no way around it.\n\nThere are two gaps:\n- P2's \"fresh model, no other context\" can't be proven from git unless the cold-reader report is committed under `.mob/records/<card>/` with the files and lines it read.\n- \"A mutation patch is run and shown failing\" is a claim, "
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d206r",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "a cold-reader seat for docs cards",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nThe proposal frames each change as a testable hypothesis. Each has a named metric with a baseline from card 266 and a target of 0, a counter-metric, a three-card trial and a single owner. That means adopt, reshape or reject can rest on trial evidence. The evidence is concrete and traceable: the T8 failure at HEAD, the prefix selector that matched two commits, the mislabelled mutation patches, the 40-second cold-reader findings and the CI run that failed by construction. P2 supplies the seat"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d206r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "guard tests read committed blobs, a cold-reader seat for docs cards",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe three changes fit the evidence from card 266. Each has a hypothesis, a metric, a counter-metric and a trial limited to 3 cards, so none of them adds standing ceremony. A cold-reader seat found a real gap in about 40 seconds, which is cheap for what it caught. P1 is a long entry, and bundling three changes into one patch makes it harder to drop one if its trial fails. I'd still vote for it as written. At the retro I'd want a check that P1's wording stays short enough to follow.\n\nC"
+   }
+  ]
+ }
+}

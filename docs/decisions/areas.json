@@ -1342,5 +1342,11 @@
     "status": "adopted",
     "title": "Card 266 task-force declaration, the five decisions, the split into 266 and two new cards, and the card text",
     "order": 196
+  },
+  "D206": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 266 retro pick: guard tests read committed blobs; a cold-reader seat for docs cards; a red a CI test wraps is pushed with its green",
+    "order": 197
   }
 }
