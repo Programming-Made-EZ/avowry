@@ -1276,5 +1276,11 @@
     "status": "not adopted",
     "title": "Card 313 task-force declaration with the facilitator-trace conditions (an outlier unresolved after the amendments; a new proposal follows as D195)",
     "order": 185
+  },
+  "D195": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 313 task-force declaration, new proposal: the green seat works in its own git worktree",
+    "order": 186
   }
 }

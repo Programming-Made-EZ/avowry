@@ -1,0 +1,183 @@
+{
+ "decider": "D195",
+ "subject": "card 313 task-force declaration, new proposal: the green seat works in its own git worktree",
+ "result": "ADOPTED",
+ "first_run": {
+  "architect": [
+   {
+    "tag": "d313i",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "a decision run that starts as another ends is never left without a vote lock",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nThe design is minimal. It has one bounded retry loop, reruns mkdir, and retries only on a missing directory. On exhaustion it prints one stderr warning and returns the no-op. `facilitator.py` stays read-only. The replace-gap reasoning holds: the `.tmp` file keeps the directory non-empty. The tests need no production seam. They patch `os.open` and `os.replace`, so they are deterministic and should not give false positives. Each no-red cycle has a mutation pair. The worktree isolates the green seat from the main checkout, and its before/after HEAD and status check is enforceable.\n\nCITE: a d"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d313i",
+    "seat": "copilot",
+    "vote": "Yes",
+    "cite": null,
+    "cite_verbatim": false,
+    "reply_head": "Yes\n\n"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d313i",
+    "seat": "codex",
+    "vote": "Yes",
+    "cite": "<at least 6 consecutive words copied exactly from the proposal below>\" (D171). Proposal:",
+    "cite_verbatim": false,
+    "reply_head": "Yes\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1b41b-7486-7773-9d45-324cb3ed61df\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated a"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d313i",
+    "seat": "agy",
+    "vote": "Support-it",
+    "cite": "the main checkout of mob-crosscli is not used by the seat, so it is untouched by construction.",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\n\nThe proposal makes its core claims verifiable from git and closes the main loopholes without adding unbuildable trace machinery. Isolating the green seat in a dedicated git worktree, merged with `--ff-only`, together with before-and-after `git rev-parse HEAD` and `git status --porcelain` checks and the committed `green-codex-events.jsonl` stream, keeps the main checkout untouched by construction. Cycle 1 requires red-first commit and push refusal assertions, G2 commits mutation patches under `.mob/records/313/`, G3 forces HOLD on any `record-only` or `blocked` step, and `git diff` "
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d313i",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "The green seat works only in its own separate git worktree",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nThe decision will rest on evidence. There are three Done checks, one per cycle, and cycle 1 is red-first against today's code. The cycles that may have no red each carry a committed mutation pair (G2). The G3 table walks every step and gap of `hold_vote_lock`, and it makes HOLD the verdict if any line reads \"record-only\". The seats cover the work: product manager, architect, QA, backend developer (green), independent reviewer, and a sign-off who did not write the green. The worktree removes the main-checkout risk. The counter-metrics guard against Goodhart effects.\n\nCITE: The green seat w"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d313i",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "the green seat works in its own git worktree",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\nThis task force is sized to the bug: it covers the needed perspectives—product-value, race-condition analysis, red/green validation, independent review, and sign-off—without padding. The separate worktree and fresh-seat rules are justified because the defect crosses git state and a vote lock; keeping the main checkout untouched is a proportional safeguard. D153/D187/D193 all support the use of targeted role coverage and a narrow, auditable gate rather than a broad ceremony.\nCITE: the green seat works in its own git worktree\n\n"
+   }
+  ]
+ },
+ "cite_reasks": {
+  "d313j": {
+   "qa": {
+    "tag": "d313j",
+    "seat": "codex",
+    "vote": "Support-it",
+    "cite": "<at least 6 consecutive words copied exactly from the proposal below>\" (D171). Proposal:",
+    "cite_verbatim": false,
+    "reply_head": "Support-it\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1b422-d67e-7da3-9520-f86fdbc8c56c\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are s"
+   },
+   "dev": {
+    "tag": "d313j",
+    "seat": "agy",
+    "vote": "Yes",
+    "cite": "a decision run that starts as another ends is never left without a vote lock",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nThe green seat rules are clear, workable, and fair without gaming. Running the green turn inside an isolated git worktree (`C:/home/<user>) keeps the main checkout untouched by construction with zero extra ceremony for the developer. Bounded 5-attempt registration retries on `FileNotFoundError` with one stderr warning on exhaustion, no production seam, fast deterministic unit tests in `VoteLockRegistration`, and QA-authored mutation patches for the no-red cycles make the implementation straightforward and unambiguous.\n\nCITE: a decision run that starts as another ends is never left without"
+   }
+  },
+  "d313k_qa_replacement_seat": {
+   "tag": "d313k",
+   "seat": "claude",
+   "vote": "Yes",
+   "cite": "the green seat works in its own git worktree",
+   "cite_verbatim": true,
+   "reply_head": "Yes\n\nFrom the QA lens, the red-first plan holds up. Cycle 1 [O], [B] and [E] fail on today's code, and the added commit-and-push refusals with zero git writes assert the actual harm. The cycles that may start green (cycle 2's replace point and readers, and cycle 3) each carry a named mutation pair. Each pair breaks one stated property, so a vacuous pass would be caught. G3 holds the verdict until the facilitator runs the probe for any step marked \"record-only\" or \"blocked\". The deterministic `os.open` and `os.replace` patching needs no sleeps or threads. The worktree adds before-and-after `HEA"
+  }
+ },
+ "independent_rerun": {
+  "architect": [
+   {
+    "tag": "d313l",
+    "seat": "copilot",
+    "vote": "Yes",
+    "cite": "a decision run that starts as another ends is never left without a vote lock",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nThe design is sound and minimal: it targets the single race window with a bounded retry around registration, keeps `facilitator.py` read-only, and adds only one explicit new observable (stderr warning on exhausted retries). The checker rules are enforceable without obvious false positives because they rely on deterministic fault injection at named points (not timing sleeps), assert concrete lock ownership/zero-write outcomes for commit and push, and include mutation pairs that prove tests are sensitive where cycles may start green. This is a tight fix with clear scope boundaries (314/315 "
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d313l",
+    "seat": "codex",
+    "vote": "Yes",
+    "cite": "a decision run that starts as another ends is never left without a vote lock",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nCITE: a decision run that starts as another ends is never left without a vote lock\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1b429-f6af-7c53-854d-1d812d0d2830\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. Yo"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d313l",
+    "seat": "agy",
+    "vote": "Yes",
+    "cite": "the main checkout of mob-crosscli is not used by the seat, so it is untouched by construction.",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nFrom the backend developer lens, these rules are workable, unambiguous, and fair. Running the green seat in its own git worktree isolates the main checkout by construction without adding transcript-parsing ceremony. The 5-attempt retry loop on `FileNotFoundError` in `hold_vote_lock` with a stderr warning on exhaustion, the deterministic wrapper tests in `VoteLockRegistration`, the D193 narrow-suite and mutation-pair checks, and the explicit literal-path delete rule are clear and can be met cleanly without gaming.\n\nCITE: the main checkout of mob-crosscli is not used by the seat, so it is u"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d313l",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "the green seat works only in its own separate git worktree",
+    "cite_verbatim": false,
+    "reply_head": "Yes\n\nMost of the proposal can be checked from git alone. The worktree branch merges fast-forward only, the mutation patches are committed under `.mob/records/313/`, and the Codex `--json` stream is stored for the reviewer to read for delete commands. The one soft spot is the main checkout's before and after `HEAD` and `status --porcelain` lines. They are facilitator-typed records, and `git status` can't be replayed later. That is a small loophole because `HEAD` is anchored by the ff-only merge, and I'm not making it a condition. The G3 rule, where any \"record-only\" or \"blocked\" line means HOLD"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d313l",
+    "seat": "copilot",
+    "vote": "Yes",
+    "cite": null,
+    "cite_verbatim": false,
+    "reply_head": "Yes\n\n"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d313l",
+    "seat": "codex",
+    "vote": "Support-it",
+    "cite": "<at least 6 consecutive words copied exactly from the proposal below>\" (D171). Proposal:",
+    "cite_verbatim": false,
+    "reply_head": "Support-it\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1b430-dac3-79c1-9a56-5ef65c3d4f73\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are s"
+   }
+  ]
+ },
+ "rerun_cite_reasks": {
+  "auditlens": {
+   "tag": "d313m",
+   "seat": "agy",
+   "vote": "Support-it",
+   "cite": "the main checkout of mob-crosscli is not used by the seat, so it is untouched by construction.",
+   "cite_verbatim": true,
+   "reply_head": "Support-it\n\nFrom the audit lens, the proposal is verifiable from git alone and closes the overlap loopholes without the over-specified trace machinery that caused D194 to fail. Running the green seat in a separate git worktree keeps the main checkout untouched by construction, backed by recorded before-and-after HEAD and porcelain status lines and the committed green-codex-events.jsonl stream. Cycle 1 scenarios [O] and [B] assert red-first that facilitator commit and push attempts during B's vote are refused with zero git writes. The D193 trial items (G1 suite table, G2 committed mutation patc"
+  },
+  "decider": {
+   "tag": "d313m",
+   "seat": "claude",
+   "vote": "Yes",
+   "cite": "The green seat works only in its own separate git worktree",
+   "cite_verbatim": true,
+   "reply_head": "Yes\n\nThe framing rests on evidence. Cycle 1 is red-first against today's code, and the sign-off probe is reproducible. Where cycles 2 and 3 may start green, committed mutation pairs (M2a/M2b, M3a/M3b) prove the tests can fail. Rerunnable `git grep` line references back the code facts. The G3 table lists every gap in `hold_vote_lock`. The worktree keeps main untouched, and the before/after `rev-parse` and status check makes that checkable. The seats cover the work: architect, QA, Codex green with a Claude fallback, a Copilot reviewer who did not author, and a fresh sign-off. Leaving out UX, sec"
+  },
+  "coach": {
+   "tag": "d313m",
+   "seat": "copilot",
+   "vote": "Support-it",
+   "cite": "The green seat works only in its own separate git worktree",
+   "cite_verbatim": true,
+   "reply_head": "Support-it\nThis is sized for a precise concurrency bug: architect for race semantics, QA for red-cycle coverage, green for implementation, reviewer for regression guardrails, and sign-off for final verification. The green seat’s separate worktree and no-main-checkout rule are good discipline, and the D193 trial remains bounded. I would not add extra roles; the work is narrow and not padded with ceremony.\nCITE: The green seat works only in its own separate git worktree\n\n"
+  }
+ }
+}
