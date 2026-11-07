@@ -289,6 +289,13 @@ jobs:
         # Then exactly card 6 is reported (TAKEOVER by the facilitator: the mutant that empties check_retros survived round 2)
         self.assertEqual(["Card 006 has no retro Cards entry"], errors)
 
+    def test_a_not_planned_card_with_the_not_card_label_needs_no_retro_entry(self):
+        # Given a closed card issue 5 and a closed card issue 6 that carries not-card (closed as not planned, no work done)
+        issues = [issue(5), issue(6, labels=("card", "not-card"))]
+        # When the closed cards that need a retro Cards entry are collected
+        # Then card 6 is not among them, exactly as check_records already excludes it
+        self.assertEqual({5}, mob.closed_card_numbers(issues))
+
     def test_workflow_bypasses_previous_checker_and_codeowners(self):
         self.assertEqual([],mob.check_workflows(self.root))
         (self.root/".github/workflows/ci.yml").write_text("jobs:\n  mob-process:\n    continue-on-error: true\n    steps:\n      - run: python3 scripts/mob_process.py check || true\n",encoding="utf-8")
