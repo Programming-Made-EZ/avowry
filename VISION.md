@@ -73,7 +73,7 @@ This paragraph measures the vocabulary's economy (LLM work removed). It is conte
 
 ## How this relates to the rest
 
-- Design rules and the grammar: [docs/GRAMMAR.md](docs/GRAMMAR.md). Its rule 3 ("small fixed core, open phrase
+- Design rules and the grammar: [docs/GRAMMAR.md](docs/GRAMMAR.md). Its rule 3 ("small fixed core, open avow
   library") is reconciled with this vision by the keyword model ADR (card 022): keywords are the standard-library
   avows that ship with Avowry.
 - Who a story is about: [PERSONAS.md](PERSONAS.md). A story names one of these personas (not a role) and its "so that" is value to that persona (product owner, 2026-10-26).

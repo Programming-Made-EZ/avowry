@@ -3,7 +3,7 @@
 
 This is the TEMPLATE for a sealed holdout task (Decider D32; the product owner's priority ruling 2026-10-26). One task is ONE file, UTF-8, LF line endings, no BOM,
 named `H<n>-<kind>.md` (for example `H1-write.md`, `H2-modify.md`, `H3-write.md`). Written OUTSIDE the mob by someone who will not drive or review cards 086 to 088.
-The mob never reads it before card 088 unseals it. The file is neutral: it names no language. The harness derives the Phrase prompt and the plain-C# prompt from it with the SAME wrapper,
+The mob never reads it before card 088 unseals it. The file is neutral: it names no language. The harness derives the Avowry prompt and the plain-C# prompt from it with the SAME wrapper,
 so nothing here may favour either language.
 
 ## Header (exactly these keys, one per line)
@@ -12,11 +12,11 @@ so nothing here may favour either language.
 - **kind:** write | modify            (write = build it from nothing; modify = change existing code; "read" and "fix" tasks are not used for the holdout)
 - **fits_no_pattern:** true | false   (exactly ONE of the three holdouts is true: a task that fits no pattern in docs/pattern-candidates-raw.md or the seed catalogue)
 - **why_it_fits_no_pattern:** <one sentence if true, otherwise: n/a>
-- **libraries:** the libraries both arms may use (for example: ASP.NET Core minimal API or FastEndpoints; the C# arm and the Phrase-generated arm use the SAME ones)
+- **libraries:** the libraries both arms may use (for example: ASP.NET Core minimal API or FastEndpoints; the C# arm and the Avowry-generated arm use the SAME ones)
 
 ## The task, in plain words (neutral)
 
-What the program must do, for a person who has never seen Phrase. Inputs, outputs, failure cases, in prose. Keep it small enough for one model run (a few paragraphs).
+What the program must do, for a person who has never seen Avowry. Inputs, outputs, failure cases, in prose. Keep it small enough for one model run (a few paragraphs).
 
 ## Observable outcomes (the cases both arms are judged by)
 
@@ -38,7 +38,7 @@ Two equivalent starting points that behave the same, so the change is the same s
 
 ### start.avowry
 ```avowry
-<the existing Phrase source>
+<the existing Avowry source>
 ```
 
 ### start.cs

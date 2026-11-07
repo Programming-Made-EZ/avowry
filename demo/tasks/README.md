@@ -1,6 +1,6 @@
 # Tasks demo
 
-The Tasks API is the Usable v1 prototype: a five-endpoint CRUD service written in Phrase, compiled to C#, and verified by eleven Given/When/Then specs.
+The Tasks API is the Usable v1 prototype: a five-endpoint CRUD service written in Avowry, compiled to C#, and verified by eleven Given/When/Then specs.
 
 Principle: a language is usable when a reader can compile a real app, run its specs, start it and call an endpoint from one page of commands, because "usable" is a procedure, not a claim.
 
@@ -21,7 +21,7 @@ Generated C# is an artifact, not the source of truth. Write it outside the repos
 dotnet run --project src/Avowry.Cli -- build demo/tasks/Tasks.avowry -o /tmp/avowry-tasks
 ```
 
-Expected: the Phrase compiler prints nothing and exits 0. It writes `/tmp/avowry-tasks/Tasks.Api` and `/tmp/avowry-tasks/Tasks.Specs`.
+Expected: the Avowry compiler prints nothing and exits 0. It writes `/tmp/avowry-tasks/Tasks.Api` and `/tmp/avowry-tasks/Tasks.Specs`.
 
 ```bash
 dotnet build /tmp/avowry-tasks/Tasks.Api
@@ -117,9 +117,9 @@ Failures answer HTTP 422 with the declared error name in `generalErrors`. The na
 
 ## Native C# remaining
 
-Five `native csharp` blocks remain. Completing a task is now a Phrase update (`task with { done: true }`) plus the existing load and save steps. The remaining blocks are the escape hatch for store operations and record construction that Phrase does not yet express. The list is in [docs/PATTERNS.md](../../docs/PATTERNS.md).
+Five `native csharp` blocks remain. Completing a task is now an Avowry update (`task with { done: true }`) plus the existing load and save steps. The remaining blocks are the escape hatch for store operations and record construction that Avowry does not yet express. The list is in [docs/PATTERNS.md](../../docs/PATTERNS.md).
 
-Library patterns belong in Phrase so a reader can see the rule without reading C#:
+Library patterns belong in Avowry so a reader can see the rule without reading C#:
 
 - Card 159, [a validation step](../../board/159-a-validation-step-in-phrase-ensure-a-condition-or-fail-with-a-declared-name.md): ensure a condition or fail with a declared name
 - Card 160, [a record update form](../../board/160-a-record-update-form-a-copy-of-a-record-with-one-field-changed.md): a copy of a record with one field changed

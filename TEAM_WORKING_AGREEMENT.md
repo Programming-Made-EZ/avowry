@@ -1,4 +1,4 @@
-# Team Working Agreement: Phrase
+# Team Working Agreement: Avowry
 
 Seeded from the mob-crosscli default template (`templates/TEAM_WORKING_AGREEMENT.default.md`). The
 facilitator refuses to start a card in a repo without this file.
@@ -9,7 +9,7 @@ generic parts only. Adopted 2026-10-25 by the mob facilitator on the product own
 
 ## North star
 
-[VISION.md](VISION.md) is the purpose of Phrase, from the product owner's ruling. **Product decisions are judged against it**,
+[VISION.md](VISION.md) is the purpose of Avowry, from the product owner's ruling. **Product decisions are judged against it**,
 at every Decider that touches the product, and the board and milestones are assessed against it. A question about
 the product's purpose or direction is answered by VISION.md first; it escalates to product owner only if VISION.md does not
 settle it.
@@ -83,7 +83,7 @@ Process improvements serve the user story being worked. They are not board cards
   - Trunk-based main stays green because the failing acceptance test is committed with `Status=Pending` (excluded from the gate) and a `Criterion=NNN-K` trait; the green commit removes `Pending` in the same commit that makes it pass; a CI job (`pending-red`) requires pending criterion tests to fail by assertion; at most one criterion test is pending at a time and none survives its card (D137).
   - The trail record shows the sequence per criterion (red commit, ordered unit commits, green commit) and, for the criteria and for each layer's unit tests, the ZOMBIES test per letter or "N/A because" a reason.
 
-- **Code follows `docs/CODING_GUIDELINES.md`.** One short document for this repository's own code: high cohesion and low coupling, dependencies pointing one way, small functions, naming, no throwing on user input, deterministic cross-platform output, tests that can fail, no dead code. Reviewers check every change against its checklist. It is separate from the project-profile standards Phrase applies to generated code (`docs/adr/ADR-library-binding-layering.md`).
+- **Code follows `docs/CODING_GUIDELINES.md`.** One short document for this repository's own code: high cohesion and low coupling, dependencies pointing one way, small functions, naming, no throwing on user input, deterministic cross-platform output, tests that can fail, no dead code. Reviewers check every change against its checklist. It is separate from the project-profile standards Avowry applies to generated code (`docs/adr/ADR-library-binding-layering.md`).
 - **Outside-in TDD** is defined in the first bullet of this section (Outside-in TDD with ZOMBIES, D137); the other bullets here (honest red, red-green-refactor, trunk-based) apply to every cycle of it.
 - **TDD red-first is a hard rule (product owner ruling, 2026-11-07; permanent, not an experiment).** Every behaviour-changing criterion starts with an acceptance test that is **watched failing** for the right reason before any production change. Then come the unit cycles, green, refactor, commit and push. Watch the test fail for the right reason; a red that survives when only the fix is reverted is not proof. Every test carries Given/When/Then comments. Mutation evidence (a put-back or a mutation patch that makes a test fail) is an extra check; it never substitutes for a watched red. A criterion that only characterises behaviour that already exists is declared as characterisation on the card up front, with the reason. **Any test born green, and any production change made before its red, is raised as a finding at that card's retro (the seats, the reason the slice allowed it, and whether the criterion was new behaviour or characterisation); it is never accepted silently, and the facilitator reports it to the product owner.**
 - **Red → Green → Refactor → Commit → Push**, every cycle. Refactor covers test code too, and must keep
@@ -153,7 +153,7 @@ column is empty AND the retro produced no new cards, or when product owner says 
 
 ### LLMs are the customers (standing rule, product owner, 2026-10-25)
 
-Phrase's target consumer is LLMs, so every model in the rotation (Codex, Copilot, Grok, agy/Gemini, and
+Avowry's target consumer is LLMs, so every model in the rotation (Codex, Copilot, Grok, agy/Gemini, and
 Claude as a voice) is a source of product ideas.
 
 - **Every retro covers four categories:** Individual, Team, Organization and **Product**, and opens with
@@ -165,7 +165,7 @@ Claude as a voice) is a source of product ideas.
   intent, a missing construct) and proposes **at most 2 improvements, each with a concrete example**.
   Feedback-gathering turns are read-only and write no files in the repo.
 - **These ideas are raw input.** The PM, with the domain expert (the language designer), dedups them and
-  weighs value against effort and fit with Phrase's principles ("the code is the context", specs are
+  weighs value against effort and fit with Avowry's principles ("the code is the context", specs are
   truth). Winners are refined into Connextra + ZOMBIES cards and ranked on the board. **Every rejected
   idea is recorded with the reason it was rejected** (in the retro entry).
 - **After each retro the facilitator reports to product owner** which cards came from model feedback and their
@@ -180,12 +180,12 @@ Claude as a voice) is a source of product ideas.
 - **Model disagreement** (retro product feedback, design debates, reviews): run the Decider protocol first.
 - **Whether anything escalates is itself decided by a Decider.**
 - **Escalate to product owner ONLY if** (a) the question is about the language's overall purpose or direction
-  (what Phrase is for, or who it serves), or (b) a model conflict the Decider could not resolve.
+  (what Avowry is for, or who it serves), or (b) a model conflict the Decider could not resolve.
 - **Format:** one short message with the options, each model's position in one line, and a recommendation;
   answerable in one word.
 - **Safety carve-out (does not widen what gets escalated):** actions outside the mob's authority still need the product owner's
   explicit OK before execution, presented as a one-word ask: destructive or irreversible changes to production or user
-  data, spending money, security or privacy exposure, and external commitments. Phrase specifics: publishing a package
+  data, spending money, security or privacy exposure, and external commitments. Avowry specifics: publishing a package
   or release (an external commitment) and any spend beyond the prepaid driver allotments.
 
 ### Decider protocol (the default for every team decision)
@@ -268,7 +268,7 @@ are logged in `docs/experiments/` (one file each) and in MOB.md, not in this agr
 - **Until a baseline is established, no idea, feature or experiment may be rejected, reverted or dropped because it "didn't
   move the metrics".** There is nothing yet to move.
 - **Keep writing hypotheses and keep recording measurements.** They build the baseline and the history. Decisions in this phase
-  use judgment, through the Decider: Phrase's principles and `VISION.md`, qualitative evidence (cold reads, review findings), and cost.
+  use judgment, through the Decider: Avowry's principles and `VISION.md`, qualitative evidence (cold reads, review findings), and cost.
 - **What is still allowed:** rejecting on principle, safety, correctness, security or cost; and the stop-the-line items (data
   loss, a security hole, a broken trunk or deploy). Only the metric-based keep/revert is paused.
 - **Exit:** metric-based keep/revert starts only when the mob, by a Decider, declares the baseline **established**, with the
@@ -291,7 +291,7 @@ The aim is value for a persona, not a number. Teams go wrong when they pick a sp
 - **Start from value.** Every improvement card states the value it is meant to create for a persona (for example "a reviewer can tell intent from a diff faster"), not a figure to reach (for example "tokens at 75 percent of the baseline"). The hypothesis says why the change should create that value; the data checks whether it did and what it cost.
 - **Metrics are evidence and trade-off detectors, not targets.** Measure the effect honestly and report what improved, what got worse and by how much, then judge whether the value was delivered. A number moving is not success on its own, and a number not moving is not failure on its own.
 - **Keep honest measurement hygiene.** Pre-register what will be measured and how, so results cannot be cherry-picked or re-scored after the fact. Keep holdouts and counter-metrics, and rotate or refresh tasks so nobody tunes the project to the suite. A pre-registered threshold is a guard against self-deception, not the goal and not the verdict.
-- **Verdicts are judgments backed by data.** A pass or fail stamp against a frozen bar is not the verdict. Example: "Phrase costs about five times the tokens on tiny tasks, makes no accuracy difference for strong models, raised the weakest model to 100 percent and caught every planted bug where specs existed. So the bet on verifiability is supported, cost is a trade-off to work on, and beating the baseline was never the goal."
+- **Verdicts are judgments backed by data.** A pass or fail stamp against a frozen bar is not the verdict. Example: "Avowry costs about five times the tokens on tiny tasks, makes no accuracy difference for strong models, raised the weakest model to 100 percent and caught every planted bug where specs existed. So the bet on verifiability is supported, cost is a trade-off to work on, and beating the baseline was never the goal."
 - **The suite is versioned.** Changing tasks, scoring or prompts needs a Decider run and a note in the status file, and is never bundled with the feature it measures.
 - **No special-casing the benchmark.** No grammar or compiler hack that only helps benchmark tasks. Reviewers check this explicitly.
 - **Qualitative check.** Every metric win also needs a model to read the change cold and explain it, and the change is sanity-checked against the product's principles.
@@ -366,7 +366,7 @@ Roles are the primary perspectives; models are the staff who fill them. Diversit
 - **Repeat guardrail on staffing (audit 13, finding F-037, the second staffing failure after card 195).** Codex, or any non-Claude model with usable quota, is seated first in every role-seat it can take, each role in its own fresh context; one model filling every seat is acceptable when it is the only model with quota. Every Claude seat carries a recorded reason (for example: no non-Claude model has usable quota, or the role needs a model family different from the author's). Deciders count: a Decider seat is a seat.
 - **No seat without fresh probes (audit 15, finding F-040, the third staffing failure).** Before every seat assignment, including every Decider seat, review seat and retro voice, the team checks that the Codex, Copilot, Grok and agy probes are under 60 minutes old and re-probes first if any is older; the probe evidence is committed under .mob/records/probes/ and DRIVERS.md cites it. This applies to the whole team, not only to card starts.
 - **Rules that do not change.** One context never holds two roles, and above all never author and reviewer of the same change. The author of a change never votes on it; reviews are non-author by role and by context; one model may hold several roles on a card only in separate fresh contexts. A reviewer from a different model than the author is preferred; when no other model is available, a fresh context of the same model reviews, and the record says so.
-- **Model diversity still matters, but never blocks.** Prefer spreading roles across different models when available. For Phrase's benchmarks the models are the customers and the test subjects, so which models were run is part of the evidence. Claude is a reasonable extra model for the benchmarks if the team wants another data point, decided by Decider and pre-registered as usual.
+- **Model diversity still matters, but never blocks.** Prefer spreading roles across different models when available. For Avowry's benchmarks the models are the customers and the test subjects, so which models were run is part of the evidence. Claude is a reasonable extra model for the benchmarks if the team wants another data point, decided by Decider and pre-registered as usual.
 
 ### Decisions stay reversible (standing rule)
 
@@ -518,9 +518,9 @@ Each experiment states its hypothesis, the metric, a trial length with its unit,
 
 ## 4. Project specifics
 
-- **Product and users:** Phrase is an LLM-friendly language. Behavior is named by sentence-style phrases with
+- **Product and users:** Avowry is an LLM-friendly language. Behavior is named by sentence-style phrases with
   typed holes, specified by Given/When/Then specs that are the source of truth, and compiled through an IR
-  to C#/FastEndpoints first. Users are engineers and LLMs writing and maintaining Phrase programs.
+  to C#/FastEndpoints first. Users are engineers and LLMs writing and maintaining Avowry programs.
 - **Toolchain and the gate:** .NET 8 SDK (user-scope install in `%USERPROFILE%\.dotnet`; set `DOTNET_ROOT`
   and put it first on `PATH` for runs). Green means `dotnet test Avowry.sln --filter "Status!=Pending"`
   passes with zero warnings (`TreatWarningsAsErrors` is on). Tests marked `Status=Pending` are the to-do

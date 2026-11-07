@@ -20,7 +20,7 @@ the mob-defaults README change only if it is kept.
 ## Hypothesis
 
 We believe true mobbing will reduce review findings, reverts and rework per increment, and cut cycles-to-green, for
-the Phrase mob. We'll know when, on the card it is run on, findings per increment, reverts per increment and
+the Avowry mob. We'll know when, on the card it is run on, findings per increment, reverts per increment and
 cycles-to-green move from the card-001 baseline to lower values, with these counter-metrics reported alongside
 (Goodhart guard): tokens per shipped increment and wall-clock time per increment.
 

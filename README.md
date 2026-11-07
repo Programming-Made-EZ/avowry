@@ -2,7 +2,9 @@
 
 A programming language for LLMs where **names are descriptions** and **specs are the truth**. Code at every level reads as its own summary, so the code is the context. Avowry compiles through a language-neutral IR to target providers; C# (FastEndpoints + xUnit) is first. Avowry is the language; each avow is one line of intent in it.
 
-The current implementation uses the `avowry` command and still uses the `.avowry` file extension. The file extension is renamed in a later card.
+The current implementation uses the `avowry` command and still uses the `.avowry` file extension.
+
+Avowry was named Phrase until 2026-10-29; older records keep the old name.
 
 - **Purpose and north star: [VISION.md](VISION.md)** (a vocabulary of common patterns an LLM reads and writes for free, in any language; both a spec and a library)
 - Grammar and resolution rules: [docs/GRAMMAR.md](docs/GRAMMAR.md)
@@ -14,8 +16,9 @@ The current implementation uses the `avowry` command and still uses the `.avowry
 
 ```
 docs/GRAMMAR.md                    v0.1 grammar, resolution, lints, vocabulary
-src/Avowry.Compiler                Lexer, Parser, formatter (done); Semantics model (designed), Resolver (stub)
-src/Phrase.Providers.CSharp        CSharpProvider (stub)
+src/Avowry.Compiler                Lexer, Parser, formatter, Semantics model, Resolver
+src/Avowry.Adapters.CSharp         CSharpProvider, the C# target adapter
+src/Avowry.Cli                     the avowry command (build, trace)
 tests/Avowry.Compiler.Tests        inner-loop unit tests (lexer 51, parser 79, formatter 8, resolver 83 pending)
 tests/Avowry.Acceptance.Tests      outer-loop acceptance tests + harness
 reference/csharp                   hand-written target output (FastEndpoints + xUnit)
