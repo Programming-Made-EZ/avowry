@@ -1,0 +1,13 @@
+diff --git a/tests/Avowry.Compiler.Tests/Avowry.Compiler.Tests.csproj b/tests/Avowry.Compiler.Tests/Avowry.Compiler.Tests.csproj
+index 272170b..e2605e3 100644
+--- a/tests/Avowry.Compiler.Tests/Avowry.Compiler.Tests.csproj
++++ b/tests/Avowry.Compiler.Tests/Avowry.Compiler.Tests.csproj
+@@ -15,7 +15,7 @@
+   </ItemGroup>
+   <ItemGroup>
+     <!-- One source of truth for fixtures: linked from the acceptance tests. -->
+-    <None Include="../Avowry.Acceptance.Tests/Fixtures/**/*" LinkBase="Fixtures" CopyToOutputDirectory="PreserveNewest" />
++    <None Include="../Phrase.Acceptance.Tests/Fixtures/**/*" LinkBase="Fixtures" CopyToOutputDirectory="PreserveNewest" />
+     <None Include="../../src/Avowry.Compiler/Avowry.Compiler.csproj" Link="Avowry.Compiler.csproj" CopyToOutputDirectory="PreserveNewest" />
+   </ItemGroup>
+ </Project>

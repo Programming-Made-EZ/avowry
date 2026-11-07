@@ -4,7 +4,7 @@ Avowry.Acceptance.Tests, with nothing lost and nothing left pointing at the old 
 One class per cycle, so later cycles add a class and never edit an earlier one:
   RenameCycle1     Criterion 1 (Z, E): the old names are gone from tracked live files; the new directories are tracked.
   ListsAndStrings  Criterion 2 (O, M, B): lists, strings and line endings survive the rename
-  PathBound        Criterion 3 (cycle 3, not yet written)
+  PathBound        Criterion 3 (I, S): path-bound scripts, the solution and a byte-exact anchored rewrite hold
 
 The old names are built from fragments below, so this file never contains the literal old names and the scan
 never matches itself.
@@ -16,6 +16,7 @@ No test deletes anything: copies live in tempfile.TemporaryDirectory.
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -279,6 +280,202 @@ class ListsAndStrings(unittest.TestCase):
                 differing = sorted(p for p in set(expected) | set(actual) if expected.get(p) != actual.get(p))
                 detail = "; ".join(f"{p}: baseline {expected.get(p)} now {actual.get(p)}" for p in differing[:10])
                 self.assertEqual([], differing, f"{len(differing)} files differ in i/ w/ line endings: {detail}")
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# Cycle 3 (Criterion 3: I integration with the five python modules, S the solution and the byte-exact rewrite).
+# Born green on the finished rename. Named put-backs: .mob/records/196/mutations/P3*.patch
+# (see .mob/records/196/red-record-3.md).
+# ---------------------------------------------------------------------------------------------------------------
+
+PYTHON_MODULES = (
+    ("tests.test_bench_launcher_scan_264", 6),
+    ("tests.test_outcome_extractors_217", 17),
+    ("tests.test_repeat_evidence", 21),
+    ("tests.test_run_pairs_217", 36),
+    ("tests.test_readme_reference_status", 4),
+)
+RENAME_MARKER = "tests/" + NEW_COMPILER + "/" + NEW_COMPILER + ".csproj"
+STARVATION_PROBE = "tests/Fixtures/StarvationProbe/Program.cs"
+# Paths of the rename commit that are not part of the rewrite: this test file and the mob records.
+REWRITE_EXEMPT = ("tests/test_rename_196.py", ".mob/")
+
+
+def rename_commit():
+    """R: the commit that first added the Compiler csproj. Without --follow the log reports the rename target as
+    the add, which is what we want here."""
+    added = git("log", "--diff-filter=A", "--reverse", "--format=%H", "--", RENAME_MARKER).decode().split()
+    if not added:
+        raise AssertionError(f"no commit adds {RENAME_MARKER}")
+    return added[0]
+
+
+def changed_entries(commit):
+    """(status, old path, new path) for every file changed between commit^ and commit, renames detected."""
+    fields = [f for f in git("diff", "-M", "--name-status", "-z", commit + "^", commit).decode("utf-8").split("\0") if f]
+    entries, i = [], 0
+    while i < len(fields):
+        status = fields[i]
+        if status[0] in "RC":
+            entries.append((status, fields[i + 1], fields[i + 2]))
+            i += 3
+        else:
+            entries.append((status, fields[i + 1], fields[i + 1]))
+            i += 2
+    return entries
+
+
+def blobs(specs):
+    """Raw bytes of each 'rev:path' (no eol or text conversion), through one git cat-file --batch."""
+    process = subprocess.run(
+        ["git", "cat-file", "--batch"], cwd=REPO, input=("\n".join(specs) + "\n").encode("utf-8"),
+        capture_output=True, check=True,
+    )
+    data, position, out = process.stdout, 0, {}
+    for spec in specs:
+        newline = data.index(b"\n", position)
+        header = data[position:newline].split()
+        if header[-1] == b"missing":
+            raise AssertionError(f"{spec} is missing")
+        size = int(header[2])
+        out[spec] = data[newline + 1:newline + 1 + size]
+        position = newline + 1 + size + 1
+    return out
+
+
+def anchored_rewrite(old_bytes, path):
+    """The one anchored rewrite, at the byte level, plus the one explicit StarvationProbe edit."""
+    new_bytes = OLD_NAMES.sub(lambda m: b"Avowry." + m.group(1) + b".Tests", old_bytes)
+    if path == STARVATION_PROBE:
+        new_bytes = new_bytes.replace(
+            ('StartsWith("' + _OLD_STEM + '.Acceptance"').encode(), b'StartsWith("Avowry.Acceptance"'
+        )
+    return new_bytes
+
+
+def run_module(module):
+    """Run python -m unittest <module>; return (tests run, ok, seconds, stderr tail)."""
+    import time
+
+    started = time.time()
+    result = subprocess.run([sys.executable, "-m", "unittest", module], cwd=REPO, capture_output=True)
+    seconds = time.time() - started
+    text = result.stderr.decode("utf-8", "replace")
+    ran = re.search(r"Ran (\d+) tests?", text)
+    ok = result.returncode == 0 and re.search(r"^OK\b", text, re.M) is not None
+    return (int(ran.group(1)) if ran else None), ok, seconds, "\n".join(text.strip().splitlines()[-12:])
+
+
+def load_script(name):
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(name.replace("-", "_") + "_196", REPO / "scripts" / f"{name}.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def project_guids(text):
+    """{project name: (csproj path, guid)} from the Project(...) lines of a solution file."""
+    found = {}
+    pattern = r'^Project\("\{[0-9A-Fa-f-]+\}"\) = "([^"]+)", "([^"]+)", "\{([0-9A-Fa-f-]+)\}"'
+    for m in re.finditer(pattern, text, re.M):
+        found[m.group(1)] = (m.group(2), "{" + m.group(3).upper() + "}")
+    return found
+
+
+class PathBound(unittest.TestCase):
+    """Criterion 3. I integration (scripts and tests that resolve a project by name or path do real work, not
+    vacuous work), S solution (Phrase.sln pairs each project with its own GUID, the fixture link resolves, and every
+    changed file is the old file's bytes under the one anchored rewrite)."""
+
+    def test_five_modules(self):
+        problems, timings = [], []
+        for module, expected in PYTHON_MODULES:
+            ran, ok, seconds, tail = run_module(module)
+            timings.append(f"{module} {ran} {'OK' if ok else 'FAILED'} {seconds:.1f}s")
+            if ran != expected or not ok:
+                problems.append(f"{module}: expected {expected} tests OK, got ran={ran} ok={ok}\n{tail}")
+        self.assertEqual([], problems, "\n".join(problems) + "\n" + "; ".join(timings))
+
+    def test_launcher_scan_not_vacuous(self):
+        import importlib
+
+        module = importlib.import_module("tests.test_bench_launcher_scan_264")
+        directory = Path(module.ACCEPTANCE)
+        self.assertTrue(directory.is_dir(), f"ACCEPTANCE {directory} is not a directory")
+        sources = [p for p in directory.rglob("*.cs") if not {"bin", "obj"} & set(p.relative_to(directory).parts)]
+        # 69 tracked .cs files at the rename (the brief's 90 was a miscount: 100 is every tracked file in the project).
+        self.assertGreaterEqual(
+            len(sources), 60, f"ACCEPTANCE {directory} holds {len(sources)} .cs files; a missed path scans nothing"
+        )
+
+    def test_extractor_not_empty(self):
+        extractor = load_script("ci-log-outcomes-217")
+        acceptance = NEW_ACCEPTANCE
+        lines = [
+            f"   Passed {acceptance}.Fake.One [3 s]",
+            f"   Passed {acceptance}.Fake.Two [3 s]",
+            f"   Failed {acceptance}.Fake.Three [3 s]",
+            "", "Test Run Failed.", "Total tests: 3", "     Passed: 2", "     Failed: 1", " Total time: 1 Minutes",
+        ]
+        log = "\n".join(f"test\tUNKNOWN STEP\t2026-11-05T17:59:45.0000000Z{line}" for line in lines) + "\n"
+        try:
+            outcomes = extractor.extract_text(log.encode("utf-8"), "synthetic.txt", job="test")["outcomes"]
+        except extractor.Rejected as rejected:
+            self.fail(f"the 217 extractor rejects a log of {acceptance} result lines: {rejected}")
+        self.assertEqual(
+            {f"{acceptance}.Fake.One": "Passed", f"{acceptance}.Fake.Two": "Passed", f"{acceptance}.Fake.Three": "Failed"},
+            outcomes,
+        )
+
+    def test_solution_guids(self):
+        wanted = {}
+        for line in (BASELINE / "project-guids.txt").read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                name, guid = line.split()
+                wanted[name.replace(_OLD_STEM + ".", "Avowry.", 1)] = guid.upper()
+        self.assertEqual({NEW_ACCEPTANCE, NEW_COMPILER}, set(wanted), "the baseline must hold both project GUIDs")
+        solution = project_guids((REPO / "Phrase.sln").read_text(encoding="utf-8"))
+        wrong = []
+        for name, guid in sorted(wanted.items()):
+            expected_path = f"tests\\{name}\\{name}.csproj"
+            found = solution.get(name)
+            if found is None:
+                wrong.append(f"{name}: no Project line in Phrase.sln")
+                continue
+            if found != (expected_path, guid):
+                wrong.append(f"{name}: Phrase.sln says {found}, expected {(expected_path, guid)}")
+            if not (REPO / expected_path.replace("\\", "/")).is_file():
+                wrong.append(f"{name}: {expected_path} does not exist")
+        self.assertEqual([], wrong, "\n".join(wrong))
+        csproj = (REPO / "tests" / NEW_COMPILER / (NEW_COMPILER + ".csproj")).read_text(encoding="utf-8")
+        links = re.findall(r'<None Include="([^"]+)/\*\*/\*" LinkBase="Fixtures"', csproj)
+        self.assertEqual(["../" + NEW_ACCEPTANCE + "/Fixtures"], links, "the Compiler csproj must link the acceptance fixtures")
+        target = (REPO / "tests" / NEW_COMPILER / links[0]).resolve()
+        self.assertTrue(target.is_dir(), f"the Compiler csproj link target {links[0]} ({target}) does not exist")
+
+    def test_rewrite_is_byte_exact_and_anchored(self):
+        commit = rename_commit()
+        entries = [e for e in changed_entries(commit) if not e[2].startswith(REWRITE_EXEMPT)]
+        self.assertGreater(len(entries), 100, f"rename commit {commit[:7]} changes {len(entries)} files")
+        unexpected = [f"{s} {o} -> {n}" for s, o, n in entries if s[0] not in "RM"]
+        self.assertEqual([], unexpected, f"only R and M entries expected in {commit[:7]}")
+        specs = [f"{commit}^:{old}" for _, old, _ in entries] + [f"{commit}:{new}" for _, _, new in entries]
+        data = blobs(specs)
+        differing, untouched_not_r100 = [], []
+        for status, old, new in entries:
+            old_bytes, new_bytes = data[f"{commit}^:{old}"], data[f"{commit}:{new}"]
+            expected = anchored_rewrite(old_bytes, new)
+            if expected != new_bytes:
+                differing.append(f"{new} (old {len(old_bytes)} bytes, rewrite {len(expected)}, committed {len(new_bytes)})")
+            if expected == old_bytes and status != "R100":
+                untouched_not_r100.append(f"{new} is {status} but needs no rewrite")
+        self.assertEqual(
+            [], differing,
+            f"{len(differing)} of {len(entries)} changed files differ from the old bytes under the one rewrite: " + "; ".join(differing),
+        )
+        self.assertEqual([], untouched_not_r100, "a file the rewrite leaves alone must be a pure rename (R100)")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,13 @@
+diff --git a/tests/test_bench_launcher_scan_264.py b/tests/test_bench_launcher_scan_264.py
+index c0241f5..94d9bff 100644
+--- a/tests/test_bench_launcher_scan_264.py
++++ b/tests/test_bench_launcher_scan_264.py
+@@ -16,7 +16,7 @@ import unittest
+ from pathlib import Path
+ 
+ REPO = Path(__file__).resolve().parent.parent
+-ACCEPTANCE = REPO / "tests" / "Avowry.Acceptance.Tests"
++ACCEPTANCE = REPO / "tests" / "Phrase.Acceptance.Tests"
+ LAUNCHER = Path("Support") / "BenchLauncher.cs"
+ CONTRACT = Path("BenchLauncherContract.cs")  # asserts on the argument list; starts nothing
+ TARGETS_BENCH = re.compile(r'Phrase\.Bench\.csproj|RunArm\("Phrase\.Bench"|Project: "Phrase\.Bench"')

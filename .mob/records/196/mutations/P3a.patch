@@ -1,0 +1,13 @@
+diff --git a/scripts/ci-log-outcomes-217.py b/scripts/ci-log-outcomes-217.py
+index ae326f6..b1ad932 100644
+--- a/scripts/ci-log-outcomes-217.py
++++ b/scripts/ci-log-outcomes-217.py
+@@ -33,7 +33,7 @@ import re
+ import sys
+ from pathlib import Path
+ 
+-PROJECT = "Avowry.Acceptance.Tests."
++PROJECT = "Phrase.Acceptance.Tests."
+ ANSI = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
+ GH = re.compile(r"^([^\t]*)\t([^\t]*)\t(.*)$")
+ STAMP = re.compile(r"^\d{4}-\d\d-\d\dT[\d:.]+Z ?")
