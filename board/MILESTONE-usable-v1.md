@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:e74b8b9190b5375134409a158c326477c7d6b7996967543170b31ea0b62b2b35 -->
+<!-- board-table-sha256:798a9fe39d1bf52b8cf147be99a7b694ddf0b6c0e237df51cbd4acbcccbaf48c -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -133,7 +133,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 111 | 302 The C# baseline benchmark children never build concurrently | Ready | card 264 (the launcher) |
 | 112 | 300 A legacy turn on a Codex machine whose shell cannot start is refused before launch | Ready | card 297 (the command probe and the placement gate) |
 | 113 | 301 The command probe cannot be passed by copying its nonce from the prompt | Ready | card 297 (the command probe) |
-| 114 | 309 A reviewer reads a card cold in the format that gives the fewest misreads | Ready | none |
+| 114 | 309 A reviewer reads a card cold in the format that gives the fewest misreads | Done | none |
 | 115 | 306 The zero-harness-tests diagnostic is capped like the other failure summaries | Done | card 303 |
 | 116 | 232 A seat driver never opens a browser or other UI on the shared machine | Ready | none |
 | 117 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |

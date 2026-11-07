@@ -34,6 +34,8 @@ A person, or a second model with a fresh context, who reads or inherits Phrase s
 
 This mob, running Phrase on its own real work after Usable v1: the mob status API (card 038), the benchmark and the board tooling.
 
+Riley exists for dogfooding: the team uses Avowry, the product, on its own work, and in that role is a consumer of the product and a valid actor. The line: Riley is valid only when a story's value comes from using Avowry as a product (writing, running or relying on Avowry code, the way any adopting team would). Riley is not valid for mob process, seats, the Decider, the board or tooling work; that work traces its value to a real consumer (the product owner, an end user) or is waste.
+
 - **Goals:** a real service with validation, state, success responses and declared failures; missing vocabulary discovered through genuine use, not speculation; reproducible friction fed back into the catalogue, the grammar and the benchmark; evidence that Phrase reduces LLM work without losing correctness or learnability.
 - **Pain points:** toy examples that hide gaps; a demo that cannot express what the mob actually posts; a program that stores something its specs never allowed.
 - **Constraints:** first slices are in-memory records with no file or clock access inside Phrase; starts after Usable v1; no special dialect for the mob.
