@@ -6,3 +6,6 @@
 - New format rule: the card text in the proposal is a Connextra story with Gherkin scenarios and ZOMBIES letters in each title (Card format rule, TEAM_WORKING_AGREEMENT.md).
 - Probe: codex available (2026-11-06 23:28 UTC), Copilot quota 218 of 1500; agy answered a seat earlier tonight; Grok disabled in counted windows (card 291); decider.py's own probe is taken per seat (D188).
 - GitHub: the installation rate limit was hit by CI tonight; this window and the work after it make no gh calls and push is held until the hour turns.
+
+## Round 2 (targeted re-ask, D187)
+- Round 1: architect, QA, developer, decider, agile coach NO OBJECTION; audit lens OBJECTION with one condition (an auditable trace that the facilitator wrote nothing in the checkout during the green turn). Adopted as A1 to A3 in .mob/records/313/taskforce-proposal-pm-r2.md. The condition came from one seat, so only the audit lens is re-asked on the amended text; the other five stand (the amendment changes nothing they voted on except by adding a check).
