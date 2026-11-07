@@ -11,7 +11,7 @@ K1. The cite check (D171) matches a cited point of at least six words after norm
 K2. A reply whose cite is the prompt's placeholder text, or whose reply is the prompt echoed back, is recorded as "echo" (a missing cite), is re-asked once on a different driver than the one that echoed, and counts toward the seat's reply only after that. The seat-use record names the echoing driver.
 K3. Not changed: what must be cited, the six-word minimum, the one re-ask, the replacement of a seat that fails twice, the Decider protocol (followed as written), and the product owner's rulings.
 
-HYPOTHESIS: We believe that normalising case and trailing punctuation, and re-asking an echo on a different driver, removes most format-caused re-asks without letting an uncited vote count. We will know when format-caused re-asks per Decider fall from this card's baseline (about 14 re-asks in 106 seat runs) to at most 2 per Decider over three cards.
+HYPOTHESIS: We believe that normalising case and trailing punctuation, and re-asking an echo on a different driver, removes most format-caused re-asks without letting an uncited vote count. We will know when format-caused re-asks per Decider fall from this card's baseline (10 cite re-asks in the Decider runs d313c, d313g, d313j, d313k and d313m, out of 106 seat runs) to at most 2 per Decider over three cards.
 
 METRIC: format-caused re-asks per Decider (case, punctuation, echo, empty), and seat minutes per decision.
 
