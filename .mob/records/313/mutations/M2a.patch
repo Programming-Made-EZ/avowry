@@ -1,0 +1,15 @@
+# breaks: Done checks 1 and 2: the retry recreates the holders directory on each attempt (a removal before the open still registers)
+diff --git a/decider.py b/decider.py
+index 55d9d30..9e17362 100644
+--- a/decider.py
++++ b/decider.py
+@@ -326,8 +326,8 @@ def hold_vote_lock(repo):
+     path = directory / f"{token}.json"
+     temporary = directory / f"{token}.tmp"
+     try:
++        directory.mkdir(exist_ok=True)
+         for _ in range(VOTE_LOCK_ATTEMPTS):
+-            directory.mkdir(exist_ok=True)
+             try:
+                 entries = list(directory.iterdir())
+             except OSError:

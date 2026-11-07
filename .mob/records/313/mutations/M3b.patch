@@ -1,0 +1,15 @@
+# breaks: Done check 3: release removes only this run's own holder file, so the first run to end leaves the checkout refused
+diff --git a/decider.py b/decider.py
+index 55d9d30..36c6ecd 100644
+--- a/decider.py
++++ b/decider.py
+@@ -375,7 +375,8 @@ def hold_vote_lock(repo):
+ 
+     def release():
+         try:
+-            path.unlink()
++            for f in directory.glob("*.json"):
++                f.unlink()
+         except OSError as exc:
+             print(f"warning: could not release the vote lock {path}: {exc}", file=sys.stderr)
+         try:

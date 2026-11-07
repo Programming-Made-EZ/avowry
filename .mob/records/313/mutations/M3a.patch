@@ -1,0 +1,17 @@
+# breaks: Done check 3: the last run to end removes the empty holders directory
+diff --git a/decider.py b/decider.py
+index 55d9d30..f74e683 100644
+--- a/decider.py
++++ b/decider.py
+@@ -378,10 +378,7 @@ def hold_vote_lock(repo):
+             path.unlink()
+         except OSError as exc:
+             print(f"warning: could not release the vote lock {path}: {exc}", file=sys.stderr)
+-        try:
+-            directory.rmdir()
+-        except OSError:
+-            pass
++        pass
+     return release
+ 
+ 

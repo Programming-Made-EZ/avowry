@@ -1,0 +1,4 @@
+after the green turns (facilitator, 2026-11-07T04:25Z):
+HEAD 159067972259be9b4fb2fead2f61c2ae0ec65199
+status: ?? .mob/;
+reflog: 1590679 HEAD@{0}: commit: Card 298 green 3: a run sweeps dead holder entries and a dead legacy lock file before registering|1c55362 HEAD@{1}: commit: Card 298 red 3: a dead holder entry and a dead legacy lock file are swept by the next run (two tests fail); two characterization tests (dead plus live entries, live legacy file) pass on HEAD with mutation evidence|d0a232f HEAD@{2}: commit: Card 298 cycle 2 tests: either end order keeps the checkout refused until the last run ends, and leaves no lock behind. These pass on green 1 (its release already removes only its own holder file); each fails under its mutation (release drops all holders; release skips rmdir), recorded in .mob/records/298/cycle2-mutation-evidence.md|

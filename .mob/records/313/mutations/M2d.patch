@@ -1,0 +1,14 @@
+# breaks: Done check 2: the readers (decider_holders, decider_lock_live) see holders and delete nothing
+diff --git a/facilitator.py b/facilitator.py
+index 90206fe..5ffabc5 100644
+--- a/facilitator.py
++++ b/facilitator.py
+@@ -1162,6 +1162,8 @@ def decider_holders(checkout):
+         except (OSError, ValueError):
+             continue
+         if isinstance(holder, dict):
++            if not pid_alive(holder.get("pid")):
++                path.unlink()
+             holders.append((path, holder))
+     return holders
+ 

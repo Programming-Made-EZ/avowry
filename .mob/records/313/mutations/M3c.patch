@@ -1,0 +1,14 @@
+# breaks: Done check 3: a dead-pid holder is swept before the run registers
+diff --git a/decider.py b/decider.py
+index 55d9d30..764ef42 100644
+--- a/decider.py
++++ b/decider.py
+@@ -338,7 +338,7 @@ def hold_vote_lock(repo):
+                 try:
+                     holder = json.loads(entry.read_text(encoding="utf-8"))
+                     if not isinstance(holder, dict) or not facilitator.pid_alive(holder.get("pid")):
+-                        entry.unlink()
++                        pass
+                 except (OSError, ValueError):
+                     try:
+                         entry.unlink()
