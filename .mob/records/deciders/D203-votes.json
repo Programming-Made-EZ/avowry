@@ -1,0 +1,141 @@
+{
+ "decider": "D203",
+ "subject": "card 197 task-force declaration and card text: rename the solution and the benchmark tool projects to Avowry",
+ "result": "ADOPTED",
+ "run1": {
+  "architect": [
+   {
+    "tag": "d203",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "the same seven projects and three solution folders",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\nThe proposal is scoped to the real build-graph rename (solution + Bench projects + CI/script path), excludes noisy prose/history/placeholder hits, and defines explicit checks for exact case, CRLF parity, and the old command failing. Its red/green gates are concrete and minimal, and the facilitator rerun/correction preserves evidence. It avoids false positives by bounding searches to live files and named exceptions.\nCITE: the same seven projects and three solution folders\n\n"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d203",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "the scan test's pattern still matches at least one file",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe rules can be tested red first. Red 1 holds the scan test and the byte-parity test before the green exists, and it fails today with \"no commit adds Avowry.sln\". The checks name the violations they catch: the put-backs cover a ci.yml line, the RepoPaths probe, the escaped regex, a Bench path, an ADR mismatch and a CR strip. The non-vacuity assertion stops the 264 scan passing with zero matches.\n\nMy reservations:\n- Cycles 2 and 3 are born green and shown red only by manual put-backs"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d203",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "one card. About 30 files and about 107 lines with 3 criteria is a fraction",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": false,
+    "reply_head": "Support-it\nThe proposal is bounded, explicit, and consistent with the verified repo facts: a single rename card, clear exclusions, explicit ownership split to 266/204, and rollback/CI safeguards. It documents the actual premises (no branch protection, no old CI job names, one script, and the real bench paths) and preserves fairness by requiring parity checks, named put-backs, and clean-copy gate evidence. It is workable and not gaming the rules because the old-name failures are defined precisely"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d203",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "A failure of that test alone is rerun in isolation and recorded under 304",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe core is checkable from git alone. The parity test takes the old bytes from the parent of the commit that adds `Avowry.sln`, reads them with `git cat-file`, and reapplies the rules. It starts red and gives the green seat a concrete check.\n\nTwo loopholes remain:\n- The named exceptions list is open-ended. It should be fixed in `test_rename_197.py` before green, and each exception should be a pinned path and line. Otherwise the green seat could widen it.\n- The card 304 flaky test is "
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d203",
+    "seat": "copilot",
+    "vote": "Yes",
+    "cite": "branch protection returns 404 \"Branch not protected",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\nThe proposal is evidence-first: it names the live-scope facts, the false premises corrected, the facilitator rerun, and the red/green gate with isolated checks and CI. It ties adoption to commands and outputs rather than intuition. The task force is sized to the work and matches the agreement: PM, architect, QA, build, ship gate, and fresh Claude sign-off, with extra roles excluded as nonessential. The issue format also matches the card format rule: story + Gherkin + ZOMBIES coverage.\nCITE: "
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d203",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "Left out: UX, security, technical writer, domain expert",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nThe task force fits the task. It has PM, architect, QA red, build green, a non-author gate and a fresh sign-off. Each seat owns a distinct risk: the slice, the red tests, the atomic rename, and the case-sensitivity and CI check. Leaving out UX, security, technical writer and domain expert is right for a tooling rename. The architect seat stays light, since it ships as-is unless the slice is over 15,360 bytes. Three cycles and one commit are proportionate to about 30 files. The one real gap,"
+   }
+  ]
+ },
+ "independent_rerun": {
+  "architect": [
+   {
+    "tag": "d203r",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "one atomic rename commit; rewrite rules: Phrase.sln to Avowry.sln",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\nThis is narrow, evidence-based, and preserves the build-graph boundary: it limits scope to the remaining build-graph names, updates the exact path/script/CI checks, and explicitly excludes prose/identifier churn. The proposal corrects false premises, distinguishes live-name renames from data placeholders, and includes byte-parity and put-back red checks to avoid vacuous passes. The card remains atomically scoped and has a clear rollback and CI gate.\nCITE: one atomic rename commit; rew"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d203r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "and the scan test's pattern still matches at least one file",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nRed 1 is testable before the green exists. The scan and byte-parity tests cover [Z], [E] and [B], and the parity test is currently red because no commit adds Avowry.sln. The non-vacuity assertion on the escaped regex stops the 264 scan from passing with nothing to match. Two concerns:\n- Cycles 2 and 3 are born green and shown red only by put-backs. That is acceptable if each put-back is run and recorded.\n- The slice says \"named exceptions listed in the slice\" but doesn't list them. T"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d203r",
+    "seat": "copilot",
+    "vote": "Yes",
+    "cite": "fresh context, read-only on the repository",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\nThis proposal is specific, bounded, and mechanically verifiable: it narrows scope to the remaining build-graph names, states the false premises, preserves the old names as exclusions, and requires red-to-green evidence with exact-case path checks and a parity proof. It also respects the task-force rules by making the slice atomic, isolating gates, and treating the CI and board follow-up as separate checks instead of hidden assumptions. The author probe and fallback order must stay fresh befo"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d203r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "one atomic rename commit; rewrite rules:",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nMost of this can be checked from git alone. The parity test derives the old bytes from the parent of the commit that adds `Avowry.sln` and reads them with `git cat-file`. That makes the \"clean\" claim reproducible, and the facilitator recomputes it. Red 1 comes before the green, which closes the 196 gap.\n\nThree loopholes remain:\n- The named-exceptions list is the main one. It could grow quietly, so the test should hard-code it and fail on any extra entry.\n- The put-back red proofs, th"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d203r",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "the rotation after Copilot (196) is Grok",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\nThe proposal is anchored to fresh repository evidence and corrected premises, with explicit gates, red/green responsibilities, and a clean division of scope. It names the needed seats—PM, architect, QA, build, ship gate, and facilitator—while making the role decision and fallback author probe explicit. The decider criteria are evidence-first and reversible, and the proposal includes the required D202 mechanical checks, isolated gate, CI wait, and rollback path. It also treats the know"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d203r",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "Left out: UX, security, technical writer, domain expert (the gate checklist covers CI)",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nThe task force fits a mechanical rename that touches about 30 files and edits `ci.yml`, which runs on every push to main. It has an architect (slice), QA (red), a build seat (green), a non-author gate and a fresh sign-off. The cases the force leaves out are covered: UX, security, writer and domain expert have no stake in this rename, and the gate checklist covers CI case-sensitivity. The three cycles (one per Done check) are lean, and a fourth needs a D175 window. Putting the parity test in"
+   }
+  ]
+ }
+}

@@ -306,3 +306,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D200](process-and-staffing.md#d200) | Re-rank 28: bug card 323 ranks after card 232, below every product story; pull card 196 | process-and-staffing | adopted |
 | [D201](process-and-staffing.md#d201) | Card 196 task-force declaration and card text: rename the two test projects, their namespaces and the paths that name them | process-and-staffing | adopted |
 | [D202](process-and-staffing.md#d202) | Card 196 retro pick: mechanical rewrites carry a byte-parity check; gate runs are isolated with a load line | process-and-staffing | adopted |
+| [D203](process-and-staffing.md#d203) | Card 197 task-force declaration and card text: rename the solution and the benchmark tool projects to Avowry | process-and-staffing | adopted |
