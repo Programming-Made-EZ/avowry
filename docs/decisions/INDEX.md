@@ -310,3 +310,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D204](process-and-staffing.md#d204) | Card 197 retro pick: red before the atomic green; the D196 cite check adopted | process-and-staffing | adopted |
 | [D205](process-and-staffing.md#d205) | Card 266 task-force declaration, the five decisions, the split into 266 and two new cards, and the card text | process-and-staffing | adopted |
 | [D206](process-and-staffing.md#d206) | Card 266 retro pick: guard tests read committed blobs; a cold-reader seat for docs cards; a red a CI test wraps is pushed with its green | process-and-staffing | adopted |
+| [D207](process-and-staffing.md#d207) | Card 324 task-force declaration and card text: compiler diagnostics call the unit an avow | process-and-staffing | adopted |

@@ -1348,5 +1348,11 @@
     "status": "adopted",
     "title": "Card 266 retro pick: guard tests read committed blobs; a cold-reader seat for docs cards; a red a CI test wraps is pushed with its green",
     "order": 197
+  },
+  "D207": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 324 task-force declaration and card text: compiler diagnostics call the unit an avow",
+    "order": 198
   }
 }

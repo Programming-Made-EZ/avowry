@@ -1,0 +1,141 @@
+{
+ "decider": "D207",
+ "subject": "card 324 task-force declaration and card text: compiler diagnostics call the unit an avow",
+ "result": "ADOPTED",
+ "run1": {
+  "architect": [
+   {
+    "tag": "d207",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Each criterion has its own production change and its own watched red.",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe design is minimal. It adds no diagnostics table and no refactor. It uses an enumeration test that runs trigger sources, a characterisation test that pins PH code, position and tail text, and one static scan with named exceptions. Splitting criteria 1 and 3 by message avoids a test that is born green.\n\nThree enforceability risks need handling in the slice:\n- The scan regex `\\bphrases?\\b` also matches \"phrase-steps\", so the `ExtensionKeywords.cs` exception must be exact.\n- The a/an"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d207",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "one reword would satisfy both tests at once",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nEach criterion has its own watched red. Criterion 1 fails on the \"Phrase '...'\" text, criterion 3 on the 10 remaining sites, and the planted-tree scanner tests fail against a stub first. Splitting the messages 8 and 10 keeps the second test from being born green.\n\nReservations:\n- Criterion 2 is green on the old tree by design. It only guards the change if the a/an normalisation regex is exact and the 18 trigger sources are committed.\n- The four PH200 shapes and the PH331 input messag"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d207",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "one reword would satisfy both tests at once, so the second would be born green",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nAs the seat that works under these rules every card, I find the plan workable. Build order 2, 1, 3 gives each criterion its own red and green, and the facilitator's corrections fix the real ambiguities. Those are the D206 push-together rule, the build seats writing only greens, and the exact a/an normalisation. Two things worry me. The \"unprobed\" PH200 and PH331 triggers mean the first red may be born green or fail for the wrong reason. The 400-line cap could push me toward compressi"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d207",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "A message that names the old unit is refused by a check.",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe work can be checked from git. The 19 changed lines come from `git diff -U0` and a word-substitution reversal. The red, green and characterisation order shows in the commit sequence. Two loopholes remain:\n- The scan reads the working tree, so an uncommitted fix could pass locally while the committed blob still says \"phrase\". Have it, or CI, also scan `git ls-files` blobs.\n- The a/an normalisation in criterion 2 could mask real drift. Define it as one exact regex and commit the pre"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d207",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "the facilitator removes the title heading and writes Status: Ready once adopted",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe framing rests on evidence. The 19 sites and 18 messages come from a tracked-file scan that the facilitator re-ran. The characterisation test goes first and is run on the old tree. Each new-state criterion has its own watched red, so the decision won't rest on tests that were green from the start.\n\nThe seats cover sign-off. The product manager, architect, QA, rotating drivers, an independent reviewer and an LLM-ergonomics reviewer are all present, and the facilitator's corrections"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d207",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "security, DevOps, technical writer (no docs edited)",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe force fits the task. It covers the PM, QA, architect, an independent reviewer and the build seats, and it leaves out the security, DevOps and technical-writer seats because no docs change. Splitting the work into three cycles is justified, since each criterion has its own production change and its own red test.\n\nTwo places look padded:\n- **Per-cycle independent reviewer:** three reviews of about 19 changed lines is heavy. One review at the gate would do.\n- **LLM-ergonomics review"
+   }
+  ]
+ },
+ "independent_rerun": {
+  "architect": [
+   {
+    "tag": "d207r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "a scan of tracked src string literals fails on the old unit word",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe design is sound and close to minimal. Splitting criteria 1 and 3 by message set avoids a test that is born green. Compiling trigger sources avoids building a diagnostics table that nothing else would use. The scanner's named exceptions and its planted-tree tests keep false positives under control.\n\nI have three reservations:\n- The a/an normalisation in criterion 2 needs an exact regex, or it will produce false failures.\n- The PH200 shapes and the PH331 input message have no probe"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d207r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "one reword would satisfy both tests at once",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nEvery criterion has a named red. Criterion 2 is a characterisation test, so it is green on the old tree by design. Criterion 1 fails on the old \"Phrase\" text, and criterion 3 fails against a stub scanner and then on exactly 10 live sites. The planted-tree scanner tests and the named exceptions will catch violations without passing bad state.\n\nReservations:\n- The a/an normalisation regex needs an exact definition before cycle 1.\n- The four PH200 shapes and the PH331 input message have"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d207r",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "one concern (the unit word in compiler messages)",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nUnder the rules this proposal sets, I can work each cycle without gaming it. The order is characterisation first, then each red with its own production change, and that keeps every test from being born green. Criteria 1 and 3 are split by message, so each has a real red. The correction that pushes each red together with its green fits how CI runs these tests. The rules leave two things open: the a/an normalisation must be defined as an exact regex, and the unprobed PH200 and PH331 triggers "
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d207r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "every red here is a C# test that CI runs directly",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe work is mostly verifiable from git alone. The characterisation baseline is committed on the old tree, and `git diff -U0` must show exactly 19 changed lines. Each of those lines must reverse by word substitution to the old bytes.\n\nLoopholes to close:\n- The \"watched failing\" reds are only the facilitator's quoted runs. Commit the red and its green as separate commits, with the red's run output in the records.\n- The scan reads the working tree, so it could be satisfied by an uncommi"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d207r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "the facilitator's diff and byte recompute are required",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe evaluation rests on evidence. Facts were run at a named HEAD, and the facilitator re-ran the scan and found the same 19 sites and 18 messages. Each criterion has its own production change and its own watched red. The characterisation test is committed green first, and the build order is 2, then 1, then 3. Sign-off seats are present: an independent reviewer on a different model, an ergonomics reader, QA, and the facilitator's byte recompute. Reservations: the a/an normalisation re"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d207r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Left out: security, DevOps, technical writer (no docs edited)",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe force is about right. The exclusions are well reasoned: security, DevOps and technical writer are left out because no docs or pipeline change, and the cold-reader is left out because this isn't a docs card. The LLM-ergonomics seat covers the one perspective that matters here, Ari's reading of the wording.\n\nTwo things are slightly padded:\n- Three build cycles for 19 literal lines is heavy. The rotation and fresh probes of Codex, Copilot and Grok mostly repeat what the facilitator'"
+   }
+  ]
+ }
+}
