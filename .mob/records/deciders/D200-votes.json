@@ -1,0 +1,141 @@
+{
+ "decider": "D200",
+ "subject": "re-rank 28: card 323 after card 232 (below all product stories); pull card 196",
+ "result": "ADOPTED",
+ "run1": {
+  "architect": [
+   {
+    "tag": "rr28",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "PLACE 323 AFTER 232 (below every product story, last among the mob-tooling bugs",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nThe placement follows Product first. Card 323 would be a standalone tooling card, and it only outranks product work if its risk is still live. The record shows that the lock now refuses the path both past incidents took, so the remaining hand-run commit hole is narrow and has never been seen. This is the same test re-rank 27 applied to 305 and 315, so the rule is applied consistently. The change is minimal: one card moves, and reversal is a single rerank.py call. The one weak point is \"reop"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "rr28",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Pull card 196 (rename the two test projects to Avowry.*.Tests) next",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nPlacing 323 last is defensible. Writers' lock already refuses the second writer on the normal path, and re-rank 27 used the same \"seen harm must still be live\" test. The reversal is cheap.\n\nQA caveat: until 323 ships, nothing refuses a plain git commit or push during a live writer or vote. A hand-run bypass passes silently, and the lock's check names a violation it can't catch there. The proposal should say that gap is accepted and unmonitored, and give a red-first scenario for 323 s"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "rr28",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "The head of the board then holds no bug",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\nThis is workable and fair under Product first and the bug rule. The proposal correctly distinguishes current active risk from older pre-lock losses, keeps product work above process/tooling cards, and keeps 323 below product stories unless the risk is seen again. Pulling 196 into the Ready card format also matches the rule that pulled cards arrive at Ready in the required form. It does not game the rules; it preserves board order and avoids process-first drift.\nCITE: The head of the b"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "rr28",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Card 299's lock now refuses a second writer that goes through Writers",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe placement can be checked from git. The re-rank record and the rerank.py call are committed. The \"seen twice, both in card 230, before any lock\" claim can be tested against history. It is also consistent with re-rank 27, which put 305 and 315 below the product stories on the same test.\n\nThe loophole is small. A hand-run commit during a live writer stays unguarded. That is acceptable, because the proposal says to reopen the placement the first time such a loss is seen. It would be "
+   }
+  ],
+  "decider": [
+   {
+    "tag": "rr28",
+    "seat": "copilot",
+    "vote": "Yes",
+    "cite": "The head of the board then holds no bug, so the head-size guard of four is not in play.",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\nThis is evidence-framed and rule-bound: it ties 323 to the live bug rule, cites the pre-lock incidents in card 230, and explains why the newer Writers lock removes the original loss mode. It also honors Product first and the Card format rule by keeping product work ahead of process/tooling work and requiring 196 to be brought into Gherkin/ZOMBIES before Ready. The team has the needed decision structure for a full Decider with an independent re-run, so the sign-off rests on facts rather than "
+   }
+  ],
+  "coach": [
+   {
+    "tag": "rr28",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Card 323 states a risk line, but it does not meet the bug rule today.",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe placement is sized to the work. It adds no new ceremony. It applies the Value rule and the bug-rule test the same way re-rank 27 did for cards 305 and 315. Card 323's loss is mitigated now that card 299's lock refuses a second writer going through Writers. What remains is narrower and has never been seen. Pulling 196 next keeps product first. The proposal also names the reopen trigger (the first loss seen) and a one-call reversal. One thing is missing. The proposal doesn't say wh"
+   }
+  ]
+ },
+ "independent_rerun": {
+  "architect": [
+   {
+    "tag": "rr28r",
+    "seat": "copilot",
+    "vote": "Yes",
+    "cite": "The head of the board then holds no bug",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\nThis proposal is minimal and enforceable: it honors the Product first rule by keeping only shipping-risk bugs above product work, and treats 323 as a lower-priority mob-tooling bug because the observed loss was already mitigated and the remaining case is narrower and avoidable. The re-rank stays stable except for 323 and the necessary Ready-format correction to 196. It avoids false positives by tying rank to live harm and user/ship risk, not historical incidents or speculative gate math.\nCIT"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "rr28r",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "PLACE 323 AFTER 232 (below every product story",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nPlacing 323 below every product story fits Product first. The risk it names (a plain git commit or push refused while a writer or vote holds the checkout) is a mob-tooling hazard, not a data-loss or ship-stopping one. The lock now refuses a second writer that goes through Writers, which was the path both seen incidents took. That matches the \"seen harm must still be live\" test from re-rank 27.\n\nFor testability, a one-card fix can be tested red first: a plain commit during a live writer. The"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "rr28r",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "Card 323 states a risk line, but it does not meet the bug rule today.",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\nThis proposal is consistent with Product first and the bug rule: 323 is below product work until a live loss appears, while 196 is pulled and fixed into Ready form before it proceeds. It preserves the top product order and avoids gaming the board by moving only the unranked risk bug and a Ready card into required format. The read-only follow-up and reopen rule are clear and reversible.\nCITE: Card 323 states a risk line, but it does not meet the bug rule today.\n\n"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "rr28r",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "Pull card 196 (rename the two test projects to Avowry.*.Tests) next",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nGit alone can verify this. The re-rank record (28) and the applied record (27) show the order. The Product first rule lets a bug rank above product work only when it states a live risk. Card 323's cited loss happened twice before the lock existed, and card 299's lock now covers the Writers path. Placing 323 last is therefore consistent with that rule, and the same test already put 305 and 315 below the stories.\n\nThe loophole risk is small. Card 323 stays open and is not dropped, and the rev"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "rr28r",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "The head of the board then holds no bug",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\nThe proposal is framed on the governing rules: product-first ordering, the bug rule for cards above product work, and the Ready card-format rule. It applies the evidence directly: 323’s risk is narrower, already mitigated, and not a live seen loss; the board’s head holds no bug, so the head-size guard does not apply; 196 is explicitly pulled only to be brought into Connextra/ZOMBIES form. This is enough evidence for a decider, and the seat list is sufficient for a ranking and format d"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "rr28r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "A better follow-up is to fold 323 into the first product story",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nPlacement follows the same test Re-rank 27 used: harm that was seen must still be live. Card 299's lock closed the path both incidents took. A one-card bug sitting below the product stories is proportionate, and the reversal is a single rerank.py call. The head of the board holds no bug, so the head-size guard of four isn't in play. The perspectives I'd want are all covered. This looks like a lot of ceremony for a one-card move. I'd keep the vote and skip a separate full Decider the "
+   }
+  ]
+ }
+}

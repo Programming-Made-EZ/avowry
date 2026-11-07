@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:3aba52a3401f416e4cebcf765ae73e5a33bb5900f9b76c8ad10d83d2fa322354 -->
+<!-- board-table-sha256:69288730b47af8992c9eb61eccf0b3a152633eacfa0f5d801ae865d713383dce -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -116,7 +116,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 94 | 303 The C# baseline endpoint tests pass on the Windows development machine | Done | none |
 | 95 | 298 A second decision run on the same checkout never votes unprotected | Done | card 230 (the vote lock) |
 | 96 | 313 A decision run that starts as another run ends can be left without a vote lock | Done | card 298 (the holder format) |
-| 97 | 299 A second writer on one checkout is refused across processes | Ready | card 230 (Writers and the vote lock) |
+| 97 | 299 A second writer on one checkout is refused across processes | Done | card 230 (Writers and the vote lock) |
 | 98 | 196 Rename the two test projects to Avowry.*.Tests | Ready | 195 |
 | 99 | 197 Rename the solution, CI jobs, scripts and paths to Avowry | Ready | 196 |
 | 100 | 266 Docs and code consistently use the name Avowry | Ready |  |
@@ -220,81 +220,82 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 198 | 301 The command probe cannot be passed by copying its nonce from the prompt | Ready | card 297 (the command probe) |
 | 199 | 286 A NO OBJECTION reply is stored as no objection, not as a No vote | Ready | none |
 | 200 | 232 A seat driver never opens a browser or other UI on the shared machine | Ready | none |
-| 201 | 316 The gate runs the changed area's narrow suites and checks each step's failure path | Done | none |
-| 202 | 317 A card that names no consumer value cannot reach Ready | Done | none |
-| 203 | 305 A Codex build seat's commands go through the delete scan | Done | card 297 (the command probe and placement), card 228 (the scan for hidden, encoded and file-content forms) |
-| 204 | 312 A Decider record is rejected when its result does not follow from its votes | Done | none |
-| 205 | 311 A Decider vote is scored as written and the agile coach flags any deviation at the vote | Done | none |
-| 206 | 310 The board keeps moving when one driver's quota runs out, with Muse trialled as a fourth driver | Done | none |
-| 207 | 308 The product owner's rulings and the team's replies are recorded where a check can verify them | Done | none |
-| 208 | 309 A reviewer reads a card cold in the format that gives the fewest misreads | Done | none |
-| 209 | 306 The zero-harness-tests diagnostic is capped like the other failure summaries | Done | card 303 |
-| 210 | 258 The loop-state lock test is not flaky | Done | none |
-| 211 | 268 The mob summary publish tests pass in every shell | Done | none |
-| 212 | 291 A Grok decision seat ends its turn with a vote, and a vote after narration is read | Done | card 229 (the whole-prompt launch) |
-| 213 | 274 The final-review record can say unclear and keep the reviewer's verdict | Done | none |
-| 214 | 252 Seat transcripts are scanned automatically for subagent and headless seats | Done | card 228 (the scan) |
-| 215 | 253 Codex rollouts are read by the delete scan | Done | card 228 (the readers) |
-| 216 | 283 The delete guard does not flag a read-only python command | Done | none |
-| 217 | 254 The delete scan cuts its known false positives | Done | card 228 |
-| 218 | 231 Uncommitted work in a watched repository older than about 30 minutes fails the checks | Done | none |
-| 219 | 281 Muse seats run with a known workspace trust | Done | none |
-| 220 | 270 A Grok decision seat receives its whole prompt and casts a vote | Superseded/Withdrawn | none (card 229 is the Copilot twin; the team may fold the two at ready) |
-| 221 | 282 A seat's prompt reaches it without placeholder rewriting | Superseded/Withdrawn | none |
-| 222 | 277 An empty decision vote opens a diagnosis; only quota or unavailability excludes a model | Superseded/Withdrawn | none |
-| 223 | 265 Decision windows launch voters in parallel safely | Superseded/Withdrawn | card 226 (the decision-seat gate) |
-| 224 | 269 mob_process.py keeps LF line endings | Superseded/Withdrawn | none |
-| 225 | 238 The reshaped process wiki carries the slice limits and a measured upkeep | Superseded/Withdrawn | card 237 |
-| 226 | 236 The process wiki closes the writer's seven content gaps | Superseded/Withdrawn | card 234 |
-| 227 | 255 The delete scan covers the residual forms and the path forms | Superseded/Withdrawn | card 228 |
-| 228 | 233 Evaluate side-by-side pairing tooling before building pairing | Superseded/Withdrawn | none |
-| 229 | 235 Green commit bodies carry a checked Proof block | Superseded/Withdrawn | none |
-| 230 | 256 Command-scan reports are readable and trusted | Superseded/Withdrawn | card 228 |
-| 231 | 257 Git-state detectors catch unpushed and hidden work | Superseded/Withdrawn | card 227 (push detector) |
-| 232 | 267 mob-defaults docs contain no dates | Superseded/Withdrawn |  |
-| 233 | 216 The default templates carry the pending process rulings | Superseded/Withdrawn | none |
-| 234 | 220 The loop runner starts a corrective card while a finding blocks | Superseded/Withdrawn | none (card 205 is done) |
-| 235 | 221 The loop runs a card in the repository its Repository line names | Superseded/Withdrawn | none |
-| 236 | 222 The loop wires its retro and re-rank steps from the repository and stops when one fails | Superseded/Withdrawn | none |
-| 237 | 223 The loop takes the per-card retro from every role, each in its own context | Superseded/Withdrawn | 208 (every retro seat starts on a fresh pinned probe), 222 (the loop calls the command and stops when it fails) |
-| 238 | 224 The loop re-ranks Ready through the product manager and a Decider after every card | Superseded/Withdrawn | 208 (every re-rank seat starts on a fresh pinned probe), 222 (the loop calls the command and stops when it fails) |
-| 239 | 225 Card mode reads only role lines as the task force | Superseded/Withdrawn | none |
-| 240 | 213 The checker rejects an incomplete objection window | Superseded/Withdrawn | none |
-| 241 | 218 A mid-card retro removal does not drop the seat before the retro | Superseded/Withdrawn | 209 (the refusal of every non-retro removal lands first; this card closes the one accepted form that still removes a seat early) |
-| 242 | 212 Every mob re-ranks at every loop boundary | Superseded/Withdrawn | 208 (the runner gaps, including its retro and re-rank commands: this card hardens the re-rank step that 208 wires in). |
-| 243 | 215 Every mob reviews each previous adjustment at stand-downs and retros | Superseded/Withdrawn | 208 (the runner gaps, including its retro command: this card adds record fields to the step 208 wires in). |
-| 244 | 206 The findings file mirrors the audit register | Superseded/Withdrawn | 205 (the facilitator start gate must exist so that this card, a corrective card, is the kind that starts while F-001 and F-008 block). 207 depends on this card. |
-| 245 | 207 The findings file history rules are checked | Superseded/Withdrawn | 206 (the findings file and its schema check must exist before its history can be checked). |
-| 246 | 192 Source files end in .avowry; the repository's own sources switch in the same card | Superseded/Withdrawn | 191 |
-| 247 | 183 Add the licence file | Done | none |
-| 248 | 154 Docs state principles and rationale, not who said them | Done | 153 |
-| 249 | 139 Loop step: re-probe unavailable drivers and restore them | Superseded/Withdrawn | 064 |
-| 250 | 106 Mutation check: the generated C# specs catch broken implementations | Done | 087 |
-| 251 | 119 Generate matching Phrase and C# codebases of 1, 10 and 50 endpoints | Done | 111 |
-| 252 | 130 Plain C# codebases in ordinary hand-written style | Done | 119 |
-| 253 | 121 Snapshot a real project slice privately and scrub it | Superseded/Withdrawn | 120 |
-| 254 | 122 Port the real slice to Phrase in the private folder | Superseded/Withdrawn | 121 |
-| 255 | 090 Benchmark: a docs-in-context mode that gives a model the real docs | Done | 085 |
-| 256 | 091 Benchmark: cold runs, a fresh session in an empty folder for every attempt | Done | 090 |
-| 257 | 092 Benchmark: scrub a stored reply before cutting it to 200 characters | Done | 085 |
-| 258 | 037 Benchmark: docs in the prompt, and cold runs | Done | 090, 091, 092 (sliced: docs-in-context mode, cold runs and the reply-head scrub moved to those cards; this card is now the baseline RUN) |
-| 259 | 088 Head-to-head: Phrase vs plain C# on the frozen bar | Superseded/Withdrawn | 085, 086, 094, 087, 037 |
-| 260 | 065 Loop: run one card with a pinned toolchain | Superseded/Withdrawn | 064 |
-| 261 | 066 Loop: bounded retry, park and split on failure | Superseded/Withdrawn | 065 |
-| 262 | 078 Ready check: reject a role-only story before the product manager is asked | Superseded/Withdrawn | 065 |
-| 263 | 067 Loop: on Done run the retro step and re-rank, then the next card | Superseded/Withdrawn | 066 |
-| 264 | 062 Atomic runs: a card runs in a fresh worktree and ends landed or discarded | Superseded/Withdrawn | none |
-| 265 | 068 Loop: liveness, publish, STOP file and the Needs-product-owner file | Superseded/Withdrawn | 067 |
-| 266 | 072 Loop: pace the work against the finite driver allotments | Superseded/Withdrawn | 066 |
-| 267 | 069 Loop: resume after a crash or reboot (logon task) | Superseded/Withdrawn | 068 |
-| 268 | 070 Loop: run every card atomically (land or discard) | Superseded/Withdrawn | 062, 067 |
-| 269 | 055 A declared failure with no failure-path spec is an error (PH336) | Superseded/Withdrawn | 054, 018 |
-| 270 | 057 Docs: the consumer-observable outcome rule is written down | Superseded/Withdrawn | 055 |
-| 271 | 008 Close the language gaps the demo app exposes | Superseded/Withdrawn | 025, 050, 052 |
-| 272 | 009 Demo app: a Tasks API written entirely in .phrase | Superseded/Withdrawn | 008 |
-| 273 | 010 End-to-end: real HTTP behaves as the specs say | Superseded/Withdrawn | 009 |
-| 274 | 011 LLM-customer check: a model adds an endpoint from the docs alone | Superseded/Withdrawn | 009, 010, 057 |
-| 275 | 012 Usable v1: acceptance test passes on main and gates CI | Superseded/Withdrawn | 009, 010, 011 |
+| 201 | 323 A plain git commit or push is refused while another writer or a vote holds the checkout | Ready | card 299 (the writer lock file mob-writer.lock and the existing vote lock) |
+| 202 | 316 The gate runs the changed area's narrow suites and checks each step's failure path | Done | none |
+| 203 | 317 A card that names no consumer value cannot reach Ready | Done | none |
+| 204 | 305 A Codex build seat's commands go through the delete scan | Done | card 297 (the command probe and placement), card 228 (the scan for hidden, encoded and file-content forms) |
+| 205 | 312 A Decider record is rejected when its result does not follow from its votes | Done | none |
+| 206 | 311 A Decider vote is scored as written and the agile coach flags any deviation at the vote | Done | none |
+| 207 | 310 The board keeps moving when one driver's quota runs out, with Muse trialled as a fourth driver | Done | none |
+| 208 | 308 The product owner's rulings and the team's replies are recorded where a check can verify them | Done | none |
+| 209 | 309 A reviewer reads a card cold in the format that gives the fewest misreads | Done | none |
+| 210 | 306 The zero-harness-tests diagnostic is capped like the other failure summaries | Done | card 303 |
+| 211 | 258 The loop-state lock test is not flaky | Done | none |
+| 212 | 268 The mob summary publish tests pass in every shell | Done | none |
+| 213 | 291 A Grok decision seat ends its turn with a vote, and a vote after narration is read | Done | card 229 (the whole-prompt launch) |
+| 214 | 274 The final-review record can say unclear and keep the reviewer's verdict | Done | none |
+| 215 | 252 Seat transcripts are scanned automatically for subagent and headless seats | Done | card 228 (the scan) |
+| 216 | 253 Codex rollouts are read by the delete scan | Done | card 228 (the readers) |
+| 217 | 283 The delete guard does not flag a read-only python command | Done | none |
+| 218 | 254 The delete scan cuts its known false positives | Done | card 228 |
+| 219 | 231 Uncommitted work in a watched repository older than about 30 minutes fails the checks | Done | none |
+| 220 | 281 Muse seats run with a known workspace trust | Done | none |
+| 221 | 270 A Grok decision seat receives its whole prompt and casts a vote | Superseded/Withdrawn | none (card 229 is the Copilot twin; the team may fold the two at ready) |
+| 222 | 282 A seat's prompt reaches it without placeholder rewriting | Superseded/Withdrawn | none |
+| 223 | 277 An empty decision vote opens a diagnosis; only quota or unavailability excludes a model | Superseded/Withdrawn | none |
+| 224 | 265 Decision windows launch voters in parallel safely | Superseded/Withdrawn | card 226 (the decision-seat gate) |
+| 225 | 269 mob_process.py keeps LF line endings | Superseded/Withdrawn | none |
+| 226 | 238 The reshaped process wiki carries the slice limits and a measured upkeep | Superseded/Withdrawn | card 237 |
+| 227 | 236 The process wiki closes the writer's seven content gaps | Superseded/Withdrawn | card 234 |
+| 228 | 255 The delete scan covers the residual forms and the path forms | Superseded/Withdrawn | card 228 |
+| 229 | 233 Evaluate side-by-side pairing tooling before building pairing | Superseded/Withdrawn | none |
+| 230 | 235 Green commit bodies carry a checked Proof block | Superseded/Withdrawn | none |
+| 231 | 256 Command-scan reports are readable and trusted | Superseded/Withdrawn | card 228 |
+| 232 | 257 Git-state detectors catch unpushed and hidden work | Superseded/Withdrawn | card 227 (push detector) |
+| 233 | 267 mob-defaults docs contain no dates | Superseded/Withdrawn |  |
+| 234 | 216 The default templates carry the pending process rulings | Superseded/Withdrawn | none |
+| 235 | 220 The loop runner starts a corrective card while a finding blocks | Superseded/Withdrawn | none (card 205 is done) |
+| 236 | 221 The loop runs a card in the repository its Repository line names | Superseded/Withdrawn | none |
+| 237 | 222 The loop wires its retro and re-rank steps from the repository and stops when one fails | Superseded/Withdrawn | none |
+| 238 | 223 The loop takes the per-card retro from every role, each in its own context | Superseded/Withdrawn | 208 (every retro seat starts on a fresh pinned probe), 222 (the loop calls the command and stops when it fails) |
+| 239 | 224 The loop re-ranks Ready through the product manager and a Decider after every card | Superseded/Withdrawn | 208 (every re-rank seat starts on a fresh pinned probe), 222 (the loop calls the command and stops when it fails) |
+| 240 | 225 Card mode reads only role lines as the task force | Superseded/Withdrawn | none |
+| 241 | 213 The checker rejects an incomplete objection window | Superseded/Withdrawn | none |
+| 242 | 218 A mid-card retro removal does not drop the seat before the retro | Superseded/Withdrawn | 209 (the refusal of every non-retro removal lands first; this card closes the one accepted form that still removes a seat early) |
+| 243 | 212 Every mob re-ranks at every loop boundary | Superseded/Withdrawn | 208 (the runner gaps, including its retro and re-rank commands: this card hardens the re-rank step that 208 wires in). |
+| 244 | 215 Every mob reviews each previous adjustment at stand-downs and retros | Superseded/Withdrawn | 208 (the runner gaps, including its retro command: this card adds record fields to the step 208 wires in). |
+| 245 | 206 The findings file mirrors the audit register | Superseded/Withdrawn | 205 (the facilitator start gate must exist so that this card, a corrective card, is the kind that starts while F-001 and F-008 block). 207 depends on this card. |
+| 246 | 207 The findings file history rules are checked | Superseded/Withdrawn | 206 (the findings file and its schema check must exist before its history can be checked). |
+| 247 | 192 Source files end in .avowry; the repository's own sources switch in the same card | Superseded/Withdrawn | 191 |
+| 248 | 183 Add the licence file | Done | none |
+| 249 | 154 Docs state principles and rationale, not who said them | Done | 153 |
+| 250 | 139 Loop step: re-probe unavailable drivers and restore them | Superseded/Withdrawn | 064 |
+| 251 | 106 Mutation check: the generated C# specs catch broken implementations | Done | 087 |
+| 252 | 119 Generate matching Phrase and C# codebases of 1, 10 and 50 endpoints | Done | 111 |
+| 253 | 130 Plain C# codebases in ordinary hand-written style | Done | 119 |
+| 254 | 121 Snapshot a real project slice privately and scrub it | Superseded/Withdrawn | 120 |
+| 255 | 122 Port the real slice to Phrase in the private folder | Superseded/Withdrawn | 121 |
+| 256 | 090 Benchmark: a docs-in-context mode that gives a model the real docs | Done | 085 |
+| 257 | 091 Benchmark: cold runs, a fresh session in an empty folder for every attempt | Done | 090 |
+| 258 | 092 Benchmark: scrub a stored reply before cutting it to 200 characters | Done | 085 |
+| 259 | 037 Benchmark: docs in the prompt, and cold runs | Done | 090, 091, 092 (sliced: docs-in-context mode, cold runs and the reply-head scrub moved to those cards; this card is now the baseline RUN) |
+| 260 | 088 Head-to-head: Phrase vs plain C# on the frozen bar | Superseded/Withdrawn | 085, 086, 094, 087, 037 |
+| 261 | 065 Loop: run one card with a pinned toolchain | Superseded/Withdrawn | 064 |
+| 262 | 066 Loop: bounded retry, park and split on failure | Superseded/Withdrawn | 065 |
+| 263 | 078 Ready check: reject a role-only story before the product manager is asked | Superseded/Withdrawn | 065 |
+| 264 | 067 Loop: on Done run the retro step and re-rank, then the next card | Superseded/Withdrawn | 066 |
+| 265 | 062 Atomic runs: a card runs in a fresh worktree and ends landed or discarded | Superseded/Withdrawn | none |
+| 266 | 068 Loop: liveness, publish, STOP file and the Needs-product-owner file | Superseded/Withdrawn | 067 |
+| 267 | 072 Loop: pace the work against the finite driver allotments | Superseded/Withdrawn | 066 |
+| 268 | 069 Loop: resume after a crash or reboot (logon task) | Superseded/Withdrawn | 068 |
+| 269 | 070 Loop: run every card atomically (land or discard) | Superseded/Withdrawn | 062, 067 |
+| 270 | 055 A declared failure with no failure-path spec is an error (PH336) | Superseded/Withdrawn | 054, 018 |
+| 271 | 057 Docs: the consumer-observable outcome rule is written down | Superseded/Withdrawn | 055 |
+| 272 | 008 Close the language gaps the demo app exposes | Superseded/Withdrawn | 025, 050, 052 |
+| 273 | 009 Demo app: a Tasks API written entirely in .phrase | Superseded/Withdrawn | 008 |
+| 274 | 010 End-to-end: real HTTP behaves as the specs say | Superseded/Withdrawn | 009 |
+| 275 | 011 LLM-customer check: a model adds an endpoint from the docs alone | Superseded/Withdrawn | 009, 010, 057 |
+| 276 | 012 Usable v1: acceptance test passes on main and gates CI | Superseded/Withdrawn | 009, 010, 011 |
 <!-- board-table:end -->
 
 Ranks are the PM's and move at each retro; ideas are triaged by expected metric impact. Milestones are in `board/MILESTONES.md`.
