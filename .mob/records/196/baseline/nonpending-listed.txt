@@ -1,0 +1,4 @@
+dotnet test <project> --no-build --list-tests --filter "Status!=Pending", count of 4-space lines
+Phrase.Compiler.Tests: 284
+Phrase.Acceptance.Tests: 316 (the one Pending test is UsableV1.cs:101)
+Expected run total 600 listed, unprobed.

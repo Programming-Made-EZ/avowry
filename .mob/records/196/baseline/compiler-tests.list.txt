@@ -1,0 +1,284 @@
+    Phrase.Compiler.Tests.ExtensionBoundaryTests.A_file_with_no_web_construct_leaves_the_web_extension_inactive
+    Phrase.Compiler.Tests.ExtensionBoundaryTests.An_explicit_uses_web_line_is_accepted_and_equivalent
+    Phrase.Compiler.Tests.ExtensionBoundaryTests.Keywords_are_partitioned_into_core_and_web
+    Phrase.Compiler.Tests.ExtensionBoundaryTests.The_active_extension_set_is_deterministic
+    Phrase.Compiler.Tests.Lexing.LexerDiagnosticTests.A_closing_bracket_with_no_opener_is_PH109
+    Phrase.Compiler.Tests.Lexing.LexerDiagnosticTests.A_native_block_with_no_body_is_PH106
+    Phrase.Compiler.Tests.Lexing.LexerDiagnosticTests.A_tab_in_indentation_is_PH100
+    Phrase.Compiler.Tests.Lexing.LexerDiagnosticTests.An_unclosed_bracket_at_end_of_file_is_PH108
+    Phrase.Compiler.Tests.Lexing.LexerDiagnosticTests.An_unexpected_character_is_PH104_and_lexing_continues
+    Phrase.Compiler.Tests.Lexing.LexerDiagnosticTests.An_unknown_escape_in_a_string_is_PH107
+    Phrase.Compiler.Tests.Lexing.LexerDiagnosticTests.An_unterminated_string_is_PH103
+    Phrase.Compiler.Tests.Lexing.LexerDiagnosticTests.Dedenting_to_a_level_that_was_never_opened_is_PH101
+    Phrase.Compiler.Tests.Lexing.LexerDiagnosticTests.Indenting_by_more_than_one_level_is_PH102
+    Phrase.Compiler.Tests.Lexing.LexerFixtureTests.Each_native_block_in_the_fixture_is_one_raw_token
+    Phrase.Compiler.Tests.Lexing.LexerFixtureTests.Every_indent_in_the_fixture_is_matched_by_a_dedent
+    Phrase.Compiler.Tests.Lexing.LexerFixtureTests.The_fixture_declares_six_specs
+    Phrase.Compiler.Tests.Lexing.LexerFixtureTests.The_orders_fixture_lexes_without_diagnostics
+    Phrase.Compiler.Tests.Lexing.LexerLayoutTests.A_missing_final_newline_is_supplied
+    Phrase.Compiler.Tests.Lexing.LexerLayoutTests.A_single_line_ends_with_a_newline_and_end_of_file
+    Phrase.Compiler.Tests.Lexing.LexerLayoutTests.A_trailing_comment_is_ignored
+    Phrase.Compiler.Tests.Lexing.LexerLayoutTests.An_indented_block_is_wrapped_in_indent_and_dedent
+    Phrase.Compiler.Tests.Lexing.LexerLayoutTests.Blank_lines_and_comment_lines_do_not_affect_layout
+    Phrase.Compiler.Tests.Lexing.LexerLayoutTests.Newlines_and_indentation_inside_brackets_are_ignored
+    Phrase.Compiler.Tests.Lexing.LexerLayoutTests.Open_blocks_are_closed_at_end_of_file
+    Phrase.Compiler.Tests.Lexing.LexerLayoutTests.Returning_several_levels_emits_one_dedent_per_level
+    Phrase.Compiler.Tests.Lexing.LexerLayoutTests.Tokens_carry_one_based_line_and_column
+    Phrase.Compiler.Tests.Lexing.LexerLayoutTests.Windows_line_endings_lex_the_same_as_unix
+    Phrase.Compiler.Tests.Lexing.LexerNativeBlockTests.A_native_block_becomes_one_raw_token
+    Phrase.Compiler.Tests.Lexing.LexerNativeBlockTests.Characters_that_mean_something_in_phrase_are_left_alone
+    Phrase.Compiler.Tests.Lexing.LexerNativeBlockTests.Native_is_only_special_at_the_start_of_a_line
+    Phrase.Compiler.Tests.Lexing.LexerNativeBlockTests.Relative_indentation_and_blank_lines_inside_the_block_are_kept
+    Phrase.Compiler.Tests.Lexing.LexerNativeBlockTests.The_raw_token_points_at_the_first_line_of_the_body
+    Phrase.Compiler.Tests.Lexing.LexerNativeBlockTests.Trailing_blank_lines_are_not_part_of_the_block
+    Phrase.Compiler.Tests.Lexing.LexerRobustnessTests.Mutated_programs_lex_without_throwing_and_with_balanced_layout(seed: 1)
+    Phrase.Compiler.Tests.Lexing.LexerRobustnessTests.Mutated_programs_lex_without_throwing_and_with_balanced_layout(seed: 2)
+    Phrase.Compiler.Tests.Lexing.LexerRobustnessTests.Mutated_programs_lex_without_throwing_and_with_balanced_layout(seed: 3)
+    Phrase.Compiler.Tests.Lexing.LexerRobustnessTests.Mutated_programs_lex_without_throwing_and_with_balanced_layout(seed: 4)
+    Phrase.Compiler.Tests.Lexing.LexerRobustnessTests.Mutated_programs_lex_without_throwing_and_with_balanced_layout(seed: 5)
+    Phrase.Compiler.Tests.Lexing.LexerRobustnessTests.Mutated_programs_lex_without_throwing_and_with_balanced_layout(seed: 6)
+    Phrase.Compiler.Tests.Lexing.LexerRobustnessTests.Mutated_programs_lex_without_throwing_and_with_balanced_layout(seed: 7)
+    Phrase.Compiler.Tests.Lexing.LexerRobustnessTests.Mutated_programs_lex_without_throwing_and_with_balanced_layout(seed: 8)
+    Phrase.Compiler.Tests.Lexing.LexerTokenTests.A_hash_inside_a_string_is_not_a_comment
+    Phrase.Compiler.Tests.Lexing.LexerTokenTests.A_string_decodes_quote_and_backslash_escapes
+    Phrase.Compiler.Tests.Lexing.LexerTokenTests.A_string_keeps_template_holes_verbatim
+    Phrase.Compiler.Tests.Lexing.LexerTokenTests.An_arrow_is_one_symbol_and_never_part_of_a_word
+    Phrase.Compiler.Tests.Lexing.LexerTokenTests.Camel_case_identifiers_are_single_names
+    Phrase.Compiler.Tests.Lexing.LexerTokenTests.Generic_types_lex_as_angle_bracket_symbols
+    Phrase.Compiler.Tests.Lexing.LexerTokenTests.Hyphens_and_apostrophes_inside_words_stay_in_the_word
+    Phrase.Compiler.Tests.Lexing.LexerTokenTests.Lowercase_words_are_names_and_capitalized_words_are_type_names
+    Phrase.Compiler.Tests.Lexing.LexerTokenTests.Numbers_include_sign_and_decimals(literal: "-0.5", expected: "-0.5")
+    Phrase.Compiler.Tests.Lexing.LexerTokenTests.Numbers_include_sign_and_decimals(literal: "-3", expected: "-3")
+    Phrase.Compiler.Tests.Lexing.LexerTokenTests.Numbers_include_sign_and_decimals(literal: "2.50", expected: "2.50")
+    Phrase.Compiler.Tests.Lexing.LexerTokenTests.Numbers_include_sign_and_decimals(literal: "5", expected: "5")
+    Phrase.Compiler.Tests.Lexing.LexerTokenTests.Paths_lex_as_names_separated_by_dots
+    Phrase.Compiler.Tests.Lexing.LexerTokenTests.Records_and_lists_lex_as_bracket_symbols
+    Phrase.Compiler.Tests.PhraseCompilerTests.Resolver_diagnostics_stop_compilation_at_the_public_boundary
+    Phrase.Compiler.Tests.PhraseCompilerTests.Valid_orders_source_reaches_the_emitter_boundary
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.A_bare_word_where_a_value_belongs_gets_a_did_you_mean
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.A_field_of_a_non_record_is_PH311
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.A_let_variable_named_by_a_bare_word_fills_a_hole
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.A_step_binds_to_its_one_matching_phrase
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.A_step_matching_two_phrases_is_PH002
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.An_argument_of_the_wrong_type_is_PH312
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.An_unknown_field_is_PH311_and_lists_the_real_fields
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.An_unknown_phrase_is_PH001_and_names_the_closest_templates
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.An_unknown_variable_is_PH310
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.Discarding_a_returned_value_is_PH321
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.Letting_a_phrase_that_returns_nothing_is_PH320
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.Literal_arguments_are_checked_against_hole_types(step: "retry 3 up to 3 times", code: "PH312")
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.Literal_arguments_are_checked_against_hole_types(step: "retry \"sync\" up to 2.5 times", code: "PH312")
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.Literal_arguments_are_checked_against_hole_types(step: "retry \"sync\" up to 3 times", code: null)
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.Literal_arguments_are_checked_against_hole_types(step: "retry true up to 3 times", code: "PH312")
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.Record_and_list_literals_are_checked_field_by_field
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.Redefining_a_variable_is_PH313(first: "let input = total quantity of input.items", second: "fail with NotBuilt")
+    Phrase.Compiler.Tests.Semantics.ResolverCallTests.Redefining_a_variable_is_PH313(first: "let total = total quantity of input.items", second: "let total = total quantity of input.items")
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.A_duplicate_field_is_PH303
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.A_duplicate_input_field_is_PH303
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.A_duplicate_or_core_type_name_is_PH302(types: "type LineItem\n  sku: Text\n\ntype LineItem\n  id:"···)
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.A_duplicate_or_core_type_name_is_PH302(types: "type Text\n  value: Int\n")
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.An_unknown_type_in_a_hole_is_PH300
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.An_unknown_type_is_PH300_at_the_reference
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.Endpoint_shapes_become_named_record_types
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.Phrase_keys_are_lowercased_words_with_holes_as_underscores
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.The_wrong_number_of_type_arguments_is_PH301(type: "Int<Text>")
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.The_wrong_number_of_type_arguments_is_PH301(type: "List<Int, Int>")
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.The_wrong_number_of_type_arguments_is_PH301(type: "Option")
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.Two_endpoints_on_the_same_verb_and_route_is_PH304
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.Two_endpoints_with_the_same_name_is_PH304
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.Two_phrases_with_the_same_wording_is_PH010
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.Types_may_refer_to_types_declared_later
+    Phrase.Compiler.Tests.Semantics.ResolverDeclarationTests.Types_resolve_to_core_and_user_types
+    Phrase.Compiler.Tests.Semantics.ResolverFixtureTests.All_six_specs_survive_resolution
+    Phrase.Compiler.Tests.Semantics.ResolverFixtureTests.Every_endpoint_step_is_bound_and_keeps_its_source
+    Phrase.Compiler.Tests.Semantics.ResolverFixtureTests.Failures_propagate_to_the_endpoint
+    Phrase.Compiler.Tests.Semantics.ResolverFixtureTests.Mutated_programs_resolve_without_throwing(seed: 1)
+    Phrase.Compiler.Tests.Semantics.ResolverFixtureTests.Mutated_programs_resolve_without_throwing(seed: 2)
+    Phrase.Compiler.Tests.Semantics.ResolverFixtureTests.Mutated_programs_resolve_without_throwing(seed: 3)
+    Phrase.Compiler.Tests.Semantics.ResolverFixtureTests.Mutated_programs_resolve_without_throwing(seed: 4)
+    Phrase.Compiler.Tests.Semantics.ResolverFixtureTests.Mutated_programs_resolve_without_throwing(seed: 5)
+    Phrase.Compiler.Tests.Semantics.ResolverFixtureTests.Mutated_programs_resolve_without_throwing(seed: 6)
+    Phrase.Compiler.Tests.Semantics.ResolverFixtureTests.Mutated_programs_resolve_without_throwing(seed: 7)
+    Phrase.Compiler.Tests.Semantics.ResolverFixtureTests.Mutated_programs_resolve_without_throwing(seed: 8)
+    Phrase.Compiler.Tests.Semantics.ResolverFixtureTests.The_orders_fixture_resolves_cleanly
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.A_composite_may_only_fail_with_declared_codes(clause: "  fails with Rejected\n", code: null)
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.A_composite_may_only_fail_with_declared_codes(clause: "", code: "PH326")
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.A_composite_must_declare_the_effects_of_what_it_calls(clause: "  effects Db\n", code: null)
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.A_composite_must_declare_the_effects_of_what_it_calls(clause: "", code: "PH328")
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.A_composite_phrase_uses_its_holes_as_variables
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.A_composite_with_a_return_type_is_PH325
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.A_phrase_call_containing_with_and_a_record_still_resolves_as_a_call
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.A_step_after_respond_is_PH324
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.An_endpoint_with_output_that_never_responds_is_PH323
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Duplicate_declared_failure_names_are_rejected
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Ending_with_fail_with_is_a_valid_endpoint
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Endpoint_failures_collect_from_every_called_phrase_sorted
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Ensure_can_read_a_Text_field_from_a_record
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Ensure_comparison_Int_literals_must_fit_in_32_bits
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Ensure_comparisons_require_matching_Int_operands(step: "ensure count < \"one\" else Invalid")
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Ensure_comparisons_require_matching_Int_operands(step: "ensure title < 1 else Invalid")
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Ensure_rejects_undeclared_failures_wrong_types_and_unknown_names(step: "ensure count length at most 200 else Invalid", code: "PH312")
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Ensure_rejects_undeclared_failures_wrong_types_and_unknown_names(step: "ensure missing is not blank else Invalid", code: "PH310")
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Ensure_rejects_undeclared_failures_wrong_types_and_unknown_names(step: "ensure title length at most 200 else Missing", code: "PH326")
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Ensure_resolves_its_typed_condition_and_failure
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Phrases_that_call_each_other_in_a_cycle_are_PH327
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Record_update_rejects_unknown_records_fields_wrong_types_and_duplicates(step: "let completed = missing with { done: true }", code: "PH001")
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Record_update_rejects_unknown_records_fields_wrong_types_and_duplicates(step: "let completed = task with { done: \"yes\" }", code: "PH312")
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Record_update_rejects_unknown_records_fields_wrong_types_and_duplicates(step: "let completed = task with { done: true, done: fals"···, code: "PH303")
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Record_update_rejects_unknown_records_fields_wrong_types_and_duplicates(step: "let completed = task with { missing: true }", code: "PH311")
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Record_update_rejects_unknown_records_fields_wrong_types_and_duplicates(step: "let completed = title with { done: true }", code: "PH311")
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Record_update_reports_an_unknown_field_on_a_zero_field_record
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Record_update_resolves_to_the_source_record_type
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Respond_with_builds_the_typed_output_record
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Responding_from_a_composite_is_PH322
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.Responding_from_an_endpoint_without_output_is_PH322
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.The_response_must_match_the_output_shape(step: "respond with { totalQuantity: 1, extra: 2 }", code: "PH314")
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.The_response_must_match_the_output_shape(step: "respond with { totalQuantity: \"x\" }", code: "PH312")
+    Phrase.Compiler.Tests.Semantics.ResolverFlowTests.The_response_must_match_the_output_shape(step: "respond with {}", code: "PH314")
+    Phrase.Compiler.Tests.Semantics.ResolverHardeningTests.A_call_to_a_phrase_with_a_repeated_hole_resolves_instead_of_throwing
+    Phrase.Compiler.Tests.Semantics.ResolverHardeningTests.A_composite_with_a_repeated_hole_resolves_instead_of_throwing
+    Phrase.Compiler.Tests.Semantics.ResolverHardeningTests.Bare_word_variable_of_the_wrong_type_is_PH312_naming_both_types
+    Phrase.Compiler.Tests.Semantics.ResolverHardeningTests.Failed_let_is_bound_as_Error_and_does_not_cascade
+    Phrase.Compiler.Tests.Semantics.ResolverHardeningTests.None_for_a_Text_hole_is_PH312
+    Phrase.Compiler.Tests.Semantics.ResolverHardeningTests.Option_Decimal_accepts_decimal_whole_number_and_none(value: "2.5")
+    Phrase.Compiler.Tests.Semantics.ResolverHardeningTests.Option_Decimal_accepts_decimal_whole_number_and_none(value: "3")
+    Phrase.Compiler.Tests.Semantics.ResolverHardeningTests.Option_Decimal_accepts_decimal_whole_number_and_none(value: "none")
+    Phrase.Compiler.Tests.Semantics.ResolverHardeningTests.Option_Id_accepts_a_string_literal_with_literal_widening
+    Phrase.Compiler.Tests.Semantics.ResolverHardeningTests.Option_Int_rejects_a_decimal_literal_with_PH312
+    Phrase.Compiler.Tests.Semantics.ResolverHardeningTests.Record_literal_for_a_non_record_hole_is_PH312
+    Phrase.Compiler.Tests.Semantics.ResolverSpecDefectsTests.PH331_names_unknown_hole_and_lists_the_valid_holes
+    Phrase.Compiler.Tests.Semantics.ResolverSpecDefectsTests.PH331_reports_the_duplicate_binding_once
+    Phrase.Compiler.Tests.Semantics.ResolverSpecDefectsTests.PH332_reports_path_values_inside_spec_records_and_lists
+    Phrase.Compiler.Tests.Semantics.ResolverSpecDefectsTests.PH334_names_the_real_endpoint_and_lists_the_failures_it_can_produce
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.A_composite_spec_may_expect_a_failure_from_a_phrase_it_calls
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.A_missing_hole_binding_is_PH331_naming_the_hole
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.A_phrase_spec_binds_holes_in_hole_order
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.A_phrase_spec_that_says_handled_is_PH330
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.A_returned_value_of_the_wrong_type_is_PH312
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.A_spec_value_that_is_a_path_is_PH332
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.An_endpoint_spec_gives_typed_input_and_expects_a_typed_response
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.An_endpoint_spec_with_no_input_is_PH331
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.An_outcome_the_phrase_cannot_have_is_PH333(then: "then responds { n: 1 }")
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.An_outcome_the_phrase_cannot_have_is_PH333(then: "then returns 1")
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.Expecting_a_failure_the_phrase_cannot_produce_is_PH334
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.Givens_must_bind_each_hole_exactly_once(first: "given a = 1", second: "and a = 2")
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.Givens_must_bind_each_hole_exactly_once(first: "given a = 1", second: "and c = 2")
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.Givens_must_bind_each_hole_exactly_once(first: "given input { a: 1, b: 2 }", second: null)
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.Invalid_endpoint_specs_are_reported(given: "given input { customerId: \"c\", items: [] }", when: "when called", then: "then responds { totalQuantity: 0 }", code: "PH330")
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.Invalid_endpoint_specs_are_reported(given: "given input { customerId: \"c\", items: [] }", when: "when handled", then: "then fails with EmptyOrder", code: "PH334")
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.Invalid_endpoint_specs_are_reported(given: "given input { customerId: \"c\", items: [] }", when: "when handled", then: "then returns 0", code: "PH333")
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.Invalid_endpoint_specs_are_reported(given: "given input { items: [] }", when: "when handled", then: "then responds { totalQuantity: 0 }", code: "PH314")
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.Invalid_endpoint_specs_are_reported(given: "given items = []", when: "when handled", then: "then responds { totalQuantity: 0 }", code: "PH331")
+    Phrase.Compiler.Tests.Semantics.ResolverSpecTests.More_than_one_outcome_is_PH335
+    Phrase.Compiler.Tests.Syntax.AvowDeclarationTests.A_filler_is_not_part_of_the_name_used_to_resolve_a_call
+    Phrase.Compiler.Tests.Syntax.AvowDeclarationTests.Each_supported_filler_and_no_filler_declares_an_avow(declaration: "avow \"double {n: Int}\"")
+    Phrase.Compiler.Tests.Syntax.AvowDeclarationTests.Each_supported_filler_and_no_filler_declares_an_avow(declaration: "avow it \"double {n: Int}\"")
+    Phrase.Compiler.Tests.Syntax.AvowDeclarationTests.Each_supported_filler_and_no_filler_declares_an_avow(declaration: "avow that \"double {n: Int}\"")
+    Phrase.Compiler.Tests.Syntax.AvowDeclarationTests.Each_supported_filler_and_no_filler_declares_an_avow(declaration: "avow to \"double {n: Int}\"")
+    Phrase.Compiler.Tests.Syntax.AvowDeclarationTests.Formatting_an_avow_always_writes_the_canonical_filler
+    Phrase.Compiler.Tests.Syntax.AvowDeclarationTests.Invalid_words_before_the_template_report_the_filler_rule(declaration: "avow to that \"work\"", code: "PH213")
+    Phrase.Compiler.Tests.Syntax.AvowDeclarationTests.Invalid_words_before_the_template_report_the_filler_rule(declaration: "avow toward \"work\"", code: "PH212")
+    Phrase.Compiler.Tests.Syntax.AvowDeclarationTests.The_old_phrase_keyword_is_an_unknown_top_level_declaration
+    Phrase.Compiler.Tests.Syntax.ParserDeclarationTests.A_file_starts_with_its_module_name
+    Phrase.Compiler.Tests.Syntax.ParserDeclarationTests.A_malformed_field_is_PH200_and_the_other_fields_survive
+    Phrase.Compiler.Tests.Syntax.ParserDeclarationTests.A_missing_module_declaration_is_PH202
+    Phrase.Compiler.Tests.Syntax.ParserDeclarationTests.A_second_module_declaration_is_PH202
+    Phrase.Compiler.Tests.Syntax.ParserDeclarationTests.A_type_lists_its_fields_in_order
+    Phrase.Compiler.Tests.Syntax.ParserDeclarationTests.A_type_with_no_fields_is_PH203
+    Phrase.Compiler.Tests.Syntax.ParserDeclarationTests.An_unexpected_indented_block_is_PH211
+    Phrase.Compiler.Tests.Syntax.ParserDeclarationTests.An_unknown_top_level_line_is_PH201
+    Phrase.Compiler.Tests.Syntax.ParserDeclarationTests.Generic_type_references_nest
+    Phrase.Compiler.Tests.Syntax.ParserDeclarationTests.Lexer_diagnostics_are_included_in_the_parse_result
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.A_repeated_section_is_PH204
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.An_unknown_http_verb_is_PH209
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.Fail_with_names_a_failure_code
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.Input_and_output_are_field_lists
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.Literals_records_and_lists_in_a_call_are_arguments
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.Malformed_steps_are_PH200(step: "ensure Customer exists")
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.Malformed_steps_are_PH200(step: "fail with oops")
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.Malformed_steps_are_PH200(step: "let = total of input.items")
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.Malformed_steps_are_PH200(step: "let total =")
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.Malformed_steps_are_PH200(step: "let total total of input.items")
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.Malformed_steps_are_PH200(step: "respond with total")
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.Missing_input_or_steps_is_PH203
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.Routes_are_rebuilt_from_their_segments(written: "/", expected: "/")
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.Routes_are_rebuilt_from_their_segments(written: "/orders/{orderId}/lines", expected: "/orders/{orderId}/lines")
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.Routes_are_rebuilt_from_their_segments(written: "/v2/order-lines", expected: "/v2/order-lines")
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.Steps_keep_words_and_arguments_in_order
+    Phrase.Compiler.Tests.Syntax.ParserEndpointTests.The_header_names_the_endpoint_verb_and_route
+    Phrase.Compiler.Tests.Syntax.ParserFixtureTests.A_broken_declaration_does_not_hide_the_ones_after_it
+    Phrase.Compiler.Tests.Syntax.ParserFixtureTests.Mutated_programs_parse_without_throwing(seed: 1)
+    Phrase.Compiler.Tests.Syntax.ParserFixtureTests.Mutated_programs_parse_without_throwing(seed: 2)
+    Phrase.Compiler.Tests.Syntax.ParserFixtureTests.Mutated_programs_parse_without_throwing(seed: 3)
+    Phrase.Compiler.Tests.Syntax.ParserFixtureTests.Mutated_programs_parse_without_throwing(seed: 4)
+    Phrase.Compiler.Tests.Syntax.ParserFixtureTests.Mutated_programs_parse_without_throwing(seed: 5)
+    Phrase.Compiler.Tests.Syntax.ParserFixtureTests.Mutated_programs_parse_without_throwing(seed: 6)
+    Phrase.Compiler.Tests.Syntax.ParserFixtureTests.Mutated_programs_parse_without_throwing(seed: 7)
+    Phrase.Compiler.Tests.Syntax.ParserFixtureTests.Mutated_programs_parse_without_throwing(seed: 8)
+    Phrase.Compiler.Tests.Syntax.ParserFixtureTests.The_fixture_contracts_are_captured
+    Phrase.Compiler.Tests.Syntax.ParserFixtureTests.The_fixture_has_six_specs_split_three_and_three
+    Phrase.Compiler.Tests.Syntax.ParserFixtureTests.The_orders_fixture_parses_into_its_declarations
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.A_composite_phrase_has_steps_instead_of_native_code
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.A_phrase_call_containing_with_and_a_record_is_not_reserved_as_an_update
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.A_phrase_with_both_native_code_and_steps_is_PH208
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.A_phrase_with_no_implementation_is_PH203
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.A_phrase_without_an_arrow_returns_nothing
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.A_return_type_follows_the_arrow
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.A_second_fails_with_clause_is_PH204
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.A_template_splits_into_words_and_typed_holes
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.An_unknown_clause_in_a_phrase_is_PH200
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.An_unknown_native_target_is_PH207
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Each_native_block_records_its_target_and_code
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Effects_none_is_an_empty_list
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Ensure_conditions_are_parsed_as_steps
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Ensure_is_only_a_step_keyword_at_the_start_of_a_step_line
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Failures_and_effects_are_lists_of_type_names
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Invalid_templates_are_reported(template: "add {n: Int} to {n: Int}", code: "PH206")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Invalid_templates_are_reported(template: "ensure {Items: Int} ok", code: "PH205")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Invalid_templates_are_reported(template: "ensure {items List<LineItem>} ok", code: "PH205")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Invalid_templates_are_reported(template: "ensure {items: List<LineItem> ok", code: "PH205")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Invalid_templates_are_reported(template: "fail with {n: Int}", code: "PH205")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Invalid_templates_are_reported(template: "let total be {n: Int}", code: "PH205")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Invalid_templates_are_reported(template: "native {n: Int}", code: "PH205")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Invalid_templates_are_reported(template: "respond with {n: Int}", code: "PH205")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Invalid_templates_are_reported(template: "total of #1", code: "PH205")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Invalid_templates_are_reported(template: "{a: Int} {b: Int}", code: "PH205")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Length_maximum_must_be_a_non_negative_32_bit_integer(maximum: "-1")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Length_maximum_must_be_a_non_negative_32_bit_integer(maximum: "-99999999999")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Length_maximum_must_be_a_non_negative_32_bit_integer(maximum: "200.5")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Length_maximum_must_be_a_non_negative_32_bit_integer(maximum: "99999999999")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Malformed_record_updates_report_a_normal_diagnostic(step: "let completed = task with { done true }", code: "PH200")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Malformed_record_updates_report_a_normal_diagnostic(step: "let completed = task with { done: true", code: "PH200")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Malformed_record_updates_report_a_normal_diagnostic(step: "let completed = task with { done: true, }", code: "PH200")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Malformed_record_updates_report_a_normal_diagnostic(step: "let completed = task with { done: }", code: "PH200")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Malformed_record_updates_report_a_normal_diagnostic(step: "let completed = task with { owner: owner with { na"···, code: "PH200")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Malformed_record_updates_report_a_normal_diagnostic(step: "let completed = task with { }", code: "PH200")
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Record_update_form_is_parsed_as_a_let_step
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Template_parts_point_into_the_string
+    Phrase.Compiler.Tests.Syntax.ParserPhraseTests.Two_native_blocks_for_the_same_target_is_PH204
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.A_multi_line_given_reads_as_one_clause
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.A_phrase_spec_binds_holes_and_expects_a_value
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.A_second_when_is_PH204
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.A_spec_may_have_no_givens_and_may_just_succeed
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.A_wrapped_record_may_end_with_a_trailing_comma
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.An_endpoint_spec_gives_input_and_expects_a_response
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.And_continues_the_clause_before_it
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.And_with_nothing_to_continue_is_PH210
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.Clauses_out_of_order_are_PH210
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.Malformed_spec_lines_are_PH200(line: "given items = [1, }")
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.Malformed_spec_lines_are_PH200(line: "given items")
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.Malformed_spec_lines_are_PH200(line: "then explodes")
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.Malformed_spec_lines_are_PH200(line: "then responds 5")
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.Malformed_spec_lines_are_PH200(line: "then returns")
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.Malformed_spec_lines_are_PH200(line: "when invoked")
+    Phrase.Compiler.Tests.Syntax.ParserSpecTests.Missing_when_and_missing_then_are_PH203
+    Phrase.Compiler.Tests.Syntax.SourceFormatterTests.Canonical_steps_round_trip(step: "ensure input.items is not empty")
+    Phrase.Compiler.Tests.Syntax.SourceFormatterTests.Canonical_steps_round_trip(step: "fail with NotBuilt")
+    Phrase.Compiler.Tests.Syntax.SourceFormatterTests.Canonical_steps_round_trip(step: "let completed = input with { n: 1 }")
+    Phrase.Compiler.Tests.Syntax.SourceFormatterTests.Canonical_steps_round_trip(step: "let total = total quantity of input.items")
+    Phrase.Compiler.Tests.Syntax.SourceFormatterTests.Canonical_steps_round_trip(step: "respond with { totalQuantity: total }")
+    Phrase.Compiler.Tests.Syntax.SourceFormatterTests.Canonical_steps_round_trip(step: "respond with {}")
+    Phrase.Compiler.Tests.Syntax.SourceFormatterTests.Canonical_steps_round_trip(step: "retry \"sync\" up to 3 times with [1, 2.5] and { f"···)
+    Phrase.Compiler.Tests.Syntax.SourceFormatterTests.Spacing_is_normalized
+    Phrase.Compiler.Tests.Syntax.SourceFormatterTests.Strings_are_re_escaped
+    Phrase.Compiler.Tests.TargetAdapterContractTests.Resolved_model_is_handed_to_the_selected_adapter_without_CSharp_knowledge

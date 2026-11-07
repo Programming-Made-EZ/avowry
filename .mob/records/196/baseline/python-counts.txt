@@ -1,0 +1,6 @@
+tests.test_bench_launcher_scan_264 6 OK
+tests.test_outcome_extractors_217 17 OK
+tests.test_repeat_evidence 21 OK
+tests.test_run_pairs_217 36 OK
+tests.test_readme_reference_status 4 OK
+(run in the real checkout at 4d73cf9 on 2026-11-07; test_demo_readme is in test_demo_readme.real-checkout.txt, recorded as is)

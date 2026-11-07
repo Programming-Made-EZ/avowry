@@ -1,0 +1,317 @@
+    Phrase.Acceptance.Tests.AvowryCommand.Build_rejects_the_removed_phrase_extension_and_names_avowry
+    Phrase.Acceptance.Tests.AvowryCommand.Help_version_build_map_and_trace_use_only_the_Avowry_name
+    Phrase.Acceptance.Tests.BenchLauncherContract.Configuration_is_read_from_the_test_assembly_directory(baseDirectory: "/x/tests/T/bin/release/net8.0/", expected: "Release")
+    Phrase.Acceptance.Tests.BenchLauncherContract.Configuration_is_read_from_the_test_assembly_directory(baseDirectory: "C:\\x\\tests\\T\\bin\\Debug\\net8.0\\", expected: "Debug")
+    Phrase.Acceptance.Tests.BenchLauncherContract.Configuration_is_read_from_the_test_assembly_directory(baseDirectory: "C:\\x\\tests\\T\\bin\\Release\\net8.0", expected: "Release")
+    Phrase.Acceptance.Tests.BenchLauncherContract.Default_overload_uses_the_running_assembly_configuration_and_no_build
+    Phrase.Acceptance.Tests.BenchLauncherContract.Missing_output_fails_before_any_process_names_configuration_path_and_remediation_and_builds_nothing(configuration: "Debug")
+    Phrase.Acceptance.Tests.BenchLauncherContract.Missing_output_fails_before_any_process_names_configuration_path_and_remediation_and_builds_nothing(configuration: "Release")
+    Phrase.Acceptance.Tests.BenchLauncherContract.Newer_files_under_bin_and_obj_do_not_make_fresh_output_stale
+    Phrase.Acceptance.Tests.BenchLauncherContract.Output_newer_than_every_source_is_fresh_and_launches
+    Phrase.Acceptance.Tests.BenchLauncherContract.Output_older_than_the_newest_source_is_stale_and_fails_the_same_way
+    Phrase.Acceptance.Tests.BenchLauncherContract.Output_only_in_the_other_configuration_counts_as_missing
+    Phrase.Acceptance.Tests.BenchLauncherContract.Output_with_exactly_the_newest_source_time_is_fresh
+    Phrase.Acceptance.Tests.BenchLauncherContract.Start_info_carries_the_bench_project_and_passes_model_command_and_private_results_through_after_the_separator
+    Phrase.Acceptance.Tests.BenchLauncherContract.Start_info_is_no_build_in_the_configuration_of_the_test_assembly(configuration: "Debug")
+    Phrase.Acceptance.Tests.BenchLauncherContract.Start_info_is_no_build_in_the_configuration_of_the_test_assembly(configuration: "Release")
+    Phrase.Acceptance.Tests.BenchLauncherContract.Start_info_with_no_bench_arguments_still_ends_with_the_separator_and_never_disables_the_no_build_start
+    Phrase.Acceptance.Tests.BenchRunHarness.Child_that_exits_zero_and_writes_history_returns_its_result
+    Phrase.Acceptance.Tests.BenchRunHarness.Early_child_exit_42_before_any_results_directory_is_reported_with_its_own_result
+    Phrase.Acceptance.Tests.BenchRunHarness.Exit_zero_with_no_results_file_at_all_fails_with_the_history_path_not_a_missing_directory
+    Phrase.Acceptance.Tests.BenchRunHarness.Failed_child_build_keeps_its_diagnostics_in_the_failure
+    Phrase.Acceptance.Tests.BenchRunHarness.History_present_but_empty_fails_with_the_exit_code_and_path
+    Phrase.Acceptance.Tests.BenchRunHarness.Legitimate_scoring_exit_3_that_wrote_history_is_not_an_infrastructure_failure
+    Phrase.Acceptance.Tests.BenchRunHarness.Unexpected_non_zero_exit_that_still_wrote_history_is_a_failure_with_the_exit_code
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.cold_runs_append_exactly_the_cold_extras_and_never_break_the_command_line
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.max_attempts_one_invokes_a_failing_model_once
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.read_stored_result_treats_a_missing_mode_as_zero_shot
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.read_stored_result_treats_missing_cold_fields_as_warm_legacy_rows
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_masks_a_secret_looking_token
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_masks_a_tilde_relative_path_inside_the_first_200_characters
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_scrubs_a_user_path_before_cutting_to_200_characters
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_without_sensitive_content_is_only_cut_to_200_characters
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_accepts_the_canonical_repository_root_as_docs_root_without_custom_docs
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_appends_a_new_row_after_a_legacy_row_and_keeps_the_legacy_line_byte_identical
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_custom_docs_is_labeled_docs_in_context_custom_and_not_counted_in_a_baseline
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_default_mode_keeps_the_prompt_hash_from_before_docs_in_context
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_delivers_the_copilot_prompt_on_stdin_so_a_multi_line_prompt_survives
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_docs_hash_changes_when_a_docs_file_changes_and_matches_when_it_does_not
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_docs_in_context_charges_the_docs_block_on_every_attempt
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_docs_in_context_counts_documentation_tokens_above_the_same_zero_shot_task
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_docs_in_context_puts_grammar_and_orders_verbatim_ahead_of_the_task
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_extracts_phrase_from_an_unlabeled_markdown_fence
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_extracts_phrase_from_case_insensitive_markdown_fence_and_narration
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_inlines_task_file_bodies_in_the_assembled_prompt
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_invokes_each_profile_once_headless_with_its_working_flags
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_keeps_legacy_history_rows_byte_for_byte_when_appending_new_results
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_labels_parse_resolve_when_the_emitter_is_still_unimplemented
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_records_a_max_turns_error_as_unavailable_with_the_reason
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_records_a_timed_out_model_as_unavailable
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_records_an_unavailable_model_instead_of_losing_the_result
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_records_cold_profile_metadata_and_uses_an_empty_workdir_at_launch
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_records_exiting_model_as_unavailable_with_none_proof_level
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_records_narration_only_failure_as_completed_model_error_without_unavailable_status
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_records_no_phrase_found_when_the_reply_contains_no_phrase
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_refuses_an_explicit_docs_root_that_is_not_the_repository_without_custom_docs
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_rerun_appends_rows_without_rewriting_old_history_entries
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_retries_an_empty_reply_once_and_records_it_as_unavailable
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_retries_with_compiler_diagnostics_until_the_model_output_passes
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_scores_one_fake_model_and_persists_its_result
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_scores_phrase_wrapped_in_narration_and_a_markdown_fence
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_skips_holdout_tasks_in_default_development_mode
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_survives_a_model_that_exits_without_reading_its_stdin_given_a_large_prompt
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.run_uses_a_fresh_empty_workdir_on_retry_attempts
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.self_check_runs_every_task_twice_and_reports_zero_noise
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.self_check_writes_only_under_self_check_and_leaves_baseline_history_untouched
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.timed_out_model_tree_is_stopped_and_recorded_in_both_arms
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.usage_mentions_the_custom_docs_flag
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.v1_benchmark_harness_files_exist_for_the_cli_contract
+    Phrase.Acceptance.Tests.BenchmarkHarnessAcceptance.v1_suite_has_fixed_task_and_holdout_coverage
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.a_later_build_failure_cannot_reuse_an_earlier_attempt_trx
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.broken_start_code_fails_with_the_expected_compiler_diagnostic(taskId: "010-fix-trigger", diagnosticName: "CS0117", expectedText: "does not contain a definition for 'Handled'")
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.broken_start_code_fails_with_the_expected_compiler_diagnostic(taskId: "011-fix-type", diagnosticName: "CS0029", expectedText: "cannot implicitly convert type")
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.cold_codex_uses_the_preamble_restricted_flags_and_an_empty_attempt_workdir
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.cold_profile_literals_cannot_drift_between_benchmark_arms
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.committed_outcomes_keep_the_existing_then_kinds
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.correct_change_task_reply_passes_and_records_the_starting_code(taskId: "004-read-phrase", kind: "read")
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.correct_change_task_reply_passes_and_records_the_starting_code(taskId: "005-read-failure", kind: "read")
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.correct_change_task_reply_passes_and_records_the_starting_code(taskId: "007-modify-return", kind: "modify")
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.correct_change_task_reply_passes_and_records_the_starting_code(taskId: "008-modify-type", kind: "modify")
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.correct_change_task_reply_passes_and_records_the_starting_code(taskId: "010-fix-trigger", kind: "fix")
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.correct_change_task_reply_passes_and_records_the_starting_code(taskId: "011-fix-type", kind: "fix")
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.correct_code_with_wrong_own_test_fails_and_names_that_test
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.correct_code_without_own_test_fails_with_no_tests_diagnostic
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.correct_csharp_reply_passes_with_specs_passed_proof
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.empty_first_reply_can_pass_on_the_second_attempt
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.empty_reply_is_retried_to_the_cap_and_records_attempt_tokens
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.endpoint_reply_fails_when_response_record_or_status_are_wrong
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.endpoint_reply_passes_when_response_record_and_status_match
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.entry_point_is_discovered_without_a_hard_coded_class_or_method_name
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.failed_build_claims_no_executed_test_counts
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.file_scoped_namespaces_in_two_marked_files_compile_separately
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.generated_test_count_equals_the_number_of_outcome_cases
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.holdout_task_is_skipped
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.marked_two_file_reply_is_written_as_two_compilation_units
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.multiple_greeting_entry_points_are_an_ambiguous_completed_failure
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.narration_only_reply_is_a_completed_no_csharp_found_failure
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.non_zero_model_exit_is_unavailable
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.read_and_modify_outcomes_match_the_phrase_prompts
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.reply_head_is_scrubbed_before_it_is_cut
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.reply_head_scrubs_tilde_paths_with_either_separator_before_cutting
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.task_001_prompt_requires_exactly_one_matching_method
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.wrong_change_task_reply_fails_and_names_the_failing_test(taskId: "004-read-phrase", kind: "read", failingTest: "Given_value_is_sample_When_called_Then_returns_its"···)
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.wrong_change_task_reply_fails_and_names_the_failing_test(taskId: "005-read-failure", kind: "read", failingTest: "Given_name_is_ada_When_called_Then_accepts_a_name")
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.wrong_change_task_reply_fails_and_names_the_failing_test(taskId: "007-modify-return", kind: "modify", failingTest: "Given_no_inputs_When_called_Then_returns_ready")
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.wrong_change_task_reply_fails_and_names_the_failing_test(taskId: "008-modify-type", kind: "modify", failingTest: "Given_name_is_ada_and_email_is_ada_example_com_Whe"···)
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.wrong_change_task_reply_fails_and_names_the_failing_test(taskId: "010-fix-trigger", kind: "fix", failingTest: "Given_no_inputs_When_called_Then_returns_hello")
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.wrong_change_task_reply_fails_and_names_the_failing_test(taskId: "011-fix-type", kind: "fix", failingTest: "Given_no_inputs_When_called_Then_returns_forty_two")
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.wrong_reply_fails_with_the_failing_test_name_in_diagnostics
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.zero_executed_model_tests_is_a_completed_failure
+    Phrase.Acceptance.Tests.CSharpBaselineAcceptance.zero_harness_tests_diagnostic_carries_the_captured_dotnet_output
+    Phrase.Acceptance.Tests.CompileEndpointToCSharp.Generated_post_endpoint_binds_its_request_and_returns_its_success_response
+    Phrase.Acceptance.Tests.CompileEndpointToCSharp.Zero_route_module_still_emits_a_buildable_program
+    Phrase.Acceptance.Tests.CompilerCarriesAvowryName.Compiler_assembly_and_namespace_carry_the_Avowry_name
+    Phrase.Acceptance.Tests.CompositePhraseOrderCompiles.Composite_phrase_calls_three_leaves_in_order_and_surfaces_a_leaf_failure
+    Phrase.Acceptance.Tests.DeclaredEffectDependencyCompiles.Declared_effect_is_injected_and_its_spec_supplies_a_double
+    Phrase.Acceptance.Tests.DeclaredEffectDependencyCompiles.Two_phrases_sharing_an_effect_each_pass_with_one_generated_double
+    Phrase.Acceptance.Tests.DeclaredEffectDependencyCompiles.Two_specs_sharing_an_effect_each_pass_with_one_generated_double
+    Phrase.Acceptance.Tests.DeclaredRecordCompiles.Declared_record_input_phrase_compiles_and_its_spec_passes
+    Phrase.Acceptance.Tests.DeclaredRecordCompiles.Zero_declared_types_still_builds
+    Phrase.Acceptance.Tests.DocumentationPrinciples.The_no_personal_names_test_suite_passes
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: <path>)
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: <path>)
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: <path>)
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: <path>)
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: <path>)
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: <path>)
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: <path>)
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: <path>)
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: <path>)
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: <path>)
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: <path>)
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: <path>)
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: <path>)
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: <path>)
+    Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.The_corpus_has_a_header_comment_and_an_expected_file_per_fixture
+    Phrase.Acceptance.Tests.EndpointFailureMapsToHttpStatus.Invalid_input_returns_the_declared_failure_with_its_mapped_status
+    Phrase.Acceptance.Tests.EnsureStepCompiles.Int_comparisons_with_literals_and_inputs_compile_and_execute
+    Phrase.Acceptance.Tests.EnsureStepCompiles.Text_rules_compile_to_guard_clauses_and_pass_their_boundary_specs
+    Phrase.Acceptance.Tests.EnsureStepCompiles.Whitespace_record_fields_and_called_phrase_failures_reach_the_generated_API
+    Phrase.Acceptance.Tests.EverySpecOutcomeAsserts.Equal_list_expectation_passes
+    Phrase.Acceptance.Tests.EverySpecOutcomeAsserts.Failure_response_and_composite_specs_each_pass
+    Phrase.Acceptance.Tests.EverySpecOutcomeAsserts.Wrong_expected_value_fails_once_and_names_the_spec_in_its_message
+    Phrase.Acceptance.Tests.EverySpecOutcomeAsserts.Wrong_list_expectation_names_the_spec_and_shows_its_elements
+    Phrase.Acceptance.Tests.ExtensionMap.The_extension_map_check_passes
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddress.Guard_default_timeouts_are_2_minutes_and_15_seconds
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddress.Guard_exit_after_reporting_names_pid_code_and_address
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddress.I_readiness_comes_from_the_childs_own_output_before_any_connection_and_not_before_the_gate
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddress.M_an_unrelated_line_is_ignored_and_the_reported_address_is_taken_without_touching_another_listener
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddress.O_one_real_api_is_started_on_port_0_and_its_base_url_is_the_address_it_reported
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddress.Z_a_child_that_never_reports_an_address_times_out_naming_pid_url_0_and_log
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddressEdges.B_a_line_after_5000_earlier_log_lines_is_found
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddressEdges.B_a_line_on_stderr_is_found
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddressEdges.B_a_reported_host_or_scheme_that_is_not_http_127_0_0_1_fails_naming_pid_line_and_log(prefix: "http://[::1]:")
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddressEdges.B_a_reported_host_or_scheme_that_is_not_http_127_0_0_1_fails_naming_pid_line_and_log(prefix: "http://localhost:")
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddressEdges.B_a_reported_host_or_scheme_that_is_not_http_127_0_0_1_fails_naming_pid_line_and_log(prefix: "https://127.0.0.1:")
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddressEdges.B_parser_accepts_only_an_http_127_0_0_1_address_with_a_port_from_1_to_65535
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddressEdges.E_an_address_nothing_listens_on_is_not_ready_after_the_timeout_and_names_that_url
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddressEdges.Guard_bind_failure_starts_exactly_one_process
+    Phrase.Acceptance.Tests.GeneratedApiBoundAddressEdges.Guard_squatter_on_reported_address_is_out_of_scope_and_the_pid_held_is_the_one_that_started
+    Phrase.Acceptance.Tests.GeneratedApiHazards.Guard_child_exit_code_names_pid_code_and_log
+    Phrase.Acceptance.Tests.GeneratedApiHazards.Guard_hook_exception_propagates_and_no_child_runs
+    Phrase.Acceptance.Tests.GeneratedApiHazards.Guard_two_parallel_starts_get_distinct_base_urls
+    Phrase.Acceptance.Tests.GeneratedApiHazards.Hazard_a_a_port_taken_before_the_api_binds_does_not_stop_a_real_api
+    Phrase.Acceptance.Tests.GeneratedApiHazards.Hazard_b_a_foreign_listener_on_the_waited_port_is_not_reported_as_up(mode: AcceptAndClose)
+    Phrase.Acceptance.Tests.GeneratedApiHazards.Hazard_b_a_foreign_listener_on_the_waited_port_is_not_reported_as_up(mode: AcceptAndKeep)
+    Phrase.Acceptance.Tests.GeneratedApiHazards.Hazard_b_a_foreign_listener_on_the_waited_port_is_not_reported_as_up(mode: BacklogNeverAccepts)
+    Phrase.Acceptance.Tests.GeneratedApiSeams.Guard_hook_is_null_by_default_and_fires_once
+    Phrase.Acceptance.Tests.GeneratedApiSeams.Guard_quietchild_dll_exists_next_to_tests
+    Phrase.Acceptance.Tests.GeneratedApiSourceScan.Guard_checked_set_of_process_start_callers
+    Phrase.Acceptance.Tests.GeneratedApiSourceScan.M_no_helper_returning_an_int_is_named_port_free_unused_or_available
+    Phrase.Acceptance.Tests.GeneratedApiSourceScan.M_no_listener_is_created_outside_the_cards_own_test_file
+    Phrase.Acceptance.Tests.GeneratedApiSourceScan.M_no_listener_is_started_then_stopped_to_read_its_port
+    Phrase.Acceptance.Tests.GeneratedApiSourceScan.O_exactly_one_place_sets_the_url_and_its_value_is_the_literal_port_0
+    Phrase.Acceptance.Tests.GeneratedApiSourceScan.Z_the_name_of_the_old_port_chooser_is_gone_from_cs_py_and_yml_files
+    Phrase.Acceptance.Tests.GeneratedCodeUsesAvowryNames.Generated_code_uses_only_the_final_Avowry_names
+    Phrase.Acceptance.Tests.GeneratedSpecsMutationCheck.Orders_specs_kill_at_least_ninety_percent_deterministically
+    Phrase.Acceptance.Tests.GetEndpointsCompile.Generated_get_specs_observe_route_binding_status_body_and_store_results
+    Phrase.Acceptance.Tests.GetEndpointsCompile.Get_and_route_parameters_are_owned_by_the_web_extension
+    Phrase.Acceptance.Tests.HeadToHeadVerdict.The_python_verdict_test_suite_passes
+    Phrase.Acceptance.Tests.HoldoutTaskConversion.The_python_holdout_task_test_suite_passes
+    Phrase.Acceptance.Tests.LeafPhraseFailureCompiles.Failing_leaf_phrase_surfaces_its_declared_code_and_its_spec_passes
+    Phrase.Acceptance.Tests.LibraryBindingLayering.The_library_binding_layering_check_passes
+    Phrase.Acceptance.Tests.ListFieldCompiles.Declared_model_with_a_list_field_compiles_and_its_spec_passes
+    Phrase.Acceptance.Tests.ListFieldCompiles.Type_named_like_a_csharp_keyword_is_escaped_and_builds
+    Phrase.Acceptance.Tests.LlmCustomerCheck.Correct_reply_passes_and_writes_totals_only
+    Phrase.Acceptance.Tests.LlmCustomerCheck.Failed_reply_names_the_reason_class_and_omits_the_reply(reason: "build")
+    Phrase.Acceptance.Tests.LlmCustomerCheck.Failed_reply_names_the_reason_class_and_omits_the_reply(reason: "outcome")
+    Phrase.Acceptance.Tests.LlmCustomerCheck.Profile_flags_reach_a_fake_cli_named_like_a_real_profile
+    Phrase.Acceptance.Tests.LlmCustomerCheck.Runner_unit_tests_pass
+    Phrase.Acceptance.Tests.MatchingCodebases.Ordinary_csharp_builds_warning_free_and_passes_the_shared_cases
+    Phrase.Acceptance.Tests.MatchingCodebases.Size_fifty_phrase_specs_and_plain_csharp_tests_pass
+    Phrase.Acceptance.Tests.MatchingCodebases.Size_one_phrase_specs_and_plain_csharp_tests_pass
+    Phrase.Acceptance.Tests.MatchingCodebases.Size_ten_phrase_specs_and_plain_csharp_tests_pass
+    Phrase.Acceptance.Tests.MobProcessAccountability.The_mob_process_checker_proves_its_audit_behaviors
+    Phrase.Acceptance.Tests.NativeCSharpBlockCompiles.Native_csharp_block_appears_verbatim_and_the_generated_project_builds_cleanly
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.B_bounded_wait_is_forbidden_and_the_async_forms_are_allowed(statement: "await process.WaitForExitAsync();", expectedHits: 0)
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.B_bounded_wait_is_forbidden_and_the_async_forms_are_allowed(statement: "await process.WaitForExitAsync(cts.Token);", expectedHits: 0)
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.B_bounded_wait_is_forbidden_and_the_async_forms_are_allowed(statement: "await task.WaitAsync(TimeSpan.FromSeconds(1));", expectedHits: 0)
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.B_bounded_wait_is_forbidden_and_the_async_forms_are_allowed(statement: "process.WaitForExit ( 10 );", expectedHits: 1)
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.B_bounded_wait_is_forbidden_and_the_async_forms_are_allowed(statement: "process.WaitForExit(120000);", expectedHits: 1)
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.B_bounded_wait_is_forbidden_and_the_async_forms_are_allowed(statement: "process.WaitForExit(180000);", expectedHits: 1)
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.B_bounded_wait_is_forbidden_and_the_async_forms_are_allowed(statement: "process.WaitForExit(TimeSpan.FromSeconds(5));", expectedHits: 1)
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.B_bounded_wait_is_forbidden_and_the_async_forms_are_allowed(statement: "var ResultCount = 1; var r = Results.Ok(); var q ="···, expectedHits: 0)
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.B_bounded_wait_is_forbidden_and_the_async_forms_are_allowed(statement: "var n = new ReadToEndHelper(); WaitForExit(); Wait"···, expectedHits: 0)
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.B_bounded_wait_is_forbidden_and_the_async_forms_are_allowed(statement: "var s = await process.StandardOutput.ReadToEndAsyn"···, expectedHits: 0)
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.E_the_guard_does_not_flag_its_own_matcher_and_fixture_text
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.I_a_comment_or_string_does_not_hide_a_real_wait_that_follows_it_and_lines_stay_true
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.I_bin_and_obj_output_is_not_scanned_but_a_source_beside_it_is
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.I_forbidden_names_in_comments_and_string_literals_are_not_hits(text: "/* t.Wait();\n   t.Result; */\nvar ok = 1;\n")
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.I_forbidden_names_in_comments_and_string_literals_are_not_hits(text: "// p.WaitForExit(); and x.ReadToEnd();\nvar ok = 1"···)
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.I_forbidden_names_in_comments_and_string_literals_are_not_hits(text: "var c = '\"'; var s = \"t.Wait()\";\n")
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.I_forbidden_names_in_comments_and_string_literals_are_not_hits(text: "var s = $\"{a} t.GetAwaiter().GetResult()\";\n")
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.I_forbidden_names_in_comments_and_string_literals_are_not_hits(text: "var s = @\"line one\np.ReadToEnd();\";\n")
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.I_forbidden_names_in_comments_and_string_literals_are_not_hits(text: "var s = \"p.WaitForExit(1)\";\n")
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.I_forbidden_names_in_comments_and_string_literals_are_not_hits(text: "var s = \"quote \\\" p.WaitForExit();\";\n")
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.M_no_synchronous_process_wait_is_left_in_the_acceptance_sources
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.M_several_forbidden_forms_in_one_file_are_all_reported_by_line
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.O_each_single_forbidden_form_is_caught_with_its_file_and_line(statement: "p.WaitForExit();", form: ".WaitForExit(")
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.O_each_single_forbidden_form_is_caught_with_its_file_and_line(statement: "task.GetAwaiter().GetResult();", form: "GetAwaiter().GetResult(")
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.O_each_single_forbidden_form_is_caught_with_its_file_and_line(statement: "task.Wait();", form: ".Wait(")
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.O_each_single_forbidden_form_is_caught_with_its_file_and_line(statement: "var r = task.Result;", form: ".Result")
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.O_each_single_forbidden_form_is_caught_with_its_file_and_line(statement: "var s = p.StandardOutput.ReadToEnd();", form: ".ReadToEnd(")
+    Phrase.Acceptance.Tests.NoBlockingProcessWaits.Z_a_clean_source_yields_no_diagnostic
+    Phrase.Acceptance.Tests.OneNumberPhraseCompiles.One_int_phrase_compiles_and_its_spec_passes
+    Phrase.Acceptance.Tests.OrdersPhraseCompiles.Orders_phrase_compiles_to_csharp_and_its_generated_specs_pass
+    Phrase.Acceptance.Tests.PersistenceEffectCompiles.Phrase_with_no_effect_emits_no_store
+    Phrase.Acceptance.Tests.PersistenceEffectCompiles.Saving_and_loading_items_uses_the_generated_in_memory_store
+    Phrase.Acceptance.Tests.PhraseBuildOneFile.Build_output_matches_the_compiler_bytes
+    Phrase.Acceptance.Tests.PhraseBuildOneFile.Compile_error_exits_one_and_prints_the_diagnostic
+    Phrase.Acceptance.Tests.PhraseBuildOneFile.Missing_output_directory_exits_two_with_usage
+    Phrase.Acceptance.Tests.PhraseBuildOneFile.Missing_phrase_file_exits_two_and_names_the_path
+    Phrase.Acceptance.Tests.PhraseBuildOneFile.Orders_phrase_build_writes_api_and_specs_projects_and_exits_zero
+    Phrase.Acceptance.Tests.PhraseCheatSheet.Custom_docs_run_records_the_sheet_hash_and_charges_its_tokens_on_every_attempt
+    Phrase.Acceptance.Tests.PhraseCheatSheet.Sheet_is_at_most_700_estimated_tokens
+    Phrase.Acceptance.Tests.PhraseCheatSheet.Sheet_names_every_keyword_and_core_type_and_its_examples_compile
+    Phrase.Acceptance.Tests.PhraseCliFreshness.EnsureAllFresh_compares_each_project_with_its_own_assembly
+    Phrase.Acceptance.Tests.PhraseCliFreshness.EnsureFresh_fails_with_the_rebuild_message_only_when_a_source_is_newer_than_the_dll_beyond_the_tolerance
+    Phrase.Acceptance.Tests.PhraseCliFreshness.EnsureFresh_passes_on_the_real_tree_after_a_build
+    Phrase.Acceptance.Tests.PhraseEndpointExecutedOutcomes.Correct_endpoint_reply_passes_at_specs_passed
+    Phrase.Acceptance.Tests.PhraseEndpointExecutedOutcomes.Wrong_record_or_status_fails_and_names_the_case
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Correct_read_and_modify_replies_pass_and_record_the_starting_code(task: "004-read-phrase", kind: "read")
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Correct_read_and_modify_replies_pass_and_record_the_starting_code(task: "005-read-failure", kind: "read")
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Correct_read_and_modify_replies_pass_and_record_the_starting_code(task: "007-modify-return", kind: "modify")
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Correct_read_and_modify_replies_pass_and_record_the_starting_code(task: "008-modify-type", kind: "modify")
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Correct_write_replies_pass_at_specs_passed_with_executed_outcomes
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Default_run_keeps_prompt_hash_launch_arguments_and_parse_resolve_rows
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Fix_task_prompts_stay_broken_and_report_the_documented_diagnostics
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Fixed_reply_passes_and_faulty_reply_fails_with_the_named_outcome(task: "010-fix-trigger")
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Fixed_reply_passes_and_faulty_reply_fails_with_the_named_outcome(task: "011-fix-type")
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Phrase_and_csharp_rows_name_change_metadata_the_same_way
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Phrase_task_outcomes_match_the_csharp_twin_byte_for_byte
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Read_and_modify_starting_modules_compile_and_their_specs_pass
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Wrong_read_and_modify_replies_fail_naming_the_outcome(task: "004-read-phrase", kind: "read")
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Wrong_read_and_modify_replies_fail_naming_the_outcome(task: "005-read-failure", kind: "read")
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Wrong_read_and_modify_replies_fail_naming_the_outcome(task: "007-modify-return", kind: "modify")
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Wrong_read_and_modify_replies_fail_naming_the_outcome(task: "008-modify-type", kind: "modify")
+    Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.Wrong_reply_fails_and_names_the_failing_outcome
+    Phrase.Acceptance.Tests.PrivateHoldoutResults.git_ignored_suite_refuses_before_the_model_is_launched
+    Phrase.Acceptance.Tests.PrivateHoldoutResults.private_run_leaves_committed_history_and_publishes_numbers_only
+    Phrase.Acceptance.Tests.PrivateHoldoutResults.repository_check_passes_here_and_fails_on_a_tracked_holdout_path
+    Phrase.Acceptance.Tests.ProductNamedToolBoundary.Built_tool_uses_Avowry_assembly_and_source_map_names
+    Phrase.Acceptance.Tests.PutAndDeleteEndpointsCompile.Live_http_put_then_get_then_delete_then_get
+    Phrase.Acceptance.Tests.PutAndDeleteEndpointsCompile.Put_and_delete_specs_update_and_remove_a_stored_item
+    Phrase.Acceptance.Tests.PutAndDeleteEndpointsCompile.Record_without_an_id_or_an_unmatched_store_name_gets_no_store
+    Phrase.Acceptance.Tests.RecordUpdateFormCompiles.Phrase_and_endpoint_update_forms_compile_without_native_csharp
+    Phrase.Acceptance.Tests.RecordUpdateFormCompiles.Tasks_demo_complete_uses_the_update_form
+    Phrase.Acceptance.Tests.ReferenceTarget.Reference_output_builds_and_every_spec_passes
+    Phrase.Acceptance.Tests.ReferenceTarget.Reference_runner_reports_a_mutated_expectation_as_failed
+    Phrase.Acceptance.Tests.SourceMapDeployment.Publish_output_never_contains_the_source_map
+    Phrase.Acceptance.Tests.SourceMapDeployment.Running_api_answers_404_for_the_source_map_paths
+    Phrase.Acceptance.Tests.SourceMapTraceCommand.Trace_of_a_shared_name_prints_every_match
+    Phrase.Acceptance.Tests.SourceMapTraceCommand.Trace_rejects_bad_inputs_cleanly(badInput: "invalid-json")
+    Phrase.Acceptance.Tests.SourceMapTraceCommand.Trace_rejects_bad_inputs_cleanly(badInput: "missing-assembly")
+    Phrase.Acceptance.Tests.SourceMapTraceCommand.Trace_rejects_bad_inputs_cleanly(badInput: "missing-csFile")
+    Phrase.Acceptance.Tests.SourceMapTraceCommand.Trace_rejects_bad_inputs_cleanly(badInput: "missing-map")
+    Phrase.Acceptance.Tests.SourceMapTraceCommand.Trace_rejects_bad_inputs_cleanly(badInput: "missing-sourceFile")
+    Phrase.Acceptance.Tests.SourceMapTraceCommand.Trace_rejects_bad_inputs_cleanly(badInput: "missing-specLines")
+    Phrase.Acceptance.Tests.SourceMapTraceCommand.Trace_rejects_bad_inputs_cleanly(badInput: "not-an-assembly")
+    Phrase.Acceptance.Tests.SourceMapTraceCommand.Trace_rejects_bad_inputs_cleanly(badInput: "null-record")
+    Phrase.Acceptance.Tests.SourceMapTraceCommand.Trace_rejects_bad_inputs_cleanly(badInput: "old-phraseFile")
+    Phrase.Acceptance.Tests.SourceMapTraceCommand.Trace_reports_a_generated_file_hash_mismatch
+    Phrase.Acceptance.Tests.SourceMapTraceCommand.Trace_resolves_a_Class_Method_frame_taken_from_the_map
+    Phrase.Acceptance.Tests.SourceMapTraceCommand.Trace_with_a_matching_assembly_prints_a_matching_build_check
+    Phrase.Acceptance.Tests.SourceMapTraceCommand.Trace_with_an_assembly_from_another_source_warns_and_strict_exits_nonzero
+    Phrase.Acceptance.Tests.SourceMapTraceability.A_failure_record_is_found_when_an_earlier_step_can_raise_the_same_name
+    Phrase.Acceptance.Tests.SourceMapTraceability.A_failure_used_by_two_endpoints_has_one_id_per_endpoint
+    Phrase.Acceptance.Tests.SourceMapTraceability.Failure_records_point_at_the_exact_declaration_line_of_the_phrase_the_endpoint_calls
+    Phrase.Acceptance.Tests.SourceMapTraceability.Failures_inherited_through_a_composite_phrase_still_get_a_failure_record
+    Phrase.Acceptance.Tests.SourceMapTraceability.Lf_and_crlf_sources_produce_the_same_map_lines_and_ids
+    Phrase.Acceptance.Tests.SourceMapTraceability.Live_failures_and_endpoints_resolve_in_the_source_map
+    Phrase.Acceptance.Tests.SourceMapTraceability.No_phrase_knowledge_assertions_fail_on_a_reintroduced_leak
+    Phrase.Acceptance.Tests.SourceMapTraceability.Repeated_builds_from_different_paths_are_byte_identical
+    Phrase.Acceptance.Tests.SourceMapTraceability.Step_ids_equal_an_independent_recompute_from_the_source
+    Phrase.Acceptance.Tests.SourceMapTraceability.Tasks_build_writes_an_external_map_and_trace_resolves_a_declared_failure
+    Phrase.Acceptance.Tests.SourceMapTraceability.Unknown_trace_name_exits_nonzero_with_a_clear_message
+    Phrase.Acceptance.Tests.StarvationProbe.A_barrier_that_cannot_complete_fails_with_its_entry_count_and_does_not_hang
+    Phrase.Acceptance.Tests.StarvationProbe.Asynchronous_blockers_leave_the_workers_free_and_readiness_meets_the_same_window(blockers: "m")
+    Phrase.Acceptance.Tests.StarvationProbe.Asynchronous_blockers_leave_the_workers_free_and_readiness_meets_the_same_window(blockers: "m+1")
+    Phrase.Acceptance.Tests.StarvationProbe.One_more_synchronous_blocker_than_workers_is_observed_queued_not_entered
+    Phrase.Acceptance.Tests.StarvationProbe.One_spare_worker_keeps_synchronous_readiness_inside_the_window
+    Phrase.Acceptance.Tests.StarvationProbe.Only_the_seam_differs_between_the_red_and_green_runs
+    Phrase.Acceptance.Tests.StarvationProbe.Synchronous_blockers_fill_every_worker_and_readiness_misses_its_window(blockers: "m")
+    Phrase.Acceptance.Tests.StarvationProbe.Synchronous_blockers_fill_every_worker_and_readiness_misses_its_window(blockers: "m+1")
+    Phrase.Acceptance.Tests.StarvationProbe.The_child_prints_its_initial_limits_and_never_loads_the_acceptance_assembly_or_its_floor
+    Phrase.Acceptance.Tests.StarvationProbe.Zero_blockers_meet_the_readiness_window_on_both_seams
+    Phrase.Acceptance.Tests.TasksDemoApp.Tasks_api_builds_and_every_endpoint_has_passing_success_and_failure_specs
+    Phrase.Acceptance.Tests.TasksDemoApp.Tasks_source_is_only_phrase_and_lists_the_feature_order
+    Phrase.Acceptance.Tests.TasksDemoReadme.Demo_readme_lists_the_commands_and_cannot_drift_from_the_app
+    Phrase.Acceptance.Tests.TasksOverHttp.Every_spec_matches_over_real_http
+    Phrase.Acceptance.Tests.TasksOverHttp.Twenty_parallel_creates_are_all_listed
+    Phrase.Acceptance.Tests.UsableV1.Bar1_a_real_app_written_entirely_in_phrase
+    Phrase.Acceptance.Tests.UsableV1.Bar2_one_cli_command_compiles_it_to_csharp_and_fastendpoints
+    Phrase.Acceptance.Tests.UsableV1.Bar3_dotnet_build_of_the_generated_projects_has_zero_warnings
+    Phrase.Acceptance.Tests.UsableV1.Bar4_the_generated_xunit_specs_all_pass_one_test_per_spec
+    Phrase.Acceptance.Tests.UsableV1.Bar5_the_app_runs_and_live_http_matches_the_specs
+    Phrase.Acceptance.Tests.UsableV1.Bar6_a_model_that_never_saw_the_app_can_add_an_endpoint_from_the_docs_alone
+    Phrase.Acceptance.Tests.WebExtensionBoundary.Orders_phrase_loads_web_and_keeps_the_output_recorded_before_the_slice

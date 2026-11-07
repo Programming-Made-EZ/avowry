@@ -1,0 +1,1 @@
+The full 'dotnet test Phrase.sln --filter "Status!=Pending"' run total (gate-run-before.txt) is the facilitator's: it runs in a clean copy and is not recorded here.
