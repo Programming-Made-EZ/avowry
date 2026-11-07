@@ -288,7 +288,7 @@ public static class Parser
                 if (c.Is(TokenKind.Name))
                     throw FillerError("PH213", c.Peek()!);
             }
-            var templateToken = c.Expect(TokenKind.String, "a quoted phrase template");
+            var templateToken = c.Expect(TokenKind.String, "a quoted avow template");
             TypeRef? returns = null;
             if (c.TryConsume("->")) returns = ParseTypeRef(c);
             c.ExpectEnd();
@@ -338,7 +338,7 @@ public static class Parser
                         cc.ExpectEnd();
                         sawNative = true;
 
-                        if (sawSteps) Report("PH208", "A phrase is implemented by native blocks or by steps, not both.", clauseAt);
+                        if (sawSteps) Report("PH208", "An avow is implemented by native blocks or by steps, not both.", clauseAt);
                         else if (!Targets.Contains(target.Text)) Report("PH207", $"Unknown native target '{target.Text}'. Known targets: {string.Join(", ", Targets)}.", Pos(target));
                         else if (natives.Any(n => n.Target == target.Text)) Report("PH204", $"A second `native {target.Text}` block.", clauseAt);
                         else if (child.Raw is { } raw) natives.Add(new NativeBlock(target.Text, raw.Text, clauseAt));
@@ -350,12 +350,12 @@ public static class Parser
                         cc.ExpectEnd();
                         if (sawSteps) { Report("PH204", "Only one `steps` block is allowed.", clauseAt); return; }
                         sawSteps = true;
-                        if (sawNative) { Report("PH208", "A phrase is implemented by native blocks or by steps, not both.", clauseAt); return; }
+                        if (sawNative) { Report("PH208", "An avow is implemented by native blocks or by steps, not both.", clauseAt); return; }
                         steps = ParseSteps(child, template.Parts.OfType<TemplateHole>().Select(hole => hole.Name));
                     }
                     else
                     {
-                        throw cc.Error("a phrase clause (effects, fails with, spec, native or steps)");
+                        throw cc.Error("an avow clause (effects, fails with, spec, native or steps)");
                     }
                 });
             }
@@ -696,7 +696,7 @@ public static class Parser
                 }
             }
 
-            if (parts.Count == 0) throw c.Error("a phrase call");
+            if (parts.Count == 0) throw c.Error("an avow call");
             return new AvowCall(parts, at);
         }
 
@@ -870,7 +870,7 @@ public static class Parser
                 && ExtensionKeywords.Is(ExtensionPart.Web, "handled")
                 && ExtensionKeywords.Construct("when-handled") == ExtensionPart.Web)
                 trigger = SpecTrigger.Handled;
-            else throw c.Error("`called` (phrase spec) or `handled` (endpoint spec)");
+            else throw c.Error("`called` (avow spec) or `handled` (endpoint spec)");
             c.Next();
             c.ExpectEnd();
             return trigger;

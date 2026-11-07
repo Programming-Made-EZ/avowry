@@ -116,7 +116,7 @@ public static class Resolver
                 if (declaration.Steps is null)
                     continue;
                 if (model.Returns is not null)
-                    Report("PH325", $"Composite phrase '{model.Template}' cannot return a value.", declaration.At);
+                    Report("PH325", $"Composite avow '{model.Template}' cannot return a value.", declaration.At);
                 var scope = model.Holes.ToDictionary(hole => hole.Name, hole => hole.Type, StringComparer.Ordinal);
                 var steps = ResolveSteps(declaration.Steps, scope, null, model.Failures);
                 var resolved = model with { Steps = steps };
@@ -348,7 +348,7 @@ public static class Resolver
                     failures.UnionWith(inherited.Failures);
                     effects.UnionWith(inherited.Effects);
                     foreach (var effect in inherited.Effects.Except(phrase.Effects, StringComparer.Ordinal))
-                        Report("PH328", $"Composite phrase '{phrase.Template}' must declare effect '{effect}'.", AvowDeclaration(phrase.Key).At);
+                        Report("PH328", $"Composite avow '{phrase.Template}' must declare effect '{effect}'.", AvowDeclaration(phrase.Key).At);
                 }
                 visiting.Remove(phrase.Key);
                 return complete[phrase.Key] = (failures.Order(StringComparer.Ordinal).ToList(), effects);
@@ -386,7 +386,7 @@ public static class Resolver
         {
             if (spec.When is not SpecTrigger.Called)
             {
-                Report(ExtensionDiagnostics.CoreArm("PH330"), $"Spec '{spec.Description}' on phrase '{phrase.Template}' must use 'when called'.", spec.At);
+                Report(ExtensionDiagnostics.CoreArm("PH330"), $"Spec '{spec.Description}' on avow '{phrase.Template}' must use 'when called'.", spec.At);
             }
 
             var scope = phrase.Holes.ToDictionary(h => h.Name, h => h.Type, StringComparer.Ordinal);
@@ -563,7 +563,7 @@ public static class Resolver
                 case SucceedsOutcome:
                     if (phrase is not null && phrase.Returns is not null)
                     {
-                        Report(ExtensionDiagnostics.CoreArm("PH333"), $"Spec '{spec.Description}' expects success for a phrase that returns a value.", outcome.At);
+                        Report(ExtensionDiagnostics.CoreArm("PH333"), $"Spec '{spec.Description}' expects success for an avow that returns a value.", outcome.At);
                     }
                     return new SucceedsModel();
                 default:
@@ -726,7 +726,7 @@ public static class Resolver
 
         private string NoMatchMessage(AvowCall call, IReadOnlyDictionary<string, PType> scope)
         {
-            const string noMatch = "No phrase matches this step.";
+            const string noMatch = "No avow matches this step.";
             var closest = phraseDeclarations
                 .OrderBy(phrase => Distance(CallShape(call), TemplateShape(phrase.Declaration.Template)))
                 .Select(phrase => phrase.Model)
