@@ -1,0 +1,33 @@
+diff --git a/demo/tasks/README.md b/demo/tasks/README.md
+--- a/demo/tasks/README.md
++++ b/demo/tasks/README.md
+@@ -15,16 +15,16 @@
+ 
+ ## Output folder
+ 
+-Generated C# is an artifact, not the source of truth. Write it outside the repository (or to a git-ignored path). These steps use `/tmp/phrase-tasks`.
++Generated C# is an artifact, not the source of truth. Write it outside the repository (or to a git-ignored path). These steps use `/tmp/avowry-tasks`.
+ 
+ ```bash
+-dotnet run --project src/Avowry.Cli -- build demo/tasks/Tasks.avowry -o /tmp/phrase-tasks
++dotnet run --project src/Avowry.Cli -- build demo/tasks/Tasks.avowry -o /tmp/avowry-tasks
+ ```
+ 
+-Expected: the Phrase compiler prints nothing and exits 0. It writes `/tmp/phrase-tasks/Tasks.Api` and `/tmp/phrase-tasks/Tasks.Specs`.
++Expected: the Phrase compiler prints nothing and exits 0. It writes `/tmp/avowry-tasks/Tasks.Api` and `/tmp/avowry-tasks/Tasks.Specs`.
+ 
+ ```bash
+-dotnet build /tmp/phrase-tasks/Tasks.Api
++dotnet build /tmp/avowry-tasks/Tasks.Api
+ ```
+ 
+ Expected:
+@@ -36,7 +36,7 @@
+ ```
+ 
+ ```bash
+-dotnet test /tmp/phrase-tasks/Tasks.Specs
++dotnet test /tmp/avowry-tasks/Tasks.Specs
+ ```
+ 
+ Expected: `Passed!` `Failed: 0, Passed: 11, Total: 11`

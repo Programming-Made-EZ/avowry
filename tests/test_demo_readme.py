@@ -35,6 +35,7 @@ COMPILE = re.compile(
     r"dotnet\s+run\s+--project\s+src/Avowry\.Cli\s+--\s+build\s+"
     r"demo/tasks/Tasks\.avowry\s+-o\s+(\S+)"
 )
+TMP_ROOT = re.compile(r"/tmp/[A-Za-z0-9_.-]+")
 BUILD_API = re.compile(r"dotnet\s+build\s+\S*Tasks\.Api")
 TEST_SPECS = re.compile(r"dotnet\s+test\s+\S*Tasks\.Specs")
 RUN_API = re.compile(
@@ -264,14 +265,36 @@ class DemoReadmeTests(unittest.TestCase):
         # Then every path, project name, route, verb, field and status exists in Tasks.avowry
         self.assertEqual(problems, [])
 
+    def test_compile_output_is_tmp_avowry_tasks(self):
+        # Given the Tasks demo README's fenced commands
+        readme = README.read_text(encoding="utf-8")
+        compile_match = COMPILE.search("\n".join(fenced_blocks(readme)))
+        self.assertIsNotNone(compile_match, "the README has no compile command")
+
+        # When the compile command's -o folder is read
+        output = compile_match.group(1)
+
+        # Then it is /tmp/avowry-tasks (the product's name, not the old one)
+        self.assertEqual("/tmp/avowry-tasks", output)
+
+    def test_every_tmp_folder_in_the_readme_is_avowry_tasks(self):
+        # Given the Tasks demo README
+        readme = README.read_text(encoding="utf-8")
+
+        # When every /tmp/<folder> root named anywhere in it is collected
+        roots = set(TMP_ROOT.findall(readme))
+
+        # Then the only root is /tmp/avowry-tasks
+        self.assertEqual({"/tmp/avowry-tasks"}, roots)
+
     def test_invented_route_is_rejected(self):
         source = PHRASE.read_text(encoding="utf-8")
         fake = """# Demo
 ```bash
-dotnet run --project src/Avowry.Cli -- build demo/tasks/Tasks.avowry -o /tmp/phrase-tasks
-dotnet build /tmp/phrase-tasks/Tasks.Api
-dotnet test /tmp/phrase-tasks/Tasks.Specs
-dotnet run --project /tmp/phrase-tasks/Tasks.Api --urls http://localhost:5099
+dotnet run --project src/Avowry.Cli -- build demo/tasks/Tasks.avowry -o /tmp/avowry-tasks
+dotnet build /tmp/avowry-tasks/Tasks.Api
+dotnet test /tmp/avowry-tasks/Tasks.Specs
+dotnet run --project /tmp/avowry-tasks/Tasks.Api --urls http://localhost:5099
 curl -X POST http://localhost:5099/invented
 ```
 Expected HTTP 200 with {} and HTTP 422 EmptyTitle.
@@ -283,10 +306,10 @@ Expected HTTP 200 with {} and HTTP 422 EmptyTitle.
         source = PHRASE.read_text(encoding="utf-8")
         fake = """# Demo
 ```bash
-dotnet run --project src/Avowry.Cli -- build demo/tasks/Tasks.avowry -o /tmp/phrase-tasks
-dotnet build /tmp/phrase-tasks/Tasks.Api
-dotnet test /tmp/phrase-tasks/Tasks.Specs
-dotnet run --project /tmp/phrase-tasks/Tasks.Api --urls http://localhost:5099
+dotnet run --project src/Avowry.Cli -- build demo/tasks/Tasks.avowry -o /tmp/avowry-tasks
+dotnet build /tmp/avowry-tasks/Tasks.Api
+dotnet test /tmp/avowry-tasks/Tasks.Specs
+dotnet run --project /tmp/avowry-tasks/Tasks.Api --urls http://localhost:5099
 curl -X POST http://localhost:5099/tasks -d '{"id":"task-1","title":"Write the demo","priority":"high"}'
 curl http://localhost:5099/tasks?available=true
 curl -X PUT http://localhost:5099/tasks/task-1/complete
