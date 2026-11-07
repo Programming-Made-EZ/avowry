@@ -2,7 +2,7 @@
 
 - Commit archived: 860d552 (the slice commit; no dotnet-relevant change after card 196), a clean `git archive` copy (no .git directory), Windows 11 Pro, dotnet 10.0.403. Start 16:27:07Z UTC.
 - Command: `dotnet test Phrase.sln --filter "Status!=Pending"`
-- Load: nothing else ran on the machine during this run (no push, no seat build; QA's red 1 seat was held to python and git work by the wait rule until this run ended).
+- Load: no push and no seat build ran during this run. One overlap, reported by the QA seat: it ran tests.test_rename_196 (whose lists test calls `dotnet test --list-tests`) at about 08:29 to 08:30 PST, about 56 seconds of dotnet while this gate (started 08:27:07 PST, 16:27:07Z) was running. The result was not affected: 313 of 316 with the same three known failures, and the card 304 timing guard passed.
 
     Passed!  - Failed:     0, Passed:   284, Skipped:     0, Total:   284, Duration: 1 s - Avowry.Compiler.Tests.dll (net8.0)
     Failed!  - Failed:     3, Passed:   313, Skipped:     0, Total:   316, Duration: 9 m 35 s - Avowry.Acceptance.Tests.dll (net8.0)
