@@ -167,10 +167,7 @@ def _do_close(gh, action):
 
 def _do_edit(gh, action):
     n = action["issue"]
-    current = _body(gh, n)
-    if (action.get("add_line") or action["story_line"]) in current:
-        return "skipped"  # already applied: a re-run never adds the line twice
-    text = new_body(current.rstrip("\n"), action) + "\n"
+    text = new_body(_body(gh, n).rstrip("\n"), action) + "\n"
     folder = tempfile.mkdtemp()
     path = os.path.join(folder, "body.md")
     try:
