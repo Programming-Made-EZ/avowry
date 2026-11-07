@@ -1,0 +1,13 @@
+diff --git a/facilitator.py b/facilitator.py
+index 2ab215b..0278a2d 100644
+--- a/facilitator.py
++++ b/facilitator.py
+@@ -1371,7 +1371,7 @@ class Writers:
+             _git(root, "commit", "-q", "-m", message, "--", *names)    # only these paths: another writer's staging stays staged
+             return _git(root, "rev-parse", "HEAD").stdout.strip()
+         finally:
+-            if fresh:
++            if fresh and sys.exc_info()[0] is None:
+                 self.release(root, writer)
+ 
+     def push(self, checkout, writer, remote="origin", branch="main"):

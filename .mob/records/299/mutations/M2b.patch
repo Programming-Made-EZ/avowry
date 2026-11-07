@@ -1,0 +1,13 @@
+diff --git a/facilitator.py b/facilitator.py
+index 2ab215b..74da836 100644
+--- a/facilitator.py
++++ b/facilitator.py
+@@ -1319,7 +1319,7 @@ def acquire_writer_lock(root, writer, operation):
+ def release_writer_lock(root, token):
+     path = writer_lock_path(root)
+     holder = _read_writer_lock(path)
+-    if holder is None or holder.get("token") != token:
++    if holder is None or False:
+         return
+     try:
+         path.unlink()

@@ -1,0 +1,13 @@
+diff --git a/facilitator.py b/facilitator.py
+index 2ab215b..02386f9 100644
+--- a/facilitator.py
++++ b/facilitator.py
+@@ -1278,7 +1278,7 @@ def acquire_writer_lock(root, writer, operation):
+                 moved = _read_writer_lock(stale)
+                 if moved is None:
+                     continue
+-                if moved.get("token") != stale_token:
++                if False:
+                     try:
+                         os.link(stale, path)
+                     except FileExistsError:

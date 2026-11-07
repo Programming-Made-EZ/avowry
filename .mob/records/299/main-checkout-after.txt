@@ -1,0 +1,4 @@
+after the green turns (facilitator, 2026-11-07T09:08Z), before the merge:
+HEAD 3b3e486486cece0b2555d001383e93923c373278
+status: ?? .mob/;
+reflog: 3b3e486 HEAD@{0}: merge card-313-green: Fast-forward|1590679 HEAD@{1}: commit: Card 298 green 3: a run sweeps dead holder entries and a dead legacy lock file before registering|

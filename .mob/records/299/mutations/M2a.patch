@@ -1,0 +1,13 @@
+diff --git a/facilitator.py b/facilitator.py
+index 2ab215b..e3fde4f 100644
+--- a/facilitator.py
++++ b/facilitator.py
+@@ -1266,7 +1266,7 @@ def acquire_writer_lock(root, writer, operation):
+                     current = None
+                 if not isinstance(current, dict) or not isinstance(current.get("pid"), int):
+                     raise WriterRefused(root, "unknown", writer, operation, holder=None, lock_path=path)
+-                if pid_alive(current["pid"]):
++                if True:
+                     owner = current.get("writer") or "unknown"
+                     raise WriterRefused(root, owner, writer, operation, holder=current, lock_path=path)
+                 stale_token = current.get("token")
