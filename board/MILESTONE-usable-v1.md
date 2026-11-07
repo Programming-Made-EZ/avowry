@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:798a9fe39d1bf52b8cf147be99a7b694ddf0b6c0e237df51cbd4acbcccbaf48c -->
+<!-- board-table-sha256:945e1dbb1b3f131fd408e5962068075921bb9f2fa2a08d8df729150f3d346ed4 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -115,7 +115,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 93 | 217 Acceptance tests do not starve the thread pool | Done | none |
 | 94 | 303 The C# baseline endpoint tests pass on the Windows development machine | Done | none |
 | 95 | 298 A second decision run on the same checkout never votes unprotected | Done | card 230 (the vote lock) |
-| 96 | 313 A decision run that starts as another run ends can be left without a vote lock | Ready | card 298 (the holder format) |
+| 96 | 313 A decision run that starts as another run ends can be left without a vote lock | Done | card 298 (the holder format) |
 | 97 | 315 A decision run that cannot register its vote lock starts without any warning | Ready | card 298 (the holder format) |
 | 98 | 299 A second writer on one checkout is refused across processes | Ready | card 230 (Writers and the vote lock) |
 | 99 | 307 Two overlapping decision runs on one checkout do not fail each other's seat-use history check | Ready | card 298 (the overlap holder format) |
