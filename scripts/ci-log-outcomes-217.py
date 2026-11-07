@@ -62,7 +62,7 @@ def merge(outcomes):
 
 
 def project_of(name):
-    m = re.match(r"^(Phrase\.[A-Za-z0-9_]+\.Tests)\.", name)
+    m = re.match(r"^(Avowry\.[A-Za-z0-9_]+\.Tests)\.", name)
     return m.group(1) if m else name.split(".")[0]
 
 
