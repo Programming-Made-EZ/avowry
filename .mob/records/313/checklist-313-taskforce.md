@@ -12,3 +12,7 @@
 
 ## Full Decider (standing rule), round A and round B
 - Round A (tag d313a, proposal = revision 2 with the vote header): developer Yes, decider Yes, QA Support-it, agile coach Support-it, architect Support-it (no verbatim cite), audit lens No with one condition (commit the timestamp-bounded source records and a reproducible extraction verification). Adopted in revision 3 (.mob/records/313/taskforce-proposal-pm-r3.md); the amended text is voted once more by all six (round B, tag d313b). Then the independent re-run with fresh seats (F-038).
+
+## Round C (a new Decider on revision 4)
+- Round B (tag d313b, with the D171 re-ask d313c for architect and coach): developer Yes, five Support-it, no No. Independent re-run (tag d313r): developer Yes, four Support-it, QA No with one condition (explicit red-first commit and push refusal tests in cycle 1; the hash and count of the tool-call file stored outside that file). Strict reading: the No is not reinterpreted; the condition is adopted in revision 4 (.mob/records/313/taskforce-proposal-pm-r4.md) and six fresh seats vote it (tag d313e), then it is re-run again with fresh seats.
+- Window status check for D187 per the product owner's inbox note on card 319: the objection window w313r2 (the audit lens alone saw the amended text) is superseded; in the full Decider every voting seat sees the final text in each round.
