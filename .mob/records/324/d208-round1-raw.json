@@ -1,0 +1,103 @@
+[
+ {
+  "role": "architect",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "No",
+  "counted_by_decider": true,
+  "cite": "a card scoring 0 on all four may use a reduced seat set",
+  "cite_ok": true,
+  "round1_vote": true,
+  "note": "",
+  "reply": "No\n\nP1 and P2 are concrete and auditable, but P3 is not yet sound. Defining 0 as “nothing known” conflates no difficulty with missing knowledge, yet permits a reduced seat set when all dimensions are 0—the riskiest interpretation. “Committed on the card” also lacks a canonical schema and checker location, inviting inconsistent records and false positives. I would vote Yes if P3 defines 0 as a positively assessed absence of difficulty and specifies one machine-checkable record format and path.\n\nCITE: a card scoring 0 on all four may use a reduced seat set"
+ },
+ {
+  "role": "qa",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "No",
+  "counted_by_decider": true,
+  "cite": "a 1 is resolved inside the card and noted, a 2 triggers the dimension's prescription",
+  "cite_ok": true,
+  "round1_vote": true,
+  "note": "",
+  "reply": "I'll read the retro, agreement, and candidate patch first so the QA vote is based on whether each rule can fail red and whether the named checks actually catch the violations.I'll read the retro, voices, amendment, and Experimental section next so the vote can check whether each rule is actually testable.I'll inspect the Experimental section, candidate text, and Ready/gate checks to see whether P1–P3 fail red first or still pass bad state.I’ll check the existing freshness and Ready checks against P3’s scoring text so the vote can say whether a violation would actually fail.No\nP2 earned permanence: the parity red fails when undo does not reproduce the old bytes; three trial cards found 0 defects after a clean report. P1 is already guarded: PhraseCliFreshness fails a stale CLI, holdouts fail without .git. P3's candidate text names two triggers for the same score: each prescription fires above 0, and a 1 is resolved inside the card, so Unknown=1 both requires a spike and stays in-slice. Ready still accepts a card with blank scores or a 2 that names no spike, split, inbox or seat.\nAlign the four prescriptions so only a 2 fires them, and name a Ready check that fails when the four scores are absent or a 2 names no artifact.\nCITE: a 1 is resolved inside the card and noted, a 2 triggers the dimension's prescription\n"
+ },
+ {
+  "role": "developer",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "Support-it",
+  "counted_by_decider": true,
+  "cite": "a 1 is resolved inside the card and noted",
+  "cite_ok": true,
+  "round1_vote": true,
+  "note": "",
+  "reply": "Support-it\n\nThe rules are workable and fair. P1 makes gate evidence reproducible, P2 preserves a proven defect-detection check, and P3 remains a measured trial rather than prematurely becoming a default. Committed scores, explicit anchors, and retro comparison limit gaming. For backend work, rebuilding after `src/` changes and testing history-dependent checks in a clone are reasonable costs. The prescriptions for scores of 1 and 2 are sufficiently bounded to follow consistently.\n\nCITE: a 1 is resolved inside the card and noted"
+ },
+ {
+  "role": "audit lens",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "No",
+  "counted_by_decider": true,
+  "cite": "the anchors are written (0 nothing known; 1 one named, bounded item the card resolves inside its own slice",
+  "cite_ok": true,
+  "round1_vote": true,
+  "note": "",
+  "reply": "I'll read the retro sources, the amendment, and the Decider protocol so the audit vote is based on git, not the synthesis.I'll pull the retro writeup, voices, amendment, and the Experimental/Decider sections next.I’ll compare the candidate patch to the current Experimental text and the gate/sign-off records next.No\n\nP3 leaves Ready scores unverifiable from git and lets a card pass Ready while skipping the practice. The patch fires each prescription \"above 0\" while the pick fires it only on a 2, so either reading complies. Anchor \"0 nothing known\" matches Unknown's failure mode, so a card can score 0, skip the spike, and still pass. Scores \"on the card\" have no path a git show can print; a contradicted 0 is reported after the card already passed. P1 and P2 are checkable from records. What would bring me to Yes: make 0 mean no named item, drop \"above 0\", fire prescriptions only on 2, and store four integers in a committed record.\n\nCITE: the anchors are written (0 nothing known; 1 one named, bounded item the card resolves inside its own slice\n"
+ },
+ {
+  "role": "decider",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "No",
+  "counted_by_decider": true,
+  "cite": "a 1 is resolved inside the card and noted, a 2 triggers the dimension's prescription before the card is pulled",
+  "cite_ok": true,
+  "round1_vote": true,
+  "note": "",
+  "reply": "I'll read the retro records, agreement, and Decider protocol so the sign-off vote rests on the evidence, not the synthesis.I'll pull the retro writeup, voices, amendment, TWA Experimental section, and Dimensions of Difficulty next.I still need the Experimental section, candidate patch, and the gate/sign-off records that the vote has to rest on.No\nP1 and P2 rest on card evidence: 63 stale-CLI Acceptance failures, archive 319/323 vs 323/323, and three clean byte-parity cards. Those evaluations can adopt or keep on a metric. P3’s candidate still fires each dimension’s prescription above 0 (escalate, split, spike, more synchronous) and also resolves a 1 inside the card while only a 2 triggers the prescription. A three-card trial with two independent variables leaves the later adopt/reshape/reject without a single measured rule. Seats, hypothesis, metric and counter-metric are present; the retro already seated PM, architect, QA, developer, audit, decider and coach.\nRewrite P3 so each leftover above-0 clause is deleted and only a score of 2 fires the dimension’s prescription, with a 1 resolved inside the card and noted.\nCITE: a 1 is resolved inside the card and noted, a 2 triggers the dimension's prescription before the card is pulled\n"
+ },
+ {
+  "role": "coach",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "Yes",
+  "counted_by_decider": true,
+  "cite": "Dimensions of Difficulty becomes a three-card trial",
+  "cite_ok": true,
+  "round1_vote": true,
+  "note": "",
+  "reply": "Yes\n\nThe scope matches the evidence: P1 fixes two concrete gate artifacts, P2 graduates a successful low-cost safeguard, and P3 remains a measured three-card trial. The four dimensions cover the relevant coordination risks without adding seats automatically; reduced staffing is allowed only for demonstrably simple cards. Clear metrics, counter-metrics, and exit criteria keep the added ceremony bounded.\n\nCITE: Dimensions of Difficulty becomes a three-card trial"
+ },
+ {
+  "role": "qa",
+  "seat": "claude",
+  "model": "sonnet",
+  "vote": "Support-it",
+  "counted_by_decider": true,
+  "cite": "starts on a fresh binary and a clone",
+  "cite_ok": true,
+  "round1_vote": false,
+  "note": "discarded: the facilitator runner mistook the Grok seat for no reply (it looked for the vote word in the first 60 words) and ran Claude as a fallback; the Grok seat of the same role was a counted vote and is the one used",
+  "reply": "Support-it\n\nThe metrics are testable red first. P1's stale-binary and missing-.git failures can be reproduced on purpose, and card 324 already showed them (2 of 3 runs). The target of 0 is checkable.\n\nP3's anchors and its scores committed on the card let git show whether a retro-found blocker went unnamed.\n\nTwo gaps remain, and neither blocks adopting this:\n- The clone and rebuild steps are rules on the brief, and nothing automated fails when someone skips them.\n- A 0/0/0/0 card using a reduced seat set could pass bad state. The trial should count that case as a counter-metric.\n\nCITE: starts on a fresh binary and a clone\n"
+ },
+ {
+  "role": "decider",
+  "seat": "claude",
+  "model": "sonnet",
+  "vote": "Support-it",
+  "counted_by_decider": true,
+  "cite": "gates start on a fresh binary and a clone",
+  "cite_ok": true,
+  "round1_vote": false,
+  "note": "discarded: the facilitator runner mistook the Grok seat for no reply (it looked for the vote word in the first 60 words) and ran Claude as a fallback; the Grok seat of the same role was a counted vote and is the one used",
+  "reply": "Support-it\n\nP1 and P2 rest on evidence. On P1, 2 of 3 card-324 runs failed for stale-binary or missing-.git reasons, and the metric, counter-metric and 3-card trial are stated. On P2, three cards found no byte-level defect after a clean report, and four of seven voices backed adoption. P3 is correctly framed as a trial, which answers the 4–3 split without a premature mob-defaults change. Two gaps remain. P3 has no baseline for \"blocker the scores did not name\". The reduced seat set for all-zero cards could drop a sign-off seat, so the declaration should name who still signs off. The seat-spread question stays with the product owner.\n\nCITE: gates start on a fresh binary and a clone\n"
+ },
+ {
+  "role": "audit lens",
+  "seat": "claude",
+  "note": "refused by decider.py before start: the Claude seat is refused while Grok has waited longer since the last seating; the seat was run on Grok (d208a)"
+ }
+]
