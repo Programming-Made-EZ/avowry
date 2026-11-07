@@ -1,0 +1,13 @@
+diff --git a/tests/test_bench_launcher_scan_264.py b/tests/test_bench_launcher_scan_264.py
+index e36e928..05d2693 100644
+--- a/tests/test_bench_launcher_scan_264.py
++++ b/tests/test_bench_launcher_scan_264.py
+@@ -19,7 +19,7 @@ REPO = Path(__file__).resolve().parent.parent
+ ACCEPTANCE = REPO / "tests" / "Avowry.Acceptance.Tests"
+ LAUNCHER = Path("Support") / "BenchLauncher.cs"
+ CONTRACT = Path("BenchLauncherContract.cs")  # asserts on the argument list; starts nothing
+-TARGETS_BENCH = re.compile(r'Avowry\.Bench\.csproj|RunArm\("Avowry\.Bench"|Project: "Avowry\.Bench"')
++TARGETS_BENCH = re.compile(r'Avowry.Bench\.csproj|RunArm\("Avowry.Bench"|Project: "Avowry.Bench"')
+ 
+ 
+ def bench_start_sites(acceptance_dir):

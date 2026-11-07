@@ -1,0 +1,760 @@
+diff --git a/tests/Avowry.Acceptance.Tests/Support/BenchChild.cs b/tests/Avowry.Acceptance.Tests/Support/BenchChild.cs
+index cce6b85..4232829 100644
+--- a/tests/Avowry.Acceptance.Tests/Support/BenchChild.cs
++++ b/tests/Avowry.Acceptance.Tests/Support/BenchChild.cs
+@@ -1,75 +1,75 @@
+-using System.Diagnostics;
+-
+-namespace Avowry.Acceptance.Tests.Support;
+-
+-/// <summary>
+-/// Card 264 (D157 Criterion 2): runs a Avowry.Bench child and keeps its real result (exit code, stdout, stderr) and the
+-/// history path before anything reads history, so an early child exit or a failed build is reported as itself and is not
+-/// masked by a DirectoryNotFoundException on results/history.jsonl.
+-/// </summary>
+-internal static class BenchChild
+-{
+-    internal static async Task<BenchChildResult> RunAsync(ProcessStartInfo child, string historyPath, params int[] acceptedExitCodes)
+-    {
+-        Process process;
+-        try
+-        {
+-            process = Process.Start(child)
+-                ?? throw new BenchChildException($"Bench child did not start. History path: {historyPath}");
+-        }
+-        catch (Exception error) when (error is not BenchChildException)
+-        {
+-            throw new BenchChildException($"Bench child could not start: {error.Message}. History path: {historyPath}");
+-        }
+-
+-        using (process)
+-        {
+-            var stdoutTask = process.StandardOutput.ReadToEndAsync();
+-            var stderrTask = process.StandardError.ReadToEndAsync();
+-            await process.WaitForExitAsync();
+-            var exitCode = process.ExitCode;
+-            var stdout = await stdoutTask;
+-            var stderr = await stderrTask;
+-
+-            if (!acceptedExitCodes.Contains(exitCode))
+-                throw Failure($"Bench child exited with unexpected exit code {exitCode} (accepted: {string.Join(", ", acceptedExitCodes)})", exitCode, stdout, stderr, historyPath);
+-
+-            var lines = ReadHistoryLines(historyPath, out var problem);
+-            if (problem is not null)
+-                throw Failure($"Bench child exit code {exitCode}: {problem}", exitCode, stdout, stderr, historyPath);
+-
+-            return new BenchChildResult(exitCode, stdout, stderr, lines);
+-        }
+-    }
+-
+-    /// <summary>Reads a history file that a completed child must have written; a missing or empty file is a BenchChildException.</summary>
+-    internal static string[] ReadHistoryLines(string historyPath)
+-    {
+-        var lines = ReadHistoryLines(historyPath, out var problem);
+-        return problem is null ? lines : throw Failure(problem, null, "", "", historyPath);
+-    }
+-
+-    private static string[] ReadHistoryLines(string historyPath, out string? problem)
+-    {
+-        problem = null;
+-        if (!File.Exists(historyPath))
+-        {
+-            problem = "history file is missing";
+-            return [];
+-        }
+-
+-        var lines = File.ReadAllLines(historyPath).Where(line => line.Trim().Length > 0).ToArray();
+-        if (lines.Length == 0)
+-            problem = "history file is empty";
+-        return lines;
+-    }
+-
+-    private static BenchChildException Failure(string what, int? exitCode, string stdout, string stderr, string historyPath) =>
+-        new($"{what}. Exit code: {(exitCode?.ToString() ?? "n/a")}. History path: {historyPath}" +
+-            $"{Environment.NewLine}--- stdout ---{Environment.NewLine}{stdout}" +
+-            $"{Environment.NewLine}--- stderr ---{Environment.NewLine}{stderr}");
+-}
+-
+-internal sealed record BenchChildResult(int ExitCode, string Stdout, string Stderr, string[] HistoryLines);
+-
+-internal sealed class BenchChildException(string message) : Exception(message);
++using System.Diagnostics;
++
++namespace Avowry.Acceptance.Tests.Support;
++
++/// <summary>
++/// Card 264 (D157 Criterion 2): runs a Avowry.Bench child and keeps its real result (exit code, stdout, stderr) and the
++/// history path before anything reads history, so an early child exit or a failed build is reported as itself and is not
++/// masked by a DirectoryNotFoundException on results/history.jsonl.
++/// </summary>
++internal static class BenchChild
++{
++    internal static async Task<BenchChildResult> RunAsync(ProcessStartInfo child, string historyPath, params int[] acceptedExitCodes)
++    {
++        Process process;
++        try
++        {
++            process = Process.Start(child)
++                ?? throw new BenchChildException($"Bench child did not start. History path: {historyPath}");
++        }
++        catch (Exception error) when (error is not BenchChildException)
++        {
++            throw new BenchChildException($"Bench child could not start: {error.Message}. History path: {historyPath}");
++        }
++
++        using (process)
++        {
++            var stdoutTask = process.StandardOutput.ReadToEndAsync();
++            var stderrTask = process.StandardError.ReadToEndAsync();
++            await process.WaitForExitAsync();
++            var exitCode = process.ExitCode;
++            var stdout = await stdoutTask;
++            var stderr = await stderrTask;
++
++            if (!acceptedExitCodes.Contains(exitCode))
++                throw Failure($"Bench child exited with unexpected exit code {exitCode} (accepted: {string.Join(", ", acceptedExitCodes)})", exitCode, stdout, stderr, historyPath);
++
++            var lines = ReadHistoryLines(historyPath, out var problem);
++            if (problem is not null)
++                throw Failure($"Bench child exit code {exitCode}: {problem}", exitCode, stdout, stderr, historyPath);
++
++            return new BenchChildResult(exitCode, stdout, stderr, lines);
++        }
++    }
++
++    /// <summary>Reads a history file that a completed child must have written; a missing or empty file is a BenchChildException.</summary>
++    internal static string[] ReadHistoryLines(string historyPath)
++    {
++        var lines = ReadHistoryLines(historyPath, out var problem);
++        return problem is null ? lines : throw Failure(problem, null, "", "", historyPath);
++    }
++
++    private static string[] ReadHistoryLines(string historyPath, out string? problem)
++    {
++        problem = null;
++        if (!File.Exists(historyPath))
++        {
++            problem = "history file is missing";
++            return [];
++        }
++
++        var lines = File.ReadAllLines(historyPath).Where(line => line.Trim().Length > 0).ToArray();
++        if (lines.Length == 0)
++            problem = "history file is empty";
++        return lines;
++    }
++
++    private static BenchChildException Failure(string what, int? exitCode, string stdout, string stderr, string historyPath) =>
++        new($"{what}. Exit code: {(exitCode?.ToString() ?? "n/a")}. History path: {historyPath}" +
++            $"{Environment.NewLine}--- stdout ---{Environment.NewLine}{stdout}" +
++            $"{Environment.NewLine}--- stderr ---{Environment.NewLine}{stderr}");
++}
++
++internal sealed record BenchChildResult(int ExitCode, string Stdout, string Stderr, string[] HistoryLines);
++
++internal sealed class BenchChildException(string message) : Exception(message);
+diff --git a/tests/Avowry.Acceptance.Tests/Support/BenchLauncher.cs b/tests/Avowry.Acceptance.Tests/Support/BenchLauncher.cs
+index cee8878..6d34824 100644
+--- a/tests/Avowry.Acceptance.Tests/Support/BenchLauncher.cs
++++ b/tests/Avowry.Acceptance.Tests/Support/BenchLauncher.cs
+@@ -1,117 +1,117 @@
+-using System.Diagnostics;
+-
+-namespace Avowry.Acceptance.Tests.Support;
+-
+-/// <summary>
+-/// Card 264 (D157 Criterion 2, cycle 2b): the one place that builds the start of a Avowry.Bench child. The child is
+-/// `dotnet run --no-build -c &lt;configuration of the running test assembly&gt;`: the outer test build already built
+-/// Avowry.Bench through a ProjectReference, so a child never builds (concurrent children that each built the same obj
+-/// output collided and one exited 1 with no history). Missing or stale output throws BenchLauncherException before any
+-/// process exists; this class never starts a build and never drops --no-build for Avowry.Bench.
+-/// </summary>
+-internal static class BenchLauncher
+-{
+-    private const string BenchProject = "Avowry.Bench";
+-    private static readonly char[] Separators = [(char)92, '/'];
+-
+-    internal static ProcessStartInfo CreateStartInfo(IEnumerable<string> benchArguments, IEnumerable<string>? runOptions = null) =>
+-        CreateStartInfo(RepoPaths.Root, AppContext.BaseDirectory, benchArguments, runOptions);
+-
+-    internal static ProcessStartInfo CreateStartInfo(
+-        string repoRoot, string testBaseDirectory, IEnumerable<string> benchArguments, IEnumerable<string>? runOptions = null)
+-    {
+-        var configuration = ConfigurationOf(testBaseDirectory);
+-        EnsureFreshOutput(repoRoot, configuration);
+-
+-        var info = NewInfo();
+-        info.ArgumentList.Add("run");
+-        info.ArgumentList.Add("--no-build");
+-        info.ArgumentList.Add("-c");
+-        info.ArgumentList.Add(configuration);
+-        foreach (var option in runOptions ?? [])
+-            info.ArgumentList.Add(option);
+-        info.ArgumentList.Add("--project");
+-        info.ArgumentList.Add(Path.Combine(repoRoot, "tools", BenchProject, BenchProject + ".csproj"));
+-        info.ArgumentList.Add("--");
+-        foreach (var argument in benchArguments)
+-            info.ArgumentList.Add(argument);
+-        return info;
+-    }
+-
+-    /// <summary>
+-    /// For a site shared with another benchmark project (the C# baseline arm): Avowry.Bench goes through the no-build
+-    /// launcher; any other project keeps its existing build-capable `dotnet run` (it is not built by the test assembly).
+-    /// </summary>
+-    internal static ProcessStartInfo CreateStartInfoFor(string projectName, IEnumerable<string> benchArguments, IEnumerable<string>? runOptions = null)
+-    {
+-        if (projectName == BenchProject)
+-            return CreateStartInfo(benchArguments, runOptions);
+-
+-        var info = NewInfo();
+-        info.ArgumentList.Add("run");
+-        foreach (var option in runOptions ?? [])
+-            info.ArgumentList.Add(option);
+-        info.ArgumentList.Add("--project");
+-        info.ArgumentList.Add(RepoPaths.Find("tools", projectName, projectName + ".csproj"));
+-        info.ArgumentList.Add("--");
+-        foreach (var argument in benchArguments)
+-            info.ArgumentList.Add(argument);
+-        return info;
+-    }
+-
+-    /// <summary>"Debug" or "Release": the last path segment of the test assembly directory that names one (case-insensitive).</summary>
+-    internal static string ConfigurationOf(string testBaseDirectory)
+-    {
+-        var segments = testBaseDirectory.Split(Separators, StringSplitOptions.RemoveEmptyEntries);
+-        for (var i = segments.Length - 1; i >= 0; i--)
+-        {
+-            if (segments[i].Equals("Release", StringComparison.OrdinalIgnoreCase)) return "Release";
+-            if (segments[i].Equals("Debug", StringComparison.OrdinalIgnoreCase)) return "Debug";
+-        }
+-
+-        throw new BenchLauncherException(
+-            $"Cannot tell the build configuration (Debug or Release) from the test assembly directory '{testBaseDirectory}'.");
+-    }
+-
+-    private static ProcessStartInfo NewInfo() => new("dotnet")
+-    {
+-        RedirectStandardOutput = true,
+-        RedirectStandardError = true,
+-        UseShellExecute = false,
+-    };
+-
+-    private static void EnsureFreshOutput(string repoRoot, string configuration)
+-    {
+-        var benchDirectory = Path.Combine(repoRoot, "tools", BenchProject);
+-        var outputDirectory = Path.Combine(benchDirectory, "bin", configuration);
+-        var remedy = $"Build it first with `dotnet build Avowry.sln -c {configuration}`; the launcher never builds.";
+-
+-        var dlls = Directory.Exists(outputDirectory)
+-            ? Directory.GetFiles(outputDirectory, BenchProject + ".dll", SearchOption.AllDirectories)
+-            : [];
+-        if (dlls.Length == 0)
+-            throw new BenchLauncherException(
+-                $"{BenchProject} {configuration} output is missing: no {BenchProject}.dll under {outputDirectory}. {remedy}");
+-
+-        var outputTime = dlls.Max(File.GetLastWriteTimeUtc);
+-        var newestSource = Directory.EnumerateFiles(benchDirectory, "*.*", SearchOption.AllDirectories)
+-            .Where(path => path.EndsWith(".cs", StringComparison.OrdinalIgnoreCase) ||
+-                           path.EndsWith(BenchProject + ".csproj", StringComparison.OrdinalIgnoreCase))
+-            .Where(path => !IsUnderBinOrObj(benchDirectory, path))
+-            .Select(path => (Path: path, Time: File.GetLastWriteTimeUtc(path)))
+-            .OrderByDescending(file => file.Time)
+-            .FirstOrDefault();
+-        if (newestSource.Path is not null && outputTime < newestSource.Time)
+-            throw new BenchLauncherException(
+-                $"{BenchProject} {configuration} output is stale: {BenchProject}.dll under {outputDirectory} " +
+-                $"({outputTime:O}) is older than {newestSource.Path} ({newestSource.Time:O}). {remedy}");
+-    }
+-
+-    private static bool IsUnderBinOrObj(string benchDirectory, string path)
+-    {
+-        var first = Path.GetRelativePath(benchDirectory, path).Split(Separators)[0];
+-        return first.Equals("bin", StringComparison.OrdinalIgnoreCase) || first.Equals("obj", StringComparison.OrdinalIgnoreCase);
+-    }
+-}
+-
+-internal sealed class BenchLauncherException(string message) : Exception(message);
++using System.Diagnostics;
++
++namespace Avowry.Acceptance.Tests.Support;
++
++/// <summary>
++/// Card 264 (D157 Criterion 2, cycle 2b): the one place that builds the start of a Avowry.Bench child. The child is
++/// `dotnet run --no-build -c &lt;configuration of the running test assembly&gt;`: the outer test build already built
++/// Avowry.Bench through a ProjectReference, so a child never builds (concurrent children that each built the same obj
++/// output collided and one exited 1 with no history). Missing or stale output throws BenchLauncherException before any
++/// process exists; this class never starts a build and never drops --no-build for Avowry.Bench.
++/// </summary>
++internal static class BenchLauncher
++{
++    private const string BenchProject = "Avowry.Bench";
++    private static readonly char[] Separators = [(char)92, '/'];
++
++    internal static ProcessStartInfo CreateStartInfo(IEnumerable<string> benchArguments, IEnumerable<string>? runOptions = null) =>
++        CreateStartInfo(RepoPaths.Root, AppContext.BaseDirectory, benchArguments, runOptions);
++
++    internal static ProcessStartInfo CreateStartInfo(
++        string repoRoot, string testBaseDirectory, IEnumerable<string> benchArguments, IEnumerable<string>? runOptions = null)
++    {
++        var configuration = ConfigurationOf(testBaseDirectory);
++        EnsureFreshOutput(repoRoot, configuration);
++
++        var info = NewInfo();
++        info.ArgumentList.Add("run");
++        info.ArgumentList.Add("--no-build");
++        info.ArgumentList.Add("-c");
++        info.ArgumentList.Add(configuration);
++        foreach (var option in runOptions ?? [])
++            info.ArgumentList.Add(option);
++        info.ArgumentList.Add("--project");
++        info.ArgumentList.Add(Path.Combine(repoRoot, "tools", BenchProject, BenchProject + ".csproj"));
++        info.ArgumentList.Add("--");
++        foreach (var argument in benchArguments)
++            info.ArgumentList.Add(argument);
++        return info;
++    }
++
++    /// <summary>
++    /// For a site shared with another benchmark project (the C# baseline arm): Avowry.Bench goes through the no-build
++    /// launcher; any other project keeps its existing build-capable `dotnet run` (it is not built by the test assembly).
++    /// </summary>
++    internal static ProcessStartInfo CreateStartInfoFor(string projectName, IEnumerable<string> benchArguments, IEnumerable<string>? runOptions = null)
++    {
++        if (projectName == BenchProject)
++            return CreateStartInfo(benchArguments, runOptions);
++
++        var info = NewInfo();
++        info.ArgumentList.Add("run");
++        foreach (var option in runOptions ?? [])
++            info.ArgumentList.Add(option);
++        info.ArgumentList.Add("--project");
++        info.ArgumentList.Add(RepoPaths.Find("tools", projectName, projectName + ".csproj"));
++        info.ArgumentList.Add("--");
++        foreach (var argument in benchArguments)
++            info.ArgumentList.Add(argument);
++        return info;
++    }
++
++    /// <summary>"Debug" or "Release": the last path segment of the test assembly directory that names one (case-insensitive).</summary>
++    internal static string ConfigurationOf(string testBaseDirectory)
++    {
++        var segments = testBaseDirectory.Split(Separators, StringSplitOptions.RemoveEmptyEntries);
++        for (var i = segments.Length - 1; i >= 0; i--)
++        {
++            if (segments[i].Equals("Release", StringComparison.OrdinalIgnoreCase)) return "Release";
++            if (segments[i].Equals("Debug", StringComparison.OrdinalIgnoreCase)) return "Debug";
++        }
++
++        throw new BenchLauncherException(
++            $"Cannot tell the build configuration (Debug or Release) from the test assembly directory '{testBaseDirectory}'.");
++    }
++
++    private static ProcessStartInfo NewInfo() => new("dotnet")
++    {
++        RedirectStandardOutput = true,
++        RedirectStandardError = true,
++        UseShellExecute = false,
++    };
++
++    private static void EnsureFreshOutput(string repoRoot, string configuration)
++    {
++        var benchDirectory = Path.Combine(repoRoot, "tools", BenchProject);
++        var outputDirectory = Path.Combine(benchDirectory, "bin", configuration);
++        var remedy = $"Build it first with `dotnet build Avowry.sln -c {configuration}`; the launcher never builds.";
++
++        var dlls = Directory.Exists(outputDirectory)
++            ? Directory.GetFiles(outputDirectory, BenchProject + ".dll", SearchOption.AllDirectories)
++            : [];
++        if (dlls.Length == 0)
++            throw new BenchLauncherException(
++                $"{BenchProject} {configuration} output is missing: no {BenchProject}.dll under {outputDirectory}. {remedy}");
++
++        var outputTime = dlls.Max(File.GetLastWriteTimeUtc);
++        var newestSource = Directory.EnumerateFiles(benchDirectory, "*.*", SearchOption.AllDirectories)
++            .Where(path => path.EndsWith(".cs", StringComparison.OrdinalIgnoreCase) ||
++                           path.EndsWith(BenchProject + ".csproj", StringComparison.OrdinalIgnoreCase))
++            .Where(path => !IsUnderBinOrObj(benchDirectory, path))
++            .Select(path => (Path: path, Time: File.GetLastWriteTimeUtc(path)))
++            .OrderByDescending(file => file.Time)
++            .FirstOrDefault();
++        if (newestSource.Path is not null && outputTime < newestSource.Time)
++            throw new BenchLauncherException(
++                $"{BenchProject} {configuration} output is stale: {BenchProject}.dll under {outputDirectory} " +
++                $"({outputTime:O}) is older than {newestSource.Path} ({newestSource.Time:O}). {remedy}");
++    }
++
++    private static bool IsUnderBinOrObj(string benchDirectory, string path)
++    {
++        var first = Path.GetRelativePath(benchDirectory, path).Split(Separators)[0];
++        return first.Equals("bin", StringComparison.OrdinalIgnoreCase) || first.Equals("obj", StringComparison.OrdinalIgnoreCase);
++    }
++}
++
++internal sealed class BenchLauncherException(string message) : Exception(message);
+diff --git a/tests/test_bench_launcher_scan_264.py b/tests/test_bench_launcher_scan_264.py
+index e36e928..5e5512f 100644
+--- a/tests/test_bench_launcher_scan_264.py
++++ b/tests/test_bench_launcher_scan_264.py
+@@ -1,81 +1,81 @@
+-"""Card 264 red 2b (D157 Criterion 2): no acceptance test starts `dotnet run` against Avowry.Bench except through
+-the shared launcher (tests/Avowry.Acceptance.Tests/Support/BenchLauncher.cs).
+-
+-A start site is a line containing the literal "--project" in an acceptance test .cs file that targets Avowry.Bench
+-(the file mentions Avowry.Bench.csproj, RunArm("Avowry.Bench", ... or Project: "Avowry.Bench"). The launcher file
+-(and the BenchLauncherContract.cs test that only inspects its argument list) are the only allowed places. Avowry.BenchCs (the C# baseline) is a different project and is not matched.
+-
+-Run narrowly: python -m unittest tests.test_bench_launcher_scan_264
+-Fixture trees use tempfile.mkdtemp and are left in place (no cleanup, by the safety rule).
+-ZOMBIES: Z zero, O one, M many, B boundary (BenchCs, launcher file), S simple (real tree).
+-"""
+-
+-import re
+-import tempfile
+-import unittest
+-from pathlib import Path
+-
+-REPO = Path(__file__).resolve().parent.parent
+-ACCEPTANCE = REPO / "tests" / "Avowry.Acceptance.Tests"
+-LAUNCHER = Path("Support") / "BenchLauncher.cs"
+-CONTRACT = Path("BenchLauncherContract.cs")  # asserts on the argument list; starts nothing
+-TARGETS_BENCH = re.compile(r'Avowry\.Bench\.csproj|RunArm\("Avowry\.Bench"|Project: "Avowry\.Bench"')
+-
+-
+-def bench_start_sites(acceptance_dir):
+-    """Return 'File.cs:line' for every Avowry.Bench `--project` start outside the launcher."""
+-    sites = []
+-    for path in sorted(Path(acceptance_dir).rglob("*.cs")):
+-        relative = path.relative_to(acceptance_dir)
+-        if relative in (LAUNCHER, CONTRACT) or "obj" in relative.parts or "bin" in relative.parts:
+-            continue
+-        text = path.read_text(encoding="utf-8")
+-        if not TARGETS_BENCH.search(text):
+-            continue
+-        for number, line in enumerate(text.splitlines(), 1):
+-            if '"--project"' in line:
+-                sites.append(f"{relative.as_posix()}:{number}")
+-    return sites
+-
+-
+-def tree(files):
+-    root = Path(tempfile.mkdtemp(prefix="bench-scan-"))
+-    for name, text in files.items():
+-        target = root / name
+-        target.parent.mkdir(parents=True, exist_ok=True)
+-        target.write_text(text, encoding="utf-8")
+-    return root
+-
+-
+-class ScannerBehaviour(unittest.TestCase):
+-    def test_zero_files_have_no_sites(self):
+-        self.assertEqual([], bench_start_sites(tree({})))
+-
+-    def test_one_direct_start_is_flagged_with_its_line(self):
+-        root = tree({"A.cs": 'var p = "Avowry.Bench.csproj";\nnew[] { "run", "--project", p };\n'})
+-        self.assertEqual(["A.cs:2"], bench_start_sites(root))
+-
+-    def test_many_starts_in_many_files_are_all_flagged(self):
+-        src = 'x("Avowry.Bench.csproj");\ny("run", "--project", p);\nz("run", "--project", p);\n'
+-        root = tree({"A.cs": src, "B.cs": src})
+-        self.assertEqual(["A.cs:2", "A.cs:3", "B.cs:2", "B.cs:3"], bench_start_sites(root))
+-
+-    def test_boundary_launcher_file_is_allowed(self):
+-        root = tree({"Support/BenchLauncher.cs": 'x("Avowry.Bench.csproj"); y("--project");\n'})
+-        self.assertEqual([], bench_start_sites(root))
+-
+-    def test_boundary_bench_cs_baseline_is_not_a_bench_start(self):
+-        root = tree({"C.cs": 'x("Avowry.BenchCs.csproj"); y("run", "--project", p);\n'})
+-        self.assertEqual([], bench_start_sites(root))
+-
+-
+-class RealTree(unittest.TestCase):
+-    def test_simple_no_acceptance_test_starts_phrase_bench_except_through_the_shared_launcher(self):
+-        sites = bench_start_sites(ACCEPTANCE)
+-        self.assertEqual(
+-            [], sites,
+-            f"{len(sites)} direct Avowry.Bench dotnet run start site(s) outside Support/BenchLauncher.cs: " + ", ".join(sites))
+-
+-
+-if __name__ == "__main__":
+-    unittest.main()
++"""Card 264 red 2b (D157 Criterion 2): no acceptance test starts `dotnet run` against Avowry.Bench except through
++the shared launcher (tests/Avowry.Acceptance.Tests/Support/BenchLauncher.cs).
++
++A start site is a line containing the literal "--project" in an acceptance test .cs file that targets Avowry.Bench
++(the file mentions Avowry.Bench.csproj, RunArm("Avowry.Bench", ... or Project: "Avowry.Bench"). The launcher file
++(and the BenchLauncherContract.cs test that only inspects its argument list) are the only allowed places. Avowry.BenchCs (the C# baseline) is a different project and is not matched.
++
++Run narrowly: python -m unittest tests.test_bench_launcher_scan_264
++Fixture trees use tempfile.mkdtemp and are left in place (no cleanup, by the safety rule).
++ZOMBIES: Z zero, O one, M many, B boundary (BenchCs, launcher file), S simple (real tree).
++"""
++
++import re
++import tempfile
++import unittest
++from pathlib import Path
++
++REPO = Path(__file__).resolve().parent.parent
++ACCEPTANCE = REPO / "tests" / "Avowry.Acceptance.Tests"
++LAUNCHER = Path("Support") / "BenchLauncher.cs"
++CONTRACT = Path("BenchLauncherContract.cs")  # asserts on the argument list; starts nothing
++TARGETS_BENCH = re.compile(r'Avowry\.Bench\.csproj|RunArm\("Avowry\.Bench"|Project: "Avowry\.Bench"')
++
++
++def bench_start_sites(acceptance_dir):
++    """Return 'File.cs:line' for every Avowry.Bench `--project` start outside the launcher."""
++    sites = []
++    for path in sorted(Path(acceptance_dir).rglob("*.cs")):
++        relative = path.relative_to(acceptance_dir)
++        if relative in (LAUNCHER, CONTRACT) or "obj" in relative.parts or "bin" in relative.parts:
++            continue
++        text = path.read_text(encoding="utf-8")
++        if not TARGETS_BENCH.search(text):
++            continue
++        for number, line in enumerate(text.splitlines(), 1):
++            if '"--project"' in line:
++                sites.append(f"{relative.as_posix()}:{number}")
++    return sites
++
++
++def tree(files):
++    root = Path(tempfile.mkdtemp(prefix="bench-scan-"))
++    for name, text in files.items():
++        target = root / name
++        target.parent.mkdir(parents=True, exist_ok=True)
++        target.write_text(text, encoding="utf-8")
++    return root
++
++
++class ScannerBehaviour(unittest.TestCase):
++    def test_zero_files_have_no_sites(self):
++        self.assertEqual([], bench_start_sites(tree({})))
++
++    def test_one_direct_start_is_flagged_with_its_line(self):
++        root = tree({"A.cs": 'var p = "Avowry.Bench.csproj";\nnew[] { "run", "--project", p };\n'})
++        self.assertEqual(["A.cs:2"], bench_start_sites(root))
++
++    def test_many_starts_in_many_files_are_all_flagged(self):
++        src = 'x("Avowry.Bench.csproj");\ny("run", "--project", p);\nz("run", "--project", p);\n'
++        root = tree({"A.cs": src, "B.cs": src})
++        self.assertEqual(["A.cs:2", "A.cs:3", "B.cs:2", "B.cs:3"], bench_start_sites(root))
++
++    def test_boundary_launcher_file_is_allowed(self):
++        root = tree({"Support/BenchLauncher.cs": 'x("Avowry.Bench.csproj"); y("--project");\n'})
++        self.assertEqual([], bench_start_sites(root))
++
++    def test_boundary_bench_cs_baseline_is_not_a_bench_start(self):
++        root = tree({"C.cs": 'x("Avowry.BenchCs.csproj"); y("run", "--project", p);\n'})
++        self.assertEqual([], bench_start_sites(root))
++
++
++class RealTree(unittest.TestCase):
++    def test_simple_no_acceptance_test_starts_phrase_bench_except_through_the_shared_launcher(self):
++        sites = bench_start_sites(ACCEPTANCE)
++        self.assertEqual(
++            [], sites,
++            f"{len(sites)} direct Avowry.Bench dotnet run start site(s) outside Support/BenchLauncher.cs: " + ", ".join(sites))
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/tests/test_phrase_executed_complete.py b/tests/test_phrase_executed_complete.py
+index 4e97d48..940876f 100644
+--- a/tests/test_phrase_executed_complete.py
++++ b/tests/test_phrase_executed_complete.py
+@@ -1,82 +1,82 @@
+-import importlib.util
+-import tempfile
+-import unittest
+-from pathlib import Path
+-
+-ROOT = Path(__file__).resolve().parents[1]
+-spec = importlib.util.spec_from_file_location(
+-    "check_phrase_executed_complete",
+-    ROOT / "scripts" / "check-avowry-executed-complete.py",
+-)
+-check = importlib.util.module_from_spec(spec)
+-spec.loader.exec_module(check)
+-
+-
+-class PhraseExecutedCompleteTests(unittest.TestCase):
+-    def build_repo(self):
+-        with tempfile.TemporaryDirectory() as tmp:
+-            root = Path(tmp)
+-            phrase_root = root / "bench" / "tasks"
+-            csharp_root = root / "bench" / "csharp-baseline" / "tasks"
+-            phrase_root.mkdir(parents=True, exist_ok=True)
+-            csharp_root.mkdir(parents=True, exist_ok=True)
+-            for task_id in check.TASK_IDS:
+-                (phrase_root / task_id).mkdir(parents=True, exist_ok=True)
+-                (csharp_root / task_id).mkdir(parents=True, exist_ok=True)
+-                payload = json_text(task_id)
+-                (phrase_root / task_id / "outcomes.json").write_text(payload, encoding="utf-8")
+-                (csharp_root / task_id / "outcomes.json").write_text(payload, encoding="utf-8")
+-            yield root
+-
+-    def test_complete_suite_passes(self):
+-        with tempfile.TemporaryDirectory() as tmp:
+-            root = Path(tmp)
+-            phrase_root = root / "bench" / "tasks"
+-            csharp_root = root / "bench" / "csharp-baseline" / "tasks"
+-            phrase_root.mkdir(parents=True, exist_ok=True)
+-            csharp_root.mkdir(parents=True, exist_ok=True)
+-            for task_id in check.TASK_IDS:
+-                (phrase_root / task_id).mkdir(parents=True, exist_ok=True)
+-                (csharp_root / task_id).mkdir(parents=True, exist_ok=True)
+-                payload = json_text(task_id)
+-                (phrase_root / task_id / "outcomes.json").write_text(payload, encoding="utf-8")
+-                (csharp_root / task_id / "outcomes.json").write_text(payload, encoding="utf-8")
+-            issues = check.check_repo(root)
+-            self.assertEqual([], issues["missing"])
+-            self.assertEqual([], issues["drifted"])
+-
+-    def test_missing_copy_fails_and_names_task(self):
+-        with tempfile.TemporaryDirectory() as tmp:
+-            root = Path(tmp)
+-            phrase_root = root / "bench" / "tasks"
+-            csharp_root = root / "bench" / "csharp-baseline" / "tasks"
+-            phrase_root.mkdir(parents=True, exist_ok=True)
+-            csharp_root.mkdir(parents=True, exist_ok=True)
+-            for task_id in check.TASK_IDS:
+-                if task_id == "010-fix-trigger":
+-                    continue
+-                (phrase_root / task_id).mkdir(parents=True, exist_ok=True)
+-                (csharp_root / task_id).mkdir(parents=True, exist_ok=True)
+-                payload = json_text(task_id)
+-                (phrase_root / task_id / "outcomes.json").write_text(payload, encoding="utf-8")
+-                (csharp_root / task_id / "outcomes.json").write_text(payload, encoding="utf-8")
+-            issues = check.check_repo(root)
+-            self.assertIn("010-fix-trigger", issues["missing"])
+-
++import importlib.util
++import tempfile
++import unittest
++from pathlib import Path
++
++ROOT = Path(__file__).resolve().parents[1]
++spec = importlib.util.spec_from_file_location(
++    "check_phrase_executed_complete",
++    ROOT / "scripts" / "check-avowry-executed-complete.py",
++)
++check = importlib.util.module_from_spec(spec)
++spec.loader.exec_module(check)
++
++
++class PhraseExecutedCompleteTests(unittest.TestCase):
++    def build_repo(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            root = Path(tmp)
++            phrase_root = root / "bench" / "tasks"
++            csharp_root = root / "bench" / "csharp-baseline" / "tasks"
++            phrase_root.mkdir(parents=True, exist_ok=True)
++            csharp_root.mkdir(parents=True, exist_ok=True)
++            for task_id in check.TASK_IDS:
++                (phrase_root / task_id).mkdir(parents=True, exist_ok=True)
++                (csharp_root / task_id).mkdir(parents=True, exist_ok=True)
++                payload = json_text(task_id)
++                (phrase_root / task_id / "outcomes.json").write_text(payload, encoding="utf-8")
++                (csharp_root / task_id / "outcomes.json").write_text(payload, encoding="utf-8")
++            yield root
++
++    def test_complete_suite_passes(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            root = Path(tmp)
++            phrase_root = root / "bench" / "tasks"
++            csharp_root = root / "bench" / "csharp-baseline" / "tasks"
++            phrase_root.mkdir(parents=True, exist_ok=True)
++            csharp_root.mkdir(parents=True, exist_ok=True)
++            for task_id in check.TASK_IDS:
++                (phrase_root / task_id).mkdir(parents=True, exist_ok=True)
++                (csharp_root / task_id).mkdir(parents=True, exist_ok=True)
++                payload = json_text(task_id)
++                (phrase_root / task_id / "outcomes.json").write_text(payload, encoding="utf-8")
++                (csharp_root / task_id / "outcomes.json").write_text(payload, encoding="utf-8")
++            issues = check.check_repo(root)
++            self.assertEqual([], issues["missing"])
++            self.assertEqual([], issues["drifted"])
++
++    def test_missing_copy_fails_and_names_task(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            root = Path(tmp)
++            phrase_root = root / "bench" / "tasks"
++            csharp_root = root / "bench" / "csharp-baseline" / "tasks"
++            phrase_root.mkdir(parents=True, exist_ok=True)
++            csharp_root.mkdir(parents=True, exist_ok=True)
++            for task_id in check.TASK_IDS:
++                if task_id == "010-fix-trigger":
++                    continue
++                (phrase_root / task_id).mkdir(parents=True, exist_ok=True)
++                (csharp_root / task_id).mkdir(parents=True, exist_ok=True)
++                payload = json_text(task_id)
++                (phrase_root / task_id / "outcomes.json").write_text(payload, encoding="utf-8")
++                (csharp_root / task_id / "outcomes.json").write_text(payload, encoding="utf-8")
++            issues = check.check_repo(root)
++            self.assertIn("010-fix-trigger", issues["missing"])
++
+     def test_drifted_copy_fails_and_names_task(self):
+-        with tempfile.TemporaryDirectory() as tmp:
+-            root = Path(tmp)
+-            phrase_root = root / "bench" / "tasks"
+-            csharp_root = root / "bench" / "csharp-baseline" / "tasks"
+-            phrase_root.mkdir(parents=True, exist_ok=True)
+-            csharp_root.mkdir(parents=True, exist_ok=True)
+-            for task_id in check.TASK_IDS:
+-                (phrase_root / task_id).mkdir(parents=True, exist_ok=True)
+-                (csharp_root / task_id).mkdir(parents=True, exist_ok=True)
+-                payload = json_text(task_id)
+-                (phrase_root / task_id / "outcomes.json").write_text(payload, encoding="utf-8")
+-                (csharp_root / task_id / "outcomes.json").write_text(payload.replace('"returns": 1', '"returns": 2'), encoding="utf-8")
+-            issues = check.check_repo(root)
++        with tempfile.TemporaryDirectory() as tmp:
++            root = Path(tmp)
++            phrase_root = root / "bench" / "tasks"
++            csharp_root = root / "bench" / "csharp-baseline" / "tasks"
++            phrase_root.mkdir(parents=True, exist_ok=True)
++            csharp_root.mkdir(parents=True, exist_ok=True)
++            for task_id in check.TASK_IDS:
++                (phrase_root / task_id).mkdir(parents=True, exist_ok=True)
++                (csharp_root / task_id).mkdir(parents=True, exist_ok=True)
++                payload = json_text(task_id)
++                (phrase_root / task_id / "outcomes.json").write_text(payload, encoding="utf-8")
++                (csharp_root / task_id / "outcomes.json").write_text(payload.replace('"returns": 1', '"returns": 2'), encoding="utf-8")
++            issues = check.check_repo(root)
+             self.assertIn("001-write-greeting", issues["drifted"])
+ 
+     def test_endpoint_responds_with_status_copy_passes_and_drift_fails(self):
+@@ -96,21 +96,21 @@ class PhraseExecutedCompleteTests(unittest.TestCase):
+                 endpoint_json().replace('"status": 200', '"status": 201'), encoding="utf-8"
+             )
+             self.assertIn("020-endpoint-greetings", check.check_repo(root)["drifted"])
+-
+-
++
++
+ def json_text(task_id):
+-    if task_id in {"010-fix-trigger", "011-fix-type"}:
+-        value = 1 if task_id.endswith("trigger") else 42
+-        return (
+-            '[{"name": "returns ' + ("hello" if task_id.endswith("trigger") else "forty two") + '", "given": {}, '
+-            '"when": "called", "then": {"returns": ' + str(value) + '}}]'
+-        )
++    if task_id in {"010-fix-trigger", "011-fix-type"}:
++        value = 1 if task_id.endswith("trigger") else 42
++        return (
++            '[{"name": "returns ' + ("hello" if task_id.endswith("trigger") else "forty two") + '", "given": {}, '
++            '"when": "called", "then": {"returns": ' + str(value) + '}}]'
++        )
+     return '[{"name": "works", "given": {}, "when": "called", "then": {"returns": 1}}]'
+ 
+ 
+ def endpoint_json():
+     return '[{"name": "greets Ada", "given": {"name": "Ada"}, "when": "called", "then": {"responds": {"message": "hello", "name": "Ada"}, "status": 200}}, {"name": "rejects blank name", "given": {"name": ""}, "when": "called", "then": {"fails_with": "MissingName"}}]'
+-
+-
+-if __name__ == "__main__":
+-    unittest.main()
++
++
++if __name__ == "__main__":
++    unittest.main()

@@ -1,0 +1,13 @@
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 6a83816..b7658f4 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -67,7 +67,7 @@ jobs:
+       # Pending acceptance tests are the outer TDD loop. They are compiled (so they
+       # cannot rot) but excluded from the gate until they go green.
+       - name: Test
+-        run: dotnet test Avowry.sln --no-build -c Release --filter "Status!=Pending" --logger "console;verbosity=normal"
++        run: dotnet test Phrase.sln --no-build -c Release --filter "Status!=Pending" --logger "console;verbosity=normal"
+ 
+   # Gates the reached Usable v1 milestone. Every bar is ratcheted, so any regression makes this job red.
+   usable-v1:

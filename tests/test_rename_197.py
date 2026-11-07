@@ -7,6 +7,8 @@ One class per cycle, so later cycles add a class and never edit an earlier one:
                    a single put-back is caught, and the rename commit is the old bytes under the rules (byte parity)
   ListsAndPaths    Criterion 2 (O, M, I): the solution projects, the two test lists, the bench self-check, the five
                    path-bound python modules and the path strings in scripts, the ADR and the C# helpers survive
+  OldCommandRefused Criterion 3 (S, E): the old solution command is refused, no compat file exists, the seven
+                   project GUIDs stay paired, and every documented dotnet command names a tracked solution
 
 The old names are built from fragments below, so this file never contains the literal old names and the scan
 never matches itself.
@@ -15,12 +17,14 @@ Run: python -m unittest tests.test_rename_197
 No test deletes anything: copies live in tempfile.TemporaryDirectory.
 """
 
+import os
 import re
 import shlex
 import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -464,6 +468,129 @@ class ListsAndPaths(unittest.TestCase):
         for rel in (probes[0], "tests/Avowry.Acceptance.Tests/BenchLauncherContract.cs"):
             named = sorted(set(re.findall(r"[\w.-]+\.sln\b", (REPO / rel).read_text(encoding="utf-8"))))
             self.assertEqual(solutions, named, f"{rel} names a .sln that is not the tracked root solution")
+
+
+SEVEN_PROJECTS = (
+    ("Avowry.Compiler", "src/Avowry.Compiler/Avowry.Compiler.csproj", "{D4614084-825A-4803-B4D7-ED0A5E84D5D1}"),
+    ("Avowry.Adapters.CSharp", "src/Avowry.Adapters.CSharp/Avowry.Adapters.CSharp.csproj", "{1ADC752D-F7FE-49CC-87F0-C13706F83AF4}"),
+    ("Avowry.Acceptance.Tests", "tests/Avowry.Acceptance.Tests/Avowry.Acceptance.Tests.csproj", "{6B568404-09EE-49AA-96C2-6BB837A13631}"),
+    ("Avowry.Compiler.Tests", "tests/Avowry.Compiler.Tests/Avowry.Compiler.Tests.csproj", "{F8C2ADE1-74CD-4458-92F5-A4F706EE67E4}"),
+    ("Avowry.Bench", "tools/Avowry.Bench/Avowry.Bench.csproj", "{16FFAB0C-B9DF-49E3-A15C-48D34A39DBF9}"),
+    ("Avowry.BenchCs", "tools/Avowry.BenchCs/Avowry.BenchCs.csproj", "{BB7FDE05-8976-4C15-A828-EE882665A980}"),
+    ("Avowry.Cli", "src/Avowry.Cli/Avowry.Cli.csproj", "{66AC61D2-A63C-4185-A821-44714DF8A1FC}"),
+)
+KNOWN_OTHER_GUIDS = {
+    "{A1899B48-B9C9-4FC5-95F1-0381DD34D1D2}",  # src folder
+    "{C2E33BC6-8208-4FA9-9C02-CF3891E5D178}",  # tests folder
+    "{7960200C-61F1-4C9C-9B54-E9B0CE0D1BD3}",  # tools folder
+    "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}",  # C# project type
+    "{2150E333-8FDC-42A3-9474-1A3956D46DE8}",  # solution folder type
+    "{2150E333-8FDC-42A3-9474-00C04F79EFBC}",  # the tools folder's type id as committed
+}
+_PROJECT_LINE = re.compile(r'^Project\("\{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC\}"\) = "([^"]+)", "([^"]+)", "(\{[0-9A-F-]+\})"$')
+# A dotnet command and the solution it names, on one line of a doc or workflow.
+_DOTNET_SOLUTION = re.compile(r"\bdotnet\s+(?:restore|build|test|publish|run|clean|pack)\b[^\n`]*?([\w./\\-]+\.sln)\b", re.IGNORECASE)
+COMMAND_FILES = (".github/workflows/ci.yml", "README.md", "HANDOFF.md", "TEAM_WORKING_AGREEMENT.md")
+OLD_COMMAND_SECONDS = 20
+
+
+def kill_tree(process):
+    if sys.platform == "win32":
+        subprocess.run(["taskkill", "/T", "/F", "/PID", str(process.pid)], capture_output=True)
+    process.kill()
+
+
+def project_triples(lines):
+    found = []
+    for line in lines:
+        match = _PROJECT_LINE.match(line)
+        if match:
+            found.append((match.group(1), match.group(2).replace("\\", "/"), match.group(3)))
+    return sorted(found)
+
+
+class OldCommandRefused(unittest.TestCase):
+    """Criterion 3. ZOMBIES: S simple (the old gate command is refused and nothing old is left to answer it),
+    E exceptions (a swapped GUID, a command that names an untracked solution). Born green: they pass on the
+    finished rename, and each has a put-back or a real-defect run under .mob/records/197/mutations/."""
+
+    def test_old_command_fails(self):
+        """In a copy of the tracked files the old gate command exits non-zero at once, saying the file does not
+        exist (probed: MSBUILD error MSB1009, 'Project file does not exist.', 'Switch: <old name>'), and no test runs."""
+        old = _OLD_STEM + ".sln"
+        env = dict(os.environ, MSBUILDDISABLENODEREUSE="1", DOTNET_CLI_USE_MSBUILD_SERVER="0", DOTNET_NOLOGO="1")
+        with tempfile.TemporaryDirectory() as temp:
+            for rel in tracked_files():
+                source = REPO / rel
+                if source.is_file():
+                    (Path(temp) / rel).parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(source, Path(temp) / rel)
+            started = time.monotonic()
+            process = subprocess.Popen(
+                ["dotnet", "test", old, "--filter", "Status!=Pending"], cwd=temp, env=env,
+                stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            )
+            try:
+                output, _ = process.communicate(timeout=OLD_COMMAND_SECONDS)
+            except subprocess.TimeoutExpired:
+                kill_tree(process)
+                output, _ = process.communicate()
+                self.fail(
+                    f"the old command was still running after {OLD_COMMAND_SECONDS} s (does a {old} answer it?): "
+                    + output.decode("utf-8", "replace")[-600:]
+                )
+            elapsed = time.monotonic() - started
+        text = output.decode("utf-8", "replace")
+        self.assertNotEqual(0, process.returncode, "the old command must exit non-zero: " + text[-600:])
+        self.assertIn("MSB1009", text)
+        self.assertIn("Project file does not exist", text)
+        self.assertIn("Switch: " + old, text)
+        self.assertNotRegex(text, r"(?i)\b(passed|failed)!|total tests", "no test may run")
+        self.assertLess(elapsed, OLD_COMMAND_SECONDS, f"the old command took {elapsed:.1f} s to be refused")
+
+    def test_no_compat_files(self):
+        tracked = tracked_files()
+        old_root = [p for p in tracked if re.match(r"^" + _OLD_STEM + r"\.", p, re.IGNORECASE)]
+        old_tools = [p for p in tracked if re.match(r"^tools/" + _OLD_STEM + r"\.", p, re.IGNORECASE)]
+        old_script = [p for p in tracked if p.lower() == OLD_PATHS[-1].lower()]
+        solutions = [p for p in tracked if p.lower().endswith(".sln")]
+        self.assertEqual(
+            {"root old name": [], "tools old name": [], "old script": [], "every .sln": [NEW_SOLUTION]},
+            {"root old name": old_root, "tools old name": old_tools, "old script": old_script, "every .sln": solutions},
+            "no compatibility shim: nothing old is tracked, and Avowry.sln is the only solution file",
+        )
+        self.assertEqual([NEW_SOLUTION], [p for p in solutions if "/" not in p], "exactly one tracked root .sln")
+
+    def test_guid_pairing_all_seven(self):
+        """The seven project GUIDs stay paired with their names and paths (a literal table and the committed
+        baseline under the rules), each has its four configuration lines, and no other GUID appears."""
+        found = project_triples(project_lines(REPO / NEW_SOLUTION))
+        self.assertEqual(sorted(SEVEN_PROJECTS), found, "name, path and GUID pairing of the seven projects")
+        baseline = project_triples([apply_rules(line.encode()).decode() for line in project_lines(BASELINE / "project-lines.txt")])
+        self.assertEqual(baseline, found, "the pairing equals the committed baseline under the rules")
+        text = (REPO / NEW_SOLUTION).read_bytes().decode("utf-8-sig")
+        guids = set(re.findall(r"\{[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\}", text))
+        known = {guid for _, _, guid in SEVEN_PROJECTS} | KNOWN_OTHER_GUIDS
+        self.assertEqual(set(), guids - known, "no GUID outside the seven projects, the folders and the type ids")
+        for _, _, guid in SEVEN_PROJECTS:
+            configured = re.findall(re.escape(guid) + r"\.(?:Debug|Release)\|Any CPU\.(?:ActiveCfg|Build\.0)", text)
+            self.assertEqual(4, len(configured), f"{guid}: Debug and Release, ActiveCfg and Build.0")
+
+    def test_commands_name_tracked_solution(self):
+        tracked = set(tracked_files())
+        bad, counts = [], {}
+        for rel in COMMAND_FILES:
+            counts[rel] = 0
+            for number, line in enumerate((REPO / rel).read_bytes().decode("utf-8").split("\n"), start=1):
+                for match in _DOTNET_SOLUTION.finditer(line):
+                    counts[rel] += 1
+                    if match.group(1) not in tracked:
+                        bad.append(f"{rel}:{number}: {match.group(1)}")
+        self.assertEqual([], bad, "every dotnet command names a tracked solution file, exact case")
+        self.assertEqual(
+            {".github/workflows/ci.yml": 4, "README.md": 2, "HANDOFF.md": 1, "TEAM_WORKING_AGREEMENT.md": 1}, counts,
+            "the extraction finds the 8 documented solution commands (4 in ci.yml)",
+        )
 
 
 if __name__ == "__main__":
