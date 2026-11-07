@@ -1318,5 +1318,11 @@
     "status": "adopted",
     "title": "Card 196 task-force declaration and card text: rename the two test projects, their namespaces and the paths that name them",
     "order": 192
+  },
+  "D202": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 196 retro pick: mechanical rewrites carry a byte-parity check; gate runs are isolated with a load line",
+    "order": 193
   }
 }

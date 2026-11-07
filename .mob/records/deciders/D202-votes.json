@@ -1,0 +1,141 @@
+{
+ "decider": "D202",
+ "subject": "card 196 retro pick: mechanical rewrites carry a byte-parity check; gate runs are isolated with a load line; MOB.md drift after a close",
+ "result": "ADOPTED",
+ "run1": {
+  "architect": [
+   {
+    "tag": "d202",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "green rewrites many files by one rule names a byte-parity checker",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nP1 is sound. The checker is a testable artifact (undo the rewrite and compare bytes), the exceptions are named, and the evidence is concrete: the green seat's counts were clean while the bytes were damaged. P2 is mostly sound but weaker. \"What else ran\" is hard to enforce mechanically, and \"does not by itself turn SHIP into HOLD\" leaves the call to judgment. Bundling both entries with the P3 line in one patch is acceptable. I'd tighten P2 so that \"reproduces in isolation\" is a define"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d202",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "a count of renames, files or grep hits is not a clean claim",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nP1 is testable red first. The red commits a parity test, the green must attach its output, and card 196's three byte defects show the gap it closes. P2 is weaker. A load line is only self-reported, and nothing checks that a full run was actually isolated. \"Load-sensitive\" could also become a way to wave through a real flaky failure, even with the tracking card and the isolation rerun as safeguards. P3 is a documentation line, so there is nothing to test. I'd keep the trial and ask fo"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d202",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "a green that must produce the parity output cannot report clean over damaged bytes",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\nThese are specific, bounded process checks with real evidence, not vague policy. P1 makes mechanical rewrites prove byte integrity before a green claim; P2 isolates full runs and records overlap so a red is less likely to be load-confounded; P3 closes the MOB.md drift issue. They match the card’s failure modes, are testable across the next three cards, and are fair because they apply only to mechanical rewrites and gated runs, not all work.\nCITE: a green that must produce the parity o"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d202",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "a count of renames, files or grep hits is not a clean claim",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nP1 is verifiable from git. The red commits a parity test, and the green attaches the checker's output. Exceptions must be named, so they are visible in review.\n\nP2 has two weak spots:\n- The \"Load\" line is self-reported, so git cannot confirm that nothing else ran.\n- \"Does not reproduce in isolation, so not HOLD\" lets a real intermittent defect pass if it is labeled load-sensitive.\n\nI'd tighten P2 so a load-sensitive label needs the isolated rerun's output committed and a tracking car"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d202",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "a green that must produce the parity output cannot report clean over damaged bytes",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\nThe evidence is concrete: the clean report missed CR-byte corruption, GUID swaps, and a 2-byte csproj loss, while a full gate showed load-sensitive timing failures overlapping other work. The proposed entries are framed as testable hypotheses with metrics, owners, and a short trial window, so adoption can be based on observed outcomes rather than preference. The required parity and isolation checks are specific and operational, and the team’s seats are covered: architect, QA, develope"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d202",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "a count of renames, files or grep hits is not a clean claim",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nThe evidence is concrete. Counts alone let a green seat report clean over 9 files with stripped CR bytes, swapped GUIDs and lost bytes. Both entries are small, with a hypothesis, metric, counter-metric and a three-card trial, so they are not ceremony. Neither adds a new seat or role. The weakest point is that P2 bundles three rules, and its metric is only 2 of 2 on a small sample. The trial and the counter-metric on gate wall-clock keep that risk bounded. P3 is a one-line housekeeping fix.\n"
+   }
+  ]
+ },
+ "independent_rerun": {
+  "architect": [
+   {
+    "tag": "d202r",
+    "seat": "copilot",
+    "vote": "Yes",
+    "cite": "a green that must produce the parity output cannot report clean over damaged bytes.",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\nThe proposal is minimal, testable, and scoped: P1 demands byte-level parity evidence instead of counts; P2 isolates full runs and records load overlap, preventing false-positive red findings; P3 ties MOB.md regeneration to issue closure without changing wider process. The trial windows and explicit owners make enforcement concrete, while preserving every current rule and keeping the change surgical.\nCITE: a green that must produce the parity output cannot report clean over damaged bytes.\n\n"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d202r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "a count of renames, files or grep hits is not a clean claim",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nP1 is testable red first. The red commit tests the parity checker, and the green cannot claim clean without its output. Card 196's evidence of 9 damaged files behind a clean-by-counts report is exactly what it would catch.\n\nP2 is weaker. \"Isolated\" and \"load line\" are reporting rules that a check can't enforce. The rule that a non-reproducing failure doesn't turn SHIP into HOLD could let a real intermittent defect through. It needs a rerun count (more than one isolated run) before a "
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d202r",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "a green that must produce the parity output cannot report clean",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\nThis patch is specific, testable, and tied to demonstrated failures: silent byte drift after rewrites, load-confounded gate noise, and MOB.md drift after issue close. It keeps the rest of the agreement unchanged, adds bounded trial metrics, and makes each rule operational without gaming. Requiring parity output and reporting overlaps is fair to the work and to the seats.\nCITE: a green that must produce the parity output cannot report clean\n\n"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d202r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "green seat (Copilot, Rung 1) reported clean on counts",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe parity check can be verified from git. The red commit holds the test, the green report holds the attached output, and the facilitator's recompute from old bytes can be repeated against the commits. It is a good rule.\n\nThere is a loophole in P2. \"Does not reproduce in isolation, so not SHIP→HOLD\" lets a team wave off a real failure by calling it load-sensitive. Git cannot confirm the load line, because it is self-reported. Require an isolated re-run with its output committed, plus"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d202r",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "A green that must produce the parity output cannot report clean over damaged bytes.",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": false,
+    "reply_head": "Support-it\nThe proposal is evidence-driven and scoped to the actual failures: a “clean” green missed byte-level corruption, and a gate failure appeared only under overlapping load. It adds a targeted parity check, isolated full-run rules with a load line, and the MOB.md close rule while leaving every other practice unchanged. The team has the needed seats—PM, architect, QA, developer, audit lens, agile coach, and decider—and the metrics are concrete.\nCITE: A green that must produce the parity ou"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d202r",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "a count of renames, files or grep hits is not a clean claim",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nThe patch is sized to the evidence: card 196 had three byte-level defects after a clean report, and two of two gate runs were load-confounded. Each entry has its own hypothesis, metric, counter-metric and a trial of three cards. That makes this a bounded experiment, not ceremony. P3 is a single line, and nothing else changes. Bundling three insertions in one patch is slightly heavy. Because the owner and trial length are the same, I don't see a perspective missing or a case for splitting it"
+   }
+  ]
+ }
+}

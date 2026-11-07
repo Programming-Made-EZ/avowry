@@ -340,6 +340,7 @@ A green local gate is not a green main: the remote CI runs on a different operat
 - The check also runs at the start of every loop iteration, so a red main left by anything (a late run, a merge, a flaky environment) is caught within one card.
 - Every test that launches a fake model, a shell or a path must work on both Windows and Linux (the CI is Linux); a test that can only pass on one is a defect found by the CI, not an excuse to ignore it.
 - A red CI is logged as a bug card and covered in the next retro (why it went unseen).
+- Closing an issue changes the generated MOB.md. After a card's issue is closed, MOB.md is regenerated and pushed; the mob-process run that the close triggers is red until that push lands (seen at card 299's close, 2026-11-07), and a manual run of it confirms green.
 
 ### Driver availability (standing rule, product owner, 2026-10-28)
 
@@ -509,6 +510,12 @@ Each experiment states its hypothesis, the metric, a trial length with its unit,
 
 - **One acceptance criterion per red-green cycle, checked from git.** The slice numbers the card's criteria; each red commit body carries one line "Criterion: n"; the green for criterion n follows before any red for n+1 (a first red committed ahead only if the slice says why); a green is pushed at once or covered by an in-flight note; the D154 pre-ship gate adds one line listing the Criterion order from git log, with any breach explained.
   - Hypothesis: one criterion per cycle, checked from git, keeps greens small. Metric: criteria per green commit, target 1. Trial: 5 cards (extended at the card 299 retro; the rule itself is the product owner's). Decider D157, started 2026-10-30.
+
+- **Mechanical rewrites carry a byte-parity check (experiment).** A card whose green rewrites many files by one rule (a rename, a move, a bulk replace) names in its slice a byte-parity checker. The red commits a test of it: for every changed file, undoing the rewrite on the new bytes reproduces the old bytes (line endings, GUIDs and file sizes included), every exception listed by name. The green seat runs the checker and attaches its output to its report before it claims clean; the facilitator's recompute from the old bytes repeats it. A count of renames, files or grep hits is not a clean claim.
+  - Hypothesis: a green that must produce the parity output cannot report clean over damaged bytes, so the facilitator's recompute finds nothing. Metric: byte-level defects found after the green seat's clean report, per mechanical-rewrite card (card 196: 3), target 0. Counter-metric: green-seat minutes (card 196: about 9). Trial: the next 3 mechanical-rewrite cards. Decider D202, started 2026-11-07.
+
+- **Gate and sign-off runs are isolated, and their reports carry a load line (experiment).** A full gate or sign-off run of a long suite is not started while a push (its pre-push hook), another full gate or a seat's build is running on the same machine, and a push waits for the run to end rather than competing with it. Every gate and sign-off report has a "Load" line naming what else ran during each full run. A failure that does not reproduce in isolation is recorded as load-sensitive, with the card that tracks it, and does not by itself turn SHIP into HOLD; a SHIP that rests on a run which overlapped other work says so. A copy for a check that needs history is made with a single-branch clone of main, because a plain clone can fail on a dangling remote ref.
+  - Hypothesis: isolating full runs and naming overlaps cuts load-confounded findings. Metric: gate or sign-off reports with a load-confounded finding, per gated card (card 196: 2 of 2, the gate and the sign-off), target 0. Counter-metric: gate wall-clock minutes and the delay of pushes. Trial: the next 3 gated cards. Decider D202, started 2026-11-07.
 
 ## 4. Project specifics
 

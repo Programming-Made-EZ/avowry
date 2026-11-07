@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 196,
+ "title": "Rename the two test projects to Avowry.*.Tests",
+ "process": "card-mode rules run by hand; ranked first after re-rank 28 (D200, product first); the Ready rewrite into Connextra, Gherkin and ZOMBIES with the scope-premise check, then the task-force declaration as a full Decider (D201, adopted); three cycles, one criterion each (cycle 3 held a real red and green 2); the green seat in its own worktree; the retro pick D202 adopted (byte-parity check, isolated gate runs)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude, a fresh subagent context, product manager (ready), read-only; taskforce-proposal-pm.md and checklist-d201.md; premise facts rerun by the facilitator",
+   "evidence": "8b21ab1"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md (SHIP AS IS, three cycles, the recipe and baseline list)",
+   "evidence": "4d73cf9"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, fresh subagent contexts, QA engineer: red 1 287dcaa, red 2 318e4f2 and red 3 a60afea with 11 mutation patches under .mob/records/196/mutations; red-record-1/2/3.md",
+   "evidence": "287dcaa"
+  },
+  {
+   "role": "green",
+   "seat": "Copilot ctx-4",
+   "model": "copilot (auto) via copilot.cmd, --allow-all-tools, in its own git worktree: green 1 (1dece86 after the facilitator's byte-exact line-ending and solution fix of the seat's 9b941dd) and green 2 6835bc0; green-record-1.md, green-record-2.md, green1-copilot-output.txt",
+   "evidence": "1dece86"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent reviewer, read-only; SHIP WITH CONDITIONS; preship-gate.md",
+   "evidence": "d70042b"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off, read-only; SIGNED OFF WITH CONDITIONS; signoff-ctx6.md, gate-pair.md",
+   "evidence": "cc73704"
+  }
+ ],
+ "retro": "docs/retros/card-196-2026-11-07.md",
+ "notes": "Signed off with conditions (.mob/records/196/signoff-ctx6.md). Done checks met: 1 the Slice=196 check (tests/test_rename_196.py cycle 1) passes and fails for each put-back (red 1, green 1); 2 lists equal name for name, the probe prefix, check-attr unset and R100 renames, line endings unchanged (born green after green 1, five mutations and the real defective commit); 3 path-bound modules, the solution GUID pairing and a byte-exact anchored rewrite (red 3 found a real miss, fixed by green 2), the gate in a clean copy and CI Linux green. The green seat's first commit (9b941dd) had stripped CR bytes from 9 files, swapped the two project GUIDs and lost 2 bytes; the facilitator's byte recompute amended it to 1dece86 (green-record-1.md). Conditions of the sign-off: the paired full gate with nothing else running (313 of 316 passed three times, gate-pair.md) and the timing-guard bug (added to card 304). Code is on main in phrase-lang; the worktree wt-196-green and its two branches are removed at closure. Not in this card: tools/Phrase.Bench and Phrase.BenchCs names (raised on card 197), the repository name (card 198)."
+}
