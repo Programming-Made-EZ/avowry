@@ -1,0 +1,5 @@
+# D158 pre-vote checklist: Decider D195 (card 313 task-force declaration, new proposal) (facilitator)
+- Why: D194 failed (recorded, both runs). The product owner ruled (2026-11-07): make the worktree a new proposal, vote it as a fresh Decider with fresh seats, using only that proposal's round 1 conditions. Not an escalation, no option picked on the owner's behalf.
+- Proposal: .mob/records/313/taskforce-proposal-pm-w.md (the original note plus the commit and push assertions in cycle 1 and the Green workspace section; no trace scripts, manifests or indexes).
+- Procedure: round 1, six fresh seats (new contexts); outliers state ONE condition and promise to support when it is met; only round 1 conditions are adopted; the amended text goes to a second vote; a later demand from a seat whose condition was given is not adopted (original protocol). An absolute No kills the proposal. Cite rule D171 still applies in this repository (one re-ask, then replace the seat). Independent re-run (F-038) after, as the agreement still says, until the alignment story ships.
+- Probe: Codex, Copilot and agy answered seats earlier today; decider.py probes per seat (D188).
