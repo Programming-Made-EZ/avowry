@@ -499,3 +499,17 @@ User benefit common to all: the product owner's product work is not slowed or pu
 ## Applied at the card 299 retro (Decider D199, 2026-11-07)
 The agreement now has the "Experimental values, principles and practices" section (hypothesis, metric with unit, trial length, start date; an experiment past its trial is decided at the next retro). For the mob-defaults working-agreement template, written timelessly: keep one section for experiments before the project specifics; each entry states hypothesis, metric and unit, trial length and start date; at the end of its trial the team decides by Decider to adopt it into the permanent text, revise and extend it, or drop it, and records the evidence. Follow-through: copy this into mob-defaults' template.
 
+## Proposal for the next retro vote (product owner, 2026-11-07): size stories with the Dimensions of Difficulty matrix
+Offered as a proposal; the team votes through Decider, as an entry in the Experimental section, at the next retro. It gives a sizing heuristic and a diagnostic. If adopted, the matrix also goes into the mob-defaults working-agreement template and the Ready-step checklist; until then it stays out of mob-defaults.
+
+At the Ready step, score every card 0, 1 or 2 on four dimensions and record the scores on the card; any score above 0 triggers that dimension's prescription before the card is pulled.
+
+| Dimension | What it measures | Prescription if above 0 |
+|---|---|---|
+| Environment | The machine, tooling, runtimes, CI, quotas or access the work depends on | Escalate to whoever manages that environment (for this mob the product owner for machine actions such as installs, sign-ins and approvals, or the owner of that tooling); do not burn cycles working around it (example: card 303's missing .NET 8 runtime) |
+| Scope | More than one concern, or more than the slice limits | Split vertically, using the acceptance criteria as the seam (often each criterion becomes its own full Connextra story and the criterion moves to it); never split horizontally by layer |
+| Unknown | Questions the team cannot answer yet (feasibility, design, cause) | Create a spike under the spike rule (a time-boxed story whose persona is the team and whose value is always "unblock story #N"; allowed only for the story at the top of the board) |
+| Communication | Someone whose input is needed is not in the loop (the product owner, a domain expert, another mob, a driver seat) | Become more synchronous: a seat at the task force, a domain-expert question at each boundary, or a direct inbox question to the product owner |
+
+Notes to reconcile when voting: a spike is the one explicit exception to the consumer-actor rule (now a permanent rule in the Ready step: persona the team, value "unblock story #N", only for the next story at the top of the board, resolved before the story is pulled); this complements D136's numeric limits rather than replacing them (scope above 0 plus D136's cap together decide a split); the retro reports the four scores against the actual flow so the team learns which dimension predicts slow cards.
+
