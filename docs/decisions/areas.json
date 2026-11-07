@@ -1294,5 +1294,11 @@
     "status": "adopted",
     "title": "Re-rank 27: product first; process improvements moved off the board; the order of product stories and bugs",
     "order": 188
+  },
+  "D198": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 299 task-force declaration: the cross-process writer lock, split from the git hooks",
+    "order": 189
   }
 }

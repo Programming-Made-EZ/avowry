@@ -1,0 +1,129 @@
+{
+ "decider": "D198",
+ "subject": "card 299 task-force declaration: split into the cross-process writer lock and a hooks card; mob-writer.lock; the Codex green seat in its own worktree",
+ "result": "ADOPTED",
+ "run1": {
+  "architect": [
+   {
+    "tag": "d299a",
+    "seat": "agy",
+    "vote": "Yes",
+    "cite": "It is a single exclusive file, not a directory.",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nSplitting the git hooks into a separate bug card keeps card 299 focused on `facilitator.py` within a three-cycle slice and leaves `decider.py` untouched. Using a single exclusive `mob-writer.lock` file outside `mob-decider.lock.d` avoids false-positive self-refusals from `decider_lock_live` and sweep collisions with vote locks. Token-based ownership cleanly refuses same-name cross-process and second-instance claims without false positives for a lone writer, while fail-open on non-existence "
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d299a",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "the git hooks become a second bug card",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\n\nMost rules can be tested red first. Cycle 1 has a real red, since today's in-memory dict cannot refuse a second process or a second `Writers()`. The born-green cycles 2 and 3 each get two named mutations that must `git apply` clean and fail a named test, which is the right check against passing bad state. The two-process child-subprocess test is sound.\n\nOne reservation: cycle 2 [E] makes an unreadable or empty lock a permanent refusal. A crash that leaves a bad file strands the check"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d299a",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "the cross-process writer lock stays; the git hooks become a second bug card",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\nThis is workable, fair, and aligned with the Value/Card-format rules and the D193 gate. It cleanly narrows card 299 to the cross-process writer lock, splits hook work into a separate bug card, preserves the vote lock boundary, and makes the fail-open and worktree constraints explicit. I can comply without gaming, and the proposed green seat in its own worktree is operationally clear.\nCITE: the cross-process writer lock stays; the git hooks become a second bug card\n\n"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d299a",
+    "seat": "agy",
+    "vote": "Yes",
+    "cite": "It is a single exclusive file, not a directory.",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nFrom the audit lens, every guardrail is verifiable from git alone and closes potential loopholes:\n- Token-based refusal, refusing empty or unreadable lock files as in-flight writes, and token-checked release close same-name, half-written, and late-release loopholes.\n- Committed mutation patches (`M2a`, `M2b`, `M3a`, `M3b`) under `.mob/records/299/` without leading comments allow `git apply` verification of born-green cycles directly from git.\n- `git diff --name-only` proves `decider.py` is "
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d299a",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "The cross-process lock stands alone and already serves the product owner",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nThe evaluation is framed to rest on evidence. There are three Done checks, one per cycle. Cycle 1 has a real red, since [O], [M], [B] and [I] must fail on today's code. Cycles 2 and 3 can be born green, so each needs a mutation pair that must fail named tests, and a padded mutation fails the trial. The value, metric and counter-metrics are measurable. The sign-off seat is a fresh Claude that did not write the green. An independent reviewer (Copilot) checks that no 230 or 298 assertion is we"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d299a",
+    "seat": "copilot",
+    "vote": "Yes",
+    "cite": "The task force and the Codex green seat in its own worktree",
+    "cite_verbatim": true,
+    "reply_head": "Yes\nThis is right-sized: PM, architect, QA, green dev, ship reviewer, and signoff cover the actual work and no added ceremony. The card is a single low-level defect with strict gates and a fresh worktree; no UX, DB, security, DevOps, or writer role is needed. The split and fail-open lock semantics are explicit and scoped; leaving hooks to a second bug card avoids bundling unrelated work. The only caveat is that the green seat must stay isolated to its worktree and the reviewer should enforce no "
+   }
+  ]
+ },
+ "independent_rerun": {
+  "architect": [
+   {
+    "tag": "d299b",
+    "seat": "agy",
+    "vote": "Yes",
+    "cite": "The cross-process lock stands alone and already serves the product owner.",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nSplitting the git hooks into a separate bug card keeps card 299 minimal and single-concern inside `facilitator.py`. Using a dedicated `mob-writer.lock` file rather than `mob-decider.lock.d` is architecturally sound: it prevents `decider_lock_live` from misreading a writer as a live vote (avoiding false-positive self-refusals) and leaves `decider.py` untouched. Token-keyed claims and releases, atomic lock creation with fail-open warnings on `OSError`, and the G1/G2/G3 pre-ship gate checks (w"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d299b",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "including the split of card 299",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\n\nEvery rule can be tested red first. Cycle 1's [O], [M], [B] and [I] fail today because the lock lives only in the in-memory `holders` dict. The `GitWrites` verb list gives a direct check that a refusal happens before any git write. A real child process holding the lock makes the cross-process test honest. The mutation pairs M2a, M2b, M3a and M3b are named, and each is tied to a scenario that must fail, so cycles 2 and 3 can't pass as born green.\n\nTwo things I'd like the QA seat to se"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d299b",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "The split: card 299 narrows to the cross-process lock",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\nThe split is coherent and bounded: the lock card stays in facilitator.py, the hook work is isolated as a second bug card, and the card text adds required consumer value and ZOMBIES coverage. The design is explicit about a second lock file, stale takeover, fail-open behavior, and the unchanged vote lock. I can comply without gaming it because the rules are mechanical and the D193 trial is scoped. The only caution is preserving the worktree exception as trial-only.\nCITE: The split: card"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d299b",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "the cross-process writer lock stays; the git hooks become",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\n\nMost of this can be checked from git alone. The fixed-point commands, the `git diff --name-only` check that `decider.py` is unchanged, the `GitWrites` verb list and the committed mutation patches are all reproducible. Three loopholes remain.\n\n- **Fail-open:** the \"cannot create the lock\" case warns on stderr only. The warning leaves no git trace, so a team could pass with the lock silently inactive. I'd like the Cycle 3 [E] test to assert the warning text.\n- **Unstated gate:** nothin"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d299b",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "the cross-process writer lock stays; the git hooks become a second bug card",
+    "cite_verbatim": true,
+    "reply_head": "Support-it\nThis proposal is evidence-first: it re-runs the disputed code facts, states the split, names the second bug card, and preserves the lock design and G1/G2/G3 gate trial. It also declares the needed roles: PM, architect, QA, green, ship reviewer, and sign-off; no extra seats are forced. The card text preserves consumer value and ZOMBIES coverage. The evidence and seat roster are sufficient for a sign-off decision.\nCITE: the cross-process writer lock stays; the git hooks become a second "
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d299b",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "the cross-process writer lock stays; the git hooks become",
+    "cite_verbatim": true,
+    "reply_head": "Yes\n\nThe force fits the card. It has a product manager, an architect for the link-versus-`O_EXCL` and takeover decisions, QA for the real two-process red, a Codex green seat in its own worktree, and an independent reviewer. A different Claude signs off, so the sign-off has no author bias. The omissions (UX, database, security, technical writer, DevOps) each have a stated reason, and the coach is an observer only. Splitting out the hooks keeps the card to three cycles. The mutation pairs are requ"
+   }
+  ]
+ }
+}
