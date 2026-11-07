@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Card 217: derive the Phrase.Acceptance.Tests per-test outcome list from the console log of the CI Test step.
+"""Card 217: derive the Avowry.Acceptance.Tests per-test outcome list from the console log of the CI Test step.
 
   python scripts/ci-log-outcomes-217.py LOG [--job NAME] [--meta key=value]... [--out OUT.json]
 
@@ -13,7 +13,7 @@ their result lines interleave, each project ends with the legacy summary block
 (the older "Passed!/Failed! - Failed: N, Passed: N, Skipped: N, Total: N" line is understood too).
 
 A result line is exactly two spaces, Passed|Failed|Skipped, the test name (theory arguments stay in the name, in
-parentheses) and an optional "[time]". Only names starting with Phrase.Acceptance.Tests. are kept. The count of
+parentheses) and an optional "[time]". Only names starting with Avowry.Acceptance.Tests. are kept. The count of
 every project's result lines must match the summaries (the Acceptance count and its passed/failed/skipped split
 must equal one summary block exactly, the other projects' counts the remaining blocks), so a log that was cut,
 double-printed or mixed is refused. With several jobs in the log, --job is required.
@@ -33,7 +33,7 @@ import re
 import sys
 from pathlib import Path
 
-PROJECT = "Phrase.Acceptance.Tests."
+PROJECT = "Avowry.Acceptance.Tests."
 ANSI = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
 GH = re.compile(r"^([^\t]*)\t([^\t]*)\t(.*)$")
 STAMP = re.compile(r"^\d{4}-\d\d-\d\dT[\d:.]+Z ?")

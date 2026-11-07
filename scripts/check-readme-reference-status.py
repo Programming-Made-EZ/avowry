@@ -24,7 +24,7 @@ def run_reference_test(root):
         [
             "dotnet",
             "test",
-            str(root / "tests" / "Phrase.Acceptance.Tests"),
+            str(root / "tests" / "Avowry.Acceptance.Tests"),
             "--filter",
             f"FullyQualifiedName~{TEST_NAME}",
             "--nologo",

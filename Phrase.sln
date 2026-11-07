@@ -11,9 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avowry.Adapters.CSharp", "s
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C2E33BC6-8208-4FA9-9C02-CF3891E5D178}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phrase.Acceptance.Tests", "tests\Phrase.Acceptance.Tests\Phrase.Acceptance.Tests.csproj", "{6B568404-09EE-49AA-96C2-6BB837A13631}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avowry.Acceptance.Tests", "tests\Avowry.Acceptance.Tests\Avowry.Acceptance.Tests.csproj", "{6B568404-09EE-49AA-96C2-6BB837A13631}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phrase.Compiler.Tests", "tests\Phrase.Compiler.Tests\Phrase.Compiler.Tests.csproj", "{F8C2ADE1-74CD-4458-92F5-A4F706EE67E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avowry.Compiler.Tests", "tests\Avowry.Compiler.Tests\Avowry.Compiler.Tests.csproj", "{F8C2ADE1-74CD-4458-92F5-A4F706EE67E4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-00C04F79EFBC}") = "tools", "tools", "{7960200C-61F1-4C9C-9B54-E9B0CE0D1BD3}"
 EndProject

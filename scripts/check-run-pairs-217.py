@@ -25,7 +25,7 @@ from datetime import datetime
 from pathlib import Path
 
 REL = ".mob/records/217/run-pairs.json"
-FLOOR = "tests/Phrase.Acceptance.Tests/Support/ThreadPoolFloor.cs"
+FLOOR = "tests/Avowry.Acceptance.Tests/Support/ThreadPoolFloor.cs"
 SHA = re.compile(r"^[0-9a-f]{40}$")
 CLOSED = ("done", "closed", "withdrawn")
 

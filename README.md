@@ -6,7 +6,7 @@ The current implementation uses the `avowry` command and still uses the `.avowry
 
 - **Purpose and north star: [VISION.md](VISION.md)** (a vocabulary of common patterns an LLM reads and writes for free, in any language; both a spec and a library)
 - Grammar and resolution rules: [docs/GRAMMAR.md](docs/GRAMMAR.md)
-- First program: [tests/Phrase.Acceptance.Tests/Fixtures/orders.avowry](tests/Phrase.Acceptance.Tests/Fixtures/orders.avowry)
+- First program: [tests/Avowry.Acceptance.Tests/Fixtures/orders.avowry](tests/Avowry.Acceptance.Tests/Fixtures/orders.avowry)
 - What the C# provider should emit for it: [reference/csharp](reference/csharp)
 - **Contributing now: [HANDOFF.md](HANDOFF.md)** (the resolver, as a mob)
 
@@ -16,8 +16,8 @@ The current implementation uses the `avowry` command and still uses the `.avowry
 docs/GRAMMAR.md                    v0.1 grammar, resolution, lints, vocabulary
 src/Avowry.Compiler                Lexer, Parser, formatter (done); Semantics model (designed), Resolver (stub)
 src/Phrase.Providers.CSharp        CSharpProvider (stub)
-tests/Phrase.Compiler.Tests        inner-loop unit tests (lexer 51, parser 79, formatter 8, resolver 83 pending)
-tests/Phrase.Acceptance.Tests      outer-loop acceptance tests + harness
+tests/Avowry.Compiler.Tests        inner-loop unit tests (lexer 51, parser 79, formatter 8, resolver 83 pending)
+tests/Avowry.Acceptance.Tests      outer-loop acceptance tests + harness
 reference/csharp                   hand-written target output (FastEndpoints + xUnit)
 .github/workflows/ci.yml           trunk CI: build, test, Pending excluded
 ```
@@ -35,10 +35,10 @@ dotnet test Phrase.sln --filter "Status!=Pending"     # what CI gates on
 |---|---|---|
 | `ReferenceTarget.Reference_output_builds_and_every_spec_passes` | Green | A fresh run builds the target and passes all 6 specs; the nested runner uses `DOTNET_ROLL_FORWARD=Major` when only a newer ASP.NET Core runtime is installed, and `python scripts/check-readme-reference-status.py` verifies this status against the test |
 | `CompileEndpointToCSharp.Generated_csharp_builds_and_every_spec_passes` | Red (Pending) | Lexes and parses the fixture cleanly, then stops with `NotImplementedException` at the resolver |
-| `Phrase.Compiler.Tests` (lexer) | Green, 51 tests | Layout, tokens, native blocks, PH100 to PH109, the full fixture, and 2,000 fuzzed mutations |
-| `Phrase.Compiler.Tests` (parser) | Green, 79 tests | Declarations, templates, endpoints, steps, specs, PH200 to PH211, recovery, fixture, 2,000 fuzzed mutations |
-| `Phrase.Compiler.Tests` (formatter) | Green, 8 tests | Canonical source round trips, used for generated comments |
-| `Phrase.Compiler.Tests` (resolver) | Red (Pending), 83 tests | The spec for the resolver; see [HANDOFF.md](HANDOFF.md) |
+| `Avowry.Compiler.Tests` (lexer) | Green, 51 tests | Layout, tokens, native blocks, PH100 to PH109, the full fixture, and 2,000 fuzzed mutations |
+| `Avowry.Compiler.Tests` (parser) | Green, 79 tests | Declarations, templates, endpoints, steps, specs, PH200 to PH211, recovery, fixture, 2,000 fuzzed mutations |
+| `Avowry.Compiler.Tests` (formatter) | Green, 8 tests | Canonical source round trips, used for generated comments |
+| `Avowry.Compiler.Tests` (resolver) | Red (Pending), 83 tests | The spec for the resolver; see [HANDOFF.md](HANDOFF.md) |
 
 The acceptance test counts specs in the `.avowry` source independently of the compiler, so a compiler that silently drops specs cannot pass.
 

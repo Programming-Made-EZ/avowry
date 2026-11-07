@@ -19,7 +19,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 NS = "http://microsoft.com/schemas/VisualStudio/TeamTest/2010"
-ACC = "Phrase.Acceptance.Tests"
+ACC = "Avowry.Acceptance.Tests"
 
 
 def load(name):
@@ -73,7 +73,7 @@ def log_doc(acc, other=(), summaries=None, job="test"):
 
 
 A = [("Passed", f"{ACC}.Fake.One"), ("Passed", f'{ACC}.Fake.Theory(x: "a (b) [c]")'), ("Failed", f"{ACC}.Fake.Three")]
-C = [("Passed", "Phrase.Compiler.Tests.Syntax.Lexer.Arrow"), ("Passed", "Phrase.Compiler.Tests.Syntax.Lexer.Word")]
+C = [("Passed", "Avowry.Compiler.Tests.Syntax.Lexer.Arrow"), ("Passed", "Avowry.Compiler.Tests.Syntax.Lexer.Word")]
 
 
 class TrxExtractor(unittest.TestCase):

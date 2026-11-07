@@ -1,5 +1,5 @@
 """Card 264 red 2b (D157 Criterion 2): no acceptance test starts `dotnet run` against Phrase.Bench except through
-the shared launcher (tests/Phrase.Acceptance.Tests/Support/BenchLauncher.cs).
+the shared launcher (tests/Avowry.Acceptance.Tests/Support/BenchLauncher.cs).
 
 A start site is a line containing the literal "--project" in an acceptance test .cs file that targets Phrase.Bench
 (the file mentions Phrase.Bench.csproj, RunArm("Phrase.Bench", ... or Project: "Phrase.Bench"). The launcher file
@@ -16,7 +16,7 @@ import unittest
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-ACCEPTANCE = REPO / "tests" / "Phrase.Acceptance.Tests"
+ACCEPTANCE = REPO / "tests" / "Avowry.Acceptance.Tests"
 LAUNCHER = Path("Support") / "BenchLauncher.cs"
 CONTRACT = Path("BenchLauncherContract.cs")  # asserts on the argument list; starts nothing
 TARGETS_BENCH = re.compile(r'Phrase\.Bench\.csproj|RunArm\("Phrase\.Bench"|Project: "Phrase\.Bench"')

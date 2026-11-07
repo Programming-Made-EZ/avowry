@@ -39,7 +39,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 SCRIPT = REPO / "scripts" / "check-repeat-evidence.py"
 REL = ".mob/records/264/repeat-evidence.json"
-ROW = ('Phrase.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.'
+ROW = ('Avowry.Acceptance.Tests.PhraseExecutedOutcomesAcceptance.'
        'Correct_read_and_modify_replies_pass_and_record_the_starting_code(task: "004-read-phrase", kind: "read")')
 
 
@@ -54,10 +54,10 @@ def good(n=20):
     return {
         "card": 264,
         "class": "PhraseExecutedOutcomesAcceptance",
-        "repeat_command": "for i in $(seq 20); do dotnet test tests/Phrase.Acceptance.Tests "
+        "repeat_command": "for i in $(seq 20); do dotnet test tests/Avowry.Acceptance.Tests "
                           "--filter FullyQualifiedName~PhraseExecutedOutcomesAcceptance; done",
         "load": {"class": "BenchmarkHarnessAcceptance", "concurrency": 2,
-                 "command": "dotnet test tests/Phrase.Acceptance.Tests --filter FullyQualifiedName~BenchmarkHarnessAcceptance"},
+                 "command": "dotnet test tests/Avowry.Acceptance.Tests --filter FullyQualifiedName~BenchmarkHarnessAcceptance"},
         "timeout_boundary_seconds": 1800,
         "runs": [{"run": i, "passed": True, "slowest_seconds": 28.3} for i in range(1, n + 1)],
         "summary": {"total": n, "passed": n, "failed": 0},

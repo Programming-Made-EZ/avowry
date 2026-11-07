@@ -22,7 +22,7 @@ import time
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-PROJECT = "tests/Phrase.Acceptance.Tests"
+PROJECT = "tests/Avowry.Acceptance.Tests"
 CLASS = "PhraseExecutedOutcomesAcceptance"
 LOAD_CLASS = "BenchmarkHarnessAcceptance"
 BOUNDARY = 600
@@ -107,7 +107,7 @@ def run_entry(n, main, trx_path, boundary):
     elif not failures:
         body = f"no failed row in the TRX (rows seen: {len(mine)}, expected at least 1)\n" + body
     entry["failure"] = {
-        "row": first.get("row") or f"Phrase.Acceptance.Tests.{CLASS}",
+        "row": first.get("row") or f"Avowry.Acceptance.Tests.{CLASS}",
         "exit_code": main["code"],
         "stdout": (first.get("stdout", "") + "\n" + main["stdout"][-4000:]).strip(),
         "stderr": (body + "\n" + main["stderr"][-2000:]).strip(),

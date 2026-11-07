@@ -144,7 +144,7 @@ def main(argv):
     if "--from-trx" in argv:
         return report(parse_trx(argv[argv.index("--from-trx") + 1]))
     out = tempfile.mkdtemp(prefix="usable-v1-")
-    cmd = ["dotnet", "test", str(ROOT / "tests" / "Phrase.Acceptance.Tests"), "-c", "Release", "--nologo",
+    cmd = ["dotnet", "test", str(ROOT / "tests" / "Avowry.Acceptance.Tests"), "-c", "Release", "--nologo",
            "--filter", "Milestone=UsableV1", "--logger", "trx;LogFileName=usable-v1.trx", "--results-directory", out]
     proc = subprocess.run(cmd, cwd=str(ROOT), capture_output=True, text=True)
     trx = Path(out) / "usable-v1.trx"

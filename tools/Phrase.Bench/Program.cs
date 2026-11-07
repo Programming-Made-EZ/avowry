@@ -445,7 +445,7 @@ static bool TryReadDocumentationBlock(string docsRoot, out string docsBlock, out
 {
     var grammarPath = Path.Combine(docsRoot, "docs", "GRAMMAR.md");
     var cheatSheetPath = Path.Combine(docsRoot, "docs", "CHEATSHEET.md");
-    var examplePath = Path.Combine(docsRoot, "tests", "Phrase.Acceptance.Tests", "Fixtures", "orders.avowry");
+    var examplePath = Path.Combine(docsRoot, "tests", "Avowry.Acceptance.Tests", "Fixtures", "orders.avowry");
     if (!File.Exists(grammarPath))
     {
         docsBlock = "";
@@ -470,7 +470,7 @@ static bool TryReadDocumentationBlock(string docsRoot, out string docsBlock, out
     }
 
     docsBlock = "";
-    error = $"docs-in-context mode could not find docs/CHEATSHEET.md or tests/Phrase.Acceptance.Tests/Fixtures/orders.avowry under '{docsRoot}'.";
+    error = $"docs-in-context mode could not find docs/CHEATSHEET.md or tests/Avowry.Acceptance.Tests/Fixtures/orders.avowry under '{docsRoot}'.";
     return false;
 }
 

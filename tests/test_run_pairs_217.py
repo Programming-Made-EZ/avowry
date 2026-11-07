@@ -25,7 +25,7 @@ environment have the same test names and the same outcome for every test (a diff
 'differ'); every non-'Passed' test must be in that environment's allowed_failures with an integer owner_card;
 every run head, the CI id head_sha and the record head are one sha; local runs name temp and tmp (non-empty);
 floor_decision present; 'kept' needs a non-empty reason; 'removed' is refused while
-tests/Phrase.Acceptance.Tests/Support/ThreadPoolFloor.cs exists and contains ModuleInitializer.
+tests/Avowry.Acceptance.Tests/Support/ThreadPoolFloor.cs exists and contains ModuleInitializer.
 
 Red shape (as card 264): the checker is not written, so every test fails on the missing script, and the real-record
 test fails because .mob/records/217/run-pairs.json does not exist. Not wired into mob_process.py check.
@@ -45,15 +45,15 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 SCRIPT = REPO / "scripts" / "check-run-pairs-217.py"
 REL = ".mob/records/217/run-pairs.json"
-FLOOR = "tests/Phrase.Acceptance.Tests/Support/ThreadPoolFloor.cs"
+FLOOR = "tests/Avowry.Acceptance.Tests/Support/ThreadPoolFloor.cs"
 HEAD = "a" * 40
 OTHER = "b" * 40
-T162 = "Phrase.Acceptance.Tests.UsableV1.Bar6_a_model_that_never_saw_the_app_can_add_an_endpoint_from_the_docs_alone"
-T303A = "Phrase.Acceptance.Tests.CSharpBaselineAcceptance.endpoint_reply_fails_when_response_record_or_status_are_wrong"
-T303B = "Phrase.Acceptance.Tests.CSharpBaselineAcceptance.endpoint_reply_passes_when_response_record_and_status_match"
+T162 = "Avowry.Acceptance.Tests.UsableV1.Bar6_a_model_that_never_saw_the_app_can_add_an_endpoint_from_the_docs_alone"
+T303A = "Avowry.Acceptance.Tests.CSharpBaselineAcceptance.endpoint_reply_fails_when_response_record_or_status_are_wrong"
+T303B = "Avowry.Acceptance.Tests.CSharpBaselineAcceptance.endpoint_reply_passes_when_response_record_and_status_match"
 F065 = [T162, T303A, T303B]
 OWNERS = {T162: 162, T303A: 303, T303B: 303}
-PASSING = [f"Phrase.Acceptance.Tests.Fake.Test{i}" for i in range(6)]
+PASSING = [f"Avowry.Acceptance.Tests.Fake.Test{i}" for i in range(6)]
 
 
 def run(root):
@@ -158,7 +158,7 @@ class RunPairs(unittest.TestCase):
     def test_one_unlisted_failure_is_rejected(self):
         def edit(r, f):
             for n in (1, 2):
-                f[f"evidence/ci-{n}.json"]["Phrase.Acceptance.Tests.Fake.Test0"] = "Failed"
+                f[f"evidence/ci-{n}.json"]["Avowry.Acceptance.Tests.Fake.Test0"] = "Failed"
         self.reject(edit, "allowed")
 
     # --- M: many
@@ -175,20 +175,20 @@ class RunPairs(unittest.TestCase):
     def test_boundary_second_run_fails_a_different_test_is_rejected(self):
         def edit(r, f):
             f["evidence/local-2.json"][T303B] = "Passed"
-            f["evidence/local-2.json"]["Phrase.Acceptance.Tests.Fake.Test1"] = "Failed"
+            f["evidence/local-2.json"]["Avowry.Acceptance.Tests.Fake.Test1"] = "Failed"
         self.reject(edit, "differ")
 
     def test_boundary_second_run_drops_an_allowed_failure_is_rejected(self):
         self.reject(lambda r, f: f["evidence/local-2.json"].update({T162: "Passed"}), "differ")
 
     def test_boundary_second_run_lists_a_different_test_set_is_rejected(self):
-        self.reject(lambda r, f: f["evidence/local-2.json"].update({"Phrase.Acceptance.Tests.Fake.Extra": "Passed"}),
+        self.reject(lambda r, f: f["evidence/local-2.json"].update({"Avowry.Acceptance.Tests.Fake.Extra": "Passed"}),
                     "differ")
 
     def test_boundary_fourth_failure_beyond_the_three_is_rejected(self):
         def edit(r, f):
             for n in (1, 2):
-                f[f"evidence/local-{n}.json"]["Phrase.Acceptance.Tests.Fake.Test2"] = "Failed"
+                f[f"evidence/local-{n}.json"]["Avowry.Acceptance.Tests.Fake.Test2"] = "Failed"
         self.reject(edit, "allowed")
 
     def test_boundary_exactly_min_tests_is_accepted_and_one_fewer_rejected(self):

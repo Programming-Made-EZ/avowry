@@ -28,7 +28,7 @@ Print("initial-worker-min", workerMin);
 Print("initial-worker-max", workerMax);
 Print("initial-io-min", ioMin);
 Print("initial-io-max", ioMax);
-Print("acceptance-assembly-loaded", AppDomain.CurrentDomain.GetAssemblies().Any(a => (a.GetName().Name ?? "").StartsWith("Phrase.Acceptance", StringComparison.Ordinal)));
+Print("acceptance-assembly-loaded", AppDomain.CurrentDomain.GetAssemblies().Any(a => (a.GetName().Name ?? "").StartsWith("Avowry.Acceptance", StringComparison.Ordinal)));
 
 var m = workerMin;
 if (!ThreadPool.SetMaxThreads(m, ioMax))
