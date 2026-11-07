@@ -1,0 +1,258 @@
+{
+ "ok": true,
+ "actions": [
+  {
+   "op": "close",
+   "issue": 305,
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the Codex build-seat brief",
+   "status": "done"
+  },
+  {
+   "op": "close",
+   "issue": 308,
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the inbox section of the working agreement",
+   "status": "done"
+  },
+  {
+   "op": "close",
+   "issue": 310,
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the driver rotation file",
+   "status": "done"
+  },
+  {
+   "op": "close",
+   "issue": 311,
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the agile coach seat brief",
+   "status": "done"
+  },
+  {
+   "op": "close",
+   "issue": 312,
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the record check",
+   "status": "done"
+  },
+  {
+   "op": "close",
+   "issue": 316,
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': an adopted trial paragraph (Decider D193), applied to the working agreement",
+   "status": "done"
+  },
+  {
+   "op": "close",
+   "issue": 317,
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the Ready check",
+   "status": "done"
+  },
+  {
+   "op": "close",
+   "issue": 318,
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed mob-defaults copy of the rulings",
+   "status": "done"
+  },
+  {
+   "op": "close",
+   "issue": 319,
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the Decider protocol (supersedes D187)",
+   "status": "done"
+  },
+  {
+   "op": "close",
+   "issue": 320,
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': applied to the Decider protocol in the working agreement (product owner ruling)",
+   "status": "done"
+  },
+  {
+   "op": "close",
+   "issue": 321,
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the facilitator duties",
+   "status": "done"
+  },
+  {
+   "op": "close",
+   "issue": 322,
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': an adopted trial paragraph (Decider D196), applied to the working agreement",
+   "status": "done"
+  },
+  {
+   "op": "edit",
+   "issue": 17,
+   "kind": "story",
+   "story_line": "As Steve, I want benchmark tasks scored by whether their generated specs pass, so that I can see whether a model produced the requested behavior rather than merely resolvable code, and decide about Avowry on honest numbers.",
+   "status": "done"
+  },
+  {
+   "op": "edit",
+   "issue": 24,
+   "kind": "story",
+   "story_line": "As Ari, I want the vocabulary to grow from recurring patterns mined from real codebases and LLM task logs, so that the keywords I find remove work I would otherwise write by hand, in fewer tokens.",
+   "status": "done"
+  },
+  {
+   "op": "edit",
+   "issue": 27,
+   "kind": "story",
+   "story_line": "As Steve, I want benchmark tasks that measure the work each keyword removes and whether a cold model finds the right keyword, so that I can judge catalogue coverage by useful task outcomes instead of keyword count.",
+   "status": "done"
+  },
+  {
+   "op": "edit",
+   "issue": 60,
+   "kind": "story",
+   "story_line": "As Steve, I want benchmark tasks that require parallel collection, bounded concurrency, publication and timeout or cancellation, so that I can see whether there is recurring demand and whether named keywords reduce agent work before I direct the language to grow them.",
+   "status": "done"
+  },
+  {
+   "op": "edit",
+   "issue": 81,
+   "kind": "story",
+   "story_line": "As Steve, I want development benchmark tasks that ask for a stored-record outcome and a published-event outcome, run under today's grammar, so that I can see whether cold models write specs that state the stored record or the event, or hide behind succeeds, before I approve changing the grammar.",
+   "status": "done"
+  },
+  {
+   "op": "edit",
+   "issue": 83,
+   "kind": "story",
+   "story_line": "As Morgan, I want a generated spec that supplies an in-memory store and an event capture and asserts the stored record and the published event, with the same trace every run, so that I can verify what a program stores and emits from the spec alone, without real infrastructure or flaky results.",
+   "status": "done"
+  },
+  {
+   "op": "edit",
+   "issue": 117,
+   "kind": "story",
+   "story_line": "As Steve, I want the candidate cheaper models run cold in both arms on the development tasks and the holdouts at the pre-registered N, so that I can see the cheapest model that clears the pass bar per arm and decide whether Phrase saves money through cheaper models.",
+   "status": "done"
+  },
+  {
+   "op": "edit",
+   "issue": 123,
+   "kind": "story",
+   "story_line": "As Steve, I want the pre-registered modify and fix tasks run cold in both arms at each codebase size, so that I can compare cost and pass rate as the codebase grows and decide whether Phrase's edge widens at scale.",
+   "status": "done"
+  },
+  {
+   "op": "edit",
+   "issue": 128,
+   "kind": "story",
+   "story_line": "As Steve, I want the two arms grown feature by feature from the same checkpoints by cold models, so that I can compare tokens, attempts and pass rate at each codebase size and decide whether Phrase pays off as a codebase grows.",
+   "status": "done"
+  },
+  {
+   "op": "edit",
+   "issue": 144,
+   "kind": "story",
+   "story_line": "As Steve, I want Copilot's 30 unavailable holdout rows run once its quota is back, under exactly the original rules, so that the holdout verdict I use to judge Avowry has all three models.",
+   "status": "done"
+  },
+  {
+   "op": "rerank",
+   "after": 313,
+   "cards": [
+    299,
+    196,
+    197,
+    266,
+    162,
+    201,
+    189,
+    202,
+    203,
+    176,
+    178,
+    179,
+    186,
+    169,
+    171,
+    172,
+    165,
+    166,
+    177,
+    200,
+    180,
+    181,
+    187,
+    163,
+    182,
+    164,
+    184,
+    153,
+    185,
+    188,
+    155,
+    204,
+    145,
+    146,
+    147,
+    148,
+    134,
+    149,
+    150,
+    151,
+    289,
+    140,
+    143,
+    144,
+    107,
+    108,
+    109,
+    115,
+    116,
+    117,
+    118,
+    120,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    89,
+    53,
+    54,
+    56,
+    22,
+    58,
+    13,
+    19,
+    14,
+    46,
+    17,
+    24,
+    27,
+    60,
+    81,
+    20,
+    52,
+    23,
+    33,
+    34,
+    59,
+    82,
+    25,
+    15,
+    21,
+    35,
+    38,
+    26,
+    61,
+    83,
+    28,
+    29,
+    30,
+    295,
+    296,
+    31,
+    315,
+    307,
+    156,
+    304,
+    302,
+    300,
+    301,
+    286,
+    232
+   ],
+   "status": "done"
+  }
+ ]
+}
