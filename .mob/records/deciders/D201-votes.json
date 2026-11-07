@@ -1,0 +1,150 @@
+{
+ "decider": "D201",
+ "subject": "card 196 task-force declaration and card text: rename the two test projects, namespaces and the paths that name them",
+ "result": "ADOPTED",
+ "run1": {
+  "architect": [
+   {
+    "tag": "d201",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "the two test projects, their namespaces and every path that names them",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\nThis is disciplined and bounded: it narrows ownership, defines exact rename scope, checks for false positives, and distinguishes live files from history. The risk list is specific and the red/green cycle is enforceable. I like the anchored rewrite rule, clean-copy gate, and the fact it explicitly rejects stale bin/obj and CI premise drift. The only caveat is the unowned Phrase.Bench naming gap; it should be resolved before merge, but the proposal is otherwise sound.\nCITE: the two test"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d201",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Silent test loss. Compare name-for-name lists, not totals",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": false,
+    "reply_head": "Support-it\n\nEvery scenario can be run red first. The before-lists are committed, the python check points at the new paths, and put-back mutations in a scratch copy cover [E]. Comparing name-for-name lists instead of totals handles the 13 duplicate display names.\n\nTwo weaknesses, neither blocking:\n- The vacuous StarvationProbe pass (risk 2) has no scenario of its own. Scenario [B] covers it only loosely, so QA should demand a named red for it.\n- The rename lands in one atomic commit, so criteria "
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d201",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "The rename is atomic, so criteria 2 and 3 go green",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\nThis is workable and scoped: a single mechanical rename with explicit boundaries, red/green checks, and clean-copy gating avoids repository writes. The card names the exact ownership split, the anchored rewrite rule, the no-recursive delete constraint, and the mutation checks that protect against silent test loss and CRLF drift. The CI and path facts are grounded in repo evidence; the non-author, clean-archive gate makes it fair and non-gaming.\nCITE: The rename is atomic, so criteria "
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d201",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Compare name-for-name lists, not totals",
+    "cite_verbatim": false,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nFrom git alone, most of this can be checked. The before-lists are committed under `.mob/records/196/`. `git diff -M` shows 100% renames, `git check-attr` covers the CRLF guard, and `git log` gives the criterion order.\n\nThe loopholes I see are small:\n- **Windows claim:** scenario [S] says \"green on Windows locally\". Git can't show that, and CI is Linux only. Cut the claim or record the evidence.\n- **Python tests in CI:** no workflow runs them, so `test_rename_196.py` is enforced only "
+   },
+   {
+    "tag": "d201x",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "a non-author re-runs the gate in a clean `git archive` copy",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe criteria are mostly checkable from git. Name-for-name before-lists are committed under `.mob/records/196/`, `git diff -M` shows 100% renames, `git check-attr` covers the CRLF guard, and the put-back mutations cover partial work.\n\nThree gaps could let the team pass while breaking the practice:\n- \"Green on Windows locally\" is not verifiable from git, since CI is Linux only. Commit the local gate output or drop the claim.\n- `tests/test_rename_196.py` and the four path-bound modules "
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d201",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "one commit using `git mv` plus the anchored rewrite",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\nThe proposal is evidence-first: it states the premise facts, the exact red/green/ship checks, and the clean-copy evidence gate. It also declares the needed roles—ready, architect, QA, green, ship, and fresh sign-off—without padding the task force, so the decision can be grounded in reproducible evidence and the full sign-off set.\nCITE: one commit using `git mv` plus the anchored rewrite\n\n"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d201",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "a non-author re-runs the gate in a clean",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe force is about the right size for a bounded mechanical rename. It leaves out UX, security, DevOps, technical writer and domain expert, each with a stated reason. The risk the rename carries is silent loss, and the seats cover it: QA for the red, a non-author for the gate, and a fresh sign-off.\n\nTwo places look slightly padded:\n- The slice seat exists only to confirm \"SHIP AS IS\".\n- The three cycles on an atomic commit must each be shown red by a put-back, so criteria 2 and 3 repe"
+   }
+  ]
+ },
+ "independent_rerun": {
+  "architect": [
+   {
+    "tag": "d201r",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "the rename is atomic, so criteria 2 and 3 go green",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": false,
+    "reply_head": "Support-it\nThe proposal is narrowly scoped, explicitly separates card 196/197 ownership, and adds red/green mutation checks that catch old-name leakage, CRLF drift, and silent test loss. The “before list equals after rewrite” and clean-copy gate are concrete, name-for-name, and avoid false positives from duplicate test display names or stale bin/obj artifacts. The design is minimal and enforceable: atomic rename, anchored rewrite, and a non-author gate in a clean archive. It also treats CI as Li"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d201r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "Compare name-for-name lists, not totals (13 duplicate display names",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe red side is mostly sound. The Slice=196 put-back checks (scenario [E]) fail on the named file and line. The name-for-name list comparison catches a silent test drop that totals would hide, because 13 duplicate display names would mask one. The StarvationProbe vacuous pass must be shown red once, and the card says so.\n\nTwo weaknesses remain:\n- Criteria 2 and 3 go green with criterion 1's commit, so they are red-first only through manual put-backs.\n- The `Status!=Pending` baseline "
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d201r",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "The rename is atomic, so criteria 2 and 3 go green with criterion 1's commit",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\nThe proposal is concrete, bounded, and mechanically testable: explicit ownership, three-cycle red→green flow, clean-copy validation, and no hidden repo writes. The naming-only scope is clear, the slice exception is narrow, and the QA mutation checks prevent vacuous passes. It also separates real gate evidence from local bin/obj contamination and makes the non-author gate explicit. The rules are workable without gaming because they require fresh proof and a clean archive rerun, not mer"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d201r",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "The checks point at the new paths, so all three criteria are red today",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nFrom git alone, the proposal can be checked. Before-lists are committed under `.mob/records/196/`. The `Slice=196` put-back check names the file and line. The criterion order comes from `git log`. The clean `git archive` gate stops stale `bin/obj` from masking a missed path. The proposal also states plainly that CI is Linux only, so it claims no Windows CI.\n\nThe loopholes I found are all closed:\n- **Vacuous pass:** the StarvationProbe prefix is listed as risk 2, and QA must show it red once"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d201r",
+    "seat": "copilot",
+    "vote": "Support-it",
+    "cite": "a fresh Claude that did not write the green",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\nThe proposal is evidence-first: it names preconditions, counts, boundary ownership, red/green checks, and a clean-copy ship gate with a non-author rerun. It also calls out exact risks and the missing owner for Phrase.Bench/Phrase.BenchCs, which is the right kind of gap to resolve before sign-off. The team has the needed seats—architect, QA, build, ship gate, and fresh decider—plus a bounded, atomic rename and revert path. This is a proper decision frame, not a vague policy vote.\nCITE:"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d201r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "The rename is atomic, so criteria 2 and 3 go green with criterion 1's commit",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe force is sized about right for a bounded mechanical rename. The risk-bearing perspectives are covered: QA for the silent-loss and vacuous-pass checks, the architect for the slice, and a non-author running the clean-copy gate. Leaving out UX, security, DevOps, the technical writer and the domain expert is justified.\n\nTwo bits of padding remain. Three cycles are capped even though the atomic commit turns all criteria green at once, so the cycles are partly ceremony, and a separate "
+   }
+  ]
+ }
+}

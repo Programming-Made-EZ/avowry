@@ -1312,5 +1312,11 @@
     "status": "adopted",
     "title": "Re-rank 28: bug card 323 ranks after card 232, below every product story; pull card 196",
     "order": 191
+  },
+  "D201": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 196 task-force declaration and card text: rename the two test projects, their namespaces and the paths that name them",
+    "order": 192
   }
 }

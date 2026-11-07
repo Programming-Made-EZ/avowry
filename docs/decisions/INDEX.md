@@ -304,3 +304,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D198](process-and-staffing.md#d198) | Card 299 task-force declaration: the cross-process writer lock, split from the git hooks | process-and-staffing | adopted |
 | [D199](process-and-staffing.md#d199) | Card 299 retro pick: the Experimental section, six lines adopted, three dropped, sixteen moved | process-and-staffing | adopted |
 | [D200](process-and-staffing.md#d200) | Re-rank 28: bug card 323 ranks after card 232, below every product story; pull card 196 | process-and-staffing | adopted |
+| [D201](process-and-staffing.md#d201) | Card 196 task-force declaration and card text: rename the two test projects, their namespaces and the paths that name them | process-and-staffing | adopted |
