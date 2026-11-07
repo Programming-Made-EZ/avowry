@@ -1,0 +1,133 @@
+"""Card 266 (D157): live docs and the README use the name Avowry.
+
+One class per cycle, so later cycles add a class and never edit an earlier one:
+  UntouchedBytes266  Criterion 3 (characterisation, passes on the pre-change tree): every tracked file outside the
+                     nine scoped files is byte-identical to the base commit
+  ScopedLinks        Criterion 2 (characterisation part): relative links in the nine scoped files resolve
+
+Run: python -m unittest tests.test_live_docs_266
+It needs history (a clone, not a `git archive` copy). No test deletes anything.
+"""
+
+import subprocess
+import unittest
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parent.parent
+
+# The nine scoped files: the only files card 266 may change (the guard lists them, the scope never grows silently).
+SCOPED = (
+    "README.md",
+    "HANDOFF.md",
+    "VISION.md",
+    "TEAM_WORKING_AGREEMENT.md",
+    "demo/tasks/README.md",
+    "bench/README.md",
+    "bench/holdout-template.md",
+    "docs/experiments/E1-true-mobbing.md",
+    "docs/experiments/E4-coding-guidelines.md",
+)
+
+# The commit card 266 started from (the D205 commit).
+BASE = "0fa5b228c69665349aa625f0238716b7057d9b22"
+
+# Paths that may differ between BASE and the comparison commit, besides the nine scoped files.
+# Exact files: the two test files card 266 edits.
+EXCLUDED_FILES = frozenset(SCOPED) | {
+    "tests/test_live_docs_266.py",
+    "tests/test_demo_readme.py",
+}
+# By prefix, each with its reason. At BASE..HEAD today `git diff --name-status` shows NO difference outside `.mob/`;
+# these prefixes are pinned so that legitimate non-card changes do not break the guard:
+#   .mob/            mob records, baselines and logs (history that grows)
+#   docs/decisions/  decision records are history that grows (a Decider adds a section)
+#   board/266-       this card's own board file (status moves while the card runs)
+# Any other board/ change (another card's file, board/MILESTONES.md, board/MILESTONE-usable-v1.md) is NOT allowed:
+# the guard fails on it, on purpose.
+EXCLUDED_PREFIXES = (".mob/", "docs/decisions/", "board/266-")
+
+PRESERVED_FILES = ("docs/CODING_GUIDELINES.md", "docs/GRAMMAR.md")
+
+
+def git(*args):
+    return subprocess.run(["git", *args], cwd=REPO, capture_output=True, check=True).stdout
+
+
+def comparison_commit():
+    """The newest commit whose subject starts `Card 266 green 1` or `Card 266 green 2`; HEAD if there is none."""
+    log = git("log", "--format=%H%x09%s").decode("utf-8").splitlines()
+    for line in log:
+        commit, _, subject = line.partition("\t")
+        if subject.startswith("Card 266 green 1") or subject.startswith("Card 266 green 2"):
+            return commit
+    return git("rev-parse", "HEAD").decode("ascii").strip()
+
+
+def tree_entries(commit):
+    """{path: (mode, blob sha)} for every file in the commit's tree."""
+    entries = {}
+    for record in git("ls-tree", "-r", "-z", commit).split(b"\0"):
+        if not record:
+            continue
+        meta, _, path = record.partition(b"\t")
+        mode, _kind, blob = meta.decode("ascii").split()
+        entries[path.decode("utf-8")] = (mode, blob)
+    return entries
+
+
+def is_excluded(path):
+    return path in EXCLUDED_FILES or path.startswith(EXCLUDED_PREFIXES)
+
+
+def outside(entries):
+    return {path: value for path, value in entries.items() if not is_excluded(path)}
+
+
+def summarise(items, limit=10):
+    items = sorted(items)
+    text = ", ".join(items[:limit])
+    return text + (f" ... and {len(items) - limit} more" if len(items) > limit else "")
+
+
+class UntouchedBytes266(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        # Given the base commit and the comparison commit (the newest card 266 green, or HEAD)
+        full = git("rev-parse", BASE).decode("ascii").strip()
+        assert full == BASE, f"BASE resolves to {full}"
+        cls.commit = comparison_commit()
+        cls.base_all = tree_entries(BASE)
+        cls.now_all = tree_entries(cls.commit)
+        cls.base = outside(cls.base_all)
+        cls.now = outside(cls.now_all)
+
+    def test_every_file_outside_the_scope_has_the_same_mode_and_bytes_as_the_base(self):
+        # When the (mode, blob sha) of each path outside the nine files, the two tests, .mob/ and the exclusions is compared
+        changed = [path for path in self.base if path in self.now and self.base[path] != self.now[path]]
+
+        # Then none differs, and the comparison is not vacuous
+        self.assertGreater(len(self.base), 100, "the comparison covers too few files to mean anything")
+        self.assertEqual([], changed, f"changed since {BASE[:7]} (at {self.commit[:7]}): {summarise(changed)}")
+
+    def test_no_file_outside_the_scope_was_added_or_deleted(self):
+        # When the path sets outside the exclusions are compared
+        added = set(self.now) - set(self.base)
+        deleted = set(self.base) - set(self.now)
+
+        # Then nothing was added and nothing was deleted
+        self.assertEqual([], sorted(added), f"added since {BASE[:7]}: {summarise(added)}")
+        self.assertEqual([], sorted(deleted), f"deleted since {BASE[:7]}: {summarise(deleted)}")
+
+    def test_the_coding_guidelines_and_the_grammar_are_byte_identical(self):
+        # Given the two documents the card says must not change (scenario Z)
+        for path in PRESERVED_FILES:
+            # When their (mode, blob sha) at the base and at the comparison commit are compared
+            self.assertIn(path, self.base_all, f"{path} is missing at the base")
+            self.assertIn(path, self.now_all, f"{path} is missing at {self.commit[:7]}")
+
+            # Then they are identical
+            self.assertEqual(self.base_all[path], self.now_all[path], f"{path} changed since {BASE[:7]}")
+
+
+if __name__ == "__main__":
+    unittest.main()

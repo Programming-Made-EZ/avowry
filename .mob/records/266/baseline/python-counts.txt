@@ -1,0 +1,8 @@
+# run in a git archive copy of HEAD f7937a9e889e067079016d8deab5ef01dce7df87, in a temporary directory
+tests.test_demo_readme: ran 6 (expected 6), OK
+tests.test_readme_reference_status: ran 4 (expected 4), OK
+tests.test_process_wiki: ran 69 (expected 69), OK
+tests.board.test_board_archive: ran 17 (expected 17), OK
+tests.test_license_files: ran 6 (expected 6), OK
+tests.test_no_personal_names: ran 4 (expected 4), OK
+scripts/check-process-wiki.py: exit 0, last line: process-wiki: OK (18 pages)
