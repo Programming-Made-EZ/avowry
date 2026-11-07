@@ -1282,5 +1282,11 @@
     "status": "adopted",
     "title": "Card 313 task-force declaration, new proposal: the green seat works in its own git worktree",
     "order": 186
+  },
+  "D196": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 313 retro pick: the cite check stops costing rounds on format (three-card trial; story 321)",
+    "order": 187
   }
 }

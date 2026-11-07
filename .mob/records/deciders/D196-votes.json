@@ -1,0 +1,93 @@
+{
+ "decider": "D196",
+ "subject": "card 313 retro pick: the cite check stops costing rounds on format (three-card trial; story 321)",
+ "result": "ADOPTED",
+ "run1": {
+  "pm": {
+   "seat": "copilot",
+   "vote": "Support-it",
+   "cite": "the product owner's cards reach users sooner",
+   "cite_verbatim": true,
+   "reply_head": "Support-it\nThis is the narrowest trial that respects the standing rules: it keeps D171’s real-cite floor, limits change to cite normalization and echo handling, measures format re-asks and seat minutes, and leaves the Decider protocol and product-owner rulings intact. It does not broaden the rule set or over-specify before evidence; it stays within the three-card experiment scope and the worktree/retro guardrails. The product value is direct: fewer decision rounds wasted on punctuation and echoe"
+  },
+  "architect": {
+   "seat": "agy",
+   "vote": "Yes",
+   "cite": "the words themselves must still be copied from the proposal in order",
+   "cite_verbatim": true,
+   "reply_head": "Yes\n\nThe checker rules and record design are sound, minimal, and enforceable without false positives. Normalising case, markdown emphasis characters, and trailing punctuation on both sides before matching at least six consecutive proposal words in order (K1) is deterministic: it eliminates capital-letter and full-stop re-asks while still rejecting fabricated or out-of-order cites. Recording placeholder or prompt echoes as \"echo\" with the echoing driver named in the seat-use record and re-asking "
+  },
+  "qa": {
+   "seat": "agy",
+   "vote": "Yes",
+   "cite": "matches a cited point of at least six words after normalising case",
+   "cite_verbatim": true,
+   "reply_head": "Yes\n\nEvery rule in K1 to K3 can be tested red-first under ZOMBIES and catches its named violation without passing bad state. For K1, unit tests can fail red on today's strict matcher for case, markdown emphasis, and trailing punctuation differences, while boundary and negative tests verify that five-word cites, out-of-order words, skipped middle words, and phrases absent from the proposal body still fail. For K2, tests can assert that placeholder cites and echoed prompts record as echo, log the "
+  },
+  "dev": {
+   "seat": "copilot",
+   "vote": "Support-it",
+   "cite": "the cite rule is applied as follows, and nothing else about the Decider changes.",
+   "cite_verbatim": true,
+   "reply_head": "Support-it\nThis is a narrow, reversible experiment that keeps the core cite rule intact, adds explicit normalization and echo handling, and limits scope to three cards. It is clear operationally: normalize case/markdown/trailing punctuation; one re-ask for failed cite; echo counts as missing cite only after a different-driver re-ask; seat replacement remains unchanged. It is fair because it reduces format noise without letting uncited votes count, and the metric and guardrails are explicit. I ca"
+  },
+  "auditlens": {
+   "seat": "agy",
+   "vote": "Support-it",
+   "cite": "the words themselves must still be copied from the proposal in order",
+   "cite_verbatim": true,
+   "reply_head": "Support-it\n\nFrom the audit lens, K1 to K3 remain verifiable from git alone and close the format-churn loop without opening an unread-vote loophole. Because both the proposal and the vote records are committed in git, normalising case, markdown emphasis characters, and trailing punctuation while requiring at least six consecutive proposal words in order is deterministic and reproducible by an external auditor. Recording prompt-placeholder echoes as \"echo\", naming the echoing driver in the seat-us"
+  },
+  "decider": {
+   "seat": "copilot",
+   "vote": "Support-it",
+   "cite": "the cite check (D171) matches a cited point of at least six words",
+   "cite_verbatim": false,
+   "reply_head": "Support-it\nThe trial is tightly scoped, evidence-based, and preserves D171’s real protections while removing the main format noise: case, trailing punctuation, placeholder echo, and empty replies. It names concrete metrics and counter-metrics, and the third-card retro gives a clear keep/revise/drop check. The team has the needed roles for sign-off—PM, architect, QA, developer, decider, audit lens, agile coach, and sign-off reviewer—without broadening the Decider rule beyond the cite check.\nCITE:"
+  }
+ },
+ "independent_rerun": {
+  "pm": {
+   "seat": "agy",
+   "vote": "Yes",
+   "cite": "the words themselves must still be copied from the proposal in order",
+   "cite_verbatim": true,
+   "reply_head": "Yes\n\nThis trial upholds the product owner's standing rules and VISION.md ruling 6 by cutting decision overhead without weakening reading accountability. Card 313 spent 111 seat-minutes across 106 runs for a 15-minute fix, including 10 format-caused cite re-asks. Normalising case, markdown emphasis, and trailing punctuation while requiring six ordered proposal words (K1), and re-asking placeholder echoes on a different driver with seat-use attribution (K2), removes format churn while keeping unre"
+  },
+  "architect": {
+   "seat": "claude",
+   "vote": "Yes",
+   "cite": "the words themselves must still be copied from the proposal in order",
+   "cite_verbatim": true,
+   "reply_head": "Yes\n\nThe design is minimal and enforceable. Normalising case, emphasis characters and trailing punctuation on both sides, while still requiring the words to be copied in order from the proposal, removes the format failures without accepting an uncited vote. Echo detection is an exact match against the placeholder or the prompt, so it should not produce false positives. Naming the echoing driver in the seat-use record keeps attribution clean. The trial scope is bounded to three cards, and counter"
+  },
+  "qa": {
+   "seat": "copilot",
+   "vote": "Support-it",
+   "cite": "the cite rule is applied as follows, and nothing else about the Decider changes.",
+   "cite_verbatim": true,
+   "reply_head": "Support-it\nThis is testable red-first: K1/K2 are deterministic string-normalization checks against the proposal, with explicit fail/re-ask paths and no counted bad votes. The echo case is defined and can be red-tested by placeholder or prompt-echo inputs. It also preserves D171 guardrails: uncited votes still fail, re-ask remains one try, and replacement is only after a second failure. The trial is bounded to three cards and the metric is measurable.\nCITE: the cite rule is applied as follows, an"
+  },
+  "dev": {
+   "seat": "agy",
+   "vote": "Yes",
+   "cite": "The cite check (D171) matches a cited point of at least six words after normalising case, markdown emphasis characters and trailing punctuation on both sides",
+   "cite_verbatim": true,
+   "reply_head": "Yes\n\nAs backend developer, K1–K3 are workable, unambiguous, and fair to implement and comply with without gaming. Normalising case, markdown emphasis, and trailing punctuation while preserving in-order six-word matching (K1) is a deterministic string transform that fits cleanly into a thin red-green slice with unit doubles. Recording prompt or placeholder echoes against the echoing driver and re-asking once on a different driver (K2) stops repeated driver-echo loops without weakening the zero-un"
+  },
+  "auditlens": {
+   "seat": "claude",
+   "vote": "Yes",
+   "cite": "the words themselves must still be copied from the proposal in order",
+   "cite_verbatim": true,
+   "reply_head": "Yes\n\nGit can verify this. The seat-use record names each echoing driver, and the checker's tests can show that a cite absent from the proposal still fails. K1 normalises only case, emphasis characters and trailing punctuation, so the copied words must still match in order. K3 keeps the six-word minimum, the single re-ask and replacement of a seat that fails twice. The baseline of 10 cite re-asks is stated and the target is measurable. The trial is bounded to three cards, and any sign-off-only fi"
+  },
+  "decider": {
+   "seat": "copilot",
+   "vote": "Support-it",
+   "cite": "the next three cards that change mob-crosscli code or hold a Decider.",
+   "cite_verbatim": true,
+   "reply_head": "Support-it\nThe trial is evidence-framed: baseline, metric, counter-metrics, and stop condition are explicit; it narrows only cite hygiene (case, punctuation, placeholder echo) without loosening the substantive cite rule or the Decider protocol. It keeps the needed roles and scopes the test to three cards with a third-card keep/revise/drop decision. The record supports the problem: format noise produced a large share of the 111-minute decision cost, while product-owner rulings and seat coverage r"
+  }
+ }
+}

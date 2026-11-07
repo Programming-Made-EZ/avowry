@@ -299,3 +299,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D193](process-and-staffing.md#d193) | Card 298 retro pick: the gate runs the changed area's narrow suites and checks each step's failure path; a cycle with no red carries a mutation pair (three-card trial; story 316) | process-and-staffing | adopted |
 | [D194](process-and-staffing.md#d194) | Card 313 task-force declaration with the facilitator-trace conditions (an outlier unresolved after the amendments; a new proposal follows as D195) | process-and-staffing | not adopted |
 | [D195](process-and-staffing.md#d195) | Card 313 task-force declaration, new proposal: the green seat works in its own git worktree | process-and-staffing | adopted |
+| [D196](process-and-staffing.md#d196) | Card 313 retro pick: the cite check stops costing rounds on format (three-card trial; story 321) | process-and-staffing | adopted |
