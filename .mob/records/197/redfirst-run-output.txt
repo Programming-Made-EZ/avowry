@@ -1,0 +1,187 @@
+test_bench_self_check (tests.test_rename_197.ListsAndPaths.test_bench_self_check)
+The bench/README.md self-check command, run exactly in a copy of the tracked files (it is cheap, about 6 s ... FAIL
+test_five_modules (tests.test_rename_197.ListsAndPaths.test_five_modules) ... ok
+test_launcher_scan_not_vacuous (tests.test_rename_197.ListsAndPaths.test_launcher_scan_not_vacuous)
+TARGETS_BENCH must still match files; if the regex stops matching, bench_start_sites passes vacuously. ... ok
+test_lists_equal_baseline (tests.test_rename_197.ListsAndPaths.test_lists_equal_baseline) ... ok
+test_probe_matches_solution (tests.test_rename_197.ListsAndPaths.test_probe_matches_solution) ... FAIL
+test_run_llm_check_path (tests.test_rename_197.ListsAndPaths.test_run_llm_check_path) ... FAIL
+test_solution_projects (tests.test_rename_197.ListsAndPaths.test_solution_projects) ... ERROR
+test_triple_agree (tests.test_rename_197.ListsAndPaths.test_triple_agree) ... FAIL
+test_commands_name_tracked_solution (tests.test_rename_197.OldCommandRefused.test_commands_name_tracked_solution) ... ok
+test_guid_pairing_all_seven (tests.test_rename_197.OldCommandRefused.test_guid_pairing_all_seven)
+The seven project GUIDs stay paired with their names and paths (a literal table and the committed ... ERROR
+test_no_compat_files (tests.test_rename_197.OldCommandRefused.test_no_compat_files) ... FAIL
+test_old_command_fails (tests.test_rename_197.OldCommandRefused.test_old_command_fails)
+In a copy of the tracked files the old gate command exits non-zero at once, saying the file does not ... FAIL
+
+======================================================================
+ERROR: test_solution_projects (tests.test_rename_197.ListsAndPaths.test_solution_projects)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ringe\AppData\Local\Temp\claude\1ff08f82160bcdeb\2ca12683-042f-40b7-b61a-623ae180176b\scratchpad\redfirst197\tests\test_rename_197.py", line 373, in test_solution_projects
+    actual = project_lines(REPO / NEW_SOLUTION)
+  File "C:\Users\ringe\AppData\Local\Temp\claude\1ff08f82160bcdeb\2ca12683-042f-40b7-b61a-623ae180176b\scratchpad\redfirst197\tests\test_rename_197.py", line 358, in project_lines
+    return [line.rstrip("\r") for line in path.read_bytes().decode("utf-8-sig").split("\n") if line.startswith("Project(")]
+                                          ~~~~~~~~~~~~~~~^^
+  File "C:\Users\ringe\AppData\Local\Python\pythoncore-3.15-64\Lib\pathlib\__init__.py", line 976, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ringe\AppData\Local\Python\pythoncore-3.15-64\Lib\pathlib\__init__.py", line 970, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ringe\\AppData\\Local\\Temp\\claude\\1ff08f82160bcdeb\\2ca12683-042f-40b7-b61a-623ae180176b\\scratchpad\\redfirst197\\Avowry.sln'
+
+======================================================================
+ERROR: test_guid_pairing_all_seven (tests.test_rename_197.OldCommandRefused.test_guid_pairing_all_seven)
+The seven project GUIDs stay paired with their names and paths (a literal table and the committed
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ringe\AppData\Local\Temp\claude\1ff08f82160bcdeb\2ca12683-042f-40b7-b61a-623ae180176b\scratchpad\redfirst197\tests\test_rename_197.py", line 567, in test_guid_pairing_all_seven
+    found = project_triples(project_lines(REPO / NEW_SOLUTION))
+                            ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ringe\AppData\Local\Temp\claude\1ff08f82160bcdeb\2ca12683-042f-40b7-b61a-623ae180176b\scratchpad\redfirst197\tests\test_rename_197.py", line 358, in project_lines
+    return [line.rstrip("\r") for line in path.read_bytes().decode("utf-8-sig").split("\n") if line.startswith("Project(")]
+                                          ~~~~~~~~~~~~~~~^^
+  File "C:\Users\ringe\AppData\Local\Python\pythoncore-3.15-64\Lib\pathlib\__init__.py", line 976, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ringe\AppData\Local\Python\pythoncore-3.15-64\Lib\pathlib\__init__.py", line 970, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ringe\\AppData\\Local\\Temp\\claude\\1ff08f82160bcdeb\\2ca12683-042f-40b7-b61a-623ae180176b\\scratchpad\\redfirst197\\Avowry.sln'
+
+======================================================================
+FAIL: test_bench_self_check (tests.test_rename_197.ListsAndPaths.test_bench_self_check)
+The bench/README.md self-check command, run exactly in a copy of the tracked files (it is cheap, about 6 s
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ringe\AppData\Local\Temp\claude\1ff08f82160bcdeb\2ca12683-042f-40b7-b61a-623ae180176b\scratchpad\redfirst197\tests\test_rename_197.py", line 398, in test_bench_self_check
+    self.assertEqual(1, len(commands), "bench/README.md names the self-check command once")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : bench/README.md names the self-check command once
+
+======================================================================
+FAIL: test_probe_matches_solution (tests.test_rename_197.ListsAndPaths.test_probe_matches_solution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ringe\AppData\Local\Temp\claude\1ff08f82160bcdeb\2ca12683-042f-40b7-b61a-623ae180176b\scratchpad\redfirst197\tests\test_rename_197.py", line 465, in test_probe_matches_solution
+    self.assertEqual([NEW_SOLUTION], solutions, "exactly one tracked root .sln, and it is Avowry.sln")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['Avowry.sln'] != ['Phrase.sln']
+
+First differing element 0:
+'Avowry.sln'
+'Phrase.sln'
+
+- ['Avowry.sln']
++ ['Phrase.sln'] : exactly one tracked root .sln, and it is Avowry.sln
+
+======================================================================
+FAIL: test_run_llm_check_path (tests.test_rename_197.ListsAndPaths.test_run_llm_check_path)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ringe\AppData\Local\Temp\claude\1ff08f82160bcdeb\2ca12683-042f-40b7-b61a-623ae180176b\scratchpad\redfirst197\tests\test_rename_197.py", line 460, in test_run_llm_check_path
+    self.assertEqual([("Avowry.Bench", "Avowry.Bench.csproj")], found, "run-llm-check.py names the Bench project once")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [('Avowry.Bench', 'Avowry.Bench.csproj')] != [('Phrase.Bench', 'Phrase.Bench.csproj')]
+
+First differing element 0:
+('Avowry.Bench', 'Avowry.Bench.csproj')
+('Phrase.Bench', 'Phrase.Bench.csproj')
+
+- [('Avowry.Bench', 'Avowry.Bench.csproj')]
+?    ^^^^ ^          ^^^^ ^
+
++ [('Phrase.Bench', 'Phrase.Bench.csproj')]
+?    ^^ ^^^          ^^ ^^^
+ : run-llm-check.py names the Bench project once
+
+======================================================================
+FAIL: test_triple_agree (tests.test_rename_197.ListsAndPaths.test_triple_agree)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ringe\AppData\Local\Temp\claude\1ff08f82160bcdeb\2ca12683-042f-40b7-b61a-623ae180176b\scratchpad\redfirst197\tests\test_rename_197.py", line 449, in test_triple_agree
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        {"adr": expected, "script": expected, "test": expected},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {"adr": adr, "script": script, "test": tests},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "the ADR, the layering script and its test must name the same two Bench paths",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: {'adr': ['tools/Avowry.Bench/Program.cs', 'tools/Avowry.B[173 chars]cs']} != {'adr': ['tools/Phrase.Bench/Program.cs', 'tools/Phrase.B[173 chars]cs']}
+Diff is 850 characters long. Set self.maxDiff to None to see it. : the ADR, the layering script and its test must name the same two Bench paths
+
+======================================================================
+FAIL: test_no_compat_files (tests.test_rename_197.OldCommandRefused.test_no_compat_files)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ringe\AppData\Local\Temp\claude\1ff08f82160bcdeb\2ca12683-042f-40b7-b61a-623ae180176b\scratchpad\redfirst197\tests\test_rename_197.py", line 557, in test_no_compat_files
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        {"root old name": [], "tools old name": [], "old script": [], "every .sln": [NEW_SOLUTION]},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {"root old name": old_root, "tools old name": old_tools, "old script": old_script, "every .sln": solutions},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "no compatibility shim: nothing old is tracked, and Avowry.sln is the only solution file",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: {'root old name': [], 'tools old name': [], 'old script': [][26 chars]ln']} != {'root old name': ['Phrase.sln'], 'tools old name': ['tools/[235 chars]ln']}
+- {'every .sln': ['Avowry.sln'],
+?                  ^^^^ ^
+
++ {'every .sln': ['Phrase.sln'],
+?                  ^^ ^^^
+
+-  'old script': [],
++  'old script': ['scripts/check-phrase-executed-complete.py'],
+-  'root old name': [],
++  'root old name': ['Phrase.sln'],
+?                    ++++++++++++
+
+-  'tools old name': []}
++  'tools old name': ['tools/Phrase.Bench/Phrase.Bench.csproj',
++                     'tools/Phrase.Bench/Program.cs',
++                     'tools/Phrase.BenchCs/Phrase.BenchCs.csproj',
++                     'tools/Phrase.BenchCs/Program.cs']} : no compatibility shim: nothing old is tracked, and Avowry.sln is the only solution file
+
+======================================================================
+FAIL: test_old_command_fails (tests.test_rename_197.OldCommandRefused.test_old_command_fails)
+In a copy of the tracked files the old gate command exits non-zero at once, saying the file does not
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\ringe\AppData\Local\Temp\claude\1ff08f82160bcdeb\2ca12683-042f-40b7-b61a-623ae180176b\scratchpad\redfirst197\tests\test_rename_197.py", line 534, in test_old_command_fails
+    output, _ = process.communicate(timeout=OLD_COMMAND_SECONDS)
+                ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ringe\AppData\Local\Python\pythoncore-3.15-64\Lib\subprocess.py", line 1395, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ringe\AppData\Local\Python\pythoncore-3.15-64\Lib\subprocess.py", line 1830, in _communicate
+    raise TimeoutExpired(self.args, orig_timeout)
+subprocess.TimeoutExpired: Command '['dotnet', 'test', 'Phrase.sln', '--filter', 'Status!=Pending']' timed out after 20 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ringe\AppData\Local\Temp\claude\1ff08f82160bcdeb\2ca12683-042f-40b7-b61a-623ae180176b\scratchpad\redfirst197\tests\test_rename_197.py", line 538, in test_old_command_fails
+    self.fail(
+    ~~~~~~~~~^
+        f"the old command was still running after {OLD_COMMAND_SECONDS} s (does a {old} answer it?): "
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        + output.decode("utf-8", "replace")[-600:]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: the old command was still running after 20 s (does a Phrase.sln answer it?):  down. Diagnostic information may be found in files in "C:\Users\ringe\AppData\Local\Temp\MSBuildTempzkxfu2sb.3ir\" and will be named MSBuild_*.failure.txt. This location can be changed by setting the MSBUILDDEBUGPATH environment variable to a different directory.
+MSBUILD : error MSB4166: Child node "7" exited prematurely. Shutting down. Diagnostic information may be found in files in "C:\Users\ringe\AppData\Local\Temp\MSBuildTempzkxfu2sb.3ir\" and will be named MSBuild_*.failure.txt. This location can be changed by setting the MSBUILDDEBUGPATH environment variable to a different directory.
+
+
+----------------------------------------------------------------------
+Ran 12 tests in 50.191s
+
+FAILED (failures=6, errors=2)
+EXIT 1
