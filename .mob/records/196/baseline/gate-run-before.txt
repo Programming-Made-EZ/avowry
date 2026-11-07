@@ -1,0 +1,13 @@
+# gate run before the rename (facilitator, clean git archive copy, no .git directory)
+HEAD archived: 4d73cf9 (red 1 287dcaa adds only a python test and records, no dotnet change)
+Command: dotnet test Phrase.sln --filter "Status!=Pending"  (Windows 11, 10.0.403)
+
+Passed!  - Failed:     0, Passed:   284, Skipped:     0, Total:   284, Duration: 1 s - Phrase.Compiler.Tests.dll (net8.0)
+Failed!  - Failed:     3, Passed:   313, Skipped:     0, Total:   316, Duration: 10 m 55 s - Phrase.Acceptance.Tests.dll (net8.0)
+
+Failed tests (3; the card 217 notes also record 3 known failures; the cause here, probably the copy having no .git directory, is unprobed):
+Failed Phrase.Acceptance.Tests.PrivateHoldoutResults.git_ignored_suite_refuses_before_the_model_is_launched [7 s]
+Failed Phrase.Acceptance.Tests.PrivateHoldoutResults.repository_check_passes_here_and_fails_on_a_tracked_holdout_path [7 s]
+Failed Phrase.Acceptance.Tests.HoldoutTaskConversion.The_python_holdout_task_test_suite_passes [3 s]
+
+Expected after the rename in the same kind of copy: Avowry.Compiler.Tests 284 passed; Avowry.Acceptance.Tests 313 passed, the same 3 failing names (with Avowry in the namespace).

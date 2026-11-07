@@ -1,0 +1,24 @@
+9b941dd
+
+`python -m unittest tests.test_rename_196`
+`Ran 5 tests in 22.638s`
+`OK`
+
+Rename check: `git diff --cached -M --name-status` => `127` renames.
+`git ls-files tests/Avowry.Compiler.Tests` => `27`
+`git ls-files tests/Avowry.Acceptance.Tests` => `100`
+Old-name scan: `git grep -n -E 'Phrase\.(Compiler|Acceptance)\.Tests' ...` => `CLEAN`
+
+Frozen/edge-case files updated:
+- `tests/Fixtures/StarvationProbe/Program.cs`
+- `tests/test_outcome_extractors_217.py`
+- `tests/test_run_pairs_217.py`
+- `tests/test_repeat_evidence.py`
+- `scripts/repeat-run-264.py`
+- `.gitattributes`
+
+I was a little unsure about the pathspec-limited corpus rename output in PowerShell: the reliable staged count I ran was the overall `127` rename count, which matches the repo-wide diff.
+
+
+
+exit=0
