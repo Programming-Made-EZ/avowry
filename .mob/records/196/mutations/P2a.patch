@@ -1,0 +1,16 @@
+diff --git a/tests/Avowry.Acceptance.Tests/Fixtures/corpus/empty-record.avowry b/tests/Avowry.Acceptance.Tests/Fixtures/corpus/empty-record.avowry
+deleted file mode 100644
+index 78bccdc..0000000
+--- a/tests/Avowry.Acceptance.Tests/Fixtures/corpus/empty-record.avowry
++++ /dev/null
+@@ -1,3 +0,0 @@
+-# empty-record: a type declaration must contain at least one field
+-module EmptyRecord
+-type Empty
+diff --git a/tests/Avowry.Acceptance.Tests/Fixtures/corpus/empty-record.expected.json b/tests/Avowry.Acceptance.Tests/Fixtures/corpus/empty-record.expected.json
+deleted file mode 100644
+index 196236a..0000000
+--- a/tests/Avowry.Acceptance.Tests/Fixtures/corpus/empty-record.expected.json
++++ /dev/null
+@@ -1 +0,0 @@
+-{"outcome":"diagnostic","code":"PH203","line":3}

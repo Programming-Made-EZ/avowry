@@ -1,0 +1,55 @@
+diff --git a/tests/Avowry.Acceptance.Tests/Fixtures/corpus/crlf-source.avowry b/tests/Avowry.Acceptance.Tests/Fixtures/corpus/crlf-source.avowry
+index fc9d6b5..d4f7e12 100644
+--- a/tests/Avowry.Acceptance.Tests/Fixtures/corpus/crlf-source.avowry
++++ b/tests/Avowry.Acceptance.Tests/Fixtures/corpus/crlf-source.avowry
+@@ -1,25 +1,25 @@
+-# crlf-source: shared-failure content stored with CRLF line endings
+-module SharedFailure
+-
+-avow to "reject {n: Int}"
+-  fails with Rejected
+-  native csharp
+-    if (n < 0) Fail("Rejected");
+-
+-endpoint First : POST /first
+-  input
+-    n: Int
+-  steps
+-    reject input.n
+-
+-endpoint Second : POST /second
+-  input
+-    n: Int
+-  steps
+-    reject input.n
+-
+-endpoint Third : POST /third
+-  input
+-    n: Int
+-  steps
+-    reject input.n
++# crlf-source: shared-failure content stored with CRLF line endings
++module SharedFailure
++
++avow to "reject {n: Int}"
++  fails with Rejected
++  native csharp
++    if (n < 0) Fail("Rejected");
++
++endpoint First : POST /first
++  input
++    n: Int
++  steps
++    reject input.n
++
++endpoint Second : POST /second
++  input
++    n: Int
++  steps
++    reject input.n
++
++endpoint Third : POST /third
++  input
++    n: Int
++  steps
++    reject input.n

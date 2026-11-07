@@ -1,0 +1,13 @@
+diff --git a/tests/Fixtures/StarvationProbe/Program.cs b/tests/Fixtures/StarvationProbe/Program.cs
+index e64b879..faef68d 100644
+--- a/tests/Fixtures/StarvationProbe/Program.cs
++++ b/tests/Fixtures/StarvationProbe/Program.cs
+@@ -28,7 +28,7 @@ Print("initial-worker-min", workerMin);
+ Print("initial-worker-max", workerMax);
+ Print("initial-io-min", ioMin);
+ Print("initial-io-max", ioMax);
+-Print("acceptance-assembly-loaded", AppDomain.CurrentDomain.GetAssemblies().Any(a => (a.GetName().Name ?? "").StartsWith("Avowry.Acceptance", StringComparison.Ordinal)));
++Print("acceptance-assembly-loaded", AppDomain.CurrentDomain.GetAssemblies().Any(a => (a.GetName().Name ?? "").StartsWith("Phrase.Acceptance", StringComparison.Ordinal)));
+ 
+ var m = workerMin;
+ if (!ThreadPool.SetMaxThreads(m, ioMax))

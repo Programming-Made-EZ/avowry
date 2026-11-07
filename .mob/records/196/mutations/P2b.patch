@@ -1,0 +1,13 @@
+diff --git a/tests/Avowry.Compiler.Tests/ExtensionBoundaryTests.cs b/tests/Avowry.Compiler.Tests/ExtensionBoundaryTests.cs
+index 2285b5e..dca8cf1 100644
+--- a/tests/Avowry.Compiler.Tests/ExtensionBoundaryTests.cs
++++ b/tests/Avowry.Compiler.Tests/ExtensionBoundaryTests.cs
+@@ -2,7 +2,7 @@ using Avowry.Compiler;
+ using Avowry.Compiler.Semantics;
+ using Avowry.Compiler.Syntax;
+ 
+-namespace Avowry.Compiler.Tests;
++namespace Phrase.Compiler.Tests;
+ 
+ // Feature: The compiler partitions core and web
+ //   As Dana, I want the compiler to know which keywords are core and which

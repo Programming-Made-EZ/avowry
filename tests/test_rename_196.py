@@ -3,7 +3,7 @@ Avowry.Acceptance.Tests, with nothing lost and nothing left pointing at the old 
 
 One class per cycle, so later cycles add a class and never edit an earlier one:
   RenameCycle1     Criterion 1 (Z, E): the old names are gone from tracked live files; the new directories are tracked.
-  ListsAndStrings  Criterion 2 (cycle 2, not yet written)
+  ListsAndStrings  Criterion 2 (O, M, B): lists, strings and line endings survive the rename
   PathBound        Criterion 3 (cycle 3, not yet written)
 
 The old names are built from fragments below, so this file never contains the literal old names and the scan
@@ -142,6 +142,143 @@ class RenameCycle1(unittest.TestCase):
     def test_put_back_gitattributes(self):
         rel, number = self._put_back_one(".gitattributes")
         self.assertEqual(1, number)
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# Cycle 2 (Criterion 2: O one list, M many strings, B boundary bytes). Born green on the finished rename:
+# each test passes on the rename commit and has a named put-back (.mob/records/196/mutations/P2*.patch) that fails it.
+# ---------------------------------------------------------------------------------------------------------------
+
+BASELINE = REPO / ".mob" / "records" / "196" / "baseline"
+CORPUS = "tests/" + NEW_ACCEPTANCE + "/Fixtures/corpus"
+_SOURCE_ROW = re.compile(r'\(source: ".*$')
+
+
+def normalised_test_list(project):
+    """`dotnet test <project> --list-tests` reduced to its test rows (4-space lines), the 14 rows that embed the
+    checkout path normalised to 'source: <path>)', sorted, duplicates kept."""
+    result = subprocess.run(
+        ["dotnet", "test", f"tests/{project}", "--list-tests"], cwd=REPO, capture_output=True, check=True
+    )
+    rows = []
+    for line in result.stdout.decode("utf-8", "replace").splitlines():
+        if line.startswith("    ") and line.strip():
+            rows.append(_SOURCE_ROW.sub("(source: <path>)", line.rstrip()))
+    return sorted(rows)
+
+
+def baseline_test_list(file_name, old_project, new_project):
+    rows = []
+    for line in (BASELINE / file_name).read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            rows.append(line.rstrip().replace(old_project + ".", new_project + ".", 1))
+    return sorted(rows)
+
+
+def multiset_difference(expected, actual, limit=8):
+    from collections import Counter
+
+    missing = list((Counter(expected) - Counter(actual)).elements())
+    extra = list((Counter(actual) - Counter(expected)).elements())
+    return (
+        f"expected {len(expected)} rows, listed {len(actual)}; {len(missing)} missing, {len(extra)} extra.\n"
+        f"missing (first {limit}): {missing[:limit]}\nextra (first {limit}): {extra[:limit]}"
+    )
+
+
+def corpus_fixtures():
+    return [p for p in tracked_files() if p.startswith(CORPUS + "/") and p.endswith(".avowry")]
+
+
+def eol_columns(text, old_project, new_project):
+    """Map `git ls-files --eol` text to {path with the old project name: (index eol, worktree eol)}."""
+    columns = {}
+    for line in text.splitlines():
+        left, path = line.split("\t", 1)
+        index_eol, worktree_eol = left.split()[:2]
+        columns[path.replace(new_project, old_project)] = (index_eol, worktree_eol)
+    return columns
+
+
+class ListsAndStrings(unittest.TestCase):
+    """Criterion 2. O one (a single list per project, equal name for name), M many (every string and path that
+    carries a name: the probe prefix, the corpus fixtures), B boundary (line-ending bytes survive the rename)."""
+
+    def test_lists_equal(self):
+        for old, new, file_name, count in (
+            (OLD_COMPILER, NEW_COMPILER, "compiler-tests.list.txt", 284),
+            (OLD_ACCEPTANCE, NEW_ACCEPTANCE, "acceptance-tests.list.txt", 317),
+        ):
+            with self.subTest(project=new):
+                expected = baseline_test_list(file_name, old, new)
+                actual = normalised_test_list(new)
+                self.assertEqual(count, len(expected), "the committed baseline must hold the stated count")
+                self.assertEqual(count, len(actual), multiset_difference(expected, actual))
+                self.assertEqual(expected, actual, multiset_difference(expected, actual))
+
+    def test_starvation_probe_prefix(self):
+        rel = "tests/Fixtures/StarvationProbe/Program.cs"
+        literals = []
+        for number, line in enumerate((REPO / rel).read_text(encoding="utf-8").splitlines(), start=1):
+            for found in re.finditer(r'StartsWith\("([^"]+)"', line):
+                literals.append((number, found.group(1)))
+        acceptance = [(n, s) for n, s in literals if "Acceptance" in s]
+        self.assertEqual(1, len(acceptance), f"{rel} must probe the acceptance assembly once: {literals}")
+        number, prefix = acceptance[0]
+        csproj = sorted((REPO / "tests" / NEW_ACCEPTANCE).glob("*.csproj"))
+        self.assertEqual(1, len(csproj), f"one csproj expected in tests/{NEW_ACCEPTANCE}: {csproj}")
+        stem = csproj[0].stem
+        self.assertEqual(
+            stem,
+            prefix + ".Tests",
+            f"{rel}:{number} probes StartsWith(\"{prefix}\") but the project is {stem}",
+        )
+
+    def test_corpus_text_unset(self):
+        fixtures = corpus_fixtures()
+        self.assertEqual(14, len(fixtures), "14 tracked corpus fixtures expected")
+        out = git("check-attr", "text", "--", *fixtures).decode("utf-8").splitlines()
+        states = {}
+        for line in out:
+            path, _, state = line.rsplit(": ", 2)
+            states[path] = state
+        not_unset = {p: s for p, s in states.items() if s != "unset"}
+        self.assertEqual({}, not_unset, f"{len(not_unset)} of {len(fixtures)} corpus fixtures are not 'text: unset', they say {sorted(set(not_unset.values()))}")
+        self.assertEqual(sorted(fixtures), sorted(states))
+
+    def test_corpus_renames_r100(self):
+        added = git(
+            "log", "--diff-filter=A", "--reverse", "--format=%H", "--", f"tests/{NEW_ACCEPTANCE}/Fixtures/orders.avowry"
+        ).decode().split()
+        self.assertTrue(added, "orders.avowry must have an adding commit")
+        commit = added[0]
+        # Pathless diff: a pathspec would hide the rename source and show an add instead.
+        rows = git("diff", "-M", "--name-status", commit + "^", commit).decode("utf-8").splitlines()
+        status = {}
+        for row in rows:
+            parts = row.split("\t")
+            if parts[0].startswith("R"):
+                status[parts[2]] = (parts[0], parts[1])
+        fixtures = corpus_fixtures()
+        self.assertEqual(14, len(fixtures))
+        found = {p: status.get(p, ("not a rename",))[0] for p in fixtures}
+        self.assertEqual({p: "R100" for p in fixtures}, found, f"commit {commit[:7]}")
+        for p in fixtures:
+            self.assertEqual(p.replace(NEW_ACCEPTANCE, OLD_ACCEPTANCE), status[p][1])
+
+    def test_eol_unchanged(self):
+        for old, new, file_name in (
+            (OLD_COMPILER, NEW_COMPILER, "compiler-eol.txt"),
+            (OLD_ACCEPTANCE, NEW_ACCEPTANCE, "acceptance-eol.txt"),
+        ):
+            with self.subTest(project=new):
+                expected = eol_columns((BASELINE / file_name).read_text(encoding="utf-8"), old, new)
+                actual = eol_columns(
+                    git("-c", "core.quotepath=off", "ls-files", "--eol", "--", f"tests/{new}").decode("utf-8"), old, new
+                )
+                differing = sorted(p for p in set(expected) | set(actual) if expected.get(p) != actual.get(p))
+                detail = "; ".join(f"{p}: baseline {expected.get(p)} now {actual.get(p)}" for p in differing[:10])
+                self.assertEqual([], differing, f"{len(differing)} files differ in i/ w/ line endings: {detail}")
 
 
 if __name__ == "__main__":
