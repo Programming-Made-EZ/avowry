@@ -1,0 +1,53 @@
+I'll read the brief and follow it exactly.I'll inspect the worktree and the rename test, then follow the brief's steps in order.I'll create the sed script outside the repo, then check GNU sed and the current name matches.The sed script is four LF lines with the escaped-dot pattern on line 3. Next I’ll run the git mv steps.Moves are staged. I'll list files that still name the old paths, then rewrite them with GNU sed.I'll inspect a few rewrite candidates that could be frozen samples, then stage each path explicitly.Index checks look clean. I'll capture 7c through bash, then commit and run the unittest.Commit: `2d58c6c`
+
+**7a**
+```
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 1.188s
+
+OK
+```
+
+**7b** `git diff --cached --diff-filter=D --name-only`
+
+(empty)
+
+**7c** `git diff --cached -M --name-status | cut -c1-4 | sort | uniq -c`
+```
+      1 M.g
+      2 Mbe
+      1 Mdo
+      1 MHA
+      1 MRE
+      4 Msc
+     16 Mte
+      1 MTE
+      1 R094
+      2 R099
+      3 R100
+```
+(27 M + R094 sln + 2×R099 Program.cs + 3×R100 csproj/script)
+
+**7d** remaining old-name grep: empty (git grep exit 1)
+
+`git log --oneline -2`
+```
+2d58c6c Card 197 green 1 (D157 Criterion 1): the solution, the benchmark tools and the script say Avowry
+47ddda1 Card 197 baseline gate record: the QA seat's 56 second dotnet overlap named in the Load line
+```
+
+`git show --stat HEAD | tail -5`
+```
+ tools/{Phrase.Bench => Avowry.Bench}/Program.cs    |  2 +-
+ .../Avowry.BenchCs.csproj}                         |  0
+ .../{Phrase.BenchCs => Avowry.BenchCs}/Program.cs  |  4 +--
+ 33 files changed, 88 insertions(+), 88 deletions(-)
+```
+
+Ambiguous frozen-vs-live: `tests/test_rename_196.py`, `tests/test_phrase_executed_complete.py`, `tests/test_bench_launcher_scan_264.py`, `HANDOFF.md`, `TEAM_WORKING_AGREEMENT.md`, `docs/adr/ADR-library-binding-layering.md`. All were live current-path references in the rewrite grep (history prefixes already excluded). Rewrote all 30 list paths. Bench csproj files had no old-name bytes; git mv only.
+
+Unsure: nothing. Byte-exactness is the 7a OK.
+
+
+exit=0
