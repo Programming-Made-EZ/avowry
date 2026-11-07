@@ -1,0 +1,16 @@
+# gate run before the card 266 greens (facilitator, rerun, isolated)
+
+- Commit archived: 20175e4 (HEAD after QA's characterisation 3 and red 2), a clean git archive copy (no .git directory), Windows 11 Pro, dotnet 10.0.403. Start 19:22:08Z UTC.
+- Command: dotnet test Avowry.sln --filter "Status!=Pending"
+- Load: no push, no seat build and no dotnet command from another seat ran during this run (QA's turn 1 was held to python and git work and had finished; the Codex green was queued behind this run's done-file; the pushes ended before it started).
+
+    Passed!  - Failed:     0, Passed:   284, Skipped:     0, Total:   284, Duration: 1 s - Avowry.Compiler.Tests.dll (net8.0)
+    Failed!  - Failed:     4, Passed:   312, Skipped:     0, Total:   316, Duration: 9 m 13 s - Avowry.Acceptance.Tests.dll (net8.0)
+
+Failing names:
+    Failed Avowry.Acceptance.Tests.TasksDemoReadme.Demo_readme_lists_the_commands_and_cannot_drift_from_the_app [928 ms]
+    Failed Avowry.Acceptance.Tests.HoldoutTaskConversion.The_python_holdout_task_test_suite_passes [3 s]
+    Failed Avowry.Acceptance.Tests.PrivateHoldoutResults.git_ignored_suite_refuses_before_the_model_is_launched [9 s]
+    Failed Avowry.Acceptance.Tests.PrivateHoldoutResults.repository_check_passes_here_and_fails_on_a_tracked_holdout_path [5 s]
+
+Reading: the three known failures (HoldoutTaskConversion, PrivateHoldoutResults x2) equal card 197's isolated baseline (313 passed, 3 failed, four isolated runs on the same dotnet-relevant tree). The fourth failure, TasksDemoReadme.Demo_readme_lists_the_commands_and_cannot_drift_from_the_app, is the dotnet test that runs tests/test_demo_readme.py; its output quotes the two new red tests of this card failing: test_compile_output_is_tmp_avowry_tasks ('/tmp/avowry-tasks' != '/tmp/phrase-tasks') and test_every_tmp_folder_in_the_readme_is_avowry_tasks. So red 2 is watched failing at the gate level too. Expected after green 2: Compiler 284 passed, Acceptance 313 passed and the same three known failures (the baseline for equality is 313 and 3, not 312 and 4). The card 304 timing guard passed in this run.
