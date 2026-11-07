@@ -1,0 +1,205 @@
+### M01-PH010
+module Test
+
+avow to "ping {n: Int}"
+  native csharp
+    return;
+
+avow to "ping {m: Int}"
+  native csharp
+    return;
+
+### M02-PH321
+module Test
+
+avow to "count things" -> Int
+  native csharp
+    return 0;
+
+endpoint Probe : POST /probe
+  input
+    n: Int
+  steps
+    count things
+
+### M03-PH320
+module Test
+
+avow to "do nothing"
+  native csharp
+    return;
+
+endpoint Probe : POST /probe
+  input
+    n: Int
+  steps
+    let x = do nothing
+
+### M04-PH327
+module Test
+
+avow to "ping {n: Int}"
+  steps
+    pong n
+
+avow to "pong {n: Int}"
+  steps
+    ping n
+
+### M05-PH331-input
+module Test
+
+avow to "check {n: Int}"
+  native csharp
+    return;
+  spec "binds input"
+    given input { n: 1 }
+    when called
+    then succeeds
+
+### M06-PH331-hole
+module Test
+
+avow to "check {n: Int}"
+  native csharp
+    return;
+  spec "wrong hole"
+    given q = 1
+    when called
+    then succeeds
+
+### M07-PH334
+module Test
+
+avow to "check {n: Int}"
+  fails with Overflow
+  native csharp
+    return;
+  spec "impossible"
+    given n = 1
+    when called
+    then fails with Underflow
+
+### M08-PH203
+module Test
+
+avow to "do nothing"
+
+### M09-PH325
+module Test
+
+avow to "count {n: Int}" -> Int
+  steps
+    ensure n is positive
+
+avow to "ensure {n: Int} is positive"
+  fails with NotPositive
+  native csharp
+    return;
+
+### M10-PH328
+module Test
+
+avow to "save {n: Int}"
+  effects Db
+  native csharp
+    return;
+
+avow to "store {n: Int}"
+  steps
+    save n
+
+### M11-PH330
+module Test
+
+avow to "add {a: Int} and {b: Int}" -> Int
+  native csharp
+    return a + b;
+  spec "wrong trigger"
+    given a = 1
+    and b = 2
+    when handled
+    then returns 3
+
+### M12-PH333
+module Test
+
+avow to "add {a: Int} and {b: Int}" -> Int
+  native csharp
+    return a + b;
+  spec "succeeds with value"
+    given a = 1
+    and b = 2
+    when called
+    then succeeds
+
+### M13-PH001
+module Test
+
+avow to "do nothing"
+  native csharp
+    return;
+
+endpoint Probe : POST /probe
+  input
+    n: Int
+  steps
+    frobnicate widgets
+
+### M14a-PH208-native-then-steps
+module Test
+
+avow to "leaf"
+  native csharp
+    return;
+
+avow to "mixed"
+  native csharp
+    return;
+  steps
+    leaf
+
+### M14b-PH208-steps-then-native
+module Test
+
+avow to "leaf"
+  native csharp
+    return;
+
+avow to "mixed"
+  steps
+    leaf
+  native csharp
+    return;
+
+### M15-PH200-template
+module Test
+
+avow to 42
+
+### M16-PH200-clause
+module Test
+
+avow to "double {n: Int}" -> Int
+  returns twice n
+  native csharp
+    return n * 2;
+
+### M17-PH200-call
+module Test
+
+avow to "ping"
+  steps
+    let x =
+
+### M18-PH200-trigger
+module Test
+
+avow to "check {n: Int}"
+  native csharp
+    return;
+  spec "bad trigger"
+    given n = 1
+    when frobnicated
+    then succeeds
+

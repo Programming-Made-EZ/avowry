@@ -1,0 +1,2 @@
+i/lf    w/lf    attr/                 src/Avowry.Compiler/Semantics/Resolver.cs
+i/lf    w/lf    attr/                 src/Avowry.Compiler/Syntax/Parser.cs

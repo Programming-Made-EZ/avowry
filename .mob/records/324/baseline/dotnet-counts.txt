@@ -1,0 +1,3 @@
+Compiler --list-tests: 305
+Acceptance --list-tests: 320
+Acceptance --list-tests --filter Status!=Pending: 319

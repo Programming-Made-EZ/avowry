@@ -1,0 +1,40 @@
+### M01-PH010
+PH010|7|1|Phrase 'ping {m: Int}' has the same wording as 'ping {n: Int}'.
+### M02-PH321
+PH321|11|5|Phrase 'count things' returns Int; use 'let' to keep it.
+### M03-PH320
+PH320|11|5|Phrase 'do nothing' returns no value and cannot be used with 'let'.
+### M04-PH327
+PH327|3|1|Phrase 'ping {n: Int}' participates in a call cycle.
+### M05-PH331-input
+PH331|7|5|Phrase specs cannot bind input; use a hole binding.
+PH331|6|3|Spec for 'check {n: Int}' is missing the hole 'n'.
+### M06-PH331-hole
+PH331|7|5|Phrase spec for 'check {n: Int}' does not bind hole 'q'. Valid holes: n.
+### M07-PH334
+PH334|10|5|Phrase 'check {n: Int}' cannot fail with 'Underflow'. Valid options: Overflow.
+### M08-PH203
+PH203|3|1|Phrase has no implementation; add `native <target>` or `steps`.
+### M09-PH325
+PH325|3|1|Composite phrase 'count {n: Int}' cannot return a value.
+### M10-PH328
+PH328|8|1|Composite phrase 'store {n: Int}' must declare effect 'Db'.
+### M11-PH330
+PH330|6|3|Spec 'wrong trigger' on phrase 'add {a: Int} and {b: Int}' must use 'when called'.
+### M12-PH333
+PH333|10|5|Spec 'succeeds with value' expects success for a phrase that returns a value.
+### M13-PH001
+PH001|11|5|No phrase matches this step. Closest: "do nothing".
+### M14a-PH208-native-then-steps
+PH208|10|3|A phrase is implemented by native blocks or by steps, not both.
+### M14b-PH208-steps-then-native
+PH208|10|3|A phrase is implemented by native blocks or by steps, not both.
+### M15-PH200-template
+PH200|3|9|Expected a quoted phrase template, found '42'.
+### M16-PH200-clause
+PH200|4|3|Expected a phrase clause (effects, fails with, spec, native or steps), found 'returns'.
+### M17-PH200-call
+PH200|5|12|Expected a phrase call, found end of line.
+### M18-PH200-trigger
+PH200|8|10|Expected `called` (phrase spec) or `handled` (endpoint spec), found 'frobnicated'.
+PH330|6|3|Spec 'bad trigger' on phrase 'check {n: Int}' must use 'when called'.

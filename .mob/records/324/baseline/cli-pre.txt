@@ -1,0 +1,15 @@
+### M13-PH001
+exit 1
+stderr:
+avowry: Compilation failed:
+PH001 (11:5) No phrase matches this step. Closest: "do nothing".
+
+### M08-PH203
+exit 1
+stderr:
+avowry: Compilation failed:
+PH203 (3:1) Phrase has no implementation; add `native <target>` or `steps`.
+
+### clean
+exit 0
+stderr:
