@@ -1,0 +1,335 @@
+{
+ "decider": "D194",
+ "subject": "card 313 task-force declaration with the facilitator-trace conditions (revisions 2 to 5)",
+ "result": "FAILED: an outlier remained unresolved after the amendments (the independent re-run of round D: architect No)",
+ "rounds": [
+  {
+   "round": "round A (revision 2)",
+   "tag": "d313a",
+   "votes": {
+    "architect": {
+     "seat": "codex",
+     "vote": "Support-it",
+     "cite": "<at least 6 consecutive words copied exactly from the proposal below>\" (D171). Proposal:",
+     "cite_verbatim": false,
+     "reply_head": "Support-it\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1b391-6575-7952-abe3-871eaf083f1f\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the ARCHITECT (fresh context). Your lens: is the design of the record, the checker rules an"
+    },
+    "qa": {
+     "seat": "agy",
+     "vote": "Support-it",
+     "cite": "Given the holders directory is removed once, just before B opens its temporary file",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nCycle 1 scenarios [O], [B] and [E] fail deterministically on current code via wrapper injection around `os.open` without sleeps or threads. For cycles 2 and 3, where existing or cycle-1 code may start green, G2 provides committed mutation pairs (M2a/M2b, M3a/M3b) that each break a stated invariant and fail the matching test. G3 enumerates every step and gap of `hold_vote_lock` and forces HOLD on `record-only` or `blocked` lines, preventing bad state from passing unchecked. Two minor QA watch-items: in cycle 2, patching `decider_lock_path` hits the post-sweep gap rather than immediately after `mkdir`; and A2's `scripts/extract_commands.py` should be checked against a transcript sl"
+    },
+    "dev": {
+     "seat": "claude",
+     "vote": "Yes",
+     "cite": "the lighter path of D153 has expired by count",
+     "cite_verbatim": true,
+     "reply_head": "Yes\n\nAs the backend developer, I can comply with these rules without gaming them. The retry bound of 5 is a module constant, fails open with a stderr warning, and is deterministic to test by patching `os.open`. The mutation pairs for the cycles that may have no red keep the green turn honest. The delete rule and the `--json` stream give the Codex seat a reviewable trace. The Claude fallback is clear, and the A1 to A3 trace states its own limit. My one reservation is that the replace-gap reading rests on the architect's confirmation.\n\nCITE: the lighter path of D153 has expired by count\n"
+    },
+    "auditlens": {
+     "seat": "codex",
+     "vote": "No",
+     "cite": "a final git diff cannot detect transient writes",
+     "cite_verbatim": true,
+     "reply_head": "No\nCommit the timestamp-bounded source transcript and a reproducible extraction verification; A2’s derived list alone cannot prove from git that no command was omitted or misparsed, which leaves the transient-write loophole open. CITE: a final git diff cannot detect transient writes\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1b398-cfa4-7810-ba89-3ae8275587ef\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown a"
+    },
+    "decider": {
+     "seat": "agy",
+     "vote": "Yes",
+     "cite": "the product owner can trust that no commit lands during any vote",
+     "cite_verbatim": true,
+     "reply_head": "Yes\n\nEvery required seat (ready, slice, red, green with fresh-Claude fallback, non-author Copilot reviewer, and fresh-Claude sign-off) is staffed with clear independence guards, and omitted roles are justified. Sign-off and the D193 trial verdict rest on concrete, git-verifiable evidence: three ZOMBIES-tagged Gherkin cycles with deterministic wrapper probes, narrow suite tables (G1), committed mutation pairs for born-green cycles (G2), an enumerated step-and-gap failure table with HOLD on unrun checks (G3), and the A1–A3 manifest and transcript-command trace proving checkout isolation during the green turn.\n\nCITE: the product owner can trust that no commit lands during any vote\n"
+    },
+    "coach": {
+     "seat": "claude",
+     "vote": "Support-it",
+     "cite": "the lighter path of D153 has expired by count",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nThe roster fits a one-function concurrency fix. It has a distinct product manager, architect, QA, developer, reviewer and sign-off, and it leaves out UX, security and DevOps with reasons given. The single-attempt-bound design is proportionate.\n\nThe one padded part is A1 to A3: manifests, a reflog snapshot and a new transcript-extraction script, all to prove the facilitator wrote nothing during one green turn. A signed-off \"facilitator writes nothing\" rule plus the reflog comparison would carry most of that weight. The audit lens made it a condition, so I accept it. The trial's retro should report what it cost against what it caught.\n\nCITE: the lighter path of D153 has expired by "
+    }
+   }
+  },
+  {
+   "round": "round B (revision 3)",
+   "tag": "d313b",
+   "votes": {
+    "architect": {
+     "seat": "copilot",
+     "vote": "Support-it",
+     "cite": "the retry bound of 5 and the stderr warning on exhaustion",
+     "cite_verbatim": false,
+     "reply_head": "Support-it\nThe design is narrow, testable, and stays within the existing contract: retrying only the missing-directory gap, preserving read-only decider_lock_live, and documenting the exhaustion warning. The scenarios and mutation pairs are sharply scoped to the defect and its adjacent edges, with explicit no-red expectations and no production seam. The audit amendment is reasonable and auditable without broadening the change or creating false positives.\nCITE: the retry bound of 5 and the stderr warning on exhaustion\n\n"
+    },
+    "qa": {
+     "seat": "codex",
+     "vote": "Support-it",
+     "cite": "each fails on today's code except [Z].",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nThe scenarios are deterministic, bounded, and assert both observable lock state and blocked writes. Cycle 1 provides genuine red-first coverage; cycles 2 and 3 have targeted mutation pairs that must fail the named tests, preventing padded green checks. Existing LiveVote suites protect regressions, while stderr exhaustion and harmless repeated release are directly testable. The transcript extractor also has an explicit red-then-green fixture and reproducible verification.\n\nCITE: each fails on today's code except [Z].\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only"
+    },
+    "dev": {
+     "seat": "agy",
+     "vote": "Yes",
+     "cite": "Run the whole registration (mkdir, sweep, open, write, replace) in a loop of at most 5 attempts",
+     "cite_verbatim": true,
+     "reply_head": "Yes\n\nThe rules and scope are workable, unambiguous, and fair to the backend developer seat without gaming:\n- The `hold_vote_lock` fix is exact: a 5-attempt loop over `mkdir`, sweep, `.tmp` open, write, and `os.replace`, retrying only `FileNotFoundError`, warning once on stderr at exhaustion, and returning the no-op release with `facilitator.py` untouched.\n- Wrapping `os.open`, `os.replace`, and `decider_lock_path` in `VoteLockRegistration(RunnerCase)` requires no production seam and keeps narrow test runs fast.\n- D193 G2 mutation pairs (M2a/M2b, M3a/M3b) handle already-green cycles honestly, and the A1-A3 `extract`/`verify` audit checks do not impede green work.\n\nCITE: Run the whole registra"
+    },
+    "auditlens": {
+     "seat": "claude",
+     "vote": "Support-it",
+     "cite": "re-derives the commands list from the committed toolcalls file alone",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nThe amendment closes most of the loophole I named. The tool-call records, their hash and the record count are committed. `verify` re-derives the commands list from git alone. The A1 reflog and manifests also catch reverted writes. The extraction has a red-then-green test. The proposal is honest that one gap remains: the facilitator copies the records from a transcript that git never sees, so a deliberate omission can't be caught. It's a small, stated limit, and I'd accept it for a safety guard that isn't a trust boundary. I'd like the reviewer's report to quote the transcript line count and hash it checked.\n\nCITE: re-derives the commands list from the committed toolcalls file alo"
+    },
+    "decider": {
+     "seat": "copilot",
+     "vote": "Support-it",
+     "cite": "a decision run that starts as another ends is never left without a vote lock",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\nThe proposal is evidence-first and seat-complete: it cites reruns of git grep, HEAD SHA, line numbers, the D153 expiry by count, and D193 trial gates; the only re-ask is the audit lens’s trace condition, which is adopted and narrowed to transcript-copy verification. All required roles are present (product owner, architect, QA, backend developer, reviewer, sign-off), plus the observer/retro roles, with fresh context and the decider rule applied. The request is framed as a full Decider under the standing rule, not a routine window, so the decision rests on evidence rather than assertion.\nCITE: a decision run that starts as another ends is never left without a vote lock\n\n"
+    },
+    "coach": {
+     "seat": "codex",
+     "vote": "Support-it",
+     "cite": "<at least 6 consecutive words copied exactly from the proposal below>\" (D171). Proposal:",
+     "cite_verbatim": false,
+     "reply_head": "Support-it\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1b3a7-54c4-7ea1-9a2e-869b7a4ca3d7\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the AGILE COACH (fresh context). Your lens: is this task force sized to the task, neither m"
+    }
+   }
+  },
+  {
+   "round": "round B cite re-ask (architect, coach)",
+   "tag": "d313c",
+   "votes": {
+    "architect": {
+     "seat": "agy",
+     "vote": "Support-it",
+     "cite": "a decision run that starts as another ends is never left without a vote lock",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nThe design of the record, checker rules, and findings artifacts is sound, minimal, and enforceable without false positives. Bounding registration to 5 attempts on FileNotFoundError and rerunning mkdir closes the sweep-to-open rmdir race without adding a production seam, while the open .tmp file already prevents rmdir before replace. The D193 trial items (G1 suite table, G2 behavior-linked mutation patches, G3 step-and-gap table) and amended A2/A3 audit verification (green-facilitator-toolcalls.jsonl with extract and verify modes tested red-first) are deterministic and git-verifiable.\n\nCITE: a decision run that starts as another ends is never left without a vote lock\n"
+    },
+    "coach": {
+     "seat": "claude",
+     "vote": "Support-it",
+     "cite": "a decision run that starts as another ends is never left without a vote lock",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nThe seats fit a small concurrency bug: product manager, architect, QA, developer, reviewer and sign-off. The audit lens adds a view the others lack, and the left-out list shows the roles were weighed. The ceremony around the green turn is heavy for a roughly 30-line retry fix. It now needs a before/after manifest, a reflog, a test-driven extraction script, a committed tool-call transcript and a `verify` mode. That is proportionate only if card 313 really is the D193 trial. I accept it because the audit lens made it a condition and it is reversible. The retro should measure its cost and drop it from later cards if the trial shows no benefit.\n\nCITE: a decision run that starts as an"
+    }
+   }
+  },
+  {
+   "round": "independent re-run of round B",
+   "tag": "d313r",
+   "votes": {
+    "architect": {
+     "seat": "copilot",
+     "vote": "Support-it",
+     "cite": "a decision run that starts as another ends is never left without a vote lock",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\nThe proposal is tight, testable, and scoped to the overlap defect: a bounded retry, explicit stderr on exhaustion, and no new production seam. It preserves read-only lock inspection, names the actual failure window, and includes mutation pairs that distinguish real regressions from acceptable no-red cases. The audit conditions are concrete and reversible, with a trace that proves facilitator writes were not made during the green turn. This is minimal and low-risk without broadening to unrelated issues.\nCITE: a decision run that starts as another ends is never left without a vote lock\n\n"
+    },
+    "qa": {
+     "seat": "codex",
+     "vote": "No",
+     "cite": "a decision run that starts as another ends is never left without a vote lock",
+     "cite_verbatim": true,
+     "reply_head": "No\n\nRequire explicit red-first tests for both commit and push refusal with zero git writes, plus unambiguous non-self-referential storage and verification of the tool-call file’s hash and record count.\n\nCITE: a decision run that starts as another ends is never left without a vote lock\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1b3af-0609-7641-ae0d-a2a3bfbf5b70\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown"
+    },
+    "dev": {
+     "seat": "agy",
+     "vote": "Yes",
+     "cite": "On exhaustion, print one stderr warning and return the no-op.",
+     "cite_verbatim": true,
+     "reply_head": "Yes\n\nThe rules and slice guidance are clear, bounded, and workable for the green seat without gaming. Retrying registration up to 5 times on FileNotFoundError with mkdir rerun and one stderr warning on exhaustion is a small, unambiguous change in decider.py that needs no production seam. Deterministic wrapper tests in VoteLockRegistration and the QA-authored mutation pairs for cycles 2 and 3 keep red and green responsibilities cleanly separated. The literal-path deletion rule and the amended A1–A3 checkout manifests and transcript tool-call extraction/verification script (with its red-green fixture test) are mechanical, self-contained, and fair to the build work.\n\nCITE: On exhaustion, print "
+    },
+    "auditlens": {
+     "seat": "claude",
+     "vote": "Support-it",
+     "cite": "the transcript itself is not committed (it holds tool results and private text)",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nMy round A condition is met. The tool-call records, their hash and count, and a `verify` mode that re-derives the list are all committed, so a reader can check the derivation from git alone. Two gaps remain, and A3 only partly admits them:\n\n- **Interval bounds:** the facilitator picks the first and last timestamps, so a narrow interval could hide a call. Require the first timestamp to be at or before the green launch command and the last at or after the after-manifest commit, and have the reviewer check that.\n- **Copying step:** an omission between the transcript and the copied file cannot be proven from git. The transcript stays uncommitted, so this limit is accepted.\n\nCITE: the"
+    },
+    "decider": {
+     "seat": "copilot",
+     "vote": "Support-it",
+     "cite": "The facilitator's own commands during the green turn are listed",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\nThe proposal names every required seat, ties the decision to concrete evidence, and adds the audit trace needed to close the transient-write loophole. It preserves independent review and sign-off, defines the red/green gates and mutation checks, and includes a clear fallback path. The evidence chain is explicit: HEAD, line refs, failing scenarios, suite targets, reflogs, manifests, and verified tool-call extraction. This is an adoptable, testable decision frame.\nCITE: The facilitator's own commands during the green turn are listed\n\n"
+    },
+    "coach": {
+     "seat": "codex",
+     "vote": "Support-it",
+     "cite": "<at least 6 consecutive words copied exactly from the proposal below>\" (D171). Proposal:",
+     "cite_verbatim": false,
+     "reply_head": "Support-it\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1b3b6-cca5-7363-926f-6ff7ab72e2b8\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the AGILE COACH (fresh context). Your lens: is this task force sized to the task, neither m"
+    }
+   }
+  },
+  {
+   "round": "round C (revision 4)",
+   "tag": "d313e",
+   "votes": {
+    "architect": {
+     "seat": "agy",
+     "vote": "Support-it",
+     "cite": "The manifest hashes only the other two files, never itself.",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nThe design is sound, minimal, and enforceable without false positives. Retrying registration up to five times on FileNotFoundError with a single stderr warning on exhaustion closes the rmdir race without adding production seams, and the temporary file in the holders directory already prevents rmdir between open and replace. Wrapper-based tests in VoteLockRegistration deterministically cover each gap without sleeps or threads, while B1 ensures Cycle 1 tests both commit and push refusal red-first with zero git writes. The D193 items (G1 suite table, G2 behavior-linked mutation patches, G3 step-and-gap table) and B2's separate manifest file eliminate self-referential hashing and ver"
+    },
+    "qa": {
+     "seat": "claude",
+     "vote": "Support-it",
+     "cite": "a decision run that starts as another ends is never left without a vote lock",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nThe amended text answers my earlier condition. Cycle 1 [O] and [B] now name both commit and push refusal with zero git writes. Cycle 1 is red on today's code, because B holds nothing and both writes land. B2 puts the hash and record count in a separate manifest, so nothing covers itself. The `verify` mode recomputes them from the committed files. Cycles 2 and 3 may start green, but each has a named mutation pair that must fail a named test. The extraction script's fixture test is written first.\n\nTwo small gaps remain. The retry-exhaustion [E] scenario should assert the exact stderr text. The `verify` mode needs a red test for a tampered manifest.\n\nCITE: a decision run that starts"
+    },
+    "dev": {
+     "seat": "copilot",
+     "vote": "Support-it",
+     "cite": "The condition is reasonable and reversible, so it is adopted.",
+     "cite_verbatim": false,
+     "reply_head": "Support-it\nIt is precise enough to execute: explicit red-first tests, a bounded retry loop, a no-silent-fail stderr warning, and a concrete audit trail for the green turn. The role split and D187 re-ask rules keep the process reversible and evidence-based without letting paperwork become a veto. I can comply without gaming it; the constraints are concrete, limited to the vote-lock bug, and do not broaden scope into unrelated code. The recordkeeping burden is real, but it is tied to a genuine risk and is therefore fair.\nCITE: The condition is reasonable and reversible, so it is adopted.\n\n"
+    },
+    "auditlens": {
+     "seat": "codex",
+     "vote": "No",
+     "cite": "A omission or misparse between the transcript and the toolcalls file is the one thing git cannot prove",
+     "cite_verbatim": true,
+     "reply_head": "No\nCommit a privacy-scrubbed but structurally complete timestamp-bounded source transcript so git alone can verify that no tool call was omitted.\nCITE: A omission or misparse between the transcript and the toolcalls file is the one thing git cannot prove\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1b3be-b3ff-76f0-8b90-2d314802b865\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create"
+    },
+    "decider": {
+     "seat": "agy",
+     "vote": "Yes",
+     "cite": "The manifest hashes only the other two files, never itself.",
+     "cite_verbatim": true,
+     "reply_head": "Yes\n\nThe proposal frames both the card delivery and the D193 trial (card 1 of 3) so the outcome rests on verifiable evidence: three red-first Done checks (with B1 adding explicit commit and push refusal assertions with zero git writes in Cycle 1), the G1 narrow-suite table, G2 behavior-linked mutation patches for Cycles 2 and 3, G3 step-and-gap failure probes forcing HOLD on record-only lines, and clear metrics and counter-metrics. B2 closes the self-referential hash gap with a separate manifest verified mechanically. Every seat needed to deliver, audit, review, and independently sign off is declared with fresh contexts, non-author separation, and justified exclusions.\n\nCITE: The manifest ha"
+    },
+    "coach": {
+     "seat": "claude",
+     "vote": "Support-it",
+     "cite": "the lighter path of D153 has expired by count",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nThe task force is about the right size. Product manager, architect, QA, developer, an independent reviewer and a fresh sign-off cover every perspective this concurrency fix needs. Leaving out UX, security, DevOps and a technical writer is justified. I'm voting Support-it rather than Yes because the audit amendments (A1–A3, B2) are heavy for a retry loop of about ten lines. A git trace, a committed tool-call file, a manifest and a tested extraction script go well beyond the code change. They are reversible and tied to the D193 trial, so I don't object. The retro should record their cost. If they grow further, treat that as padding.\n\nCITE: the lighter path of D153 has expired by co"
+    }
+   }
+  },
+  {
+   "round": "round D (revision 5)",
+   "tag": "d313f",
+   "votes": {
+    "architect": {
+     "seat": "copilot",
+     "vote": "Support-it",
+     "cite": "a registration that gives up says so on stderr",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\nThe design is scoped to the race, adds explicit red-first tests, and limits the fix to the one missing retry path without broadening scope. The audit and trace requirements are strong but still enforceable, and the out-of-scope cards preserve minimality. It respects D153/D187 standing rules and the task-force declaration is coherent.\nCITE: a registration that gives up says so on stderr\n\n"
+    },
+    "qa": {
+     "seat": "codex",
+     "vote": "Support-it",
+     "cite": "<at least 6 consecutive words copied exactly from the proposal below>\" (D171). Proposal:",
+     "cite_verbatim": false,
+     "reply_head": "Support-it\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1b3c6-b811-7503-8c6a-434ffed25add\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the QA ENGINEER (fresh context). Your lens: can every rule be tested red first, and will th"
+    },
+    "dev": {
+     "seat": "agy",
+     "vote": "Yes",
+     "cite": "On exhaustion, print one stderr warning and return the no-op.",
+     "cite_verbatim": true,
+     "reply_head": "Yes\n\nThe scope, slice guidance, and verification rules are clear, workable, and fair to the backend developer seat. The production fix in `decider.py` is tightly bounded: a 5-attempt retry loop around registration on `FileNotFoundError` that reruns `mkdir`, emits one stderr warning on exhaustion, and adds no production seam while leaving `facilitator.py` read-only. Deterministic wrapper tests in `VoteLockRegistration(RunnerCase)` avoid sleeps, threads, and bare-origin setup overhead, and the G2 mutation pairs for cycles 2 and 3 are pre-specified for QA. Amendments A1–A3 and B1–B3 (`scripts/extract_commands.py` with `extract` and `verify` modes against the non-self-referential manifest and pr"
+    },
+    "auditlens": {
+     "seat": "claude",
+     "vote": "Support-it",
+     "cite": "a decision run that starts as another ends is never left without a vote lock",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nThe amended text closes the main git-verifiability gaps. The index is gap-free and hash-covered, the manifest is separate from the files it covers, and `verify` fails on a dropped, deleted or edited line. Two loopholes remain, and I'd want both fixed in the slice. First, the index can't show that the transcript's first and last timestamps are the real turn boundaries, so a shortened interval could hide a call. Second, A3's stated limit stays open: the transcript isn't committed, so the index and toolcalls file can't be checked against it from git alone. The facilitator's own extractor also writes the evidence, which is acceptable only because every check is reproducible.\n\nCITE: a"
+    },
+    "decider": {
+     "seat": "copilot",
+     "vote": "Support-it",
+     "cite": "The facilitator's own commands during the green turn are listed",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\nThe proposal is now evidence-framed: it ties the decision to rerun code facts, explicit line refs, red-first tests, mutation pairs, and a full six-seat Decider with fresh-seat reruns. The audit lens’s conditions are specific, reversible, and adopted, and the task-force roster covers the required roles: PM, architect, QA, backend, independent reviewer, and sign-off. The evidence path is strong enough to support adoption or reshape, but not to justify a blind yes without the stated trace and verification steps.\n\nCITE: The facilitator's own commands during the green turn are listed\n\n"
+    },
+    "coach": {
+     "seat": "codex",
+     "vote": "Support-it",
+     "cite": "<at least 6 consecutive words copied exactly from the proposal below>\" (D171). Proposal:",
+     "cite_verbatim": false,
+     "reply_head": "Support-it\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1b3cd-e317-7502-a651-36c267a8cfbf\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the AGILE COACH (fresh context). Your lens: is this task force sized to the task, neither m"
+    }
+   }
+  },
+  {
+   "round": "round D cite re-ask (QA, coach)",
+   "tag": "d313g",
+   "votes": {
+    "qa": {
+     "seat": "agy",
+     "vote": "Support-it",
+     "cite": "git alone shows a complete, gap-free sequence of lines and every tool call in it",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nEvery rule in revision 5 is testable red-first and checks for bad state before passing. Cycle 1 scenarios [O], [B] and [E] fail deterministically on current code via wrapper injection around `os.open` without threads or sleeps, and B1 requires explicit red-first assertions that both facilitator commit and push are refused with zero git writes. For cycles 2 and 3, G2's committed mutation patches (M2a, M2b, M3a, M3b) target specific invariants so no-red paths cannot pass trivially. For facilitator write isolation, B2 and B3 separate the manifest hashes from the covered files and require red-then-green fixture tests where a dropped `tool_use` record, a deleted index line, an edited "
+    },
+    "coach": {
+     "seat": "claude",
+     "vote": "Support-it",
+     "cite": "The facilitator writes nothing in the mob-crosscli checkout during the turn.",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nThe core bug fix is small: a bounded retry in `hold_vote_lock`. The roster covers it with no missing perspective. Product manager, architect, QA, a different-CLI developer, an independent reviewer and a fresh sign-off are all in, and the sensible exclusions (UX, security, DevOps) are stated. The coach is observer-only, which is right.\n\nThe audit trail is the padding: the transcript index, manifest, `extract_commands.py` and its tests are heavy for one retry loop. It is a declared D193 trial with a counter-metric, so I support it and will watch the trial retro for cost against value.\n\nCITE: The facilitator writes nothing in the mob-crosscli checkout during the turn.\n"
+    }
+   }
+  },
+  {
+   "round": "independent re-run of round D",
+   "tag": "d313h",
+   "votes": {
+    "architect": {
+     "seat": "copilot",
+     "vote": "No",
+     "cite": "the audit lens OBJECTION with one condition",
+     "cite_verbatim": true,
+     "reply_head": "No\nThis proposal is not minimal or reliably enforceable. The audit trail grew from a simple no-write check into duplicative manifests, transcript indexes, tool-call manifests, extraction/verify scripts, and hash-count choreography, which is brittle and creates false-positive risk. The bug is real, but the record/checker design is over-specified and harder to audit than the underlying fix.\nWhat would bring me to yes is a smaller, deterministic proof: pre/post repo manifests plus one verified tool-call extraction test for the green turn, without redundant hash chains.\nCITE: the audit lens OBJECTION with one condition\n\n"
+    },
+    "qa": {
+     "seat": "codex",
+     "vote": "Support-it",
+     "cite": "<at least 6 consecutive words copied exactly from the proposal below>\" (D171). Proposal:",
+     "cite_verbatim": false,
+     "reply_head": "Support-it\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1b3d5-de35-7581-adaf-1a18c75e9797\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the QA ENGINEER (fresh context). Your lens: can every rule be tested red first, and will th"
+    },
+    "dev": {
+     "seat": "agy",
+     "vote": "Yes",
+     "cite": "in a loop of at most 5 attempts",
+     "cite_verbatim": true,
+     "reply_head": "Yes\n\nThe rules and slice guidance are clear, workable, and fair to implement without gaming. The production change in `hold_vote_lock` is tightly scoped: a 5-attempt retry loop on `FileNotFoundError` that reruns `mkdir`, emits one stderr warning on exhaustion, returns a harmless no-op release, and leaves `facilitator.py` read-only. Deterministic wrapper tests in `VoteLockRegistration` avoid threads, sleeps, and `LiveVoteOverlap` setup overhead, while the G2 mutation pairs (`M2a`/`M2b`, `M3a`/`M3b`) handle no-red cycles cleanly. While B2/B3's transcript-index verification adds nontrivial tooling work, its red-green extraction specification is completely unambiguous.\n\nCITE: in a loop of at mos"
+    },
+    "auditlens": {
+     "seat": "claude",
+     "vote": "Support-it",
+     "cite": "one line for every transcript line in the interval",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nB3 closes the omission gap I raised. Git alone now shows a gap-free, typed line sequence, and `verify` cross-checks it against the toolcalls file and the commands list. Two small residuals, neither blocking:\n- The index types are self-reported by the extractor. Only a reader who still holds the transcript can catch a mistyped line.\n- Nothing ties the turn's first and last timestamps to the green seat's own `--json` event stream or the A1 before/after commits. Add that check to `verify` or to the reviewer's checklist.\n\nCITE: one line for every transcript line in the interval\n"
+    },
+    "decider": {
+     "seat": "codex",
+     "vote": "Yes",
+     "cite": "<at least 6 consecutive words copied exactly from the proposal below>\" (D171). Proposal:",
+     "cite_verbatim": false,
+     "reply_head": "Yes\n\nReading additional input from stdin...\nOpenAI Codex v0.149.1\n--------\nworkdir: C:\\Users\\<user>\nmodel: gpt-5.6-sol\nprovider: openai\napproval: never\nsandbox: read-only\nreasoning effort: low\nreasoning summaries: none\nsession id: 01a1b3dc-de6f-7930-bade-60817e1f4356\n--------\nuser\nDECIDER vote. You are a voting seat on the task force. You are in a scratch copy of the repository (committed files only) that is thrown away afterwards: do NOT create, edit or delete any file and run nothing that changes anything. You may read files and run git log, git show and git diff.\n\nPROPOSAL:\nYou are seated as the DECIDER / SIGN-OFF seat (fresh context, not the proposer). Your lens: is the evaluation framed"
+    },
+    "coach": {
+     "seat": "agy",
+     "vote": "Support-it",
+     "cite": "git alone shows a complete, gap-free sequence of lines and every tool call in it",
+     "cite_verbatim": true,
+     "reply_head": "Support-it\n\nThe core six-role roster (PM, architect, QA, developer, independent reviewer, sign-off) matches card 298 and is right-sized for this lock-registration retry fix and the D193 trial items, with unneeded roles explicitly left out. The transcript-index, manifest, and extraction-verification steps (A1–A3, B1–B3) add heavy ceremony relative to a small bug fix, but they resolve the audit and QA conditions without adding seats; we should track their overhead at the retro.\n\nCITE: git alone shows a complete, gap-free sequence of lines and every tool call in it\n"
+    }
+   }
+  }
+ ]
+}
