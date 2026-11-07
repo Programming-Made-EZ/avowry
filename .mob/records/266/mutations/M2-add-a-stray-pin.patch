@@ -1,0 +1,12 @@
+diff --git a/tests/test_live_docs_266.py b/tests/test_live_docs_266.py
+index 8cd6577..c281a4c 100644
+--- a/tests/test_live_docs_266.py
++++ b/tests/test_live_docs_266.py
+@@ -259,2 +259,7 @@ EXCEPTIONS = [
+     ),
++    (
++        "README.md",
++        "A stray pinned line that exists nowhere.",
++        "Phrase Board",
++    ),
+ ]

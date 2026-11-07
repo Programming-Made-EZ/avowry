@@ -4,14 +4,17 @@ One class per cycle, so later cycles add a class and never edit an earlier one:
   UntouchedBytes266  Criterion 3 (characterisation, passes on the pre-change tree): every tracked file outside the
                      nine scoped files is byte-identical to the base commit
   ScopedLinks        Criterion 2 (characterisation part): relative links in the nine scoped files resolve
+  GuardScan266       Criterion 1 (new-state): the nine scoped files hold the old name only on nine pinned lines
 
 Run: python -m unittest tests.test_live_docs_266
 It needs history (a clone, not a `git archive` copy). No test deletes anything.
 """
 
+import difflib
 import posixpath
 import re
 import subprocess
+import tempfile
 import unittest
 import urllib.parse
 from pathlib import Path
@@ -191,6 +194,402 @@ class ScopedLinks(unittest.TestCase):
         # Then the scan is not vacuous and every link points at a tracked file or directory
         self.assertGreaterEqual(count, 15, "fewer than 15 relative links found: the scan is vacuous")
         self.assertEqual([], bad, f"unresolved links ({len(bad)} of {count}): {bad}")
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Criterion 1 (new-state): the nine scoped files carry no old name outside nine pinned exceptions.
+#
+# The scan: split each file's bytes on LF, strip one trailing CR, apply PHRASE (case-sensitive). A `Phrase` that ends a
+# line is a `\bPhrase\b` hit, with LF or CRLF endings (T13). The exceptions are pinned by file plus the exact full line
+# content (never by line number), each with the one allowed token that explains it; after the token is masked the line
+# must hold no hit, so a real old name cannot hide on an exception line.
+# ---------------------------------------------------------------------------------------------------------------------
+
+PHRASE = re.compile(r"\bPhrase\b|Phrase[A-Za-z]|phrase[-_][A-Za-z]")
+
+# Exactly nine (file, exact full line, allowed token). Eight lines are copied from `git show BASE:FILE` (HANDOFF 3, 83,
+# 99, 115; TEAM_WORKING_AGREEMENT 57, 528; demo/tasks/README.md 124; bench/README.md 19). bench/README.md line 19 is
+# pinned as the green produces it: the base line with every `Phrase` word replaced by `Avowry` and the token
+# `no_phrase_found` kept (367 bytes, sha256[:16] 8cbb6589e1dc65f8). The ninth is the README note.
+EXCEPTIONS = [
+    (
+        'HANDOFF.md',
+        'This file replaces the earlier resolver handoff (the resolver is long done; earlier versions are in `git log -- HANDOFF.md`). The facilitator session that wrote it was retired by the product owner after card 195, at about 3,800 turns, the size at which earlier facilitators started dropping practices. A fresh facilitator takes over from this file. Read all of it before doing anything. The repository is Avowry (a language for LLM-maintained codebases where the name of every unit of behaviour is a plain-language description of it; the unit is an avow), at https://github.com/Programming-Made-EZ/avowry (public). The local folder is still `C:\\Users\\ringe\\projects\\phrase-lang`. Nothing has been published as a package.',
+        'phrase-lang',
+    ),
+    (
+        'HANDOFF.md',
+        '- The GitHub Project "Phrase Board" (project 1, org Programming-Made-EZ, private) is the source of truth; `board/NNN-*.md` and the rank table are generated archives (`PYTHONPATH=. python scripts/board/generate_archive.py --apply`). Scripts: `scripts/board/{edit_card,new_card,rerank,generate_archive}.py`. **Issue numbers differ from card numbers for three cards**: issue 186 is card 187, issue 187 is card 188, issue 188 is card 186 (the checker reads the card number from the issue title prefix, never the issue number). Closing a card: `PYTHONPATH=. python scripts/board/edit_card.py NNN --status Done --status-line "..." --apply` after the retro and the trail record are on main and `ci` is green.',
+        'Phrase Board',
+    ),
+    (
+        'HANDOFF.md',
+        "- Open product items: card 204 (personas still say Phrase in eleven places, lack the on-call engineer and the domain expert, and Dana's definition disagrees with bar 2 of the release bar); earlier benchmark rows are not comparable with rows after the keyword change (D127; card 201 records the new baseline).",
+        'personas still say Phrase',
+    ),
+    (
+        'HANDOFF.md',
+        '- Helper scripts of the old session live outside the repository in the Claude scratchpad (`C:\\Users\\ringe\\AppData\\Local\\Temp\\claude\\C--Users-ringe-projects-phrase-lang\\39123b30-167f-4efb-b4f5-bf56d1d02640\\scratchpad`): `launch_author.py` (a throwaway-clone author launcher, now replaced by card mode), `record_dNNN.py` (decision recorders), `goalNNN.txt`. They are not needed; copy a pattern, not the files.',
+        'phrase-lang',
+    ),
+    (
+        'TEAM_WORKING_AGREEMENT.md',
+        "- **The Phrase Board on GitHub Projects (project 1 under Programming-Made-EZ, private) is the single source of truth.** `board/` is a generated read-only archive (`scripts/board/generate_archive.py`). The loop and the retro re-rank hook write Rank and Status to the project only, after a passed Decider, skipping any card whose Rank is newer than the Decider's snapshot. Card text is edited on the issue. Work is pulled from the top of the ranked Ready list.",
+        'Phrase Board',
+    ),
+    (
+        'TEAM_WORKING_AGREEMENT.md',
+        '- **Board:** the Phrase Board on GitHub Projects (project 1 under Programming-Made-EZ, private) is the single source of truth. `board/` is a generated read-only archive (`scripts/board/generate_archive.py`), one `NNN-slug.md` per card. Card text is edited on the issue. The loop and the retro re-rank hook write Rank and Status to the project only, after a passed Decider, skipping any card whose Rank is newer than the Decider\'s snapshot. Cards carry a Connextra story, ZOMBIES acceptance criteria and a "Done when" command list the facilitator runs.',
+        'Phrase Board',
+    ),
+    (
+        'demo/tasks/README.md',
+        '- Card 159, [a validation step](../../board/159-a-validation-step-in-phrase-ensure-a-condition-or-fail-with-a-declared-name.md): ensure a condition or fail with a declared name',
+        'in-phrase-ensure',
+    ),
+    (
+        'bench/README.md',
+        'A normal run invokes one model profile headlessly, extracts Avowry source from a plain reply or a fenced block, and compiles that source. Compiler diagnostics are returned for bounded retries. A reply containing no Avowry is recorded with `no_phrase_found`; an authentication, quota, launch, or timeout failure is recorded as `unavailable`, not as a language failure.',
+        'no_phrase_found',
+    ),
+    (
+        'README.md',
+        'Avowry was named Phrase until 2026-10-29; older records keep the old name.',
+        'named Phrase until 2026-10-29',
+    ),
+]
+
+README_NOTE = "Avowry was named Phrase until 2026-10-29; older records keep the old name."
+
+# The seven files the facilitator's sed script (r266.sed) edits, byte for byte, with no hand edit.
+SED_FILES = tuple(path for path in SCOPED if path not in ("README.md", "VISION.md"))
+
+# r266.sed protects these five tokens, replaces three things, then restores the tokens (same order as the script).
+SED_TOKENS = (
+    "Phrase Board",
+    "phrase-lang",
+    "in-phrase-ensure",
+    "no_phrase_found",
+    "personas still say Phrase",
+)
+
+OLD_README_SENTENCE = " The file extension is renamed in a later card."
+README_LAYOUT_ROWS = (
+    "src/Avowry.Compiler                Lexer, Parser, formatter, Semantics model, Resolver",
+    "src/Avowry.Adapters.CSharp         CSharpProvider, the C# target adapter",
+    "src/Avowry.Cli                     the avowry command (build, trace)",
+)
+
+
+def scan_text(text):
+    """[(line number, line)] for every line that holds the old name; LF split, one trailing CR stripped."""
+    hits = []
+    for number, line in enumerate(text.split("\n"), 1):
+        if line.endswith("\r"):
+            line = line[:-1]
+        if PHRASE.search(line):
+            hits.append((number, line))
+    return hits
+
+
+def scan_tree(root):
+    """[(file, line number, line)] over the nine scoped files below `root`."""
+    hits = []
+    for path in SCOPED:
+        text = (Path(root) / path).read_bytes().decode("utf-8")
+        hits.extend((path, number, line) for number, line in scan_text(text))
+    return hits
+
+
+def scan_problems(root):
+    """(hits, problems): a problem is a hit that is not pinned (unexpected) or a pin that matches no hit (stale)."""
+    hits = scan_tree(root)
+    pinned = {(path, line) for path, line, _token in EXCEPTIONS}
+    seen = {(path, line) for path, _number, line in hits}
+    problems = [
+        f"{path}:{number}: unexpected {line[:70]!r}" for path, number, line in hits if (path, line) not in pinned
+    ]
+    problems += [f"{path}: stale pin {line[:50]!r}" for path, line, _token in EXCEPTIONS if (path, line) not in seen]
+    return hits, problems
+
+
+def working_bytes(path):
+    return (REPO / path).read_bytes()
+
+
+def newest_green_commit():
+    """The newest commit whose subject starts `Card 266 green`, or None (then the working tree is compared)."""
+    for line in git("log", "--format=%H%x09%s").decode("utf-8").splitlines():
+        commit, _, subject = line.partition("\t")
+        if subject.startswith("Card 266 green"):
+            return commit
+    return None
+
+
+def committed_bytes(path):
+    commit = newest_green_commit()
+    return working_bytes(path) if commit is None else git("show", f"{commit}:{path}")
+
+
+def base_bytes(path):
+    return git("cat-file", "blob", f"{BASE}:{path}")
+
+
+def apply_rules(data):
+    """The bytes r266.sed produces: protect five tokens, phrase-tasks, `is now a Phrase update`, Phrase word, restore."""
+    out = []
+    for line in data.split(b"\n"):
+        for index, token in enumerate(SED_TOKENS):
+            line = line.replace(token.encode(), b"@@KEEP%d@@" % index)
+        line = line.replace(b"phrase-tasks", b"avowry-tasks")
+        line = line.replace(b"is now a Phrase update", b"is now an Avowry update", 1)
+        line = re.sub(rb"\bPhrase\b", b"Avowry", line)
+        for index, token in enumerate(SED_TOKENS):
+            line = line.replace(b"@@KEEP%d@@" % index, token.encode())
+        out.append(line)
+    return b"\n".join(out)
+
+
+def expected_readme(base):
+    """BASE README with the hand edits: line 5 loses its last sentence, the note follows it, the layout rows change."""
+    lines = base.decode("utf-8").split("\n")
+    assert lines[16].startswith("src/Avowry.Compiler ") and lines[17].startswith("src/Phrase.Providers.CSharp "), (
+        "BASE README layout rows 17 and 18 are not where the slice says"
+    )
+    lines[16:18] = list(README_LAYOUT_ROWS)
+    assert lines[4].endswith(OLD_README_SENTENCE), "BASE README line 5 does not end with the old sentence"
+    lines[4] = lines[4][: -len(OLD_README_SENTENCE)]
+    lines.insert(5, README_NOTE)
+    return "\n".join(lines)
+
+
+def expected_vision(base):
+    """BASE VISION with line 76 quoting GRAMMAR rule 3 as `open avow` instead of `open phrase`."""
+    lines = base.split(b"\n")
+    assert b"open phrase" in lines[75], "BASE VISION line 76 does not hold `open phrase`"
+    lines[75] = lines[75].replace(b"open phrase", b"open avow", 1)
+    return b"\n".join(lines)
+
+
+def first_difference(left, right):
+    left_lines, right_lines = left.split(b"\n"), right.split(b"\n")
+    for number in range(max(len(left_lines), len(right_lines))):
+        a = left_lines[number] if number < len(left_lines) else None
+        b = right_lines[number] if number < len(right_lines) else None
+        if a != b:
+            return number + 1
+    return 0
+
+
+def collapsed(text):
+    return " ".join(text.split()).casefold()
+
+
+class GuardScan266(unittest.TestCase):
+    def lines_of(self, path):
+        return [line[:-1] if line.endswith("\r") else line for line in working_bytes(path).decode("utf-8").split("\n")]
+
+    def test_t01_every_hit_line_is_a_pinned_exception_and_there_are_exactly_nine(self):
+        # Given the scan of the nine scoped files and the nine pinned exceptions
+        # When every line holding the old name is collected
+        hits, problems = scan_problems(REPO)
+        unexpected = [p for p in problems if "unexpected" in p]
+        stale = [p for p in problems if "stale pin" in p]
+
+        # Then there are nine pinned exceptions, nine hit lines, none unexpected and no pin is stale
+        self.assertEqual(9, len(EXCEPTIONS), "the exception list must hold exactly 9 pins")
+        self.assertEqual(
+            9,
+            len(hits),
+            f"{len(hits)} hit lines, {len(unexpected)} unexpected, {len(stale)} stale pins; first: {problems[:4]}",
+        )
+        self.assertEqual([], problems)
+
+    def test_t02_each_exception_is_found_once_and_holds_no_old_name_once_its_token_is_masked(self):
+        # Given the nine pinned exceptions
+        problems = []
+        for path, line, token in EXCEPTIONS:
+            lines = self.lines_of(path)
+
+            # When the pinned line is looked up in its file and its allowed token is masked
+            found = lines.count(line)
+            masked = line.replace(token, chr(0))
+
+            # Then it is found exactly once, it is a real hit (not stale), it holds its token, and nothing is left
+            if found != 1:
+                problems.append(f"{path}: pinned line found {found} times (stale or duplicated): {line[:60]!r}")
+            if not PHRASE.search(line):
+                problems.append(f"{path}: pinned line is not a hit (stale pin): {line[:60]!r}")
+            if token not in line:
+                problems.append(f"{path}: allowed token {token!r} is not in the pinned line")
+            if PHRASE.search(masked):
+                problems.append(f"{path}: an old name hides on the exception line after masking {token!r}")
+        self.assertEqual([], problems)
+
+    def test_t03_every_path_in_the_readme_layout_block_exists(self):
+        # Given the README layout block (the code fence after the `## Layout` heading)
+        lines = self.lines_of("README.md")
+        start = lines.index("## Layout")
+        fence_open = next(i for i in range(start, len(lines)) if lines[i].startswith("```"))
+        fence_close = next(i for i in range(fence_open + 1, len(lines)) if lines[i].startswith("```"))
+        paths = [row.split()[0] for row in lines[fence_open + 1 : fence_close] if row.strip()]
+
+        # When each path is looked up among the tracked files (a directory counts when a tracked file lies below it)
+        tracked = tracked_paths()
+        missing = [
+            p for p in paths if p not in tracked and not any(name.startswith(p.rstrip("/") + "/") for name in tracked)
+        ]
+
+        # Then the block is not vacuous and every path exists with exact case
+        self.assertGreaterEqual(len(paths), 6, "the layout block has fewer than 6 rows")
+        self.assertEqual([], missing, f"layout paths that are not tracked: {missing}")
+
+    def test_t05_the_readme_note_appears_exactly_once(self):
+        # Given the README
+        lines = self.lines_of("README.md")
+
+        # When the note line is counted
+        count = lines.count(README_NOTE)
+
+        # Then it appears exactly once
+        self.assertEqual(1, count, f"the note line appears {count} times in README.md")
+
+    def test_t06_the_readme_does_not_say_the_rename_is_for_a_later_card(self):
+        # Given the README
+        text = working_bytes("README.md").decode("utf-8")
+
+        # When the old promise is looked for
+        # Then it is gone
+        self.assertNotIn("renamed in a later card", text)
+
+    def test_t07_vision_quotes_the_grammar_rule_3_wording_that_exists(self):
+        # Given VISION.md and docs/GRAMMAR.md (the VISION quote spans a line end: whitespace collapsed, case folded)
+        vision = collapsed(working_bytes("VISION.md").decode("utf-8"))
+        grammar = collapsed(working_bytes("docs/GRAMMAR.md").decode("utf-8"))
+
+        # When the quoted rule 3 is extracted from VISION
+        found = re.search(r'rule 3 \("(small fixed core[^"]*)"\)', vision)
+
+        # Then the quote exists, reads the new wording, and that exact wording exists in GRAMMAR
+        self.assertIsNotNone(found, "VISION does not quote GRAMMAR rule 3 any more")
+        self.assertEqual("small fixed core, open avow library", found.group(1))
+        self.assertIn("small fixed core, open avow library", grammar)
+
+    def test_t08_the_seven_sed_files_equal_the_rules_applied_to_the_base_bytes(self):
+        # Given the base bytes of the seven sed files and the newest green commit's blobs (the working tree if none)
+        differing = []
+        unchanged_by_rules = 0
+        for path in SED_FILES:
+            base = base_bytes(path)
+
+            # When the sed rules are applied to the base bytes (byte level: CRLF and size are preserved)
+            expected = apply_rules(base)
+            committed = committed_bytes(path)
+            unchanged_by_rules += expected == base
+
+            # Then the committed bytes are the expected bytes
+            if committed != expected:
+                differing.append(
+                    f"{path}: old {len(base)} bytes, expected {len(expected)}, committed {len(committed)}, "
+                    f"first differing line {first_difference(expected, committed)}"
+                )
+        self.assertLess(unchanged_by_rules, len(SED_FILES), "the rules change nothing: the check is vacuous")
+        self.assertEqual([], differing, "files that differ from the rules applied to the base: " + "; ".join(differing))
+
+    def test_t09_the_hand_edits_are_exactly_the_pinned_readme_and_vision_lines(self):
+        # Given the base bytes of README.md and VISION.md and the committed ones
+        problems = []
+
+        # When the README is compared with the base plus the hand edits (blank lines are not compared) ...
+        expected = [l for l in expected_readme(base_bytes("README.md")).split("\n") if l.strip()]
+        committed = [l for l in committed_bytes("README.md").decode("utf-8").split("\n") if l.strip()]
+        if committed != expected:
+            diff = list(difflib.unified_diff(expected, committed, "expected", "committed", n=0, lineterm=""))
+            problems.append("README.md differs from BASE beyond line 5, the note and the layout rows: " + " | ".join(
+                line[:90] for line in diff[:8]
+            ))
+
+        # ... and VISION.md with the base plus line 76
+        expected_v = expected_vision(base_bytes("VISION.md"))
+        committed_v = committed_bytes("VISION.md")
+        if committed_v != expected_v:
+            problems.append(
+                f"VISION.md differs from BASE beyond line 76 (open phrase -> open avow): expected {len(expected_v)} "
+                f"bytes, committed {len(committed_v)}, first differing line {first_difference(expected_v, committed_v)}"
+            )
+
+        # Then nothing else changed in either file
+        self.assertEqual([], problems)
+
+    def put_back_fails_the_scan(self, path, number):
+        """In a scratch copy of the nine files put `Phrase` back on line `number` of `path`; the scan must say so."""
+        with tempfile.TemporaryDirectory() as scratch:
+            # Given a copy of the nine files that scans clean
+            for name in SCOPED:
+                target = Path(scratch) / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(working_bytes(name))
+            hits, pristine = scan_problems(scratch)
+            self.assertEqual([], pristine, f"the pristine copy does not scan clean ({len(hits)} hit lines): {pristine[:3]}")
+
+            # When the old name is put back on that line (bytes: a CR before the line end is kept)
+            target = Path(scratch) / path
+            lines = target.read_bytes().split(b"\n")
+            self.assertIn(b"Avowry", lines[number - 1], f"{path}:{number} holds no Avowry to put Phrase back over")
+            lines[number - 1] = lines[number - 1].replace(b"Avowry", b"Phrase", 1)
+            target.write_bytes(b"\n".join(lines))
+            crlf = lines[number - 1].endswith(b"\r")
+            _hits, problems = scan_problems(scratch)
+
+            # Then the scan fails, naming that file and line, and nothing else
+            self.assertEqual(1, len(problems), f"expected exactly the put-back, got {problems}")
+            self.assertTrue(problems[0].startswith(f"{path}:{number}: unexpected"), problems[0])
+            return crlf
+
+    def test_t10_putting_phrase_back_in_readme_line_3_fails_the_scan(self):
+        self.put_back_fails_the_scan("README.md", 3)
+
+    def test_t11_putting_phrase_back_in_the_agreement_line_156_fails_the_scan(self):
+        self.put_back_fails_the_scan("TEAM_WORKING_AGREEMENT.md", 156)
+
+    def test_t12_putting_phrase_back_in_the_crlf_line_23_of_experiment_e1_fails_the_scan(self):
+        # Given E1 line 23 is a CRLF line, When Phrase is put back before the CR, Then the scan still names it
+        crlf = self.put_back_fails_the_scan("docs/experiments/E1-true-mobbing.md", 23)
+        self.assertTrue(crlf, "E1 line 23 is not a CRLF line: the CR case is not exercised")
+
+    def test_t13_an_old_name_at_a_line_end_is_flagged_with_lf_and_with_crlf(self):
+        for eol in ("\n", "\r\n"):
+            # Given a synthetic file whose line 2 ends with the old name (LF, then CRLF line endings)
+            text = f"first line{eol}the name is Phrase{eol}last line{eol}"
+
+            # When it is scanned
+            hits = scan_text(text)
+
+            # Then line 2 is flagged and the reported line holds no CR
+            self.assertEqual([(2, "the name is Phrase")], hits, f"line ending {eol!r}")
+        # And a name at the very end of a file with no final newline is flagged too
+        self.assertEqual([(1, "Phrase")], scan_text("Phrase"))
+
+    def test_t14_the_scan_is_not_vacuous(self):
+        # Given a synthetic file with known hits (1, 3, 4, 5) and known non-hits
+        text = "\n".join(
+            [
+                "Phrase is the old name",
+                "a noun phrase is fine",
+                "PhraseBoard",
+                "phrase-lang",
+                "a_phrase_x",
+                "PHRASE and phrase alone",
+                "Avowry",
+            ]
+        )
+
+        # When it is scanned
+        hits = scan_text(text)
+
+        # Then it finds exactly the known hits, and the real scan finds at least as many lines as there are pins
+        self.assertEqual([1, 3, 4, 5], [number for number, _line in hits])
+        self.assertGreaterEqual(len(scan_tree(REPO)), len(EXCEPTIONS), "the scan of the real files finds too little")
 
 
 if __name__ == "__main__":
