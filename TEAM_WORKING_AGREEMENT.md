@@ -273,6 +273,8 @@ a pointer to the record (`| joined: cycle 2 | decider: D3`). Card mode refuses a
 
 ### Process ideas are hypotheses, not doctrine
 
+- **Retro improvement and review (product owner ruling, 2026-11-07).** Every retro identifies improvements in all four areas, individual, team, organisation and product, each with evidence and a stated user benefit. Improvements become working-agreement changes, never issues: each is written into this agreement (or the relevant process document) as a concrete diff and voted through Decider at the end of the cycle. Each retro also reviews the permanent working agreement: for each value, principle and practice it records whether it needs updating, still earns its place, or should be removed, including "kept, no change", so the review is visible. A proposal for an "Experimental values, principles and practices" section (hypothesis, metric, trial length or data threshold and start date per experiment; adopt, revise and extend, or drop through Decider when the data is in; no experiment lingers past its trial length undecided) is recorded in docs/retros/experiments.md for the next retro's vote.
+
 Any process change idea, from product owner, a model or a retro, enters as an **experiment**, not a rule. Each experiment has:
 
 - a **hypothesis** ("We believe <change> will <improve metric> for <who>. We'll know when <metric> moves from
