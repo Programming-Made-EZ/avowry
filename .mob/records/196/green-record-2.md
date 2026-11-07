@@ -1,0 +1,7 @@
+# Card 196 green 2 record (build seat: Copilot; the facilitator re-ran every claim)
+
+- Why a second green: red 3 (a60afea) was red on HEAD, not born green. QA found a real miss in green 1 (1dece86): `scripts/ci-log-outcomes-217.py:65`, `project_of`, matched `Phrase\.[A-Za-z0-9_]+\.Tests`, an escaped-dot regex the anchored sed could not reach, so the 217 extractor rejected every real Avowry log (tests.test_outcome_extractors_217: 5 failures and 14 errors on HEAD against 17 OK in the baseline). `tests.test_rename_196` had 2 of 5 PathBound tests red (five_modules, extractor_not_empty).
+- Green 2 (6835bc0, build seat Copilot, worktree wt-196-green, brief green196b-brief.md): the one-line change from `.mob/records/196/mutations/P3fix.patch`, nothing else. One file, one line.
+- Facilitator's re-run in the worktree: `python -m unittest tests.test_rename_196` runs 15 tests OK; the five path-bound modules run 84 tests OK; the diff from a60afea is one file, one insertion, one deletion, no CR bytes in the diff.
+- Escaped or split forms of the old names elsewhere: `git grep` for escaped dots, split strings and regex fragments found only the unowned `Phrase.Bench` patterns in tests/test_bench_launcher_scan_264.py (card 197's gap), the bench history data and a word-boundary check in test_license_files.py; none names the two renamed projects.
+- Cycle count: three cycles, one per criterion (cycle 3 holds its red and green 2); within the cap of 3.
