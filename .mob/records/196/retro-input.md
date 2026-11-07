@@ -1,0 +1,22 @@
+# Card 196 retro input (facilitator facts; the voices read this)
+
+Card 196: the two test projects, their namespaces and every path that names them say Avowry (As Morgan ... so that I can find a test by the product's name). Product card, repository phrase-lang, pulled first after re-rank 28 (Decider D200).
+
+## Flow (local time, from git and run timestamps)
+- Ready rewrite by the product manager seat plus the scope-premise check: about 4 minutes of seat time (a read-only fresh context ran 28 read-only commands). Task-force Decider D201: six fresh seats plus an independent re-run (03:57 to 04:12), one audit-lens cite re-ask (five-word cite), committed 04:16: about 23 minutes from Ready to a recorded decision. Slice (architect, read-only): 04:17 to 04:23.
+- Build, slice to green 2: 04:23 to 05:16, about 53 minutes for six seat turns: red 1 (QA, about 5 min), green 1 (Copilot, about 9 min), the facilitator's byte-exact fix (about 2 min), red 2 (QA, about 8 min), red 3 (QA, about 24 min including the mutation harness), green 2 (Copilot, about 2 min).
+- Decision cost against build: about 23 minutes (plus the 4-minute Ready) against about 53: about 0.5 to 1 (card 299: 1.7 to 1; card 313: 7 to 1).
+- Gate: brief 05:18, reviewer finished 05:39 (about 22 minutes, partly waiting for the machine); sign-off: see below.
+- Cycles: three, one per criterion, within the cap of 3. Cycle 3 held a real red (QA's red 3 found a miss) and green 2.
+- Pushes: the pre-push hook (mob_process check and its unit tests) takes 4 to 10 minutes and slows when a dotnet gate is running; one push took about 40 minutes of wall clock and the product owner's watchdog fired.
+
+## What the evidence shows
+- The green seat (Copilot, trust Rung 1, rotation) reported clean on counts (127 renames, file counts, a grep) but had stripped CR bytes from 9 files including a `-text` fixture, swapped the two project GUIDs in Phrase.sln and lost 2 bytes in a csproj. The facilitator's byte-for-byte recompute from the old bytes found all three and amended the commit (green-record-1.md). The slice had said to keep line endings.
+- QA's red 2 (lists, strings, line endings) and red 3 (path-bound scripts, the solution, a byte-exact anchored rewrite) each failed under named mutations and under the real defective commit (9b941dd): red 2 caught the CR strip, red 3 caught the GUID swap, the csproj bytes and the python file CR strip, and found one more real miss in green 1 (the escaped-dot regex in scripts/ci-log-outcomes-217.py:65), fixed by green 2 (one line).
+- The scope premise check (D184) corrected the card before the window: "CI green on Windows and Linux" was a false premise (CI is Linux only); the "path-bound test_demo_readme" premise was false too.
+- Gate (independent reviewer, fresh Claude): SHIP WITH CONDITIONS: 7 checks rerun; the full gate showed 312 passed and 4 failed in the Acceptance project against the baseline 313 and 3; the fourth failure was a 20-second timing guard (`timed_out_model_tree_is_stopped_and_recorded_in_both_arms`) that overlapped with a pre-push hook run; it passed alone four times (reviewer once, facilitator three times) and passed in the facilitator's own full gate (313 and 3, equal to the baseline). Open observation, not a rename defect.
+- CI: the pushed rename ran the ci workflow green on Linux (7b74bad); the mob-process workflow failed once on the card 299 closing commit because MOB.md drifted after the issue was closed, and passed on a manual run after the regeneration commit.
+- D196 cite trial data (the Deciders on this card): D199, D200, D201: one cite miss in 36 votes (D201: an audit lens cite of five words, one re-ask, then Support-it); zero format-caused re-asks otherwise; no echo.
+- D193 does not apply (phrase-lang). The third D193 trial card is still pending (mob-crosscli).
+- The Experimental section (D199) is in the agreement; this is the first retro after it was adopted: its entries are D22, D150 x2, D154, D178, D188, D190, D176, D174, D168, D167, D166, D158, D157, D193, D196; at this retro each is checked for trial progress (counts) and anything past its trial is decided.
+- Product owner direction in force: the retro names an improvement in each of four areas (individual, team, organisation, product) with evidence and a user benefit, reviews the permanent agreement (kept, no change is valid), and the pick is voted by Decider as a document change, never an issue.
