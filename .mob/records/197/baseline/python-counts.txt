@@ -1,0 +1,10 @@
+tests.test_bench_launcher_scan_264: ---------------------------------------------------------------------- Ran 6 tests in 0.075s  OK 
+tests.test_outcome_extractors_217: ---------------------------------------------------------------------- Ran 17 tests in 1.171s  OK 
+tests.test_repeat_evidence: ---------------------------------------------------------------------- Ran 21 tests in 11.241s  OK 
+tests.test_run_pairs_217: ---------------------------------------------------------------------- Ran 36 tests in 7.989s  OK 
+tests.test_readme_reference_status: ---------------------------------------------------------------------- Ran 4 tests in 0.031s  OK 
+tests.test_rename_196: ---------------------------------------------------------------------- Ran 15 tests in 56.432s  OK 
+
+Module counts at HEAD 860d552 in the real checkout, python -m unittest <module> (expected 6, 17, 21, 36, 4; all OK).
+tests.test_rename_196 (15 tests) also passes now, run from the real checkout; it includes its own dotnet --list-tests step.
+tests.test_rename_197.RenameCycle1: Ran 7 tests, FAILED (failures=6) before the green; test_scan_flags_injected_old_name passes.

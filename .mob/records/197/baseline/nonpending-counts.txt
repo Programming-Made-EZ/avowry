@@ -1,0 +1,3 @@
+Avowry.Compiler.Tests: 284
+Avowry.Acceptance.Tests: 316
+(dotnet test tests/Avowry.<X>.Tests --no-build --list-tests --filter "Status!=Pending", 4-space rows counted with grep -c; listed without filter: 284 and 317)
