@@ -1,0 +1,32 @@
+I'll read the brief first and follow it exactly.I'll read the edit script and check the worktree state before applying the cycle-1 changes.The script looks correct. Next I’ll apply stage-1 edits, then verify bytes and tests.Edits applied with the expected byte deltas. Next I’ll verify the diff, file sizes, then run the tests one at a time.Diff has eight hunks in the two source files. I’ll count hunks and bytes, then start the first test.Hunk count is 8 and the byte sizes match. Starting the first `dotnet test` now.All 8 LeadingMessagesSayAvow tests passed. Running DiagnosticCharacterisation next.DiagnosticCharacterisation passed 21. Running the CLI diagnostic-shape tests next.All three test filters passed. I’ll stage only the two source files and commit with the specified message.**Commit:** `c29b2274fb475f273214a2b9e83cab3e65c1d8aa`
+
+**Step 1 (`edits.py . 1`):**
+```
+src/Avowry.Compiler/Semantics/Resolver.cs 42162 -> 42148 delta -14
+src/Avowry.Compiler/Syntax/Parser.cs 39282 -> 39280 delta -2
+```
+
+**Step 2:**
+(a) hunk count `8`
+```
+ src/Avowry.Compiler/Semantics/Resolver.cs | 14 +++++++-------
+ src/Avowry.Compiler/Syntax/Parser.cs      |  2 +-
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+```
+(b) `git diff --numstat`: `7 7 Resolver.cs`, `1 1 Parser.cs` (tabs present in the raw output)
+(c) sizes: `42148 Resolver.cs`, `39280 Parser.cs`
+(d) `Passed!  - Failed: 0, Passed: 8, Skipped: 0, Total: 8`
+(e) `Passed!  - Failed: 0, Passed: 21, Skipped: 0, Total: 21`
+(f) `Passed!  - Failed: 0, Passed: 3, Skipped: 0, Total: 3`
+
+**Commit log:**
+```
+c29b227 Card 324 green 1 (D157 Criterion 1): the eight leading messages say Avow
+f9b3b23 Card 324 cycle 1 red: seat output and the main-checkout record
+```
+`git show --stat HEAD`: 2 files, 8 insertions, 8 deletions.
+
+**Unsure:** this PowerShell has no `grep`/`wc`/`tail`. Hunk count used `python` `startswith`; sizes used `os.path.getsize`. Working tree was clean after the commit. Byte-exactness is for the facilitator to recompute.
+
+
+exit=0
