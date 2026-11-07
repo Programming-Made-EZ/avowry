@@ -9,3 +9,6 @@
 
 ## Round 2 (targeted re-ask, D187)
 - Round 1: architect, QA, developer, decider, agile coach NO OBJECTION; audit lens OBJECTION with one condition (an auditable trace that the facilitator wrote nothing in the checkout during the green turn). Adopted as A1 to A3 in .mob/records/313/taskforce-proposal-pm-r2.md. The condition came from one seat, so only the audit lens is re-asked on the amended text; the other five stand (the amendment changes nothing they voted on except by adding a check).
+
+## Full Decider (standing rule), round A and round B
+- Round A (tag d313a, proposal = revision 2 with the vote header): developer Yes, decider Yes, QA Support-it, agile coach Support-it, architect Support-it (no verbatim cite), audit lens No with one condition (commit the timestamp-bounded source records and a reproducible extraction verification). Adopted in revision 3 (.mob/records/313/taskforce-proposal-pm-r3.md); the amended text is voted once more by all six (round B, tag d313b). Then the independent re-run with fresh seats (F-038).
