@@ -102,7 +102,7 @@ public static class Resolver
                 var skeleton = Skeleton(declaration.Template);
                 if (skeletons.TryGetValue(skeleton, out var existing))
                 {
-                    Report("PH010", $"Phrase '{model.Template}' has the same wording as '{existing.Template}'.", declaration.At);
+                    Report("PH010", $"Avow '{model.Template}' has the same wording as '{existing.Template}'.", declaration.At);
                     continue;
                 }
                 skeletons.Add(skeleton, model);
@@ -184,7 +184,7 @@ public static class Resolver
                         if (resolved is not null)
                         {
                             if (resolved.Value.Avow.Returns is not null)
-                                Report("PH321", $"Phrase '{resolved.Value.Avow.Template}' returns {resolved.Value.Avow.Returns}; use 'let' to keep it.", call.At);
+                                Report("PH321", $"Avow '{resolved.Value.Avow.Template}' returns {resolved.Value.Avow.Returns}; use 'let' to keep it.", call.At);
                             bound.Add(new BoundCallStep(resolved.Value.Call, SourceFormatter.Format(call)) { Line = call.At.Line });
                         }
                         break;
@@ -197,7 +197,7 @@ public static class Resolver
                         {
                             type = resolved.Value.Avow.Returns ?? PType.Error;
                             if (resolved.Value.Avow.Returns is null)
-                                Report("PH320", $"Phrase '{resolved.Value.Avow.Template}' returns no value and cannot be used with 'let'.", let.At);
+                                Report("PH320", $"Avow '{resolved.Value.Avow.Template}' returns no value and cannot be used with 'let'.", let.At);
                         }
                         if (scope.ContainsKey(let.Name))
                             Report("PH313", $"Variable '{let.Name}' is already defined.", let.At);
@@ -328,7 +328,7 @@ public static class Resolver
                 if (!visiting.Add(phrase.Key))
                 {
                     if (reportedCycles.Add(phrase.Key))
-                        Report("PH327", $"Phrase '{phrase.Template}' participates in a call cycle.", AvowDeclaration(phrase.Key).At);
+                        Report("PH327", $"Avow '{phrase.Template}' participates in a call cycle.", AvowDeclaration(phrase.Key).At);
                     return ([], new HashSet<string>(StringComparer.Ordinal));
                 }
 
@@ -397,7 +397,7 @@ public static class Resolver
             {
                 if (given is GivenInput)
                 {
-                    Report(ExtensionDiagnostics.WebArm("PH331"), "Phrase specs cannot bind input; use a hole binding.", given.At);
+                    Report(ExtensionDiagnostics.WebArm("PH331"), "Avow specs cannot bind input; use a hole binding.", given.At);
                     continue;
                 }
 
@@ -405,7 +405,7 @@ public static class Resolver
                 if (!scope.TryGetValue(binding.Name, out var type))
                 {
                     hasInvalidBinding = true;
-                    Report(ExtensionDiagnostics.CoreArm("PH331"), $"Phrase spec for '{phrase.Template}' does not bind hole '{binding.Name}'. Valid holes: {string.Join(", ", scope.Keys.Order(StringComparer.Ordinal))}.", binding.At);
+                    Report(ExtensionDiagnostics.CoreArm("PH331"), $"Avow spec for '{phrase.Template}' does not bind hole '{binding.Name}'. Valid holes: {string.Join(", ", scope.Keys.Order(StringComparer.Ordinal))}.", binding.At);
                     continue;
                 }
                 if (!seen.Add(binding.Name))
@@ -553,7 +553,7 @@ public static class Resolver
                 case FailsWithOutcome fail:
                     if (phrase is not null && !phrase.Failures.Contains(fail.Code, StringComparer.Ordinal))
                     {
-                        Report(ExtensionDiagnostics.CoreArm("PH334"), $"Phrase '{phrase.Template}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", phrase.Failures)}.", fail.At);
+                        Report(ExtensionDiagnostics.CoreArm("PH334"), $"Avow '{phrase.Template}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", phrase.Failures)}.", fail.At);
                     }
                     if (phrase is null && endpointFailures is not null && !endpointFailures.Contains(fail.Code, StringComparer.Ordinal))
                     {

@@ -361,7 +361,7 @@ public static class Parser
             }
 
             if (!sawNative && !sawSteps)
-                Report("PH203", "Phrase has no implementation; add `native <target>` or `steps`.", at);
+                Report("PH203", "Avow has no implementation; add `native <target>` or `steps`.", at);
 
             return new AvowDecl(template, returns, effects, failures, specs, natives, steps, at) { FailureLine = failureLine };
         }
