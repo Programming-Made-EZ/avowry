@@ -1,0 +1,24 @@
+I'll read the brief first and follow it exactly.I'll read the spec files and existing test conventions next.I'll inspect existing tests for conventions, how sources are compiled, and the CLI helper.I'll copy the data files, then write the characterisation tests.Hashes match. Next I’ll write the loader and the characterisation tests.Data files are LF and match the architect’s byte counts. I’ll write SHA and eol records, then run the compiler characterisation tests.**Commit:** `2dd23a7085c7d906e2111776f2a56c6bc1a0a2cf`
+
+**Step 6**
+
+`dotnet test tests/Avowry.Compiler.Tests --filter "FullyQualifiedName~DiagnosticCharacterisation"` (with `--nologo`):
+
+```
+Passed!  - Failed:     0, Passed:    21, Skipped:     0, Total:    21, Duration: 205 ms - Avowry.Compiler.Tests.dll (net8.0)
+```
+
+`dotnet test tests/Avowry.Acceptance.Tests --filter "FullyQualifiedName~CliKeepsDiagnosticShape"` (with `--nologo`):
+
+```
+Passed!  - Failed:     0, Passed:     3, Skipped:     0, Total:     3, Duration: 5 s - Avowry.Acceptance.Tests.dll (net8.0)
+```
+
+**Counts** (`--list-tests`): Compiler 305; Acceptance 320; Acceptance `--filter Status!=Pending` 319.
+
+**CLI pre:** M13 exit 1, `PH001 (11:5) No phrase matches this step. Closest: "do nothing".`; M08 exit 1, PH203; clean exit 0, empty stderr.
+
+**Unsure:** drift Fact samples are full diagnostic-shaped strings with the nine named wording drifts, so a loose `ToOld` could hit a baseline text. Did not run the full Compiler or Acceptance suites. `src/` was not touched.
+
+
+exit=0
