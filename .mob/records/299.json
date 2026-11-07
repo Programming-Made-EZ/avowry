@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 299,
+ "title": "A second writer on one checkout is refused across processes",
+ "process": "card-mode rules run by hand; ranked first at re-rank 27 (product first, risk to shipping stated); the task-force declaration ran as a full Decider (D198, adopted); D193 trial card 2 of 3 (G1 to G3); the retro pick D199 adopted (the Experimental section)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude, a fresh subagent context, product manager (ready); taskforce-proposal-pm.md and checklist-d198.md",
+   "evidence": "7dc0046"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md",
+   "evidence": "4597ad6"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "QA engineer: red 1 3f2b4a6, red 2 f8ee94d and the cycle 3 tests 4ae67db in mob-crosscli, four mutation patches; red-record-2026-11-07.md",
+   "evidence": "e18bed9"
+  },
+  {
+   "role": "green",
+   "seat": "Codex ctx-4",
+   "model": "codex via the machine-local launcher, danger-full-access, --json, in its own git worktree: green 1 7afce8e and green 2 4b6ab57; green1/green2-codex-events.jsonl, green-and-mutations-2026-11-07.md",
+   "evidence": "0effe73"
+  },
+  {
+   "role": "ship",
+   "seat": "Copilot ctx-5",
+   "model": "copilot independent reviewer, read-only; SHIP with facilitator-run evidence for the record-only lines and the G3 probe; preship-gate.md",
+   "evidence": "1939baa"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off, read-only; SIGNED OFF with conditions; signoff-ctx6.md",
+   "evidence": "72f2ff2"
+  }
+ ],
+ "retro": "docs/retros/card-299-2026-11-07.md",
+ "notes": "Done: a second process holding the checkout is refused before any git write, naming the holder and lock path (mob-writer.lock in the git directory, atomic create by link, stale takeover decided by one successful unlink, fail-open with one stderr warning). Code is in mob-crosscli (mob-defaults) main and pushed (3f2b4a6, 7afce8e, f8ee94d, 4b6ab57, 4ae67db); worktree and branch removed. The restore gap (two live holders for milliseconds during a stale takeover) is accepted and stated on the card; the git-hooks half is bug card 323."
+}
