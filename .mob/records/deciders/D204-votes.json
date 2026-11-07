@@ -1,0 +1,141 @@
+{
+ "decider": "D204",
+ "subject": "card 197 retro pick: red before the atomic green; the D196 cite check adopted",
+ "result": "ADOPTED",
+ "run1": {
+  "architect": [
+   {
+    "tag": "d204",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "every new-state criterion's test is committed and watched failing against the pre-change tree before the green",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe design is sound and minimal. It is one patch with no new file, seat or checker. The P2 cite-check adoption folds the trial text into the permanent practice, and I see no conflict in the diff. The enforcement hooks are checkable: `git log` criterion order, the pre-change-tree rerun, and the rule that a declared characterisation test must pass there. Two risks keep this at Support-it. \"Atomic green\" has no objective test, so a card could be classed non-atomic to skip the red. The \""
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d204",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "every new-state test fails there; the criterion order is checked from git log",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes. The red-first rule can be tested red. Its checks are mechanical and name their own failure cases:\n- The pre-ship gate reruns each new-state test against the pre-change tree, and every one must fail there. A born-green test cannot pass that gate.\n- Criterion order is checked from `git log`.\n- Each declared characterisation test must pass on the pre-change tree. That closes the loophole of declaring characterisation to excuse a missing red.\n- The counter-metrics cover vacuous reds and reds th"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d204",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "with each new-state red written and watched before the atomic green",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nWorkable. Classifying each criterion as new-state or characterisation up front is a decision I can make from the slice, so I don't have to game it. The check that every characterisation test passes on the pre-change tree stops \"characterisation\" being used to excuse a missing red.\n\nTwo wording risks:\n- \"One red commit per criterion\" sits beside \"a red commit may hold several criteria if the slice says so\". State which one is the default.\n- On a rename, a red can fail only because the"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d204",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "the pre-ship gate reruns the criteria's tests against the pre-change tree",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nMostly verifiable from git: the red commit's \"Criterion: n\" line, its order against the green in `git log`, and a rerun on the pre-change tree. Two loopholes remain:\n- A new-state test that happens to pass on the pre-change tree can be declared characterisation. That is caught only by the counter-metric, so the gate should require the declaration to be in the slice commit, dated before the red.\n- The git-log order check says \"except for declared characterisation\", which sits awkwardl"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d204",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "born-green tests on atomic-change cards drop to 0",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nThe evaluation is framed so its decision will rest on evidence. It states a hypothesis, a metric with a target, and counter-metrics against Goodhart gaming, including declaring a test characterisation to excuse a missing red. It has a bounded trial of 3 atomic-green cards and a named owner. P2 rests on three Decider-holding cards, about 70 votes. The sources show every seat voted on P1. One gap: the proposal doesn't say what result at the end of the trial means adopt, reshape or reject. The"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d204",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "born-green tests on atomic-change cards drop to 0 at no extra rework",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe red-first ruling is the product owner's, and card 197's evidence is concrete: 8 of 12 tests were born green. The 3-card trial, the metric and the counter-metric keep the change right-sized. Adopting D196 also shortens the agreement, which is the right direction.\n\nMy concern is ceremony. A red commit per criterion, a pre-ship rerun against the pre-change tree, a git-log order check, and reds named in the task-force proposal are overlapping controls. I suggest the trial measure whe"
+   }
+  ]
+ },
+ "independent_rerun": {
+  "architect": [
+   {
+    "tag": "d204r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "the criterion order is checked from git log",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe design is sound and enforceable. The checks use existing artifacts: the criterion order comes from `git log`, and the pre-ship gate reruns the tests on the pre-change tree. The characterisation escape hatch is policed by a rule that those tests must pass pre-change. Folding the cite-check trial into the permanent text shortens the agreement.\n\nTwo small risks. The \"Criterion: 1-n\" and \"red commit holds several criteria\" exceptions add parsing cases for the git-log check. \"Every ne"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d204r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "every new-state test fails there; the criterion order is checked from git log",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nFrom a QA view, the red-first rule is testable. The pre-ship gate reruns the tests against the pre-change tree, and every new-state test must fail there. The criterion order is checked from git log. Card 197's retroactive run (8 of 12 failed, 4 passed) shows the new-state/characterisation split can be told apart mechanically.\n\nTwo gaps remain:\n- A vacuous red, or one that fails for the wrong reason, is only a counter-metric. The gate should require the failure message to match the ne"
+   }
+  ],
+  "dev": [
+   {
+    "tag": "d204r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "the criterion order is checked from git log",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nCompliance is workable and I can't see a way to game it. Each new-state test is watched failing before the green, with one red commit and one \"Criterion: n\" line per criterion. The pre-ship rerun against the pre-change tree and the git log order check catch a born-green test. The characterisation exemption is fair to the work. It is also checkable, because each declared characterisation test must pass on the pre-change tree. Card 197 shows 8 of 12 tests could have been watched red fi"
+   }
+  ],
+  "auditlens": [
+   {
+    "tag": "d204r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "the criterion order is checked from git log",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe patch is verifiable from git alone. The \"Criterion: n\" lines and red-before-green order can be checked in `git log`, and the pre-ship gate reruns the tests against the pre-change tree. The diff also matches the proposal text.\n\nTwo loopholes remain:\n- A criterion declared \"characterisation\" can excuse a missing red. The counter-metric names this, and the pre-change-tree rerun covers it. A reviewer outside the mob should confirm each such declaration.\n- The \"(a red commit may hold "
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d204r",
+    "seat": "claude",
+    "vote": "Support-it",
+    "cite": "born-green tests on atomic-change cards drop to 0 at no extra rework",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Support-it\n\nThe evaluation is framed to rest on evidence. It states a hypothesis, a metric with a target, and counter-metrics that guard against gaming, such as declaring a test characterisation to excuse a missing red. It also sets a bounded trial of 3 atomic-green cards with a named owner. The P1 evidence is one card (8 of 12 tests born green), which is thin but enough for an Experimental entry. P2 is backed by a trial across three cards. The proposal doesn't say what result at the end of the "
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d204r",
+    "seat": "claude",
+    "vote": "Yes",
+    "cite": "and the agreement is shorter by one finished trial",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "reply_head": "Yes\n\nThe change fits the size of the problem. Card 197 produced 8 born-green new-state tests out of 12, and the fix is a small rule that applies only to atomic-green cards. It is a trial of 3 cards with a target, a counter-metric and an owner. It adds no new role, meeting or seat. Declaring a criterion characterisation has to be backed by a test that passes on the pre-change tree, so that label can't be used to skip a red. P2 retires a finished trial after about 70 votes with one format-caused r"
+   }
+  ]
+ }
+}

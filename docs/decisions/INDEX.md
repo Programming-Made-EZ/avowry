@@ -307,3 +307,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D201](process-and-staffing.md#d201) | Card 196 task-force declaration and card text: rename the two test projects, their namespaces and the paths that name them | process-and-staffing | adopted |
 | [D202](process-and-staffing.md#d202) | Card 196 retro pick: mechanical rewrites carry a byte-parity check; gate runs are isolated with a load line | process-and-staffing | adopted |
 | [D203](process-and-staffing.md#d203) | Card 197 task-force declaration and card text: rename the solution and the benchmark tool projects to Avowry | process-and-staffing | adopted |
+| [D204](process-and-staffing.md#d204) | Card 197 retro pick: red before the atomic green; the D196 cite check adopted | process-and-staffing | adopted |

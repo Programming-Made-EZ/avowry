@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 197,
+ "title": "Rename the solution, CI jobs, scripts and paths to Avowry",
+ "process": "card-mode rules run by hand; ranked first after card 196 closed (product first); the Ready rewrite into Connextra, Gherkin and ZOMBIES with the scope-premise check, then the task-force declaration as a full Decider (D203, adopted); three cycles, one criterion each (criterion 1 red-first; the tests of criteria 2 and 3 were written after the atomic rename: the born-green finding of the product owner's red-first ruling, recorded in redfirst-finding.md and the retro); the green seat (Grok) in its own worktree; the first card under the D202 trial entries; the retro pick D204 adopted (red before the atomic green; the D196 cite check adopted)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude, a fresh subagent context, product manager (ready), read-only; taskforce-proposal-pm.md and checklist-d203.md; premise facts rerun by the facilitator",
+   "evidence": "e69e908"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md (SHIP AS IS, the rewrite table with no exceptions, sed -b from a script file, three cycles)",
+   "evidence": "860d552"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, fresh subagent contexts, QA engineer: red 1 21a2caa, red 2 a102d64 and red 3 dc1193f with 12 mutation or real-defect patches under .mob/records/197/mutations; red-record-1/2/3.md",
+   "evidence": "21a2caa"
+  },
+  {
+   "role": "green",
+   "seat": "Grok ctx-4",
+   "model": "grok-4.6 via grok.cmd, --always-approve, in its own git worktree: green 1 2d58c6c (33 of 33 files byte-exact on the facilitator's recompute); green-record-1.md, green1-grok-output.txt, author-probe.md",
+   "evidence": "2d58c6c"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent reviewer, read-only; SHIP; preship-gate.md",
+   "evidence": "e143146"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off, read-only; SIGNED OFF; signoff-ctx6.md",
+   "evidence": "2f2f4ab"
+  }
+ ],
+ "retro": "docs/retros/card-197-2026-11-07.md",
+ "notes": "Signed off (.mob/records/197/signoff-ctx6.md). Done checks met: 1 the old solution and Bench names are gone from tracked live lines, the six new paths are tracked with exact case, and the rewrite is byte-exact (red 1 red first, green 1); 2 the ten solution Project lines, both test lists name for name, the Bench self-check, the five path-bound modules, the launcher-scan non-vacuity and the ADR, script and test triple hold (born green after green 1, six mutation patches); 3 the old command is refused with MSB1009, no compatibility file is tracked, the seven GUIDs stay paired and every gate command names a tracked solution (born green, four mutation patches and the two real-defect runs). The full gate equals the baseline four times with nothing else running (313 of 316, the same three known failures; the card 304 timing guard passed). CI green on the pushed rename (52a66e6). FINDING (product owner ruling 2026-11-07): the tests of criteria 2 and 3 were born green (12 tests; against the pre-rename tree 8 fail, so they could have been red first, and 4 pass, undeclared characterisation); see redfirst-finding.md and the retro, reported to the product owner. Code is on main in phrase-lang; the worktree wt-197-green and its branch are removed. Not in this card: identifiers and prose (card 266), personas (204)."
+}

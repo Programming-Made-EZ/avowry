@@ -1330,5 +1330,11 @@
     "status": "adopted",
     "title": "Card 197 task-force declaration and card text: rename the solution and the benchmark tool projects to Avowry",
     "order": 194
+  },
+  "D204": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 197 retro pick: red before the atomic green; the D196 cite check adopted",
+    "order": 195
   }
 }
