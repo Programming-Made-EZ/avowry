@@ -431,3 +431,60 @@ The facilitator's probe script (scratchpad, not in the repo) launched plain `cod
 ## Converted to story issues, 2026-11-06 (product-owner ruling)
 
 The open process items below are now board stories with a persona and Gherkin criteria, to be refined and ranked: the card-format question (card 309), the Muse rotation trial (card 310), the coach protocol-conformance finding (card 311), the tally checker (card 312), and the decision-channel question left by D191/D192 (card 308). Their earlier experiment entries stay as history; the story is the live item.
+
+## Process improvements moved off the board, 2026-11-07 (product-owner ruling: process improvements are not issues)
+
+The product owner ruled on 2026-11-07 that the board holds only product stories and product bugs. A process improvement is a proposed change to TEAM_WORKING_AGREEMENT.md or the relevant process document, identified in a retro, written as a concrete diff with its user benefit, and voted for adoption through Decider after the retro; once adopted it is applied as retro follow-through, including any tooling it needs. The twelve process and tooling issues below were closed as not planned with the label not-card and moved here. Each keeps its evidence and its acceptance checks (the scenarios of the issue, in short). Rulings the product owner already gave are applied directly (marked APPLIED) and need no vote; adopted Deciders are applied as written (marked ADOPTED); the rest are PROPOSED for the next retro's vote.
+
+User benefit common to all: the product owner's product work is not slowed or put at risk by process work that a consumer never sees.
+
+### 316 (the gate runs the changed area's narrow suites and checks each failure path): ADOPTED (Decider D193, a three-card trial; card 313 was its first card)
+- Document change: TEAM_WORKING_AGREEMENT.md, a trial paragraph (now applied): G1 the pre-ship gate brief carries a table of the changed code files, the test files that name them and their narrow suites, and the gate runs and quotes each; G2 a cycle whose tests pass before any change carries two committed mutation patches, each failing the matching test and naming the behaviour it breaks; G3 for lock, registration and cleanup code the brief lists every step and gap, each labelled rerun, record-only or blocked, and a record-only or blocked line makes the verdict HOLD until the facilitator's probe is attached. Trial: three cards that change mob-crosscli code; the third retro decides keep, revise or drop.
+- Evidence and acceptance checks: card 298's gate said SHIP and the sign-off found three defects; card 313's gate HOLD on record-only lines was closed by the facilitator's probes. Scenarios: the gate record lists each suite with command, count and raw result; a no-red cycle has two mutations that each fail; each step and gap has a label.
+- Follow-through: patch files must be git-apply clean (card 313 retro).
+
+### 322 (decisions stop spending rounds on capital letters and full stops): ADOPTED (Decider D196, a three-card trial)
+- Document change: TEAM_WORKING_AGREEMENT.md, a trial paragraph (now applied): K1 the cite check matches a cited point of at least six words after normalising case, markdown emphasis and trailing punctuation, the words still copied in order; a failing cite is re-asked once, then the seat is replaced; K2 a reply whose cite is the prompt's placeholder or that echoes the prompt is recorded as an echo, re-asked once on a different driver, and the seat-use record names the echoing driver; K3 nothing else changes. Metric: format-caused re-asks per Decider at most 2 (card 313 baseline 10); counter-metrics: votes counted without a real cited point (0), wrong-seat attribution (0).
+- Follow-through (tooling): the cite check in decider.py and the seat-use record, test first; not yet built.
+- Evidence and acceptance checks: card 313's decision took about 111 minutes of seat time, ten of the re-asks being format. Scenarios: no cite is re-asked; a case difference counts; case, emphasis and a trailing full stop together count while five words do not; words not in the proposal fail; an echo is re-asked on a different driver; the trial is measured at the retro.
+
+### 320 (team decisions conclude without stalling or being escalated): APPLIED (product-owner ruling, 2026-11-07)
+- Document change: TEAM_WORKING_AGREEMENT.md, the Decider protocol, applied now: the outlier's promise (an outlier states precisely what it requires and, once given it, drops all resistance; a later demand from a seat whose condition was given is not adopted); unresolved outliers kill the proposal and someone makes a new proposal (an impasse is not escalated; only a real purpose or direction question goes to the product owner); an absolute No kills the proposal and that seat makes the next one; if No plus Support-it votes are more than about 30 percent the proposer drops it; after a minor amendment the other voters get a quick check and any may demand a formal re-vote. The mob-defaults copy is follow-through.
+- Evidence: card 313's task-force decision (Deciders D194 and D195).
+
+### 319 (every seat reviews an amendment before a decision is recorded; replaces D187): PROPOSED (product owner's filing; for the next retro's vote)
+- Document change: the Decider protocol: after any amendment every voting seat receives only the change (a diff and a one-line why) in a fresh context and replies NO OBJECTION or OBJECTION with one condition; a full re-poll stays for a real No and for conflicting conditions; D187's targeted re-ask is replaced. Interaction with the aligned protocol (320): it costs rounds, so it should be voted together with the quick-check rule of 320, which it overlaps.
+- Evidence and acceptance checks: scenarios [S][O] one condition folded in and every seat reviews the diff; [E] a seat objects to the amendment; [Z] no amendment needed; [M] several amendments in sequence; [B] a seat does not reply in time; [I] the record shows the final text, every diff and each seat's reply.
+
+### 321 (a wait never leaves the mob idle): PROPOSED (product owner's filing; for the next retro's vote)
+- Document change: the facilitator duties in TEAM_WORKING_AGREEMENT.md: every background wait has a monitor that wakes the facilitator when it ends, dies or expires; a seat, test run or CI wait has a hard timeout after which the facilitator stops only that run's own process ids and re-runs on another available driver; idle minutes per card are a flow metric in each retro.
+- Evidence: about five idle stalls of 40 to 70+ minutes on 2026-11-06. Acceptance checks: a monitor that ends without a result wakes the facilitator; a hung seat is stopped and re-run; the retro reports idle minutes.
+- Follow-through (tooling): the monitor and timeout wrappers.
+
+### 317 (a card that names no consumer value cannot reach Ready): PROPOSED (follow-through of rulings already applied as text)
+- Document change: the Ready check (scripts/check-story-persona.py and the Contract branch of scripts/board/new_card.py) refuses a card with no consumer actor, no Gherkin scenarios or a missing ZOMBIES letter without a one-line reason. The value, format and product-first rules are already in TEAM_WORKING_AGREEMENT.md; this is their mechanical check.
+- Acceptance checks: a story with a mob role as actor is refused; a contract with no Consumer value line is refused; a card in the full format passes; letter coverage is checked letter by letter; the board is checked as a whole.
+
+### 318 (a new mob starts from templates that carry the team's core rulings): PROPOSED (follow-through: the mob-defaults copy)
+- Document change: mob-defaults (the working-agreement template, Ready check, card template, story and persona guidance and the Decider text) carry, in timeless wording with no dates or personal names: a No is a No, the aligned Decider, product first, the value rule, the card format with ZOMBIES letters, and that process improvements are amendments voted after the retro and not issues.
+- Acceptance checks: a card with no consumer value is refused in a new mob; a full-format card passes; letter coverage fails by letter; the templates carry the rulings; the template text is timeless.
+
+### 312 (a Decider record is rejected when its result does not follow from its votes): PROPOSED
+- Document change: scripts/mob_process.py check (and the Decider protocol text) fails a record whose result is passed while an unresolved No remains after the amendment round. Tooling follow-through, test first.
+- Evidence: Decider D191 passed on an interpretive reading and was corrected only after the product owner caught it. Acceptance checks: a wrong pass is refused; right results pass; the check runs on push.
+
+### 311 (a Decider vote is scored as written and the agile coach flags any deviation at the vote): PROPOSED
+- Document change: the agile coach seat brief: before any Decider result is recorded, check the tally against the protocol as written and object when a vote is reread; the result is withheld until the departure is fixed or the proposal is recorded as failed.
+- Evidence: the D191 deviation the coach did not catch. Acceptance checks: the coach's reply carries a conformance line; a named departure blocks the record; the catch rate is reported at the next three Deciders.
+
+### 310 (the board keeps moving when one driver's quota runs out, with Muse trialled as a fourth driver): PROPOSED
+- Document change: the driver rotation file and the seat briefs: Muse takes non-counted seats after a trial with the card text inlined; a failed trial keeps it out with the reason written; a quota-exhausted driver's seat goes to a driver that passed its trial.
+- Evidence: Muse passed the one-word probe but returned no reply on card 303's slice brief. Acceptance checks: a trial seat's reply is stored or a seat failure is recorded with the launch command and output; placement follows the result.
+
+### 308 (the product owner's rulings and the team's replies are recorded where a check can verify them): PROPOSED
+- Document change: the inbox section of TEAM_WORKING_AGREEMENT.md: each ruling and the team's reply is logged in a committed file with its time and destination, and a check refuses a gap or a rewritten line. Decisions D191 and D192 (the inbox adoption) failed the strict count twice; this is the replacement for that question.
+- Acceptance checks: an acknowledged ruling has one log line with identity, read time, acknowledgement time, boundary and destination; a heading shown acknowledged with no line fails; an edited earlier line fails.
+
+### 305 (a Codex build seat's commands go through the delete scan): PROPOSED
+- Document change: the Codex build-seat brief and the command-source rule: the seat runs with `--json` and the command_execution events are read by the delete scan like any other driver's; a seat whose stream is missing fails the record check. Today the facilitator reads the stream by hand.
+- Evidence: Codex build seats now run in full-access mode (cards 303, 298, 313: 15, 18 and 11 commands, none a delete). Acceptance checks: a seeded stream with a recursive delete on a variable path is flagged; a clean one passes; the record carries the scan result and command count.

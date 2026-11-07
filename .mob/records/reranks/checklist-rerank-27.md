@@ -14,3 +14,6 @@
 - New proposal: .mob/records/reranks/2026-11-07-27-product-first.md (a fresh product-manager seat; its reply committed unchanged, with the facilitator's additions). Artifacts: rerank-27-verdicts.json (the seat's order of 112 cards, 10 Riley re-points) and rerank-27-open-issues.json; the apply script's dry run validates them. Procedure as before: six fresh seats vote (round 1); a No states ONE condition and promises support; the amended text is voted once more; the independent re-run follows; Grok disabled and Codex excluded.
 - Rule applied: Product first (TEAM_WORKING_AGREEMENT.md, added today).
 - The facilitator now checks that each commit succeeded (git log) before a vote starts.
+
+## Revision 2 of product first (process improvements are not issues)
+- The product-first vote (tag rr27d) was stopped by its own process ids when the product owner's next ruling arrived (process improvements are not issues; re-rank 27 ranks product stories and product bugs only); three of six seats had replied and none of it counts. The note gains the facilitator's Revision 2 section (twelve process issues closed as not planned, the order without them); procedure as before: six fresh seats vote (tag rr27e), conditions, a second vote, the independent re-run; the commit is checked before the vote starts.

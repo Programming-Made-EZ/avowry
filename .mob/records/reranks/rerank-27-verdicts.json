@@ -7,7 +7,68 @@
   "Dana",
   "Ari"
  ],
- "close": [],
+ "close": [
+  {
+   "issue": 305,
+   "kind": "waste",
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the Codex build-seat brief"
+  },
+  {
+   "issue": 308,
+   "kind": "waste",
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the inbox section of the working agreement"
+  },
+  {
+   "issue": 310,
+   "kind": "waste",
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the driver rotation file"
+  },
+  {
+   "issue": 311,
+   "kind": "waste",
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the agile coach seat brief"
+  },
+  {
+   "issue": 312,
+   "kind": "waste",
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the record check"
+  },
+  {
+   "issue": 316,
+   "kind": "waste",
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': an adopted trial paragraph (Decider D193), applied to the working agreement"
+  },
+  {
+   "issue": 317,
+   "kind": "waste",
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the Ready check"
+  },
+  {
+   "issue": 318,
+   "kind": "waste",
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed mob-defaults copy of the rulings"
+  },
+  {
+   "issue": 319,
+   "kind": "waste",
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the Decider protocol (supersedes D187)"
+  },
+  {
+   "issue": 320,
+   "kind": "waste",
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': applied to the Decider protocol in the working agreement (product owner ruling)"
+  },
+  {
+   "issue": 321,
+   "kind": "waste",
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': a proposed change to the facilitator duties"
+  },
+  {
+   "issue": 322,
+   "kind": "waste",
+   "reason": "process improvements are not issues (product owner ruling, 2026-11-07); moved to docs/retros/experiments.md, section 'Process improvements moved off the board, 2026-11-07': an adopted trial paragraph (Decider D196), applied to the working agreement"
+  }
+ ],
  "edit_contract": [],
  "edit_story": [
   {
@@ -58,7 +119,6 @@
   "max_bugs_above": 4,
   "cards": [
    299,
-   305,
    196,
    197,
    266,
@@ -153,23 +213,16 @@
    295,
    296,
    31,
-   321,
-   316,
    315,
    307,
-   317,
    156,
    304,
    302,
-   312,
-   311,
-   308,
-   310,
    300,
    301,
    286,
    232
   ]
  },
- "note": "revision product first: the order is the product manager seat's command; 305 is retyped to a bug and cards 299 and 305 get a risk line by two facilitator gh issue edit steps (see the proposal's Facilitator's additions)"
+ "note": "revision 2 of product first: process and tooling stories are closed as not planned (label not-card) and moved to docs/retros/experiments.md; the board is ranked with product stories and product bugs only: the at-risk bug 299 first, then the 94 product stories in their current order, then the remaining bugs and card 156 below them"
 }
