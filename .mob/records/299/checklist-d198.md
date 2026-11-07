@@ -1,0 +1,7 @@
+# D158 pre-vote checklist: Decider for the card 299 task-force declaration (facilitator)
+- Boundary: after re-rank 27 (D197) was applied (CI run 42353750860 green on 73d1e23). Inbox read at this boundary: empty.
+- Proposal: .mob/records/299/taskforce-proposal-pm.md (a fresh product-manager seat; its reply committed with the persona name before a colon reworded and one note of the facilitator's at the end). It proposes to split card 299 (the cross-process writer lock stays; the git hooks become a second bug card).
+- Category: task-force declaration with the card-text fix its Ready check lists. The D153 lighter path expired by count (card 313's status check), so this is a full Decider under the standing rule as aligned with the original protocol: six fresh seats vote Yes, Support-it or No with a verbatim cite (D171, with the D196 trial's normalisation not yet built); a No states ONE precise condition and promises to support once it is met; a later demand from a seat whose condition was given is not adopted; an unresolved outlier kills the proposal and a new proposal follows (no escalation); an independent re-run with fresh seats follows (F-038). Grok disabled; Codex excluded from voting seats (it echoes the placeholder cite).
+- Probe: Codex, Copilot and agy answered seats today; decider.py probes per seat (D188).
+- Commit checked: yes (git log after the commit, before the vote).
+- D193 trial: this is the second of three mob-crosscli cards (G1 suite table, G2 mutation pair, G3 steps and gaps).
