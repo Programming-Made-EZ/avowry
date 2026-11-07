@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 313,
+ "title": "A decision run that starts as another ends is never left without a vote lock",
+ "process": "card-mode rules run by hand; ranked first at re-rank 26; the task-force declaration ran as a full Decider because the D153 lighter path expired by count: D194 failed, D195 (the green seat in its own worktree) adopted; D193 trial card 1 of 3 (G1 to G3); the retro pick D196 adopted",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude, a fresh subagent context, product manager (ready); .mob/records/313/taskforce-proposal-pm.md; code facts rerun by the seat",
+   "evidence": "f5febac"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md (a bounded retry of five attempts in hold_vote_lock)",
+   "evidence": "637a444"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, fresh subagent contexts, QA engineer: red 1 d34b873 in mob-crosscli (three failing, one passing) and the cycles 2 and 3 tests 3b3e486 with six mutation patches; red-record-2026-11-07.md",
+   "evidence": "0c40fd4"
+  },
+  {
+   "role": "green",
+   "seat": "Codex ctx-4",
+   "model": "codex gpt-5.6-sol via the machine-local launcher, danger-full-access, --json, in its own git worktree: green 1 1fb3cb5 (11 commands, no delete, explicit git add, no push) and the facilitator's line-endings follow-up 3dacde5; green1-codex-events.jsonl, green-and-mutations-2026-11-07.md",
+   "evidence": "c0ec67c"
+  },
+  {
+   "role": "ship",
+   "seat": "Copilot ctx-5",
+   "model": "copilot (auto) via copilot.cmd from a script, independent reviewer, read-only; verdict HOLD (one LiveVote failure not reproduced; record-only G3 lines), then the facilitator-run evidence in the same record; preship-gate.md",
+   "evidence": "2c5ed4c"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off, read-only; reran every suite and a real three-process race; SIGNED OFF with conditions; signoff-ctx6.md",
+   "evidence": "02b330e"
+  }
+ ],
+ "retro": "docs/retros/card-313-2026-11-07.md",
+ "notes": "Signed off with conditions (.mob/records/313/signoff-ctx6.md). Done checks met: 1 a run whose holders directory is removed between mkdir and open still registers, a facilitator commit and push are refused during its vote, and after five removals it warns once (VoteLockRegistration, cycle 1 red then green); 2 an other run's release at each point of the registration leaves this run registered (born green after green 1, mutation evidence); 3 either end order and a dead holder or empty directory (born green, mutation evidence); all rerun by the gate (9, 7 and 8 tests) and the sign-off (the whole file, 43). The reviewer's single LiveVote failure was not reproduced in the facilitator's nine later runs or the sign-off's repeated and concurrent runs and stays an open observation. Conditions: the retro keeps that flake open (done); the suggested release-versus-sweep bug is not filed (no consumer harm shown; recorded in the retro). Code is in mob-crosscli (mob-defaults), merged to main and pushed (3b3e486); the worktree wt-313-green is removed at closure."
+}
