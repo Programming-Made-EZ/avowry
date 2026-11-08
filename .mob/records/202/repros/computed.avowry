@@ -1,0 +1,4 @@
+module M
+avow to "reject {code: Text}"
+  native csharp
+    Fail(code);

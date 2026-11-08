@@ -1,0 +1,16 @@
+module M
+avow to "reject {n: Int}"
+  fails with X
+  native csharp
+    if (n < 0) Fail("X");
+
+avow to "wrap {n: Int}"
+  fails with X
+  steps
+    reject n
+
+endpoint W : POST /w
+  input
+    n: Int
+  steps
+    wrap input.n

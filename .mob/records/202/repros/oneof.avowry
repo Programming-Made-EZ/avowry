@@ -1,0 +1,6 @@
+module M
+avow to "reject {n: Int}"
+  fails with Declared
+  native csharp
+    if (n < 0) Fail("Declared");
+    if (n > 9) Fail("X");

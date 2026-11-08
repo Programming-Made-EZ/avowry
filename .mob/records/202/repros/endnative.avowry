@@ -1,0 +1,11 @@
+module M
+avow to "ok {n: Int}"
+  native csharp
+    return;
+
+endpoint W : POST /w
+  input
+    n: Int
+  steps
+    native csharp
+      Fail("X");

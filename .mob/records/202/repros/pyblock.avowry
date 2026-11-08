@@ -1,0 +1,7 @@
+module M
+avow to "reject {n: Int}"
+  fails with Y
+  native csharp
+    if (n < 0) Fail("Y");
+  native python
+    raise Fail("X")

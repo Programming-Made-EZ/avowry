@@ -1,0 +1,4 @@
+module M
+avow to "reject {n: Int}"
+  native csharp
+    var s = """Fail("X")""";

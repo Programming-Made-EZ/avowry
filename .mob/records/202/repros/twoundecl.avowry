@@ -1,0 +1,5 @@
+module M
+avow to "reject {n: Int}"
+  native csharp
+    if (n < 0) Fail("A");
+    if (n > 9) Fail("B");
