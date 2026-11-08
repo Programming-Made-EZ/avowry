@@ -1846,3 +1846,6 @@
 {"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-08T04:07:04.566977Z", "probe_taken_at": "2026-11-08T04:07:04.556610Z"}
 {"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-08T04:07:04.602260Z", "probe_taken_at": "2026-11-08T04:07:04.592010Z"}
 {"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-08T04:07:06.310560Z", "probe_taken_at": "2026-11-08T04:07:06.298439Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-08T04:22:28.117933Z", "probe_taken_at": "2026-11-08T04:22:28.091942Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-08T04:22:28.120579Z", "probe_taken_at": "2026-11-08T04:22:28.097797Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-08T04:24:10.411383Z", "probe_taken_at": "2026-11-08T04:24:10.403678Z"}

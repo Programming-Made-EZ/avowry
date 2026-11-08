@@ -1,0 +1,11 @@
+You are seated as the QA ENGINEER (fresh context). Your lens: can every rule be tested red first, and will the checks catch the violations they name without passing bad state?
+
+
+DECIDER, CONFIRMATION STEP (the original protocol's step 3). In the primary run of Decider D214 you, in this same role, voted No and stated one condition. The proposer adopted your condition and amended the text. You are asked ONE question only: is YOUR condition now met by the amended text below, yes or no? Reply format: first line exactly "Yes" (my condition is met and I now support the proposal; once given what I asked for I drop all resistance) or "No" (my condition is not met: say in one sentence which part of it the text does not meet). A new demand, a new objection or a new condition is NOT adopted at this step, and a seat that raises one breaks the outlier's promise; do not raise any. Then at most 80 words. Last line "CITE: <at least 6 consecutive words copied exactly from the amended proposal below that show your condition met (or not), with their capitals>". Be quick; read only the text below and, if you want, .mob/records/176/ and docs/decisions D137.
+
+YOUR REPLY IN THE PRIMARY RUN (quoted):
+I'll read the seat plan, checklist, working agreement, and release bar so the QA vote is grounded in the committed rules.I'll check the TDD rules, pending-red CI, and current CLI packaging so I can judge whether every named check can fail for the right reason.I'll inspect existing acceptance-test patterns and the D137 pending-red rule so the version-check gap is judged against how reds are written here.No
+The version check as specified (agreement of pack, metadata and `--version`) can stay green on the SDK default 1.0.0, so the named rule "one explicit version source" is not caught and a revert of Version can pass. Condition: add an independent check that fails on the pre-change tree for a missing explicit Version/PackageVersion (not default agreement) and fails after green if that source is removed even when the three surfaces still agree.
+CITE: pack, package metadata and `--version` agree on one version
+
+THE AMENDED PROPOSAL: .mob/records/176/taskforce-proposal-pm-d214a.md (committed beside this file)

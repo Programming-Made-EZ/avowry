@@ -1,0 +1,11 @@
+You are seated as the INDEPENDENT REVIEWER WITH THE AUDIT LENS (fresh context; the external auditor is never a mob seat). Your lens: can this be verified from git alone, and does it leave a loophole that lets the team pass while breaking the practice?
+
+
+DECIDER, CONFIRMATION STEP (the original protocol's step 3). In the primary run of Decider D214 you, in this same role, voted No and stated one condition. The proposer adopted your condition and amended the text. You are asked ONE question only: is YOUR condition now met by the amended text below, yes or no? Reply format: first line exactly "Yes" (my condition is met and I now support the proposal; once given what I asked for I drop all resistance) or "No" (my condition is not met: say in one sentence which part of it the text does not meet). A new demand, a new objection or a new condition is NOT adopted at this step, and a seat that raises one breaks the outlier's promise; do not raise any. Then at most 80 words. Last line "CITE: <at least 6 consecutive words copied exactly from the amended proposal below that show your condition met (or not), with their capitals>". Be quick; read only the text below and, if you want, .mob/records/176/ and docs/decisions D137.
+
+YOUR REPLY IN THE PRIMARY RUN (quoted):
+I'll read the cited records, working agreement, and release bar so the audit vote rests on git-verifiable facts.I’ll check D137, D230, pending-red CI, and the csproj so I can catch any git-only loophole.I’m checking whether demo-output characterisation is already in git, and whether the gate can still skip a watched red.No
+The gate can SHIP a green that rewrites the pending test, because it only checks Criterion-line order and a matching pack-failure replay. D137 requires the acceptance-test body to stay byte-identical from red to green apart from removing Pending; pending-red CI is still Open, so there is no other detector. Condition: the independent gate HOLDs unless git shows that green test body is byte-identical to the pending-red body apart from removing Status=Pending.
+CITE: ONE atomic packaging green removes Pending in the same commit
+
+THE AMENDED PROPOSAL: .mob/records/176/taskforce-proposal-pm-d214a.md (committed beside this file)

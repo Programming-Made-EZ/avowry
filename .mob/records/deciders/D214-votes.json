@@ -1,7 +1,7 @@
 {
  "decider": "D214",
  "subject": "card 176 task-force declaration and card text (second correction)",
- "result": "FAILED",
+ "result": "ADOPTED",
  "run1_text_826ca51": {
   "architect": [
    {
@@ -221,5 +221,25 @@
     "reply_head": "I'll read the seat plan, working agreement, and related records first so I can vote on whether this task force is sized to the work.The agreement’s task-force and worktree rules look like they may conflict with this declaration; I’ll read those sections next.Yes\nThe force is the default card-mode seats: Ready Codex, slice and red Grok, green Codex, independent Claude gate, separate Claude sign-off. Authors do not review; red and green differ. Trial drivers sit on the seat plan, not the force, so D212's padding is gone. Claude seats carry a reason: Grok and Codex author, Copilot and agy are out, Muse/Cursor/Qwen are trial-only. Architect owns "
    }
   ]
- }
+ },
+ "confirmation_step": {
+  "audit lens": {
+   "question": "is your condition now met, yes or no",
+   "seat": "grok",
+   "vote": "Yes",
+   "counted_by_decider": true,
+   "cite_ok": true,
+   "reply": "Yes\nThe independent gate now HOLDs unless git shows the green test body is byte-identical to the pending-red body apart from removing Status=Pending. That is the condition I asked for.\nCITE: HOLDs unless git shows that the green's test body is byte-identical\n"
+  },
+  "qa": {
+   "question": "is your condition now met, yes or no",
+   "seat": "grok",
+   "vote": "Yes",
+   "counted_by_decider": true,
+   "cite_ok": true,
+   "reply": "Yes\nThe pending red now includes the independent explicit-version check I required: it fails on the pre-change tree when Version or PackageVersion is missing, and it fails after green if that source is removed even when pack, metadata and `--version` still agree. I drop resistance.\nCITE: fails after the green if that explicit source is removed even when the three surfaces still agree\n",
+   "note": "the first QA confirmation call (confirm214-qa) did not start: the seat-use history failed its append-only check when two decider calls began at once; asked again alone (confirm214-qa2)"
+  }
+ },
+ "confirmation_amended_text": ".mob/records/176/taskforce-proposal-pm-d214a.md"
 }
