@@ -1456,5 +1456,11 @@
     "status": "adopted",
     "title": "Card 202 retro pick: adopt the D217 trial, the confirmation step in place of the separate independent re-run",
     "order": 215
+  },
+  "D225": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 186 task-force declaration and card text (pre-publication checks: name, licences, history, vendor terms)",
+    "order": 216
   }
 }

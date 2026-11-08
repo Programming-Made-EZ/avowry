@@ -1,0 +1,63 @@
+{
+ "decider": "D225",
+ "subject": "card 186 task-force declaration and card text (pre-publication checks: name, licences, history, vendor terms)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d225-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a disposition per finding, never a value",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 186 records, related cards, and the working agreement so the architect vote is grounded in the actual design.I'll compare the 186 draft against cards 189 and 202 and the existing checker tests.I'll inspect the existing checker tests, D137/D222 rules, and how docs findings pages are asserted.Yes\n\nOne findings page, one Pending aggregate with the MULTI ids, each id checking the committed page against tracked files, owner items left open, legal files untouched: sound, minimal, and in line with 189/202. Personal-names as characterisation is the right D204 call. Recording the history-scan command (no new script) plus the gate re"
+   }
+  ],
+  "qa": [],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "d225-auditlens-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The card closes when the gate and CI are green",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe page's claims can be checked from git alone, and the gate steps I'd want are all named. The history-scan command is recorded verbatim and rerun with counts compared (step 7). The distinct-identity count is compared with `git log` (step 8). The empty `git diff` on NOTICE, TRADEMARKS.md and LICENSE is checked (step 9). Tracked-only scanning (`git ls-files`) is also covered.\n\nNotes, not conditions:\n- The one-word asks go out in a report, not in git, so only the \"open with ask date\" text is git-verifiable.\n- \"Not reviewed: needs <source>\" rows could pass indefinitely. The publish card's Ready check must fail while any such row is open.\n-"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d225-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "separate fresh sign-off Claude. The baseline gate by the facilitator",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card-186 records, related cards, and the working agreement so the vote rests on those files.I'll read the 186 records, the 189/202 seat plans, and the agreement sections that define this vote.I'll check the sign-off rules, D206/D219, and how 189 and 202 seated the same work.Yes\n\nThe page is the evidence the sponsor persona will adopt, reshape or reject on: named tests pin each MULTI id to the committed page and the repo, the gate reruns the scan and git-log counts, owner items stay open with dates, and unread terms recommend holding publish. Seats cover sign-off: architect, red, green, Qwen as the sponsor persona before the gate, Muse on the secrets scan, "
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d225-coach-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Cursor takes a SECOND read-only review of the final tip",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the working agreement and the card 186/189/202 records to judge whether this task force is sized to the work.I'll compare this roster with the recent docs cards and the agreement's \"sized to the task\" rule.Yes\n\nThe force matches a docs card plus the two extras the work and the owner require. Architect, red, green, Qwen as the sponsor persona (D206), independent gate, separate sign-off, and the facilitator baseline are the 178/179 core. Muse on the secrets-scan section supplies the security lens this history page needs; the lawyer stays an owner item. Cursor's second read-only review is the owner's probation review-type seat, bounded as read-only "
+   }
+  ]
+ },
+ "trigger_line": "(d) the re-run was not run because the primary window passed with no No and no amendment and the proposal does not change this agreement",
+ "scrub_note": "In 2 reply_head field(s) the persona name of the card sponsor was replaced by \"the sponsor persona\" so the record passes the personal-attribution rule of scripts/check-no-personal-names.py; nothing else of the replies was changed."
+}
