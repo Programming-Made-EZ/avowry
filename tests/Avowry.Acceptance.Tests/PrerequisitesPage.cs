@@ -11,7 +11,6 @@ public class PrerequisitesPage
     [Fact]
     [Trait("Slice", "178")]
     [Trait("Criterion", "178-1")]
-    [Trait("Status", "Pending")]
     public async Task Prerequisites_page_matches_what_CI_uses()
     {
         // Given the CI workflows and docs/PREREQUISITES.md as they are on the working tree
