@@ -179,3 +179,12 @@ Left out: tech-writer (cold-reader + promise check); security (no code path); ex
 ## THE DECLARATION VOTED
 
 The task force of section 5 of the draft with these changes: slice (architect) Claude, read-only, writes the slice and decides correction 2; red (QA) Grok, a worktree; green a fresh Claude context that is never the red's seat; the cold reader Muse (fallback Cursor; fallback Qwen reply-only); gate reviewer and sign-off two separate fresh Claude contexts (no non-author non-trial driver is in quota); the baseline gate by the facilitator, isolated, the CLI built first. Decider seats: six fresh seats at once through decider.py, Muse in two of them. Per D217 this proposal does not change the agreement, so if the primary window passes with no No and no amendment no separate re-run is run (trigger line (d)); an amendment goes through the confirmation step.
+
+## AMENDMENT AFTER THE PRIMARY WINDOW OF D218 (the two outliers' conditions, adopted)
+
+The primary window had four Yes (architect, developer, audit lens, coach) and two No (QA, decider), each No with one condition. Both conditions are adopted as written, and each goes back to its own outlier to confirm.
+
+1. QA's condition: the single Pending python test records an independent check for every Criterion 1 to 3 bullet (every README keep and drop as the slice pins it after correction 2, a PREREQUISITES check that fails on today's lines 7 to 9, every guide step, every PowerShell and Windows-path rule), reports every failing check in one aggregated assertion, and keeps the named hostile inputs (a missing guide, a restyled table, a curl block without a PowerShell block) red.
+2. The decider's condition: `docs/PREREQUISITES.md` is added to the cold reader's named files (the reader reads `README.md`, `docs/GETTING_STARTED.md` and `docs/PREREQUISITES.md` only, still read-only as Dana), and its report is committed before the sign-off.
+
+Where the declaration above says the cold reader reads only `README.md` and `docs/GETTING_STARTED.md`, read the three files. The other four voters are asked only whether this amendment changes their vote.
