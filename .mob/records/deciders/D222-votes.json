@@ -1,0 +1,108 @@
+{
+ "decider": "D222",
+ "subject": "card 189 retro pick: a Ready table row that names two constructs becomes two ids",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d222-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the red record lists the ids with the Ready row each came from",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 189 records, the amendment diff, and the agreement so I can vote on whether the design is sound, minimal, and enforceable.The amendment is a short Experimental entry. Next I’ll check how experiments and checker rules are written so I can judge enforceability.I’ll check the Experimental section, the red-id rules, and the slice cap so the vote can rest on whether this stays enforceable.Yes\n\nThe record is sound and minimal: each Ready-named construct gets its own slice row and red id, with provenance in the red record and a recorded one-throw-site exception. That closes the card 189 gap (Ready `:122/:126`, slice kept `:126` on"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d222-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "the red record lists the ids with the Ready row each came from",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 189 records and the agreement patch as a QA seat, then vote on whether every named rule can fail red first.Next I’ll read the Experimental section, the retro voices, and the red-first rules so the QA vote is grounded in what is actually testable.No\n\nThe split of ids is red-first: each new id must fail on the pre-change tree. Completeness is not. Listing \"the ids with the Ready row each came from\" only annotates ids that exist, so a dropped half never appears and the record still passes. The why-line covers an intentional one-id collapse, not omission, which was card 189's HOLD. Condition: the red record and the pre-ship gat"
+   }
+  ],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "d222-auditlens-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a Ready table row that names two constructs becomes two ids",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe practice can be checked from git alone. The red record lists each id with the Ready row it came from, and the pre-change failing run is committed. That lets an auditor compare the Ready draft's rows with the red's ids.\n\nOne loophole to watch: \"names two constructs\" is a judgment call, and the \"stays one id, says why\" escape could be abused. The trial's duplicate counter-metric partly covers this.\n\nSuggestion: have the red record list every Ready row, including the ones kept as one id, so a dropped row shows up as a diff and not as silence."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d222-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A Ready table row that names two constructs becomes two ids",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 189 records and the Decider/Experimental sections so the sign-off vote rests on those facts.I’ll check the Experimental section and the experiments log next so the sign-off vote can rest on those rules.Yes\n\nThe later adopt/reshape/reject can rest on evidence: hypothesis, metric (named gaps found only at gate or sign-off: baseline 1, target 0), counter-metric (duplicate or non-failing ids, red-to-first-green minutes), three-card trial, facilitator owner, and red-record provenance. The independent gate stays the holdout detector. Existing PM, slice, red, gate, sign-off and a retro Decider are enough; no extra seat. D217 (c), "
+   }
+  ],
+  "coach": []
+ },
+ "confirmation_outlier_qa_amended_text_a7d65f9": [
+  {
+   "role": "qa",
+   "kind": "outlier",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe amendment requires the red record to list every multi-construct Ready row with ids or a one-id reason, treats a dropped half as a missing line, requires each id to fail on the pre-change tree, and makes the independent gate a HOLD if a row or construct is missing. Condition met.\nCITE: the red record lists EVERY multi-construct Ready row, each with its ids or a reason for staying one id\n"
+  }
+ ],
+ "confirmation_others_amended_text_a7d65f9": [
+  {
+   "role": "architect",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe amendment tightens fail-closed completeness without changing the record shape I already backed. Listing every multi-construct Ready row with ids or a one-id reason, plus a HOLD when a construct is missing, closes the dropped-half hole. The why-line still valves false positives.\n\nCITE: the red record lists EVERY multi-construct Ready row\n"
+  },
+  {
+   "role": "dev",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nAmendment closes the dropped-half gap with an explicit list and gate check. Still bounded, unambiguous, and workable for backend without gaming.\nCITE: the red record lists EVERY multi-construct Ready row\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n"
+  },
+  {
+   "role": "auditlens",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe amendment adopts my own primary-window suggestion. The red record now lists every multi-construct Ready row, so a dropped half shows up as a missing line. An auditor can check that from git alone by diffing the Ready table against the red record. The \"stays one id\" escape still needs a stated reason.\n\nCITE: the red record lists EVERY multi-construct Ready row, each with its ids or a reason for staying one id\n"
+  },
+  {
+   "role": "decider",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe amendment closes the drop-half hole: every multi-construct Ready row must appear with ids or a stay-one-id reason, and the existing independent gate HOLDs on a missing row or construct. Evidence for adopt/reshape/reject is stronger. No extra seat. Still support.\nCITE: the review is a HOLD if a row or one of its constructs is missing\n"
+  },
+  {
+   "role": "coach",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nStill right-sized: amendment closes the dropped-half loophole QA named, within the same 3-card trial, owner and metrics, no new ceremony beyond the existing gate check.\nCITE: each with its ids or a reason for staying one id\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n"
+  }
+ ],
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run"
+}

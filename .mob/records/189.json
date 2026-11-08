@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 189,
+ "title": "An unsupported construct is a diagnostic, not an unhandled exception",
+ "process": "card-mode rules run by hand; pulled as the head of the board after re-rank 31 (Decider D220: cards 162 and 201 placed after card 203, 162 waiting for Codex and 201 owner-run); the Ready draft by a Grok product-manager seat with the facilitator rerun that reproduced the crash on HEAD, six corrections and the standing-rules preflight; the declaration through Decider D221 (six Yes, no re-run: trigger (d)); an architect slice that ran every row through the CLI; a characterisation first (the composite return type stays PH325), one Pending red for criteria 1 and 2, one atomic green (Criterion: 1-2); an independent gate review that returned HOLD on the missing then-returns-none half, fixed by a red revision (watched failing on exactly that row) and a green revision, then SHIP; a separate fresh sign-off; seats spread under the product owner clarification (Codex, Copilot and agy out of quota; Claude 8 of about 23 card seats with reasons in the retro)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Grok ctx-1",
+   "model": "grok-4.6, product manager, read-only; taskforce-proposal-pm.md with the facilitator reruns (the crash reproduced on HEAD), six corrections and the declaration",
+   "evidence": "32d9f9b6745a0dcbdf56a7ca02384d9e109ac52c"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md (eight rows run through the CLI, the design, the codes PH340 and PH020, the size cap); reason: Grok wrote the PM draft and the red, Codex out of quota",
+   "evidence": "49731bf0e5a69423fc011b85328b187660914b65"
+  },
+  {
+   "role": "red",
+   "seat": "Grok ctx-3",
+   "model": "grok-4.6 via grok.cmd in its own git worktree, QA engineer: the characterisation (a641d7f), the pending red and the red revision 1 (3f2c974, the missing then-returns-none row); each claim rerun by the facilitator",
+   "evidence": "068c37821e40fd82df9e8319fc1de6af9ab332a7"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, build seat, in its own worktree, never the red seat; the green revision 1 (8ee6230) by the same context; reason: Grok wrote the red and Codex is out of quota",
+   "evidence": "164b928b97870ff931a385033d9c0ad844b4a906"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent gate reviewer, read-only (a first review that returned HOLD and a delta re-review on the same context that returned SHIP); red replay, mutations, supported-output checks, Gate evidence and Load lines",
+   "evidence": "5fe2628e40684cbde25fa67dd3288a02018576ae"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, separate from the gate reviewer, own full gate in a single-branch clone; SIGNED OFF WITH CONDITIONS (none blocking; cards 352 and 353 filed)",
+   "evidence": "5829a547974cf9c3b4b6ff7bbe897bffef4dcb19"
+  }
+ ],
+ "retro": "docs/retros/card-189-2026-11-08.md",
+ "notes": "Done checks met: criterion 1 (the card repro MultiLevel.avowry builds with exit 1 and PH340 at the line of the plain-call step, no stack trace); criterion 2 (the other rows: a composite fail with, a leaf with only a python native (PH020), two effects, a non-variable call argument, a spec given of none, an effectful composite let, a store seed of an Int field, and the spec then-returns-none outcome found at the gate, each PH340 or PH020 with line and column, none an unhandled exception); criterion 3 (a characterisation passing on the pre-change tree: a composite return type is PH325 through the CLI, the 174 corpus theory and the orders output hash unchanged). The shared Pending red failed by assertion on the pre-change tree and passes after the atomic green; the red revision failed on exactly the one new row before the green revision; the test file is byte-identical. Baseline gate isolated, CLI built first: Compiler 324 of 324, Acceptance 339 of 339, 0 warnings; the independent gate reviewer SHIP after one HOLD, and the sign-off with a clean full run. docs/GRAMMAR.md gained a PH020 row, a PH340 row and clauses with the D72 reason recorded in the green commit (card 162 ratifies the hashes). Task force declared through D221; the retro pick D222 was adopted as a three-code-card trial (a Ready table row that names two constructs becomes two ids). Process time against build time about 0.5 to 1 before the gates. Born-green findings: none. Open: bug 338, bug 327, issue 304 (fourth sighting), bugs 352 (pin the diagnostic column) and 353 (messages name what to change); card 162 waits for Codex (about 2026-11-11) and 201 is owner-run."
+}

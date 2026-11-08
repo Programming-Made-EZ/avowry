@@ -1438,5 +1438,11 @@
     "status": "adopted",
     "title": "Card 189 task-force declaration and card text (an unsupported construct is a diagnostic, not an unhandled exception)",
     "order": 212
+  },
+  "D222": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 189 retro pick: a Ready table row that names two constructs becomes two ids (adopted as a three-code-card trial)",
+    "order": 213
   }
 }
