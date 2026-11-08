@@ -1,0 +1,62 @@
+{
+ "decider": "D220",
+ "subject": "re-rank 31: place cards 162 and 201 after card 203 so the head of the board is a card the mob can pull",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d220-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the head of the board is the highest-value card the mob can finish",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the re-rank record, PM draft, and working agreement so the Architect vote is grounded in the actual design, not the card summaries.The PM draft and checklist match the proposal; I’ll confirm the Value rule, re-rank mechanics, and the parked-card placement next.Yes\n\nParking 162 and 201 after 203 is the minimal board move that makes the head pullable without dropping those cards or adding checkers. 162 cannot finish while the frozen Codex/Grok pair is out (D127; driver-availability forbids swapping the pair); 201 is owner-run. 189, 202 and 203 are already the next unblocked product cluster, so one `--after 203` call yields a three-car"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d220-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "recording another CLI under those names would falsify the evidence",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the cited records and agreement as a QA seat, then vote on whether the re-rank rules are testable red-first.I'll check the three cards' texts and the value/WIP rules so the vote is about testable red-first checks.Yes\nParking 162 until Codex returns is the check that stops Bar6 going green on one stale evidence file (`failures.Count < files.Length`). Pulling 162 now, or recording another CLI as `--model codex`, would pass falsified state. 201 is owner-run; the mob cannot finish it. 189 is unblocked and code-only; its three criteria already name the red (PH code, source line, no Unhandled exception) that fails today on NotImplementedE"
+   }
+  ],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "d220-auditlens-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the head of the board is a card the mob can pull",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe reorder is checkable from git alone: the rerank run and its resulting ranks should appear in the commit, and reversal is one rerank call. The external facts are the Codex quota date and the \"owner-run\" status of card 201. Both come from the card texts and the probe, so the record should cite them. The loophole risk is that cards 162 and 201 sit below 203 indefinitely. The record should therefore state the re-pull condition (a Codex re-probe at or after 2026-11-11 12:10) so the park can't become a silent drop. These are notes only and don't change my vote."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d220-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the head of the board is a card the mob can pull",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the cited records, agreement, and card texts so the sign-off vote rests on evidence, without changing anything.I'll check the Decider protocol, re-rank rules, and the three cards so the sign-off vote is on evidence.I'll verify HEAD, the three cards, and probe evidence so the sign-off vote is grounded.Yes\nThe facts are git-checkable: 162’s criterion 2 needs the frozen Codex and Grok pair, and Codex is out until about 2026-11-11; 201 is owner-run by its own text; 189 has no dependencies and is a v0.1 required card the mob can finish this session. That evidence is enough to adopt, to park 162 and 201, and to reverse with one rerank. Si"
+   }
+  ],
+  "coach": []
+ },
+ "trigger_line": "(d) the re-run was not run because the primary window passed with no No and no amendment and the proposal does not change this agreement"
+}

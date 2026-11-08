@@ -323,3 +323,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D217](process-and-staffing.md#d217) | Card 178 retro pick: the confirmation step replaces the separate independent re-run (adopted as a five-Decider trial) | process-and-staffing | adopted |
 | [D218](process-and-staffing.md#d218) | Card 179 task-force declaration and card text (README and getting-started guide) | process-and-staffing | adopted |
 | [D219](process-and-staffing.md#d219) | Card 179 retro pick: on a docs card the independent gate review starts on the final tip (adopted as a three-docs-card trial) | process-and-staffing | adopted |
+| [D220](process-and-staffing.md#d220) | Re-rank 31: place cards 162 and 201 after card 203 so the head of the board is a card the mob can pull | process-and-staffing | adopted |

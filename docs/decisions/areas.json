@@ -1426,5 +1426,11 @@
     "status": "adopted",
     "title": "Card 179 retro pick: on a docs card the independent gate review starts on the final tip (adopted as a three-docs-card trial)",
     "order": 210
+  },
+  "D220": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Re-rank 31: place cards 162 and 201 after card 203 so the head of the board is a card the mob can pull",
+    "order": 211
   }
 }
