@@ -1,0 +1,79 @@
+[
+ {
+  "tag": "d212-architect-grok",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "No",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "watched failing because no installable tool package exists",
+  "reason": "Rewrite criterion 2's named red so it is watched failing after criterion 1 is green for a remaining production gap (installed `--version` versus the package version, and the packed tool building the demo), not because no installable tool pa",
+  "reply_tail": "I'll read the seat plan, checklist, working agreement, and release bar so the architect vote is grounded in the recorded design.I'll check the slice rules, packaging decisions, CLI project, and whether the declaration conflicts with serial-on-main.No\nRewrite criterion 2's named red so it is watched failing after criterion 1 is green for a remaining production gap (installed `--version` versus the package version, and the packed tool building the demo), not because no installable tool package exists. PackAsTool, package ID `Avowry`, one version source, local cleared feed, scratch `--tool-path`, characterisation first, and the 177/186 split stay sound. As ordered, criterion 1 already produces the package, so that named reason is a false checker: the later red is born green or fails for a different reason than the card records.\nCITE: watched failing because no installable tool package exists\n"
+ },
+ {
+  "tag": "d212-auditlens-codex",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "No",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "Fresh sign-off: a fresh Claude context",
+  "reason": "Use a separate fresh Claude context for final sign-off; the gate reviewer is no longer fresh after running the gate. CITE: Fresh sign-off: a fresh Claude context",
+  "reply_tail": "No\nUse a separate fresh Claude context for final sign-off; the gate reviewer is no longer fresh after running the gate.\nCITE: Fresh sign-off: a fresh Claude context"
+ },
+ {
+  "tag": "d212-coach-codex",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "No",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "package and prove locally only; unknowns: package layout",
+  "reason": "Remove the three trial-driver seats from this medium packaging card; the core Ready, Slice, Red, Green, independent gate, and sign-off roles already cover delivery and assurance without ceremonial staffing. CITE: package and prove locally o",
+  "reply_tail": "No\nRemove the three trial-driver seats from this medium packaging card; the core Ready, Slice, Red, Green, independent gate, and sign-off roles already cover delivery and assurance without ceremonial staffing.\nCITE: package and prove locally only; unknowns: package layout"
+ },
+ {
+  "tag": "d212-decider-codex",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "Yes",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "the full suite in a single-branch clone of main",
+  "reason": "The decision is evidence-led: named reds, characterization, explicit local-feed isolation, version agreement, unchanged generated output, and a reproducible gate tied to the tested commit. Ready, architecture, QA, build, independent gate, t",
+  "reply_tail": "Yes\n\nThe decision is evidence-led: named reds, characterization, explicit local-feed isolation, version agreement, unchanged generated output, and a reproducible gate tied to the tested commit. Ready, architecture, QA, build, independent gate, trial feedback, and fresh sign-off seats are all assigned with author separation.\n\nCITE: the full suite in a single-branch clone of main"
+ },
+ {
+  "tag": "d212-decider-muse",
+  "seat": "muse",
+  "model": "",
+  "vote": "none",
+  "counted_by_decider": false,
+  "cite_ok": false,
+  "cite": null,
+  "reason": "seat unavailable",
+  "reply_tail": ""
+ },
+ {
+  "tag": "d212-dev-grok",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "No",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "criterion 1 red then green; criterion 2 red then green",
+  "reason": "Sequential red-then-green per criterion forces an incomplete PackAsTool green so criterion 2 stays red. An honest criterion-1 pack already installs, reports a version, and builds the demo, so the named fail reason \"no installable tool packa",
+  "reply_tail": "I'll read the working agreement, seat plan, checklist, and release bar so I can vote as the backend seat on whether these rules are workable.I'll check the CLI project, existing tests, and the slice/TDD rules so the vote rests on whether I can actually work this card.No\nSequential red-then-green per criterion forces an incomplete PackAsTool green so criterion 2 stays red. An honest criterion-1 pack already installs, reports a version, and builds the demo, so the named fail reason \"no installable tool package exists\" is gone before that red is written. Condition: commit both new-state reds and watch them fail on the pre-change tree before any production change; the green may then land both. Slice caps, pending reds, no feature flag, and one version source are workable. Inner unit doubles around real `dotnet pack` and `dotnet tool install` stay thin.\nCITE: criterion 1 red then green; criterion 2 red then green\n"
+ },
+ {
+  "tag": "d212-qa-codex",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "Yes",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "one red per new-state criterion, the characterisation first",
+  "reason": "The named reds are observable and fail on the current tree. The local-feed isolation, scratch tool path, unchanged global list, package/version agreement, demo output comparison, and empty-feed failure checks directly guard against the bad ",
+  "reply_tail": "Yes\n\nThe named reds are observable and fail on the current tree. The local-feed isolation, scratch tool path, unchanged global list, package/version agreement, demo output comparison, and empty-feed failure checks directly guard against the bad states they name. Red/green authorship is separated, and the independent gate reruns the complete installed artifact path.\n\nCITE: one red per new-state criterion, the characterisation first"
+ }
+]
