@@ -1372,5 +1372,11 @@
     "status": "failed",
     "title": "Card 324 retro pick, third form: the byte-parity check becomes a permanent practice (failed; the practice stays on trial)",
     "order": 201
+  },
+  "D211": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Re-rank 29 (after card 324 closed): place cards 176, 178, 186 and 179 after card 324 and pull card 176",
+    "order": 202
   }
 }

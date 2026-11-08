@@ -1,0 +1,345 @@
+{
+ "decider": "D211",
+ "subject": "re-rank 29 (after card 324 closed): place cards 176, 178, 186 and 179 after card 324 and pull card 176",
+ "result": "ADOPTED",
+ "round1_unamended_text_12101a3": {
+  "architect": [
+   {
+    "tag": "d211-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "none",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": false,
+    "decider_cite_ok": false,
+    "reply_head": "I'll read the re-rank records, board cards, and the working-agreement rules first so the Architect vote is based on the actual proposal, not a guess.Next I’ll read the re-rank notes, the standing rules, and the Architect role so the vote matches those constraints.I’ll pull the Architect role, D197/D200, and the live issue text next so the ranking claim can be checked against the cards.",
+    "note": "the Grok seat read files for two attempts and never replied with a vote (no vote in the reply); re-run on Claude"
+   },
+   {
+    "tag": "d211-architect-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "PLACE 176, 178, 186 AND 179 AFTER 324, in that order",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nThe proposal is minimal and enforceable. It is one reversible `rerank.py` call, it moves no other card, and it leaves the 325 and 326 outcomes to their own Ready steps. Pulling 176 first is consistent with the v0.1 bar and the dependency chain 176, 178, 179, with 186 placed before 179 because 179 links to it.\n\nI didn't open the repo files, so this rests on the proposal's own facts. I would watch one point. \"LLMs are the customers\" makes Ari primary, so the Ready step for 176 should name which Ari-facing gain 176 enables. The proposal's reopen triggers cover the compiler-crash risk,"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d211-qa-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "Rewrite card 176's criteria as titled Gherkin scenarios with ZOMBIES letters",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nThe Ready gate is testable red-first: titled Gherkin/ZOMBIES scenarios, verified local-feed installation, explicit failure outcomes, and no unverified external dependency. Checking pack, install, `--version`, and demo build prevents superficial success from passing bad state. Dependency order is coherent and reversible. The package-id and naming boundaries remain decisions to resolve at Ready, not hidden assumptions."
+   },
+   {
+    "tag": "d211-qa-claude",
+    "seat": "claude",
+    "note": "not counted by the decider (cite not exact)"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d211-dev-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "none",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": false,
+    "decider_cite_ok": false,
+    "reply_head": "I'll read the re-rank records, working agreement, and the named cards so the backend-developer vote is grounded in the actual rules.Next I’ll read the proposal records, TWA rules, and the board cards that this re-rank would pull.I’ll pull D197/D200 and the open issues next so the Ready-step load on 176 is clear.I’ll read the backend-developer charter and the board copies of the named cards.Card 176’s command-name history conflicts with D205; I’ll read the remaining cards and confirm the current CLI and flags.Live issue text may differ from the archive; I’ll read the named GitHub issues next.",
+    "note": "the Grok seat read files for two attempts and never replied with a vote (no vote in the reply); re-run on Claude"
+   },
+   {
+    "tag": "d211-dev-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "PULL CARD 176 (package the CLI as a dotnet tool and version it) NEXT",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nFrom the seat that works under the rules every card, this is workable. 176 has no dependency, so I can start it without waiting on anything. The chain 176, 178, 186, 179 follows the stated dependencies, and 178 and 179 can each be tested against the one before. Putting the Ready step first is fair to the work. It requires titled Gherkin scenarios, observable failure outcomes for pack, install, `--version` and a demo build, and a check that the slice stays within three increments. I can meet those without gaming them. My one concern is that a pack and install path needs real doubles"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d211-auditlens-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "resolve the placeholder package-id boundary without publishing",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nRequire committed evidence that card 176’s Ready checks and decisions were completed; otherwise the team can claim compliance from mutable issue state, which is not verifiable from git alone."
+   },
+   {
+    "tag": "d211-auditlens-claude",
+    "seat": "claude",
+    "note": "not counted by the decider (cite not exact)"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d211-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "none",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": false,
+    "decider_cite_ok": false,
+    "reply_head": "I'll read the re-rank records, working agreement, v0.1 bar, and the named decisions first so the vote rests on the written evidence.Next I’ll pull D197/D200 and the live issue text so the vote can check evidence and whether the right seats are present.",
+    "note": "the Grok seat read files for two attempts and never replied with a vote (no vote in the reply); re-run on Claude"
+   },
+   {
+    "tag": "d211-decider-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "PULL CARD 176 (package the CLI as a dotnet tool and version it) NEXT",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nThe placement rests on evidence the proposal cites: the v0.1 bar (bars 1, 2 and 8) and the dependency chain 176, 178, 179, which the facilitator checked against the issues. The reversal trigger is concrete: a consumer seen losing work to an unhandled compiler exception while the four are in progress. Deciding at each Ready step whether 325 and 326 close is correct. Two things I'd add:\n- The Ready step for 176 should record the evidence that would prove it a consumer gain, so it isn't judged on completion alone.\n- Ari's cards 162 and 189 are delayed. The sign-off seat for that trade"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d211-coach-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": false,
+    "decider_cite_ok": false,
+    "reply_head": "Yes",
+    "note": "not counted by the decider (cite not exact)"
+   },
+   {
+    "tag": "d211-coach-claude",
+    "seat": "claude",
+    "note": "not counted by the decider (cite not exact)"
+   },
+   {
+    "tag": "d211-coach-claude",
+    "seat": "claude",
+    "note": "refused before start by decider.py: a Claude seat is refused while Grok has waited longer since the last seating"
+   }
+  ]
+ },
+ "round2_after_amendment": {
+  "architect": [
+   {
+    "tag": "d211b-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the completion of these checks is verifiable from git and not from the mutable issue text",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll vote as Architect on this re-rank. First I'll read the draft, round-1 record, and the board/bar files the proposal cites.The draft and round-1 votes are in. Next I’ll check the architect lens, the v0.1 bar, and how Ready records are supposed to work.I’ll check whether `--after 324` is a valid closed-card anchor and how the architect slice rule treats this ranking.Yes\n\nThe ranking is one atomic `rerank.py` call that fails closed if 324 or a named card is missing, so it cannot silently mis-order. 176, 178, 186, 179 is the v0.1 install-to-first-use chain, and 325 and 326 stay for their own R"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d211b-qa-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "state the observable failure outcomes for pack, install, `--version` and a demo build",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nThe amendment makes card 176’s readiness auditable from committed evidence. Its required Gherkin scenarios, ZOMBIES coverage, explicit failure outcomes, dependency verification, and criteria red plan provide a strong basis for proving checks fail before implementation and reject the named bad states."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d211b-dev-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "Rewrite card 176's criteria as titled Gherkin scenarios with ZOMBIES letters",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the working-agreement rules and the re-rank draft so I can vote as the backend seat on whether 176's Ready checks are workable.I'll check the Card format and slice-limit rules so the backend vote is on whether 176's Ready checks are workable.Support-it\n\nFrom the seat that ships red-then-green under slice limits, this is workable. Card 176 is unblocked. The Ready step restates the Card format rule I already follow: titled Gherkin with ZOMBIES letters, observable failures for pack, install, `--version` and a demo build, and a three-increment cap. Local-feed pack/install is named, so I "
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d211b-auditlens-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "so that the completion of these checks is verifiable from git",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nThe amendment closes the audit loophole: card 176’s Ready proposal, checklist, and red plan must be committed before the task-force window. That makes compliance reviewable from immutable repository history rather than mutable issue text, while the specified checks and observable failure outcomes give reviewers concrete evidence to assess."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d211b-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "PLACE 176, 178, 186 AND 179 AFTER 324, in that order",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the rerank draft, round-1 record, and Decider protocol so the sign-off vote rests on those sources.I’ll check the Decider protocol and the v0.1 bar so the sign-off vote can rest on those written rules.Yes\n\nThe ranking is one reversible command with a named reopen. Card facts were facilitator-checked; v0.1 bars 1 and 2 match 176, 178 and 179. Closing 325 and 326 stays at their Ready steps. Round 1’s audit No is now the Ready record under `.mob/records/176/`, so those checks rest on git. The product manager drafted the Dana-first order; architect, developer, QA, audit, coach and this s"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d211b-coach-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The condition is reasonable and costs nothing",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe task force covered product value, architecture, implementation, QA, audit, and delivery process without missing a material perspective. The audit’s concrete concern was incorporated cheaply, and the second vote is appropriately narrowed to one reversible sequencing decision. Further seats or deliberation would add ceremony rather than insight."
+   }
+  ]
+ },
+ "independent_rerun_on_final_text": {
+  "architect": [
+   {
+    "tag": "d211brr-architect-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The Ready step also commits its record",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe design is minimal and enforceable: one ordering decision, explicit exclusions, clear reversal, and a narrowly defined Ready gate. Requiring the Ready proposal, checklist, and red plan to be committed before the task-force window creates immutable evidence without pretending completion has already occurred. The checks are observable and scoped to card 176, reducing false positives from mutable issue state or unrelated cards."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d211brr-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "state the observable failure outcomes for pack, install, `--version` and a demo build",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the rerank draft, round-1 record, and the Ready-check language so I can vote as QA on whether the rules can fail red first.I'll check the Card format rule, v0.1 bar, and Ready-record checks so the QA vote rests on what can actually fail red.I'll read the Card format rule, the v0.1 bar, and how Ready records are checked so I can judge red-first coverage.Support-it\n\nThe ranking is an observable board state: one `rerank.py` call, a named head, no other moves. Card 176’s Ready gate names red-first hooks a test can fail on before pack or install code exists: titled Gherkin/ZOMBIES scenari"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d211brr-dev-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "confirm the slice stays within three increments",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nThe ordering is workable and fair. Card 176’s Ready requirements are detailed but bounded: committed evidence, explicit failure outcomes, verified tooling assumptions, and a three-increment limit reduce ambiguity without predetermining implementation. The dependency chain is coherent, reversal is cheap, and reopening triggers are concrete. I can comply with red/green discipline, unit commits with doubles, flags, and slice limits without gaming them because readiness evidence must be committed before the task-force window."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d211brr-auditlens-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "verifiable from git and not from the mutable issue text",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the re-rank draft and round-1 record, then vote from the audit lens only.The round-1 audit condition was adopted; I’ll check the Ready-record practice in git so the vote is on remaining loopholes, not the old one.I'll check a recent Ready record against the standing Card-format and claim-equals-commit rules so the remaining loophole is concrete.Support-it\nThe rerank command and the named head are checkable from git after apply. Pulling 176 for Ready, with Card-format rewrite and the listed checks, matches standing practice. Round 1’s git-evidence condition is in the last section: the"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d211brr-decider-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "so that the completion of these checks is verifiable from git",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nThe decision is evidence-framed: dependency facts were verified, consumer outcomes and release-bar links are stated, alternatives are surfaced, and reversal triggers are observable. Product, architecture, development, QA, audit, coaching, and independent Decider perspectives are represented. The adopted requirement for committed Ready evidence closes the mutable-state concern before execution."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d211brr-coach-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Not decided by this vote (each is decided at its own Ready step)",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the draft, round-1 record, and the coach lens in the working agreement, then vote.The coach lens is task-force size versus ceremony. I'll check the TWA and the card-176 Ready load next.Yes\nThis vote is one ranking and one pull. Task-force assembly stays at 176's Ready step, where TFDD sizes the roster to the work. 325 and 326 stay off this ballot and close at their own Ready steps, so this is not a bundled planning ceremony. Ready obligations are the Card format rule plus a committed record under `.mob/records/176/`, which every card already writes, with informal Difficulty questions"
+   }
+  ]
+ },
+ "round1_note": "round 1 counted: QA (Codex), architect, developer and decider (Claude, after the Grok seats gave no vote) Support-it; audit lens (Codex) No with one condition (committed evidence that card 176 Ready checks were completed), adopted as the amendment; the coach (Codex) Yes was not counted (cite not exact) and its Claude fallback was refused. The independent re-run of the unamended text was stopped (it tested text that no longer stood)."
+}

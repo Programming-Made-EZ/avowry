@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:d156c23a4d880ee73182168addf395873c0b38a3a6433924ef9853bae72ab1b2 -->
+<!-- board-table-sha256:9b5bb4bb56fb5d8e35b6683d87a60c1518542f4e61a47af271e2e2247035f74a -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -119,18 +119,18 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 97 | 299 A second writer on one checkout is refused across processes | Done | card 230 (Writers and the vote lock) |
 | 98 | 196 Rename the two test projects to Avowry.*.Tests | Done | 195 |
 | 99 | 197 Rename the solution, CI jobs, scripts and paths to Avowry | Done | 196 |
-| 100 | 266 Live docs and the README use the name Avowry | Ready |  |
-| 101 | 324 A compiler diagnostic calls the unit an avow, not a Phrase | Ready | none |
-| 102 | 325 Test and code identifiers name the product Avowry, not Phrase | Ready | card 266 (the guard and the history decision) |
-| 103 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
-| 104 | 201 Migrate the sealed holdouts to avow and record a new baseline | Ready | 199 |
-| 105 | 189 An unsupported construct is a diagnostic, not an unhandled exception | Ready | none |
-| 106 | 202 A native block that fails with an undeclared code is a diagnostic | Ready | none |
-| 107 | 203 Names reserved by generated code are rejected or escaped | Ready | none |
-| 108 | 176 Package the CLI as a dotnet tool and version it | Ready | none |
-| 109 | 178 A prerequisites page that matches what CI tests | Ready | 176 |
-| 110 | 179 Rewrite the README and write the getting-started guide | Ready | 178 |
-| 111 | 186 Pre-publication checks: name, licences, history, vendor terms | Ready | none |
+| 100 | 266 Live docs and the README use the name Avowry | Done |  |
+| 101 | 324 A compiler diagnostic calls the unit an avow, not a Phrase | Done | none |
+| 102 | 176 Package the CLI as a dotnet tool and version it | Ready | none |
+| 103 | 178 A prerequisites page that matches what CI tests | Ready | 176 |
+| 104 | 186 Pre-publication checks: name, licences, history, vendor terms | Ready | none |
+| 105 | 179 Rewrite the README and write the getting-started guide | Ready | 178 |
+| 106 | 325 Test and code identifiers name the product Avowry, not Phrase | Ready | card 266 (the guard and the history decision) |
+| 107 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
+| 108 | 201 Migrate the sealed holdouts to avow and record a new baseline | Ready | 199 |
+| 109 | 189 An unsupported construct is a diagnostic, not an unhandled exception | Ready | none |
+| 110 | 202 A native block that fails with an undeclared code is a diagnostic | Ready | none |
+| 111 | 203 Names reserved by generated code are rejected or escaped | Ready | none |
 | 112 | 169 The map bytes do not depend on the culture | Ready | 161 |
 | 113 | 171 The CLI reads method and type names from the adapter; Program.cs is tidy | Ready | 161 |
 | 114 | 172 Trace hardening follow-ups and one shared test process helper | Ready | 168 |
