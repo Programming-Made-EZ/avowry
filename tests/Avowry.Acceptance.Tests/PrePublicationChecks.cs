@@ -11,7 +11,6 @@ public class PrePublicationChecks
     [Fact]
     [Trait("Slice", "186")]
     [Trait("Criterion", "186-1")]
-    [Trait("Status", "Pending")]
     public async Task Pre_publication_findings_match_the_repo()
     {
         var start = new ProcessStartInfo("python")
