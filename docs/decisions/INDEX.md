@@ -313,3 +313,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D207](process-and-staffing.md#d207) | Card 324 task-force declaration and card text: compiler diagnostics call the unit an avow | process-and-staffing | adopted |
 | [D208](process-and-staffing.md#d208) | Card 324 retro pick, first form: gate preparation, byte-parity permanent, Dimensions of Difficulty trial (failed; two parts re-proposed as D209) | process-and-staffing | failed |
 | [D209](process-and-staffing.md#d209) | Card 324 retro pick, second form: gate preparation with committed gate evidence; byte-parity permanent (failed; byte-parity re-proposed alone) | process-and-staffing | failed |
+| [D210](process-and-staffing.md#d210) | Card 324 retro pick, third form: the byte-parity check becomes a permanent practice (failed; the practice stays on trial) | process-and-staffing | failed |

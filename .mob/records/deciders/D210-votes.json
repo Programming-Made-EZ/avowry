@@ -1,0 +1,189 @@
+{
+ "decider": "D210",
+ "subject": "card 324 retro pick (third form): the byte-parity check becomes a permanent practice",
+ "result": "FAILED",
+ "run1": {
+  "architect": [
+   {
+    "tag": "d210-architect-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a count of renames, files or grep hits is not a clean claim",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe proposal is narrow, evidence-backed, and cleanly separates the uncontested parity practice from failed D208/D209 concerns. The rule is enforceable through a named checker, committed red test, attached output, and independent recomputation. Byte comparison directly covers the cited failure modes without conflating counts with correctness. Applicability is bounded to rule-based mechanical rewrites, while named exceptions prevent unexplained mismatches. The amendment moves unchanged trial text and removes the experimental entry, avoiding duplicate authority."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d210-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "undoing the rewrite on the new bytes reproduces the old bytes",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro records, the amendment, and the working-agreement experimental section so the QA vote is based on whether the byte-parity rule is red-first testable.Next I’ll read the amendment, QA retro voice, and current experimental wording so I can check whether the parity rule is red-first and actually catches the named defects.I’ll inspect the existing parity tests and the D209 QA objection to see whether the rule fails first and still rejects damaged bytes.I’ll read the parity test implementations and the D209 QA vote so I can judge whether the check fails first and still rejects damaged bytes.I’ll check card 324’s checker and the D209 QA wording so I can confirm the red-first tes"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d210-dev-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "a count of renames, files or grep hits is not a clean claim.",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nThe rule is workable and fair for backend mechanical rewrites: it is narrowly triggered, requires explicit exceptions, verifies byte-level invariants that ordinary tests miss, and divides responsibility between green and facilitator. The evidence shows meaningful defect prevention at modest cost. “Many files” remains somewhat subjective, but naming the checker in the slice makes applicability visible before implementation and limits opportunistic avoidance. I can comply without gaming it."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d210-auditlens-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a count of renames, files or grep hits is not a clean claim",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll audit this from git alone: the retro record, the amendment patch, and the working-agreement experimental text, looking for verification gaps or pass-while-breaking loopholes.I'll read the agreement, candidate text, retro, and D208/D209 records next so the vote rests on git evidence.I'll check D209's audit objections, the candidate patch, and how byte-parity evidence actually landed in git.I need to see whether the trial cards actually committed a red byte-parity test, or only recorded a facilitator recompute.Yes\n\nThe body is git-verifiable at four artifacts a git show can print: the slice names the checker; the red commits an undo-to-old-bytes test (line endings, GUIDs, sizes, named exc"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d210-decider-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "the byte-parity check for mechanical rewrites becomes a permanent practice",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nThe proposal isolates one change, supplies a testable hypothesis, baseline, three-card trial, explicit metric, counter-metric, cost, and follow-up review. QA, audit, facilitator recomputation, independent sign-off, retro voices, and product-owner process ruling provide adequate perspectives. The small sample limits causal certainty, but the practice is low-cost, mechanically verifiable, and addresses demonstrated byte-level failures; ordinary retro review preserves a route to reshape it if burden or skipped checks emerge."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d210-coach-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a count of renames, files or grep hits is not a clean claim",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro record, the proposed amendment, and the working-agreement Decider rules so the Agile Coach vote is sized to the actual practice, not the ceremony around it.Yes\nThe trial met its three-card length with the metric at target and a small cost. Existing seats run it: the slice names the checker, red commits a test of it, green attaches output, and the facilitator recomputes. It applies when one rule rewrites many files. Refusing a rename count as a clean claim keeps the practice as evidence. D208 and D209 showed bundling padded the vote; this Decider is one concern. Hypothesis, metric and counter-metric stay under the next retro's ordinary agreement pass."
+   }
+  ]
+ },
+ "independent_rerun": {
+  "architect": [
+   {
+    "tag": "d210rr-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "undoing the rewrite on the new bytes reproduces the old bytes",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro record, the amendment, and the agreement so the architect vote rests on the actual design.I'll pull the retro record, amendment, agreement, and related decisions next.I’ll inspect the candidate patch, the existing checker tests, and the D208/D209 records next.I’ll inspect the candidate text, the slice checker, and D209’s P2 votes for false-positive risk.Yes\n\nThe checker invariant is exact and the right one: undoing the rewrite must reproduce the old bytes, including line endings, GUIDs and sizes. Named exceptions are the false-positive valve and are listed by name, so a skip is visible. The red commits that test, the green attaches output, and the facilitator recomputes i"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d210rr-qa-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a count of renames, files or grep hits is not a clean claim",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe rule is operationally testable red first: deliberately restoring old bytes must expose altered line endings, GUIDs, sizes, or unnamed exceptions. It checks byte equivalence rather than weak proxies such as grep-hit or file counts, requires recorded output, and adds an independent facilitator recomputation. The three-card trial supports the named zero-defect metric at low measured cost."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d210rr-dev-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a count of renames, files or grep hits is not a clean claim",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro, agreement, and amendment as the backend seat, without changing anything.I'll read the retro record, amendment diff, and experiment notes next.I'll check how the checker was used on those cards and what D208/D209 recorded.Yes\n\nAs the green seat I already run this: the slice names the checker, red commits the undo-test, I attach its output, and the facilitator recomputes. Cards 197, 266 and 324 stayed byte-exact; card 196’s count-based clean hid CR, GUID and size damage. A few minutes and a ~35-line script fit red, unit doubles, flags and slice limits (rewrite exceptions already exist). Rename, move and bulk replace name the work; exceptions are listed by name; a skip is t"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d210rr-auditlens-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "the byte-parity check for mechanical rewrites becomes a permanent practice",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\n\nThe checker and its test are git-verifiable, but execution is not: “attaches its output to its report” and the facilitator’s recompute do not explicitly require committed command output. “Many files” is also undefined, letting a team classify a damaging rewrite out of scope. I would vote yes if the rule defined its trigger and required both outputs, commands, commit hashes, and exit statuses in a committed record checked before clean may be claimed."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d210rr-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the D202 byte-parity check moves from the Experimental section into the permanent Engineering discipline practices",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro record, the D210 amendment, the working agreement, and the experiment notes so the sign-off vote rests on the evidence.I’ll check the D208/D209 records, the candidate patch, and the trial-card evidence next so the vote can rest on those sources.Yes\nTrial complete: card 196 had three byte-level defects after a clean report; 197, 266 and 324 had zero. Facilitator recompute and independent sign-off matched on card 324 (Resolver.cs 42139, Parser.cs 39272). The patch moves the tested D202 text unchanged, one concern, after D208 and D209 Nos hit other parts. Hypothesis, metric, counter-metric and user benefit are stated; QA called P2 directly testable and the audit lens git-ver"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d210rr-coach-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the byte-parity check for mechanical rewrites becomes a permanent practice",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe proposal is narrowly scoped, evidence-backed, and appropriately sized for a Decider vote. Existing QA, audit, facilitator, product-owner, and retro perspectives cover testability, verification, governance, and cost; adding seats would be ceremony. The practice applies only to mechanical rewrites, has measurable outcomes and overhead, and leaves disputed experiments for later consideration."
+   }
+  ]
+ }
+}

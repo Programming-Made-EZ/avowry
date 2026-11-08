@@ -1366,5 +1366,11 @@
     "status": "failed",
     "title": "Card 324 retro pick, second form: gate preparation with committed gate evidence; byte-parity permanent (failed; byte-parity re-proposed alone)",
     "order": 200
+  },
+  "D210": {
+    "area": "process-and-staffing",
+    "status": "failed",
+    "title": "Card 324 retro pick, third form: the byte-parity check becomes a permanent practice (failed; the practice stays on trial)",
+    "order": 201
   }
 }
