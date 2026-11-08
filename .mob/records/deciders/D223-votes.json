@@ -1,0 +1,74 @@
+{
+ "decider": "D223",
+ "subject": "card 202 task-force declaration and card text (a native block that fails with an undeclared code is a diagnostic)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d223-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "PH337 unless a recorded reason says otherwise",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card-202 records, grammar, and resolver so I can vote on whether the scan, codes, and findings design stay sound.I'll inspect the resolver, grammar, native-block AST, and the 202 records next.I’ll check native-block parsing, the grammar clause, the 202 scan, and how 189 documented diagnostics.Yes\nResolver scan of each leaf csharp body for `Fail(\"literal\")`, before emit, is the smallest enforceable rule for GRAMMAR.md:247. PH337 is the right resolver code. Keep the RAW start line so the diagnostic names the Fail line (`NativeBlock.At` is the header; the model currently stores code only). Skip full-line `//` comments. Require an i"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d223-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "both MULTI ids watched failing by assertion",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card-202 records, the working agreement, and the tests the proposal names so I can vote on whether every rule can fail red first.I'll check the standing rules, the QA red brief, and the tests and fixtures the card names.I'll inspect the characterisation tests and the existing red pattern so I can see whether they would actually catch a scan that flags declared Fail.Yes\n\nC2 and C3 are honest characterisation: named tests exist and pass on HEAD; a greedy scan that flags declared Fail fails LeafPhraseFailureCompiles, SourceMapTraceability, and the orders hash. C1 is one Pending test in the UnsupportedCsharpConstructs style; both MU"
+   }
+  ],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "d223-auditlens-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Replay the Pending red on the commit before the first production change",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nFrom git alone, this can be checked. Everything is a commit property: the Pending red replayed on the pre-change commit, Criterion order from `git log`, the MULTI list compared with the Ready table, and the one-file fixture change in the green.\n\nTwo notes that don't change my vote:\n- The gate should diff the green against the red and confirm that only `undeclared-native-failure.expected.json`, the resolver, GRAMMAR.md and the Pending trait changed. This closes the loophole where a test is weakened quietly.\n- The scan's documented holes (computed codes, comments, other targets) are acceptable only if the GRAMMAR.md clause really lands in "
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d223-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the gate reviewer checks the red record's MULTI list against the Ready table",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the working agreement and Card 202 records, then vote on whether the evaluation is evidence-framed and the seats can sign off.I'll check the 202 records, the sign-off brief, and the Decider rules next so the vote sits on those facts.Yes\n\nLater adopt, reshape or reject can rest on evidence: facilitator CLI on the corpus fixture, the 41-file Fail scan, named characterisation tests, architect CLI variants before red, one Pending MULTI red, isolated clone gate, and sign-off that reruns before reading the gate. PM, slice, red, green, gate and sign-off are seated; cold-reader is correctly omitted. Note: ship is neither present nor removed"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d223-coach-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "gate reviewer and sign-off two separate fresh Claude contexts",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll vote as the agile coach after a read-only check of the working agreement and card 202 records. No files will be changed.Next I’ll read the task-force rules and the card 202 / 189 records so the seat list can be judged against practice.Yes\nThe roster fits this one-concern compiler story: PM, architect, QA, green, gate, and sign-off. Independence holds: green is a fresh Claude context distinct from red; gate and sign-off are two separate fresh Claude contexts. Cold-reader is omitted because this is a code card; the story-promise check is already in section 3. Tech-writer and security stay out: the GRAMMAR.md row is architect and green work"
+   }
+  ]
+ },
+ "trigger_line": "(d) the re-run was not run because the primary window passed with no No and no amendment and the proposal does not change this agreement"
+}

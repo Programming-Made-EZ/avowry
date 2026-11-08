@@ -1444,5 +1444,11 @@
     "status": "adopted",
     "title": "Card 189 retro pick: a Ready table row that names two constructs becomes two ids (adopted as a three-code-card trial)",
     "order": 213
+  },
+  "D223": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 202 task-force declaration and card text (a native block that fails with an undeclared code is a diagnostic)",
+    "order": 214
   }
 }
