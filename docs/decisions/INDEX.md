@@ -316,3 +316,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D210](process-and-staffing.md#d210) | Card 324 retro pick, third form: the byte-parity check becomes a permanent practice (failed; the practice stays on trial) | process-and-staffing | failed |
 | [D211](process-and-staffing.md#d211) | Re-rank 29 (after card 324 closed): place cards 176, 178, 186 and 179 after card 324 and pull card 176 | process-and-staffing | adopted |
 | [D212](process-and-staffing.md#d212) | Card 176 task-force declaration and card text: package the CLI as a dotnet tool and version it (failed; corrected and re-proposed as D213) | process-and-staffing | failed |
+| [D213](process-and-staffing.md#d213) | Card 176 task-force declaration and card text, corrected after D212 (failed; one condition re-proposed as D214) | process-and-staffing | failed |

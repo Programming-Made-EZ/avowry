@@ -1,0 +1,7 @@
+# D158 pre-vote checklist: Decider D214, the card 176 task-force declaration and card text (corrected after D212), facilitator
+- Boundary: D213 recorded as failed; the three conditions that failed it are adopted in the text; the text was checked against the agreement's standing rules this time (D137: at most one criterion test pending at a time; D204: an atomic green may carry `Criterion: 1-n`; D154 and D157: the gate reruns the criteria's tests and checks the Criterion order in git log). Inbox read at this boundary: none open.
+- Proposal: .mob/records/176/taskforce-proposal-pm-d214.md (the corrected proposal; the PM seat's draft stands in the file verbatim with the facilitator's reruns), seat plan .mob/records/176/seat-plan.md, both committed before the vote.
+- Category: task-force declaration with the card-text rewrite. A full Decider: six fresh seats, Yes, Support-it or No with a cite of at least six words copied exactly with their capitals; an independent re-run with fresh seats (F-038); the strict reading applies in both runs; a No names ONE fixed condition and an adopted condition is checked against the standing rules before the re-poll.
+- Seat spread: non-Claude drivers; Muse stays out of decider.py until its harness is fitted (diagnosis task in the seat plan).
+- Red-first (permanent rule): the single pending new-state test is watched failing on the pre-change tree before the atomic green; criterion 3 is a declared characterisation passing on the pre-change tree.
+- No commit and no tracked-file change during a vote run.

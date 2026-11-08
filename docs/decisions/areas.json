@@ -1384,5 +1384,11 @@
     "status": "failed",
     "title": "Card 176 task-force declaration and card text: package the CLI as a dotnet tool and version it (failed; corrected and re-proposed as D213)",
     "order": 203
+  },
+  "D213": {
+    "area": "process-and-staffing",
+    "status": "failed",
+    "title": "Card 176 task-force declaration and card text, corrected after D212 (failed; one condition re-proposed as D214)",
+    "order": 204
   }
 }
