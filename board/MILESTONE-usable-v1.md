@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:4424ec97f6ec54d08f457120bc224bc6dee0a2d9ec297d77450a88a5055e81eb -->
+<!-- board-table-sha256:504d1084dbe1ec2a8edc0fdb16b85a5c03abda59fb9caa2fc980e0222a745f0a -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -123,7 +123,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 101 | 324 A compiler diagnostic calls the unit an avow, not a Phrase | Done | none |
 | 102 | 176 Package the CLI as a dotnet tool and version it | Done | none |
 | 103 | 178 A prerequisites page that matches what CI tests | Done | 176 |
-| 104 | 186 Pre-publication checks: name, licences, history, vendor terms | Ready | none |
+| 104 | 186 Pre-publication checks: name, licences, history, vendor terms | Done | none |
 | 105 | 179 Rewrite the README and write the getting-started guide | Done | 178 |
 | 106 | 189 An unsupported construct is a diagnostic, not an unhandled exception | Done | none |
 | 107 | 202 A native block that fails with an undeclared code is a diagnostic | Done | none |
