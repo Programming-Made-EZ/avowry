@@ -1450,5 +1450,11 @@
     "status": "adopted",
     "title": "Card 202 task-force declaration and card text (a native block that fails with an undeclared code is a diagnostic)",
     "order": 214
+  },
+  "D224": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 202 retro pick: adopt the D217 trial, the confirmation step in place of the separate independent re-run",
+    "order": 215
   }
 }

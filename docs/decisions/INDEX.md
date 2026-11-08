@@ -327,3 +327,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D221](process-and-staffing.md#d221) | Card 189 task-force declaration and card text (an unsupported construct is a diagnostic, not an unhandled exception) | process-and-staffing | adopted |
 | [D222](process-and-staffing.md#d222) | Card 189 retro pick: a Ready table row that names two constructs becomes two ids (adopted as a three-code-card trial) | process-and-staffing | adopted |
 | [D223](process-and-staffing.md#d223) | Card 202 task-force declaration and card text (a native block that fails with an undeclared code is a diagnostic) | process-and-staffing | adopted |
+| [D224](process-and-staffing.md#d224) | Card 202 retro pick: adopt the D217 trial, the confirmation step in place of the separate independent re-run | process-and-staffing | adopted |

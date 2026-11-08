@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 202,
+ "title": "A native block that fails with an undeclared code is a diagnostic",
+ "process": "card-mode rules run by hand; pulled as the head of the board after card 189 (re-rank 31, D220); the Ready draft by a Grok product-manager seat with the facilitator reruns (the fixture builds today; a script over all 41 tracked .avowry files found only the target undeclared), six corrections and the standing-rules preflight; the declaration through Decider D223 (six Yes, no re-run: trigger (d)); an architect slice that ran 15 ids through the CLI; the existing tests as the characterisations of criteria 2 and 3 (a characterisation record with a mutation), one Pending red for criterion 1 with the MULTI Ready row listed first (D222, its first exercise), one atomic green (Criterion: 1); an independent gate review that returned SHIP, and a separate fresh sign-off; seats spread under the product owner clarification (Codex, Copilot and agy out of quota; Claude 5 of about 17 card seats with reasons in the retro)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Grok ctx-1",
+   "model": "grok-4.6, product manager, read-only; taskforce-proposal-pm.md with the facilitator reruns, six corrections and the declaration; facts rerun by the facilitator",
+   "evidence": "d7fe95d65c18ef2a71cba880c4c64ea347b68918"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md (fifteen ids run through the CLI, the resolver scan, PH337, the size cap); reason: Grok wrote the PM draft and the red, Codex out of quota",
+   "evidence": "6fbc32366051f4ff883b31591b43cd2f7a75e93e"
+  },
+  {
+   "role": "red",
+   "seat": "Grok ctx-3",
+   "model": "grok-4.6 via grok.cmd in its own git worktree, QA engineer: the characterisation record (e95ee65) and the pending red; each claim rerun by the facilitator",
+   "evidence": "d9aa096631f3822e1dd365d35d6a176fe1389f69"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, build seat, in its own worktree, never the red seat; reason: Grok wrote the red and Codex is out of quota",
+   "evidence": "a067ef968a23530a6ce9564152741cca00828138"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent gate reviewer, read-only; SHIP; red replay, seven mutations, false-positive checks, the D222 list against the Ready draft, Gate evidence and Load lines",
+   "evidence": "dc2966ca8e4de4f1090d156fd537513a99ecc51c"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, separate from the gate reviewer, own full gate in a single-branch clone; SIGNED OFF WITH CONDITIONS (none blocking; cards 352 and 357 open)",
+   "evidence": "21fd0f795e49af63c0262b7ab54cd0a30a8e5d0c"
+  }
+ ],
+ "retro": "docs/retros/card-202-2026-11-08.md",
+ "notes": "Done checks met: criterion 1 (a leaf whose native csharp block calls Fail(\"X\") with X absent from its fails with clause, or with no fails with clause, builds with exit 1 and PH337 at the line of the call, naming the code, the leaf and the fix; a declared code still builds); criterion 2 (a declared Fail still builds and still has its source-map failure record, characterised by existing tests passing on the pre-change tree); criterion 3 (the corpus fixture undeclared-native-failure flipped from builds to PH337 at line 5 in the green, the corpus theory untouched, the generated C# of valid sources unchanged: the orders output hash and the demo build identical). The shared Pending red failed by assertion on the pre-change tree with exactly the 7 failing ids and none of the 8 keep-building ids, and passes after the atomic green; the test file is byte-identical. Baseline gate isolated, CLI built first: Compiler 324 of 324, Acceptance 340 of 340, 0 warnings; the independent gate reviewer SHIP and the sign-off with a clean full run. docs/GRAMMAR.md gained a PH337 row, the code list and a clause with the scan limits, with the D72 reason in the green commit (card 162 ratifies the hashes). Task force declared through D223; the retro pick D224 adopted the D217 trial (the confirmation step in place of the separate re-run) as step 6 of the Decider protocol. Process time against build time about 1.4 to 1 before the gates. Born-green findings: none. Open: bug 338, bug 327, issue 304, bugs 352 (pin the diagnostic column), 353 (messages name what to change) and 357 (a Fail with a space before the parenthesis, plus an indirect method-group call); card 162 waits for Codex (about 2026-11-11), 201 is owner-run."
+}

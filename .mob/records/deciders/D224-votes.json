@@ -1,0 +1,164 @@
+{
+ "decider": "D224",
+ "subject": "card 202 retro pick: adopt the D217 trial, the confirmation step in place of the separate independent re-run",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d224-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The confirmation step replaces the separate independent re-run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 202 records, the D217–D223 decision records, and the agreement patch so the Architect vote is based on the actual design.I'll read the Decider protocol, the Experimental entries, and D217–D223 so the record and checker design can be judged against the patch.I'll check how trigger lines are recorded and whether any checker already enforces them, which is the Architect lens.The Architect lens is the record, the checker, and the findings file, so I'll inspect F-038 and how trigger lines are actually stored.Yes\n\nThe votes file already stores the primary window, each confirmation and one git-showable (a)–(d) line. That record is"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d224-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The confirmation step replaces the separate independent re-run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 202 records, the D217–D223 decision docs, and the working-agreement text so the QA vote is grounded in what is actually testable.I'll pull the Decider protocol, Experimental entries, and D217–D223 records next so the QA vote can check red-first testability.Yes\n\nThe four triggers are mutually exclusive and git-showable; confirmation quotes each outlier’s condition; trigger (c) still re-runs agreement changes, including this window. Trial D218–D223: 0 re-run-only failures, 0 post-record errors; primary windows found the real Nos (thin red, ancestor check, every Ready row). The patch lifts the trial text into step 6 and retire"
+   }
+  ],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "d224-auditlens-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "adopt the D217 trial, the confirmation step in place of the separate independent re-run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nEverything I'd check from git alone is `git show`-able. Step 6 requires one committed trigger line, (a) to (d), on every record. The record also shows the primary window, each amendment and each confirmation. Trigger (c) forces a re-run when a change to the agreement passes with no No and no amendment. That closes the main loophole, because a team can't pass an agreement change with a quiet window. Remaining soft spot: (d) depends on a human judging \"does not change this agreement\". An auditor can check that against the diff, so I'd keep it as a checklist line. I did not open the repo files, so this rests on the proposal text."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d224-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The confirmation step replaces the separate independent re-run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 202 records, D217–D223, and the Decider protocol so this sign-off vote rests on the same evidence the proposal cites.The trial text and D217–D223 records are next; I'll check whether the evaluation is evidence-framed and whether every sign-off seat is present.Yes\n\nThe trial is scored against its own hypothesis, metric and counter-metric, so adopt, reshape or reject rests on recorded evidence. D218–D223: 0 re-run-only failures, 0 post-record single-window errors, git-showable trigger lines, and every primary-window No was a real condition. Four of five counted windows met the 20-minute target; D219’s 38 minutes was a D171 re"
+   }
+  ],
+  "coach": []
+ },
+ "rerun_window_fresh_seats": {
+  "architect": [
+   {
+    "tag": "d224rr-architect-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The confirmation step replaces the separate independent re-run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe design is minimal: one Experimental entry retires into step 6, and the 9-line patch touches nothing else. The four trigger lines (a) to (d) are mutually exclusive and checkable with `git show`, so an auditor can enforce them without judgment calls. That should avoid false positives. The evidence also fits the lens. The primary window found each real condition, none were found only by a re-run, and there were no single-window errors. Trigger (c) is the safeguard for changes to this agreement, and it behaves as intended.\n\nNote, not a condition: \"any voter or the product owner asks\" is unbounded, but it is bounded in practice by the com"
+   }
+  ],
+  "qa": [],
+  "developer": [
+   {
+    "tag": "d224rr-dev-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The confirmation step replaces the separate independent re-run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 202 records, the D217–D223 decisions, and the working agreement so I can vote as the backend-developer seat.The agreement and decision records are large, so I’ll pull the Decider protocol, Experimental entries, and D217–D223 next.Yes\n\nThe adopted step 6 is workable for the developer seat. I vote Yes, Support-it or No; a No names one fixed condition; confirmation asks only whether that condition is met. I can comply without gaming. The trial (D218–D223) recorded git-showable trigger lines, real primary-window conditions, zero re-run-only failures and zero post-record errors. Minutes hit the target on four of five. Faster dec"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d224rr-auditlens-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "carries one committed trigger line that an auditor can `git show`",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 202 records, D217–D223, the agreement, and the patch so the audit vote is grounded in git.The agreement and D217–D223 records are next so I can check the trial text against git.I'll read D217–D223 in full and check whether the trigger lines and trial facts match git.Yes\n\nThe patch matches the trial entry; D217–D223 each carry a git-showable trigger line. Trigger (c) stays for agreement changes, the only path that found a fresh-seat gap (D217: the committed trigger line). Primary windows found the real Nos (D218, D219, D222); confirmation settled them; re-run-only failures 0; post-record errors 0. Note: EVIDENCE says trigger"
+   }
+  ],
+  "decider": [],
+  "coach": [
+   {
+    "tag": "d224rr-coach-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The confirmation step replaces the separate independent re-run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 202 records, D217–D223, and the working agreement so I can vote as the Agile Coach on whether this task force is sized to the task.I'll read the Decider protocol, Experimental section, and D217–D223 next so the coach vote sits on the written rules.Yes\n\nThe trial right-sizes the check: confirmation keeps the outlier’s promise (the needed perspective), and the default second window of fresh seats was ceremony that invented demands. Minutes 17, 38, 8, 7, 20; four of five at most 20; re-run-only failures 0 (was five); post-record errors 0. Primary windows found the real Nos. Trigger (c) still sizes a fresh-seat check to an all-"
+   }
+  ]
+ },
+ "confirmation_outlier_qa_amended_text_b3fa395": [
+  {
+   "role": "qa",
+   "kind": "outlier",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nTrigger (e) now covers the No, no-amendment case, stating no re-run was run, with a requested re-run under (b).\nCITE: the proposal failed in its primary window\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n"
+  }
+ ],
+ "confirmation_others_amended_text_b3fa395": [
+  {
+   "role": "architect",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nTrigger (e) fills the fail-with-no-letter hole: a failed primary or unconfirmed condition is recorded and no re-run runs unless someone asks (then (b)). The record stays one git-showable line; an auditor can still enforce it without false positives.\n\nCITE: so it is recorded as failed and no re-run was run\n"
+  },
+  {
+   "role": "dev",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe added trigger (e) closes the failure case without changing the workflow I already supported.\nCITE: the confirmation step gives the check the re-run was meant to give\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n"
+  },
+  {
+   "role": "auditlens",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nTrigger (e) closes a gap I'd have flagged. A Decider that fails in its primary window now carries a committed line saying whether a re-run was run, so an auditor can check it with `git show`. Any voter can still ask for a re-run, which is trigger (b).\n\nCITE: so it is recorded as failed and no re-run was run\n"
+  },
+  {
+   "role": "decider",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nTrigger (e) names the missing failed-primary case, records it as failed with no re-run, and leaves an ask as (b). Evidence frame, seats, and the confirmation-step pick are unchanged.\n\nCITE: the proposal failed in its primary window or its confirmation step\n"
+  },
+  {
+   "role": "coach",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nAmendment adds only a failure-state trigger line, no new seats or ceremony, so sizing stays right.\nCITE: the proposal failed in its primary window\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n"
+  }
+ ],
+ "trigger_line": "(c) the re-run was run because the primary window passed with no No and no amendment and the proposal changes this agreement; its single No (QA) was resolved by the confirmation step"
+}
