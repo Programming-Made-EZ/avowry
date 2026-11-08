@@ -1,0 +1,117 @@
+{
+ "decider": "D215",
+ "subject": "card 176 retro pick: a task-force declaration and every amendment carry a standing-rules preflight",
+ "result": "FAILED",
+ "primary_window_text_fa3a2c4": {
+  "architect": [
+   {
+    "seat": "grok",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "with the line of the proposal that satisfies it, or the reason it does not apply",
+    "cite_verbatim": true,
+    "reply_head": "I'll read the retro record, the amendment, and the agreement so I can vote as architect on whether this preflight design is sound.I'll check the candidate text, Decider protocol details, and any checker or findings design the preflight would sit on.Yes\n\nThe preflight maps each named rule (D137, D154, D157, D204, no-new-demand, 30 percent) to a proposal line or a does-not-apply reason, committed in the proposal before the poll. That is git-checkable, matches the D158 checklist pattern, and the N/A path keeps a rigid template from refusing a legitimate one-Pending exception. A mechanical checker can wait until the three-card trial shows the lis"
+   }
+  ],
+  "qa": [
+   {
+    "seat": "grok",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "with the line of the proposal that satisfies it, or the reason it does not apply",
+    "cite_verbatim": true,
+    "reply_head": "I'll read the card 176 records and the agreement so I can vote as QA on whether this preflight is red-first testable.I'll pull the Experimental section, Decider protocol, and the card 176 retro so the QA vote can rest on those rules.I'll read the Experimental section and the candidate amendment so I can judge whether the preflight fails closed.No\n\nThe preflight is a facilitator-written mapping and can pass a declaration that still breaks D137, the same miss as D212. A list that marks a contradicting line as satisfied, or as does not apply, is a green over a red. Condition: do not poll until every named rule has a quoted proposal line that sat"
+   }
+  ],
+  "developer": [
+   {
+    "seat": "grok",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the green's test body unchanged apart from removing Pending",
+    "cite_verbatim": true,
+    "reply_head": "I'll read the retro records, the amendment, and the working agreement so I can vote as the backend-developer seat.Yes\n\nThe rules I execute (one Pending, green body = red minus Pending, four red-record fields, Criterion order) stay checkable. A recorded preflight stops a declaration that contradicts D137, as D212's two-reds-first did. Workable and fair: I write one red, unit commits with doubles, and one atomic green without gaming. The preflight is a checklist in the proposal, not a fourth vote. Neighbouring tests as a QA-brief line is the right place. Outlier confirmation keeps the safeguard without three full Deciders."
+   }
+  ],
+  "audit lens": [
+   {
+    "seat": "grok",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "the preflight must be recorded in git",
+    "cite_verbatim": true,
+    "reply_head": "I'll read the retro records, amendment, and standing rules first so the audit vote is based on git-visible facts.No\n\nThe preflight is facilitator-authored text with no detector. Git shows a list only if one was written; a poll can still pass with no list, or with \"does not apply\" on the rule the facilitator already missed (D212 versus D137). That is the skip loophole. A committed list without a FAIL is a promise to remember.\n\nCondition: a window whose committed proposal lacks a preflight line for each named rule (D137, D154, D157, D204, no-new-demand, 30 percent) is unread, the same as a missing CITE."
+   }
+  ],
+  "decider": [
+   {
+    "seat": "grok",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "writes the result into the proposal as a short list",
+    "cite_verbatim": true,
+    "reply_head": "I'll read the Decider protocol, the retro records, and the amendment so the sign-off vote rests on evidence.Yes\n\nThe experiment states a hypothesis, a countable metric with baselines (card 176: 3 Deciders, about 100 minutes), a counter-metric the gate and sign-off already collect, a three-card trial, and an owner. Keep, reshape or drop at the next retro can rest on those figures. Independent votes, the gate, the separate sign-off, and the standing independent re-run of the final text remain. Note: the keep/revise/drop Decider should attach both metrics and both counter-metrics from the three cards, including loopholes the gate found."
+   }
+  ],
+  "coach": [
+   {
+    "seat": "grok",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a preflight stops declaration rounds that only restate rules already in the agreement",
+    "cite_verbatim": true,
+    "reply_head": "I'll read the retro records, amendment, and Decider protocol so I can vote as the Agile Coach on whether this task force is sized to the task.Yes\n\nThree six-seat Deciders restating D137, D154 and D157 was ceremony. The preflight is a facilitator checklist written into the proposal, not a fourth vote and not a new seat, so every needed perspective still votes once. Outlier confirmation is the original protocol the product owner already directed; a new full Decider stays for a 30-percent drop or an absolute No. Neighbouring tests stay a QA-brief line. The independent re-run stays in the standing protocol and is the rubber-stamp guard. A three-c"
+   }
+  ]
+ },
+ "confirmation_step_amended_text_2e0f206": [
+  {
+   "role": "auditlens",
+   "kind": "outlier",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe amended PICK and the AMENDMENT AFTER THE PRIMARY WINDOW adopt the unread-if-missing-preflight-line rule for each named rule, matching the condition I stated.\nCITE: a window whose committed proposal lacks a preflight line for each named rule (D137, D154, D157, D204, no-new-demand, 30 percent) is unread, the same as a missing CITE.\n"
+  },
+  {
+   "role": "qa",
+   "kind": "outlier",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe amendment requires a quoted line for every named rule that satisfies it, or a quoted fact that makes it inapplicable, and treats a contradicting cited line as a failed preflight that is not polled. That is the red-first check I asked for.\n\nCITE: a cited line that contradicts that rule is a failed preflight\n"
+  },
+  {
+   "role": "architect",
+   "kind": "other",
+   "vote": "No",
+   "attempt": 1,
+   "reply": "No\nQA's condition that a cited contradicting line is a failed preflight, so the declaration is not polled, turns a human \"contradicts\" call into a poll-blocker. That is not mechanically enforceable without false positives; a facilitator misread would fail a declaration without the seats deciding.\nCITE: a cited line that contradicts that rule is a failed preflight\n"
+  },
+  {
+   "role": "dev",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe amendment records the same checks I already execute: quoted preflight lines for D137, D154, D157, D204, no-new-demand and 30 percent, unread if missing, failed if a cited line contradicts. I still write one red, unit commits with doubles, and one atomic green. Workable, unambiguous, fair.\n\nCITE: a window whose committed proposal lacks a preflight line for each named rule\n"
+  },
+  {
+   "role": "decider",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe amendment only tightens the preflight: unread without a line per named rule, and a quoted contradiction fails the poll. Hypothesis, metrics, counter-metrics, three-card trial, owner, independent votes, gate, and sign-off stay. I still support.\n\nCITE: a window whose committed proposal lacks a preflight line for each named rule\n"
+  },
+  {
+   "role": "coach",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe amendment keeps the preflight as a facilitator checklist with quoted lines per named rule. Missing lines leave the window unread; a contradicting quote fails the preflight. Outlier confirmation stays the original protocol. The task force stays sized to the finding.\n\nCITE: Every named rule gets its own quoted line\n"
+  }
+ ],
+ "architect_condition": {
+  "question": "state ONE fixed condition that would bring you to Yes",
+  "vote": "No",
+  "reply": "I'll read the agreement, the candidate amendment, and the retro record so the condition matches the actual checker design.No\nAfter \"a quoted line that contradicts its rule is a failed preflight and the declaration is not polled\" add: only a committed checker may record that failure, by a grep-F match of the quoted line against that named rule's committed forbid phrases (same check as CITE); a facilitator contradicts call the checker does not report does not block the poll.\nCITE: a quoted line that contradicts its rule is a failed preflight\n"
+ },
+ "note": "the independent re-run was not run on a text that failed"
+}

@@ -1396,5 +1396,11 @@
     "status": "adopted",
     "title": "Card 176 task-force declaration and card text, second correction (adopted after the outliers' confirmation)",
     "order": 205
+  },
+  "D215": {
+    "area": "process-and-staffing",
+    "status": "failed",
+    "title": "Card 176 retro pick: a task-force declaration and every amendment carry a standing-rules preflight (failed on the architect's condition; kept as the facilitator's practice)",
+    "order": 206
   }
 }

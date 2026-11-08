@@ -318,3 +318,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D212](process-and-staffing.md#d212) | Card 176 task-force declaration and card text: package the CLI as a dotnet tool and version it (failed; corrected and re-proposed as D213) | process-and-staffing | failed |
 | [D213](process-and-staffing.md#d213) | Card 176 task-force declaration and card text, corrected after D212 (failed; one condition re-proposed as D214) | process-and-staffing | failed |
 | [D214](process-and-staffing.md#d214) | Card 176 task-force declaration and card text, second correction (adopted after the outliers' confirmation) | process-and-staffing | adopted |
+| [D215](process-and-staffing.md#d215) | Card 176 retro pick: a task-force declaration and every amendment carry a standing-rules preflight (failed on the architect's condition; kept as the facilitator's practice) | process-and-staffing | failed |
