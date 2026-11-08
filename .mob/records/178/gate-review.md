@@ -1,0 +1,20 @@
+# Card 178: pre-ship gate review (independent fresh Claude context, read-only; scratch single-branch clones)
+
+Verdict: SHIP.
+
+Gate evidence: the tip fbc9227 and the red replay at ef7d589, each a `git clone --no-hardlinks --single-branch -b main` then `git checkout`; the CLI build 0 errors. At ef7d589: `python -m unittest tests.test_prerequisites` ran 4 tests and 1 failed by assertion; the C# wrapper failed 1 of 1 by assertion. At the tip: the five-module python run (tests.test_prerequisites, test_readmes_untouched_178, test_demo_readme, test_readme_reference_status, test_license_files) passed 26 of 26; the C# wrapper plus GeneratedApiSourceScan passed 7 of 7; `tests.test_live_docs_266` ran 18 and 1 failed at T11 (the known bug, issue 338, not this card). Not run: the full solution suite (the facilitator's baseline gate: Compiler 324 of 324, Acceptance 326 of 327 with the one failure being the process-start callers guard, fixed in fbc9227 and passing 6 of 6 in its class; the sign-off reruns the full suite). Load: the reviewer's python runs overlapped the facilitator's push; dotnet started only after the push marker appeared.
+
+Checks (the reviewer's own runs):
+- Diffs: red to green adds docs/PREREQUISITES.md (46 lines) and removes one Pending line from PrerequisitesPage.cs (plus the characterisation revision commit bf382ad that sits between them); green to page revision changes only the page (plus the cold-reader record); `git diff ef7d589 HEAD -- tests/test_prerequisites.py` is empty; the guard-list commit is one entry.
+- Red replay: matches red-record.md exactly: the page-missing line plus ten "blocked: page missing" lines.
+- Criterion order from git log: 3 (5a813c4), 1-2 (ef7d589), 3 (bf382ad), 1-2 (5012d9c), 1-2 (3bc6b7b), 1-2 (fbc9227); the cold-reader report a3f594d carries no Criterion trailer (a record only).
+- Scope: README.md and demo/tasks/README.md are byte-identical between b9e6423 and HEAD.
+- Page against the repo: CI image ubuntu-latest, pin 8.0.x, net8.0, the packed-tool test (no Pending trait: CI runs it), `--tool-path` plus `--add-source`, PackageId Avowry from Avowry.Cli.csproj, and `--version` printing "Avowry <ver>": all true; nothing false or circular; the story's promise is met.
+
+Mutations at the tip (each in its own copy; all failed the python test): (a) ubuntu-latest to windows-latest on the page: `runs-on ubuntu-latest`, `reverse-os`; (b) remove the unpinned sentence: `architecture`; (c) ci.yml 8.0.x to 9.0.x: `dotnet-version 9.0.x`, `reverse-sdk`; (d) remove a `Run from:` line: `commands-0`; (e) remove a `Same in PowerShell.` line: `commands-0`. No mutation survived.
+
+Findings: 1 NOTE: the red commit alone fails the full gate (GeneratedApiSourceScan.Guard_checked_set_of_process_start_callers: PrerequisitesPage.cs is not in the list; reproduced); fbc9227 fixes it; it does not matter because the red was never pushed alone; process lesson: the slice should have named the guard-list file. 2 NOTE: tests/test_prerequisites.py is 531 lines against the slice's aim of 350, no stated python cap; about 100 lines are fixtures and self-tests and the hand-rolled YAML parser (lines 166 to 337) is the bulk: a maintenance cost, not a defect. 3 NOTE: docs/PREREQUISITES.md lines 7 to 9, "A newer SDK than 8.0.x is also untested ... you need the .NET 8 SDK", can read as contradictory; not false (a wording follow-up for card 179). 4 NOTE: tests/test_prerequisites.py:464 to 470 check prose by keyword co-occurrence; a paragraph could hold the keywords and still mislead; the labels-only page does fail them. 5 NOTE: install is documented with `--add-source` only; the CI test also passes `--configfile` for isolation, so a reader's machine may still consult nuget.org; that matches the page's claim that the package is not published.
+
+Not verified: the real GitHub CI run; any operating system other than this Windows machine; the full solution suite; the `Status!=Pending` exclusion of this wrapper.
+
+Independence: a Claude seat reviewing tests written by a Grok seat and a page written by Claude seats; the reason is that Codex, Copilot and agy are out of quota.
