@@ -1,0 +1,79 @@
+[
+ {
+  "tag": "d213p-architect-grok",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "Yes",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "ONE new-state test that carries criteria 1 and 2 together",
+  "reason": "One concern, D204 atomic green: characterisation first, one Pending red covering pack, install, version and demo, then one green with Criterion: 1-2. That satisfies D137's one-pending-test rule and the watched-red rule. Avowry/avowry, local",
+  "reply_tail": "rchitect vote rests on the recorded design, not the board.Next I’ll check the CLI project, standing TDD/slice rules, and the D213 proposal text so the vote matches the recorded design.I’ll pin D137/D204/D157 wording and the current test layout so the slice and red-record design can be judged against standing rules.Yes\nOne concern, D204 atomic green: characterisation first, one Pending red covering pack, install, version and demo, then one green with Criterion: 1-2. That satisfies D137's one-pending-test rule and the watched-red rule. Avowry/avowry, local feed, public sources off, scratch --tool-path, and no publish are minimal and stop a public-feed false pass. The four-field red record and pre-production replay are enforceable. Notes: name [Z] and [E] in that red; --version reads informational/package version so prerelease matches; git-log checks that the pending red's Criterion line appears before the production commit.\nCITE: ONE new-state test that carries criteria 1 and 2 together\n"
+ },
+ {
+  "tag": "d213p-auditlens-codex",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "Yes",
+  "counted_by_decider": false,
+  "cite_ok": false,
+  "cite": null,
+  "reason": "",
+  "reply_tail": "Yes"
+ },
+ {
+  "tag": "d213p-auditlens-grok",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "No",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "records that it fails because no tool package is configured",
+  "reason": "The adopted replay can SHIP on any non-zero exit: pending-red CI is still Open (D137), so Criterion git-log order plus a compile or helper failure would satisfy the four-field record. Condition: the independent gate HOLDs unless the replaye",
+  "reply_tail": "I will read the cited agreement, bar, seat plan, and checklist files, then check git history for the verification loopholes this audit vote needs.The declaration mentions per-seat worktrees; I am checking that against the serial-on-main rule and the red-first/git-log practices.I am checking D204, the worktree rule, D125/D205, and whether the red-replay gate can pass a wrong-reason failure.No\nThe adopted replay can SHIP on any non-zero exit: pending-red CI is still Open (D137), so Criterion git-log order plus a compile or helper failure would satisfy the four-field record. Condition: the independent gate HOLDs unless the replayed pending-red output matches the committed expected-failure assertion that no tool package is configured, and the runner result type is assertion failure.\nCITE: records that it fails because no tool package is configured\n"
+ },
+ {
+  "tag": "d213p-coach-grok",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "Yes",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "Trial drivers (Muse, Cursor, local Qwen) are not part of this task force",
+  "reason": "The force is the default card-mode seats only: Ready Codex, slice and red Grok, green Codex, independent Claude gate, separate Claude sign-off. Authors do not review; red and green differ. Trial drivers sit on the seat plan, not the force, ",
+  "reply_tail": "I'll read the seat plan, working agreement, and related records so I can vote as Agile Coach on whether this task force is sized to the work.Yes\nThe force is the default card-mode seats only: Ready Codex, slice and red Grok, green Codex, independent Claude gate, separate Claude sign-off. Authors do not review; red and green differ. Trial drivers sit on the seat plan, not the force, so D212's padding is gone. Claude seats carry a reason: Grok and Codex author, Copilot and agy are out, Muse/Cursor/Qwen are trial-only. Architect owns packaging design; cards 177 and 186 own the OS matrix and publish, so DevOps or security would pad. No extra domain member: the named red covers NuGet and version unknowns. Note: drop per-seat worktrees; writing is serial on main (card 230).\nCITE: Trial drivers (Muse, Cursor, local Qwen) are not part of this task force\n"
+ },
+ {
+  "tag": "d213p-decider-grok",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "Yes",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "does not read the gate reviewer's report before its own reruns",
+  "reason": "The adopt decision rests on facilitator-rerun file facts, one pending red with four evidence fields, characterisation on the pre-change tree, a gate that replays that red and checks Criterion lines in git log, and a sign-off that reruns wit",
+  "reply_tail": " plan, checklist, working agreement, and release bar so the vote rests on those records.The declaration mentions worktrees; I'll check the agreement's task-force and driver rules against that.I'll check the atomic-green trial, Dana as a persona, and a recent task-force declaration so the sign-off seats match current practice.Yes\n\nThe adopt decision rests on facilitator-rerun file facts, one pending red with four evidence fields, characterisation on the pre-change tree, a gate that replays that red and checks Criterion lines in git log, and a sign-off that reruns without the gate report. D212’s conditions and D137/D204 hold: one pending test, one atomic green. Seats are complete: ready, slice, red, green, independent gate, isolated sign-off. Authors are Grok and Codex; Claude takes gate and sign-off with the recorded reason; trial drivers stay on the seat plan. Note: architect pins the single version source at slice.\n\nCITE: does not read the gate reviewer's report before its own reruns\n"
+ },
+ {
+  "tag": "d213p-dev-grok",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "Yes",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "ONE atomic packaging green removes Pending in the same commit",
+  "reason": "Characterisation then one Pending test for criteria 1'2 then one atomic packaging green matches D137's one-pending limit and D204 (`Criterion: 1-2`). Packaging is metadata plus a version source, so the inner loop is that atomic green. One-g",
+  "reply_tail": "I'll read the seat plan, working agreement, and related card records so the backend-developer vote is based on the actual rules, not the proposal text alone.I’ll check the TDD, atomic-green, flag, and slice rules against the CLI project so the vote is about whether a green seat can follow them as written.Yes\n\nCharacterisation then one Pending test for criteria 1–2 then one atomic packaging green matches D137’s one-pending limit and D204 (`Criterion: 1-2`). Packaging is metadata plus a version source, so the inner loop is that atomic green. One-green cap is fair, with a D175 window if pack and version disagree. The increment is complete at green, so D136 flags stay unused. Slice is one concern, three criteria, under file and line limits. I will keep the watched red and the pending-red assertion path. Note: `--version` must carry a prerelease form; green writes on main under card 230’s single-writer lock.\n\nCITE: ONE atomic packaging green removes Pending in the same commit\n"
+ },
+ {
+  "tag": "d213p-qa-codex",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "No",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "the single pending red for criteria 1 and 2",
+  "reason": "Require the single pending red to aggregate independent checks and record each expected failure, so an early pack failure cannot mask version, source-isolation, scratch-path, global-list, command, or demo-build violations; then I will vote ",
+  "reply_tail": "No\n\nRequire the single pending red to aggregate independent checks and record each expected failure, so an early pack failure cannot mask version, source-isolation, scratch-path, global-list, command, or demo-build violations; then I will vote Yes.\n\nCITE: the single pending red for criteria 1 and 2"
+ }
+]
