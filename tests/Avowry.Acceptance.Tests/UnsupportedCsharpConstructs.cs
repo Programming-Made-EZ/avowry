@@ -226,6 +226,26 @@ public class UnsupportedCsharpConstructs
                 respond with { r: input.n }
             """, @"spec ""none""", "PH340");
 
+        yield return new Row("spec-then-none", """
+            module M
+
+            avow to "maybe {n: Int}" -> Option<Int>
+              spec "none"
+                given n = 0
+                when called
+                then returns none
+              native csharp
+                return null;
+
+            endpoint Check : POST /check
+              input
+                n: Int
+              output
+                r: Int
+              steps
+                respond with { r: input.n }
+            """, @"spec ""none""", "PH340");
+
         yield return new Row("let-effectful", """
             module M
 

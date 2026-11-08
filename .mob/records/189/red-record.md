@@ -101,3 +101,50 @@ Pre-change (before any new test file): the wider neighbour filter including WebE
 ## Line count
 
 `tests/Avowry.Acceptance.Tests/UnsupportedCsharpConstructs.cs`: 388 lines, LF only. No corpus fixtures added (those land in the green).
+
+## Revision 1
+
+Adds the missing `then returns none` row. The independent gate reviewer found one reachable crash the original red did not cover: the card's table row reads "avow spec given/then returns of none", and the red (`068c378`) and the green (`164b928`) cover only the `given` half. A leaf `maybe {n: Int} -> Option<Int>` with a spec `given n = 0`, `when called`, `then returns none` still exits with an unhandled NotImplementedException at `src/Avowry.Adapters.CSharp/CSharpProvider.cs:150` ("does not support the outcome of spec ... yet"). This revision is built on main `bbbc6e7`. The test has no Pending trait (it passes on main); after this commit it is expected to FAIL by assertion until the green revision lands, so this revision is pushed only together with its green.
+
+### Pre-change commit hash
+
+`git rev-parse HEAD` before this commit: `bbbc6e7b1f3bf463f3fcab8463e9a51831fbc018` (main).
+
+### Command
+
+```
+dotnet test tests/Avowry.Acceptance.Tests --nologo --filter "FullyQualifiedName~Unsupported_csharp_constructs_report_a_diagnostic"
+```
+
+### Failing test
+
+`Avowry.Acceptance.Tests.UnsupportedCsharpConstructs.Unsupported_csharp_constructs_report_a_diagnostic`
+
+No Pending trait. Calls `PhraseCli.RunAsync`. One new row `spec-then-none`; no other row, Check() logic, or attribute changed.
+
+### Expected failure
+
+Assertion failure from `Assert.True(failures.Count == 0, ...)`, not a missing file and not a compile error. Exactly one row id: `spec-then-none`. Every other row already reports a diagnostic on this tree.
+
+```
+  Failed Avowry.Acceptance.Tests.UnsupportedCsharpConstructs.Unsupported_csharp_constructs_report_a_diagnostic [5 s]
+  Error Message:
+   spec-then-none: exit -532462766; Unhandled exception; NotImplementedException; stack at; no PHnnn (line:col)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.UnsupportedCsharpConstructs.Unsupported_csharp_constructs_report_a_diagnostic() in C:\Users\ringe\projects\wt-189-red2\tests\Avowry.Acceptance.Tests\UnsupportedCsharpConstructs.cs:line 30
+--- End of stack trace from previous location ---
+
+Failed!  - Failed:     1, Passed:     0, Skipped:     0, Total:     1, Duration: 5 s - Avowry.Acceptance.Tests.dll (net8.0)
+```
+
+Windows exit `-532462766` is HRESULT `0xE0434352` (CLR unhandled exception).
+
+### Observed pre-change CLI result of the new row
+
+Ran `dotnet exec src/Avowry.Cli/bin/Debug/net8.0/Avowry.Cli.dll build FILE -o OUT` from scratch `qa189/` after `dotnet build src/Avowry.Cli`.
+
+| id | source | exit | observed |
+|---|---|---|---|
+| spec-then-none | leaf `maybe {n: Int} -> Option<Int>`, spec `given n = 0` / `when called` / `then returns none`, native csharp `return null` | -532462766 | Unhandled exception, NIE `The C# emitter does not support the outcome of spec 'none' yet.` at CSharpProvider.cs:150 |
+
+A control copy that changes only the outcome to `then returns 0` (native csharp `return n`) exits 0, so the only problem is the spec outcome.
