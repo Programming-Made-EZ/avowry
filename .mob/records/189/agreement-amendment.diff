@@ -1,0 +1,6 @@
+--- TEAM_WORKING_AGREEMENT.md
++++ TEAM_WORKING_AGREEMENT.md
+@@ -533,0 +534,3 @@
++- **A Ready table row that names two constructs becomes two ids (experiment; the mob's decision, card 189 retro).** While this entry is on trial, on a code card whose Ready draft has a table row that names two constructs (joined by a slash, "and" or a list, for example "`given`/`then returns` of none"), the slice's table and the red give each construct its own row or id, and the red record lists the ids with the Ready row each came from; every id is watched failing on the pre-change tree before the green. A row that stays one id says in the red record why (one throw site, one rule).
++  - Hypothesis: a construct the Ready table names cannot be dropped between the draft, the slice and the red, so the gate no longer finds a named half still failing. Metric: gaps found only at the independent gate review or the sign-off that the Ready table named (card 189: 1, about 55 minutes of revisions and a second gate), target 0. Counter-metric: ids that do not fail on the pre-change tree or share one throw site (duplicates), and minutes from the red's start to its first green (card 189: about 9). Trial: the next 3 code cards with a multi-construct Ready row. Decider D222, started 2026-11-08.
++
