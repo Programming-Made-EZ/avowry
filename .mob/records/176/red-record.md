@@ -70,3 +70,68 @@ No test matches the given testcase filter `Status!=Pending&FullyQualifiedName~Pa
 ```
 
 0 tests run, exit 0.
+
+## Revision 1
+
+The installed `--version` expectation now agrees with the existing `AvowryCommand` test: output must be `Avowry ` followed by the package version. The contradiction was found at the green seat; the neighbouring test had not been run before the original red.
+
+### Pre-change commit hash
+
+`git rev-parse HEAD` before this commit: `ed135f7b118da6c6d569b9227dcba39bcc2037a7`
+
+### Reason
+
+Pending test `Packed_tool_is_versioned_installs_and_builds_the_demo` asserted `Assert.Equal(packageVersion, version.Stdout.Trim())`. Existing passing test `AvowryCommand` asserts `Assert.StartsWith("Avowry ", version.Stdout)`. One output cannot satisfy both. The card says `avowry --version` reports the package version, which `Avowry 0.1.0` does. Changed only that one expectation to `Assert.Equal("Avowry " + packageVersion, version.Stdout.Trim())`. Status=Pending and Criterion traits unchanged. `AvowryCommand.cs` untouched.
+
+### Command
+
+```
+dotnet test tests/Avowry.Acceptance.Tests --nologo --filter FullyQualifiedName~Packed_tool_is_versioned_installs_and_builds_the_demo
+```
+
+Also: `dotnet test tests/Avowry.Acceptance.Tests --nologo --filter FullyQualifiedName~AvowryCommand`
+
+### Failing test
+
+`Avowry.Acceptance.Tests.PackedToolIsVersionedInstallsAndBuildsTheDemo.Packed_tool_is_versioned_installs_and_builds_the_demo`
+
+### Expected failure
+
+Assertion failure from `Checks.AssertAll`, not a compile error and not a helper exception. Six named checks; four failed on their own assertion; two were blocked by the missing installed tool (pack still produced `Avowry.Cli.1.0.0.nupkg`, which is not an Avowry tool package). The version check is blocked, so the revised assertion is not reached on this tree.
+
+Failed on their own assertion:
+
+- `pack`: `nupkg is not named for package ID Avowry: Avowry.Cli.1.0.0.nupkg` (`dotnet pack` exited 0).
+- `metadata`: `id is Avowry.Cli; Version is 1.0.0; tool command is <missing>` (nuspec inspected; no `DotnetToolSettings.xml`).
+- `explicit-version-source`: `CLI project and Directory.Build.props set no Version or PackageVersion` (reads those files; independent of pack).
+- `install`: `dotnet tool install exited 1; installed command missing` plus `avowry is not found in NuGet feeds <local feed>` (public sources cleared).
+
+Blocked by the missing package / installed tool:
+
+- `version`: `blocked: tool not installed`
+- `demo-build`: `blocked: tool not installed`
+
+`AvowryCommand` on the same tree: Passed! Failed: 0, Passed: 2, Skipped: 0, Total: 2.
+
+### Quoted output
+
+```
+[xUnit.net 00:00:06.16]     Avowry.Acceptance.Tests.PackedToolIsVersionedInstallsAndBuildsTheDemo.Packed_tool_is_versioned_installs_and_builds_the_demo [FAIL]
+  Failed Avowry.Acceptance.Tests.PackedToolIsVersionedInstallsAndBuildsTheDemo.Packed_tool_is_versioned_installs_and_builds_the_demo [5 s]
+  Error Message:
+   pack (failed): nupkg is not named for package ID Avowry: Avowry.Cli.1.0.0.nupkg
+metadata (failed): id is Avowry.Cli; Version is 1.0.0; tool command is <missing>
+explicit-version-source (failed): CLI project and Directory.Build.props set no Version or PackageVersion
+install (failed): dotnet tool install exited 1; installed command missing
+avowry is not found in NuGet feeds C:\Users\ringe\AppData\Local\Temp\phrase-acceptance\cffda888caef418bafb2ba53b44e3d84.
+
+version (blocked): blocked: tool not installed
+demo-build (blocked): blocked: tool not installed
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PackedToolIsVersionedInstallsAndBuildsTheDemo.Checks.AssertAll() in C:\Users\ringe\projects\wt-176-red2\tests\Avowry.Acceptance.Tests\PackedToolIsVersionedInstallsAndBuildsTheDemo.cs:line 263
+   at Avowry.Acceptance.Tests.PackedToolIsVersionedInstallsAndBuildsTheDemo.Packed_tool_is_versioned_installs_and_builds_the_demo() in C:\Users\ringe\projects\wt-176-red2\tests\Avowry.Acceptance.Tests\PackedToolIsVersionedInstallsAndBuildsTheDemo.cs:line 74
+
+Failed!  - Failed:     1, Passed:     0, Skipped:     0, Total:     1, Duration: 5 s - Avowry.Acceptance.Tests.dll (net8.0)
+```
+
+The local-feed directory in the install line changes per run.

@@ -126,7 +126,7 @@ public class PackedToolIsVersionedInstallsAndBuildsTheDemo
         Assert.False(string.IsNullOrWhiteSpace(packageVersion), "blocked: package version unknown");
         Assert.False(version.TimedOut, "avowry --version timed out");
         Assert.True(version.ExitCode == 0, "avowry --version exited " + version.ExitCode + Extra(version));
-        Assert.Equal(packageVersion, version.Stdout.Trim());
+        Assert.Equal("Avowry " + packageVersion, version.Stdout.Trim());
     }
 
     private static void AssertDemoBuild(ProcessResult built, string output)
