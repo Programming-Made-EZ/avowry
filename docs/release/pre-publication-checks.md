@@ -87,19 +87,19 @@ Recommendation: repeat the registry lookups on the publish day and commission a 
 
 ## Owner items
 
-Command: read from `NOTICE`, `TRADEMARKS.md`, D121 and D125. Scan tip: `c4692e074c8970081687d332adb64f200728426c`. Every item is open; none can be answered from the repository.
+Command: read from `NOTICE`, `TRADEMARKS.md`, D121 and D125. Scan tip: `c4692e074c8970081687d332adb64f200728426c`. Every item is open, none can be answered from the repository, and each is asked in one word (or one line for the holder).
 
-- Public name: OPEN, asked 2026-11-08. Confirm Avowry (D125).
-- Holder line at `NOTICE:2` and `TRADEMARKS.md:5`: OPEN, asked 2026-11-08. Both still hold the marked placeholder.
-- Professional trademark search: OPEN, asked 2026-11-08.
-- Four questions for a lawyer (D121): OPEN, asked 2026-11-08.
+- Public name: OPEN, asked 2026-11-08. Confirm Avowry (D125)? Answer: yes / no.
+- Holder line at `NOTICE:2` and `TRADEMARKS.md:5`: OPEN, asked 2026-11-08. Both still hold the marked placeholder. Answer: give the holder name (one line).
+- Professional trademark search: OPEN, asked 2026-11-08. Answer: commission / skip.
+- The four lawyer questions (D121): OPEN, asked 2026-11-08. Answer: ask / skip (and, if ask, who).
   1. Do the generated runtime helper files need a notice, given that generated code belongs to the user?
   2. Is a trademark policy on this name enforceable?
   3. Does the rename rule conflict with Apache-2.0 notice retention?
   4. Who is the holder?
-- Author identity going forward: OPEN, asked 2026-11-08.
-- Unread vendor terms (four vendors): OPEN, asked 2026-11-08.
-- The `reply_head` publication choice: OPEN, asked 2026-11-08. Publish, trim or drop the reply prefixes in the bench history files (up to 200 characters each).
-- Transitive package licences: OPEN, asked 2026-11-08. Needs a restore.
+- Author identity going forward: OPEN, asked 2026-11-08. Answer: keep / change.
+- Unread vendor terms (four vendors): OPEN, asked 2026-11-08. Answer: read-first / accept-risk.
+- The `reply_head` publication choice (reply prefixes of up to 200 characters in the bench history files): OPEN, asked 2026-11-08. Answer: publish / trim / drop.
+- Transitive package licences: OPEN, asked 2026-11-08. Needs a restore. Answer: restore-and-review / accept.
 
-Recommendation: answer the eight items before approving the first publish; the placeholders in `NOTICE` and `TRADEMARKS.md` stay until the holder is named.
+Recommendation: name yes; holder name needed; trademark search commission; lawyer ask; author identity keep; vendor terms read-first; reply_head trim; transitive licences restore-and-review. The holder placeholders in `NOTICE` and `TRADEMARKS.md` stay until the holder is named.
