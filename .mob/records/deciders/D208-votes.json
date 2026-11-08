@@ -1,0 +1,327 @@
+{
+ "decider": "D208",
+ "subject": "card 324 retro pick (first form): gate preparation, byte-parity permanent, Dimensions of Difficulty trial",
+ "result": "FAILED",
+ "round1": {
+  "architect": [
+   {
+    "tag": "d208-architect-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "a card scoring 0 on all four may use a reduced seat set",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\n\nP1 and P2 are concrete and auditable, but P3 is not yet sound. Defining 0 as “nothing known” conflates no difficulty with missing knowledge, yet permits a reduced seat set when all dimensions are 0—the riskiest interpretation. “Committed on the card” also lacks a canonical schema and checker location, inviting inconsistent records and false positives. I would vote Yes if P3 defines 0 as a positively assessed absence of difficulty and specifies one machine-checkable record format and path."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d208-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "a 1 is resolved inside the card and noted, a 2 triggers the dimension's prescription",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro, agreement, and candidate patch first so the QA vote is based on whether each rule can fail red and whether the named checks actually catch the violations.I'll read the retro, voices, amendment, and Experimental section next so the vote can check whether each rule is actually testable.I'll inspect the Experimental section, candidate text, and Ready/gate checks to see whether P1–P3 fail red first or still pass bad state.I’ll check the existing freshness and Ready checks against P3’s scoring text so the vote can say whether a violation would actually fail.No\nP2 earned permanence: the parity red fails when undo does not reproduce the old bytes; three trial cards found 0 defe"
+   },
+   {
+    "tag": "d208-qa-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "starts on a fresh binary and a clone",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nThe metrics are testable red first. P1's stale-binary and missing-.git failures can be reproduced on purpose, and card 324 already showed them (2 of 3 runs). The target of 0 is checkable.\n\nP3's anchors and its scores committed on the card let git show whether a retro-found blocker went unnamed.\n\nTwo gaps remain, and neither blocks adopting this:\n- The clone and rebuild steps are rules on the brief, and nothing automated fails when someone skips them.\n- A 0/0/0/0 card using a reduced seat set could pass bad state. The trial should count that case as a counter-metric.",
+    "note": "discarded: the facilitator runner mistook the Grok seat for no reply (it looked for the vote word in the first 60 words) and ran Claude as a fallback; the Grok seat above is the counted vote"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d208-dev-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "a 1 is resolved inside the card and noted",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nThe rules are workable and fair. P1 makes gate evidence reproducible, P2 preserves a proven defect-detection check, and P3 remains a measured trial rather than prematurely becoming a default. Committed scores, explicit anchors, and retro comparison limit gaming. For backend work, rebuilding after `src/` changes and testing history-dependent checks in a clone are reasonable costs. The prescriptions for scores of 1 and 2 are sufficiently bounded to follow consistently."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d208a-auditlens-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "the anchors are written (0 nothing known; 1 one named, bounded item the card resolves inside its own slice",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro sources, the amendment, and the Decider protocol so the audit vote is based on git, not the synthesis.I'll pull the retro writeup, voices, amendment, and the Experimental/Decider sections next.I’ll compare the candidate patch to the current Experimental text and the gate/sign-off records next.No\n\nP3 leaves Ready scores unverifiable from git and lets a card pass Ready while skipping the practice. The patch fires each prescription \"above 0\" while the pick fires it only on a 2, so either reading complies. Anchor \"0 nothing known\" matches Unknown's failure mode, so a card can score 0, skip the spike, and still pass. Scores \"on the card\" have no path a git show can print; a co"
+   },
+   {
+    "seat": "claude",
+    "note": "refused by decider.py before start (a Claude seat is refused while Grok has waited longer since the last seating); the seat was run on Grok (tag d208a)"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d208-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "a 1 is resolved inside the card and noted, a 2 triggers the dimension's prescription before the card is pulled",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro records, agreement, and Decider protocol so the sign-off vote rests on the evidence, not the synthesis.I'll pull the retro writeup, voices, amendment, TWA Experimental section, and Dimensions of Difficulty next.I still need the Experimental section, candidate patch, and the gate/sign-off records that the vote has to rest on.No\nP1 and P2 rest on card evidence: 63 stale-CLI Acceptance failures, archive 319/323 vs 323/323, and three clean byte-parity cards. Those evaluations can adopt or keep on a metric. P3’s candidate still fires each dimension’s prescription above 0 (escalate, split, spike, more synchronous) and also resolves a 1 inside the card while only a 2 triggers th"
+   },
+   {
+    "tag": "d208-decider-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "gates start on a fresh binary and a clone",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nP1 and P2 rest on evidence. On P1, 2 of 3 card-324 runs failed for stale-binary or missing-.git reasons, and the metric, counter-metric and 3-card trial are stated. On P2, three cards found no byte-level defect after a clean report, and four of seven voices backed adoption. P3 is correctly framed as a trial, which answers the 4–3 split without a premature mob-defaults change. Two gaps remain. P3 has no baseline for \"blocker the scores did not name\". The reduced seat set for all-zero cards could drop a sign-off seat, so the declaration should name who still signs off. The seat-spread question stays with the product owner.",
+    "note": "discarded: the same runner defect; the Grok seat above is the counted vote"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d208-coach-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Dimensions of Difficulty becomes a three-card trial",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe scope matches the evidence: P1 fixes two concrete gate artifacts, P2 graduates a successful low-cost safeguard, and P3 remains a measured three-card trial. The four dimensions cover the relevant coordination risks without adding seats automatically; reduced staffing is allowed only for demonstrably simple cards. Clear metrics, counter-metrics, and exit criteria keep the added ceremony bounded."
+   }
+  ]
+ },
+ "round2_after_amendment": {
+  "architect": [
+   {
+    "tag": "d208r2-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "0 means assessed and none found",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the Decider protocol, the round-2 amendment, and the retro record so the architect vote is grounded in the committed text.I'll read the retro, amendment, agreement, and experimental sections next so the vote can rest on the committed design.Round 1 votes and the candidate text are next; those show which P3 objections the amendment claims to close.I’ll compare the round-2 candidate against D158 and the current record/checker rules so the architect vote can test enforceability.I’ll check the architect retro voice and the round-1 candidate so the vote can confirm the amendment closed the record-and-checker gap.Yes\n\nP1 and P2 are auditable: briefs name the rebuild and the clone, existi"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d208r2-qa-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "Every card is scored 0, 1 or 2",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\n\nP3’s Ready check catches an absent Difficulty line and an unsupported 2, but can pass invalid values, unnamed non-zero items, a 1 without its in-slice resolution, or a 0 without the required assessment record. Those are normative rules without corresponding red-first checks, so bad state can still reach the vote. P1 and P2 are otherwise evidence-based and checkable. I would vote yes if the Ready check explicitly failed every malformed score and every missing anchor-required explanation, with red-first fixtures proving each violation is rejected."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d208r2-dev-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Only a 2 fires the dimension's prescription",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro records, amendment, and working agreement as a backend-developer seat, then vote on whether the rules are workable and fair.I'll pull the retro, amendment, and agreement text next so the vote rests on the actual rules, not the summary.Yes\n\nP1 and P2 I can follow. Rebuild the CLI after a src cherry-pick to stop stale-binary Acceptance failures (card 324). Byte-parity is unchanged: red commits the undo test, green runs it, facilitator recomputes; three mechanical cards found no post-clean defect.\n\nP3 is workable and fair. 0 is assessed absence with what was checked; 1 stays in-slice; only a 2 fires a spike, split, escalation or extra seat. Scores live on a committed path gi"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d208r2-auditlens-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "The Ready check is one line in the D158 pre-vote checklist",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\n\nP1 and P2 are auditable, but P3’s Ready check permits noncompliance: it does not fail when the issue and committed proposal disagree, a 0 omits what was checked, or a 1 omits its named item and resolution. Thus git can show a passing checklist while the stated practice was broken. I would vote Yes if Ready validates both copies for equality and enforces every anchor’s required evidence."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d208r2-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the independent gate reviewer and the fresh sign-off stay",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro record, round-1 votes, the amendment, and the Decider protocol so the sign-off rests on what's actually written.Reading the retro, round-1 votes, amendment, and the Decider/Experimental sections next.I’ll compare the amended P3 text to the round-1 objections and to the Experimental/Decider rules.Checking the candidate text for leftover “above 0” clauses and that the Ready check is actually named.Yes\nRound 1 Nos were P3-only. P1 and P2 rest on card 324 evidence: 63 stale-CLI Acceptance failures, archive 319/323 against 323/323, and three clean byte-parity cards. The amendment meets every stated condition: 0 is assessed absence, one git-showable Difficulty line, prescriptio"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d208r2-coach-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Dimensions of Difficulty becomes a three-card trial with checkable anchors",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment is proportionate: it preserves independent review while allowing a declared reduced seat set only for cards assessed as difficulty-free. The four dimensions create a practical trigger for adding the perspectives a card actually needs, without padding every task force by default. The three-card trial, Ready failure conditions, committed evidence, metrics, and counter-metrics make P3 inspectable and reversible. P1 and P2 address demonstrated failures with modest ceremony. The remaining odd-seat driver split is correctly escalated rather than smuggled into this patch."
+   }
+  ]
+ },
+ "independent_rerun_on_final_text": {
+  "architect": [
+   {
+    "tag": "d208rr-architect-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "the text, not the idea, was the problem",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nP1 and P2 are evidence-based and enforceable. P3 now has durable records, explicit anchors, a Ready failure condition, and prescriptions triggered only by blockers. Minor ambiguity remains about where zero-score evidence and non-zero explanations sit relative to the fixed Difficulty line, but the three-card trial and retro checks contain that risk."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d208rr-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "fails the task-force window when the Difficulty line is absent",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll vote as QA Engineer after reading the retro record, the round-1 objections, and the amended patch so I can check whether each rule fails red first.I'll read the amendment, the Decider protocol, and the round-1 objections next so the vote is on the actual checks, not the pitch.Round 1 failed P3 on trigger and Ready-check gaps; I’ll compare the amended text to D158 and the existing freshness checks next.I’ll inspect the candidate text, the D158 checklist, and the existing freshness tests to see whether the named Ready fail actually refuses bad state.Support-it\nP1's defects already fail red: PhraseCliFreshness refuses a stale CLI, holdouts fail without .git (card 324: 2 of 3 runs). P2's pa"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d208rr-dev-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "starting the gate on a fresh binary and a clone removes false gate failures",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment makes P3 workable and auditable: zero requires an actual assessment, one stays bounded within the slice, and only two triggers a prescription. The committed Difficulty line and failing Ready check prevent retrospective scoring or silent omission. P1 adds modest, justified overhead and ensures gates test the binary and history-bearing tree that will ship. P2 is a low-cost safeguard supported by the trial evidence. As a backend developer, I can comply without inflating scores, splitting work artificially, or exploiting ambiguity."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d208rr-auditlens-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "so a git show prints it, with each non-zero item named",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll vote as the independent audit seat. First I'll read the cited retro records, the round-2 patch, and the Decider rules, without changing anything.The repo is a committed snapshot. Next I’ll read the agreement, retro records, and the round-2 patch.Round 1 objected to P3. I’ll check the amended candidate, D158, and whether git can actually fail a missing score.P1 and P2 check out from the records. I’m casting the audit vote on whether P3 is now git-checkable and closed.Support-it\nP1 and P2 are checkable from git and records: retro-input and signoff-ctx7 show 63 stale-CLI Acceptance failures and archive 319/323 versus 323/323; retros 197, 266, 324 show zero byte-level defects after a clean "
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d208rr-decider-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "the amendment is the changes the objecting seats asked for",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nP1 and P3 now have observable baselines, targets, counter-metrics, bounded trials, committed evidence paths, and explicit Ready failure conditions. P3’s revised anchors close the ambiguity that defeated round 1, while preserving independent gate review and fresh sign-off even with reduced seats. P2’s three-card evidence supports promotion, though the retro should continue watching for false-clean parity results. The unresolved odd-seat driver arithmetic is transparently escalated to the product owner and does not undermine this patch’s evaluation or required sign-off coverage."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d208rr-coach-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": false,
+    "cite": "a card scoring 0 on all four may use a reduced seat set",
+    "cite_verbatim": false,
+    "cite_exact_without_normalising": false,
+    "cite_normalised_match": true,
+    "decider_cite_ok": false,
+    "reply_head": "I'll read the retro records, the amendment, and the working agreement so the coach vote is based on the actual proposal, not ceremony.Round 1 votes and the candidate text next, so I can judge whether the amendment actually sized the trial to the objections.Yes\n\nP1 and P2 match observed defects: stale CLI, archive-copy gates, and a completed byte-parity trial. P3 is the TFDD diagnostic: scores at Ready, only a 2 fires a prescription, a 1 stays in-slice, and an assessed 0/0/0/0 may drop seats the declaration names. Independent gate and sign-off stay, so shrinking keeps assurance. Ready fails a missing Difficulty line or a 2 with no spike, split, inbox or seat, so scores are checkable. A three-",
+    "note": "not counted: the decider found the cite not verbatim (the proposal says \"A card scoring 0 on all four may use a reduced seat set\", the seat wrote the lower-case a); the vote was Yes; the seat was re-run on Claude, the least recently used driver in this window"
+   },
+   {
+    "tag": "d208rr-coach-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "A gate starts on a fresh binary and a clone",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nThe amendment answers every round 1 objection to P3. The anchors are checkable, the score line has a committed path a `git show` can print, the Ready check fails a card with absent scores, and only a 2 fires a prescription. P1 and P2 rest on card 324 evidence, and the P1 fix costs about 3 seconds for the build.\n\nOn sizing, the reduced seat set for all-0 cards trims ceremony. Keeping the independent gate reviewer and the fresh sign-off keeps the needed perspectives. My reservation is that the 10-minute Ready scoring target could grow into padding, so the counter-metric must be watched. Three parts in one patch is also a lot, though each part has its own metric and trial window."
+   }
+  ]
+ }
+}
