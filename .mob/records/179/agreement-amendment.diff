@@ -1,0 +1,6 @@
+--- TEAM_WORKING_AGREEMENT.md
++++ TEAM_WORKING_AGREEMENT.md
+@@ -530,0 +531,3 @@
++- **On a docs card the independent gate review starts on the final tip (experiment; the mob's decision, card 179 retro).** While this entry is on trial, on a card that has a cold-reader seat (D206), the independent gate review starts only after the cold-reader report is committed and any page revision it caused is on the tip, and the gate record's tested commit is a descendant of the commit that added the cold-reader report (the record shows the `git merge-base --is-ancestor` line and its exit status). A gate review started earlier is stopped and relaunched on the final tip, and the record says so. The facilitator's own baseline gate may run earlier. Everything else of the gate (the red replay, the mutations, the Gate evidence and Load lines, the separate fresh sign-off) is unchanged.
++  - Hypothesis: a reviewer who reads the pages Dana will read spends one run, not two, and the shipped pages are the reviewed pages. Metric: gate reviews started on a pre-revision tip per docs card (card 179: 1, about 20 minutes of reviewer time), target 0. Counter-metric: minutes from the green to SHIP on a docs card (card 179: 38, including the page revision). Trial: the next 3 docs cards with a cold reader. Decider D219, started 2026-11-08.
++
