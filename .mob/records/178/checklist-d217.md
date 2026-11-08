@@ -1,0 +1,7 @@
+# D158 pre-vote checklist: Decider D217, the card 178 retro pick (facilitator)
+- Boundary: card 178 signed off (SIGNED OFF, no conditions), the retro voices complete (seven, each a fresh context, launched at once; Muse held the coach seat, its first real seat; the Muse architect seat hit the runner cap and was re-asked on Grok). Inbox read at this boundary: none open.
+- Proposal: .mob/records/178/retro-pick-proposal.md (patch agreement-amendment.diff, candidate text agreement-candidate.md; voices retro-voices.json), committed before the vote. One concern. The standing-rules preflight list is in the proposal.
+- Category: a change to TEAM_WORKING_AGREEMENT.md (an Experimental entry). A full Decider run with the original protocol: six fresh seats at once, voter briefs that define Yes against Support-it, the mechanical 30 percent tally; each No states one condition; an adopted condition goes back to the same outlier to confirm and the other voters answer one narrow question about the amendment only; one live window at a time. No separate re-run window is run for this Decider: the proposal is itself the question whether to keep it, and the primary window plus the confirmation step is the process under test; any voter or the product owner may ask for a re-run.
+- Seat spread: Grok, Claude and Muse (Codex, Copilot, agy out of quota); Muse takes two Decider seats (developer and coach).
+- Red-first: a document change; the rule held on the card.
+- No commit and no tracked-file change on main during a vote window.
