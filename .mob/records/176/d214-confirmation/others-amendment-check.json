@@ -1,0 +1,22 @@
+{
+ "architect": {
+  "vote": "Yes",
+  "attempt": 1,
+  "reply": "Yes\nThe amendment adds an independent explicit-Version check to the pending red and HOLDs the gate unless the green test body is byte-identical to the pending red except Status=Pending. Both rules are minimal, D137-aligned, and enforceable. I still support the proposal.\nCITE: the green's test body is byte-identical to the pending red's test body apart from the removal of Status=Pending\n"
+ },
+ "developer": {
+  "vote": "Yes",
+  "attempt": 1,
+  "reply": "Yes\nQA's independent Version/PackageVersion check is a fair green: set one explicit source in the csproj. The gate HOLDs unless the green's test body is byte-identical except stripping Pending; that is D137 and matches my frozen-body Yes. Both are workable without gaming.\nCITE: the green's test body is byte-identical to the pending red's test body apart from the removal of Status=Pending\n"
+ },
+ "decider": {
+  "vote": "Yes",
+  "attempt": 1,
+  "reply": "Yes\nThe amendment tightens evidence: the pending red must independently catch a missing explicit Version or PackageVersion, and the gate HOLDs unless the green test body is byte-identical to that red except Status=Pending. Seats and isolated sign-off are unchanged. I still support adopt.\nCITE: HOLDs unless git shows that the green's test body is byte-identical\n"
+ },
+ "coach": {
+  "vote": "Yes",
+  "attempt": 1,
+  "reply": "Yes\nThe amendment keeps the force at the default card-mode seats. QA’s Version check is an extra assertion inside the existing pending red Grok already authors. The gate HOLDs on D137’s byte-identical test-body rule using the same Claude reviewer. Size and roles stay as I voted.\nCITE: the independent gate reviewer HOLDs unless git shows that the green's test body is byte-identical\n"
+ }
+}
