@@ -1,0 +1,7 @@
+# D158 pre-vote checklist: Decider D224, the card 202 retro pick (facilitator)
+- Boundary: card 202 signed off (SIGNED OFF WITH CONDITIONS, none blocking), the retro voices complete (seven, each a fresh context, launched at once; the coach on Muse, a short reply). Inbox read at this boundary: no open entries.
+- Proposal: .mob/records/202/retro-pick-proposal.md (patch agreement-amendment.diff; voices retro-voices.json; retro input retro-input.md), committed before the vote. One concern: the verdict of the D217 trial (adopt). The standing-rules preflight list is in the proposal.
+- Category: a change to TEAM_WORKING_AGREEMENT.md (step 6 replaced, an Experimental entry retired). A full Decider run with the original protocol: six fresh seats at once, voter briefs that define Yes against Support-it, the mechanical 30 percent tally; each No states one condition; an adopted condition goes back to the same outlier to confirm and the other voters answer one narrow question about the amendment only; one live window at a time. The D217 trial rule governs this Decider: because it changes the agreement, trigger (c) applies if the primary window passes with no amendment and no No (one fresh-seat re-run, with the seats swapped); the record carries a committed trigger line.
+- Seat spread: Grok, Claude and Muse (Codex, Copilot, agy out of quota); Muse takes two Decider seats.
+- Red-first: a document change; the rule held on the card.
+- No commit and no tracked-file change on main during a vote window.
