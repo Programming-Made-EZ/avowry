@@ -18,6 +18,18 @@
    "seconds": 8.8,
    "reply": "I have no usage telemetry or memory across sessions, so these figures are rough impressions, not measurements.\n\n(1) Top HTTP stacks:\n- Python with FastAPI (sometimes Flask or Django): about 35%.\n- TypeScript or JavaScript with Node and Express (or Next.js API routes, NestJS, Hono): about 35%.\n- Go with net/http, Gin or Chi: about 10%.\nC#/ASP.NET Core and Java/Spring Boot share most of the rest.\n\n(2) Deployment is mostly Docker containers on cloud platforms such as Kubernetes, AWS ECS, Cloud Run, Fly.io and Render. Serverless (Lambda, Vercel, Cloudflare Workers) is next, followed by a developer laptop during development. Plain VMs are less common.\n\n(3) I usually run code in a Linux container or a cloud sandbox. Fairly often I run it on the user's own machine, Windows here. Sometimes I can't run it at all.\n\n(4) Yes, because targeting Python or TypeScript reaches far more existing code, libraries and deployment paths than .NET alone.",
    "stderr": ""
+  },
+  "claude": {
+   "rc": 0,
+   "reply": "1) Python with FastAPI/Flask/Django about 40%; TypeScript/JavaScript with Node (Express, Fastify, Next.js routes) about 35%; C# with ASP.NET Core about 10% (Go, Java/Spring and others share the rest). 2) Mostly Docker containers on cloud platforms (AWS, Azure, GCP), then serverless functions, a developer laptop for local runs, a plain VM less often. 3) Mostly Linux containers or sandboxes, but often on a developer's own Windows or macOS machine; sometimes a browser sandbox; sometimes no execution at all. 4) Yes: a language that compiles to several common stacks, especially Python and Node, would reach far more users than one limited to .NET, because .NET is a minority of what I am asked to write.",
+   "note": "a fresh Claude subagent context asked the identical question, no files read"
   }
- }
+ },
+ "not_asked": {
+  "codex": "usage limit until about 2026-11-11",
+  "copilot": "no quota",
+  "agy": "at quota (about 137 hours)",
+  "local_qwen": "not asked (loads a 35B model; runs only while the gate is idle); can be asked at the next idle gate"
+ },
+ "summary": "All four available drivers (Grok, Muse, Cursor, Claude) put Python (FastAPI/Flask/Django) and TypeScript/Node (Express/Nest/Next/Fastify) first, together about 65 to 75 percent of the HTTP services they are asked to write; Go about 10 to 15 percent; C#/ASP.NET Core about 10 percent or less. Deployment: Docker containers on cloud (Kubernetes, Cloud Run, ECS), then serverless, a developer laptop for local runs. As agents they run code mostly in Linux containers or sandboxes, sometimes on the user's Windows or macOS machine, often not at all. All four say a language that compiles to their most common stack would be more useful than .NET-only. This is the models' self-report (an impression, not telemetry)."
 }
