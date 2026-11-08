@@ -22,6 +22,7 @@ public class GeneratedApiSourceScan
     private static readonly string[] ProcessStartCallers =
     [
         "BenchmarkHarnessAcceptance.cs", "CSharpBaselineAcceptance.cs", "EnsureStepCompiles.cs",
+        "GettingStartedDocs.cs",
         "LlmCustomerCheck.cs", "MatchingCodebases.cs",
         "MobProcessAccountability.cs", "PhraseCheatSheet.cs", "PhraseEndpointExecutedOutcomes.cs", "PrerequisitesPage.cs",
         "PrivateHoldoutResults.cs", "RecordUpdateFormCompiles.cs", "SourceMapDeployment.cs", "SourceMapTraceCommand.cs",
