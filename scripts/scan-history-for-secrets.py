@@ -22,7 +22,7 @@ def scan(rev, cwd):
     spec.loader.exec_module(module)
     patterns = [(re.compile(p), k) for p, k in module.PATTERNS if k not in NOISY]
     hits, binaries, commit, path, in_hunk = [], 0, "", "", False
-    for line in git(["log", rev, "-p", "-U0", "--no-color", "--format=@@C %H"], cwd).splitlines():
+    for line in git(["log", rev, "-p", "-U0", "--no-color", "--format=@@C %H"], cwd).split(chr(10)):
         if line.startswith("@@C "):
             commit, in_hunk = line[4:].strip(), False
         elif line.startswith("diff --git"):
