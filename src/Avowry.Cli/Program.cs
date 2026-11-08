@@ -17,7 +17,7 @@ if (args is ["--help"])
 }
 if (args is ["--version"])
 {
-    Console.WriteLine($"Avowry {Assembly.GetExecutingAssembly().GetName().Version}");
+    Console.WriteLine($"Avowry {Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion}");
     return 0;
 }
 if (args.Length > 0 && args[0] == "trace")

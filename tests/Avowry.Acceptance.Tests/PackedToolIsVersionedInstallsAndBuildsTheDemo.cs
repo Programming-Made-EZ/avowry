@@ -12,7 +12,6 @@ public class PackedToolIsVersionedInstallsAndBuildsTheDemo
 {
     [Fact]
     [Trait("Slice", "176")]
-    [Trait("Status", "Pending")]
     [Trait("Criterion", "176-1")]
     public async Task Packed_tool_is_versioned_installs_and_builds_the_demo()
     {

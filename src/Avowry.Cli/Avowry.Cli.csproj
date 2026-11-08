@@ -2,6 +2,12 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <AssemblyName>Avowry.Cli</AssemblyName>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>avowry</ToolCommandName>
+    <PackageId>Avowry</PackageId>
+    <Version>0.1.0</Version>
+    <Description>Avowry compiler command line: builds .avowry sources to C#.</Description>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../Avowry.Compiler/Avowry.Compiler.csproj" />
