@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 324,
+ "title": "Compiler diagnostics call the unit an avow",
+ "process": "card-mode rules run by hand; pulled as the top product card after card 266 closed; the Ready rewrite into Connextra, Gherkin and ZOMBIES with the scope-premise check (19 sites, not eight) and the task-force Decider D207; three cycles in the order 2, 1, 3 under the permanent red-first rule; seats spread across Grok, Codex and Claude under the product owner's seat-spread ruling (Copilot no quota, agy at quota: recorded in seat-plan.md)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude, a fresh subagent context, product manager (ready), read-only; taskforce-proposal-pm.md and checklist-d207.md; premise facts rerun by the facilitator",
+   "evidence": "972a110"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md (the 19 trigger sources probed, the 13 exact fragment pairs, the byte-exact edits script, three cycles)",
+   "evidence": "e4d3ece"
+  },
+  {
+   "role": "red",
+   "seat": "Grok and Codex",
+   "model": "QA seats by least-recently-used spread: Grok grok-4.6 wrote the cycle 2 characterisation (4c764fc) and the cycle 3 red with the scanner (dcb4812, scanner tests failed against a stub first); Codex gpt-5.6-sol wrote the cycle 1 red (f28cb05); each in its own git worktree, facilitator reruns and cherry-picks; red-record-1.md, red-record-3.md, seat-c2-record.md, seat-c1-record.md",
+   "evidence": "dcb4812"
+  },
+  {
+   "role": "green",
+   "seat": "Grok and Codex",
+   "model": "build seats, never the author of the paired red: Grok grok-4.6 the cycle 1 green (ba824d5), Codex gpt-5.6-sol the cycle 3 green (5646c8a); both byte-exact on the facilitator's recompute from edits.py (Resolver 42139, Parser 39272, LF, ASCII); seat-c1-record.md, seat-plan.md",
+   "evidence": "5646c8a"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent reviewer, read-only; SHIP (no blockers); gate-review.md; with a read-only LLM-ergonomics reviewer (a fresh Claude context reading all 19 messages as a cold reader, nothing to change; ergonomics-review.md); independence by the seat rule: the authors of the commits were Grok and Codex",
+   "evidence": "7b635d8"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-7",
+   "model": "claude, a fresh subagent context, sign-off, read-only; SIGNED OFF; signoff-ctx7.md (mutations rerun, full gate in a clean archive copy: three known holdout failures need .git plus one timing flake that passed alone)",
+   "evidence": "d424999"
+  }
+ ],
+ "retro": "docs/retros/card-324-2026-11-07.md",
+ "notes": "Signed off; no blocking finding. Done checks met: (a) characterisation green on the old tree (21 tests); (b) the eight leading messages say Avow (8 of 8 failed before, pass after); (c) the other ten messages and the src scan are green (11 of 11, the CLI test, the live scan listing exactly the 11 remaining sites before the green and none after); 19 hunks, Resolver.cs 42139 bytes and Parser.cs 39272 bytes. Full gate on main: Compiler 324 of 324, Acceptance 323 of 323 (a first run failed 63 tests on a stale CLI binary after the cherry-pick: not a defect). Retro pick: Decider D208 and D209 failed (recorded); the byte-parity adoption is proposed alone as D210; the Dimensions of Difficulty matrix and the gate-preparation rule return to the next retro. No born-green test; seat mix: Grok 3 of 5 writing seats."
+}

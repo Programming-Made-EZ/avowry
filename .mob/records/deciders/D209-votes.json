@@ -1,0 +1,297 @@
+{
+ "decider": "D209",
+ "subject": "card 324 retro pick (second form): gate preparation with committed gate evidence; byte-parity permanent",
+ "result": "FAILED",
+ "round1_unamended_text_b3e49ce": {
+  "architect": [
+   {
+    "tag": "d209-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A gate starts on a fresh binary and a clone",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro record, the candidate amendment, and the Decider protocol so the architect vote is on the actual design, not the prompt summary.I’ll pull the retro, D208 record, candidate patch, and Experimental section next so the vote sits on the written design.I’ll read the D209 patch, the Experimental section, and D208’s No votes next so I can judge whether this split is sound.The isolated-gate experiment already mentions clones, so I’ll compare that text with the D209 candidate and the Decider rules.Yes\n\nP1 and P2 are independently checkable; dropping the contested matrix from D208 leaves a sound, minimal patch. P1’s rebuild and clone steps match the two false gate failures on card "
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d209-qa-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A gate starts on a fresh binary and a clone",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nP1 is falsifiable: stale binaries and missing `.git` produce named failures, while the metric and counter-metric expose reruns and clone costs. Its trial scope is bounded to three qualifying cards. P2 has completed its three-card trial, preserves the tested text unchanged, and has byte-exact evidence. Separating the disputed Dimensions proposal avoids passing malformed scoring rules under an unrelated consensus."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d209-dev-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A gate starts on a fresh binary and a clone",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the agreement, retro records, and the candidate patch first so the backend-developer vote is based on the actual rules and evidence.I'll read the Decider protocol, the D209 candidate patch, and the card 324 retro evidence next.I'll pull the candidate patch, D208 votes, the developer retro voice, and the cite-a-point rule so the vote matches the protocol.I'll compare the candidate text with the current practices and the developer retro voice so the vote stays on whether the rules are workable.I’ll copy the cite from the committed D209 proposal so the D171 check matches the file the reviewer greps.Yes\n\nP1 and P2 are workable on the red-green path I already run. P1 is facilitator proc"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d209-auditlens-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "a gate or sign-off brief names both steps",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\n\nP2 is git-verifiable, but P1 only requires the brief to name steps; it does not require committed evidence proving the build, clone, tested commit, or resulting gate run. This permits documentary compliance while using a stale binary or wrong tree. I would vote yes if P1 required committed command/output evidence tying both steps and the gate result to the tested commit."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d209-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "starting the gate on a fresh binary and a clone",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro records, agreement text, and D208 votes so the sign-off can rest on evidence.I'll read the Decider protocol, Experimental section, retro voices, and the D209 candidate patch next.I'll pull D208 votes, the D209 candidate patch, retro voices, and the Experimental section next.I'll check D208 round 2, the candidate text, and the gate/sign-off records that the metrics rest on.I'll confirm the gate and sign-off records, then check D208 round 2 for any objection to P1 or P2.Yes\n\nP1 is a three-card trial with a hypothesis, a countable metric (stale-binary or missing-.git failures; card 324: 2 of 3), a counter-metric, and a named review. Sign-off records 319/323 in a git-less arc"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d209-coach-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Support-it",
+    "counted_by_decider": true,
+    "cite": "starting the gate on a fresh binary and a clone",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Support-it\n\nThe evidence supports both changes, and D209 appropriately excludes the disputed scoring experiment. The task force already supplied ample perspectives; adding seats would be ceremony. My reservation is that P1 and P2 remain distinct concerns bundled into one vote, despite the stated one-concern principle. Because both are uncontested, checkable, and low-risk, that does not justify another round."
+   }
+  ]
+ },
+ "round2_after_amendment": {
+  "architect": [
+   {
+    "tag": "d209b-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "so a stale binary or a wrong tree is visible from git",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro record, the amendment, and the agreement so I can vote as Architect on whether this design is sound and enforceable.I'll read the retro record, the round-1 vote, and the candidate amendment next.I’ll compare the candidate text, retro voices, and existing gate rules so the vote rests on whether the design is checkable.Yes\n\nP1’s Gate evidence line makes the rebuild and clone git-visible: hash of the tree that ran, CLI build result, copy method, and run totals. PhraseCliFreshness and the holdout tests already fail a stale binary and a git-less archive, so the trial measures procedure without a new checker that could fail a good tree. Rebuild is scoped to src cherry-picks; cl"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d209b-qa-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "gates start on a fresh binary and a clone",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\n\nP1 records evidence but specifies no red-first validator that rejects a missing/malformed line, mismatched commit, non-clone, failed build, or totals from another run. A copied build-result line can still pass while hiding the stale binary the rule names. P2 is directly testable and supported. I would vote yes if P1 required a red-first automated check that validates every field and ties the tested commit, fresh build, clone, and run totals together."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d209b-dev-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "so a stale binary or a wrong tree is visible from git",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro record, the amendment, and the Experimental/Decider sections so I can vote as the backend developer seat.I’ll check the Experimental section, the candidate amendment, and the round-1 votes next so the backend vote is grounded in the actual wording.Yes\n\nP1 and P2 stay workable on the red-green path. P1 is facilitator work after a src cherry-pick: I still write reds with doubles, greens, flags and slice caps as before. The Gate evidence line is four committed fields (HEAD hash, CLI build line, clone method, totals), so a brief cannot hide a stale binary or the wrong tree. P2 is the D202 checker I already ran on 197, 266 and 324: the slice names it, the red commits the undo-"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d209b-auditlens-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "the commit hash tested (git rev-parse HEAD in the tree that ran)",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\n\nThe amendment still permits an unaudited summary line; require committed command/output evidence proving the clone origin, tested HEAD, fresh build, and gate totals are from one run."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d209b-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a stale binary or a wrong tree is visible from git",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro record, agreement amendment, Decider protocol, and experimental section so the vote rests on those sources.I'll read the Decider protocol, the D209 records, and the experimental section next.I'll check the candidate text, retro voices, D208 objections, and gate records against the round-1 condition.Yes\n\nP1 is a three-card trial: hypothesis, metric (stale-binary or missing-.git failures; card 324: 2 of 3), counter-metric, named review. Round-1's audit condition is in the patch: a committed Gate evidence line ties tested hash, CLI build result, clone method, and run totals, so adopt, reshape or reject is git-readable. PhraseCliFreshness and holdout tests already fail those "
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d209b-coach-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": false,
+    "cite": "the byte-parity check becomes permanent",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": false,
+    "decider_cite_ok": false,
+    "reply_head": "Yes\n\nThe task force is proportionate: six seats cover architecture, implementation, QA, audit, facilitation, and decision authority without adding ceremonial roles. The amendment directly resolves the sole round-one objection with committed, checkable evidence. Separating the disputed Dimensions proposal keeps this decision focused, while combining the two uncontested, evidence-backed practices avoids needless additional Deciders. P1 remains a measured three-card experiment; P2 has completed its trial.",
+    "note": "not counted by the decider (its cite check is exact: the cite must be at least six words copied with their capitals); the seat was re-run on Claude, the least recently used driver in that window"
+   },
+   {
+    "tag": "d209b-coach-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the ship verdict matches the tree that ships",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nSplitting the uncontested parts out of D208 is the right size. Every No in both rounds concerned only the Dimensions of Difficulty text, so deciding the rest on its own is one concern per decision, with no added ceremony. P1 answers a real failure on card 324: two of three runs failed on a stale binary or a missing .git. It is cheap, a build of about 3 seconds plus a clone, and it is reversible. The Gate evidence line makes a stale tree visible from git, which is the missing audit perspective. P2 promotes a safeguard that held across three trial cards. The metric, counter-metric and trial window are defined. The seat-spread ruling is left to the product owner, which is correct.",
+    "note": "the re-run seat that counts"
+   }
+  ]
+ },
+ "independent_rerun_on_final_text": {
+  "architect": [
+   {
+    "tag": "d209brr-architect-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the ship verdict matches the tree that ships",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nP1 is minimal and auditable: one committed evidence line binds the tested commit, fresh build, clone method, and run totals. Its narrow trigger avoids burdening cards without source changes or history-dependent checks. P2 promotes an unchanged, successfully trialed rule, avoiding needless redesign. The findings and amendment preserve the rejected difficulty proposal separately, so this decision remains focused and enforceable without introducing likely false positives."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d209brr-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "so a stale binary or a wrong tree is visible from git",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the Decider protocol, the amendment, and the card 324 retro evidence so I can vote as QA on whether the rules are red-first and catch the violations they name.I'll read the amendment, candidate text, round-1 votes, and the card 324 retro so the QA vote can rest on the actual checks.I'll inspect the round-1 votes, candidate text, and how the existing gate and byte-parity checks fail so I can judge red-first coverage.I'll check the byte-parity tests, holdout `.git` failures, and the D208 QA objections so the vote is on whether those checks actually fail the named bad states.Yes\n\nP1: stale CLI already fails PhraseCliFreshness with the rebuild message (card 324: 63 Acceptance failures)"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d209brr-dev-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "starting the gate on a fresh binary and a clone removes false gate failures",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amended rules are workable, auditable, and fair. P1 specifies the trigger, responsible role, required environment, fallback disclosure, and committed evidence tying the tested commit to the build and gate totals. That prevents stale-binary or wrong-tree compliance without inviting gaming. The modest clone cost is explicit and measurable during the three-card trial. P2 promotes an unchanged check only after three successful trial cards, so it adds no interpretive burden. I can comply consistently with both parts."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d209brr-auditlens-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "so a stale binary or a wrong tree is visible from git",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro records, the amendment, and the working agreement with an audit lens: git-verifiable evidence and remaining loopholes. No files will be changed.Round 1’s audit No was about missing committed gate evidence. I’ll check whether the amended text actually closes that loophole.I’ll compare the amended Gate evidence line with the Decider protocol, the isolated-gate experiment, and the round-1 audit condition.No\n\nP1’s Gate evidence line is a self-attested summary. A report can name a hash, a build result, “single-branch clone”, and totals without quoting the clone command, `git rev-parse --git-dir`, or `dotnet build` output. Card 324 already SIGNED OFF a `git archive` copy by tre"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d209brr-decider-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the ship verdict matches the tree that ships",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment makes P1 auditable: committed evidence links the tested commit, fresh build, clone method, and gate totals. Its hypothesis, baseline, target, counter-metric, and three-card trial support an evidence-based adoption decision. P2 has completed its named three-card trial with clean byte parity. Architect, QA, developer, coach, audit, and independent Decider seats cover implementation, verification, process, and sign-off; driver-mix ambiguity is appropriately escalated separately."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d209brr-coach-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The two uncontested parts are proposed here on their own",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro record, amendment, and working-agreement Experimental section so I can vote as Agile Coach on whether this task force is sized to the work.I'll read the retro voices, the round-1 record, and the amendment next so the vote sits on those artifacts.I'll check the Dimensions experiment and the candidate amendment so the coach vote covers ceremony versus fit.Yes\n\nSix role seats fit this document change: architect, QA, developer, audit, decider, and coach. The audit condition is now in the Gate evidence line, so the evidence perspective is present. Dimensions of Difficulty stays in experiments.md, which keeps Ready free of four-score ceremony until anchors exist. P1 is a three-"
+   }
+  ]
+ },
+ "independent_rerun_note": "an earlier independent re-run of the unamended text (tag d209rr) was stopped after the audit lens condition was adopted; it tested text that no longer stood and is not counted"
+}

@@ -1360,5 +1360,11 @@
     "status": "failed",
     "title": "Card 324 retro pick, first form: gate preparation, byte-parity permanent, Dimensions of Difficulty trial (failed; two parts re-proposed as D209)",
     "order": 199
+  },
+  "D209": {
+    "area": "process-and-staffing",
+    "status": "failed",
+    "title": "Card 324 retro pick, second form: gate preparation with committed gate evidence; byte-parity permanent (failed; byte-parity re-proposed alone)",
+    "order": 200
   }
 }
