@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 176,
+ "title": "Package the CLI as a dotnet tool and version it",
+ "process": "card-mode rules run by hand; pulled as the top product card after re-rank 29 (Decider D211); the Ready rewrite by a Codex product-manager seat, the declaration through Deciders D212, D213 and D214 (D214 adopted at the confirmation step the product owner directed); a characterisation first, one pending red for criteria 1 and 2 with a red revision, one atomic green (Criterion: 1-2), then a declared characterisation of the empty-feed scenario; seats spread under the product owner's clarification (Codex out of quota during the card; Claude seats with their reasons in the seat plan)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Codex ctx-1",
+   "model": "codex gpt-5.6-sol, a fresh read-only seat, product manager (ready); taskforce-proposal-pm.md with the facilitator's reruns, three corrections and the declaration; facts rerun by the facilitator",
+   "evidence": "6010f98"
+  },
+  {
+   "role": "slice",
+   "seat": "Grok ctx-2",
+   "model": "grok-4.6, the architect seat of Deciders D212 to D214 (read-only): the slice in section 3 of the Ready proposal (the order: characterisation, one pending red for criteria 1 and 2, one atomic green) was shaped by the architect's conditions (D137: one pending test; the red-record evidence fields; the gate replay) and adopted at D214; no separate slice document",
+   "evidence": "f84b1b2"
+  },
+  {
+   "role": "red",
+   "seat": "Grok ctx-3",
+   "model": "grok-4.6 via grok.cmd in its own git worktree, QA engineer: the characterisation (c2cb76f), the pending red (ed135f7), its one-line revision (ed44d13) and the empty-feed characterisation (5b9aa6c on its branch); red-record.md with Revision 1, characterisation-record.md, characterisation-record-e.md; each claim rerun by the facilitator",
+   "evidence": "ed135f7"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, build seat, in its own git worktree (the first context stopped at a contradiction between the red and an existing test and made no commit; the second shipped dd3d511); the reason for a Claude green: Codex out of quota, Grok wrote the red, the trial drivers are for low-stakes seats; the facilitator rechecked the diff and that the test body is byte-identical to the red apart from the Pending line",
+   "evidence": "dd3d511"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent reviewer, read-only; SHIP; gate-review.md (red replay on the commit before the first production change, hand pack and install, four mutations, none survived)",
+   "evidence": "766d1e7"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, separate from the gate reviewer, sign-off, read-only; SIGNED OFF WITH CONDITIONS (a benchmark 20-second timing flake recorded; the [E] promise needed a named check, added afterwards); signoff.md",
+   "evidence": "049b1ec"
+  }
+ ],
+ "retro": "docs/retros/card-176-2026-11-07.md",
+ "notes": "Done checks met: criterion 3 (the demo's generated C# equals its golden output, a characterisation committed first and passing on the pre-change tree); criteria 1 and 2 (the shared pending red failed by assertion on the pre-change tree and passes after the atomic green: the CLI packs as the stable Avowry 0.1.0 tool with command avowry, installs from a local feed into a scratch tool path with public sources off, prints `Avowry 0.1.0`, and builds the demo; the global tool list is unchanged); the [E] scenario now has a named check (an empty feed fails without reaching a public source, a declared characterisation, mutation-checked). Baseline gate at dd3d511 (isolated, CLI built first): Compiler 324 of 324, Acceptance 325 of 325, 0 warnings. The task force was declared through D212, D213 and D214 (adopted at the confirmation step); the retro pick D215 failed on the architect's condition (a committed checker) and is kept as the facilitator's practice. Process time against build time: about 100 minutes of Deciders against about 25 of building, reported as a finding in the retro. Seat mix: Claude held the two green contexts, the gate reviewer, the sign-off and a few fallback votes; reasons in the retro and the seat plan."
+}
