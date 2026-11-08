@@ -1,0 +1,14 @@
+module M
+
+avow to "double {n: Int}" -> Int
+  native python
+    return n * 2
+
+endpoint Check : POST /check
+  input
+    n: Int
+  output
+    r: Int
+  steps
+    let r = double input.n
+    respond with { r: r }

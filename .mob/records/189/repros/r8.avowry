@@ -1,0 +1,31 @@
+module M
+
+type Item
+  id: Id
+  count: Int
+
+avow to "find item {id: Id}" -> Item
+  effects ItemStore
+  fails with NotFound
+  native csharp
+    var item = itemstore.Find(id);
+    if (item is null)
+        Fail("NotFound");
+    return item;
+
+avow to "delete item {id: Id}"
+  effects ItemStore
+  fails with NotFound
+  native csharp
+    if (!itemstore.Remove(id))
+        Fail("NotFound");
+
+endpoint Del : POST /items/delete
+  input
+    id: Id
+  steps
+    delete item input.id
+  spec "deletes"
+    given input { id: "a" }
+    when handled
+    then succeeds

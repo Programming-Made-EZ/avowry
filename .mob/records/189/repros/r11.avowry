@@ -1,0 +1,15 @@
+module M
+
+avow to "reject {n: Int}" -> Int
+  native csharp
+    return n;
+
+avow to "inner {n: Int}"
+  steps
+    reject n
+
+endpoint Check : POST /check
+  input
+    n: Int
+  steps
+    inner input.n

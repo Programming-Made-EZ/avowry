@@ -1,0 +1,15 @@
+module M
+
+avow to "log {n: Int}"
+  native csharp
+    return;
+
+avow to "inner {n: Int}"
+  steps
+    log n
+
+endpoint Check : POST /check
+  input
+    n: Int
+  steps
+    inner input.n

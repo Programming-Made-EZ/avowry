@@ -1,0 +1,17 @@
+module M
+
+avow to "show {x: Option<Text>}" -> Text
+  spec "none"
+    given x = none
+    when called
+    then returns "a"
+  native csharp
+    return "a";
+
+endpoint Check : POST /check
+  input
+    n: Int
+  output
+    r: Int
+  steps
+    respond with { r: input.n }

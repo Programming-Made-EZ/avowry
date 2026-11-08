@@ -1,0 +1,11 @@
+module M
+
+avow to "inner {n: Int}"
+  steps
+    respond with { r: n }
+
+endpoint Check : POST /check
+  input
+    n: Int
+  steps
+    inner input.n

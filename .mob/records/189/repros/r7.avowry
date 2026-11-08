@@ -1,0 +1,21 @@
+module M
+
+type Item
+  id: Id
+  name: Text
+
+avow to "find item {id: Id}" -> Item
+  effects ItemStore
+  native csharp
+    return itemstore.Find(id)!;
+
+avow to "wrap {id: Id}"
+  effects ItemStore
+  steps
+    let item = find item id
+
+endpoint Check : POST /check
+  input
+    id: Id
+  steps
+    wrap input.id

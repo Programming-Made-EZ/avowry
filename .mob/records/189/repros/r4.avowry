@@ -1,0 +1,12 @@
+module M
+
+avow to "ping {n: Int}"
+  effects Clock, Mailer
+  native csharp
+    return;
+
+endpoint Check : POST /check
+  input
+    n: Int
+  steps
+    ping input.n

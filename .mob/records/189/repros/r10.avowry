@@ -1,0 +1,19 @@
+module M
+
+type Item
+  id: Id
+  count: Int
+
+avow to "reject {n: Int}" -> Int
+  native csharp
+    return n;
+
+avow to "inner {item: Item}"
+  steps
+    let c = reject item.count
+
+endpoint Check : POST /check
+  input
+    item: Item
+  steps
+    inner input.item
