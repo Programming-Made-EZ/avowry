@@ -147,14 +147,16 @@ public sealed class CSharpProvider : ITargetAdapter
         {
             if (spec.Outcome is not FailsModel && spec.Outcome is not SucceedsModel &&
                 (spec.Outcome is not ReturnsModel returns || !IsSupportedValue(module, returns.Value)))
-                throw new NotImplementedException($"The C# emitter does not support the outcome of spec '{spec.Description}' yet.");
+                throw Unsupported("PH340", $"the outcome '{(spec.Outcome is ReturnsModel r ? "returns " + ValueKind(r.Value) : "responds")}' in spec '{spec.Description}'", spec.SourceSpan.FirstLine, spec.Column);
             foreach (var given in spec.Givens)
             {
                 if (!IsSupportedValue(module, given.Value))
-                    throw Unsupported("PH340", $"a given value of that kind in spec '{spec.Description}'", spec.SourceSpan.FirstLine, spec.Column);
+                    throw Unsupported("PH340", $"the given value {ValueKind(given.Value)} for '{given.Hole.Name}' in spec '{spec.Description}'", spec.SourceSpan.FirstLine, spec.Column);
             }
         }
     }
+
+    private static string ValueKind(BoundExpr value) => value is BoundNone ? "none" : $"of type {value.Type}";
 
     private static bool IsSupportedType(ModuleModel module, PType type)
     {

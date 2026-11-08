@@ -1,0 +1,18 @@
+# spec-then-none: a then returns none in a phrase spec is reported, not a crash
+module M
+
+avow to "maybe {n: Int}" -> Option<Int>
+  spec "none"
+    given n = 0
+    when called
+    then returns none
+  native csharp
+    return null;
+
+endpoint Check : POST /check
+  input
+    n: Int
+  output
+    r: Int
+  steps
+    respond with { r: input.n }

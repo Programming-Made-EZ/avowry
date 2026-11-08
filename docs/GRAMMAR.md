@@ -192,7 +192,7 @@ The full resolver diagnostic table (`PH001`, `PH002`, `PH010`, `PH020`, and `PH3
 | `PH333` | Outcome the unit cannot have (`returns` with no return type, `responds` in an avow spec, `returns` in an endpoint spec, `responds` with no output) |
 | `PH334` | Expected failure the unit can never produce (message lists the ones it can) |
 | `PH335` | More than one outcome in a spec |
-| `PH340` | The C# target does not support a construct yet (a plain-call step or `fail with` in a composite, more than one effect, a call argument that is not a variable, a spec `given` of `none`, an effectful avow in a composite `let`, a `then succeeds` seed of a stored field that is not Text, Id or Bool) |
+| `PH340` | The C# target does not support a construct yet (a plain-call step or `fail with` in a composite, more than one effect, a call argument that is not a variable, a spec `given` or `then returns` of `none`, an effectful avow in a composite `let`, a `then succeeds` seed of a stored field that is not Text, Id or Bool) |
 
 Rules fixed by the resolver tests:
 
