@@ -78,11 +78,11 @@ Hostile ids (slice hostile, not from the Ready row):
 |---|---|---|
 | fail-not-first-line | fail | slice hostile (not from the Ready row) |
 | one-of-two-undeclared | fail | slice hostile (not from the Ready row) |
-| two-undeclared | fail | slice hostile (not from the Ready row) |
+| two-undeclared | fail | Ready scenario [M] (two undeclared literals) |
 | crlf | fail | slice hostile (not from the Ready row) |
 | multi-line-call | fail | slice hostile (not from the Ready row) |
 | declared-twice | keep | slice hostile (not from the Ready row) |
-| computed | keep | slice hostile (not from the Ready row) |
+| computed | keep | Ready scenario [E] (a computed code stays unchecked) |
 | line-comment | keep | slice hostile (not from the Ready row) |
 | block-comment | keep | slice hostile (not from the Ready row) |
 | trailing-comment | keep | slice hostile (not from the Ready row) |
@@ -127,3 +127,7 @@ Passed!  - Failed:     0, Passed:    23, Skipped:     0, Total:    23, Duration:
 ## Line count
 
 `tests/Avowry.Acceptance.Tests/UndeclaredNativeFail.cs`: 244 lines, LF only. No corpus fixtures added (those land in the green).
+
+## Correction (facilitator, after the gate review)
+
+The tags of `two-undeclared` and `computed` above were corrected: they come from the Ready draft's scenarios [M] and [E], not from the slice's hostile inputs (the gate reviewer's nit). No id was missing.
