@@ -1,0 +1,176 @@
+{
+ "decider": "D217",
+ "subject": "card 178 retro pick: the confirmation step replaces the separate independent re-run",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d217-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The record shows the primary window, each amendment and each confirmation",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the proposal materials and the agreement text, then vote as Architect on whether the record, checker rules, and findings design hold.The Architect lens is record, checkers, and false positives, so I am reading the voices, candidate text, and how step 6 is enforced today.I am checking D216’s confirmation record and the candidate agreement text against the Architect’s false-positive bar.Yes\n\nThe record is the existing votes file: primary window, each amendment, each confirmation. That reconstructs the result and is what D214–D216 already stored. No new schema, checker or findings-file rule is needed for a five-Decider trial; a poll-bl"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d217-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The separate window of fresh seats on the final text is not run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 178 records and the Decider/Experimental rules first so the QA vote is on the actual text, not the synthesis alone.The candidate patch and how Decider records are checked will tell me whether this rule can fail red first or would still pass a bad recording.Yes\n\nConfirmation is a real check: outliers re-asked in role with their reply quoted, others may flip on the amendment. That catches unmet conditions without inventing new Nos (D208–D214). Unanimous agreement changes still get the independent re-run, which would have caught D210. Cite check and mechanical tally remain on the primary. Residual risk is a unanimous non-agree"
+   }
+  ],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "d217-auditlens-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The record shows the primary window, each amendment and each confirmation.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe record is checkable from git. The primary window, each amendment and each confirmation are recorded, and the diff and the text of step 6 are committed. The trial is bounded at 5 Deciders and carries a counter-metric, so a loophole would show up there. My notes don't change the vote:\n- Whether \"there was an amendment\" should be shown by a committed record. It should not rest on the facilitator's say-so.\n- A request for a re-run from any voter must be logged as asked, so a refusal can be seen.\n- The trial review should list any Decider where the primary window was split but no re-run ran."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d217-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The confirmation step replaces the separate independent re-run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 178 records, the candidate amendment, and the Experimental/Decider sections so the sign-off vote rests on those facts.Yes\n\nThe trial has a hypothesis, metrics with baselines and targets, a Goodhart counter-metric, five Deciders, an owner and a start date, so adopt/reshape/reject can rest on those numbers. Step 6's text stays, so the overlay is reversible. Any voter or the product owner may still demand a re-run; an unamended no-No agreement change still gets one. The audit lens remains a retro seat for the trial-end Decider. Note: fail-on-fresh-seat-demand is 0 by construction unless a re-run is requested, so the verdict sh"
+   }
+  ],
+  "coach": []
+ },
+ "rerun_window_fresh_seats": {
+  "architect": [
+   {
+    "tag": "d217rr-architect-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The confirmation step replaces the separate independent re-run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe design is minimal. It is a single Experimental entry, and step 6 stays in place, so no other rule is touched. It is enforceable without false positives, because the record already shows the primary window, each amendment and each confirmation, and the runner can check that mechanically. The re-run is still available on request, and it is mandatory for agreement changes with nothing to confirm. That keeps a backstop where the confirmation step has nothing to check.\n\nNotes:\n- The \"any voter asks\" trigger should be recorded in the Decider record, so it can be audited.\n- The counter-metric needs a named owner to review single-window erro"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d217rr-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "each outlier's role is asked, with its own reply quoted",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 178 records and the agreement text, then vote as QA on whether this experiment can fail red first and catch the violations it names.Yes\n\nConfirmation is a check that can fail: outliers re-answer their quoted condition, others only whether the amendment changes their vote. That catches unmet conditions without fresh seats inventing Nos (D208–D214). D214–D216 already settled on one window plus confirmation. Hypothesis, metric, counter-metric, five-Decider trial and owner match the Experimental section. Step 6 text stays; any voter can still demand a re-run; unamended agreement changes still get one. Note: “fail on a demand ma"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d217rr-dev-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The confirmation step replaces the separate independent re-run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 178 records and the working agreement so I can vote as the backend-developer seat.Yes\n\nThe confirmation step is the original protocol I already work under: one condition, then a yes-or-no check that it was met. Fresh re-run seats never made that promise and invented Nos on D208–D210, D212 and D214, which stalled the red. Card 178 showed one window plus confirmation (about 13 minutes) versus about 100 for three declaration Deciders on card 176. That is workable, fair, and I can follow it without hunting new demands. Step 6 stays in the text; anyone can still ask for a re-run. Trial of five Deciders with the single-window-err"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d217rr-auditlens-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "The separate window of fresh seats on the final text is not run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 178 records and the agreement sections that this vote depends on, then vote with the audit lens.The audit question is whether skip rules and the counter-metric are checkable from git. I’ll read the confirmation records and F-038 next.No\n\nF-038’s skip has no detector. An ask is not in git. The counter-metric cannot be scored without a re-run. Target 0 of re-run-only Nos passes by not seating that seat.\n\nCondition: each trial Decider record includes one committed trigger line an auditor can git-show, naming which trigger applied: confirmation completed so re-run skipped; re-run because a named voter or the product owner asked"
+   }
+  ],
+  "decider": [],
+  "coach": [
+   {
+    "tag": "d217rr-coach-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The confirmation step replaces the separate independent re-run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the retro records, agreement, and experiment notes first so the Agile Coach vote is grounded in the card 178 facts.Yes\n\nThe second full window is a padded task force: six fresh seats on already-confirmed text, none of whom made the outlier's promise. Confirmation is sized to the amendment: outliers check their condition; others only whether the amendment changes their vote. Anyone can still ask for a re-run, and an uncontested agreement change still gets one when there is nothing to confirm. Five-Decider trial, counter-metric in place. The two other picks stay as briefs."
+   }
+  ]
+ },
+ "confirmation_outlier_audit_lens_amended_text_395470f": [
+  {
+   "role": "auditlens",
+   "kind": "outlier",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe four triggers and the committed `git show` line are in the pick. Each trial record names which trigger applied. My condition is met.\n\nCITE: carries one committed trigger line that an auditor can\n"
+  }
+ ],
+ "confirmation_others_amended_text_395470f": [
+  {
+   "role": "architect",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe committed trigger line is a fact in the existing record an auditor can git show, naming which of (a)–(d) applied. It is one line in the votes record. Record design stays minimal and enforceable without false positives.\n\nCITE: carries one committed trigger line that an auditor can\n"
+  },
+  {
+   "role": "qa",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe committed trigger line makes skip vs re-run git-showable, so a missing confirmation after an amendment or a missing re-run on a no-No agreement change can fail red without passing a bad recording. That is the detector the primary vote asked for.\nCITE: carries one committed trigger line that an auditor can\n"
+  },
+  {
+   "role": "dev",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nAmendment does not change my vote; the committed trigger line is auditable via git show and imposes no extra burden on red, green, or slice work.\nCITE: each trial Decider record must carry\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n"
+  },
+  {
+   "role": "decider",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe committed trigger line gives the auditor a git-showable detector for which of (a)–(d) applied, so the skip and the counter-metric can be scored. Hypothesis, metrics, owner, and the five-Decider trial stay in place. The confirmation-only ask matches the original protocol. I still support.\n\nCITE: each trial Decider record must carry one committed trigger line\n"
+  },
+  {
+   "role": "coach",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nAmendment adds one committed trigger line, naming which trigger applied, without adding a fresh-seat ceremony — still right-sized, proportional to the check.\nCITE: The confirmation step replaces the separate independent re-run\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n"
+  }
+ ],
+ "trigger_line": "(c) the re-run was run because the primary window passed with no No and no amendment and the proposal changes this agreement"
+}

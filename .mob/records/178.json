@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 178,
+ "title": "A prerequisites page that matches what CI tests",
+ "process": "card-mode rules run by hand; Ready draft by a Grok product-manager seat with the facilitator reruns and the standing-rules preflight list; declaration through Decider D216 (three Yes, three No in the primary window, the three conditions adopted and confirmed); a characterisation first, one Pending red for criteria 1 and 2, one atomic green (Criterion: 1-2), a cold-reader seat (Cursor) and a page-only revision, an independent gate review and a separate fresh sign-off; seats spread under the product owner clarification (Codex, Copilot and agy out of quota; Claude 7 of about 24 card seats with reasons in the retro)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Grok ctx-1",
+   "model": "grok-4.6, product manager, read-only (the first attempt in plan mode ended after narrating; the second delivered); facts rerun by the facilitator",
+   "evidence": "daf17d5f42a456ef18582a5bdf2965594d7c1a6c"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md; reason: Codex out of quota and Grok kept for the red",
+   "evidence": "b9e642348fdac7f80aac4fc33bdc2f74dcddaff2"
+  },
+  {
+   "role": "red",
+   "seat": "Grok ctx-3",
+   "model": "grok-4.6 via grok.cmd in its own git worktree, QA engineer: the characterisation (5a813c4), the pending red and the characterisation revision (bf382ad); each claim rerun by the facilitator",
+   "evidence": "ef7d589ee62546d002521dc4860939353a6f6917"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, build seat, in its own worktree, never the red seat; the page-only revision after the cold reader (3bc6b7b); reason: Grok wrote the red and Codex is out of quota",
+   "evidence": "5012d9c0a021ac169cbd5b1534339f6ebe6532bc"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent gate reviewer, read-only; SHIP; red replay on the commit before the first production change, mutations, Gate evidence and Load lines",
+   "evidence": "809aa76699df6549d71c4daa4ad91a7f5a178033"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, separate from the gate reviewer, own full gate in a single-branch clone; SIGNED OFF, no conditions",
+   "evidence": "e9d91d336c378bdb331202ab4bf339c1569aeb66"
+  }
+ ],
+ "retro": "docs/retros/card-178-2026-11-08.md",
+ "notes": "Done checks met: criterion 3 (the two READMEs stay byte-identical, a declared characterisation committed first and passing on the pre-change tree); criteria 1 and 2 (the shared Pending red failed by assertion on the pre-change tree and passes after the atomic green: docs/PREREQUISITES.md states the CI SDK pin and OS label, that architecture is unpinned, what to do on untested systems, the .NET-first line, that the CLI is installed from a local feed, and each command working directory, prerequisite and PowerShell form). Cold reader (Cursor) found a circular Needs, an ambiguous untested-systems sentence and missing clone/feed/verify guidance; fixed in a page-only revision. Baseline gate isolated with the CLI built first: green. The task force was declared through D216; the retro pick D217 was adopted as a five-Decider trial (the confirmation step replaces the separate independent re-run, with a committed trigger line per trial Decider). Process time against build time about 1.5 to 1 (card 176: about 4 to 1). Born-green findings: none. Open: bug 338, bug 327, issue 304; clone URL and untested-SDK paragraph carried to card 179."
+}

@@ -1408,5 +1408,11 @@
     "status": "adopted",
     "title": "Card 178 task-force declaration and card text: a prerequisites page that matches what CI tests (adopted at the confirmation step)",
     "order": 207
+  },
+  "D217": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 178 retro pick: the confirmation step replaces the separate independent re-run (adopted as a five-Decider trial)",
+    "order": 208
   }
 }
