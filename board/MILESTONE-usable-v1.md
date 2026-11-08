@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:75d57d40ca7e0a498677e20bb5392d2d4ed569c498f123303d4ce299f2ea932e -->
+<!-- board-table-sha256:fe7d9c9b4473b760c3964bc42c4cc1bc80ce860ac89b72c9a14f5be0986fac02 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -125,7 +125,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 103 | 178 A prerequisites page that matches what CI tests | Done | 176 |
 | 104 | 186 Pre-publication checks: name, licences, history, vendor terms | Ready | none |
 | 105 | 179 Rewrite the README and write the getting-started guide | Done | 178 |
-| 106 | 189 An unsupported construct is a diagnostic, not an unhandled exception | Ready | none |
+| 106 | 189 An unsupported construct is a diagnostic, not an unhandled exception | Done | none |
 | 107 | 202 A native block that fails with an undeclared code is a diagnostic | Ready | none |
 | 108 | 203 Names reserved by generated code are rejected or escaped | Ready | none |
 | 109 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
