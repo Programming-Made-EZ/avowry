@@ -1,0 +1,22 @@
+# plain-call: a plain call of a phrase inside a composite is reported, not a crash
+module M
+
+avow to "reject {n: Int}" -> Int
+  fails with Rejected
+  native csharp
+    if (n < 0) Fail("Rejected");
+    return n;
+
+avow to "inner {n: Int}"
+  steps
+    let checked = reject n
+
+avow to "outer {n: Int}"
+  steps
+    inner n
+
+endpoint Check : POST /check
+  input
+    n: Int
+  steps
+    outer input.n

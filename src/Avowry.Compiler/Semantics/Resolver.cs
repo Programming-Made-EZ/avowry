@@ -97,6 +97,7 @@ public static class Resolver
                     declaration.Steps is null ? null : [], [])
                 {
                     Line = declaration.At.Line,
+                    Column = declaration.At.Column,
                     DeclaredFailures = declaration.Failures.Select(name => new DeclaredFailureModel(name, declaration.FailureLine)).ToList(),
                 };
                 var skeleton = Skeleton(declaration.Template);
@@ -185,7 +186,7 @@ public static class Resolver
                         {
                             if (resolved.Value.Avow.Returns is not null)
                                 Report("PH321", $"Avow '{resolved.Value.Avow.Template}' returns {resolved.Value.Avow.Returns}; use 'let' to keep it.", call.At);
-                            bound.Add(new BoundCallStep(resolved.Value.Call, SourceFormatter.Format(call)) { Line = call.At.Line });
+                            bound.Add(new BoundCallStep(resolved.Value.Call, SourceFormatter.Format(call)) { Line = call.At.Line, Column = call.At.Column });
                         }
                         break;
                     }
@@ -204,7 +205,7 @@ public static class Resolver
                         else
                             scope.Add(let.Name, type);
                         if (resolved is not null)
-                            bound.Add(new BoundLetStep(let.Name, type, resolved.Value.Call, SourceFormatter.Format(let)) { Line = let.At.Line });
+                            bound.Add(new BoundLetStep(let.Name, type, resolved.Value.Call, SourceFormatter.Format(let)) { Line = let.At.Line, Column = let.At.Column });
                         break;
                     }
                     case LetUpdateStep update:
@@ -213,7 +214,7 @@ public static class Resolver
                     case FailStep fail:
                         if (declaredFailures is not null && !declaredFailures.Contains(fail.Code, StringComparer.Ordinal))
                             Report("PH326", $"Composite failure '{fail.Code}' is not declared in 'fails with'.", fail.At);
-                        bound.Add(new BoundFailStep(fail.Code, SourceFormatter.Format(fail)) { Line = fail.At.Line });
+                        bound.Add(new BoundFailStep(fail.Code, SourceFormatter.Format(fail)) { Line = fail.At.Line, Column = fail.At.Column });
                         terminated = true;
                         break;
                     case EnsureStep ensure:
@@ -442,7 +443,7 @@ public static class Resolver
                 outputType: null,
                 endpointFailures: null,
                 endpointName: null);
-            return new AvowSpecModel(spec.Description, givens, outcome, SourceFormatter.Lines(spec)) { SourceSpan = SpecSpan(spec) };
+            return new AvowSpecModel(spec.Description, givens, outcome, SourceFormatter.Lines(spec)) { SourceSpan = SpecSpan(spec), Column = spec.At.Column };
         }
 
         private IReadOnlyList<EndpointSpecModel> ResolveEndpointSpecs(EndpointDecl declaration, EndpointModel endpoint) =>
@@ -488,7 +489,7 @@ public static class Resolver
 
             var outcome = ResolveSpecOutcome(spec, null, scope, endpoint.OutputType, endpoint.Failures, endpoint.Name);
             var boundInput = new BoundRecord(inputFields, endpoint.InputType);
-            return new EndpointSpecModel(spec.Description, boundInput, outcome, SourceFormatter.Lines(spec)) { SourceSpan = SpecSpan(spec) };
+            return new EndpointSpecModel(spec.Description, boundInput, outcome, SourceFormatter.Lines(spec)) { SourceSpan = SpecSpan(spec), Column = spec.At.Column };
         }
 
         private static SourceSpan SpecSpan(SpecDecl spec)

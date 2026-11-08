@@ -237,7 +237,7 @@ class ListsAndStrings(unittest.TestCase):
 
     def test_corpus_text_unset(self):
         fixtures = corpus_fixtures()
-        self.assertEqual(14, len(fixtures), "14 tracked corpus fixtures expected")
+        self.assertEqual(22, len(fixtures), "22 tracked corpus fixtures expected")
         out = git("check-attr", "text", "--", *fixtures).decode("utf-8").splitlines()
         states = {}
         for line in out:
@@ -260,7 +260,9 @@ class ListsAndStrings(unittest.TestCase):
             parts = row.split("\t")
             if parts[0].startswith("R"):
                 status[parts[2]] = (parts[0], parts[1])
-        fixtures = corpus_fixtures()
+        # Only the fixtures the rename commit carried; later fixtures (card 189) are new files, not renames.
+        at_commit = git("ls-tree", "-r", "--name-only", commit).decode("utf-8").splitlines()
+        fixtures = [p for p in corpus_fixtures() if p in at_commit]
         self.assertEqual(14, len(fixtures))
         found = {p: status.get(p, ("not a rename",))[0] for p in fixtures}
         self.assertEqual({p: "R100" for p in fixtures}, found, f"commit {commit[:7]}")

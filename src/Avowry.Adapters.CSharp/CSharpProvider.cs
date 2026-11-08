@@ -22,6 +22,7 @@ public sealed class CSharpProvider : ITargetAdapter
 
         foreach (var phrase in module.Avows)
             RequireSupportedAvow(module, phrase);
+        RequireSupportedSeeds(module);
 
         var api = module.Name + ".Api";
         var specs = module.Name + ".Specs";
@@ -59,7 +60,7 @@ public sealed class CSharpProvider : ITargetAdapter
     private static void RequireSupportedAvow(ModuleModel module, AvowModel phrase)
     {
         if (phrase.Effects.Count > 1)
-            throw new NotImplementedException($"The C# emitter does not support more than one effect on '{phrase.Template}' yet.");
+            throw Unsupported("PH340", $"more than one effect on '{phrase.Template}'", phrase.Line, phrase.Column);
 
         if (phrase.Steps is not null)
         {
@@ -68,7 +69,7 @@ public sealed class CSharpProvider : ITargetAdapter
         }
 
         if (!phrase.Natives.ContainsKey("csharp"))
-            throw new NotImplementedException($"The C# emitter needs a native csharp block on '{phrase.Template}'.");
+            throw new CompilationFailedException([new Diagnostic("PH020", $"Avow '{phrase.Template}' has no implementation for target csharp; add a `native csharp` block.", phrase.Line, phrase.Column)]);
         RequireSupportedSignature(module, phrase);
         RequireSupportedSpecs(module, phrase);
     }
@@ -84,9 +85,13 @@ public sealed class CSharpProvider : ITargetAdapter
         {
             if (step is BoundEnsureStep or BoundLetUpdateStep)
                 continue;
+            if (step is BoundCallStep or BoundFailStep)
+                throw Unsupported("PH340", step is BoundFailStep ? "'fail with' in a composite" : $"a plain-call step ('{step.Source}')", step.Line, step.Column);
             if (step is not BoundLetStep let)
                 throw new NotImplementedException($"The C# emitter does not support step '{step.Source}' yet.");
-            RequireSupportedArguments(phrase, let.Call);
+            RequireSupportedArguments(let);
+            if (module.Avow(let.Call.AvowKey).Effects.Count > 0)
+                throw Unsupported("PH340", "an effectful avow in a composite 'let'", let.Line, let.Column);
         }
 
         RequireSupportedSpecs(module, phrase);
@@ -104,12 +109,35 @@ public sealed class CSharpProvider : ITargetAdapter
             throw new NotImplementedException($"The C# emitter does not support return type '{phrase.Returns}' on '{phrase.Template}' yet.");
     }
 
-    private static void RequireSupportedArguments(AvowModel phrase, BoundCall call)
+    private static void RequireSupportedArguments(BoundLetStep let)
     {
-        foreach (var argument in call.Arguments)
+        foreach (var argument in let.Call.Arguments)
         {
             if (argument.Value is not BoundVariable)
-                throw new NotImplementedException($"The C# emitter does not support the call argument in '{phrase.Template}' yet.");
+                throw Unsupported("PH340", "a call argument that is not a variable", let.Line, let.Column);
+        }
+    }
+
+    private static CompilationFailedException Unsupported(string code, string construct, int line, int column) =>
+        new([new Diagnostic(code, $"The C# target does not support {construct} yet.", line, column)]);
+
+    // Mirrors KnownIdSeed and StoredDefault: a `then succeeds` endpoint spec seeds the stored item.
+    private static void RequireSupportedSeeds(ModuleModel module)
+    {
+        foreach (var endpoint in module.Endpoints)
+        {
+            foreach (var spec in endpoint.Specs.Where(spec => spec.Outcome is SucceedsModel))
+            {
+                if (spec.Input.Fields.FirstOrDefault(field => field.Name == "id")?.Value is not BoundText)
+                    continue;
+                foreach (var effect in EndpointEffects(module, endpoint))
+                {
+                    var unsupported = PersistenceEntity(module, effect)?.Fields
+                        .FirstOrDefault(field => field.Name != "id" && field.Type != PType.Text && field.Type != PType.Id && field.Type != PType.Bool);
+                    if (unsupported is not null)
+                        throw Unsupported("PH340", $"seeding a stored field of type {unsupported.Type}", spec.SourceSpan.FirstLine, spec.Column);
+                }
+            }
         }
     }
 
@@ -123,7 +151,7 @@ public sealed class CSharpProvider : ITargetAdapter
             foreach (var given in spec.Givens)
             {
                 if (!IsSupportedValue(module, given.Value))
-                    throw new NotImplementedException($"The C# emitter does not support the given value of spec '{spec.Description}' yet.");
+                    throw Unsupported("PH340", $"a given value of that kind in spec '{spec.Description}'", spec.SourceSpan.FirstLine, spec.Column);
             }
         }
     }

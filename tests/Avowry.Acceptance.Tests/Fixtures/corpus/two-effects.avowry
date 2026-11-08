@@ -1,0 +1,13 @@
+# two-effects: two effects on one phrase are reported, not a crash
+module M
+
+avow to "ping {n: Int}"
+  effects Clock, Mailer
+  native csharp
+    return;
+
+endpoint Check : POST /check
+  input
+    n: Int
+  steps
+    ping input.n

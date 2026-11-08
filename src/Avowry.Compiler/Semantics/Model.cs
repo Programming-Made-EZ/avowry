@@ -44,6 +44,7 @@ public sealed record AvowModel(
     IReadOnlyList<AvowSpecModel> Specs)
 {
     public int Line { get; init; }
+    public int Column { get; init; }
     public IReadOnlyList<DeclaredFailureModel> DeclaredFailures { get; init; } = [];
 }
 
@@ -67,6 +68,7 @@ public sealed record EndpointModel(
 public abstract record BoundStep(string Source)
 {
     public int Line { get; init; }
+    public int Column { get; init; }
 }
 public sealed record BoundCallStep(BoundCall Call, string Source) : BoundStep(Source);
 public sealed record BoundLetStep(string Name, PType Type, BoundCall Call, string Source) : BoundStep(Source);
@@ -108,6 +110,7 @@ public sealed record AvowSpecModel(
     IReadOnlyList<string> Lines)
 {
     public SourceSpan SourceSpan { get; init; }
+    public int Column { get; init; }
 }
 
 public sealed record EndpointSpecModel(
@@ -117,6 +120,7 @@ public sealed record EndpointSpecModel(
     IReadOnlyList<string> Lines)
 {
     public SourceSpan SourceSpan { get; init; }
+    public int Column { get; init; }
 }
 
 public abstract record SpecOutcomeModel;

@@ -13,7 +13,6 @@ public class UnsupportedCsharpConstructs
     [Fact]
     [Trait("Slice", "189")]
     [Trait("Criterion", "189-1")]
-    [Trait("Status", "Pending")]
     public async Task Unsupported_csharp_constructs_report_a_diagnostic()
     {
         // Given each in-card unsupported C# construct as an inline source

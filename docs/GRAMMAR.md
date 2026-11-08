@@ -159,13 +159,14 @@ result:    call total-quantity-of(items = input.items) : Int
 
 ### Resolver diagnostics
 
-The full resolver diagnostic table (`PH001`, `PH002`, `PH010`, and `PH300` to `PH335`), which previously lived in [HANDOFF.md](../HANDOFF.md), now lives here:
+The full resolver diagnostic table (`PH001`, `PH002`, `PH010`, `PH020`, and `PH300` to `PH335`, plus `PH340` from the C# target), which previously lived in [HANDOFF.md](../HANDOFF.md), now lives here:
 
 | Code | Meaning |
 |---|---|
 | `PH001` | Unknown avow (quotes the closest template; suggests `variable.field` when a bare word matches a record field in scope) |
 | `PH002` | Ambiguous avow (lists the matching templates) |
 | `PH010` | Duplicate wording (two templates with the same word sequence, holes ignored) |
+| `PH020` | Leaf avow with no `native` block for the selected target (the C# target reports it as "has no implementation for target csharp; add a `native csharp` block") |
 | `PH300` | Unknown type |
 | `PH301` | Wrong number of type arguments |
 | `PH302` | Type name already taken (duplicate, or a core type) |
@@ -191,6 +192,7 @@ The full resolver diagnostic table (`PH001`, `PH002`, `PH010`, and `PH300` to `P
 | `PH333` | Outcome the unit cannot have (`returns` with no return type, `responds` in an avow spec, `returns` in an endpoint spec, `responds` with no output) |
 | `PH334` | Expected failure the unit can never produce (message lists the ones it can) |
 | `PH335` | More than one outcome in a spec |
+| `PH340` | The C# target does not support a construct yet (a plain-call step or `fail with` in a composite, more than one effect, a call argument that is not a variable, a spec `given` of `none`, an effectful avow in a composite `let`, a `then succeeds` seed of a stored field that is not Text, Id or Bool) |
 
 Rules fixed by the resolver tests:
 

@@ -1,0 +1,13 @@
+# composite-fail: fail with inside a composite is reported, not a crash
+module M
+
+avow to "check {n: Int}"
+  fails with Bad
+  steps
+    fail with Bad
+
+endpoint Check : POST /check
+  input
+    n: Int
+  steps
+    check input.n
