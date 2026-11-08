@@ -1378,5 +1378,11 @@
     "status": "adopted",
     "title": "Re-rank 29 (after card 324 closed): place cards 176, 178, 186 and 179 after card 324 and pull card 176",
     "order": 202
+  },
+  "D212": {
+    "area": "process-and-staffing",
+    "status": "failed",
+    "title": "Card 176 task-force declaration and card text: package the CLI as a dotnet tool and version it (failed; corrected and re-proposed as D213)",
+    "order": 203
   }
 }

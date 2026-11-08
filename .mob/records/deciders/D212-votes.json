@@ -1,0 +1,311 @@
+{
+ "decider": "D212",
+ "subject": "card 176 task-force declaration and card text: package the CLI as a dotnet tool and version it",
+ "result": "FAILED",
+ "round1_unamended_text_6010f98": {
+  "architect": [
+   {
+    "tag": "d212-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "watched failing because no installable tool package exists",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the seat plan, checklist, working agreement, and release bar so the architect vote is grounded in the recorded design.I'll check the slice rules, packaging decisions, CLI project, and whether the declaration conflicts with serial-on-main.No\nRewrite criterion 2's named red so it is watched failing after criterion 1 is green for a remaining production gap (installed `--version` versus the package version, and the packed tool building the demo), not because no installable tool package exists. PackAsTool, package ID `Avowry`, one version source, local cleared feed, scratch `--tool-path`, characterisation first, and the 177/186 split sta"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d212-qa-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "one red per new-state criterion, the characterisation first",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe named reds are observable and fail on the current tree. The local-feed isolation, scratch tool path, unchanged global list, package/version agreement, demo output comparison, and empty-feed failure checks directly guard against the bad states they name. Red/green authorship is separated, and the independent gate reruns the complete installed artifact path."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d212-dev-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "criterion 1 red then green; criterion 2 red then green",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the working agreement, seat plan, checklist, and release bar so I can vote as the backend seat on whether these rules are workable.I'll check the CLI project, existing tests, and the slice/TDD rules so the vote rests on whether I can actually work this card.No\nSequential red-then-green per criterion forces an incomplete PackAsTool green so criterion 2 stays red. An honest criterion-1 pack already installs, reports a version, and builds the demo, so the named fail reason \"no installable tool package exists\" is gone before that red is written. Condition: commit both new-state reds and watch them fail on the pre-change tree before any "
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d212-auditlens-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "Fresh sign-off: a fresh Claude context",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nUse a separate fresh Claude context for final sign-off; the gate reviewer is no longer fresh after running the gate."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d212-decider-muse",
+    "seat": "muse",
+    "model": "",
+    "vote": "none",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": false,
+    "decider_cite_ok": false,
+    "reply_head": "",
+    "note": "trial driver: decider.py reported the Muse seat unavailable (no vote); the seat was run on Codex"
+   },
+   {
+    "tag": "d212-decider-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the full suite in a single-branch clone of main",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe decision is evidence-led: named reds, characterization, explicit local-feed isolation, version agreement, unchanged generated output, and a reproducible gate tied to the tested commit. Ready, architecture, QA, build, independent gate, trial feedback, and fresh sign-off seats are all assigned with author separation."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d212-coach-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "package and prove locally only; unknowns: package layout",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nRemove the three trial-driver seats from this medium packaging card; the core Ready, Slice, Red, Green, independent gate, and sign-off roles already cover delivery and assurance without ceremonial staffing."
+   }
+  ]
+ },
+ "round2_after_amendment_f84b1b2": {
+  "architect": [
+   {
+    "tag": "d212b-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "both committed and watched failing on the pre-change tree",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the specified records, working agreement, and release bar, then check the CLI packaging design against the proposal.I'll check the CLI project, version handling, Dana's persona, and D125 so the slice and checker rules can be judged against the repo.No\nPackaging design is sound and minimal: command `avowry`, package ID `Avowry`, one version source, local feed with public sources off, scratch tool path, characterisation of compiler output first, publish left to later cards. Committing both new-state reds before any production change puts two Pending tests on main, which D137's checker rejects even when both tests fail for the right re"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d212b-qa-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "both committed and watched failing on the pre-change tree before any production change",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe plan makes both new-state checks fail before production changes, preventing criterion 2 from passing accidentally after packaging exists. Criterion 2 exercises the installed artifact, isolated tool path, disabled public fallback, version output, demo build, and unchanged global state. Characterisation runs first, and independent gate/sign-off rerun the actual package path. Each named violation has an observable assertion and clean red-first provenance."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d212b-dev-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "both new-state reds watched failing on the pre-change tree before any production change",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the working agreement, the card-176 records, and the release bar so I can vote as the backend-developer seat.I'll check the CLI project, PERSONAS, FLAGS, and whether worktree rules conflict with how a green seat is supposed to write.Yes\nCharacterisation first, then both new-state reds watched failing on the pre-change tree, then production, is the honest pack path; greening criterion 1 first would leave criterion 2 born green. Caps are fair: zero green for characterisation, one each for 1 and 2, inside D136. I will land one green for both. No flag: PackAsTool is complete for this card. Doubling nuget would be gaming; the named reds "
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d212b-auditlens-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "both new-state reds watched failing on the pre-change tree",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\n\nGit can prove commit order, but not that both named reds were actually watched failing for the intended reasons. Require committed evidence for each red recording the pre-change commit hash, command, failing test, and expected failure before any production commit."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d212b-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "does not read the gate reviewer's report before its own reruns",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the working agreement, seat plan, checklist, and release bar so the vote rests on those seats and evidence rules.Yes\nThe card names Dana, three criteria with named reds or characterisation, and Gherkin ZOMBIES. Adopt or reject will rest on new-state tests watched failing on the pre-change tree, then pack, local-feed install with public sources off, version agreement, and a demo build, plus a Gate evidence line and a Load line. Unrun claims are facilitator gate commands. Seats cover Ready, slice, red, green, independent gate, and a separate non-author sign-off that reruns without the gate report. Red and green are different seats. Cl"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d212b-coach-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a red and its green are never the same seat",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe force is proportionate: product readiness, packaging architecture, red-first QA, implementation, independent gate, and isolated sign-off each cover a distinct risk. Author/reviewer separation is explicit, while trial drivers are correctly excluded from this high-stakes packaging gate. No perspective is missing, and no role is merely ceremonial."
+   }
+  ]
+ },
+ "independent_rerun_on_final_text": {
+  "architect": [
+   {
+    "tag": "d212brr-architect-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Support-it",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": false,
+    "decider_cite_ok": false,
+    "reply_head": "Support-it",
+    "note": "not counted by the decider (its cite check is exact); the seat was re-run on Grok, the other non-Claude driver"
+   },
+   {
+    "tag": "d212brr-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "watched failing on the pre-change tree because no tool package is configured",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the cited records, working agreement, and release bar first so the architect vote rests on the actual design, not the board.Next I’ll check the release bar, CLI project, and the decisions that pin package ID, command, and publish limits.I’ll inspect existing acceptance tests, version wiring, and D125/D230 so the vote can catch false-positive and worktree issues.Yes\nThe record is one packaging concern with three criteria. Characterisation first, then both new-state reds watched failing on the pre-change tree, then green, so criterion 2 cannot pass for the wrong reason after a pack-only change. Criterion 1 requires a DotnetTool with c",
+    "note": "the re-run seat that counts"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d212brr-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "watched failing on the pre-change tree because no tool package is configured",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the working-agreement rules and the 176 records first, then vote on whether each criterion can fail red and still catch the named violation.I'll inspect the CLI project, `--version` handling, and how pending reds are enforced so the vote can rest on whether those checks fail for the right reason.Yes\nCriterion 1 is red-first only if it inspects the nupkg (command `avowry`, id `Avowry`, one version): `dotnet pack` already succeeds and would born-green an exit-code check. Criterion 2’s install, exact pack/metadata/`--version` match, scratch `--tool-path`, unchanged global list, cleared local feed, and demo build are one red committed b"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d212brr-dev-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "both committed and watched failing on the pre-change tree",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe sequencing is workable and fair: characterization first, both genuine reds before production, then criterion-labeled greens. Separate worktrees, facilitator reruns, byte checks, non-author gate review, and independent sign-off prevent gaming. The three-increment cap fits the nearly atomic packaging change, while explicit local-feed isolation and unchanged global state make acceptance unambiguous."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d212brr-auditlens-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "the Red before the atomic green trial entry applies",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the cited agreement, bar, and card-176 records only, then vote from git-verifiable facts.I'll verify the CLI project, version wiring, D125, and whether the declaration's worktrees conflict with the serial-on-main rule.No\n\nGit confirms no PackAsTool, ToolCommandName, PackageId or Version, and CI does not pack. The slice names both new-state reds and says D204 applies, but the voted gate only builds, tests, packs, installs and demos on the post-change tree. That lets a SHIP land with tests born green: git then shows a passing suite and the red-first practice is broken. Condition: the gate also replays both named new-state tests on the"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d212brr-decider-codex",
+    "seat": "codex",
+    "model": "gpt-5.6-sol",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the public sources off, `avowry --version`, a demo build",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe evaluation is evidence-led: explicit named reds, characterization baseline, isolated local-feed installation, version agreement, demo build, and independent reruns. Roles cover readiness, architecture, QA, implementation, gate review, and separate fresh sign-off, with author/reviewer isolation and clear scope boundaries."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d212brr-coach-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Trial drivers (Muse, Cursor, local Qwen) are not part of this task force",
+    "cite_verbatim": true,
+    "cite_exact_without_normalising": true,
+    "cite_normalised_match": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the working agreement, seat plan, and related records so I can vote on whether this task force is sized to the work.Yes\n\nThe roster is the default card-mode seats this pack-and-version story needs: ready, slice, red, green, independent gate, and a separate sign-off. Trial drivers stay off the force and on the seat plan, so pack, install, and the gate are not first-trial seats. Grok authors red and Codex greens in different seats; authors do not review. Unused menu roles (UX, security, DevOps, coach-on-card) are omitted: local pack proof needs no extra domain seat, and card 177 owns the OS matrix. Claude on gate and sign-off is recor"
+   }
+  ]
+ },
+ "independent_rerun_note": "an earlier independent re-run of the unamended text (tag d212rr) was stopped after the four round 1 conditions were adopted"
+}
