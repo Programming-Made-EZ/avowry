@@ -38,7 +38,7 @@
    "role": "signoff",
    "seat": "Claude ctx-7",
    "model": "claude, a fresh subagent context, sign-off, read-only; SIGNED OFF; signoff-ctx7.md (mutations rerun, full gate in a clean archive copy: three known holdout failures need .git plus one timing flake that passed alone)",
-   "evidence": "d424999"
+   "evidence": "d424999e8db790111efc3b0827d041c18f9426e3"
   }
  ],
  "retro": "docs/retros/card-324-2026-11-07.md",
