@@ -1,0 +1,108 @@
+{
+ "decider": "D218",
+ "subject": "card 179 task-force declaration and card text (README and getting-started guide)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d218-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "One Pending red, then one atomic green",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card-179 records, neighbouring tests, and agreement so the architect vote is on the actual checker design.I'll check the 179 records, 178 slice, and the neighbouring tests that correction 2 names.Yes\nLive-state guard, blob characterisation of demo/tasks/README.md, and ProcessStartCallers in the same red match the 178 design. C1–C3 as one Pending test and one atomic green is D204. Fenced-block regex plus substring needles, no parser, missing-guide as assertion, and kept license/266 strings make the checker enforceable without false reds on neighbours. Correction 2 is slice work: I pick (a), because C1 drops the status table. Note"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d218-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "Aggregate independent checks in one assertion",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll vote as the QA seat after a read-only check of the card records, standing rules, and whether each named check can fail red first.I'll read the 179 records, the 178 red pattern, and the tests this card would guard.I'll inspect the 178 test pattern, neighbour tests, and current docs to see which named failures would actually go red.No\nC2’s named pre-change failure is only the missing guide, so the PREREQUISITES reword and most C1 keep/drop bullets can ship untested: today’s 178 `untested`/`try`/`.NET 8 SDK` needles already pass, and a restyled table with clone URL plus `NotImplementedException` removed could satisfy a thin red. Condition: "
+   }
+  ],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "d218-auditlens-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Replay the Pending red on the commit before the first production change",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nBoth the red and the green can be verified from git alone. The red record stores the pre-change commit, command and failing test, so the gate can replay it on the commit before the first production change. `git log` gives the Criterion order. The `demo/tasks/README.md` characterisation uses `git show <sha>:path` with an exact key. The live-state guard cannot be passed by restyling the old table.\n\nNotes, not conditions:\n- Criterion 3 relies on substring needles, so a pasted \"Same in PowerShell.\" line could pass it. The cold-reader report is the human check on that.\n- Correction 2 leaves the `test_rename_196` and `test_rename_197` table ed"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d218-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "the clone URL and the reworded newer-SDK sentence are the two points the card 178 reader raised",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card-179 records, the 178 comparison, and the working agreement so the vote rests on those files.I'll read the 179 records, the 178 comparison, and the sign-off rules next.I'll read the 179 seat plan, the 178 comparison, and the sign-off role next.I'll spot-check the facts that decide whether sign-off can rest on evidence.No\nSign-off later adopts, reshapes or rejects this card from Dana's reading, the live-state test, red replay, and an independent gate. The cold-reader is that Dana reading. Correction 4 asks the reader to judge the reworded newer-SDK sentence, and C2 puts that sentence only in `docs/PREREQUISITES.md`. Scenario "
+   }
+  ],
+  "coach": []
+ },
+ "confirmation_outliers_qa_decider_amended_text_0a33581": [
+  {
+   "role": "qa",
+   "kind": "outlier",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe amendment adopts an independent check for every C1–C3 bullet, the PREREQUISITES lines 7–9 failure, every guide step, every PowerShell and Windows-path rule, one aggregated assertion, and the named hostile inputs remaining red. Condition met.\nCITE: records an independent check for every Criterion 1 to 3 bullet\n"
+  },
+  {
+   "role": "decider",
+   "kind": "outlier",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe amendment adds `docs/PREREQUISITES.md` to the cold-reader’s named files, keeps the seat read-only as Dana, and commits that report before sign-off. That is the condition I asked for.\nCITE: the reader reads `README.md`, `docs/GETTING_STARTED.md` and `docs/PREREQUISITES.md` only, still read-only as Dana\n"
+  }
+ ],
+ "confirmation_others_amended_text_0a33581": [
+  {
+   "role": "architect",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nIndependent checks per C1–C3 bullet in one aggregated assertion match the 176/178 live-state design I already supported. Named hostile inputs staying red keep the checker enforceable. Adding PREREQUISITES.md to the cold reader stays Dana-only and leaves the record and checker rules intact.\nCITE: reports every failing check in one aggregated assertion\n"
+  },
+  {
+   "role": "dev",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nAmendment keeps one Pending aggregated test and adds PREREQUISITES to cold reader; both workable, no new gaming or slice burden.\nCITE: a rebuild overwrites the same relative paths\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n"
+  },
+  {
+   "role": "auditlens",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe amendment only tightens verification. QA's per-bullet aggregated checks and hostile inputs make the test harder to pass without doing the work. Adding `docs/PREREQUISITES.md` to the cold reader's files closes a gap in the human check. Neither change touches the red record, the replay or the Criterion order in git.\n\nCITE: Both conditions are adopted as written\n"
+  },
+  {
+   "role": "coach",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nAmendment adds checks within existing red and one file to existing cold-reader; no new seat or ceremony, force stays sized to two docs.\nCITE: reports every failing check in one aggregated assertion\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n"
+  }
+ ],
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run"
+}

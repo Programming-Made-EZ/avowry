@@ -1414,5 +1414,11 @@
     "status": "adopted",
     "title": "Card 178 retro pick: the confirmation step replaces the separate independent re-run (adopted as a five-Decider trial)",
     "order": 208
+  },
+  "D218": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 179 task-force declaration and card text (README and getting-started guide)",
+    "order": 209
   }
 }
