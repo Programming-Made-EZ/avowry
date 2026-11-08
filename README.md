@@ -1,61 +1,30 @@
 # Avowry
 
-A programming language for LLMs where **names are descriptions** and **specs are the truth**. Code at every level reads as its own summary, so the code is the context. Avowry compiles through a language-neutral IR to target providers; C# (FastEndpoints + xUnit) is first. Avowry is the language; each avow is one line of intent in it.
+Avowry is its own language for describing software as intent: names are descriptions and specs are the truth. Avowry is the language; each avow is one line of intent in it.
+
+This is the C# adapter preview: it ships one adapter, the C# one (C# with FastEndpoints), which turns an Avowry file into a running API and its tests.
 
 The current implementation uses the `avowry` command and still uses the `.avowry` file extension.
 
 Avowry was named Phrase until 2026-10-29; older records keep the old name.
 
-- **Purpose and north star: [VISION.md](VISION.md)** (a vocabulary of common patterns an LLM reads and writes for free, in any language; both a spec and a library)
-- Grammar and resolution rules: [docs/GRAMMAR.md](docs/GRAMMAR.md)
-- First program: [tests/Avowry.Acceptance.Tests/Fixtures/orders.avowry](tests/Avowry.Acceptance.Tests/Fixtures/orders.avowry)
-- What the C# provider should emit for it: [reference/csharp](reference/csharp)
-- **Contributing now: [HANDOFF.md](HANDOFF.md)** (the resolver, as a mob)
+## Who it is for
 
-## Layout
+Dana directs an agent to build software and has to judge what comes back. Dana does not need to read C#: the Avowry source states what each part must do, and Dana stays free of any one target.
 
-```
-docs/GRAMMAR.md                    v0.1 grammar, resolution, lints, vocabulary
-src/Avowry.Compiler                Lexer, Parser, formatter, Semantics model, Resolver
-src/Avowry.Adapters.CSharp         CSharpProvider, the C# target adapter
-src/Avowry.Cli                     the avowry command (build, trace)
-tests/Avowry.Compiler.Tests        inner-loop unit tests (lexer 51, parser 79, formatter 8, resolver 83 pending)
-tests/Avowry.Acceptance.Tests      outer-loop acceptance tests + harness
-reference/csharp                   hand-written target output (FastEndpoints + xUnit)
-.github/workflows/ci.yml           trunk CI: build, test, Pending excluded
-```
+## What it aims at
 
-## Running
+- **Aim one, verifiability:** every spec in the source becomes a running test.
+- **Aim two, preserved intent:** the source keeps the one-line intent of each avow, so the reason survives the code.
+- **Aim three, reviewability:** a change can be checked against the spec instead of read line by line.
 
-```bash
-dotnet test Avowry.sln                                # everything; the acceptance test is red by design
-dotnet test Avowry.sln --filter "Status!=Pending"     # what CI gates on
-```
+## Start here
 
-## Test status
+1. Clone the repository: `https://github.com/Programming-Made-EZ/avowry.git`
+2. Check what you need: [docs/PREREQUISITES.md](docs/PREREQUISITES.md) (the .NET 8 SDK).
+3. Follow [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) from clone to a running API.
 
-| Test | Status | Why |
-|---|---|---|
-| `ReferenceTarget.Reference_output_builds_and_every_spec_passes` | Green | A fresh run builds the target and passes all 6 specs; the nested runner uses `DOTNET_ROLL_FORWARD=Major` when only a newer ASP.NET Core runtime is installed, and `python scripts/check-readme-reference-status.py` verifies this status against the test |
-| `CompileEndpointToCSharp.Generated_csharp_builds_and_every_spec_passes` | Red (Pending) | Lexes and parses the fixture cleanly, then stops with `NotImplementedException` at the resolver |
-| `Avowry.Compiler.Tests` (lexer) | Green, 51 tests | Layout, tokens, native blocks, PH100 to PH109, the full fixture, and 2,000 fuzzed mutations |
-| `Avowry.Compiler.Tests` (parser) | Green, 79 tests | Declarations, templates, endpoints, steps, specs, PH200 to PH211, recovery, fixture, 2,000 fuzzed mutations |
-| `Avowry.Compiler.Tests` (formatter) | Green, 8 tests | Canonical source round trips, used for generated comments |
-| `Avowry.Compiler.Tests` (resolver) | Red (Pending), 83 tests | The spec for the resolver; see [HANDOFF.md](HANDOFF.md) |
-
-The acceptance test counts specs in the `.avowry` source independently of the compiler, so a compiler that silently drops specs cannot pass.
-
-## Next: the inner loop
-
-Build inward, one unit-test suite per stage, each with Given/When/Then comments:
-
-1. ~~**Lexer**: indentation to `INDENT`/`DEDENT`, comments, strings, raw `native` blocks~~ (done)
-2. ~~**Parser**: AST for `module`, `type`, `avow`, `endpoint`, `spec`~~ (done)
-3. **Resolver** (in progress, see [HANDOFF.md](HANDOFF.md)): avow call matching, type checks, failure and effect propagation, spec checks. Its output, `ModuleModel`, is the IR.
-4. **Provider contract**: give `ITargetProvider` an `Emit(ModuleModel)` member
-5. **C# emitter**: types, avows, endpoint, specs; compare against `reference/csharp`
-
-When the acceptance test goes green, remove its `Pending` trait so CI gates on it.
+The purpose and north star are in [VISION.md](VISION.md); the grammar is in [docs/GRAMMAR.md](docs/GRAMMAR.md). The known limitations page is not yet written (card 187).
 
 ## License
 

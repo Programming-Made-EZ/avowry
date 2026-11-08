@@ -6,7 +6,9 @@ CI builds and tests the solution with .NET SDK `8.0.x` on `ubuntu-latest`. That 
 
 CPU architecture is unpinned; no architecture is named by the workflows, so the only tested system is the CI image above.
 
-Any other operating system than the CI image is untested, and so is any CPU architecture you run it on. A newer SDK than 8.0.x is also untested. If you try anyway, you need the .NET 8 SDK.
+Any other operating system than the CI image is untested, and so is any CPU architecture you run it on. If you try anyway, you need the .NET 8 SDK.
+
+A newer SDK than 8.0.x is untested and does not replace the .NET 8 SDK.
 
 v0.1 is .NET-first: the emitter writes C# for net8.0, so building and running the output needs the .NET 8 SDK. A newer ASP.NET Core runtime alone is not enough.
 

@@ -293,7 +293,6 @@ PYTHON_MODULES = (
     ("tests.test_outcome_extractors_217", 17),
     ("tests.test_repeat_evidence", 21),
     ("tests.test_run_pairs_217", 36),
-    ("tests.test_readme_reference_status", 4),
 )
 RENAME_MARKER = "tests/" + NEW_COMPILER + "/" + NEW_COMPILER + ".csproj"
 STARVATION_PROBE = "tests/Fixtures/StarvationProbe/Program.cs"

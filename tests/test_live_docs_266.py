@@ -429,24 +429,6 @@ class GuardScan266(unittest.TestCase):
                 problems.append(f"{path}: an old name hides on the exception line after masking {token!r}")
         self.assertEqual([], problems)
 
-    def test_t03_every_path_in_the_readme_layout_block_exists(self):
-        # Given the README layout block (the code fence after the `## Layout` heading)
-        lines = self.lines_of("README.md")
-        start = lines.index("## Layout")
-        fence_open = next(i for i in range(start, len(lines)) if lines[i].startswith("```"))
-        fence_close = next(i for i in range(fence_open + 1, len(lines)) if lines[i].startswith("```"))
-        paths = [row.split()[0] for row in lines[fence_open + 1 : fence_close] if row.strip()]
-
-        # When each path is looked up among the tracked files (a directory counts when a tracked file lies below it)
-        tracked = tracked_paths()
-        missing = [
-            p for p in paths if p not in tracked and not any(name.startswith(p.rstrip("/") + "/") for name in tracked)
-        ]
-
-        # Then the block is not vacuous and every path exists with exact case
-        self.assertGreaterEqual(len(paths), 6, "the layout block has fewer than 6 rows")
-        self.assertEqual([], missing, f"layout paths that are not tracked: {missing}")
-
     def test_t05_the_readme_note_appears_exactly_once(self):
         # Given the README
         lines = self.lines_of("README.md")

@@ -11,7 +11,6 @@ public class GettingStartedDocs
     [Fact]
     [Trait("Slice", "179")]
     [Trait("Criterion", "179-1")]
-    [Trait("Status", "Pending")]
     public async Task Getting_started_docs_match_danas_story()
     {
         // Given README.md, docs/GETTING_STARTED.md and docs/PREREQUISITES.md on the working tree

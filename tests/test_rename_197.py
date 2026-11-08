@@ -323,7 +323,6 @@ FIVE_MODULES = (
     ("tests.test_outcome_extractors_217", 17),
     ("tests.test_repeat_evidence", 21),
     ("tests.test_run_pairs_217", 36),
-    ("tests.test_readme_reference_status", 4),
 )
 
 
@@ -588,8 +587,8 @@ class OldCommandRefused(unittest.TestCase):
                         bad.append(f"{rel}:{number}: {match.group(1)}")
         self.assertEqual([], bad, "every dotnet command names a tracked solution file, exact case")
         self.assertEqual(
-            {".github/workflows/ci.yml": 4, "README.md": 2, "HANDOFF.md": 1, "TEAM_WORKING_AGREEMENT.md": 1}, counts,
-            "the extraction finds the 8 documented solution commands (4 in ci.yml)",
+            {".github/workflows/ci.yml": 4, "README.md": 0, "HANDOFF.md": 1, "TEAM_WORKING_AGREEMENT.md": 1}, counts,
+            "the extraction finds the 6 documented solution commands (4 in ci.yml)",
         )
 
 
