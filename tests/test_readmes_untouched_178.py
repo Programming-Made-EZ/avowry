@@ -53,13 +53,10 @@ def differing_readmes(left, right):
     return [path for path in PATHS if blob(left, path) != blob(right, path)]
 
 
-def _scratch_clone(scratch):
-    clone = Path(scratch) / "clone"
-    subprocess.run(
-        ["git", "clone", "-q", "--shared", "--no-checkout", str(REPO), str(clone)],
-        check=True,
-        capture_output=True,
-    )
+def _synthetic_repo(scratch):
+    """A git-init repo whose history cannot see the real page-adding commit."""
+    repo = Path(scratch) / "repo"
+    repo.mkdir()
     ident = [
         "-c",
         "user.name=scratch",
@@ -69,14 +66,20 @@ def _scratch_clone(scratch):
         "commit.gpgsign=false",
     ]
 
-    def in_clone(*args):
-        subprocess.run(
-            ["git", *ident, *args], cwd=clone, check=True, capture_output=True
+    def in_repo(*args):
+        return subprocess.run(
+            ["git", *ident, *args], cwd=repo, check=True, capture_output=True
         )
 
-    in_clone("read-tree", "HEAD")
-    in_clone("checkout", "-q", "HEAD", "--", *PATHS)
-    return clone, in_clone
+    in_repo("init", "-q", "-b", "main")
+    (repo / "README.md").write_bytes(b"base README\n")
+    demo = repo / "demo" / "tasks"
+    demo.mkdir(parents=True)
+    (demo / "README.md").write_bytes(b"base demo README\n")
+    in_repo("add", "README.md", "demo/tasks/README.md")
+    in_repo("commit", "-q", "--no-verify", "-m", "base")
+    base = in_repo("rev-parse", "HEAD").stdout.decode("ascii").strip()
+    return repo, in_repo, base
 
 
 class ReadmesUntouched178(unittest.TestCase):
@@ -106,29 +109,31 @@ class ReadmesUntouched178(unittest.TestCase):
         )
 
     def test_look_alike_commit_and_uncommitted_edit_still_report_equal(self):
-        # Given the BASE blobs, and a scratch clone where the page has been added,
-        # a later commit with look-alike subject `Card 178 green 1 (scratch)` edited
+        # Given a synthetic repo: page added with READMEs unchanged, then a later
+        # commit with look-alike subject `Card 178 green 1 (scratch)` edited
         # README.md, and demo/tasks/README.md has an uncommitted append
-        want = {path: git("show", f"{BASE}:{path}") for path in PATHS}
         with tempfile.TemporaryDirectory() as scratch:
-            clone, in_clone = _scratch_clone(scratch)
-            page = clone / PAGE
+            repo, in_repo, base = _synthetic_repo(scratch)
+            page = repo / PAGE
             page.parent.mkdir(parents=True, exist_ok=True)
             page.write_bytes(b"CI runs on ubuntu-latest.\n")
-            in_clone("add", PAGE)
-            in_clone("commit", "-q", "--no-verify", "-m", "Card 178 green 1")
-            readme = clone / "README.md"
+            in_repo("add", PAGE)
+            in_repo("commit", "-q", "--no-verify", "-m", "Card 178 green 1")
+            readme = repo / "README.md"
             readme.write_bytes(readme.read_bytes() + b"\nA later look-alike line.\n")
-            in_clone("add", "README.md")
-            in_clone("commit", "-q", "--no-verify", "-m", "Card 178 green 1 (scratch)")
-            demo = clone / "demo" / "tasks" / "README.md"
+            in_repo("add", "README.md")
+            in_repo("commit", "-q", "--no-verify", "-m", "Card 178 green 1 (scratch)")
+            demo = repo / "demo" / "tasks" / "README.md"
             demo.write_bytes(demo.read_bytes() + b"\nan uncommitted later line\n")
 
-            # When the helpers read committed blobs in the clone
+            # When the helpers read committed blobs in the synthetic repo
             module = sys.modules[__name__]
-            with mock.patch.object(module, "REPO", clone):
+            with mock.patch.object(module, "REPO", repo), mock.patch.object(
+                module, "BASE", base
+            ):
                 other = comparison_commit()
                 got = {path: blob(other, path) for path in PATHS}
+                want = {path: git("show", f"{BASE}:{path}") for path in PATHS}
 
         # Then they still report the two READMEs equal (page-adding commit, not HEAD)
         wrong = [path for path in PATHS if got[path] != want[path]]
@@ -139,20 +144,22 @@ class ReadmesUntouched178(unittest.TestCase):
         )
 
     def test_adding_the_page_and_editing_a_readme_reports_a_difference(self):
-        # Given a scratch clone whose one commit adds the page and edits a README
+        # Given a synthetic repo whose second commit adds the page and edits a README
         with tempfile.TemporaryDirectory() as scratch:
-            clone, in_clone = _scratch_clone(scratch)
-            page = clone / PAGE
+            repo, in_repo, base = _synthetic_repo(scratch)
+            page = repo / PAGE
             page.parent.mkdir(parents=True, exist_ok=True)
             page.write_bytes(b"CI runs on ubuntu-latest.\n")
-            readme = clone / "README.md"
+            readme = repo / "README.md"
             readme.write_bytes(readme.read_bytes() + b"\nmutated README\n")
-            in_clone("add", PAGE, "README.md")
-            in_clone("commit", "-q", "--no-verify", "-m", "Card 178 green 1 (scratch)")
+            in_repo("add", PAGE, "README.md")
+            in_repo("commit", "-q", "--no-verify", "-m", "Card 178 green 1 (scratch)")
 
             # When the helpers compare BASE to the comparison commit
             module = sys.modules[__name__]
-            with mock.patch.object(module, "REPO", clone):
+            with mock.patch.object(module, "REPO", repo), mock.patch.object(
+                module, "BASE", base
+            ):
                 other = comparison_commit()
                 differing = differing_readmes(BASE, other)
 
