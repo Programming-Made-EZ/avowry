@@ -27,7 +27,7 @@ Recommendation: the four direct packages are permissive; accept them, set the pa
 
 ## Vendor terms
 
-Command: `git ls-files 'bench/results/*.json'` (four files), then the `model` value and the `reply_head` field of each file. Scan tip: `c4692e074c8970081687d332adb64f200728426c`.
+Command: `git ls-files 'bench/results/*.json' ':!bench/results/self-check/*'` (four vendor model files; the unfiltered pathspec also lists one self-check fixture), then the `model` value and the `reply_head` field of each file. Scan tip: `c4692e074c8970081687d332adb64f200728426c`.
 
 | model | vendor (inferred from the file name only) | reply_head published | terms status |
 | --- | --- | --- | --- |
@@ -52,7 +52,7 @@ Dispositions, grouped by kind and path area (65 in total; none looks like a cred
 - 45 hits, credential assignment: an identifier or prose using the word token or secret, in seat-session logs and slice records under `.mob/records/298`, `299` and `313`.
 - 5 hits, credential assignment: source code with an identifier named token (`scripts/delete_guard.py`, the parser, a lexer test).
 - 4 hits, credential assignment: prose in a decision document, a board file and a reviewer record using the word secret or token.
-- 8 hits, credential assignment: a deliberate redaction fixture with a dummy lower-case value in `tests/Phrase.Acceptance.Tests/BenchmarkHarnessAcceptance.cs`.
+- 8 hits, credential assignment: a deliberate redaction fixture with a dummy lower-case value in the benchmark-harness acceptance test file (a tracked file whose old project folder name is deliberately not written here).
 - 3 hits, credential assignment: a fixture or placeholder in two seat records (one builds a fake GitHub-style prefix by concatenation, one holds a placeholder), under `.mob/records/229` and `.mob/records/230`.
 
 Limits of the scan: the content of a merge commit (its conflict-resolution lines) is not scanned; commit messages, author fields and tags are not scanned; UTF-16 files are not read; dummy values were judged by shape, not content. The patterns miss names with a keyword after an underscore (a database password variable, for example) because no word boundary sits there, miss JSON keys where a quote stands between the keyword and the colon, and do not know other token shapes (JWTs, passwords inside URLs). The new script sits in the next scan range and its own lines may add false positives of the same kind.
