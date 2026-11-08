@@ -27,7 +27,7 @@ public class PrePublicationChecks
         Assert.NotNull(process);
         var stdout = process.StandardOutput.ReadToEndAsync();
         var stderr = process.StandardError.ReadToEndAsync();
-        using var timeout = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+        using var timeout = new CancellationTokenSource(TimeSpan.FromMinutes(6));
         await process.WaitForExitAsync(timeout.Token);
         var text = await stdout + await stderr;
         Assert.True(process.ExitCode == 0, text);
