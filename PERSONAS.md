@@ -12,7 +12,7 @@ An LLM coding agent asked to build or extend a service, starting with only the r
 
 - **Goals:** find the right vocabulary without prompt-specific coaching; express the behaviour in few tokens and few native-code escapes; produce code and consumer-observable specs that compile and pass in few attempts; understand an unfamiliar Phrase program from its sentence-names and specs.
 - **Pain points:** ambiguous syntax or duplicated vocabulary that burns context and retries; specs that say only that nothing went wrong; diagnostics with no location or fix; two documents that disagree.
-- **Constraints:** a limited context window and bounded attempts; no private knowledge of the codebase; must act from the message and the docs; needs concise, deterministic feedback; works across target languages through documented adapters.
+- **Constraints:** a limited context window and bounded attempts; no private knowledge of the codebase; must act from the message and the docs; needs concise, deterministic feedback; works across target languages through documented adapters; usually runs code in a Linux container or sandbox, sometimes on the user's Windows or macOS machine, and often cannot run code at all.
 
 ## Dana: developer directing an agent
 
@@ -20,7 +20,7 @@ A developer who owns a service outcome and directs an LLM agent (Ari) to create 
 
 - **Goals:** state the behaviour once and get a working implementation in the chosen target language; review the Phrase source and its specs without reconstructing generated details; reuse standard, spec-backed patterns; change target language without changing the intended behaviour.
 - **Pain points:** native glue code and adapter knowledge that distract from the outcome; weak specs that pass while the requested behaviour is absent; unclear failures that make supervising the agent slow; one-off emitters that undermine confidence Phrase is portable.
-- **Constraints:** little time for supervising retries or reading generated code; must keep control of requirements and externally visible behaviour; needs repeatable builds and stable generated output; judges a slice by one command's exit and the spec result.
+- **Constraints:** little time for supervising retries or reading generated code; must keep control of requirements and externally visible behaviour; needs repeatable builds and stable generated output; judges a slice by one command's exit and the spec result; her stack is not fixed (a story states it in its Given): most services she directs are Python or TypeScript in Docker containers on cloud, then serverless.
 
 ## Morgan: maintainer and reviewer
 
