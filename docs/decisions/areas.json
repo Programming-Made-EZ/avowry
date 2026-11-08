@@ -1402,5 +1402,11 @@
     "status": "failed",
     "title": "Card 176 retro pick: a task-force declaration and every amendment carry a standing-rules preflight (failed on the architect's condition; kept as the facilitator's practice)",
     "order": 206
+  },
+  "D216": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 178 task-force declaration and card text: a prerequisites page that matches what CI tests (adopted at the confirmation step)",
+    "order": 207
   }
 }

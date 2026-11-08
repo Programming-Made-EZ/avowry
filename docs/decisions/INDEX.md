@@ -319,3 +319,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D213](process-and-staffing.md#d213) | Card 176 task-force declaration and card text, corrected after D212 (failed; one condition re-proposed as D214) | process-and-staffing | failed |
 | [D214](process-and-staffing.md#d214) | Card 176 task-force declaration and card text, second correction (adopted after the outliers' confirmation) | process-and-staffing | adopted |
 | [D215](process-and-staffing.md#d215) | Card 176 retro pick: a task-force declaration and every amendment carry a standing-rules preflight (failed on the architect's condition; kept as the facilitator's practice) | process-and-staffing | failed |
+| [D216](process-and-staffing.md#d216) | Card 178 task-force declaration and card text: a prerequisites page that matches what CI tests (adopted at the confirmation step) | process-and-staffing | adopted |

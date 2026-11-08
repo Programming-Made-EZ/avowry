@@ -1,0 +1,129 @@
+{
+ "decider": "D216",
+ "subject": "card 178 task-force declaration and card text",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d216-architect-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the single Pending test is a python test",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe design is minimal and enforceable. It has one page, one shared Pending test, a characterisation that passes on the pre-change tree and reads committed blobs, and one atomic green. The drift test reads the working tree and the characterisation reads blobs, which is the right split.\n\nNotes, which do not downgrade the vote:\n- \"Every SDK/OS claim on the page appears in those workflows\" is where false positives would come from. A PowerShell or Windows mention is not a CI claim. The green should limit the claim scan to a delimited block or to backticked tokens. The red record should state that rule.\n- The matrix and `strategy` parsing shou"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d216-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "every SDK/OS claim on the page appears in those workflows",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the seat plan, checklist, working agreement, and v0.1 bar so the QA vote is grounded in the repo, then inspect the tests the proposal names.I'll inspect the CI workflow, the existing docs-guard tests, and the TWA rules the card cites so the red-first check is grounded.I'll inspect the card-176 test pattern and live-docs guards so I can judge whether this shared test would actually catch the named violations.No\nThe named test as specified asserts only that workflow `runs-on` and `dotnet-version` strings appear on the page. A labels-only page therefore satisfies it while Criterion 1 still requires PowerShell, local-feed, untested-syst"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d216-dev-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the python test file stays byte-identical between red and green",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the seat plan, checklist, working agreement, and v0.1 bar so the backend vote is grounded in the actual rules.I'll check the TDD standing rules and the existing C# wrapper pattern so the slice's red/green split is unambiguous.I'll confirm the committed proposal wording so the CITE line matches exactly.Yes\nI can follow these rules without gaming. Characterisation first on blobs, one Pending shared test for C1+C2 watched failing because the page is missing, one atomic green that adds the page and drops only Pending. Docs need no flag. Three increments, one concern, under the file and line caps. No unit-double loop: the production chan"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d216-auditlens-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "Pre-change failure: the page is missing.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll audit this from git and the named records only, then vote. Reading the seat plan, checklist, working agreement, and v0.1 bar first.I'll check the standing rules and the files the card claims, looking for a pass-while-broken loophole.No\nThe shared Pending test is specified as a C2 workflow-label parse whose stated red is only a missing page. Criterion 1’s other claims (unpinned architecture, untested systems, .NET-first versus runtime-only, local-feed, per-command directory and needs, PowerShell) then have no git-replayable assertion, so a page that names ubuntu-latest and 8.0.x can pass the replay, drop Pending, and ship. Cold-reader out"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d216-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "does not read the gate report before its own reruns",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the seat plan, checklist, working agreement, and v0.1 bar so the vote rests on those files and the proposal text.I'll check the Decider and task-force rules in the working agreement, then confirm the CI and docs facts the proposal cites.Yes\nThe card text, slice and declaration frame ship/hold on rerunnable evidence: one named Pending test for C1+C2, characterisation first on blobs, a four-field red record, gate replay, Criterion order from git log, python docs guards, and Gate evidence plus Load lines. Sign-off reruns without the gate report. Seats are complete: independent gate, separate sign-off, D206 cold-reader, red ≠ green. Sto"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d216-coach-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "a fresh Claude context in its own git worktree (never the red's seat",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the seat plan, checklist, working agreement, and v0.1 bar so I can vote on whether this task force is sized to the work.I'll pull the task-force sizing rules and the card 176 declaration so I can compare this roster to the last similar card.No\nThe six working seats match what card 176 kept: PM, architect, QA, a green that is never the red, independent gate, separate sign-off. Correction 3 keeps the D206 cold-reader off the force. Trial drivers stay off counted writing seats. That roster fits this one-page docs card. F-032 still fails at Ready: each role’s domain or context and why this card needs that role are unstated (the Claude l"
+   }
+  ]
+ },
+ "confirmation_step_amended_text_1fc76c4": [
+  {
+   "role": "qa",
+   "kind": "outlier",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nIndependent checks now cover every Criterion 1 bullet, so a labels-only page stays red. Criterion 2 reverse-matches only parsed `runs-on`, `dotnet-version`, and matrix pins.\n\nCITE: so a page that only names the workflow labels stays red like a missing page\n"
+  },
+  {
+   "role": "auditlens",
+   "kind": "outlier",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe amendment binds the single Pending python test to an independent check for every Criterion 1 bullet in one aggregated assertion, so a labels-only page stays red like a missing page. That is the condition I asked for.\nCITE: a page that only names the workflow labels stays red like a missing page\n"
+  },
+  {
+   "role": "coach",
+   "kind": "outlier",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe three fields now sit on THE DECLARATION VOTED: each role's domain and why this card needs it, the default card-mode seats left out and why, and the domain-expert answer that none is needed. Assignees are unchanged. Condition met; I support the proposal.\nCITE: THE DECLARATION VOTED gains three fields, with no change of assignee\n"
+  },
+  {
+   "role": "architect",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe amendment doesn't change my vote. The aggregated per-bullet checks stay inside the single Pending test, and the reverse match is limited to values parsed from the workflows. That limit also covers my earlier false-positive concern. The declaration fields add no new design burden.\n\nCITE: the single Pending python test records an independent check\n"
+  },
+  {
+   "role": "dev",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe amendment names every Criterion 1 check in one aggregated assertion and limits C2 reverse match to workflow pins. That is the card 176 pattern; python stays byte-identical and green still adds the page and drops only Pending. Declaration fields keep the same assignees. I still comply without gaming.\nCITE: reports every failing check in one aggregated assertion\n"
+  },
+  {
+   "role": "decider",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe amendment strengthens evidence and seating: every Criterion 1 bullet is an independent check in one aggregated assertion, C2 reverse-match is limited to workflow values, and the declaration now names each role's domain, omitted seats, and that no domain expert is needed. Sign-off still reruns independently. Vote unchanged.\nCITE: reports every failing check in one aggregated assertion\n"
+  }
+ ]
+}
