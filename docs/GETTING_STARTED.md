@@ -1,8 +1,8 @@
 # Getting started
 
-This guide takes you from a clone to a running spec-first API, using the C# adapter preview. It should take about 15 minutes. Every command has a bash form and a PowerShell form, so Windows needs no bash.
+This guide takes you from a clone to a running spec-first API, using the C# adapter preview. It should take about 15 minutes. Every command has a bash form and a PowerShell form (or says it is the same in PowerShell), so Windows needs no bash.
 
-Before you start, read [docs/PREREQUISITES.md](PREREQUISITES.md). You need the .NET 8 SDK; a newer SDK or a newer ASP.NET Core runtime does not replace it. The package is not published, so you install it from a local folder you pack yourself. In the commands below the folders `avowry-feed`, `avowry-tools` and `avowry-tasks` are scratch folders: bash uses `/tmp/`, PowerShell uses `$env:TEMP\`.
+Before you start, read the prerequisites page ([PREREQUISITES.md](PREREQUISITES.md), `docs/PREREQUISITES.md` in the repository). You need the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) and [git](https://git-scm.com/downloads); a newer SDK or a newer ASP.NET Core runtime does not replace it. The package is not published, so you install it from a local folder you pack yourself. In the commands below the folders `avowry-feed`, `avowry-tools` and `avowry-tasks` are scratch folders: bash uses `/tmp/`, PowerShell uses `$env:TEMP\`.
 
 ## Check the SDK
 
@@ -148,6 +148,8 @@ Passed!  - Failed:     0, Passed:    11, Skipped:     0, Total:    11
 Run from: the repository root, in a second window (the API keeps running)
 Needs: the .NET 8 SDK and the built output
 
+The build and test steps used your first window. The API runs in a second window, which you leave running; the calls in the next step come from the first window.
+
 ```bash
 dotnet run --project /tmp/avowry-tasks/Tasks.Api --urls http://localhost:5099
 ```
@@ -155,6 +157,8 @@ dotnet run --project /tmp/avowry-tasks/Tasks.Api --urls http://localhost:5099
 ```powershell
 dotnet run --project "$env:TEMP\avowry-tasks\Tasks.Api" --urls http://localhost:5099
 ```
+
+When the API is up, the window prints that it is listening on http://localhost:5099. Leave this window running.
 
 ## 8. Call it
 
@@ -221,4 +225,4 @@ Stop the API with Ctrl+C in the second window.
 
 The `.avowry` file is the source: edit it, not the generated code. The generated projects are output. A rebuild overwrites the same relative paths and does not delete leftover files, so build into a fresh folder, or remove the old output yourself, when you rename or drop something.
 
-The known limitations page is not yet written (card 187). For what you need installed, see [docs/PREREQUISITES.md](PREREQUISITES.md).
+The known limitations page is not yet written (card 187). For what you need installed, see [PREREQUISITES.md](PREREQUISITES.md).

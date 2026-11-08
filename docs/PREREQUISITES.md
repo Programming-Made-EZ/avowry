@@ -8,7 +8,7 @@ CPU architecture is unpinned; no architecture is named by the workflows, so the 
 
 Any other operating system than the CI image is untested, and so is any CPU architecture you run it on. If you try anyway, you need the .NET 8 SDK.
 
-A newer SDK than 8.0.x is untested and does not replace the .NET 8 SDK.
+A newer SDK than 8.0.x is untested and does not replace the .NET 8 SDK. Install the .NET 8 SDK next to the newer one; `dotnet --list-sdks` should then list an 8.0.x entry.
 
 v0.1 is .NET-first: the emitter writes C# for net8.0, so building and running the output needs the .NET 8 SDK. A newer ASP.NET Core runtime alone is not enough.
 
