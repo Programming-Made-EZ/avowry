@@ -2050,3 +2050,9 @@
 {"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-08T21:32:48.019422Z", "probe_taken_at": "2026-11-08T21:32:48.004480Z"}
 {"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-08T21:35:08.422741Z", "probe_taken_at": "2026-11-08T21:35:08.407950Z"}
 {"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-08T21:40:55.332830Z", "probe_taken_at": "2026-11-08T21:40:55.323457Z"}
+{"seat": "qwen", "role": "decider voter", "context": "decider-qwen", "card": "decider", "ts": "2026-11-08T21:43:15.306190Z", "probe_taken_at": "2026-11-08T21:43:15.296452Z"}
+{"seat": "muse", "role": "decider voter", "context": "decider-muse", "card": "decider", "ts": "2026-11-08T21:46:38.745584Z", "probe_taken_at": "2026-11-08T21:46:38.737832Z"}
+{"seat": "muse", "role": "decider voter", "context": "decider-muse", "card": "decider", "ts": "2026-11-08T21:46:43.751156Z", "probe_taken_at": "2026-11-08T21:46:43.738647Z"}
+{"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-08T21:46:54.218376Z", "probe_taken_at": "2026-11-08T21:46:54.207917Z"}
+{"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-08T21:46:56.462586Z", "probe_taken_at": "2026-11-08T21:46:56.449647Z"}
+{"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-08T21:47:28.176482Z", "probe_taken_at": "2026-11-08T21:47:28.163057Z"}

@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 186,
+ "title": "Pre-publication checks: name, licences, history, vendor terms",
+ "process": "card-mode rules run by hand; pulled as the head of the board after re-rank 32 and the closure of card 202; the Ready draft by a Cursor product-manager seat in ask mode (its first real seat, Probation rung 1) with the facilitator reruns of every shell fact (one author identity across 3,119 commits, not two) and seven corrections; the declaration through Decider D225 (six Yes, the first with a Cursor and a Muse and a Claude seat, no re-run: trigger (d)); an architect slice that ran the whole-history scan; a characterisation record, one Pending red with an id per row (D222: the Ready draft MULTI rows first), one atomic green (Criterion: 1-3); a Qwen cold reader (D206, Probation reply-only) and a page revision; the first baseline gate timed out the new test under load (a one-line wrapper timeout revision, logged); a second read-only review by Cursor that found the repository already public, the home paths and six overclaims (page revision 2); the independent gate review relaunched on the final tip (D219), its HOLD on four newly red rename tests (page revision 3) and a delta re-check; a separate fresh sign-off; seats spread under the product owner direction of 2026-11-08 (Codex, Copilot, agy out of quota; Grok out of quota at the retro; Claude 5 of about 14 card seats with reasons in the retro)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Cursor ctx-1",
+   "model": "cursor-agent in ask mode through cursor_reply.py, product manager, reply-only, Probation rung 1; taskforce-proposal-pm.md with the facilitator reruns, seven corrections and the declaration; the facilitator reran every shell fact (the seat's shell calls were refused)",
+   "evidence": "523705529521a6d90172c2a482d7d86d9eb46f1c"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md (the page layout, the whole-history scan, 65 hits and none real, the committed scan script, the one Pending test with its ids); reason: Codex, Copilot, agy out of quota and Grok kept for the red",
+   "evidence": "89592516a4eb6998800888b8c4c92f14cc0eece3"
+  },
+  {
+   "role": "red",
+   "seat": "Grok ctx-3",
+   "model": "grok-4.6 via grok.cmd in its own git worktree, QA engineer: the characterisation record (5049248) and the pending red; each claim rerun by the facilitator",
+   "evidence": "c4692e074c8970081687d332adb64f200728426c"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, build seat, in its own worktree, never the red seat; the page revisions 1 (83d0272) and 2 (8fb29ce) by the same context; page revision 3 (3aa11ca) and the wrapper timeout revision (4e984c4) by the facilitator (logged takeovers); reason: Grok wrote the red",
+   "evidence": "1e09c0083ebd92112d5ca2b9e8e9d2c233a3c489"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent gate reviewer, read-only (a first run stopped when a second read-only review changed the page; the relaunched run on the final tip returned HOLD; a delta re-check returned SHIP); red replay, eleven mutations, page-truth checks, a depth-1 CI simulation, Gate evidence and Load lines; the second read-only review by Cursor (second-review.md) and the Qwen cold reader (cold-reader.md) preceded it",
+   "evidence": "80efb9504d09c53ced05f2b83c74b9fa696514e7"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, separate from the gate reviewer, own full gate in a single-branch clone; SIGNED OFF WITH CONDITIONS (none blocking; the nine owner items open)",
+   "evidence": "5bb1e9b0b17b776813f4a3757580fd590303a7dc"
+  }
+ ],
+ "retro": "docs/retros/card-186-2026-11-08.md",
+ "notes": "Done checks met: criterion 1 (the name and package-id collisions are listed with the date and source of the D125 screen and a recommendation, marked \"not a professional search\"; the owner confirms the public name and the holder through two owner items that stay open); criterion 2 (the licence compatibility list is committed: four direct packages, MIT and Apache-2.0, none shipped, transitive licences not reviewed; the vendor terms summarised as unread, with the finding that the bench rows publish a reply prefix of up to 200 characters); criterion 3 (the history secrets scan recorded: 65 hits across 3,124 commits, none looking like a credential, via a committed script scripts/scan-history-for-secrets.py; the author metadata recorded as counts: one identity; the personal-name check passing). The page also records that the repository is already public and that 146 tracked files carry a home path with the local account name. The shared Pending red failed by assertion on the pre-change tree (the page missing, the blocked ids, the missing scan script) and passes after the green; the python test is byte-identical; NOTICE, TRADEMARKS.md and LICENSE are unchanged. Baseline gate isolated, CLI built first: Compiler 324 of 324, Acceptance 341 of 341, 0 warnings (after the wrapper timeout revision); the independent gate reviewer SHIP on 3aa11ca after one HOLD and the sign-off with a clean full run. Task force declared through D225; the retro pick D226 tuned D219 (every review of a docs card page, a second read-only review included, finishes before the gate review starts, with a blocking step 0). Process time against build time about 0.4 to 1 before the gates; the reviews and revisions took about 90 minutes. Born-green findings: none. Open: the nine owner items for the product owner (public name, holder with year, trademark search, lawyer questions, author identity, vendor terms, reply_head choice, transitive licences, home paths); bugs 338, 327, 352, 353, 357; issue 304; the seat-use history race bug; Grok is out of quota (402) as well as Codex, Copilot and agy."
+}

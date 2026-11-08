@@ -1,0 +1,113 @@
+{
+ "decider": "D226",
+ "subject": "card 186 retro pick: tune D219, every review of a docs card page finishes before the gate review starts",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d226-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "none",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "decider_cite_ok": false,
+    "reply_head": "",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   },
+   {
+    "tag": "d226-architect-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the independent gate review starts only after the cold-reader report",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe design is minimal: one Experimental entry is tuned, no new record type or checker rule is added, and the check is an existing `git merge-base --is-ancestor` line with its exit status in the gate record. It can be enforced mechanically without false positives.\n\nNotes, which do not change my vote:\n- \"Every other review of the page\" is judged by a person, not a checker. The facilitator should list the reviews in the gate record so the ancestor check has a named last report to compare against.\n- The two metrics are sound. The counter-metric guards against the rule slowing docs cards down."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d226-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "none",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "decider_cite_ok": false,
+    "reply_head": "",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   }
+  ],
+  "developer": [],
+  "audit lens": [],
+  "decider": [],
+  "coach": []
+ },
+ "qa_reask_same_seat_d171": {
+  "architect": [],
+  "qa": [],
+  "developer": [],
+  "audit lens": [],
+  "decider": [],
+  "coach": []
+ },
+ "auditlens_staggered_qwen": {
+  "architect": [],
+  "qa": [],
+  "developer": [],
+  "audit lens": [],
+  "decider": [],
+  "coach": []
+ },
+ "confirmation_outlier_auditlens_amended_text_1b2d6d5": [
+  {
+   "role": "auditlens",
+   "kind": "outlier",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe amendment mandates a blocking step 0 before any other work, stops execution on failure, and logs the command and exit status at the start of the review record, fully satisfying the timing and verification requirements.\nCITE: before any other work the reviewer runs the\n"
+  }
+ ],
+ "confirmation_others_amended_text_1b2d6d5": [
+  {
+   "role": "architect",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 2,
+   "reply": "Yes\n\nThe amendment does not change my vote. Step 0 runs the same mechanical ancestor check, only earlier: it blocks the gate review before it starts instead of checking afterwards. No new record type or checker rule is added. The facilitator's brief has to name the commit being compared against, which keeps the check free of false positives.\n\nCITE: the gate review's brief begins with a blocking step 0\n"
+  },
+  {
+   "role": "dev",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nStep 0 makes the ancestor check a starting gate, not post-hoc, so it is easier to comply with and harder to game.\nCITE: the independent gate review starts only after the cold-reader report\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n"
+  },
+  {
+   "role": "decider",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe blocking step 0 preserves the metric, counter-metric, trial and owner, and strengthens start-time evidence without removing any seat.\nCITE: the gate review's brief begins with a blocking step\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n"
+  },
+  {
+   "role": "coach",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe amendment does not change my vote. It adds one blocking first step to the gate brief that the reviewer already runs, plus one opening line in the review record. It deliberately turns down a new CI job. That closes the audit lens's gap without adding a role, a seat or a ceremony, so the size of the change still fits the task.\n\nCITE: the gate review's brief begins with a blocking step 0\n"
+  },
+  {
+   "role": "qa",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe amendment makes the rule easier to test red first. Step 0 runs the same `git merge-base --is-ancestor` check before the review starts, and a non-zero exit status stops the review. The command, tested commit and exit status go into git, so a replay of card 186 shows a visible failure. My earlier note still stands: the check only sees reviews whose reports are committed.\n\nCITE: the gate review's brief begins with a blocking step 0\n"
+  }
+ ],
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run"
+}
