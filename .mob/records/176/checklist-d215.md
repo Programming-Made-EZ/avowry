@@ -1,0 +1,7 @@
+# D158 pre-vote checklist: Decider D215, the card 176 retro pick (facilitator)
+- Boundary: card 176's sign-off done (SIGNED OFF WITH CONDITIONS, flake recorded); retro voices complete (seven, each a fresh context, launched at once); the [E] characterisation is in flight in its own worktree and does not touch main. Inbox read at this boundary: none open.
+- Proposal: .mob/records/176/retro-pick-proposal.md (patch agreement-amendment.diff, candidate text agreement-candidate.md; voices retro-voices.json), committed before the vote. One concern.
+- Category: a change to TEAM_WORKING_AGREEMENT.md. A full Decider, run with the original protocol as the product owner directed: six fresh seats Yes, Support-it or No with a cite of at least six words copied exactly with their capitals, voter briefs define Yes against Support-it, the runner tallies the 30 percent rule mechanically; each No states ONE condition; an adopted condition is checked against the standing rules, then the same outlier role confirms it and the other voters get one narrow question about the amendment only. One live window at a time. The independent re-run question is open for the next retro; until then the rule in use stands (a No in either run fails).
+- Seat spread: Grok and Claude (Codex out of quota); Muse and Cursor not yet fitted.
+- Red-first: a document change; the rule held on the card.
+- No commit and no tracked-file change on main during a vote window.
