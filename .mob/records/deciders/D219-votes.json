@@ -1,0 +1,129 @@
+{
+ "decider": "D219",
+ "subject": "card 179 retro pick: on a docs card the independent gate review starts on the final tip",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d219-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the record shows the `git merge-base --is-ancestor` line and its exit status",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the proposal records, the amendment patch, and the agreement sections that this Experimental entry would change, then vote as Architect.The patch is three lines. Next I’ll check D206, the Experimental section, and how gate records and checkers currently encode the tested commit.I’ll read the Experimental block and a recent gate record so the ancestor check and relaunch rule can be judged against how records are actually written.Yes\n\nStart-rule is the control: a post-hoc checker would not have stopped the 20-minute run. The recorded `git merge-base --is-ancestor` line and exit status is git-showable, matches Gate evidence, and adds n"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d219-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": false,
+    "cite": "the gate record's tested commit is a descendant of the commit that added the cold-reader report",
+    "cite_verbatim": false,
+    "decider_cite_ok": false,
+    "reply_head": "I'll read the agreement, the amendment, and the card 179 records so I can vote as QA on whether the rule is red-testable.I’ll read the Experimental entries and gate-record rules so I can judge whether this ordering check can fail red without letting a pre-revision tip through.I’ll inspect an existing gate record and D209’s failed evidence-line pattern so I can see whether this ancestor check would actually fail the card-179 case.No\n\nThe named `git merge-base --is-ancestor` check of the cold-reader report commit fails a gate whose tested commit predates that report (card 179's first run). A gate whose tested commit sits after the report and be",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   }
+  ],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "d219-auditlens-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the independent gate review starts only after the cold-reader report is committed",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe check is verifiable from git: `git merge-base --is-ancestor` gives an exit status, and the record's tested commit can be `git show`n. Reservations, which don't change my vote:\n\n- The ancestor check proves only that the tested commit follows the cold-reader report. It does not prove that no page change landed after the tested commit. The existing \"tested commit equals ship tip, or only non-page changes\" rule should cover that, and the retro should confirm it does.\n- A card could skip the cold-reader seat to avoid the ordering rule. D206 should keep requiring the seat on docs cards, and the record should say when it was waived.\n- The a"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d219-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the independent gate review starts on the final tip",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 179 records and the Decider/Experimental rules so the vote rests on the proposal as written.I'll read the Decider protocol, Experimental section, and D206 so the vote can check evidence framing and seats.Yes\n\nThe trial is framed for a later keep, revise or drop on evidence: a git-showable `git merge-base --is-ancestor` check, baseline 1 and target 0, counter-metric of green-to-SHIP minutes (38 on 179), three docs cards with a cold reader, facilitator as owner. Cold reader, independent gate and separate sign-off already cover sign-off; this only orders them. D217 (c) is named because the agreement changes. Note: put the 10-m"
+   }
+  ],
+  "coach": []
+ },
+ "qa_reask_same_seat_d171": {
+  "architect": [],
+  "qa": [
+   {
+    "tag": "d219q-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "The gate record's tested commit is a descendant of the commit that added the cold-reader report",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the proposal records, the amendment, and the agreement as a QA seat, then vote on whether the rule can fail red first.No\nThe named ancestor check still passes when the tested SHA is the cold-reader report commit and a later page revision exists. That is the unrevised-pages state this pick exists to stop. Card 179's overlap with a still-running reader would fail; a launch after the report and before the revision would not.\nCondition: record `git merge-base --is-ancestor` of the last post-report page-revision commit when one exists (else the report commit), so a tested SHA equal to the report while a later revision exists shows a non-"
+   }
+  ],
+  "developer": [],
+  "audit lens": [],
+  "decider": [],
+  "coach": []
+ },
+ "confirmation_outlier_qa_amended_text_aea3875": [
+  {
+   "role": "qa",
+   "kind": "outlier",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe record now names the last post-report page-revision as the ancestor when one exists, else the report commit, and a tested SHA equal to the report while a later revision exists shows a non-zero exit. The red-first check is specified.\nCITE: a tested commit equal to the report while a later page revision exists shows a non-zero exit\n"
+  }
+ ],
+ "confirmation_others_amended_text_aea3875": [
+  {
+   "role": "architect",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nThe ancestor now targets the last post-report page revision, so a tested commit equal to the report while a later revision exists records a non-zero exit. Still record-only, no checker or findings.json, a well-ordered final-tip gate still passes. The hole I already named is closed.\nCITE: a tested commit equal to the report while a later page revision exists shows a non-zero exit\n"
+  },
+  {
+   "role": "dev",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nStill workable as backend: the amendment only tightens the ancestor check to the last post-report revision, a mechanical git test that closes the equal-to-report loophole without changing red/green, flags or slices.\nCITE: The gate record's tested commit is a descendant of the last commit\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n"
+  },
+  {
+   "role": "auditlens",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe amendment tightens the check in the direction I care about. The ancestor line is now taken against the last post-report page revision, so a tested commit equal to the report while a later revision exists shows a non-zero exit. That closes the loophole I would have flagged. My earlier reservations stand and don't change my vote.\n\nCITE: a tested commit equal to the report while a later page revision exists shows a non-zero exit\n"
+  },
+  {
+   "role": "decider",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\n\nThe amendment tightens the ancestor check so a gate on the report commit fails when a later page revision exists. That is the failure mode the trial exists to catch. Evidence framing and seats are unchanged. I still support.\n\nCITE: a tested commit equal to the report while a later page revision exists shows a non-zero exit\n"
+  },
+  {
+   "role": "coach",
+   "kind": "other",
+   "vote": "Yes",
+   "attempt": 1,
+   "reply": "Yes\nAmendment tightens the ancestor check to the last post-report revision, preserving lean sequencing and trial scope. No added ceremony; still right-sized.\nCITE: On a docs card the independent gate review starts on the final tip\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n"
+  }
+ ],
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run"
+}

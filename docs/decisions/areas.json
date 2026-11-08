@@ -1420,5 +1420,11 @@
     "status": "adopted",
     "title": "Card 179 task-force declaration and card text (README and getting-started guide)",
     "order": 209
+  },
+  "D219": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 179 retro pick: on a docs card the independent gate review starts on the final tip (adopted as a three-docs-card trial)",
+    "order": 210
   }
 }

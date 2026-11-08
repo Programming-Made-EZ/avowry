@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 179,
+ "title": "Rewrite the README and write the getting-started guide",
+ "process": "card-mode rules run by hand; pulled as the top product card after card 178; the Ready draft by a Grok product-manager seat with the facilitator reruns, six corrections and the standing-rules preflight; the declaration through Decider D218 (four Yes and two No in the primary window, both conditions adopted and confirmed, trigger line (a): no separate re-run, the D217 trial); a characterisation first (the Tasks demo README stays byte-identical, proven on a pre-change and a post-change scratch tree before the red), one Pending red for criteria 1 to 3, one atomic green (Criterion: 1-3), a Muse cold-reader seat and a page-only revision, an independent gate review and a separate fresh sign-off; seats spread under the product owner clarification (Codex, Copilot and agy out of quota; Claude 8 of about 21 card seats with reasons in the retro)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Grok ctx-1",
+   "model": "grok-4.6, product manager, read-only; taskforce-proposal-pm.md with the facilitator reruns, six corrections and the declaration; facts rerun by the facilitator",
+   "evidence": "f83b68f1414b2ae4d0022d34d21884f585cdd043"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md; reason: Codex out of quota and Grok kept for the red",
+   "evidence": "8499022a8ac50150851274bff48bc56e9f5e7702"
+  },
+  {
+   "role": "red",
+   "seat": "Grok ctx-3",
+   "model": "grok-4.6 via grok.cmd in its own git worktree, QA engineer: the characterisation (8086854) and the pending red; each claim rerun by the facilitator",
+   "evidence": "ed5819c3d6b14a8ec224cca5ee44296f98e2c2a1"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, build seat, in its own worktree, never the red seat; the page-only revision after the Muse cold reader (cold-reader.md, 5ec6d32; 8a5c618) by the same context; reason: Grok wrote the red and Codex is out of quota",
+   "evidence": "ced00e37ddea80c7675eadcefdc62bb8609f5cec"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, independent gate reviewer, read-only (a first run on the unrevised pages was stopped and relaunched on the final tip); SHIP; red replay, six mutations, Gate evidence and Load lines",
+   "evidence": "ecd3e6e68db7231ace768132fa5669752948b56d"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-7",
+   "model": "claude, a fresh subagent context, separate from the gate reviewer, own full gate in a single-branch clone; SIGNED OFF WITH CONDITIONS (none blocking)",
+   "evidence": "99d1a5220c143d1480f0d086c167ee52d96f9603"
+  }
+ ],
+ "retro": "docs/retros/card-179-2026-11-08.md",
+ "notes": "Done checks met: criterion 1 (the README is one screen: its own language, the C# adapter preview, who it is for, the three aims, the clone URL, links to the guide and prerequisites, the limitations page named as card 187 with no link; the resolver, status table and layout are gone); criterion 2 (the guide covers clone, pack, install from a local feed, build, 11 specs, start, create, read and a failure call, and afterwards; the newer-SDK sentence in PREREQUISITES says what to do); criterion 3 (every command has a PowerShell form or says it is the same in PowerShell, with Windows paths); the shared Pending red failed by assertion on the pre-change tree and passes after the atomic green, and the test file is byte-identical. Baseline gate isolated, CLI built first: Compiler 324 of 324, Acceptance 328 of 328, 0 warnings; the independent gate reviewer SHIP and the sign-off with two clean full runs. Cold reader (Muse) found six real gaps fixed in a page-only revision. The task force was declared through D218; the retro pick D219 was adopted as a three-docs-card trial (on a docs card the independent gate review starts on the final tip). Process time against build time about 0.85 to 1. Born-green findings: none. Open: bug 338, bug 327, issue 304; the bash forms, PowerShell 5.1, an 8.0.x SDK and the 15-minute claim go to cards 180 and 181."
+}

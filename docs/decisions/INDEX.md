@@ -322,3 +322,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D216](process-and-staffing.md#d216) | Card 178 task-force declaration and card text: a prerequisites page that matches what CI tests (adopted at the confirmation step) | process-and-staffing | adopted |
 | [D217](process-and-staffing.md#d217) | Card 178 retro pick: the confirmation step replaces the separate independent re-run (adopted as a five-Decider trial) | process-and-staffing | adopted |
 | [D218](process-and-staffing.md#d218) | Card 179 task-force declaration and card text (README and getting-started guide) | process-and-staffing | adopted |
+| [D219](process-and-staffing.md#d219) | Card 179 retro pick: on a docs card the independent gate review starts on the final tip (adopted as a three-docs-card trial) | process-and-staffing | adopted |
