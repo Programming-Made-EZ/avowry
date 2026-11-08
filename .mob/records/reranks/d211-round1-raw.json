@@ -1,0 +1,101 @@
+[
+ {
+  "tag": "d211-architect-claude",
+  "seat": "claude",
+  "model": "sonnet",
+  "vote": "Support-it",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "PLACE 176, 178, 186 AND 179 AFTER 324, in that order",
+  "reason": "The proposal is minimal and enforceable. It is one reversible `rerank.py` call, it moves no other card, and it leaves the 325 and 326 outcomes to their own Ready steps. Pulling 176 first is consistent with the v0.1 bar and the dependency ch",
+  "reply_tail": "Support-it\n\nThe proposal is minimal and enforceable. It is one reversible `rerank.py` call, it moves no other card, and it leaves the 325 and 326 outcomes to their own Ready steps. Pulling 176 first is consistent with the v0.1 bar and the dependency chain 176, 178, 179, with 186 placed before 179 because 179 links to it.\n\nI didn't open the repo files, so this rests on the proposal's own facts. I would watch one point. \"LLMs are the customers\" makes Ari primary, so the Ready step for 176 should name which Ari-facing gain 176 enables. The proposal's reopen triggers cover the compiler-crash risk, so I don't make that a No condition.\n\nCITE: PLACE 176, 178, 186 AND 179 AFTER 324, in that order\n"
+ },
+ {
+  "tag": "d211-architect-grok",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "none",
+  "counted_by_decider": false,
+  "cite_ok": false,
+  "cite": null,
+  "reason": "no vote in the reply",
+  "reply_tail": "I'll read the re-rank records, board cards, and the working-agreement rules first so the Architect vote is based on the actual proposal, not a guess.Next I’ll read the re-rank notes, the standing rules, and the Architect role so the vote matches those constraints.I’ll pull the Architect role, D197/D200, and the live issue text next so the ranking claim can be checked against the cards.\n"
+ },
+ {
+  "tag": "d211-auditlens-codex",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "No",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "resolve the placeholder package-id boundary without publishing",
+  "reason": "Require committed evidence that card 176's Ready checks and decisions were completed; otherwise the team can claim compliance from mutable issue state, which is not verifiable from git alone. CITE: resolve the placeholder package-id boundar",
+  "reply_tail": "No\nRequire committed evidence that card 176’s Ready checks and decisions were completed; otherwise the team can claim compliance from mutable issue state, which is not verifiable from git alone.\nCITE: resolve the placeholder package-id boundary without publishing"
+ },
+ {
+  "tag": "d211-coach-codex",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "Yes",
+  "counted_by_decider": false,
+  "cite_ok": false,
+  "cite": null,
+  "reason": "",
+  "reply_tail": "Yes"
+ },
+ {
+  "tag": "d211-decider-claude",
+  "seat": "claude",
+  "model": "sonnet",
+  "vote": "Support-it",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "PULL CARD 176 (package the CLI as a dotnet tool and version it) NEXT",
+  "reason": "The placement rests on evidence the proposal cites: the v0.1 bar (bars 1, 2 and 8) and the dependency chain 176, 178, 179, which the facilitator checked against the issues. The reversal trigger is concrete: a consumer seen losing work to an",
+  "reply_tail": "Support-it\n\nThe placement rests on evidence the proposal cites: the v0.1 bar (bars 1, 2 and 8) and the dependency chain 176, 178, 179, which the facilitator checked against the issues. The reversal trigger is concrete: a consumer seen losing work to an unhandled compiler exception while the four are in progress. Deciding at each Ready step whether 325 and 326 close is correct. Two things I'd add:\n- The Ready step for 176 should record the evidence that would prove it a consumer gain, so it isn't judged on completion alone.\n- Ari's cards 162 and 189 are delayed. The sign-off seat for that trade-off is the product owner, so the note should record that they saw it.\n\nCITE: PULL CARD 176 (package the CLI as a dotnet tool and version it) NEXT\n"
+ },
+ {
+  "tag": "d211-decider-grok",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "none",
+  "counted_by_decider": false,
+  "cite_ok": false,
+  "cite": null,
+  "reason": "no vote in the reply",
+  "reply_tail": "I'll read the re-rank records, working agreement, v0.1 bar, and the named decisions first so the vote rests on the written evidence.Next I’ll pull D197/D200 and the live issue text so the vote can check evidence and whether the right seats are present.\n"
+ },
+ {
+  "tag": "d211-dev-claude",
+  "seat": "claude",
+  "model": "sonnet",
+  "vote": "Support-it",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "PULL CARD 176 (package the CLI as a dotnet tool and version it) NEXT",
+  "reason": "From the seat that works under the rules every card, this is workable. 176 has no dependency, so I can start it without waiting on anything. The chain 176, 178, 186, 179 follows the stated dependencies, and 178 and 179 can each be tested ag",
+  "reply_tail": "Support-it\n\nFrom the seat that works under the rules every card, this is workable. 176 has no dependency, so I can start it without waiting on anything. The chain 176, 178, 186, 179 follows the stated dependencies, and 178 and 179 can each be tested against the one before. Putting the Ready step first is fair to the work. It requires titled Gherkin scenarios, observable failure outcomes for pack, install, `--version` and a demo build, and a check that the slice stays within three increments. I can meet those without gaming them. My one concern is that a pack and install path needs real doubles or a local feed, so the Ready step has to name them. The reversal path is a single rerank call, so the cost of being wrong is low.\n\nCITE: PULL CARD 176 (package the CLI as a dotnet tool and version it) NEXT\n"
+ },
+ {
+  "tag": "d211-dev-grok",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "none",
+  "counted_by_decider": false,
+  "cite_ok": false,
+  "cite": null,
+  "reason": "no vote in the reply",
+  "reply_tail": "I'll read the re-rank records, working agreement, and the named cards so the backend-developer vote is grounded in the actual rules.Next I’ll read the proposal records, TWA rules, and the board cards that this re-rank would pull.I’ll pull D197/D200 and the open issues next so the Ready-step load on 176 is clear.I’ll read the backend-developer charter and the board copies of the named cards.Card 176’s command-name history conflicts with D205; I’ll read the remaining cards and confirm the current CLI and flags.Live issue text may differ from the archive; I’ll read the named GitHub issues next.\n"
+ },
+ {
+  "tag": "d211-qa-codex",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "Support-it",
+  "counted_by_decider": true,
+  "cite_ok": true,
+  "cite": "Rewrite card 176's criteria as titled Gherkin scenarios with ZOMBIES letters",
+  "reason": "The Ready gate is testable red-first: titled Gherkin/ZOMBIES scenarios, verified local-feed installation, explicit failure outcomes, and no unverified external dependency. Checking pack, install, `--version`, and demo build prevents superfi",
+  "reply_tail": "Support-it\n\nThe Ready gate is testable red-first: titled Gherkin/ZOMBIES scenarios, verified local-feed installation, explicit failure outcomes, and no unverified external dependency. Checking pack, install, `--version`, and demo build prevents superficial success from passing bad state. Dependency order is coherent and reversible. The package-id and naming boundaries remain decisions to resolve at Ready, not hidden assumptions.\n\nCITE: Rewrite card 176's criteria as titled Gherkin scenarios with ZOMBIES letters"
+ }
+]
