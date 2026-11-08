@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Avowry.Compiler.Syntax;
 
 namespace Avowry.Compiler.Semantics;
@@ -100,6 +101,7 @@ public static class Resolver
                     Column = declaration.At.Column,
                     DeclaredFailures = declaration.Failures.Select(name => new DeclaredFailureModel(name, declaration.FailureLine)).ToList(),
                 };
+                ReportUndeclaredNativeFails(declaration);
                 var skeleton = Skeleton(declaration.Template);
                 if (skeletons.TryGetValue(skeleton, out var existing))
                 {
@@ -800,6 +802,34 @@ public static class Resolver
 
         private static string Skeleton(Template template) =>
             string.Join(" ", template.Parts.OfType<TemplateWord>().Select(word => word.Text));
+
+        // One left-to-right pass over a csharp native body. Comments and string or char literals are
+        // consumed so a Fail inside them cannot match; only an unqualified Fail("literal") captures.
+        // Not checked: computed, interpolated or concatenated codes, verbatim strings, other targets.
+        private static readonly Regex NativeScan = new(
+            """//[^\n]*|/\*[\s\S]*?\*/|(?<![\w.])Fail\(\s*"([^"\\\n]*)"\s*\)|"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'""",
+            RegexOptions.CultureInvariant);
+
+        private void ReportUndeclaredNativeFails(AvowDecl declaration)
+        {
+            var native = declaration.Natives.FirstOrDefault(n => n.Target == "csharp");
+            if (native is null)
+                return;
+            var seen = new HashSet<string>(declaration.Failures, StringComparer.Ordinal);
+            foreach (Match match in NativeScan.Matches(native.Code))
+            {
+                if (!match.Groups[1].Success || !seen.Add(match.Groups[1].Value))
+                    continue;
+                var code = match.Groups[1].Value;
+                var before = native.Code.AsSpan(0, match.Index);
+                var line = native.BodyAt.Line + before.Count('\n');
+                var column = native.BodyAt.Column + match.Index - (before.LastIndexOf('\n') + 1);
+                var declared = declaration.Failures.Count == 0 ? "none" : string.Join(", ", declaration.Failures);
+                diagnostics.Add(new Diagnostic("PH337",
+                    $"Avow '{SourceFormatter.Format(declaration.Template)}' raises Fail(\"{code}\") in its native csharp block on line {line}, but {code} is not in its 'fails with' (declared: {declared}). Add {code} to 'fails with' or remove the call.",
+                    line, column));
+            }
+        }
 
         private void Report(string code, string message, Position at) =>
             diagnostics.Add(new Diagnostic(code, message, at.Line, at.Column));

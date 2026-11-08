@@ -50,7 +50,7 @@ public abstract record TemplatePart(Position At);
 public sealed record TemplateWord(string Text, Position At) : TemplatePart(At);
 public sealed record TemplateHole(string Name, TypeRef Type, Position At) : TemplatePart(At);
 
-public sealed record NativeBlock(string Target, string Code, Position At);
+public sealed record NativeBlock(string Target, string Code, Position At, Position BodyAt);
 
 public sealed record EndpointDecl(
     string Name,

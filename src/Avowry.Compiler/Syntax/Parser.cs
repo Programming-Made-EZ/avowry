@@ -341,7 +341,7 @@ public static class Parser
                         if (sawSteps) Report("PH208", "An avow is implemented by native blocks or by steps, not both.", clauseAt);
                         else if (!Targets.Contains(target.Text)) Report("PH207", $"Unknown native target '{target.Text}'. Known targets: {string.Join(", ", Targets)}.", Pos(target));
                         else if (natives.Any(n => n.Target == target.Text)) Report("PH204", $"A second `native {target.Text}` block.", clauseAt);
-                        else if (child.Raw is { } raw) natives.Add(new NativeBlock(target.Text, raw.Text, clauseAt));
+                        else if (child.Raw is { } raw) natives.Add(new NativeBlock(target.Text, raw.Text, clauseAt, Pos(raw)));
                         // No RAW token: the lexer has already reported PH106.
                     }
                     else if (cc.IsName("steps"))

@@ -159,7 +159,7 @@ result:    call total-quantity-of(items = input.items) : Int
 
 ### Resolver diagnostics
 
-The full resolver diagnostic table (`PH001`, `PH002`, `PH010`, `PH020`, and `PH300` to `PH335`, plus `PH340` from the C# target), which previously lived in [HANDOFF.md](../HANDOFF.md), now lives here:
+The full resolver diagnostic table (`PH001`, `PH002`, `PH010`, `PH020`, and `PH300` to `PH335`, plus `PH337` and `PH340` from the C# target), which previously lived in [HANDOFF.md](../HANDOFF.md), now lives here:
 
 | Code | Meaning |
 |---|---|
@@ -192,6 +192,7 @@ The full resolver diagnostic table (`PH001`, `PH002`, `PH010`, `PH020`, and `PH3
 | `PH333` | Outcome the unit cannot have (`returns` with no return type, `responds` in an avow spec, `returns` in an endpoint spec, `responds` with no output) |
 | `PH334` | Expected failure the unit can never produce (message lists the ones it can) |
 | `PH335` | More than one outcome in a spec |
+| `PH337` | A native csharp block raises `Fail("X")` where `X` is not in the avow's `fails with` |
 | `PH340` | The C# target does not support a construct yet (a plain-call step or `fail with` in a composite, more than one effect, a call argument that is not a variable, a spec `given` or `then returns` of `none`, an effectful avow in a composite `let`, a `then succeeds` seed of a stored field that is not Text, Id or Bool) |
 
 Rules fixed by the resolver tests:
@@ -244,7 +245,7 @@ The lexer always returns a complete token stream with balanced `INDENT`/`DEDENT`
 
 ## 5. Semantics in brief
 
-- **Failures** are declared codes, not exceptions. An avow may only fail with codes in its `fails with` clause, plus codes from avows it calls. Providers map failures to their idiom (C#: an `AvowryFailure` carrying the code, mapped to HTTP 422 at endpoints).
+- **Failures** are declared codes, not exceptions. An avow may only fail with codes in its `fails with` clause, plus codes from avows it calls. Providers map failures to their idiom (C#: an `AvowryFailure` carrying the code, mapped to HTTP 422 at endpoints). In a `native csharp` block, a `Fail("X")` call with `X` not in `fails with` is `PH337`; the scan reads only unqualified `Fail("literal")` calls outside comments and string or char literals, so computed, interpolated and concatenated codes are not checked, verbatim and nested-quote interpolated strings are not tokenised, `#if` branches are all scanned, other targets are not scanned, and a differently named helper is not seen.
 - **Effects** default to `none`. An avow that calls an effectful avow must declare the union. Providers use effects to choose sync vs async and what to inject.
 - **Naming in targets.** Providers convert names to target conventions: field `quantity` becomes `Quantity` in C#, `quantity` in TypeScript. `native` blocks use target conventions.
 - **Missing native block.** If a leaf avow has no `native` block for the selected target, compilation fails with `PH020 no implementation for target`. (Later: the LLM-assisted generator proposes one, gated by the avow's specs.)

@@ -17,7 +17,6 @@ public class UndeclaredNativeFail
     [Fact]
     [Trait("Slice", "202")]
     [Trait("Criterion", "202-1")]
-    [Trait("Status", "Pending")]
     public async Task Undeclared_native_fail_reports_a_diagnostic()
     {
         // Given each in-card native Fail row as an inline source
