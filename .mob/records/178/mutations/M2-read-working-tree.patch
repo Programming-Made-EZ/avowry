@@ -1,0 +1,8 @@
+diff --git a/tests/test_readmes_untouched_178.py b/tests/test_readmes_untouched_178.py
+--- a/tests/test_readmes_untouched_178.py
++++ b/tests/test_readmes_untouched_178.py
+@@ -45,3 +45,3 @@
+ def blob(rev, path):
+-    data = git("show", f"{rev}:{path}")
++    data = (REPO / path).read_bytes()
+     if not data:

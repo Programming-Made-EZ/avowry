@@ -1,0 +1,16 @@
+diff --git a/tests/test_readmes_untouched_178.py b/tests/test_readmes_untouched_178.py
+--- a/tests/test_readmes_untouched_178.py
++++ b/tests/test_readmes_untouched_178.py
+@@ -36,7 +36,7 @@
+     """
+-    log = git(
+-        "log", "--diff-filter=A", "--format=%H", "-1", "--", PAGE
+-    ).decode("ascii").strip()
+-    if log:
+-        return log
++    log = git("log", "--format=%H%x09%s").decode("utf-8").splitlines()
++    for line in log:
++        commit, _, subject = line.partition("\t")
++        if subject.startswith("Card 178 green"):
++            return commit
+     return git("rev-parse", "HEAD").decode("ascii").strip()
