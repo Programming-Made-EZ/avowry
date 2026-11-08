@@ -1,0 +1,65 @@
+[
+ {
+  "role": "architect",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "Yes",
+  "counted_by_decider": true,
+  "cite": "A gate starts on a fresh binary and a clone",
+  "cite_ok": true,
+  "reply": "I'll read the retro record, the candidate amendment, and the Decider protocol so the architect vote is on the actual design, not the prompt summary.I’ll pull the retro, D208 record, candidate patch, and Experimental section next so the vote sits on the written design.I’ll read the D209 patch, the Experimental section, and D208’s No votes next so I can judge whether this split is sound.The isolated-gate experiment already mentions clones, so I’ll compare that text with the D209 candidate and the Decider rules.Yes\n\nP1 and P2 are independently checkable; dropping the contested matrix from D208 leaves a sound, minimal patch. P1’s rebuild and clone steps match the two false gate failures on card 324, and PhraseCliFreshness plus the holdout tests already fail those states, so the trial measures the procedure without a new checker. The clone rule sits beside D202’s single-branch clone sentence and D190’s facilitator-run SHIP label as overlapping procedure, still consistent. P2 keeps the byte-parity checker text unchanged after three clean trial cards, with named exceptions and a facilitator recompute, so permanence is earned and enforceable.\n\nCITE: A gate starts on a fresh binary and a clone\n"
+ },
+ {
+  "role": "qa",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "Yes",
+  "counted_by_decider": true,
+  "cite": "A gate starts on a fresh binary and a clone",
+  "cite_ok": true,
+  "reply": "Yes\n\nP1 is falsifiable: stale binaries and missing `.git` produce named failures, while the metric and counter-metric expose reruns and clone costs. Its trial scope is bounded to three qualifying cards. P2 has completed its three-card trial, preserves the tested text unchanged, and has byte-exact evidence. Separating the disputed Dimensions proposal avoids passing malformed scoring rules under an unrelated consensus.\n\nCITE: A gate starts on a fresh binary and a clone"
+ },
+ {
+  "role": "developer",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "Yes",
+  "counted_by_decider": true,
+  "cite": "A gate starts on a fresh binary and a clone",
+  "cite_ok": true,
+  "reply": "I'll read the agreement, retro records, and the candidate patch first so the backend-developer vote is based on the actual rules and evidence.I'll read the Decider protocol, the D209 candidate patch, and the card 324 retro evidence next.I'll pull the candidate patch, D208 votes, the developer retro voice, and the cite-a-point rule so the vote matches the protocol.I'll compare the candidate text with the current practices and the developer retro voice so the vote stays on whether the rules are workable.I’ll copy the cite from the committed D209 proposal so the D171 check matches the file the reviewer greps.Yes\n\nP1 and P2 are workable on the red-green path I already run. P1 is facilitator procedure after a src cherry-pick; Acceptance already fails a stale CLI, and history checks run in a clone, so unit commits, flags and slice caps stay the same. P2 is the D202 rule I followed on 197, 266 and 324: the slice names a checker, the red commits an undo-to-old-bytes test, and a count is not a clean claim. Three cards at zero defects after a clean report is enough to make it permanent. Exceptions are named and the facilitator recomputes, so I cannot game it.\n\nCITE: A gate starts on a fresh binary and a clone\n"
+ },
+ {
+  "role": "audit lens",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "No",
+  "counted_by_decider": true,
+  "cite": "a gate or sign-off brief names both steps",
+  "cite_ok": true,
+  "reply": "No\n\nP2 is git-verifiable, but P1 only requires the brief to name steps; it does not require committed evidence proving the build, clone, tested commit, or resulting gate run. This permits documentary compliance while using a stale binary or wrong tree. I would vote yes if P1 required committed command/output evidence tying both steps and the gate result to the tested commit.\n\nCITE: a gate or sign-off brief names both steps"
+ },
+ {
+  "role": "decider",
+  "seat": "grok",
+  "model": "grok-4.6",
+  "vote": "Yes",
+  "counted_by_decider": true,
+  "cite": "starting the gate on a fresh binary and a clone",
+  "cite_ok": true,
+  "reply": "I'll read the retro records, agreement text, and D208 votes so the sign-off can rest on evidence.I'll read the Decider protocol, Experimental section, retro voices, and the D209 candidate patch next.I'll pull D208 votes, the D209 candidate patch, retro voices, and the Experimental section next.I'll check D208 round 2, the candidate text, and the gate/sign-off records that the metrics rest on.I'll confirm the gate and sign-off records, then check D208 round 2 for any objection to P1 or P2.Yes\n\nP1 is a three-card trial with a hypothesis, a countable metric (stale-binary or missing-.git failures; card 324: 2 of 3), a counter-metric, and a named review. Sign-off records 319/323 in a git-less archive against the facilitator’s 323/323; retro-input records the 63 stale-CLI Acceptance failures. P2’s trial is complete: three mechanical-rewrite cards, zero byte-level defects after a clean report, text unchanged. D208’s Nos were about Dimensions of Difficulty only; that part is out. Six voting seats plus an independent re-run cover architect, QA, developer, audit, decider and coach. Seat-spread stays with the product owner. Adopt, reshape or reject of each part can be read from gate records and the completed trial.\n\nCITE: starting the gate on a fresh binary and a clone\n"
+ },
+ {
+  "role": "coach",
+  "seat": "codex",
+  "model": "gpt-5.6-sol",
+  "vote": "Support-it",
+  "counted_by_decider": true,
+  "cite": "starting the gate on a fresh binary and a clone",
+  "cite_ok": true,
+  "reply": "Support-it\n\nThe evidence supports both changes, and D209 appropriately excludes the disputed scoring experiment. The task force already supplied ample perspectives; adding seats would be ceremony. My reservation is that P1 and P2 remain distinct concerns bundled into one vote, despite the stated one-concern principle. Because both are uncontested, checkable, and low-risk, that does not justify another round.\n\nCITE: starting the gate on a fresh binary and a clone"
+ },
+ {
+  "note": "the independent re-run of the unamended text (tag d209rr) was stopped after the audit lens condition was adopted: it tested text that no longer stood; its seats are not counted"
+ }
+]
