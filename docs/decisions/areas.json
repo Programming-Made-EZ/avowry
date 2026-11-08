@@ -1432,5 +1432,11 @@
     "status": "adopted",
     "title": "Re-rank 31: place cards 162 and 201 after card 203 so the head of the board is a card the mob can pull",
     "order": 211
+  },
+  "D221": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 189 task-force declaration and card text (an unsupported construct is a diagnostic, not an unhandled exception)",
+    "order": 212
   }
 }

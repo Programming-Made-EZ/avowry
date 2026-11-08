@@ -1,0 +1,62 @@
+{
+ "decider": "D221",
+ "subject": "card 189 task-force declaration and card text (an unsupported construct is a diagnostic, not an unhandled exception)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d221-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Every in-card row must be shown to crash before it is kept",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card 189 records, nearby cards, and the working agreement so the architect vote is based on the committed design, not the draft's claims.I'll check the 189 records, the architect brief, and the emitter/diagnostic sources the card cites.I'll verify the emitter throw sites, diagnostic codes, and the GRAMMAR freeze so the architect vote can judge false positives.Yes\n\nConverting reachable emitter NIEs into Diagnostic plus CompilationFailedException is the right layer: the CLI catch path stays, supported emission is pinned by the orders hash, and PH325 stays characterisation. Correction 1 prevents invented diagnostics. PH020 is the d"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d221-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "one independent check per row, one aggregated assertion",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card-189 records, neighbouring tests, and the cited throw sites so the QA vote is grounded in what can actually fail red first.I'll check throw sites, neighbouring tests, and the 189 records against the red-first and no-false-green rules.Yes\n\nC1+C2 is one Pending CLI test in the PhraseBuildOneFile style, so it fails today on uncaught NIE (exit not 1, Unhandled exception, no PHnnn (line:col)). Wrapping the throw without a PH location and the “C# target does not support it yet” (or PH020) wording still fails. C3 is characterisation and must pass on HEAD first. Correction 1 keeps C2 honest: each row is CLI-run on the pre-change tre"
+   }
+  ],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "d221-auditlens-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The named test asserts exit code 1 exactly, plus the",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe practice can be checked from git alone. The red record stores the pre-change commit, command and failing test, and the gate replays that red. `git log` gives the Criterion order. Characterisation (C3) is committed first and passes on the pre-change tree. The exact exit-1 assertion and the no-stack-trace assertion close the loophole of passing on a different failure mode.\n\nNotes on remaining gaps:\n- A row dropped from C2 for not crashing, or deferred, should be named in a committed file (the red record or the Not-in-this-card list), not only in an external issue tracker.\n- The aggregated assertion must fail if any single row fails.\n- "
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d221-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Every in-card row must be shown to crash before it is kept",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the card-189 records, the working agreement, and nearby cards so the vote rests on evidence.Next I’ll read the 189 records, the working agreement, and the sign-off briefs.I’ll compare 178/179 declarations and the sign-off brief so the seat list and evidence bar match prior cards.Yes\nCorrection 1 makes keep-or-drop of every C2 row rest on a quoted CLI crash, and C1 is already reproduced on HEAD. Characterisation first, one Pending red, gate replay of that red, Criterion order from git log, and a separate sign-off that reruns without the gate report give an evidence path from Ready through SHIP. Seats cover Ready, slice, red, green, i"
+   }
+  ],
+  "coach": []
+ },
+ "trigger_line": "(d) the re-run was not run because the primary window passed with no No and no amendment and the proposal does not change this agreement"
+}
