@@ -149,7 +149,7 @@ An ensure step has the form `ensure <condition> else <Failure>`: it checks a con
 - `<path> length at most N`: a Text value of at most `N` characters; `N` is a non-negative 32-bit integer.
 - `<path> <op> <value>`: an Int comparison with `<`, `<=`, `>`, `>=`, `==` or `!=`; the right side is a signed 32-bit Int literal or an Int path.
 
-The path is a variable in scope or a field path such as `task.title`. In an avow, the code after `else` must be in the avow's `fails with` list (`AV326` otherwise). In an endpoint, the code becomes one of the endpoint's effective failures. A code repeated in `fails with` is `AV329`. A path of the wrong type for its condition is `AV312`; a malformed condition is `AV200`. An `ensure` line without `else` is an ordinary avow call, resolved against your own templates.
+The path is a variable in scope or a field path such as `task.title`. In an avow, the code after `else` must be in the avow's `fails with` list (`AV326` otherwise). In an endpoint, the code becomes one of the endpoint's effective failures. A code repeated in `fails with` is `AV329`. A path of the wrong type for its condition is `AV312`; a malformed condition is `AV200`. An `ensure` line without `else` is an ordinary avow call, resolved against your own templates. When every step passes, the avow succeeds.
 
 ### Record update step
 
@@ -201,7 +201,7 @@ The full resolver diagnostic table (`AV001`, `AV002`, `AV010`, `AV020`, and `AV3
 | `AV300` | Unknown type |
 | `AV301` | Wrong number of type arguments |
 | `AV302` | Type name already taken (duplicate, or a core type) |
-| `AV303` | Duplicate field (type, input or output) |
+| `AV303` | Duplicate field (type, input or output, or a field named twice in a record update) |
 | `AV304` | Duplicate endpoint name, or same verb and route |
 | `AV310` | Unknown variable (message lists what is in scope) |
 | `AV311` | Unknown field, or a field read on a non-record (message lists the fields) |
