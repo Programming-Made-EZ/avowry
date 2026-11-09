@@ -55,7 +55,7 @@ F...
 FAIL: test_prerequisites_page_matches_what_CI_uses (tests.test_prerequisites.PrerequisitesPageTests.test_prerequisites_page_matches_what_CI_uses)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\Users\ringe\projects\wt-178-red\tests\test_prerequisites.py", line 527, in test_prerequisites_page_matches_what_CI_uses
+  File "C:\Users\<user>\projects\wt-178-red\tests\test_prerequisites.py", line 527, in test_prerequisites_page_matches_what_CI_uses
     self.assertEqual([], failures, HEADER + "\n".join(failures))
 AssertionError: Lists differ: [] != ['page: docs/PREREQUISITES.md is missing', ... 11 items]
 
@@ -98,7 +98,7 @@ Failed!  - Failed:     1, Passed:     0, Skipped:     0, Total:     1, Duration:
 Command: `dotnet test tests/Avowry.Acceptance.Tests --nologo --filter "Status!=Pending&FullyQualifiedName~Prerequisites_page"`
 
 ```
-No test matches the given testcase filter `Status!=Pending&FullyQualifiedName~Prerequisites_page` in C:\Users\ringe\projects\wt-178-red\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+No test matches the given testcase filter `Status!=Pending&FullyQualifiedName~Prerequisites_page` in C:\Users\<user>\projects\wt-178-red\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
 ```
 
 0 tests run, exit 0.

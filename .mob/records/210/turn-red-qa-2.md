@@ -14,5 +14,5 @@ D167: disabled n/a (a log line has no enabled flag); unknown = test_i_a_seat_log
 
 Failing output (one line): "Ran 171 tests ... FAILED (failures=20, errors=21)", e.g. "AssertionError: 'cycles: record says 0, MOB.md shows 2' not found in []" and "AttributeError: module 'mob_process' has no attribute 'cycles_from_evidence'".
 
-Modules run: 5 = tests.test_mob_process, tests.test_command_scans_record, tests.test_command_scans_record_strict, tests.test_record_task_force_probes (the four from red 1; green 1 makes the last pass) plus tests.test_record_cycles_evidence. 171 tests, FAILED, all 41 failures in the new module; the other four modules (129 tests) pass. Full suite not run. Scratch: C:/Users/ringe/AppData/Local/Temp/claude/qa210-2-5937 (commit message file there, left in place).
+Modules run: 5 = tests.test_mob_process, tests.test_command_scans_record, tests.test_command_scans_record_strict, tests.test_record_task_force_probes (the four from red 1; green 1 makes the last pass) plus tests.test_record_cycles_evidence. 171 tests, FAILED, all 41 failures in the new module; the other four modules (129 tests) pass. Full suite not run. Scratch: C:/Users/<user>/AppData/Local/Temp/claude/qa210-2-5937 (commit message file there, left in place).
 Size: 4994 bytes

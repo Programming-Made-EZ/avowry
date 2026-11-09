@@ -13,7 +13,7 @@ Counts: red 1 module 25 tests OK. The 4 named modules (test_mob_process, test_co
 
 Time from tests passing to push: 13:27:52 to 13:27:54 UTC, about 2 seconds (commit and push).
 
-Full suite on the committed code 690975a (python -m unittest discover -s tests, 13:28 to 13:56 UTC): Ran 1475 tests in 1716 s, OK (skipped=1). No failure, so no flaky card 258 hit. The log holds "SMOKE FAILED" lines printed by a test of the smoke script; they are expected test output, not failures. Log: C:\Users\ringe\AppData\Local\Temp\claude\dev210-1-a7k3\full.log.
+Full suite on the committed code 690975a (python -m unittest discover -s tests, 13:28 to 13:56 UTC): Ran 1475 tests in 1716 s, OK (skipped=1). No failure, so no flaky card 258 hit. The log holds "SMOKE FAILED" lines printed by a test of the smoke script; they are expected test output, not failures. Log: C:\Users\<user>\AppData\Local\Temp\claude\dev210-1-a7k3\full.log.
 
 MOB.md: not touched in this step.
 Size: 2079 bytes

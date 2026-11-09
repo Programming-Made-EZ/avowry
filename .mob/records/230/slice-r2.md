@@ -14,7 +14,7 @@ Give every writing seat an isolated worktree, leave integration to the facilitat
 
 - P5. Nothing in the inspected write path currently owns a writer lock or rejects a second writer. Command: `rg -n "index[.]lock" facilitator.py decider.py mob_process.py tests`. Output: no match in the production modules. The only observed gate before a seat is quota/rotation: `gate_seat` calls `check_seat` then `commit_seat`.
 
-- P6. Multiple worktrees exist, but current seat dispatch does not allocate or select one. Command: `git worktree list`. Output begins `"C:/Users/ringe/mob-crosscli 73eea8a [main]"` and lists detached `wt-*` worktrees; P1 still shows every card seat receiving `cwd=self.repo`.
+- P6. Multiple worktrees exist, but current seat dispatch does not allocate or select one. Command: `git worktree list`. Output begins `"C:/Users/<user>/mob-crosscli 73eea8a [main]"` and lists detached `wt-*` worktrees; P1 still shows every card seat receiving `cwd=self.repo`.
 
 - P7. `decider.py` already snapshots the real checkout immediately before and after concurrent voters, compares both `HEAD` and porcelain status, and exits 5 on any change. Command: `more +330 decider.py`. Output: `"before = snapshot(repo)"`, `"after = snapshot(repo)"`, `"changes = diff_snapshots(before, after)"`, and `"return 5"` when changes exist. This proves check 3’s violation at runtime: the real-tree `HEAD` and status were stable, or the vote is rejected.
 

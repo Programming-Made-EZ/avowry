@@ -1,6 +1,6 @@
 # Findings 264 (green 2, criterion 2)
 
-Environment: Windows 11 10.0.26300, dotnet 10.0.403, Python 3.15.1, cwd C:/Users/ringe/projects/phrase-lang, HEAD 05b0442 before the commit.
+Environment: Windows 11 10.0.26300, dotnet 10.0.403, Python 3.15.1, cwd C:/Users/<user>/projects/phrase-lang, HEAD 05b0442 before the commit.
 Diagnostic helper: `python .mob/records/264/diag-concurrent-builds.py` (two concurrent `dotnet run --disable-build-servers --project tools/Phrase.Bench/Phrase.Bench.csproj -- run ...` against separate temp suites, 3 rounds; with the default it first touches the mtime of tools/Phrase.Bench/Program.cs, content unchanged, so both children rebuild; `DIAG_NO_TOUCH=1` leaves the build up to date).
 
 | Suspect | Evidence | Result |

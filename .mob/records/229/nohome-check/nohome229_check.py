@@ -8,7 +8,7 @@ from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 from unittest import mock
 
-MC = Path("C:/Users/ringe/mob-crosscli")
+MC = Path("C:/Users/<user>/mob-crosscli")
 sys.path.insert(0, str(MC))
 import decider  # noqa: E402
 import facilitator as fac  # noqa: E402

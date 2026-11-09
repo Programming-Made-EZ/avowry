@@ -2,10 +2,10 @@
 Usage: confirm_generic.py DID PROPFILE_REL PRIMARY_TAG_PREFIX OUTLIER_ROLES(comma) OTHER_ROLES(comma) [driver]
 Outliers: 'is YOUR condition now met, yes or no'. Others: 'does this amendment change your vote'. Both answered Yes/No by decider.py's parse."""
 import json, glob, subprocess, time, sys, concurrent.futures as cf
-S = 'C:/Users/ringe/AppData/Local/Temp/claude/1ff08f82160bcdeb/2ca12683-042f-40b7-b61a-623ae180176b/scratchpad/'
-R = 'C:/Users/ringe/projects/phrase-lang/'
-RF = 'C:/Users/ringe/AppData/Local/Temp/claude/1ff08f82160bcdeb/f5302246-709f-4d35-b4d7-d556237d7061/scratchpad/'
-import sys as _s; _s.path.insert(0, 'C:/Users/ringe/AppData/Local/Temp/claude/1ff08f82160bcdeb/2ca12683-042f-40b7-b61a-623ae180176b/scratchpad'); import mkbackends; B = mkbackends.build()
+S = 'C:/Users/<user>/AppData/Local/Temp/claude/1ff08f82160bcdeb/2ca12683-042f-40b7-b61a-623ae180176b/scratchpad/'
+R = 'C:/Users/<user>/projects/phrase-lang/'
+RF = 'C:/Users/<user>/AppData/Local/Temp/claude/1ff08f82160bcdeb/f5302246-709f-4d35-b4d7-d556237d7061/scratchpad/'
+import sys as _s; _s.path.insert(0, 'C:/Users/<user>/AppData/Local/Temp/claude/1ff08f82160bcdeb/2ca12683-042f-40b7-b61a-623ae180176b/scratchpad'); import mkbackends; B = mkbackends.build()
 did, prop, prefix, outl, oth = sys.argv[1:6]
 driver = sys.argv[6] if len(sys.argv) > 6 else 'grok'
 amended = open(R + prop, encoding='utf-8').read()
@@ -49,7 +49,7 @@ def job(item):
     open(fn, 'w', encoding='utf-8', newline='\n').write(prompt(role, outlier))
     for attempt in (1, 2, 3):
         out = S + f'conf-{did}-{role}-out{attempt}'
-        subprocess.run(['python', 'C:/Users/ringe/mob-crosscli/decider.py', '--repo', R, '--proposal-file', fn, '--seats', SEATS.get(role, driver) if attempt == 1 else driver, '--backends', B, '--out', out, '--timeout', '420'],
+        subprocess.run(['python', 'C:/Users/<user>/mob-crosscli/decider.py', '--repo', R, '--proposal-file', fn, '--seats', SEATS.get(role, driver) if attempt == 1 else driver, '--backends', B, '--out', out, '--timeout', '420'],
                        stdout=open(S + f'conf-{did}-{role}.log{attempt}', 'w'), stderr=subprocess.STDOUT, timeout=900)
         g = glob.glob(out + '/**/decider-result.json', recursive=True)
         if g:

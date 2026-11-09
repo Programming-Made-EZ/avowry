@@ -21,7 +21,7 @@ At the green a067ef9: Compiler 324 of 324, Acceptance 340 of 340, 0 warnings (ga
 - The reviewer's full run was free of the benchmark flake (issue 304).
 
 ## Gate evidence
-Tested commit b11505b2e2133ca19147ae63cfb246f21baf1747. Copy: `git clone --no-hardlinks --single-branch -b main` from C:/Users/ringe/projects/phrase-lang into gate202-review, not an archive. `dotnet build src/Avowry.Cli`: 0 warnings, 0 errors.
+Tested commit b11505b2e2133ca19147ae63cfb246f21baf1747. Copy: `git clone --no-hardlinks --single-branch -b main` from C:/Users/<user>/projects/phrase-lang into gate202-review, not an archive. `dotnet build src/Avowry.Cli`: 0 warnings, 0 errors.
 
 ## Load
 One dotnet.exe running at the start (PID 41076, a leftover, not the reviewer's); nothing else of the reviewer's was running; dotnet commands one at a time.

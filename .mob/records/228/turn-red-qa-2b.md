@@ -14,6 +14,6 @@ File: tests/test_command_scan_files_2b.py (new, 48 tests, the 6 drive-style ones
 
 Failing output (one line): Ran 517 tests, FAILED (failures=30, errors=12), all 42 in the new module, e.g. "unreadable file: scripts/mob_process.py cannot be read (file scripts/mob_process.py, file_source: disk, run call 1)" and a TypeError on the new scan_entry keywords. Born-green guards in the new module (benign twins that do not need the reader, missing-file findings, Windows checks that hold today) pass.
 
-Modules run (20: the 19 of turn-red-qa-2a.md, which is the 18 of turn-red-qa-1g.md plus tests.test_command_scan_files_2a, plus tests.test_command_scan_files_2b; 517 tests). Full discover not run. Scratch: C:\Users\ringe\AppData\Local\Temp\claude\qa228-2b-37167427 (left in place).
+Modules run (20: the 19 of turn-red-qa-2a.md, which is the 18 of turn-red-qa-1g.md plus tests.test_command_scan_files_2a, plus tests.test_command_scan_files_2b; 517 tests). Full discover not run. Scratch: C:\Users\<user>\AppData\Local\Temp\claude\qa228-2b-37167427 (left in place).
 
 Size: 4023 bytes

@@ -1,6 +1,6 @@
 # Proposal for card 313: a decision run that starts as another ends is never left without a vote lock
 
-Product manager seat (ready), fresh Claude context; read-only reply committed unchanged by the facilitator except that the persona name before a colon is written "the product owner" (the repository's personal-name check). The seat ran no test suite, wrote no file and did not call `gh`. Every line number below was produced by the command named beside it, run in `C:/Users/ringe/mob-crosscli`.
+Product manager seat (ready), fresh Claude context; read-only reply committed unchanged by the facilitator except that the persona name before a colon is written "the product owner" (the repository's personal-name check). The seat ran no test suite, wrote no file and did not call `gh`. Every line number below was produced by the command named beside it, run in `C:/Users/<user>/mob-crosscli`.
 
 ## Code facts (rerun)
 - `git rev-parse --short HEAD` gives `1590679`.
@@ -118,7 +118,7 @@ ZOMBIES coverage: Z, O, M, B, I, E and S are each present above. Per cycle:
 
 **G1: table for the gate brief** (from `git grep` above; the facilitator fills the changed-file column from `git diff --name-only`):
 
-| Changed file expected | Test file naming it | Narrow suite (from `C:/Users/ringe/mob-crosscli`) |
+| Changed file expected | Test file naming it | Narrow suite (from `C:/Users/<user>/mob-crosscli`) |
 |---|---|---|
 | `decider.py` (`hold_vote_lock`, `:313-370`) | `tests/test_decider_runner.py` | `python -m unittest tests.test_decider_runner.VoteLockRegistration` (new) |
 | same | same | `python -m unittest tests.test_decider_runner.LiveVoteOverlap` (7 tests) |

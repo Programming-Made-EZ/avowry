@@ -1,6 +1,6 @@
 # New proposal for card 313 after D194 failed (green seat in its own worktree):  a decision run that starts as another ends is never left without a vote lock
 
-This is a new proposal made after Decider D194 failed (the product owner's ruling of 2026-11-07: record the proposal as failed, and make the worktree a new proposal voted as a fresh Decider with fresh seats, using only its round 1 conditions). It is the product manager seat's original note below with two changes: the card text's cycle 1 scenarios [O] and [B] now also assert, red first, that a facilitator commit and push during B's vote are each refused with zero git writes, and the green seat works in its own git worktree (the section at the end). Product manager seat (ready), fresh Claude context; read-only reply committed unchanged by the facilitator except that the persona name before a colon is written "the product owner" (the repository's personal-name check). The seat ran no test suite, wrote no file and did not call `gh`. Every line number below was produced by the command named beside it, run in `C:/Users/ringe/mob-crosscli`.
+This is a new proposal made after Decider D194 failed (the product owner's ruling of 2026-11-07: record the proposal as failed, and make the worktree a new proposal voted as a fresh Decider with fresh seats, using only its round 1 conditions). It is the product manager seat's original note below with two changes: the card text's cycle 1 scenarios [O] and [B] now also assert, red first, that a facilitator commit and push during B's vote are each refused with zero git writes, and the green seat works in its own git worktree (the section at the end). Product manager seat (ready), fresh Claude context; read-only reply committed unchanged by the facilitator except that the persona name before a colon is written "the product owner" (the repository's personal-name check). The seat ran no test suite, wrote no file and did not call `gh`. Every line number below was produced by the command named beside it, run in `C:/Users/<user>/mob-crosscli`.
 
 ## Code facts (rerun)
 - `git rev-parse --short HEAD` gives `1590679`.
@@ -119,7 +119,7 @@ ZOMBIES coverage: Z, O, M, B, I, E and S are each present above. Per cycle:
 
 **G1: table for the gate brief** (from `git grep` above; the facilitator fills the changed-file column from `git diff --name-only`):
 
-| Changed file expected | Test file naming it | Narrow suite (from `C:/Users/ringe/mob-crosscli`) |
+| Changed file expected | Test file naming it | Narrow suite (from `C:/Users/<user>/mob-crosscli`) |
 |---|---|---|
 | `decider.py` (`hold_vote_lock`, `:313-370`) | `tests/test_decider_runner.py` | `python -m unittest tests.test_decider_runner.VoteLockRegistration` (new) |
 | same | same | `python -m unittest tests.test_decider_runner.LiveVoteOverlap` (7 tests) |
@@ -201,7 +201,7 @@ A line that reads "record-only" or "blocked" for any step makes the verdict HOLD
 7. Confirm card 313 is the first of the three D193 trial cards, so its retro reports the G1, G2 and G3 results.
 
 ## Green workspace (the new part of this proposal)
-- Before the green seat starts, the facilitator creates a separate worktree: `git -C C:/Users/ringe/mob-crosscli worktree add C:/Users/ringe/wt-313-green -b card-313-green HEAD`. The green seat's brief names C:/Users/ringe/wt-313-green as its working directory and the only repository it may write; the main checkout of mob-crosscli is not used by the seat, so it is untouched by construction.
+- Before the green seat starts, the facilitator creates a separate worktree: `git -C C:/Users/<user>/mob-crosscli worktree add C:/Users/<user>/wt-313-green -b card-313-green HEAD`. The green seat's brief names C:/Users/<user>/wt-313-green as its working directory and the only repository it may write; the main checkout of mob-crosscli is not used by the seat, so it is untouched by construction.
 - The facilitator records `git rev-parse HEAD` and `git status --porcelain` of the main checkout before and after the turn in the green record (two lines each); they must be equal, and the reviewer compares them.
-- After the turn the facilitator fast-forwards main to the branch (`git merge --ff-only card-313-green`), pushes, and removes the worktree and branch with `git worktree remove C:/Users/ringe/wt-313-green` and `git branch -d card-313-green` (explicit names only; never a recursive delete).
+- After the turn the facilitator fast-forwards main to the branch (`git merge --ff-only card-313-green`), pushes, and removes the worktree and branch with `git worktree remove C:/Users/<user>/wt-313-green` and `git branch -d card-313-green` (explicit names only; never a recursive delete).
 - Nothing else about the declaration changes: roles, seats, the Codex green seat with the delete rule and the `--json` stream (stored under `.mob/records/313/`), the Claude fallback, the D193 trial items G1 to G3, the retry bound of 5 with a stderr warning on exhaustion.

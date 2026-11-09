@@ -4,8 +4,8 @@ sonnet (the real file's Claude entry has no default model and its probe model is
 The cause of the Muse drop-out found 2026-11-08: the runners used a pinned COPY made before Muse was added, so decider.py could not seat it."""
 import json
 
-REAL = "C:/Users/ringe/mob-crosscli/core/backends.json"
-OUT = "C:/Users/ringe/AppData/Local/Temp/claude/1ff08f82160bcdeb/2ca12683-042f-40b7-b61a-623ae180176b/scratchpad/backends-current.json"
+REAL = "C:/Users/<user>/mob-crosscli/core/backends.json"
+OUT = "C:/Users/<user>/AppData/Local/Temp/claude/1ff08f82160bcdeb/2ca12683-042f-40b7-b61a-623ae180176b/scratchpad/backends-current.json"
 
 
 def build():

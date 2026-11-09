@@ -2,7 +2,7 @@
 
 The seat's reply, committed unchanged except that the persona name before a colon, and one possessive, is written "the product owner" (the repository's personal-name check).
 
-Disclosure: the seat ran no test suite, wrote no file and called no `gh`. Every code fact below was re-run in `C:/Users/ringe/mob-crosscli` with the command quoted beside it. Wherever it says "unprobed", no command has been run for it.
+Disclosure: the seat ran no test suite, wrote no file and called no `gh`. Every code fact below was re-run in `C:/Users/<user>/mob-crosscli` with the command quoted beside it. Wherever it says "unprobed", no command has been run for it.
 
 ## Code facts (rerun)
 - `git rev-parse --short HEAD` gives `3b3e486`. `git status --porcelain` shows only `?? .mob/`.
@@ -156,7 +156,7 @@ Scenario: [S] one claim, one commit, one push through Writers is unchanged
 ZOMBIES: all seven letters appear in each cycle. [B] in cycle 1 is the same-name boundary, in cycle 2 the late-release boundary, and in cycle 3 the half-written-file boundary. Per cycle: Z is the lone commit, O is one holder, M is a sequence, B is the boundary above, I is the reader/interface, E is the failure path, S is the plain path.
 
 ## G1: table for the gate brief
-All narrow suites run from `C:/Users/ringe/mob-crosscli` (rerun commands, durations record-only).
+All narrow suites run from `C:/Users/<user>/mob-crosscli` (rerun commands, durations record-only).
 
 | Changed code file expected | Test files that name it | Narrow suite and exact command |
 |---|---|---|
@@ -199,14 +199,14 @@ Every line is "unprobed" until the QA or green seat runs it. The facilitator pro
 A "record-only" or "blocked" mark on any line makes the verdict HOLD under G3 until the facilitator's probe output is attached.
 
 ## Green workspace (as D195)
-- The facilitator creates the worktree with `git -C C:/Users/ringe/mob-crosscli worktree add C:/Users/ringe/wt-299-green -b card-299-green HEAD`. It is the green seat's only working directory and the only repository it may write. The main checkout is untouched by construction.
+- The facilitator creates the worktree with `git -C C:/Users/<user>/mob-crosscli worktree add C:/Users/<user>/wt-299-green -b card-299-green HEAD`. It is the green seat's only working directory and the only repository it may write. The main checkout is untouched by construction.
 - The facilitator records `git rev-parse HEAD` and `git status --porcelain` of the main checkout before and after the turn (today: `3b3e486` and `?? .mob/`). They must be equal, and the reviewer compares them.
 - Brief lines for the green seat:
   - "Never `rm -rf` or `Remove-Item -Recurse` on a variable or computed path; only explicit literal paths."
   - "Keep each file's existing line endings and rewrite no untouched line." `facilitator.py` is mixed (`git ls-files --eol`), so the diff must be small.
   - Run with `--json` and store the stream as `.mob/records/299/green-codex-events.jsonl`; the reviewer reads it for delete commands.
 - Fallback: a fresh Claude takes the green seat if Codex weekly quota is under about 20% at green start. The facilitator reads the quota then.
-- After the turn: `git merge --ff-only card-299-green`, push, then `git worktree remove C:/Users/ringe/wt-299-green` and `git branch -d card-299-green` (explicit names only). Nothing is deleted without those named commands.
+- After the turn: `git merge --ff-only card-299-green`, push, then `git worktree remove C:/Users/<user>/wt-299-green` and `git branch -d card-299-green` (explicit names only). Nothing is deleted without those named commands.
 - The worktree's `core.hooksPath` is shared config (unprobed). This card needs no hook, so it does not matter here.
 
 ## Task-force declaration

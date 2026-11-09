@@ -1,11 +1,11 @@
 import re, subprocess
-files = subprocess.run(['git', 'ls-files', '*.avowry'], capture_output=True, text=True, cwd='C:/Users/ringe/projects/phrase-lang').stdout.split()
+files = subprocess.run(['git', 'ls-files', '*.avowry'], capture_output=True, text=True, cwd='C:/Users/<user>/projects/phrase-lang').stdout.split()
 bad = []
 total = 0
 for f in files:
     if f.startswith('.mob/'):
         continue
-    text = open('C:/Users/ringe/projects/phrase-lang/' + f, encoding='utf-8').read().replace('\r\n', '\n')
+    text = open('C:/Users/<user>/projects/phrase-lang/' + f, encoding='utf-8').read().replace('\r\n', '\n')
     blocks = re.split(r'(?m)^(?=avow to |endpoint |type |store )', text)
     for b in blocks:
         if not b.startswith('avow to '):

@@ -8,7 +8,7 @@ No production change. No new test file.
 
 `git rev-parse HEAD` before this commit: `6fbc32366051f4ff883b31591b43cd2f7a75e93e`
 
-Worktree `C:\Users\ringe\projects\wt-202-red`, branch `card-202-red`. CLI rebuilt first: `dotnet build src/Avowry.Cli` succeeded (0 Warning(s), 0 Error(s)).
+Worktree `C:\Users\<user>\projects\wt-202-red`, branch `card-202-red`. CLI rebuilt first: `dotnet build src/Avowry.Cli` succeeded (0 Warning(s), 0 Error(s)).
 
 ## Neighbouring tests (pre-change tree)
 

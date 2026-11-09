@@ -9,9 +9,9 @@ SDKS: 10.0.403 [C:\Program Files\dotnet\sdk]
 Updating files: 100% (1756/1756)
 Updating files: 100% (1756/1756), done.
 == 2 pack
-  Avowry.Cli -> C:\Users\ringe\AppData\Local\Temp\avowry-probe179\avowry\src\Avowry.Cli\bin\Release\net8.0\publish\
+  Avowry.Cli -> C:\Users\<user>\AppData\Local\Temp\avowry-probe179\avowry\src\Avowry.Cli\bin\Release\net8.0\publish\
   The package Avowry.0.1.0 is missing a readme. Go to https://aka.ms/nuget/authoring-best-practices/readme to learn why package readmes are important.
-  Successfully created package 'C:\Users\ringe\AppData\Local\Temp\avowry-probe179\feed\Avowry.0.1.0.nupkg'.
+  Successfully created package 'C:\Users\<user>\AppData\Local\Temp\avowry-probe179\feed\Avowry.0.1.0.nupkg'.
 == 3 tool install
 You can invoke the tool using the following command: avowry
 Tool 'avowry' (version '0.1.0') was successfully installed.
@@ -22,9 +22,9 @@ Tasks.Api
 Tasks.Specs
 Tasks.avowrymap.json
 == 6 test
-  Tasks.Api -> C:\Users\ringe\AppData\Local\Temp\avowry-probe179\out\Tasks.Api\bin\Debug\net8.0\Tasks.Api.dll
-  Tasks.Specs -> C:\Users\ringe\AppData\Local\Temp\avowry-probe179\out\Tasks.Specs\bin\Debug\net8.0\Tasks.Specs.dll
-Test run for C:\Users\ringe\AppData\Local\Temp\avowry-probe179\out\Tasks.Specs\bin\Debug\net8.0\Tasks.Specs.dll (.NETCoreApp,Version=v8.0)
+  Tasks.Api -> C:\Users\<user>\AppData\Local\Temp\avowry-probe179\out\Tasks.Api\bin\Debug\net8.0\Tasks.Api.dll
+  Tasks.Specs -> C:\Users\<user>\AppData\Local\Temp\avowry-probe179\out\Tasks.Specs\bin\Debug\net8.0\Tasks.Specs.dll
+Test run for C:\Users\<user>\AppData\Local\Temp\avowry-probe179\out\Tasks.Specs\bin\Debug\net8.0\Tasks.Specs.dll (.NETCoreApp,Version=v8.0)
 A total of 1 test files matched the specified pattern.
 
 Passed!  - Failed:     0, Passed:    11, Skipped:     0, Total:    11, Duration: 683 ms - Tasks.Specs.dll (net8.0)

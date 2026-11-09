@@ -1,4 +1,4 @@
-Evidence for the follow-up bug (facilitator, 2026-11-06 20:15 UTC): the output of `python -m unittest tests.test_decider_runner.LiveVoteOverlap` in C:/Users/ringe/mob-crosscli with card 298's red 1 (commit 0cd4830) and the Codex green's uncommitted change in the working tree, run by the facilitator. The refusal assertions passed; the clean-record assertion failed:
+Evidence for the follow-up bug (facilitator, 2026-11-06 20:15 UTC): the output of `python -m unittest tests.test_decider_runner.LiveVoteOverlap` in C:/Users/<user>/mob-crosscli with card 298's red 1 (commit 0cd4830) and the Codex green's uncommitted change in the working tree, run by the facilitator. The refusal assertions passed; the clean-record assertion failed:
 
 INTEGRITY: the real working tree or HEAD changed while the vote ran (a voter escaped its sandbox, or another process is writing here):
   the decider voter seat in decider cannot start: the seat-use history .mob/records/seat-use.jsonl is not append-only (a line this run saw or wrote is missing or changed). Restore it from git.

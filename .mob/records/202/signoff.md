@@ -12,7 +12,7 @@ Verdict: SIGNED OFF WITH CONDITIONS. Criteria 1 to 3 all hold on its own reruns.
 5. Scope and value: the diff d9aa096..a067ef9 is 7 files, +37/-9, and only adds the PH337 diagnostic (the resolver scan is 30 lines; `NativeBlock` gains `BodyAt`; the fixture header and expected.json move to PH337 at line 5; the GRAMMAR.md edit is a PH337 row, the code-list wording and one clause with the scan limits, the card 189 precedent, hashes left for card 162). After a067ef9 the tip adds only records and MOB.md.
 
 ## Gate evidence
-Tested commit dc2966ca8e4de4f1090d156fd537513a99ecc51c (main tip). Copy: `git clone --no-hardlinks --single-branch -b main` into C:/Users/ringe/projects/signoff202-clone, not an archive. `dotnet build src/Avowry.Cli`: 0 warnings, 0 errors.
+Tested commit dc2966ca8e4de4f1090d156fd537513a99ecc51c (main tip). Copy: `git clone --no-hardlinks --single-branch -b main` into C:/Users/<user>/projects/signoff202-clone, not an archive. `dotnet build src/Avowry.Cli`: 0 warnings, 0 errors.
 
 ## Load
 One dotnet.exe at the start (PID 41076, a leftover, not the sign-off's). One dotnet command at a time. One dotnet.exe at the end.

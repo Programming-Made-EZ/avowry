@@ -1,6 +1,6 @@
 import json, shutil, subprocess, sys, tempfile
 from pathlib import Path
-REPO = Path(r"C:\Users\ringe\projects\phrase-lang")
+REPO = Path(r"C:\Users\<user>\projects\phrase-lang")
 RECORD = ".mob/records/234/record-in-progress.json"
 SEATS = ".mob/records/234/usage/seats-2026-11-01-0626.json"
 FULL = ".mob/records/234/usage/measure-qa-red-full.json"

@@ -8,9 +8,9 @@ Commit: 9f90dd4 in mob-defaults (only records/211/rerun.json), pushed to origin 
 Environment line (D176): Git Bash (POSIX sh) on Windows 11 Pro 10.0.26300, Python 3.15.1, launched by the Claude Code Bash tool as detached background subshells, `cd <worktree> && python -m unittest discover -s tests`, three at once starting 21:20:01Z.
 
 Worktrees, left in place (git worktree add, no old commit checked out in the shared checkout):
-- C:\Users\ringe\AppData\Local\Temp\claude\rr211-797931284\range_start at 687410e
-- C:\Users\ringe\AppData\Local\Temp\claude\rr211-797931284\range_end at e3736d1
-- C:\Users\ringe\AppData\Local\Temp\claude\rr211-797931284\head at 53ec0c3
+- C:\Users\<user>\AppData\Local\Temp\claude\rr211-797931284\range_start at 687410e
+- C:\Users\<user>\AppData\Local\Temp\claude\rr211-797931284\range_end at e3736d1
+- C:\Users\<user>\AppData\Local\Temp\claude\rr211-797931284\head at 53ec0c3
 
 Suite runs:
 - 687410e: Ran 163 tests in 566.7s, OK (skipped=1).

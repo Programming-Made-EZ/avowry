@@ -1,7 +1,7 @@
 # Card 209 sign-off (ctx-5, product manager signoff)
 
 Claude seat, fresh context; probes at 15:33 UTC (.mob/records/probes/2026-10-30.jsonl) show Codex, Copilot, Grok and agy without usable quota.
-Code: mob-defaults (C:\Users\ringe\mob-crosscli) at e239b12, clean except untracked .mob/. Nothing pushed by me; no gh calls.
+Code: mob-defaults (C:\Users\<user>\mob-crosscli) at e239b12, clean except untracked .mob/. Nothing pushed by me; no gh calls.
 
 ## Verdict: SIGN OFF
 

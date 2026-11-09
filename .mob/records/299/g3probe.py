@@ -1,4 +1,4 @@
-"""Facilitator G3 probes for card 299 (the gate's record-only lines). Run from C:/Users/ringe/mob-crosscli: python <this file>."""
+"""Facilitator G3 probes for card 299 (the gate's record-only lines). Run from C:/Users/<user>/mob-crosscli: python <this file>."""
 import contextlib
 import io
 import os
@@ -7,7 +7,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-sys.path.insert(0, "C:/Users/ringe/mob-crosscli")
+sys.path.insert(0, "C:/Users/<user>/mob-crosscli")
 import facilitator as fac  # noqa: E402
 
 

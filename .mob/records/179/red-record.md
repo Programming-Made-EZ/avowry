@@ -38,7 +38,7 @@ F
 FAIL: test_readme_and_guide_match_the_story (tests.test_getting_started.GettingStartedTests.test_readme_and_guide_match_the_story)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "C:\Users\ringe\projects\wt-179-red\tests\test_getting_started.py", line 279, in test_readme_and_guide_match_the_story
+  File "C:\Users\<user>\projects\wt-179-red\tests\test_getting_started.py", line 279, in test_readme_and_guide_match_the_story
     self.assertEqual([], failures, HEADER + "\n".join(failures))
 AssertionError: Lists differ: [] != ['clone-url: missing', 'link-guide: missin[1961 chars]ing']
 
@@ -109,7 +109,7 @@ Failed Avowry.Acceptance.Tests.GettingStartedDocs.Getting_started_docs_match_dan
 Failed!  - Failed:     1, Passed:     0, Skipped:     0, Total:     1, Duration: 337 ms - Avowry.Acceptance.Tests.dll (net8.0)
 ```
 
-Self-tests that passed (python `-v`, and again on the post-change scratch clone at `C:\Users\ringe\AppData\Local\Temp\avowry-179-char-pass` where `docs/GETTING_STARTED.md` exists and README.md is rewritten):
+Self-tests that passed (python `-v`, and again on the post-change scratch clone at `C:\Users\<user>\AppData\Local\Temp\avowry-179-char-pass` where `docs/GETTING_STARTED.md` exists and README.md is rewritten):
 
 - `test_compliant_fixtures_give_no_failures`
 - `test_missing_guide_reports_page_missing_and_blocked_ids_without_exception`
@@ -127,7 +127,7 @@ Self-tests (embedded fixtures only): a missing guide yields `page: docs/GETTING_
 Command: `dotnet test tests/Avowry.Acceptance.Tests --nologo --filter "Status!=Pending&FullyQualifiedName~GettingStartedDocs"`
 
 ```
-No test matches the given testcase filter `Status!=Pending&FullyQualifiedName~GettingStartedDocs` in C:\Users\ringe\projects\wt-179-red\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+No test matches the given testcase filter `Status!=Pending&FullyQualifiedName~GettingStartedDocs` in C:\Users\<user>\projects\wt-179-red\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
 ```
 
 0 tests run, exit 0.

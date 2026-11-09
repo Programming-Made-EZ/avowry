@@ -36,4 +36,4 @@ Test limits: (f) nothing committed fails if the regex is narrowed again, because
 **Load:** the gate suite ran alone; the mutation runs came after it, one at a time. A dotnet process was present at the end (count 1, as at the start).
 
 ## Facilitator note
-My own isolated baseline gate on the green (clone, CLI first): Compiler 344 and Acceptance 376, no failure listed. Stray files of the reviewer's: `C:\Users\ringe\projects\gate361-review` with untracked `_x/`, `files.txt`, `mut.sh` and three worktrees (no recursive delete is allowed; removal by `git worktree remove` for the worktrees).
+My own isolated baseline gate on the green (clone, CLI first): Compiler 344 and Acceptance 376, no failure listed. Stray files of the reviewer's: `C:\Users\<user>\projects\gate361-review` with untracked `_x/`, `files.txt`, `mut.sh` and three worktrees (no recursive delete is allowed; removal by `git worktree remove` for the worktrees).

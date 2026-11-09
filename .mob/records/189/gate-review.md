@@ -29,7 +29,7 @@ At the green 164b928: Compiler 324 of 324, Acceptance 338 of 338, 0 warnings (ga
 - Column unpinned: no test asserts the diagnostic column (the corpus convention is code and line only); the CLI shape `PHnnn (line:col)` is asserted by CliKeepsDiagnosticShape for other codes.
 
 ## Gate evidence
-Tested commit 8ee6230dc3c8b9fd05f3cd3de164aec40564fe3e (equal to main's tip at clone time for the re-review; bbbc6e7b1f3bf463f3fcab8463e9a51831fbc018 for the first review). Copy: `git clone --no-hardlinks --single-branch -b main` from C:/Users/ringe/projects/phrase-lang, not an archive. Build: 0 warnings, 0 errors. The re-review did not rerun the full gate (the sign-off does).
+Tested commit 8ee6230dc3c8b9fd05f3cd3de164aec40564fe3e (equal to main's tip at clone time for the re-review; bbbc6e7b1f3bf463f3fcab8463e9a51831fbc018 for the first review). Copy: `git clone --no-hardlinks --single-branch -b main` from C:/Users/<user>/projects/phrase-lang, not an archive. Build: 0 warnings, 0 errors. The re-review did not rerun the full gate (the sign-off does).
 
 ## Load
 First review: one dotnet.exe (PID 28072) at the start; during the full run only idle wait loops. Re-review: one dotnet.exe at the start and at the end; dotnet commands one at a time.

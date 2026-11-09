@@ -3,7 +3,7 @@
 **Disclosures.**
 - The seat wrote no repo file, changed no git state, called no `gh`, and ran no recursive delete.
 - Probe scripts are in the scratchpad `.../scratchpad/probe299{,b,c}.py`. They worked in `.../scratchpad/p299/`, and every file in it was removed with literal paths. `ls` of that directory afterwards printed nothing.
-- The seat ran the three narrow suites once each from `C:/Users/ringe/mob-crosscli` with `PYTHONDONTWRITEBYTECODE=1`. Its `| tail -3` cut the summary lines, so pass or fail is **unconfirmed (record-only)**; the run is not a baseline. Wall times from `date +%s` (rerun): `test_writer_staging` 20 s, `test_writer_isolation` 60 s, `test_decider_runner` 76 s.
+- The seat ran the three narrow suites once each from `C:/Users/<user>/mob-crosscli` with `PYTHONDONTWRITEBYTECODE=1`. Its `| tail -3` cut the summary lines, so pass or fail is **unconfirmed (record-only)**; the run is not a baseline. Wall times from `date +%s` (rerun): `test_writer_staging` 20 s, `test_writer_isolation` 60 s, `test_decider_runner` 76 s.
 - `git rev-parse --short HEAD` gives `3b3e486` in the main checkout (rerun). `git status --porcelain` gives `?? .mob/` in main and nothing in `wt-299-green` (rerun). Python is 3.15.1 (`python --version`, rerun).
 - Line numbers come from the seat's `Read` of `wt-299-green/facilitator.py`.
 
@@ -160,7 +160,7 @@ Cycle 1 has real reds, so it needs no pair. Cycles 2 and 3 may be born green. Ea
   - `Writers.commit` and `Writers.push` bodies (the `try/finally` and `fresh` logic stay as they are)
 
 ## 4. Verification commands (G1)
-All run from `C:/Users/ringe/mob-crosscli`, with `PYTHONDONTWRITEBYTECODE=1`.
+All run from `C:/Users/<user>/mob-crosscli`, with `PYTHONDONTWRITEBYTECODE=1`.
 
 | Command | Expected | Label |
 |---|---|---|
@@ -191,8 +191,8 @@ All run from `C:/Users/ringe/mob-crosscli`, with `PYTHONDONTWRITEBYTECODE=1`.
 | Pid reuse | A dead holder's reused pid reads live, so the claim is refused with the path in the text. Out of card. | blocked, `test_the_refusal_text_names_the_lock_path_for_a_reused_pid` |
 
 ## 6. Worktree
-- `git rev-parse --git-path mob-writer.lock` in `C:/Users/ringe/wt-299-green` prints `C:/Users/ringe/mob-crosscli/.git/worktrees/wt-299-green/mob-writer.lock` (rerun).
-- The same command in `C:/Users/ringe/mob-crosscli` prints `.git/mob-writer.lock` (rerun).
+- `git rev-parse --git-path mob-writer.lock` in `C:/Users/<user>/wt-299-green` prints `C:/Users/<user>/mob-crosscli/.git/worktrees/wt-299-green/mob-writer.lock` (rerun).
+- The same command in `C:/Users/<user>/mob-crosscli` prints `.git/mob-writer.lock` (rerun).
 - `git rev-parse --git-dir --git-common-dir` in the worktree prints `.../.git/worktrees/wt-299-green` and `.../.git` (rerun).
 - The lock is per worktree, which matches `checkout_root` keys: linked worktrees are distinct keys, per the test file docstring (`:12-14`).
 - `writer_lock_path` must join a relative result to the root. Do it exactly as `decider_lock_path` does at `:1140`.

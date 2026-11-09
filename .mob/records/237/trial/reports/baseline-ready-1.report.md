@@ -61,7 +61,7 @@ Answer: Yes. The security reviewer with an adversarial lens (in the table above)
 1. The exact slip is not recorded verbatim; QA reconstructs it from card 226's recorded deviation and the trust-ladder line, and the red test uses that reconstruction (state the evidence used).
 2. Command source: the scan reads replies and may never see an executed command. The slice decides where commands come from (hook or transcript), what happens for a seat with no command source, and the Zero case (empty or missing source). Done check 1 requires executed commands, not only reply text.
 3. Where the trust-ladder record lives (the template's trust-ladder record; confirm file and line format).
-4. Which repositories the push detector watches (avowry and mob-defaults per the card; the avowry path is C:/Users/ringe/projects/phrase-lang).
+4. Which repositories the push detector watches (avowry and mob-defaults per the card; the avowry path is C:/Users/<user>/projects/phrase-lang).
 5. Whether the card ships as is or splits into scan and push-detector slices (see the thin-slice check).
 6. Which command forms count as "equivalents" for the hostile-input list (`rm -rf`, `rm -r`, `Remove-Item -Recurse` with and without `-Force`, `shutil.rmtree`, others), and which are named but out of reach.
 7. Assumption line (D166; this card changes a rule and a checker): name the invariant the checker relies on and probe it against a real record.

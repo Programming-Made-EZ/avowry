@@ -26,7 +26,7 @@ First gate at 83d0272: Compiler 324 of 324, Acceptance 340 of 341; the new wrapp
 - The reviewer ran one `rmdir` on an empty directory it had just created itself (disclosed); nothing else was deleted.
 
 ## Gate evidence
-Tested commit 8fb29ce4d2b7b7ea8596bfab0c6be67aa1eeefb9 (clone gate186-review2) and, for the delta, 3aa11ca (clone gate186-review3). Copy: `git clone --no-hardlinks --single-branch -b main` from C:/Users/ringe/projects/phrase-lang, not an archive. `dotnet build src/Avowry.Cli`: 0 warnings, 0 errors.
+Tested commit 8fb29ce4d2b7b7ea8596bfab0c6be67aa1eeefb9 (clone gate186-review2) and, for the delta, 3aa11ca (clone gate186-review3). Copy: `git clone --no-hardlinks --single-branch -b main` from C:/Users/<user>/projects/phrase-lang, not an archive. `dotnet build src/Avowry.Cli`: 0 warnings, 0 errors.
 
 ## Load
 One dotnet.exe running at the start and at the end (not identified as the reviewer's); the facilitator's own gate was not running; dotnet commands one at a time.

@@ -9,7 +9,7 @@ Run key: baseline-ship-1. Nothing was pushed. This is a plan and a list of proof
 - Not read, as instructed: `.mob/records/227*`, `.mob/records/decisions/227*`, card 227 git history, `docs/process-wiki/`.
 
 ## Limit of this run
-This clone is the avowry repository. The card's code and tests live in mob-defaults (C:\Users\ringe\mob-crosscli), which is not in this clone. Here `scripts/mob_process.py` has no `unpushed` or `ladder` subcommand, so those proofs could not be run or verified from this tree. The board file's header says Done, but this run treats the card as open at pre-ship. Every proof below is "to be run by the real ship seat".
+This clone is the avowry repository. The card's code and tests live in mob-defaults (C:\Users\<user>\mob-crosscli), which is not in this clone. Here `scripts/mob_process.py` has no `unpushed` or `ladder` subcommand, so those proofs could not be run or verified from this tree. The board file's header says Done, but this run treats the card as open at pre-ship. Every proof below is "to be run by the real ship seat".
 
 ## Checklist (item, proof)
 

@@ -1,4 +1,4 @@
-"""Facilitator G3 probes for card 313: failure paths of hold_vote_lock that no unit test drives. Run from C:/Users/ringe/mob-crosscli."""
+"""Facilitator G3 probes for card 313: failure paths of hold_vote_lock that no unit test drives. Run from C:/Users/<user>/mob-crosscli."""
 import contextlib
 import io
 import os
@@ -8,7 +8,7 @@ import tempfile
 from pathlib import Path
 from unittest import mock
 
-sys.path.insert(0, "C:/Users/ringe/mob-crosscli")
+sys.path.insert(0, "C:/Users/<user>/mob-crosscli")
 import decider  # noqa: E402
 import facilitator as fac  # noqa: E402
 

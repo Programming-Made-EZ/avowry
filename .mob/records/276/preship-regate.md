@@ -1,7 +1,7 @@
 # RE-GATE — Card 276 (ctx-5, independent reviewer)
 
 ## 1) Own scan (required re-scan)
-Environment (D176): shell=PowerShell (Copilot CLI tool runner); launch form=`python -c "from tests.muse_real_logs import copy_muse_real_fixture; from command_source import scan_entry; ..."`; working directory=`C:\Users\ringe\mob-crosscli`; commit=`839380be9b260a3735ce6807c1937580af0abc1c`.
+Environment (D176): shell=PowerShell (Copilot CLI tool runner); launch form=`python -c "from tests.muse_real_logs import copy_muse_real_fixture; from command_source import scan_entry; ..."`; working directory=`C:\Users\<user>\mob-crosscli`; commit=`839380be9b260a3735ce6807c1937580af0abc1c`.
 
 Using `tests/muse_real_logs.py` (`copy_muse_real_fixture`) and `command_source.scan_entry(..., root=<fixture data root>)` at `839380b`:
 
@@ -31,10 +31,10 @@ Observed commit order after that gate (by git timestamp):
 Each commit body carries `Criterion: 3` and cycle lines (messages for these hashes). Scope ruling is explicit that lettered reds 4b/4c are actually cycles 5/6 past prior cap 4, then ratified in scope-4 (`.mob/records/276/record-in-progress.json:35,37`; `.mob/records/decisions/276-scope-4.json:4,12,321`). Caps were raised and ratified to `1+1+6 = 8` (`.mob/records/decisions/276-scope-4.json:12,321`; `.mob/records/276/turn-scope4-architect.md:17`).
 
 ## 4) Required runs (each with Environment line)
-Environment (D176): shell=PowerShell; launch form=`python -m unittest tests.test_muse_install tests.test_muse_probe_state tests.test_muse_command_source tests.test_muse_cycle2_scope tests.test_muse_cycle3_scope tests.test_muse_cycle4_scope tests.test_muse_cycle4b_real_logs tests.test_muse_cycle4c_condition tests.test_repo_path_lengths tests.test_command_scan_wiring tests.test_command_source tests.test_command_scan_files_2b tests.test_probe_model tests.test_quota_first`; working directory=`C:\Users\ringe\mob-crosscli`; commit=`839380be9b260a3735ce6807c1937580af0abc1c`.
+Environment (D176): shell=PowerShell; launch form=`python -m unittest tests.test_muse_install tests.test_muse_probe_state tests.test_muse_command_source tests.test_muse_cycle2_scope tests.test_muse_cycle3_scope tests.test_muse_cycle4_scope tests.test_muse_cycle4b_real_logs tests.test_muse_cycle4c_condition tests.test_repo_path_lengths tests.test_command_scan_wiring tests.test_command_source tests.test_command_scan_files_2b tests.test_probe_model tests.test_quota_first`; working directory=`C:\Users\<user>\mob-crosscli`; commit=`839380be9b260a3735ce6807c1937580af0abc1c`.
 Result: `Ran 169 tests in 30.553s` — `OK (skipped=1)`.
 
-Environment (D176): shell=PowerShell; launch form=`python scripts/mob_process.py check`; working directory=`C:\Users\ringe\projects\phrase-lang`; commit=`c622f39682aeb1c97f1a7e565447759d5086abb7`.
+Environment (D176): shell=PowerShell; launch form=`python scripts/mob_process.py check`; working directory=`C:\Users\<user>\projects\phrase-lang`; commit=`c622f39682aeb1c97f1a7e565447759d5086abb7`.
 Result: `mob-process: OK (104 closed cards, 13 records, 91 legacy)`.
 
 Attestation of facilitator full run on 839380b from record (not re-run here): `Ran 1643 tests ... OK (skipped=1)` (`.mob/records/276/record-in-progress.json:36`).

@@ -11,7 +11,7 @@ Test: tests/test_card_211_decider_record.py, committed 6fccd4a, pushed to origin
 Asserts: the record has a "#### Decider MD-010" entry, the range, and all 27 commits; the votes file has the range, the proposal text, and exactly one vote per declared seat with a valid vote, a reason, a context equal to the seat's ctx (not missing, wrong or shared) and a CITE found in the proposal.
 ZOMBIES: Z no files; O one seat; M all seats pass; B each single missing seat fails; E empty reason, empty CITE, unread CITE, missing or borrowed context, duplicate seat; I a missing commit name fails.
 
-Run on committed code (git status showed only untracked .mob/), from C:\Users\ringe\mob-crosscli, Git Bash, HEAD 6fccd4a: python -m unittest tests.test_card_211_decider_record. Modules run: 1 (not the full suite). Ran 11 tests, FAILED (failures=1): the real-record test, "no Decider record DECIDERS.md; no votes file records/211/votes.json". The 10 fixture tests pass.
+Run on committed code (git status showed only untracked .mob/), from C:\Users\<user>\mob-crosscli, Git Bash, HEAD 6fccd4a: python -m unittest tests.test_card_211_decider_record. Modules run: 1 (not the full suite). Ran 11 tests, FAILED (failures=1): the real-record test, "no Decider record DECIDERS.md; no votes file records/211/votes.json". The 10 fixture tests pass.
 
 Open for green: the facilitator, not the QA seat, writes DECIDERS.md and the votes file. The range is counted as 687410e^..e3736d1 (27 commits).
 Size: 2269 bytes

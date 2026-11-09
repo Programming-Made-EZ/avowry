@@ -2,7 +2,7 @@
 
 Intent (D165): a vote counts only with a vote line and a D171-valid CITE; any other reply is left out of the result (task force 290). A seat that never answered is not a reply, and still fails the result.
 
-Assumes (D184, run on HEAD 3d503c8 in C:\Users\ringe\mob-crosscli, read-only):
+Assumes (D184, run on HEAD 3d503c8 in C:\Users\<user>\mob-crosscli, read-only):
 
 ```
 python -c "import decider as d; print(d.result_of({'a':'Yes','b':'Yes'})); print(d.result_of({'a':'Yes','b':'Yes','c':'none'}))"

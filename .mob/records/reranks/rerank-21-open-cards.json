@@ -203,7 +203,7 @@
   "title": "The default templates carry the pending process rulings",
   "shape": "Contract",
   "type": "tooling (mob-defaults card; docs and templates only)",
-  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "repo": "mob-defaults (C:\\Users\\<user>\\mob-crosscli), not the product ",
   "author": ""
  },
  {
@@ -212,7 +212,7 @@
   "title": "The loop runner starts a corrective card while a finding blocks",
   "shape": "Contract",
   "type": "tooling (corrective for F-008; gap 5 of card 208's runner ga",
-  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "repo": "mob-defaults (C:\\Users\\<user>\\mob-crosscli), not the product ",
   "author": ""
  },
  {
@@ -221,7 +221,7 @@
   "title": "The loop runs a card in the repository its Repository line names",
   "shape": "Contract",
   "type": "tooling (corrective for F-008; gap 2 of card 208's runner ga",
-  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "repo": "mob-defaults (C:\\Users\\<user>\\mob-crosscli), not the product ",
   "author": ""
  },
  {
@@ -230,7 +230,7 @@
   "title": "The loop wires its retro and re-rank steps from the repository and stops when one fails",
   "shape": "Contract",
   "type": "tooling (corrective for F-008; the wiring half of gap 3 of c",
-  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "repo": "mob-defaults (C:\\Users\\<user>\\mob-crosscli), not the product ",
   "author": ""
  },
  {
@@ -239,7 +239,7 @@
   "title": "The loop takes the per-card retro from every role, each in its own context",
   "shape": "Contract",
   "type": "tooling (corrective for F-008; the retro half of gap 3 of ca",
-  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "repo": "mob-defaults (C:\\Users\\<user>\\mob-crosscli), not the product ",
   "author": ""
  },
  {
@@ -248,7 +248,7 @@
   "title": "The loop re-ranks Ready through the product manager and a Decider after every card",
   "shape": "Contract",
   "type": "tooling (corrective for F-008; the re-rank half of gap 3 of ",
-  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "repo": "mob-defaults (C:\\Users\\<user>\\mob-crosscli), not the product ",
   "author": ""
  },
  {
@@ -257,7 +257,7 @@
   "title": "Card mode reads only role lines as the task force",
   "shape": "Contract",
   "type": "tooling (corrective for F-008; gap 1 of card 208's runner ga",
-  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "repo": "mob-defaults (C:\\Users\\<user>\\mob-crosscli), not the product ",
   "author": ""
  },
  {
@@ -266,7 +266,7 @@
   "title": "The checker rejects an incomplete objection window",
   "shape": "Contract",
   "type": "tooling (checker rule)",
-  "repo": "phrase-lang (C:\\Users\\ringe\\projects\\phrase-lang), scripts/m",
+  "repo": "phrase-lang (C:\\Users\\<user>\\projects\\phrase-lang), scripts/m",
   "author": ""
  },
  {
@@ -275,7 +275,7 @@
   "title": "Acceptance tests do not starve the thread pool",
   "shape": "Contract",
   "type": "bug (flaky tests; flaky tests are bugs)",
-  "repo": "phrase-lang (C:\\Users\\ringe\\projects\\phrase-lang), tests/Phr",
+  "repo": "phrase-lang (C:\\Users\\<user>\\projects\\phrase-lang), tests/Phr",
   "author": ""
  },
  {
@@ -284,7 +284,7 @@
   "title": "A mid-card retro removal does not drop the seat before the retro",
   "shape": "Contract",
   "type": "tooling (corrective for the card 209 refusal; a loophole in ",
-  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "repo": "mob-defaults (C:\\Users\\<user>\\mob-crosscli), not the product ",
   "author": ""
  },
  {
@@ -293,7 +293,7 @@
   "title": "Every mob re-ranks at every loop boundary",
   "shape": "Contract",
   "type": "tooling (mob-defaults card)",
-  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "repo": "mob-defaults (C:\\Users\\<user>\\mob-crosscli), not the product ",
   "author": ""
  },
  {
@@ -302,7 +302,7 @@
   "title": "Every mob reviews each previous adjustment at stand-downs and retros",
   "shape": "Contract",
   "type": "tooling (mob-defaults card)",
-  "repo": "mob-defaults (C:\\Users\\ringe\\mob-crosscli), not the product ",
+  "repo": "mob-defaults (C:\\Users\\<user>\\mob-crosscli), not the product ",
   "author": ""
  },
  {

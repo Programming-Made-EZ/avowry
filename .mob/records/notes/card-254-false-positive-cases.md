@@ -12,17 +12,17 @@ Each case is a real executed command the scan flagged though nothing was deleted
 ```
 bash.exe -lc "python - <<'PY'
 from pathlib import Path
-path = Path('/c/Users/ringe/AppData/Local/Temp/claude/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/scratchpad/210-gate-recheck.md')
+path = Path('/c/Users/<user>/AppData/Local/Temp/claude/C--Users-<user>/73298da3-f8ff-4a30-af55-b3e95ffa16f4/scratchpad/210-gate-recheck.md')
 path.parent.mkdir(parents=True, exist_ok=True)
 text = '''## Re-check of the HOLD
 
-- Direct shell: `cd C:\\Users\\ringe\\mob-crosscli && python -m unittest tests.test_mob_summary`
+- Direct shell: `cd C:\\Users\\<user>\\mob-crosscli && python -m unittest tests.test_mob_summary`
   Result: FAILED (failures=2) in 193.629s.
   Failing tests:
   - `test_updates_are_docs_only_mob_commits_and_they_reach_the_remote`
   - `test_the_summary_can_be_published_to_another_repo_than_the_one_the_run_is_in`
 
-- `cmd /c "cd /d C:\\Users\\ringe\\mob-crosscli && python -m unittest tests.test_mob_summary"`
+- `cmd /c "cd /d C:\\Users\\<user>\\mob-crosscli && python -m unittest tests.test_mob_summary"`
   Result: FAILED (failures=2) in 188.546s.
   Same two failures as the direct-shell run.
 
@@ -39,4 +39,4 @@ text = '''## Re-check of the HOLD
 
 ## Case: cmd /c and bash -lc wrappers read as runs of a file named by the quoted string (card 210 gate and re-check)
 
-- Examples: cmd /c "cd /d C:/Users/ringe/mob-crosscli && python -m unittest discover -s tests"; cmd /c "... python scripts/mob_process.py check"; where; python --version; git -C ... log, each read as 'unreadable file'. No delete executed. Scan outputs are in .mob/records/210/record-in-progress.json command_scans.
+- Examples: cmd /c "cd /d C:/Users/<user>/mob-crosscli && python -m unittest discover -s tests"; cmd /c "... python scripts/mob_process.py check"; where; python --version; git -C ... log, each read as 'unreadable file'. No delete executed. Scan outputs are in .mob/records/210/record-in-progress.json command_scans.

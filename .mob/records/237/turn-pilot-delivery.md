@@ -28,7 +28,7 @@ Commits: 1281b05 (run artifacts), 5de395a (ledger), this record next.
 Deviations:
 - 11 of 12 rows not-run: cap reached after one run. The 69701-token estimate behind the cap was about 12x too low for a headless run. The Decider must decide whether to raise the cap by a new committed cap (condition 3) before more runs.
 - Tool log: the raw session log was refused by the pre-commit personal-attribution scan, so the committed tool log is runs/baseline-ready-1.tools.jsonl (tool name and input of each call, 16 calls). The raw log is untracked at runs/baseline-ready-1.session.jsonl in the main checkout and in the clone's Claude project folder; I did not delete it.
-- Run clone left in place: C:\Users\ringe\AppData\Local\Temp\claude\pilot237-baseline-ready-1-ec728028. Probe clone left: ...\claude\pilot237-probe.
+- Run clone left in place: C:\Users\<user>\AppData\Local\Temp\claude\pilot237-baseline-ready-1-ec728028. Probe clone left: ...\claude\pilot237-probe.
 - The report is committed at .mob/records/237/trial/reports/baseline-ready-1.report.md.
 - Misses are unscored (0 placeholder); the grader scores them.
 - Run keys learned via checker membership probe, see above.
@@ -82,7 +82,7 @@ Commits: run artifacts 62ab086 (wiki-ready-1), 46fad58, e553749, b331eee, 31c45e
 Deviations:
 - A driver script (scratchpad) started each run, committed its three artifacts with explicit paths and pushed; on the stale MOB.md error it ran write-mob-md and committed MOB.md alone, as the rule says. The first push failed once before I handled it by hand (9fe7874).
 - Raw session logs are untracked in runs/<run_key>.session.jsonl (the personal-attribution scan refused the raw log in run 1; the tool log holds tool name and input per call). I did not delete them.
-- Run clones are left in place under C:\Users\ringe\AppData\Local\Temp\claude\pilot237-<run_key>-<random> (clone of run 1: pilot237-baseline-ready-1-ec728028).
+- Run clones are left in place under C:\Users\<user>\AppData\Local\Temp\claude\pilot237-<run_key>-<random> (clone of run 1: pilot237-baseline-ready-1-ec728028).
 - Clones come from origin, so their .git holds the history of the excluded folder; the wrapper line forbids reading it, and no tool log shows a git command against it.
 - No process was stopped; no PIDs killed. No probing of the checker, no change to product code, checker, thresholds, key or freeze.
 

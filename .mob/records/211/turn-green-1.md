@@ -8,7 +8,7 @@ What I wrote (mob-crosscli, commit ed97c75, pushed to origin main; nothing else)
 
 Tests: python -m unittest tests.test_card_211_decider_record: 11 run, OK (red 1 was 1 failure of 11).
 Time from tests passing (12:45:03) to push (12:45:12): about 9 seconds.
-Full suite on the committed code (started on ed97c75 at 12:45): Ran 1556 tests in 1753 s, OK (skipped=1). No test_loop_state lock failure (card 258) and no test_mob_summary failure (card 268). The smoke script's "SMOKE FAILED" lines are printed output of tests that passed, not failures. Log: C:\Users\ringe\AppData\Local\Temp\claude\g211-1-632417253\full.log.
+Full suite on the committed code (started on ed97c75 at 12:45): Ran 1556 tests in 1753 s, OK (skipped=1). No test_loop_state lock failure (card 258) and no test_mob_summary failure (card 268). The smoke script's "SMOKE FAILED" lines are printed output of tests that passed, not failures. Log: C:\Users\<user>\AppData\Local\Temp\claude\g211-1-632417253\full.log.
 Unpushed commits of another seat: none. After my push, the QA seat pushed red 2 (53ec0c3) on top; I did not touch it.
 
 Refactor: none needed, because this step added two records files and no code, so there is nothing to restructure.

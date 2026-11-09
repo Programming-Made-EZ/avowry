@@ -42,5 +42,5 @@ All ten killed. Test limit: mutation (b) removes the phrase from the item (line 
 1. `pre-publication-checks.md:14` says "three tracked test projects, `reference/csharp/Orders.Specs`...": `Orders.Specs` is double-counted (only three tracked projects reference Microsoft.NET.Test.Sdk); the wording is from card 186's original page, not a card 371 regression.
 2. The jargon, stale heading and tip-only "it passes" items above are carried by the records.
 
-**Gate evidence:** tested commit `729933c2064bef29a92bea6bd0594f39e7856443`; copy: fresh `--no-hardlinks --single-branch` clone, with a detached worktree at 54a6875 for the red replay; dotnet processes at start: 1 (the build server, not a test run). Clone: `C:\Users\ringe\projects\gate371-review`; stray files: a throwaway mutation script and the gate log in the session scratchpad directory.
+**Gate evidence:** tested commit `729933c2064bef29a92bea6bd0594f39e7856443`; copy: fresh `--no-hardlinks --single-branch` clone, with a detached worktree at 54a6875 for the red replay; dotnet processes at start: 1 (the build server, not a test run). Clone: `C:\Users\<user>\projects\gate371-review`; stray files: a throwaway mutation script and the gate log in the session scratchpad directory.
 **Load:** the full dotnet gate ran alone; the Python suites started only after it finished; no load flake seen.

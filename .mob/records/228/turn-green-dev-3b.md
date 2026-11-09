@@ -10,5 +10,5 @@ Module counts: red 3b 16 OK (was 10 failures). The 23 named modules (21 command-
 Time from tests passing (06:25:40 UTC) to push (06:25:48 UTC): about 8 seconds.
 Full suite, python -m unittest discover -s tests, run on committed 743a4a1: 1434 tests OK (skipped=1), 1804 s (06:25:55 to 06:56 UTC).
 Other seats: no unpushed commit in either repo. MOB.md not regenerated (no process change). Untracked .mob/ in mob-crosscli and body.tmp here left alone.
-Scratch: C:\Users\ringe\AppData\Local\Temp\claude\dev228-3b-a91c (left in place).
+Scratch: C:\Users\<user>\AppData\Local\Temp\claude\dev228-3b-a91c (left in place).
 Size: 1666 bytes

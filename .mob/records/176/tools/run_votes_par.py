@@ -6,7 +6,7 @@ Prints one line per role as it finishes, then the mechanical tally: the 30 perce
 of the seats drops the proposal) and the strict rule (any No fails it)."""
 import sys, os, json, glob, subprocess, datetime, concurrent.futures as cf
 OUT = os.path.dirname(os.path.abspath(__file__))
-ROLES = "C:/Users/ringe/AppData/Local/Temp/claude/1ff08f82160bcdeb/f5302246-709f-4d35-b4d7-d556237d7061/scratchpad"
+ROLES = "C:/Users/<user>/AppData/Local/Temp/claude/1ff08f82160bcdeb/f5302246-709f-4d35-b4d7-d556237d7061/scratchpad"
 BACK = ROLES + "/backends-pinned-sonnet-scanned.json"
 tag = sys.argv[1]
 PROP = open(os.environ['PROPFILE'], encoding='utf-8').read()
@@ -21,7 +21,7 @@ def run(t, text, seat):
     open(f'{OUT}/{t}.txt', 'w', encoding='utf-8', newline='\n').write(text)
     open(f'{OUT}/{t}.start', 'w').write(datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'))
     try:
-        subprocess.run(['python', 'C:/Users/ringe/mob-crosscli/decider.py', '--repo', 'C:/Users/ringe/projects/phrase-lang', '--proposal-file',
+        subprocess.run(['python', 'C:/Users/<user>/mob-crosscli/decider.py', '--repo', 'C:/Users/<user>/projects/phrase-lang', '--proposal-file',
                         f'{OUT}/{t}.txt', '--seats', seat, '--backends', BACK, '--out', f'{OUT}/{t}-out', '--timeout', '420'],
                        stdout=open(f'{OUT}/{t}.log', 'w'), stderr=subprocess.STDOUT, timeout=900)
     except subprocess.TimeoutExpired:

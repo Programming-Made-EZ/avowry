@@ -1,7 +1,7 @@
 """Post one GitHub Discussion per Decider (General category) from the committed decision record and votes file.
 Usage: post_discussions.py D208 D209 ...  Prints the URL of each thread; appends id, url to the scratchpad log (the facilitator commits the log)."""
 import sys, re, json, subprocess, os, glob
-G = 'C:/Users/ringe/projects/phrase-lang/'
+G = 'C:/Users/<user>/projects/phrase-lang/'
 SP = os.path.dirname(os.path.abspath(__file__)) + '/'
 REPO_ID = 'R_kgDOVSbx0g'
 CAT = 'DIC_kwDOVSbx0s4DKM2e'  # General

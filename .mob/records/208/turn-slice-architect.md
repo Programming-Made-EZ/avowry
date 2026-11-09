@@ -1,6 +1,6 @@
 # Card 208 slice (architect, ctx-2)
 
-Decision: SPLIT under D136 and D157. Card 208 keeps one concern, the first (a seat starts only on a fresh, pinned probe, and a Claude seat only while no other model has quota; token MD-002). Six new one-concern cards (220 to 225, numbers provisional until the board assigns them) take the rest, each citing F-008 as its corrective finding. Every card has at most three Done checks, numbered 1 to 3 here before any red (D157), at most three increments and one repository. The code is in mob-defaults (C:\Users\ringe\mob-crosscli) for all seven; phrase-lang gets only records, notes and one Avowry config file at the end of 224.
+Decision: SPLIT under D136 and D157. Card 208 keeps one concern, the first (a seat starts only on a fresh, pinned probe, and a Claude seat only while no other model has quota; token MD-002). Six new one-concern cards (220 to 225, numbers provisional until the board assigns them) take the rest, each citing F-008 as its corrective finding. Every card has at most three Done checks, numbered 1 to 3 here before any red (D157), at most three increments and one repository. The code is in mob-defaults (C:\Users\<user>\mob-crosscli) for all seven; phrase-lang gets only records, notes and one Avowry config file at the end of 224.
 
 Seat: architect (slice), context ctx-2, Claude; reason for a Claude seat: probes at 17:13 UTC (.mob/records/probes/2026-10-30.jsonl) show Codex, Copilot, Grok and agy without usable quota (copilot has_quota=False remaining=-5; grok 402 balance exhausted; agy 429 reset in 52 h; codex exit 1). The probes are 15 minutes old at this seat (under 60).
 
@@ -29,7 +29,7 @@ These facts decided the split; four of them correct the card text.
 | 224 | The re-rank: the product manager leads, a Decider decides, a note is committed, the order is applied only after a pass | F-008 | 3 | 208, 222 | 6 |
 | 225 | Card mode reads only role lines of the declared format as the task force | F-008 | 3 | none | 7 |
 
-Drafts: C:\Users\ringe\AppData\Local\Temp\claude\C--Users-ringe\73298da3-f8ff-4a30-af55-b3e95ffa16f4\scratchpad\220-*.md to 225-*.md (Contract shape).
+Drafts: C:\Users\<user>\AppData\Local\Temp\claude\C--Users-<user>\73298da3-f8ff-4a30-af55-b3e95ffa16f4\scratchpad\220-*.md to 225-*.md (Contract shape).
 
 ### Why this order (which gap, once enforced, stops the most drift first)
 

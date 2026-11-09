@@ -18,6 +18,6 @@ File: tests/test_command_scan_files_2a.py (new, 22 tests). Fixture: call 3 write
 
 Failing output: python -m unittest tests.test_command_scan_files_2a gives Ran 22 tests, FAILED (failures=27): every dirty case prints "clean: red ctx-3, N command(s) scanned" (exit 0, expected 1), and scan_entry returns status clean. Z tests, benign twins and the not-a-run test pass today.
 
-Modules run (19: the 18 of turn-red-qa-1g.md plus tests.test_command_scan_files_2a; 469 tests, FAILED failures=27, all in the new module). Full discover not run. Scratch: C:\Users\ringe\AppData\Local\Temp\claude\qa228-2a-125166755 (left in place).
+Modules run (19: the 18 of turn-red-qa-1g.md plus tests.test_command_scan_files_2a; 469 tests, FAILED failures=27, all in the new module). Full discover not run. Scratch: C:\Users\<user>\AppData\Local\Temp\claude\qa228-2a-125166755 (left in place).
 
 Size: 3479 bytes

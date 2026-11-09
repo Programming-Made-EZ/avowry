@@ -14,6 +14,6 @@ File: tests/test_command_scan_files_2c.py (new, 20 tests; fixtures are text unde
 Failing output (one line): the 21 modules ran 537 tests, FAILED (failures=15), all in the new module, e.g. "('findings', ['recursive delete on a variab...') != ('clean', [])" for the grep case, "('copilot', None) != ('copilot', 'copilot')" for the source run_backend passes, and 'unscanned' != 'no command source'. Born-green guards pass (read-then-run, run forms, missing-file, Claude and none backends).
 Note for green: `cat x.sh | bash` reports clean today, so a shell reading stdin from a piped read must count as a run of that file.
 
-Modules run (21 = the 20 of turn-red-qa-2b.md plus tests.test_command_scan_files_2c). Without the new module: 517 tests OK. Full discover not run. Scratch: C:\Users\ringe\AppData\Local\Temp\claude\qa228-2c-8e41 (left in place).
+Modules run (21 = the 20 of turn-red-qa-2b.md plus tests.test_command_scan_files_2c). Without the new module: 517 tests OK. Full discover not run. Scratch: C:\Users\<user>\AppData\Local\Temp\claude\qa228-2c-8e41 (left in place).
 
 Size: 3555 bytes

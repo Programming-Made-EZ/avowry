@@ -15,7 +15,7 @@ Facts I ran:
   - DocumentationPrinciples.cs 1
 
   Five sites use a bounded `WaitForExit(120000)` or `(180000)`, which still blocks a pool thread. There is no `.Result` or `.Wait(` hit. A separate scan for `GetAwaiter().GetResult` or `Thread.Sleep` gave 1 line.
-- **Test count.** `git grep -h` of [Fact] and [Theory] gave 216 Facts and 14 Theories, which is 230 attributes. `dotnet test tests/Phrase.Acceptance.Tests --list-tests` (TEMP and TMP set to C:/Users/ringe/AppData/Local/Temp/claude/ready217) listed 278 cases in 11.8 s.
+- **Test count.** `git grep -h` of [Fact] and [Theory] gave 216 Facts and 14 Theories, which is 230 attributes. `dotnet test tests/Phrase.Acceptance.Tests --list-tests` (TEMP and TMP set to C:/Users/<user>/AppData/Local/Temp/claude/ready217) listed 278 cases in 11.8 s.
 - **Full-run time.** Unrun: I may not run the full suite. The facilitator's last full local run was 278 tests in 10 m 50 s on 2026-11-05 at dc1c39c, with 274 passed.
 
 ## Task force

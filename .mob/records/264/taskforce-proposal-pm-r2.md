@@ -37,7 +37,7 @@ The root cause is named by evidence, not guessed. If only the CI logs can show i
 
 Order against card 217: follow 217 on the merits, not wait. Both are the same family. Card 217's own Context says that if the cause is thread-pool starvation, this class of flake is fixed there. But 264 has an open audit FAIL, so it cannot be parked behind a Draft card. Run 264's diagnosis first (the architect's log reading is cheap). If the logs show starvation, close 264 as covered by 217 with the evidence and move 217 up. If they show a shared-build collision or something else, 264 fixes it on its own.
 
-Narrow run (the seat's own check): `dotnet test tests/Phrase.Acceptance.Tests --filter "FullyQualifiedName~Correct_read_and_modify_replies_pass_and_record_the_starting_code"` with TEMP and TMP set to C:/Users/ringe/AppData/Local/Temp/claude/ready264. Result: Passed 4 of 4 in 1 m (1 m 17 s wall, including the build). One run, so it proves nothing about flakiness. It shows the test is slow at about 15 s per row, which leaves little slack under load. The seat made no changes.
+Narrow run (the seat's own check): `dotnet test tests/Phrase.Acceptance.Tests --filter "FullyQualifiedName~Correct_read_and_modify_replies_pass_and_record_the_starting_code"` with TEMP and TMP set to C:/Users/<user>/AppData/Local/Temp/claude/ready264. Result: Passed 4 of 4 in 1 m (1 m 17 s wall, including the build). One run, so it proves nothing about flakiness. It shows the test is slow at about 15 s per row, which leaves little slack under load. The seat made no changes.
 
 ## ZOMBIES, one criterion per cycle
 Cycle 1, check 1 (20 consecutive passes, class run in parallel):

@@ -29,7 +29,7 @@ Summary: I reviewed the card and the committed evidence; the red/green sequence 
 - (e) The fix removes the collision only for `Phrase.Bench` children in the harness path; for this card’s acceptance test, the root cause is fixed in the harness: child failure is preserved and reported, and the proven local collision is neutralized by guarded no-build launcher behavior. The card’s test remains not flaky under the recorded load.
 
 4) Command attestation
-Environment: D176: shell=cmd.exe, launch form=command, working directory=C:/Users/ringe/projects/phrase-lang, HEAD=82026bf.
+Environment: D176: shell=cmd.exe, launch form=command, working directory=C:/Users/<user>/projects/phrase-lang, HEAD=82026bf.
 - `python -m unittest tests.test_repeat_evidence tests.test_findings_264 tests.test_run_1127_264 tests.test_bench_launcher_scan_264 tests.test_mob_process_repeat_evidence`
   Result: Ran 41 tests in 4.480s — OK.
 - `dotnet test tests/Phrase.Acceptance.Tests --filter "FullyQualifiedName~BenchRunHarness|FullyQualifiedName~BenchLauncherContract|FullyQualifiedName~GeneratedApiSourceScan"`

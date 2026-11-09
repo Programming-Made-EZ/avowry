@@ -11,7 +11,7 @@ Verdict: SIGNED OFF WITH CONDITIONS. The conditions are minor and none blocks cl
 6. Gate review (read last): agrees, including the minor points (column unpinned, the clumsy non-none return message); the first HOLD on `then returns none` is fixed by the revisions replayed. The difference: its Acceptance run hit the 20-second benchmark flake and the sign-off's did not.
 
 ## Gate evidence
-Tested commit 5fe2628 (main's tip). Copy: `git clone --no-hardlinks --single-branch -b main C:/Users/ringe/projects/phrase-lang C:/Users/ringe/projects/signoff189-clone`, not an archive. `dotnet build src/Avowry.Cli`: 0 warnings, 0 errors.
+Tested commit 5fe2628 (main's tip). Copy: `git clone --no-hardlinks --single-branch -b main C:/Users/<user>/projects/phrase-lang C:/Users/<user>/projects/signoff189-clone`, not an archive. `dotnet build src/Avowry.Cli`: 0 warnings, 0 errors.
 
 ## Load
 One dotnet process at the start (tasklist count of lines matching dotnet). dotnet commands one at a time; the Python neighbour run took place after the gate finished.

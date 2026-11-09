@@ -2,7 +2,7 @@
 
 Intent (D165): decider.py counts a vote only when it has a vote line and a CITE that meets D171 as written (6+ words verbatim, or "line N: <first 4 words>"); any other reply is uncounted.
 
-Assumes (D184, run on HEAD 38b8eb5 in C:\Users\ringe\mob-crosscli, read-only):
+Assumes (D184, run on HEAD 38b8eb5 in C:\Users\<user>\mob-crosscli, read-only):
 
 ```
 python -c "import decider; p='alpha beta gamma delta epsilon zeta eta\ntheta iota kappa lambda mu'

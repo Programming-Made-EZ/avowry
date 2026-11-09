@@ -1,6 +1,6 @@
 # Proposal for card 313 (revision 2 after round 1): a decision run that starts as another ends is never left without a vote lock
 
-Product manager seat (ready), fresh Claude context; read-only reply committed unchanged by the facilitator except that the persona name before a colon is written "the product owner" (the repository's personal-name check). The seat ran no test suite, wrote no file and did not call `gh`. Every line number below was produced by the command named beside it, run in `C:/Users/ringe/mob-crosscli`.
+Product manager seat (ready), fresh Claude context; read-only reply committed unchanged by the facilitator except that the persona name before a colon is written "the product owner" (the repository's personal-name check). The seat ran no test suite, wrote no file and did not call `gh`. Every line number below was produced by the command named beside it, run in `C:/Users/<user>/mob-crosscli`.
 
 ## Code facts (rerun)
 - `git rev-parse --short HEAD` gives `1590679`.
@@ -118,7 +118,7 @@ ZOMBIES coverage: Z, O, M, B, I, E and S are each present above. Per cycle:
 
 **G1: table for the gate brief** (from `git grep` above; the facilitator fills the changed-file column from `git diff --name-only`):
 
-| Changed file expected | Test file naming it | Narrow suite (from `C:/Users/ringe/mob-crosscli`) |
+| Changed file expected | Test file naming it | Narrow suite (from `C:/Users/<user>/mob-crosscli`) |
 |---|---|---|
 | `decider.py` (`hold_vote_lock`, `:313-370`) | `tests/test_decider_runner.py` | `python -m unittest tests.test_decider_runner.VoteLockRegistration` (new) |
 | same | same | `python -m unittest tests.test_decider_runner.LiveVoteOverlap` (7 tests) |
@@ -203,6 +203,6 @@ A line that reads "record-only" or "blocked" for any step makes the verdict HOLD
 
 Round 1 of the window: architect, QA, developer, decider and agile coach NO OBJECTION; the audit lens OBJECTION with one condition: "Commit an auditable command/event trace proving the facilitator made no checkout writes during the green turn; a final git diff cannot detect transient writes that were reverted." The condition is adopted as the following addition to the green seat's conditions (all else unchanged); by D187 only the audit lens is re-asked.
 
-- A1. Before the green seat starts, the facilitator commits `.mob/records/313/green-checkout-before.txt`: `git rev-parse HEAD`, `git status --porcelain` and `git reflog -n 20` of C:/Users/ringe/mob-crosscli, and a sha256 manifest of every file outside .git. After the seat ends, and before anything else touches the checkout, the same is committed as `green-checkout-after.txt`. The seat's own commits are the only differences allowed: the facilitator compares the two manifests and the reflog (a facilitator commit, reset or checkout would appear in the reflog even if the file content was restored).
-- A2. The facilitator's own commands during the turn are listed: `.mob/records/313/green-facilitator-commands.txt`, extracted from the session transcript by a committed script (`scripts/extract_commands.py`, a read-only reader of the transcript's tool-call records between two timestamps) with the first and last timestamp of the turn; it lists every Bash and PowerShell command and every file-tool call the facilitator issued in that interval with its target path. The reviewer checks that none targets C:/Users/ringe/mob-crosscli (except the read-only manifests of A1) and says so.
+- A1. Before the green seat starts, the facilitator commits `.mob/records/313/green-checkout-before.txt`: `git rev-parse HEAD`, `git status --porcelain` and `git reflog -n 20` of C:/Users/<user>/mob-crosscli, and a sha256 manifest of every file outside .git. After the seat ends, and before anything else touches the checkout, the same is committed as `green-checkout-after.txt`. The seat's own commits are the only differences allowed: the facilitator compares the two manifests and the reflog (a facilitator commit, reset or checkout would appear in the reflog even if the file content was restored).
+- A2. The facilitator's own commands during the turn are listed: `.mob/records/313/green-facilitator-commands.txt`, extracted from the session transcript by a committed script (`scripts/extract_commands.py`, a read-only reader of the transcript's tool-call records between two timestamps) with the first and last timestamp of the turn; it lists every Bash and PowerShell command and every file-tool call the facilitator issued in that interval with its target path. The reviewer checks that none targets C:/Users/<user>/mob-crosscli (except the read-only manifests of A1) and says so.
 - A3. The stated limit: a write reverted before the second manifest and not recorded in the reflog cannot be seen in the manifests; A2 is the evidence that the facilitator issued none. Together they are the auditable trace the condition asks for.

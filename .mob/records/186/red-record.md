@@ -75,7 +75,7 @@ Slice additions:
 Command: `dotnet test tests/Avowry.Acceptance.Tests --nologo --no-build --filter "Status!=Pending&FullyQualifiedName~PrePublicationChecks"`
 
 ```
-No test matches the given testcase filter `Status!=Pending&FullyQualifiedName~PrePublicationChecks` in C:\Users\ringe\projects\wt-186-red\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+No test matches the given testcase filter `Status!=Pending&FullyQualifiedName~PrePublicationChecks` in C:\Users\<user>\projects\wt-186-red\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
 ```
 
 0 tests run, exit 0.

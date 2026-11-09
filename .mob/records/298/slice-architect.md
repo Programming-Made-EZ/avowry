@@ -78,7 +78,7 @@ All three go in `tests/test_decider_runner.py` as a new class `LiveVoteOverlap(L
 - The green may touch `decider.py` (only `hold_vote_lock`, lines 313 to 344 at HEAD, plus its docstring) and `facilitator.py` (`decider_lock_live`, plus new `decider_holders_dir` and `decider_holders`).
 - The green must not touch `tests/test_decider_runner.py` assertions that exist, `tests/test_writer_isolation.py`, core/backends.json, `Writers._claim`, `Writers.push`, `pid_alive`, `decider_lock_path` or `DECIDER_LOCK`.
 
-**4. Verification commands, from `C:/Users/ringe/mob-crosscli`**
+**4. Verification commands, from `C:/Users/<user>/mob-crosscli`**
 - `python -m unittest tests.test_decider_runner.LiveVote`: 8 tests today. After green the new class adds its own, so the count is 8 plus the new tests.
 - `python -m unittest tests.test_writer_isolation`: 31 tests, OK, in 70 s.
 - Whole suite before pushing: `python -m unittest discover tests`, per README line 109. There are 85 entries in `tests/`, and I did not run the suite, so its duration is unknown. The 19 s and 70 s figures above suggest several minutes. Run it in the background.

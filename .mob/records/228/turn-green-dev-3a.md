@@ -9,5 +9,5 @@ Change: delete_guard.py gets inside_tree(path, root, cwd), tree_verdict(command,
 Module counts: red 3a 41 OK (was 27 failures, 13 errors). The 22 named modules plus tests.test_delete_guard: 716 tests OK (skipped=1).
 Time from tests passing (05:39 UTC) to push (05:41:33 UTC): about 2 min 18 s.
 Full suite, python -m unittest discover -s tests, run on committed de65fe5: 1418 tests OK (skipped=1), 1851 s (05:41:38 to 06:12:30 UTC).
-Scratch: C:\Users\ringe\AppData\Local\Temp\claude\dev228-3a-5c1e (left in place).
+Scratch: C:\Users\<user>\AppData\Local\Temp\claude\dev228-3a-5c1e (left in place).
 Size: 1491 bytes

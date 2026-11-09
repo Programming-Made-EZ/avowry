@@ -15,7 +15,7 @@ names). If their outcomes differ the entry reads `Mixed(...)`, which the checker
 
 Head `3c5712e620c1c90dca53897ecf4ce9c8699f1b16` (no C# or project file changed between it and the head the lists were
 derived at). Two consecutive full local runs of `tests/Phrase.Acceptance.Tests`, `TEMP` and `TMP` set to a scratch folder
-(`C:/Users/ringe/AppData/Local/Temp/claude/full217a`), TRX in `C:/Users/ringe/AppData/Local/Temp/claude/full217a/trx`
+(`C:/Users/<user>/AppData/Local/Temp/claude/full217a`), TRX in `C:/Users/<user>/AppData/Local/Temp/claude/full217a/trx`
 (outside the repo; they stay there).
 
 | file | TRX | sha256 of the TRX | finished (local time, UTC-8) | result |
@@ -33,8 +33,8 @@ identical.
 Head `d6e8f262f5f2a226d1569422e42d29f64c490efa` (commit A, clean tracked tree; unrelated untracked files only). Windows 11 Pro
 10.0.26300, dotnet 10.0.403, `dotnet build tests/Phrase.Acceptance.Tests` once, then
 `dotnet test tests/Phrase.Acceptance.Tests --no-build --results-directory <TEMP>/trx --logger "trx;LogFileName=nofloorN.trx"`
-twice, consecutively, cwd `C:/Users/ringe/projects/phrase-lang`. `TEMP` and `TMP` both
-`C:/Users/ringe/AppData/Local/Temp/claude/green217c`; the TRX files are in `<TEMP>/trx` (outside the repo; they stay there).
+twice, consecutively, cwd `C:/Users/<user>/projects/phrase-lang`. `TEMP` and `TMP` both
+`C:/Users/<user>/AppData/Local/Temp/claude/green217c`; the TRX files are in `<TEMP>/trx` (outside the repo; they stay there).
 
 | file | TRX | sha256 of the TRX | run (local time, UTC-8) | result |
 | --- | --- | --- | --- | --- |
@@ -48,7 +48,7 @@ The two no-floor lists therefore differ (the two extra tests); nothing was fixed
 ## With the thread-pool floor restored (commit C, cycle 3b)
 
 Head `2bb2f306c686692097fe33a41a867f244ea4a24f` (commit C restores `ThreadPoolFloor.cs` byte-identical to 3c5712e; clean tracked tree).
-Local: `dotnet build` once, then two consecutive full runs as above, `TEMP` and `TMP` both `C:/Users/ringe/AppData/Local/Temp/claude/green217d`.
+Local: `dotnet build` once, then two consecutive full runs as above, `TEMP` and `TMP` both `C:/Users/<user>/AppData/Local/Temp/claude/green217d`.
 
 | file | source | sha256 of the TRX / log | result |
 | --- | --- | --- | --- |

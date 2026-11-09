@@ -2,7 +2,7 @@
 
 ## 1) Done checks against committed evidence (restated by 230-scope-3)
 
-The accepted evidence is the card record and the code at the final trunk-based state, not the stale worktree-era red tests in this local checkout. The governing record is `.mob/records/230/record-in-progress.json` and the final green at `1732a82` (`green_1c`, `full_suite_1732a82`), with the code in `C:\Users\ringe\mob-crosscli\facilitator.py` and `C:\Users\ringe\mob-crosscli\decider.py`.
+The accepted evidence is the card record and the code at the final trunk-based state, not the stale worktree-era red tests in this local checkout. The governing record is `.mob/records/230/record-in-progress.json` and the final green at `1732a82` (`green_1c`, `full_suite_1732a82`), with the code in `C:\Users\<user>\mob-crosscli\facilitator.py` and `C:\Users\<user>\mob-crosscli\decider.py`.
 
 1. Done check 1 — Met.
    - Design and proof: `facilitator.py` now uses a single checkout keyed by `git rev-parse --show-toplevel`; `Writers._claim` refuses a second writer before any Git write when the same checkout is held, and `seat_claim` holds the claim for the whole turn (`facilitator.py:1136-1179`, `1271-1321`). `seat_cwd` returns `self.repo` and no worktree path remains (`facilitator.py:1297-1308`). `ship_push` commits the audit trail with explicit paths and pushes only after the seat claim is released (`facilitator.py:1338-1370`).
@@ -50,11 +50,11 @@ Met.
 ## 4) Required runs and attestation
 
 Environment line (mob-crosscli, targeted run):
-- `shell=PowerShell; launch form="python -m unittest tests.test_writer_isolation tests.test_writer_staging tests.test_decider_runner"; working directory="C:\Users\ringe\mob-crosscli"; commit="1732a82"`
+- `shell=PowerShell; launch form="python -m unittest tests.test_writer_isolation tests.test_writer_staging tests.test_decider_runner"; working directory="C:\Users\<user>\mob-crosscli"; commit="1732a82"`
 - This session’s local narrow run is not the card’s gate evidence because it exercises the stale worktree-era tests in a final trunk-based design. The accepted evidence for this card is the recorded final pass on `1732a82` (`full_suite_1732a82`), not a stale subset.
 
 Environment line (records repo):
-- `shell=PowerShell; launch form="python scripts/mob_process.py check"; working directory="C:\Users\ringe\projects\phrase-lang"; commit="7ca32e34386044fce453d2cc6c508a4ac02f4c33"`
+- `shell=PowerShell; launch form="python scripts/mob_process.py check"; working directory="C:\Users\<user>\projects\phrase-lang"; commit="7ca32e34386044fce453d2cc6c508a4ac02f4c33"`
 - Result: `mob-process: OK (107 closed cards, 16 records, 91 legacy)`.
 
 Recorded final full-suite attestation for the card:
@@ -80,4 +80,4 @@ Rationale: the final trunk-based design is implemented, the worktree path is rem
 
 ## Facilitator's verification note (2026-11-05 02:24 UTC)
 
-The gate's section 4 says its narrow run exercised "stale worktree-era tests" and reports no counts. That is not so: mob-crosscli main was at 1732a82 and its tests are the trunk-based ones (the remaining mentions of worktree in tests/test_writer_isolation.py assert that none is created). The facilitator ran the same command on 1732a82: `python -m unittest tests.test_writer_isolation tests.test_writer_staging tests.test_decider_runner` (Git Bash, working directory C:/Users/ringe/mob-crosscli, TEMP in the scratchpad): Ran 65 tests in 110.4s, OK. Gate attempt 1 (session fa77c645) timed out without a file; this is attempt 2 (session 0b1ad032, scan clean, 4 commands).
+The gate's section 4 says its narrow run exercised "stale worktree-era tests" and reports no counts. That is not so: mob-crosscli main was at 1732a82 and its tests are the trunk-based ones (the remaining mentions of worktree in tests/test_writer_isolation.py assert that none is created). The facilitator ran the same command on 1732a82: `python -m unittest tests.test_writer_isolation tests.test_writer_staging tests.test_decider_runner` (Git Bash, working directory C:/Users/<user>/mob-crosscli, TEMP in the scratchpad): Ran 65 tests in 110.4s, OK. Gate attempt 1 (session fa77c645) timed out without a file; this is attempt 2 (session 0b1ad032, scan clean, 4 commands).

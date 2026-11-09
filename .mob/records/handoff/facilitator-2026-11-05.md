@@ -4,8 +4,8 @@ For a fresh facilitator session. Card 230 is Done; no card is in flight; the nex
 
 ## Repos and state
 
-- Records: C:/Users/ringe/projects/phrase-lang (GitHub Programming-Made-EZ/avowry), main in sync with origin at the commit that adds this file.
-- Code: C:/Users/ringe/mob-crosscli (mob-defaults, GitHub Programming-Made-EZ/mob-defaults), main at 1732a82, in sync. Untracked `.mob/` there is old and expected.
+- Records: C:/Users/<user>/projects/phrase-lang (GitHub Programming-Made-EZ/avowry), main in sync with origin at the commit that adds this file.
+- Code: C:/Users/<user>/mob-crosscli (mob-defaults, GitHub Programming-Made-EZ/mob-defaults), main at 1732a82, in sync. Untracked `.mob/` there is old and expected.
 - Board: GitHub project 1 (the Phrase Board). Issues are cards; board/ is a generated archive (scripts/board/generate_archive.py --apply). Check: `python scripts/mob_process.py check` (OK at 108 closed cards).
 
 ## Board head (ranks)
@@ -40,7 +40,7 @@ For a fresh facilitator session. Card 230 is Done; no card is in flight; the nex
 - Copilot: counted seats; long test runs inside a Copilot seat can hit the timeout (card 230 gate attempt 1); give gate seats a narrow run list.
 - Claude: subagents for reds, greens and sign-off.
 
-## Scratchpad tooling (C:/Users/ringe/AppData/Local/Temp/claude/C--Users-ringe/73298da3-f8ff-4a30-af55-b3e95ffa16f4/scratchpad)
+## Scratchpad tooling (C:/Users/<user>/AppData/Local/Temp/claude/C--Users-<user>/73298da3-f8ff-4a30-af55-b3e95ffa16f4/scratchpad)
 
 inflight.sh, push_retry.sh, probe_drivers.py (`--only copilot codex --out FILE`, then append to .mob/records/probes/2026-10-30.jsonl and commit), run_window.py (`WBACKENDS=backends-nogrok.json WNOTE=w276-note.txt python run_window.py TAG PROP "CTX" roles...`; re-ask note w229-reask-note.txt), rec_window3.py (records a window from a spec JSON; spec-230sc3.json is the latest model; category must be one of the closed list, for example "slice decision", "card-text or declaration fix", "task-force declaration"), run_voices.py (retro voices), run_votes_pick230.py (Decider on a retro pick; RERUN=1 for the re-run with coach in place of the product manager), rr21_apply_lean.py (cheap board edits). A fresh session may get a new scratchpad: copy these first.
 

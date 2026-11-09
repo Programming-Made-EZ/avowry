@@ -11,7 +11,7 @@
    "rc": 0,
    "seconds": 13.5,
    "reply": "1) Python + FastAPI/Flask ~40%, TypeScript/Node + Express/NestJS ~30%, Go + net/http/Gin ~15%; the rest is mostly Java/Spring Boot and C#/ASP.NET Core.\n\n2) Most often Docker containers deployed to cloud Kubernetes or Cloud Run/App Service, then serverless functions, then a developer laptop for local testing; plain VMs are now uncommon.\n\n3) As an agent I run code mainly in a Linux container sandbox, sometimes on Windows or in a browser sandbox, and frequently not at all — I just return code for the user to run.\n\n4) Yes, because targeting the stack users already ask for maximizes immediate reuse of existing libraries, tooling, and deployment pipelines.",
-   "stderr": "muse: workspace root: C:\\Users\\ringe\\AppData\\Local\\Temp\\survey-4cqi99hx (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted."
+   "stderr": "muse: workspace root: C:\\Users\\<user>\\AppData\\Local\\Temp\\survey-4cqi99hx (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted."
   },
   "cursor": {
    "rc": 0,

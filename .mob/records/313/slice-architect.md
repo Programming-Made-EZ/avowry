@@ -1,7 +1,7 @@
 # Card 313 slice (architect seat, fresh context, read-only; nothing written, no git state changed, no `gh`; reply committed unchanged by the facilitator)
 
 Disclosures (the seat's):
-- It ran `PYTHONDONTWRITEBYTECODE=1 python -m unittest tests.test_decider_runner.LiveVoteOverlap` and `...LiveVote` once each, from `C:/Users/ringe/mob-crosscli`. Its `| tail -4` cut off the summary lines, so pass or fail is unconfirmed (record-only). Wall times 16.2 s and 16.1 s (`time`, rerun).
+- It ran `PYTHONDONTWRITEBYTECODE=1 python -m unittest tests.test_decider_runner.LiveVoteOverlap` and `...LiveVote` once each, from `C:/Users/<user>/mob-crosscli`. Its `| tail -4` cut off the summary lines, so pass or fail is unconfirmed (record-only). Wall times 16.2 s and 16.1 s (`time`, rerun).
 - Test counts from counting `def test_` lines with awk: 8 in `LiveVote` (lines 297-489) and 7 in `LiveVoteOverlap` (line 490 on) (rerun count, not a unittest summary).
 - One `python -I` probe in a temp directory, deleted afterwards. `git status --porcelain` shows only `?? .mob/`. HEAD `1590679` (rerun).
 
@@ -87,7 +87,7 @@ Mutations (scratch copies of `decider.py`):
 **The green must not touch:** `facilitator.py` (`decider_holders_dir`, `decider_holders`, `decider_lock_live`, `Writers`): `git diff --name-only` must not name it; existing assertions in `tests/test_decider_runner.py`; `tests/test_writer_isolation.py`; `core/backends.json`; `release` (its body stays as it is; only `hold_vote_lock` changes).
 The red seat adds `VoteLockRegistration` after `LiveVoteOverlap` in `tests/test_decider_runner.py`.
 
-## 4. Verification commands (from `C:/Users/ringe/mob-crosscli`, or the worktree)
+## 4. Verification commands (from `C:/Users/<user>/mob-crosscli`, or the worktree)
 
 | Command | Expected | Label |
 |---|---|---|
@@ -122,7 +122,7 @@ The red seat adds `VoteLockRegistration` after `LiveVoteOverlap` in `tests/test_
 
 **Checkout path:** nothing depends on it. `git grep -n "mob-crosscli\|ringe\|show-toplevel" -- tests/test_decider_runner.py decider.py` returns nothing (rerun). Imports resolve through `HERE = Path(__file__).resolve().parent` (`tests/test_decider_runner.py` line 13, `decider.py` line 28), so code and tests load from the worktree. `run_runner` starts `HERE.parent/decider.py`, again from the worktree. `RunnerCase.setUp` makes its own repository with `git init` in a `TemporaryDirectory`, so the lock path is in that temporary repository's `.git`, not the worktree's. `core/backends.json` is not used when `--backends` is passed.
 
-**In a linked worktree:** `git rev-parse --git-path mob-decider.lock.d` resolves under the per-worktree git dir (confirmed on an existing linked worktree `wt-290-probe`, rerun: `C:/Users/ringe/mob-crosscli/.git/worktrees/wt-290-probe/mob-decider.lock.d`; in the main checkout it is `.git/mob-decider.lock`, rerun). `decider_holders_dir` derives from `decider_lock_path(...).with_name(DECIDER_LOCK + ".d")` and handles absolute and relative results, so it is correct in a worktree. A facilitator `Writers` in the main checkout does not see a lock held in the worktree; that does not matter for these tests.
+**In a linked worktree:** `git rev-parse --git-path mob-decider.lock.d` resolves under the per-worktree git dir (confirmed on an existing linked worktree `wt-290-probe`, rerun: `C:/Users/<user>/mob-crosscli/.git/worktrees/wt-290-probe/mob-decider.lock.d`; in the main checkout it is `.git/mob-decider.lock`, rerun). `decider_holders_dir` derives from `decider_lock_path(...).with_name(DECIDER_LOCK + ".d")` and handles absolute and relative results, so it is correct in a worktree. A facilitator `Writers` in the main checkout does not see a lock held in the worktree; that does not matter for these tests.
 
 **Branch:** `card-313-green` is created from HEAD `1590679`. `.mob/` is untracked in the main checkout, so it is absent in the worktree; the tests do not read it from the checkout.
 

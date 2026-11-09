@@ -17,7 +17,7 @@ ZOMBIES:
 - O: a token in stderr is REDACTED in both failure_excerpt and reason.
 - M: two failed attempts, each scrubbed, kept in order.
 - B: a secret that straddles the 300-character cut is masked, not half-kept (scrub runs before trim); the length test applies to the scrubbed text (at most 300 plus the ellipsis).
-- I: no stored field in decider-result.json matches contains_secret, and none holds C:\Users\ringe.
+- I: no stored field in decider-result.json matches contains_secret, and none holds C:\Users\<user>.
 - E: scrub on None or non-ASCII text gives no exception.
 - S: Yes with a valid cite gives passed. Yes without a valid cite gives failed and the seat is left out of counted_seats. No still fails.
 

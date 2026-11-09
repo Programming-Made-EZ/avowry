@@ -153,7 +153,7 @@ Assumes: xUnit's default class/collection serialization keeps rows in this class
 
 ## Gate environment (D176)
 
-Every gate test run must open with an Environment line stating OS, `dotnet --version`, exact command, working directory, and HEAD. Current read-only probe: Windows `10.0.26300.9818`; .NET SDK `10.0.403`; cwd `C:\Users\ringe\projects\phrase-lang`; HEAD `22edff6073393e861a2fc2aa358f23e36dc8cfc8`. These are not substitute results for the future red/green gates.
+Every gate test run must open with an Environment line stating OS, `dotnet --version`, exact command, working directory, and HEAD. Current read-only probe: Windows `10.0.26300.9818`; .NET SDK `10.0.403`; cwd `C:\Users\<user>\projects\phrase-lang`; HEAD `22edff6073393e861a2fc2aa358f23e36dc8cfc8`. These are not substitute results for the future red/green gates.
 
 ## Guardrail for green
 

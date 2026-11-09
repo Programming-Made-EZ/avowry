@@ -20,5 +20,5 @@ File: tests/test_delete_guard_hook_3a.py (new, 41 tests). Fixtures are JSON or t
 
 Failing output (one line): "Ran 41 tests ... FAILED (failures=27, errors=13)", e.g. the hook is missing so every exit code is Python's "can't open file" 2 (the allow cases fail with 2 != 0, the refuse cases fail on the stderr finding), and `AttributeError: module 'delete_guard' has no attribute 'tree_verdict'` / `inside_tree`. One born-green guard passes: the scan still reports in-tree deletes.
 
-Modules run (22 = the 21 of turn-red-qa-2c.md plus tests.test_delete_guard_hook_3a). Without the new module: 537 tests OK (75 s). Full discover not run. Scratch: C:\Users\ringe\AppData\Local\Temp\claude\qa228-3a-390315620 (left in place).
+Modules run (22 = the 21 of turn-red-qa-2c.md plus tests.test_delete_guard_hook_3a). Without the new module: 537 tests OK (75 s). Full discover not run. Scratch: C:\Users\<user>\AppData\Local\Temp\claude\qa228-3a-390315620 (left in place).
 Size: 4214 bytes

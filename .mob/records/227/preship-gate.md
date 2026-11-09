@@ -30,7 +30,7 @@ PASS.
 
 ## 2. Full-suite evidence
 
-- The last green's single full run: `python -m unittest discover -s tests` from C:/Users/ringe/mob-crosscli, 22:10:21 to about 22:38 UTC: Ran 1253 tests in 1684.397 s, OK (skipped=1) (record cycles, criterion 3 increment 3d, and `git log -1 --format=%B f8a45da` line 15). The earlier run of the same code without the test_card_mode isolation: Ran 1253, failures=1 (a timing test) - the record says so and the body of f8a45da says so; it is the red run, not the one counted. The commit f8a45da is stamped 15:38:51 -07:00 = 22:38:51 UTC, which fits a run that ended about 22:38 on the tree being committed.
+- The last green's single full run: `python -m unittest discover -s tests` from C:/Users/<user>/mob-crosscli, 22:10:21 to about 22:38 UTC: Ran 1253 tests in 1684.397 s, OK (skipped=1) (record cycles, criterion 3 increment 3d, and `git log -1 --format=%B f8a45da` line 15). The earlier run of the same code without the test_card_mode isolation: Ran 1253, failures=1 (a timing test) - the record says so and the body of f8a45da says so; it is the red run, not the one counted. The commit f8a45da is stamped 15:38:51 -07:00 = 22:38:51 UTC, which fits a run that ended about 22:38 on the tree being committed.
 - Anything unrun after it: `git log --oneline origin/main` in mob-defaults shows f8a45da as the head, and `git rev-list --count f8a45da..origin/main` is 0. No mob-defaults commit exists after the full run. The avowry commits after the run (5deedcc 15:39:06 -07:00, one line count 16 in TEAM_WORKING_AGREEMENT.md, then record, in-flight and turn-record commits) change text and records only, no code; the rule text they carry is read by `push_rule_problems`, which the 3d body and the re-check ran on both repositories (`[]` on both, review-ctx6.md "What I ran").
 - Re-checks ran subsets, not the full suite, and say so: review-ctx6.md re-check at f8a45da: command-scan group Ran 684 OK (skipped=1), decider and seat group Ran 205 OK, "Not run: the full 1253-test suite". These are the seats' counts; this seat ran nothing.
 - Limit: the 1253 run is one run by the developer seat, not independently repeated.
@@ -98,11 +98,11 @@ PASS.
 Run at 23:05 UTC:
 
 ```
-$ python C:/Users/ringe/mob-crosscli/mob_process.py unpushed C:/Users/ringe/projects/phrase-lang C:/Users/ringe/mob-crosscli
+$ python C:/Users/<user>/mob-crosscli/mob_process.py unpushed C:/Users/<user>/projects/phrase-lang C:/Users/<user>/mob-crosscli
 ok
 exit 0
 
-$ python C:/Users/ringe/mob-crosscli/mob_process.py ladder C:/Users/ringe/projects/phrase-lang
+$ python C:/Users/<user>/mob-crosscli/mob_process.py ladder C:/Users/<user>/projects/phrase-lang
 ok
 exit 0
 ```

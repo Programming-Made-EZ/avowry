@@ -13,5 +13,5 @@ File: tests/test_delete_guard_hook_3b.py (new, 16 tests). Fixtures are text or J
 
 Failing output (one line): "Ran 16 tests ... FAILED (failures=10)", e.g. "AssertionError: 2 != 0 : --print-snippet must exit 0, stderr: 'delete_guard_hook: stdin is not JSON (Expecting value: line 1 column 1 (char 0)); refused'" (the flag is unknown, so the hook reads empty stdin and refuses). 6 born-green guards pass (hook runs write nothing, off by default holds today).
 
-Modules run: 23 = the 22 of turn-red-qa-3a.md (the 21 of turn-red-qa-2c.md plus tests.test_delete_guard_hook_3a) plus tests.test_delete_guard_hook_3b. 594 tests, FAILED (failures=10), all in the new module (104 s). Without the new module: 578 tests OK. Full discover not run. Scratch: C:\Users\ringe\AppData\Local\Temp\claude\qa228-3b-7c41 (left in place; the tests use their own temp folders).
+Modules run: 23 = the 22 of turn-red-qa-3a.md (the 21 of turn-red-qa-2c.md plus tests.test_delete_guard_hook_3a) plus tests.test_delete_guard_hook_3b. 594 tests, FAILED (failures=10), all in the new module (104 s). Without the new module: 578 tests OK. Full discover not run. Scratch: C:\Users\<user>\AppData\Local\Temp\claude\qa228-3b-7c41 (left in place; the tests use their own temp folders).
 Size: 3298 bytes

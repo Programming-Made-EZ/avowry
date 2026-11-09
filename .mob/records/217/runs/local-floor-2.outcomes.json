@@ -7,7 +7,7 @@
     "run_start": "2026-11-05T16:47:51.6130399-08:00",
     "run_finish": "2026-11-05T16:58:56.5828373-08:00",
     "collapsed_truncated_names": {
-      "Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: \"C:\\\\Users\\\\ringe\\\\projects\\\\phrase-lang\\\\tests\\\\Ph\"···)": 14
+      "Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: \"C:\\\\Users\\\\<user>\\\\projects\\\\phrase-lang\\\\tests\\\\Ph\"···)": 14
     }
   },
   "outcomes": {
@@ -130,7 +130,7 @@
     "Phrase.Acceptance.Tests.DeclaredRecordCompiles.Declared_record_input_phrase_compiles_and_its_spec_passes": "Passed",
     "Phrase.Acceptance.Tests.DeclaredRecordCompiles.Zero_declared_types_still_builds": "Passed",
     "Phrase.Acceptance.Tests.DocumentationPrinciples.The_no_personal_names_test_suite_passes": "Passed",
-    "Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: \"C:\\\\Users\\\\ringe\\\\projects\\\\phrase-lang\\\\tests\\\\Ph\"···)": "Passed",
+    "Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.Every_corpus_fixture_matches_its_expected_outcome(source: \"C:\\\\Users\\\\<user>\\\\projects\\\\phrase-lang\\\\tests\\\\Ph\"···)": "Passed",
     "Phrase.Acceptance.Tests.EdgeCaseFixtureCorpus.The_corpus_has_a_header_comment_and_an_expected_file_per_fixture": "Passed",
     "Phrase.Acceptance.Tests.EndpointFailureMapsToHttpStatus.Invalid_input_returns_the_declared_failure_with_its_mapped_status": "Passed",
     "Phrase.Acceptance.Tests.EnsureStepCompiles.Int_comparisons_with_literals_and_inputs_compile_and_execute": "Passed",

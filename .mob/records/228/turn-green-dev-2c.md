@@ -9,5 +9,5 @@ Change:
 - facilitator.py: run_backend takes a launch time (ISO-8601 UTC, milliseconds, Z) before the process starts and, for command_source "copilot", calls scan_entry with source copilot, the seat's cwd and that time, with no {SESSION} needed. Claude and none backends unchanged. CRLF kept (CR bytes 1723 to 1728, equal to the line count).
 - Card 227 allow-list and fail-closed rules untouched; no scanned file is executed.
 
-Tests: red 2c tests.test_command_scan_files_2c 20 OK (was 15 failures). The 21 modules 537 tests OK. Full discover 1377 tests OK (skipped=1), 1841 seconds. Scratch: C:\Users\ringe\AppData\Local\Temp\claude\dev228-2c-7f3a (left in place).
+Tests: red 2c tests.test_command_scan_files_2c 20 OK (was 15 failures). The 21 modules 537 tests OK. Full discover 1377 tests OK (skipped=1), 1841 seconds. Scratch: C:\Users\<user>\AppData\Local\Temp\claude\dev228-2c-7f3a (left in place).
 Size: 1760 bytes

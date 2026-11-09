@@ -1,6 +1,6 @@
 # Card 210 slice: the card record check rejects an empty task force and empty probes
 
-Seat: architect (slice), Claude ctx-2, fresh context. Change repo: mob-defaults (C:\Users\ringe\mob-crosscli), mob_process.py and its tests. First slice under D175. Decision: SHIP AS IS under D136 (one concern, three increments, three criteria; a red that would pass 400 lines is split by test file, never by criterion).
+Seat: architect (slice), Claude ctx-2, fresh context. Change repo: mob-defaults (C:\Users\<user>\mob-crosscli), mob_process.py and its tests. First slice under D175. Decision: SHIP AS IS under D136 (one concern, three increments, three criteria; a red that would pass 400 lines is split by test file, never by criterion).
 
 Intent (D165): the owner wants the record check to stop trusting a value just because it is present. Card 210 Observes: "it does not trust a truthy value alone". Source: audit finding MD-003 (audit 17, mob-crosscli 687410e..586f15e) and F-043; D147 lets the card start under an open FAIL because its issue names MD-003.
 

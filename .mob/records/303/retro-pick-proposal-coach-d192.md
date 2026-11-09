@@ -4,7 +4,7 @@ Card 303 retro, 2026-11-06, re-proposal after Decider D191 failed the strict cou
 
 WHY THIS IS A NEW VOTE: D191 (the same idea with a committed log) got, in round 2, Yes 1, Support-it 4 and one No from the architect, whose one condition was "record each boundary and immutable entry identity in git, then mechanically reject missing, duplicate, late, or destination-less acknowledgements". Under the Decider protocol an outlier still unresolved after the amendment means the proposal fails, and the product owner ruled (2026-11-06) that a No is never reinterpreted. D191 is recorded as not adopted. This proposal resolves that condition and nothing else changes, so by D145 it adds no new demands. The round 1 and round 2 votes of D191 are in .mob/records/deciders/D191-votes.json.
 
-PICK: adopt the product-owner inbox file (outside the repo, C:/Users/ringe/.mob-inbox/avowry.md) as the channel for product-owner decisions, questions and process proposals, for three cards, with a committed log and a script that checks the log mechanically.
+PICK: adopt the product-owner inbox file (outside the repo, C:/Users/<user>/.mob-inbox/avowry.md) as the channel for product-owner decisions, questions and process proposals, for three cards, with a committed log and a script that checks the log mechanically.
 
 RULE UNDER TRIAL (C1 to C5 and the tunes are unchanged from D191's revision 2; C6 is the amendment; C6b was added after round 1 of this vote). NOTE TO THE SEAT: the cite is matched case-sensitively and character for character, including capital letters and punctuation; copy a phrase of at least 6 consecutive words exactly as written below:
 C1. The facilitator reads the inbox at every card and cycle boundary and at every retro.

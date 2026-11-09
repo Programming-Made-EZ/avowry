@@ -1,6 +1,6 @@
 # Card 313: red, green and mutation record (facilitator; seats' own reports summarised, commands and results as the seats gave them)
 
-Code repository: mob-crosscli. The green seat worked in its own worktree C:/Users/ringe/wt-313-green (branch card-313-green) per Decider D195; the main checkout's HEAD and status before and after the turns are equal (main-checkout-before.txt, main-checkout-after.txt; after the turns the facilitator fast-forwarded main to the branch).
+Code repository: mob-crosscli. The green seat worked in its own worktree C:/Users/<user>/wt-313-green (branch card-313-green) per Decider D195; the main checkout's HEAD and status before and after the turns are equal (main-checkout-before.txt, main-checkout-after.txt; after the turns the facilitator fast-forwarded main to the branch).
 
 ## Commits (mob-crosscli, in order)
 - d34b873 red 1 (QA, Claude): VoteLockRegistration, four cycle 1 tests: [Z] passes; [O], [B], [E] fail at the slice's assertions (holder count 0 != 1; open count 1 != 5).

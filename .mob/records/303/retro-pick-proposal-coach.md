@@ -1,10 +1,10 @@
 # Retro pick proposal (agile coach seat): adopt the product-owner inbox as the decision channel (experiment)
 
-Card 303 retro, 2026-11-06, revision 1. Proposer: agile coach seat. For a Decider. Sources: .mob/records/303/retro-voices.json and retro-input.md; the inbox proposal itself (C:/Users/ringe/.mob-inbox/avowry.md, "Process proposal for retro: adopt this inbox", routed to docs/retros/experiments.md); the product owner's correction that turns end at card and cycle boundaries; memory of the earlier incident (decisions sat undelivered for over an hour).
+Card 303 retro, 2026-11-06, revision 1. Proposer: agile coach seat. For a Decider. Sources: .mob/records/303/retro-voices.json and retro-input.md; the inbox proposal itself (C:/Users/<user>/.mob-inbox/avowry.md, "Process proposal for retro: adopt this inbox", routed to docs/retros/experiments.md); the product owner's correction that turns end at card and cycle boundaries; memory of the earlier incident (decisions sat undelivered for over an hour).
 
 Decider (number set at recording), the card 303 retro process pick, as a working-agreement experiment (D183: not a card)
 
-PICK: adopt the product-owner inbox file (outside the repo, C:/Users/ringe/.mob-inbox/avowry.md) as the channel for product-owner decisions, questions and process proposals, for the next three cards.
+PICK: adopt the product-owner inbox file (outside the repo, C:/Users/<user>/.mob-inbox/avowry.md) as the channel for product-owner decisions, questions and process proposals, for the next three cards.
 
 RULE UNDER TRIAL:
 C1. The facilitator reads the inbox at every card and cycle boundary and at every retro (as it has since 2026-11-06).

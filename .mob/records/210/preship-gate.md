@@ -1,6 +1,6 @@
 # Card 210 pre-ship gate (independent reviewer, ctx-4)
 
-Checked at 2026-11-02 15:29Z. Repo: `C:\Users\ringe\mob-crosscli` (mob-defaults) + `C:\Users\ringe\projects\phrase-lang` (avowry). Scope: board/210 card, `.mob/records/210/*`, `.mob/records/decisions/210-*.json`, and the current `main` branch of mob-crosscli.
+Checked at 2026-11-02 15:29Z. Repo: `C:\Users\<user>\mob-crosscli` (mob-defaults) + `C:\Users\<user>\projects\phrase-lang` (avowry). Scope: board/210 card, `.mob/records/210/*`, `.mob/records/decisions/210-*.json`, and the current `main` branch of mob-crosscli.
 
 Verdict: HOLD.
 
@@ -36,7 +36,7 @@ Evidence:
 Result: HOLD because current main is red; the records repo check is green.
 
 Evidence:
-- `python -m unittest discover -s tests` in `C:\Users\ringe\mob-crosscli` ran and reported: `Ran 1545 tests in 1520.326s` and `FAILED (failures=2, skipped=1)`. The failures are at `tests/test_mob_summary.py:134-146` and `:177-202`.
+- `python -m unittest discover -s tests` in `C:\Users\<user>\mob-crosscli` ran and reported: `Ran 1545 tests in 1520.326s` and `FAILED (failures=2, skipped=1)`. The failures are at `tests/test_mob_summary.py:134-146` and `:177-202`.
 - `python scripts/mob_process.py check` in the records repo reported `mob-process: OK (102 closed cards, 11 records, 91 legacy)` during this review.
 
 ## 4) Invariant: a record that passed before still passes; no check weakened
@@ -86,13 +86,13 @@ Evidence:
 The card-specific fix for MD-003 is complete and the red/green cycle order is correct, the task-force and proof requirements are documented, and the records repo itself is green. However, the current `main` branch of `mob-crosscli` is not green because the full suite currently fails with 2 test failures in `tests/test_mob_summary.py`, so this review must HOLD the pre-ship gate until that branch-level regression is fixed or triaged.
 ## Re-check of the HOLD
 
-- Direct shell: `cd C:\Users\ringe\mob-crosscli && python -m unittest tests.test_mob_summary`
+- Direct shell: `cd C:\Users\<user>\mob-crosscli && python -m unittest tests.test_mob_summary`
   Result: FAILED (failures=2) in 193.629s.
   Failing tests:
   - `test_updates_are_docs_only_mob_commits_and_they_reach_the_remote`
   - `test_the_summary_can_be_published_to_another_repo_than_the_one_the_run_is_in`
 
-- `cmd /c "cd /d C:\Users\ringe\mob-crosscli && python -m unittest tests.test_mob_summary"`
+- `cmd /c "cd /d C:\Users\<user>\mob-crosscli && python -m unittest tests.test_mob_summary"`
   Result: FAILED (failures=2) in 188.546s.
   Same two failures as the direct-shell run.
 

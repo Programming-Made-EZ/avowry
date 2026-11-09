@@ -216,7 +216,7 @@ PHRASE = re.compile(r"\bPhrase\b|Phrase[A-Za-z]|phrase[-_][A-Za-z]")
 EXCEPTIONS = [
     (
         'HANDOFF.md',
-        'This file replaces the earlier resolver handoff (the resolver is long done; earlier versions are in `git log -- HANDOFF.md`). The facilitator session that wrote it was retired by the product owner after card 195, at about 3,800 turns, the size at which earlier facilitators started dropping practices. A fresh facilitator takes over from this file. Read all of it before doing anything. The repository is Avowry (a language for LLM-maintained codebases where the name of every unit of behaviour is a plain-language description of it; the unit is an avow), at https://github.com/Programming-Made-EZ/avowry (public). The local folder is still `C:\\Users\\ringe\\projects\\phrase-lang`. Nothing has been published as a package.',
+        'This file replaces the earlier resolver handoff (the resolver is long done; earlier versions are in `git log -- HANDOFF.md`). The facilitator session that wrote it was retired by the product owner after card 195, at about 3,800 turns, the size at which earlier facilitators started dropping practices. A fresh facilitator takes over from this file. Read all of it before doing anything. The repository is Avowry (a language for LLM-maintained codebases where the name of every unit of behaviour is a plain-language description of it; the unit is an avow), at https://github.com/Programming-Made-EZ/avowry (public). The local folder is still `C:\\Users\\<user>\\projects\\phrase-lang`. Nothing has been published as a package.',
         'phrase-lang',
     ),
     (
@@ -231,7 +231,7 @@ EXCEPTIONS = [
     ),
     (
         'HANDOFF.md',
-        '- Helper scripts of the old session live outside the repository in the Claude scratchpad (`C:\\Users\\ringe\\AppData\\Local\\Temp\\claude\\C--Users-ringe-projects-phrase-lang\\39123b30-167f-4efb-b4f5-bf56d1d02640\\scratchpad`): `launch_author.py` (a throwaway-clone author launcher, now replaced by card mode), `record_dNNN.py` (decision recorders), `goalNNN.txt`. They are not needed; copy a pattern, not the files.',
+        '- Helper scripts of the old session live outside the repository in the Claude scratchpad (`C:\\Users\\<user>\\AppData\\Local\\Temp\\claude\\C--Users-<user>-projects-phrase-lang\\39123b30-167f-4efb-b4f5-bf56d1d02640\\scratchpad`): `launch_author.py` (a throwaway-clone author launcher, now replaced by card mode), `record_dNNN.py` (decision recorders), `goalNNN.txt`. They are not needed; copy a pattern, not the files.',
         'phrase-lang',
     ),
     (

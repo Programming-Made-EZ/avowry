@@ -3,18 +3,18 @@
 ## 1) Done checks vs committed evidence (as adopted)
 1. **Done check 1 — met.**
    - Adopted requirement (BOTH parts) is explicit in taskforce result: committed over-limit test **and** live Copilot+Grok parsed cited votes with committed evidence (`.mob/records/decisions/229-taskforce.json:12,18,788`; also carried in record: `.mob/records/229/record-in-progress.json:7`).
-   - **(a) Committed over-limit test:** red/green pair `ab8f4a5` -> `4674d19` adds and passes long-prompt delivery checks; test fixture and limits are explicit (`C:\Users\ringe\mob-crosscli\tests\test_launch_long_prompt.py:20,49-52,247-256,278-289`).
+   - **(a) Committed over-limit test:** red/green pair `ab8f4a5` -> `4674d19` adds and passes long-prompt delivery checks; test fixture and limits are explicit (`C:\Users\<user>\mob-crosscli\tests\test_launch_long_prompt.py:20,49-52,247-256,278-289`).
    - **(b) Live window evidence:** both seat records show parsed votes, `cite_ok: true`, `counted: true`, and one-attempt `attempt_log` (`.mob/records/229/live/copilot/decider-result.json:35,41-45,53-55`; `.mob/records/229/live/grok/decider-result.json:35,41-45,53-55`). Seat-use lines named in evidence are present (`.mob/records/229/live/evidence.md:8`; `.mob/records/seat-use.jsonl:928-929`).
    - Prompt-over-limit requirement is met: committed evidence states 9774 chars built (`.mob/records/229/live/evidence.md:5`), and direct check here matched that (`proposal_chars=9249`, `built_chars=9774`, `built_lines=61`, sha256 `1efdfc...34bcc`).
 
 2. **Done check 2 — met.**
    - Failure honesty + empty guard landed across `858649b` -> `a2bb1d4` -> `d13148e` -> `cda02f2`, with red-before-green order per D182 (`.mob/records/229/record-in-progress.json:12,15,23-24`).
-   - Current implementation/evidence includes `failure_excerpt`, `attempt_log`, explicit failure reasons, `cite_ok`, `counted`, and `counted_seats` (`C:\Users\ringe\mob-crosscli\decider.py:119-129,154,165,168,338-340,352`; `.mob/records/229/live/copilot/decider-result.json:41-45,53-54,61-63`; `.mob/records/229/live/grok/decider-result.json:41-45,53-54,61-63`).
+   - Current implementation/evidence includes `failure_excerpt`, `attempt_log`, explicit failure reasons, `cite_ok`, `counted`, and `counted_seats` (`C:\Users\<user>\mob-crosscli\decider.py:119-129,154,165,168,338-340,352`; `.mob/records/229/live/copilot/decider-result.json:41-45,53-54,61-63`; `.mob/records/229/live/grok/decider-result.json:41-45,53-54,61-63`).
    - Scope-2 moved the cited-only overall result rule to bug card 290 by adopted decision; that move is recorded and in-scope compliant (`.mob/records/decisions/229-scope-2.json:12,201`; `.mob/records/229/record-in-progress.json:22`).
 
 3. **Done check 3 — met.**
    - Red/green pair `cef48a7` -> `2d4d24d` completes placeholder-literal handling (`.mob/records/229/record-in-progress.json:27,29`).
-   - Placeholder literals and refusal behavior are covered in committed tests (`C:\Users\ringe\mob-crosscli\tests\test_prompt_placeholders.py:9-12,21-23,127-128,137,142-143`).
+   - Placeholder literals and refusal behavior are covered in committed tests (`C:\Users\<user>\mob-crosscli\tests\test_prompt_placeholders.py:9-12,21-23,127-128,137,142-143`).
 
 ## 2) Criterion order in git and cap/rule checks
 - Observed commit order in `mob-crosscli` is: `ab8f4a5` (red1) -> `858649b` (red2) -> `4674d19` (green1) -> `a2bb1d4` (green2) -> `7c26629` (red2 cycle2) -> `d13148e` (red2 cycle3) -> `cda02f2` (green2 cycle3) -> `cef48a7` (red3) -> `2d4d24d` (green3).
@@ -24,10 +24,10 @@
 - D182 QA condition is respected: red 2 committed before green 1 (`.mob/records/229/record-in-progress.json:12`; `858649b` precedes `4674d19`; D182 condition at `docs/decisions/process-and-staffing.md:888`).
 
 ## 3) Required runs (D176 Environment lines)
-Environment (D176): shell=PowerShell; launch form=`python -m unittest tests.test_launch_long_prompt tests.test_launch_failure_honesty tests.test_prompt_placeholders tests.test_decider_launched tests.test_decider_pin_scrub tests.test_decider_record tests.test_repo_path_lengths tests.test_muse_command_source`; working directory=`C:\Users\ringe\mob-crosscli`; commit=`2d4d24d42484d0c187587b320d59d0467da0fdda`.
+Environment (D176): shell=PowerShell; launch form=`python -m unittest tests.test_launch_long_prompt tests.test_launch_failure_honesty tests.test_prompt_placeholders tests.test_decider_launched tests.test_decider_pin_scrub tests.test_decider_record tests.test_repo_path_lengths tests.test_muse_command_source`; working directory=`C:\Users\<user>\mob-crosscli`; commit=`2d4d24d42484d0c187587b320d59d0467da0fdda`.
 Result: `Ran 151 tests in 69.049s` — `OK`.
 
-Environment (D176): shell=PowerShell; launch form=`python scripts/mob_process.py check`; working directory=`C:\Users\ringe\projects\phrase-lang`; commit=`3353c7cde539e784d32eb53d91959187bfe36707`.
+Environment (D176): shell=PowerShell; launch form=`python scripts/mob_process.py check`; working directory=`C:\Users\<user>\projects\phrase-lang`; commit=`3353c7cde539e784d32eb53d91959187bfe36707`.
 Result: `mob-process: OK (105 closed cards, 14 records, 91 legacy)`.
 
 Attestation only (not re-run full suite): facilitator full run on `2d4d24d` is recorded as `Ran 1713 tests ... OK (skipped=1)` (`.mob/records/229/record-in-progress.json:32`).

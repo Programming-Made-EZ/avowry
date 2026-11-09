@@ -4,7 +4,7 @@ Diagnosed by the facilitator from Dispatch's hint (GitHub issue 270) and the pro
 
 ## Finding
 
-Both Grok and Copilot ship on this machine as Windows batch shims: C:\Users\ringe\nodejs20\grok.CMD and copilot.CMD (facilitator.resolve_executable). Launching a .CMD goes through cmd.exe, whose command line is limited to 8191 characters.
+Both Grok and Copilot ship on this machine as Windows batch shims: C:\Users\<user>\nodejs20\grok.CMD and copilot.CMD (facilitator.resolve_executable). Launching a .CMD goes through cmd.exe, whose command line is limited to 8191 characters.
 
 facilitator._launch_backend collapses the prompt to one line and passes it as one argument. Every decision prompt in window 276-taskforce round 2 was 9304 to 9408 characters after collapsing, and the full command line was 9412. cmd.exe refuses before the CLI starts: rc 1, stdout 0 bytes, stderr "The command line is too long." (30 bytes).
 

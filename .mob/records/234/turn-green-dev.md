@@ -1,6 +1,6 @@
 # Card 234, green developer (ctx-5): turn record
 
-This turn record is written at close, from git and from the card record, by a later Claude seat in a fresh context (ctx-5 again). It is not a live transcript. Sources: `git log` and `git show` of the eleven commits below in avowry (C:\Users\ringe\projects\phrase-lang), .mob/records/234/record-in-progress.json (cycles, deviations, command_scans, observations, token_usage, seat_ab), and the two measurement files .mob/records/234/usage/measure-qa-red-full.json and measure-qa-red-brief.json. Where the sources give no number, the line says "not measured". Commits are named by what they do; hashes are in the table or in parentheses.
+This turn record is written at close, from git and from the card record, by a later Claude seat in a fresh context (ctx-5 again). It is not a live transcript. Sources: `git log` and `git show` of the eleven commits below in avowry (C:\Users\<user>\projects\phrase-lang), .mob/records/234/record-in-progress.json (cycles, deviations, command_scans, observations, token_usage, seat_ab), and the two measurement files .mob/records/234/usage/measure-qa-red-full.json and measure-qa-red-brief.json. Where the sources give no number, the line says "not measured". Commits are named by what they do; hashes are in the table or in parentheses.
 
 ## Commits of this seat
 

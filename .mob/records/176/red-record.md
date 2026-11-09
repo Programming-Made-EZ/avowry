@@ -44,13 +44,13 @@ Blocked by the missing package / installed tool (not counted as evidence they ca
 metadata (failed): id is Avowry.Cli; Version is 1.0.0; tool command is <missing>
 explicit-version-source (failed): CLI project and Directory.Build.props set no Version or PackageVersion
 install (failed): dotnet tool install exited 1; installed command missing
-avowry is not found in NuGet feeds C:\Users\ringe\AppData\Local\Temp\phrase-acceptance\a968d03e9f94408eaf057619fdb861b8.
+avowry is not found in NuGet feeds C:\Users\<user>\AppData\Local\Temp\phrase-acceptance\a968d03e9f94408eaf057619fdb861b8.
 
 version (blocked): blocked: tool not installed
 demo-build (blocked): blocked: tool not installed
   Stack Trace:
-     at Avowry.Acceptance.Tests.PackedToolIsVersionedInstallsAndBuildsTheDemo.Checks.AssertAll() in C:\Users\ringe\projects\wt-176-red\tests\Avowry.Acceptance.Tests\PackedToolIsVersionedInstallsAndBuildsTheDemo.cs:line 263
-   at Avowry.Acceptance.Tests.PackedToolIsVersionedInstallsAndBuildsTheDemo.Packed_tool_is_versioned_installs_and_builds_the_demo() in C:\Users\ringe\projects\wt-176-red\tests\Avowry.Acceptance.Tests\PackedToolIsVersionedInstallsAndBuildsTheDemo.cs:line 74
+     at Avowry.Acceptance.Tests.PackedToolIsVersionedInstallsAndBuildsTheDemo.Checks.AssertAll() in C:\Users\<user>\projects\wt-176-red\tests\Avowry.Acceptance.Tests\PackedToolIsVersionedInstallsAndBuildsTheDemo.cs:line 263
+   at Avowry.Acceptance.Tests.PackedToolIsVersionedInstallsAndBuildsTheDemo.Packed_tool_is_versioned_installs_and_builds_the_demo() in C:\Users\<user>\projects\wt-176-red\tests\Avowry.Acceptance.Tests\PackedToolIsVersionedInstallsAndBuildsTheDemo.cs:line 74
 
 Failed!  - Failed:     1, Passed:     0, Skipped:     0, Total:     1, Duration: 3 s - Avowry.Acceptance.Tests.dll (net8.0)
 ```
@@ -66,7 +66,7 @@ The local-feed directory in the install line changes per run.
 Command: `dotnet test tests/Avowry.Acceptance.Tests --nologo --filter Status!=Pending&FullyQualifiedName~Packed_tool_is_versioned`
 
 ```
-No test matches the given testcase filter `Status!=Pending&FullyQualifiedName~Packed_tool_is_versioned` in C:\Users\ringe\projects\wt-176-red\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+No test matches the given testcase filter `Status!=Pending&FullyQualifiedName~Packed_tool_is_versioned` in C:\Users\<user>\projects\wt-176-red\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
 ```
 
 0 tests run, exit 0.
@@ -123,13 +123,13 @@ Blocked by the missing package / installed tool:
 metadata (failed): id is Avowry.Cli; Version is 1.0.0; tool command is <missing>
 explicit-version-source (failed): CLI project and Directory.Build.props set no Version or PackageVersion
 install (failed): dotnet tool install exited 1; installed command missing
-avowry is not found in NuGet feeds C:\Users\ringe\AppData\Local\Temp\phrase-acceptance\cffda888caef418bafb2ba53b44e3d84.
+avowry is not found in NuGet feeds C:\Users\<user>\AppData\Local\Temp\phrase-acceptance\cffda888caef418bafb2ba53b44e3d84.
 
 version (blocked): blocked: tool not installed
 demo-build (blocked): blocked: tool not installed
   Stack Trace:
-     at Avowry.Acceptance.Tests.PackedToolIsVersionedInstallsAndBuildsTheDemo.Checks.AssertAll() in C:\Users\ringe\projects\wt-176-red2\tests\Avowry.Acceptance.Tests\PackedToolIsVersionedInstallsAndBuildsTheDemo.cs:line 263
-   at Avowry.Acceptance.Tests.PackedToolIsVersionedInstallsAndBuildsTheDemo.Packed_tool_is_versioned_installs_and_builds_the_demo() in C:\Users\ringe\projects\wt-176-red2\tests\Avowry.Acceptance.Tests\PackedToolIsVersionedInstallsAndBuildsTheDemo.cs:line 74
+     at Avowry.Acceptance.Tests.PackedToolIsVersionedInstallsAndBuildsTheDemo.Checks.AssertAll() in C:\Users\<user>\projects\wt-176-red2\tests\Avowry.Acceptance.Tests\PackedToolIsVersionedInstallsAndBuildsTheDemo.cs:line 263
+   at Avowry.Acceptance.Tests.PackedToolIsVersionedInstallsAndBuildsTheDemo.Packed_tool_is_versioned_installs_and_builds_the_demo() in C:\Users\<user>\projects\wt-176-red2\tests\Avowry.Acceptance.Tests\PackedToolIsVersionedInstallsAndBuildsTheDemo.cs:line 74
 
 Failed!  - Failed:     1, Passed:     0, Skipped:     0, Total:     1, Duration: 5 s - Avowry.Acceptance.Tests.dll (net8.0)
 ```

@@ -12,5 +12,5 @@ File: tests/test_delete_guard_gatefix.py (new, 16 tests) plus the one-line flip 
 
 Failing output (one line): "Ran 16 tests ... FAILED (failures=15)", e.g. "AssertionError: 0 != 2 : 'eval "$(ssh-agent -s)"' must be refused, stderr: ''" and "the session must be found, locate_copilot said: 0 Copilot sessions under ... match cwd and start time" (offsets 13 to 24 s).
 
-Modules run: 24 = the 23 of turn-red-qa-3b.md (every test_command_scan*, test_command_scans_record* and test_command_source* module plus test_delete_guard_hook_3a and _3b) plus tests.test_delete_guard_gatefix. 610 tests, FAILED (failures=15), all in the new module (101 s). Without the new module (with the line 147 flip): 594 tests OK. Full discover not run. Scratch: C:\Users\ringe\AppData\Local\Temp\claude\qa228-gf-105676702 (left in place; the tests use their own temp folders).
+Modules run: 24 = the 23 of turn-red-qa-3b.md (every test_command_scan*, test_command_scans_record* and test_command_source* module plus test_delete_guard_hook_3a and _3b) plus tests.test_delete_guard_gatefix. 610 tests, FAILED (failures=15), all in the new module (101 s). Without the new module (with the line 147 flip): 594 tests OK. Full discover not run. Scratch: C:\Users\<user>\AppData\Local\Temp\claude\qa228-gf-105676702 (left in place; the tests use their own temp folders).
 Size: 3336 bytes

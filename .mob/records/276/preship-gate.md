@@ -24,7 +24,7 @@ Blocking findings:
 ## 2) Criterion order in git and cap progression
 
 - Commit bodies carry explicit criterion/cycle markers in red→green order:
-  - C1: red `5ef4b8f`, red `970118c`, green `2196c58` (then refactor `41ecf78`) with `Criterion: 1`, `Cycle 1 of 1` (tool capture file `C:\Users\ringe\AppData\Local\Temp\1793689940682-copilot-tool-output-17732-d44270f7-63bc-4818-83f1-2666b9443ebf.txt:1-43`).
+  - C1: red `5ef4b8f`, red `970118c`, green `2196c58` (then refactor `41ecf78`) with `Criterion: 1`, `Cycle 1 of 1` (tool capture file `C:\Users\<user>\AppData\Local\Temp\1793689940682-copilot-tool-output-17732-d44270f7-63bc-4818-83f1-2666b9443ebf.txt:1-43`).
   - C2: red `dbe2e1c`, green `d3a9787` (then refactor `c71c05f`) with `Criterion: 2`, `Cycle 1 of 1` (same file:66-87).
   - C3: red `ac5a5a2`, red `fd09aaf`, green `40d0d08`, refactor `5157e3f`; then cycle 2 red `244678b`, amendment `c0354cb`, green `cefaf4e`; then cycle 3 red `228d2df`, green `2f34856` with `Criterion: 3`, `Cycle 1/1`, `2/2`, `3/3` (same file:99-130,152-183,195-217).
 - Cap raises are explicitly recorded and adopted:
@@ -35,11 +35,11 @@ Blocking findings:
 ## 3) Required runs (with Environment lines)
 
 1. **mob-crosscli targeted unittest command**
-   - Environment: shell=PowerShell tool runner; launch form=`python -m unittest tests.test_muse_install tests.test_muse_probe_state tests.test_muse_command_source tests.test_muse_cycle2_scope tests.test_muse_cycle3_scope tests.test_command_scan_wiring tests.test_probe_model tests.test_quota_first`; working directory=`C:\Users\ringe\mob-crosscli`; commit=`2f348568633f1928bd101ee4b1501bbec1c660bd`.
+   - Environment: shell=PowerShell tool runner; launch form=`python -m unittest tests.test_muse_install tests.test_muse_probe_state tests.test_muse_command_source tests.test_muse_cycle2_scope tests.test_muse_cycle3_scope tests.test_command_scan_wiring tests.test_probe_model tests.test_quota_first`; working directory=`C:\Users\<user>\mob-crosscli`; commit=`2f348568633f1928bd101ee4b1501bbec1c660bd`.
    - Result: **not executed in this context** due permission gate: `Permission denied because no interactive user response was available.`
 
 2. **records repo process check**
-   - Environment: shell=PowerShell tool runner; launch form=`python scripts/mob_process.py check`; working directory=`C:\Users\ringe\projects\phrase-lang`; commit=`656e8413664e0d950dcab424cfdeb0660772159d`.
+   - Environment: shell=PowerShell tool runner; launch form=`python scripts/mob_process.py check`; working directory=`C:\Users\<user>\projects\phrase-lang`; commit=`656e8413664e0d950dcab424cfdeb0660772159d`.
    - Result: `mob-process: OK (104 closed cards, 13 records, 91 legacy)`.
 
 ## 4) Deviations and shipping impact

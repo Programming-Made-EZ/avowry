@@ -11,7 +11,7 @@ Verdict: SIGNED OFF WITH CONDITIONS. The conditions are follow-ups for later car
 6. Remote state: `git ls-remote` shows GitHub main at 8a5c618, so the clone URL serves the guide as reviewed.
 
 ## Gate evidence
-Tested commit ecd3e6e (main tip, clean tree). Copy: `git clone --no-hardlinks --single-branch -b main` from C:/Users/ringe/projects/phrase-lang into signoff179-clone, not an archive. `dotnet build src/Avowry.Cli`: 0 warnings, 0 errors. SDK 10.0.403 only, no 8.0.x SDK installed. Compiler 324/324 and Acceptance 328/328 under `--filter "Status!=Pending"`.
+Tested commit ecd3e6e (main tip, clean tree). Copy: `git clone --no-hardlinks --single-branch -b main` from C:/Users/<user>/projects/phrase-lang into signoff179-clone, not an archive. `dotnet build src/Avowry.Cli`: 0 warnings, 0 errors. SDK 10.0.403 only, no 8.0.x SDK installed. Compiler 324/324 and Acceptance 328/328 under `--filter "Status!=Pending"`.
 
 ## Load
 One dotnet process at the start (tasklist count 1). dotnet commands one at a time. A `git checkout` moved the clone to b308034, 8086854 and ed5819c for the replays and back to main. Nothing deleted or modified in phrase-lang.

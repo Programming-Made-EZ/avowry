@@ -21,7 +21,7 @@ Self-tests use a `git init` synthetic repo, not a clone (card 178 revision 1).
 
 ## Result on the pre-change tree
 
-Worktree `C:\Users\ringe\projects\wt-179-red`, HEAD `b30803420f30f4ff749f77d39be7640461d0506f`, no `docs/GETTING_STARTED.md`.
+Worktree `C:\Users\<user>\projects\wt-179-red`, HEAD `b30803420f30f4ff749f77d39be7640461d0506f`, no `docs/GETTING_STARTED.md`.
 
 ```
 test_adding_the_guide_and_editing_the_demo_readme_reports_a_difference ... ok
@@ -37,7 +37,7 @@ OK
 
 ## Result on the post-change scratch tree
 
-Clone left at `C:\Users\ringe\AppData\Local\Temp\avowry-179-char-pass`. That clone added `docs/GETTING_STARTED.md` (any text) and rewrote `README.md` (any text) in one commit; `demo/tasks/README.md` was not touched. The characterisation test file was copied into the clone's working tree (uncommitted) so the module could run.
+Clone left at `C:\Users\<user>\AppData\Local\Temp\avowry-179-char-pass`. That clone added `docs/GETTING_STARTED.md` (any text) and rewrote `README.md` (any text) in one commit; `demo/tasks/README.md` was not touched. The characterisation test file was copied into the clone's working tree (uncommitted) so the module could run.
 
 ```
 test_adding_the_guide_and_editing_the_demo_readme_reports_a_difference ... ok
@@ -53,7 +53,7 @@ OK
 
 ## Mutation (edit of demo/tasks/README.md)
 
-Clone left at `C:\Users\ringe\AppData\Local\Temp\avowry-179-char-fail`. Same new state plus `demo/tasks/README.md` edited in the guide-adding commit.
+Clone left at `C:\Users\<user>\AppData\Local\Temp\avowry-179-char-fail`. Same new state plus `demo/tasks/README.md` edited in the guide-adding commit.
 
 ```
 FAIL: test_the_demo_readme_is_byte_identical_to_the_base

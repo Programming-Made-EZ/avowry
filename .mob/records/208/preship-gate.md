@@ -22,7 +22,7 @@ Method: a fresh `git worktree add --detach` of each origin/main (wt-208-gate-avo
 - Record paths: 17 of the 18 cited paths exist as blobs on avowry origin/main: the six 208 checklists and turn (checklist-208-cardtext, -rerank-9, -rerank-10, checklist-slice, checklist-taskforce, turn-slice-architect), record-in-progress.json, review-ctx5.md, blockers/in-flight.md, probes/2026-10-30.jsonl, reranks/2026-10-30-8b.md, the five decisions/208-*.json windows (cardtext, rerank-9, rerank-10, slice, taskforce) and docs/decisions/process-and-staffing.md.
 - Cited but absent on origin: `.mob/records/seat-use.jsonl`. It is not a record the card claims exists; it is the runtime history the new rotation reads and appends to (facilitator.py, the seat-use path), created at the first seating the runner makes. No such seating has happened yet, so no file exists. Noted, not a failure: until then the history is empty and every available model counts as never seated.
 - Code paths cited (mob-defaults 9cda13d): tests/test_probe_model.py, tests/test_quota_first.py, tests/test_card_mode.py, core/backends.json, mob_process.py, facilitator.py all exist.
-- Observation: C:\Users\ringe\mob-crosscli has an untracked `.mob/` directory that this seat did not create and did not touch.
+- Observation: C:\Users\<user>\mob-crosscli has an untracked `.mob/` directory that this seat did not create and did not touch.
 
 ## 2. Full-suite evidence: accept the 2a01531 run plus module runs; no re-run
 
@@ -32,7 +32,7 @@ Method: a fresh `git worktree add --detach` of each origin/main (wt-208-gate-avo
   - `python -m unittest tests.test_probe_model` at 9cda13d: Ran 16, OK (13 before plus the 3 new).
   - `python -m unittest tests.test_quota_first tests.test_seat_gate tests.test_seat_rotation tests.test_probe_model` at 9cda13d in one process (the modules that read or write BACKENDS, the new tests last): Ran 73, OK, about 2 s.
   - Adding tests.test_card_mode to that process ran past my 7 minute bound and my own `timeout` stopped it; it gave no verdict and is not counted as evidence. No process of mine remains.
-- Why not re-run: the full suite costs about 21 minutes (1258 s), the change is test-only and isolated, and the two runs above exercise the only plausible interaction. A re-run would need a second in-flight line and a 31 minute cap for no new information. The command stays available: `python -m unittest discover -s tests` in C:\Users\ringe\mob-crosscli.
+- Why not re-run: the full suite costs about 21 minutes (1258 s), the change is test-only and isolated, and the two runs above exercise the only plausible interaction. A re-run would need a second in-flight line and a 31 minute cap for no new information. The command stays available: `python -m unittest discover -s tests` in C:\Users\<user>\mob-crosscli.
 - PASS on hash 9cda13d (origin/main of mob-defaults). Limit: the product code at 9cda13d has not itself been through one full discover run; it is identical to 2a01531 outside the one test file.
 
 ## 3. CI

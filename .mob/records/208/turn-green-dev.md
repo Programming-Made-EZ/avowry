@@ -1,6 +1,6 @@
 # Card 208, green developer (ctx-4): turn record
 
-This turn record is written at close, from the mob-defaults commits below; it is not a live transcript. Repository: mob-defaults (C:\Users\ringe\mob-crosscli).
+This turn record is written at close, from the mob-defaults commits below; it is not a live transcript. Repository: mob-defaults (C:\Users\<user>\mob-crosscli).
 
 ## Criterion 1 (a seat starts only on a probe under 60 minutes old)
 - 38075b7 unit layer 1 (L2). Doubles: recorded probe double RECORDED (probe lines of 18:10 UTC), scripted Clock, run_backend and run_turn mocks; stub gate_seat.

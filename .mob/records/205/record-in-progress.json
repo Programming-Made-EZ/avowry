@@ -3,7 +3,7 @@
  "card": 205,
  "title": "The facilitator starts only corrective cards while a finding blocks",
  "status": "Done checks 1 to 3 met; review APPROVE (ctx-5), ship checks PASS and persona demo (ctx-6), sign-off ACCEPTED (ctx-7); closure blocked on the record-check fix (seats compared by context), in review",
- "run_repository": "Programming-Made-EZ/mob-defaults (C:/Users/ringe/mob-crosscli)",
+ "run_repository": "Programming-Made-EZ/mob-defaults (C:/Users/<user>/mob-crosscli)",
  "corrective_for": [
   "MD-001",
   "MD-002",

@@ -40,7 +40,7 @@ crlf-copy: exit -532462766; Unhandled exception; NotImplementedException; stack 
 supported-avow-first: exit -532462766; Unhandled exception; NotImplementedException; stack at; no PHnnn (line:col)
 two-problems: exit -532462766; Unhandled exception; NotImplementedException; stack at; no PHnnn (line:col)
   Stack Trace:
-     at Avowry.Acceptance.Tests.UnsupportedCsharpConstructs.Unsupported_csharp_constructs_report_a_diagnostic() in C:\Users\ringe\projects\wt-189-red\tests\Avowry.Acceptance.Tests\UnsupportedCsharpConstructs.cs:line 31
+     at Avowry.Acceptance.Tests.UnsupportedCsharpConstructs.Unsupported_csharp_constructs_report_a_diagnostic() in C:\Users\<user>\projects\wt-189-red\tests\Avowry.Acceptance.Tests\UnsupportedCsharpConstructs.cs:line 31
 
 Failed!  - Failed:     1, Passed:     0, Skipped:     0, Total:     1, Duration: 32 s - Avowry.Acceptance.Tests.dll (net8.0)
 ```
@@ -73,7 +73,7 @@ Kept: all eight in-card rows and the four hostile rows (each crashed). Dropped f
 Command: `dotnet test tests/Avowry.Acceptance.Tests --nologo --no-build --filter "Status!=Pending&FullyQualifiedName~UnsupportedCsharpConstructs"`
 
 ```
-No test matches the given testcase filter `Status!=Pending&FullyQualifiedName~UnsupportedCsharpConstructs` in C:\Users\ringe\projects\wt-189-red\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+No test matches the given testcase filter `Status!=Pending&FullyQualifiedName~UnsupportedCsharpConstructs` in C:\Users\<user>\projects\wt-189-red\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
 ```
 
 0 tests run, exit 0.
@@ -131,7 +131,7 @@ Assertion failure from `Assert.True(failures.Count == 0, ...)`, not a missing fi
   Error Message:
    spec-then-none: exit -532462766; Unhandled exception; NotImplementedException; stack at; no PHnnn (line:col)
   Stack Trace:
-     at Avowry.Acceptance.Tests.UnsupportedCsharpConstructs.Unsupported_csharp_constructs_report_a_diagnostic() in C:\Users\ringe\projects\wt-189-red2\tests\Avowry.Acceptance.Tests\UnsupportedCsharpConstructs.cs:line 30
+     at Avowry.Acceptance.Tests.UnsupportedCsharpConstructs.Unsupported_csharp_constructs_report_a_diagnostic() in C:\Users\<user>\projects\wt-189-red2\tests\Avowry.Acceptance.Tests\UnsupportedCsharpConstructs.cs:line 30
 --- End of stack trace from previous location ---
 
 Failed!  - Failed:     1, Passed:     0, Skipped:     0, Total:     1, Duration: 5 s - Avowry.Acceptance.Tests.dll (net8.0)

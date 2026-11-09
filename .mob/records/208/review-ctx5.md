@@ -33,7 +33,7 @@ What should survive the rework.
 
 ## What I verified
 
-- Run: `python -m unittest tests.test_seat_gate tests.test_quota_first tests.test_probe_model tests.test_card_mode.SeatProbes tests.test_card_mode.QuotaFirstSeats tests.test_card_mode.ProbeModelPins` in C:\Users\ringe\mob-crosscli at be9ec1b: Ran 63 tests in 155.6 s, OK. The developer's recorded full suite (1194 s, OK) was not re-run.
+- Run: `python -m unittest tests.test_seat_gate tests.test_quota_first tests.test_probe_model tests.test_card_mode.SeatProbes tests.test_card_mode.QuotaFirstSeats tests.test_card_mode.ProbeModelPins` in C:\Users\<user>\mob-crosscli at be9ec1b: Ran 63 tests in 155.6 s, OK. The developer's recorded full suite (1194 s, OK) was not re-run.
 - D157 order from `git log e239b12..be9ec1b`: red 83714f1 (Criterion: 1), units 38075b7 and 26aaa0c, green e81ed21; red 6af1cca (Criterion: 2), units 56b3686 and 832ca6a, green 36f09a0; red 40cc57c (Criterion: 3), units 6effcdb and f24885e, green be9ec1b. Every commit carries its "Criterion: n" line; no red for n+1 before the green for n; subjects cite MD-002 (and F-040). No trailers seen. D136: each commit is one concern (reds tests only, units one layer, greens production).
 - Done checks against ZOMBIES: Z/O/M/B/E/I present for all three criteria across test_seat_gate, test_quota_first, test_probe_model and the three card-mode classes. Code read: gate_seat runs before any backend call in turn() and seat_turn(); exit 2 propagates through run(); loop_runner reads exit 2 as gate-refused.
 - Born-green mutations re-run by me in a scratch copy under the scratchpad (each reverted; the repository was not touched): (1) `>=` to `>` in probe_is_stale: 3 FAIL. (2) unread result skipped in quota_first_problem: 2 FAIL. (3) `pin not in models` dropped from probe_model_problem: 3 FAIL. (4) probe launches 'default' instead of the pin: 5 FAIL. (5) probe_backend unusable-pin guard disabled: no test fails (F1). (6) TrueMobbing joiner excluded from signoff: passes (F2); seats refresh removed: fails.
@@ -48,7 +48,7 @@ Close F1 and F2 (tests) and F3 (test or a recorded note). Settle criterion 2 thr
 
 ## Re-check
 
-Reviewer: independent reviewer, audit lens and runner lens, ctx-5, fresh context (Claude seat; the probes of 2026-10-30T22:13Z show Codex, Copilot, Grok and agy without usable quota, in .mob/records/probes/2026-10-30.jsonl). In-flight line committed first (3050781). Code reviewed: C:\Users\ringe\mob-crosscli at 9cda13d; decision text D164 at docs/decisions/process-and-staffing.md#d164.
+Reviewer: independent reviewer, audit lens and runner lens, ctx-5, fresh context (Claude seat; the probes of 2026-10-30T22:13Z show Codex, Copilot, Grok and agy without usable quota, in .mob/records/probes/2026-10-30.jsonl). In-flight line committed first (3050781). Code reviewed: C:\Users\<user>\mob-crosscli at 9cda13d; decision text D164 at docs/decisions/process-and-staffing.md#d164.
 
 ### Verdict: APPROVE
 

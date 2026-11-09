@@ -1,8 +1,8 @@
 """Retro voices for card 176, ALL SEVEN AT ONCE through decider.py's gate (parallel dispatch). Usage: run_voices_par.py role=driver ..."""
 import sys, os, json, glob, subprocess, datetime, concurrent.futures as cf
 OUT = os.path.dirname(os.path.abspath(__file__))
-ROLES = "C:/Users/ringe/AppData/Local/Temp/claude/1ff08f82160bcdeb/f5302246-709f-4d35-b4d7-d556237d7061/scratchpad"
-import sys as _s; _s.path.insert(0, "C:/Users/ringe/AppData/Local/Temp/claude/1ff08f82160bcdeb/2ca12683-042f-40b7-b61a-623ae180176b/scratchpad"); import mkbackends; BACK = mkbackends.build()
+ROLES = "C:/Users/<user>/AppData/Local/Temp/claude/1ff08f82160bcdeb/f5302246-709f-4d35-b4d7-d556237d7061/scratchpad"
+import sys as _s; _s.path.insert(0, "C:/Users/<user>/AppData/Local/Temp/claude/1ff08f82160bcdeb/2ca12683-042f-40b7-b61a-623ae180176b/scratchpad"); import mkbackends; BACK = mkbackends.build()
 card = "176"
 ASK = (f"\n\nRETRO VOICE for card {card} (each role gives feedback in its own fresh context). Read .mob/records/{card}/retro-input.md first, then as useful "
        f".mob/records/{card}/ (red-record.md, gate-review.md, signoff.md, seat-plan.md), docs/decisions/process-and-staffing.md D211 to D214 and docs/retros/experiments.md (the section on what turns a Yes into a No). "
@@ -16,7 +16,7 @@ def run(tag, text, seat):
     open(f'{OUT}/{tag}.txt', 'w', encoding='utf-8', newline='\n').write(text)
     open(f'{OUT}/{tag}.start', 'w').write(datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'))
     try:
-        subprocess.run(['python', 'C:/Users/ringe/mob-crosscli/decider.py', '--repo', 'C:/Users/ringe/projects/phrase-lang', '--proposal-file',
+        subprocess.run(['python', 'C:/Users/<user>/mob-crosscli/decider.py', '--repo', 'C:/Users/<user>/projects/phrase-lang', '--proposal-file',
                         f'{OUT}/{tag}.txt', '--seats', seat, '--backends', BACK, '--out', f'{OUT}/{tag}-out', '--timeout', '420'],
                        stdout=open(f'{OUT}/{tag}.log', 'w'), stderr=subprocess.STDOUT, timeout=900)
     except subprocess.TimeoutExpired:

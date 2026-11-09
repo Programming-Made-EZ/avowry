@@ -1,8 +1,8 @@
 """Build a D-votes.json from the parallel runner's result dirs. Usage: mkvotes_generic.py DNNN SUBJECT RESULT PROPCOMMIT_OR_FILE=label:tagprefix [...]
 Each block spec: label=tagprefix@proposalref  (proposalref: a git commit hash for .mob/records/176/<file>, or 'file' for the working file); env PROPPATH is the repo path."""
 import json, glob, re, subprocess, sys, os
-S = 'C:/Users/ringe/AppData/Local/Temp/claude/1ff08f82160bcdeb/2ca12683-042f-40b7-b61a-623ae180176b/scratchpad/'
-G = 'C:/Users/ringe/projects/phrase-lang'
+S = 'C:/Users/<user>/AppData/Local/Temp/claude/1ff08f82160bcdeb/2ca12683-042f-40b7-b61a-623ae180176b/scratchpad/'
+G = 'C:/Users/<user>/projects/phrase-lang'
 PROPPATH = os.environ['PROPPATH']
 d, subject, result = sys.argv[1:4]
 R = {'architect': 'architect', 'qa': 'qa', 'developer': 'dev', 'audit lens': 'auditlens', 'decider': 'decider', 'coach': 'coach'}

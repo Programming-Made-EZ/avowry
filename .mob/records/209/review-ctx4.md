@@ -1,7 +1,7 @@
 # Card 209 review (ctx-4, independent reviewer, audit lens)
 
 Reviewer: Claude, ctx-4, fresh context, authored none of this code. Claude seat because probes at 14:54 UTC (.mob/records/probes/2026-10-30.jsonl) show Codex, Copilot, Grok and agy without usable quota.
-Reviewed: mob-defaults (C:\Users\ringe\mob-crosscli) 6836d76..1bb0a83 on origin/main (working tree at 1bb0a83, clean except untracked .mob/). I did not push; no gh calls.
+Reviewed: mob-defaults (C:\Users\<user>\mob-crosscli) 6836d76..1bb0a83 on origin/main (working tree at 1bb0a83, clean except untracked .mob/). I did not push; no gh calls.
 
 ## Verdict: CHANGES REQUESTED
 
@@ -31,7 +31,7 @@ The behaviour is correct and the process is sound. Two small findings need a fol
 
 ## What I ran
 
-- `python -m unittest tests.test_mob_process tests.test_template_removal` in C:\Users\ringe\mob-crosscli: Ran 79 tests, OK (4.8 s).
+- `python -m unittest tests.test_mob_process tests.test_template_removal` in C:\Users\<user>\mob-crosscli: Ran 79 tests, OK (4.8 s).
 - Card-mode removal classes `python -m unittest tests.test_card_mode.RemovalsOnlyAtTheRetro tests.test_card_mode.RemovalRule tests.test_card_mode.ParsingARemoval tests.test_card_mode.RemovalRuleCalls`: OK.
 - Mutations M1-M5 above, and the F1 experiment (mutated `sync_task_force` with the unmodified test: OK; with line 1072 changed to `removed: retro`: FAILED; unmutated code with line 1072 changed: OK), all in the scratch copy.
 - `grep -n "removed: cycle" tests/*.py` (F3) and a grep for `removed: cycle` over tracked non-test files (found F2).
@@ -53,7 +53,7 @@ Should an agent with different domain knowledge or context join now? **No.** The
 ### What I ran
 - `python -m unittest tests.test_template_removal` at e239b12: 6 tests, OK.
 - `python -m unittest tests.test_card_mode.TrueMobbing.test_a_removal_without_a_passed_decider_is_refused`: OK.
-- F1 and F2 mutations above in a git-archive scratch copy; nothing in C:\Users\ringe\mob-crosscli was edited.
+- F1 and F2 mutations above in a git-archive scratch copy; nothing in C:\Users\<user>\mob-crosscli was edited.
 - Not re-run: the full suite (338 tests OK is the author's record at e239b12; the F1/F2 deltas are one test line, one scan extension and one template paragraph, all exercised above).
 
 ### Domain-expert answer (boundary: after green, before ship; T2)

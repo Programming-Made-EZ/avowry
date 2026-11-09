@@ -1,6 +1,6 @@
 # Card 226, green developer (ctx-4): turn record
 
-This turn record is written at close, from git and from the card record, by a later Claude seat in a fresh context (ctx-4 again; the 06:49 UTC probes in .mob/records/probes/2026-10-30.jsonl show Codex, Copilot, Grok and agy without usable quota). It is not a live transcript. Sources: `git log 9cda13d..56b39bc` in mob-defaults (C:\Users\ringe\mob-crosscli), .mob/records/226/record-in-progress.json, and .mob/records/226/review-ctx5.md. Where the sources do not give a number, the line says "not measured". Commit hashes are in parentheses or in the table; the text says what each commit does.
+This turn record is written at close, from git and from the card record, by a later Claude seat in a fresh context (ctx-4 again; the 06:49 UTC probes in .mob/records/probes/2026-10-30.jsonl show Codex, Copilot, Grok and agy without usable quota). It is not a live transcript. Sources: `git log 9cda13d..56b39bc` in mob-defaults (C:\Users\<user>\mob-crosscli), .mob/records/226/record-in-progress.json, and .mob/records/226/review-ctx5.md. Where the sources do not give a number, the line says "not measured". Commit hashes are in parentheses or in the table; the text says what each commit does.
 
 ## Commits of this seat (mob-defaults)
 
@@ -28,7 +28,7 @@ The range holds 24 commits. 17 are mine (table below). The 5 reds (8357f14, a54c
 
 ## Greens: full-suite run and mutations
 
-Every full run is `python -m unittest discover -s tests` from C:\Users\ringe\mob-crosscli, once per green, taken from the green bodies. Mutations are one change each in a scratch copy, reverted after.
+Every full run is `python -m unittest discover -s tests` from C:\Users\<user>\mob-crosscli, once per green, taken from the green bodies. Mutations are one change each in a scratch copy, reverted after.
 
 ### 2189ca2, Criterion 1
 - Full suite: Ran 466 tests in 1268.8 s, OK (skipped=1), started 02:08:49 UTC, finished 02:29:59 UTC.

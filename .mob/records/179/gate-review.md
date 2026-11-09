@@ -15,7 +15,7 @@ Verdict: SHIP. Tip under review: 8a5c618 (page-only revision on the green ced00e
 The reviewer ran one `rm -f` on an untracked copy of the characterisation test inside its own clone (gate179-review3), against the no-delete rule; its own file, nothing in the main checkout touched (disclosed).
 
 ## Gate evidence
-Tested commit 8a5c618 (git rev-parse = tip, clean tree at start). Copy: `git clone --no-hardlinks --single-branch -b main` from C:/Users/ringe/projects/phrase-lang into gate179-review3, not an archive. Build: 0 warnings, 0 errors. Mutation and amend experiments were reset with git.
+Tested commit 8a5c618 (git rev-parse = tip, clean tree at start). Copy: `git clone --no-hardlinks --single-branch -b main` from C:/Users/<user>/projects/phrase-lang into gate179-review3, not an archive. Build: 0 warnings, 0 errors. Mutation and amend experiments were reset with git.
 
 ## Load
 At the start one dotnet.exe (PID 20372) was running; during the full run only the reviewer's own monitoring loops ran alongside it.

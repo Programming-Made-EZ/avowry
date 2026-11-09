@@ -12,8 +12,8 @@
             "trx": "floorC1.trx",
             "timestamp": "2026-11-05T17:45:43.1697698-08:00"
           },
-          "temp": "C:/Users/ringe/AppData/Local/Temp/claude/green217d",
-          "tmp": "C:/Users/ringe/AppData/Local/Temp/claude/green217d"
+          "temp": "C:/Users/<user>/AppData/Local/Temp/claude/green217d",
+          "tmp": "C:/Users/<user>/AppData/Local/Temp/claude/green217d"
         },
         {
           "outcomes": ".mob/records/217/runs/local-floorC-2.outcomes.json",
@@ -22,8 +22,8 @@
             "trx": "floorC2.trx",
             "timestamp": "2026-11-05T17:56:58.0319107-08:00"
           },
-          "temp": "C:/Users/ringe/AppData/Local/Temp/claude/green217d",
-          "tmp": "C:/Users/ringe/AppData/Local/Temp/claude/green217d"
+          "temp": "C:/Users/<user>/AppData/Local/Temp/claude/green217d",
+          "tmp": "C:/Users/<user>/AppData/Local/Temp/claude/green217d"
         }
       ],
       "allowed_failures": [

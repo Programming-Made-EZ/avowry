@@ -12,5 +12,5 @@ D167: disabled = the failed-probe guard; unknown = the claude/gemini guard; repe
 
 Failing output (one line): "Ran 25 tests ... FAILED (failures=54, errors=4)", e.g. "AssertionError: 0 != 1 : ['ok']" for a one-model probe record and "AttributeError: module 'mob_process' has no attribute '_probe_problems'" for the 4 unit tests.
 
-Modules run: 4 = tests.test_mob_process, tests.test_command_scans_record, tests.test_command_scans_record_strict (the three that call check_record) plus tests.test_record_task_force_probes. 129 tests, FAILED, every failure in the new module. The three old modules alone: 104 tests OK. Full suite not run. Scratch: C:/Users/ringe/AppData/Local/Temp/claude/qa210-1-4821 (left in place; the commit message file went to the shell temp folder).
+Modules run: 4 = tests.test_mob_process, tests.test_command_scans_record, tests.test_command_scans_record_strict (the three that call check_record) plus tests.test_record_task_force_probes. 129 tests, FAILED, every failure in the new module. The three old modules alone: 104 tests OK. Full suite not run. Scratch: C:/Users/<user>/AppData/Local/Temp/claude/qa210-1-4821 (left in place; the commit message file went to the shell temp folder).
 Size: 3402 bytes

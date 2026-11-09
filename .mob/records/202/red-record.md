@@ -35,7 +35,7 @@ two-undeclared: exit 0; no PHnnn (line:col)
 crlf: exit 0; no PHnnn (line:col)
 multi-line-call: exit 0; no PHnnn (line:col)
   Stack Trace:
-     at Avowry.Acceptance.Tests.UndeclaredNativeFail.Undeclared_native_fail_reports_a_diagnostic() in C:\Users\ringe\projects\wt-202-red\tests\Avowry.Acceptance.Tests\UndeclaredNativeFail.cs:line 35
+     at Avowry.Acceptance.Tests.UndeclaredNativeFail.Undeclared_native_fail_reports_a_diagnostic() in C:\Users\<user>\projects\wt-202-red\tests\Avowry.Acceptance.Tests\UndeclaredNativeFail.cs:line 35
 --- End of stack trace from previous location ---
 
 Failed!  - Failed:     1, Passed:     0, Skipped:     0, Total:     1, Duration: 2 s - Avowry.Acceptance.Tests.dll (net8.0)
@@ -99,7 +99,7 @@ The green of criterion 1 changes `tests/Avowry.Acceptance.Tests/Fixtures/corpus/
 Command: `dotnet test tests/Avowry.Acceptance.Tests --nologo --no-build --filter "Status!=Pending&FullyQualifiedName~UndeclaredNativeFail"`
 
 ```
-No test matches the given testcase filter `Status!=Pending&FullyQualifiedName~UndeclaredNativeFail` in C:\Users\ringe\projects\wt-202-red\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+No test matches the given testcase filter `Status!=Pending&FullyQualifiedName~UndeclaredNativeFail` in C:\Users\<user>\projects\wt-202-red\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
 ```
 
 0 tests run, exit 0.

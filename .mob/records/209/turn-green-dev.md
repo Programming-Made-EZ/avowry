@@ -1,6 +1,6 @@
 # Card 209: green seat turn record (backend developer, ctx-3)
 
-Card 209 green evidence. Code is in mob-defaults (C:\Users\ringe\mob-crosscli, local main, not pushed).
+Card 209 green evidence. Code is in mob-defaults (C:\Users\<user>\mob-crosscli, local main, not pushed).
 
 ## Commits per criterion
 

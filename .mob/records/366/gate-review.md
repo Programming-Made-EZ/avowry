@@ -39,4 +39,4 @@ Reading the three texts as Dana: NOTICE ("Copyright 2026 Programming Made EZ") i
 
 **Gate evidence:** tested commit fab5dc9b5f7861353241b571ce33ef6e19ddce09; copy: `git clone --no-hardlinks --single-branch -b main` of the main checkout; dotnet processes at start: 1 (a pre-existing dotnet.exe, not the reviewer's).
 **Load:** the gate ran alone (10 m 34 s for the Acceptance project, slow for a quiet machine); the Python suites ran only after it.
-Clone left at `C:\Users\ringe\projects\gate366-review` (clean, on main at fab5dc9, no extra worktrees).
+Clone left at `C:\Users\<user>\projects\gate366-review` (clean, on main at fab5dc9, no extra worktrees).

@@ -1,6 +1,6 @@
 # Card 209: red seat turn record (QA engineer, ctx-2)
 
-Evidence for Card 209 (MD-001, D145, D157). The red work is in mob-defaults (C:\Users\ringe\mob-crosscli).
+Evidence for Card 209 (MD-001, D145, D157). The red work is in mob-defaults (C:\Users\<user>\mob-crosscli).
 
 ## Commits
 

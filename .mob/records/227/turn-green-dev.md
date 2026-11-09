@@ -1,6 +1,6 @@
 # Card 227, green developer (ctx-5): turn record
 
-This turn record is written at close, from git and from the card record, by a later Claude seat in a fresh context (ctx-5 again; the 22:23 UTC probes in .mob/records/probes/2026-10-30.jsonl show Codex, Copilot, Grok and agy without usable quota). It is not a live transcript. Sources: `git log 56b39bc..f8a45da` in mob-defaults (C:\Users\ringe\mob-crosscli), the bodies of the green commits, .mob/records/227/record-in-progress.json (cycles, deviations, command_scans, observations), .mob/records/227/review-ctx6.md (review and re-check) and .mob/records/227/review-security-ctx3.md (review and re-check). Where the sources do not give a number, the line says "not measured". Commit hashes are in the table or in parentheses; the text says what each commit does.
+This turn record is written at close, from git and from the card record, by a later Claude seat in a fresh context (ctx-5 again; the 22:23 UTC probes in .mob/records/probes/2026-10-30.jsonl show Codex, Copilot, Grok and agy without usable quota). It is not a live transcript. Sources: `git log 56b39bc..f8a45da` in mob-defaults (C:\Users\<user>\mob-crosscli), the bodies of the green commits, .mob/records/227/record-in-progress.json (cycles, deviations, command_scans, observations), .mob/records/227/review-ctx6.md (review and re-check) and .mob/records/227/review-security-ctx3.md (review and re-check). Where the sources do not give a number, the line says "not measured". Commit hashes are in the table or in parentheses; the text says what each commit does.
 
 ## Commits of this seat
 
@@ -24,7 +24,7 @@ Avowry commits that belong to these greens (text only, per the cycles in the rec
 
 ## Greens: full-suite run and mutations
 
-Every full run is `python -m unittest discover -s tests` from C:\Users\ringe\mob-crosscli, one run per green, taken from the green bodies and the cycles in the record. All finished OK with skipped=1 (the symlink case) unless a line says otherwise. The "SMOKE FAILED" lines in the output are printed by tests/test_smoke.py fixtures that exercise a failing smoke on purpose. Mutations are one change each in a scratch copy, reverted or discarded after; "killed" means at least one test failed.
+Every full run is `python -m unittest discover -s tests` from C:\Users\<user>\mob-crosscli, one run per green, taken from the green bodies and the cycles in the record. All finished OK with skipped=1 (the symlink case) unless a line says otherwise. The "SMOKE FAILED" lines in the output are printed by tests/test_smoke.py fixtures that exercise a failing smoke on purpose. Mutations are one change each in a scratch copy, reverted or discarded after; "killed" means at least one test failed.
 
 | Green | Full suite | Duration | Started (UTC, 2026-10-31) | Mutations run | Killed | Survivors |
 |---|---|---|---|---|---|---|
@@ -49,7 +49,7 @@ Other counts named in the bodies, each with its command:
 - b8bbfaf: `python -m unittest tests.test_command_scans_record_strict`: Ran 23, OK (the red had 21 tests, 16 failing).
 - 1d65a30: `python -m unittest tests/test_trust_ladder.py`: Ran 56, OK (7 failing methods before).
 - 799af53: `python -m unittest tests.test_push_rule_audit`: Ran 26, OK.
-- f8a45da: `python -m unittest tests.test_push_watch_default`: Ran 17, OK (the red had failures=11). `python -m unittest tests.test_card_mode.SeatProbes`: Ran 5, OK in 104.325 s. Real runs: `python mob_process.py unpushed C:/Users/ringe/projects/phrase-lang C:/Users/ringe/mob-crosscli` printed ok, exit 0; `push_rule_problems` on both repositories returned [].
+- f8a45da: `python -m unittest tests.test_push_watch_default`: Ran 17, OK (the red had failures=11). `python -m unittest tests.test_card_mode.SeatProbes`: Ran 5, OK in 104.325 s. Real runs: `python mob_process.py unpushed C:/Users/<user>/projects/phrase-lang C:/Users/<user>/mob-crosscli` printed ok, exit 0; `push_rule_problems` on both repositories returned [].
 
 Real-run checks from the cycles: `python mob_process.py ladder` on avowry printed one problem (card 226) before the entry and ok, exit 0, after; command_scans problems 0 over 7 contexts at 1f.
 
