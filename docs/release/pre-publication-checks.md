@@ -1,6 +1,6 @@
 # Pre-publication checks (card 186)
 
-Findings for the sponsor persona before the first package publish, recorded 2026-11-08. Each figure comes from the command named in its section, run on the tree at commit `c4692e074c8970081687d332adb64f200728426c` (the commit before this page), except where a section says otherwise: the licences come from the local NuGet cache, the home-path counts were taken at commit `dde36dc`, and a few bench counts are labelled as counted by a short script. Where the repository cannot say, the page says `not reviewed: needs <source>`. Nothing here is legal advice.
+Findings for the sponsor persona before the first package publish, recorded 2026-11-08. Each figure comes from the command named in its section, run on the tree at commit `c4692e074c8970081687d332adb64f200728426c` (the commit before this page), except where a section says otherwise: the Owner items section reads `NOTICE` and `TRADEMARKS.md` as filled by card 366 and the product owner's answers of 2026-11-08 (its scan tip is kept for the other sections), the licences come from the local NuGet cache, the home-path counts were taken at commit `dde36dc`, and a few bench counts are labelled as counted by a short script. Where the repository cannot say, the page says `not reviewed: needs <source>`. Nothing here is legal advice.
 
 The repository is public now (`docs/release/v0.1-bar.md:34` and `:51`). So the history, the author identity, the records and the bench rows below are already exposed, and a problem found in history cannot be undone by holding the publish: pushed history is not rewritten (`TEAM_WORKING_AGREEMENT.md`). The hold recommendations below apply to what is published next: the package, new bench output and new releases.
 
@@ -10,10 +10,10 @@ Command: `git grep -n PackageReference -- '*.csproj' '*.props' '*.targets'` plus
 
 | id | version | licence | source | where used |
 | --- | --- | --- | --- | --- |
-| FastEndpoints | 8.3.0 | MIT | nuspec licence expression | generated project (`CSharpProvider.cs:193`) and `reference/csharp/Orders.Api` |
-| Microsoft.NET.Test.Sdk | 17.11.1 | MIT | nuspec licence expression | test-only: three tracked test projects, `reference/csharp/Orders.Specs`, generated Specs project (`CSharpProvider.cs:207`) |
-| xunit | 2.9.2 | Apache-2.0 | nuspec licence expression | test-only: same projects as above (`CSharpProvider.cs:208`) |
-| xunit.runner.visualstudio | 2.8.2 | Apache-2.0 | nuspec licence expression | test-only: same projects as above (`CSharpProvider.cs:209`) |
+| FastEndpoints | 8.3.0 | MIT | nuspec licence expression | generated project (`CSharpProvider.cs:237`) and `reference/csharp/Orders.Api` |
+| Microsoft.NET.Test.Sdk | 17.11.1 | MIT | nuspec licence expression | test-only: three tracked test projects, `reference/csharp/Orders.Specs`, generated Specs project (`CSharpProvider.cs:251`) |
+| xunit | 2.9.2 | Apache-2.0 | nuspec licence expression | test-only: same projects as above (`CSharpProvider.cs:252`) |
+| xunit.runner.visualstudio | 2.8.2 | Apache-2.0 | nuspec licence expression | test-only: same projects as above (`CSharpProvider.cs:253`) |
 
 Shipped with the compiler and CLI: none. `Avowry.Cli.csproj` and every other project under `src/` have no PackageReference; the first package is added only to a project the compiler generates.
 
@@ -81,7 +81,7 @@ Recommendation: keep the check as a commit gate; it passes.
 
 ## Name collisions (not a professional search)
 
-Source: the screen recorded in D125 (`docs/decisions/process-and-staffing.md:128`), not queried again on 2026-11-08. Scan tip: `c4692e074c8970081687d332adb64f200728426c`. Free means free on the date given.
+Source: the screen recorded in D125 (`docs/decisions/process-and-staffing.md:129`), not queried again on 2026-11-08. Scan tip: `c4692e074c8970081687d332adb64f200728426c`. Free means free on the date given.
 
 - NuGet package id Avowry: free on 2026-10-29, source D125.
 - npm: free on 2026-10-29, source D125.
@@ -90,34 +90,39 @@ Source: the screen recorded in D125 (`docs/decisions/process-and-staffing.md:128
 - GitHub handle: free on 2026-10-29, source D125.
 - avowry.dev: free on 2026-10-29, source D125.
 - avowry.io: free on 2026-10-29, source D125.
-- Trademark databases and the earlier brand called Phrase: not reviewed: commissioned by the owner; pending result (Trademark search brief below).
+- Trademark databases and the earlier brand called Phrase (the earlier name, no longer the product name): not reviewed: commissioned by the owner; pending result (Trademark search brief below).
 - Registry state after 2026-10-29: not reviewed: needs a fresh lookup on the day of publishing.
 
 Recommendation: repeat the registry lookups on the publish day; the professional trademark search is commissioned by the owner, and publishing the name waits on its result.
 
 ## Owner items
 
-Command: read from `NOTICE`, `TRADEMARKS.md`, D121, D125 and the owner's answers of 2026-11-08 (`NOTICE` and `TRADEMARKS.md` filled by card 366). Scan tip: `c4692e074c8970081687d332adb64f200728426c`. Every item is answered; the search waits on its result and four items are carried by cards 367 to 370.
+What blocks what: nothing is published as a release until the trademark search result is in and the owner approves in writing. Preparation (cards 366 to 370 and the publish card's package metadata) can proceed meanwhile. The registry state after 2026-10-29 is re-checked on the day of publishing (the brief says so).
+
+Command: read from `NOTICE`, `TRADEMARKS.md`, D121, D125 and the owner's answers of 2026-11-08 (`NOTICE` and `TRADEMARKS.md` filled by card 366). These items are the product owner's answers of 2026-11-08, recorded here; the mob's inbox copy is outside the repository, so this page is the record. Scan tip: `c4692e074c8970081687d332adb64f200728426c`. Every item is answered; the search waits on its result and four items are carried by cards 367 to 370.
 
 - Public name: answered 2026-11-08. Avowry confirmed (D125); registration status pending the owner's trademark search.
 - Holder at `NOTICE:2` and `TRADEMARKS.md:5`: answered 2026-11-08. Programming Made EZ; 2026 is an assumption the owner can correct (docs/LICENSING.md); same holder for the trademark line: yes (card 366).
-- Professional trademark search: answered 2026-11-08. commissioned by the owner; pending result. Publishing the name waits on the result.
-- The four lawyer questions (D121): answered 2026-11-08. skipped by owner decision.
+- Professional trademark search: answered 2026-11-08. The search is commissioned by the owner; pending result. Publishing the name waits on the result.
+- The four lawyer questions (D121): answered 2026-11-08. The lawyer questions were skipped by owner decision.
   1. Do the generated runtime helper files need a notice, given that generated code belongs to the user?
   2. Is a trademark policy on this name enforceable?
   3. Does the rename rule conflict with Apache-2.0 notice retention?
   4. Who is the holder? (answered by the holder item above)
-- Author identity going forward: answered 2026-11-08. keep.
-- Unread vendor terms (four vendors, plus the seat replies under `.mob/records`): answered 2026-11-08. read-first (card 367).
-- The `reply_head` publication choice (prefixes of up to 200 characters in the bench history files): answered 2026-11-08. trim for new rows only; pushed rows stay public (card 368).
-- Transitive package licences: answered 2026-11-08. restore-and-review (card 369).
-- Home paths in tracked records: answered 2026-11-08. scrub-tracked; history stays public (card 370).
+- Author identity going forward: answered 2026-11-08. Decision: keep. The current author identity stays for the package and for later commits.
+- Unread vendor terms (four vendors, plus the seat replies under `.mob/records`): answered 2026-11-08. Decision: read-first (card 367). Read the four vendors' terms before anything more is published.
+- The `reply_head` publication choice (prefixes of up to 200 characters in the bench history files): answered 2026-11-08. Decision: trim for new rows only; pushed rows stay public (card 368).
+- Transitive package licences: answered 2026-11-08. Decision: restore-and-review (card 369). Restore the packages, then review their licences.
+- Home paths in tracked records: answered 2026-11-08. Decision: scrub-tracked; history stays public (card 370). Remove home paths from tracked files.
 
 ### Trademark search brief
 
 - Applicant: Programming Made EZ.
+- Applicant's country and legal form: supplied privately by the owner to the provider; not written on this page.
 - Mark: Avowry.
+- Mark type: word mark (the name Avowry in plain characters); the logo is not part of this search.
 - Classes: 9 (downloadable software) and 42 (software development services).
+- Goods and services for both classes: programming-language compiler and command-line tool; software development services.
 - Jurisdictions (proposed by the mob; the owner confirms with the provider): United States, European Union, United Kingdom.
 - NuGet package id: free on 2026-10-29 (D125); not checked since.
 - npm: free on 2026-10-29 (D125); not checked since.
@@ -126,8 +131,8 @@ Command: read from `NOTICE`, `TRADEMARKS.md`, D121, D125 and the owner's answers
 - GitHub handle: free on 2026-10-29 (D125); not checked since.
 - avowry.dev: free on 2026-10-29 (D125); not checked since.
 - avowry.io: free on 2026-10-29 (D125); not checked since.
-- Trademark databases and the earlier brand called Phrase: not checked (the search covers them).
-- Registry state after 2026-10-29: not checked.
+- Trademark databases and the earlier brand called Phrase: not checked (the earlier name is no longer the product name; the search is for Avowry).
+- Registry state after 2026-10-29: not checked. Re-checked on the day of publishing.
 - Registry screen: [Name collisions](#name-collisions-not-a-professional-search).
 
 Recommendation: name Avowry confirmed, publishing waits on the search result; holder Programming Made EZ (card 366); search commissioned by the owner; lawyer questions skipped by owner decision; author identity keep; vendor terms read-first (card 367); reply_head trim for new rows only, pushed rows stay public (card 368); transitive licences restore-and-review (card 369); home paths scrub-tracked, history stays public (card 370).
