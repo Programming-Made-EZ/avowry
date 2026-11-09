@@ -2113,3 +2113,4 @@
 {"seat": "qwen", "role": "decider voter", "context": "decider-qwen", "card": "decider", "ts": "2026-11-09T04:15:54.027495Z", "probe_taken_at": "2026-11-09T04:15:54.018876Z"}
 {"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-09T04:19:30.084112Z", "probe_taken_at": "2026-11-09T04:19:30.073377Z"}
 {"seat": "qwen", "role": "decider voter", "context": "decider-qwen", "card": "decider", "ts": "2026-11-09T04:21:27.658348Z", "probe_taken_at": "2026-11-09T04:21:27.648034Z"}
+{"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-09T04:24:28.479449Z", "probe_taken_at": "2026-11-09T04:24:28.470548Z"}
