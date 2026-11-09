@@ -1,0 +1,87 @@
+{
+ "decider": "D227",
+ "subject": "card 203 task-force declaration and card text (names reserved by generated code)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "g227architect-architect-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "exits 1 with PH341 at its marker line",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe record cleanly separates reject ids from characterisation near-misses, ensuring false positives are caught before merge. The checker uses exact reserved-name matching, not prefix or case-insensitive logic, aligning with the exact-ordinal rule. Adding a Line property to three models is minimal and consistent with existing patterns. Deferring derived-name and framework collisions keeps scope tight. The CLI guard exits before file emission, making enforcement deterministic. Golden tests and near-miss fixtures verify byte-identical output and prevent regressions. The design is sound, minimal, and enforceable."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "g227qa-qa-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Without `runSpecs` a \"builds\" fixture proves nothing, because collisions also \"build\" today.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nFrom the QA side, every rule can be tested red first. The Pending test's rows R1 to R10 fail today with \"exit 0; no PHnnn; .cs files present\". The near-miss fixtures N1 to N6 are declared as characterisation, and they use `runSpecs: true`, which really does exist in the corpus fixtures. Without it, the collisions would also show as \"builds\". The golden test guards against emission changes.\n\nNotes:\n- The R4 fixture must include a spec that uses the type, or it builds and proves nothing.\n- The R8 and R9 fixtures must declare a failure or an `ensure`.\n- Scenario 1 should check that no source map was written, not just that no .cs file was.\n-"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "g227dev-dev-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A diagnostic is one guard in the adapter",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe rules are workable from the developer seat. The red is a single Pending test with the near-miss fixtures committed as characterisation, so I can watch the red fail without gaming it. The green is one guard, a `Line` property on three model records, and the reject fixtures. That keeps one criterion per green, with the golden test guarding unchanged output. Adding the reject corpus rows with the green, not the red, avoids breaking the gate. It is also fair to the work that the near-miss fixtures run specs. The note I'd add is that the architect should settle the shared constant for each reserved name, so the guard and the emitter can't"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "g227auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "SUPERSEDED BY THE VOTE TEXT AT THE TOP OF THIS PROPOSAL AND THE CORRECTIONS BLOCK",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal supersedes the draft's conflicting seat assignments with the corrections block, resolving the quota issue for Grok/Codex/Copilot/agy. It enforces TDD red-first, fresh contexts for all critical seats, and independent gate/sign-off roles. The scope is tightly bounded to one diagnostic (PH341) with clear characterisation tests and near-miss coverage. The audit lens confirms the process is verifiable via committed records and CI gates. No loopholes detected; the corrections block explicitly closes the draft's section 6 discrepancy."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "g227r-decider-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a fresh Claude QA context in its own worktree",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe decision to reject rests on evidence, not assertion. The red must run `dotnet build` once on each emitted reject project from R1 to R10, so the predicted C# error codes are checked on the current tree. N1 becomes a reject id if it fails. The near-miss fixtures need `runSpecs: true`, and the golden test pins the generated output byte for byte. Every seat needed to sign off is named. The red and green are separate, and neither the gate reviewer nor the sign-off is the green. Both of those seats run the gate. Leaving out a cold reader is justified because this is not a docs card.\n\nOne inconsistency to fix: the vote text puts Muse in the"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "g227coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "independent gate reviewer and sign-off two further fresh Claude contexts",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe task force fits the task. Every role is either required by a standing rule (red-first, independence, gate, sign-off) or covers a real risk. The second review is pointed at the C# name-binding claims, which is where the draft is weakest. Leaving out the cold reader is right for a one-row docs change. Not adding a domain expert is fine because the red's `dotnet build` evidence settles the C# rules.\n\nNotes:\n- The proposal lists Muse as available in one place and out of quota in another. Settle that before seating anyone.\n- For an S card, the two extra Claude contexts (gate reviewer and sign-off) are the heaviest part. Keep them only bec"
+   }
+  ]
+ },
+ "trigger_line": "(d) the re-run was not run because the primary window passed with no No and no amendment and the proposal does not change this agreement",
+ "window_notes": "Three earlier attempts failed on harness problems (see .mob/records/203/retro-input.md); the counted window ran the seats one at a time with the shared vote prompt (CITE and reply format); the decider seat was refused for Claude by the rotation rule and re-asked on Cursor (D171)."
+}

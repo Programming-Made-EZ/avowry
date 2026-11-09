@@ -330,3 +330,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D224](process-and-staffing.md#d224) | Card 202 retro pick: adopt the D217 trial, the confirmation step in place of the separate independent re-run | process-and-staffing | adopted |
 | [D225](process-and-staffing.md#d225) | Card 186 task-force declaration and card text (pre-publication checks: name, licences, history, vendor terms) | process-and-staffing | adopted |
 | [D226](process-and-staffing.md#d226) | Card 186 retro pick: tune D219, every review of a docs card page finishes before the gate review starts | process-and-staffing | adopted |
+| [D227](process-and-staffing.md#d227) | Card 203 task-force declaration and card text (names reserved by generated code are rejected) | process-and-staffing | adopted |

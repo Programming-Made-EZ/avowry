@@ -1468,5 +1468,11 @@
     "status": "adopted",
     "title": "Card 186 retro pick: tune D219, every review of a docs card page finishes before the gate review starts",
     "order": 217
+  },
+  "D227": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 203 task-force declaration and card text (names reserved by generated code are rejected)",
+    "order": 218
   }
 }
