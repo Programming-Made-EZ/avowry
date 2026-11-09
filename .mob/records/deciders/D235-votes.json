@@ -1,0 +1,120 @@
+{
+ "decider": "D235",
+ "subject": "card 370 task-force declaration and card text (tracked files carry no home path of a local account)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "y235architect-architect-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the neutral form is `<user>` replacing only the account segment",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nArchitecturally sound and enforceable: one shared home-path definition, byte-preserving replacement of only the account segment, a short reasoned allow-list, and scanner rows covering F1–F9 plus must-not-hit controls, which limits false positives. The staged-only hook plus CI scan, board regeneration rather than hand-editing, and the verified MIGRATION re-pin are minimal mechanisms. Characterisation N1–N4 makes the large rewrite auditable without rewriting history. The read-only architect slice must lock the pattern module location and re-pin proof before red."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "y235qa-qa-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "decider_cite_ok": false,
+    "reply_head": "Yes",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   }
+  ],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "y235auditlens-auditlens-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The characterisation and red commits precede the green in git",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nMost of the declaration can be checked from git alone: review records under `.mob/records/370/`, distinct context labels, separate commits and worktrees, red before green, and the per-card evidence section in the retro. The notes below are loopholes the gate reviewer should close.\n\n- The allow-list must be pinned by exact file path, not by pattern, so a new path can't slip in under it.\n- The facilitator's board regeneration is the one step git can't prove. Its command and output must be committed, and the gate should run `generate_archive.py --check`.\n- The guard hook is opt-in per clone, so the in-gate CI scan has to cover the same form"
+   },
+   {
+    "tag": "y235auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": false,
+    "cite": "STANDING EVIDENCE OF THE PRACTICE",
+    "cite_verbatim": true,
+    "decider_cite_ok": false,
+    "reply_head": "Yes\nThe proposal adheres to standing rules D234, D137, D204, D136, D206, D222, D230, D224, D228, D171, D232. It mandates committed review records, separate sessions, red-first order, idle minutes, and per-card evidence. Excluding a cold reader is valid since this is not a docs card. The second review may be skipped with a dated line, matching \"when run\". The gate review executes `git merge-base --is-ancestor`. All actions are git-verifiable. No loopholes found.",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "y235decider-decider-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "tracked files carry no home path of a local account",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nDecision rests on evidence: characterisation and red precede greens, gate replays red, verifies rewrite byte-for-byte, runs characterisation in a full clone, and checks MIGRATION re-pin proof. Seats are complete and distinct: architect, red, green, gate reviewer, sign-off, second review or dated skip, with no cold reader justified for a scan-checked absence."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "y235coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the task force named in the rulings block: a read-only architect slice",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe task force fits the task. A 329-file rewrite with pinned hashes, a generator and a hook needs an architect, separate red and green contexts, a gate reviewer and a sign-off. Dropping the cold reader is justified, because the story promises an absence that a scan checks. Splitting green 1 from green 2 follows the slice limit rather than adding ceremony. Having the facilitator regenerate the board keeps that step with the one person who has `gh` access.\n\nOne note, which does not change the vote: run the Qwen second review rather than taking the dated skip line. The main risks on this card are forms the scan misses and false positives, a"
+   }
+  ]
+ },
+ "reasked_seats": {
+  "architect": [],
+  "qa": [
+   {
+    "tag": "z235qa-qa-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the scanner rows against a stub and the generator red",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nFrom a QA view, each rule can be shown failing before any fix is written. Criteria 370-1 and 370-3 fail on today's tree with a count and file:line places. The scanner rows fail against a stub first, using planted samples and negative controls (`<user>`, `/home/<user> `api.github.com/users/x`). The generator red fails on the expanded checkout path. G2 is a passing control.\n\nThe characterisation tests N1 to N4 read the recorded base blob, so they catch a rule that is too broad. I see no gap that would let bad state through.\n\nNotes:\n- The architect should state how the UTF-16 and `-I`-skipped text files get scanned. Otherwise criterion 370-"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "z235dev-dev-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the red and the green work in their own worktree branches",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes. The card structure is workable and unambiguous for backend work. The red-first TDD rule is enforced, with two Pending criteria consolidated in one red commit per D137/D204 ruling. Slice limits are respected via explicit exceptions for Green 2’s rewrite and generated files. The separation of guard/hook implementation (Green 1) from the bulk path scrub (Green 2) keeps commits focused and testable. Allow-lists, pinned-hash handling, and untracked-file preservation are clearly defined, preventing scope creep or gaming. The facilitator’s board regeneration step is necessary and isolated. The “Done when” criteria are precise and verifiable. I "
+   }
+  ],
+  "audit lens": [],
+  "decider": [],
+  "coach": []
+ },
+ "trigger_line": "(d) the re-run was not run because the primary window passed with no No and no amendment and the proposal does not change this agreement",
+ "window_notes": "Primary window one seat at a time under the D228 preflight: the audit lens fell back from Qwen (a Yes whose cite was not exact, uncounted) to Claude (Yes, counted); QA (Cursor, uncounted cite) and developer (refused for Claude by the rotation rule) were asked again on Cursor and Qwen (D171) and voted Yes: six counted Yes, no No."
+}
