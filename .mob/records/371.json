@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 371,
+ "title": "The pre-publication page shows the owner's answers and the trademark search brief",
+ "process": "card-mode rules run by hand; the Ready draft by a Cursor product-manager seat (reply-only, Probation rung 1) with the facilitator's facts in the brief; the declaration through Decider D233 (four Yes, one audit lens No adopted as named git evidence of separate sessions; confirmation step six Yes; trigger (a)); a read-only architect slice that found one more stale line; a Claude QA red in its own worktree (card 186's 6-OPEN clause moved out in its own commit, then a new module of tests with stub-first planted rows and wrappers); a different Claude context green (the page) and page revision 1 by the same context after two page reviews; a Qwen cold reader (UNCLEAR for a real reason) and a Cursor second read-only review (REVISE) both before the gate review (D206, D219 as tuned by D226); the facilitator's isolated baseline gate; an independent gate review (SHIP; ten mutants killed) and a separate fresh sign-off (SIGNED OFF WITH CONDITIONS); the retro voices and Decider D234 (a declaration carries the standing evidence)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Cursor ctx-1",
+   "model": "cursor-agent in ask mode through cursor_reply.py, product manager, reply-only, Probation rung 1; read-only; the facilitator reran the key facts and ruled on five open points",
+   "evidence": "022b3a8921053252ce174f3b63abe36b299d3203"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md (exact page text, the brief, the card 186 revision, the new module)",
+   "evidence": "1a82c2f1c0d69f4a9a53b70acc19b09f47bbc080"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, a fresh subagent context, QA engineer, in its own git worktree (Grok, Codex, Copilot, agy out of quota); the card 186 revision 9355735 and the characterisation and red 54a6875",
+   "evidence": "54a687570f2081f6c33fd3ef38207fdaf0af8383"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, developer, in its own worktree, never the red's seat; the green 479f2db and page revision 1 f61e99c",
+   "evidence": "479f2dbd974a7d5f0060b4d8407615931a425928"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent gate reviewer, read-only: ancestor step 0 against the page revision, red replay, a ten-row mutation table, page citations checked; SHIP",
+   "evidence": "720ce3c53cf5b0c609b66d91122063f3ddf5838a"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, separate from the gate reviewer, own full gate in its own clone; SIGNED OFF WITH CONDITIONS (none blocking)",
+   "evidence": "8eb0ebb7c9e368f9336391aa512c65ac2bd37663"
+  }
+ ],
+ "retro": "docs/retros/card-371-2026-11-09.md",
+ "notes": "Done checks met: criterion 1 (each of the nine owner items shows its answer, answered 2026-11-08; the search item reads \"commissioned by the owner; pending result\"; the lawyer questions \"skipped by owner decision\"); criterion 2 (no line of the page still calls an answered item open or a placeholder; the stale lines corrected; a \"What blocks what\" paragraph); criterion 3 (a \"Trademark search brief\" with the mark, classes 9 and 42 with a goods and services description, jurisdictions proposed by the mob and the owner confirms, the registry results of 2026-10-29 and what was not checked, and a link). The shared Pending red failed by assertion on 32 ids on the pre-change page and passes after the green; card 186's clause was moved out in its own commit. Baseline gate: Compiler 344 of 344, Acceptance 384 of 384; the green seat, the gate review and the sign-off the same (no load flake on this card). Task force declared through D233; the retro pick D234 added the standing evidence block to declarations. Process time against build time about 1.0 to 1 before the gates. Born-green findings: none. Open: the owner supplies the search result, the provider's jurisdictions confirmation, the applicant's country and legal form, and written approval before any release; cards 367 to 370; bugs 372 to 375, 365; the card 361 test-limit cards; the card 203 follow-up cards."
+}

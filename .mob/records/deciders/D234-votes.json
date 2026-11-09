@@ -1,0 +1,155 @@
+{
+ "decider": "D234",
+ "subject": "card 371 retro pick: a declaration carries the standing evidence",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "w234architect-architect-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "every task-force declaration proposal includes the committed block",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe design is minimal: one block file, one Experimental entry, and nothing else in step 6 or the strict reading of a No changes. The rule is enforceable. Whether a No asks for evidence the block already names can be settled by quoting a line, and anything else stays an ordinary condition.\n\nNotes:\n- Each block line must be checkable with a named git command, or the counter-metric (a line later found untrue of a card) could trigger.\n- The boundary between \"already names\" and \"does not name\" should be judged on the block's literal text, not on intent."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "w234qa-qa-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a declaration that states its git evidence up front draws no repeat No on verifiability",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nFrom a QA view, each of the four block lines can be checked against git: the committed records, the closure-record hashes, distinct context labels in the seat-use log, and red commits coming before the green. The counter-metric (\"a block line later found not true of a card\") gives the experiment a way to fail on its own evidence. That keeps a block pasted in by rote from passing a bad state.\n\nNote: the minutes don't match. The evidence section gives about 16 and about 15 minutes for D231 and D233, but the metric line says about 16 and 20. Please fix the baseline before counting starts. Also, have the closure check verify the block's clai"
+   }
+  ],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "w234auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "a No that asks for evidence the block already names",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nThe proposal mandates including a static template rather than card-specific evidence. Quoting a shared template to dismiss a No creates a loophole: the team can pass declarations without generating actual per-card git-verifiable records, satisfying the letter while breaking the practice. Condition: The evidence block must be generated per-card and explicitly reference the specific git commits/paths for that card’s review records, ensuring dynamic verification rather than quoting a static template."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "w234decider-decider-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a declaration that states its git evidence up front",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nEvaluation is evidence-framed: baseline, target, confirmation minutes, counter-metric against suppression or false block lines, and a bounded three-declaration trial with an owner. That lets adopt, reshape, or reject rest on observed results."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "w234coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a declaration that states its git evidence up front draws no repeat No on verifiability",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe scope fits the problem. It is a single concern: one agreement entry that reuses a committed template, with no new seats, roles or windows. It goes after a measured cost, two confirmation windows of about 15 to 20 minutes each, without adding ceremony. Nobody is left out: the audit lens's recurring condition is answered up front, and the other voices' requests are sent to cards (the QA checklist item, bug 375) instead of padding this change.\n\nNotes:\n- The evidence paragraph gives D231 as about 16 minutes, while the metric says about 16 and 20. One of these should be fixed.\n- At retro, watch the counter-metric so that quoting a block l"
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "x234architect-architect-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "that lists the full commit hashes of that card's review records",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment makes my endorsement stronger. Line 5 of the committed template turns a static block into per-card evidence that `git show` can check against the closure record's hashes, and the regenerated diff includes it. One note on the design: the entry text in the diff leaves out \"copied from the closure record\". Adding it would pin a single source and avoid hashes that don't match."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x234qa-qa-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "so lines 1 to 4 of the block are instantiated for the card in git",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment makes my QA case stronger. Each card now has concrete full hashes that `git show` can check, so a missing or fabricated review record fails a mechanical check. Before, it was only a static claim. Note: copied hashes could still drift from the closure record. The check should also compare the `Evidence (per card)` section against `.mob/records/<card>.json`, and an absent section should count as a counter-metric hit."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x234dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a declaration that states its git evidence up front draws no repeat No on verifiability",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nFrom the developer's seat, I can follow this without gaming it. Every card already produces the cold-reader report, the gate review, the sign-off, and the red and green commits. Copying their full hashes from the closure record into an `Evidence (per card)` section is a few minutes of mechanical work. Anyone can check those lines with `git show`, so the block can't become boilerplate. The amendment fixes the weakness of a static template, and a No that asks for something new is still an ordinary condition. Two notes. First, if a step was skipped (for example, no second review), the section should say so in a line rather than leave it out"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x234auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "each card's retro document carries a section `Evidence (per card)` that lists the full commit hashes",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment explicitly requires each card's retro document to list the full commit hashes for that card's specific review records and commits, instantiated per card and verifiable via `git show`. This directly satisfies the requirement for dynamic, card-specific git references rather than a static template quote."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x234decider-decider-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a declaration that states its git evidence up front",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment strengthens the evidence framing: per-card hashes make verification dynamic and checkable, while the hypothesis, metric, counter-metric and trial remain intact. My endorsement stands."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x234coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the declaration of the next card quotes the previous card's section as the example",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment keeps the right size. It adds one section to each card's retro document, filled with commit hashes copied from the closure record that already exists, so no new seat, review or meeting is created. It meets the audit lens's condition with the smallest change that makes the block specific to each card. A note for later: if retros start skipping the copy step, the closure check should create the section automatically."
+   }
+  ]
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run",
+ "window_notes": "Primary window one seat at a time under the D228 preflight: the developer seat was refused for Claude by the rotation rule and voted in the confirmation step as a full vote on Cursor (D171). D232 was considered for the audit lens No and not applied (the block as proposed was static)."
+}
