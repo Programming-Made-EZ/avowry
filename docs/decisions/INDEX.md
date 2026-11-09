@@ -336,3 +336,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D230](process-and-staffing.md#d230) | Card 361 retro pick: no idle between steps | process-and-staffing | adopted |
 | [D231](process-and-staffing.md#d231) | Card 366 task-force declaration and card text (the NOTICE and TRADEMARKS files name the holder and the year) | process-and-staffing | adopted |
 | [D232](process-and-staffing.md#d232) | Card 366 retro pick: a No whose condition a rule in force meets costs one question to the objector | process-and-staffing | adopted |
+| [D233](process-and-staffing.md#d233) | Card 371 task-force declaration and card text (the pre-publication page shows the owner answers and the trademark search brief) | process-and-staffing | adopted |

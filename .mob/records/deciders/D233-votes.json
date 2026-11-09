@@ -1,0 +1,167 @@
+{
+ "decider": "D233",
+ "subject": "card 371 task-force declaration and card text (the pre-publication page shows the owner answers and the trademark search brief)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "u233architect-architect-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the review records committed under .mob/records/371/ and named in the closure evidence",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe design is sound and minimal. A new module with its own wrapper keeps the gated card 186 wrapper green throughout. Moving the 6-OPEN clause in its own commit is safer than editing it in place. Splitting the ids per D222 and planting pages for the E and F rows means each checker can fail, so it isn't vacuous. B5 checks only the label, not the jurisdictions' content, which avoids a false positive. Notes:\n- Make the Z1 and S \"stale phrase\" patterns exact whole-line matches, so the \"OPEN\" token doesn't hit legitimate prose.\n- The brief must stay a `###` under Owner items, with the nine-item count stopping at it.\n- A10 is a characterisatio"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "u233qa-qa-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The gate reviewer replays 371-1 on the pre-change page.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nI checked the card 186 test against the proposal, and the line numbers hold. Lines 235 to 238 contain the clause that needs at least 6 OPEN items. The six-item fixture is at lines 58 to 60, and the \"Recommendation: ask.\" line comes right after it. Every new-state id (A, Z, S, B) can fail first on the current page, and the E and F rows are written against a stub before the real checker lands. Moving the 6-OPEN clause into a separate Pending test, rather than editing it in place, means main is never red.\n\nQA notes:\n- X1 passes trivially against a stub that returns nothing, so the red record should also show it passing against the real chec"
+   }
+  ],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "u233auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "a fresh Claude QA context in its own worktree",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nThe proposal mandates AI seats using \"fresh context,\" a state git cannot verify. Git records commits and file content but cannot prove model isolation, context initialization, or the absence of prior state reuse. This creates a loophole where the team could claim compliance while reusing contexts, undermining the independent review and audit integrity. The practice relies on unverifiable promises.\nCondition: The proposal must require a git-verifiable artifact, such as a context hash or initialization log committed by each seat, to prove context freshness and isolation."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "u233decider-decider-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "independent gate reviewer and sign-off two further fresh Claude contexts",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nEvaluation rests on observable evidence: line-verified premise, split A/Z/S/E/F/B ids, named tests with current-tree outcomes, red replay, planted failures, and explicit done-when gates. Seats cover architect, red, green, cold reader as sponsor persona, second review, independent gate review, and fresh sign-off, with records committed before closure."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "u233coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the task force named in the rulings block",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe task force fits the risk even though the card is small (size S, four files). The second review earns its place: the red moves a gated assertion in the opposite direction from card 366, and the search brief leaves the mob for a paid provider. The cold reader comes from D206 and answers to the page's actual reader, the sponsor persona. The red, green, gate reviewer and sign-off are the standing minimum. Nothing is missing.\n\nOne note, which does not change my vote: the architect slice is the only seat that looks like ceremony on a one-page edit. Its job is fixing the exact sentences and failure strings, so the red could probably take th"
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "v233architect-architect-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The declaration claims only that the seats are separate sessions with separate worktrees and distinct commits",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment doesn't change my vote. It adds no new file, checker or rule. It points to evidence the agreement already requires: the Accountability record carries the context id (`TEAM_WORKING_AGREEMENT.md:333`), and `.mob/records/seat-use.jsonl` already exists. It also claims only that the seats were separate sessions, not that their isolation was proven, so no checker can fail on something it can't measure. One note: the gate reviewer should check that the context labels in `371.json` are distinct, and that the green's label differs from the red's."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "v233qa-qa-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The declaration claims only that the seats are separate sessions with separate worktrees and distinct commits",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment doesn't change my vote. All four kinds of evidence can be checked with git and can fail: distinct context labels in `371.json`, separate commit hashes on separate worktree branches, lines in `seat-use.jsonl`, and the clone directory each reviewer states. The declaration also stops short of claiming it proves the model has no memory, which nothing in git could show. One QA note: the gate reviewer should check that the green's context label differs from the red's, and that the green's commits are not on `wt-371-red`."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "v233dev-dev-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a read-only architect slice, a red (a fresh Claude QA context in its own worktree",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nAs the seat that runs these rules on every card, I find the plan workable. Moving the assertion into a new module with its own wrapper keeps main from going red. The three Pending wrappers fit the card 361 and 366 precedent, because the green is a single page edit. The D222 id lists are specific enough to comply with without gaming them. The exact failure strings and the planted-page rows mean each test can fail.\n\nNotes:\n- Stubs for the E and F rows must be committed before the real checker lands in the same red. That order needs to be explicit in the red record.\n- The amendment's per-seat commits and worktree branches add no burden for "
+   },
+   {
+    "tag": "v233dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "decider_cite_ok": false,
+    "reply_head": "Yes",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "v233auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the closure record `.mob/records/371.json` lists each seat with its own context label",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment explicitly requires committing `.mob/records/371.json` with distinct context labels and commit hashes, plus `seat-use.jsonl` logs and gate/sign-off hashes, satisfying the git-verifiable artifact requirement for freshness and isolation."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "v233decider-decider-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The declaration claims only that the seats",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment strengthens the evidence trail without claiming a hash proves model memory, and it leaves every required seat and gate intact."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "v233coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The declaration claims only that the seats are separate sessions with separate worktrees",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nMy vote stands. The amendment adds no new seat, no new file and no new checker. It only names evidence the agreement already requires: the context id in the trail record (Accountability, line 333) and the seat-use lines. So the task force stays the size it was. It also openly says it does not claim to prove model isolation, which keeps the evidence honest. One note: the closure check should read those existing fields rather than start a separate ritual for proving freshness."
+   }
+  ]
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run",
+ "window_notes": "Primary window one seat at a time under the D228 preflight; the developer seat was refused for Claude by the rotation rule in the primary window and voted in the confirmation step. The D232 paragraph was considered for the audit lens No and not applied (no line in force proves isolation), so the full confirmation step ran."
+}
