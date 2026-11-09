@@ -1,0 +1,18 @@
+{"outcome":"builds","records":[
+  {"kind":"avow","name":"ok {n: Int}","endpoint":"Types","line":4},
+  {"kind":"endpoint","name":"AvowryBuild","endpoint":"AvowryBuild","line":60},
+  {"kind":"endpoint","name":"AvowryRuntime","endpoint":"AvowryRuntime","line":47},
+  {"kind":"endpoint","name":"Avows","endpoint":"Avows","line":21},
+  {"kind":"endpoint","name":"Program","endpoint":"Program","line":34},
+  {"kind":"endpoint","name":"Types","endpoint":"Types","line":8},
+  {"kind":"step","name":"let kept = ok input.n","endpoint":"AvowryBuild","line":66},
+  {"kind":"step","name":"let kept = ok input.n","endpoint":"AvowryRuntime","line":53},
+  {"kind":"step","name":"let kept = ok input.n","endpoint":"Avows","line":27},
+  {"kind":"step","name":"let kept = ok input.n","endpoint":"Program","line":40},
+  {"kind":"step","name":"let kept = ok input.n","endpoint":"Types","line":14},
+  {"kind":"step","name":"respond with { r: kept }","endpoint":"AvowryBuild","line":67},
+  {"kind":"step","name":"respond with { r: kept }","endpoint":"AvowryRuntime","line":54},
+  {"kind":"step","name":"respond with { r: kept }","endpoint":"Avows","line":28},
+  {"kind":"step","name":"respond with { r: kept }","endpoint":"Program","line":41},
+  {"kind":"step","name":"respond with { r: kept }","endpoint":"Types","line":15}
+],"runSpecs":true}

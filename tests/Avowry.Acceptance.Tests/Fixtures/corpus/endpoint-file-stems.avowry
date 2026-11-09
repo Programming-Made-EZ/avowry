@@ -1,0 +1,71 @@
+# endpoint-file-stems: endpoints named like generated file stems still build and pass their specs
+module FileStems
+
+avow to "ok {n: Int}" -> Int
+  native csharp
+    return n;
+
+endpoint Types : POST /p1
+  input
+    n: Int
+  output
+    r: Int
+  steps
+    let kept = ok input.n
+    respond with { r: kept }
+  spec "accepts"
+    given input { n: 1 }
+    when handled
+    then responds { r: 1 }
+
+endpoint Avows : POST /p2
+  input
+    n: Int
+  output
+    r: Int
+  steps
+    let kept = ok input.n
+    respond with { r: kept }
+  spec "accepts"
+    given input { n: 1 }
+    when handled
+    then responds { r: 1 }
+
+endpoint Program : POST /p3
+  input
+    n: Int
+  output
+    r: Int
+  steps
+    let kept = ok input.n
+    respond with { r: kept }
+  spec "accepts"
+    given input { n: 1 }
+    when handled
+    then responds { r: 1 }
+
+endpoint AvowryRuntime : POST /p4
+  input
+    n: Int
+  output
+    r: Int
+  steps
+    let kept = ok input.n
+    respond with { r: kept }
+  spec "accepts"
+    given input { n: 1 }
+    when handled
+    then responds { r: 1 }
+
+endpoint AvowryBuild : POST /p5
+  input
+    n: Int
+  output
+    r: Int
+  steps
+    let kept = ok input.n
+    respond with { r: kept }
+  spec "accepts"
+    given input { n: 1 }
+    when handled
+    then responds { r: 1 }

@@ -167,17 +167,6 @@ public class ReservedGeneratedNames
             type Email
               email: Text
             """, "type Email", "Email", "field");
-
-        yield return new Row("endpoint-types", EndpointRow("Types"),
-            "endpoint Types ", "Types", "endpoint");
-        yield return new Row("endpoint-avows", EndpointRow("Avows"),
-            "endpoint Avows ", "Avows", "endpoint");
-        yield return new Row("endpoint-program", EndpointRow("Program"),
-            "endpoint Program ", "Program", "endpoint");
-        yield return new Row("endpoint-avowryruntime", EndpointRow("AvowryRuntime"),
-            "endpoint AvowryRuntime ", "AvowryRuntime", "endpoint");
-        yield return new Row("endpoint-avowrybuild", EndpointRow("AvowryBuild"),
-            "endpoint AvowryBuild ", "AvowryBuild", "endpoint");
     }
 
     private sealed record Row(string Id, string Source, string Marker, string Name, string KindWord);
