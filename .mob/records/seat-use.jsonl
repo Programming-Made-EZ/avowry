@@ -2185,3 +2185,4 @@
 {"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-09T13:20:02.303609Z", "probe_taken_at": "2026-11-09T13:20:02.292867Z"}
 {"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-09T13:21:44.830712Z", "probe_taken_at": "2026-11-09T13:21:44.822218Z"}
 {"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-09T13:23:15.338642Z", "probe_taken_at": "2026-11-09T13:23:15.327452Z"}
+{"seat": "muse", "role": "decider voter", "context": "decider-muse", "card": "decider", "ts": "2026-11-09T13:25:05.117967Z", "probe_taken_at": "2026-11-09T13:25:05.104432Z"}
