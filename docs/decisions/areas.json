@@ -1480,5 +1480,11 @@
     "status": "adopted",
     "title": "Card 203 retro pick: a preflight before every vote window (tune D174)",
     "order": 219
+  },
+  "D229": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 361 task-force declaration and card text (diagnostic codes use the AV prefix)",
+    "order": 220
   }
 }

@@ -1,0 +1,87 @@
+{
+ "decider": "D229",
+ "subject": "card 361 task-force declaration and card text (diagnostic codes use the AV prefix)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "k229architect-architect-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "every diagnostic code to use the AV prefix",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nArchitecturally sound and minimal. The suffix discriminator avoids `Phrase`/`PHRASE` false positives while covering `StaysPH325`, `PH10`, `PH\\d`, `PHnnn`, `PH###` and `\"PH\"`. The replayable rewrite rule, tracked-file guard, reasoned history allow-list, base-blob characterisation and atomic green justified by the `ExtensionKeywords` lookup make it enforceable without partial-rename false greens."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "k229qa-qa-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The output must be empty, apart from facilitator record commits.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nI checked the claims through my QA lens. A read-only search turned up no false-positive tokens in the live tree. No uppercase word ending in PH is followed by a digit or a quote, so the rule will not damage words like \"GRAPH\". The rewrite rule also catches test-method names such as `_PH203`, which a `\\bPH` pattern would miss. Planting codes against a stub scanner, which must hit `StaysPH325`, `PH10\"` and `\"PH\"` and must not hit `Phrase`, gives a real red-first check of the guard itself. Comparing against the base-commit `baseline.txt` with the prefix stripped is the right independent check that the numbers are unchanged.\n\nNote: the `test"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "k229dev-dev-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "two Pending criterion tests in one red commit",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nAs the seat that writes the green, I can comply with this honestly. The one rewrite rule is mechanical and replayable. The slice-exception names the exact rule, so I don't have to split the work into broken commits. Each partial split would leave main red, as the draft shows.\n\nNotes:\n- The red's own files must be guard-clean and excluded from the rewrite by path. Please state that exclusion explicitly in the commit's rule.\n- The hand edit to `test_getting_started.py:48` falls outside the rewrite rule. Please record it as a separate listed step.\n- The `git mv` of the `StaysPH325` file needs its class name changed in the same green."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "k229auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The audit replays the rule and compares bytes.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal explicitly defines the rewrite rule, slice exception, and verification steps. The gate reviewer replays the rule byte-for-byte, and the history check is deterministic via git diff. It addresses known traps like matcher literals and hand edits, mandating fresh contexts to prevent leakage. The audit can verify the atomic green solely from the rule and base tree. No loophole allows passing while breaking the practice."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "k229decider-decider-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a fresh Claude QA context in its own worktree",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nAdopt: the decision rests on reproducible evidence — Pending reds watched failing per id, characterisation passing, byte-for-byte rewrite replay, empty history diff, and a gate run in a clone. Sign-off seats are complete and independent: separate fresh contexts for architect, red, green, gate reviewer and sign-off, plus a second read-only review that is either run or removed with a dated skip line at the red."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "k229coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a fresh Claude QA context in its own worktree",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nAs agile coach, I think the task force fits the task. The work is a mechanical rename across about 60 files, and its real risks are matcher literals that a `PH[0-9]{3}` scan misses, history getting scrubbed, and the red seat's own files tripping the guard. Each seat covers one of those risks:\n- The architect fixes the rewrite rule and the allow-list.\n- Red and green are separate fresh contexts.\n- The gate reviewer replays the rule byte for byte.\n- The second reviewer looks only at missed literals.\n\nLeaving out the cold reader and the domain expert is the right call and avoids padding. Note: the sign-off repeats the gate reviewer's full g"
+   }
+  ]
+ },
+ "trigger_line": "(d) the re-run was not run because the primary window passed with no No and no amendment and the proposal does not change this agreement",
+ "window_notes": "The first window run under the D228 preflight: the committed vote prompt template, seats one at a time, no out-of-quota driver in the fallback chains, a Ready draft sent to a reply-only seat; Muse back in the rotation (short votes). Counted at once: no seat re-asked."
+}
