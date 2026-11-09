@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 366,
+ "title": "The NOTICE and TRADEMARKS files name the holder and the year, not placeholders",
+ "process": "card-mode rules run by hand; the Ready draft by a Cursor product-manager seat (reply-only, Probation rung 1) with the facilitator's facts in the brief; the declaration through Decider D231 (five Yes and one audit lens No whose condition was adopted as committed review records named in the closure evidence; confirmation step six Yes; trigger (a)); a read-only architect slice that found the process-start allow-list trap; a Claude QA red in its own worktree (a loosening commit for card 186's placeholder clause, then the scanner with planted rows, the new tests and four wrappers so the gate runs the licence-file tests); a different Claude context green (three line edits and the Pending traits); a Qwen cold reader before the gate review (D206, D219 as tuned by D226); the facilitator's isolated baseline gate; an independent gate review (SHIP; eleven mutants all caught) and a separate fresh sign-off (SIGNED OFF WITH CONDITIONS); the retro voices and Decider D232 (a No that restates a rule in force costs one question; with the trigger (c) re-run)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Cursor ctx-1",
+   "model": "cursor-agent in ask mode through cursor_reply.py, product manager, reply-only, Probation rung 1; read-only; the facilitator reran the key facts and ruled on the open points",
+   "evidence": "152ee40fa3a47fc9b1fe038a18af060d8387596b"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md",
+   "evidence": "4476596f3a3348d261eaf6fe12497b36db44bb90"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, a fresh subagent context, QA engineer, in its own git worktree (Grok, Codex, Copilot, agy out of quota); loosening fc32c36 and the characterisation and red b044e96",
+   "evidence": "b044e968934dc2bd374cbdc852ddfd4f7c99e678"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, developer, in its own worktree, never the red's seat; one atomic commit",
+   "evidence": "b5f381a6301687771b9907a72b0942ea49ed5725"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent gate reviewer, read-only: ancestor step 0 against the Qwen cold-reader report commit, red replay, an eleven-row mutation table; SHIP",
+   "evidence": "83930ddf55df0599f9b95021940243f48f1904ce"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, separate from the gate reviewer, own full gate in its own clone; SIGNED OFF WITH CONDITIONS (none blocking)",
+   "evidence": "d82571904ce25e904949a0facc3594b7030d8672"
+  }
+ ],
+ "retro": "docs/retros/card-366-2026-11-09.md",
+ "notes": "Done checks met: criterion 1 (NOTICE line 2 reads \"Copyright 2026 Programming Made EZ\" and TRADEMARKS.md line 5 names the same holder; no square-bracket placeholder remains in either file); criterion 2 (LICENSE unchanged; docs/LICENSING.md says 2026 is the year the project began, an assumption the product owner can correct); criterion 3 (the placeholder scanner and the guard tests fail if a placeholder returns, with planted rows; the gate now runs tests/test_license_files.py through four wrappers). The shared Pending red failed by assertion on six ids on the pre-change tree and passes after the green; the green changed the test file by the Pending traits only. Baseline gate: Compiler 344 of 344, Acceptance 380 of 380; the review and the sign-off the same (one load flake in the green seat's and the sign-off's first full runs; passes alone and on rerun). The product owner's year assumption (2026) is recorded in docs/LICENSING.md and the card 366 Ready draft. Task force declared through D231; the retro pick D232 tuned Decider protocol step 6. Process time against build time about 0.9 to 1 before the gates. Born-green findings: none. Open: card 371 (the pre-publication page lines 103, 115 and 116 are stale and its criteria now list them); test limits (the scanner is line based; a mixed-case bracket token is caught only by the exact-line check); bugs 372, 373, 374, 365; the card 361 test-limit cards; the card 203 follow-up cards."
+}

@@ -1,0 +1,167 @@
+{
+ "decider": "D232",
+ "subject": "card 366 retro pick: a No whose condition a rule in force meets costs one question to the objector",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "s232architect-architect-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the proposal text is NOT amended, and only the objector is asked",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nAs architect: minimal append-only change, proposal text not amended so re-asking other voters adds no signal. Objector remains sole judge of whether the quoted line meets its condition, preventing proposer overrule or false positives. Record naming the quoted line plus `git show` makes prior-force checkable and auditable. Fallback to ordinary adoption/refusal preserves strict No handling."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "s232qa-qa-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the proposal text is NOT amended, and only the objector is asked",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nFrom a QA view, every part of this can be checked. The quoted line must be committed before the vote, and an auditor can confirm that with `git show`. The record names the line and keeps trigger (a). The counter-metric catches the two bad outcomes: a quoted line that was not yet in force, and an objector overruled by a misreading. Bad state cannot pass silently, because the objector alone decides whether the quoted line meets its condition, and a \"not met\" answer goes back to the full process in steps 3 and 4. The proposal text stays unchanged, so not asking the other voters again is sound.\n\nNote: the record should show the commit hash o"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "s232dev-dev-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "only the objector is asked, in one question",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nAs the seat that works under these rules every card, I find this workable. Only the objector is asked, and the quoted line can be checked with `git show`, so I can comply without gaming it. The strict reading of a No stays, and a condition that no rule in force meets still goes through the full confirmation step. The unchanged trigger (a) and the counter-metric on misquoted lines guard against the proposer overreaching. My one note is that the proposer should quote the line verbatim, with its commit, in the record."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "s232auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the proposer quotes that line in the record",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe audit lens requires verifiable, git-tracked evidence that pre-existing rules are correctly cited before skipping confirmation. This proposal mandates quoting the exact line, recording it, and enabling `git show` verification, directly satisfying the audit requirement. It preserves the objector’s veto power if the line is misapplied, preventing the team from bypassing genuine objections. The only reservation is ensuring the objector remains truly independent during the single-question check, but the recorded quote provides an objective audit trail. This balances efficiency with rigorous verification."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "s232decider-decider-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a confirmation window spent on a condition",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nEvaluation rests on evidence: baseline of about 16 confirmation minutes for D230 and D231, target under 5, a counter-metric for lines not in force or misread, a bounded trial of the next 3 Deciders with a No, and a named owner. The outlier's promise is preserved: only the objector is asked whether the quoted line meets its condition, and a negative answer restores the ordinary steps 3 and 4 with full confirmation. Other voters are not re-asked only when the proposal text is unchanged, and the quoted line is auditable by `git show`."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "s232coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "only the objector is asked, in one question with the quoted line",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nIt's the right size for the problem. Only the person who objected is asked again, and only with the quoted line. No new seats, windows or lists are added, and the \"practices in force\" list for the vote prompt is rightly turned down. The objector keeps full control: if they say the quoted line doesn't meet their condition, the normal process takes over. The diff only appends a paragraph to step 6, and the trial has a metric, a counter-metric and an owner. One suggestion: if the objector doesn't answer that one question, the record should say whether that counts as \"met\" or \"not met\"."
+   }
+  ]
+ },
+ "rerun_swapped_seats": {
+  "architect": [
+   {
+    "tag": "t232architect-architect-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the proposal text is NOT amended, and only the objector is asked",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nI read the patch. It only adds a paragraph to step 6 and leaves triggers (a) to (e) unchanged. The design is sound and kept small. The objector keeps full control: if it rejects the quoted line, the condition goes back through steps 3 and 4 and the full confirmation step, so the shortcut cannot overrule a real objection. Skipping the other voters is justified because their text did not change. An auditor can check it, since the record names the quoted line and `git show` proves it was in force before the vote.\n\nNote: the record should quote the commit hash with the line, so \"in force before the vote\" can be checked mechanically and does "
+   }
+  ],
+  "qa": [
+   {
+    "tag": "t232qa-qa-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "when the proposer finds that a No's condition is already met by a line of the agreement",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nEndorsed. The shortcut is testable red-first: we can pre-vote script that diffs proposed conditions against committed agreement lines. The mandatory `git show` audit requirement guarantees checks catch violations without passing bad state, as any mismatch or objector rejection automatically falls back to the full confirmation step. This preserves safety while cutting idle minutes. Note: enforce deterministic line extraction to prevent manual copy-paste drift. The counter-metric explicitly tracks misreads, ensuring the process self-corrects."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "t232dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the other voters are not asked again, because nothing they voted on changed",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nI couldn't open the amendment diff here, so I'm voting on the proposal text alone. From the developer seat this is workable and fair. It changes nothing about red, unit commits with doubles, green, flags or slice limits. It only saves the other voters a second window when an objection asks for something a rule already in force requires. It can't be gamed easily: the objector, not the proposer, decides whether the quoted line meets its condition. If the objector says no, the condition goes through the normal steps 3 and 4 with the full confirmation step. Anyone can check with `git show` that the quoted line was in force before the vote. O"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "t232auditlens-auditlens-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the proposal text is NOT amended",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nI checked this against the committed diff, `.mob/records/366/agreement-amendment.diff`. It adds one paragraph to step 6, and the existing triggers (a) to (e) are unchanged.\n\nThere's no loophole that lets the team pass while breaking the practice. Only the objector can decide that the quoted line meets its condition. If it says the line does not, the condition goes back to steps 3 and 4, and an adopted amendment still brings the full confirmation step. The other voters aren't asked again, which is fair because the proposal text didn't change. The counter-metric watches for a misquoted rule.\n\nNote: quoting the line doesn't prove when it wa"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "t232decider-decider-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "when the proposer finds that a No's condition is already met by a line of the agreement",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal directly addresses a documented inefficiency where confirmation windows wasted time on already-met conditions. It preserves auditability by requiring the quoted line to be committed before the vote, enabling independent verification via git show. The mechanism correctly isolates the objector’s review without altering the substantive agreement or other voters’ positions. Evidence from D230 and D231 demonstrates the current cost, and the target metric provides a clear success criterion. The team retains full sign-off capability through the fallback to standard steps if the objector disputes the line. This is a sound, evidence-b"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "t232coach-coach-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "confirmation minutes per Decider with a restated condition",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nAs Agile Coach, I endorse this. It trims unnecessary ceremony by eliminating redundant confirmation windows when conditions are already satisfied, directly addressing the 16-minute overhead documented in D230/D231. The scope is tightly focused on step 6, preserving full dissent rights while preventing team fatigue. The trial period and counter-metrics provide safe guardrails. One note: ensure the facilitator’s line-quoting process is explicitly defined to prevent misinterpretation, but this does not block endorsement. The proposal aligns with agile waste-reduction principles and is appropriately sized."
+   }
+  ]
+ },
+ "trigger_line": "(c) the re-run was run because the primary window passed with no No and no amendment and the proposal changes the agreement",
+ "window_notes": "Primary window one seat at a time under the D228 preflight (architect and decider on Muse, QA and coach on Cursor, audit lens on Qwen, developer on Claude): six Yes. Fresh-seat re-run with the seats swapped (Cursor and Qwen across the roles): six Yes."
+}

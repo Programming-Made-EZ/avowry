@@ -335,3 +335,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D229](process-and-staffing.md#d229) | Card 361 task-force declaration and card text (diagnostic codes use the AV prefix) | process-and-staffing | adopted |
 | [D230](process-and-staffing.md#d230) | Card 361 retro pick: no idle between steps | process-and-staffing | adopted |
 | [D231](process-and-staffing.md#d231) | Card 366 task-force declaration and card text (the NOTICE and TRADEMARKS files name the holder and the year) | process-and-staffing | adopted |
+| [D232](process-and-staffing.md#d232) | Card 366 retro pick: a No whose condition a rule in force meets costs one question to the objector | process-and-staffing | adopted |
