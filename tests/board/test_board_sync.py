@@ -10,6 +10,7 @@ from scripts.board import check_real_board, migrate_cards
 
 SLUG = "Programming-Made-EZ/avowry"
 BOARD = Path(__file__).resolve().parents[2] / "board"
+FIXTURE_ACCOUNT = "qa" + "acct" + "7"
 
 OLD_STORY = """# Sync the story
 
@@ -447,7 +448,7 @@ class BoardSyncTests(unittest.TestCase):
         # Given the issue still has a local path and the card file would scrub it
         text = (
             "# Paths\n\n- **Status:** Ready\n- **Type:** docs\n\n"
-            "See C:\\Users\\ringe\\projects\\phrase-lang\\board and C:/Users/ringe/mob-crosscli/x.\n"
+            "See C:\\Users\\" + FIXTURE_ACCOUNT + "\\projects\\phrase-lang\\board and C:/Users/" + FIXTURE_ACCOUNT + "/mob-crosscli/x.\n"
         )
         with tempfile.TemporaryDirectory() as tmp:
             board = Path(tmp)

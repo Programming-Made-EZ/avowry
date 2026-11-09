@@ -11,11 +11,15 @@ repo are hard-wired; anything else is refused. The script never deletes.
 import argparse
 import hashlib
 import json
-import os
 import re
 import subprocess
+import sys
 from pathlib import Path
 from typing import Sequence
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+import home_paths  # noqa: E402
 
 OWNER = "Programming-Made-EZ"
 REPO = "avowry"
@@ -29,19 +33,11 @@ TITLE_PREFIX_RE = re.compile(r"^\(\d{3}\)\s+")
 TABLE_RE = re.compile(r"(?m)^\| Rank \|.*(?:\n\|.*)*(?:\n|$)")
 TABLE_START = "<!-- board-table:start -->"
 TABLE_END = "<!-- board-table:end -->"
-DEFAULT_MOB_DEFAULTS = r"C:\Users\ringe\mob-crosscli"
 
 
 def repo_root() -> Path:
-    """The checkout that contains this script. Placeholders expand to this path."""
+    """The checkout that contains this script."""
     return Path(__file__).resolve().parents[2]
-
-
-def mob_defaults() -> str:
-    value = os.environ.get("MOB_DEFAULTS")
-    if value:
-        return value
-    return DEFAULT_MOB_DEFAULTS
 
 
 def gh_runner(args: Sequence[str], *, check: bool = True, input_text: str | None = None):
@@ -82,10 +78,6 @@ def slugify(title: str) -> str:
     return slug or "card"
 
 
-def expand_paths(text: str) -> str:
-    return text.replace("<phrase-lang>", str(repo_root())).replace("<mob-defaults>", mob_defaults())
-
-
 def strip_marker(text: str) -> str:
     """Drop the phrase-card marker line. The rest of the body is unchanged."""
     first, sep, rest = text.partition("\n")
@@ -106,7 +98,7 @@ def archive_text(issue: dict, number: str) -> str:
     """One generated card: H1, hash header, a blank line, then the issue body."""
     title = card_title(str(issue.get("title") or ""))
     body = normalise_newlines(str(issue.get("body") or ""))
-    rest = expand_paths(strip_marker(body))
+    rest = home_paths.scrub_text(strip_marker(body))
     below = "\n" + rest  # the blank line under the header, then the body
     digest = hashlib.sha256(below.encode("utf-8")).hexdigest()
     header = (

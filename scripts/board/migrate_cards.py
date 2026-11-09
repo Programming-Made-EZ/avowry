@@ -14,11 +14,16 @@ import json
 import os
 import re
 import subprocess
+import sys
 import tempfile
 import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Sequence
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+import home_paths  # noqa: E402
 
 OWNER = "Programming-Made-EZ"
 REPO = "avowry"
@@ -30,10 +35,8 @@ HEADING_RE = re.compile(r"^#\s*(.*)$")
 STATUS_RE = re.compile(r"(?m)^- \*\*Status:\*\*\s*(.*)$")
 TYPE_RE = re.compile(r"(?m)^- \*\*Type:\*\*\s*(.*)$")
 REPLACEMENTS = (
-    ("C:\\Users\\ringe\\projects\\phrase-lang", "<phrase-lang>"),
-    ("C:/Users/ringe/projects/phrase-lang", "<phrase-lang>"),
-    ("C:\\Users\\ringe\\mob-crosscli", "<mob-defaults>"),
-    ("C:/Users/ringe/mob-crosscli", "<mob-defaults>"),
+    (home_paths.account_root_re(r"(?:\\|/)projects(?:\\|/)phrase-lang"), "<phrase-lang>"),
+    (home_paths.account_root_re(r"(?:\\|/)mob-crosscli"), "<mob-defaults>"),
 )
 LABEL_SPECS = (
     ("card", "1D76DB", "Phrase board card"),
@@ -104,8 +107,12 @@ def is_tooling(text: str) -> bool:
 
 
 def replace_local_paths(text: str) -> str:
-    for old, new in REPLACEMENTS:
-        text = text.replace(old, new)
+    for pattern, new in REPLACEMENTS:
+        def _sub(match, new=new):
+            if match.group("seg") in home_paths.ALLOWED_SEGMENTS:
+                return match.group(0)
+            return new
+        text = pattern.sub(_sub, text)
     return text
 
 

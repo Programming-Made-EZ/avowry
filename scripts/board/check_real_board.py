@@ -288,7 +288,7 @@ def verify_pick(gh, picker):
 def default_picker():
     import os
 
-    repo = os.environ.get("MOB_DEFAULTS", r"C:\Users\ringe\mob-crosscli")
+    repo = os.environ.get("MOB_DEFAULTS") or str(Path.home() / "mob-crosscli")
     out = subprocess.run([sys.executable, "loop.py", "--pick"], cwd=repo, capture_output=True, text=True)
     return out.stdout.strip()
 

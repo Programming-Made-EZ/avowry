@@ -170,10 +170,8 @@ class ArchiveGenerationTests(unittest.TestCase):
         else:
             os.environ["MOB_DEFAULTS"] = self._mob
 
-    def test_generated_file_has_title_header_hash_expanded_paths_and_lf(self):
+    def test_generated_file_has_title_header_hash_retained_placeholders_and_lf(self):
         # Given a marked issue whose body is CRLF and still has the path placeholders
-        repo = str(generate_archive.repo_root())
-        mob = r"D:\mob-defaults-fixture"
         body = crlf("<!-- phrase-card:007 -->\n\nSee <phrase-lang> and <mob-defaults>.\n")
         fake = FakeGH(
             issues=[issue(15, "007", "CLI build command", body)],
@@ -193,14 +191,14 @@ class ArchiveGenerationTests(unittest.TestCase):
             code_again, again = run(["--apply"], fake, board)
             second = card.read_bytes()
 
-        # Then the file is the title, the hash header, a blank line and the expanded body, in LF
-        rest = f"\nSee {repo} and {mob}.\n"
+        # Then the file is the title, the hash header, a blank line and the body with placeholders retained, in LF
+        rest = "\nSee <phrase-lang> and <mob-defaults>.\n"
         expected = expected_archive(15, "CLI build command", rest)
         self.assertEqual(code, 0)
         self.assertEqual(data, expected)
         self.assertNotIn(b"\r", data)
-        self.assertNotIn(b"<phrase-lang>", data)
-        self.assertNotIn(b"<mob-defaults>", data)
+        self.assertIn(b"<phrase-lang>", data)
+        self.assertIn(b"<mob-defaults>", data)
         self.assertIn(b"issue #15", data)
         self.assertEqual(hashlib.sha256(below_line_two(data)).hexdigest().encode("ascii") in data.splitlines()[1], True)
         self.assertEqual(data.splitlines()[0], b"# CLI build command")
@@ -219,21 +217,6 @@ class ArchiveGenerationTests(unittest.TestCase):
         self.assertEqual(fake.calls[1], [
             "project", "item-list", "1", "--owner", OWNER, "--format", "json", "--limit", "1000",
         ])
-
-    def test_mob_defaults_falls_back_when_the_environment_is_unset(self):
-        # Given MOB_DEFAULTS is unset
-        saved = os.environ.pop("MOB_DEFAULTS", None)
-        try:
-            # When the archive asks for the mob-defaults root
-            root = generate_archive.mob_defaults()
-        finally:
-            if saved is not None:
-                os.environ["MOB_DEFAULTS"] = saved
-            else:
-                os.environ["MOB_DEFAULTS"] = r"D:\mob-defaults-fixture"
-        # Then the documented fallback path is used
-        self.assertEqual(root, r"C:\Users\ringe\mob-crosscli")
-        self.assertEqual(generate_archive.repo_root(), REPO)
 
     def test_existing_slug_is_kept_and_a_new_card_is_slugged_from_the_title(self):
         # Given one card file already on disk and one marked issue with no file

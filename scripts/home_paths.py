@@ -12,7 +12,7 @@ board generator. Import with ``sys.path.insert(0, <scripts dir>)`` then ``import
 This file holds no home path: its patterns cannot match their own text, and its tests build every sample from
 parts.
 
-Red stub: ``find`` returns no hit yet (the green makes it real); ``scrub_bytes`` is the real rule.
+``find`` reports exactly what ``scrub_bytes`` would change; ``scrub_bytes`` is the rewrite rule.
 """
 
 import argparse
@@ -98,9 +98,62 @@ def scrub_text(text, path=None):
     return scrub_bytes(text.encode("utf-8", "surrogateescape"), path).decode("utf-8", "surrogateescape")
 
 
+_DRIVE_ROOT = re.compile(rb"(?:/mnt)?/[a-z](?:\x5c|/|%5[cC]|%2[fF])+(?i:users)")
+
+_SEP_STR = r"(?:\\|/|%5[cC]|%2[fF])+"
+_SEG_STR = r"(?P<seg>[^\\/\s\"'`<>|*?:,;()\[\]{}%&=$]*[^\\/\s\"'`<>|*?:,;()\[\]{}%&=$.])"
+_NB_STR = r"(?<![A-Za-z0-9_.\-])"
+
+
+def account_root_re(tail):
+    """A regex (text) matching a home-path prefix, an account segment and then ``tail``.
+
+    ``tail`` is a regex fragment that follows the account segment directly (it usually starts
+    with a separator class). The pattern carries the groups ``pre``, ``sep`` and ``seg`` of the
+    bytes rule, so a caller can leave an allowed segment unchanged and rewrite any other.
+    """
+    return re.compile(
+        r"(?P<pre>[A-Za-z](?::|%3[aA])" + _SEP_STR + r"(?i:users)"
+        r"|" + _NB_STR + r"(?:/mnt)?/[a-z]" + _SEP_STR + r"(?i:users)"
+        r"|" + _NB_STR + r"(?:/|\\+|%2[fF]|%5[cC])(?:Users|home))"
+        r"(?P<sep>" + _SEP_STR + r")" + _SEG_STR + tail
+    )
+
+
+def _form_of(match, is_slug, line):
+    if is_slug:
+        return "F5"
+    pre, sep = match.group("pre"), match.group("sep")
+    if b"%" in pre or b"%" in sep or line[:match.start()].endswith(b"file:///"):
+        return "F8"
+    if pre[1:2] == b":":
+        if pre[-5:] != b"Users":
+            return "F3"
+        return "F1" if pre[2:3] == b"\\" else "F2"
+    if _DRIVE_ROOT.fullmatch(pre):
+        return "F4"
+    return "F6" if pre.endswith(b"Users") else "F7"
+
+
 def find(path, text):
-    """Each home path in ``text`` as Hit(line, form); never the matched text. Red stub: finds nothing."""
-    return []
+    """Each home path in ``text`` as Hit(line, form); never the matched text.
+
+    Uses the same PATH and SLUG regexes as scrub_bytes, so a hit is reported exactly where
+    scrub_bytes would change a segment (allow-lists honoured).
+    """
+    data = text.encode("utf-8", "surrogateescape") if isinstance(text, str) else bytes(text)
+    allowed = _allowed(path)
+    hits = []
+    for number, line in enumerate(data.split(b"\n"), start=1):
+        found = []
+        for pattern, is_slug in ((PATH, False), (SLUG, True)):
+            for match in pattern.finditer(line):
+                if match.group("seg") in allowed:
+                    continue
+                found.append((match.start(), is_slug, match))
+        for _start, is_slug, match in sorted(found, key=lambda item: item[0]):
+            hits.append(Hit(number, _form_of(match, is_slug, line)))
+    return hits
 
 
 def tracked_paths(root):

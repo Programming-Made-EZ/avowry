@@ -13,7 +13,6 @@ public class PreCommitRefusesAHomePath
     [Fact]
     [Trait("Slice", "370")]
     [Trait("Criterion", "370-3")]
-    [Trait("Status", "Pending")]
     public async Task The_hook_names_the_file_that_adds_a_home_path()
     {
         // Given a clone whose staged file (not MOB.md) adds a home path in the plain, escaped and slug forms

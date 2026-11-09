@@ -11,15 +11,16 @@ from scripts.board import check_real_board, migrate_cards
 
 SLUG = "Programming-Made-EZ/avowry"
 BOARD = Path(__file__).resolve().parents[2] / "board"
+FIXTURE_ACCOUNT = "qa" + "acct" + "7"
 CARD_FILE_RE = re.compile(r"^(\d{3})-.+\.md$")
 MARKER_RE = re.compile(r"<!-- phrase-card:(\d{3}) -->")
 STATUS_RE = re.compile(r"(?m)^- \*\*Status:\*\*\s*(.*)$")
 TYPE_RE = re.compile(r"(?m)^- \*\*Type:\*\*\s*(.*)$")
 REPLACEMENTS = (
-    ("C:\\Users\\ringe\\projects\\phrase-lang", "<phrase-lang>"),
-    ("C:/Users/ringe/projects/phrase-lang", "<phrase-lang>"),
-    ("C:\\Users\\ringe\\mob-crosscli", "<mob-defaults>"),
-    ("C:/Users/ringe/mob-crosscli", "<mob-defaults>"),
+    ("C:\\Users\\" + FIXTURE_ACCOUNT + "\\projects\\phrase-lang", "<phrase-lang>"),
+    ("C:/Users/" + FIXTURE_ACCOUNT + "/projects/phrase-lang", "<phrase-lang>"),
+    ("C:\\Users\\" + FIXTURE_ACCOUNT + "\\mob-crosscli", "<mob-defaults>"),
+    ("C:/Users/" + FIXTURE_ACCOUNT + "/mob-crosscli", "<mob-defaults>"),
 )
 
 
@@ -399,8 +400,8 @@ class BoardMigrateTests(unittest.TestCase):
                     "- **Status:** Done 2026-10-26",
                     "- **Type:** docs",
                     "",
-                    "Windows `C:\\Users\\ringe\\projects\\phrase-lang\\board` and `C:/Users/ringe/projects/phrase-lang/docs`.",
-                    "Defaults `C:\\Users\\ringe\\mob-crosscli` and `C:/Users/ringe/mob-crosscli/x`.",
+                    "Windows `C:\\Users\\" + FIXTURE_ACCOUNT + "\\projects\\phrase-lang\\board` and `C:/Users/" + FIXTURE_ACCOUNT + "/projects/phrase-lang/docs`.",
+                    "Defaults `C:\\Users\\" + FIXTURE_ACCOUNT + "\\mob-crosscli` and `C:/Users/" + FIXTURE_ACCOUNT + "/mob-crosscli/x`.",
                     "The card itself wrote `.mob\\loop\\state.json` and `.mob/loop/state.json`.",
                     "",
                 ]),
@@ -422,7 +423,7 @@ class BoardMigrateTests(unittest.TestCase):
                 "# Future fixture\n\n- **Status:** Ready, FUTURE\n- **Type:** feature\n",
                 encoding="utf-8",
             )
-            (board / "006-lf.md").write_bytes(b"# LF fixture\n\n- **Status:** Ready\n- **Type:** bug\nSee C:/Users/ringe/mob-crosscli/y.\n")
+            (board / "006-lf.md").write_bytes(("# LF fixture\n\n- **Status:** Ready\n- **Type:** bug\nSee C:/Users/" + FIXTURE_ACCOUNT + "/mob-crosscli/y.\n").encode("utf-8"))
             (board / "MILESTONE-usable-v1.md").write_text("# Milestone: Usable v1\n\n- **Status:** Done\n", encoding="utf-8")
             (board / "MILESTONES.md").write_text("# Milestones\n", encoding="utf-8")
             (board / "12-short.md").write_text("# Short\n\n- **Status:** Done\n", encoding="utf-8")
