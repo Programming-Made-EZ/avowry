@@ -1522,5 +1522,11 @@
     "status": "adopted",
     "title": "Card 370 task-force declaration and card text (tracked files carry no home path of a local account)",
     "order": 226
+  },
+  "D236": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 370 retro pick: seat plans follow a live probe; a misbehaving driver is repaired, not benched",
+    "order": 227
   }
 }

@@ -339,3 +339,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D233](process-and-staffing.md#d233) | Card 371 task-force declaration and card text (the pre-publication page shows the owner answers and the trademark search brief) | process-and-staffing | adopted |
 | [D234](process-and-staffing.md#d234) | Card 371 retro pick: a task-force declaration carries the standing evidence | process-and-staffing | adopted |
 | [D235](process-and-staffing.md#d235) | Card 370 task-force declaration and card text (tracked files carry no home path of a local account) | process-and-staffing | adopted |
+| [D236](process-and-staffing.md#d236) | Card 370 retro pick: seat plans follow a live probe; a misbehaving driver is repaired, not benched | process-and-staffing | adopted |

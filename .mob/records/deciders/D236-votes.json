@@ -1,0 +1,201 @@
+{
+ "decider": "D236",
+ "subject": "card 370 retro pick: seat plans follow a live probe; a misbehaving driver is repaired, not benched",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "a236architect-architect-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a driver whose probe passes is seated in rotation with no decision",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment is small and you can check it against the record. It touches one entry, adds 3 lines to the agreement, and the 60-minute probe window can be confirmed from the committed probe file's timestamp against the declaration commit. Making the \"probe passes, so seat it with no decision\" step automatic removes stale-belief judgment calls, and that is the failure the evidence shows. One amendment line per seat change is easy to audit with git.\n\nNotes, not conditions:\n- Define the exit from Probation (one passing smoke plus one clean seat) so it can't drag on.\n- Spell out that a quota or balance failure is not a behaviour finding. Oth"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "a236qa-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "a driver whose probe passes is seated in rotation with no decision",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the named patch, standing rules, and probe evidence so the QA vote can check whether each rule fails red first.I'll inspect the amendment patch, the Driver availability rule, and any existing probe/seat checks next.I'll check how similar experimental rules are enforced and whether a red-first test already exists for this one.No\nAdd to the patch a planted-fail check, watched red first, that exits non-zero when a seat plan or Decider window omits a driver the cited probe shows available on any enabled family. D188 already ages probes; this session still benched Grok after the 21:33 probe passed and labelled agy out while the probe row"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "a236dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a misbehaving driver is repaired, not benched",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nFrom the developer's seat, the rules are workable and I can follow them honestly. A probe within 60 minutes is cheap. Seating a driver whose probe passes with no decision takes away guesswork. A repaired driver has to pass a smoke test in a throwaway worktree before it gets a Probation seat, which protects the red-then-green order instead of weakening it.\n\nNotes:\n- **Define \"fails for behaviour\".** Say what separates it from a quota or availability failure, so the stop-the-line path isn't triggered for something a re-probe would fix.\n- **Bound repair time.** Give the repair a time limit within a card so a slice isn't blocked while the st"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "a236auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": false,
+    "cite": "every seat plan and Decider window cites a probe_all.py output taken within 60 minutes",
+    "cite_verbatim": false,
+    "decider_cite_ok": false,
+    "reply_head": "No\nThe proposal mandates committing probe outputs and amendment lines, but leaves a verifiability loophole: committing a file proves nothing about live execution or data freshness, and repairs in a throwaway worktree leave zero git trace. The team could commit static or stale artifacts and claim compliance, passing the vote while breaking the practice. Git alone cannot verify behavioral fixes or live probe validity without structural constraints.\nRequire the probe output to include a verifiable system-state hash and mandate that all repair smoke tests be committed to a tracked worktree, with a machine-readable schema validated by the gate rev",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "a236decider-decider-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": false,
+    "cite": "a driver whose probe passes is seated in the rotation with no decision",
+    "cite_verbatim": false,
+    "decider_cite_ok": false,
+    "reply_head": "I'll read the named records and agreement patch first so the vote rests on what's actually committed.I'll check the agreement patch, the live probe, and the Decider protocol next.I'll read the Driver availability rule, the experimental section, and the retro evidence next.Yes\nAdopt, reshape or reject after the three-card trial can rest on committed probe files, seat-use lines, amendment lines, and each retro's list of sidelined drivers with root cause and fix status. Hypothesis, metric (benched while available or fixable; undeclared swaps, both target 0), counter-metric (probe and repair minutes), trial length and owner are named. This window",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "a236coach-coach-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Seat plans follow a live probe",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nRight-sized as an Experimental entry: one owner, 3-card trial, hypothesis with metric, counter-metric, and target 0. It adds only lightweight checks — a 60-minute probe, one amendment line per seat change, and a retro list — proportionate to the benched capacity and two undeclared swaps evidenced. No new seats or standing ceremony."
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "b236architect-architect-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a hash of machine state is not something git can verify",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment strengthens the design without adding scope. A fixed schema, a 60-minute freshness rule and a committed repair record are all things git can check. Rejecting the machine-state hash is correct because git cannot verify it. The \"without a recorded cause\" escape keeps the check from flagging a seat the rotation rule correctly refused. One note: the check should read the cause from a named field of the seat plan, not from free text, so that the planted-fail tests can be checked by a machine."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "b236qa-qa-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the check and its planted-fail tests are written red first as a tooling card filed with this pick",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the amendment, the patch, and the original QA condition without changing anything, then vote only on whether that condition is met.I'll compare the original QA condition to the regenerated patch and the live probe schema.Yes\n\nThe form names `check_seat_plan.py`, planted-fail tests written red first as a tooling card, and a non-zero exit when the plan omits a driver whose cited probe passed. That is the check I required. Hand-running the same three checks until the card lands keeps the rule testable in the trial. Condition met; I support the proposal."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "b236dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a repair is committed as `driver-repairs.md` under the card",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment doesn't change my vote. From the developer's seat, `check_seat_plan.py` gives three exact exit conditions: a missing schema field, a probe row older than 60 minutes, or an available driver left out of the plan with no recorded cause. Its planted-fail tests are written red first as their own tooling card, so I can do that work without gaming it. Note: the closure check should refuse a card when a driver it sidelined has no `driver-repairs.md`."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "b236auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "a hash of machine state is not something git can verify",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nThe verifiable system-state hash is not met, as the proposal explicitly notes it cannot be verified by git."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "b236decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "seats benched while the driver was available or fixable",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation is framed so that deciding to adopt, reshape, or reject rests on objective evidence: explicit targets for benched seats and undeclared swaps against repair minutes across a 3-card trial. With the amendment, probe freshness and schema compliance are verified by `check_seat_plan.py`, and driver repairs leave a committed git trace in `driver-repairs.md` with smoke test outputs. The team has every seat required to verify and sign off."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "b236coach-coach-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Seat plans follow a live probe",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nAmendment adds no seat or ceremony layer. It automates the probe, freshness, and omission checks, with manual checks only until that tooling lands. That is proportionate to the stale-benching problem."
+   }
+  ]
+ },
+ "second_amendment_check": {
+  "architect": [],
+  "qa": [],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "c236auditlens-auditlens-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The hash binds a row to a commit and makes an edited row detectable",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe condition is met in the form git can check. Each probe row carries the commit it was taken against and a hash that `check_seat_plan.py` recomputes. Repair smoke tests are committed under the card, and the same script checks their schema. One caveat, not a new demand: the hash has no secret, so it shows an edit only if the hash wasn't recomputed. The entry already says the hash doesn't prove the probe ran live."
+   },
+   {
+    "tag": "c236auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": false,
+    "cite": "the hash binds a row to a commit and makes an edited row detectable",
+    "cite_verbatim": false,
+    "decider_cite_ok": false,
+    "reply_head": "Yes.\nThe second amendment replaces the unverifiable system-state hash with a row_sha256 bound to the repository head commit, which git can verify to detect edits. Repair smoke tests are now committed in driver-repairs.md with schema validation handled by check_seat_plan.py, satisfying the verifiability and traceability requirements within git's constraints.",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   }
+  ],
+  "decider": [],
+  "coach": []
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run",
+ "window_notes": "Primary window one seat at a time under the D228 preflight with Grok back in the rotation (its first vote: a No on QA); the audit lens (Qwen) gave an uncounted No (inexact cite) and the decider seat (Grok) an uncounted Yes. Confirmation step after the first amendment: QA (Grok) Yes, architect, coach, developer Yes, decider (agy, its first vote) Yes, the audit lens (Qwen) No (it asked for a verifiable hash). The second amendment (a commit-bound row hash) was put to the audit lens alone: Qwen answered Yes (uncounted for an inexact cite) and the fallback seat (Claude) in the same role answered Yes, counted."
+}

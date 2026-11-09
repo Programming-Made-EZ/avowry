@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 370,
+ "title": "Tracked files carry no home path of a local account",
+ "process": "card-mode rules run by hand; the Ready draft by a Cursor product-manager seat (reply-only) with the measured reach in the brief; the declaration through Decider D235 (six counted Yes with two seats re-asked for inexact cites; the first declaration with the standing evidence block of D234; trigger (d)); a read-only architect slice that verified the reach by area and form and corrected the draft; the RED by a Cursor WRITING seat (the first non-Claude writer: 57 tests, stub-first, written through the new cursor_write.py launcher); GREEN 1 (the guard) and GREEN 2a (the rewrite and the decision-records re-pin) by a Muse WRITING seat through the new muse_write.py launcher; green 2b (the board regeneration, needing gh) by the facilitator as a logged takeover; the facilitator's isolated baseline gate (a DRIVERS.md regression of the facilitator's own caught and fixed); an independent gate review (SHIP; the rewrite reproduced and checked line by line; eight mutants) and a separate fresh sign-off (SIGNED OFF with two conditions); the retro voices and Decider D236 (seat plans follow a live probe; a misbehaving driver is repaired, not benched)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Cursor ctx-1",
+   "model": "cursor-agent in ask mode through cursor_reply.py, product manager, reply-only; the facilitator supplied the measured reach and ruled on the draft's open points",
+   "evidence": "8ca1ba4e54c0727a45436437dcde4f64243c8198"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md (verified reach: 325 files, 932 lines; the generic rule, the shared module, the guard, the tests, the commit order)",
+   "evidence": "88ce4470a9308cbd1f7c191cdb86c042cf2ba3e4"
+  },
+  {
+   "role": "red",
+   "seat": "Cursor ctx-3",
+   "model": "cursor-agent in print mode with tools through cursor_write.py (a linked worktree, guardrails), QA engineer, Probation rung 1, the first non-Claude writing seat; 57 tests, 11 documented deviations; every claim re-run by the facilitator and the gate reviewer",
+   "evidence": "0a3ec382725f5e753bfae8d306cd6d083e834937"
+  },
+  {
+   "role": "green",
+   "seat": "Muse ctx-4",
+   "model": "muse exec through muse_write.py (a linked worktree, effort medium, 250 model steps, the hanging shell sandbox off with an escape check on every other worktree), developer, Probation rung 1, the first Muse writing seat; green 1 (626172d, the guard) and green 2a (a886f63, the rewrite of 258 files and the re-pin); never the red's seat; the green 2b board regeneration (e19198d) by the facilitator (a logged takeover)",
+   "evidence": "a886f63f9bb5b6eedcf458b6ddee22272875b466"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent gate reviewer, read-only: ancestor step 0, red replay, the rewrite reproduced and every changed line checked, the re-pin recomputed, the guard tested with planted paths, eight mutants; SHIP",
+   "evidence": "79fdf9de9380eb4611c14a65d38e3a54f766b8b7"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, separate from the gate reviewer, own full gate in its own clone; SIGNED OFF with two conditions (a recursive delete of its own throwaway clone disclosed as a rule breach)",
+   "evidence": "6e37d5d7b9c87152e3fcb685339ced769fbe5fcf"
+  }
+ ],
+ "retro": "docs/retros/card-370-2026-11-09.md",
+ "notes": "Done checks met: criterion 1 (a scan of the tracked tree finds no home path of a local account in any of the areas A1 to A8, including the regenerated board archive, outside the reasoned allow-list); criterion 2 (258 files rewritten by one generic rule, every changed line only an account segment replaced by <user>, no file deleted, untracked files untouched, CRLF and escapes preserved, history in git unchanged); criterion 3 (the pre-commit guard refuses a staged added line holding a home path, naming file and line and never the account; an in-gate scan covers the tree). Both Pending criterion tests failed by assertion on the pre-change tree and pass after the greens; the greens changed the red files by the Pending traits only. Baseline gate: Compiler 344 of 344, Acceptance 387 of 387 after the facilitator fixed a DRIVERS.md regression of its own (fa1eb43); the gate review and the sign-off the same (one load flake in the sign-off's first run, rerun green). Task force declared through D235; the retro pick D236 added the live-probe entry. Process time against build time about 0.5 to 1 before the gates. Born-green findings: none. Open: card 376 (the account name standing alone in 8 files; the tree scan exit code; a name with a space), tooling card 377 (the seat-plan check), the first Qwen writing seat, bugs 365, 372 to 375, cards 367 to 369, card 162 (waits for Codex)."
+}
