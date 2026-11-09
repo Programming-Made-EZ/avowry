@@ -13,7 +13,6 @@ public class NoHomePathsInTrackedFiles
     [Fact]
     [Trait("Slice", "370")]
     [Trait("Criterion", "370-1")]
-    [Trait("Status", "Pending")]
     public async Task Tracked_files_carry_no_home_path_of_a_local_account()
     {
         // Given every file git ls-files lists, in every area (A1 .mob/ to A8 other)
