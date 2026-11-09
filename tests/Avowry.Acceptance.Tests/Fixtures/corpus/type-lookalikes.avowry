@@ -1,0 +1,31 @@
+# type-lookalikes: types named like generated names but not equal to them still build
+module Lookalikes
+
+type Avow
+  n: Int
+
+type AvowryRuntime
+  n: Int
+
+type AvowryBuild
+  n: Int
+
+type Program
+  n: Int
+
+type AVOWS
+  n: Int
+
+avow to "ok {n: Int}" -> Int
+  spec "keeps"
+    given n = 1
+    when called
+    then returns 1
+  native csharp
+    return n;
+
+endpoint Ping : POST /ping
+  input
+    n: Int
+  steps
+    let kept = ok input.n

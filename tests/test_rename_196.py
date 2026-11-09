@@ -237,7 +237,7 @@ class ListsAndStrings(unittest.TestCase):
 
     def test_corpus_text_unset(self):
         fixtures = corpus_fixtures()
-        self.assertEqual(23, len(fixtures), "23 tracked corpus fixtures expected")
+        self.assertEqual(25, len(fixtures), "25 tracked corpus fixtures expected")
         out = git("check-attr", "text", "--", *fixtures).decode("utf-8").splitlines()
         states = {}
         for line in out:

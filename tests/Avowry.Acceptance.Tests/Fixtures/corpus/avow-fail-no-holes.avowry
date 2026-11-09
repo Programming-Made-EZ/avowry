@@ -1,0 +1,25 @@
+# avow-fail-no-holes: an avow named fail with no holes is a legal overload of the generated Fail
+module FailNoHoles
+
+avow to "fail" -> Int
+  spec "returns one"
+    when called
+    then returns 1
+  native csharp
+    return 1;
+
+avow to "check {n: Int}" -> Int
+  fails with Bad
+  spec "keeps"
+    given n = 1
+    when called
+    then returns 1
+  native csharp
+    if (n < 0) Fail("Bad");
+    return n;
+
+endpoint Ping : POST /ping
+  input
+    n: Int
+  steps
+    let kept = check input.n

@@ -1,0 +1,7 @@
+{"outcome":"builds","records":[
+  {"kind":"avow","name":"check {n: Int}","endpoint":"Ping","line":11},
+  {"kind":"avow","name":"fail","endpoint":"","line":4},
+  {"kind":"endpoint","name":"Ping","endpoint":"Ping","line":21},
+  {"kind":"failure","name":"Bad","endpoint":"Ping","line":12},
+  {"kind":"step","name":"let kept = check input.n","endpoint":"Ping","line":25}
+],"runSpecs":true}

@@ -1,0 +1,5 @@
+{"outcome":"builds","records":[
+  {"kind":"avow","name":"ok {n: Int}","endpoint":"Ping","line":19},
+  {"kind":"endpoint","name":"Ping","endpoint":"Ping","line":27},
+  {"kind":"step","name":"let kept = ok input.n","endpoint":"Ping","line":31}
+],"runSpecs":true}
