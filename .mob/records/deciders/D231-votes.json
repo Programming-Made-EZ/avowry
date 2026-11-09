@@ -1,0 +1,179 @@
+{
+ "decider": "D231",
+ "subject": "card 366 task-force declaration and card text (the NOTICE and TRADEMARKS files name the holder and the year)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "p231architect-architect-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "is a marked placeholder until the product owner confirms it",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nArchitecturally sound and minimal: exact whole-line checks for NOTICE and TRADEMARKS, hash-pinned LICENSE, single placeholder definition, and planted/negative scanner rows prevent false positives and vacuous passes; red/green separation plus wrapper coverage makes it enforceable."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "p231qa-qa-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "one red commit holds the criteria that turn green together",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe checked facts hold. No wrapper or workflow runs `test_license_files`, and lines 241 to 247 of card 186's test fail once the files are filled. Removing that clause in its own commit before the green keeps main from going red. Every new-state id fails first: the P rows against a stub scanner, and the N, T, G and L rows against the current tree. The characterisation ids are declared as passing. Note for the slice: `[LICENSE]` is itself an all-caps bracket token, so the pattern must tell a markdown link from a bare token. X1 should also plant a bare `[LICENSE]` that must hit. The tests should read N1 and N2 from line 2 exactly, not just "
+   }
+  ],
+  "developer": [
+   {
+    "tag": "p231dev-dev-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "one red commit holds the criteria that turn green together",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe rules are workable for the developer seat. The green is narrow: three lines, removing `Pending`, and running both Python modules and the gate. Every red id has a stated on-tree outcome, so I can comply without gaming anything. Keeping the card 186 loosening as its own commit means main is never red between the red and the green. Moving the placeholder text into one definition also follows the one-definition rule.\n\nTwo notes, neither downgrading the vote:\n- The red record should show the characterisation wrapper passing, so the gate demonstrably runs `test_license_files`.\n- The year-assumption sentence in `docs/LICENSING.md` should be"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "p231auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "independent gate reviewer and sign-off two further fresh Claude contexts",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nThe audit lens requires git-only verifiability and zero loopholes. This proposal delegates critical verification to external AI contexts and manual gate checks that leave no immutable trace in git history. The cold reader and independent gate reviewer operate outside the repository, making it impossible to verify from git alone that they actually performed the review or that their conclusions were independent. This creates a loophole: the team could commit the green changes, skip or fabricate the external reviews, and still pass the dotnet test gate while breaking the independent review practice. One fixed condition: the proposal must requ"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "p231decider-decider-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a cold reader (Qwen, inlined) before the independent gate review",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nDecision rests on evidence: red record quotes each id failing or passing, characterisation ids are declared upfront, and Done-when names concrete test and diff commands. Seats are complete and separated: architect slice, distinct red and green contexts, cold reader before the independent gate reviewer with blocking step 0, a separate sign-off context, and a dated skip line for the omitted second review."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "p231coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "no second read-only review (dated skip line)",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe task force fits an S card that has a reader-facing prose change. The cold reader is justified because `docs/LICENSING.md:27` tells the sponsor persona something new. The red and green seats are separate, and the gate reviewer and sign-off are independent, so no perspective is missing. The ceremony has also been cut where it adds nothing: the second read-only review is skipped with a dated line.\n\nOne note: the architect slice is the most likely padding. Its decisions (the scanner pattern, the wrapper split, the exact LICENSING sentence) are already mostly settled in the draft. The facilitator could take this slice inline rather than s"
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "q231architect-architect-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the closure check refuses a card whose evidence is not a full commit hash",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment does not change my vote. It writes down the record layout cards 186 to 361 already use: card 361 has `gate-review.md` and `signoff.md` under `.mob/records/361/`. The existing closure check enforces it by refusing evidence that is not a full commit hash. No new checker rule is added, so it adds no new false-positive risk. One note: `cold-reader.md` is a new file for this card, since card 361 had no cold-reader file. The architect slice should fix its exact path before the red."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "q231qa-qa-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the closure check refuses a card whose evidence is not a full commit hash",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment doesn't change my QA vote. Committing the cold-reader report, gate review and sign-off as `.mob/records/366/*.md` makes the reviews provable from git alone. It also leaves the red-first plan untouched: the planted rows, the stub scanner and the characterisation rows stay the same. One note: the gate review should quote the step 0 command's exit status word for word. I couldn't check the claim about the closure check because my read-only command was refused."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "q231dev-dev-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the cold-reader report, the independent gate review",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe rules are workable for the red and green seats. The red is split into two commits. The Pending wrappers use the `Criterion=366-N` traits. The one-fill-turns-three-criteria case is covered by D204. Card 186's loosening is its own commit, so main is never red. The gate now runs `test_license_files`, which closes a real gap. The green's scope is four items, so I can comply without gaming it. The amendment makes the review records commit-verifiable and does not change my vote."
+   },
+   {
+    "tag": "q231dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "decider_cite_ok": false,
+    "reply_head": "Yes",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "q231auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the cold-reader report, the independent gate review",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment explicitly mandates committing the cold-reader report and gate review to `.mob/records/366/`, detailing exact contents like commands, pass lines, and checked files. The closure check enforces full commit hashes, ensuring git alone verifies the reviews occurred without loopholes."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "q231decider-decider-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the cold-reader report, the independent gate review",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nAmendment strengthens evidence: committed cold-reader, gate-review and sign-off records tied to full commit hashes in closure make the decision auditable without weakening any seat."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "q231coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "This is the practice of cards 186 to 361",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment adds no new seat, step or review. It writes down the existing practice of committing the cold-reader, gate-review and sign-off records under `.mob/records/366/`, which cards 186 to 361 already follow. The closure check already enforces it. It meets the audit lens's need to verify the reviews from git alone, and it leaves the task force at the right size for an S card."
+   }
+  ]
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run",
+ "window_notes": "Primary window one seat at a time under the D228 preflight, then the confirmation step: the outlier (audit lens, Qwen) and the five other voters each answered one narrow question about the amended declaration."
+}
