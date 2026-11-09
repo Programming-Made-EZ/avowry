@@ -17,13 +17,13 @@ Command: `git grep -n PackageReference -- '*.csproj' '*.props' '*.targets'` plus
 
 Shipped with the compiler and CLI: none. `Avowry.Cli.csproj` and every other project under `src/` have no PackageReference; the first package is added only to a project the compiler generates.
 
-Compatibility (bar 7 asks for it, this page only lists): the four direct packages are permissive (MIT, Apache-2.0), and the mob sees no incompatibility with Apache-2.0. That is the mob's reading, not legal advice; the lawyer questions stay open.
+Compatibility (bar 7 asks for it, this page only lists): the four direct packages are permissive (MIT, Apache-2.0), and the mob sees no incompatibility with Apache-2.0. That is the mob's reading, not legal advice; the lawyer questions were skipped by owner decision (Owner items).
 
 Package metadata, for the publish card: `src/Avowry.Cli/Avowry.Cli.csproj` sets the package id, version, tool command and a description, but no licence expression, no authors, no copyright and no packed `NOTICE` (Apache-2.0 section 4 asks that the notice travel with redistributions).
 
 Transitive packages: not reviewed: needs a restore (`obj/project.assets.json` is untracked, so the repository cannot list them).
 
-Recommendation: the four direct packages are permissive; accept them, set the package metadata on the publish card, and treat the transitive licences as an open check.
+Recommendation: the four direct packages are permissive; accept them, set the package metadata on the publish card, and treat the transitive licences as a review (card 369).
 
 ## Vendor terms
 
@@ -59,7 +59,7 @@ Limits of the scan: the content of a merge commit (its conflict-resolution lines
 
 Home paths: the scan drops the home-path pattern as noisy, so they were counted separately at commit `dde36dc`, counts only: `git grep -l -E 'C:\\Users\\[A-Za-z0-9._-]+|C:/Users/[A-Za-z0-9._-]+' | wc -l` gives 146 files, and the same search with `-c` summed gives 277 lines (381 matches by `git grep -o`). Nearly all are under `.mob/records` (137 of the 146 files). A local account name is therefore in public history.
 
-Recommendation: no secret was found by these patterns, and none can be pulled back from history anyway; skim the 11 fixture and placeholder hits once by eye, rotate any credential found, and decide the home-path item.
+Recommendation: no secret was found by these patterns, and none can be pulled back from history anyway; skim the 11 fixture and placeholder hits once by eye, rotate any credential found, and scrub the home paths from tracked records (card 370; history stays public).
 
 ## Author metadata
 
@@ -71,7 +71,7 @@ Command: `git log c4692e074c8970081687d332adb64f200728426c --format='%an|%ae|%cn
 
 Described by role: the repository-local identity; every commit carries it. This page holds neither the name nor the address, by design. Because the repository is public, that identity is already visible in history.
 
-Recommendation: the owner decides whether that identity is the one to publish the package under, and what identity later commits use.
+Recommendation: the owner kept the repository-local identity for the package and for later commits (answered 2026-11-08).
 
 ## Personal-name check
 
@@ -90,27 +90,44 @@ Source: the screen recorded in D125 (`docs/decisions/process-and-staffing.md:128
 - GitHub handle: free on 2026-10-29, source D125.
 - avowry.dev: free on 2026-10-29, source D125.
 - avowry.io: free on 2026-10-29, source D125.
-- Trademark databases and the earlier brand called Phrase: not reviewed: needs a professional search.
+- Trademark databases and the earlier brand called Phrase: not reviewed: commissioned by the owner; pending result (Trademark search brief below).
 - Registry state after 2026-10-29: not reviewed: needs a fresh lookup on the day of publishing.
 
-Recommendation: repeat the registry lookups on the publish day and commission a professional trademark search before the first package publish.
+Recommendation: repeat the registry lookups on the publish day; the professional trademark search is commissioned by the owner, and publishing the name waits on its result.
 
 ## Owner items
 
-Command: read from `NOTICE`, `TRADEMARKS.md`, D121 and D125. Scan tip: `c4692e074c8970081687d332adb64f200728426c`. Every item is open, none can be confirmed from the repository (D125 recorded the name choice, nothing more), and each is asked in one word (one line for the holder).
+Command: read from `NOTICE`, `TRADEMARKS.md`, D121, D125 and the owner's answers of 2026-11-08 (`NOTICE` and `TRADEMARKS.md` filled by card 366). Scan tip: `c4692e074c8970081687d332adb64f200728426c`. Every item is answered; the search waits on its result and four items are carried by cards 367 to 370.
 
-- Public name: OPEN, asked 2026-11-08. Confirm Avowry (D125)? Answer: yes / no.
-- Holder at `NOTICE:2` (which also holds a year placeholder) and `TRADEMARKS.md:5` (same holder label): OPEN, asked 2026-11-08. Answer: give the year and the holder name (one line); same holder for the trademark line? yes / no.
-- Professional trademark search: OPEN, asked 2026-11-08. Answer: commission / skip.
-- The four lawyer questions (D121): OPEN, asked 2026-11-08. Answer: ask / skip (and, if ask, who).
+- Public name: answered 2026-11-08. Avowry confirmed (D125); registration status pending the owner's trademark search.
+- Holder at `NOTICE:2` and `TRADEMARKS.md:5`: answered 2026-11-08. Programming Made EZ; 2026 is an assumption the owner can correct (docs/LICENSING.md); same holder for the trademark line: yes (card 366).
+- Professional trademark search: answered 2026-11-08. commissioned by the owner; pending result. Publishing the name waits on the result.
+- The four lawyer questions (D121): answered 2026-11-08. skipped by owner decision.
   1. Do the generated runtime helper files need a notice, given that generated code belongs to the user?
   2. Is a trademark policy on this name enforceable?
   3. Does the rename rule conflict with Apache-2.0 notice retention?
-  4. Who is the holder?
-- Author identity going forward: OPEN, asked 2026-11-08. Answer: keep / change.
-- Unread vendor terms (four vendors, plus the seat replies under `.mob/records`): OPEN, asked 2026-11-08. Answer: read-first / accept-risk.
-- The `reply_head` publication choice (prefixes of up to 200 characters in the bench history files): OPEN, asked 2026-11-08. Answer: publish / trim / drop. Trim means shorten or drop the reply prefix in future rows.
-- Transitive package licences: OPEN, asked 2026-11-08. Needs a restore. Answer: restore-and-review / accept.
-- Home paths in tracked records: OPEN, asked 2026-11-08. Answer: keep / scrub-tracked (history stays public).
+  4. Who is the holder? (answered by the holder item above)
+- Author identity going forward: answered 2026-11-08. keep.
+- Unread vendor terms (four vendors, plus the seat replies under `.mob/records`): answered 2026-11-08. read-first (card 367).
+- The `reply_head` publication choice (prefixes of up to 200 characters in the bench history files): answered 2026-11-08. trim for new rows only; pushed rows stay public (card 368).
+- Transitive package licences: answered 2026-11-08. restore-and-review (card 369).
+- Home paths in tracked records: answered 2026-11-08. scrub-tracked; history stays public (card 370).
 
-Recommendation: name yes, once the search is commissioned; holder needed (year and name); search commission; lawyer ask; author identity keep; vendor terms read-first; reply_head trim for new rows only (pushed rows stay public); transitive licences restore-and-review; home paths scrub-tracked. The holder placeholders in `NOTICE` and `TRADEMARKS.md` stay until the holder is named.
+### Trademark search brief
+
+- Applicant: Programming Made EZ.
+- Mark: Avowry.
+- Classes: 9 (downloadable software) and 42 (software development services).
+- Jurisdictions (proposed by the mob; the owner confirms with the provider): United States, European Union, United Kingdom.
+- NuGet package id: free on 2026-10-29 (D125); not checked since.
+- npm: free on 2026-10-29 (D125); not checked since.
+- PyPI: free on 2026-10-29 (D125); not checked since.
+- crates.io: free on 2026-10-29 (D125); not checked since.
+- GitHub handle: free on 2026-10-29 (D125); not checked since.
+- avowry.dev: free on 2026-10-29 (D125); not checked since.
+- avowry.io: free on 2026-10-29 (D125); not checked since.
+- Trademark databases and the earlier brand called Phrase: not checked (the search covers them).
+- Registry state after 2026-10-29: not checked.
+- Registry screen: [Name collisions](#name-collisions-not-a-professional-search).
+
+Recommendation: name Avowry confirmed, publishing waits on the search result; holder Programming Made EZ (card 366); search commissioned by the owner; lawyer questions skipped by owner decision; author identity keep; vendor terms read-first (card 367); reply_head trim for new rows only, pushed rows stay public (card 368); transitive licences restore-and-review (card 369); home paths scrub-tracked, history stays public (card 370).

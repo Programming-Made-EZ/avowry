@@ -13,7 +13,6 @@ public class PrePublicationOwnerItems
     [Fact]
     [Trait("Slice", "371")]
     [Trait("Criterion", "371-1")]
-    [Trait("Status", "Pending")]
     public async Task Each_of_the_nine_owner_items_shows_its_answer()
     {
         // Given the owner's answers of 2026-11-08
@@ -27,7 +26,6 @@ public class PrePublicationOwnerItems
     [Fact]
     [Trait("Slice", "371")]
     [Trait("Criterion", "371-2")]
-    [Trait("Status", "Pending")]
     public async Task No_page_line_still_calls_an_answered_item_open()
     {
         // Given the answered page
@@ -41,7 +39,6 @@ public class PrePublicationOwnerItems
     [Fact]
     [Trait("Slice", "371")]
     [Trait("Criterion", "371-3")]
-    [Trait("Status", "Pending")]
     public async Task The_page_carries_the_trademark_search_brief()
     {
         // Given the commissioned search
