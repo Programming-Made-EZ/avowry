@@ -14,16 +14,7 @@ avow to "validate task title {title: Text}"
     ensure title length at most 200 else TitleTooLong
 ```
 
-The failure after `else` must appear in the containing avow's `fails with` list. An endpoint may also use an ensure step; its failure becomes one of the endpoint's effective failures.
-Failure names in a `fails with` list must be unique.
-
-The condition vocabulary is deliberately small:
-
-- `<text> is blank` and `<text> is not blank`
-- `<text> length at most <integer>`
-- `<int> <operator> <integer-or-int-input>`, where the operator is `<`, `<=`, `>`, `>=`, `==`, or `!=`
-
-The value being checked may be a variable or a field path such as `task.title`. Paths are resolved against declared record fields and must have the type required by the condition. Length maxima are non-negative 32-bit integers, and Int literals in comparisons must fit in a signed 32-bit Int.
+The conditions, the failure rules and their diagnostics are defined in [the grammar's ensure step section](GRAMMAR.md#ensure-step).
 
 The core syntax and base-library pattern define the condition and declared-failure semantics. The C# adapter maps them to early-return-style guard clauses that raise the declared `AvowryFailure`; for example, `is not blank` becomes a `string.IsNullOrWhiteSpace` guard and `length at most 200` becomes a length guard. A project profile may select a different idiomatic representation later without changing the Avowry source.
 
@@ -35,9 +26,7 @@ A record update is a copy of a record with named fields replaced. The original v
 let completed = task with { done: true }
 ```
 
-The source must be a record already in scope (a hole, a prior `let`, or `input`, optionally followed by a field path). The parser reserves `with { ... }` for an update only when the name before `with` is already in scope and a brace follows; the update itself then requires a non-empty `name: value` field list, and an empty or malformed list is a parse diagnostic (AV200), not an avow call. This narrow reservation leaves ordinary phrase calls such as `let sent = send with { urgent: true }` available when `send` is wording rather than an in-scope value.
-
-Each named field must exist on that record and match the field's type (Text, Int, Bool, Id, or a user type). Duplicate names in one update are an error; an unknown field is an error even when the record declares no fields. A trailing comma is not allowed. Nested update expressions are deliberately rejected with a syntax diagnostic; bind the inner update to a `let` first, then use that name as the outer field value.
+The source rules, the field rules and their diagnostics are defined in [the grammar's record update step section](GRAMMAR.md#record-update-step).
 
 The form is a core pattern, usable in the steps of an avow and of an endpoint. The C# adapter emits a `with`-expression on the generated record type (positional records already support it). A project profile may change surrounding layout later without changing the Avowry source.
 

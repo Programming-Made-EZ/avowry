@@ -23,14 +23,14 @@ Programs compile through a language-neutral IR to target **providers** (C# first
 - **Type names** (lexer token `TypeName`, grammar `Ident`): `[A-Z][A-Za-z0-9]*`. Types, modules, endpoints, failure codes, HTTP verbs.
 - **Strings:** double-quoted, single line, `\"` and `\\` escapes only. An avow template is lexed as one string; the parser splits its words and holes.
 - **Numbers:** `-?[0-9]+(\.[0-9]+)?`. A `-` followed by a digit starts a number; there is no arithmetic.
-- **Symbols:** `: , . = { } [ ] < > / ->`.
+- **Symbols:** `: , . = { } [ ] < > / ->` and the comparisons `<=`, `>=`, `==`, `!=`.
 - **Native blocks.** A logical line that is exactly `native <target>` captures every following line indented deeper than it (blank lines included) as one `RAW` token, with the block's base indentation (header + 2) removed and trailing blank lines dropped. The block ends at the first non-blank line at or left of the header's indentation.
 
 ### Core keywords
 
 `module` `type` `avow` `endpoint` `input` `output` `steps` `let` `respond with` `fail with` `fails with` `effects` `spec` `given` `when` `then` `and` `native`
 
-Core keywords are reserved only at the **start of a line**. Inside avow templates and steps, words like `with` or `input` are ordinary words.
+Core keywords are reserved only at the **start of a line**. Inside avow templates and steps, words like `with` or `input` are ordinary words, except that `with {` after a name already in scope starts a record update, and a line that starts with `ensure` and contains `else` is an ensure step.
 
 An avow accepts at most one filler from the fixed set `to`, `that`, `it`, directly after `avow`. The filler is ignored, is never part of the declared name, and is not allowed after any other keyword. The formatter always writes the canonical form `avow to "..."`; for example, `avow to "to do list"` declares the name `to do list`.
 
@@ -82,8 +82,14 @@ segment         = name | number | "{" , ident , "}" ;    (* /orders/{orderId}/li
 (* ---------- steps ---------- *)
 steps_block     = "steps" , NEWLINE , INDENT , step_line , { step_line } , DEDENT ;
 step_line       = step , NEWLINE ;
-step            = let_step | respond_step | fail_step | avow_call ;
+step            = let_step | update_step | ensure_step | respond_step | fail_step | avow_call ;
 let_step        = "let" , ident , "=" , avow_call ;
+update_step     = "let" , ident , "=" , path , "with" , record ;   (* root of path in scope *)
+ensure_step     = "ensure" , condition , "else" , Ident ;
+condition       = path , "is" , [ "not" ] , "blank"
+                | path , "length" , "at" , "most" , number
+                | path , compare_op , expr ;
+compare_op      = "<" | "<=" | ">" | ">=" | "==" | "!=" ;
 respond_step    = "respond with" , record ;
 fail_step       = "fail with" , Ident ;
 avow_call     = call_part , { call_part } ;           (* resolved, see section 4 *)
@@ -118,10 +124,10 @@ and_line        = "and" , ( binding | outcome ) , NEWLINE ;
 
 ## 4. Avow resolution (the important part)
 
-A step that is not `let`, `respond with`, or `fail with` is a **avow call**. The compiler resolves it against every avow template in scope:
+A step that is not `let`, `respond with`, `fail with`, an ensure step or a record update is a **avow call**. The compiler resolves it against every avow template in scope:
 
 1. Split the template into **words** and **holes**. The parser has already split the step into **words** (bare names) and **arguments** (dotted paths, literals, records, lists).
-2. A hole matches exactly **one argument**, or **one bare word that names a variable in scope** (a `let`, or a hole of the enclosing composite avow). So `respond with { totalQuantity: total }` and `ensure items is not empty` inside a composite both work. Arguments never contain spaces outside brackets, so matching is a linear scan with no backtracking.
+2. A hole matches exactly **one argument**, or **one bare word that names a variable in scope** (a `let`, or a hole of the enclosing composite avow). So `respond with { totalQuantity: total }` and `ensure items is not empty` inside a composite both work (an `ensure` line without `else` is an ordinary avow call). Arguments never contain spaces outside brackets, so matching is a linear scan with no backtracking.
 3. Words match case-insensitively; whitespace is normalized.
 4. **Exactly one** template must match. Zero matches is error `AV001 unknown avow` (with the closest templates suggested). Two or more is error `AV002 ambiguous avow`.
 5. The matched expressions are type-checked against the hole types.
@@ -134,6 +140,29 @@ step:      total quantity of input.items
 result:    call total-quantity-of(items = input.items) : Int
 ```
 
+### Ensure step
+
+An ensure step has the form `ensure <condition> else <Failure>`: it checks a condition and fails with the named code when the condition does not hold. The condition is one of:
+
+- `<path> is blank`: a Text value that is empty or only whitespace.
+- `<path> is not blank`: a Text value with at least one non-space character.
+- `<path> length at most N`: a Text value of at most `N` characters; `N` is a non-negative 32-bit integer.
+- `<path> <op> <value>`: an Int comparison with `<`, `<=`, `>`, `>=`, `==` or `!=`; the right side is a signed 32-bit Int literal or an Int path.
+
+The path is a variable in scope or a field path such as `task.title`. In an avow, the code after `else` must be in the avow's `fails with` list (`AV326` otherwise). In an endpoint, the code becomes one of the endpoint's effective failures. A code repeated in `fails with` is `AV329`. A path of the wrong type for its condition is `AV312`; a malformed condition is `AV200`. An `ensure` line without `else` is an ordinary avow call, resolved against your own templates.
+
+### Record update step
+
+`let <name> = <source> with { field: value, ... }` binds a copy of a record with the named fields replaced; the source is never changed. The source must already be in scope: a hole, a `let` or `input`, optionally followed by a field path (`input.task`). After any other word, `with {` is ordinary words in an avow call.
+
+- An empty field list, a trailing comma or a nested update is `AV200`; bind the inner update to a `let` first and use that name as the field value.
+- An unknown field, or a source with no fields, is `AV311`.
+- A field named twice is `AV303`.
+- A value of the wrong type for its field is `AV312`.
+- A name that is already defined is `AV313`.
+
+The update is a `let` step only; it cannot appear as a call argument or inside a record.
+
 ### Library lints
 
 - `AV010 duplicate skeleton`: two templates with the same word sequence (holes ignored) are an error.
@@ -143,7 +172,7 @@ result:    call total-quantity-of(items = input.items) : Int
 
 | Verb | Meaning |
 |---|---|
-| `ensure` | Guard. Returns nothing; fails with a declared code. |
+| `ensure` | Guard. Returns nothing; fails with a declared code. Built in as the ensure step; without `else` it is wording for your own avows. |
 | `validate` | Structural check of input shape. Fails with a declared code. |
 | `find` | Read that may return `none`. |
 | `load` | Read that must succeed; fails if missing. |
@@ -158,6 +187,8 @@ result:    call total-quantity-of(items = input.items) : Int
 - Must not start with a step keyword (`let`, `native`, `respond with`, `fail with`), because no step could ever call it.
 
 ### Resolver diagnostics
+
+Every diagnostic code is `AV` followed by three digits (for example `AV001`), and a code keeps its number.
 
 The full resolver diagnostic table (`AV001`, `AV002`, `AV010`, `AV020`, and `AV300` to `AV335`, plus `AV337`, `AV340` and `AV341` from the C# target), which previously lived in [HANDOFF.md](../HANDOFF.md), now lives here:
 
@@ -183,9 +214,10 @@ The full resolver diagnostic table (`AV001`, `AV002`, `AV010`, `AV020`, and `AV3
 | `AV323` | Endpoint with output never responds |
 | `AV324` | Step after `respond with` or `fail with` is unreachable |
 | `AV325` | Composite avow with a return type (not supported in v0.1) |
-| `AV326` | Composite fails with an undeclared code |
+| `AV326` | Composite fails with an undeclared code (`fail with` or `ensure ... else`) |
 | `AV327` | Avows call each other in a cycle |
 | `AV328` | Composite calls an avow whose effect it does not declare |
+| `AV329` | A failure code repeated in `fails with` |
 | `AV330` | Wrong trigger (`called` for avows, `handled` for endpoints) |
 | `AV331` | Givens wrong: unknown, missing or duplicate hole; `input` in an avow spec; missing input in an endpoint spec |
 | `AV332` | Spec value is a path, not a literal |
@@ -266,7 +298,7 @@ Each generated target symbol carries its source avow (C#: `[Avow("...")]` attrib
 
 ## 7. Out of scope for v0.1
 
-- Emitting composite avows with `steps` (the parser supports them; the first provider will not)
+- Composite avows with `steps` (`let`, ensure and record update steps) are emitted by the C# target; constructs it does not emit yet are `AV340`.
 - Effects other than `none`
 - Content-hash pinning and the generation cache (`avowry.lock`)
 - The `avowry index` command (one line per avow: template, return type, effects, failures)

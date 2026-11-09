@@ -1,6 +1,6 @@
 # Avowry cheat sheet
 
-Indent 2 spaces. `#` comments. Keywords only at line start: module, type, avow, endpoint, input, output, steps, let, respond with, fail with, fails with, effects, spec, given, when, then, and, native. Hole `{name: Type}`. Types: Text, Int, Decimal, Bool, Id, List<T>, Option<T>. `"t"` fits Text or Id; `1` fits Int or Decimal; `2.5` is Decimal; true/false are Bool; none fits only Option. Outcomes: returns, fails with, succeeds, responds. Accepted declaration fillers: `to`, `that`, `it` (at most one, only directly after `avow`, and never part of the name). Write the canonical form `avow to "..."`. `when called` on an avow; `when handled` on an endpoint. Verbs: GET POST PUT PATCH DELETE.
+Indent 2 spaces. `#` comments. Keywords only at line start: module, type, avow, endpoint, input, output, steps, let, respond with, fail with, fails with, effects, spec, given, when, then, and, native. Hole `{name: Type}`. Types: Text, Int, Decimal, Bool, Id, List<T>, Option<T>. `"t"` fits Text or Id; `1` fits Int or Decimal; `2.5` is Decimal; true/false are Bool; none fits only Option. Outcomes: returns, fails with, succeeds, responds. Accepted declaration fillers: `to`, `that`, `it` (at most one, only directly after `avow`, and never part of the name). Write the canonical form `avow to "..."`. `when called` on an avow; `when handled` on an endpoint. Verbs: GET POST PUT PATCH DELETE. Steps: `ensure <Text path> is [not] blank|length at most N else Code`, or `ensure <Int path> <|<=|>|>=|==|!= <Int> else Code`; Code must be in `fails with` (AV326). No `else`: plain call. `let y = x with { f: v }` copies a record.
 
 ```avowry
 module Shop
@@ -51,6 +51,25 @@ avow to "ensure {ok: Bool} holds"
     then succeeds
   native csharp
     if (!ok) Fail("Missing");
+
+avow to "check {title: Text}"
+  fails with Blank
+  steps
+    ensure title is not blank else Blank
+  spec "rejects blank"
+    given title = ""
+    when called
+    then fails with Blank
+
+avow to "close {item: Item}"
+  fails with Empty
+  steps
+    let shut = item with { ok: false }
+    ensure shut.name is not blank else Empty
+  spec "rejects a blank name"
+    given item = { name: "", qty: 1, price: 2.5, ok: true, tag: "t-1" }
+    when called
+    then fails with Empty
 
 avow to "count of {items: List<Item>}" -> Int
   native csharp
