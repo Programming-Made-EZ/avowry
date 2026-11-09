@@ -1474,5 +1474,11 @@
     "status": "adopted",
     "title": "Card 203 task-force declaration and card text (names reserved by generated code are rejected)",
     "order": 218
+  },
+  "D228": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 203 retro pick: a preflight before every vote window (tune D174)",
+    "order": 219
   }
 }

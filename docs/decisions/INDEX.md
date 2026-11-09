@@ -331,3 +331,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D225](process-and-staffing.md#d225) | Card 186 task-force declaration and card text (pre-publication checks: name, licences, history, vendor terms) | process-and-staffing | adopted |
 | [D226](process-and-staffing.md#d226) | Card 186 retro pick: tune D219, every review of a docs card page finishes before the gate review starts | process-and-staffing | adopted |
 | [D227](process-and-staffing.md#d227) | Card 203 task-force declaration and card text (names reserved by generated code are rejected) | process-and-staffing | adopted |
+| [D228](process-and-staffing.md#d228) | Card 203 retro pick: a preflight before every vote window (tune D174) | process-and-staffing | adopted |

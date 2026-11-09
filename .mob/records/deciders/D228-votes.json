@@ -1,0 +1,179 @@
+{
+ "decider": "D228",
+ "subject": "card 203 retro pick: a preflight before every vote window (tune D174)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "h228architect-architect-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "none",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "decider_cite_ok": false,
+    "reply_head": "",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   },
+   {
+    "tag": "h228rarchitect-architect-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a window that passes a preflight is not lost to the harness",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe diff stays small: it adds 7 lines to one Experimental entry (D174) and has its own metric, counter-metric and trial. Every preflight condition can be checked mechanically: whether the committed template is used, whether another decision run is active, whether stray `prompt-*.txt` files sit in the root, whether a fallback chain names a driver out of quota, and whether a non-vote prompt goes through the vote wrapper. The one-seat-at-a-time rule ends when bugs 365 and 374 are closed, so it removes itself.\n\nNotes:\n- The template still contains the placeholder `{DNNN}`. The wrapper should fill it, and the preflight should state that, so \""
+   }
+  ],
+  "qa": [
+   {
+    "tag": "h228qa-qa-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a window starts only after a preflight line of the D158 checklist",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe four preflight checks can each be tested red first: an untemplated prompt, an active run, a stray `prompt-*.txt`, and a driver that is out of quota but still in a fallback chain. The bug-gated serial rule ends at a clear point, when bugs 365 and 374 close. I have three notes.\n\n1. This scratch root already contains an untracked `prompt-bubykjuh.txt`, so the check needs to define \"stray\" as \"not this run's own prompt\". Otherwise it will block every window.\n2. The check that the template was used should also reject any wrapper text appended after the template. This prompt ended with a conflicting \"ABSOLUTELY NO / Nothing else\" tail, whi"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "h228rdev-dev-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a window starts only after a preflight line of the D158 checklist",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe preflight checklist is workable, unambiguous, and fair. It directly addresses the three harness failures that wasted 75 minutes on card 203 by enforcing a standard template, preventing stray prompts, blocking concurrent runs, and temporarily serializing seats during known bugs. These checks are concrete, verifiable, and align with backend development discipline around state isolation and deterministic execution. I can comply without gaming them, as the gates are objective and the trial period allows rapid validation. The temporary one-seat constraint during bug resolution is a reasonable trade-off for integrity."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "h228auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a preflight line of the D158 checklist: the vote prompt is the committed template",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe preflight directly addresses the three harness failures from card 203 by anchoring checks to committed templates and repository state, making the practice verifiable from git alone. The trial period and metric provide clear feedback. My audit reservation is that runtime checks like “no other decision run is active” must be enforced via a git-tracked lock or explicit log to prevent race conditions from bypassing the preflight. Once verifiable in the repository history, the loophole risk is eliminated. The proposal strengthens process integrity without altering core principles."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "h228decider-decider-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a window that passes a preflight is not lost to the harness",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nI read the 7-line amendment diff, and the template it names is committed at `.mob/records/templates/vote-prompt.md`. The decision can rest on evidence. It has a measured baseline (3 windows lost, about 75 minutes), a metric with a target of 0, a counter-metric for minutes until the counted window, a fixed trial over the next 3 cards, and a named owner. It tunes one Experimental entry (D174) and keeps every standing rule. It also correctly triggers the fresh-seat re-run because it changes the agreement.\n\nNote: this scratch checkout has an untracked `prompt-*.txt` file in its root. That is the stray-file hazard the preflight targets, so it"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "h228coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a window that passes a preflight is not lost to the harness",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe task force is the right size. Six of seven voices name the same single concern, and the developer's ask is handled as a line in the slice brief rather than added to the agreement. The change is one tuned Experimental entry of 7 diff lines. It has a metric, a counter-metric and a 3-card trial, so the ceremony matches the 75 minutes lost. The smaller findings stay in briefs and checklists.\n\nNotes:\n- The serial fallback is tied to bugs 365 and 374. That could slow every window until they are fixed, so the counter-metric should show it.\n- The preflight's no-stray-`prompt-*.txt` check should allow for this window's own prompt file, which "
+   }
+  ]
+ },
+ "rerun_swapped_seats": {
+  "architect": [
+   {
+    "tag": "j228architect-architect-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a window that passes a preflight is not lost to the harness",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nAs the architect, I endorse this. It is one change to one entry, the 7-line diff matches the proposal, and every check comes from a failure that actually happened on card 203. Each check can be confirmed before the window starts: the committed template, no other decision run active, no out-of-quota drivers in the fallback chains, and no non-vote prompt sent through the vote wrapper.\n\nNotes:\n- **Possible false positive.** The stray-file check must run before dispatch. The runner itself writes a `prompt-*.txt` file at the repository root, and this checkout has one now. If the check runs after dispatch, it will fail windows that are fine.\n-"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "j228qa-qa-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the vote prompt is the committed template",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe preflight checks are explicitly state-enforcing and directly prevent the three harness failures. Each condition is verifiable and supports red-first testing: intentionally placing a stray prompt file, injecting a non-template prompt, or leaving a concurrent run active will reliably block the window before bad state propagates. The trial metric is measurable, and the fallback constraints are clear. Automated preflight scripts should be committed alongside the agreement to guarantee consistent enforcement."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "j228dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a window starts only after a preflight line of the D158 checklist",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThis rule binds the facilitator's harness, not my build loop. Red, unit commits with doubles, green, flags and slice limits all stay the same, so I can follow it without gaming anything. Each preflight item can be checked by anyone: whether the committed template was used, whether another run is active, whether stray `prompt-*.txt` files are present, whether a quota-dead driver is in the fallback chain, and whether a non-vote prompt went through the vote wrapper. Running one seat at a time while bugs 365 and 374 stay open is a fair, temporary cost. Note: this scratch checkout has an untracked `prompt-*.txt` at the repository root right n"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "j228auditlens-auditlens-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a window starts only after a preflight line of the D158 checklist",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nNotes from the audit lens, none of them blocking: the amendment diff and the template it names are both committed, and the trigger is concrete. Two loopholes are worth closing in the checklist line:\n\n- **Prompt check.** \"Uses the template\" should mean the prompt sent is the template plus the proposal, with nothing added afterwards. The prompt for this vote ends with an extra trailing instruction that contradicts the template: it adds \"ABSOLUTELY NO\", says \"Nothing else\", and drops the CITE line. That is exactly the drift the preflight is meant to catch.\n- **Git evidence.** The record should commit the preflight line with a hash of the pr"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "j228decider-decider-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a window starts only after a preflight line of the D158 checklist",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes. The proposal directly addresses documented process failures with a concrete, measurable preflight checklist. The evidence ties specific harness issues to actionable safeguards, and the three-card trial with clear metrics allows for rapid validation without overcommitting. The standing-rules preflight confirms alignment with existing agreements and voting protocols. I endorse this as a pragmatic, evidence-driven improvement to the voting window integrity."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "j228coach-coach-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a window that passes a preflight is not lost to the harness.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nAs Agile Coach, I endorse this targeted preflight. It directly addresses observed waste with a lightweight, time-boxed trial. The checklist focuses on removing impediments rather than adding ceremony, and the synthesis reflects all seven voices without padding. The hypothesis and metrics are clear, and the single-seat fallback during known bugs shows pragmatic risk management. I note that automating the preflight checks would prevent manual bottlenecks, but the current design is appropriately sized and focused."
+   }
+  ]
+ },
+ "trigger_line": "(c) the re-run was run because the primary window passed with no No and no amendment and the proposal changes the agreement",
+ "window_notes": "Primary window one seat at a time (the preflight of the entry under vote, applied to itself): the Qwen architect reply did not parse and Claude seats were refused by the rotation rule while Muse (idle, and wrongly still counted out of quota) waited longest; the architect and developer seats were re-asked on Cursor and Qwen. The fresh-seat re-run swapped the seats."
+}
