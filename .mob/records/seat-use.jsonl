@@ -2152,3 +2152,5 @@
 {"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-09T09:26:02.522495Z", "probe_taken_at": "2026-11-09T09:26:02.511743Z"}
 {"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-09T09:28:01.577572Z", "probe_taken_at": "2026-11-09T09:28:01.567959Z"}
 {"seat": "muse", "role": "decider voter", "context": "decider-muse", "card": "decider", "ts": "2026-11-09T09:30:25.715903Z", "probe_taken_at": "2026-11-09T09:30:25.703054Z"}
+{"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-09T09:32:15.790571Z", "probe_taken_at": "2026-11-09T09:32:15.780856Z"}
+{"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-09T09:33:39.627515Z", "probe_taken_at": "2026-11-09T09:33:39.613778Z"}
