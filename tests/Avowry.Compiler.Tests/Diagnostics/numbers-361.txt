@@ -1,0 +1,40 @@
+### M01-010
+1|010|7|1|Avow 'ping {m: Int}' has the same wording as 'ping {n: Int}'.
+### M02-321
+1|321|11|5|Avow 'count things' returns Int; use 'let' to keep it.
+### M03-320
+1|320|11|5|Avow 'do nothing' returns no value and cannot be used with 'let'.
+### M04-327
+1|327|3|1|Avow 'ping {n: Int}' participates in a call cycle.
+### M05-331-input
+1|331|7|5|Avow specs cannot bind input; use a hole binding.
+2|331|6|3|Spec for 'check {n: Int}' is missing the hole 'n'.
+### M06-331-hole
+1|331|7|5|Avow spec for 'check {n: Int}' does not bind hole 'q'. Valid holes: n.
+### M07-334
+1|334|10|5|Avow 'check {n: Int}' cannot fail with 'Underflow'. Valid options: Overflow.
+### M08-203
+1|203|3|1|Avow has no implementation; add `native <target>` or `steps`.
+### M09-325
+1|325|3|1|Composite avow 'count {n: Int}' cannot return a value.
+### M10-328
+1|328|8|1|Composite avow 'store {n: Int}' must declare effect 'Db'.
+### M11-330
+1|330|6|3|Spec 'wrong trigger' on avow 'add {a: Int} and {b: Int}' must use 'when called'.
+### M12-333
+1|333|10|5|Spec 'succeeds with value' expects success for an avow that returns a value.
+### M13-001
+1|001|11|5|No avow matches this step. Closest: "do nothing".
+### M14a-208-native-then-steps
+1|208|10|3|An avow is implemented by native blocks or by steps, not both.
+### M14b-208-steps-then-native
+1|208|10|3|An avow is implemented by native blocks or by steps, not both.
+### M15-200-template
+1|200|3|9|Expected a quoted avow template, found '42'.
+### M16-200-clause
+1|200|4|3|Expected an avow clause (effects, fails with, spec, native or steps), found 'returns'.
+### M17-200-call
+1|200|5|12|Expected an avow call, found end of line.
+### M18-200-trigger
+1|200|8|10|Expected `called` (avow spec) or `handled` (endpoint spec), found 'frobnicated'.
+2|330|6|3|Spec 'bad trigger' on avow 'check {n: Int}' must use 'when called'.
