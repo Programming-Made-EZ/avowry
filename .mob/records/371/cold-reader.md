@@ -1,0 +1,13 @@
+# Card 371 cold reader (Qwen, reply-only, Probation rung 1; the page, NOTICE and TRADEMARKS.md inlined; read as the sponsor persona)
+
+Tested tip: the green 479f2dbd974a7d5f0060b4d8407615931a425928 (main). Texts read: docs/release/pre-publication-checks.md, NOTICE, TRADEMARKS.md (inlined, nothing else). The reply, verbatim:
+
+Yes
+WHAT IS SETTLED: Public name is Avowry. Holder is Programming Made EZ. Author identity stays repository-local. Vendor terms need read-first review. `reply_head` prefixes trim for new rows only; existing rows stay public. Transitive licences need restore-and-review. Home paths in tracked records get scrubbed; history stays public. Lawyer questions skipped by owner decision. Package metadata is configured.
+WHAT STILL WAITS AND ON WHOM: Trademark search result waits on the owner. Fresh registry lookups post-2026-10-29 wait on the owner/mob. Vendor terms audit, transitive licence review, and home-path scrubbing wait on the mob.
+THE SEARCH BRIEF: A provider could start, but must ask whether to cover common-law marks, exact vs. phonetic similarity, and whether to expand beyond classes 9 and 42. They also need the exact scope of the prior “Phrase” brand search.
+CONFUSING OR MISSING: The page states “Publishing the name waits on the result,” yet recommends accepting packages and setting metadata for the publish card, splitting the release gate. It also notes “Registry state after 2026-10-29: not reviewed: needs a fresh lookup on the day of publishing,” which conflicts with the earlier “free on 2026-10-29” status without clarifying if the hold blocks the package or only the branding.
+VERDICT: UNCLEAR, because the document splits the release gate between package publication and trademark clearance without a unified condition.
+
+## Facilitator reading (story-promise check, D206)
+The card's story promises "I see what is settled and what still waits". The reader lists what is settled and what waits and could not find a line calling an answered item open, but its verdict is UNCLEAR for a real reason: the page says "Publishing the name waits on the result" while the publish card carries the package metadata, and the registry state after 2026-10-29 is "not checked" without saying what that blocks. Page revision 1 (a commit after this report, before the gate review) adds a short "What blocks what" paragraph and makes the registry line consistent; it also completes the brief with the points a provider would still ask (word mark, goods and services description, the applicant's details supplied privately) and removes the unsupported clause about the earlier brand.
