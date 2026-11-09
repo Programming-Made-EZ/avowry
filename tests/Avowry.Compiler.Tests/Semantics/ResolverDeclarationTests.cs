@@ -35,7 +35,7 @@ public class ResolverDeclarationTests
     }
 
     [Fact]
-    public void An_unknown_type_is_PH300_at_the_reference()
+    public void An_unknown_type_is_AV300_at_the_reference()
     {
         // Given a field whose type does not exist
         const string source = "module Test\n\ntype Basket\n  prices: Map<Text, Decimal>\n";
@@ -44,56 +44,56 @@ public class ResolverDeclarationTests
         var diagnostic = Only(source);
 
         // Then the type name is reported where it is written
-        Assert.Equal(("PH300", 4, 11), (diagnostic.Code, diagnostic.Line, diagnostic.Column));
+        Assert.Equal(("AV300", 4, 11), (diagnostic.Code, diagnostic.Line, diagnostic.Column));
     }
 
     [Theory]
     [InlineData("List<Int, Int>")]
     [InlineData("Int<Text>")]
     [InlineData("Option")]
-    public void The_wrong_number_of_type_arguments_is_PH301(string type)
+    public void The_wrong_number_of_type_arguments_is_AV301(string type)
     {
         // Given a field with a malformed generic
         var source = $"module Test\n\ntype Box\n  value: {type}\n";
 
         // When it is resolved
         // Then the arity is reported
-        Assert.Equal(["PH301"], Codes(source));
+        Assert.Equal(["AV301"], Codes(source));
     }
 
     [Theory]
     [InlineData("type LineItem\n  sku: Text\n\ntype LineItem\n  id: Id\n")]
     [InlineData("type Text\n  value: Int\n")]
-    public void A_duplicate_or_core_type_name_is_PH302(string types)
+    public void A_duplicate_or_core_type_name_is_AV302(string types)
     {
         // Given a type name that is already taken
         var source = "module Test\n\n" + types;
 
         // When it is resolved
         // Then the second definition is reported
-        Assert.Equal(["PH302"], Codes(source));
+        Assert.Equal(["AV302"], Codes(source));
     }
 
     [Fact]
-    public void A_duplicate_field_is_PH303()
+    public void A_duplicate_field_is_AV303()
     {
         // Given a type with the same field twice
         const string source = "module Test\n\ntype LineItem\n  sku: Text\n  sku: Id\n";
 
         // When it is resolved
         // Then the second field is reported
-        Assert.Equal(["PH303"], Codes(source));
+        Assert.Equal(["AV303"], Codes(source));
     }
 
     [Fact]
-    public void An_unknown_type_in_a_hole_is_PH300()
+    public void An_unknown_type_in_a_hole_is_AV300()
     {
         // Given a phrase whose hole type does not exist
         var source = Program("avow to \"weigh {items: List<Thing>}\"\n  native csharp\n    return;\n");
 
         // When it is resolved
         // Then it is reported
-        Assert.Equal(["PH300"], Codes(source));
+        Assert.Equal(["AV300"], Codes(source));
     }
 
     [Fact]
@@ -111,7 +111,7 @@ public class ResolverDeclarationTests
     }
 
     [Fact]
-    public void Two_phrases_with_the_same_wording_is_PH010()
+    public void Two_phrases_with_the_same_wording_is_AV010()
     {
         // Given a phrase worded like a prelude phrase, differing only in its hole
         var source = Program("avow to \"ensure {count: Int} is not empty\"\n  native csharp\n    return;\n");
@@ -120,12 +120,12 @@ public class ResolverDeclarationTests
         var diagnostic = Only(source);
 
         // Then the duplicate is reported and names the phrase it collides with
-        Assert.Equal("PH010", diagnostic.Code);
+        Assert.Equal("AV010", diagnostic.Code);
         Assert.Contains("ensure {items: List<LineItem>} is not empty", diagnostic.Message);
     }
 
     [Fact]
-    public void Two_endpoints_with_the_same_name_is_PH304()
+    public void Two_endpoints_with_the_same_name_is_AV304()
     {
         // Given the probe endpoint declared twice on different routes
         var second = Probe("fail with NotBuilt").Replace("/probe", "/other", StringComparison.Ordinal);
@@ -133,11 +133,11 @@ public class ResolverDeclarationTests
 
         // When it is resolved
         // Then the second is reported
-        Assert.Equal(["PH304"], Codes(source));
+        Assert.Equal(["AV304"], Codes(source));
     }
 
     [Fact]
-    public void Two_endpoints_on_the_same_verb_and_route_is_PH304()
+    public void Two_endpoints_on_the_same_verb_and_route_is_AV304()
     {
         // Given a second endpoint with a new name on the same route
         var second = Probe("fail with NotBuilt").Replace("endpoint Probe", "endpoint Probe2", StringComparison.Ordinal);
@@ -145,18 +145,18 @@ public class ResolverDeclarationTests
 
         // When it is resolved
         // Then the clash is reported
-        Assert.Equal(["PH304"], Codes(source));
+        Assert.Equal(["AV304"], Codes(source));
     }
 
     [Fact]
-    public void A_duplicate_input_field_is_PH303()
+    public void A_duplicate_input_field_is_AV303()
     {
         // Given an endpoint input with a repeated field
         var source = Program(Probe("fail with NotBuilt").Replace("    items: List<LineItem>\n", "    items: List<LineItem>\n    items: Int\n", StringComparison.Ordinal));
 
         // When it is resolved
         // Then it is reported
-        Assert.Equal(["PH303"], Codes(source));
+        Assert.Equal(["AV303"], Codes(source));
     }
 
     [Fact]

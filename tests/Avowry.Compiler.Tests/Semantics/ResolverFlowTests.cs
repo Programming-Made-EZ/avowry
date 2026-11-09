@@ -32,9 +32,9 @@ public class ResolverFlowTests
 
     [Theory]
     [Trait("Slice", "159")]
-    [InlineData("ensure title length at most 200 else Missing", "PH326")]
-    [InlineData("ensure count length at most 200 else Invalid", "PH312")]
-    [InlineData("ensure missing is not blank else Invalid", "PH310")]
+    [InlineData("ensure title length at most 200 else Missing", "AV326")]
+    [InlineData("ensure count length at most 200 else Invalid", "AV312")]
+    [InlineData("ensure missing is not blank else Invalid", "AV310")]
     public void Ensure_rejects_undeclared_failures_wrong_types_and_unknown_names(string step, string code)
     {
         // Given an invalid ensure step
@@ -66,7 +66,7 @@ public class ResolverFlowTests
 
         // When the phrase is resolved
         // Then the comparison reports the normal type diagnostic
-        Assert.Equal(["PH312"], Codes(source));
+        Assert.Equal(["AV312"], Codes(source));
     }
 
     [Fact]
@@ -86,7 +86,7 @@ public class ResolverFlowTests
 
         // Then the literal is diagnosed instead of reaching generated C#
         var diagnostic = Assert.Single(result.Diagnostics);
-        Assert.Equal("PH312", diagnostic.Code);
+        Assert.Equal("AV312", diagnostic.Code);
         Assert.Contains("32-bit Int", diagnostic.Message, StringComparison.Ordinal);
     }
 
@@ -129,7 +129,7 @@ public class ResolverFlowTests
 
         // When the phrase is resolved
         // Then the duplicate is reported clearly
-        Assert.Equal(["PH329"], Codes(source));
+        Assert.Equal(["AV329"], Codes(source));
     }
 
     [Fact]
@@ -164,11 +164,11 @@ public class ResolverFlowTests
 
     [Theory]
     [Trait("Slice", "160")]
-    [InlineData("let completed = missing with { done: true }", "PH001")]
-    [InlineData("let completed = title with { done: true }", "PH311")]
-    [InlineData("let completed = task with { missing: true }", "PH311")]
-    [InlineData("let completed = task with { done: \"yes\" }", "PH312")]
-    [InlineData("let completed = task with { done: true, done: false }", "PH303")]
+    [InlineData("let completed = missing with { done: true }", "AV001")]
+    [InlineData("let completed = title with { done: true }", "AV311")]
+    [InlineData("let completed = task with { missing: true }", "AV311")]
+    [InlineData("let completed = task with { done: \"yes\" }", "AV312")]
+    [InlineData("let completed = task with { done: true, done: false }", "AV303")]
     public void Record_update_rejects_unknown_records_fields_wrong_types_and_duplicates(string step, string code)
     {
         // Given an invalid record update
@@ -205,7 +205,7 @@ public class ResolverFlowTests
         var result = Resolver.Resolve(parsed.File);
 
         // Then every record, including a zero-field record, reports the unknown field
-        var diagnostic = Assert.Single(result.Diagnostics, diagnostic => diagnostic.Code == "PH311");
+        var diagnostic = Assert.Single(result.Diagnostics, diagnostic => diagnostic.Code == "AV311");
         Assert.Contains("Unknown field 'missing'", diagnostic.Message, StringComparison.Ordinal);
     }
 
@@ -257,9 +257,9 @@ public class ResolverFlowTests
     }
 
     [Theory]
-    [InlineData("respond with {}", "PH314")]                                  // missing totalQuantity
-    [InlineData("respond with { totalQuantity: 1, extra: 2 }", "PH314")]       // field not in output
-    [InlineData("respond with { totalQuantity: \"x\" }", "PH312")]             // wrong type
+    [InlineData("respond with {}", "AV314")]                                  // missing totalQuantity
+    [InlineData("respond with { totalQuantity: 1, extra: 2 }", "AV314")]       // field not in output
+    [InlineData("respond with { totalQuantity: \"x\" }", "AV312")]             // wrong type
     public void The_response_must_match_the_output_shape(string step, string code)
     {
         // Given a respond step that does not fit the output
@@ -271,36 +271,36 @@ public class ResolverFlowTests
     }
 
     [Fact]
-    public void Responding_from_an_endpoint_without_output_is_PH322()
+    public void Responding_from_an_endpoint_without_output_is_AV322()
     {
         // Given an endpoint with no output section that responds anyway
         var source = Program(Probe("respond with { totalQuantity: 1 }"));
 
         // When it is resolved
         // Then it is reported
-        Assert.Equal(["PH322"], Codes(source));
+        Assert.Equal(["AV322"], Codes(source));
     }
 
     [Fact]
-    public void An_endpoint_with_output_that_never_responds_is_PH323()
+    public void An_endpoint_with_output_that_never_responds_is_AV323()
     {
         // Given an endpoint with output whose steps just validate
         var source = Program(ProbeWithOutput("ensure input.items is not empty"));
 
         // When it is resolved
         // Then the missing response is reported
-        Assert.Equal(["PH323"], Codes(source));
+        Assert.Equal(["AV323"], Codes(source));
     }
 
     [Fact]
-    public void A_step_after_respond_is_PH324()
+    public void A_step_after_respond_is_AV324()
     {
         // Given a step after the response
         var source = Program(ProbeWithOutput("respond with { totalQuantity: 1 }", "ensure input.items is not empty"));
 
         // When it is resolved
         // Then it is reported as unreachable
-        Assert.Equal(["PH324"], Codes(source));
+        Assert.Equal(["AV324"], Codes(source));
     }
 
     [Fact]
@@ -349,7 +349,7 @@ public class ResolverFlowTests
     }
 
     [Theory]
-    [InlineData("", "PH326")]
+    [InlineData("", "AV326")]
     [InlineData("  fails with Rejected\n", null)]
     public void A_composite_may_only_fail_with_declared_codes(string clause, string? code)
     {
@@ -362,7 +362,7 @@ public class ResolverFlowTests
     }
 
     [Fact]
-    public void Phrases_that_call_each_other_in_a_cycle_are_PH327()
+    public void Phrases_that_call_each_other_in_a_cycle_are_AV327()
     {
         // Given two composites that call each other
         var source = Program(
@@ -371,11 +371,11 @@ public class ResolverFlowTests
 
         // When it is resolved
         // Then the cycle is reported
-        Assert.Contains("PH327", Codes(source));
+        Assert.Contains("AV327", Codes(source));
     }
 
     [Theory]
-    [InlineData("", "PH328")]
+    [InlineData("", "AV328")]
     [InlineData("  effects Db\n", null)]
     public void A_composite_must_declare_the_effects_of_what_it_calls(string clause, string? code)
     {
@@ -390,24 +390,24 @@ public class ResolverFlowTests
     }
 
     [Fact]
-    public void A_composite_with_a_return_type_is_PH325()
+    public void A_composite_with_a_return_type_is_AV325()
     {
         // Given a composite that claims to return a value
         var source = Program("avow to \"count {items: List<LineItem>}\" -> Int\n  steps\n    ensure items is not empty\n");
 
         // When it is resolved
         // Then it is reported, since steps have no way to return a value in v0.1
-        Assert.Equal(["PH325"], Codes(source));
+        Assert.Equal(["AV325"], Codes(source));
     }
 
     [Fact]
-    public void Responding_from_a_composite_is_PH322()
+    public void Responding_from_a_composite_is_AV322()
     {
         // Given a composite that tries to respond
         var source = Program("avow to \"answer {n: Int}\"\n  steps\n    respond with { totalQuantity: n }\n");
 
         // When it is resolved
         // Then it is reported
-        Assert.Equal(["PH322"], Codes(source));
+        Assert.Equal(["AV322"], Codes(source));
     }
 }

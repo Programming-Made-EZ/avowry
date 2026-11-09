@@ -22,7 +22,7 @@ public static class ExtensionKeywords
 
     private static readonly string[] VerbNames = ["GET", "POST", "PUT", "PATCH", "DELETE"];
 
-    /// <summary>The HTTP verbs, in the order PH209 prints them.</summary>
+    /// <summary>The HTTP verbs, in the order AV209 prints them.</summary>
     public static readonly IReadOnlySet<string> HttpVerbs =
         new HashSet<string>(VerbNames, StringComparer.Ordinal);
 
@@ -81,14 +81,14 @@ public static class ExtensionKeywords
 
     private static readonly Dictionary<string, DiagnosticHome[]> Diagnostics = new(StringComparer.Ordinal)
     {
-        ["PH209"] = [new(ExtensionPart.Web, null)],
-        ["PH304"] = [new(ExtensionPart.Web, null)],
-        ["PH322"] = [new(ExtensionPart.Web, null)],
-        ["PH323"] = [new(ExtensionPart.Web, null)],
-        ["PH330"] = [new(ExtensionPart.Core, "phrase"), new(ExtensionPart.Web, "endpoint")],
-        ["PH331"] = [new(ExtensionPart.Core, "phrase"), new(ExtensionPart.Web, "endpoint")],
-        ["PH333"] = [new(ExtensionPart.Core, "phrase"), new(ExtensionPart.Web, "endpoint")],
-        ["PH334"] = [new(ExtensionPart.Core, "phrase"), new(ExtensionPart.Web, "endpoint")],
+        ["AV209"] = [new(ExtensionPart.Web, null)],
+        ["AV304"] = [new(ExtensionPart.Web, null)],
+        ["AV322"] = [new(ExtensionPart.Web, null)],
+        ["AV323"] = [new(ExtensionPart.Web, null)],
+        ["AV330"] = [new(ExtensionPart.Core, "phrase"), new(ExtensionPart.Web, "endpoint")],
+        ["AV331"] = [new(ExtensionPart.Core, "phrase"), new(ExtensionPart.Web, "endpoint")],
+        ["AV333"] = [new(ExtensionPart.Core, "phrase"), new(ExtensionPart.Web, "endpoint")],
+        ["AV334"] = [new(ExtensionPart.Core, "phrase"), new(ExtensionPart.Web, "endpoint")],
     };
 
     static ExtensionKeywords()

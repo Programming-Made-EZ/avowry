@@ -50,8 +50,8 @@ public class AvowDeclarationTests
     }
 
     [Theory]
-    [InlineData("avow toward \"work\"", "PH212")]
-    [InlineData("avow to that \"work\"", "PH213")]
+    [InlineData("avow toward \"work\"", "AV212")]
+    [InlineData("avow to that \"work\"", "AV213")]
     [Trait("Slice", "199")]
     public void Invalid_words_before_the_template_report_the_filler_rule(string declaration, string code)
     {
@@ -78,7 +78,7 @@ public class AvowDeclarationTests
         var result = Parser.Parse(source);
 
         // Then the existing unknown declaration diagnostic points authors to avow
-        var diagnostic = Assert.Single(result.Diagnostics, diagnostic => diagnostic.Code == "PH201");
+        var diagnostic = Assert.Single(result.Diagnostics, diagnostic => diagnostic.Code == "AV201");
         Assert.Contains("avow", diagnostic.Message, StringComparison.Ordinal);
     }
 

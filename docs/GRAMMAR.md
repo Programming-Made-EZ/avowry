@@ -123,7 +123,7 @@ A step that is not `let`, `respond with`, or `fail with` is a **avow call**. The
 1. Split the template into **words** and **holes**. The parser has already split the step into **words** (bare names) and **arguments** (dotted paths, literals, records, lists).
 2. A hole matches exactly **one argument**, or **one bare word that names a variable in scope** (a `let`, or a hole of the enclosing composite avow). So `respond with { totalQuantity: total }` and `ensure items is not empty` inside a composite both work. Arguments never contain spaces outside brackets, so matching is a linear scan with no backtracking.
 3. Words match case-insensitively; whitespace is normalized.
-4. **Exactly one** template must match. Zero matches is error `PH001 unknown avow` (with the closest templates suggested). Two or more is error `PH002 ambiguous avow`.
+4. **Exactly one** template must match. Zero matches is error `AV001 unknown avow` (with the closest templates suggested). Two or more is error `AV002 ambiguous avow`.
 5. The matched expressions are type-checked against the hole types.
 
 Example:
@@ -136,8 +136,8 @@ result:    call total-quantity-of(items = input.items) : Int
 
 ### Library lints
 
-- `PH010 duplicate skeleton`: two templates with the same word sequence (holes ignored) are an error.
-- `PH011 near-duplicate`: templates that differ only by a synonym from the controlled vocabulary (`check` vs `ensure`) warn.
+- `AV010 duplicate skeleton`: two templates with the same word sequence (holes ignored) are an error.
+- `AV011 near-duplicate`: templates that differ only by a synonym from the controlled vocabulary (`check` vs `ensure`) warn.
 
 ### Controlled vocabulary (starter set)
 
@@ -159,86 +159,86 @@ result:    call total-quantity-of(items = input.items) : Int
 
 ### Resolver diagnostics
 
-The full resolver diagnostic table (`PH001`, `PH002`, `PH010`, `PH020`, and `PH300` to `PH335`, plus `PH337`, `PH340` and `PH341` from the C# target), which previously lived in [HANDOFF.md](../HANDOFF.md), now lives here:
+The full resolver diagnostic table (`AV001`, `AV002`, `AV010`, `AV020`, and `AV300` to `AV335`, plus `AV337`, `AV340` and `AV341` from the C# target), which previously lived in [HANDOFF.md](../HANDOFF.md), now lives here:
 
 | Code | Meaning |
 |---|---|
-| `PH001` | Unknown avow (quotes the closest template; suggests `variable.field` when a bare word matches a record field in scope) |
-| `PH002` | Ambiguous avow (lists the matching templates) |
-| `PH010` | Duplicate wording (two templates with the same word sequence, holes ignored) |
-| `PH020` | Leaf avow with no `native` block for the selected target (the C# target reports it as "has no implementation for target csharp; add a `native csharp` block") |
-| `PH300` | Unknown type |
-| `PH301` | Wrong number of type arguments |
-| `PH302` | Type name already taken (duplicate, or a core type) |
-| `PH303` | Duplicate field (type, input or output) |
-| `PH304` | Duplicate endpoint name, or same verb and route |
-| `PH310` | Unknown variable (message lists what is in scope) |
-| `PH311` | Unknown field, or a field read on a non-record (message lists the fields) |
-| `PH312` | Type mismatch (message names both types) |
-| `PH313` | Variable already defined |
-| `PH314` | Record fields do not match the expected type |
-| `PH320` | `let` of an avow that returns nothing |
-| `PH321` | Returned value discarded; use `let` |
-| `PH322` | `respond with` outside an endpoint, or in an endpoint with no output |
-| `PH323` | Endpoint with output never responds |
-| `PH324` | Step after `respond with` or `fail with` is unreachable |
-| `PH325` | Composite avow with a return type (not supported in v0.1) |
-| `PH326` | Composite fails with an undeclared code |
-| `PH327` | Avows call each other in a cycle |
-| `PH328` | Composite calls an avow whose effect it does not declare |
-| `PH330` | Wrong trigger (`called` for avows, `handled` for endpoints) |
-| `PH331` | Givens wrong: unknown, missing or duplicate hole; `input` in an avow spec; missing input in an endpoint spec |
-| `PH332` | Spec value is a path, not a literal |
-| `PH333` | Outcome the unit cannot have (`returns` with no return type, `responds` in an avow spec, `returns` in an endpoint spec, `responds` with no output) |
-| `PH334` | Expected failure the unit can never produce (message lists the ones it can) |
-| `PH335` | More than one outcome in a spec |
-| `PH337` | A native csharp block raises `Fail("X")` where `X` is not in the avow's `fails with` |
-| `PH340` | The C# target does not support a construct yet (a plain-call step or `fail with` in a composite, more than one effect, a call argument that is not a variable, a spec `given` or `then returns` of `none`, an effectful avow in a composite `let`, a `then succeeds` seed of a stored field that is not Text, Id or Bool) |
-| `PH341` | The C# target reserves a name the generated code declares itself: a type named `AvowAttribute`, `AvowryFailure`, `Avows` or `AvowSpecs`, a module named `Program`, an avow whose method name is `Avows` or `AvowryFailure`, a field named like its own type, or an endpoint named `Avow` (message names the reserved name and the line to rename) |
+| `AV001` | Unknown avow (quotes the closest template; suggests `variable.field` when a bare word matches a record field in scope) |
+| `AV002` | Ambiguous avow (lists the matching templates) |
+| `AV010` | Duplicate wording (two templates with the same word sequence, holes ignored) |
+| `AV020` | Leaf avow with no `native` block for the selected target (the C# target reports it as "has no implementation for target csharp; add a `native csharp` block") |
+| `AV300` | Unknown type |
+| `AV301` | Wrong number of type arguments |
+| `AV302` | Type name already taken (duplicate, or a core type) |
+| `AV303` | Duplicate field (type, input or output) |
+| `AV304` | Duplicate endpoint name, or same verb and route |
+| `AV310` | Unknown variable (message lists what is in scope) |
+| `AV311` | Unknown field, or a field read on a non-record (message lists the fields) |
+| `AV312` | Type mismatch (message names both types) |
+| `AV313` | Variable already defined |
+| `AV314` | Record fields do not match the expected type |
+| `AV320` | `let` of an avow that returns nothing |
+| `AV321` | Returned value discarded; use `let` |
+| `AV322` | `respond with` outside an endpoint, or in an endpoint with no output |
+| `AV323` | Endpoint with output never responds |
+| `AV324` | Step after `respond with` or `fail with` is unreachable |
+| `AV325` | Composite avow with a return type (not supported in v0.1) |
+| `AV326` | Composite fails with an undeclared code |
+| `AV327` | Avows call each other in a cycle |
+| `AV328` | Composite calls an avow whose effect it does not declare |
+| `AV330` | Wrong trigger (`called` for avows, `handled` for endpoints) |
+| `AV331` | Givens wrong: unknown, missing or duplicate hole; `input` in an avow spec; missing input in an endpoint spec |
+| `AV332` | Spec value is a path, not a literal |
+| `AV333` | Outcome the unit cannot have (`returns` with no return type, `responds` in an avow spec, `returns` in an endpoint spec, `responds` with no output) |
+| `AV334` | Expected failure the unit can never produce (message lists the ones it can) |
+| `AV335` | More than one outcome in a spec |
+| `AV337` | A native csharp block raises `Fail("X")` where `X` is not in the avow's `fails with` |
+| `AV340` | The C# target does not support a construct yet (a plain-call step or `fail with` in a composite, more than one effect, a call argument that is not a variable, a spec `given` or `then returns` of `none`, an effectful avow in a composite `let`, a `then succeeds` seed of a stored field that is not Text, Id or Bool) |
+| `AV341` | The C# target reserves a name the generated code declares itself: a type named `AvowAttribute`, `AvowryFailure`, `Avows` or `AvowSpecs`, a module named `Program`, an avow whose method name is `Avows` or `AvowryFailure`, a field named like its own type, or an endpoint named `Avow` (message names the reserved name and the line to rename) |
 
 Rules fixed by the resolver tests:
 
-- **Duplicate wording** (`PH010`) compares the word sequence with holes ignored entirely.
-- **Types check against an expected type.** `"text"` fits `Text` or `Id`; whole numbers fit `Int` or `Decimal`; `2.5` fits only `Decimal`; `none` fits only `Option<T>`; a `T` also fits `Option<T>` (with literal widening for `Option<Decimal>` and `Option<Id>`); records and lists check against record and list types (`PH312` otherwise), and records need their exact field set (`PH314`).
+- **Duplicate wording** (`AV010`) compares the word sequence with holes ignored entirely.
+- **Types check against an expected type.** `"text"` fits `Text` or `Id`; whole numbers fit `Int` or `Decimal`; `2.5` fits only `Decimal`; `none` fits only `Option<T>`; a `T` also fits `Option<T>` (with literal widening for `Option<Decimal>` and `Option<Id>`); records and lists check against record and list types (`AV312` otherwise), and records need their exact field set (`AV314`).
 - **Failed bindings do not cascade:** a `let` whose avow call fails to resolve binds its variable as `PType.Error` (`?`), which is compatible with every type so later uses do not emit a second diagnostic.
-- **Results are never silently discarded:** calling a value-returning avow as a statement is `PH321`; use `let`.
-- **Flow is linear:** an endpoint with an output must end with `respond with` or `fail with`; anything after either is unreachable (`PH324`).
-- **Specs use literal data only** (`PH332`) and have exactly one outcome (`PH335`).
+- **Results are never silently discarded:** calling a value-returning avow as a statement is `AV321`; use `let`.
+- **Flow is linear:** an endpoint with an output must end with `respond with` or `fail with`; anything after either is unreachable (`AV324`).
+- **Specs use literal data only** (`AV332`) and have exactly one outcome (`AV335`).
 - **Endpoint request and response shapes** are record types named `<Endpoint>.Input` and `<Endpoint>.Output`.
 
 ### Lexer diagnostics
 
 | Code | Meaning |
 |---|---|
-| `PH100` | Tab used in indentation |
-| `PH101` | Dedent to a level that matches no open block |
-| `PH102` | Indent that opens more (or less) than one 2-space level |
-| `PH103` | String not closed before end of line |
-| `PH104` | Character Avowry does not use (e.g. `+`) |
-| `PH105` | Native block line under-indented (deeper than header, shallower than base) |
-| `PH106` | Native block has no body |
-| `PH107` | Unknown string escape |
-| `PH108` | `{` or `[` never closed |
-| `PH109` | `}` or `]` with no matching opener |
+| `AV100` | Tab used in indentation |
+| `AV101` | Dedent to a level that matches no open block |
+| `AV102` | Indent that opens more (or less) than one 2-space level |
+| `AV103` | String not closed before end of line |
+| `AV104` | Character Avowry does not use (e.g. `+`) |
+| `AV105` | Native block line under-indented (deeper than header, shallower than base) |
+| `AV106` | Native block has no body |
+| `AV107` | Unknown string escape |
+| `AV108` | `{` or `[` never closed |
+| `AV109` | `}` or `]` with no matching opener |
 
 ### Parser diagnostics
 
 | Code | Meaning |
 |---|---|
-| `PH200` | Syntax error: expected X, found Y |
-| `PH201` | Top-level line is not `module`, `type`, `avow` or `endpoint` |
-| `PH202` | Module declaration missing, not first, or repeated |
-| `PH203` | Required part missing: type fields, avow implementation, endpoint `input`/`steps`, spec `when`/`then` |
-| `PH204` | Clause or section repeated (`fails with`, `input`, `when`, `native <same target>`, ...) |
-| `PH205` | Invalid template (see template rules) |
-| `PH206` | Duplicate hole name in a template |
-| `PH207` | Unknown native target |
-| `PH208` | Avow has both native blocks and steps |
-| `PH209` | Unknown HTTP verb |
-| `PH210` | Spec clauses out of order, or `and` with nothing to continue |
-| `PH211` | Unexpected indented block |
-| `PH212` | Unknown word before an avow template; allowed fillers are `to`, `that`, `it` |
-| `PH213` | More than one filler before an avow template |
+| `AV200` | Syntax error: expected X, found Y |
+| `AV201` | Top-level line is not `module`, `type`, `avow` or `endpoint` |
+| `AV202` | Module declaration missing, not first, or repeated |
+| `AV203` | Required part missing: type fields, avow implementation, endpoint `input`/`steps`, spec `when`/`then` |
+| `AV204` | Clause or section repeated (`fails with`, `input`, `when`, `native <same target>`, ...) |
+| `AV205` | Invalid template (see template rules) |
+| `AV206` | Duplicate hole name in a template |
+| `AV207` | Unknown native target |
+| `AV208` | Avow has both native blocks and steps |
+| `AV209` | Unknown HTTP verb |
+| `AV210` | Spec clauses out of order, or `and` with nothing to continue |
+| `AV211` | Unexpected indented block |
+| `AV212` | Unknown word before an avow template; allowed fillers are `to`, `that`, `it` |
+| `AV213` | More than one filler before an avow template |
 
 The parser skips a bad line together with its indented children and keeps going, so one error never hides the declarations after it.
 
@@ -246,10 +246,10 @@ The lexer always returns a complete token stream with balanced `INDENT`/`DEDENT`
 
 ## 5. Semantics in brief
 
-- **Failures** are declared codes, not exceptions. An avow may only fail with codes in its `fails with` clause, plus codes from avows it calls. Providers map failures to their idiom (C#: an `AvowryFailure` carrying the code, mapped to HTTP 422 at endpoints). In a `native csharp` block, a `Fail("X")` call with `X` not in `fails with` is `PH337`; the scan reads only unqualified `Fail("literal")` calls outside comments and string or char literals, so computed, interpolated and concatenated codes are not checked, verbatim and nested-quote interpolated strings are not tokenised, `#if` branches are all scanned, other targets are not scanned, and a differently named helper is not seen.
+- **Failures** are declared codes, not exceptions. An avow may only fail with codes in its `fails with` clause, plus codes from avows it calls. Providers map failures to their idiom (C#: an `AvowryFailure` carrying the code, mapped to HTTP 422 at endpoints). In a `native csharp` block, a `Fail("X")` call with `X` not in `fails with` is `AV337`; the scan reads only unqualified `Fail("literal")` calls outside comments and string or char literals, so computed, interpolated and concatenated codes are not checked, verbatim and nested-quote interpolated strings are not tokenised, `#if` branches are all scanned, other targets are not scanned, and a differently named helper is not seen.
 - **Effects** default to `none`. An avow that calls an effectful avow must declare the union. Providers use effects to choose sync vs async and what to inject.
 - **Naming in targets.** Providers convert names to target conventions: field `quantity` becomes `Quantity` in C#, `quantity` in TypeScript. `native` blocks use target conventions.
-- **Missing native block.** If a leaf avow has no `native` block for the selected target, compilation fails with `PH020 no implementation for target`. (Later: the LLM-assisted generator proposes one, gated by the avow's specs.)
+- **Missing native block.** If a leaf avow has no `native` block for the selected target, compilation fails with `AV020 no implementation for target`. (Later: the LLM-assisted generator proposes one, gated by the avow's specs.)
 
 ## 6. Compilation pipeline
 

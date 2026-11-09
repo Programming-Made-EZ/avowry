@@ -363,7 +363,7 @@ public class BenchmarkHarnessAcceptance
         Assert.Equal("completed", result.RootElement.GetProperty("status").GetString());
         Assert.DoesNotContain(
             result.RootElement.GetProperty("diagnostics").EnumerateArray(),
-            diagnostic => diagnostic.GetString()!.StartsWith("PH10", StringComparison.Ordinal));
+            diagnostic => diagnostic.GetString()!.StartsWith("AV10", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -391,7 +391,7 @@ public class BenchmarkHarnessAcceptance
         // When the benchmark CLI runs the fake model through its real process boundary
         var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "plain-fence-v1", modelCommand);
 
-        // Then the Phrase is stripped from the fence and scored without PH diagnostics
+        // Then the Phrase is stripped from the fence and scored without AV diagnostics
         Assert.True(exitCode == 0, stdout + stderr);
         Assert.Contains("plain-fence-v1: passed", stdout);
         using var result = await ReadModelResult(suiteDirectory, "plain-fence-v1");
@@ -399,7 +399,7 @@ public class BenchmarkHarnessAcceptance
         Assert.Equal("completed", result.RootElement.GetProperty("status").GetString());
         Assert.DoesNotContain(
             result.RootElement.GetProperty("diagnostics").EnumerateArray(),
-            diagnostic => diagnostic.GetString()!.StartsWith("PH10", StringComparison.Ordinal));
+            diagnostic => diagnostic.GetString()!.StartsWith("AV10", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -427,7 +427,7 @@ public class BenchmarkHarnessAcceptance
         // When the benchmark CLI runs the fake model through its real process boundary
         var (exitCode, stdout, stderr) = await RunBenchmark(suiteDirectory, "fenced-case-v1", modelCommand);
 
-        // Then the phrase is extracted from the fenced block and scored without PH diagnostics
+        // Then the phrase is extracted from the fenced block and scored without AV diagnostics
         Assert.True(exitCode == 0, stdout + stderr);
         Assert.Contains("fenced-case-v1: passed", stdout);
         using var result = await ReadModelResult(suiteDirectory, "fenced-case-v1");
@@ -435,7 +435,7 @@ public class BenchmarkHarnessAcceptance
         Assert.Equal("completed", result.RootElement.GetProperty("status").GetString());
         Assert.DoesNotContain(
             result.RootElement.GetProperty("diagnostics").EnumerateArray(),
-            diagnostic => diagnostic.GetString()!.StartsWith("PH10", StringComparison.Ordinal));
+            diagnostic => diagnostic.GetString()!.StartsWith("AV10", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -464,7 +464,7 @@ public class BenchmarkHarnessAcceptance
         Assert.Contains(diagnostics, diagnostic => diagnostic.GetString() == "no_phrase_found");
         Assert.DoesNotContain(
             diagnostics,
-            diagnostic => diagnostic.GetString()!.StartsWith("PH10", StringComparison.Ordinal));
+            diagnostic => diagnostic.GetString()!.StartsWith("AV10", StringComparison.Ordinal));
     }
 
     [Fact]

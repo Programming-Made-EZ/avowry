@@ -29,7 +29,7 @@ public class ParserPhraseTests
 
         // Then parsing returns a normal, clear diagnostic rather than throwing
         var diagnostic = Assert.Single(result.Diagnostics);
-        Assert.Equal("PH200", diagnostic.Code);
+        Assert.Equal("AV200", diagnostic.Code);
         Assert.Contains("non-negative 32-bit integer", diagnostic.Message, StringComparison.Ordinal);
     }
 
@@ -108,12 +108,12 @@ public class ParserPhraseTests
 
     [Theory]
     [Trait("Slice", "160")]
-    [InlineData("let completed = task with { done: true", "PH200")]
-    [InlineData("let completed = task with { }", "PH200")]
-    [InlineData("let completed = task with { done: true, }", "PH200")]
-    [InlineData("let completed = task with { owner: owner with { name: \"x\" } }", "PH200")]
-    [InlineData("let completed = task with { done true }", "PH200")]
-    [InlineData("let completed = task with { done: }", "PH200")]
+    [InlineData("let completed = task with { done: true", "AV200")]
+    [InlineData("let completed = task with { }", "AV200")]
+    [InlineData("let completed = task with { done: true, }", "AV200")]
+    [InlineData("let completed = task with { owner: owner with { name: \"x\" } }", "AV200")]
+    [InlineData("let completed = task with { done true }", "AV200")]
+    [InlineData("let completed = task with { done: }", "AV200")]
     public void Malformed_record_updates_report_a_normal_diagnostic(string step, string code)
     {
         // Given a malformed update in a phrase whose source is in scope
@@ -302,7 +302,7 @@ public class ParserPhraseTests
     }
 
     [Fact]
-    public void A_phrase_with_no_implementation_is_PH203()
+    public void A_phrase_with_no_implementation_is_AV203()
     {
         // Given a phrase with only a contract
         var source = InModule("""
@@ -312,11 +312,11 @@ public class ParserPhraseTests
 
         // When it is parsed
         // Then the missing implementation is reported
-        Assert.Equal(["PH203"], Codes(source));
+        Assert.Equal(["AV203"], Codes(source));
     }
 
     [Fact]
-    public void A_phrase_with_both_native_code_and_steps_is_PH208()
+    public void A_phrase_with_both_native_code_and_steps_is_AV208()
     {
         // Given a phrase with both kinds of implementation
         var source = InModule("""
@@ -329,11 +329,11 @@ public class ParserPhraseTests
 
         // When it is parsed
         // Then the conflict is reported
-        Assert.Equal(["PH208"], Codes(source));
+        Assert.Equal(["AV208"], Codes(source));
     }
 
     [Fact]
-    public void Two_native_blocks_for_the_same_target_is_PH204()
+    public void Two_native_blocks_for_the_same_target_is_AV204()
     {
         // Given two csharp bodies
         var source = InModule("""
@@ -346,11 +346,11 @@ public class ParserPhraseTests
 
         // When it is parsed
         // Then the duplicate is reported
-        Assert.Equal(["PH204"], Codes(source));
+        Assert.Equal(["AV204"], Codes(source));
     }
 
     [Fact]
-    public void An_unknown_native_target_is_PH207()
+    public void An_unknown_native_target_is_AV207()
     {
         // Given a body for a target with no provider
         var source = InModule("""
@@ -361,11 +361,11 @@ public class ParserPhraseTests
 
         // When it is parsed
         // Then the target is reported
-        Assert.Equal(["PH207"], Codes(source));
+        Assert.Equal(["AV207"], Codes(source));
     }
 
     [Fact]
-    public void A_second_fails_with_clause_is_PH204()
+    public void A_second_fails_with_clause_is_AV204()
     {
         // Given a phrase that splits its failures over two lines
         var source = InModule("""
@@ -378,20 +378,20 @@ public class ParserPhraseTests
 
         // When it is parsed
         // Then the second clause is reported
-        Assert.Equal(["PH204"], Codes(source));
+        Assert.Equal(["AV204"], Codes(source));
     }
 
     [Theory]
-    [InlineData("{a: Int} {b: Int}", "PH205")]                 // no words: every call would match
-    [InlineData("ensure {items List<LineItem>} ok", "PH205")]  // hole missing its colon
-    [InlineData("ensure {items: List<LineItem> ok", "PH205")]  // hole never closed
-    [InlineData("ensure {Items: Int} ok", "PH205")]            // hole names are lowercase
-    [InlineData("total of #1", "PH205")]                       // '#' would be read as a comment
-    [InlineData("let total be {n: Int}", "PH205")]             // starts with a step keyword
-    [InlineData("respond with {n: Int}", "PH205")]
-    [InlineData("fail with {n: Int}", "PH205")]
-    [InlineData("native {n: Int}", "PH205")]
-    [InlineData("add {n: Int} to {n: Int}", "PH206")]          // duplicate hole name
+    [InlineData("{a: Int} {b: Int}", "AV205")]                 // no words: every call would match
+    [InlineData("ensure {items List<LineItem>} ok", "AV205")]  // hole missing its colon
+    [InlineData("ensure {items: List<LineItem> ok", "AV205")]  // hole never closed
+    [InlineData("ensure {Items: Int} ok", "AV205")]            // hole names are lowercase
+    [InlineData("total of #1", "AV205")]                       // '#' would be read as a comment
+    [InlineData("let total be {n: Int}", "AV205")]             // starts with a step keyword
+    [InlineData("respond with {n: Int}", "AV205")]
+    [InlineData("fail with {n: Int}", "AV205")]
+    [InlineData("native {n: Int}", "AV205")]
+    [InlineData("add {n: Int} to {n: Int}", "AV206")]          // duplicate hole name
     public void Invalid_templates_are_reported(string template, string code)
     {
         // Given a phrase with a malformed template
@@ -403,7 +403,7 @@ public class ParserPhraseTests
     }
 
     [Fact]
-    public void An_unknown_clause_in_a_phrase_is_PH200()
+    public void An_unknown_clause_in_a_phrase_is_AV200()
     {
         // Given a phrase with a line that is not a phrase clause
         var source = InModule("""
@@ -417,7 +417,7 @@ public class ParserPhraseTests
         var result = Parser.Parse(source);
 
         // Then the line is reported
-        Assert.Equal(["PH200"], result.Diagnostics.Select(d => d.Code));
+        Assert.Equal(["AV200"], result.Diagnostics.Select(d => d.Code));
 
         // And the phrase is still kept with its native block
         Assert.Single(Assert.Single(result.File.Avows).Natives);

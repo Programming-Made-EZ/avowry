@@ -7,7 +7,7 @@ namespace Avowry.Acceptance.Tests;
 public class UnsupportedCsharpConstructs
 {
     private static readonly Regex DiagnosticLine = new(
-        """(?m)^(PH\d{3}) \((\d+):(\d+)\) """,
+        """(?m)^(AV\d{3}) \((\d+):(\d+)\) """,
         RegexOptions.CultureInvariant);
 
     [Fact]
@@ -26,7 +26,7 @@ public class UnsupportedCsharpConstructs
                 failures.Add($"{row.Id}: {reason}");
         }
 
-        // Then every row is a PH diagnostic at the named source line, not a crash
+        // Then every row is a AV diagnostic at the named source line, not a crash
         Assert.True(failures.Count == 0, string.Join("\n", failures));
     }
 
@@ -55,7 +55,7 @@ public class UnsupportedCsharpConstructs
         var match = DiagnosticLine.Match(combined);
         if (!match.Success)
         {
-            reasons.Add("no PHnnn (line:col)");
+            reasons.Add("no AVnnn (line:col)");
             return string.Join("; ", reasons);
         }
 
@@ -76,8 +76,8 @@ public class UnsupportedCsharpConstructs
                 reasons.Add($"line {line} expected {expectedLine} or {otherLine}");
             if (!codeOk)
                 reasons.Add($"code {code} expected {row.Code} or {row.OtherCode}");
-            var wordsOk = (code == "PH020" && message.Contains("no implementation for target", StringComparison.Ordinal))
-                || (code != "PH020"
+            var wordsOk = (code == "AV020" && message.Contains("no implementation for target", StringComparison.Ordinal))
+                || (code != "AV020"
                     && message.Contains("does not support", StringComparison.Ordinal)
                     && message.Contains("yet", StringComparison.Ordinal));
             if (!wordsOk)
@@ -89,7 +89,7 @@ public class UnsupportedCsharpConstructs
             reasons.Add($"line {line} expected {expectedLine}");
         if (code != expectedCode)
             reasons.Add($"code {code} expected {expectedCode}");
-        if (expectedCode == "PH020")
+        if (expectedCode == "AV020")
         {
             if (!message.Contains("no implementation for target", StringComparison.Ordinal))
                 reasons.Add($"message {message}");
@@ -139,7 +139,7 @@ public class UnsupportedCsharpConstructs
                 n: Int
               steps
                 outer input.n
-            """, "    inner n", "PH340");
+            """, "    inner n", "AV340");
 
         yield return new Row("composite-fail", """
             module M
@@ -154,7 +154,7 @@ public class UnsupportedCsharpConstructs
                 n: Int
               steps
                 check input.n
-            """, "fail with Bad", "PH340");
+            """, "fail with Bad", "AV340");
 
         yield return new Row("native-python-only", """
             module M
@@ -171,7 +171,7 @@ public class UnsupportedCsharpConstructs
               steps
                 let r = double input.n
                 respond with { r: r }
-            """, "double {n: Int}", "PH020");
+            """, "double {n: Int}", "AV020");
 
         yield return new Row("two-effects", """
             module M
@@ -186,7 +186,7 @@ public class UnsupportedCsharpConstructs
                 n: Int
               steps
                 ping input.n
-            """, "ping {n: Int}", "PH340");
+            """, "ping {n: Int}", "AV340");
 
         yield return new Row("let-literal-arg", """
             module M
@@ -204,7 +204,7 @@ public class UnsupportedCsharpConstructs
                 n: Int
               steps
                 inner input.n
-            """, "let checked = reject 5", "PH340");
+            """, "let checked = reject 5", "AV340");
 
         yield return new Row("spec-none", """
             module M
@@ -224,7 +224,7 @@ public class UnsupportedCsharpConstructs
                 r: Int
               steps
                 respond with { r: input.n }
-            """, @"spec ""none""", "PH340");
+            """, @"spec ""none""", "AV340");
 
         yield return new Row("spec-then-none", """
             module M
@@ -244,7 +244,7 @@ public class UnsupportedCsharpConstructs
                 r: Int
               steps
                 respond with { r: input.n }
-            """, @"spec ""none""", "PH340");
+            """, @"spec ""none""", "AV340");
 
         yield return new Row("let-effectful", """
             module M
@@ -268,7 +268,7 @@ public class UnsupportedCsharpConstructs
                 id: Id
               steps
                 wrap input.id
-            """, "let item = find item id", "PH340");
+            """, "let item = find item id", "AV340");
 
         yield return new Row("seed-int", """
             module M
@@ -302,7 +302,7 @@ public class UnsupportedCsharpConstructs
                 given input { id: "a" }
                 when handled
                 then succeeds
-            """, @"spec ""deletes""", "PH340");
+            """, @"spec ""deletes""", "AV340");
 
         yield return new Row("unused-composite", """
             module M
@@ -321,7 +321,7 @@ public class UnsupportedCsharpConstructs
                 n: Int
               steps
                 fine input.n
-            """, "fail with Bad", "PH340");
+            """, "fail with Bad", "AV340");
 
         yield return new Row("crlf-copy", """
             module M
@@ -345,7 +345,7 @@ public class UnsupportedCsharpConstructs
                 n: Int
               steps
                 outer input.n
-            """, "    inner n", "PH340", Crlf: true);
+            """, "    inner n", "AV340", Crlf: true);
 
         yield return new Row("supported-avow-first", """
             module MultiLevel
@@ -373,7 +373,7 @@ public class UnsupportedCsharpConstructs
                 n: Int
               steps
                 outer input.n
-            """, "    inner n", "PH340");
+            """, "    inner n", "AV340");
 
         yield return new Row("two-problems", """
             module M
@@ -392,8 +392,8 @@ public class UnsupportedCsharpConstructs
                 n: Int
               steps
                 check input.n
-            """, "double {n: Int}", "PH020",
-            OtherMarker: "fail with Bad", OtherCode: "PH340");
+            """, "double {n: Int}", "AV020",
+            OtherMarker: "fail with Bad", OtherCode: "AV340");
     }
 
     private sealed record Row(

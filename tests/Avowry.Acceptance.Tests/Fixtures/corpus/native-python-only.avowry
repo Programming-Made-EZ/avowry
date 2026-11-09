@@ -1,4 +1,4 @@
-# native-python-only: a leaf with only a python native block is PH020 for the csharp target
+# native-python-only: a leaf with only a python native block is AV020 for the csharp target
 module M
 
 avow to "double {n: Int}" -> Int

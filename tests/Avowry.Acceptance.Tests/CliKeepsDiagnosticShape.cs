@@ -3,14 +3,14 @@ using Avowry.Acceptance.Tests.Support;
 namespace Avowry.Acceptance.Tests;
 
 // Feature: CLI diagnostic shape (card 324 criterion 2)
-//   avowry build still exits 1 with the PH line on a trigger, and 0 with empty
-//   stderr on a clean source; only the unit word in the PH001 line may change.
+//   avowry build still exits 1 with the AV line on a trigger, and 0 with empty
+//   stderr on a clean source; only the unit word in the AV001 line may change.
 public class CliKeepsDiagnosticShape
 {
     [Theory]
     [Trait("Criterion", "2")]
-    [InlineData("M13-PH001")]
-    [InlineData("M08-PH203")]
+    [InlineData("M13-AV001")]
+    [InlineData("M08-AV203")]
     [InlineData("clean")]
     public async Task The_CLI_exits_1_with_the_diagnostic_line_and_0_when_clean(string id)
     {
@@ -32,7 +32,7 @@ public class CliKeepsDiagnosticShape
         }
 
         Assert.Equal(1, result.ExitCode);
-        if (id != "M13-PH001")
+        if (id != "M13-AV001")
             return;
 
         var lines = result.Stderr.Replace("\r\n", "\n", StringComparison.Ordinal)
@@ -40,13 +40,13 @@ public class CliKeepsDiagnosticShape
             .Split('\n');
         Assert.Equal("avowry: Compilation failed:", lines[0]);
         Assert.Matches(
-            """^PH001 \(11:5\) No (phrase|avow) matches this step\. Closest: "do nothing"\.$""",
+            """^AV001 \(11:5\) No (phrase|avow) matches this step\. Closest: "do nothing"\.$""",
             lines[1]);
     }
 
     private static string SourceFor(string id) => id switch
     {
-        "M13-PH001" => """
+        "M13-AV001" => """
             module Test
 
             avow to "do nothing"
@@ -59,7 +59,7 @@ public class CliKeepsDiagnosticShape
               steps
                 frobnicate widgets
             """,
-        "M08-PH203" => """
+        "M08-AV203" => """
             module Test
 
             avow to "do nothing"

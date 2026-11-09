@@ -22,7 +22,6 @@ public class AvPrefixedDiagnostics
     [Fact]
     [Trait("Slice", "361")]
     [Trait("Criterion", "361-1")]
-    [Trait("Status", "Pending")]
     public async Task The_CLI_prints_AV_codes_with_unchanged_numbers()
     {
         // Given one failing source per emitting site (ids C1 to C9; C5 has a phrase arm and an endpoint arm)

@@ -143,18 +143,18 @@ public class ParserSpecTests
     }
 
     [Fact]
-    public void Missing_when_and_missing_then_are_PH203()
+    public void Missing_when_and_missing_then_are_AV203()
     {
         // Given a spec with only a given
         var source = PhraseWithSpec("  spec \"incomplete\"\n    given items = []\n");
 
         // When it is parsed
         // Then both missing clauses are reported
-        Assert.Equal(["PH203", "PH203"], Codes(source));
+        Assert.Equal(["AV203", "AV203"], Codes(source));
     }
 
     [Fact]
-    public void Clauses_out_of_order_are_PH210()
+    public void Clauses_out_of_order_are_AV210()
     {
         // Given a spec whose then comes before its when
         var source = PhraseWithSpec("""
@@ -167,11 +167,11 @@ public class ParserSpecTests
 
         // When it is parsed
         // Then the order is reported
-        Assert.Contains("PH210", Codes(source));
+        Assert.Contains("AV210", Codes(source));
     }
 
     [Fact]
-    public void And_with_nothing_to_continue_is_PH210()
+    public void And_with_nothing_to_continue_is_AV210()
     {
         // Given a spec that starts with and
         var source = PhraseWithSpec("""
@@ -184,11 +184,11 @@ public class ParserSpecTests
 
         // When it is parsed
         // Then the and is reported
-        Assert.Equal(["PH210"], Codes(source));
+        Assert.Equal(["AV210"], Codes(source));
     }
 
     [Fact]
-    public void A_second_when_is_PH204()
+    public void A_second_when_is_AV204()
     {
         // Given a spec with two triggers
         var source = PhraseWithSpec("""
@@ -201,7 +201,7 @@ public class ParserSpecTests
 
         // When it is parsed
         // Then the second is reported
-        Assert.Contains("PH204", Codes(source));
+        Assert.Contains("AV204", Codes(source));
     }
 
     [Theory]
@@ -210,8 +210,8 @@ public class ParserSpecTests
     [InlineData("then responds 5")]       // responds needs a record
     [InlineData("then explodes")]         // unknown outcome
     [InlineData("given items")]           // binding needs = value
-    [InlineData("given items = [1, }")]   // broken list (lexer also reports PH109)
-    public void Malformed_spec_lines_are_PH200(string line)
+    [InlineData("given items = [1, }")]   // broken list (lexer also reports AV109)
+    public void Malformed_spec_lines_are_AV200(string line)
     {
         // Given a spec with one malformed line next to valid ones
         var lines = new List<string> { "when called", "then returns 0" };
@@ -222,6 +222,6 @@ public class ParserSpecTests
 
         // When it is parsed
         // Then a syntax error is reported
-        Assert.Contains("PH200", Codes(source));
+        Assert.Contains("AV200", Codes(source));
     }
 }

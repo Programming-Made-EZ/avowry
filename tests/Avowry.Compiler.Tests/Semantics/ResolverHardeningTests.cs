@@ -5,11 +5,11 @@ namespace Avowry.Compiler.Tests.Semantics;
 
 // Feature: Resolver hardening
 //   A program the parser already rejected must still resolve. Repeated hole names
-//   (PH206) degrade to a model instead of throwing inside the resolver.
+//   (AV206) degrade to a model instead of throwing inside the resolver.
 public class ResolverHardeningTests
 {
     [Fact]
-    public void Bare_word_variable_of_the_wrong_type_is_PH312_naming_both_types()
+    public void Bare_word_variable_of_the_wrong_type_is_AV312_naming_both_types()
     {
         // Given a Bool let variable passed by bare word to an Int hole
         var source = Program(
@@ -20,13 +20,13 @@ public class ResolverHardeningTests
         var diagnostic = Only(source);
 
         // Then the mismatch names both the actual and expected types
-        Assert.Equal("PH312", diagnostic.Code);
+        Assert.Equal("AV312", diagnostic.Code);
         Assert.Contains("Bool", diagnostic.Message);
         Assert.Contains("Int", diagnostic.Message);
     }
 
     [Fact]
-    public void None_for_a_Text_hole_is_PH312()
+    public void None_for_a_Text_hole_is_AV312()
     {
         // Given none passed to a hole that requires Text
         var source = Program(
@@ -37,11 +37,11 @@ public class ResolverHardeningTests
         var diagnostic = Only(source);
 
         // Then none is rejected because it fits only Option<T>
-        Assert.Equal("PH312", diagnostic.Code);
+        Assert.Equal("AV312", diagnostic.Code);
     }
 
     [Fact]
-    public void Record_literal_for_a_non_record_hole_is_PH312()
+    public void Record_literal_for_a_non_record_hole_is_AV312()
     {
         // Given a record literal passed to a hole that requires Int
         var source = Program(Probe("ensure { value: 3 } is positive"));
@@ -50,7 +50,7 @@ public class ResolverHardeningTests
         var diagnostic = Only(source);
 
         // Then the record is rejected as a type mismatch
-        Assert.Equal("PH312", diagnostic.Code);
+        Assert.Equal("AV312", diagnostic.Code);
     }
 
     [Theory]
@@ -87,7 +87,7 @@ public class ResolverHardeningTests
     }
 
     [Fact]
-    public void Option_Int_rejects_a_decimal_literal_with_PH312()
+    public void Option_Int_rejects_a_decimal_literal_with_AV312()
     {
         // Given a decimal literal passed to an Option<Int> hole
         var source = Program(
@@ -98,7 +98,7 @@ public class ResolverHardeningTests
         var diagnostic = Only(source);
 
         // Then the incompatible literal is rejected
-        Assert.Equal("PH312", diagnostic.Code);
+        Assert.Equal("AV312", diagnostic.Code);
     }
 
     [Fact]
@@ -112,7 +112,7 @@ public class ResolverHardeningTests
 
         // Then only the original unknown-phrase diagnostic is produced
         var diagnostic = Assert.Single(result.Diagnostics);
-        Assert.Equal("PH001", diagnostic.Code);
+        Assert.Equal("AV001", diagnostic.Code);
     }
 
     [Fact]
@@ -129,7 +129,7 @@ public class ResolverHardeningTests
         var result = Resolver.Resolve(source);
 
         // Then the parser diagnostic is kept and the composite is bound
-        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "PH206");
+        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "AV206");
         var phrase = Assert.Single(result.Module.Avows, candidate => candidate.Key == "add _ to _");
         Assert.NotNull(phrase.Steps);
         Assert.NotEmpty(phrase.Steps);
@@ -151,7 +151,7 @@ public class ResolverHardeningTests
         var result = Resolver.Resolve(source);
 
         // Then the call is bound, once per hole occurrence, and resolution does not throw
-        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "PH206");
+        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Code == "AV206");
         var step = Assert.IsType<BoundCallStep>(Assert.Single(ProbeModel(result.Module).Steps));
         Assert.Equal(2, step.Call.Arguments.Count);
         Assert.All(step.Call.Arguments, argument => Assert.Equal("n", argument.Hole.Name));

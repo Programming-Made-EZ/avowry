@@ -7,14 +7,14 @@ public class LeadingMessagesSayAvowTests
 {
     [Theory]
     [Trait("Criterion", "1")]
-    [InlineData("M01-PH010", "Avow 'ping {m: Int}' has the same wording as 'ping {n: Int}'.")]
-    [InlineData("M02-PH321", "Avow 'count things' returns Int; use 'let' to keep it.")]
-    [InlineData("M03-PH320", "Avow 'do nothing' returns no value and cannot be used with 'let'.")]
-    [InlineData("M04-PH327", "Avow 'ping {n: Int}' participates in a call cycle.")]
-    [InlineData("M05-PH331-input", "Avow specs cannot bind input; use a hole binding.")]
-    [InlineData("M06-PH331-hole", "Avow spec for 'check {n: Int}' does not bind hole 'q'. Valid holes: n.")]
-    [InlineData("M07-PH334", "Avow 'check {n: Int}' cannot fail with 'Underflow'. Valid options: Overflow.")]
-    [InlineData("M08-PH203", "Avow has no implementation; add `native <target>` or `steps`.")]
+    [InlineData("M01-AV010", "Avow 'ping {m: Int}' has the same wording as 'ping {n: Int}'.")]
+    [InlineData("M02-AV321", "Avow 'count things' returns Int; use 'let' to keep it.")]
+    [InlineData("M03-AV320", "Avow 'do nothing' returns no value and cannot be used with 'let'.")]
+    [InlineData("M04-AV327", "Avow 'ping {n: Int}' participates in a call cycle.")]
+    [InlineData("M05-AV331-input", "Avow specs cannot bind input; use a hole binding.")]
+    [InlineData("M06-AV331-hole", "Avow spec for 'check {n: Int}' does not bind hole 'q'. Valid holes: n.")]
+    [InlineData("M07-AV334", "Avow 'check {n: Int}' cannot fail with 'Underflow'. Valid options: Overflow.")]
+    [InlineData("M08-AV203", "Avow has no implementation; add `native <target>` or `steps`.")]
     public void The_eight_leading_messages_say_Avow(string id, string expected)
     {
         // Given a trigger source and the first diagnostic recorded for it

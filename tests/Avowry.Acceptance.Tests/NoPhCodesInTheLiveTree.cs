@@ -23,7 +23,6 @@ public class NoPhCodesInTheLiveTree
     [Fact]
     [Trait("Slice", "361")]
     [Trait("Criterion", "361-2")]
-    [Trait("Status", "Pending")]
     public async Task Tracked_live_files_contain_no_PH_diagnostic_code()
     {
         // Given every tracked file outside the history allow-list (git ls-files -z, content read from disk)

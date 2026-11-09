@@ -10,8 +10,8 @@ namespace Avowry.Acceptance.Tests;
 //   As Dana, I want PUT and DELETE endpoints that update and remove a stored item,
 //   so that I can describe a complete small CRUD service.
 //
-// DELETE has no output. The grammar rejects `respond with` (PH322) and `then responds`
-// (PH333) on an endpoint with no output. The remaining success outcome is `then succeeds`.
+// DELETE has no output. The grammar rejects `respond with` (AV322) and `then responds`
+// (AV333) on an endpoint with no output. The remaining success outcome is `then succeeds`.
 // A successful endpoint is already bound with Send.OkAsync, which is HTTP 200; with no
 // response record that is 200 and an empty body. One spec has one outcome, so the later
 // GET that proves the item is gone is the live request sequence, not a second `then`.

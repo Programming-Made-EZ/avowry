@@ -34,7 +34,7 @@ public class PhraseCompilerTests
         var exception = Assert.Throws<CompilationFailedException>(() => Compile(source));
 
         // Then the resolver diagnostic is exposed to the caller
-        Assert.Contains(exception.Diagnostics, diagnostic => diagnostic.Code == "PH001");
+        Assert.Contains(exception.Diagnostics, diagnostic => diagnostic.Code == "AV001");
     }
 
     [Fact]

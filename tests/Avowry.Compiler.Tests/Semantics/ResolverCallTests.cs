@@ -36,7 +36,7 @@ public class ResolverCallTests
     }
 
     [Fact]
-    public void An_unknown_phrase_is_PH001_and_names_the_closest_templates()
+    public void An_unknown_phrase_is_AV001_and_names_the_closest_templates()
     {
         // Given a step with a typo
         var source = Program(Probe("ensure input.items isnt empty"));
@@ -45,7 +45,7 @@ public class ResolverCallTests
         var diagnostic = Only(source);
 
         // Then the nearest template is suggested
-        Assert.Equal("PH001", diagnostic.Code);
+        Assert.Equal("AV001", diagnostic.Code);
         Assert.Contains("\"ensure {items: List<LineItem>} is not empty\"", diagnostic.Message);
     }
 
@@ -59,12 +59,12 @@ public class ResolverCallTests
         var diagnostic = Only(source);
 
         // Then the hint points at the path that would work
-        Assert.Equal("PH001", diagnostic.Code);
+        Assert.Equal("AV001", diagnostic.Code);
         Assert.Contains("input.items", diagnostic.Message);
     }
 
     [Fact]
-    public void A_step_matching_two_phrases_is_PH002()
+    public void A_step_matching_two_phrases_is_AV002()
     {
         // Given a hole-taking phrase and a fixed phrase that read the same when a variable is named ready
         var source = Program(
@@ -77,7 +77,7 @@ public class ResolverCallTests
         var diagnostic = Only(source);
 
         // Then both candidates are listed
-        Assert.Equal("PH002", diagnostic.Code);
+        Assert.Equal("AV002", diagnostic.Code);
         Assert.Contains("ensure {flag: Bool} holds", diagnostic.Message);
         Assert.Contains("ensure ready holds", diagnostic.Message);
     }
@@ -99,44 +99,44 @@ public class ResolverCallTests
     }
 
     [Fact]
-    public void An_argument_of_the_wrong_type_is_PH312()
+    public void An_argument_of_the_wrong_type_is_AV312()
     {
         // Given a list passed where an Int is expected
         var diagnostic = Only(Program(Probe("ensure input.items is positive")));
 
         // When it is resolved
         // Then both types are named
-        Assert.Equal("PH312", diagnostic.Code);
+        Assert.Equal("AV312", diagnostic.Code);
         Assert.Contains("Int", diagnostic.Message);
         Assert.Contains("List<LineItem>", diagnostic.Message);
     }
 
     [Fact]
-    public void An_unknown_variable_is_PH310()
+    public void An_unknown_variable_is_AV310()
     {
         // Given a path rooted at a name that is not in scope
         var diagnostic = Only(Program(Probe("ensure basket.items is not empty")));
 
         // When it is resolved
         // Then the variable is reported with what is in scope
-        Assert.Equal("PH310", diagnostic.Code);
+        Assert.Equal("AV310", diagnostic.Code);
         Assert.Contains("input", diagnostic.Message);
     }
 
     [Fact]
-    public void An_unknown_field_is_PH311_and_lists_the_real_fields()
+    public void An_unknown_field_is_AV311_and_lists_the_real_fields()
     {
         // Given a path to a field input does not have
         var diagnostic = Only(Program(Probe("ensure input.lines is not empty")));
 
         // When it is resolved
         // Then the available fields are listed
-        Assert.Equal("PH311", diagnostic.Code);
+        Assert.Equal("AV311", diagnostic.Code);
         Assert.Contains("customerId, items", diagnostic.Message);
     }
 
     [Fact]
-    public void A_field_of_a_non_record_is_PH311()
+    public void A_field_of_a_non_record_is_AV311()
     {
         // Given a path that reads a field of a list
         var source = Program(
@@ -145,49 +145,49 @@ public class ResolverCallTests
 
         // When it is resolved
         // Then it is reported
-        Assert.Equal(["PH311"], Codes(source));
+        Assert.Equal(["AV311"], Codes(source));
     }
 
     [Fact]
-    public void Letting_a_phrase_that_returns_nothing_is_PH320()
+    public void Letting_a_phrase_that_returns_nothing_is_AV320()
     {
         // Given a let around a guard
         var source = Program(Probe("let ok = ensure input.items is not empty"));
 
         // When it is resolved
         // Then it is reported
-        Assert.Equal(["PH320"], Codes(source));
+        Assert.Equal(["AV320"], Codes(source));
     }
 
     [Fact]
-    public void Discarding_a_returned_value_is_PH321()
+    public void Discarding_a_returned_value_is_AV321()
     {
         // Given a value-returning phrase used as a statement
         var source = Program(Probe("total quantity of input.items"));
 
         // When it is resolved
         // Then it is reported, because the result is silently lost
-        Assert.Equal(["PH321"], Codes(source));
+        Assert.Equal(["AV321"], Codes(source));
     }
 
     [Theory]
     [InlineData("let total = total quantity of input.items", "let total = total quantity of input.items")]
     [InlineData("let input = total quantity of input.items", "fail with NotBuilt")]
-    public void Redefining_a_variable_is_PH313(string first, string second)
+    public void Redefining_a_variable_is_AV313(string first, string second)
     {
         // Given a let that reuses a name already in scope
         var source = Program(Probe(first, second));
 
         // When it is resolved
         // Then it is reported
-        Assert.Contains("PH313", Codes(source));
+        Assert.Contains("AV313", Codes(source));
     }
 
     [Theory]
     [InlineData("retry \"sync\" up to 3 times", null)]
-    [InlineData("retry \"sync\" up to 2.5 times", "PH312")]
-    [InlineData("retry 3 up to 3 times", "PH312")]
-    [InlineData("retry true up to 3 times", "PH312")]
+    [InlineData("retry \"sync\" up to 2.5 times", "AV312")]
+    [InlineData("retry 3 up to 3 times", "AV312")]
+    [InlineData("retry true up to 3 times", "AV312")]
     public void Literal_arguments_are_checked_against_hole_types(string step, string? code)
     {
         // Given a phrase with Text and Int holes

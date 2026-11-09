@@ -10,7 +10,7 @@ namespace Avowry.Compiler.Lexing;
 ///   <item>Inside <c>{ }</c> or <c>[ ]</c>, newlines and indentation are ignored (implicit line joining).</item>
 ///   <item>A logical line that is exactly <c>native &lt;target&gt;</c> captures the indented lines under it as one RAW token.</item>
 /// </list>
-/// Errors are reported as PH1xx diagnostics and lexing continues.
+/// Errors are reported as AV1xx diagnostics and lexing continues.
 /// </summary>
 public static class Lexer
 {
@@ -84,7 +84,7 @@ public static class Lexer
                 if (line[p] == '\t')
                 {
                     if (!IsBlankOrComment(line, p))
-                        Report("PH100", "Indentation must use spaces, not tabs.", lineNo, p + 1);
+                        Report("AV100", "Indentation must use spaces, not tabs.", lineNo, p + 1);
                     indent += IndentWidth; // recover as one level
                 }
                 else
@@ -102,7 +102,7 @@ public static class Lexer
             if (indent > top)
             {
                 if (indent != top + IndentWidth)
-                    Report("PH102", $"Indent by exactly {IndentWidth} spaces per level (found {indent - top}).", lineNo, 1);
+                    Report("AV102", $"Indent by exactly {IndentWidth} spaces per level (found {indent - top}).", lineNo, 1);
                 _indents.Push(indent);
                 _tokens.Add(new Token(TokenKind.Indent, "", lineNo, 1));
                 return;
@@ -115,7 +115,7 @@ public static class Lexer
             }
 
             if (indent != _indents.Peek())
-                Report("PH101", $"Dedent to {indent} spaces does not match any open block (expected {_indents.Peek()}).", lineNo, 1);
+                Report("AV101", $"Dedent to {indent} spaces does not match any open block (expected {_indents.Peek()}).", lineNo, 1);
         }
 
         private static bool IsBlankOrComment(string line, int from)
@@ -159,7 +159,7 @@ public static class Lexer
 
                 if (spaces < baseIndent)
                 {
-                    Report("PH105", $"Native block lines must be indented at least {baseIndent} spaces.", j + 1, 1);
+                    Report("AV105", $"Native block lines must be indented at least {baseIndent} spaces.", j + 1, 1);
                     body.Add(line[spaces..]);
                 }
                 else
@@ -174,7 +174,7 @@ public static class Lexer
 
             if (firstLine is null)
             {
-                Report("PH106", "Native block has no body.", headerLine, headerIndent + 1);
+                Report("AV106", "Native block has no body.", headerLine, headerIndent + 1);
                 return j;
             }
 
@@ -229,7 +229,7 @@ public static class Lexer
                         Add(TokenKind.Symbol, c.ToString(), lineNo, column);
                         break;
                     default:
-                        Report("PH104", $"Unexpected character '{c}'.", lineNo, column);
+                        Report("AV104", $"Unexpected character '{c}'.", lineNo, column);
                         break;
                 }
                 p++;
@@ -242,13 +242,13 @@ public static class Lexer
 
             if (_brackets.Count == 0)
             {
-                Report("PH109", $"'{close}' has no matching opener.", lineNo, column);
+                Report("AV109", $"'{close}' has no matching opener.", lineNo, column);
                 return;
             }
 
             var (open, _, _) = _brackets.Pop();
             if (open != expectedOpen)
-                Report("PH109", $"'{close}' does not match '{open}'.", lineNo, column);
+                Report("AV109", $"'{close}' does not match '{open}'.", lineNo, column);
 
             Add(TokenKind.Symbol, close.ToString(), lineNo, column);
         }
@@ -313,7 +313,7 @@ public static class Lexer
                     }
                     else
                     {
-                        Report("PH107", $"Unknown escape '\\{escaped}'. Only \\\" and \\\\ are defined.", lineNo, p + 1);
+                        Report("AV107", $"Unknown escape '\\{escaped}'. Only \\\" and \\\\ are defined.", lineNo, p + 1);
                         value.Append(c).Append(escaped);
                     }
                     p += 2;
@@ -324,7 +324,7 @@ public static class Lexer
                 p++;
             }
 
-            Report("PH103", "String is not closed before the end of the line.", lineNo, start + 1);
+            Report("AV103", "String is not closed before the end of the line.", lineNo, start + 1);
             Add(TokenKind.String, value.ToString(), lineNo, start + 1);
             return p;
         }
@@ -338,7 +338,7 @@ public static class Lexer
             if (_brackets.Count > 0)
             {
                 var (open, line, column) = _brackets.Last(); // outermost unclosed
-                Report("PH108", $"'{open}' is never closed.", line, column);
+                Report("AV108", $"'{open}' is never closed.", line, column);
                 _brackets.Clear();
                 if (_tokens.Count > _logicalStart)
                     _tokens.Add(new Token(TokenKind.Newline, "", eofLine, 1));

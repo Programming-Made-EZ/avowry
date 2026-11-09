@@ -117,7 +117,7 @@ public class CompilerMessagesNameTheAvow
         // Then stderr carries the avow wording and the process exits 1
         Assert.Equal(1, result.ExitCode);
         var lines = result.Stderr.Replace("\r\n", "\n", StringComparison.Ordinal).TrimEnd('\n').Split('\n');
-        Assert.Equal("""PH001 (11:5) No avow matches this step. Closest: "do nothing".""", lines[1]);
+        Assert.Equal("""AV001 (11:5) No avow matches this step. Closest: "do nothing".""", lines[1]);
     }
 
     private static void Plant(string root, string relative, string text)

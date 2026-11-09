@@ -9,7 +9,7 @@ namespace Avowry.Compiler.Syntax;
 ///   <item>Group tokens into a tree of logical lines (INDENT/DEDENT become children; a RAW token attaches to the <c>native</c> line above it).</item>
 ///   <item>Parse each line by its first word. Keywords are recognised only there, so phrase sentences may use any word.</item>
 /// </list>
-/// Errors are PH2xx diagnostics. A bad line is skipped along with its children; the rest of the file still parses.
+/// Errors are AV2xx diagnostics. A bad line is skipped along with its children; the rest of the file still parses.
 /// </summary>
 public static class Parser
 {
@@ -92,7 +92,7 @@ public static class Parser
     }
 
     /// <summary>Reads one logical line. Errors throw <see cref="SyntaxError"/> with this cursor's code.</summary>
-    private sealed class Cursor(IReadOnlyList<Token> tokens, Position end, string code = "PH200")
+    private sealed class Cursor(IReadOnlyList<Token> tokens, Position end, string code = "AV200")
     {
         private int _i;
 
@@ -183,8 +183,8 @@ public static class Parser
                 {
                     case "module":
                         if (Try(() => ParseModule(line)) is not { } m) break;
-                        if (module is not null) Report("PH202", "A file has exactly one module declaration.", m.At);
-                        else if (sawDeclaration) Report("PH202", "The module declaration must come before every other declaration.", m.At);
+                        if (module is not null) Report("AV202", "A file has exactly one module declaration.", m.At);
+                        else if (sawDeclaration) Report("AV202", "The module declaration must come before every other declaration.", m.At);
                         module ??= m;
                         break;
                     case "type":
@@ -201,13 +201,13 @@ public static class Parser
                         AddIfParsed(endpoints, () => ParseEndpoint(line));
                         break;
                     default:
-                        Report("PH201", $"Expected a declaration (module, type, avow or endpoint), found '{head.Text}'.", Pos(head));
+                        Report("AV201", $"Expected a declaration (module, type, avow or endpoint), found '{head.Text}'.", Pos(head));
                         break;
                 }
             }
 
-            if (module is null && !_diagnostics.Any(d => d.Code == "PH202"))
-                Report("PH202", "A file must start with `module <Name>`.", new Position(1, 1));
+            if (module is null && !_diagnostics.Any(d => d.Code == "AV202"))
+                Report("AV202", "A file must start with `module <Name>`.", new Position(1, 1));
 
             return new ParseResult(new SourceFile(module, types, phrases, endpoints), _diagnostics)
             {
@@ -242,7 +242,7 @@ public static class Parser
         private List<FieldDecl> ParseFieldBlock(Line header, string owner)
         {
             if (header.Children.Count == 0)
-                Report("PH203", $"{owner} has no fields; indent `name: Type` lines under it.", header.Start);
+                Report("AV203", $"{owner} has no fields; indent `name: Type` lines under it.", header.Start);
 
             var fields = new List<FieldDecl>();
             foreach (var child in header.Children)
@@ -284,9 +284,9 @@ public static class Parser
             {
                 var filler = c.Next();
                 if (filler.Text is not ("to" or "that" or "it"))
-                    throw FillerError("PH212", filler);
+                    throw FillerError("AV212", filler);
                 if (c.Is(TokenKind.Name))
-                    throw FillerError("PH213", c.Peek()!);
+                    throw FillerError("AV213", c.Peek()!);
             }
             var templateToken = c.Expect(TokenKind.String, "a quoted avow template");
             TypeRef? returns = null;
@@ -312,7 +312,7 @@ public static class Parser
                     if (cc.IsName("effects"))
                     {
                         cc.Next();
-                        if (sawEffects) { Report("PH204", "Only one `effects` clause is allowed.", clauseAt); return; }
+                        if (sawEffects) { Report("AV204", "Only one `effects` clause is allowed.", clauseAt); return; }
                         sawEffects = true;
                         if (cc.IsName("none")) { cc.Next(); cc.ExpectEnd(); }
                         else effects.AddRange(ParseTypeNameList(cc, "an effect name"));
@@ -321,7 +321,7 @@ public static class Parser
                     else if (cc.IsName("fails") && cc.IsName("with", 1))
                     {
                         cc.Next(); cc.Next();
-                        if (sawFailures) { Report("PH204", "List every failure in one `fails with A, B` clause.", clauseAt); return; }
+                        if (sawFailures) { Report("AV204", "List every failure in one `fails with A, B` clause.", clauseAt); return; }
                         sawFailures = true;
                         failureLine = clauseAt.Line;
                         failures.AddRange(ParseTypeNameList(cc, "a failure code"));
@@ -338,19 +338,19 @@ public static class Parser
                         cc.ExpectEnd();
                         sawNative = true;
 
-                        if (sawSteps) Report("PH208", "An avow is implemented by native blocks or by steps, not both.", clauseAt);
-                        else if (!Targets.Contains(target.Text)) Report("PH207", $"Unknown native target '{target.Text}'. Known targets: {string.Join(", ", Targets)}.", Pos(target));
-                        else if (natives.Any(n => n.Target == target.Text)) Report("PH204", $"A second `native {target.Text}` block.", clauseAt);
+                        if (sawSteps) Report("AV208", "An avow is implemented by native blocks or by steps, not both.", clauseAt);
+                        else if (!Targets.Contains(target.Text)) Report("AV207", $"Unknown native target '{target.Text}'. Known targets: {string.Join(", ", Targets)}.", Pos(target));
+                        else if (natives.Any(n => n.Target == target.Text)) Report("AV204", $"A second `native {target.Text}` block.", clauseAt);
                         else if (child.Raw is { } raw) natives.Add(new NativeBlock(target.Text, raw.Text, clauseAt, Pos(raw)));
-                        // No RAW token: the lexer has already reported PH106.
+                        // No RAW token: the lexer has already reported AV106.
                     }
                     else if (cc.IsName("steps"))
                     {
                         cc.Next();
                         cc.ExpectEnd();
-                        if (sawSteps) { Report("PH204", "Only one `steps` block is allowed.", clauseAt); return; }
+                        if (sawSteps) { Report("AV204", "Only one `steps` block is allowed.", clauseAt); return; }
                         sawSteps = true;
-                        if (sawNative) { Report("PH208", "An avow is implemented by native blocks or by steps, not both.", clauseAt); return; }
+                        if (sawNative) { Report("AV208", "An avow is implemented by native blocks or by steps, not both.", clauseAt); return; }
                         steps = ParseSteps(child, template.Parts.OfType<TemplateHole>().Select(hole => hole.Name));
                     }
                     else
@@ -361,7 +361,7 @@ public static class Parser
             }
 
             if (!sawNative && !sawSteps)
-                Report("PH203", "Avow has no implementation; add `native <target>` or `steps`.", at);
+                Report("AV203", "Avow has no implementation; add `native <target>` or `steps`.", at);
 
             return new AvowDecl(template, returns, effects, failures, specs, natives, steps, at) { FailureLine = failureLine };
         }
@@ -395,7 +395,7 @@ public static class Parser
 
             if (content.Contains('#'))
             {
-                Report("PH205", "A template may not contain '#'.", Map(1, content.IndexOf('#') + 1));
+                Report("AV205", "A template may not contain '#'.", Map(1, content.IndexOf('#') + 1));
                 return new Template(parts, at);
             }
 
@@ -408,7 +408,7 @@ public static class Parser
             };
             if (reserved is not null)
             {
-                Report("PH205", $"A template may not start with the step keyword `{reserved}`; no step could call it.", Map(1, 1));
+                Report("AV205", $"A template may not start with the step keyword `{reserved}`; no step could call it.", Map(1, 1));
                 return new Template(parts, at);
             }
 
@@ -416,7 +416,7 @@ public static class Parser
             if (inner.Diagnostics.Count > 0)
             {
                 foreach (var d in inner.Diagnostics)
-                    Report("PH205", $"Invalid template: {d.Message}", Map(d.Line, d.Column));
+                    Report("AV205", $"Invalid template: {d.Message}", Map(d.Line, d.Column));
                 return new Template(parts, at);
             }
 
@@ -424,7 +424,7 @@ public static class Parser
                 .Where(t => t.Kind is not (TokenKind.Newline or TokenKind.Indent or TokenKind.Dedent or TokenKind.EndOfFile))
                 .Select(t => t with { Line = str.Line, Column = startColumn + t.Column - 1 })
                 .ToList();
-            var c = new Cursor(tokens, new Position(str.Line, str.Column + content.Length + 1), "PH205");
+            var c = new Cursor(tokens, new Position(str.Line, str.Column + content.Length + 1), "AV205");
             var holes = new HashSet<string>(StringComparer.Ordinal);
 
             try
@@ -444,7 +444,7 @@ public static class Parser
                         var type = ParseTypeRef(c);
                         c.ExpectSymbol("}");
                         if (!holes.Add(name.Text))
-                            Report("PH206", $"Hole name '{name.Text}' is used twice in this template.", Pos(open));
+                            Report("AV206", $"Hole name '{name.Text}' is used twice in this template.", Pos(open));
                         parts.Add(new TemplateHole(name.Text, type, Pos(open)));
                     }
                     else
@@ -460,7 +460,7 @@ public static class Parser
             }
 
             if (!parts.OfType<TemplateWord>().Any())
-                Report("PH205", "A template needs at least one word, or every call would match it.", at);
+                Report("AV205", "A template needs at least one word, or every call would match it.", at);
 
             return new Template(parts, at);
         }
@@ -479,7 +479,7 @@ public static class Parser
             c.ExpectEnd();
 
             if (!ExtensionKeywords.IsHttpVerb(verb.Text))
-                Report(ExtensionDiagnostics.Web("PH209"), $"Unknown HTTP verb '{verb.Text}'. Use one of: {string.Join(", ", HttpVerbs)}.", Pos(verb));
+                Report(ExtensionDiagnostics.Web("AV209"), $"Unknown HTTP verb '{verb.Text}'. Use one of: {string.Join(", ", HttpVerbs)}.", Pos(verb));
             else
                 _web = true;
 
@@ -504,7 +504,7 @@ public static class Parser
                             cc.Next();
                             cc.ExpectEnd();
                             var seen = section switch { "input" => input is not null, "output" => output is not null, _ => steps is not null };
-                            if (seen) { Report("PH204", $"Only one `{section}` section is allowed.", sectionAt); return; }
+                            if (seen) { Report("AV204", $"Only one `{section}` section is allowed.", sectionAt); return; }
                             if (section == "input") input = ParseFieldBlock(child, "input");
                             else if (section == "output") output = ParseFieldBlock(child, "output");
                             else steps = ParseSteps(child, ["input"]);
@@ -518,8 +518,8 @@ public static class Parser
                 });
             }
 
-            if (input is null) Report("PH203", $"Endpoint {name.Text} has no `input` section.", at);
-            if (steps is null) Report("PH203", $"Endpoint {name.Text} has no `steps` section.", at);
+            if (input is null) Report("AV203", $"Endpoint {name.Text} has no `input` section.", at);
+            if (steps is null) Report("AV203", $"Endpoint {name.Text} has no `steps` section.", at);
 
             return new EndpointDecl(name.Text, verb.Text, route, input ?? [], output ?? [], steps ?? [], specs, at);
         }
@@ -564,7 +564,7 @@ public static class Parser
         private List<Step> ParseSteps(Line header, IEnumerable<string> initialNames)
         {
             if (header.Children.Count == 0)
-                Report("PH203", "`steps` has no steps; indent one step per line under it.", header.Start);
+                Report("AV203", "`steps` has no steps; indent one step per line under it.", header.Start);
 
             var steps = new List<Step>();
             var namesInScope = initialNames.ToHashSet(StringComparer.Ordinal);
@@ -636,7 +636,7 @@ public static class Parser
                     c.Next(); c.Next(); c.Next();
                     var maximum = c.Expect(TokenKind.Number, "an integer maximum");
                     if (!int.TryParse(maximum.Text, System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var parsedMaximum))
-                        throw new SyntaxError(new Diagnostic("PH200", "Length maximum must be a non-negative 32-bit integer.", maximum.Line, maximum.Column));
+                        throw new SyntaxError(new Diagnostic("AV200", "Length maximum must be a non-negative 32-bit integer.", maximum.Line, maximum.Column));
                     condition = new LengthAtMostCondition(value, parsedMaximum, at);
                 }
                 else
@@ -799,7 +799,7 @@ public static class Parser
                     {
                         case "given":
                             cc.Next();
-                            if (phase > Clause.Given) Report("PH210", "`given` must come before `when` and `then`.", clauseAt);
+                            if (phase > Clause.Given) Report("AV210", "`given` must come before `when` and `then`.", clauseAt);
                             givens.Add(ParseGiven(cc, clauseAt));
                             last = Clause.Given;
                             if (phase < Clause.Given) phase = Clause.Given;
@@ -808,8 +808,8 @@ public static class Parser
                         case "when":
                             cc.Next();
                             sawWhen = true;
-                            if (when is not null) { Report("PH204", "A spec has exactly one `when`.", clauseAt); return; }
-                            if (phase > Clause.When) Report("PH210", "`when` must come before `then`.", clauseAt);
+                            if (when is not null) { Report("AV204", "A spec has exactly one `when`.", clauseAt); return; }
+                            if (phase > Clause.When) Report("AV210", "`when` must come before `then`.", clauseAt);
                             when = ParseTrigger(cc);
                             last = Clause.When;
                             if (phase < Clause.When) phase = Clause.When;
@@ -829,7 +829,7 @@ public static class Parser
                             {
                                 case Clause.Given: givens.Add(ParseGiven(cc, clauseAt)); break;
                                 case Clause.Then: thens.Add(ParseOutcome(cc, clauseAt)); break;
-                                default: Report("PH210", "`and` must follow a `given` or a `then`.", clauseAt); break;
+                                default: Report("AV210", "`and` must follow a `given` or a `then`.", clauseAt); break;
                             }
                             break;
 
@@ -839,8 +839,8 @@ public static class Parser
                 });
             }
 
-            if (!sawWhen) Report("PH203", $"Spec \"{description.Text}\" has no `when` line.", at);
-            if (!sawThen) Report("PH203", $"Spec \"{description.Text}\" has no `then` line.", at);
+            if (!sawWhen) Report("AV203", $"Spec \"{description.Text}\" has no `when` line.", at);
+            if (!sawThen) Report("AV203", $"Spec \"{description.Text}\" has no `then` line.", at);
 
             return new SpecDecl(description.Text, givens, when, thens, at);
         }
@@ -898,7 +898,7 @@ public static class Parser
         private void NoChildren(Line line)
         {
             if (line.Children.Count > 0)
-                Report("PH211", "Unexpected indented block.", line.Children[0].Start);
+                Report("AV211", "Unexpected indented block.", line.Children[0].Start);
         }
 
         private T? Try<T>(Func<T> parse) where T : class

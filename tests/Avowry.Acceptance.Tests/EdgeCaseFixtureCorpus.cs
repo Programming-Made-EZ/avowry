@@ -85,6 +85,6 @@ public partial class EdgeCaseFixtureCorpus
             record.GetProperty("line").GetInt32());
     }
 
-    [GeneratedRegex(@"(?<code>PH\d+) \((?<line>\d+):\d+\)")]
+    [GeneratedRegex(@"(?<code>AV\d+) \((?<line>\d+):\d+\)")]
     private static partial Regex DiagnosticPattern();
 }

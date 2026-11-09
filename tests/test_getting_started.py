@@ -45,7 +45,7 @@ DROPS = (
     ("layout", r"(?m)^## Layout\b"), ("test-status", r"Test status"),
     ("table-row", r"(?m)^\|"), ("pending", r"Pending"),
     ("resolver", r"(?i)resolver"), ("not-implemented", r"NotImplementedException"),
-    ("trace", r"\btrace\b"), ("ph-code", r"\bPH\d*\b"),
+    ("trace", r"\btrace\b"), ("ph-code", r"\b(?:P[H]|AV)\d*\b"),
     ("dotnet-roll-forward", r"DOTNET_ROLL_FORWARD"), ("dotnet-test", r"dotnet test"),
     ("wasm", r"Wasm"), ("webassembly", r"WebAssembly"),
     ("reference-target", r"ReferenceTarget"),

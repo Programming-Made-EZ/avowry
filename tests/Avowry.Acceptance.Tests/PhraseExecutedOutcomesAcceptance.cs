@@ -476,11 +476,11 @@ public class PhraseExecutedOutcomesAcceptance
             var exception = Assert.Throws<CompilationFailedException>(() => AvowryCompiler.Compile(source, new Avowry.Adapters.CSharp.CSharpProvider()));
             if (task == "010-fix-trigger")
             {
-                Assert.Contains(exception.Diagnostics, diagnostic => diagnostic.Code == "PH330" && diagnostic.Message.Contains("when called", StringComparison.OrdinalIgnoreCase));
+                Assert.Contains(exception.Diagnostics, diagnostic => diagnostic.Code == "AV330" && diagnostic.Message.Contains("when called", StringComparison.OrdinalIgnoreCase));
             }
             else
             {
-                Assert.Contains(exception.Diagnostics, diagnostic => diagnostic.Code == "PH312" && diagnostic.Message.Contains("Text", StringComparison.OrdinalIgnoreCase) && diagnostic.Message.Contains("Int", StringComparison.OrdinalIgnoreCase));
+                Assert.Contains(exception.Diagnostics, diagnostic => diagnostic.Code == "AV312" && diagnostic.Message.Contains("Text", StringComparison.OrdinalIgnoreCase) && diagnostic.Message.Contains("Int", StringComparison.OrdinalIgnoreCase));
             }
         }
     }
@@ -561,8 +561,8 @@ public class PhraseExecutedOutcomesAcceptance
         using var brokenRow = JsonDocument.Parse(ReadResultByModel(suite, brokenModel));
         var diagnostics = brokenRow.RootElement.GetProperty("diagnostics").EnumerateArray().Select(item => item.GetString()!).ToArray();
         if (task == "010-fix-trigger")
-            Assert.Contains(diagnostics, text => text.Contains("PH330", StringComparison.Ordinal) && text.Contains("when called", StringComparison.OrdinalIgnoreCase));
+            Assert.Contains(diagnostics, text => text.Contains("AV330", StringComparison.Ordinal) && text.Contains("when called", StringComparison.OrdinalIgnoreCase));
         else
-            Assert.Contains(diagnostics, text => text.Contains("PH312", StringComparison.Ordinal) && text.Contains("Text", StringComparison.OrdinalIgnoreCase) && text.Contains("Int", StringComparison.OrdinalIgnoreCase));
+            Assert.Contains(diagnostics, text => text.Contains("AV312", StringComparison.Ordinal) && text.Contains("Text", StringComparison.OrdinalIgnoreCase) && text.Contains("Int", StringComparison.OrdinalIgnoreCase));
     }
 }

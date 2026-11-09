@@ -75,7 +75,7 @@ public class PhraseBuildOneFile
 
         // Then it exits 1 and prints the current diagnostic text
         Assert.True(result.ExitCode == 1, result.Text);
-        Assert.Contains("PH001 (", result.Text, StringComparison.Ordinal);
+        Assert.Contains("AV001 (", result.Text, StringComparison.Ordinal);
     }
 
     [Fact]

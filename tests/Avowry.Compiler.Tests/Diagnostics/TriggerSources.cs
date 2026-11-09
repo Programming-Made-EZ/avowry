@@ -108,7 +108,7 @@ internal static class TriggerSources
             var rows = new List<BaselineRow>();
             foreach (var line in body.Split('\n'))
             {
-                if (!line.StartsWith("PH", StringComparison.Ordinal))
+                if (!line.StartsWith("AV", StringComparison.Ordinal))
                     continue;
                 var parts = line.Split('|', 4);
                 rows.Add(new BaselineRow(parts[0], int.Parse(parts[1]), int.Parse(parts[2]), parts[3]));

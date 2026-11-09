@@ -56,7 +56,7 @@ public static class Resolver
             foreach (var declaration in file.Types)
             {
                 if (!typeNames.Add(declaration.Name))
-                    Report("PH302", $"Type '{declaration.Name}' is already defined.", declaration.At);
+                    Report("AV302", $"Type '{declaration.Name}' is already defined.", declaration.At);
             }
         }
 
@@ -76,7 +76,7 @@ public static class Resolver
                 var failureNames = new HashSet<string>(StringComparer.Ordinal);
                 foreach (var failure in declaration.Failures)
                     if (!failureNames.Add(failure))
-                        Report("PH329", $"Failure '{failure}' is repeated in 'fails with'.", declaration.At);
+                        Report("AV329", $"Failure '{failure}' is repeated in 'fails with'.", declaration.At);
                 var parts = new List<AvowPart>();
                 var holes = new List<FieldModel>();
                 var holeNames = new HashSet<string>(StringComparer.Ordinal);
@@ -89,7 +89,7 @@ public static class Resolver
                             break;
                         case TemplateHole hole:
                             parts.Add(new AvowPart(hole.Name, true));
-                            // The parser already reports PH206. Keep the first so a later scope
+                            // The parser already reports AV206. Keep the first so a later scope
                             // or call lookup has one entry per name and does not throw.
                             if (holeNames.Add(hole.Name))
                                 holes.Add(new FieldModel(hole.Name, ResolveType(hole.Type)));
@@ -113,7 +113,7 @@ public static class Resolver
                 var skeleton = Skeleton(declaration.Template);
                 if (skeletons.TryGetValue(skeleton, out var existing))
                 {
-                    Report("PH010", $"Avow '{model.Template}' has the same wording as '{existing.Template}'.", declaration.At);
+                    Report("AV010", $"Avow '{model.Template}' has the same wording as '{existing.Template}'.", declaration.At);
                     continue;
                 }
                 skeletons.Add(skeleton, model);
@@ -127,7 +127,7 @@ public static class Resolver
                 if (declaration.Steps is null)
                     continue;
                 if (model.Returns is not null)
-                    Report("PH325", $"Composite avow '{model.Template}' cannot return a value.", declaration.At);
+                    Report("AV325", $"Composite avow '{model.Template}' cannot return a value.", declaration.At);
                 var scope = model.Holes.ToDictionary(hole => hole.Name, hole => hole.Type, StringComparer.Ordinal);
                 var steps = ResolveSteps(declaration.Steps, scope, null, model.Failures);
                 var resolved = model with { Steps = steps };
@@ -154,9 +154,9 @@ public static class Resolver
             foreach (var declaration in file.Endpoints)
             {
                 if (!names.Add(declaration.Name))
-                    Report(ExtensionDiagnostics.Web("PH304"), $"Endpoint '{declaration.Name}' is already defined.", declaration.At);
+                    Report(ExtensionDiagnostics.Web("AV304"), $"Endpoint '{declaration.Name}' is already defined.", declaration.At);
                 if (!routes.Add((declaration.Verb, declaration.Route)))
-                    Report(ExtensionDiagnostics.Web("PH304"), $"Endpoint route '{declaration.Verb} {declaration.Route}' is already defined.", declaration.At);
+                    Report(ExtensionDiagnostics.Web("AV304"), $"Endpoint route '{declaration.Verb} {declaration.Route}' is already defined.", declaration.At);
                 var input = ResolveFields(declaration.Input, $"endpoint '{declaration.Name}' input");
                 var output = ResolveFields(declaration.Output, $"endpoint '{declaration.Name}' output");
                 var inputType = PType.EndpointInput(declaration.Name);
@@ -167,7 +167,7 @@ public static class Resolver
                 var scope = new Dictionary<string, PType>(StringComparer.Ordinal) { ["input"] = inputType };
                 var steps = ResolveSteps(declaration.Steps, scope, outputType, null);
                 if (outputType is not null && !steps.Any(step => step is BoundRespondStep or BoundFailStep))
-                    Report(ExtensionDiagnostics.Web("PH323"), $"Endpoint '{declaration.Name}' has an output but never responds or fails.", declaration.At);
+                    Report(ExtensionDiagnostics.Web("AV323"), $"Endpoint '{declaration.Name}' has an output but never responds or fails.", declaration.At);
                 var failures = EffectiveFailures(steps);
                 var model = new EndpointModel(
                     declaration.Name, declaration.Verb, declaration.Route,
@@ -186,7 +186,7 @@ public static class Resolver
             foreach (var step in steps)
             {
                 if (terminated)
-                    Report("PH324", "Step is unreachable after 'respond with' or 'fail with'.", step.At);
+                    Report("AV324", "Step is unreachable after 'respond with' or 'fail with'.", step.At);
                 switch (step)
                 {
                     case AvowCall call:
@@ -195,7 +195,7 @@ public static class Resolver
                         if (resolved is not null)
                         {
                             if (resolved.Value.Avow.Returns is not null)
-                                Report("PH321", $"Avow '{resolved.Value.Avow.Template}' returns {resolved.Value.Avow.Returns}; use 'let' to keep it.", call.At);
+                                Report("AV321", $"Avow '{resolved.Value.Avow.Template}' returns {resolved.Value.Avow.Returns}; use 'let' to keep it.", call.At);
                             bound.Add(new BoundCallStep(resolved.Value.Call, SourceFormatter.Format(call)) { Line = call.At.Line, Column = call.At.Column });
                         }
                         break;
@@ -208,10 +208,10 @@ public static class Resolver
                         {
                             type = resolved.Value.Avow.Returns ?? PType.Error;
                             if (resolved.Value.Avow.Returns is null)
-                                Report("PH320", $"Avow '{resolved.Value.Avow.Template}' returns no value and cannot be used with 'let'.", let.At);
+                                Report("AV320", $"Avow '{resolved.Value.Avow.Template}' returns no value and cannot be used with 'let'.", let.At);
                         }
                         if (scope.ContainsKey(let.Name))
-                            Report("PH313", $"Variable '{let.Name}' is already defined.", let.At);
+                            Report("AV313", $"Variable '{let.Name}' is already defined.", let.At);
                         else
                             scope.Add(let.Name, type);
                         if (resolved is not null)
@@ -223,19 +223,19 @@ public static class Resolver
                         break;
                     case FailStep fail:
                         if (declaredFailures is not null && !declaredFailures.Contains(fail.Code, StringComparer.Ordinal))
-                            Report("PH326", $"Composite failure '{fail.Code}' is not declared in 'fails with'.", fail.At);
+                            Report("AV326", $"Composite failure '{fail.Code}' is not declared in 'fails with'.", fail.At);
                         bound.Add(new BoundFailStep(fail.Code, SourceFormatter.Format(fail)) { Line = fail.At.Line, Column = fail.At.Column });
                         terminated = true;
                         break;
                     case EnsureStep ensure:
                         if (declaredFailures is not null && !declaredFailures.Contains(ensure.Code, StringComparer.Ordinal))
-                            Report("PH326", $"Ensure failure '{ensure.Code}' is not declared in 'fails with'.", ensure.At);
+                            Report("AV326", $"Ensure failure '{ensure.Code}' is not declared in 'fails with'.", ensure.At);
                         bound.Add(new BoundEnsureStep(ResolveCondition(ensure.Condition, scope), ensure.Code, SourceFormatter.Format(ensure)) { Line = ensure.At.Line });
                         break;
                     case RespondStep respond:
                         if (outputType is null)
                         {
-                            Report(ExtensionDiagnostics.Web("PH322"), "'respond with' is only valid in an endpoint with an output.", respond.At);
+                            Report(ExtensionDiagnostics.Web("AV322"), "'respond with' is only valid in an endpoint with an output.", respond.At);
                             bound.Add(new BoundRespondStep(new BoundRecord([], PType.Error), SourceFormatter.Format(respond)) { Line = respond.At.Line });
                         }
                         else
@@ -256,7 +256,7 @@ public static class Resolver
             if (!record.Type.IsError)
             {
                 if (!recordFields.TryGetValue(record.Type.Name, out var declared))
-                    Report("PH311", $"Type {record.Type} has no fields; cannot update it.", update.At);
+                    Report("AV311", $"Type {record.Type} has no fields; cannot update it.", update.At);
                 else
                     fields = declared;
             }
@@ -267,7 +267,7 @@ public static class Resolver
             {
                 if (!seen.Add(field.Name))
                 {
-                    Report("PH303", $"Field '{field.Name}' is repeated in the update.", field.At);
+                    Report("AV303", $"Field '{field.Name}' is repeated in the update.", field.At);
                     continue;
                 }
 
@@ -277,7 +277,7 @@ public static class Resolver
                     if (fields is not null)
                     {
                         var available = fields.Count == 0 ? "none" : string.Join(", ", fields.Select(candidate => candidate.Name));
-                        Report("PH311", $"Unknown field '{field.Name}' on {record.Type}. Available fields: {available}.", field.At);
+                        Report("AV311", $"Unknown field '{field.Name}' on {record.Type}. Available fields: {available}.", field.At);
                     }
                     boundFields.Add(new BoundRecordField(field.Name, ResolveValue(field.Value, PType.Error, scope)));
                     continue;
@@ -287,7 +287,7 @@ public static class Resolver
             }
 
             if (scope.ContainsKey(update.Name))
-                Report("PH313", $"Variable '{update.Name}' is already defined.", update.At);
+                Report("AV313", $"Variable '{update.Name}' is already defined.", update.At);
             else
                 scope.Add(update.Name, record.Type);
 
@@ -302,14 +302,14 @@ public static class Resolver
                 {
                     var value = ResolvePath(blank.Value, scope);
                     if (!value.Type.IsError && value.Type != PType.Text)
-                        Report("PH312", $"Blank checks require Text, but got {value.Type}.", blank.At);
+                        Report("AV312", $"Blank checks require Text, but got {value.Type}.", blank.At);
                     return new BoundBlankCondition(value, blank.IsNotBlank);
                 }
                 case LengthAtMostCondition length:
                 {
                     var value = ResolvePath(length.Value, scope);
                     if (!value.Type.IsError && value.Type != PType.Text)
-                        Report("PH312", $"Length checks require Text, but got {value.Type}.", length.At);
+                        Report("AV312", $"Length checks require Text, but got {value.Type}.", length.At);
                     return new BoundLengthAtMostCondition(value, length.Maximum);
                 }
                 case ComparisonCondition comparison:
@@ -317,7 +317,7 @@ public static class Resolver
                     var left = ResolvePath(comparison.Left, scope);
                     var right = ResolveValue(comparison.Right, PType.Int, scope);
                     if (!left.Type.IsError && left.Type != PType.Int)
-                        Report("PH312", $"Comparisons require Int, but got {left.Type}.", comparison.At);
+                        Report("AV312", $"Comparisons require Int, but got {left.Type}.", comparison.At);
                     return new BoundComparisonCondition(left, comparison.Operator, right);
                 }
                 default:
@@ -339,7 +339,7 @@ public static class Resolver
                 if (!visiting.Add(phrase.Key))
                 {
                     if (reportedCycles.Add(phrase.Key))
-                        Report("PH327", $"Avow '{phrase.Template}' participates in a call cycle.", AvowDeclaration(phrase.Key).At);
+                        Report("AV327", $"Avow '{phrase.Template}' participates in a call cycle.", AvowDeclaration(phrase.Key).At);
                     return ([], new HashSet<string>(StringComparer.Ordinal));
                 }
 
@@ -359,7 +359,7 @@ public static class Resolver
                     failures.UnionWith(inherited.Failures);
                     effects.UnionWith(inherited.Effects);
                     foreach (var effect in inherited.Effects.Except(phrase.Effects, StringComparer.Ordinal))
-                        Report("PH328", $"Composite avow '{phrase.Template}' must declare effect '{effect}'.", AvowDeclaration(phrase.Key).At);
+                        Report("AV328", $"Composite avow '{phrase.Template}' must declare effect '{effect}'.", AvowDeclaration(phrase.Key).At);
                 }
                 visiting.Remove(phrase.Key);
                 return complete[phrase.Key] = (failures.Order(StringComparer.Ordinal).ToList(), effects);
@@ -397,7 +397,7 @@ public static class Resolver
         {
             if (spec.When is not SpecTrigger.Called)
             {
-                Report(ExtensionDiagnostics.CoreArm("PH330"), $"Spec '{spec.Description}' on avow '{phrase.Template}' must use 'when called'.", spec.At);
+                Report(ExtensionDiagnostics.CoreArm("AV330"), $"Spec '{spec.Description}' on avow '{phrase.Template}' must use 'when called'.", spec.At);
             }
 
             var scope = phrase.Holes.ToDictionary(h => h.Name, h => h.Type, StringComparer.Ordinal);
@@ -408,7 +408,7 @@ public static class Resolver
             {
                 if (given is GivenInput)
                 {
-                    Report(ExtensionDiagnostics.WebArm("PH331"), "Avow specs cannot bind input; use a hole binding.", given.At);
+                    Report(ExtensionDiagnostics.WebArm("AV331"), "Avow specs cannot bind input; use a hole binding.", given.At);
                     continue;
                 }
 
@@ -416,13 +416,13 @@ public static class Resolver
                 if (!scope.TryGetValue(binding.Name, out var type))
                 {
                     hasInvalidBinding = true;
-                    Report(ExtensionDiagnostics.CoreArm("PH331"), $"Avow spec for '{phrase.Template}' does not bind hole '{binding.Name}'. Valid holes: {string.Join(", ", scope.Keys.Order(StringComparer.Ordinal))}.", binding.At);
+                    Report(ExtensionDiagnostics.CoreArm("AV331"), $"Avow spec for '{phrase.Template}' does not bind hole '{binding.Name}'. Valid holes: {string.Join(", ", scope.Keys.Order(StringComparer.Ordinal))}.", binding.At);
                     continue;
                 }
                 if (!seen.Add(binding.Name))
                 {
                     hasInvalidBinding = true;
-                    Report(ExtensionDiagnostics.CoreArm("PH331"), $"Hole '{binding.Name}' is bound more than once in the spec.", binding.At);
+                    Report(ExtensionDiagnostics.CoreArm("AV331"), $"Hole '{binding.Name}' is bound more than once in the spec.", binding.At);
                     continue;
                 }
             }
@@ -433,14 +433,14 @@ public static class Resolver
                 if (bindings.Count == 0)
                 {
                     if (!hasInvalidBinding)
-                        Report(ExtensionDiagnostics.CoreArm("PH331"), $"Spec for '{phrase.Template}' is missing the hole '{hole.Name}'.", spec.At);
+                        Report(ExtensionDiagnostics.CoreArm("AV331"), $"Spec for '{phrase.Template}' is missing the hole '{hole.Name}'.", spec.At);
                     continue;
                 }
 
                 var binding = bindings[0];
                 if (ContainsPath(binding.Value))
                 {
-                    Report("PH332", $"Spec value for '{binding.Name}' must be a literal, not a path.", binding.At);
+                    Report("AV332", $"Spec value for '{binding.Name}' must be a literal, not a path.", binding.At);
                     continue;
                 }
                 givens.Add(new BoundArgument(new FieldModel(hole.Name, hole.Type), ResolveValue(binding.Value, hole.Type, scope)));
@@ -463,7 +463,7 @@ public static class Resolver
         {
             if (spec.When is not SpecTrigger.Handled)
             {
-                Report(ExtensionDiagnostics.WebArm("PH330"), $"Spec '{spec.Description}' on endpoint '{endpoint.Name}' must use 'when handled'.", spec.At);
+                Report(ExtensionDiagnostics.WebArm("AV330"), $"Spec '{spec.Description}' on endpoint '{endpoint.Name}' must use 'when handled'.", spec.At);
             }
 
             var scope = new Dictionary<string, PType>(StringComparer.Ordinal) { ["input"] = endpoint.InputType };
@@ -476,7 +476,7 @@ public static class Resolver
                     seenInput = true;
                     if (ContainsPath(inputGiven.Value))
                     {
-                        Report("PH332", "Spec input must contain literal values, not paths.", inputGiven.At);
+                        Report("AV332", "Spec input must contain literal values, not paths.", inputGiven.At);
                         continue;
                     }
                     var inputRecord = ResolveRecord(inputGiven.Value, endpoint.InputType, scope);
@@ -487,15 +487,15 @@ public static class Resolver
                 var binding = (GivenBinding)given;
                 if (binding.Name == "input")
                 {
-                    Report(ExtensionDiagnostics.WebArm("PH331"), $"Endpoint spec for '{endpoint.Name}' must use 'given input {{ ... }}', not 'input = ...'.", binding.At);
+                    Report(ExtensionDiagnostics.WebArm("AV331"), $"Endpoint spec for '{endpoint.Name}' must use 'given input {{ ... }}', not 'input = ...'.", binding.At);
                     continue;
                 }
-                Report(ExtensionDiagnostics.WebArm("PH331"), $"Endpoint spec for '{endpoint.Name}' must use 'given input {{ ... }}', not '{binding.Name}'.", binding.At);
+                Report(ExtensionDiagnostics.WebArm("AV331"), $"Endpoint spec for '{endpoint.Name}' must use 'given input {{ ... }}', not '{binding.Name}'.", binding.At);
             }
             if (!seenInput && spec.Givens.Count == 0)
-                Report(ExtensionDiagnostics.WebArm("PH331"), $"Endpoint spec for '{endpoint.Name}' is missing the required 'given input {{ ... }}'.", spec.At);
+                Report(ExtensionDiagnostics.WebArm("AV331"), $"Endpoint spec for '{endpoint.Name}' is missing the required 'given input {{ ... }}'.", spec.At);
             if (spec.Givens.Count(g => g is GivenInput) > 1)
-                Report(ExtensionDiagnostics.WebArm("PH331"), $"Endpoint spec for '{endpoint.Name}' has more than one input binding.", spec.At);
+                Report(ExtensionDiagnostics.WebArm("AV331"), $"Endpoint spec for '{endpoint.Name}' has more than one input binding.", spec.At);
 
             var outcome = ResolveSpecOutcome(spec, null, scope, endpoint.OutputType, endpoint.Failures, endpoint.Name);
             var boundInput = new BoundRecord(inputFields, endpoint.InputType);
@@ -522,7 +522,7 @@ public static class Resolver
             var outcomes = spec.Thens;
             if (outcomes.Count > 1)
             {
-                Report("PH335", $"Spec '{spec.Description}' has more than one outcome.", spec.At);
+                Report("AV335", $"Spec '{spec.Description}' has more than one outcome.", spec.At);
                 return new SucceedsModel();
             }
 
@@ -536,14 +536,14 @@ public static class Resolver
                     if (phrase is null || phrase.Returns is null)
                     {
                         var code = phrase is null
-                            ? ExtensionDiagnostics.WebArm("PH333")
-                            : ExtensionDiagnostics.CoreArm("PH333");
+                            ? ExtensionDiagnostics.WebArm("AV333")
+                            : ExtensionDiagnostics.CoreArm("AV333");
                         Report(code, $"Spec '{spec.Description}' uses 'returns' but this unit cannot return a value.", returns.At);
                         return new SucceedsModel();
                     }
                     if (ContainsPath(returns.Value))
                     {
-                        Report("PH332", "Spec outcome value must be a literal, not a path.", returns.At);
+                        Report("AV332", "Spec outcome value must be a literal, not a path.", returns.At);
                         return new SucceedsModel();
                     }
                     var value = ResolveValue(returns.Value, phrase.Returns, scope);
@@ -551,12 +551,12 @@ public static class Resolver
                 case RespondsOutcome responds:
                     if (outputType is null)
                     {
-                        Report(ExtensionDiagnostics.WebArm("PH333"), $"Spec '{spec.Description}' uses 'responds' but this unit has no output.", responds.At);
+                        Report(ExtensionDiagnostics.WebArm("AV333"), $"Spec '{spec.Description}' uses 'responds' but this unit has no output.", responds.At);
                         return new SucceedsModel();
                     }
                     if (ContainsPath(responds.Value))
                     {
-                        Report("PH332", "Spec outcome value must contain literal values, not paths.", responds.At);
+                        Report("AV332", "Spec outcome value must contain literal values, not paths.", responds.At);
                         return new RespondsModel(new BoundRecord([], outputType));
                     }
                     var responseRecord = ResolveRecord(responds.Value, outputType, scope);
@@ -564,17 +564,17 @@ public static class Resolver
                 case FailsWithOutcome fail:
                     if (phrase is not null && !phrase.Failures.Contains(fail.Code, StringComparer.Ordinal))
                     {
-                        Report(ExtensionDiagnostics.CoreArm("PH334"), $"Avow '{phrase.Template}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", phrase.Failures)}.", fail.At);
+                        Report(ExtensionDiagnostics.CoreArm("AV334"), $"Avow '{phrase.Template}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", phrase.Failures)}.", fail.At);
                     }
                     if (phrase is null && endpointFailures is not null && !endpointFailures.Contains(fail.Code, StringComparer.Ordinal))
                     {
-                        Report(ExtensionDiagnostics.WebArm("PH334"), $"Endpoint '{endpointName}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", endpointFailures)}.", fail.At);
+                        Report(ExtensionDiagnostics.WebArm("AV334"), $"Endpoint '{endpointName}' cannot fail with '{fail.Code}'. Valid options: {string.Join(", ", endpointFailures)}.", fail.At);
                     }
                     return new FailsModel(fail.Code);
                 case SucceedsOutcome:
                     if (phrase is not null && phrase.Returns is not null)
                     {
-                        Report(ExtensionDiagnostics.CoreArm("PH333"), $"Spec '{spec.Description}' expects success for an avow that returns a value.", outcome.At);
+                        Report(ExtensionDiagnostics.CoreArm("AV333"), $"Spec '{spec.Description}' expects success for an avow that returns a value.", outcome.At);
                     }
                     return new SucceedsModel();
                 default:
@@ -606,12 +606,12 @@ public static class Resolver
             var matches = phraseDeclarations.Where(p => Matches(p.Declaration.Template, call, scope)).ToList();
             if (matches.Count == 0)
             {
-                Report("PH001", NoMatchMessage(call, scope), call.At);
+                Report("AV001", NoMatchMessage(call, scope), call.At);
                 return null;
             }
             if (matches.Count > 1)
             {
-                Report("PH002", $"Step is ambiguous between: {string.Join(", ", matches.Select(m => $"'{m.Model.Template}'"))}.", call.At);
+                Report("AV002", $"Step is ambiguous between: {string.Join(", ", matches.Select(m => $"'{m.Model.Template}'"))}.", call.At);
                 return null;
             }
 
@@ -655,7 +655,7 @@ public static class Resolver
             if (expression is NumberLit integer && target == PType.Int &&
                 !integer.Text.Contains('.', StringComparison.Ordinal) &&
                 !int.TryParse(integer.Text, System.Globalization.NumberStyles.AllowLeadingSign, System.Globalization.CultureInfo.InvariantCulture, out _))
-                Report("PH312", $"Integer literal '{integer.Text}' must fit in a 32-bit Int.", integer.At);
+                Report("AV312", $"Integer literal '{integer.Text}' must fit in a 32-bit Int.", integer.At);
             var value = expression switch
             {
                 PathExpr path => ResolvePath(path, scope),
@@ -668,7 +668,7 @@ public static class Resolver
                 _ => throw new InvalidOperationException($"Unknown expression {expression.GetType().Name}.")
             };
             if (!Compatible(value.Type, expected))
-                Report("PH312", $"Expected {expected}, but got {value.Type}.", expression.At);
+                Report("AV312", $"Expected {expected}, but got {value.Type}.", expression.At);
             return value;
         }
 
@@ -676,7 +676,7 @@ public static class Resolver
         {
             if (path.Segments.Count == 0 || !scope.TryGetValue(path.Segments[0], out var type))
             {
-                Report("PH310", $"Unknown variable '{path.Segments.FirstOrDefault()}'. In scope: {string.Join(", ", scope.Keys)}.", path.At);
+                Report("AV310", $"Unknown variable '{path.Segments.FirstOrDefault()}'. In scope: {string.Join(", ", scope.Keys)}.", path.At);
                 return new BoundVariable(path.Segments.FirstOrDefault() ?? "?", PType.Error);
             }
             BoundExpr value = new BoundVariable(path.Segments[0], type);
@@ -686,13 +686,13 @@ public static class Resolver
                     return new BoundField(value, segment, PType.Error);
                 if (!recordFields.TryGetValue(value.Type.Name, out var fields))
                 {
-                    Report("PH311", $"Type {value.Type} has no fields; cannot read '{segment}'.", path.At);
+                    Report("AV311", $"Type {value.Type} has no fields; cannot read '{segment}'.", path.At);
                     return new BoundField(value, segment, PType.Error);
                 }
                 var field = fields.FirstOrDefault(f => f.Name == segment);
                 if (field is null)
                 {
-                    Report("PH311", $"Unknown field '{segment}' on {value.Type}. Available fields: {string.Join(", ", fields.Select(f => f.Name))}.", path.At);
+                    Report("AV311", $"Unknown field '{segment}' on {value.Type}. Available fields: {string.Join(", ", fields.Select(f => f.Name))}.", path.At);
                     return new BoundField(value, segment, PType.Error);
                 }
                 value = new BoundField(value, field.Name, field.Type);
@@ -706,7 +706,7 @@ public static class Resolver
                 return new BoundRecord([], new PType("Record", []));
             var actualNames = record.Fields.Select(f => f.Name).ToHashSet(StringComparer.Ordinal);
             if (!actualNames.SetEquals(expectedFields.Select(f => f.Name)))
-                Report("PH314", $"Record fields do not match {expected}.", record.At);
+                Report("AV314", $"Record fields do not match {expected}.", record.At);
             var fields = expectedFields.Select(field =>
             {
                 var actual = record.Fields.FirstOrDefault(f => f.Name == field.Name);
@@ -777,7 +777,7 @@ public static class Resolver
             {
                 if (!names.Add(field.Name))
                 {
-                    Report("PH303", $"Field '{field.Name}' is repeated in {owner}.", field.At);
+                    Report("AV303", $"Field '{field.Name}' is repeated in {owner}.", field.At);
                     continue;
                 }
                 fields.Add(new FieldModel(field.Name, ResolveType(field.Type)) { Line = field.At.Line, Column = field.At.Column });
@@ -789,13 +789,13 @@ public static class Resolver
         {
             if (!typeNames.Contains(reference.Name))
             {
-                Report("PH300", $"Unknown type '{reference.Name}'.", reference.At);
+                Report("AV300", $"Unknown type '{reference.Name}'.", reference.At);
                 return PType.Error;
             }
             var expectedArity = PType.Core.TryGetValue(reference.Name, out var arity) ? arity : 0;
             if (reference.Arguments.Count != expectedArity)
             {
-                Report("PH301", $"Type '{reference.Name}' expects {expectedArity} type argument(s), but got {reference.Arguments.Count}.", reference.At);
+                Report("AV301", $"Type '{reference.Name}' expects {expectedArity} type argument(s), but got {reference.Arguments.Count}.", reference.At);
                 return PType.Error;
             }
             return new PType(reference.Name, reference.Arguments.Select(ResolveType).ToList());
@@ -833,7 +833,7 @@ public static class Resolver
                 var line = native.BodyAt.Line + before.Count('\n');
                 var column = native.BodyAt.Column + match.Index - (before.LastIndexOf('\n') + 1);
                 var declared = declaration.Failures.Count == 0 ? "none" : string.Join(", ", declaration.Failures);
-                diagnostics.Add(new Diagnostic("PH337",
+                diagnostics.Add(new Diagnostic("AV337",
                     $"Avow '{SourceFormatter.Format(declaration.Template)}' raises Fail(\"{code}\") in its native csharp block on line {line}, but {code} is not in its 'fails with' (declared: {declared}). Add {code} to 'fails with' or remove the call.",
                     line, column));
             }

@@ -62,7 +62,7 @@ public sealed class CSharpProvider : ITargetAdapter
     private static void RequireSupportedAvow(ModuleModel module, AvowModel phrase)
     {
         if (phrase.Effects.Count > 1)
-            throw Unsupported("PH340", $"more than one effect on '{phrase.Template}'", phrase.Line, phrase.Column);
+            throw Unsupported("AV340", $"more than one effect on '{phrase.Template}'", phrase.Line, phrase.Column);
 
         if (phrase.Steps is not null)
         {
@@ -71,14 +71,14 @@ public sealed class CSharpProvider : ITargetAdapter
         }
 
         if (!phrase.Natives.ContainsKey("csharp"))
-            throw new CompilationFailedException([new Diagnostic("PH020", $"Avow '{phrase.Template}' has no implementation for target csharp; add a `native csharp` block.", phrase.Line, phrase.Column)]);
+            throw new CompilationFailedException([new Diagnostic("AV020", $"Avow '{phrase.Template}' has no implementation for target csharp; add a `native csharp` block.", phrase.Line, phrase.Column)]);
         RequireSupportedSignature(module, phrase);
         RequireSupportedSpecs(module, phrase);
     }
 
     private static void RequireSupportedComposite(ModuleModel module, AvowModel phrase)
     {
-        // A composite cannot declare a return type (PH325): steps bind results, they do not return one.
+        // A composite cannot declare a return type (AV325): steps bind results, they do not return one.
         if (phrase.Returns is not null)
             throw new NotImplementedException($"The C# emitter does not support a return type on composite '{phrase.Template}' yet.");
 
@@ -88,12 +88,12 @@ public sealed class CSharpProvider : ITargetAdapter
             if (step is BoundEnsureStep or BoundLetUpdateStep)
                 continue;
             if (step is BoundCallStep or BoundFailStep)
-                throw Unsupported("PH340", step is BoundFailStep ? "'fail with' in a composite" : $"a plain-call step ('{step.Source}')", step.Line, step.Column);
+                throw Unsupported("AV340", step is BoundFailStep ? "'fail with' in a composite" : $"a plain-call step ('{step.Source}')", step.Line, step.Column);
             if (step is not BoundLetStep let)
                 throw new NotImplementedException($"The C# emitter does not support step '{step.Source}' yet.");
             RequireSupportedArguments(let);
             if (module.Avow(let.Call.AvowKey).Effects.Count > 0)
-                throw Unsupported("PH340", "an effectful avow in a composite 'let'", let.Line, let.Column);
+                throw Unsupported("AV340", "an effectful avow in a composite 'let'", let.Line, let.Column);
         }
 
         RequireSupportedSpecs(module, phrase);
@@ -116,7 +116,7 @@ public sealed class CSharpProvider : ITargetAdapter
         foreach (var argument in let.Call.Arguments)
         {
             if (argument.Value is not BoundVariable)
-                throw Unsupported("PH340", "a call argument that is not a variable", let.Line, let.Column);
+                throw Unsupported("AV340", "a call argument that is not a variable", let.Line, let.Column);
         }
     }
 
@@ -126,7 +126,7 @@ public sealed class CSharpProvider : ITargetAdapter
         var hits = new List<(Diagnostic Diagnostic, int Order)>();
 
         void Hit(string reserved, string role, string kind, string subject, int line, int column) =>
-            hits.Add((new Diagnostic("PH341",
+            hits.Add((new Diagnostic("AV341",
                 $"The C# target reserves the name '{reserved}' for {role}, so {kind} {subject} cannot use it; rename the {kind} declared on line {line}.",
                 line, column), hits.Count));
 
@@ -179,7 +179,7 @@ public sealed class CSharpProvider : ITargetAdapter
                     var unsupported = PersistenceEntity(module, effect)?.Fields
                         .FirstOrDefault(field => field.Name != "id" && field.Type != PType.Text && field.Type != PType.Id && field.Type != PType.Bool);
                     if (unsupported is not null)
-                        throw Unsupported("PH340", $"seeding a stored field of type {unsupported.Type}", spec.SourceSpan.FirstLine, spec.Column);
+                        throw Unsupported("AV340", $"seeding a stored field of type {unsupported.Type}", spec.SourceSpan.FirstLine, spec.Column);
                 }
             }
         }
@@ -191,11 +191,11 @@ public sealed class CSharpProvider : ITargetAdapter
         {
             if (spec.Outcome is not FailsModel && spec.Outcome is not SucceedsModel &&
                 (spec.Outcome is not ReturnsModel returns || !IsSupportedValue(module, returns.Value)))
-                throw Unsupported("PH340", $"the outcome '{(spec.Outcome is ReturnsModel r ? "returns " + ValueKind(r.Value) : "responds")}' in spec '{spec.Description}'", spec.SourceSpan.FirstLine, spec.Column);
+                throw Unsupported("AV340", $"the outcome '{(spec.Outcome is ReturnsModel r ? "returns " + ValueKind(r.Value) : "responds")}' in spec '{spec.Description}'", spec.SourceSpan.FirstLine, spec.Column);
             foreach (var given in spec.Givens)
             {
                 if (!IsSupportedValue(module, given.Value))
-                    throw Unsupported("PH340", $"the given value {ValueKind(given.Value)} for '{given.Hole.Name}' in spec '{spec.Description}'", spec.SourceSpan.FirstLine, spec.Column);
+                    throw Unsupported("AV340", $"the given value {ValueKind(given.Value)} for '{given.Hole.Name}' in spec '{spec.Description}'", spec.SourceSpan.FirstLine, spec.Column);
             }
         }
     }

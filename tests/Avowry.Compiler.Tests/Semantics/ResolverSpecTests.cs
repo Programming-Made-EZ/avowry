@@ -39,14 +39,14 @@ public class ResolverSpecTests
     }
 
     [Fact]
-    public void A_phrase_spec_that_says_handled_is_PH330()
+    public void A_phrase_spec_that_says_handled_is_AV330()
     {
         // Given a phrase spec using the endpoint trigger
         var source = Adder(Spec("wrong trigger", "given a = 1", "and b = 2", "when handled", "then returns 3"));
 
         // When it is resolved
         // Then it is reported
-        Assert.Equal(["PH330"], Codes(source));
+        Assert.Equal(["AV330"], Codes(source));
     }
 
     [Theory]
@@ -62,80 +62,80 @@ public class ResolverSpecTests
         var source = Adder(Spec("bad givens", [.. lines]));
 
         // When it is resolved
-        // Then every problem is PH331
+        // Then every problem is AV331
         var codes = Codes(source);
         Assert.NotEmpty(codes);
-        Assert.All(codes, c => Assert.Equal("PH331", c));
+        Assert.All(codes, c => Assert.Equal("AV331", c));
     }
 
     [Fact]
-    public void A_missing_hole_binding_is_PH331_naming_the_hole()
+    public void A_missing_hole_binding_is_AV331_naming_the_hole()
     {
         // Given a spec that never binds b
         var diagnostic = Only(Adder(Spec("half", "given a = 1", "when called", "then returns 1")));
 
         // When it is resolved
         // Then the hole is named
-        Assert.Equal("PH331", diagnostic.Code);
+        Assert.Equal("AV331", diagnostic.Code);
         Assert.Contains("b", diagnostic.Message);
     }
 
     [Fact]
-    public void A_spec_value_that_is_a_path_is_PH332()
+    public void A_spec_value_that_is_a_path_is_AV332()
     {
         // Given a spec that refers to a variable
         var source = Adder(Spec("path", "given a = input.count", "and b = 2", "when called", "then returns 3"));
 
         // When it is resolved
         // Then it is reported, because specs run with literal data only
-        Assert.Equal(["PH332"], Codes(source));
+        Assert.Equal(["AV332"], Codes(source));
     }
 
     [Fact]
-    public void A_returned_value_of_the_wrong_type_is_PH312()
+    public void A_returned_value_of_the_wrong_type_is_AV312()
     {
         // Given a spec expecting text from an Int phrase
         var source = Adder(Spec("text", "given a = 1", "and b = 2", "when called", "then returns \"three\""));
 
         // When it is resolved
         // Then it is reported
-        Assert.Equal(["PH312"], Codes(source));
+        Assert.Equal(["AV312"], Codes(source));
     }
 
     [Theory]
     [InlineData("then returns 1")]                  // check returns nothing
     [InlineData("then responds { n: 1 }")]          // responds is for endpoints
-    public void An_outcome_the_phrase_cannot_have_is_PH333(string then)
+    public void An_outcome_the_phrase_cannot_have_is_AV333(string then)
     {
         // Given a spec on a phrase with no return type
         var source = Checker(Spec("bad outcome", "given n = 1", "when called", then));
 
         // When it is resolved
         // Then it is reported
-        Assert.Equal(["PH333"], Codes(source));
+        Assert.Equal(["AV333"], Codes(source));
     }
 
     [Fact]
-    public void Expecting_a_failure_the_phrase_cannot_produce_is_PH334()
+    public void Expecting_a_failure_the_phrase_cannot_produce_is_AV334()
     {
         // Given a spec expecting a code the phrase never declares
         var diagnostic = Only(Checker(Spec("impossible", "given n = 1", "when called", "then fails with Underflow")));
 
         // When it is resolved
         // Then the possible codes are listed
-        Assert.Equal("PH334", diagnostic.Code);
+        Assert.Equal("AV334", diagnostic.Code);
         Assert.Contains("Overflow", diagnostic.Message);
     }
 
     [Fact]
-    public void More_than_one_outcome_is_PH335()
+    public void More_than_one_outcome_is_AV335()
     {
         // Given a spec that expects a value and a failure
         var source = Adder(Spec("both", "given a = 1", "and b = 2", "when called", "then returns 3", "and fails with Overflow"));
 
         // When it is resolved
         // Then it is reported
-        Assert.Equal(["PH335"], Codes(source));
+        Assert.Equal(["AV335"], Codes(source));
     }
 
     [Fact]
@@ -171,11 +171,11 @@ public class ResolverSpecTests
     }
 
     [Theory]
-    [InlineData("given input { customerId: \"c\", items: [] }", "when called", "then responds { totalQuantity: 0 }", "PH330")]
-    [InlineData("given items = []", "when handled", "then responds { totalQuantity: 0 }", "PH331")]
-    [InlineData("given input { items: [] }", "when handled", "then responds { totalQuantity: 0 }", "PH314")]
-    [InlineData("given input { customerId: \"c\", items: [] }", "when handled", "then returns 0", "PH333")]
-    [InlineData("given input { customerId: \"c\", items: [] }", "when handled", "then fails with EmptyOrder", "PH334")]
+    [InlineData("given input { customerId: \"c\", items: [] }", "when called", "then responds { totalQuantity: 0 }", "AV330")]
+    [InlineData("given items = []", "when handled", "then responds { totalQuantity: 0 }", "AV331")]
+    [InlineData("given input { items: [] }", "when handled", "then responds { totalQuantity: 0 }", "AV314")]
+    [InlineData("given input { customerId: \"c\", items: [] }", "when handled", "then returns 0", "AV333")]
+    [InlineData("given input { customerId: \"c\", items: [] }", "when handled", "then fails with EmptyOrder", "AV334")]
     public void Invalid_endpoint_specs_are_reported(string given, string when, string then, string code)
     {
         // Given an endpoint spec with one mistake
@@ -187,13 +187,13 @@ public class ResolverSpecTests
     }
 
     [Fact]
-    public void An_endpoint_spec_with_no_input_is_PH331()
+    public void An_endpoint_spec_with_no_input_is_AV331()
     {
         // Given an endpoint spec with no given at all
         var source = ProbeWithSpec(Spec("no input", "when handled", "then responds { totalQuantity: 0 }"));
 
         // When it is resolved
         // Then it is reported
-        Assert.Equal(["PH331"], Codes(source));
+        Assert.Equal(["AV331"], Codes(source));
     }
 }

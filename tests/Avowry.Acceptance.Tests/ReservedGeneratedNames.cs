@@ -10,7 +10,7 @@ namespace Avowry.Acceptance.Tests;
 public class ReservedGeneratedNames
 {
     private static readonly Regex DiagnosticLine = new(
-        """(?m)^(PH\d{3}) \((\d+):(\d+)\) (.*)$""",
+        """(?m)^(AV\d{3}) \((\d+):(\d+)\) (.*)$""",
         RegexOptions.CultureInvariant);
 
     [Fact]
@@ -29,7 +29,7 @@ public class ReservedGeneratedNames
                 failures.Add($"{row.Id}: {reason}");
         }
 
-        // Then every row is exit 1 with PH341 at its declaration line and nothing written
+        // Then every row is exit 1 with AV341 at its declaration line and nothing written
         Assert.True(failures.Count == 0, string.Join("\n", failures));
     }
 
@@ -51,9 +51,9 @@ public class ReservedGeneratedNames
             reasons.Add("stack at");
 
         var match = DiagnosticLine.Match(combined);
-        if (!match.Success || match.Groups[1].Value != "PH341")
+        if (!match.Success || match.Groups[1].Value != "AV341")
         {
-            reasons.Add("no PH341 (line:col)");
+            reasons.Add("no AV341 (line:col)");
         }
         else
         {

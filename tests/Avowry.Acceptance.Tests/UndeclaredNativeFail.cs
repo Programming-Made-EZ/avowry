@@ -7,11 +7,11 @@ namespace Avowry.Acceptance.Tests;
 public class UndeclaredNativeFail
 {
     private static readonly Regex DiagnosticLine = new(
-        """(?m)^(PH\d{3}) \((\d+):(\d+)\) """,
+        """(?m)^(AV\d{3}) \((\d+):(\d+)\) """,
         RegexOptions.CultureInvariant);
 
     private static readonly Regex PhShape = new(
-        """(?m)^PH\d{3} \(""",
+        """(?m)^AV\d{3} \(""",
         RegexOptions.CultureInvariant);
 
     [Fact]
@@ -30,7 +30,7 @@ public class UndeclaredNativeFail
                 failures.Add($"{row.Id}: {reason}");
         }
 
-        // Then every failing id is PH337 at the Fail line and every keep id still builds
+        // Then every failing id is AV337 at the Fail line and every keep id still builds
         Assert.True(failures.Count == 0, string.Join("\n", failures));
     }
 
@@ -52,7 +52,7 @@ public class UndeclaredNativeFail
             if (result.ExitCode != 0)
                 reasons.Add($"exit {result.ExitCode}");
             if (PhShape.IsMatch(combined))
-                reasons.Add("PHnnn (line:col)");
+                reasons.Add("AVnnn (line:col)");
             return reasons.Count == 0 ? null : string.Join("; ", reasons);
         }
 
@@ -64,7 +64,7 @@ public class UndeclaredNativeFail
         var match = DiagnosticLine.Match(combined);
         if (!match.Success)
         {
-            reasons.Add("no PHnnn (line:col)");
+            reasons.Add("no AVnnn (line:col)");
             return string.Join("; ", reasons);
         }
 
@@ -75,8 +75,8 @@ public class UndeclaredNativeFail
         var message = cut < 0 ? rest : rest[..cut];
         var expectedLine = LineOf(row.Source, row.Marker);
 
-        if (code != "PH337")
-            reasons.Add($"code {code} expected PH337");
+        if (code != "AV337")
+            reasons.Add($"code {code} expected AV337");
         if (line != expectedLine)
             reasons.Add($"line {line} expected {expectedLine}");
         if (!message.Contains(row.UndeclaredCode, StringComparison.Ordinal))

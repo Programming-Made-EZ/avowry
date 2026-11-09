@@ -16,7 +16,7 @@ Principle for every rule below: a reader, human or a fresh-context seat, should 
 ## Naming
 
 - Functions and methods are verbs for one action; types are nouns; booleans read as predicates (`IsDeclared`, `HasFailure`). Avoid `Manager`, `Helper`, `Util` and `Data` as names: they hide the responsibility.
-- No abbreviations except universally known ones (`id`, `url`). Diagnostics keep the existing `PHnnn` code style, one code per distinct problem.
+- No abbreviations except universally known ones (`id`, `url`). Diagnostics keep the existing `AVnnn` code style, one code per distinct problem.
 - A name states what a thing is or does, not how it is used today.
 
 ## Errors and determinism

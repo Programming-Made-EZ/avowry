@@ -101,9 +101,9 @@ public class ExtensionBoundaryTests
         Assert.Equal(ExtensionPart.Core, ExtensionKeywords.Construct("record-update"));
 
         // And the web diagnostics stay web, including only the endpoint arm of the shared codes
-        foreach (var code in new[] { "PH209", "PH304", "PH322", "PH323" })
+        foreach (var code in new[] { "AV209", "AV304", "AV322", "AV323" })
             Assert.Equal(ExtensionPart.Web, ExtensionKeywords.DiagnosticPart(code));
-        foreach (var code in new[] { "PH330", "PH331", "PH333", "PH334" })
+        foreach (var code in new[] { "AV330", "AV331", "AV333", "AV334" })
         {
             Assert.Equal(ExtensionPart.Core, ExtensionKeywords.DiagnosticPart(code, "phrase"));
             Assert.Equal(ExtensionPart.Web, ExtensionKeywords.DiagnosticPart(code, "endpoint"));
@@ -151,7 +151,7 @@ public class ExtensionBoundaryTests
         var explicitResolved = Resolver.Resolve(explicitWeb);
 
         // Then the explicit line is accepted and both files load the same web set
-        Assert.DoesNotContain(explicitParse.Diagnostics, diagnostic => diagnostic.Code == "PH201");
+        Assert.DoesNotContain(explicitParse.Diagnostics, diagnostic => diagnostic.Code == "AV201");
         Assert.Empty(impliedParse.Diagnostics);
         Assert.Empty(explicitParse.Diagnostics);
         Assert.Equal(new[] { "core", "web" }, ExtensionLoad.Active(implied));
@@ -167,7 +167,7 @@ public class ExtensionBoundaryTests
 
         // And uses web on its own is enough to load web, with no unknown-declaration diagnostic
         var onlyUses = Parser.Parse(ExplicitWebOnly);
-        Assert.DoesNotContain(onlyUses.Diagnostics, diagnostic => diagnostic.Code == "PH201");
+        Assert.DoesNotContain(onlyUses.Diagnostics, diagnostic => diagnostic.Code == "AV201");
         Assert.Empty(onlyUses.Diagnostics);
         Assert.Equal(new[] { "core", "web" }, ExtensionLoad.Active(ExplicitWebOnly));
     }

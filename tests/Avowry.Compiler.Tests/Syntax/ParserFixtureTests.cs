@@ -84,7 +84,7 @@ public class ParserFixtureTests
         var result = Parser.Parse(source);
 
         // Then the error is reported once
-        Assert.Equal(["PH200"], result.Diagnostics.Select(d => d.Code));
+        Assert.Equal(["AV200"], result.Diagnostics.Select(d => d.Code));
 
         // And the later declarations are recovered
         Assert.Single(result.File.Types);

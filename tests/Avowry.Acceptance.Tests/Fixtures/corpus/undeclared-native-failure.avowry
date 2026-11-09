@@ -1,4 +1,4 @@
-# undeclared-native-failure: native-only Fail with an undeclared code is a diagnostic (PH337), because a phrase may only fail with declared codes (card 202)
+# undeclared-native-failure: native-only Fail with an undeclared code is a diagnostic (AV337), because a phrase may only fail with declared codes (card 202)
 module UndeclaredNativeFailure
 avow to "reject natively"
   native csharp

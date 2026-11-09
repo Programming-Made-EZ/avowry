@@ -2,11 +2,11 @@ using Avowry.Acceptance.Tests.Support;
 
 namespace Avowry.Acceptance.Tests;
 
-public class CompositeReturnTypeStaysPH325
+public class CompositeReturnTypeStaysAV325
 {
     [Fact]
     [Trait("Slice", "189")]
-    public async Task A_composite_with_a_return_type_already_reports_PH325()
+    public async Task A_composite_with_a_return_type_already_reports_AV325()
     {
         // Given a composite that claims to return a value
         using var workspace = TempWorkspace.Create();
@@ -28,9 +28,9 @@ public class CompositeReturnTypeStaysPH325
         // When avowry build compiles it
         var result = await PhraseCli.RunAsync("build", source, "-o", output);
 
-        // Then it exits 1 with PH325 and no unhandled exception
+        // Then it exits 1 with AV325 and no unhandled exception
         Assert.True(result.ExitCode == 1, result.Text);
-        Assert.Contains("PH325 (", result.Text, StringComparison.Ordinal);
+        Assert.Contains("AV325 (", result.Text, StringComparison.Ordinal);
         Assert.DoesNotContain("Unhandled exception", result.Text, StringComparison.Ordinal);
     }
 }

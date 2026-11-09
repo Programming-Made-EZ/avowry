@@ -56,7 +56,7 @@ class StoryPersonaTests(unittest.TestCase):
 
 def contract(consumer="the C# emitter", label="Actor", observes="an API project whose handler returns the declared status", enables="039", shape="Contract"):
     return (f"# C\n\n- **Status:** Ready\n- **Shape:** {shape}\n- **{label}:** {consumer}\n- **Given:** a resolved model\n"
-            f"- **Observes:** {observes}\n- **Fails with:** PH333\n- **Invariants:** deterministic output\n- **Enables:** {enables}\n")
+            f"- **Observes:** {observes}\n- **Fails with:** AV333\n- **Invariants:** deterministic output\n- **Enables:** {enables}\n")
 
 
 class ContractCardTests(unittest.TestCase):

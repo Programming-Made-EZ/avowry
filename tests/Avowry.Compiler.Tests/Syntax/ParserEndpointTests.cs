@@ -43,14 +43,14 @@ public class ParserEndpointTests
     }
 
     [Fact]
-    public void An_unknown_http_verb_is_PH209()
+    public void An_unknown_http_verb_is_AV209()
     {
         // Given an endpoint with a made-up verb
         var source = InModule("endpoint CreateOrder : CREATE /orders\n" + MinimalBody);
 
         // When it is parsed
         // Then the verb is reported
-        Assert.Equal(["PH209"], Codes(source));
+        Assert.Equal(["AV209"], Codes(source));
     }
 
     [Fact]
@@ -138,18 +138,18 @@ public class ParserEndpointTests
     [InlineData("respond with total")]           // respond needs a record
     [InlineData("fail with oops")]               // codes are capitalized
     [InlineData("ensure Customer exists")]       // type names are not call parts in v0.1
-    public void Malformed_steps_are_PH200(string step)
+    public void Malformed_steps_are_AV200(string step)
     {
         // Given an endpoint with one malformed step
         var source = InModule($"endpoint Stub : GET /stub\n  input\n    n: Int\n  steps\n    {step}\n");
 
         // When it is parsed
         // Then it is reported as a syntax error
-        Assert.Equal(["PH200"], Codes(source));
+        Assert.Equal(["AV200"], Codes(source));
     }
 
     [Fact]
-    public void Missing_input_or_steps_is_PH203()
+    public void Missing_input_or_steps_is_AV203()
     {
         // Given an endpoint with neither section
         var source = InModule("""
@@ -160,11 +160,11 @@ public class ParserEndpointTests
 
         // When it is parsed
         // Then each missing section is reported
-        Assert.Equal(["PH203", "PH203"], Codes(source));
+        Assert.Equal(["AV203", "AV203"], Codes(source));
     }
 
     [Fact]
-    public void A_repeated_section_is_PH204()
+    public void A_repeated_section_is_AV204()
     {
         // Given an endpoint with two input sections
         var source = InModule("""
@@ -179,6 +179,6 @@ public class ParserEndpointTests
 
         // When it is parsed
         // Then the second section is reported
-        Assert.Equal(["PH204"], Codes(source));
+        Assert.Equal(["AV204"], Codes(source));
     }
 }

@@ -21,7 +21,7 @@ public class ParserDeclarationTests
     }
 
     [Fact]
-    public void A_missing_module_declaration_is_PH202()
+    public void A_missing_module_declaration_is_AV202()
     {
         // Given a type with no module above it
         const string source = "type LineItem\n  sku: Text\n";
@@ -31,14 +31,14 @@ public class ParserDeclarationTests
 
         // Then the missing module is reported at the top of the file
         var diagnostic = Assert.Single(result.Diagnostics);
-        Assert.Equal(("PH202", 1, 1), (diagnostic.Code, diagnostic.Line, diagnostic.Column));
+        Assert.Equal(("AV202", 1, 1), (diagnostic.Code, diagnostic.Line, diagnostic.Column));
 
         // And the type is still parsed
         Assert.Single(result.File.Types);
     }
 
     [Fact]
-    public void A_second_module_declaration_is_PH202()
+    public void A_second_module_declaration_is_AV202()
     {
         // Given two module lines
         const string source = "module Orders\nmodule Billing\n";
@@ -47,7 +47,7 @@ public class ParserDeclarationTests
         var codes = Codes(source);
 
         // Then the second is reported
-        Assert.Equal(["PH202"], codes);
+        Assert.Equal(["AV202"], codes);
     }
 
     [Fact]
@@ -85,7 +85,7 @@ public class ParserDeclarationTests
     }
 
     [Fact]
-    public void A_type_with_no_fields_is_PH203()
+    public void A_type_with_no_fields_is_AV203()
     {
         // Given a type with nothing under it
         var source = InModule("type Empty\n");
@@ -94,11 +94,11 @@ public class ParserDeclarationTests
         var codes = Codes(source);
 
         // Then the missing fields are reported
-        Assert.Equal(["PH203"], codes);
+        Assert.Equal(["AV203"], codes);
     }
 
     [Fact]
-    public void An_unknown_top_level_line_is_PH201()
+    public void An_unknown_top_level_line_is_AV201()
     {
         // Given a line that starts with no declaration keyword
         var source = InModule("function foo\n");
@@ -108,11 +108,11 @@ public class ParserDeclarationTests
 
         // Then it is reported at its first token
         var diagnostic = Assert.Single(result.Diagnostics);
-        Assert.Equal(("PH201", 2, 1), (diagnostic.Code, diagnostic.Line, diagnostic.Column));
+        Assert.Equal(("AV201", 2, 1), (diagnostic.Code, diagnostic.Line, diagnostic.Column));
     }
 
     [Fact]
-    public void A_malformed_field_is_PH200_and_the_other_fields_survive()
+    public void A_malformed_field_is_AV200_and_the_other_fields_survive()
     {
         // Given a type where one field is missing its colon
         var source = InModule("""
@@ -125,14 +125,14 @@ public class ParserDeclarationTests
         var result = Parser.Parse(source);
 
         // Then the bad field is reported
-        Assert.Equal(["PH200"], result.Diagnostics.Select(d => d.Code));
+        Assert.Equal(["AV200"], result.Diagnostics.Select(d => d.Code));
 
         // And the good field is kept
         Assert.Equal("(type LineItem (quantity: Int))", Print(Assert.Single(result.File.Types)));
     }
 
     [Fact]
-    public void An_unexpected_indented_block_is_PH211()
+    public void An_unexpected_indented_block_is_AV211()
     {
         // Given a module declaration with lines indented under it
         const string source = "module Orders\n  stray\n";
@@ -141,7 +141,7 @@ public class ParserDeclarationTests
         var codes = Codes(source);
 
         // Then the block is reported
-        Assert.Equal(["PH211"], codes);
+        Assert.Equal(["AV211"], codes);
     }
 
     [Fact]
@@ -153,7 +153,7 @@ public class ParserDeclarationTests
         // When it is parsed
         var codes = Codes(source);
 
-        // Then the lexer's PH100 comes through
-        Assert.Contains("PH100", codes);
+        // Then the lexer's AV100 comes through
+        Assert.Contains("AV100", codes);
     }
 }
