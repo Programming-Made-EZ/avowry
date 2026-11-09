@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:229c4fb5a5a47654ab4d89f2b723fe888f8590486513de4a4610ced91c4785a7 -->
+<!-- board-table-sha256:5dad895e6bd4e8b40dcd94a3f4764f42dd9ce7dece3a50f10cf14ca832637631 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -129,7 +129,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 107 | 202 A native block that fails with an undeclared code is a diagnostic | Done | none |
 | 108 | 203 Names reserved by generated code are rejected or escaped | Done | none |
 | 109 | 361 Diagnostic codes use the AV prefix before the v0.1 preview | Done | none. Ranked ahead of the v0.1 publish card (188) and immediately before card 162, so that the 162 re-freeze ratifies AV codes in docs/GRAMMAR.md (D127: 162 is the single final re-freeze; this card must not follow it). |
-| 110 | 366 The NOTICE and TRADEMARKS files name the holder and the year, not placeholders | Ready | none |
+| 110 | 366 The NOTICE and TRADEMARKS files name the holder and the year, not placeholders | Done | none |
 | 111 | 371 The pre-publication page shows the owner's answers and the trademark search brief | Ready | none |
 | 112 | 370 Tracked files carry no home path of a local account | Ready | none |
 | 113 | 368 New bench rows no longer publish a reply prefix | Ready | none |
