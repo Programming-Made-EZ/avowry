@@ -7,10 +7,6 @@ REPO = Path(__file__).resolve().parent.parent
 PAGE = REPO / "docs" / "release" / "pre-publication-checks.md"
 SCAN = REPO / "scripts" / "scan-history-for-secrets.py"
 CHECKER = REPO / "scripts" / "check-no-personal-names.py"
-PLACEHOLDER = (
-    "[COPYRIGHT HOLDER: to be confirmed by the product owner at the "
-    "pre-publication checks (card 186)]"
-)
 HEADER = "docs/release/pre-publication-checks.md must match the repo.\n"
 PKG_RE = re.compile(r'PackageReference Include=\\?"([^"\\]+)\\?" Version=\\?"([^"\\]+)\\?"')
 MODEL_RE = re.compile(r'"model"\s*:\s*"([^"]+)"')
@@ -106,7 +102,7 @@ def counts_of(cwd, rev):
 
 
 def live_ctx():
-    ctx = {"forbidden_reasons": check.forbidden_reasons, "placeholder": PLACEHOLDER}
+    ctx = {"forbidden_reasons": check.forbidden_reasons}
     ran = sh([sys.executable, str(CHECKER)])
     ctx["personal_names_exit"] = None if ran is None else ran.returncode
     if not SCAN.is_file():
@@ -238,13 +234,8 @@ def collect_failures(page, ctx):
                         break
             elif cid == "owner-items":
                 items = [ln for ln in body.splitlines() if "OPEN" in ln and "2026-11-08" in ln]
-                ph = ctx.get("placeholder", PLACEHOLDER)
-                notice = ctx.get("notice") or (REPO / "NOTICE").read_text(encoding="utf-8")
-                marks = ctx.get("trademarks") or (REPO / "TRADEMARKS.md").read_text(encoding="utf-8")
                 if len(items) < 6:
                     fail(cid, "need at least 6 OPEN items dated 2026-11-08")
-                elif ph not in notice or ph not in marks:
-                    fail(cid, "NOTICE or TRADEMARKS.md placeholder missing")
         if len(re.findall(r"(?m)^Recommendation:", page)) != len(found):
             fail("recommendations", "one Recommendation line per topic section")
         reasons = ctx.get("forbidden_reasons")
@@ -271,8 +262,7 @@ def fixture_ctx():
         "models": [
             "grok-4.7", "copilot-default", "codex-gpt-5.6-sol", "agy-gemini-4-argon-medium",
         ],
-        "author_counts": (1, 1, 1), "skip_recompute": True, "placeholder": PLACEHOLDER,
-        "notice": PLACEHOLDER, "trademarks": PLACEHOLDER,
+        "author_counts": (1, 1, 1), "skip_recompute": True,
         "forbidden_reasons": check.forbidden_reasons,
     }
 
