@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:49d32d7c6381a50cc9ce6597a1ba62ef6db90557ccbc49e5985ea885b38b6892 -->
+<!-- board-table-sha256:ea38414c5057d077e1afa3e3a0dc639b33813df3747584c9b3c67e3415c09206 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -127,7 +127,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 105 | 179 Rewrite the README and write the getting-started guide | Done | 178 |
 | 106 | 189 An unsupported construct is a diagnostic, not an unhandled exception | Done | none |
 | 107 | 202 A native block that fails with an undeclared code is a diagnostic | Done | none |
-| 108 | 203 Names reserved by generated code are rejected or escaped | Ready | none |
+| 108 | 203 Names reserved by generated code are rejected or escaped | Done | none |
 | 109 | 361 Diagnostic codes use the AV prefix before the v0.1 preview | Ready | none. Ranked ahead of the v0.1 publish card (188) and immediately before card 162, so that the 162 re-freeze ratifies AV codes in docs/GRAMMAR.md (D127: 162 is the single final re-freeze; this card must not follow it). |
 | 110 | 366 The NOTICE and TRADEMARKS files name the holder and the year, not placeholders | Ready | none |
 | 111 | 371 The pre-publication page shows the owner's answers and the trademark search brief | Ready | none |
