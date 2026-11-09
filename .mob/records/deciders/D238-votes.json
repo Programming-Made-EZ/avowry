@@ -1,0 +1,107 @@
+{
+ "decider": "D238",
+ "subject": "card 162 re-freeze of the documents the LLM-customer check reads (D72, D127)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d238architect-architect-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "R1 (un-pended by the record commit) enforces the seven bound content files in the gate",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe re-freeze is sound and small. It binds seven content files by full hash and checks them in two places: the R1 gate rule and the launcher guard at run time. Old and new hashes and a token report are given, as D72 and D127 require. The cheat sheet stays under its cap at 693 of 700 tokens.\n\nNotes:\n- The cheat sheet has only 7 tokens of headroom. Any later row will need its own Decider after green 2.\n- Program.cs and run-llm-check.py are guarded only by the launcher, not by R1. That is acceptable for informational files.\n- I could not recompute the hashes myself because my command was rejected. My vote takes the stated facts as given."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d238qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Grok's and Codex's check runs are made against exactly these bytes",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe preflight confirms red-first TDD discipline with tests on main (`tests/test_pattern_docs.py`, planted Bar6 rows, and closure rows). The recomputed sha256 hashes cleanly pin the updated grammar, cheat sheet, and benchmark fixtures. Un-pending R1 and gating via launcher exit 76 guarantees that any file drift or violations during the freeze window are caught immediately without admitting bad state into benchmark evaluations."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d238dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "adopt this re-freeze as the one re-freeze of D127",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nI couldn't check the hashes myself because the read-only hash command was rejected, so I'm going on the facts table as written. From the backend seat, the rules work. The test comes first and is already on main (red-first). R1 and the launcher guard enforce a clear list of nine files, and the window has a clear end: green 2. A card that needs a GRAMMAR row just waits, and that's fair. It's a pause, not a reason to work around the rule. One suggestion: the record should say exactly how the queue resumes once green 2 lands, for example card 166 going first. That stops blocked cards from piling up into one big slice. A second suggestion: th"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d238auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "adopt this re-freeze as the one re-freeze of D127.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No. The freeze relies entirely on external CI gates and scripts rather than git-level enforcement. If those tools fail or are bypassed, the team could modify the frozen files and still claim compliance, leaving a clear loophole. Verification from git alone is possible for the hashes, but the enforcement mechanism is external and fragile. Add a git branch-protection rule or signed-commit requirement for the listed files until green 2."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d238decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "adopt the re-freeze below as the one re-freeze of D127",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation rests entirely on verifiable evidence: exact SHA-256 hashes are pinned for all seven bound documents, token counts remain strictly within budget, and cold-reader verification is recorded. R1 un-pending and runtime exit-76 launcher guards provide hard automated boundaries, ensuring runs evaluate identical bytes. The freeze window cleanly isolates benchmark inputs through green 2 without early claims. The seat plan established under D237, D234, and D236 is fully preserved, providing all necessary independent seats and gates for sign-off once both benchmark runs complete."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d238coach-coach-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "adopt this re-freeze as the one re-freeze of D127",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nRight-sized: one Decider, one re-freeze, hashes and token report pinned, freeze ends at green 2. No new seats or ceremony added; the cold-reader check and both Grok/Codex runs cover the needed perspectives. Note: cheat sheet at 693/700 tokens leaves little headroom, but that is a watch item, not a blocker."
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [],
+  "qa": [],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "x238auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Bar6 hash binding and the launcher guard enforce it",
+    "cite_verbatim": false,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nI withdraw my No. The R1 hash test and launcher guard are verifiable from git alone, satisfying the D237 ruling and closing the external-script loophole. Reservations: future audits should verify the test script itself isn't tampered with, but this proposal meets the criteria."
+   }
+  ],
+  "decider": [],
+  "coach": []
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run",
+ "window_notes": "Primary window one seat at a time: audit lens Qwen (No: the freeze rests on CI gates, asked for branch protection or signed commits), QA agy, architect Cursor, coach Muse, developer Cursor, decider agy (Yes). Confirmation step (D232): the rule in force quoted (D237 ruling 3, hash binding and launcher guard) and only the objector asked; Qwen withdrew the No (Yes). Grok not seated (held for its card 162 check run)."
+}

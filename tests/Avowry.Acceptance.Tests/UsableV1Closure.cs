@@ -67,8 +67,7 @@ public class UsableV1Closure
     [Fact]
     [Trait("Slice", "162")]
     [Trait("Criterion", "162-3")]
-    [Trait("Status", "Pending")]
-    // Pending until the re-freeze record commit, which un-pends it so the gate enforces the freeze window.
+    // Un-pended by the D238 re-freeze record commit: the gate enforces the freeze window from here to green 2.
     // Record format (docs/decisions/language-and-grammar.md, one marker, then machine lines):
     //   <a id="refreeze-162"></a>
     //   - refreeze-162 <repo-relative path> <old sha256 or -> <new sha256>

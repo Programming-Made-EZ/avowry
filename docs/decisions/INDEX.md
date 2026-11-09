@@ -341,3 +341,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D235](process-and-staffing.md#d235) | Card 370 task-force declaration and card text (tracked files carry no home path of a local account) | process-and-staffing | adopted |
 | [D236](process-and-staffing.md#d236) | Card 370 retro pick: seat plans follow a live probe; a misbehaving driver is repaired, not benched | process-and-staffing | adopted |
 | [D237](process-and-staffing.md#d237) | Card 162 task-force declaration and card text (fold the pattern steps into the grammar and cheat sheet; re-freeze; rerun the LLM check with Codex and Grok) | process-and-staffing | adopted |
+| [D238](language-and-grammar.md#d238) | Card 162 re-freeze of the documents the LLM-customer check reads (D72, D127) | language-and-grammar | adopted |

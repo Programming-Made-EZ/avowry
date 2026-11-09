@@ -1534,5 +1534,11 @@
     "status": "adopted",
     "title": "Card 162 task-force declaration and card text (fold the pattern steps into the grammar and cheat sheet; re-freeze; rerun the LLM check with Codex and Grok)",
     "order": 228
+  },
+  "D238": {
+    "area": "language-and-grammar",
+    "status": "adopted",
+    "title": "Card 162 re-freeze of the documents the LLM-customer check reads (D72, D127)",
+    "order": 229
   }
 }
