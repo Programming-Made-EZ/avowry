@@ -333,3 +333,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D227](process-and-staffing.md#d227) | Card 203 task-force declaration and card text (names reserved by generated code are rejected) | process-and-staffing | adopted |
 | [D228](process-and-staffing.md#d228) | Card 203 retro pick: a preflight before every vote window (tune D174) | process-and-staffing | adopted |
 | [D229](process-and-staffing.md#d229) | Card 361 task-force declaration and card text (diagnostic codes use the AV prefix) | process-and-staffing | adopted |
+| [D230](process-and-staffing.md#d230) | Card 361 retro pick: no idle between steps | process-and-staffing | adopted |

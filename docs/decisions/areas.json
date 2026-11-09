@@ -1486,5 +1486,11 @@
     "status": "adopted",
     "title": "Card 361 task-force declaration and card text (diagnostic codes use the AV prefix)",
     "order": 220
+  },
+  "D230": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 361 retro pick: no idle between steps",
+    "order": 221
   }
 }

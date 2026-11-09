@@ -1,0 +1,155 @@
+{
+ "decider": "D230",
+ "subject": "card 361 retro pick: no idle between steps",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "m230architect-architect-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "every background wait has an armed monitor whose condition matches success, failure and expiry",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe design is minimal and bounded. It adds one Experimental entry and leaves every other value, principle and rule unchanged. The root cause is stated as \"armed on success only\" and \"step boundary treated as a stop\". Each rule in the entry answers one of those two causes.\n\nNotes, which do not change the vote:\n- Most clauses are checkable from the record: monitor conditions, the 60-second first-output read, and the trap-written end flag.\n- \"Idle minutes\" needs a committed definition. Otherwise the retro could count it differently each time without anyone noticing.\n- The counter-metric (a next step launched too early) covers the main false"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "m230qa-qa-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "every background wait has an armed monitor whose condition matches success, failure and expiry",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nFrom a QA view, each rule can be shown failing before it is fixed. Card 203's crashed launcher, whose monitor only watched for \"VOICES DONE\", is a recorded failing case. The amendment also says outright that a check that only watches for success \"is not a monitor\", so a reviewer can catch that violation instead of letting it pass. The list of step boundaries (gate review after a green push, sign-off after the review, and so on) means \"turn ended with the next step ready\" can be checked against the records. The counter-metric guards against launching too early.\n\nNote: the 60-second first-output read and the idle-minute counts can only be "
+   }
+  ],
+  "developer": [],
+  "audit lens": [
+   {
+    "tag": "m230auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "idle minutes per card and Dispatch nudges per card",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nRequire all monitor states, idle durations, and dispatch nudges to be committed as machine-readable artifacts per card so git history alone verifies compliance."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "m230decider-decider-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "an armed, failure-aware monitor on every wait",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nEvaluation rests on evidence: baseline idle and nudge counts, target 0, a counter-metric for premature launches, a defined 3-card trial, and per-retro reporting with causes. Ownership and sign-off triggers are explicit."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "m230coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Common root: a wait is armed on success only",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThrough the agile-coach lens, the proposal is the right size. It handles one concern with one Experimental entry, and it pushes the smaller findings (the Muse brief, mutation waivers, the scanner reading committed blobs, the declared-versus-ran check) into briefs and follow-up cards instead of adding them to the agreement. It draws on all seven voices plus the product owner's entry, so no perspective is missing. It has a metric, a counter-metric, a three-card trial and an owner.\n\nNote: the entry bundles five mechanics. If the trial shows ceremony overhead, trim the trap end-flag and the 60-second first-output read into a checklist and ke"
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "n230architect-architect-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "as two committed lines in the retro document",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment keeps my vote, and the regenerated patch matches the amended text. Two committed lines with a fixed format can be checked from git history alone, and they do not require committing the transient monitor states. That makes the entry easier to enforce at almost no cost. One note: a checker could falsely flag retros written before D230, so it should only check retros from the next three cards in the trial."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "n230qa-qa-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "as two committed lines in the retro document",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nMy vote stands. I checked the regenerated patch and it has the new clause. From a QA view, the amendment makes the rule easier to test, not harder. The two committed lines, `Idle minutes: N.` and `Dispatch nudges: M.`, have a fixed pattern. A check can fail first on a retro that is missing either line or its cause line. Note: the counts are still reported by the facilitator, not measured independently, so the check proves the lines exist, not that the numbers are right."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "n230dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a launcher's first output is read within 60 seconds",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nSpeaking as the backend developer: I can follow these rules every card without gaming them, and none of them weakens red, unit commits with doubles, green, flags or slice limits. The patch I read (`agreement-amendment.diff`) matches the proposal.\n\nNotes, which don't change my vote:\n- \"Within 60 seconds\" should be timed from the moment of launch, and the record should log that time.\n- \"Idle minutes\" is defined as minutes with nothing running and nothing landing. A slow test run counts as running, so it doesn't push us to cut tests short.\n- The counter-metric (starting a step too early and having to relaunch it) needs to stay visible in th"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "n230auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "so that git history alone shows them.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment explicitly commits idle durations and dispatch nudges as documented lines, satisfying the requirement that git history alone verifies compliance. The condition is fully met."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "n230decider-decider-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "every retro reports idle minutes per card",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nAmendment strengthens the evidence basis: committed per-card metrics keep the trial verdict checkable from git history alone, with no change to hypothesis, counter-metric, or trial length."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "n230coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "as two committed lines in the retro document",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment does not change my vote. Committing two lines per retro is lightweight and adds no extra ceremony, and it leaves monitor states out of the repository, which keeps the task force's work sized to the task. My only note is to keep each cause line to one sentence so the reporting stays proportionate."
+   }
+  ]
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run",
+ "window_notes": "Primary window one seat at a time under the D228 preflight: the architect seat fell back from Muse (no reply within 900 s) to Claude; the developer seat was refused for Claude by the rotation rule and was asked again, in the confirmation step, on Cursor as a full vote (D171). Confirmation step: the outlier (audit lens, Qwen) and the five other voters each answered one narrow question about the amended text."
+}

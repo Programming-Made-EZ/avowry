@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 361,
+ "title": "Diagnostic codes use the AV prefix before the v0.1 preview",
+ "process": "card-mode rules run by hand; the Ready draft by a Cursor product-manager seat (reply-only, Probation rung 1) after two Muse attempts returned nothing within 840 seconds; the declaration through Decider D229 (six Yes under the D228 preflight, seats one at a time; trigger (d)); an architect slice that verified the reach by command and corrected the draft's counts; a Claude QA characterisation and red in its own worktree (two Pending criterion tests, a scanner with planted-tree rows, a prefix-free number snapshot); a different Claude context green (one atomic commit, 68 files, the architect's two-pass rewrite); the facilitator's isolated baseline gate; an independent gate review (SHIP; the rename reproduced byte for byte; a mutation table) and a separate fresh sign-off (SIGNED OFF WITH CONDITIONS); the retro voices and Decider D230 (no idle between steps, with the confirmation step)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Cursor ctx-1",
+   "model": "cursor-agent in ask mode through cursor_reply.py, product manager, reply-only, Probation rung 1; read-only; the facilitator supplied the measured reach in the brief and ruled on the draft's open points",
+   "evidence": "d613d9a033258f6835ae632b07ae4c77a9a08cf1"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md (verified reach: 66 files, 575 lines; the rewrite rule, allow-list, the two Pending tests and the commit order)",
+   "evidence": "57f94f200eb0e7e8256edcc4289e3b4245847128"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-3",
+   "model": "claude, a fresh subagent context, QA engineer, in its own git worktree (Grok, Codex, Copilot, agy out of quota); characterisation c52f981 and red 44c7381",
+   "evidence": "44c7381cafeee8a11c981d58ca739e707c3fdac2"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, developer, in its own worktree, never the red's seat; one atomic commit",
+   "evidence": "8ed59b157f6f86d52d0e12dc174c442ec42b04ad"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent gate reviewer, read-only: ancestor check, red replay, byte-for-byte reproduction of the rename, history check, mutation table; SHIP",
+   "evidence": "817befcce317d938e838a23a9650c61133025db7"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, separate from the gate reviewer, own full gate in its own clone; SIGNED OFF WITH CONDITIONS (none blocking)",
+   "evidence": "242be13834d6ad906718bf2e8ce4dc0417b10ef8"
+  }
+ ],
+ "retro": "docs/retros/card-361-2026-11-09.md",
+ "notes": "Done checks met: criterion 1 (the CLI prints AVnnn with the same numbers, lines and messages for every emitting site: nine rows, ten builds; a stderr line contains no old-prefix code); criterion 2 (no old-prefix diagnostic code in src, tests, live docs, scripts or the working agreement; the history paths (.mob, docs/decisions, docs/retros, bench/results, board, MOB.md) keep theirs, checked by an allow-list test); criterion 3 (numbers, lines, messages, the orders hash and the Tasks golden file unchanged). Both Pending reds failed by assertion on the pre-change tree and pass after the one atomic green; the green changed the red files by one line each (the Pending trait). Baseline gate: Compiler 344 of 344, Acceptance 376 of 376; the review and the sign-off the same (one load flake in a sign-off run that overlapped a Python run; rerun alone green). Task force declared through D229 (the first Decider under the D228 preflight); the retro pick D230 added the no-idle entry. Process time against build time about 0.65 to 1 before the gates. Born-green findings: none. Open: the sign-off conditions for card 162 (stale llm-check pins, a sentence on the AV convention in GRAMMAR, a formerly-PH pointer for old retros); test limits (the test_getting_started regex narrowing, the adapter code numbers resting on the CLI rows, the scanner reading disk); bugs 372, 373, 374, 365; card 203's four follow-up cards."
+}
