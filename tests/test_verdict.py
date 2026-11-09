@@ -134,7 +134,7 @@ class VerdictPageTests(unittest.TestCase):
         page = self.run_verdict(self.rows("csharp", tokens=200), self.rows("phrase", tokens=100), holdout)
         # Then Steve sees the committed display names, statuses, and reset times
         self.assertIn("Copilot status: UNAVAILABLE (no quota)", page)
-        self.assertIn("Copilot resets 2026-11-01 00:00 UTC (account endpoint)", page)
+        self.assertIn("Copilot resets unknown: the 2026-11-01 00:00 UTC reset has passed and the probe still fails", page)
         self.assertIn("agy status: UNAVAILABLE (quota)", page)
         # The countdown changes at every probe, so the test pins the shape (a relative reset and an absolute date), not the number
         self.assertRegex(page, r"agy resets in \d+h\d+m from [^\n]*so about \d{4}-\d{2}-\d{2} \d{2}:\d{2} UTC")
