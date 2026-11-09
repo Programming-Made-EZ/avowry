@@ -1,0 +1,5 @@
+# type-avows: a type named like the generated Avows class is rejected
+module ReservedAvows
+
+type Avows
+  n: Int

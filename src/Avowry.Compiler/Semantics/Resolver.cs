@@ -43,7 +43,11 @@ public static class Resolver
                 recordFields[type.Name] = type.Fields;
             var phrases = ResolveAvows();
             var endpoints = ResolveEndpoints();
-            var module = new ModuleModel(file.Module?.Name ?? string.Empty, types, phrases, endpoints);
+            var module = new ModuleModel(file.Module?.Name ?? string.Empty, types, phrases, endpoints)
+            {
+                Line = file.Module?.At.Line ?? 0,
+                Column = file.Module?.At.Column ?? 0,
+            };
             return new ResolveResult(module, diagnostics);
         }
 
@@ -57,7 +61,11 @@ public static class Resolver
         }
 
         private TypeModel ResolveTypeDeclaration(TypeDecl declaration) =>
-            new(declaration.Name, ResolveFields(declaration.Fields, declaration.Name));
+            new(declaration.Name, ResolveFields(declaration.Fields, declaration.Name))
+            {
+                Line = declaration.At.Line,
+                Column = declaration.At.Column,
+            };
 
         private IReadOnlyList<AvowModel> ResolveAvows()
         {
@@ -772,7 +780,7 @@ public static class Resolver
                     Report("PH303", $"Field '{field.Name}' is repeated in {owner}.", field.At);
                     continue;
                 }
-                fields.Add(new FieldModel(field.Name, ResolveType(field.Type)));
+                fields.Add(new FieldModel(field.Name, ResolveType(field.Type)) { Line = field.At.Line, Column = field.At.Column });
             }
             return fields;
         }

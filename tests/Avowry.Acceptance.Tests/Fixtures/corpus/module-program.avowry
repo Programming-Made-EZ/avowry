@@ -1,0 +1,6 @@
+# module-program: a module named like the generated Program class is rejected
+module Program
+
+avow to "ok {n: Int}"
+  native csharp
+    return;

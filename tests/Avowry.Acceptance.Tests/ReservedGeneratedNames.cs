@@ -16,7 +16,6 @@ public class ReservedGeneratedNames
     [Fact]
     [Trait("Slice", "203")]
     [Trait("Criterion", "203-1")]
-    [Trait("Status", "Pending")]
     public async Task Names_reserved_by_generated_csharp_report_a_diagnostic()
     {
         // Given one inline source per reserved-name family

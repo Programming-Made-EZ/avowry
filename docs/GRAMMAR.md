@@ -159,7 +159,7 @@ result:    call total-quantity-of(items = input.items) : Int
 
 ### Resolver diagnostics
 
-The full resolver diagnostic table (`PH001`, `PH002`, `PH010`, `PH020`, and `PH300` to `PH335`, plus `PH337` and `PH340` from the C# target), which previously lived in [HANDOFF.md](../HANDOFF.md), now lives here:
+The full resolver diagnostic table (`PH001`, `PH002`, `PH010`, `PH020`, and `PH300` to `PH335`, plus `PH337`, `PH340` and `PH341` from the C# target), which previously lived in [HANDOFF.md](../HANDOFF.md), now lives here:
 
 | Code | Meaning |
 |---|---|
@@ -194,6 +194,7 @@ The full resolver diagnostic table (`PH001`, `PH002`, `PH010`, `PH020`, and `PH3
 | `PH335` | More than one outcome in a spec |
 | `PH337` | A native csharp block raises `Fail("X")` where `X` is not in the avow's `fails with` |
 | `PH340` | The C# target does not support a construct yet (a plain-call step or `fail with` in a composite, more than one effect, a call argument that is not a variable, a spec `given` or `then returns` of `none`, an effectful avow in a composite `let`, a `then succeeds` seed of a stored field that is not Text, Id or Bool) |
+| `PH341` | The C# target reserves a name the generated code declares itself: a type named `AvowAttribute`, `AvowryFailure`, `Avows` or `AvowSpecs`, a module named `Program`, an avow whose method name is `Avows` or `AvowryFailure`, a field named like its own type, or an endpoint named `Avow` (message names the reserved name and the line to rename) |
 
 Rules fixed by the resolver tests:
 

@@ -20,6 +20,8 @@ public sealed class CSharpProvider : ITargetAdapter
         if (module.Name.Length == 0)
             throw new NotImplementedException("The C# emitter needs a module name.");
 
+        RequireNoReservedNames(module);
+
         foreach (var phrase in module.Avows)
             RequireSupportedAvow(module, phrase);
         RequireSupportedSeeds(module);
@@ -29,17 +31,17 @@ public sealed class CSharpProvider : ITargetAdapter
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             [$"{api}/{module.Name}.Api.csproj"] = ApiProject(module.Name),
-            [$"{api}/Program.cs"] = Program(module),
-            [$"{api}/AvowryRuntime.cs"] = Runtime(module.Name),
-            [$"{api}/Types.cs"] = Types(module),
-            [$"{api}/Avows.cs"] = Avows(module),
+            [$"{api}/{ReservedNames.Program}.cs"] = Program(module),
+            [$"{api}/{ReservedNames.RuntimeFile}.cs"] = Runtime(module.Name),
+            [$"{api}/{ReservedNames.TypesFile}.cs"] = Types(module),
+            [$"{api}/{ReservedNames.Avows}.cs"] = Avows(module),
             [$"{specs}/{module.Name}.Specs.csproj"] = SpecsProject(module.Name),
-            [$"{specs}/AvowSpecs.cs"] = AvowSpecs(module),
+            [$"{specs}/{ReservedNames.AvowSpecs}.cs"] = AvowSpecs(module),
         };
         var endpointFiles = new Dictionary<string, string>(StringComparer.Ordinal);
 
         if (module.BuildId.Length > 0)
-            files[$"{api}/AvowryBuild.cs"] = "using System.Reflection;\n\n[assembly: AssemblyMetadata(\"AvowryBuildId\", \"" + module.BuildId + "\")]\n";
+            files[$"{api}/{ReservedNames.BuildFile}.cs"] = "using System.Reflection;\n\n[assembly: AssemblyMetadata(\"AvowryBuildId\", \"" + module.BuildId + "\")]\n";
 
         foreach (var endpoint in module.Endpoints)
         {
@@ -53,7 +55,7 @@ public sealed class CSharpProvider : ITargetAdapter
         {
             Module = module,
             EndpointFiles = endpointFiles,
-            AvowFiles = module.Avows.ToDictionary(phrase => phrase.Key, _ => $"{api}/Avows.cs", StringComparer.Ordinal),
+            AvowFiles = module.Avows.ToDictionary(phrase => phrase.Key, _ => $"{api}/{ReservedNames.Avows}.cs", StringComparer.Ordinal),
         };
     }
 
@@ -116,6 +118,48 @@ public sealed class CSharpProvider : ITargetAdapter
             if (argument.Value is not BoundVariable)
                 throw Unsupported("PH340", "a call argument that is not a variable", let.Line, let.Column);
         }
+    }
+
+    // Names the generated C# declares itself must not be reused by the source. Every hit is reported, in line order.
+    private static void RequireNoReservedNames(ModuleModel module)
+    {
+        var hits = new List<(Diagnostic Diagnostic, int Order)>();
+
+        void Hit(string reserved, string role, string kind, string subject, int line, int column) =>
+            hits.Add((new Diagnostic("PH341",
+                $"The C# target reserves the name '{reserved}' for {role}, so {kind} {subject} cannot use it; rename the {kind} declared on line {line}.",
+                line, column), hits.Count));
+
+        if (module.Name == ReservedNames.Program)
+            Hit(ReservedNames.Program, "the generated program class", "module", $"'{module.Name}'", module.Line, module.Column);
+
+        foreach (var type in module.Types)
+        {
+            if (ReservedNames.TypeNames.TryGetValue(type.Name, out var role))
+                Hit(type.Name, role, "type", $"'{type.Name}'", type.Line, type.Column);
+
+            var typeIdent = CSharpIdent(type.Name);
+            foreach (var field in type.Fields)
+            {
+                if (CSharpFieldName(field.Name) == typeIdent)
+                    Hit(typeIdent, "the record type that owns the field", "field", $"'{field.Name}' of type '{type.Name}'", type.Line, type.Column);
+            }
+        }
+
+        foreach (var phrase in module.Avows)
+        {
+            if (ReservedNames.MethodNames.TryGetValue(MethodName(phrase), out var role))
+                Hit(MethodName(phrase), role, "avow", $"'{phrase.Template}'", phrase.Line, phrase.Column);
+        }
+
+        foreach (var endpoint in module.Endpoints)
+        {
+            if (EndpointSpecsFileName(endpoint.Name) == ReservedNames.AvowSpecs + ".cs")
+                Hit(ReservedNames.AvowSpecs, "the generated specs file", "endpoint", $"'{endpoint.Name}'", endpoint.Line, 1);
+        }
+
+        if (hits.Count > 0)
+            throw new CompilationFailedException(hits.OrderBy(hit => hit.Diagnostic.Line).ThenBy(hit => hit.Order).Select(hit => hit.Diagnostic).ToList());
     }
 
     private static CompilationFailedException Unsupported(string code, string construct, int line, int column) =>
@@ -226,18 +270,18 @@ public sealed class CSharpProvider : ITargetAdapter
         "\n" +
         "/// <summary>Links a generated symbol back to the avow it came from.</summary>\n" +
         "[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]\n" +
-        "public sealed class AvowAttribute(string template) : Attribute\n" +
+        $"public sealed class {ReservedNames.AvowAttribute}(string template) : Attribute\n" +
         "{\n" +
         "    public string Template { get; } = template;\n" +
         "}\n" +
         "\n" +
         "/// <summary>A declared failure code raised by an avow (`fails with Code`).</summary>\n" +
-        "public sealed class AvowryFailure(string code) : Exception(code)\n" +
+        $"public sealed class {ReservedNames.AvowryFailure}(string code) : Exception(code)\n" +
         "{\n" +
         "    public string Code { get; } = code;\n" +
         "\n" +
         "    [DoesNotReturn]\n" +
-        "    public static void Raise(string code) => throw new AvowryFailure(code);\n" +
+        $"    public static void Raise(string code) => throw new {ReservedNames.AvowryFailure}(code);\n" +
         "}\n";
 
     private static string Program(ModuleModel module)
@@ -263,7 +307,7 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append("var app = builder.Build();\n");
         code.Append("app.UseFastEndpoints();\n");
         code.Append("app.Run();\n\n");
-        code.Append("public partial class Program;\n");
+        code.Append("public partial class ").Append(ReservedNames.Program).Append(";\n");
         return code.ToString();
     }
 
@@ -419,7 +463,7 @@ public sealed class CSharpProvider : ITargetAdapter
             else
                 AppendPersistenceStore(code, effect, entity);
         }
-        code.Append("public static class Avows\n{\n");
+        code.Append("public static class ").Append(ReservedNames.Avows).Append("\n{\n");
         for (var i = 0; i < module.Avows.Count; i++)
         {
             if (i > 0)
@@ -430,7 +474,7 @@ public sealed class CSharpProvider : ITargetAdapter
         if (module.Avows.Any(phrase => phrase.Failures.Count > 0))
         {
             code.Append("\n    [DoesNotReturn]\n");
-            code.Append("    private static void Fail(string code) => AvowryFailure.Raise(code);\n");
+            code.Append("    private static void Fail(string code) => ").Append(ReservedNames.AvowryFailure).Append(".Raise(code);\n");
         }
         code.Append("}\n");
         return code.ToString();
@@ -481,7 +525,7 @@ public sealed class CSharpProvider : ITargetAdapter
     }
 
     private static string EnsureStatement(BoundEnsureStep ensure) =>
-        $"if ({FailureCondition(ensure.Condition)}) AvowryFailure.Raise({CsString(ensure.Code)});";
+        $"if ({FailureCondition(ensure.Condition)}) {ReservedNames.AvowryFailure}.Raise({CsString(ensure.Code)});";
 
     private static string FailureCondition(BoundCondition condition) => condition switch
     {
@@ -503,7 +547,7 @@ public sealed class CSharpProvider : ITargetAdapter
             return CSharpIdent(effect.ToLowerInvariant());
         });
         var arguments = string.Join(", ", effects.Concat(call.Arguments.Select(argument => CSharpArgument(argument.Value))));
-        return $"Avows.{MethodName(target)}({arguments})";
+        return $"{ReservedNames.Avows}.{MethodName(target)}({arguments})";
     }
 
     private static string CSharpArgument(BoundExpr value) => value switch
@@ -610,7 +654,7 @@ public sealed class CSharpProvider : ITargetAdapter
             code.Append("), ct);\n");
         }
         code.Append("        }\n");
-        code.Append("        catch (AvowryFailure failure)\n");
+        code.Append("        catch (").Append(ReservedNames.AvowryFailure).Append(" failure)\n");
         code.Append("        {\n");
         code.Append("            AddError(failure.Code);\n");
         code.Append("            await Send.ErrorsAsync(422, ct);\n");
@@ -636,7 +680,7 @@ public sealed class CSharpProvider : ITargetAdapter
         BoundLetStep let => $"var {CSharpIdent(let.Name)} = {CallExpression(module, let.Call, EndpointEffects(module, endpoint))};",
         BoundLetUpdateStep update => $"var {CSharpIdent(update.Name)} = {RecordUpdateExpression(update)};",
         BoundRespondStep respond => $"return new {EndpointResponseName(endpoint.Name)}({string.Join(", ", respond.Value.Fields.Select(field => $"{CSharpFieldName(field.Name)}: {EndpointResponseValue(field.Value)}"))});",
-        BoundFailStep fail => $"AvowryFailure.Raise({CsString(fail.Code)});",
+        BoundFailStep fail => $"{ReservedNames.AvowryFailure}.Raise({CsString(fail.Code)});",
         BoundEnsureStep ensure => EnsureStatement(ensure),
         _ => string.Empty,
     };
@@ -733,7 +777,7 @@ public sealed class CSharpProvider : ITargetAdapter
                     AppendAssertion(code, spec.Description, CSharpAssertionValue(responds.Value), "response");
                     break;
                 case FailsModel fails:
-                    code.Append("        var failure = Assert.Throws<AvowryFailure>(() => ").Append(EndpointHandlerName(endpoint.Name)).Append(".Handle(input));\n");
+                    code.Append("        var failure = Assert.Throws<").Append(ReservedNames.AvowryFailure).Append(">(() => ").Append(EndpointHandlerName(endpoint.Name)).Append(".Handle(input));\n");
                     code.Append("        // Then fails with ").Append(fails.Code).Append('\n');
                     AppendAssertion(code, spec.Description, CsString(fails.Code), "failure.Code");
                     break;
@@ -824,7 +868,7 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append("// </auto-generated>\n");
         code.Append("using ").Append(module.Name).Append(";\n\n");
         code.Append("namespace ").Append(module.Name).Append(".Specs;\n\n");
-        code.Append("public class AvowSpecs\n{\n");
+        code.Append("public class ").Append(ReservedNames.AvowSpecs).Append("\n{\n");
         var first = true;
         foreach (var phrase in module.Avows)
         {
@@ -867,7 +911,7 @@ public sealed class CSharpProvider : ITargetAdapter
         code.Append("        // ").Append(Capitalize(spec.Lines[index++])).Append('\n');
         var fails = spec.Outcome as FailsModel;
         var succeeds = spec.Outcome is SucceedsModel;
-        code.Append(fails is not null ? "        var failure = Assert.Throws<AvowryFailure>(() => Avows." : succeeds ? "        Avows." : "        var result = Avows.").Append(MethodName(phrase)).Append('(');
+        code.Append(fails is not null ? "        var failure = Assert.Throws<" + ReservedNames.AvowryFailure + ">(() => " + ReservedNames.Avows + "." : succeeds ? "        " + ReservedNames.Avows + "." : "        var result = " + ReservedNames.Avows + ".").Append(MethodName(phrase)).Append('(');
         code.Append(string.Join(", ", phrase.Effects.Select(effect => $"new {CSharpIdent(effect)}Double()").Concat(phrase.Holes.Select(hole => CSharpIdent(hole.Name)))));
         code.Append(fails is null ? ");\n" : "));\n");
         code.Append("        // ").Append(Capitalize(spec.Lines[index])).Append('\n');

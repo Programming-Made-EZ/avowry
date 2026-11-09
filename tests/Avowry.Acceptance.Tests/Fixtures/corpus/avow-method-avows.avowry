@@ -1,0 +1,6 @@
+# avow-method-avows: an avow whose method would be named Avows is rejected
+module ReservedMethod
+
+avow to "avows"
+  native csharp
+    return;

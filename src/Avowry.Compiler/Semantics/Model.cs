@@ -19,14 +19,24 @@ public sealed record ModuleModel(
     public AvowModel Avow(string key) => Avows.Single(avow => avow.Key == key);
     public string AvowFile { get; init; } = "";
     public string BuildId { get; init; } = "";
+    public int Line { get; init; }
+    public int Column { get; init; }
 }
 
 public readonly record struct SourceSpan(int FirstLine, int LastLine);
 public sealed record DeclaredFailureModel(string Name, int Line);
 
-public sealed record FieldModel(string Name, PType Type);
+public sealed record FieldModel(string Name, PType Type)
+{
+    public int Line { get; init; }
+    public int Column { get; init; }
+}
 
-public sealed record TypeModel(string Name, IReadOnlyList<FieldModel> Fields);
+public sealed record TypeModel(string Name, IReadOnlyList<FieldModel> Fields)
+{
+    public int Line { get; init; }
+    public int Column { get; init; }
+}
 
 /// <summary>One word or hole of a phrase template, in order. Providers use these to build target names.</summary>
 public sealed record AvowPart(string Text, bool IsHole);

@@ -1,0 +1,12 @@
+# endpoint-avow: an endpoint whose specs file would take the name of AvowSpecs is rejected
+module ReservedSpecs
+
+avow to "ok {n: Int}"
+  native csharp
+    return;
+
+endpoint Avow : POST /ping
+  input
+    n: Int
+  steps
+    ok input.n

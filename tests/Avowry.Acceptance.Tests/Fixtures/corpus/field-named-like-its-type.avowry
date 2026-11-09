@@ -1,0 +1,5 @@
+# field-named-like-its-type: a field named like its own record type is rejected
+module ReservedField
+
+type Email
+  email: Text
