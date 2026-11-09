@@ -156,3 +156,11 @@ Left out: tech-writer (cold-reader + promise check); security (docs and JSON evi
 - Cheat-sheet examples must stay under ~728 characters of headroom (518 → 700). `Sheet_names_every_keyword_and_core_type_and_its_examples_compile` will compile every new fence.
 - Prompt.md still says “Return only valid Phrase source.” Slice updates it with C2.
 - Did not run dotnet or a model. Facilitator commands in section 1. Brief’s quota facts were not re-probed here; re-probe before pull.
+
+---
+
+## Added from the card 361 sign-off (2026-11-09 UTC): what card 162's Ready step and fold must include now that the codes are AV
+- Regenerate `grammar_sha256` in `docs/usable-v1/llm-check-codex.json` and `llm-check-grok.json` (pinned `ad0f6e51…`; GRAMMAR.md hashed `88746d6b…` before card 361 and `8e4f91bd…` after, so the pins were already stale); bar 6 (Pending) needs that.
+- Add one sentence to `docs/GRAMMAR.md` stating that diagnostic codes use the `AV` prefix (the table header is just "Code").
+- The fold's rows PH020, PH337 and PH340 are now AV020, AV337 and AV340 (and AV341 from card 203); the draft's older PH names are history.
+- A one-line "formerly PH" pointer for readers of old retros and decision records (index note), or a doc card for it.
