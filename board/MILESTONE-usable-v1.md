@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:86a3f175d287a693ef6d01fb2b98bcd92b9ab280deb6a0c7b0d18086f04c1782 -->
+<!-- board-table-sha256:e78f6ff355f86122ba9a301e30118d642292d106b577d3a991f1d0ec578b70f1 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -131,7 +131,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 109 | 361 Diagnostic codes use the AV prefix before the v0.1 preview | Done | none. Ranked ahead of the v0.1 publish card (188) and immediately before card 162, so that the 162 re-freeze ratifies AV codes in docs/GRAMMAR.md (D127: 162 is the single final re-freeze; this card must not follow it). |
 | 110 | 366 The NOTICE and TRADEMARKS files name the holder and the year, not placeholders | Done | none |
 | 111 | 371 The pre-publication page shows the owner's answers and the trademark search brief | Done | none |
-| 112 | 370 Tracked files carry no home path of a local account | Ready | none |
+| 112 | 370 Tracked files carry no home path of a local account | Done | none |
 | 113 | 368 New bench rows no longer publish a reply prefix | Ready | none |
 | 114 | 369 The licences of the packages the first preview restores are reviewed and listed | Ready | none |
 | 115 | 367 The four model vendors' published terms are read for what they say about publishing model output | Ready | none |

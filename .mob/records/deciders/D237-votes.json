@@ -1,0 +1,87 @@
+{
+ "decider": "D237",
+ "subject": "card 162 task-force declaration and card text (fold the pattern steps into the grammar and cheat sheet; re-freeze; rerun the LLM check with Codex and Grok)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d237architect-architect-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Bar 6 must be tightened in the red.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nI endorse the design. The current check in `UsableV1.cs:113` (`failures.Count < files.Length`) really does pass when only one of the two files is current, so tightening Bar6 to require exactly the Codex and Grok files, each passing, is right and needs to happen in the red. The design stays minimal: one re-freeze record, one hash binding enforced by the test, and the suspension and Pending traits kept until green 2. Main therefore stays green and nothing is claimed early. Notes for the architect slice:\n\n- The planted rows E1 to E4 should be built in a temporary directory, not committed fixtures, so the live check never picks them up and p"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d237qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "One red commit holds three Pending tests",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nEvery rule can be tested red first and partial states are caught cleanly. Criterion 1 tests (`test_pattern_docs.py` and `PatternDocs.cs`) fail immediately against current documentation for ids G1–G8, S1, and S2. Criterion 2 tightens Bar 6 to require both model runs, preventing partial passes when only Grok or Codex is current, verified by planted rows E1–E4. Criterion 3 (`UsableV1Closure`) verifies Z1, Z2, and R1, catching premature closure or un-pending while `suspended.6` persists or the re-freeze record is missing. The sequence of red commits preceding greens in distinct worktrees preserves red-first integrity and guards against passin"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d237dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Main stays green throughout, because bar 6 is already suspended and its test is already Pending.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe rules are workable from where I sit. The plan has three commits: one red commit with three Pending tests (`162-1`, `162-2`, `162-3`), green 1 with `Criterion: 1`, and green 2 with `Criterion: 2-3`. In green 2 the red files change by their Pending traits only. That rule is clear and can be checked, and there is no room to game it.\n\nTightening Bar6 in the red is correct. Rows E1 and E2 are watched failing against the old rule, and rows E3 and E4 are honestly labelled as characterisation. The limit of 15 files per commit holds.\n\nTwo notes:\n- The preflight table in section 0 quotes the card 371 retro, but the declaration quotes card 370'"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d237auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "STANDING EVIDENCE OF THE PRACTICE (committed template; every line can be checked with git; included in every task-force declaration proposal):",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal is fully auditable via git: it mandates committed records, distinct worktrees, hash-bound tests, and explicit merge-base checks. The suspension and Pending traits prevent premature passing, while launcher guards and the cold reader enforce model isolation and document integrity. The one-card WIP exception is bounded and recorded, not a loophole. All claims tie to verifiable commits and files, ensuring the standing evidence block is instantiated per card. I endorse this as it meets the audit lens without leaving exploitable gaps."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d237decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the gate review replays the red on the pre-change tree",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal frames evaluation squarely on objective evidence: Bar6 is tightened to require fresh artifacts from both models, SHA-256 bindings guard the document freeze, and explicit pass levels are pinned before lifting suspension. Seat allocation is complete and properly segregated: independent gate review and sign-off are assigned to distinct, fresh contexts, with sign-off running in an isolated clone against the full gate and zero-warning criteria. The one-card WIP exception is bounded and does not leave an open TDD loop."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d237coach-coach-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "independent gate reviewer and sign-off two further fresh Claude contexts",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nSized to the task: each seat covers a distinct risk — slice fixes scope, red/green separation preserves TDD evidence, cold reader tests Ari's two-document value, gate and sign-off are mandated independence, and Green 2 is split only by the external model wait. No second review, plus the parking exception, avoids padded ceremony and blocked WIP."
+   }
+  ]
+ },
+ "trigger_line": "(d) the re-run was not run because the primary window passed with no No and no amendment and the proposal does not change this agreement",
+ "window_notes": "Primary window one seat at a time under the D228 preflight and the D236 live probe (.mob/records/162/probe-all-2026-11-09.jsonl). Grok was NOT seated in this window: it is held for its card 162 LLM-customer check run (the product owner's decision of 2026-11-09, re-stated by Dispatch while the window ran); its only use was the availability probe. Seats: audit lens Qwen; QA and decider agy (the second and third agy votes: its first two were D236); architect and developer Cursor; coach Muse. Six counted Yes, no No."
+}

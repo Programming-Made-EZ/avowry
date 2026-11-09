@@ -1528,5 +1528,11 @@
     "status": "adopted",
     "title": "Card 370 retro pick: seat plans follow a live probe; a misbehaving driver is repaired, not benched",
     "order": 227
+  },
+  "D237": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 162 task-force declaration and card text (fold the pattern steps into the grammar and cheat sheet; re-freeze; rerun the LLM check with Codex and Grok)",
+    "order": 228
   }
 }
