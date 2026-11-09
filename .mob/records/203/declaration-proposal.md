@@ -173,6 +173,8 @@ Each of the derived, framework, local and `.cs.cs` items should be filed as its 
 
 ## 6. Task-force declaration
 
+SUPERSEDED BY THE VOTE TEXT AT THE TOP OF THIS PROPOSAL AND THE CORRECTIONS BLOCK: the red is a fresh Claude QA context in its own worktree (not Grok, which is out of quota), the green a different fresh Claude context, the Decider voters Claude, Cursor and Qwen (Muse and Grok are out of quota). Read the list below with those substitutions; the substitutions are what is voted on.
+
 - **Product manager (Ready):** Cursor, read-only. It reads code and runs nothing.
 - **Architect (slice):** a fresh Claude context. It fixes the code number, the model `Line` change, whether the near-miss fixtures merge, and the shared constant for each reserved name.
 - **Red (QA):** Grok in a worktree. It writes the Pending test and the near-miss fixtures, and quotes the `dotnet build` C# errors.
