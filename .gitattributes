@@ -1,3 +1,5 @@
 tests/Avowry.Acceptance.Tests/Fixtures/corpus/*.avowry -text
 LICENSE text eol=lf
 MOB.md text eol=lf
+docs/GRAMMAR.md text eol=lf
+docs/CHEATSHEET.md text eol=lf

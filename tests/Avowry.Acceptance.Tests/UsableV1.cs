@@ -98,20 +98,140 @@ public class UsableV1 : IClassFixture<UsableV1Fixture>
     [Fact]
     [Trait("Slice", "138")]
     [Trait("Milestone", "UsableV1")]
+    [Trait("Criterion", "162-2")]
     [Trait("Status", "Pending")]
-    // Card 162 reruns the LLM check against the renamed documents and un-pends this evidence binding.
+    // Card 162 reruns the LLM check against the re-frozen documents; green 2 removes this Pending trait.
     public void Bar6_a_model_that_never_saw_the_app_can_add_an_endpoint_from_the_docs_alone()
     {
-        // Given fresh-context model evidence and the committed documentation
-        var files = Directory.GetFiles(RepoPaths.Find("docs", "usable-v1"), "llm-check-*.json");
-        Assert.True(files.Length > 0, "Bar 6 not met: no docs/usable-v1/llm-check-*.json evidence exists.");
+        // Given fresh-context model evidence for both models and the committed documentation
         var grammar = Sha256(RepoPaths.Find("docs", "GRAMMAR.md"));
         var cheatsheet = Sha256(RepoPaths.Find("docs", "CHEATSHEET.md"));
-        // When each file is checked for a complete, current successful run
-        var failures = files.Select(file => EvidenceFailure(file, grammar, cheatsheet)).Where(value => value is not null).ToList();
-        // Then at least one model passed every spec warning-free against both current documents
-        Assert.True(failures.Count < files.Length,
-            "Bar 6 not met: no current passing LLM evidence." + Environment.NewLine + string.Join(Environment.NewLine, failures));
+        // When each of the two model files is checked for a complete, current successful run
+        var failure = Bar6Failure(RepoPaths.Find("docs", "usable-v1"), grammar, cheatsheet);
+        // Then both Codex and Grok passed every spec warning-free against both current documents
+        Assert.True(failure is null, "Bar 6 not met." + Environment.NewLine + failure);
+    }
+
+    // Card 162 criterion 2 rule: exactly llm-check-codex.json and llm-check-grok.json count, each must be current and
+    // passing, its model must equal the file name and its proof level must be specs-passed. Other llm-check-*.json
+    // files are ignored. Returns null when bar 6 is met, else the lines that say what is missing.
+    internal static string? Bar6Failure(string dir, string grammar, string sheet)
+    {
+        var failures = new List<string>();
+        foreach (var model in new[] { "codex", "grok" })
+        {
+            var name = $"llm-check-{model}.json";
+            var path = Path.Combine(dir, name);
+            if (!File.Exists(path)) { failures.Add($"{name}: evidence file is missing."); continue; }
+            var failure = EvidenceFailure(path, grammar, sheet) ?? ModelFailure(path, model);
+            if (failure is not null) failures.Add(failure);
+        }
+        return failures.Count == 0 ? null : string.Join(Environment.NewLine, failures);
+    }
+
+    private static string? ModelFailure(string path, string model)
+    {
+        using var json = JsonDocument.Parse(File.ReadAllText(path));
+        var root = json.RootElement;
+        var name = Path.GetFileName(path);
+        if (!root.TryGetProperty("model", out var value) || value.ValueKind != JsonValueKind.String || value.GetString() != model)
+            return $"{name}: model must be \"{model}\".";
+        if (!root.TryGetProperty("proof_level", out var proof) || proof.ValueKind != JsonValueKind.String || proof.GetString() != "specs-passed")
+            return $"{name}: proof_level must be \"specs-passed\".";
+        return null;
+    }
+
+    // ---- Criterion 2 evidence rule (characterisation of Bar6Failure; planted rows, they pass at red) --------
+    // Named Evidence_rule_*, never Bar6_*: the usable-v1 report maps a test name starting Bar6_ to bar 6.
+
+    private const string PlantedGrammar = "aaaa";
+    private const string PlantedSheet = "bbbb";
+
+    private static string PlantedEvidence(string model, string grammar = PlantedGrammar, int specs = 13, int specsPassed = 13,
+        bool passed = true, string? modelField = null) =>
+        $$"""
+        {"model": "{{modelField ?? model}}", "date": "2026-11-11", "attempts": 1, "tokens_in": 6000, "tokens_out": 1000,
+         "passed": {{(passed ? "true" : "false")}}, "proof_level": "specs-passed", "specs": {{specs}}, "specs_passed": {{specsPassed}},
+         "build_warnings": 0, "grammar_sha256": "{{grammar}}", "cheatsheet_sha256": "{{PlantedSheet}}"}
+        """;
+
+    private static string? PlantedBar6(Action<string> plant)
+    {
+        using var workspace = TempWorkspace.Create();
+        plant(workspace.Root);
+        return Bar6Failure(workspace.Root, PlantedGrammar, PlantedSheet);
+    }
+
+    private static void Plant(string dir, string model, string json) => File.WriteAllText(Path.Combine(dir, $"llm-check-{model}.json"), json);
+
+    [Fact]
+    [Trait("Slice", "162")]
+    public void Evidence_rule_V0_both_current_files_meet_bar_6()
+    {
+        // Given a current passing Codex file and a current passing Grok file
+        // When bar 6 is evaluated
+        var failure = PlantedBar6(dir => { Plant(dir, "codex", PlantedEvidence("codex")); Plant(dir, "grok", PlantedEvidence("grok")); });
+        // Then it is met
+        Assert.Null(failure);
+    }
+
+    [Fact]
+    [Trait("Slice", "162")]
+    public void Evidence_rule_E1_a_stale_grok_file_next_to_a_current_codex_file_fails_naming_grok()
+    {
+        var failure = PlantedBar6(dir => { Plant(dir, "codex", PlantedEvidence("codex")); Plant(dir, "grok", PlantedEvidence("grok", grammar: "stale")); });
+        Assert.NotNull(failure);
+        Assert.Contains("llm-check-grok.json", failure, StringComparison.Ordinal);
+        Assert.Contains("grammar_sha256 is stale", failure, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    [Trait("Slice", "162")]
+    public void Evidence_rule_E2_a_missing_codex_file_fails_naming_codex()
+    {
+        var failure = PlantedBar6(dir => Plant(dir, "grok", PlantedEvidence("grok")));
+        Assert.NotNull(failure);
+        Assert.Contains("llm-check-codex.json: evidence file is missing", failure, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    [Trait("Slice", "162")]
+    public void Evidence_rule_E3_a_file_with_passed_false_fails_naming_it()
+    {
+        var failure = PlantedBar6(dir => { Plant(dir, "codex", PlantedEvidence("codex", passed: false)); Plant(dir, "grok", PlantedEvidence("grok")); });
+        Assert.NotNull(failure);
+        Assert.Contains("llm-check-codex.json: passed is not true", failure, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    [Trait("Slice", "162")]
+    public void Evidence_rule_E4_a_partial_run_with_specs_passed_below_specs_fails_naming_it()
+    {
+        var failure = PlantedBar6(dir => { Plant(dir, "codex", PlantedEvidence("codex")); Plant(dir, "grok", PlantedEvidence("grok", specsPassed: 12)); });
+        Assert.NotNull(failure);
+        Assert.Contains("llm-check-grok.json: specs_passed must equal specs (13)", failure, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    [Trait("Slice", "162")]
+    public void Evidence_rule_E5_a_file_whose_model_is_not_its_file_name_fails_naming_it()
+    {
+        var failure = PlantedBar6(dir => { Plant(dir, "codex", PlantedEvidence("codex")); Plant(dir, "grok", PlantedEvidence("grok", modelField: "codex")); });
+        Assert.NotNull(failure);
+        Assert.Contains("llm-check-grok.json: model must be \"grok\"", failure, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    [Trait("Slice", "162")]
+    public void Evidence_rule_E6_an_extra_stale_third_file_is_ignored()
+    {
+        var failure = PlantedBar6(dir =>
+        {
+            Plant(dir, "codex", PlantedEvidence("codex"));
+            Plant(dir, "grok", PlantedEvidence("grok"));
+            Plant(dir, "other", PlantedEvidence("other", grammar: "stale", passed: false));
+        });
+        Assert.Null(failure);
     }
 
     private static string? EvidenceFailure(string path, string grammar, string cheatsheet)
