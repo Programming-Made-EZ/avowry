@@ -2,7 +2,7 @@
 
 The name "Avowry" and any project logo identify the official, accountable Avowry toolchain: the compiler, the command line tool and the language specification published from this repository. People who see the name should be able to trust that what they run is that toolchain, unmodified. The code is open under Apache-2.0 (see LICENSE); this policy is about the name and logo only, which the license does not grant.
 
-Trademark holder: [COPYRIGHT HOLDER: to be confirmed by the product owner at the pre-publication checks (card 186)]
+Trademark holder: Programming Made EZ
 
 ## You may, without asking
 

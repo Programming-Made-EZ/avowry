@@ -24,4 +24,4 @@ Contributions are accepted under the same Apache-2.0 license. A contributing not
 
 ## Status
 
-The copyright holder named in `LICENSE`-adjacent files (`NOTICE`, `TRADEMARKS.md`) is a marked placeholder until the product owner confirms it at the pre-publication checks (card 186). Nothing is published as a release until those checks pass and the product owner approves in writing.
+The copyright holder named in `NOTICE` and `TRADEMARKS.md` is Programming Made EZ. The year 2026 is the year the project began; it is an assumption the product owner can correct. Nothing is published as a release until the pre-publication checks pass and the product owner approves in writing.

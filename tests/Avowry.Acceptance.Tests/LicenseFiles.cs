@@ -13,7 +13,6 @@ public class LicenseFiles
     [Fact]
     [Trait("Slice", "366")]
     [Trait("Criterion", "366-1")]
-    [Trait("Status", "Pending")]
     public async Task Notice_and_trademarks_name_the_holder_and_the_year()
     {
         // Given the owner's answer: holder "Programming Made EZ", year 2026
@@ -25,7 +24,6 @@ public class LicenseFiles
     [Fact]
     [Trait("Slice", "366")]
     [Trait("Criterion", "366-2")]
-    [Trait("Status", "Pending")]
     public async Task Notice_and_trademarks_hold_no_placeholder_and_the_scanner_catches_one()
     {
         // Given NOTICE and TRADEMARKS.md
@@ -40,7 +38,6 @@ public class LicenseFiles
     [Fact]
     [Trait("Slice", "366")]
     [Trait("Criterion", "366-3")]
-    [Trait("Status", "Pending")]
     public async Task The_licensing_page_names_the_holder_and_the_year_assumption()
     {
         // Given docs/LICENSING.md
