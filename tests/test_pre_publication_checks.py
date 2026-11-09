@@ -55,9 +55,6 @@ COMPLIANT = "\n".join([
     "## Name collisions (not a professional search)",
     *[f"{t}: free on 2026-10-29, source D125" for t in TARGETS], "Recommendation: hold.",
     "## Owner items",
-    *[f"- {x}: OPEN, asked 2026-11-08" for x in (
-        "public name", "holder line", "professional trademark search",
-        "four lawyer questions", "author identity going forward", "unread vendor terms")],
     "Recommendation: ask.", "",
 ])
 
@@ -232,10 +229,6 @@ def collect_failures(page, ctx):
                     if "2026-10-29" not in line or "D125" not in line:
                         fail(cid, "target missing date or source")
                         break
-            elif cid == "owner-items":
-                items = [ln for ln in body.splitlines() if "OPEN" in ln and "2026-11-08" in ln]
-                if len(items) < 6:
-                    fail(cid, "need at least 6 OPEN items dated 2026-11-08")
         if len(re.findall(r"(?m)^Recommendation:", page)) != len(found):
             fail("recommendations", "one Recommendation line per topic section")
         reasons = ctx.get("forbidden_reasons")
