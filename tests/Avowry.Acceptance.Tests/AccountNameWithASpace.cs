@@ -13,7 +13,6 @@ public class AccountNameWithASpace
     [Fact]
     [Trait("Slice", "376")]
     [Trait("Criterion", "376-3")]
-    [Trait("Status", "Pending")]
     public async Task A_two_word_account_becomes_the_placeholder_and_prose_stays()
     {
         // Given planted paths whose account is two words

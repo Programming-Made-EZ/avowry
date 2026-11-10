@@ -13,7 +13,6 @@ public class TreeScanGatesByExitCode
     [Fact]
     [Trait("Slice", "376")]
     [Trait("Criterion", "376-2")]
-    [Trait("Status", "Pending")]
     public async Task The_tree_scan_and_the_hook_gate_by_exit_code()
     {
         // Given a temporary repository holding a planted home path or the planted account name

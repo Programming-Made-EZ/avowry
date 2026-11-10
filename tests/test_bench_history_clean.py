@@ -18,19 +18,20 @@ spec.loader.exec_module(check)
 
 
 class BenchHistoryCleanTests(unittest.TestCase):
-    def scan(self, rows):
+    def scan(self, rows, accounts=None):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "history.jsonl"
             path.write_text("\n".join(rows) + "\n", encoding="utf-8")
-            return check.scan_history(path)
+            return check.scan_history(path, accounts=accounts)
 
     def test_reports_every_path_or_user_name_with_its_line_number(self):
         hits = self.scan(
             [
                 r'{"reply_head":"C:\\Users\\someone\\reply.txt"}',
                 r'{"diagnostics":["open ~/AppData/Local/Temp/x"]}',
-                '{"error":"user RINGE was named"}',
-            ]
+                '{"error":"user ' + PLANTED.upper() + ' was named"}',
+            ],
+            accounts=(PLANTED,),
         )
 
         self.assertEqual([1, 2, 3], [hit[0] for hit in hits])

@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
-"""Fail a commit if a staged file adds a secret or a home path.
+"""Fail a commit if a staged file adds a secret, a home path or the local account name.
 
 Used by .githooks/pre-commit. The published MOB.md is a generated summary and is already scrubbed by the facilitator
 (mob-defaults/mob_summary.py); this is the second, independent check at the commit boundary.
 
 For every staged file other than MOB.md only the added lines (git diff --cached -U0) are scanned
-for home paths, so existing record files do not block a commit. MOB.md keeps a whole-file scan:
-the secret patterns below plus home_paths.find. A hit names the file, the line and the form only;
-the matched text (and so the account) is never printed.
+for home paths (F1 to F9) and the local account name standing alone (F10, home_paths.local_accounts),
+so existing record files do not block a commit. MOB.md keeps a whole-file scan: the secret patterns
+below plus home_paths.find. A hit names the file, the line and the form only; the matched text (and
+so the account) is never printed.
 
-With --tree, scan every tracked file in the working tree instead and print, per area, the hit
-count and the first three file:line:form.
+With --tree, scan every tracked file in the working tree instead (F1 to F10) and exit 1 on any hit,
+else 0. Output: one count line per area, one line saying whether F10 was checked (so an exit 0 is
+never read as proof when no local account name is known), up to 50 path:line:form lines in area,
+path and line order, then "... K more hits" if any, and a final "N hits in M files". No matched
+text, no account and no absolute path is printed.
 """
 
 import re
@@ -116,8 +120,15 @@ def added_lines():
     return added
 
 
+def describe(hit):
+    if hit.form == "F10":
+        return f"account name ({hit.form})"
+    return f"home path ({hit.form})"
+
+
 def scan_staged():
     bad = []
+    accounts = home_paths.local_accounts()
     names = staged_names()
     added = added_lines()
     for name in names:
@@ -127,17 +138,21 @@ def scan_staged():
                 for match in re.finditer(pattern, text):
                     line = text.count("\n", 0, match.start()) + 1
                     bad.append(f"{name}:{line}: looks like a {label}")
-            for hit in home_paths.find(name, text):
-                bad.append(f"{name}:{hit.line}: home path ({hit.form})")
+            for hit in home_paths.find(name, text, accounts):
+                bad.append(f"{name}:{hit.line}: {describe(hit)}")
             continue
         for line, text in added.get(name, []):
-            for hit in home_paths.find(name, text):
-                bad.append(f"{name}:{line}: home path ({hit.form})")
+            for hit in home_paths.find(name, text, accounts):
+                bad.append(f"{name}:{line}: {describe(hit)}")
     return bad
+
+
+MAX_LISTED = 50
 
 
 def scan_tree():
     root = Path(git_text("rev-parse", "--show-toplevel").strip() or ".")
+    accounts = home_paths.local_accounts()
     hits = {area: [] for area in AREA_LABELS}
     for relative in home_paths.tracked_paths(root):
         target = root / relative
@@ -147,18 +162,27 @@ def scan_tree():
         if b"\0" in data:
             continue
         seen = set()
-        for hit in home_paths.find(relative, data.decode("utf-8", "replace")):
-            if (relative, hit.line) in seen:
+        for hit in home_paths.find(relative, data.decode("utf-8", "replace"), accounts):
+            if hit.line in seen:
                 continue
-            seen.add((relative, hit.line))
+            seen.add(hit.line)
             hits[area_of(relative)].append((relative, hit.line, hit.form))
     for area, label in AREA_LABELS.items():
         found = hits[area]
         files = len({path for path, _line, _form in found})
         print(f"{area} {label}: {len(found)} hits in {files} files")
-        for path, line, form in found[:3]:
-            print(f"{path}:{line}:{form}")
-    return 0
+    if accounts:
+        print(f"F10: checked {len(accounts)} local account name(s)")
+    else:
+        print("F10: skipped, no local account name outside the allow-list")
+    ordered = [hit for area in AREA_LABELS for hit in sorted(hits[area])]
+    for path, line, form in ordered[:MAX_LISTED]:
+        print(f"{path}:{line}:{form}")
+    if len(ordered) > MAX_LISTED:
+        print(f"... {len(ordered) - MAX_LISTED} more hits")
+    files = len({path for path, _line, _form in ordered})
+    print(f"{len(ordered)} hits in {files} files")
+    return 1 if ordered else 0
 
 
 def main(argv=None):
@@ -167,7 +191,8 @@ def main(argv=None):
         return scan_tree()
     bad = scan_staged()
     if bad:
-        print("pre-commit: staged files must not add secrets or home paths (the repo is PUBLIC):", file=sys.stderr)
+        print("pre-commit: staged files must not add secrets, home paths or the account name (the repo is PUBLIC):",
+              file=sys.stderr)
         for entry in bad[:50]:
             print("  " + entry, file=sys.stderr)
         return 1

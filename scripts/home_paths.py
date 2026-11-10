@@ -13,9 +13,20 @@ This file holds no home path: its patterns cannot match their own text, and its 
 parts.
 
 ``find`` reports exactly what ``scrub_bytes`` would change; ``scrub_bytes`` is the rewrite rule.
+
+Card 376, the space rule: an account segment may be up to three words joined by one literal space or ``%20``;
+the multi-word form is taken only if a separator, a quote, a backtick or the end of the line or file directly
+follows the last word, otherwise the segment is the first word alone. Known limits: four or more words, double
+spaces or tabs, and a spaced name followed by prose are not taken whole; prose such as ``<account> then foo/bar``
+after a path is over-scrubbed to ``<user>/bar`` (the safe direction).
+
+Card 376, F10: the local account name standing alone (whole word, any case). ``local_accounts`` lists the names
+of this machine outside the allow-lists; ``find(path, text, accounts)`` reports them and ``scrub_account_bytes``
+rewrites them. ``scrub_tracked`` never applies the F10 rewrite.
 """
 
 import argparse
+import functools
 import getpass
 import os
 import re
@@ -27,7 +38,9 @@ from pathlib import Path
 PLACEHOLDER = "<user>"
 
 SEGX = rb"\x5c/\s\x22\x27`<>|*?:,;()\[\]{}%&=$"
-SEG  = rb"(?P<seg>[^"+SEGX+rb"]*[^"+SEGX+rb".])"      # not empty, no trailing dot, never starts "<" or "$"
+_WORD  = rb"[^"+SEGX+rb"]*[^"+SEGX+rb".]"             # not empty, no trailing dot, never starts "<" or "$"
+_CLOSE = rb"(?=[\x5c/\x22\x27`]|%5[cC]|%2[fF]|\r?\n|\r?\Z)"
+SEG  = rb"(?P<seg>(?:"+_WORD+rb"(?: |%20)){1,2}"+_WORD+_CLOSE+rb"|"+_WORD+rb")"  # up to three words, see below
 SEP  = rb"(?:\x5c|/|%5[cC]|%2[fF])+"                   # any run of separators, kept verbatim
 NB   = rb"(?<![A-Za-z0-9_.\-])"
 PATH = re.compile(rb"(?P<pre>[A-Za-z](?::|%3[aA])"+SEP+rb"(?i:users)"        # F1 F2 F3 F8 (file:/// ends here)
@@ -63,6 +76,21 @@ FORMS = {
     "F7": "the Unix home root",
     "F8": "a file URL or a URL-encoded separator or colon",
     "F9": "the segment ends a line or the file, or is followed by a quote, a backtick or a space",
+}
+FORMS["F10"] = "the local account name standing alone (whole word, any case)"
+
+MIN_ACCOUNT_LENGTH = 3
+
+GENERIC_ACCOUNTS = {
+    "root": "the Unix superuser; a common word in paths and prose",
+    "administrator": "the built-in Windows administrator",
+    "admin": "a common administrator account and a common word",
+    "user": "a common default account and a common word (also inside the placeholder)",
+    "ubuntu": "the default account of Ubuntu cloud images; also the distribution name",
+    "vsts": "the Azure Pipelines hosted agent account",
+    "default": "the Windows default profile and a common word",
+    "guest": "the Windows guest account and a common word",
+    "public": "the Windows public profile and a common word",
 }
 
 Hit = namedtuple("Hit", "line form")
@@ -103,7 +131,9 @@ def scrub_text(text, path=None):
 _DRIVE_ROOT = re.compile(rb"(?:/mnt)?/[a-z](?:\x5c|/|%5[cC]|%2[fF])+(?i:users)")
 
 _SEP_STR = r"(?:\\|/|%5[cC]|%2[fF])+"
-_SEG_STR = r"(?P<seg>[^\\/\s\"'`<>|*?:,;()\[\]{}%&=$]*[^\\/\s\"'`<>|*?:,;()\[\]{}%&=$.])"
+_WORD_STR = r"[^\\/\s\"'`<>|*?:,;()\[\]{}%&=$]*[^\\/\s\"'`<>|*?:,;()\[\]{}%&=$.]"
+_SEG_STR = (r"(?P<seg>(?:" + _WORD_STR + r"(?: |%20)){1,2}" + _WORD_STR
+            + r"(?=[\\/\"'`]|%5[cC]|%2[fF]|\r?\n|\r?\Z)|" + _WORD_STR + r")")
 _NB_STR = r"(?<![A-Za-z0-9_.\-])"
 
 
@@ -138,7 +168,12 @@ def _form_of(match, is_slug, line):
 
 
 def local_accounts(candidates=None):
-    """Red stub for card 376: the unfiltered machine names (green filters and de-duplicates them)."""
+    """The account names of this machine that F10 looks for, as a tuple (empty when none remains).
+
+    Default candidates: getpass.getuser(), the home folder name and the non-empty LOGNAME, USER and
+    USERNAME. Each is stripped; a name shorter than MIN_ACCOUNT_LENGTH, on ALLOWED_SEGMENTS or in
+    GENERIC_ACCOUNTS is dropped, and so is a repeat (case-folded; the first spelling is kept).
+    """
     if candidates is None:
         candidates = []
         try:
@@ -153,7 +188,41 @@ def local_accounts(candidates=None):
             value = os.environ.get(name)
             if value:
                 candidates.append(value)
-    return tuple(candidates)
+    dropped = {name.casefold() for name in ALLOWED_SEGMENTS} | {name.casefold() for name in GENERIC_ACCOUNTS}
+    accounts = []
+    for candidate in candidates:
+        name = (candidate or "").strip()
+        folded = name.casefold()
+        if len(name) < MIN_ACCOUNT_LENGTH or folded in dropped:
+            continue
+        dropped.add(folded)
+        accounts.append(name)
+    return tuple(accounts)
+
+
+@functools.lru_cache(maxsize=None)
+def _account_pattern(accounts):
+    names = sorted({name for name in accounts if name}, key=len, reverse=True)
+    if not names:
+        return None
+    alternation = "|".join(re.escape(name) for name in names)
+    return re.compile(r"(?<![^\W_])(?:" + alternation + r")(?![^\W_])", re.IGNORECASE)
+
+
+def _as_text(data):
+    return data.decode("utf-8", "surrogateescape") if isinstance(data, (bytes, bytearray)) else data
+
+
+def find_accounts(text, accounts):
+    """Each line of ``text`` holding one of ``accounts`` as a whole word, as Hit(line, "F10").
+
+    A letter or digit next to the name blocks a match; any other neighbour does not. Any case.
+    """
+    pattern = _account_pattern(tuple(accounts))
+    if pattern is None:
+        return []
+    return [Hit(number, "F10") for number, line in enumerate(_as_text(text).split("\n"), start=1)
+            if pattern.search(line)]
 
 
 def find(path, text, accounts=()):
@@ -161,21 +230,37 @@ def find(path, text, accounts=()):
 
     Uses the same PATH and SLUG regexes as scrub_bytes, so a hit is reported exactly where
     scrub_bytes would change a segment (allow-lists honoured).
-    ``accounts`` is accepted and ignored by the card 376 red stub.
+    With ``accounts``, a line holding one of them as a whole word is reported as F10, unless the
+    line already has a home-path hit (one finding per occurrence, never two).
     """
     data = text.encode("utf-8", "surrogateescape") if isinstance(text, str) else bytes(text)
     allowed = _allowed(path)
+    pattern = _account_pattern(tuple(accounts))
     hits = []
     for number, line in enumerate(data.split(b"\n"), start=1):
         found = []
-        for pattern, is_slug in ((PATH, False), (SLUG, True)):
-            for match in pattern.finditer(line):
+        for regex, is_slug in ((PATH, False), (SLUG, True)):
+            for match in regex.finditer(line):
                 if match.group("seg") in allowed:
                     continue
                 found.append((match.start(), is_slug, match))
         for _start, is_slug, match in sorted(found, key=lambda item: item[0]):
             hits.append(Hit(number, _form_of(match, is_slug, line)))
+        if not found and pattern is not None and pattern.search(_as_text(line)):
+            hits.append(Hit(number, "F10"))
     return hits
+
+
+def scrub_account_bytes(data, accounts):
+    """The F10 rewrite: each whole-word occurrence of ``accounts`` (any case) becomes PLACEHOLDER.
+
+    Every other byte, line endings included, stays. Not part of scrub_bytes or scrub_tracked.
+    """
+    pattern = _account_pattern(tuple(accounts))
+    if pattern is None:
+        return bytes(data)
+    text = bytes(data).decode("utf-8", "surrogateescape")
+    return pattern.sub(PLACEHOLDER, text).encode("utf-8", "surrogateescape")
 
 
 def tracked_paths(root):
