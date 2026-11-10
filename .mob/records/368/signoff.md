@@ -1,0 +1,3 @@
+# Card 368 sign-off (a fresh Claude context, attempt 2): SIGNED OFF
+
+Tested HEAD 4214581966a578456e3905ff778cad35dedbbe65 in a fresh clone (signoff368c-clone); ancestry exit 0. Run alone and one after another: `dotnet test Avowry.sln --filter "Status!=Pending"`: Avowry.Compiler.Tests 344 passed, 0 failed, 0 skipped; Avowry.Acceptance.Tests 402 passed, 0 failed, 0 skipped (9 m 56 s). `Slice=368`: 12 passed, 0 failed, 0 skipped. `python -m pytest tests/test_pre_publication_owner_items.py tests/test_pre_publication_checks.py -q`: 13 passed, 46 subtests passed. Attempt 1 (signoff-attempt-1.md) was NOT SIGNED OFF on one timing test; the fix is logged takeover 4.
