@@ -1,0 +1,2 @@
+4c8585e495e5bfcccbc16abe14a24070cf0d7b39
+gate rerun alone exit 0: Passed!  - Failed:     0, Passed:   344, Skipped:     0, Total:   344, Duration: 1 s - Avowry.Compiler.Tests.dll (net8.0) Passed!  - Failed:     0, Passed:   402, Skipped:     0, Total:   402, Duration: 9 m 38 s - Avowry.Acceptance.Tests.dll (net8.0) 
