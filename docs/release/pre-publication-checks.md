@@ -90,20 +90,20 @@ Source: the screen recorded in D125 (`docs/decisions/process-and-staffing.md:129
 - GitHub handle: free on 2026-10-29, source D125.
 - avowry.dev: free on 2026-10-29, source D125.
 - avowry.io: free on 2026-10-29, source D125.
-- Trademark databases and the earlier brand called Phrase (the earlier name, no longer the product name): not reviewed: commissioned by the owner; pending result (Trademark search brief below).
+- Trademark databases and the earlier brand called Phrase (the earlier name, no longer the product name): not reviewed by a professional search: declined by owner decision of 2026-11-10; a free first-pass screen of public databases is run by the product owner's assistant and its result (name screen: CLEAR or CONFLICT) is relayed to the mob.
 - Registry state after 2026-10-29: not reviewed: needs a fresh lookup on the day of publishing.
 
-Recommendation: repeat the registry lookups on the publish day; the professional trademark search is commissioned by the owner, and publishing the name waits on its result.
+Recommendation: repeat the registry lookups on the publish day; the owner declined a professional trademark search (2026-11-10); publishing waits for the free first-pass screen to be reported CLEAR and for the owner's written approval, which is given on the condition that no existing conflicting trademark is found.
 
 ## Owner items
 
-What blocks what: nothing is published as a release until the trademark search result is in and the owner approves in writing. Preparation (cards 366 to 370 and the publish card's package metadata) can proceed meanwhile. The registry state after 2026-10-29 is re-checked on the day of publishing (the brief says so).
+What blocks what: nothing is published as a release until the free first-pass name screen is reported CLEAR and the owner approves in writing (the professional trademark search is no longer a blocker: declined by owner decision, 2026-11-10; the owner's conditional approval of 2026-11-10 is recorded in the inbox and needs the CLEAR report). Preparation (cards 366 to 370 and the publish card's package metadata) can proceed meanwhile. The registry state after 2026-10-29 is re-checked on the day of publishing (the brief says so).
 
-Command: read from `NOTICE`, `TRADEMARKS.md`, D121, D125 and the owner's answers of 2026-11-08 (`NOTICE` and `TRADEMARKS.md` filled by card 366). These items are the product owner's answers of 2026-11-08, recorded here; the mob's inbox copy is outside the repository, so this page is the record. Scan tip: `c4692e074c8970081687d332adb64f200728426c`. Every item is answered; the search waits on its result and four items are carried by cards 367 to 370.
+Command: read from `NOTICE`, `TRADEMARKS.md`, D121, D125 and the owner's answers of 2026-11-08 (`NOTICE` and `TRADEMARKS.md` filled by card 366). These items are the product owner's answers of 2026-11-08, recorded here; the mob's inbox copy is outside the repository, so this page is the record. Scan tip: `c4692e074c8970081687d332adb64f200728426c`. Every item is answered; the search was declined by the owner on 2026-11-10 and four items are carried by cards 367 to 370.
 
-- Public name: answered 2026-11-08. Avowry confirmed (D125); registration status pending the owner's trademark search.
+- Public name: answered 2026-11-08. Avowry confirmed (D125); the owner does not intend to register a trademark before the preview (2026-11-10).
 - Holder at `NOTICE:2` and `TRADEMARKS.md:5`: answered 2026-11-08. Programming Made EZ; 2026 is an assumption the owner can correct (docs/LICENSING.md); same holder for the trademark line: yes (card 366).
-- Professional trademark search: answered 2026-11-08. The search is commissioned by the owner; pending result. Publishing the name waits on the result.
+- Professional trademark search: answered 2026-11-08. Declined by the owner on 2026-11-10 (no professional search, no trademark registration before the preview); the Apache-2.0 licence and the TRADEMARKS.md policy stand. Publishing waits only for the free first-pass screen's CLEAR report and the owner's written approval.
 - The four lawyer questions (D121): answered 2026-11-08. The lawyer questions were skipped by owner decision.
   1. Do the generated runtime helper files need a notice, given that generated code belongs to the user?
   2. Is a trademark policy on this name enforceable?
@@ -115,7 +115,7 @@ Command: read from `NOTICE`, `TRADEMARKS.md`, D121, D125 and the owner's answers
 - Transitive package licences: answered 2026-11-08. Decision: restore-and-review (card 369). Restore the packages, then review their licences.
 - Home paths in tracked records: answered 2026-11-08. Decision: scrub-tracked; history stays public (card 370). Remove home paths from tracked files.
 
-### Trademark search brief
+### Trademark search brief (not used: the owner declined the search on 2026-11-10; kept as the record of what was prepared)
 
 - Applicant: Programming Made EZ.
 - Applicant's country and legal form: supplied privately by the owner to the provider; not written on this page.
@@ -135,4 +135,4 @@ Command: read from `NOTICE`, `TRADEMARKS.md`, D121, D125 and the owner's answers
 - Registry state after 2026-10-29: not checked. Re-checked on the day of publishing.
 - Registry screen: [Name collisions](#name-collisions-not-a-professional-search).
 
-Recommendation: name Avowry confirmed, publishing waits on the search result; holder Programming Made EZ (card 366); search commissioned by the owner; lawyer questions skipped by owner decision; author identity keep; vendor terms read-first (card 367); reply_head trim for new rows only, pushed rows stay public (card 368); transitive licences restore-and-review (card 369); home paths scrub-tracked, history stays public (card 370).
+Recommendation: name Avowry confirmed, publishing waits on the free first-pass screen being CLEAR and the owner's written approval; holder Programming Made EZ (card 366); professional search declined by the owner; lawyer questions skipped by owner decision; author identity keep; vendor terms read-first (card 367); reply_head trim for new rows only, pushed rows stay public (card 368); transitive licences restore-and-review (card 369); home paths scrub-tracked, history stays public (card 370).
