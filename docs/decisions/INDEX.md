@@ -343,3 +343,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D237](process-and-staffing.md#d237) | Card 162 task-force declaration and card text (fold the pattern steps into the grammar and cheat sheet; re-freeze; rerun the LLM check with Codex and Grok) | process-and-staffing | adopted |
 | [D238](language-and-grammar.md#d238) | Card 162 re-freeze of the documents the LLM-customer check reads (D72, D127) | language-and-grammar | adopted |
 | [D239](process-and-staffing.md#d239) | Card 376 task-force declaration and card text (the account name standing alone is gone from tracked files; the tree scan gates by exit code; an account name with a space) | process-and-staffing | adopted |
+| [D240](process-and-staffing.md#d240) | Card 376 retro pick: prompts to an external driver are checked for the local account name before launch | process-and-staffing | adopted |

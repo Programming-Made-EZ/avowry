@@ -1,0 +1,36 @@
+# Retro pick proposal (facilitator's synthesis of the seven voices): prompts to an external driver are checked for the local account name before launch
+
+Card 376 retro, 2026-11-10. Proposer: the facilitator, from the seven retro voices (.mob/records/376/retro-voices.json; retro input retro-input.md). For Decider D240. A change to TEAM_WORKING_AGREEMENT.md (a new Experimental entry), not an issue. One concern only. The patch is .mob/records/376/agreement-amendment.diff.
+
+STANDING-RULES PREFLIGHT: the Decider protocol steps 2 to 4 unchanged; step 6 (D224) with the D232 paragraph (a No whose condition a rule in force meets: quote the line, ask only the objector); this proposal changes the agreement, so trigger (c) applies if the primary window passes with no No and no amendment. The D228 preflight and the D236 live probe apply (probe committed as .mob/records/376/probe-all-2026-11-10b.jsonl, taken for this window). The 30 percent rule and the strict reading of a No unchanged. The standing evidence block of D234 is quoted below.
+
+EVIDENCE: on card 376 a review prompt was built from `git diff` of the scripts; the diff of a card that removes a name contains the removed lines, one of which was the old literal account name, and the prompt was sent once to an outside model service before a hand count caught it (retro-input.md). Five of the seven voices named a launcher-level guard (pm, qa, architect, dev, decider); the auditor judged a practice enough. The code already exists: `home_paths.find` with `local_accounts()` (card 376 green 1) and `scrub_account_bytes`.
+
+THE PROPOSED ENTRY (verbatim from the patch):
+
+- **Prompts to an external driver are checked for the local account name before launch (experiment; card 376 retro, Decider D240).** While this entry is on trial: before any prompt is sent to an external model service (the vote runner, `cursor_reply.py`, `cursor_write.py`, `muse_write.py`, `llm_check_when_back.py` and any direct `grok`, `agy` or `codex` call), the launcher runs `home_paths.find` with `home_paths.local_accounts()` over the prompt bytes and refuses to launch (exit non-zero, naming `line:form`, never the matched text) on any hit; a prompt built from a diff, a log or a record is passed through `home_paths.scrub_account_bytes` first, because a diff of a card that removes a name carries the removed lines; a refused launch is one line in the card's retro input; the check and its planted-fail tests are written red first as a tooling card filed with this pick, and until it lands the facilitator counts the name in each prompt by hand (`grep -c -w -e "$USERNAME"` on the prompt file, which prints a number only) and scrubs before sending.
+  - Hypothesis: a launcher that refuses a prompt holding the account name stops the name reaching an outside service. Metric: prompts sent to an external service that held the account name (card 376: 1, the second-review prompt, caught by a hand count after it was sent), target 0. Counter-metric: launches refused by a false positive, and seconds added per launch. Trial: the next 3 cards, counted from Decider D240. Owner: the facilitator.
+
+
+Not in this pick (named so they stay separate): a reply-format check before a vote is accepted (the Cursor bare Yes of D239; carried as the CITE pre-check item); a Seat trailer on commits so the gate can see red and green seats in git (architect and developer voices; a change to the commit hook and the hook's trailer rule); the history decision for the account name in old commits (an owner decision); the look-back at D208 to D210 (carried); the first Qwen writing seat (carried).
+
+STANDING EVIDENCE OF THE PRACTICE (D234; the committed block, quoted):
+
+STANDING EVIDENCE OF THE PRACTICE (committed template; every line can be checked with git; included in every task-force declaration proposal):
+1. Review records. For every card the cold-reader report (a docs card), the second read-only review (when run), the independent gate review (opening with the step 0 line: the `git merge-base --is-ancestor` command, the tested commit and its exit status, and listing the files and criteria it checked) and the sign-off are committed under `.mob/records/<card>/`, and the closure record `.mob/records/<card>.json` names the full commit hashes of the ship and signoff seats (the closure check refuses a card without them).
+2. Separate sessions. The closure record lists each seat with its own context label (Claude ctx-N, all distinct; the green never the red's), each seat's work is its own commit, and the red and the green work in their own worktree branches. The decider seats' launches are lines of `.mob/records/seat-use.jsonl` (seat, role, context, time). No claim of model isolation is made: separate sessions, worktrees and distinct commits are the evidence.
+3. Red-first order. The characterisation and red commits precede the green in git; the gate review replays the red on the pre-change tree and the green changes the red files by the Pending traits only.
+4. Idle minutes and Dispatch nudges are two committed lines in each retro (D230).
+5. Per card, not only in general. Each card's retro document carries a section `Evidence (per card)` that lists the full commit hashes of that card's review records (the cold-reader report, the second review when run, the gate review, the sign-off) and of its red and green commits, copied from the closure record `.mob/records/<card>.json`, so that the block's lines 1 to 4 are instantiated for the card in git and checked by `git show` on those hashes; the declaration of the next card quotes the previous card's section as the example of the evidence it will produce.
+
+
+DECISION ASKED: adopt the entry above as an Experimental entry of TEAM_WORKING_AGREEMENT.md for the next 3 cards.
+
+## AMENDMENT AFTER THE PRIMARY WINDOW OF D240
+
+Primary window result: four Yes (QA agy, coach Muse, developer Cursor, decider agy) and two No (audit lens Qwen, architect Grok). Both Nos are conditions, adopted by the proposer in these forms (the patch .mob/records/376/agreement-amendment.diff is the amended text; the original text of this proposal above is what the primary window voted on):
+
+1. Architect's condition (precision of the check): the check counts the account name only, `home_paths.find_accounts` over `local_accounts()` (form F10), not `home_paths.find`, which also reports the path forms F1 to F9 and would refuse a prompt that quotes a planted home-path sample after `scrub_account_bytes`. The entry now says so.
+2. Audit lens's condition (verifiable in git): each launch appends one line (launcher, sha256 of the prompt as sent, number of hits, result) to `.mob/records/<card>/prompt-checks.jsonl`, so the check's execution leaves a committed artifact, and the gate reviewer checks that every external seat of the card has a line. The check itself is a committed script with committed planted-fail tests written red first (already in the entry); a launcher's runtime behaviour that git cannot see is not asserted by the entry.
+
+Confirmation step (D232): the two objectors are each asked one question: is your condition now met by this form? The four Yes voters are asked one question: does the amendment change your vote?

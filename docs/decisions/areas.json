@@ -1546,5 +1546,11 @@
     "status": "adopted",
     "title": "Card 376 task-force declaration and card text (the account name standing alone is gone from tracked files; the tree scan gates by exit code; an account name with a space)",
     "order": 230
+  },
+  "D240": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 376 retro pick: prompts to an external driver are checked for the local account name before launch",
+    "order": 231
   }
 }

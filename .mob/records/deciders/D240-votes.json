@@ -1,0 +1,167 @@
+{
+ "decider": "D240",
+ "subject": "card 376 retro pick: prompts to an external driver are checked for the local account name before launch",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d240architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "Prompts to an external driver are checked for the local account name before launch",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I will read the proposal files and the agreement as a read-only architect seat, then vote.I’ll inspect the amendment, the existing checker, and how experimental entries are written.I’ll read the experimental section, the retro input, and how launchers send prompts.No\nCount F10 only (`home_paths.find_accounts` over `local_accounts()`), matching the hand `grep -w` and the incident: `find` also reports F1–F9, so a review prompt that quotes a planted home-path sample still refuses after `scrub_account_bytes`."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d240qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the check and its planted-fail tests are written red first",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal satisfies the QA lens. Requiring planted-fail tests written red first on a dedicated tooling card guarantees verifiable detection before automated enforcement lands. Evaluating `home_paths.find` with `local_accounts()` at the launcher boundary reliably catches violations before dispatch without leaking matched sensitive bytes into terminal output. The interim manual counting protocol ensures unverified state does not pass in the meantime. Note: test fixtures should explicitly cover diffs containing removed account references, multi-line substrings, and boundary encodings to verify the failure report properly identifies `line:"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d240dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the launcher runs `home_paths.find` with `home_paths.local_accounts()` over the prompt bytes",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nFrom the backend developer's seat, this is workable and I can comply without gaming it. The functions it relies on already exist in `scripts/home_paths.py`: `local_accounts`, `find(path, text, accounts)` and `scrub_account_bytes`. The tooling card can therefore be written red first with planted-fail tests at slice size. The refusal names only `line:form`, which is unambiguous.\n\nNotes:\n- `scrub_account_bytes` only removes the account name, not home paths, so a scrubbed diff can still be refused for a home path. The tooling card should say whether diff prompts also go through `scrub_bytes`.\n- `find` ignores case, but the hand-count `grep` "
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d240auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "Prompts to an external driver are checked for the local account name before launch",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nThis entry depends on runtime launcher behavior and external model service interactions, which git alone cannot verify. Git can confirm code presence and test commits, but cannot audit whether prompts are scrubbed, whether launches are refused, or whether the hand-count fallback is applied correctly. The standing evidence block claims all lines are git-checkable, yet this practice requires observing execution and network calls. A loophole exists where committed code passes git checks while the guard silently fails, allowing the account name to reach external services. Verification must be limited to artifacts git can inspect. Condition: re"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d240decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Prompts to an external driver are checked for the local account name before launch",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation is framed cleanly on evidence: a trial of three cards with an explicit metric (prompts sent to an external service holding the account name, target zero) and counter-metrics for false positives and latency. The team retains all required sign-off seats and review steps under standing evidence rules, with verification anchored in red-first planted-fail tests before landing. The trial owner is clearly designated, and fallback hand-scrubbing covers the interim."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d240coach-coach-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Prompts to an external driver are checked for the local account name before launch",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nRight-sized as an experiment: one concern, one owner, 3-card trial, with hypothesis, target metric and counter-metric. No new seats or ceremony — a launcher check, one retro line per refusal, and a lean hand-count interim until the tooling card lands. Separate items stay separate."
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "x240architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the check counts the account name only, `home_paths.find_accounts` over `local_accounts()` (form F10), not `home_paths.find`",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll verify the amended entry against the architect condition by reading the patch and agreement text, without changing anything.The condition names `find_accounts`; I'll read the amendment patch and the home-path forms next.The patch path is missing in this tree. I'll look in git history and the card 376 records for the amended wording.Yes\n\nThe amended form names `home_paths.find_accounts` over `local_accounts()` (form F10) as the launch check. That is the primary-window condition. Forms F1 to F9 no longer refuse a prompt that quotes a planted home-path sample after `scrub_account_bytes`."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x240qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The check itself is a committed script with committed planted-fail tests written red first",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment strengthens testability without passing bad state. Narrowing to account-form checks avoids false positives on planted path samples, while committing verification lines to prompt-checks.jsonl gives the gate reviewer an artifact that can be tested red first with planted missing entries. The check and its planted-fail tests remain written red first as a tooling card."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x240dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the check counts the account name only",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nMy vote stands. Both amendments make the rule tighter and easier to build. `find_accounts` already exists in `scripts/home_paths.py` (line 216) and reports only form F10, so planted home-path samples no longer cause false refusals. The `prompt-checks.jsonl` line gives the red test a clear target to assert. One note: the entry should say whether the sha256 is taken before or after `scrub_account_bytes` runs. I read \"as sent\" as after."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x240auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a launcher's runtime behaviour that git cannot see is not asserted",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment explicitly commits launch artifacts to prompt-checks.jsonl for gate review and states that unobservable runtime behavior is not asserted. This directly satisfies my condition to restrict verification to git-auditable artifacts without relying on launcher execution. The planted-fail tests and committed script further ensure the check itself is verifiable in version control."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x240decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the gate reviewer checks that every external seat of the card has a line.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment does not change my vote; it strengthens my endorsement. Refining the check to `home_paths.find_accounts` over `local_accounts()` prevents false positives on planted path samples, ensuring runs are not blocked erroneously. Appending each check to `.mob/records/<card>/prompt-checks.jsonl` provides committed, git-verifiable evidence for the independent gate reviewer to verify across every external seat, ensuring any future evaluation to adopt, reshape, or reject rests on empirical data. The team retains all necessary roles to sign off."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x240coach-coach-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "prompts to an external driver are checked for the local account name before launch",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nMy vote stands: I still endorse the amended proposal. The narrower check and one-line git record add verifiability without adding a seat or disproportionate ceremony, and the 3-card trial with counter-metrics keeps it sized to the risk."
+   }
+  ]
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run",
+ "window_notes": "Primary window one seat at a time: audit lens Qwen No (condition: restrict to what git can verify), QA agy Yes, architect Grok No (condition: count the account name only, form F10), coach Muse Yes, developer Cursor Yes, decider agy Yes. The proposer adopted both conditions in an amended entry. Confirmation step (D232): each objector asked one question and answered Yes (condition met); the four Yes voters asked whether the amendment changes their vote and answered Yes (no change). Six counted Yes after the step."
+}
