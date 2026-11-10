@@ -1,0 +1,179 @@
+{
+ "decider": "D247",
+ "subject": "card 368 retro pick: test classes that start a tool under a hard time limit share one xunit collection",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "x247architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "two such classes never overlap in one full run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe Collection attribute is the right, minimal xunit mechanism for this failure mode: parallel process-starting classes inflating wall time past a hard limit. The experiment is bounded (three cards), with a hypothesis, a metric, a suite-duration counter-metric, an owner, and a keep/change/remove review. Human reviewer checks and the two remaining overlapping classes deferred to a filed bug are acceptable for a trial. Extra serialization only costs minutes, which the counter-metric watches, so the rule does not invent false-positive failures."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x247qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "starts the bench tools or another external process under a hard time limit",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe shared collection prevents CPU and I/O contention between process-heavy test fixtures, stabilizing the non-deterministic 20-second timeout failures seen under full-suite load. From a QA perspective, the rule is verifiable: gate review can statically enforce the collection attribute on any qualifying test class, and suite stability is tracked against explicit metrics (zero timing failures, one sign-off attempt target) without masking genuine process exit errors or timeouts. Note: ensure gate reviewers verify that newly added process-starting test classes carry the attribute so regressions are caught immediately."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x247dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "so that two such classes never overlap in one full run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nFrom the developer's seat, I can follow this rule without gaming it. One attribute on each qualifying test class is cheap and easy to check. The gate reviewer catches any class that is missed, and the bug filed with this pick covers the two classes that still overlap. The evidence fits a cause from parallel load: the test fails under the full suite and passes when run alone. A note on wording: the phrase \"starts the bench tools or another external process under a hard time limit\" could be read as covering only classes that have their own time limit. The class that adds load, starting the tools about twenty times, must also join the colle"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x247auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "independent gate reviewer checks every new class",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nThe audit lens requires git-automated verification, but this proposal delegates enforcement to a human reviewer (“the independent gate reviewer checks every new class...”), creating a loophole where manual oversight can be missed or bypassed without detection. A trial of only three cards is also too short to validate the hypothesis. To bring this to Yes: replace the manual reviewer check with an automated CI or pre-commit hook that enforces the `[Collection(\"Bench processes\")]` attribute on any test class spawning time-limited tools, ensuring the practice is verifiable from git alone and cannot be silently broken."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x247decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "add or touch a test class that starts the bench tools",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation is solidly framed around empirical metrics: tracking sign-off attempts and full-suite timing failures against the counter-metric of suite duration. The review at the third card's retro provides a clear, evidence-based decision point to adopt, reshape, or reject. Verification and gate review responsibilities are well accounted for, giving the team the coverage needed for sign-off."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x247coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Test classes that start a tool under a hard time limit share one xunit collection",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nViewed as the agile coach, this proposal is sized to the problem. It makes one change: one attribute and one collection name, chosen to address a failure that cost two sign-off attempts and a wasted gate. It keeps the existing seats and adds no new role. The reviewer check is a single line in a review that already happens, so it adds little ceremony.\n\nThe evidence fits the timing theory. The test passed when run alone and failed under parallel load, and six of the seven retro voices pointed to the same fix. The counter-metric, the seconds the serial collection adds, guards against slowing the suite down. A three-card trial with a named o"
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "x247carchitect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": false,
+    "cite": "until an automated guard exists",
+    "cite_verbatim": true,
+    "decider_cite_ok": false,
+    "reply_head": "Yes\nThe amendment keeps the design sound: one collection, a short trial, and a red-first guard so CI enforces the attribute. Hand review is only the bridge. Three cards still suffice; the third retro can extend. I still endorse.",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   },
+   {
+    "tag": "x247carchitect-architect-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the independent gate reviewer checks every new class of that kind by hand and records it in its review until an automated guard exists",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment strengthens the design without adding rules. It makes the reviewer check a stopgap and adds an automated attribute guard written red first, which is enforceable and removes the human-only point of failure. One residual false-positive risk is how the guard recognises \"starts an external process\"."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x247cqa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "so that two such classes never overlap in one full run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment strengthens the proposal from a QA perspective. Requiring the automated guard to be written red first ensures the rule is verified by automated regression testing rather than relying solely on manual review. An automated test failing on missing collection attributes prevents regressions in CI without passing bad state. My endorsement stands."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x247cdev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a test that fails when a test class that starts the bench tools or another external process lacks the collection attribute",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nMy vote stands. The automated guard helps the developer seat: a test written red first that CI enforces is clearer and fairer than a manual review that can miss a class. One note: the guard needs a mechanical way to decide what \"starts an external process\" means, for example classes that use the shared process-launch helper. Without that, it could flag the wrong classes or miss some."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x247cauditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "so that CI, not a reviewer, catches a missed class",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nThe trial remains three cards, which is still too short to validate the hypothesis."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x247cdecider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "an acceptance test class that starts the bench tools or another external process",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nMy vote stands. The amendment strengthens evidence-based sign-off by pairing the trial with an automated guard written red first, while keeping the review criteria, metrics, and trial horizon intact for an objective evaluation at the third retro."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x247ccoach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "so that CI, not a reviewer, catches a missed class",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nMy vote stands. As agile coach, I think the amendment makes the task force a better fit for the task. A test that fails in CI now does the check, and the manual reviewer step lasts only until that test exists, so it adds little ceremony. Keeping the trial at three cards is proportionate. One note: the guard should use a simple, explicit way to spot classes that start a process, so it does not flag the wrong classes."
+   }
+  ]
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run",
+ "window_notes": "Both rounds launched with all six voters at once (D228 as amended by D244). Primary window 21:53:37 to 21:57:13 UTC (3 minutes 36 seconds): QA agy, architect Grok, coach Cursor, developer Cursor and decider agy Yes; audit lens Qwen No with a condition (the check must be automated, not a human reviewer; it also called three cards short). The proposer adopted the condition (the entry now says the gate reviewer checks by hand only until an automated guard exists, and the bug filed with this pick adds the guard, written red first); the trial stays at three cards with a review at the third retro that can extend it. Confirmation step (D232): the objector was asked one question and the five Yes voters whether the amendment changes their vote; 21:57:53 to 22:01:46 UTC (3 minutes 53 seconds). Four Yes voters (QA, coach, developer, decider) said their vote stands. The architect Grok answered Yes but its citation was inexact (uncounted) and the launcher substituted a Claude seat, which answered Yes and was counted; a substituted seat is not the voter (the D245 finding), so the architect is recorded as Yes by the substitute and by its own uncounted reply, which agree. The objector Qwen answered No again: its stated condition (\"replace the manual reviewer check with an automated check\") is met by the amended entry, and its remaining reason, that three cards is too short, was an aside in its primary reply and not its condition; a new demand is not adopted at this step. Result: five Yes, one No with a recorded residual (the length of the trial); No plus Support-it is 1 of 6 (17 percent, under the 30 percent rule); the third retro reviews whether three cards were enough."
+}

@@ -1588,5 +1588,11 @@
     "status": "adopted",
     "title": "Card 368 declaration: task force and card text (new bench rows publish no reply prefix)",
     "order": 237
+  },
+  "D247": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 368 retro pick: test classes that start a tool under a hard time limit share one xunit collection",
+    "order": 238
   }
 }

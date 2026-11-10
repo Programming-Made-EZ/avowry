@@ -119,5 +119,21 @@
   "options": "None were contested; all six reviewers agreed.",
   "outcome": "Adopted by six of six. Two reviewers had to be asked a second time because their first answer lacked a clear vote line.",
   "owner": "Nothing needed."
+ },
+ "D247": {
+  "decided": "A new rule for the team's test code: tests that start the benchmark tools under a strict time limit must run one class at a time, never alongside another such class.",
+  "why": "On the last card a timing test failed in two of four full test runs because other tests were starting the same tools at the same moment, which cost two sign-off attempts and about an hour of waiting.",
+  "changes": "Those test classes carry one shared label so the test runner never overlaps them. Until an automatic check exists, the independent reviewer checks every new class by hand; a bug filed now adds the automatic check, written failing first, and brings the two classes that still overlap into the group.",
+  "options": "Raising the time limit or leaving it as it is were the alternatives; six of seven reviewers wanted the classes serialised.",
+  "outcome": "Adopted for the next three cards. Five reviewers agreed outright. One reviewer first wanted the check automated, which was accepted, and still thinks three cards is too short a trial; that is recorded and the third retro will decide whether to extend it.",
+  "owner": "Nothing needed."
+ },
+ "RETRO368": {
+  "decided": "Looking back on card 368, which stopped new benchmark result rows from carrying any part of the model's reply text.",
+  "why": "The benchmark history is public and the owner did not want it to republish text written by AI vendors' models.",
+  "changes": "Both benchmark writers, the private results path and the per-model files now save no reply text. The 336 and 120 rows already published are byte for byte unchanged, which a test proves. One new rule was adopted (the timing-test rule above).",
+  "options": "Other ideas came up: one reviewed way to start background jobs (two were silently lost this card), a checklist of the tests that pin each documentation page, and a check on vote replies before they are counted.",
+  "outcome": "Signed off on the second attempt (the first failed on a timing test that this card had made flakier). The final run passed all 344 and 402 tests.",
+  "owner": "A decision for you: failed C# benchmark builds still save the temporary path, which includes the local account folder on Windows, in the row's diagnostics field. A bug is filed; it needs a rank."
  }
 }
