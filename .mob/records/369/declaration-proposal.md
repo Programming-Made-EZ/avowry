@@ -53,3 +53,9 @@ STANDING-RULES PREFLIGHT: Card format rule (three scenarios cover Z, O, M, B, I,
 ## Done when
 
     dotnet test Avowry.sln --filter "Status!=Pending"
+
+## AMENDMENT AFTER THE PRIMARY WINDOW OF D248
+
+Primary window result (all six voters at once, 4 minutes 16 seconds, 22:59:50 to 23:04:06 UTC): five Yes (QA agy, architect Grok, coach Cursor, developer Cursor, decider agy) and one No (audit lens Qwen). The No is a condition: the acceptance criteria compare the page with committed lockfiles, a drift loophole if a lockfile is stale; the test must enforce a locked restore in the CI environment and assert that the live restore output matches the committed lockfiles and the page. The proposer adopted it: ruling 2 is no longer conditional. The locked restore is part of criterion 3: `RestoreLockedMode` is on for the reference projects (reference/Directory.Build.props), and the acceptance test runs a restore of the two reference projects in locked mode (`dotnet restore --locked-mode`, which fails when a project and its lockfile disagree) and compares the packages that restore reports with the lockfiles and with the page rows; it runs in CI, which has network access, and is not skipped silently (a skip is never counted as a pass, and a missing network is reported as such). The architect's slice says how the test starts the restore; the facilitator's earlier wording "if the architect confirms it works" is withdrawn. The primary window voted on the original text above.
+
+Confirmation step (D232): the objector is asked one question: is your condition now met by this form? The five Yes voters are asked one question: does the amendment change your vote?
