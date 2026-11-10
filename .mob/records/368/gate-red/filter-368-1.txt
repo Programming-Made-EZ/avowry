@@ -1,0 +1,68 @@
+  Determining projects to restore...
+  Restored C:\Users\<user>\projects\gate368red-clone\tools\Avowry.Bench\Avowry.Bench.csproj (in 614 ms).
+  Restored C:\Users\<user>\projects\gate368red-clone\src\Avowry.Adapters.CSharp\Avowry.Adapters.CSharp.csproj (in 614 ms).
+  Restored C:\Users\<user>\projects\gate368red-clone\src\Avowry.Compiler\Avowry.Compiler.csproj (in 614 ms).
+  Restored C:\Users\<user>\projects\gate368red-clone\tests\Fixtures\StarvationProbe\StarvationProbe.csproj (in 614 ms).
+  Restored C:\Users\<user>\projects\gate368red-clone\tests\Fixtures\QuietChild\QuietChild.csproj (in 614 ms).
+  Restored C:\Users\<user>\projects\gate368red-clone\tests\Avowry.Acceptance.Tests\Avowry.Acceptance.Tests.csproj (in 661 ms).
+  Avowry.Compiler -> C:\Users\<user>\projects\gate368red-clone\src\Avowry.Compiler\bin\Debug\net8.0\Avowry.Compiler.dll
+  Avowry.Adapters.CSharp -> C:\Users\<user>\projects\gate368red-clone\src\Avowry.Adapters.CSharp\bin\Debug\net8.0\Avowry.Adapters.CSharp.dll
+  Avowry.Bench -> C:\Users\<user>\projects\gate368red-clone\tools\Avowry.Bench\bin\Debug\net8.0\Avowry.Bench.dll
+  QuietChild -> C:\Users\<user>\projects\gate368red-clone\tests\Fixtures\QuietChild\bin\Debug\net8.0\QuietChild.dll
+  StarvationProbe -> C:\Users\<user>\projects\gate368red-clone\tests\Fixtures\StarvationProbe\bin\Debug\net8.0\StarvationProbe.dll
+  Avowry.Acceptance.Tests -> C:\Users\<user>\projects\gate368red-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+Test run for C:\Users\<user>\projects\gate368red-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:02.37]     Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_scrubs_a_user_path_before_cutting_to_200_characters [FAIL]
+[xUnit.net 00:00:02.39]     Avowry.Acceptance.Tests.NewBenchRowsCarryNoReply.A_completed_run_saves_its_scores_and_no_reply_text [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_scrubs_a_user_path_before_cutting_to_200_characters [1 s]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: ""
+Actual:   "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"···
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_scrubs_a_user_path_before_cutting_to_200_characters() in C:\Users\<user>\projects\gate368red-clone\tests\Avowry.Acceptance.Tests\BenchmarkHarnessAcceptance.cs:line 161
+--- End of stack trace from previous location ---
+  Failed Avowry.Acceptance.Tests.NewBenchRowsCarryNoReply.A_completed_run_saves_its_scores_and_no_reply_text [1 s]
+  Error Message:
+   Assert.DoesNotContain() Failure: Sub-string found
+                                ↓ (pos 272)
+String: ···"dbfc","reply_head":"MARKER-368-1\\nmodule "···
+Found:  "MARKER-368-1"
+  Stack Trace:
+     at Avowry.Acceptance.Tests.NewBenchRowsCarryNoReply.AssertNoReply(String stored, String[] fragments) in C:\Users\<user>\projects\gate368red-clone\tests\Avowry.Acceptance.Tests\NewBenchRowsCarryNoReply.cs:line 299
+   at Avowry.Acceptance.Tests.NewBenchRowsCarryNoReply.A_completed_run_saves_its_scores_and_no_reply_text() in C:\Users\<user>\projects\gate368red-clone\tests\Avowry.Acceptance.Tests\NewBenchRowsCarryNoReply.cs:line 61
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:03.67]     Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_without_sensitive_content_is_only_cut_to_200_characters [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_without_sensitive_content_is_only_cut_to_200_characters [1 s]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: ""
+Actual:   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"···
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_without_sensitive_content_is_only_cut_to_200_characters() in C:\Users\<user>\projects\gate368red-clone\tests\Avowry.Acceptance.Tests\BenchmarkHarnessAcceptance.cs:line 220
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:04.80]     Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_masks_a_tilde_relative_path_inside_the_first_200_characters [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_masks_a_tilde_relative_path_inside_the_first_200_characters [1 s]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: ""
+Actual:   "Inspect [path] before answering."
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_masks_a_tilde_relative_path_inside_the_first_200_characters() in C:\Users\<user>\projects\gate368red-clone\tests\Avowry.Acceptance.Tests\BenchmarkHarnessAcceptance.cs:line 181
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:06.21]     Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_masks_a_secret_looking_token [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_masks_a_secret_looking_token [1 s]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: ""
+Actual:   "Use api_key=[redacted] before answering."
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.reply_head_masks_a_secret_looking_token() in C:\Users\<user>\projects\gate368red-clone\tests\Avowry.Acceptance.Tests\BenchmarkHarnessAcceptance.cs:line 201
+--- End of stack trace from previous location ---
+
+Failed!  - Failed:     5, Passed:     0, Skipped:     0, Total:     5, Duration: 5 s - Avowry.Acceptance.Tests.dll (net8.0)
