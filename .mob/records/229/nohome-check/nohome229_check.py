@@ -17,7 +17,7 @@ import mob_summary  # noqa: E402
 OUT, WORK = Path(sys.argv[1]), Path(sys.argv[2])
 FAKE = MC / "tests" / "fakes" / "fake_launch_seat.py"
 BS = chr(92)
-home = BS.join(["C:", "Users", "ringe", "secret", "creds.txt"])
+home = BS.join(["C:", "Users", "<user>", "secret", "creds.txt"])
 token = "ghp_" + "A1b2C3d4E5f6G7h8I9j0K1l2M3n4O5p6Q7r8"
 stderr = f"error: could not open {home}; token {token}; The command line is too long."
 inv = f'"{sys.executable}" "{FAKE}" copilot {{PROMPT}}'
@@ -45,7 +45,7 @@ res = sorted(OUT.rglob("decider-result.json"))[0]
 text = res.read_text(encoding="utf-8")
 vote = json.loads(text)["votes"]["copilot"]
 checks = {
-    "home path absent": "ringe" not in text.lower() and "secret" + BS * 2 not in text and "secret" + BS not in text,
+    "home path absent": "<user>" not in text.lower() and "secret" + BS * 2 not in text and "secret" + BS not in text,
     "token absent": token not in text,
     "contains_secret false": (not mob_summary.contains_secret(text)) if hasattr(mob_summary, "contains_secret") else "n/a",
     "attempt_log present": bool(vote.get("attempt_log")),

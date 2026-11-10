@@ -14,7 +14,6 @@ public class NoAccountNameInTrackedFiles
     [Fact]
     [Trait("Slice", "376")]
     [Trait("Criterion", "376-1")]
-    [Trait("Status", "Pending")]
     public async Task The_account_name_is_gone_from_tracked_files_and_the_bench_checker_still_refuses_it()
     {
         // Given every tracked file and the local account name read from the environment
