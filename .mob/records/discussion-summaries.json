@@ -1,0 +1,59 @@
+{
+ "note": "Plain-language summaries placed at the top of the public Discussion threads (the product owner's request of 2026-11-09). About 120 words each, no decision numbers, hashes or file paths. The full record stays below the summary in the thread.",
+ "D236": {
+  "decided": "How the team picks which AI assistants do each job on a card, and what it does when one of them misbehaves.",
+  "why": "Assistants were being left out of the rotation for days because a status label said they were out of quota, or because they once gave an odd answer. The product owner asked that this stop: a label is a claim to check, and a misbehaving assistant should be fixed, not benched.",
+  "changes": "Before every plan the team now runs a quick live test of every assistant and writes the result down. An assistant that passes goes back into use at once. One that misbehaves gets its cause found and fixed, and the fix is written down.",
+  "options": "Keeping the old habit of routing around a problem assistant was the alternative; it hid the causes and wasted capacity.",
+  "outcome": "Adopted. Two reviewers first objected (they wanted proof a git check can verify); their conditions were built into the rule and they agreed.",
+  "owner": "Nothing needed."
+ },
+ "D237": {
+  "decided": "The plan for card 162: teach the language guide and cheat sheet the two newest features, then re-run the test where AI models try to write Avowry from those two pages alone.",
+  "why": "The person who will write Avowry with an AI assistant only reads the guide and the cheat sheet. They did not yet explain the checking step or the copy-with-one-change step, so the earlier test no longer matched what people read.",
+  "changes": "The two pages gain short sections on both features. Two AI models then re-run the same test as before, so the results can be compared with the earlier ones.",
+  "options": "Splitting the work into two cards was considered; one card was chosen so the pages change only once.",
+  "outcome": "Adopted by six reviewers, with no objection.",
+  "owner": "Nothing needed. One model's half of the test waits until its usage allowance returns on 11 November."
+ },
+ "D238": {
+  "decided": "Freezing the exact wording of the documents that the AI-writing test reads, once the team finishes editing them.",
+  "why": "The test only means something if every model reads exactly the same pages. If anyone changes a page while the test is running, the results cannot be compared.",
+  "changes": "The pages and test files are recorded as they now are. From now until card 162 finishes, no one may edit them, and an automatic check fails if a recorded page differs from its record.",
+  "options": "Relying on the team simply remembering not to edit was considered and rejected.",
+  "outcome": "Adopted. One reviewer first objected that the freeze depends on automatic checks rather than on the code storage system itself; the team pointed to the rule already adopted for this, and the reviewer withdrew the objection.",
+  "owner": "Nothing needed."
+ },
+ "D239": {
+  "decided": "The plan for card 376: remove the machine owner's account name from every file in the public repository and make the scan that looks for it fail loudly.",
+  "why": "A public repository should not show the name of the account on the maintainer's computer. Earlier work removed it from file paths but it still stood alone in eight files, and the scan reported success even when it found something.",
+  "changes": "The name is replaced everywhere it appeared, the scan now stops with an error when it finds the name or a home path, and names made of two words are cleaned up completely.",
+  "options": "Rewriting the full git history was left out on purpose; that is a separate decision for the owner.",
+  "outcome": "Adopted by six reviewers, with no objection.",
+  "owner": "Optional: decide whether old history, which still contains the name, should be rewritten."
+ },
+ "D240": {
+  "decided": "A new safeguard: before the team sends any text to an outside AI service, it checks that the text does not contain the account name of the machine.",
+  "why": "While reviewing card 376, a prompt carried the old account name to an outside service by accident. The team caught it by hand, after the fact.",
+  "changes": "For the next three cards, every launcher that sends text to an outside AI service refuses to send a text containing the name, and writes a line in a log so the check can be verified later. Until the tooling exists, the team checks by hand.",
+  "options": "Relying on people to remember was the alternative; five of seven team members judged that a practice is not a guard.",
+  "outcome": "Adopted. Two reviewers first objected; the safeguard was narrowed to the account name only and given a verifiable log, and both agreed.",
+  "owner": "For your information: the account name reached one outside AI vendor once, in that review. Nothing else is needed."
+ },
+ "D241": {
+  "decided": "The plan for the work item called card 365: stop the team's own voting tool from rejecting several voters that start at the same moment.",
+  "why": "The tool keeps a log of who voted when that can only be added to, and it wrongly raised an error when two voters wrote to it at once. The team has run voters one at a time as a workaround, which makes each decision take 15 to 30 minutes instead of about 5.",
+  "changes": "Voters can start together again. Each write briefly holds back other writers; the log still cannot be edited after the fact, and any change would still show. A second card then fixes leftover scratch files that the same tool leaves behind.",
+  "options": "Separate files per voter merged at the end were considered; they would weaken the tamper-evidence.",
+  "outcome": "Adopted by six reviewers, with no objection.",
+  "owner": "Nothing needed. A later decision will remove the one-at-a-time workaround."
+ },
+ "RETRO376": {
+  "decided": "Looking back on card 376, which removed the machine owner's account name from the public repository.",
+  "why": "Each card ends with a short review of what worked, what did not, and what to change.",
+  "changes": "One new safeguard was adopted (see the decision about checking text before it goes to outside AI services). Other ideas were noted for later.",
+  "options": "Several ideas came up, such as marking in git which assistant wrote which change; only one was chosen at a time.",
+  "outcome": "The card passed all its checks (743 tests, none failed). One slip is reported: the old account name reached one outside AI vendor in a review.",
+  "owner": "You may want to decide whether to rewrite old history that still contains the name."
+ }
+}
