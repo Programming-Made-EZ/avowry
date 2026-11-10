@@ -2305,3 +2305,12 @@
 {"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-10T08:33:31.183089Z", "probe_taken_at": "2026-11-10T08:33:31.025684Z"}
 {"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-10T08:36:16.026256Z", "probe_taken_at": "2026-11-10T08:36:15.950628Z"}
 {"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-10T08:37:56.816069Z", "probe_taken_at": "2026-11-10T08:37:56.731957Z"}
+{"seat": "qwen", "role": "decider voter", "context": "decider-qwen", "card": "decider", "ts": "2026-11-10T11:08:26.141720Z", "probe_taken_at": "2026-11-10T11:08:26.034404Z"}
+{"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-10T11:08:26.561292Z", "probe_taken_at": "2026-11-10T11:08:26.284980Z"}
+{"seat": "agy", "role": "decider voter", "context": "decider-agy", "card": "decider", "ts": "2026-11-10T11:08:26.635680Z", "probe_taken_at": "2026-11-10T11:08:26.267418Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-10T11:08:26.713713Z", "probe_taken_at": "2026-11-10T11:08:26.579638Z"}
+{"seat": "agy", "role": "decider voter", "context": "decider-agy", "card": "decider", "ts": "2026-11-10T11:08:28.116961Z", "probe_taken_at": "2026-11-10T11:08:27.965782Z"}
+{"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-10T11:08:34.508878Z", "probe_taken_at": "2026-11-10T11:08:34.371006Z"}
+{"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-10T11:09:18.605996Z", "probe_taken_at": "2026-11-10T11:09:18.480258Z"}
+{"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-10T11:12:52.288710Z", "probe_taken_at": "2026-11-10T11:12:52.213933Z"}
+{"seat": "qwen", "role": "decider voter", "context": "decider-qwen", "card": "decider", "ts": "2026-11-10T11:16:31.551764Z", "probe_taken_at": "2026-11-10T11:16:31.482950Z"}
