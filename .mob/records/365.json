@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 365,
+ "title": "Two decision seats launched at the same moment are no longer refused by the seat-use history's append-only check",
+ "process": "card-mode rules run by hand; the Ready draft by a Cursor product-manager seat (reply-only) with the facilitator's reruns and rulings (two cards, 365 first and 374 right after); the declaration through Decider D241 (six counted Yes, the last window run one seat at a time, 18 minutes; trigger (d)); a read-only architect slice that reproduced both failure points and found that the race also loses and tears lines; the RED by a Cursor WRITING seat in the mob-defaults repository (9 characterisation rows and 11 red ids with expectedFailure, one commit because they share a test file); the GREEN by a fresh Claude context as a recorded stopgap (the declared Muse writing seat hit its weekly quota on its first call: seat-changes.md); the facilitator's isolated baseline gate (full mob-defaults suite, 1966 tests, only the five pre-existing failures); a second read-only review by Grok (accept with notes, bug 405); an independent gate review (PASS; red replay, four mutation sets, six-process test 5 of 5); a separate fresh sign-off (the full suite alone, 39 minutes); the retro voices and Decider D242 (a writing seat keeps each file's existing line endings; trigger (c), a re-run with swapped seats)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Cursor ctx-1",
+   "model": "cursor-agent in ask mode through cursor_reply.py, product manager, reply-only; the facilitator reran the key facts and ruled on the draft",
+   "evidence": "50527ac34614693fbe504e0c81a578b6e0a5b9c4"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md (both failure points reproduced, the lock and prefix rule, the test list, card 374 part)",
+   "evidence": "7ba2de58fbe27c3ab55ca5a338806cab764c1ae2"
+  },
+  {
+   "role": "red",
+   "seat": "Cursor ctx-3",
+   "model": "cursor-agent in print mode with tools through cursor_write.py (a linked worktree of mob-defaults, changes left uncommitted); characterisation and red in mob-defaults commit 224738b9416b57f65bed1476e0056b5717213bbc; the facilitator reproduced it and committed it; the avowry commit holds the red record",
+   "evidence": "0d16903c11095fec2794fd3f452c6c4b2e64a32c"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-4",
+   "model": "claude, a fresh subagent context, a RECORDED STOPGAP green seat in a linked worktree (Muse writing seat declared; weekly quota out until 2026-11-16: seat-changes.md); the green is mob-defaults commit 5d5da21e484fe0bb08b4d1878b649f62fa58b373, committed by the facilitator; the avowry commit holds the seat change",
+   "evidence": "69c32c347da985b0da73eed9b27cea5c8435e565"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent gate reviewer; gate-review.md (PASS) and the second read-only review by Grok (second-review.md)",
+   "evidence": "f67b5a16f7aff17f339369e1dee068e66b2c4918"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off; the full mob-defaults suite alone in a clean clone",
+   "evidence": "751d85b2e7064b0bf6de8c8d7ed409111855da7d"
+  }
+ ],
+ "retro": "docs/retros/card-365-2026-11-10.md",
+ "notes": "Done checks met: criterion 1 (six decider processes released at one barrier all start and exit 0, the history holds exactly six terminated lines, one per context, and no process says 'not append-only'; the in-process interleaving, the overlap and the non-git fallback tests pass); criterion 2 (a seen line removed, changed, reordered or the file emptied is still refused at the start check and at the end check, while another run's appended line is accepted; a live lock held past the wait refuses with a named error and a dead holder's lock is swept); criterion 3 (each run's line_index is the verified position of its own line and the Claude rotation reason equals the rotation recomputed from the committed file). The red tests failed by assertion on the pre-change tree (12 failures for 11 ids, 0 errors) and pass after the green, which removed the expectedFailure marks and changed no test logic. Known limits stated in the reviews: residual lock races named in bug 405 (a live lock swept by age, a create-then-write gap on Linux, a Windows delete-pending name); an unlocked writer can still append a line (outside tamper evidence for a prefix); the card-mode branch of gate_seat has no test of its own. Bug 374 (prompt files in the repository root) is the card right after; the removal of the one-seat-at-a-time line from the D228 preflight is a later Decider after both cards ship. Five older mob-defaults tests fail on the base and after (bug 406)."
+}

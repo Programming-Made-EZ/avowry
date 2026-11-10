@@ -1558,5 +1558,11 @@
     "status": "adopted",
     "title": "Card 365 task-force declaration and card text (concurrent seat-use appends never fail the append-only check; bug 374 right after)",
     "order": 232
+  },
+  "D242": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 365 retro pick: a writing seat keeps each file's existing line endings",
+    "order": 233
   }
 }

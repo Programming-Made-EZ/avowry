@@ -1,0 +1,167 @@
+{
+ "decider": "D242",
+ "subject": "card 365 retro pick: a writing seat keeps each file's existing line endings",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d242architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "keep each file's existing line endings; use LF only for a file you create",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the committed proposal files and the agreement patch, then vote as Architect on whether the record, checker, and findings design is sound.I'll read the amendment patch, agreement, retro voices, and probe so the Architect vote is based on the committed design.I'll check the experimental section and how similar checks are recorded so the vote matches the agreement's design.Yes\nThe two-numstat checker is exact: counts differ only when some lines match after stripping CR-at-EOL, so a content-only edit on a CRLF file is not flagged. The brief change removes the card 365 cause. Restore-before-commit is the enforcement; the planted-fail (C"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d242qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "are written red first as a tooling card",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe verification strategy is sound: comparing raw diff numstat against CR-ignored numstat directly detects line-ending churn without false-negative masking. The requirement to write the check and a planted-fail test red first on a dedicated tooling card guarantees testability before automation lands, while the manual two-command audit and record logging bridge the interim without passing bad state. Suggestion for the tooling card: include test cases for both CRLF-to-LF and LF-to-CRLF conversions, as well as mixed endings, to ensure full coverage of repository edge cases."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d242dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "keep each file's existing line endings; use LF only for a file you create",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nAs the seat that works under this rule, I can follow it without gaming it. \"Keep each file's existing line endings; use LF only for a file you create\" is clear and does not conflict with red-first order, unit commits or slice limits. The numstat comparison is a fair, mechanical check that a seat cannot argue its way past.\n\nNotes:\n- Files with mixed line endings should say \"keep each line's ending as found\", so that \"existing\" is not read as one ending per file.\n- On Windows, `core.autocrlf` can make the working copy differ from the committed copy. The tooling card should pin or record that setting so it does not cause false flags.\n- A se"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d242auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A writing seat keeps each file's existing line endings",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal introduces a clear, git-verifiable check comparing `--numstat` against `--ignore-cr-at-eol --numstat` to detect line-ending conversions. The practice leaves no git loophole: any uncorrected conversion will appear in the commit diff, and the restoration step is explicitly bounded before commit. The manual facilitator run until tooling lands is transparent and auditable. My reservation is that reliance on manual checks introduces process variance; the tooling card should land promptly to automate enforcement. The metric and trial window are appropriately scoped."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d242decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Counter-metric: false flags per card and minutes spent restoring a file.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation is solidly framed on empirical evidence: it defines a specific hypothesis, a clean target metric of zero converted files per card, and balanced counter-metrics tracking false flags and restoration overhead. The 3-card trial period with designated ownership provides a structured window to decide whether to adopt, reshape, or reject based on observed data. All requisite sign-off seats, review records, and independent gate checks remain in place and accounted for under the standing evidence protocol."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d242coach-coach-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A writing seat keeps each file's existing line endings",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe entry is sized right for one concern: it fixes a root cause in the brief itself, adds one cheap mechanical check and has a measurable target of 0. It also carries a counter-metric, an owner and a three-card expiry. No perspective seems missing, since all seven voices named the same incident.\n\nTwo notes. The tooling card duplicates part of what the facilitator does by hand, so keep it small. And the hand-run numstat step is a stopgap, so it should lapse once the check lands."
+   }
+  ]
+ },
+ "rerun_swapped_seats": {
+  "architect": [
+   {
+    "tag": "t242architect-architect-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "keep each file's existing line endings; use LF only for a file you create",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe check is small and easy to enforce. It compares `git diff --numstat` with `git diff --ignore-cr-at-eol --numstat`, and the two counts can only differ when some lines changed by their line endings alone. A seat that keeps a file's endings, including a file with mixed endings, never trips it, so the risk of false flags is low.\n\nNotes:\n- Run the check with `-c core.autocrlf=false` so that a per-machine Git setting doesn't hide or invent differences.\n- New untracked files don't appear in `git diff`. That is fine, since the rule only covers files that already exist.\n- The planted-fail test should also include a CRLF file with one LF line "
+   }
+  ],
+  "qa": [
+   {
+    "tag": "t242qa-qa-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the check and its planted-fail test (a CRLF file rewritten to LF) are written red first",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal explicitly commits to writing the check and its planted-fail test red first, satisfying the red-first testing requirement. The launcher’s numstat comparison reliably detects line-ending changes, and the automatic restoration prevents bad state from entering the commit. The manual fallback during the trial is a reasonable temporary measure for an experiment. I endorse this as it aligns with our QA lens and provides measurable metrics for the trial."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "t242dev-dev-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A writing seat keeps each file's existing line endings",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe rule is workable and fair to the work. \"Keep each file's existing line endings; use LF only for a file you create\" is unambiguous, and I can follow it without gaming it. It also removes the conflict card 365 hit, where the brief's own \"LF in every file\" rule forced the conversion. The two-numstat comparison is a cheap, mechanical check. Until the tooling card lands, I can run the commands by hand and record the result.\n\nNotes:\n- Mixed-ending files could give false flags if a seat edits lines that have mixed endings. The counter-metric already covers this.\n- A new file created inside a CRLF-heavy directory is handled correctly, becaus"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "t242auditlens-auditlens-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "records the result in the red or green record",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nFrom an audit perspective, preserving existing line endings strengthens verification by eliminating spurious whole-file churn that obscures real changes in git diffs. The practice is completely verifiable from git alone: any commit or worktree can be objectively re-verified by comparing the two numstat outputs. Recording the manual checks in the committed records until tooling lands closes potential loopholes and preserves a clean audit trail."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "t242decider-decider-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "keep each file's existing line endings; use LF only for a file you create",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe evidence is concrete and can be checked: the CRLF file that was converted to LF on card 365, and all seven voices naming it. The fix goes after the actual cause, the brief's \"LF in every file\" rule. The entry has a metric, a counter-metric, a three-card trial and an owner, so the adopt, reshape or reject decision at the end will rest on counted results. Until the tooling card lands, the facilitator runs the two numstat commands by hand and records the result, so there is no gap in coverage. No extra sign-off seat is needed, because this changes only the brief and the commit check.\n\nNote: I couldn't confirm the patch file or the `lf_n"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "t242coach-coach-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A writing seat keeps each file's existing line endings",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the named proposal files and agreement only—no edits, no mutating commands—then vote as Agile Coach on whether this is sized to the task.Yes\nThe change is sized to the failure: one concern, other retro items named so they stay separate, and no extra seat. The brief rewrite hits the cause (the launcher already leaves CRLF files alone). The two-numstat check is a cheap mechanical loop; card 196 already showed a seat can ignore a line-ending brief. Manual until a tooling card lands matches D236 and D240. Hypothesis, metric, counter-metric, owner, and a 3-card trial fit the experimental section. Note: the D234 standing-evidence block be"
+   }
+  ]
+ },
+ "trigger_line": "(c) the re-run was run because the primary window passed with no No and no amendment and the proposal changes the agreement",
+ "window_notes": "Primary window one seat at a time (card 374 still open): audit lens Qwen, QA agy, architect Grok, coach Claude, developer Cursor, decider agy; six Yes, 15 minutes. Re-run with swapped seats (trigger (c)): audit lens agy, QA Qwen, architect Cursor, coach Grok, developer Claude, decider Cursor; six Yes, 13 minutes. No No, no amendment in either window."
+}

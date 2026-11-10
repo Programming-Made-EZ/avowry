@@ -55,5 +55,21 @@
   "options": "Several ideas came up, such as marking in git which assistant wrote which change; only one was chosen at a time.",
   "outcome": "The card passed all its checks (743 tests, none failed). One slip is reported: the old account name reached one outside AI vendor in a review.",
   "owner": "You may want to decide whether to rewrite old history that still contains the name."
+ },
+ "D242": {
+  "decided": "A new working rule for the AI assistants that write code for the team: when they edit a file, they must keep the file's existing line-ending style instead of converting it.",
+  "why": "On the voting-tool fix, an assistant was told to save every file the same way, so it rewrote a whole test file. The change then looked like every line had changed, which hid the real edit from reviewers. The team had to undo it by hand.",
+  "changes": "For the next three cards the instructions to writing assistants change, and a quick comparison of the change with and without line-ending differences flags any file that was converted, so it is put back before it is saved.",
+  "options": "Leaving the instruction as it was and fixing files by hand each time was the alternative; all seven reviewers named this as the one thing to fix.",
+  "outcome": "Adopted. Six reviewers agreed in the first round and six different reviewers agreed again in the second round the rules require for a change to the team agreement.",
+  "owner": "Nothing needed."
+ },
+ "RETRO365": {
+  "decided": "Looking back on card 365, which fixed the team's voting tool so several voters can start at the same moment.",
+  "why": "Each card ends with a short review of what worked, what did not, and what to change.",
+  "changes": "One new working rule was adopted (keep a file's existing line-ending style). A card for the leftover scratch files is next; after that the one-voter-at-a-time workaround can be removed.",
+  "options": "Several smaller ideas came up, such as checking an assistant's usage allowance before it is given a job; they were noted for later.",
+  "outcome": "The fix passed all checks: the whole tooling test suite ran 1966 tests with only the five failures that already existed before this card. Six voters starting together now all succeed, and the log still refuses edits to earlier entries.",
+  "owner": "Nothing needed. Decision time per vote window before the fix: 18 to 40 minutes; the after numbers come with the next windows."
  }
 }
