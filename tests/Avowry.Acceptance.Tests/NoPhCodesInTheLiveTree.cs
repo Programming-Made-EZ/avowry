@@ -62,15 +62,14 @@ public class NoPhCodesInTheLiveTree
         ("H3", "docs/retros/", "retrospectives are dated history of what the team saw at the time"),
         ("H4", "bench/results/", "pushed benchmark rows are schema: a row written with a code stays as pushed"),
         ("H5", "board/", "the board files are generated from the issues and never hand-edited"),
-        ("H6", "MOB.md", "generated from the records; it follows them and is regenerated, not edited"),
     ];
 
     [Fact]
     [Trait("Slice", "361")]
     public async Task Every_history_allow_list_entry_still_holds_a_PH_code()
     {
-        // Given the six allow-listed history areas (ids H1 to H6), each with its reason
-        Assert.Equal(["H1", "H2", "H3", "H4", "H5", "H6"], History.Select(entry => entry.Id));
+        // Given the five allow-listed history areas (ids H1 to H5; H6, MOB.md, was removed on 2026-11-10 when its last old-prefix text rotated out of the generated file), each with its reason
+        Assert.Equal(["H1", "H2", "H3", "H4", "H5"], History.Select(entry => entry.Id));
         var files = await TrackedFilesAsync();
 
         // When each area is scanned for the old prefix without the allow-list

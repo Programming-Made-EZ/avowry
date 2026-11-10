@@ -11,12 +11,12 @@ BRIEF_HEADING = "### Trademark search brief"
 # key -> (line prefix, phrases the item line must carry after the answered tag)
 ITEMS = {
     "name": ("- Public name:", (
-        "Avowry confirmed (D125); registration status pending the owner's trademark search.",)),
+        "Avowry confirmed (D125); the owner does not intend to register a trademark before the preview (2026-11-10).",)),
     "holder": ("- Holder at", (
         "Programming Made EZ;", "2026 is an assumption the owner can correct (docs/LICENSING.md);",
         "same holder for the trademark line: yes (card 366).")),
     "search": ("- Professional trademark search:", (
-        "commissioned by the owner; pending result", "Publishing the name waits on the result.")),
+        "Declined by the owner on 2026-11-10", "Publishing waits only for the free first-pass screen's CLEAR report and the owner's written approval.")),
     "lawyer": ("- The four lawyer questions", ("skipped by owner decision.",)),
     "author": ("- Author identity going forward:", ("keep.",)),
     "vendor": ("- Unread vendor terms", ("read-first (card 367).",)),
@@ -62,12 +62,12 @@ ANSWERED = "\n".join([
     f"Command: read from NOTICE, TRADEMARKS.md, D121, D125 and the owner's answers of 2026-11-08 "
     f"(NOTICE and TRADEMARKS.md filled by card 366). Scan tip: {H40}. Every item is answered; the search "
     "waits on its result and four items are carried by cards 367 to 370.",
-    "- Public name: answered 2026-11-08. Avowry confirmed (D125); registration status pending the owner's "
-    "trademark search.",
+    "- Public name: answered 2026-11-08. Avowry confirmed (D125); the owner does not intend to register a "
+    "trademark before the preview (2026-11-10).",
     "- Holder at `NOTICE:2` and `TRADEMARKS.md:5`: answered 2026-11-08. Programming Made EZ; 2026 is an "
     "assumption the owner can correct (docs/LICENSING.md); same holder for the trademark line: yes (card 366).",
-    "- Professional trademark search: answered 2026-11-08. commissioned by the owner; pending result. "
-    "Publishing the name waits on the result.",
+    "- Professional trademark search: answered 2026-11-08. Declined by the owner on 2026-11-10 (no professional "
+    "search). Publishing waits only for the free first-pass screen's CLEAR report and the owner's written approval.",
     "- The four lawyer questions (D121): answered 2026-11-08. skipped by owner decision.",
     "  1. Do the generated runtime helper files need a notice, given that generated code belongs to the user?",
     "  2. Is a trademark policy on this name enforceable?",
@@ -198,15 +198,15 @@ class PrePublicationOwnerItemsTests(unittest.TestCase):
         self.assertEqual(9, len(top_items(read_page())))
 
     def test_the_owner_items_check_reports_a_missing_answer(self):
-        search = "- Professional trademark search: answered 2026-11-08. commissioned by the owner; pending result. "
+        search = "- Professional trademark search: answered 2026-11-08. Declined by the owner on 2026-11-10 (no professional search). "
         holder = next(ln for ln in ANSWERED.splitlines() if ln.startswith("- Holder at"))
         cases = (
             ("E1", planted(search, "- Professional trademark search: OPEN, asked 2026-11-08. Answer: commission / skip. "),
              ["owner-items: search: not answered 2026-11-08"]),
             ("E2", planted(holder + "\n", ""),
              ["owner-items: count: expected 9 items, found 8", "owner-items: holder: not answered 2026-11-08"]),
-            ("E3", planted("commissioned by the owner; pending result.", "commissioned by the owner."),
-             ['owner-items: search: missing "commissioned by the owner; pending result"']),
+            ("E3", planted("Declined by the owner on 2026-11-10", "Declined."),
+             ['owner-items: search: missing "Declined by the owner on 2026-11-10"']),
             ("E4", planted("skipped by owner decision.", "ask."),
              ['owner-items: lawyer: missing "skipped by owner decision."']),
             ("E5", planted("\n" + BRIEF_HEADING, "\n- Extra item: answered 2026-11-08. none.\n\n" + BRIEF_HEADING),
