@@ -15,11 +15,12 @@ EMAIL_RE = re.compile(r"\S+@\S+\.\w+")
 ASSIGN_RE = re.compile(r"(?i)\b(?:api[_-]?key|secret|token|passwd|password|authorization|access[_-]?key)\b\s*[:=]\s*\S+")
 WHERE, LICS = ("shipped", "generated", "test-only"), ("MIT", "Apache-2.0")
 BLOCKED = (
-    "package-licences", "vendor-terms", "secrets-scan", "author-metadata",
+    "package-licences", "restored-package-licences", "vendor-terms", "secrets-scan", "author-metadata",
     "name-collisions", "owner-items", "recommendations",
 )
 HEADINGS = {
-    "package-licences": "Package licences", "vendor-terms": "Vendor terms",
+    "package-licences": "Package licences", "restored-package-licences": "Restored package licences",
+    "vendor-terms": "Vendor terms",
     "secrets-scan": "Secrets scan", "author-metadata": "Author metadata",
     "personal-names": "Personal-name check", "owner-items": "Owner items",
     "name-collisions": "Name collisions (not a professional search)",
@@ -37,7 +38,9 @@ COMPLIANT = "\n".join([
     "| Microsoft.NET.Test.Sdk | 17.11.1 | MIT | nuspec | test-only |",
     "| xunit | 2.9.2 | Apache-2.0 | nuspec | test-only |",
     "| xunit.runner.visualstudio | 2.8.2 | Apache-2.0 | nuspec | test-only |",
-    "transitive: not reviewed", "Recommendation: proceed.",
+    "transitive: see Restored package licences", "Recommendation: proceed.",
+    "## Restored package licences", f"Command: dotnet restore. HEAD {H40}",
+    "The Avowry tool restores no packages.", "Recommendation: proceed.",
     "## Vendor terms", f"Command: list. HEAD {H40}",
     "| model | vendor | published | terms |", "| --- | --- | --- | --- |",
     "| grok-4.7 | xAI (inferred) | reply_head | not reviewed |",
@@ -165,8 +168,10 @@ def collect_failures(page, ctx):
                         for r in rows(body)
                     ):
                         fail(cid, "row missing licence or where-used word")
-                    elif "not reviewed" not in body:
-                        fail(cid, "transitive line does not say not reviewed")
+                    elif "not reviewed" in body:
+                        fail(cid, "still says not reviewed")
+                    elif "Restored package licences" not in body:
+                        fail(cid, "does not point to Restored package licences")
             elif cid == "vendor-terms":
                 models = ctx.get("models")
                 if models is not None:
