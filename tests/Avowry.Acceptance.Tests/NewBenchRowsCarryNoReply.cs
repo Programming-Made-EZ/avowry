@@ -5,6 +5,7 @@ using Avowry.Acceptance.Tests.Support;
 
 namespace Avowry.Acceptance.Tests;
 
+[Collection("Bench processes")] // the two classes that start the bench tools under a 20 second limit never overlap (card 368: the extra launches made the timing test flaky under the full run)
 public sealed class NewBenchRowsCarryNoReply
 {
     private const string PhraseHistorySha = "6fcd386156464c405c34cc6e7ae68847e45213c63eac3e8647c3a8dfcc6f7202";

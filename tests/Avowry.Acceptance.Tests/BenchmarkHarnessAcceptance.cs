@@ -6,6 +6,7 @@ using System.Text.Json;
 
 namespace Avowry.Acceptance.Tests;
 
+[Collection("Bench processes")] // the two classes that start the bench tools under a 20 second limit never overlap (card 368: the extra launches made the timing test flaky under the full run)
 public class BenchmarkHarnessAcceptance
 {
     // Feature: A model that outlives its timeout is stopped with its whole process tree
