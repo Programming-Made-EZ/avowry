@@ -95,5 +95,21 @@
   "options": "Several ideas came up, such as fixing five older failing tests and checking the instructions given to the first-time Qwen writing assistant against the code.",
   "outcome": "The fix passed all checks: 1976 tests, with only the five failures that already existed. The retro itself, with seven voters at once, took 6 minutes 20 seconds.",
   "owner": "Nothing needed."
+ },
+ "D245": {
+  "decided": "A new rule for the team: when a change affects how an AI assistant is started, the team must start each affected assistant for real, in two kinds of folder, and keep the proof, before the change is accepted.",
+  "why": "On the last card, five faults in the new safety settings passed all automated tests and were found only when an assistant was actually started. Some made an assistant unable to run any command at all.",
+  "changes": "For the next three such cards, each affected assistant is started once in a plain folder and once in a project copy, runs one harmless command, and the proof (which version was tested and the exact output, with a checksum) is saved with the card. A small script will write that file so it cannot be typed by hand.",
+  "options": "Relying on the automated tests alone was the alternative; six of seven team members named a live start as the missing check.",
+  "outcome": "Adopted. One reviewer first objected that a hand-typed proof cannot be checked; the rule was changed so the proof carries the tested version and the exact output with a checksum and is written by a script, and the reviewer agreed.",
+  "owner": "Nothing needed."
+ },
+ "RETRO379": {
+  "decided": "Looking back on card 379, which made the team's AI assistants unable to delete whole folders by accident.",
+  "why": "Twice in two days an assistant typed a command that deletes a whole folder. Both times nothing was lost, but the ban only works if the tools enforce it.",
+  "changes": "Assistants started through the team's tools now refuse folder-deleting commands: proved by running real assistants against folders that do not exist. One reviewed cleanup tool removes old throwaway copies, and only the facilitator runs it. One new rule was adopted (start each affected assistant for real before accepting such a change).",
+  "options": "Several smaller ideas came up, such as asking a separate assistant to write the failing test when a live problem appears, instead of the facilitator.",
+  "outcome": "The change passed all checks (2012 tests, only the five failures that already existed). It is not complete: three assistants (Muse, agy and Codex) are not covered yet, and your own interactive sessions get only a partial guard unless you install a setting on your machine.",
+  "owner": "A decision for you: whether to install the guard in your own user-level Claude settings so it also covers interactive sessions and their helpers. It may also affect Cursor on this machine; say if you want that tried."
  }
 }

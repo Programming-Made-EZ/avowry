@@ -1576,5 +1576,11 @@
     "status": "adopted",
     "title": "Card 374 retro pick: a merge is verified before a gate starts",
     "order": 235
+  },
+  "D245": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 379 retro pick: a change to how seats start carries a live start-proof",
+    "order": 236
   }
 }
