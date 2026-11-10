@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:e78f6ff355f86122ba9a301e30118d642292d106b577d3a991f1d0ec578b70f1 -->
+<!-- board-table-sha256:76530d01d1d8423641e2f426378c629cddca20b4370c77be7c992395e9a416bf -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -227,16 +227,9 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 205 | 295 A legacy system's exercised behaviour is pinned as reviewable avowries before anyone changes it | Ready | 030 (synthesize Avowry from existing code; this card supplies the behaviour oracle that synthesis is checked against) |
 | 206 | 296 Behaviour characterized from a legacy system runs the same on a second target | Ready | 295; 108 (a second target's specs project); a real, non-spike second adapter (no card yet: card 028 is its spike and informs risk only, it is not evidence of a supported adapter) |
 | 207 | 031 Converter between LLM-optimized Phrase and a human-friendly rendering (spike) | Ready | 030 |
-| 208 | 315 A decision run that cannot register its vote lock starts without any warning | Ready | card 298 (the holder format) |
-| 209 | 307 Two overlapping decision runs on one checkout do not fail each other's seat-use history check | Ready | card 298 (the overlap holder format) |
 | 210 | 156 Personas capture the same ten fields | Ready | 154 |
 | 211 | 304 The two card-214 readiness tests pass without the thread-pool floor on the development machine | Ready | card 217 (the shared async runner, the guard and the run-pair record) |
 | 212 | 302 The C# baseline benchmark children never build concurrently | Ready | card 264 (the launcher) |
-| 213 | 300 A legacy turn on a Codex machine whose shell cannot start is refused before launch | Ready | card 297 (the command probe and the placement gate) |
-| 214 | 301 The command probe cannot be passed by copying its nonce from the prompt | Ready | card 297 (the command probe) |
-| 215 | 286 A NO OBJECTION reply is stored as no objection, not as a No vote | Ready | none |
-| 216 | 232 A seat driver never opens a browser or other UI on the shared machine | Ready | none |
-| 217 | 323 A plain git commit or push is refused while another writer or a vote holds the checkout | Ready | card 299 (the writer lock file mob-writer.lock and the existing vote lock) |
 | 218 | 316 The gate runs the changed area's narrow suites and checks each step's failure path | Done | none |
 | 219 | 317 A card that names no consumer value cannot reach Ready | Done | none |
 | 220 | 305 A Codex build seat's commands go through the delete scan | Done | card 297 (the command probe and placement), card 228 (the scan for hidden, encoded and file-content forms) |
@@ -256,36 +249,9 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 234 | 254 The delete scan cuts its known false positives | Done | card 228 |
 | 235 | 231 Uncommitted work in a watched repository older than about 30 minutes fails the checks | Done | none |
 | 236 | 281 Muse seats run with a known workspace trust | Done | none |
-| 237 | 270 A Grok decision seat receives its whole prompt and casts a vote | Superseded/Withdrawn | none (card 229 is the Copilot twin; the team may fold the two at ready) |
-| 238 | 282 A seat's prompt reaches it without placeholder rewriting | Superseded/Withdrawn | none |
-| 239 | 277 An empty decision vote opens a diagnosis; only quota or unavailability excludes a model | Superseded/Withdrawn | none |
-| 240 | 265 Decision windows launch voters in parallel safely | Superseded/Withdrawn | card 226 (the decision-seat gate) |
-| 241 | 269 mob_process.py keeps LF line endings | Superseded/Withdrawn | none |
-| 242 | 238 The reshaped process wiki carries the slice limits and a measured upkeep | Superseded/Withdrawn | card 237 |
-| 243 | 236 The process wiki closes the writer's seven content gaps | Superseded/Withdrawn | card 234 |
-| 244 | 255 The delete scan covers the residual forms and the path forms | Superseded/Withdrawn | card 228 |
-| 245 | 233 Evaluate side-by-side pairing tooling before building pairing | Superseded/Withdrawn | none |
-| 246 | 235 Green commit bodies carry a checked Proof block | Superseded/Withdrawn | none |
-| 247 | 256 Command-scan reports are readable and trusted | Superseded/Withdrawn | card 228 |
-| 248 | 257 Git-state detectors catch unpushed and hidden work | Superseded/Withdrawn | card 227 (push detector) |
-| 249 | 267 mob-defaults docs contain no dates | Superseded/Withdrawn |  |
-| 250 | 216 The default templates carry the pending process rulings | Superseded/Withdrawn | none |
-| 251 | 220 The loop runner starts a corrective card while a finding blocks | Superseded/Withdrawn | none (card 205 is done) |
-| 252 | 221 The loop runs a card in the repository its Repository line names | Superseded/Withdrawn | none |
-| 253 | 222 The loop wires its retro and re-rank steps from the repository and stops when one fails | Superseded/Withdrawn | none |
-| 254 | 223 The loop takes the per-card retro from every role, each in its own context | Superseded/Withdrawn | 208 (every retro seat starts on a fresh pinned probe), 222 (the loop calls the command and stops when it fails) |
-| 255 | 224 The loop re-ranks Ready through the product manager and a Decider after every card | Superseded/Withdrawn | 208 (every re-rank seat starts on a fresh pinned probe), 222 (the loop calls the command and stops when it fails) |
-| 256 | 225 Card mode reads only role lines as the task force | Superseded/Withdrawn | none |
-| 257 | 213 The checker rejects an incomplete objection window | Superseded/Withdrawn | none |
-| 258 | 218 A mid-card retro removal does not drop the seat before the retro | Superseded/Withdrawn | 209 (the refusal of every non-retro removal lands first; this card closes the one accepted form that still removes a seat early) |
-| 259 | 212 Every mob re-ranks at every loop boundary | Superseded/Withdrawn | 208 (the runner gaps, including its retro and re-rank commands: this card hardens the re-rank step that 208 wires in). |
-| 260 | 215 Every mob reviews each previous adjustment at stand-downs and retros | Superseded/Withdrawn | 208 (the runner gaps, including its retro command: this card adds record fields to the step 208 wires in). |
-| 261 | 206 The findings file mirrors the audit register | Superseded/Withdrawn | 205 (the facilitator start gate must exist so that this card, a corrective card, is the kind that starts while F-001 and F-008 block). 207 depends on this card. |
-| 262 | 207 The findings file history rules are checked | Superseded/Withdrawn | 206 (the findings file and its schema check must exist before its history can be checked). |
 | 263 | 192 Source files end in .avowry; the repository's own sources switch in the same card | Superseded/Withdrawn | 191 |
 | 264 | 183 Add the licence file | Done | none |
 | 265 | 154 Docs state principles and rationale, not who said them | Done | 153 |
-| 266 | 139 Loop step: re-probe unavailable drivers and restore them | Superseded/Withdrawn | 064 |
 | 267 | 106 Mutation check: the generated C# specs catch broken implementations | Done | 087 |
 | 268 | 119 Generate matching Phrase and C# codebases of 1, 10 and 50 endpoints | Done | 111 |
 | 269 | 130 Plain C# codebases in ordinary hand-written style | Done | 119 |
@@ -296,15 +262,6 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 274 | 092 Benchmark: scrub a stored reply before cutting it to 200 characters | Done | 085 |
 | 275 | 037 Benchmark: docs in the prompt, and cold runs | Done | 090, 091, 092 (sliced: docs-in-context mode, cold runs and the reply-head scrub moved to those cards; this card is now the baseline RUN) |
 | 276 | 088 Head-to-head: Phrase vs plain C# on the frozen bar | Superseded/Withdrawn | 085, 086, 094, 087, 037 |
-| 277 | 065 Loop: run one card with a pinned toolchain | Superseded/Withdrawn | 064 |
-| 278 | 066 Loop: bounded retry, park and split on failure | Superseded/Withdrawn | 065 |
-| 279 | 078 Ready check: reject a role-only story before the product manager is asked | Superseded/Withdrawn | 065 |
-| 280 | 067 Loop: on Done run the retro step and re-rank, then the next card | Superseded/Withdrawn | 066 |
-| 281 | 062 Atomic runs: a card runs in a fresh worktree and ends landed or discarded | Superseded/Withdrawn | none |
-| 282 | 068 Loop: liveness, publish, STOP file and the Needs-product-owner file | Superseded/Withdrawn | 067 |
-| 283 | 072 Loop: pace the work against the finite driver allotments | Superseded/Withdrawn | 066 |
-| 284 | 069 Loop: resume after a crash or reboot (logon task) | Superseded/Withdrawn | 068 |
-| 285 | 070 Loop: run every card atomically (land or discard) | Superseded/Withdrawn | 062, 067 |
 | 286 | 055 A declared failure with no failure-path spec is an error (PH336) | Superseded/Withdrawn | 054, 018 |
 | 287 | 057 Docs: the consumer-observable outcome rule is written down | Superseded/Withdrawn | 055 |
 | 288 | 008 Close the language gaps the demo app exposes | Superseded/Withdrawn | 025, 050, 052 |
