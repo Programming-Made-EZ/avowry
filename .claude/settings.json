@@ -1,6 +1,6 @@
 {
   "permissions": {
-    "_comment": "card 379: recursive deletes the globs cannot express (python shutil.rmtree, flags in any order, wrapped and quoted forms) are judged by the PreToolUse hook (safety_policy.refuses); there is no rmtree glob, so a seat can still grep for rmtree",
+    "_comment": "card 379: prefix-anchored deny globs for direct recursive deletes only. The broad judge (safety_policy.refuses: wrapped and quoted forms, flags in any order, python rmtree) runs as a PreToolUse hook only for the seats the mob launches, through core/claude-seat-settings.json (claude --settings); an interactive session and its subagents get these globs only unless a user-level settings file installs the hook",
     "deny": [
       "Bash(rm -rf *)",
       "Bash(rm -r *)",
