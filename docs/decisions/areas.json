@@ -1570,5 +1570,11 @@
     "status": "adopted",
     "title": "Remove the one-seat-at-a-time sentence from the Parallel voter dispatch entry, now that bugs 365 and 374 are fixed",
     "order": 234
+  },
+  "D243": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 374 retro pick: a merge is verified before a gate starts",
+    "order": 235
   }
 }

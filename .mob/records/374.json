@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 374,
+ "title": "A decision run's start probe no longer leaves prompt files in the repository root",
+ "process": "card-mode rules run by hand; declared together with card 365 in Decider D241 (no separate window; the Ready draft by a Cursor product-manager seat covers both cards); the read-only architect slice (section 5 of the card 365 slice); the RED in two parts: the Qwen WRITING seat (its first writing job, Probation: through local_driver.py with aider; the facilitator made four corrections) and a Cursor WRITING seat (through cursor_write.py, the CRLF file kept); the GREEN by a fresh Claude context as a recorded stopgap (Muse out of weekly quota; the Grok writing launcher grok_write.py was built and pushed during the card); the facilitator's isolated baseline gate (full mob-defaults suite, 1976 tests, only the five pre-existing failures; a first run on a tree without the green was stopped and discarded); a second read-only review by Grok (accept with notes, bug 409); an independent gate review (PASS; red replay, three mutations, overlap test 5 of 5); a separate fresh sign-off (the full suite alone, 41 minutes); the retro voices (all seven at once, 6 minutes 20 seconds) and Decider D243 (a merge is verified before a gate starts; trigger (c), both windows run with all voters at once; its predecessor D244 removed the one-seat-at-a-time sentence)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Cursor ctx-1",
+   "model": "cursor-agent in ask mode through cursor_reply.py, product manager, reply-only; the draft covers cards 365 and 374 (pointer record)",
+   "evidence": "48f77ca24d9ecbf6632b7f80d1b93bd0dec05369"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; section 5 of the card 365 slice (pointer record)",
+   "evidence": "a1543f5cbd7fe3765548ce4b96280702bc0d472a"
+  },
+  {
+   "role": "red",
+   "seat": "Qwen ctx-3 and Cursor ctx-4",
+   "model": "red part 1 by the Qwen writing seat (local_driver.py, aider; first writing job) and part 2 by a Cursor writing seat (cursor_write.py); mob-defaults commits 0e93c52 and a6f4385; the facilitator reproduced both and made four corrections to part 1 (red-record.md)",
+   "evidence": "2ae7e4f852f8ed7e5f56b76e8d50025321576a3b"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, a RECORDED STOPGAP green seat in a linked worktree (Muse out of weekly quota until 2026-11-16; seat-changes.md); the green is mob-defaults commit 396e643 (rebased onto the Grok launcher commit), committed by the facilitator",
+   "evidence": "2bc5d9805eb9ece9a3232c942aeb920080d52ad2"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, independent gate reviewer; gate-review.md (PASS) and the second read-only review by Grok (second-review.md)",
+   "evidence": "ab27c60220c67f461a6a5f1e26e89c6ac84644a3"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-7",
+   "model": "claude, a fresh subagent context, sign-off; the full mob-defaults suite alone in a clean clone",
+   "evidence": "23f7cda01bf54ab9dbf2ad1cebabbb9b06a422c3"
+  }
+ ],
+ "retro": "docs/retros/card-374-2026-11-10.md",
+ "notes": "Done checks met: criterion 1 (two runs at once both finish with counted votes and integrity ok: 374-1, with the held probe's prompt file alive while the other run takes its after-snapshot); criterion 2 (a tracked file changed during a run and a planted prompt-planted.txt written into the repository root by a voter are still refused with exit 5: 374-2a, 374-2b); criterion 3 (every prompt file of the start probe is written under the run directory, a probe whose cleanup never ran leaves its file in the run directory, and a backend without a placeholder writes no file: 374-3a, 374-3b, 374-3c). The three red tests failed by assertion on the pre-change tree (3 failures, 0 errors) and pass after the green, which changed decider.py by 3 lines and removed three decorators. Live check: the real start probe of every backend was run from a scratch directory that is not a git work tree; agy, claude, cursor, grok and qwen answered OK. Known limits: probe_all.py and the card-mode probes still use the real repository root (bug 409); the Qwen probe no longer sees the optional gate-lock file from the scratch directory (the machine-wide test-process check remains); five older mob-defaults tests fail on the base and after (bug 406). The first decision windows launched with all voters at once ran in under 5 minutes each."
+}

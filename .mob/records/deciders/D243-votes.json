@@ -1,0 +1,167 @@
+{
+ "decider": "D243",
+ "subject": "card 374 retro pick: a merge is verified before a gate starts",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d243architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A merge is verified before a gate starts",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the amendment, agreement, and retro record so the architect vote is based on the committed design, not the synthesis alone.The patch is a three-line Experimental entry. Next I’ll check the agreement’s experiment pattern, the retro voices, and how gate records are written today.The vote template and D226 ancestor check will tell me whether the “or contains” alternative is a hole or a note.Yes\nThe gate record is the right artifact: named `HEAD`, ancestry with exit status, and a discarded wrong-tree run written down. That is git-checkable and matches the D226 ancestor line. The planted fail (ff-only refused because main moved) is the c"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d243qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a merge is verified before a gate starts",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe verification stops bad state by checking the merge exit status and verifying commit ancestry via `git merge-base --is-ancestor` on HEAD without truncating output. Both rules can be tested red first: the amendment explicitly mandates that the gate-start script and its planted-fail test (reproducing a merge refused when main has moved) be written red first on an accompanying tooling card. The checks directly verify the required ancestry condition, preventing gates from executing on stale checkouts."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d243rdev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A merge is verified before a gate starts",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nAs the backend developer, I can follow this without gaming it. It adds two commands I can check and nothing that is up to judgement: print `git rev-parse HEAD`, then run `git merge-base --is-ancestor` and record its exit status. It also makes sure a failed `--ff-only` merge can't be hidden by cutting the output down to its last line. It doesn't touch the red, the unit commits with doubles, the green, the flags or the slice limits. My only cost is a few seconds at each gate start, and the counter-metric already measures that.\n\nOne note: the gate-start script should exit non-zero when the ancestry check fails, so the gate stops itself rath"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d243auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "shows that it contains the commit under test",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal mandates explicit git commands and requires recording the tested commit and exit status in the committed gate record. This aligns perfectly with the audit lens: verification is fully traceable via git show on .mob/records/<card>/gate-record. The standing evidence rules ensure records are immutable and auditable. The only gap is manual execution until a script is written, but the proposal transparently acknowledges this and ties it to a future tooling card. No loophole exists to pass while breaking the practice, as any mismatch between recorded status and actual tree ancestry is instantly falsifiable in git history."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d243decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "gate runs started on a tree that did not contain the commit under test per card",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation is cleanly framed for an evidence-based adopt, reshape, or reject decision after the three-card trial: the metric (gate runs started on a tree lacking the commit under test, target zero) and counter-metric (overhead seconds per gate start) are objective and directly measurable. Furthermore, the procedure explicitly protects all verification stages—the facilitator's baseline gate, reviewer replay, and sign-off clone—ensuring every sign-off and review seat operates on verified commits and ancestry in the card's gate record before certifying."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d243coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A merge is verified before a gate starts",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe task force fits the task. One concern produced six of seven matching voices, and the agile coach, decider, QA, developer, architect and audit lens all covered the merge-then-gate failure without extra seats. The entry is also sized to the evidence. It adds two commands per gate start, has a counter-metric (seconds added per gate start) against creeping ceremony, and runs as a three-card trial with one owner. Note: keep the gate-start script card small. If the two commands add only seconds by hand, the retro should ask whether the script is still worth it. That keeps the tooling from growing beyond the 3-minute loss it guards against."
+   }
+  ]
+ },
+ "rerun_swapped_seats": {
+  "architect": [
+   {
+    "tag": "t243architect-architect-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a merge refused because main moved",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe patch matches the proposal word for word. The record is minimal: the tested HEAD plus one ancestry check with its exit status. `merge-base --is-ancestor` gives a yes-or-no answer about the tree actually under test, so it should not raise false positives. Checking the exit status of `--ff-only` and keeping its full output closes the exact failure seen on card 374. The planted-fail test, a merge refused because main moved, makes the script enforceable.\n\nNote: `git branch --contains <commit>` is weaker. It checks branches, not the checked-out HEAD, so it could pass on a detached or stale checkout. I suggest the gate record and the scrip"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "t243qa-qa-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the script and its planted-fail test, a merge refused because main moved, are written red first",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal directly satisfies the red-first QA lens. It mandates a planted-fail test written red first, explicitly verifying the exact violation (gate running on a tree missing the target commit). The checks (rev-parse, merge-base --is-ancestor, branch --contains, and ff-only exit status) catch violations before execution and explicitly discard bad-state runs, preventing false passes. The temporary manual execution is acceptable for a three-card trial, and the metrics cleanly measure success and overhead. I endorse this as a robust, testable safeguard."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "t243dev-dev-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "before the facilitator's baseline gate, a reviewer's replay or a sign-off clone starts",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nFrom the developer lens, this rule is workable, unambiguous, and fair. Verifying that HEAD contains the commit under test protects our green delivery from silent merge collisions like card 374, where main moved and wasted gate cycles on stale code. The verification relies on standard, fast git commands checking exit status directly. It requires no gaming or developer workarounds, runs transparently before gates and replays, and adds trivial latency while preventing discarded runs. The trial is properly scoped to 3 cards with clear metrics."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "t243auditlens-auditlens-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "before the facilitator's baseline gate, a reviewer's replay or a sign-off clone starts",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nFrom the audit lens, this practice is fully verifiable from git alone. Requiring the gate record to capture `git rev-parse HEAD` and the exit status of `git merge-base --is-ancestor` produces an immutable, replayable record committed directly to the repository. An auditor can re-evaluate ancestry against git history without relying on transient terminal output or external state. No loophole is created: unmerged or mismatched checkouts must be stopped, discarded, and recorded as such, while masking command output is explicitly forbidden. Transitioning to a red-first tooling card with a planted-fail test provides additional verification int"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "t243decider-decider-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a merge refused because main moved",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe proposal rests on evidence. The patch matches the quoted entry word for word. In `retro-voices.json`, all seven retro voices named a check of HEAD or of ancestry before a gate, including the audit lens, which voted Support-it. That makes the proposal's count of six of seven conservative. The entry has a hypothesis, a baseline (1 run on the wrong tree, about 3 minutes lost), a target of 0, a counter-metric, an owner and a 3-card trial, so adopt, reshape or reject can be decided from those numbers.\n\nNotes, not conditions:\n- Two voices raised edge cases the entry should log: a rebased green, and a detached HEAD.\n- The tooling card for t"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "t243coach-coach-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A merge is verified before a gate starts",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the named records and the working agreement so I can vote as Agile Coach on whether this is sized to the task.I'll read the retro voices, the amendment patch, and the experimental section of the working agreement.I'll check how experimental entries are written and skim the retro pick so the vote matches the agreement's size.Yes\n\nOne concern, six of seven voices, a 3-card trial with hypothesis, metric, counter-metric and owner. The work is two git commands plus a stop-and-discard, run by hand until a small red-first tooling card lands. Other items stay out of this pick. The silent ff-only hid a refusal and started a gate on the wrong"
+   }
+  ]
+ },
+ "trigger_line": "(c) the re-run was run because the primary window passed with no No and no amendment and the proposal changes the agreement",
+ "window_notes": "The first two decision windows launched with all six voters at once after the D244 removal of the one-seat-at-a-time sentence. Primary window (all six roles at once): audit lens Qwen, QA agy, architect Grok, coach Cursor, decider agy; six Yes after one re-ask; 4 minutes 59 seconds (11:43:53 to 11:48:52 UTC). The developer seat was planned on Claude and refused by the rotation rule (Qwen and Grok had waited longer: the rule working, a seat-plan error of the facilitator, not the seat-use race), and was re-asked on Cursor (Yes, 4 minutes 45 seconds). Re-run with swapped seats (trigger (c), all six at once): audit lens agy, QA Qwen, architect Cursor, coach Grok, developer agy, decider Cursor; six Yes; 4 minutes 45 seconds (11:49:15 to 11:54:00 UTC), run at the same time as the re-ask. No No, no amendment, no seat refused by the seat-use history in any window."
+}

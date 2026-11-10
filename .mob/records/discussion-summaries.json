@@ -85,7 +85,7 @@
   "why": "On the last card a merge silently did not happen, so a 40-minute test run began on code without the fix. It was noticed after about 3 minutes, by luck.",
   "changes": "For the next three cards the person running the tests writes down which version is being tested and proves it contains the change, and a refused merge is never hidden by cutting its output short.",
   "options": "Relying on care alone was the alternative; six of seven team members named this check.",
-  "outcome": "Pending until the vote is recorded.",
+  "outcome": "Adopted. Six reviewers agreed in the first round and six different reviewers agreed again in the second round the rules require for a change to the team agreement. Both rounds ran with all voters at once and took under 5 minutes each.",
   "owner": "Nothing needed."
  },
  "RETRO374": {
