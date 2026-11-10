@@ -19,13 +19,13 @@
   {
    "role": "red",
    "seat": "Cursor ctx-3",
-   "model": "cursor-agent in print mode with tools through cursor_write.py (a linked worktree of mob-defaults, changes left uncommitted); characterisation and red in mob-defaults commit 224738b9416b57f65bed1476e0056b5717213bbc; the facilitator reproduced it and committed it; the avowry commit holds the red record",
+   "model": "cursor-agent in print mode with tools through cursor_write.py (a linked worktree of mob-defaults, changes left uncommitted); characterisation and red in mob-defaults commit 224738b; the facilitator reproduced it and committed it; the avowry commit holds the red record",
    "evidence": "0d16903c11095fec2794fd3f452c6c4b2e64a32c"
   },
   {
    "role": "green",
    "seat": "Claude ctx-4",
-   "model": "claude, a fresh subagent context, a RECORDED STOPGAP green seat in a linked worktree (Muse writing seat declared; weekly quota out until 2026-11-16: seat-changes.md); the green is mob-defaults commit 5d5da21e484fe0bb08b4d1878b649f62fa58b373, committed by the facilitator; the avowry commit holds the seat change",
+   "model": "claude, a fresh subagent context, a RECORDED STOPGAP green seat in a linked worktree (Muse writing seat declared; weekly quota out until 2026-11-16: seat-changes.md); the green is mob-defaults commit 5d5da21, committed by the facilitator; the avowry commit holds the seat change",
    "evidence": "69c32c347da985b0da73eed9b27cea5c8435e565"
   },
   {
