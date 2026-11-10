@@ -434,33 +434,53 @@ public sealed class CSharpBaselineAcceptance
     }
 
     [Fact]
+    [Trait("Slice", "368")]
+    [Trait("Criterion", "368-2")]
+    [Trait("Status", "Pending")]
+    // Pending until green 2 (C# baseline writer) writes an empty reply_head.
     public async Task reply_head_is_scrubbed_before_it_is_cut()
     {
+        // Given a model reply that contains a user path and a passing C# program
         using var workspace = TempWorkspace.Create();
         var suite = WriteSuite(workspace.Root, holdout: false, OneCase);
         var secretPath = @"C:\Users\alice\private\answer.cs";
         var reply = WriteReply(workspace.Root, "path.cs", new string('x', 190) + " " + secretPath + "\n" + CorrectGreetingAndTest);
 
+        // When the C# baseline bench saves the result
         await Run(suite, PrintFileCommand(reply), "scrub-v1");
 
-        using var result = ReadResult(suite, "scrub-v1");
-        Assert.DoesNotContain("alice", result.RootElement.GetProperty("reply_head").GetString(), StringComparison.OrdinalIgnoreCase);
+        // Then reply_head is empty or absent and the stored row holds no reply text
+        var stored = File.ReadAllText(Path.Combine(Path.GetDirectoryName(suite)!, "results", "scrub-v1.json"));
+        using var result = JsonDocument.Parse(stored);
+        Assert.Equal("", HeadOf(result.RootElement));
+        Assert.DoesNotContain("alice", stored, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("[path]", stored, StringComparison.Ordinal);
+        Assert.DoesNotContain(secretPath, stored, StringComparison.Ordinal);
     }
 
     [Fact]
+    [Trait("Slice", "368")]
+    [Trait("Criterion", "368-2")]
+    [Trait("Status", "Pending")]
+    // Pending until green 2 (C# baseline writer) writes an empty reply_head.
     public async Task reply_head_scrubs_tilde_paths_with_either_separator_before_cutting()
     {
+        // Given a model reply that contains tilde paths with either separator and a passing C# program
         using var workspace = TempWorkspace.Create();
         var suite = WriteSuite(workspace.Root, holdout: false, OneCase);
         var reply = WriteReply(workspace.Root, "tilde-path.cs",
             @"~\AppData\Local\Temp\private-answer.cs ~/private/answer.cs " + CorrectGreetingAndTest);
 
+        // When the C# baseline bench saves the result
         await Run(suite, PrintFileCommand(reply), "tilde-scrub-v1");
 
-        using var result = ReadResult(suite, "tilde-scrub-v1");
-        var head = result.RootElement.GetProperty("reply_head").GetString();
-        Assert.DoesNotContain("AppData", head, StringComparison.OrdinalIgnoreCase);
-        Assert.DoesNotContain("~/private", head, StringComparison.OrdinalIgnoreCase);
+        // Then reply_head is empty or absent and the stored row holds no reply text
+        var stored = File.ReadAllText(Path.Combine(Path.GetDirectoryName(suite)!, "results", "tilde-scrub-v1.json"));
+        using var result = JsonDocument.Parse(stored);
+        Assert.Equal("", HeadOf(result.RootElement));
+        Assert.DoesNotContain("AppData", stored, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("~/private", stored, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("[path]", stored, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -940,4 +960,9 @@ public sealed class CSharpBaselineAcceptance
 
     private static JsonDocument ReadResult(string suite, string model) => JsonDocument.Parse(
         File.ReadAllText(Path.Combine(Path.GetDirectoryName(suite)!, "results", $"{model}.json")));
+
+    private static string HeadOf(JsonElement row) =>
+        row.TryGetProperty("reply_head", out var value) && value.ValueKind == JsonValueKind.String
+            ? value.GetString() ?? ""
+            : "";
 }

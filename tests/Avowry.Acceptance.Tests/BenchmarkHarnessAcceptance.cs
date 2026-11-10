@@ -144,46 +144,82 @@ public class BenchmarkHarnessAcceptance
     }
 
     [Fact]
+    [Trait("Slice", "368")]
+    [Trait("Criterion", "368-1")]
+    [Trait("Status", "Pending")]
+    // Pending until green 1 (Phrase writer) writes an empty reply_head.
     public async Task reply_head_scrubs_a_user_path_before_cutting_to_200_characters()
     {
+        // Given a model reply that contains a user path inside the first 200 characters
         var prefix = new string('x', 190);
         var reply = prefix + @" C:\ tail!";
 
-        var replyHead = await RunAndReadReplyHead(reply, "reply-head-user-path-v1");
+        // When the Phrase bench saves the result
+        var stored = await RunAndReadStoredJson(reply, "reply-head-user-path-v1");
 
-        Assert.True(replyHead.Length <= 200, $"Reply head was {replyHead.Length} characters.");
-        Assert.Contains(" [path]", replyHead, StringComparison.Ordinal);
-        Assert.DoesNotContain(@"C:\", replyHead, StringComparison.OrdinalIgnoreCase);
+        // Then reply_head is empty or absent, and neither [path] nor the path fragment nor a secret token appears
+        Assert.Equal("", HeadOf(stored));
+        Assert.DoesNotContain("[path]", stored, StringComparison.Ordinal);
+        Assert.DoesNotContain(@"C:\", stored, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("top-secret-value", stored, StringComparison.Ordinal);
     }
 
     [Fact]
+    [Trait("Slice", "368")]
+    [Trait("Criterion", "368-1")]
+    [Trait("Status", "Pending")]
+    // Pending until green 1 (Phrase writer) writes an empty reply_head.
     public async Task reply_head_masks_a_tilde_relative_path_inside_the_first_200_characters()
     {
-        var replyHead = await RunAndReadReplyHead(
-            @"Inspect ~\AppData\Local\Temp\private\reply.txt before answering.",
-            "reply-head-tilde-path-v1");
+        // Given a model reply that contains a tilde-relative path inside the first 200 characters
+        var reply = @"Inspect ~\AppData\Local\Temp\private\reply.txt before answering.";
 
-        Assert.Equal("Inspect [path] before answering.", replyHead);
+        // When the Phrase bench saves the result
+        var stored = await RunAndReadStoredJson(reply, "reply-head-tilde-path-v1");
+
+        // Then reply_head is empty or absent, and neither [path] nor the path fragment nor a secret token appears
+        Assert.Equal("", HeadOf(stored));
+        Assert.DoesNotContain("[path]", stored, StringComparison.Ordinal);
+        Assert.DoesNotContain(@"~\AppData", stored, StringComparison.Ordinal);
+        Assert.DoesNotContain("top-secret-value", stored, StringComparison.Ordinal);
     }
 
     [Fact]
+    [Trait("Slice", "368")]
+    [Trait("Criterion", "368-1")]
+    [Trait("Status", "Pending")]
+    // Pending until green 1 (Phrase writer) writes an empty reply_head.
     public async Task reply_head_masks_a_secret_looking_token()
     {
-        var replyHead = await RunAndReadReplyHead(
-            "Use api_key=top-secret-value before answering.",
-            "reply-head-secret-v1");
+        // Given a model reply that contains a secret-looking token
+        var reply = "Use api_key=top-secret-value before answering.";
 
-        Assert.Equal("Use api_key=[redacted] before answering.", replyHead);
+        // When the Phrase bench saves the result
+        var stored = await RunAndReadStoredJson(reply, "reply-head-secret-v1");
+
+        // Then reply_head is empty or absent, and neither [path] nor the path fragment nor the secret token appears
+        Assert.Equal("", HeadOf(stored));
+        Assert.DoesNotContain("[path]", stored, StringComparison.Ordinal);
+        Assert.DoesNotContain("top-secret-value", stored, StringComparison.Ordinal);
     }
 
     [Fact]
+    [Trait("Slice", "368")]
+    [Trait("Criterion", "368-1")]
+    [Trait("Status", "Pending")]
+    // Pending until green 1 (Phrase writer) writes an empty reply_head.
     public async Task reply_head_without_sensitive_content_is_only_cut_to_200_characters()
     {
+        // Given a model reply longer than 200 characters with no sensitive content
         var reply = new string('a', 210);
 
-        var replyHead = await RunAndReadReplyHead(reply, "reply-head-plain-v1");
+        // When the Phrase bench saves the result
+        var stored = await RunAndReadStoredJson(reply, "reply-head-plain-v1");
 
-        Assert.Equal(reply[..200], replyHead);
+        // Then reply_head is empty or absent, and neither [path] nor a secret token appears
+        Assert.Equal("", HeadOf(stored));
+        Assert.DoesNotContain("[path]", stored, StringComparison.Ordinal);
+        Assert.DoesNotContain("top-secret-value", stored, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -713,7 +749,7 @@ public class BenchmarkHarnessAcceptance
         Assert.Equal("unavailable", result.RootElement.GetProperty("status").GetString());
         Assert.Equal(2, result.RootElement.GetProperty("attempts").GetInt32());
         Assert.Equal("empty reply", result.RootElement.GetProperty("error").GetString());
-        Assert.Equal(string.Empty, result.RootElement.GetProperty("reply_head").GetString());
+        Assert.Equal(string.Empty, HeadOf(result.RootElement));
     }
 
     [Fact]
@@ -971,6 +1007,10 @@ public class BenchmarkHarnessAcceptance
     }
 
     [Fact]
+    [Trait("Slice", "368")]
+    [Trait("Criterion", "368-2")]
+    [Trait("Status", "Pending")]
+    // Pending until green 1 (Phrase writer) writes an empty reply_head.
     public async Task run_records_cold_profile_metadata_and_uses_an_empty_workdir_at_launch()
     {
         // Given a fresh scratch directory and a fake Grok command that lists its working directory
@@ -998,10 +1038,7 @@ public class BenchmarkHarnessAcceptance
         Assert.False(string.IsNullOrEmpty(result.RootElement.GetProperty("cold_flags").GetString()));
         Assert.Equal("There is no workspace and no files to read; answer directly in this reply without looking anything up.", result.RootElement.GetProperty("cold_preamble").GetString());
         Assert.True(result.RootElement.GetProperty("workdir_empty_at_launch").GetBoolean());
-        var replyHead = result.RootElement.GetProperty("reply_head").GetString();
-        Assert.StartsWith("[]", replyHead ?? string.Empty, StringComparison.Ordinal);
-        Assert.DoesNotContain("bench", replyHead ?? string.Empty, StringComparison.OrdinalIgnoreCase);
-        Assert.DoesNotContain("Avowry.Acceptance.Tests", replyHead ?? string.Empty, StringComparison.OrdinalIgnoreCase);
+        Assert.Equal("", HeadOf(result.RootElement));
     }
 
     [Fact]
@@ -1463,15 +1500,25 @@ public class BenchmarkHarnessAcceptance
         JsonDocument.Parse(await File.ReadAllTextAsync(
             Path.Combine(suiteDirectory, "results", $"{model}.json")));
 
-    private static async Task<string> RunAndReadReplyHead(string reply, string model)
+    private static string HeadOf(JsonElement row) =>
+        row.TryGetProperty("reply_head", out var value) && value.ValueKind == JsonValueKind.String
+            ? value.GetString() ?? ""
+            : "";
+
+    private static string HeadOf(string json)
+    {
+        using var document = JsonDocument.Parse(json);
+        return HeadOf(document.RootElement);
+    }
+
+    private static async Task<string> RunAndReadStoredJson(string reply, string model)
     {
         using var workspace = TempWorkspace.Create();
         var suiteDirectory = CopySuiteTo(workspace.Root);
         var modelOutput = Path.Combine(workspace.Root, "model-output.txt");
         await File.WriteAllTextAsync(modelOutput, reply);
         await RunBenchmark(suiteDirectory, model, PrintFileCommand(modelOutput));
-        using var result = await ReadModelResult(suiteDirectory, model);
-        return result.RootElement.GetProperty("reply_head").GetString()!;
+        return await File.ReadAllTextAsync(Path.Combine(suiteDirectory, "results", $"{model}.json"));
     }
 
     private static async Task<(int ExitCode, string Stdout, string Stderr)> RunBenchmark(
