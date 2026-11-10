@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 376,
+ "title": "The account name standing alone is gone from tracked files; the tree scan gates by exit code; an account name with a space",
+ "process": "card-mode rules run by hand; the Ready draft by a Cursor product-manager seat (reply-only) with the facilitator's reruns and rulings; the declaration through Decider D239 (six counted Yes, one developer vote re-asked once after a bare Yes; trigger (d)); a read-only architect slice; the RED by a Muse WRITING seat (its first red on a code card; 33 python rows, 24 failing by assertion, the rest controls and characterisation, three Pending C# wrappers and one characterisation wrapper); GREEN 1 (the code) and GREEN 2 (the six records by the rule only) by a Cursor WRITING seat through cursor_write.py with the changes left uncommitted and committed by the facilitator; the facilitator's isolated baseline gate (found the baseline failure of bug 397, fixed by one line); an independent gate review (PASS; red replayed, rewrite reproduced byte for byte, nine mutation checks) and a second read-only review by Grok (accept with notes, bug 398); a separate fresh sign-off (full gate 743 passed, 0 failed, 0 skipped); the retro voices and Decider D240 (prompts to an external driver are checked for the local account name before launch; two conditions adopted; confirmation step)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Cursor ctx-1",
+   "model": "cursor-agent in ask mode through cursor_reply.py, product manager, reply-only; the facilitator reran the key counts and ruled on the draft",
+   "evidence": "c2a3f56a837491d11ce72f21de669e6b05db0e1f"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md (recomputed counts, the space rule, F10, the bench checker, the test list, the greens, R1, the commit order)",
+   "evidence": "cf5be43f28dfee04ca59e7c85772f17ef3b8ee58"
+  },
+  {
+   "role": "red",
+   "seat": "Muse ctx-3",
+   "model": "muse exec through muse_write.py in a linked worktree (a writing seat, Probation widening: its first red on a code card); stubs, tests/test_account_name_376.py, the bench rows and the wrappers; the facilitator reproduced it",
+   "evidence": "e915aa99bf5553601943abbfddc183135c2624d3"
+  },
+  {
+   "role": "green",
+   "seat": "Cursor ctx-4",
+   "model": "cursor-agent in print mode with tools through cursor_write.py (a linked worktree, changes left uncommitted); green 1 the code, green 2 the six records by the rule; committed by the facilitator",
+   "evidence": "586c2cdd9f12e37b2d6892770376f8ebadae33b6"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent gate reviewer; gate-review.md (PASS: step 0, red replay, rule reproduction, nine mutation checks, scans) and the second read-only review by Grok (second-review.md)",
+   "evidence": "4522f428f86ef16d5933dfafafe1817750e78a7b"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off; the full gate alone in a clean clone",
+   "evidence": "2cc15a814e3cc67db573957c82920ae768cfe509"
+  }
+ ],
+ "retro": "docs/retros/card-376-2026-11-10.md",
+ "notes": "Done checks met: criterion 1 (the account name as a whole word is in no tracked file at HEAD on the maintainer's machine; the bench history checker still refuses a planted name at its line, in upper case and on many rows, accepts the placeholder, never prints the matched text and ignores the name inside a longer word); criterion 2 (check-no-secrets.py --tree exits 1 naming file, line and form on a home path or the account name standing alone, exits 0 on a clean tree and prints no planted text; the commit hook refuses an added account name); criterion 3 (an account name of two words is rewritten completely in the backslash, slash, doubled, quoted, backtick and %20 forms and prose after a path is kept). The pending criterion tests failed by assertion on the red and pass after the greens; the greens changed the red files by the Pending traits only. Known limits stated in the card and the reviews: in CI the account is runner, so the whole-word scan and R1 skip with a stated reason and the planted-name rows run; git history before green 2 still holds the name (an owner decision); a spaced name followed by ) , . ; ] or > keeps its second word (bug 398). Bug 397 (card 370's rewrite test failed in a full clone) was found by the baseline gate and fixed by one line in 370's scrub-commits.txt. Disclosure: a review prompt carried the old literal name to one vendor service before a hand count caught it; recorded in the retro and answered by Decider D240."
+}
