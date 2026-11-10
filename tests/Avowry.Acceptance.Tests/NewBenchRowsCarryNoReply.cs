@@ -172,15 +172,15 @@ public sealed class NewBenchRowsCarryNoReply
         var csharpLines = JsonlLines(csharpAfter);
         var phraseOriginalLines = JsonlLines(phraseOriginal);
         var csharpOriginalLines = JsonlLines(csharpOriginal);
-        Assert.Equal(PhrasePushedRows + 1, phraseLines.Length);
-        Assert.Equal(CSharpPushedRows + 1, csharpLines.Length);
+        Assert.Equal(phraseOriginalLines.Length + 1, phraseLines.Length);
+        Assert.Equal(csharpOriginalLines.Length + 1, csharpLines.Length);
         for (var i = 0; i < PhrasePushedRows; i++)
             AssertPhraseReaderAgrees(phraseLines[i], phraseOriginalLines[i]);
         for (var i = 0; i < CSharpPushedRows; i++)
             AssertCSharpReaderAgrees(csharpLines[i], csharpOriginalLines[i]);
 
-        var phraseNew = phraseLines[PhrasePushedRows];
-        var csharpNew = csharpLines[CSharpPushedRows];
+        var phraseNew = phraseLines[phraseOriginalLines.Length];
+        var csharpNew = csharpLines[csharpOriginalLines.Length];
         AssertPhraseReaderAgrees(phraseNew, phraseNew);
         AssertCSharpReaderAgrees(csharpNew, csharpNew);
         var phraseHead = HeadOf(phraseNew);
