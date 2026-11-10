@@ -18,8 +18,8 @@
   },
   {
    "role": "red",
-   "seat": "Qwen ctx-3 and Cursor ctx-4",
-   "model": "red part 1 by the Qwen writing seat (local_driver.py, aider; first writing job) and part 2 by a Cursor writing seat (cursor_write.py); mob-defaults commits 0e93c52 and a6f4385; the facilitator reproduced both and made four corrections to part 1 (red-record.md)",
+   "seat": "Local ctx-3 and Cursor ctx-4",
+   "model": "red part 1 by the Local Qwen3.6 writing seat (local_driver.py, aider; first writing job) and part 2 by a Cursor writing seat (cursor_write.py); mob-defaults commits 0e93c52 and a6f4385; the facilitator reproduced both and made four corrections to part 1 (red-record.md)",
    "evidence": "2ae7e4f852f8ed7e5f56b76e8d50025321576a3b"
   },
   {
