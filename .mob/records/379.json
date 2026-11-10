@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 379,
+ "title": "Every seat launcher refuses recursive-delete commands, and throwaway clones are removed by one reviewed helper",
+ "process": "card-mode rules run by hand; directed by the product owner as a small harness change (safety outranks product), so no declaration Decider; the facilitator filed the story (issue 413) and wrote the slice from a read-only architect survey; THREE red and green cycles: the REDS by the Grok WRITING seat (its first three real writing seats through grok_write.py: 17, 7 and 2 red ids, real output) and the GREENS by a Cursor WRITING seat (cycle 1 complete; cycle 2 refused to start because of a defect of cycle 1, fixed test-first; cycle 3 stopped because its own shell was blocked by a committed hook file), with SIX logged facilitator takeovers (four with the failing test committed first) after live findings; four facilitator baseline gates (merge verified first, D243), a second read-only review (accept with notes), an independent gate review (PASS with notes) and a delta review for cycle 3 (code PASS, documentation fixed), and a separate fresh sign-off (the full suite alone, 2012 tests, only the five pre-existing failures); the retro voices (all seven at once, 6 minutes 11 seconds) and Decider D245 (a change to how seats start carries a live start-proof; one condition adopted; confirmation step)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-1",
+   "model": "claude, the facilitator; no product-manager draft (the product owner's direction of 2026-11-10 and the story in issue 413 served; pointer record)",
+   "evidence": "bb457ca6b959ce8501218593428cc6172da46baa"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only survey of every driver's deny mechanism, made concrete in slice-architect.md",
+   "evidence": "e63d60705b0af1db8f775d311afd3e7faff8bcb4"
+  },
+  {
+   "role": "red",
+   "seat": "Grok ctx-3",
+   "model": "grok writing seat through grok_write.py (a linked worktree of mob-defaults): cycle 1 mob-defaults 63fb99f, cycle 2 ad828d1, cycle 3 a0bd1af; the facilitator reproduced each; the avowry commit holds the red record and the deny files",
+   "evidence": "d2995f05ba172f39cca2817359d4fc7a55af9556"
+  },
+  {
+   "role": "green",
+   "seat": "Cursor ctx-4",
+   "model": "cursor-agent in print mode with tools through cursor_write.py (a linked worktree of mob-defaults, changes left uncommitted): cycle 1 mob-defaults be8fff6, cycle 2 ead9a4e; cycle 3 and the corrections by the facilitator (six logged takeovers: seat-changes.md); final tested commit a2f0e5d",
+   "evidence": "aee12cd76f1e28324d47e8df988e2ae4c9facd98"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent gate reviewer (gate-review.md PASS with notes; the delta review gate-review-cycle3.md); the second read-only review second-review.md",
+   "evidence": "2f474975b459310f8305597a88a2f62f4259a2c5"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off; the full mob-defaults suite alone in a clean clone at a2f0e5d",
+   "evidence": "500ed28901035a773dabcbcab0b8cd735cee1d92"
+  }
+ ],
+ "retro": "docs/retros/card-379-2026-11-10.md",
+ "notes": "Done checks met: criterion 1 (the policy source renders each driver's deny syntax; committed deny files exist in both repositories and equal the render; a launcher whose deny file is missing or differs refuses to start with exit 2: Claude (permission globs plus the strict hook through the seat settings file), Grok (--deny rules), Cursor write (permissions.deny of .cursor/cli.json), Copilot (--deny-tool), aider (shell suggestions declined, --no-suggest-shell-commands); criterion 2 (a planted recursive delete is refused by the shell-aware judge and the hook with exit 2 and logged, for the Claude, Cursor and agy payload shapes; 52 refused and 20 allowed table rows and the reviewers' own phrasings without a miss; rm file, Remove-Item file, git worktree remove and git clean -n are allowed; proved live for Claude on nonexistent targets: a command that only mentions the words runs, rm -rf and bash -c rm -rf are blocked); criterion 3 (one reviewed cleanup helper removes only clean allow-listed throwaway clones, refuses a main checkout, a dirty tree, a symlink, the current directory and its parents, a path outside the allow-list and a clone holding a nested repository, removes a linked worktree through git worktree remove, and logs every attempt; only the facilitator runs it). NOT enforced and said plainly: Muse, agy and Codex (bug 414); an interactive Claude session and its Agent-tool subagents get the project deny globs only, not the broad hook, unless a user-level settings file installs it (an owner decision; Cursor may read that file too). Five harness defects of the card's own changes passed the unit tests and were found only by live runs (a relative --settings path; Cursor's permissions.allow schema; a committed hook file blocking every Cursor shell command; Cursor loading project hooks; globs blocking text that mentions the commands): all fixed, the retro pick (D245) makes a live start-proof part of accepting such changes."
+}
