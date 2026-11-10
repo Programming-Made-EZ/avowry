@@ -1552,5 +1552,11 @@
     "status": "adopted",
     "title": "Card 376 retro pick: prompts to an external driver are checked for the local account name before launch",
     "order": 231
+  },
+  "D241": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 365 task-force declaration and card text (concurrent seat-use appends never fail the append-only check; bug 374 right after)",
+    "order": 232
   }
 }
