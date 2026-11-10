@@ -16,6 +16,8 @@ parts.
 """
 
 import argparse
+import getpass
+import os
 import re
 import subprocess
 import sys
@@ -135,11 +137,31 @@ def _form_of(match, is_slug, line):
     return "F6" if pre.endswith(b"Users") else "F7"
 
 
-def find(path, text):
+def local_accounts(candidates=None):
+    """Red stub for card 376: the unfiltered machine names (green filters and de-duplicates them)."""
+    if candidates is None:
+        candidates = []
+        try:
+            candidates.append(getpass.getuser())
+        except Exception:
+            pass
+        try:
+            candidates.append(Path.home().name)
+        except Exception:
+            pass
+        for name in ("LOGNAME", "USER", "USERNAME"):
+            value = os.environ.get(name)
+            if value:
+                candidates.append(value)
+    return tuple(candidates)
+
+
+def find(path, text, accounts=()):
     """Each home path in ``text`` as Hit(line, form); never the matched text.
 
     Uses the same PATH and SLUG regexes as scrub_bytes, so a hit is reported exactly where
     scrub_bytes would change a segment (allow-lists honoured).
+    ``accounts`` is accepted and ignored by the card 376 red stub.
     """
     data = text.encode("utf-8", "surrogateescape") if isinstance(text, str) else bytes(text)
     allowed = _allowed(path)

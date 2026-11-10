@@ -10,7 +10,8 @@ PATTERNS = (
 )
 
 
-def scan_history(path):
+def scan_history(path, accounts=None):
+    # Card 376 red stub: accounts is accepted and ignored.
     hits = []
     for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
         for kind, pattern in PATTERNS:
