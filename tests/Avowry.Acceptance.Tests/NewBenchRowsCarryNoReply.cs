@@ -38,8 +38,6 @@ public sealed class NewBenchRowsCarryNoReply
     [Fact]
     [Trait("Slice", "368")]
     [Trait("Criterion", "368-1")]
-    [Trait("Status", "Pending")]
-    // Pending until green 1 (Phrase writer) writes an empty reply_head.
     public async Task A_completed_run_saves_its_scores_and_no_reply_text()
     {
         // Given the Phrase bench runs one task and the model replies with a passing program longer than 200 characters that starts with a known marker
@@ -75,8 +73,6 @@ public sealed class NewBenchRowsCarryNoReply
     [Fact]
     [Trait("Slice", "368")]
     [Trait("Criterion", "368-2")]
-    [Trait("Status", "Pending")]
-    // Pending until green 1 (Phrase writer) writes an empty reply_head on every ending.
     public async Task Every_ending_of_the_Phrase_bench_saves_no_reply_text()
     {
         // Given the Phrase bench run four times: a passing reply, a reply that fails on every attempt, an empty reply, and a model that exits with an error after an earlier attempt replied with a known marker
@@ -108,8 +104,6 @@ public sealed class NewBenchRowsCarryNoReply
     [Fact]
     [Trait("Slice", "368")]
     [Trait("Criterion", "368-2")]
-    [Trait("Status", "Pending")]
-    // Pending until green 2 (C# baseline writer) writes an empty reply_head on every ending.
     public async Task Every_ending_of_the_C_sharp_baseline_saves_no_reply_text()
     {
         // Given the C# baseline bench run four times: a passing reply, a reply that fails on every attempt, an empty reply, and a model that exits with an error after an earlier attempt replied with a known marker
@@ -144,8 +138,6 @@ public sealed class NewBenchRowsCarryNoReply
     [Fact]
     [Trait("Slice", "368")]
     [Trait("Criterion", "368-3")]
-    [Trait("Status", "Pending")]
-    // Pending until green 2 (C# baseline writer) has both writers appending rows with an empty reply_head.
     public async Task Pushed_rows_stay_byte_identical_and_still_read_when_a_new_row_is_appended()
     {
         // Given bench/results/history.jsonl with its 336 pushed rows and bench/csharp-baseline/results/history.jsonl with its 120, copied into a temp workspace

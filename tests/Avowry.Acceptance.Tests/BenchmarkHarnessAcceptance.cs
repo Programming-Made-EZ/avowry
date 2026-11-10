@@ -146,8 +146,6 @@ public class BenchmarkHarnessAcceptance
     [Fact]
     [Trait("Slice", "368")]
     [Trait("Criterion", "368-1")]
-    [Trait("Status", "Pending")]
-    // Pending until green 1 (Phrase writer) writes an empty reply_head.
     public async Task reply_head_scrubs_a_user_path_before_cutting_to_200_characters()
     {
         // Given a model reply that contains a user path inside the first 200 characters
@@ -167,8 +165,6 @@ public class BenchmarkHarnessAcceptance
     [Fact]
     [Trait("Slice", "368")]
     [Trait("Criterion", "368-1")]
-    [Trait("Status", "Pending")]
-    // Pending until green 1 (Phrase writer) writes an empty reply_head.
     public async Task reply_head_masks_a_tilde_relative_path_inside_the_first_200_characters()
     {
         // Given a model reply that contains a tilde-relative path inside the first 200 characters
@@ -187,8 +183,6 @@ public class BenchmarkHarnessAcceptance
     [Fact]
     [Trait("Slice", "368")]
     [Trait("Criterion", "368-1")]
-    [Trait("Status", "Pending")]
-    // Pending until green 1 (Phrase writer) writes an empty reply_head.
     public async Task reply_head_masks_a_secret_looking_token()
     {
         // Given a model reply that contains a secret-looking token
@@ -206,8 +200,6 @@ public class BenchmarkHarnessAcceptance
     [Fact]
     [Trait("Slice", "368")]
     [Trait("Criterion", "368-1")]
-    [Trait("Status", "Pending")]
-    // Pending until green 1 (Phrase writer) writes an empty reply_head.
     public async Task reply_head_without_sensitive_content_is_only_cut_to_200_characters()
     {
         // Given a model reply longer than 200 characters with no sensitive content
@@ -1009,8 +1001,6 @@ public class BenchmarkHarnessAcceptance
     [Fact]
     [Trait("Slice", "368")]
     [Trait("Criterion", "368-2")]
-    [Trait("Status", "Pending")]
-    // Pending until green 1 (Phrase writer) writes an empty reply_head.
     public async Task run_records_cold_profile_metadata_and_uses_an_empty_workdir_at_launch()
     {
         // Given a fresh scratch directory and a fake Grok command that lists its working directory

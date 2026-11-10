@@ -18,8 +18,6 @@ public sealed class PrivateHoldoutResults
     [Trait("Slice", "113")]
     [Trait("Slice", "368")]
     [Trait("Criterion", "368-2")]
-    [Trait("Status", "Pending")]
-    // Pending until green 2 (C# baseline writer) writes an empty reply_head on the private path.
     public async Task private_run_leaves_committed_history_and_publishes_numbers_only()
     {
         // Given invented tasks, fake models whose replies carry a private marker, and the committed history files

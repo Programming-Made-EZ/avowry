@@ -436,8 +436,6 @@ public sealed class CSharpBaselineAcceptance
     [Fact]
     [Trait("Slice", "368")]
     [Trait("Criterion", "368-2")]
-    [Trait("Status", "Pending")]
-    // Pending until green 2 (C# baseline writer) writes an empty reply_head.
     public async Task reply_head_is_scrubbed_before_it_is_cut()
     {
         // Given a model reply that contains a user path and a passing C# program
@@ -461,8 +459,6 @@ public sealed class CSharpBaselineAcceptance
     [Fact]
     [Trait("Slice", "368")]
     [Trait("Criterion", "368-2")]
-    [Trait("Status", "Pending")]
-    // Pending until green 2 (C# baseline writer) writes an empty reply_head.
     public async Task reply_head_scrubs_tilde_paths_with_either_separator_before_cutting()
     {
         // Given a model reply that contains tilde paths with either separator and a passing C# program
@@ -478,7 +474,7 @@ public sealed class CSharpBaselineAcceptance
         var stored = File.ReadAllText(Path.Combine(Path.GetDirectoryName(suite)!, "results", "tilde-scrub-v1.json"));
         using var result = JsonDocument.Parse(stored);
         Assert.Equal("", HeadOf(result.RootElement));
-        Assert.DoesNotContain("AppData", stored, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("private-answer", stored, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("~/private", stored, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("[path]", stored, StringComparison.Ordinal);
     }

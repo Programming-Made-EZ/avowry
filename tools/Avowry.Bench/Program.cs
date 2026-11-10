@@ -318,7 +318,7 @@ static async Task<TaskRunResult> RunTask(
                     continue;
 
                 var unavailable = BenchmarkResult.Unavailable(
-                    model, task.Id, promptHash, "empty reply", attempts, tokensIn, tokensOut, CreateReplyHead(reply),
+                    model, task.Id, promptHash, "empty reply", attempts, tokensIn, tokensOut, string.Empty,
                     label: label, mode: mode, docsHash: docsHash,
                     cold: resolvedColdProfile.Cold, coldFlags: resolvedColdProfile.Flags, coldPreamble: coldPreamble,
                     coldReason: resolvedColdProfile.Reason, workdirEmptyAtLaunch: workdirEmptyAtLaunch);
@@ -340,7 +340,7 @@ static async Task<TaskRunResult> RunTask(
 
         var result = new BenchmarkResult(
             model, task.Id, score.Passed, attempts, tokensIn, tokensOut,
-            "estimated", diagnostics, false, promptHash, CreateReplyHead(reply),
+            "estimated", diagnostics, false, promptHash, string.Empty,
             Status: "completed", Error: null, Label: label, ProofLevel: DetermineProofLevel(score),
             Mode: mode, DocsHash: docsHash, Cold: resolvedColdProfile.Cold, ColdFlags: resolvedColdProfile.Flags,
             ColdPreamble: coldPreamble, ColdReason: resolvedColdProfile.Reason, WorkdirEmptyAtLaunch: workdirEmptyAtLaunch,
@@ -353,7 +353,7 @@ static async Task<TaskRunResult> RunTask(
     catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception or TimeoutException)
     {
         var result = BenchmarkResult.Unavailable(
-            model, task.Id, promptHash, exception.Message, attempts, tokensIn, tokensOut, CreateReplyHead(string.Empty),
+            model, task.Id, promptHash, exception.Message, attempts, tokensIn, tokensOut, string.Empty,
             label: label, mode: mode, docsHash: docsHash,
             cold: resolvedColdProfile.Cold, coldFlags: resolvedColdProfile.Flags, coldPreamble: coldPreamble,
             coldReason: resolvedColdProfile.Reason, workdirEmptyAtLaunch: workdirEmptyAtLaunch);
@@ -800,12 +800,6 @@ static int EstimateAttemptTokens(string taskPrompt, string docsBlock, string col
     return tokens;
 }
 static bool IsEmptyReply(string reply) => string.IsNullOrWhiteSpace(reply);
-static string CreateReplyHead(string reply)
-{
-    var scrubbed = Regex.Replace(reply.Trim(), @"(?i)\b(api[_-]?key|token|secret)\s*[:=]\s*\S+", "$1=[redacted]", RegexOptions.CultureInvariant);
-    scrubbed = Regex.Replace(scrubbed, @"(?<!\w)(?:(?:[A-Za-z]:\\|/|~[\\/])(?:[^\s\""'<>]+[\\/])*[^\s\""'<>]*)", "[path]", RegexOptions.CultureInvariant);
-    return scrubbed[..Math.Min(200, scrubbed.Length)];
-}
 static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text))).ToLowerInvariant();
 static string AddDiagnostics(string prompt, IReadOnlyList<string> diagnostics) =>
     $"{prompt}{Environment.NewLine}{Environment.NewLine}Compiler diagnostics:{Environment.NewLine}{string.Join(Environment.NewLine, diagnostics)}";

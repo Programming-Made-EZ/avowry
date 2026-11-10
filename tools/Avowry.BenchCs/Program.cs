@@ -151,7 +151,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
                     continue;
 
                 var unavailable = CreateResult(task, model, false, attempts, tokensIn, tokensOut, diagnostics,
-                    promptHash, reply, label, "unavailable", "empty reply", "none", 0, 0, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
+                    promptHash, label, "unavailable", "empty reply", "none", 0, 0, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
                 Persist(suiteDirectory, model, unavailable, privateResultsPath);
                 Console.WriteLine($"{model}: unavailable {task.Id}");
                 return true;
@@ -168,7 +168,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
                 if (score.Passed)
                 {
                     var passedResult = CreateResult(task, model, true, attempts, tokensIn, tokensOut, diagnostics,
-                        promptHash, reply, label, "completed", null, "specs-passed", score.ModelTestCount, score.HarnessTestCount, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
+                        promptHash, label, "completed", null, "specs-passed", score.ModelTestCount, score.HarnessTestCount, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
                     Persist(suiteDirectory, model, passedResult, privateResultsPath);
                     Console.WriteLine($"{model}: passed {task.Id}");
                     return true;
@@ -179,7 +179,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
         }
 
         var failed = CreateResult(task, model, false, attempts, tokensIn, tokensOut, diagnostics,
-            promptHash, reply, label, "completed", null, "none", lastScore?.ModelTestCount ?? 0, lastScore?.HarnessTestCount ?? 0, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
+            promptHash, label, "completed", null, "none", lastScore?.ModelTestCount ?? 0, lastScore?.HarnessTestCount ?? 0, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
         Persist(suiteDirectory, model, failed, privateResultsPath);
         Console.WriteLine($"{model}: failed {task.Id}");
         return false;
@@ -187,7 +187,7 @@ static async Task<bool> RunTask(BenchmarkTask task, string suiteDirectory, strin
     catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception or TimeoutException)
     {
         var unavailable = CreateResult(task, model, false, attempts, tokensIn, tokensOut, diagnostics,
-            promptHash, reply, label, "unavailable", exception.Message, "none", 0, 0, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
+            promptHash, label, "unavailable", exception.Message, "none", 0, 0, existingCodeTokens, coldProfile, coldPreamble, workdirEmptyAtLaunch);
         Persist(suiteDirectory, model, unavailable, privateResultsPath);
         Console.WriteLine($"{model}: unavailable {task.Id}");
         return true;
@@ -833,17 +833,11 @@ static string FirstLine(string value) => value.Split(['\r', '\n'], StringSplitOp
 static string Cap(string value, int length) => value[..Math.Min(length, value.Length)];
 static int EstimateTokens(string text) => Math.Max(1, (int)Math.Ceiling(text.Length / 4d));
 static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text))).ToLowerInvariant();
-static string ReplyHead(string reply)
-{
-    var scrubbed = Regex.Replace(reply.Trim(), @"(?i)\b(api[_-]?key|token|secret)\s*[:=]\s*\S+", "$1=[redacted]", RegexOptions.CultureInvariant);
-    scrubbed = Regex.Replace(scrubbed, @"(?<!\w)(?:(?:[A-Za-z]:\\|/|~[\\/])(?:[^\s\""'<>]+[\\/])*[^\s\""'<>]*)", "[path]", RegexOptions.CultureInvariant);
-    return scrubbed[..Math.Min(200, scrubbed.Length)];
-}
 
 static BenchmarkResult CreateResult(BenchmarkTask task, string model, bool passed, int attempts, int tokensIn, int tokensOut,
-    IReadOnlyList<string> diagnostics, string promptHash, string reply, string? label, string status, string? error,
+    IReadOnlyList<string> diagnostics, string promptHash, string? label, string status, string? error,
     string proofLevel, int modelTestCount, int harnessTestCount, int existingCodeTokens, ColdProfile coldProfile, string coldPreamble, bool workdirEmptyAtLaunch) => new(model, task.Id, passed, attempts, tokensIn, tokensOut, "estimated", diagnostics,
-        false, promptHash, ReplyHead(reply), status, error, label, proofLevel, "plain-csharp", "", task.Kind, modelTestCount, harnessTestCount, "executed-outcomes", existingCodeTokens, coldProfile.Cold, coldProfile.Flags, coldPreamble, coldProfile.Reason, workdirEmptyAtLaunch);
+        false, promptHash, string.Empty, status, error, label, proofLevel, "plain-csharp", "", task.Kind, modelTestCount, harnessTestCount, "executed-outcomes", existingCodeTokens, coldProfile.Cold, coldProfile.Flags, coldPreamble, coldProfile.Reason, workdirEmptyAtLaunch);
 
 static void Persist(string suiteDirectory, string model, BenchmarkResult result, string? privateResultsPath = null)
 {
