@@ -135,5 +135,13 @@
   "options": "Other ideas came up: one reviewed way to start background jobs (two were silently lost this card), a checklist of the tests that pin each documentation page, and a check on vote replies before they are counted.",
   "outcome": "Signed off on the second attempt (the first failed on a timing test that this card had made flakier). The final run passed all 344 and 402 tests.",
   "owner": "A decision for you: failed C# benchmark builds still save the temporary path, which includes the local account folder on Windows, in the row's diagnostics field. A bug is filed; it needs a rank."
+ },
+ "D248": {
+  "decided": "The team agreed the plan for its next product card: a page that lists the licence of every software package that Avowry's generated code restores.",
+  "why": "Before adopting the preview, a developer needs to see whether any package it pulls in has a licence that needs a closer look.",
+  "changes": "The page will list each package with its exact version and licence, flag anything outside the permissive licences, and a test will fail if the page and the recorded package lists disagree. A locked restore will be part of that test so a stale list cannot pass.",
+  "options": "Reading the list from the local package cache instead of committed lists was the alternative; it cannot say which packages are really restored.",
+  "outcome": "Adopted by six of six. One reviewer first asked that the check run a real restore and compare it with the committed lists; that was accepted and the reviewer agreed.",
+  "owner": "Nothing needed."
  }
 }

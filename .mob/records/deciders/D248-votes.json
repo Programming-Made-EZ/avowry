@@ -1,0 +1,167 @@
+{
+ "decider": "D248",
+ "subject": "card 369 declaration: task force and card text (the licences of every package a generated service and its specs restore are reviewed and listed)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "x248architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a stale list fails without network access",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe record is sound: committed lockfiles are the checker source, the page is a derived listing, and the offline identity checks (missing, extra, or wrong-version row; provider directs versus lockfile; tool PackageReference drift) are enforceable with no network and no NuGet-cache reads. Allowed-licence policy flags other licences for review, matching restore-and-review. Named borderline packages and out-of-scope targeting packs plus in-repo test, bench, and fixture projects keep the slice minimal. The locked-restore-on-temp-copy fork has a documented fallback, which keeps the gate free of restore-path false positives. Note: list each pack"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x248qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a stale list fails without network access",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nFrom the QA lens, the acceptance criteria and failure modes are testable red first. Scenario 3 specifies deterministic, offline assertions for missing packages, version drift, extraneous rows, provider discrepancies, and tool package reference additions. Preserving existing passing checks as characterisation while isolating the red-first rework of the unreviewed marker prevents regression while ensuring new checks reliably catch unverified transitive dependencies. The separation between the locked restore verification and reference target validation ensures the test suite catches violations without passing bad state."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x248dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the allowed licences are MIT, Apache-2.0, BSD-2-Clause and BSD-3-Clause and any other is flagged for review",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nFrom the seat that writes and passes these tests, the card is workable and I can comply without gaming it. The red tests can fail honestly on today's tree, because there are no lockfiles yet and the page still says \"not reviewed\". The tests read the lockfiles rather than hardcoding a list of packages, so the green seat cannot fit the code to a list someone typed by hand.\n\nNotes, not conditions:\n\n- The slice should fix the exact column format of the table before red starts. That includes the spelling of \"where the licence was read\" and the \"where it is used\" values, so red and green agree on the strings.\n- If locked restore inside the tem"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x248auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "the exact restored closure comes from the first locked restore",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nGit alone cannot verify the practice because the closure and licenses depend on a live restore with network access, not on committed state. The acceptance criteria compare against committed lockfiles, creating a drift loophole: stale lockfiles or cached restores could pass tests while actual licenses differ or remain unreviewed. I will vote Yes once the test enforces a locked restore in the CI environment and asserts the live output matches the committed lockfiles and page, eliminating network-dependent recomputation and drift."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x248decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a stale list fails without network access",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation rests firmly on objective, automated evidence: committed lockfiles, network-isolated unit tests enforcing schema and versions, and locked-mode reference builds. The seat plan is comprehensive and properly separated, establishing distinct seats for architecture slice, red test creation, green implementation, independent review, gate verification, and final sign-off, with merge verification preceding every gate."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x248coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "red and green on different seats",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe task force fits a size M card. It covers each perspective the work needs: an architect slice, red and green tests on separate writing seats, gate runs in an isolated clone, and independent review. Licence judgement stays in scope through the allowed-licence list and the \"needs review\" flag, and legal advice is excluded, so no legal seat is needed.\n\nOne note on possible padding: the second read-only review, the independent gate reviewer and the sign-off are three fresh Claude contexts. If the gate reviewer recomputes every figure, the second review could fold into the gate review. This is a suggestion, not a condition."
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "x248carchitect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The architect's slice says how the test starts the restore",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment tightens enforcement: locked restore is mandatory, and the test compares live restore output with lockfiles and page rows. A skip is never a pass. The slice still designs how restore starts, so the ReferenceTarget copy path remains a design task. Targeting packs stay out of scope under the existing ruling. I still endorse."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x248cqa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the live restore output matches the committed lockfiles",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nMy vote stands. Enforcing locked restore during continuous integration and asserting that restore output matches the committed lockfiles and documentation directly strengthens verification. It ensures drift is caught red first and prevents passing bad state, satisfying QA standards."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x248cdev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the acceptance test runs a restore of the two reference projects in locked mode",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment strengthens criterion 3, and I can comply with it without gaming it. Two notes for the slice. First, keep the offline page-versus-lockfile checks separate from the networked locked-restore test, so that a missing network shows up as its own reported failure. Second, the restore test starts the dotnet tool under a time limit, so D247's shared collection may now apply. The slice should decide that rather than assume it does not."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x248cauditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "which fails when a project and its lockfile disagree",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment explicitly mandates a locked restore in CI, asserts live output matches committed lockfiles and the page, and ensures drift is caught. This directly satisfies my original condition that the test enforce a locked restore and verify live output against committed artifacts."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x248cdecider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a stale list fails without network access",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nMy vote stands. The amendment reinforces the evidence base by closing the lockfile drift loophole with an explicit locked restore requirement in CI. The evaluation remains anchored in verifiable evidence, and all necessary seats and gate reviews required for sign-off are preserved."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x248ccoach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the acceptance test runs a restore of the two reference projects in locked mode",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment closes a real drift gap without adding any seats, so the task force is still the right size and the card is still size M. One note: scenario 3's title says the check works \"without network access\", but the new locked restore needs the network. The slice should keep the offline page-and-lockfile comparison as its own test, separate from the CI restore check. That way a network failure can't hide whether the list is stale."
+   }
+  ]
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run with swapped seats was not run (the declaration changes no agreement text)",
+ "window_notes": "Primary window, all six voters at once, 22:59:50 to 23:04:06 UTC (4 minutes 16 seconds): QA agy, architect Grok, coach Cursor, developer Cursor and decider agy Yes; audit lens Qwen No with a condition (the test must enforce a locked restore in CI and assert that the live restore output matches the committed lockfiles and the page, so a stale lockfile cannot pass). The proposer adopted it: the locked restore of the two reference projects became part of criterion 3 (ruling 2 no longer conditional). Confirmation step (D232), the objector asked one question and the five Yes voters whether the amendment changes their vote: the first launch of this window failed at once (a mistake in the facilitator's script pointed it at a missing file; no seat was started and nothing was counted) and was re-run 23:05:03 to 23:09:00 UTC (3 minutes 57 seconds); all six answered Yes, all counted: the objector Qwen said its condition is met. Notes from the confirmation for the slice (not conditions): keep the offline page-against-lockfile checks separate from the networked locked-restore test so a missing network is its own reported failure; scenario 3 of the card says \"without network access\" while the locked restore needs the network (the slice words it); the ReferenceTarget temporary copy path is a design task of the slice."
+}
