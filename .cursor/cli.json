@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "deny": [
+      "Shell(rm:-rf*)",
+      "Shell(rm:-r*)",
+      "Shell(Remove-Item:*-Recurse*)",
+      "Shell(remove-item:*-recurse*)",
+      "Shell(rmdir:/s*)",
+      "Shell(rmdir:/S*)",
+      "Shell(del:/s*)",
+      "Shell(del:/S*)",
+      "Shell(rm:-fr*)",
+      "Shell(rm:-R*)",
+      "Shell(rm:--recursive*)",
+      "Shell(rd:/s*)",
+      "Shell(rd:/S*)",
+      "Shell(python:*rmtree*)",
+      "Shell(python3:*rmtree*)",
+      "Shell(py:*rmtree*)",
+      "Shell(git:clean -f*)",
+      "Shell(find:*-delete*)"
+    ]
+  }
+}

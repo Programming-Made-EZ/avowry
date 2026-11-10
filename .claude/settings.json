@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(*rm -rf *)",
+      "Bash(*rm -r *)",
+      "Bash(*Remove-Item *-Recurse*)",
+      "Bash(*remove-item *-recurse*)",
+      "Bash(*rmdir /s *)",
+      "Bash(*rmdir /S *)",
+      "Bash(*del /s *)",
+      "Bash(*del /S *)",
+      "Bash(*rm -fr *)",
+      "Bash(*rm -R *)",
+      "Bash(*rm --recursive *)",
+      "Bash(*rd /s *)",
+      "Bash(*rd /S *)",
+      "Bash(*rmtree*)",
+      "Bash(*git clean -f*)",
+      "Bash(*find *-delete*)",
+      "PowerShell(*rm -rf *)",
+      "PowerShell(*rm -r *)",
+      "PowerShell(*Remove-Item *-Recurse*)",
+      "PowerShell(*remove-item *-recurse*)",
+      "PowerShell(*rmdir /s *)",
+      "PowerShell(*rmdir /S *)",
+      "PowerShell(*del /s *)",
+      "PowerShell(*del /S *)",
+      "PowerShell(*rm -fr *)",
+      "PowerShell(*rm -R *)",
+      "PowerShell(*rm --recursive *)",
+      "PowerShell(*rd /s *)",
+      "PowerShell(*rd /S *)",
+      "PowerShell(*rmtree*)",
+      "PowerShell(*git clean -f*)",
+      "PowerShell(*find *-delete*)"
+    ]
+  }
+}
