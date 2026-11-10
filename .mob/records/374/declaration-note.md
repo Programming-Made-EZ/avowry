@@ -1,0 +1,3 @@
+# Card 374 declaration pointer
+
+Card 374 (concurrent decision runs leave prompt files in the repository root that fail every other run's integrity check) was declared together with card 365 in Decider D241 (docs/decisions/process-and-staffing.md, .mob/records/365/declaration-proposal.md): "two cards, 365 first, 374 right after". Its slice is section 5 of .mob/records/365/slice-architect.md. Seats: red by the Qwen WRITING seat (first writing job, Probation) and a Cursor WRITING seat (see red-record.md); green by a fresh Claude context as a RECORDED STOPGAP (the declared Muse writing seat is out of weekly quota until 2026-11-16; see .mob/records/365/seat-changes.md, the same cause); independent gate reviewer, second review and sign-off as for card 365.
