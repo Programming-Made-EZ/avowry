@@ -1540,5 +1540,11 @@
     "status": "adopted",
     "title": "Card 162 re-freeze of the documents the LLM-customer check reads (D72, D127)",
     "order": 229
+  },
+  "D239": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 376 task-force declaration and card text (the account name standing alone is gone from tracked files; the tree scan gates by exit code; an account name with a space)",
+    "order": 230
   }
 }

@@ -1,0 +1,99 @@
+{
+ "decider": "D239",
+ "subject": "card 376 task-force declaration and card text (the account name standing alone is gone from tracked files; the tree scan gates by exit code; an account name with a space)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d239architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The six record files are rewritten by that rule only",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the named scripts, tests, and records so the architect vote is based on the actual design, not the draft alone.I'll inspect the scanner, hook, and named records next to check the proposed rules against the current code.I'll check the tests, space-segment rule, and named records for false-positive and overreach risk.I'll read the cited record lines and the rest of the scanner tests, without printing any account name.Yes\nOne definition in home_paths is sound: local_accounts(), F10 as a whole-word not bounded by letter or digit, and inner spaces on PATH only when a separator, quote or backtick follows, so find, scrub_bytes and account_"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d239qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Every new-state id is watched failing on the current tree.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nEvery rule has an explicit red-first test path. The three scenarios map cleanly to failing tests on the current tree: whole-word scans on the eight tracked files, exit-code assertions for `--tree` and the hook, and multi-word account path rewrites S1 to S5. The test matrix rigorously pairs failing assertions with controls (B4, B6, T3, T4, G4, S6) to ensure violations are caught without false passes or overreach. Explicitly declaring CI skips ensures lack of a local environment name is never counted as a pass. Characterisation tests C1 and R1 prevent unprompted file drift and verify the record transformation rule cleanly."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d239dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "decider_cite_ok": false,
+    "reply_head": "Yes",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   },
+   {
+    "tag": "d239rdev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Every seat brief repeats two rules: never type or echo the name",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nI can follow these rules without gaming them. Each red row has a named failure message, each green says which Pending criteria it removes, and \"a skip is never counted as a pass\" closes the obvious CI loophole.\n\nTwo notes for the slice:\n- S1 to S6 go into the existing `ScannerRows` file, which already gates CI. Either they need their own Pending wrapper, or the red must be explicit about how the new rows stay Pending while the existing rows (including `F9_space`) keep gating.\n- Green 2's script should run in binary mode so CRLF line endings are kept. R1 will catch any drift, but stating it in the brief avoids a wasted round.\n\nThe facilita"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d239auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "STANDING EVIDENCE OF THE PRACTICE (committed template; every line can be checked with git",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal thoroughly addresses all three defects (leak, exit code, space rule) and establishes a robust, git-verifiable evidence chain. The acknowledged CI limitation for the local name is properly mitigated by local hooks and scans, with planted rows ensuring CI coverage. The rule-based scrub of records preserves integrity, and the red-first workflow with separate worktrees and fresh contexts maintains auditability. No loophole allows passing while breaking the practice."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d239decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "independent gate reviewer and sign-off two further fresh Claude contexts",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation is framed rigorously around empirical verification. The characterisation tests (C1, R1) ensure no regressions, and new-state tests (376-1 through 376-3) separate code changes from blob rewrites with deterministic exit-code and whole-word gating. The task force contains every necessary seat with strict session segregation: read-only architecture, isolated worktrees for red and green, second review, an independent gate reviewer replaying red on the pre-change tree, and a final sign-off seat. Evidence requirements are thoroughly grounded in reproducible git state and blob hash verification. Note: ensure CI logs explicitly reco"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d239coach-coach-muse",
+    "seat": "muse",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "It fixes the space rule, the",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nSized to the risk, not padded: red and green are separated, both greens stay with one Cursor seat, cold reader is correctly omitted for a non-docs card, and Grok, gate review, and sign-off each check a distinct failure mode (overreach, full-clone replay, independent gate). No perspective is missing for an S card."
+   }
+  ]
+ },
+ "trigger_line": "(d) the re-run was not run because the primary window passed with no No and no amendment and the proposal does not change this agreement",
+ "window_notes": "Primary window one seat at a time under the D228 preflight and the D236 live probe (.mob/records/376/probe-all-2026-11-10.jsonl). Seats: audit lens Qwen; QA and decider agy; architect Grok (its first seat after its card 162 check run); coach Muse; developer Cursor. The developer seat first came back as a bare \"Yes\" with no citation and no reason (uncounted; the launcher then counted a Claude fallback, a stopgap); Cursor was re-asked once with the same prompt, answered with a citation and was counted. Six counted Yes, no No. The Claude fallback vote (a stopgap) is left out of the counted record: the developer seat is the Cursor re-ask."
+}
