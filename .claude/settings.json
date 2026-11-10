@@ -139,18 +139,5 @@
       "PowerShell(git * clean -f*)",
       "PowerShell(git * clean --force*)"
     ]
-  },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash|PowerShell",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python ~/mob-crosscli/hooks/delete_guard_hook.py --deny-all"
-          }
-        ]
-      }
-    ]
   }
 }
