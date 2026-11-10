@@ -349,3 +349,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D244](process-and-staffing.md#d244) | Remove the one-seat-at-a-time sentence from the Parallel voter dispatch entry, now that bugs 365 and 374 are fixed | process-and-staffing | adopted |
 | [D243](process-and-staffing.md#d243) | Card 374 retro pick: a merge is verified before a gate starts | process-and-staffing | adopted |
 | [D245](process-and-staffing.md#d245) | Card 379 retro pick: a change to how seats start carries a live start-proof | process-and-staffing | adopted |
+| [D246](process-and-staffing.md#d246) | Card 368 declaration: task force and card text (new bench rows publish no reply prefix) | process-and-staffing | adopted |

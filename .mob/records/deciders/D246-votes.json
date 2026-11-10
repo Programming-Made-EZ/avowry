@@ -1,0 +1,123 @@
+{
+ "decider": "D246",
+ "subject": "card 368 declaration: task force and card text (new bench rows publish no reply prefix)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "x246architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "none",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "decider_cite_ok": false,
+    "reply_head": "I'll read the card, related records, and current bench writers so the architect vote is on the actual design, not just the proposal text.I'll inspect the writers' persist paths, the stored-result reader, and tests that could false-positive if reply text leaks into other fields.",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   },
+   {
+    "tag": "x246rarchitect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "reply_head may be absent or empty and the tests accept either",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe record is minimal and enforceable: new rows omit reply text, hashes pin the 336+120 pushed lines, and empty-or-absent reply_head avoids representation false positives. Scenario 2's \"any part of any reply\" stays sound if tests use the same distinctive markers as scenario 1. Holdout and per-model files in one code path closes the leak. Size S matches the change."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x246qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the seven existing acceptance tests that pin the prefix are rewritten red-first as the changed behaviour",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nRed-first testability is fully supported. Existing prefix assertions fail red on the current tree once updated to disallow reply prefixes, and the three scenarios cover all termination modes across both benchmark writers with explicit marker tracking. Acceptance checks verify immutability of existing history via SHA-256 and ensure stored-result readers correctly handle old and new rows. The checks catch prefix leakage across history lines and per-model files without passing bad state."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x246dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "decider_cite_ok": false,
+    "reply_head": "Yes",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   },
+   {
+    "tag": "x246rdev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "reply_head may be absent or empty and the tests accept either",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe backend developer can follow these rules without gaming them. Each scenario fails on partial work, and red and green go to different seats. Letting `reply_head` be either absent or empty means I have no reason to choose a field shape just to satisfy the tests. Two notes:\n- The preflight lists seven rewritten tests \"plus the empty-reply test\". The red record should name all eight ids so the count can't be misread.\n- In scenario 2, \"eight history lines or model files\" should say eight runs, each checked in both its history line and its model file."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x246auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the marker appears nowhere in either",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes. The proposal ties verification to git-traceable artifacts: committed test files, explicit file paths, and SHA-256 hashes for pushed rows that can be diff-checked. The acceptance criteria explicitly require the marker to appear nowhere in the output files, which effectively prevents seats from bypassing the trim by merely deleting or nullifying fields. The allowance for reply_head to be absent or empty is a minor TDD convenience, but the marker absence check closes the loophole. The scope boundaries and red-first TDD flow are clearly defined. I endorse this as verifiable and robust."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x246decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The slice, the red and the gate reviewer recompute every figure.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation is grounded in objective evidence. Acceptance criteria rigorously verify both harness outputs and baseline hashes across all termination conditions. The evidence block, live probe citations, and isolation requirements ensure full traceability without relying on retained vendor text. Furthermore, the task force includes distinct seats for slicing, red implementation, green implementation, baseline gate execution, independent gate review, and final sign-off, providing all necessary independent verification stages."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x246coach-coach-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The card is size S. It changes no agreement text",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe task force matches the card's risk, which is a privacy and publication change across two writers and the published rows. Red and green on different seats, with a read-only slice first, is proportionate. The ceremony comes from standing rules (D204, D234, D243), not from padding this card. My one note is that the second read-only review (agy) and the independent Claude gate reviewer overlap. If the first review finds nothing, the facilitator could skip the second. The perspectives are covered: the architect, red, green, and the consumer value for Dana."
+   },
+   {
+    "tag": "x246coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": false,
+    "cite": "",
+    "cite_verbatim": true,
+    "decider_cite_ok": false,
+    "reply_head": "Yes",
+    "note": "not counted by the decider (no vote, or the cite was not exact); the role was re-asked on the next driver"
+   }
+  ]
+ },
+ "trigger_line": "(d) no change to the agreement: the declaration changes no agreement text, so the re-run with swapped seats was not run",
+ "window_notes": "All six voters launched at once (D228 as amended by D244); window 18:51:39 to 18:57:42 UTC (6 minutes 3 seconds). Counted Yes: audit lens Qwen, QA agy, decider agy, coach (Claude, after the Cursor reply was a bare Yes with no citation and the launcher fell back to Claude, which the rotation rule allowed). Architect Grok gave no vote line (two attempts) and developer Cursor a bare Yes without a citation: each was re-asked alone with an explicit reply format, 18:58:22 to 19:00:26 UTC (2 minutes 4 seconds), and both counted Yes. Six counted Yes, no No, no Support-it."
+}

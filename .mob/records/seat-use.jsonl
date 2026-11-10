@@ -2360,3 +2360,12 @@
 {"seat": "agy", "role": "decider voter", "context": "decider-agy", "card": "decider", "ts": "2026-11-10T17:29:19.303674Z", "probe_taken_at": "2026-11-10T17:29:19.180561Z"}
 {"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-10T17:33:11.568667Z", "probe_taken_at": "2026-11-10T17:33:11.496229Z"}
 {"seat": "qwen", "role": "decider voter", "context": "decider-qwen", "card": "decider", "ts": "2026-11-10T17:34:49.417805Z", "probe_taken_at": "2026-11-10T17:34:49.316093Z"}
+{"seat": "qwen", "role": "decider voter", "context": "decider-qwen", "card": "decider", "ts": "2026-11-10T18:52:23.791785Z", "probe_taken_at": "2026-11-10T18:52:23.704735Z"}
+{"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-10T18:52:23.848041Z", "probe_taken_at": "2026-11-10T18:52:23.751521Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-10T18:52:23.946771Z", "probe_taken_at": "2026-11-10T18:52:23.757318Z"}
+{"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-10T18:52:30.966427Z", "probe_taken_at": "2026-11-10T18:52:30.846830Z"}
+{"seat": "agy", "role": "decider voter", "context": "decider-agy", "card": "decider", "ts": "2026-11-10T18:52:31.656635Z", "probe_taken_at": "2026-11-10T18:52:31.546542Z"}
+{"seat": "agy", "role": "decider voter", "context": "decider-agy", "card": "decider", "ts": "2026-11-10T18:52:32.955182Z", "probe_taken_at": "2026-11-10T18:52:32.855987Z"}
+{"seat": "claude", "role": "decider voter", "context": "decider-claude", "card": "decider", "ts": "2026-11-10T18:54:16.527059Z", "probe_taken_at": "2026-11-10T18:54:16.397713Z"}
+{"seat": "grok", "role": "decider voter", "context": "decider-grok", "card": "decider", "ts": "2026-11-10T18:59:02.874074Z", "probe_taken_at": "2026-11-10T18:59:02.803560Z"}
+{"seat": "cursor", "role": "decider voter", "context": "decider-cursor", "card": "decider", "ts": "2026-11-10T18:59:03.393328Z", "probe_taken_at": "2026-11-10T18:59:03.305455Z"}
