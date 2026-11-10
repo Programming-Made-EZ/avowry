@@ -71,5 +71,29 @@
   "options": "Several smaller ideas came up, such as checking an assistant's usage allowance before it is given a job; they were noted for later.",
   "outcome": "The fix passed all checks: the whole tooling test suite ran 1966 tests with only the five failures that already existed before this card. Six voters starting together now all succeed, and the log still refuses edits to earlier entries.",
   "owner": "Nothing needed. Decision time per vote window before the fix: 18 to 40 minutes; the after numbers come with the next windows."
+ },
+ "D244": {
+  "decided": "Whether the team's decision votes may run all at the same time again, instead of one voter after another.",
+  "why": "Voters had to go one at a time since two bugs in the team's voting tool made simultaneous voters fail. That cost 15 to 30 minutes per decision instead of about 5. The product owner asked for it to be fixed and then switched back.",
+  "changes": "One sentence is removed from the team agreement (the rule that voters run one at a time while the two bugs are open). The safety rules stay: a fallback to one-at-a-time if the log cannot be written safely, and a check that no stray scratch files are lying around before a vote.",
+  "options": "Keeping the rule 'just in case' was considered; the evidence shows seven voters at once finished in 6 minutes 20 seconds with no voter refused.",
+  "outcome": "Adopted. Six reviewers agreed, and six different reviewers agreed again in the second round that a change to the agreement requires.",
+  "owner": "Nothing needed. Two smaller follow-up bugs are filed (hardening of the lock, and two other places that can still leave a scratch file)."
+ },
+ "D243": {
+  "decided": "A new check for the team's own process: before a quality test run starts, confirm that the code under test really contains the change being tested.",
+  "why": "On the last card a merge silently did not happen, so a 40-minute test run began on code without the fix. It was noticed after about 3 minutes, by luck.",
+  "changes": "For the next three cards the person running the tests writes down which version is being tested and proves it contains the change, and a refused merge is never hidden by cutting its output short.",
+  "options": "Relying on care alone was the alternative; six of seven team members named this check.",
+  "outcome": "Pending until the vote is recorded.",
+  "owner": "Nothing needed."
+ },
+ "RETRO374": {
+  "decided": "Looking back on card 374, which stopped the team's voting tool from leaving scratch files that made other simultaneous votes fail.",
+  "why": "Each card ends with a short review of what worked, what did not, and what to change.",
+  "changes": "One new check was proposed (verify that a merge landed before a test run starts). With card 365 and this card done, decisions run with all voters at once again.",
+  "options": "Several ideas came up, such as fixing five older failing tests and checking the instructions given to the first-time Qwen writing assistant against the code.",
+  "outcome": "The fix passed all checks: 1976 tests, with only the five failures that already existed. The retro itself, with seven voters at once, took 6 minutes 20 seconds.",
+  "owner": "Nothing needed."
  }
 }

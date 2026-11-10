@@ -1,0 +1,167 @@
+{
+ "decider": "D244",
+ "subject": "remove the one-seat-at-a-time sentence from the Parallel voter dispatch entry (bugs 365 and 374 fixed)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "d244architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "While bug 365 (the seat-use history race) or bug 374 (stray prompt files) is open, the window runs one seat at a time and the record says so.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the agreement, the named patch, and the 365/374 records so the architect vote is based on the committed design, not the proposal text alone.The agreement and the 365/374 records are next: the patch, the remaining clauses, and whether the one-at-a-time sentence is still the only thing that should go.I'll check the 365 and 374 sign-offs, whether those cards are closed, and whether 405/409 still make the remaining preflight and fallback enforceable.Yes\nThe remaining dispatch design is sound and minimal: launch all voters at once, serial only as a recorded fallback when the seat-use history cannot be written, and the D228 preflight (no "
+   }
+  ],
+  "qa": [
+   {
+    "tag": "d244qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "remove the one-seat-at-a-time clause from the parallel voter dispatch entry",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nBoth prerequisite bug fixes (365 and 374) demonstrate rigorous red-first characterisation and sign-off verification. Concurrent integrity checks, negative test paths (rejecting tampered or reordered history lines, detecting planted prompt files), and full test suites confirm that violations are caught without allowing bad state. The preflight checks and safety fallback to serial launch remain intact to guard against unhandled race conditions. From the QA perspective, testing proves the underlying failure modes are caught, meeting the criteria to lift the temporary one-seat-at-a-time restriction."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "d244dev-dev-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "While bug 365 (the seat-use history race) or bug 374 (stray prompt files) is open",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nBoth blocking bugs are fixed with committed sign-offs, and the retro window ran seven seats at once without a history-check refusal. As the seat that works under this entry on every card, I find the preflight (no other decision run active, no stray `prompt-*.txt` in the repository root) plus the fallback clause enough protection. Bug 409 stays filed and covered by those two guards. The deletion is clean and leaves nothing ambiguous, and it matches the owner's instruction. One note: \"the window runs one seat at a time and the record says so\" currently forces serial runs for work that no longer needs it."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "d244auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the window runs one seat at a time and the record says so.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal is fully git-verifiable: bug fixes, sign-offs, retro records, and probe outputs are committed under `.mob/records/` and `mob-defaults`. The audit lens confirms no loophole: the fallback clause and preflight checks remain intact, explicitly preserving serial launch if history writes fail. Known limits are acknowledged and scoped out, preventing silent degradation. The removal is strictly conditional on verified fixes, and the standing evidence template ensures every claim can be replayed via `git show`. Reservations: monitor bug 409’s probe behavior in future windows, but the current safety nets are sufficient."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "d244decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "remove the one-seat-at-a-time clause from the parallel voter dispatch entry",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation rests firmly on verified evidence. Both prerequisite issues (bug 365 and bug 374) have completed sign-offs, independent gate reviews, and passing test suites. Live parallel dispatch was successfully demonstrated during the card 374 retro voices without history race regressions. The team has every seat required to sign off under standing rules, and safety guarantees remain preserved since the serial fallback clause stays in force."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "d244coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Nothing else in the entry changes",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe change fits the task. It deletes one sentence, which carries out the product owner's own decision, and the fix commits for bugs 365 and 374 are both signed off. The fallback to serial launch and the preflight check for stray `prompt-*.txt` files stay, so bug 409 is still covered. Windows that took 13 to 40 minutes one seat at a time took 6 minutes 20 seconds with all seats at once. Removing that waiting is the right direction for a coach.\n\nNotes:\n- The full D234 evidence block in a one-line agreement edit is ceremony. A reference to it would do.\n- \"The live proof is not in yet\" contradicts the run cited right after it. Reword it befo"
+   }
+  ]
+ },
+ "rerun_swapped_seats": {
+  "architect": [
+   {
+    "tag": "t244architect-architect-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Nothing else in the entry changes",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nI read the committed diff. It removes exactly the one quoted sentence from line 495 of the agreement and leaves the rest of the entry unchanged. The fallback clause (\"falls back to serial launch\") and the preflight ban on a stray `prompt-*.txt` in the repository root both stay. So the rule stays minimal and enforceable, and it adds no new check that could raise false positives. The sentence was only meant to last while bugs 365 and 374 were open. Both are signed off, and the parallel retro (seven voices, no seat refused by the history check) is real evidence.\n\nNote: this scratch copy has an untracked `prompt-*.txt` in the repository root"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "t244qa-qa-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "While bug 365 (the seat-use history race) or bug 374 (stray prompt files) is open",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe removal of the serial constraint is justified by verified fixes to the seat-use race and stray prompt probes. The existing preflight and fallback clauses provide robust guardrails: unsafe history writes trigger serial fallback, and stray prompts are caught before launch. Red-first testing is enforced by the gate review replaying red on pre-change trees, and the sign-off suites demonstrate that violations (modified history lines, planted prompts) are correctly refused. The checks catch stated violations without masking bad state. I endorse the change, noting that continuous regression coverage for the lock and probe should be maintaine"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "t244dev-dev-claude",
+    "seat": "claude",
+    "model": "sonnet",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the window runs one seat at a time and the record says so",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nAs the seat that works under this rule on every card, I find the one-seat-at-a-time clause fair to retire. Both bugs have fixes that were signed off. The retro run with all seven voices at once finished in 6m20s with no refusal from the history check. The fallback clause and the preflight stay, so I can still comply without gaming anything. Bug 409 is filed and the stray-prompt preflight still covers it.\n\nNote: the live proof is a single run. If a seat is refused by the history check after this change, the facilitator should record it and reopen the question."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "t244auditlens-auditlens-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "If the shared seat-use history cannot be written safely, the window falls back to serial launch",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe audit trail remains fully verifiable from git history alone. The fix commits, test suites, and sign-offs for bugs 365 and 374 are committed in repository records. Seat usage continues to be recorded in the append-only seat log, and fallback serial execution remains mandated and recorded in git whenever history writing cannot proceed safely. Removing this temporary restriction restores parallel dispatch without introducing loopholes that would allow practice violations to go undetected."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "t244decider-decider-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Nothing else in the entry changes: the fallback clause",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe patch in `.mob/records/374/agreement-removal.diff` only deletes the sentence that keeps the window to one seat at a time. The fallback clause and the stray `prompt-*.txt` preflight check stay unchanged. Both bugs have committed sign-offs. The owner's done-condition, that every seat launches at once and none is refused, matches `retro-voices.json`: seven voices ran in 6m20s, with no refusal from the seat-use history check. That beats every earlier window, which took 13 to 90 minutes.\n\nNotes:\n- The line \"The live proof is not in yet\" contradicts the evidence that follows it, so the record should be corrected.\n- The audit lens asked for"
+   }
+  ],
+  "coach": [
+   {
+    "tag": "t244coach-coach-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the window runs one seat at a time and the record says so",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll read the agreement, the named patch, and the 365/374 records so the Agile Coach vote is grounded in committed files only.The agreement entry and the 365/374 records are next; I'll confirm the sentence and that the claimed sign-offs exist.I'll check the 365 and 374 sign-offs and the retro-voices proof so the vote rests on committed evidence.Yes\nThe one-at-a-time sentence was a temporary constraint sized to two open bugs. Both are signed off (365 lock plus prefix rule; 374 start probe in scratch). Parallel dispatch is already the standing D174 rule and the lean default. The patch deletes only that sentence. Fallback and the stray-prompt pr"
+   }
+  ]
+ },
+ "trigger_line": "(c) the re-run was run because the primary window passed with no No and no amendment and the proposal changes the agreement",
+ "window_notes": "Both windows ran one seat at a time, as the sentence under vote still required while the issue of card 374 was open (the last serial windows). Primary window: audit lens Qwen, QA agy, architect Grok, coach Cursor, developer Claude, decider agy; six Yes, 14 minutes (11:15:51 to 11:29:50 UTC). Re-run with swapped seats (trigger (c)): audit lens agy, QA Qwen, architect Cursor, coach Grok, developer Claude, decider Cursor; six Yes, 13 minutes (11:30:02 to 11:42:42 UTC). No No, no amendment in either window."
+}

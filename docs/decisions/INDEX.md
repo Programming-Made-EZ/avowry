@@ -346,3 +346,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D240](process-and-staffing.md#d240) | Card 376 retro pick: prompts to an external driver are checked for the local account name before launch | process-and-staffing | adopted |
 | [D241](process-and-staffing.md#d241) | Card 365 task-force declaration and card text (concurrent seat-use appends never fail the append-only check; bug 374 right after) | process-and-staffing | adopted |
 | [D242](process-and-staffing.md#d242) | Card 365 retro pick: a writing seat keeps each file's existing line endings | process-and-staffing | adopted |
+| [D244](process-and-staffing.md#d244) | Remove the one-seat-at-a-time sentence from the Parallel voter dispatch entry, now that bugs 365 and 374 are fixed | process-and-staffing | adopted |

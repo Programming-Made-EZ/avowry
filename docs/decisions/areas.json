@@ -1564,5 +1564,11 @@
     "status": "adopted",
     "title": "Card 365 retro pick: a writing seat keeps each file's existing line endings",
     "order": 233
+  },
+  "D244": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Remove the one-seat-at-a-time sentence from the Parallel voter dispatch entry, now that bugs 365 and 374 are fixed",
+    "order": 234
   }
 }
