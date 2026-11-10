@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": "python ~/mob-crosscli/hooks/delete_guard_hook.py --deny-all"
+      }
+    ]
+  }
+}
