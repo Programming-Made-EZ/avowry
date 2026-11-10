@@ -1,0 +1,3 @@
+# Card 365 seat changes after the declaration (D236: one committed amendment line each, before the seat launches)
+
+- 2026-11-10: green seat, Muse writing seat (declared in D241) -> a fresh Claude context, a RECORDED STOPGAP. Reason: Muse is out of weekly quota (API 429 "Subscription quota exhausted", reset 2026-11-16T00:00:00Z; `muse usage` shows weekly 99 percent used); this is quota, not behaviour, so no repair is owed; Muse re-enters rotation at its reset (a one-time re-probe is scheduled, DRIVERS.md row updated). The red was written by Cursor, so Cursor cannot take the green; Qwen's writing seat is still untried and a concurrency change is not the first trial to give it. The Muse attempt left no change in its worktree (the 429 came on its first model call).
