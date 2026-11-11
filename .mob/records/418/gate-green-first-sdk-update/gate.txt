@@ -1,0 +1,189 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Avowry.Compiler -> C:\Users\<user>\projects\gate418green-clone\src\Avowry.Compiler\bin\Debug\net8.0\Avowry.Compiler.dll
+  Avowry.Adapters.CSharp -> C:\Users\<user>\projects\gate418green-clone\src\Avowry.Adapters.CSharp\bin\Debug\net8.0\Avowry.Adapters.CSharp.dll
+  Avowry.Compiler.Tests -> C:\Users\<user>\projects\gate418green-clone\tests\Avowry.Compiler.Tests\bin\Debug\net8.0\Avowry.Compiler.Tests.dll
+Test run for C:\Users\<user>\projects\gate418green-clone\tests\Avowry.Compiler.Tests\bin\Debug\net8.0\Avowry.Compiler.Tests.dll (.NETCoreApp,Version=v8.0)
+  Avowry.Bench -> C:\Users\<user>\projects\gate418green-clone\tools\Avowry.Bench\bin\Debug\net8.0\Avowry.Bench.dll
+A total of 1 test files matched the specified pattern.
+  StarvationProbe -> C:\Users\<user>\projects\gate418green-clone\tests\Fixtures\StarvationProbe\bin\Debug\net8.0\StarvationProbe.dll
+  QuietChild -> C:\Users\<user>\projects\gate418green-clone\tests\Fixtures\QuietChild\bin\Debug\net8.0\QuietChild.dll
+  Avowry.Acceptance.Tests -> C:\Users\<user>\projects\gate418green-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+Test run for C:\Users\<user>\projects\gate418green-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:   344, Skipped:     0, Total:   344, Duration: 2 s - Avowry.Compiler.Tests.dll (net8.0)
+[xUnit.net 00:09:20.03]     Avowry.Acceptance.Tests.CSharpBaselineAcceptance.empty_first_reply_can_pass_on_the_second_attempt [FAIL]
+[xUnit.net 00:09:20.60]     Avowry.Acceptance.Tests.CSharpBaselineAcceptance.wrong_reply_fails_with_the_failing_test_name_in_diagnostics [FAIL]
+  Failed Avowry.Acceptance.Tests.CSharpBaselineAcceptance.empty_first_reply_can_pass_on_the_second_attempt [860 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 0
+Actual:   1
+  Stack Trace:
+     at Avowry.Acceptance.Tests.CSharpBaselineAcceptance.empty_first_reply_can_pass_on_the_second_attempt()
+--- End of stack trace from previous location ---
+  Failed Avowry.Acceptance.Tests.CSharpBaselineAcceptance.wrong_reply_fails_with_the_failing_test_name_in_diagnostics [577 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 3
+Actual:   1
+  Stack Trace:
+     at Avowry.Acceptance.Tests.CSharpBaselineAcceptance.wrong_reply_fails_with_the_failing_test_name_in_diagnostics()
+--- End of stack trace from previous location ---
+[xUnit.net 00:09:20.71]     Avowry.Acceptance.Tests.GeneratedSpecsMutationCheck.Orders_specs_kill_at_least_ninety_percent_deterministically [FAIL]
+[xUnit.net 00:09:21.12]     Avowry.Acceptance.Tests.CSharpBaselineAcceptance.failed_build_claims_no_executed_test_counts [FAIL]
+[xUnit.net 00:09:21.62]     Avowry.Acceptance.Tests.CSharpBaselineAcceptance.zero_executed_model_tests_is_a_completed_failure [FAIL]
+[xUnit.net 00:09:22.13]     Avowry.Acceptance.Tests.CSharpBaselineAcceptance.marked_two_file_reply_is_written_as_two_compilation_units [FAIL]
+  Failed Avowry.Acceptance.Tests.GeneratedSpecsMutationCheck.Orders_specs_kill_at_least_ninety_percent_deterministically [9 m 20 s]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                                  ↓ (pos 133)
+Expected: ···"Item>} is positive: 3 / 4 killed; 0 exclu"···
+Actual:   ···"Item>} is positive: 2 / 2 killed; 2 exclu"···
+                                  ↑ (pos 133)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.GeneratedSpecsMutationCheck.Orders_specs_kill_at_least_ninety_percent_deterministically()
+--- End of stack trace from previous location ---
+  Standard Output Messages:
+ Mutation fixture:
+ ensure {items: List<LineItem>} is not empty: 4 / 4 killed; 0 excluded
+ ensure every quantity in {items: List<LineItem>} is positive: 4 / 4 killed; 0 excluded
+ total quantity of {items: List<LineItem>}: 1 / 1 killed; 0 excluded
+ Total: 9 / 9 killed; 0 excluded
+ Survivors: none
+ Run time: 246.6 seconds
+ orders.avowry (informational):
+ ensure {items: List<LineItem>} is not empty: 4 / 4 killed; 0 excluded
+ ensure every quantity in {items: List<LineItem>} is positive: 3 / 4 killed; 0 excluded
+ total quantity of {items: List<LineItem>}: 1 / 1 killed; 0 excluded
+ Total: 8 / 9 killed; 0 excluded
+ Survivors: ensure every quantity in {items: List<LineItem>} is positive [change integer constant by one]
+ Run time: 117.1 seconds
+
+
+  Failed Avowry.Acceptance.Tests.CSharpBaselineAcceptance.failed_build_claims_no_executed_test_counts [516 ms]
+  Error Message:
+   System.IO.DirectoryNotFoundException : Could not find a part of the path 'C:\Users\<user>\AppData\Local\Temp\phrase-acceptance\1ebdec39d6a540f19c395ceee77320f3\csharp-baseline\results\broken-v1.json'.
+  Stack Trace:
+     at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.File.ReadAllText(String path, Encoding encoding)
+   at Avowry.Acceptance.Tests.CSharpBaselineAcceptance.ReadResult(String suite, String model)
+   at Avowry.Acceptance.Tests.CSharpBaselineAcceptance.failed_build_claims_no_executed_test_counts()
+--- End of stack trace from previous location ---
+  Failed Avowry.Acceptance.Tests.CSharpBaselineAcceptance.zero_executed_model_tests_is_a_completed_failure [499 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 3
+Actual:   1
+  Stack Trace:
+     at Avowry.Acceptance.Tests.CSharpBaselineAcceptance.zero_executed_model_tests_is_a_completed_failure()
+--- End of stack trace from previous location ---
+  Failed Avowry.Acceptance.Tests.CSharpBaselineAcceptance.marked_two_file_reply_is_written_as_two_compilation_units [507 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 0
+Actual:   1
+  Stack Trace:
+     at Avowry.Acceptance.Tests.CSharpBaselineAcceptance.marked_two_file_reply_is_written_as_two_compilation_units()
+--- End of stack trace from previous location ---
+[xUnit.net 00:09:22.65]     Avowry.Acceptance.Tests.CSharpBaselineAcceptance.generated_test_count_equals_the_number_of_outcome_cases [FAIL]
+[xUnit.net 00:09:23.17]     Avowry.Acceptance.Tests.CSharpBaselineAcceptance.broken_start_code_fails_with_the_expected_compiler_diagnostic(taskId: "010-fix-trigger", diagnosticName: "CS0117", expectedText: "does not contain a definition for 'Handled'") [FAIL]
+  Failed Avowry.Acceptance.Tests.CSharpBaselineAcceptance.generated_test_count_equals_the_number_of_outcome_cases [521 ms]
+  Error Message:
+   System.IO.DirectoryNotFoundException : Could not find a part of the path 'C:\Users\<user>\AppData\Local\Temp\phrase-acceptance\15c4d671dd9b4c818812276d3b78a0ca\csharp-baseline\results\count-v1.json'.
+  Stack Trace:
+     at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+   at System.IO.File.ReadAllText(String path, Encoding encoding)
+   at Avowry.Acceptance.Tests.CSharpBaselineAcceptance.ReadResult(String suite, String model)
+   at Avowry.Acceptance.Tests.CSharpBaselineAcceptance.generated_test_count_equals_the_number_of_outcome_cases()
+--- End of stack trace from previous location ---
+  Failed Avowry.Acceptance.Tests.CSharpBaselineAcceptance.broken_start_code_fails_with_the_expected_compiler_diagnostic(taskId: "010-fix-trigger", diagnosticName: "CS0117", expectedText: "does not contain a definition for 'Handled'") [510 ms]
+  Error Message:
+   C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error : Could not resolve SDK "Microsoft.NET.SDK.WorkloadAutoImportPropsLocator". Exactly one of the probing messages below indicates why we could not resolve the SDK. Investigate and resolve that message to correctly specify the SDK.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error :   
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,38): error MSB4236: The SDK 'Microsoft.NET.SDK.WorkloadAutoImportPropsLocator' specified could not be found.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error : Could not resolve SDK "Microsoft.NET.SDK.WorkloadAutoImportPropsLocator". Exactly one of the probing messages below indicates why we could not resolve the SDK. Investigate and resolve that message to correctly specify the SDK.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error :   
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,38): error MSB4236: The SDK 'Microsoft.NET.SDK.WorkloadAutoImportPropsLocator' specified could not be found.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error : Could not resolve SDK "Microsoft.NET.SDK.WorkloadAutoImportPropsLocator". Exactly one of the probing messages below indicates why we could not resolve the SDK. Investigate and resolve that message to correctly specify the SDK.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error :   
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,38): error MSB4236: The SDK 'Microsoft.NET.SDK.WorkloadAutoImportPropsLocator' specified could not be found.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error : Could not resolve SDK "Microsoft.NET.SDK.WorkloadAutoImportPropsLocator". Exactly one of the probing messages below indicates why we could not resolve the SDK. Investigate and resolve that message to correctly specify the SDK.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error :   
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,38): error MSB4236: The SDK 'Microsoft.NET.SDK.WorkloadAutoImportPropsLocator' specified could not be found.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error : Could not resolve SDK "Microsoft.NET.SDK.WorkloadAutoImportPropsLocator". Exactly one of the probing messages below indicates why we could not resolve the SDK. Investigate and resolve that message to correctly specify the SDK.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error :   
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,38): error MSB4236: The SDK 'Microsoft.NET.SDK.WorkloadAutoImportPropsLocator' specified could not be found. [C:\Users\<user>\projects\gate418green-clone\tools\Avowry.BenchCs\Avowry.BenchCs.csproj]
+
+
+The build failed. Fix the build errors and run again.
+
+  Stack Trace:
+     at Avowry.Acceptance.Tests.CSharpBaselineAcceptance.broken_start_code_fails_with_the_expected_compiler_diagnostic(String taskId, String diagnosticName, String expectedText)
+--- End of stack trace from previous location ---
+[xUnit.net 00:09:23.71]     Avowry.Acceptance.Tests.CSharpBaselineAcceptance.broken_start_code_fails_with_the_expected_compiler_diagnostic(taskId: "011-fix-type", diagnosticName: "CS0029", expectedText: "cannot implicitly convert type") [FAIL]
+[xUnit.net 00:09:24.35]     Avowry.Acceptance.Tests.CSharpBaselineAcceptance.cold_codex_uses_the_preamble_restricted_flags_and_an_empty_attempt_workdir [FAIL]
+  Failed Avowry.Acceptance.Tests.CSharpBaselineAcceptance.broken_start_code_fails_with_the_expected_compiler_diagnostic(taskId: "011-fix-type", diagnosticName: "CS0029", expectedText: "cannot implicitly convert type") [547 ms]
+  Error Message:
+   C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error : Could not resolve SDK "Microsoft.NET.SDK.WorkloadAutoImportPropsLocator". Exactly one of the probing messages below indicates why we could not resolve the SDK. Investigate and resolve that message to correctly specify the SDK.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error :   
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,38): error MSB4236: The SDK 'Microsoft.NET.SDK.WorkloadAutoImportPropsLocator' specified could not be found.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error : Could not resolve SDK "Microsoft.NET.SDK.WorkloadAutoImportPropsLocator". Exactly one of the probing messages below indicates why we could not resolve the SDK. Investigate and resolve that message to correctly specify the SDK.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error :   
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,38): error MSB4236: The SDK 'Microsoft.NET.SDK.WorkloadAutoImportPropsLocator' specified could not be found.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error : Could not resolve SDK "Microsoft.NET.SDK.WorkloadAutoImportPropsLocator". Exactly one of the probing messages below indicates why we could not resolve the SDK. Investigate and resolve that message to correctly specify the SDK.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error :   
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,38): error MSB4236: The SDK 'Microsoft.NET.SDK.WorkloadAutoImportPropsLocator' specified could not be found.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error : Could not resolve SDK "Microsoft.NET.SDK.WorkloadAutoImportPropsLocator". Exactly one of the probing messages below indicates why we could not resolve the SDK. Investigate and resolve that message to correctly specify the SDK.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error :   
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,38): error MSB4236: The SDK 'Microsoft.NET.SDK.WorkloadAutoImportPropsLocator' specified could not be found.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error : Could not resolve SDK "Microsoft.NET.SDK.WorkloadAutoImportPropsLocator". Exactly one of the probing messages below indicates why we could not resolve the SDK. Investigate and resolve that message to correctly specify the SDK.
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,3): error :   
+C:\Program Files\dotnet\sdk\10.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Sdk.ImportWorkloads.props(14,38): error MSB4236: The SDK 'Microsoft.NET.SDK.WorkloadAutoImportPropsLocator' specified could not be found. [C:\Users\<user>\projects\gate418green-clone\tools\Avowry.BenchCs\Avowry.BenchCs.csproj]
+
+
+The build failed. Fix the build errors and run again.
+
+  Stack Trace:
+     at Avowry.Acceptance.Tests.CSharpBaselineAcceptance.broken_start_code_fails_with_the_expected_compiler_diagnostic(String taskId, String diagnosticName, String expectedText)
+--- End of stack trace from previous location ---
+  Failed Avowry.Acceptance.Tests.CSharpBaselineAcceptance.cold_codex_uses_the_preamble_restricted_flags_and_an_empty_attempt_workdir [637 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 0
+Actual:   1
+  Stack Trace:
+     at Avowry.Acceptance.Tests.CSharpBaselineAcceptance.cold_codex_uses_the_preamble_restricted_flags_and_an_empty_attempt_workdir()
+--- End of stack trace from previous location ---
+[xUnit.net 00:09:25.29]     Avowry.Acceptance.Tests.LlmCustomerCheck.Profile_flags_reach_a_fake_cli_named_like_a_real_profile [FAIL]
+[xUnit.net 00:09:26.10]     Avowry.Acceptance.Tests.LlmCustomerCheck.Failed_reply_names_the_reason_class_and_omits_the_reply(reason: "build") [FAIL]
+  Failed Avowry.Acceptance.Tests.LlmCustomerCheck.Profile_flags_reach_a_fake_cli_named_like_a_real_profile [932 ms]
+  Error Message:
+  Failed Avowry.Acceptance.Tests.LlmCustomerCheck.Failed_reply_names_the_reason_class_and_omits_the_reply(reason: "build") [817 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "build"
+Actual:   "error"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.LlmCustomerCheck.Failed_reply_names_the_reason_class_and_omits_the_reply(String reason)
+--- End of stack trace from previous location ---
+[xUnit.net 00:09:27.05]     Avowry.Acceptance.Tests.LlmCustomerCheck.Failed_reply_names_the_reason_class_and_omits_the_reply(reason: "outcome") [FAIL]
+  Failed Avowry.Acceptance.Tests.LlmCustomerCheck.Failed_reply_names_the_reason_class_and_omits_the_reply(reason: "outcome") [945 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "outcome"
+Actual:   "error"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.LlmCustomerCheck.Failed_reply_names_the_reason_class_and_omits_the_reply(String reason)
+--- End of stack trace from previous location ---
+
+Failed!  - Failed:    13, Passed:   437, Skipped:     0, Total:   450, Duration: 10 m 18 s - Avowry.Acceptance.Tests.dll (net8.0)

@@ -1,0 +1,26 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Avowry.Compiler -> C:\Users\<user>\projects\gate418green2-clone\src\Avowry.Compiler\bin\Debug\net8.0\Avowry.Compiler.dll
+  Avowry.Adapters.CSharp -> C:\Users\<user>\projects\gate418green2-clone\src\Avowry.Adapters.CSharp\bin\Debug\net8.0\Avowry.Adapters.CSharp.dll
+  Avowry.Compiler.Tests -> C:\Users\<user>\projects\gate418green2-clone\tests\Avowry.Compiler.Tests\bin\Debug\net8.0\Avowry.Compiler.Tests.dll
+Test run for C:\Users\<user>\projects\gate418green2-clone\tests\Avowry.Compiler.Tests\bin\Debug\net8.0\Avowry.Compiler.Tests.dll (.NETCoreApp,Version=v8.0)
+  Avowry.Bench -> C:\Users\<user>\projects\gate418green2-clone\tools\Avowry.Bench\bin\Debug\net8.0\Avowry.Bench.dll
+A total of 1 test files matched the specified pattern.
+  QuietChild -> C:\Users\<user>\projects\gate418green2-clone\tests\Fixtures\QuietChild\bin\Debug\net8.0\QuietChild.dll
+  StarvationProbe -> C:\Users\<user>\projects\gate418green2-clone\tests\Fixtures\StarvationProbe\bin\Debug\net8.0\StarvationProbe.dll
+  Avowry.Acceptance.Tests -> C:\Users\<user>\projects\gate418green2-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+Test run for C:\Users\<user>\projects\gate418green2-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:   344, Skipped:     0, Total:   344, Duration: 3 s - Avowry.Compiler.Tests.dll (net8.0)
+[xUnit.net 00:02:01.23]     Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.timed_out_model_tree_is_stopped_and_recorded_in_both_arms [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.timed_out_model_tree_is_stopped_and_recorded_in_both_arms [28 s]
+  Error Message:
+   Avowry.BenchCs did not finish within 20 seconds.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.RunBenchmarkArm(String projectName, String suite, String model, String modelCommand, Int32 timeoutMs) in C:\Users\<user>\projects\gate418green2-clone\tests\Avowry.Acceptance.Tests\BenchmarkHarnessAcceptance.cs:line 1461
+   at Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.timed_out_model_tree_is_stopped_and_recorded_in_both_arms() in C:\Users\<user>\projects\gate418green2-clone\tests\Avowry.Acceptance.Tests\BenchmarkHarnessAcceptance.cs:line 41
+   at Avowry.Acceptance.Tests.BenchmarkHarnessAcceptance.timed_out_model_tree_is_stopped_and_recorded_in_both_arms() in C:\Users\<user>\projects\gate418green2-clone\tests\Avowry.Acceptance.Tests\BenchmarkHarnessAcceptance.cs:line 70
+--- End of stack trace from previous location ---
+
+Failed!  - Failed:     1, Passed:   449, Skipped:     0, Total:   450, Duration: 11 m 9 s - Avowry.Acceptance.Tests.dll (net8.0)
