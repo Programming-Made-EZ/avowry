@@ -33,6 +33,19 @@ public sealed class PathScrubForms
         yield return R("file:///C:/Users/<user>/Temp/Candidate.cs", "Candidate.cs");
     }
 
+    // Found by the card 418 second review: an account folder with a space or an apostrophe, at the end of a path or alone.
+    // The names are built from parts at run time, never typed as one literal (card 418 account-name rule).
+    public static IEnumerable<object[]> OddAccountFolders()
+    {
+        var spaced = "Two" + " " + "Words";
+        var apostrophe = "O" + "'" + "Brien";
+        yield return R($@"Access to the path 'C:\Users\{spaced}' is denied.", "Access to the path '<path>' is denied.");
+        yield return R($"see /home/{spaced.ToLowerInvariant()}", "see <path>");
+        yield return R($@"path C:\Users\{apostrophe}\x.cs end", "path x.cs end");
+        yield return R($@"C:\Users\{apostrophe}", "<path>");
+        yield return R($@"C:\Users\{spaced}\AppData\x.cs", "x.cs");
+    }
+
     public static IEnumerable<object[]> Untouched()
     {
         yield return R("</Project>", "</Project>");
@@ -45,6 +58,19 @@ public sealed class PathScrubForms
         yield return R("tests_did_not_run", "tests_did_not_run");
         yield return R("error CS0117: 'Greeter' does not contain a definition for 'Handled'", "error CS0117: 'Greeter' does not contain a definition for 'Handled'");
         yield return R("error CS0029: Cannot implicitly convert type 'int' to 'string'", "error CS0029: Cannot implicitly convert type 'int' to 'string'");
+    }
+
+    [Theory]
+    [MemberData(nameof(OddAccountFolders))]
+    [Trait("Slice", "418")]
+    [Trait("Criterion", "418-U")]
+    [Trait("Status", "Pending")] // the card 418 fix after the second review removes this Pending trait
+    public void Id_418_U5_an_account_folder_with_a_space_or_an_apostrophe_leaves_no_fragment(string input, string expected)
+    {
+        // Given an account folder with a space or an apostrophe, at the end of a path or alone
+        // When PathScrub.Apply runs
+        // Then no part of the folder name survives (the short name, or <path> for the folder itself)
+        Assert.Equal(expected, Apply(input));
     }
 
     [Theory]

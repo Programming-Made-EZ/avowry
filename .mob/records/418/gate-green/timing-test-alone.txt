@@ -1,0 +1,5 @@
+The facilitator's two runs of the known timing test alone on the second gate's clone (same HEAD, same build), after the full gate failed it:
+dotnet test tests/Avowry.Acceptance.Tests/Avowry.Acceptance.Tests.csproj --no-build -c Debug --filter "FullyQualifiedName~timed_out_model_tree_is_stopped_and_recorded_in_both_arms"
+run 1: Passed!  - Failed:     0, Passed:     1, Skipped:     0, Total:     1, Duration: 9 s - Avowry.Acceptance.Tests.dll (net8.0)
+run 2: Passed!  - Failed:     0, Passed:     1, Skipped:     0, Total:     1, Duration: 9 s - Avowry.Acceptance.Tests.dll (net8.0)
+(recorded from the console output of 2026-11-11; the failure in the full gate was "Avowry.BenchCs did not finish within 20 seconds" at 28 seconds)
