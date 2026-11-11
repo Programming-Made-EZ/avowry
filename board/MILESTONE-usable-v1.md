@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:446a7267d223f9ecb52bb53766ce01cf48e4b8ded21d5eb32c1091c3bbc82915 -->
+<!-- board-table-sha256:3229e3c46f9f5867163462b0e95d13952f678822cfdda6b917c4369ec447d3b6 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -136,7 +136,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 114 | 369 The licences of the packages the first preview restores are reviewed and listed | Done | none |
 | 114.5 | 418 New bench rows name files by their short name and hold no folder from the machine that ran them | Done |  |
 | 114.6 | 417 A test that asserts a wall-clock limit runs alone, in its own isolated collection, and a guard test fails when one does not | Done |  |
-| 114.7 | Bug: the bench path scrub over-scrubs prose after a path, misses a few path forms, and its label and save-step behaviour is untested | Ready |  |
+| 114.7 | 426 The bench path scrub keeps the words around a path, covers more path forms, and its label and save-step behaviour is tested | Ready |  |
 | 115 | 367 The four model vendors' published terms are read for what they say about publishing model output | Ready | none |
 | 116 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
 | 117 | 201 Migrate the sealed holdouts to avow and record a new baseline | Ready | 199 |
