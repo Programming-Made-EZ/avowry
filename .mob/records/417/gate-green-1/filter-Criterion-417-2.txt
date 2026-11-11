@@ -1,0 +1,4 @@
+Test run for C:\Users\<user>\projects\gate417g1-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:     1, Skipped:     0, Total:     1, Duration: 51 ms - Avowry.Acceptance.Tests.dll (net8.0)
