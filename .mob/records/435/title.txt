@@ -1,0 +1,1 @@
+(435) The bench path scrub removes the whole account folder from glued, unlisted and UNC roots, non-ASCII account names and paths followed by a JSON escape

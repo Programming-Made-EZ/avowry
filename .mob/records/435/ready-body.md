@@ -1,0 +1,79 @@
+<!-- phrase-card:435 -->
+
+- **Status:** Ready · **Shape:** Story · **Type:** bug · **Source:** issue 435 (card 426 second review, findings 1 rows 2–4, 4, 5, 6, 8, 10 and the list of uncaught mutations) · **Depends on:** 426 done
+- **Repository:** avowry (`tools/Avowry.Bench/PathScrub.cs`, linked into `tools/Avowry.BenchCs`; `tests/Avowry.Acceptance.Tests`)
+- **Story:** As Dana, I want the bench path scrub to remove the whole account folder from glued, unlisted and UNC roots, from account names with non-ASCII letters, parentheses or dots, and from paths followed by a JSON escape, without losing the words around a path, so that I can share a stored row that never names whose machine produced it, whatever tool printed the path.
+- **Consumer value:** A row can be shared without checking each path shape by hand.
+- **Acceptance criteria (each fails on partial work; every row is written once with `<user>` and once with a stand-in folder built from parts at run time):**
+  1. **Scenario: [M][I][O] glued, unlisted and UNC roots**
+     - **Given** each text:
+       | text | stored as |
+       | `gcc /tmp/a.c -I /usr/include -I/home/<user>/include` | `gcc a.c -I /usr/include -Iinclude` |
+       | `in /tmp/x.cs at /opt/data/home/<user>/x.cs` | `in x.cs at x.cs` |
+       | `Restoring /tmp/x.csproj for /cygdrive/c/Users/<user>/x.csproj` | `Restoring x.csproj for x.csproj` |
+       | `/cygdrive/d/Users/<user>` | `<path>` |
+       | `\\host\c$\Users\<user>` | `<path>` |
+       | `\\wsl$\Ubuntu\home\<user>` | `<path>` |
+       | `\\\\host\\c$\\Users\\<user>` | `<path>` |
+       | `/Users/<user>/x.cs` · `/Users/<user>` | `x.cs` · `<path>` |
+       | `/mnt/d/Users/<user>/x.cs` · `/d/Users/<user>` | `x.cs` · `<path>` |
+       | `c:\documents and settings\<user>` | `<path>` |
+       | `\\host\share\x.cs` | `x.cs` |
+       | `https://example.com/Users/x`, `https://example.com/home/x`, `/opt/data/x.cs` | unchanged |
+     - **When** the scrub runs
+     - **Then** each row reads exactly as listed, and neither `<user>` nor any part of the stand-in appears in the output.
+  2. **Scenario: [E][B] account names that are not plain ASCII**
+     - **Given** the account folders `aa`+ö+`bb`, its JSON-escaped form `aa\u00f6bb`, `aa(bb)`, `aa (bb)`, `aa bb.cc` and `aa` + a space + a word starting with ö, each built from parts at run time (the non-ASCII letter written as a C# `\u00F6` escape, so the source stays ASCII). Each folder is used after `C:\Users\`, `C:\\Users\\`, `\u0027C:\\Users\\…\u0027` and `/home/`, alone and followed by `\x.cs`.
+     - **When** the scrub runs
+     - **Then** the folder alone becomes `<path>` (and `\u0027<path>\u0027` in the quoted form), the folder followed by a file becomes `x.cs`, no half of any stand-in survives, and `see C:\Users\<user> bb.` still ends in `<path>.`.
+  3. **Scenario: [Z][S] escapes after a path, and 100,000 generated inputs**
+     - **Given** these text rows, and the D256 generator test:
+       | text | stored as |
+       | `C:\\a\\x.cs\nnext` | `x.cs\nnext` |
+       | `/tmp/a/x.cs\tnext` | `x.cs\tnext` |
+       | `see C:\\a\\x.cs\u0022` | `see x.cs\u0022` |
+       | `\"C:\\a\\x.cs\"` | `\"x.cs\"` |
+       | `C:\\a\\x.cs\n/home/<user>/y.cs` | `x.cs\ny.cs` |
+       | `match \\d+ here`, `""` | unchanged |
+     - The generator test is a committed generator with a fixed seed and its own small pseudo-random generator, not `System.Random`. It builds at least 100,000 strings from the shapes in criteria 1 to 3: the text before a path, the root, the account token, zero to three folders, an optional file and the text after it. It plants either `<user>` or a two-part token built from parts.
+     - **When** the scrub runs once and then again
+     - **Then** each row reads exactly as listed. For every generated input:
+       - the new output holds no planted token or half-token;
+       - no input leaks a token where the old scrub's output did not;
+       - a second pass changes nothing.
+       - Each exception is an exclusion committed in the generator test (the shape, the reason and `card 435`); the test prints how many inputs each exclusion matched, and fails when an exclusion matches none.
+- **Criterion checks:**
+  - Criteria 1 and 2 fail if any row differs.
+  - The red record shows each of these hand-applied mutants of `PathScrub.cs` failing a named row and then restored, with an empty diff at hand-off:
+    - `/Users/` changed to `/users/` (line 23);
+    - `[a-z]` narrowed to `c` (line 23);
+    - `documents and settings` made case-sensitive (line 19);
+    - `\\u` changed to `u` in the escape lookbehind, once each on lines 18, 20 and 22;
+    - the UNC `users` on line 20 widened to any folder.
+  - Criterion 3 fails while any in-scope shape leaks. The old scrub is a verbatim copy of the base `PathScrub.cs`, with only the class renamed (for example to `PathScrubBefore435`, under `tests/…/Support/`). A small fact asserts that the copy still reproduces three known base leaks (the `-I`, `/opt/data/home` and `\\host\c$` rows), so a patched copy cannot quietly empty the comparison. The gate reviewer checks the copy against `git show <base>:tools/Avowry.Bench/PathScrub.cs`.
+- **ZOMBIES:**
+  - Z: an empty string and text with no root (`\\d+`, `/opt/data/x.cs`) stay unchanged (criteria 3 and 1).
+  - O: one account folder alone becomes `<path>` in UNC, WSL and non-ASCII forms (criteria 1 and 2).
+  - M: two paths on one line, the generator's 100,000 inputs (criteria 1 and 3).
+  - B: a dot ending a sentence after an account folder, `\u0022` and `\"` at both ends of a path (criteria 2 and 3).
+  - I: both tools call the shared file (418-U4 kept); WSL, Cygwin and JSON-escaped forms (criterion 1).
+  - E: JSON-escaped letters, parentheses and dots in account names (criterion 2).
+  - S: a second pass changes nothing (criterion 3).
+- **D256 differential check (named for the slice):** the check is `Id_435_3` generated inputs against the base copy, with a fixed seed and at least 100,000 inputs. It runs in the normal gate, with no Pending trait after the green and no wall-clock assertion (D254).
+- **Must keep passing:** all of `PathScrubForms` (418-U1, U2, U4, U5 and the 426 rows), `BenchRowsHoldNoFolderPath`, `NewBenchRowsCarryNoReply`, `BenchmarkHarnessAcceptance`, `PrivateHoldoutResults`.
+- **Rulings (facilitator, 2026-11-11; the draft read the code and did not run it, so the red seat proves every 'today' output by running it):** (1) the old version for the D256 differential is a verbatim copy of the CURRENT base `tools/Avowry.Bench/PathScrub.cs` (the file at the base commit of this card), renamed for the test; a copy from `dcd96f4` is not needed; (2) the bug's 'a failing count is pinned' is replaced by D256's rule: every difference is a failing test or an explicit exclusion committed in the generator test (the shape, the reason, `card 435`), and the exclusions are counted and reported; (3) the bug's example account name is replaced by the stand-in built from parts (the issue body is replaced by this text); (4) a root glued to a flag reads `-Iinclude` (the existing short-name rule), as the table says; (5) taking parentheses, dots and non-ASCII words after a bare account folder widens the known over-scrub of prose after it: accepted (an over-scrub never leaks); (6) the single-backslash regular-expression row `\d+` stays unchanged as in card 426; the double-backslash `\\d+` row is NOT claimed unless it falls out of the design for free (the architect says; the red records it); (7) plain accented account folders are already removed whole: those rows are characterisation rows, declared up front, and the red record lists them apart from the failing rows; (8) one card, one slice; if the slice goes over 15,360 bytes the architect splits criterion 2 as 435b, never the generator on its own; (9) the hand-applied mutants are proved by the red seat once against the final tests and restored (an empty diff at hand-off), as in card 426's label proof; (10) card number 435 (the issue number), persona Dana, size L; D251 stamp, D254 (no wall-clock assertion) and D256 apply.
+- **Not in this card:**
+  - the `\\?\` prefix;
+  - a TMPDIR or other unlisted root that holds no `home` or `Users` folder;
+  - prose followed by a relative path (a known limit);
+  - a drive glued after `\x27` or `%27`;
+  - rewriting pushed rows (0 hold an account name);
+  - the residue regex in `BenchRowsHoldNoFolderPath`;
+  - the pre-commit scrubber tooling item;
+  - a mutation-testing tool (the mutants are applied by hand).
+- **Size:** L as one slice (one regex in one shared file, about 35 rows, 8 hand-applied mutants, one generator test and the base copy). If the slice goes over 15,360 bytes, split criterion 2 into 435b. The generator stays with whichever slice changes the regex first, and the next slice extends it. Never split the generator off on its own.
+- **Done when:**
+
+    dotnet test Avowry.sln --filter "Status!=Pending"
+
+**Test note:** test inputs use only `<user>` and stand-ins built from parts at run time (`"aa" + "bb"`, with the non-ASCII letter as a `\u00F6` escape in the source). No real name or home folder appears. Outputs the red seat must prove by running are every "today" output in the table in section 1, and the generator's first counts.

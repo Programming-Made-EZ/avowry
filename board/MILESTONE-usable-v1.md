@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:7fb225dbdf179d67b5b15de40f6a2e45376d1193210515f1ded49edf63614bcf -->
+<!-- board-table-sha256:22b81ed10efe0f0950dedf2f594f5e2b82207684089971e246cc924812a95ea2 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -137,7 +137,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 114.5 | 418 New bench rows name files by their short name and hold no folder from the machine that ran them | Done |  |
 | 114.6 | 417 A test that asserts a wall-clock limit runs alone, in its own isolated collection, and a guard test fails when one does not | Done |  |
 | 114.7 | 426 The bench path scrub keeps the words around a path, covers more path forms, and its label and save-step behaviour is tested | Done |  |
-| 114.8 | Bug: the bench path scrub still leaves an account folder in glued roots, non-ASCII account names and some UNC shapes, and its tests miss five mutations | Ready |  |
+| 114.8 | 435 The bench path scrub removes the whole account folder from glued, unlisted and UNC roots, non-ASCII account names and paths followed by a JSON escape | Ready |  |
 | 115 | 367 The four model vendors' published terms are read for what they say about publishing model output | Ready | none |
 | 116 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
 | 117 | 201 Migrate the sealed holdouts to avow and record a new baseline | Ready | 199 |
