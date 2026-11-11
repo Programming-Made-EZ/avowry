@@ -95,6 +95,20 @@ public sealed class PathScrubForms
 
     public static IEnumerable<object[]> MissedRootsCharacterisation() => MissedRoots().Skip(11);
 
+    // Rows from the card 426 second review (findings 1 to 3 and 7): a path after a JSON escape must not leak, an account folder must not swallow a drive letter,
+    // and a one-letter URL host is not a Git Bash drive.
+    public static IEnumerable<object[]> SecondReviewRows()
+    {
+        yield return R(@"copy /tmp/a.cs to \u0027/home/<user>/b.cs\u0027", @"copy a.cs to \u0027b.cs\u0027");
+        yield return R(@"\u0027/home/<user>/x.cs\u0027", @"\u0027x.cs\u0027");
+        yield return R(@"\u0027/home/<user>\u0027", @"\u0027<path>\u0027");
+        yield return R(@"\u0027/mnt/c/Users/<user>/x.cs\u0027", @"\u0027x.cs\u0027");
+        yield return R(@"\u0027\\host\Users\<user>\x.cs\u0027", @"\u0027x.cs\u0027");
+        yield return R(@"moved C:\Users\<user> to D:\Users\<user>\x.cs", "moved <path> x.cs");
+        yield return R("/c/users/<user>/x.cs", "x.cs");
+        yield return R("see https://a/Users/<user>", "see https://a/Users/<user>");
+    }
+
     [Theory]
     [MemberData(nameof(OddAccountFolders))]
     [Trait("Slice", "418")]
@@ -218,6 +232,20 @@ public sealed class PathScrubForms
         // Given the C:/Users missed-root text, written once with the <user> placeholder and once with a plain-letter folder built from parts
         // When PathScrub.Apply runs
         // Then each row reads exactly as listed, neither the placeholder nor the plain folder appears, and a second pass changes nothing (characterisation: this row passes on the current tree)
+        AssertMissedRoot(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(SecondReviewRows))]
+    [Trait("Slice", "426")]
+    [Trait("Criterion", "426-4")]
+    [Trait("Status", "Pending")]
+    // Pending until the facilitator's fix of tools/Avowry.Bench/PathScrub.cs after the second review (takeover, seat-changes.md)
+    public void Id_426_4_second_review_rows(string input, string expected)
+    {
+        // Given each text of the second review, written once with the <user> placeholder and once with a plain-letter folder built from parts
+        // When PathScrub.Apply runs
+        // Then each row reads exactly as listed, neither the placeholder nor the plain folder appears, and a second pass changes nothing
         AssertMissedRoot(input, expected);
     }
 
