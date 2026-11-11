@@ -1,3 +1,7 @@
 <Project>
   <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->
+  <PropertyGroup>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode>true</RestoreLockedMode>
+  </PropertyGroup>
 </Project>

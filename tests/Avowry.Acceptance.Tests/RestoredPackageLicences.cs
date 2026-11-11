@@ -49,7 +49,6 @@ public class RestoredPackageLicences
     [Fact]
     [Trait("Slice", "369")]
     [Trait("Criterion", "369-3")]
-    [Trait("Status", "Pending")] // green 1 (lockfiles and props) removes this Pending trait
     public async Task F3_lockfiles_match_the_provider_and_the_tool_gains_no_package()
     {
         // Given the lockfiles, the C# provider and the three tool projects

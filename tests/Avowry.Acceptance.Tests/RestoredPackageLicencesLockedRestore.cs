@@ -18,7 +18,6 @@ public class RestoredPackageLicencesLockedRestore
     [Fact]
     [Trait("Slice", "369")]
     [Trait("Criterion", "369-3")]
-    [Trait("Status", "Pending")] // green 1 (lockfiles and props) removes this Pending trait
     public async Task F5_locked_restore_matches_the_lockfiles_and_a_planted_mismatch_is_NU1004()
     {
         // Given committed lockfiles for the two reference projects
@@ -176,12 +175,9 @@ public class RestoredPackageLicencesLockedRestore
             ?? throw new InvalidOperationException("lockfile does not parse");
         var deps = node["dependencies"]?["net8.0"] as JsonObject
             ?? throw new InvalidOperationException("lockfile dependencies[net8.0] missing");
-        if (!deps.Remove("FluentValidation"))
-        {
-            var victim = deps.FirstOrDefault(p => p.Value?["type"]?.GetValue<string>() == "Transitive").Key;
-            Assert.False(string.IsNullOrEmpty(victim), "could not plant a lockfile mismatch");
-            deps.Remove(victim);
-        }
+        // The project asks for FastEndpoints directly, so a lockfile without that DIRECT entry disagrees with the project: NU1004.
+        // (A missing transitive entry fails the restore too, but with NU1102, not NU1004: found by the green 1 seat on SDK 10.0.403.)
+        Assert.True(deps.Remove("FastEndpoints"), "could not plant a lockfile mismatch: no direct FastEndpoints entry");
         File.WriteAllText(lockPath, node.ToJsonString());
     }
 
