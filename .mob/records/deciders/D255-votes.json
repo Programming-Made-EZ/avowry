@@ -1,0 +1,167 @@
+{
+ "decider": "D255",
+ "subject": "card 426: task force declaration and Ready text (the bench path scrub keeps the words around a path, covers more path forms, and its label and save-step behaviour is tested)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "x255architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "without losing the words around a path",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nSound and minimal: one shared PathScrub.Apply, three criteria with exact stored-as tables, and explicit non-goals. Over-scrub and URL false positives are pinned (`/usr/lib/dotnet`, bare `/x`, `\\d+`, both https rows), so the regex is testable. Dual leak rows (placeholder plus a folder built at run time) keep the account-name rule enforceable. Leaving the residue regex and pushed rows unchanged avoids checker false positives; PathScrubForms looping the new rows carries those forms. Note: criterion 3 mixes a new label proof with characterisation; the residue regex will not police the new forms later."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x255qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "every new-state row of criteria 1 and 2 is watched failing by assertion",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe test strategy is solid for QA. Criteria 1 and 2 test new behaviors red-first against the current tree, with explicit tables covering over-scrub and missed root forms (both with placeholders and runtime-constructed folder strings). Criterion 3 properly declares existing characterization upfront and mandates verifying test sensitivity by deleting the label persistence line in both bench tools. The two-pass stability check, residue check, and preservation of unaffected URLs and existing rows ensure no regressions or bad state pass through."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x255dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the red seat proves each row by running it",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe rules are workable for the writing seats, and I can follow them without gaming them. Criteria 1 and 2 are exact input-to-output tables, so the red failures come from assertions on those rows rather than from interpretation. Criterion 3 may pass before any code changes. That is declared up front, and deleting the label line in each tool proves the test can fail, which is fair. Ruling 6 pins down the glued-drive edge, and the URL rows fence it in.\n\nNotes:\n- The line numbers 817 and 850 may drift, so the red record should name the label line by its code, not its number.\n- Criterion 3 needs a passing reply without a live model; the brief "
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x255auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "the red seat proves every row by running it",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nThe proposal relies on seat execution and test runs but lacks an explicit git-based audit step to verify compliance with the account-name rule and regex changes. The \"Done when\" criterion only executes tests, leaving a loophole where the team could pass while violating the strict no-leak practice. The repository state alone cannot be verified for compliance without a mandated diff scan or commit history check. Mandate an explicit git-based verification step (e.g., scanning the staged diff and committed tree for account names and regex modifications) before the test run, ensuring the practice is auditable from the repository state alone."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x255decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "neither the placeholder nor the plain-letter folder appears in any output",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation is solidly framed around concrete evidence. Acceptance criteria are pinned to exact input-output text rows, characterisation behaviors are declared up front and verified by deletion, and regression suites are protected. The verification process enforces isolated execution, toolchain stamps, and merge verification. Furthermore, the staffing plan provides every required seat across isolated contexts for red, green, adversarial review, gate review, and sign-off."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x255coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "read-only architect slice by a fresh Claude context",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe task force fits a size-M bug. One architect slice, red and green on different seats, gates run by the facilitator, then review and sign-off. That covers design, test-first proof, implementation and independent checking without duplicating any of them. The red seat runs every row, which fills the gap left by the draft only reading the regex.\n\nNotes:\n- Three fresh Claude contexts after green (the second review, the gate reviewer and the sign-off) is the heaviest part of the plan. It is justified here because the account-name rule is strict.\n- A seven-voice retro for one regex card is a lot of ceremony. Consider a lighter retro if nothi"
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "x255carchitect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a count other than 0 voids the gate",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment only adds a facilitator git-audit of PathScrub.cs and the two Program.cs files plus an env-based account-name count before each gate and sign-off. Criteria, PathScrub design, characterisation, and the test command stay the same. The regex change is reviewable from git; a non-zero count voids the gate. Still sound, minimal, and enforceable. Vote stands."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x255cqa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "neither the placeholder nor the plain-letter folder appears in any output",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nMy vote stands. The amendment adds git-based diff and environment leak auditing to the facilitator gate verification without altering the acceptance criteria, characterisation proofs, or red-first requirements. Every rule remains testable red-first, the test command is preserved, and the additional audit checks catch account-name leaks without passing bad state."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x255cdev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a count other than 0 voids the gate",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nMy vote stands. The amendment adds an audit step for the facilitator, not for the red or green seats. It doesn't change how I write the failing tests, make the unit commits or bring them to green, and I can't game it, since the account-name count comes from a script that reads the name from the environment. Note: if the card leaves both Program.cs files unchanged, their committed diff will simply be empty. That is still auditable, so it's fine."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x255cauditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the count of the account name over the staged diff and over the whole tracked tree",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment explicitly mandates committing the full diff of the regex file and both Program.cs files for review, alongside a script-generated count of the account name across the staged diff and tracked tree, with a non-zero count voiding the gate. This directly satisfies the requirement for an explicit, git-based verification step before testing."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x255cdecider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "over the staged diff and over the whole tracked tree",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nMy vote stands: I endorse the amended proposal. The amendment strengthens the evidentiary foundation of the evaluation by adding repository-level audit records and automated leak scans before each gate and sign-off, without disturbing the necessary roles or sign-off authority."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x255ccoach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a count other than 0 voids the gate",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nAs the agile coach, the amendment keeps my Yes. It adds a scripted facilitator step and no new seat or extra review round. It also targets the card's core risk: an account name ending up in the repository. Note: generate the audit with one script run per gate, so it stays a short check and does not become a hand-written report each time."
+   }
+  ]
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run",
+ "window_notes": "Both rounds launched with all six voters at once (D228 as amended by D244; the explicit reply format: every reply counted, no re-ask). Primary window 13:32:19 to 13:39:27 UTC (7 minutes 8 seconds): QA agy, architect Grok, coach Cursor, developer Cursor and decider agy Yes; audit lens Qwen No with a condition (the Done-when only runs tests: mandate a git-based verification step, a scan of the staged diff and committed tree for the account name and a review of the regular-expression change from git, before the test run). The proposer adopted it (the facilitator commits before every gate and sign-off the full diff of the scrub file and the two bench programs and a script-produced count of the account name over the staged diff and the whole tracked tree, the name read from the environment; a count other than 0 voids the gate). Confirmation step (D232): 13:39:58 to 13:44:53 UTC (4 minutes 55 seconds): the audit lens answered Yes (condition met) and the five Yes voters said their vote stands. Result: six of six Yes. One coach note (produce the audit with one script run per gate so it stays a short check) is taken up."
+}

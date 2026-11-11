@@ -1636,5 +1636,11 @@
     "status": "adopted",
     "title": "Card 417 retro pick: the D247 entry is rewritten (a test that asserts a wall-clock limit runs alone in an isolated collection)",
     "order": 245
+  },
+  "D255": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 426: task force declaration and Ready text (the bench path scrub keeps the words around a path, covers more path forms, and its label and save-step behaviour is tested)",
+    "order": 246
   }
 }

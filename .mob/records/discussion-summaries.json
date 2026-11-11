@@ -215,5 +215,13 @@
   "options": "Other ideas came up: always take a measurement first on cards about test time, have the reviewer recompute the facilitator's derived numbers a second way, and write a short state file at every step so a laptop restart resumes at once.",
   "outcome": "Signed off at the first attempt; all 344 and 480 tests pass, in 10.4 minutes. I made a mistake in my own evidence (I read the wrong time stamp in the test log) and the independent reviewer caught it; the corrected evidence supports the change more strongly.",
   "owner": "Nothing needed."
+ },
+ "D255": {
+  "decided": "The team agreed the plan for the next bug: the tool that removes folder paths from stored benchmark results will keep the words around a path, handle more kinds of paths, and have its label handling tested.",
+  "why": "A review of the earlier fix found that the cleaning can cut away useful words in an error message and misses a few path styles, such as those used by Linux-on-Windows and Git Bash.",
+  "changes": "Nothing in the rules changes. The card gets its plan: an architect reads the code first, one seat writes the failing tests, a different seat makes them pass, and independent reviewers check the result.",
+  "options": "Splitting the card into a fix for the missed paths now and the wording fix later was considered and not needed: the owner ranked the whole bug before the first release.",
+  "outcome": "Adopted by six of six. One reviewer first asked for a check, based on the repository alone, that no account name gets in; that was added (a script-made count and the full change listed before each test run).",
+  "owner": "Nothing needed."
  }
 }
