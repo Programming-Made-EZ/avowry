@@ -1,0 +1,33 @@
+I'll start by reading the card, the architect's slice, and the declaration so the red tests match the rulings.Next I’ll read the existing PathScrub tests and nearby patterns so the new rows match the current style.I’ll check the commit hook, line endings, git HEAD, and how 426 wrote split home-folder rows.I’ll read the long-running-task skill and a few test conventions, then start writing the files.I have the slice and the current tests. Next I’ll copy the base PathScrub class and add the red tests.The base copy differs by one class-name line. Next I’ll add the PathScrubForms rows and the generator tests.The xUnit analyzer rejects `Assert.Equal` on collection length, so I’ll pin the exclusion count with `Assert.True` instead.Slice=435 is 34 failed and 43 passed, which matches the pending and characterisation split. Next I’ll pull exact assertion messages and run the remaining filters.The class filter matches: 33 pending failures, 103 passes. Next I’ll probe `\\d+` and run the seven mutants.The red is written and left uncommitted. Production files are unchanged.
+
+**Pending (34) fail by assertion on the current tree.** Characterisation (43) passes. Record: `.mob/records/435/red-record.md`.
+
+**New / changed files**
+- `tests/Avowry.Acceptance.Tests/PathScrubForms.cs` — 183 insertions, no existing test edited
+- `tests/Avowry.Acceptance.Tests/PathScrubGenerated.cs`
+- `tests/Avowry.Acceptance.Tests/Support/PathScrubBefore435.cs` — base blob at `7f8680c` with only `class PathScrub` renamed (one-line diff)
+- `.mob/records/435/red-record.md`
+
+**Pending ids:** `Id_435_1_glued_unlisted_and_unc_roots` (7), `Id_435_2_non_ascii_account_folders` (21), `Id_435_3_escapes_after_a_path` (5), `Id_435_3_generated_inputs_leak_nothing_and_settle_in_one_pass`.
+
+**Characterisation ids:** `Id_435_1_rows_that_pass_today` (12), `Id_435_2_rows_that_pass_today` (28, including plain accented folders), `Id_435_3_rows_that_pass_today` (two-quote text and empty string), `Id_435_3_base_copy_still_reproduces_three_known_leaks`.
+
+**Proof**
+- `Slice=435`: 34 failed, 43 passed, 77 total
+- `435-1`: 7 failed, 12 passed; `435-2`: 21 failed, 28 passed; `435-3`: 6 failed, 3 passed
+- Generator (detailed logger): `inputs=100000 leaks_base=31534 leaks_new=31534 regressions=0 second_pass=0 exclusions=0`
+- `match \\d+ here` today is `match d+ here` (ruling 6, not claimed)
+- All seven mutants failed the named characterisation row and were restored; `git diff --stat -- tools` is empty
+- `Status!=Pending` alone: 344 compiler + 552 acceptance, both passed (11 m 47 s)
+- `python scripts/home_paths.py --root .`: `0 files`
+
+No flaw turned up in a test this seat was not asked to change.
+
+--- worktree after the seat ---
+M tests/Avowry.Acceptance.Tests/PathScrubForms.cs
+?? .mob/records/435/red-record.md
+?? tests/Avowry.Acceptance.Tests/PathScrubGenerated.cs
+?? tests/Avowry.Acceptance.Tests/Support/PathScrubBefore435.cs
+tests/Avowry.Acceptance.Tests/PathScrubForms.cs | 183 ++++++++++++++++++++++++
+ 1 file changed, 183 insertions(+)
+lf-normalised: 0
