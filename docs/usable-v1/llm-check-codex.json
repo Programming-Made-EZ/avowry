@@ -1,14 +1,14 @@
 {
   "model": "codex",
-  "date": "2026-10-28",
+  "date": "2026-11-11",
   "attempts": 1,
-  "tokens_in": 5836,
-  "tokens_out": 1185,
+  "tokens_in": 7234,
+  "tokens_out": 1130,
   "passed": true,
   "proof_level": "specs-passed",
   "specs": 13,
   "specs_passed": 13,
   "build_warnings": 0,
-  "grammar_sha256": "ad0f6e51fe1d61968fecb7ed3609bb00b204f3aa482defcf38f6fd6f6728dc9f",
-  "cheatsheet_sha256": "fe3d8a8b37f4b5bfe2c95e9a38bd9b59de5c57fa163c2c4526ef55d5c1300ae3"
+  "grammar_sha256": "92029d22b0aaf52d266ef2710238a75cb5908afeacf1146e44343a808dc9d222",
+  "cheatsheet_sha256": "3611d24bac1de57a2b0de0225a6125916c9a610a899697cb37660b65107cc189"
 }
