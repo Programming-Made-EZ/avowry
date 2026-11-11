@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:b00a274d86711c34b9e4f650c07883027d7f04e54e4b3b7090345009e6684911 -->
+<!-- board-table-sha256:01c94ee0845804b261204068668a979dad79670552809047b26b09031e4d3a9f -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -135,6 +135,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 113 | 368 New bench rows no longer publish a reply prefix | Done | none |
 | 114 | 369 The licences of the packages the first preview restores are reviewed and listed | Done | none |
 | 114.5 | 418 New bench rows name files by their short name and hold no folder from the machine that ran them | Done |  |
+| 114.6 | 417 every class that starts the bench tools shares the "Bench processes" collection, and a guard test fails when one does not | Ready |  |
 | 115 | 367 The four model vendors' published terms are read for what they say about publishing model output | Ready | none |
 | 116 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
 | 117 | 201 Migrate the sealed holdouts to avow and record a new baseline | Ready | 199 |
@@ -270,7 +271,6 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 290 | 010 End-to-end: real HTTP behaves as the specs say | Superseded/Withdrawn | 009 |
 | 291 | 011 LLM-customer check: a model adds an endpoint from the docs alone | Superseded/Withdrawn | 009, 010, 057 |
 | 292 | 012 Usable v1: acceptance test passes on main and gates CI | Superseded/Withdrawn | 009, 010, 011 |
-| 293 | Bug: two bench test classes still overlap the time-limited timing test, and nothing fails when a process-starting test class lacks the shared collection | Ready |  |
 | 295 | Bug: the restored-package licence checks can stay green while the page is wrong (licence values, prose figures, the tool's package references, the props, the CI proof) | Ready |  |
 | 296 | Bug: the bench path scrub over-scrubs prose after a path, misses a few path forms, and its label and save-step behaviour is untested | Ready |  |
 <!-- board-table:end -->
