@@ -1,0 +1,42 @@
+Test run for C:\Users\<user>\projects\signoff426-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.08]   Discovering: Avowry.Acceptance.Tests
+[xUnit.net 00:00:00.21]   Discovered:  Avowry.Acceptance.Tests
+[xUnit.net 00:00:00.22]   Starting:    Avowry.Acceptance.Tests
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_rows_that_pass_today(input: "see C:\\a\\x.cs.", expected: "see x.cs.") [7 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_rows_that_pass_today(input: "/x then /tmp/a/y.cs", expected: "/x then y.cs") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_rows_that_pass_today(input: "match \\d+ here", expected: "match \\d+ here") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_rows_that_pass_today(input: "C:\\a\\x.cs, then", expected: "x.cs, then") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "\\u0027C:\\\\Users\\\\<user>\\\\x.cs\\u0027", expected: "\\u0027x.cs\\u0027") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/c/Users/<user>", expected: "<path>") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/mnt/c/Users/<user>/x.cs", expected: "x.cs") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/var/tmp/a/x.cs", expected: "x.cs") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/c/Users/<user>/x.cs", expected: "x.cs") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "\\\\host\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "file://localhost/home/<user>/x.cs", expected: "x.cs") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/mnt/c/Users/<user>", expected: "<path>") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/private/tmp/a/x.cs", expected: "x.cs") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "\\\\\\\\host\\\\Users\\\\<user>\\\\x.cs", expected: "x.cs") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "C:\\Documents and Settings\\<user>", expected: "<path>") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_4_second_review_rows(input: "/c/users/<user>/x.cs", expected: "x.cs") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_4_second_review_rows(input: "\\u0027\\\\host\\Users\\<user>\\x.cs\\u0027", expected: "\\u0027x.cs\\u0027") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_4_second_review_rows(input: "\\u0027/mnt/c/Users/<user>/x.cs\\u0027", expected: "\\u0027x.cs\\u0027") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_4_second_review_rows(input: "copy /tmp/a.cs to \\u0027/home/<user>/b.cs\\u0027", expected: "copy a.cs to \\u0027b.cs\\u0027") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_4_second_review_rows(input: "\\u0027/home/<user>\\u0027", expected: "\\u0027<path>\\u0027") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_4_second_review_rows(input: "\\u0027/home/<user>/x.cs\\u0027", expected: "\\u0027x.cs\\u0027") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_4_second_review_rows(input: "see https://a/Users/<user>", expected: "see https://a/Users/<user>") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_4_second_review_rows(input: "moved C:\\Users\\<user> to D:\\Users\\<user>\\x.cs", expected: "moved <path> x.cs") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_the_words_around_a_path_stay(input: "see C:\\a\\b.cs (line 3) and /docs/x", expected: "see b.cs (line 3) and /docs/x") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_the_words_around_a_path_stay(input: "copy /tmp/a/x.cs to /tmp/b/y.cs", expected: "copy x.cs to y.cs") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_the_words_around_a_path_stay(input: "Could not find file /tmp/x.cs in /usr/lib/dotnet", expected: "Could not find file x.cs in /usr/lib/dotnet") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_drive_slash_users_row_passes_today(input: "C:/Users/<user>/x.cs", expected: "x.cs") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_3b_phrase_retry_prompt_carries_the_scrubbed_text [16 s]
+  Passed Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_426_3b_csharp_baseline_label_holds_no_folder_path [5 s]
+[xUnit.net 00:00:25.08]   Finished:    Avowry.Acceptance.Tests
+  Passed Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_426_3a_phrase_bench_label_holds_no_folder_path [2 s]
+
+Test Run Successful.
+Total tests: 30
+     Passed: 30
+ Total time: 25.5655 Seconds
