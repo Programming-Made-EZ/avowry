@@ -64,7 +64,6 @@ public sealed class PathScrubForms
     [MemberData(nameof(OddAccountFolders))]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-U")]
-    [Trait("Status", "Pending")] // the card 418 fix after the second review removes this Pending trait
     public void Id_418_U5_an_account_folder_with_a_space_or_an_apostrophe_leaves_no_fragment(string input, string expected)
     {
         // Given an account folder with a space or an apostrophe, at the end of a path or alone
