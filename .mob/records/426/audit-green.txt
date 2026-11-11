@@ -1,0 +1,44 @@
+D255 git audit (green), base dcd96f4, HEAD d267b5cd5efb348ffdf7c52a675fcb59e6e5665a
+diff of the scrub file and the two bench programs since the base: 40 lines
+diff --git a/tools/Avowry.Bench/PathScrub.cs b/tools/Avowry.Bench/PathScrub.cs
+index 760438d..4aefd58 100644
+--- a/tools/Avowry.Bench/PathScrub.cs
++++ b/tools/Avowry.Bench/PathScrub.cs
+@@ -2,11 +2,11 @@ using System.Text.RegularExpressions;
+ 
+ // Shared by Avowry.Bench and, as a linked file, Avowry.BenchCs. Platform independent on purpose:
+ // Path.GetFileName would not split a Windows path on Linux.
+-// Known limits (card 418 second review): prose between two rooted paths on one line, with no quote, colon, comma, semicolon
+-// or bracket between them, collapses to the last short name (so `copy /tmp/a/x.cs to /tmp/b/y.cs` becomes `copy y.cs`: it over-scrubs
+-// and never leaks); an account folder alone swallows the plain words that follow it (`C:\Users\<user>` becomes `<path>`);
+-// `\\?\C:\...` becomes `<path>?\short-name`; /mnt/c/Users, Git Bash /c/Users, /var/tmp, /private/tmp and `Documents and
+-// Settings` roots are not matched; a Linux TMPDIR outside the listed roots is left as is.
++// Known limits (card 418 second review, card 426): prose followed by a relative path on one line collapses into that path
++// (`copy /tmp/x.cs to src/y.cs` becomes `copy y.cs`: it over-scrubs and never leaks); an account folder alone swallows the
++// plain words that follow it (`C:\Users\<user> is denied` becomes `<path>`); `\\?\C:\...` becomes `<path>?\short-name`;
++// a path that starts after a JSON `\uXXXX` escape ends before a folder named `u` plus four hex digits; a Linux TMPDIR
++// outside the listed roots is left as is.
+ public static class PathScrub
+ {
+     private const string Separator = @"[\\/]+";
+@@ -15,12 +15,14 @@ public static class PathScrub
+ 
+     private static readonly Regex RootedPath = new(
+         @"(?:" +
+-        @"(?<![A-Za-z0-9_])(?:file:///)?[A-Za-z]:" + Separator + @"(?:(?<home>(?i:users))" + Separator + @")?" +
+-        @"|(?<![\w\\:])\\\\(?=[^\\/\s])" +
++        @"(?:(?<![A-Za-z0-9_])|(?<=(?<esc>\\u[0-9A-Fa-f]{4})))(?:file:///)?[A-Za-z]:" + Separator +
++        @"(?:(?<home>(?i:users|documents and settings))" + Separator + @")?" +
++        @"|(?<![\w\\:])(?:\\\\)?\\\\(?=[^\\/\s])(?:[^\\/\s]+" + Separator + @"(?<home>(?i:users))" + Separator + @")?" +
+         @"|(?<![\w.])~" + Separator +
+-        @"|(?<![A-Za-z0-9_.])(?:file://)?(?:(?<home>/home/|/Users/)|/root/|/tmp/|/var/folders/|/private/var/folders/)" +
++        @"|(?<![A-Za-z0-9_.])(?:file://(?:localhost)?)?" +
++        @"(?:(?<home>/home/|/Users/|(?:/mnt)?/[a-z]/(?i:users)/)|/root/|/tmp/|/var/tmp/|/var/folders/|/private/tmp/|/private/var/folders/)" +
+         @")" +
+-        @"(?:(?<dir>" + Segment + @")" + Separator + @")*" +
++        @"(?:(?<dir>" + Segment + @")(?<!\s)(?(esc)(?!\\u[0-9A-Fa-f]{4}))" + Separator + @")*" +
+         @"(?<file>" + FinalSegment + @")" +
+         @"(?(dir)(?:)|(?(home)(?<tail>(?:[ ]+(?:[A-Za-z0-9_-]|(?<=[A-Za-z])'(?=[A-Za-z]))+)*)))",
+         RegexOptions.CultureInvariant);
+
+account name count over the tracked tree: 0; over the staged diff: 0 (whole-word match; name read from the environment)

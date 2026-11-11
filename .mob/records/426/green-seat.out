@@ -1,0 +1,42 @@
+Every Slice 426 test now passes, and the full `Status!=Pending` suite passes when run on its own. All 14 rows that were Pending are green, and I found no flaw in the tests. The changes are uncommitted in the worktree for you to commit.
+
+**What changed**
+- **`tools/Avowry.Bench/PathScrub.cs`:** design parts A to F, applied as the slice wrote them.
+  - **A:** a folder name may no longer end in whitespace, so the words around a path stay.
+  - **B:** a drive path is matched right after a JSON `\uXXXX` escape. The capture inside the lookbehind works, so the fallback was not needed.
+  - **C:** `Documents and Settings` now counts as a home folder.
+  - **D:** network paths accept four leading backslashes and `host\Users`.
+  - **E:** adds the `/mnt/c/Users`, `/c/Users`, `/var/tmp`, `/private/tmp` and `file://localhost` roots.
+  - **F:** the header comment drops the limits this card fixes and adds the two new ones. I checked its new example, `copy /tmp/x.cs to src/y.cs`, against the built tool, and it gives `copy y.cs` as stated.
+- **`tests/Avowry.Acceptance.Tests/PathScrubForms.cs`:** I removed the Pending trait and the "Pending until…" comment from `Id_426_1_the_words_around_a_path_stay` and `Id_426_2_no_account_folder_survives_in_the_missed_forms`. These were the only two Pending ids. Nothing else in the tests changed.
+- Neither `Program.cs` file was touched; `git diff` on both is empty. Both changed files keep LF line endings, and there is no new kind of tracked file.
+
+**Results**
+
+| Command | Result |
+|---|---|
+| `dotnet build Avowry.sln -c Debug` | Build succeeded, 0 warnings, 0 errors |
+| `Slice=426` | 22 of 22 passed (14 failed in the red) |
+| `Criterion=426-1` / `426-2` / `426-3` | 7, 12 and 3 passed, none failed |
+| `FullyQualifiedName~PathScrubForms` | 53 of 53 passed |
+| `dotnet test Avowry.sln --filter "Status!=Pending"`, run alone | Compiler 344 of 344, Acceptance 501 of 501 (the red's 487 plus the 14 former Pending rows), exit 0 |
+| `python scripts/home_paths.py --root .` | `0 files` |
+
+**For the record**
+- During the full run no test host was running. Six idle `dotnet.exe` processes were present before and after; they look like build nodes left by the build, but I did not inspect them.
+- A script that reads the name from the environment counts 0 account-name hits in the two changed files and the new record.
+
+**Not run**
+- The label-deletion proofs, because the green does not touch `Program.cs` and the red record already holds them.
+- The Python unittest wrappers, which the brief did not name.
+- The getpass count over the staged diff, which is your D255 audit step.
+
+`.mob/records/426/green-record.md` holds the commands and output excerpts.That notification is for the full `Status!=Pending` run I already covered. It finished with exit code 0: the compiler tests passed 344 of 344 and the acceptance tests passed 501 of 501. Nothing else needs doing; the changes are still uncommitted in the worktree for you to commit.
+
+--- worktree after the seat ---
+M tests/Avowry.Acceptance.Tests/PathScrubForms.cs
+ M tools/Avowry.Bench/PathScrub.cs
+?? .mob/records/426/green-record.md
+tests/Avowry.Acceptance.Tests/PathScrubForms.cs |  4 ----
+ tools/Avowry.Bench/PathScrub.cs                 | 20 +++++++++++---------
+ 2 files changed, 11 insertions(+), 13 deletions(-)
