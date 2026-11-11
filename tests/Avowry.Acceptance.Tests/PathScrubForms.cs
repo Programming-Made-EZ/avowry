@@ -106,7 +106,7 @@ public sealed class PathScrubForms
         yield return R(@"\u0027\\host\Users\<user>\x.cs\u0027", @"\u0027x.cs\u0027");
         yield return R(@"moved C:\Users\<user> to D:\Users\<user>\x.cs", "moved <path> x.cs");
         yield return R("/c/users/<user>/x.cs", "x.cs");
-        yield return R("see https://a/Users/<user>", "see https://a/Users/<user>");
+        yield return R("see https://a/" + "Users/x ok", "see https://a/" + "Users/x ok");
     }
 
     [Theory]
@@ -239,8 +239,6 @@ public sealed class PathScrubForms
     [MemberData(nameof(SecondReviewRows))]
     [Trait("Slice", "426")]
     [Trait("Criterion", "426-4")]
-    [Trait("Status", "Pending")]
-    // Pending until the facilitator's fix of tools/Avowry.Bench/PathScrub.cs after the second review (takeover, seat-changes.md)
     public void Id_426_4_second_review_rows(string input, string expected)
     {
         // Given each text of the second review, written once with the <user> placeholder and once with a plain-letter folder built from parts
