@@ -167,5 +167,21 @@
   "options": "Cleaning only at save time was the alternative; the plan cleans where the text is built so the retry prompt matches the row.",
   "outcome": "Adopted by six of six in one round.",
   "owner": "Nothing needed."
+ },
+ "D251": {
+  "decided": "A new rule for the team's test runs: every full test run notes which version of the .NET toolkit it started on and ended on, and a small script voids the run automatically if the version changed during it.",
+  "why": "On the last card, a toolkit update installed itself on the machine in the middle of a test run, so thirteen tests failed at once for a reason that had nothing to do with the code. It was recognised by reading timestamps, which is slow and easy to miss.",
+  "changes": "For the next three cards with a full test run, the run records the versions before and after. A committed script compares them and marks the run void, and the reviewer checks the note. Until the script exists the facilitator prints the two lines by hand.",
+  "options": "Leaving it to the person reading the logs was the alternative; all seven reviewers asked for the automatic check.",
+  "outcome": "Adopted by six of six. One reviewer first wanted the comparison to be automatic, not read by a person, which was accepted, and agreed.",
+  "owner": "Nothing needed."
+ },
+ "RETRO418": {
+  "decided": "Looking back on card 418, which stopped new benchmark result rows from saving any folder path from the machine that ran them.",
+  "why": "A failed build could save a temporary folder path that includes the account folder of whoever ran it, and the benchmark history is public. You asked for this to be fixed before the first release is published.",
+  "changes": "Both benchmark tools now replace every folder path in the saved text with the file's short name; the text the model sees on a retry is the same cleaned text. Your question was answered: none of the 336 and 120 rows already published carried the account folder, so nothing published was changed. A reviewer who tried to break the change found one real gap (an account folder with a space or an apostrophe) and it was fixed before sign-off.",
+  "options": "Other ideas came up: record the toolkit version on every test run (adopted above), make the second review always try to break the change, and clean up leftover folders the cleanup tool cannot remove.",
+  "outcome": "Signed off at the first attempt; all 344 and 455 tests pass. A smaller set of further gaps in the cleaning rules is filed as one bug.",
+  "owner": "A decision for you: bug 426 (more path forms the cleaning misses, and where it removes too many words) needs a rank; bug 417 (a test that fails under load and costs a rerun on every card) is now ranked next because it puts the team's ability to ship at risk. Also two leftover folders the cleanup tool cannot remove, plus the four temporary folders from the licence card; say if you want the cleanup tool extended."
  }
 }

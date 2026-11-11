@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 418,
+ "title": "New bench rows name files by their short name and hold no folder from the machine that ran them",
+ "process": "card-mode rules run by hand; a bug raised by the product owner's direction of 2026-11-10 (fixed before the publish card, which now depends on it); the product manager draft by a Cursor reply-only seat (it widened the bug to both benches and the error field) with the facilitator's re-run of the key facts (the account name counted in the pushed rows by a script that reads the name from the environment: 0) and eight rulings; declaration Decider D250 (six of six Yes in one round); a read-only architect slice by a fresh Claude context (criteria 2 and 3 corrected, no Phrase seam, one linked source file); ONE red by a Grok WRITING seat through grok_write.py (39 Pending tests plus one characterisation) reproduced by the facilitator in an isolated clone (gate 344 and 411); both greens in one run by a Cursor WRITING seat through cursor_write.py (no test body changed); the first baseline gate lost to a .NET SDK update installed during the run (13 simultaneous failures, kept and explained), the second and the fix gate each failed only the known timing test under load (passed alone twice); a second read-only review (accept with notes: it found a real leak, a spaced or apostrophe account folder at the end of a path) and an independent gate review (pass with notes); one logged facilitator takeover with its failing test committed first (the review's finding); a fresh sign-off (attempt 1 signed off: 344 and 455, Slice=418 45); the retro voices (seven at once, 4 minutes 49 seconds) and Decider D251 (a gate records the toolchain version before and after and refuses a verdict when it changed; confirmation step six of six Yes)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Cursor ctx-1",
+   "model": "cursor-agent in ask mode through cursor_reply.py, product manager, reply-only; the facilitator re-ran the key facts by command and ruled on eight open points",
+   "evidence": "584bb021609f58d32bfec2ea81cb28b0e7271b17"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md",
+   "evidence": "ef15cbfa37e95cbe9dd1ab11e7582c3b85cf581d"
+  },
+  {
+   "role": "red",
+   "seat": "Grok ctx-3",
+   "model": "grok writing seat through grok_write.py in a linked worktree, changes left uncommitted; the facilitator committed it (faad26e) and reproduced the red in an isolated clone",
+   "evidence": "faad26ea15319a63725bae1795f6d4dfd305146e"
+  },
+  {
+   "role": "green",
+   "seat": "Cursor ctx-4",
+   "model": "cursor-agent in print mode with tools through cursor_write.py in a linked worktree, both greens in one run, changes left uncommitted; the facilitator committed it (5617134); one logged takeover (the second review's finding: red 2884e6d, fix 56ee199; seat-changes.md)",
+   "evidence": "56171343741e23478cf04713844b0665548e6316"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent gate reviewer (gate-review.md PASS WITH NOTES); the second read-only review second-review.md (ACCEPT WITH NOTES)",
+   "evidence": "1394209b5d0732032158f52869f9f2bd307749e7"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off attempt 1 in a fresh clone, the full suite alone (signoff.md)",
+   "evidence": "f93a78344e116cf8ea7b55d75399a55892ece392"
+  }
+ ],
+ "retro": "docs/retros/card-418-2026-11-11.md",
+ "notes": "Done checks met: criterion 1 (a failed C# build, in every route, saves the file's short name and no folder: drive, UNC, tilde, /home, /Users, /root, /tmp and /var/folders forms; each stored line equals the short form; the 600-character cap acts after the scrub); criterion 2 (every other route into diagnostics or error on both benches: a model's stderr, a start failure, a real failed build of a native block in the Phrase executed route; each row still shows its cause and holds no folder, checked on the decoded strings, the raw text and the real profile and temp folders read from the environment); criterion 3 (the retry prompt carries the same scrubbed text; a retry that then passes keeps the first attempt's scrubbed text and a null error). The owner's question: no already-pushed row carried the account folder (0 of 336, 0 of 120, by script; the 13 pushed C# rows that hold a temp path show the account segment as the placeholder), so nothing pushed was changed and the 336 and 120 hash pins stand. Said plainly: the scrub over-scrubs prose after a path, misses a few path forms and has untested promises (bug 426); bug 417 (the timing test that fails under load) costs a gate rerun per card and is ranked next; two clone directories and the four scratch folders of card 369 are outside the cleanup helper's reach (the owner's decision); D251 (a gate records the toolchain version before and after) adopted."
+}

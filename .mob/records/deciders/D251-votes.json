@@ -1,0 +1,167 @@
+{
+ "decider": "D251",
+ "subject": "card 418 retro pick: a gate records the toolchain version before and after and refuses a verdict when it changed",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "x251architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A gate records the toolchain version before and after",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe before/after version stamp is a minimal mechanical record: the gate script prints two lines, the independent reviewer checks them, and a mismatch voids the verdict. That matches the card-418 failure mode and is enforceable without hand-reading timestamps. Note: void on a toolchain-folder change is less specified than the version strings; during the trial treat folder identity as supporting evidence in the kept logs, with the version stamp as the checker, so cache and lock churn stays off the void path. Bounded trial of three cards, named owner, keep/change/remove review, and the benign-void counter-metric make the experiment sound."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x251qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "an environment update during a run is not scored as a card failure",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nFrom the QA lens, this rule can be tested red-first by simulating a toolchain change between the pre-run and post-run probes and asserting that the gate voids the run. When the toolchain is unchanged, normal verdicts record cleanly. The mechanical before-and-after check directly catches mid-run environment mutations without admitting contaminated state into the card records."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x251dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the verdict of that run is void",
+    "cite_verbatim": false,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nAs the backend seat, I can work under this rule without gaming it. The check is mechanical, it costs almost nothing per gate, and it protects my card from being failed by an environment change I didn't cause, like the SDK update on card 418. It doesn't change red, commits, green, flags or slice limits. One note: \"a folder of the toolchain changed\" is vaguer than a version-string comparison. The gate script should name which folders it checks, such as the `dotnet` SDK directory listing, so the gate reviewer has something exact to verify. The counter-metric already covers benign version-string changes that would void a run."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x251auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "the independent gate reviewer checks the stamp in the gate records",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No. The proposal relies on manual verification rather than automated enforcement, leaving a loophole where human oversight fails to catch version drift or folder changes, allowing contaminated verdicts to pass. To close this, the gate script must automatically detect mismatches and programmatically void the verdict without human review. Once automated enforcement replaces manual checking, I will endorse it."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x251decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the independent gate reviewer checks the stamp in the gate records",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe trial structure is solidly grounded in evidence: it defines a clear hypothesis, a zero-tolerance primary metric for contaminated verdicts, and counter-metrics tracking gate overhead and false voids across a 3-card horizon. Sign-off and oversight requirements are fully satisfied, assigning execution to the facilitator and independent verification to the gate reviewer before a formal retrospective decision to keep, change, or remove."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x251coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "every facilitator baseline gate and every sign-off run prints",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe size fits the problem. It addresses one concern, a single real incident (a .NET SDK update installed in the middle of the gate run), and a fix that costs only a few seconds per run. Every retro voice asked for it. It adds no new role and no extra review step: the gate script prints the versions, and the existing independent gate reviewer checks them. It has a named owner, a three-card trial, a metric and a counter-metric, so it is lean rather than ceremonial.\n\nOne note for the third card's retro: \"a folder of the toolchain changed\" may be hard to check mechanically. If it adds work or produces false voids, keep only the version-strin"
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "x251carchitect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a void verdict needs no human review",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment tightens the design I already endorsed: a committed script stamps versions and SDK folder names, compares on after, writes VOID: toolchain changed, and exits 3 so a void needs no human review. Set comparison of SDK folders is precise supporting evidence. The temporary hand-print until the tooling card exists is bounded. Sound, minimal, enforceable."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x251cqa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "so that a void verdict needs no human review",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe programmatic check in gate_stamp.py can be tested red first with synthetic before and after stamps. Exiting status 3 mechanically voids contaminated runs without relying on manual inspection or passing bad state."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x251cdev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "so that a void verdict needs no human review",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment makes the rule easier for me to follow under the red-green-unit discipline. A committed script with a fixed exit status, 3, is a check I can't game. It is built as a red-first tooling card, and a void run is scored as neither a pass nor a failure. One note: treating the set of SDK folders as a voiding condition could void runs when an unrelated SDK is installed. The counter-metric for benign voids should track that."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x251cauditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "so that a void verdict needs no human review",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nYour condition is met. The amendment explicitly mandates that a committed script performs the comparison and programmatically voids the verdict when a mismatch occurs, eliminating the need for manual checking. The fallback for the facilitator only applies until the script is implemented, which does not undermine the automated requirement."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x251cdecider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "an environment update during a run is not scored as a card failure",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nMy vote stands. The amendment reinforces the decider lens by replacing manual inspection with a committed script that mechanically voids contaminated runs. This guarantees that verdicts and trial evaluation rest strictly on objective, reproducible evidence. The sign-off seats and baseline gate workflows maintain unambiguous criteria to verify validity without human error or subjective review."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x251ccoach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the comparison is made by a committed script, never by reading",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment does not change my vote. The committed script replaces judgement by reading with a mechanical check, so it removes ceremony rather than adding it. The interim step of printing the versions by hand keeps the trial running until the tooling card lands. One note: the counter-metric on benign version changes should watch for false voids caused by comparing SDK folder names."
+   }
+  ]
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run",
+ "window_notes": "Both rounds launched with all six voters at once (D228 as amended by D244; the explicit reply format in the prompt: every reply counted in both windows, no re-ask). Primary window 05:26:30 to 05:30:29 UTC (3 minutes 59 seconds): QA agy, architect Grok, coach Cursor, developer Cursor and decider agy Yes; audit lens Qwen No with a condition (the comparison must be automatic: a script detects a mismatch and voids the verdict without human review). The proposer adopted it (a committed script scripts/gate_stamp.py before|after writes the stamp, compares on after, writes the line VOID: toolchain changed and exits with status 3; until it exists, written red first as a tooling card filed with this pick, the facilitator prints the two lines by hand) and the architect's and developer's notes (the folder part made precise: the sorted names of the SDK folders, compared as a set, as supporting evidence). Confirmation step (D232), the objector asked one question and the five Yes voters whether the amendment changes their vote: 05:31:06 to 05:34:43 UTC (3 minutes 37 seconds); all six answered Yes, all counted; the objector Qwen said its condition is met."
+}

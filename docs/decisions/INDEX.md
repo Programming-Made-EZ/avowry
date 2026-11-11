@@ -354,3 +354,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D248](process-and-staffing.md#d248) | Card 369 declaration: task force and card text (the licences of every package a generated service and its specs restore are reviewed and listed) | process-and-staffing | adopted |
 | [D249](process-and-staffing.md#d249) | Card 369 retro pick: the slice names the guard tests that scan any new kind of tracked file | process-and-staffing | adopted |
 | [D250](process-and-staffing.md#d250) | Card 418 declaration: task force and card text (new bench rows name files by their short name and hold no folder from the machine that ran them) | process-and-staffing | adopted |
+| [D251](process-and-staffing.md#d251) | Card 418 retro pick: a gate records the toolchain version before and after and refuses a verdict when it changed | process-and-staffing | adopted |
