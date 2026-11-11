@@ -1,0 +1,3 @@
+# Card 418 red: the facilitator's isolated reproduction (2026-11-11)
+
+Fresh clone, tested HEAD 8380d55aa6a0b24e577c3976d5baabc169627dbc (printed first; the red commit faad26e is an ancestor, exit 0, D243). The build is clean (0 warnings, 0 errors). `Slice=418`: 39 failed and 1 passed of 40 (the passing one is 418-1c, the declared characterisation); `Criterion=418-1`: 3 failed, 1 passed; `418-2`: 5 failed; `418-3`: 2 failed; each failing by assertion (a real or planted path stored, or PathScrub missing). The gate `dotnet test Avowry.sln --filter "Status!=Pending"` passes: 344 and 411. Logs in gate-red/ (account name scrubbed).

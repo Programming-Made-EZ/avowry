@@ -1,0 +1,9 @@
+tested HEAD: 8380d55aa6a0b24e577c3976d5baabc169627dbc
+red commit ancestry exit: 0
+build exit 0:     0 Warning(s)     0 Error(s) 
+Slice=418 exit 1: Failed!  - Failed:    39, Passed:     1, Skipped:     0, Total:    40, Duration: 51 s - Avowry.Acceptance.Tests.dll (net8.0)
+Criterion=418-1 exit 1: Failed!  - Failed:     3, Passed:     1, Skipped:     0, Total:     4, Duration: 15 s - Avowry.Acceptance.Tests.dll (net8.0)
+Criterion=418-2 exit 1: Failed!  - Failed:     5, Passed:     0, Skipped:     0, Total:     5, Duration: 19 s - Avowry.Acceptance.Tests.dll (net8.0)
+Criterion=418-3 exit 1: Failed!  - Failed:     2, Passed:     0, Skipped:     0, Total:     2, Duration: 17 s - Avowry.Acceptance.Tests.dll (net8.0)
+gate exit 0: Passed!  - Failed:     0, Passed:   344, Skipped:     0, Total:   344, Duration: 2 s - Avowry.Compiler.Tests.dll (net8.0) Passed!  - Failed:     0, Passed:   411, Skipped:     0, Total:   411, Duration: 9 m 37 s - Avowry.Acceptance.Tests.dll (net8.0) 
+DONE

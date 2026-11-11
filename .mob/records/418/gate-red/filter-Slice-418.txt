@@ -1,0 +1,363 @@
+Test run for C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:01.02]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "obj\\Debug\\x.cs", expected: "obj\\Debug\\x.cs") [FAIL]
+[xUnit.net 00:00:01.03]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "tests_did_not_run", expected: "tests_did_not_run") [FAIL]
+[xUnit.net 00:00:01.03]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "/a/b", expected: "/a/b") [FAIL]
+[xUnit.net 00:00:01.03]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "Build FAILED.", expected: "Build FAILED.") [FAIL]
+[xUnit.net 00:00:01.03]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "src/a/b.cs", expected: "src/a/b.cs") [FAIL]
+[xUnit.net 00:00:01.03]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "error CS0029: Cannot implicitly convert type 'int'"···, expected: "error CS0029: Cannot implicitly convert type 'int'"···) [FAIL]
+[xUnit.net 00:00:01.03]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "</Project>", expected: "</Project>") [FAIL]
+[xUnit.net 00:00:01.03]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "https://host/path", expected: "https://host/path") [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "obj\\Debug\\x.cs", expected: "obj\\Debug\\x.cs") [301 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 73
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "tests_did_not_run", expected: "tests_did_not_run") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 73
+   at InvokeStub_PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "/a/b", expected: "/a/b") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 73
+   at InvokeStub_PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "Build FAILED.", expected: "Build FAILED.") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 73
+   at InvokeStub_PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "src/a/b.cs", expected: "src/a/b.cs") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 73
+   at InvokeStub_PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "error CS0029: Cannot implicitly convert type 'int'"···, expected: "error CS0029: Cannot implicitly convert type 'int'"···) [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 73
+   at InvokeStub_PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "</Project>", expected: "</Project>") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 73
+   at InvokeStub_PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "https://host/path", expected: "https://host/path") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 73
+   at InvokeStub_PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.06]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "error CS0117: 'Greeter' does not contain a definit"···, expected: "error CS0117: 'Greeter' does not contain a definit"···) [FAIL]
+[xUnit.net 00:00:01.06]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "https://example.com/home/x", expected: "https://example.com/home/x") [FAIL]
+[xUnit.net 00:00:01.06]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "C:\\Users\\<user>\\AppData\\Local\\Temp\\phrase-be"···, expected: "Candidate.cs(7,1): error CS1529: planted [Verifica"···) [FAIL]
+[xUnit.net 00:00:01.06]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "C:\\Users\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.07]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "C:\\\\Users\\\\<user>\\\\Temp\\\\Candidate.cs", expected: "Candidate.cs") [FAIL]
+[xUnit.net 00:00:01.07]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "/tmp/phrase-bench/Candidate.cs", expected: "Candidate.cs") [FAIL]
+[xUnit.net 00:00:01.07]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "\\\\host\\share\\folder\\Candidate.cs", expected: "Candidate.cs") [FAIL]
+[xUnit.net 00:00:01.07]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "/root/tmp/Candidate.cs", expected: "Candidate.cs") [FAIL]
+[xUnit.net 00:00:01.07]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "An error occurred trying to start process 'D:\\My "···, expected: "An error occurred trying to start process 'missing"···) [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "error CS0117: 'Greeter' does not contain a definit"···, expected: "error CS0117: 'Greeter' does not contain a definit"···) [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 73
+   at InvokeStub_PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(input: "https://example.com/home/x", expected: "https://example.com/home/x") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 73
+   at InvokeStub_PathScrubForms.Id_418_U2_must_not_touch_rows_stay_byte_identical(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "C:\\Users\\<user>\\AppData\\Local\\Temp\\phrase-be"···, expected: "Candidate.cs(7,1): error CS1529: planted [Verifica"···) [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "C:\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "C:\\\\Users\\\\<user>\\\\Temp\\\\Candidate.cs", expected: "Candidate.cs") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "/tmp/phrase-bench/Candidate.cs", expected: "Candidate.cs") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "\\\\host\\share\\folder\\Candidate.cs", expected: "Candidate.cs") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "/root/tmp/Candidate.cs", expected: "Candidate.cs") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "An error occurred trying to start process 'D:\\My "···, expected: "An error occurred trying to start process 'missing"···) [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.07]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "~/tmp/Candidate.cs", expected: "Candidate.cs") [FAIL]
+[xUnit.net 00:00:01.07]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "[C:\\Users\\<user>\\Temp\\Verification.csproj]", expected: "[Verification.csproj]") [FAIL]
+[xUnit.net 00:00:01.07]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "~\\AppData\\Local\\Temp\\Candidate.cs", expected: "Candidate.cs") [FAIL]
+[xUnit.net 00:00:01.07]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "file:///C:/Users/<user>/Temp/Candidate.cs", expected: "Candidate.cs") [FAIL]
+[xUnit.net 00:00:01.07]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "D:\\My Projects\\Sub Folder\\x.cs", expected: "x.cs") [FAIL]
+[xUnit.net 00:00:01.07]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "/home/<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.07]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "C:\\Users\\<user>\\Temp\\Candidate.cs(7,1)", expected: "Candidate.cs(7,1)") [FAIL]
+[xUnit.net 00:00:01.07]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "C:\\", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.08]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "/home/<user>/tmp/phrase-bench-cs/a/verification-b/"···, expected: "Candidate.cs(7,1): error CS1529: planted [Verifica"···) [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "~/tmp/Candidate.cs", expected: "Candidate.cs") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "[C:\\Users\\<user>\\Temp\\Verification.csproj]", expected: "[Verification.csproj]") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "~\\AppData\\Local\\Temp\\Candidate.cs", expected: "Candidate.cs") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "file:///C:/Users/<user>/Temp/Candidate.cs", expected: "Candidate.cs") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "D:\\My Projects\\Sub Folder\\x.cs", expected: "x.cs") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "/home/<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "C:\\Users\\<user>\\Temp\\Candidate.cs(7,1)", expected: "Candidate.cs(7,1)") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "C:\\", expected: "<path>") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "/home/<user>/tmp/phrase-bench-cs/a/verification-b/"···, expected: "Candidate.cs(7,1): error CS1529: planted [Verifica"···) [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.08]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "/var/folders/xx/yy/T/Candidate.cs", expected: "Candidate.cs") [FAIL]
+[xUnit.net 00:00:01.08]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_apply_is_idempotent_on_every_form [FAIL]
+[xUnit.net 00:00:01.08]     Avowry.Acceptance.Tests.PathScrubForms.Id_418_U4_csharp_tool_links_the_shared_file_and_defines_no_scrub_class [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(input: "/var/folders/xx/yy/T/Candidate.cs", expected: "Candidate.cs") [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(String input, String expected) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 60
+   at InvokeStub_PathScrubForms.Id_418_U1_each_rooted_form_becomes_the_short_name(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_apply_is_idempotent_on_every_form [< 1 ms]
+  Error Message:
+   PathScrub is missing from the Phrase tool assembly.
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Apply(String text) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 116
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U2_apply_is_idempotent_on_every_form() in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 88
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_418_U4_csharp_tool_links_the_shared_file_and_defines_no_scrub_class [3 ms]
+  Error Message:
+   Assert.Contains() Failure: Sub-string not found
+String:    "<Project Sdk="Microsoft.NET.Sdk">\n  <Prop"···
+Not found: "Include="..\\Avowry.Bench\\PathScrub.cs""
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Id_418_U4_csharp_tool_links_the_shared_file_and_defines_no_scrub_class() in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 105
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:03.35]     Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2e_csharp_model_exit_scrubs_error [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2e_csharp_model_exit_scrubs_error [2 s]
+  Error Message:
+   results/418-2e.json error holds a drive path; results/418-2e.json error holds /home/; results/418-2e.json error holds /tmp/; results/418-2e.json error holds the <user> placeholder; results/418-2e.json error holds Users\; results/418-2e.json error holds AppData; results/418-2e.json error holds phrase-bench; results/418-2e.json raw holds \u003Cuser\u003E; results/418-2e.json raw holds a backslash-doubled Users path; results/418-2e.json raw holds phrase-bench; results/418-2e.json raw holds AppData
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertNoResidueOnRow(String raw, String label) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 486
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertNoResidue(String suite, String model) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 464
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2e_csharp_model_exit_scrubs_error() in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 350
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:07.21]     Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2b_phrase_model_exit_on_every_attempt_scrubs_error [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2b_phrase_model_exit_on_every_attempt_scrubs_error [1 s]
+  Error Message:
+   results/418-2b.json error holds a drive path; results/418-2b.json error holds /home/; results/418-2b.json error holds /tmp/; results/418-2b.json error holds the <user> placeholder; results/418-2b.json error holds Users\; results/418-2b.json error holds AppData; results/418-2b.json error holds phrase-bench; results/418-2b.json raw holds \u003Cuser\u003E; results/418-2b.json raw holds a backslash-doubled Users path; results/418-2b.json raw holds phrase-bench; results/418-2b.json raw holds AppData
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertNoResidueOnRow(String raw, String label) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 486
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertNoResidue(String suite, String model) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 464
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2b_phrase_model_exit_on_every_attempt_scrubs_error() in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 277
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:21.52]     Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_3b_phrase_retry_prompt_carries_the_scrubbed_text [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_3b_phrase_retry_prompt_carries_the_scrubbed_text [14 s]
+  Error Message:
+   prompt-2 Compiler diagnostics holds a drive path; prompt-2 Compiler diagnostics holds Users\; prompt-2 Compiler diagnostics holds AppData; prompt-2 Compiler diagnostics holds phrase-bench; prompt-2 Compiler diagnostics raw holds phrase-bench; prompt-2 Compiler diagnostics raw holds AppData; prompt-2 Compiler diagnostics decoded holds the profile folder; prompt-2 Compiler diagnostics raw holds the profile folder; prompt-2 Compiler diagnostics decoded holds the profile folder; prompt-2 Compiler diagnostics raw holds the profile folder; prompt-2 Compiler diagnostics decoded holds the temp folder; prompt-2 Compiler diagnostics raw holds the temp folder; prompt-2 Compiler diagnostics decoded holds the temp folder; prompt-2 Compiler diagnostics raw holds the temp folder; prompt-2 Compiler diagnostics holds the profile folder's last segment
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertNoResidueOnText(String decoded, String raw, String label) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 495
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_3b_phrase_retry_prompt_carries_the_scrubbed_text() in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 424
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:22.65]     Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2a_phrase_model_exit_then_pass_scrubs_diagnostics [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2a_phrase_model_exit_then_pass_scrubs_diagnostics [1 s]
+  Error Message:
+   results/418-2a.json diagnostics[0] holds a drive path; results/418-2a.json diagnostics[0] holds /home/; results/418-2a.json diagnostics[0] holds /tmp/; results/418-2a.json diagnostics[0] holds the <user> placeholder; results/418-2a.json diagnostics[0] holds Users\; results/418-2a.json diagnostics[0] holds AppData; results/418-2a.json diagnostics[0] holds phrase-bench; results/418-2a.json raw holds \u003Cuser\u003E; results/418-2a.json raw holds a backslash-doubled Users path; results/418-2a.json raw holds phrase-bench; results/418-2a.json raw holds AppData
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertNoResidueOnRow(String raw, String label) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 486
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertNoResidue(String suite, String model) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 464
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2a_phrase_model_exit_then_pass_scrubs_diagnostics() in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 252
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:30.03]     Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_1d_csharp_real_syntax_error_holds_no_folder [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_1d_csharp_real_syntax_error_holds_no_folder [7 s]
+  Error Message:
+   results/418-1d.json diagnostics[0] holds a drive path; results/418-1d.json diagnostics[0] holds Users\; results/418-1d.json diagnostics[0] holds AppData; results/418-1d.json diagnostics[0] holds phrase-bench; results/418-1d.json diagnostics[1] holds a drive path; results/418-1d.json diagnostics[1] holds Users\; results/418-1d.json diagnostics[1] holds AppData; results/418-1d.json diagnostics[1] holds phrase-bench; results/418-1d.json diagnostics[2] holds a drive path; results/418-1d.json diagnostics[2] holds Users\; results/418-1d.json diagnostics[2] holds AppData; results/418-1d.json diagnostics[2] holds phrase-bench; results/418-1d.json raw holds a backslash-doubled Users path; results/418-1d.json raw holds phrase-bench; results/418-1d.json raw holds AppData; results/418-1d.json decoded holds the profile folder; results/418-1d.json raw holds the JSON-escaped profile folder; results/418-1d.json decoded holds the profile folder; results/418-1d.json raw holds the JSON-escaped profile folder; results/418-1d.json decoded holds the temp folder; results/418-1d.json raw holds the JSON-escaped temp folder; results/418-1d.json decoded holds the temp folder; results/418-1d.json raw holds the JSON-escaped temp folder; results/418-1d.json holds the profile folder's last segment
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertNoResidueOnRow(String raw, String label) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 486
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertNoResidue(String suite, String model) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 464
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_1d_csharp_real_syntax_error_holds_no_folder() in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 225
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:42.85]     Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2c_phrase_executed_real_build_holds_no_folder [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2c_phrase_executed_real_build_holds_no_folder [12 s]
+  Error Message:
+   results/418-2c.json diagnostics[0] holds a drive path; results/418-2c.json diagnostics[0] holds Users\; results/418-2c.json diagnostics[0] holds AppData; results/418-2c.json diagnostics[0] holds phrase-bench; results/418-2c.json diagnostics[1] holds a drive path; results/418-2c.json diagnostics[1] holds Users\; results/418-2c.json diagnostics[1] holds AppData; results/418-2c.json diagnostics[1] holds phrase-bench; results/418-2c.json diagnostics[2] holds a drive path; results/418-2c.json diagnostics[2] holds Users\; results/418-2c.json diagnostics[2] holds AppData; results/418-2c.json diagnostics[2] holds phrase-bench; results/418-2c.json raw holds a backslash-doubled Users path; results/418-2c.json raw holds phrase-bench; results/418-2c.json raw holds AppData; results/418-2c.json decoded holds the profile folder; results/418-2c.json raw holds the JSON-escaped profile folder; results/418-2c.json decoded holds the profile folder; results/418-2c.json raw holds the JSON-escaped profile folder; results/418-2c.json decoded holds the temp folder; results/418-2c.json raw holds the JSON-escaped temp folder; results/418-2c.json decoded holds the temp folder; results/418-2c.json raw holds the JSON-escaped temp folder; results/418-2c.json holds the profile folder's last segment
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertNoResidueOnRow(String raw, String label) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 486
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertNoResidue(String suite, String model) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 464
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2c_phrase_executed_real_build_holds_no_folder() in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 301
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:45.51]     Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_3a_csharp_retry_prompt_carries_the_scrubbed_text [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_3a_csharp_retry_prompt_carries_the_scrubbed_text [2 s]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "Candidate.cs(7,1): error CS1529: planted "···
+Actual:   "C:\\Users\\<user>\\AppData\\Local\\Temp\\phrase"···
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertEveryLineIsShortForm(IReadOnlyList`1 diagnostics) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 453
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_3a_csharp_retry_prompt_carries_the_scrubbed_text() in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 379
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:47.65]     Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2d_csharp_start_failure_stores_the_missing_file_short_name [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2d_csharp_start_failure_stores_the_missing_file_short_name [2 s]
+  Error Message:
+   results/418-2d.json error holds a drive path; results/418-2d.json error holds the <user> placeholder; results/418-2d.json error holds Users\; results/418-2d.json error holds AppData; results/418-2d.json error holds phrase-bench; results/418-2d.json raw holds \u003Cuser\u003E; results/418-2d.json raw holds a backslash-doubled Users path; results/418-2d.json raw holds phrase-bench; results/418-2d.json raw holds AppData; results/418-2d.json decoded holds the profile folder; results/418-2d.json raw holds the JSON-escaped profile folder; results/418-2d.json decoded holds the profile folder; results/418-2d.json raw holds the JSON-escaped profile folder; results/418-2d.json decoded holds the temp folder; results/418-2d.json raw holds the JSON-escaped temp folder; results/418-2d.json decoded holds the temp folder; results/418-2d.json raw holds the JSON-escaped temp folder; results/418-2d.json holds the profile folder's last segment
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertNoResidueOnRow(String raw, String label) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 486
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertNoResidue(String suite, String model) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 464
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_2d_csharp_start_failure_stores_the_missing_file_short_name() in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 326
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:49.98]     Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_1b_csharp_tests_did_not_run_stores_short_file_names [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_1b_csharp_tests_did_not_run_stores_short_file_names [2 s]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "Candidate.cs(7,1): error CS1529: planted "···
+Actual:   "C:\\Users\\<user>\\AppData\\Local\\Temp\\phrase"···
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_1b_csharp_tests_did_not_run_stores_short_file_names() in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 177
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:52.61]     Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_1a_csharp_planted_build_failure_stores_short_file_names [FAIL]
+  Failed Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_1a_csharp_planted_build_failure_stores_short_file_names [2 s]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "Candidate.cs(7,1): error CS1529: planted "···
+Actual:   "C:\\Users\\<user>\\AppData\\Local\\Temp\\phrase"···
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.AssertEveryLineIsShortForm(IReadOnlyList`1 diagnostics) in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 453
+   at Avowry.Acceptance.Tests.BenchRowsHoldNoFolderPath.Id_418_1a_csharp_planted_build_failure_stores_short_file_names() in C:\Users\<user>\projects\gate418red-clone\tests\Avowry.Acceptance.Tests\BenchRowsHoldNoFolderPath.cs:line 143
+--- End of stack trace from previous location ---
+
+Failed!  - Failed:    39, Passed:     1, Skipped:     0, Total:    40, Duration: 51 s - Avowry.Acceptance.Tests.dll (net8.0)
