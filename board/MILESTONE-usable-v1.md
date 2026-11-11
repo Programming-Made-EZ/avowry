@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:01c94ee0845804b261204068668a979dad79670552809047b26b09031e4d3a9f -->
+<!-- board-table-sha256:f03c27f6169d2fc9a8a5c77aa47e9d8b37e689510fcfa0fc5bf13b3449d3db20 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -135,7 +135,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 113 | 368 New bench rows no longer publish a reply prefix | Done | none |
 | 114 | 369 The licences of the packages the first preview restores are reviewed and listed | Done | none |
 | 114.5 | 418 New bench rows name files by their short name and hold no folder from the machine that ran them | Done |  |
-| 114.6 | 417 every class that starts the bench tools shares the "Bench processes" collection, and a guard test fails when one does not | Ready |  |
+| 114.6 | 417 A test that asserts a wall-clock limit runs alone, in its own isolated collection, and a guard test fails when one does not | Ready |  |
 | 115 | 367 The four model vendors' published terms are read for what they say about publishing model output | Ready | none |
 | 116 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
 | 117 | 201 Migrate the sealed holdouts to avow and record a new baseline | Ready | 199 |
