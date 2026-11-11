@@ -62,14 +62,16 @@ public class NoPhCodesInTheLiveTree
         ("H3", "docs/retros/", "retrospectives are dated history of what the team saw at the time"),
         ("H4", "bench/results/", "pushed benchmark rows are schema: a row written with a code stays as pushed"),
         ("H5", "board/", "the board files are generated from the issues and never hand-edited"),
+        ("H6", "reference/csharp/Orders.Api/packages.lock.json", "a generated lockfile: its base64 content hashes can contain the old prefix by chance and are never hand-edited (card 369)"),
+        ("H7", "reference/csharp/Orders.Specs/packages.lock.json", "a generated lockfile: its base64 content hashes can contain the old prefix by chance and are never hand-edited (card 369)"),
     ];
 
     [Fact]
     [Trait("Slice", "361")]
     public async Task Every_history_allow_list_entry_still_holds_a_PH_code()
     {
-        // Given the five allow-listed history areas (ids H1 to H5; H6, MOB.md, was removed on 2026-11-10 when its last old-prefix text rotated out of the generated file), each with its reason
-        Assert.Equal(["H1", "H2", "H3", "H4", "H5"], History.Select(entry => entry.Id));
+        // Given the seven allow-listed history areas (ids H1 to H5, and H6 and H7 for the two generated lockfiles of card 369; the earlier H6, MOB.md, was removed on 2026-11-10 when its last old-prefix text rotated out of the generated file), each with its reason
+        Assert.Equal(["H1", "H2", "H3", "H4", "H5", "H6", "H7"], History.Select(entry => entry.Id));
         var files = await TrackedFilesAsync();
 
         // When each area is scanned for the old prefix without the allow-list
@@ -110,7 +112,7 @@ public class NoPhCodesInTheLiveTree
         data.Add("miss-new-prefix", "src/I.cs", "AV325 and AVnnn", false);
         // Must not hit (anything under an allow-listed path)
         foreach (var (id, prefix, _) in History)
-            data.Add("allow-listed-" + id, prefix == "MOB.md" ? prefix : prefix + "x/y.md", Old + "325 and " + Old + "nnn", false);
+            data.Add("allow-listed-" + id, !prefix.EndsWith("/") ? prefix : prefix + "x/y.md", Old + "325 and " + Old + "nnn", false);
         return data;
     }
 
@@ -182,7 +184,8 @@ internal static class LiveTreeScanner
 {
     // History allow-list: files under these paths are never live. The red's own files are not listed; they are clean.
     private static readonly string[] HistoryPrefixes =
-        [".mob/", "docs/decisions/", "docs/retros/", "bench/results/", "board/", "MOB.md"];
+        [".mob/", "docs/decisions/", "docs/retros/", "bench/results/", "board/", "MOB.md",
+         "reference/csharp/Orders.Api/packages.lock.json", "reference/csharp/Orders.Specs/packages.lock.json"];
 
     // Case-sensitive, no left anchor (a class name may end in the old prefix and a number). The character class keeps this line clean.
     private static readonly Regex Pattern = new("""P[H](?:[0-9]|n{3}|\b)""", RegexOptions.CultureInvariant);
