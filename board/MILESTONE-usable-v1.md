@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:32beda564c10966d58102f2f130737903b539e1e07e4627e1698123db0a624a4 -->
+<!-- board-table-sha256:4f97a23acb738872b603c1445408f277a08f3a183ace33cae5dd3c94cbe5465b -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -133,7 +133,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 111 | 371 The pre-publication page shows the owner's answers and the trademark search brief | Done | none |
 | 112 | 370 Tracked files carry no home path of a local account | Done | none |
 | 113 | 368 New bench rows no longer publish a reply prefix | Done | none |
-| 114 | 369 The licences of the packages the first preview restores are reviewed and listed | Ready | none |
+| 114 | 369 The licences of the packages the first preview restores are reviewed and listed | Done | none |
 | 115 | 367 The four model vendors' published terms are read for what they say about publishing model output | Ready | none |
 | 116 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
 | 117 | 201 Migrate the sealed holdouts to avow and record a new baseline | Ready | 199 |
@@ -271,6 +271,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 292 | 012 Usable v1: acceptance test passes on main and gates CI | Superseded/Withdrawn | 009, 010, 011 |
 | 293 | Bug: two bench test classes still overlap the time-limited timing test, and nothing fails when a process-starting test class lacks the shared collection | Ready |  |
 | 294 | Bug: a failed C# benchmark build saves its scratch path, with the local account folder on Windows, in the row's diagnostics field | Ready |  |
+| 295 | Bug: the restored-package licence checks can stay green while the page is wrong (licence values, prose figures, the tool's package references, the props, the CI proof) | Ready |  |
 <!-- board-table:end -->
 
 Ranks are the PM's and move at each retro; ideas are triaged by expected metric impact. Milestones are in `board/MILESTONES.md`.
