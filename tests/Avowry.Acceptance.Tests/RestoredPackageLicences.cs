@@ -14,7 +14,6 @@ public class RestoredPackageLicences
     [Fact]
     [Trait("Slice", "369")]
     [Trait("Criterion", "369-1")]
-    [Trait("Status", "Pending")] // green 2 (the page) removes this Pending trait
     public async Task F1_lockfiles_parse_and_every_package_is_listed()
     {
         // Given committed lockfiles for the reference API and specs projects
@@ -32,7 +31,6 @@ public class RestoredPackageLicences
     [Fact]
     [Trait("Slice", "369")]
     [Trait("Criterion", "369-2")]
-    [Trait("Status", "Pending")] // green 2 (the page) removes this Pending trait
     public async Task F2_empty_and_borderline_cases_are_stated()
     {
         // Given the Avowry tool projects and the packages with no licence expression or licence acceptance
@@ -64,7 +62,6 @@ public class RestoredPackageLicences
     [Fact]
     [Trait("Slice", "369")]
     [Trait("Criterion", "369-3")]
-    [Trait("Status", "Pending")] // green 2 (the page) removes this Pending trait
     public async Task F4_a_stale_page_row_is_reported()
     {
         // Given the page and the two committed lockfiles

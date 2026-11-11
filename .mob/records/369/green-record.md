@@ -90,3 +90,35 @@ Run from the repository root of this worktree.
 - `avowry-369-green-drift-1794356073` (the hand-made drift copy, with `restore.log`, `restore2.log` and the projects' `obj` folders)
 - `avowry-369-restore.log`, `avowry-369-green1-test.log` (log files)
 - The restores also wrote git-ignored `obj` folders under `reference/csharp/Orders.Api` and `Orders.Specs` in this worktree.
+
+# Card 369 green 2 (the page), Cursor writing seat, new worktree
+
+Done; all changes left uncommitted. `git rev-parse HEAD` in this worktree: `48fabf37e90e403916e739692d990f9f360380db`. That is NOT green 1's commit: it is the facilitator's "Card 369 green 2 prompt addition (the page)" commit on top of it (it changes only `.mob/records/369/green-prompt.md`). Green 1's commit is `49db6a8b21f2b4972ad9e48b6785e86649877b50` (`git rev-parse 49db6a8`). `git diff --stat 49db6a8 HEAD -- reference` is empty, so the lockfile blobs are the same at both. **The page cites `49db6a8b21f2b4972ad9e48b6785e86649877b50`**, the commit the lockfiles came from (the card asks for "the commit they came from"); if the facilitator wants HEAD's hash instead, it is a one-hash swap on the Command line of the new section and L5 passes either way.
+
+## Data read (no network for the packages)
+
+- Lockfiles: Orders.Api 16 packages (1 Direct, 15 Transitive); Orders.Specs 30 packages (3 Direct, 27 Transitive) plus the `orders.api` Project entry. Union 30 distinct ids, one version each; 16 in the Orders.Api lockfile, 14 only in Orders.Specs. Direct: FastEndpoints, Microsoft.NET.Test.Sdk, xunit, xunit.runner.visualstudio. No figure differs from the slice.
+- Nuspec files in the NuGet package folder (path built from environment variables inside an inline `python -` script; never printed): all 30 folders present, each `.nupkg.metadata` source `https://api.nuget.org/v3/index.json`. 28 have `<license type="expression">`; counting the two below, the 30 are 21 MIT and 9 Apache-2.0. System.Reflection.Metadata 1.6.0 and xunit.abstractions 2.0.3 have no `<license>` element, only `<licenseUrl>`. `requireLicenseAcceptance` true: Microsoft.CodeCoverage, Microsoft.NET.Test.Sdk, Microsoft.TestPlatform.ObjectModel, Microsoft.TestPlatform.TestHost (all 17.11.1); no other.
+- System.Reflection.Metadata 1.6.0 packaged `LICENSE.TXT`, first line: `The MIT License (MIT)`.
+- xunit.abstractions 2.0.3: no licence file in the package. `curl -sS -L --max-time 30 https://raw.githubusercontent.com/xunit/xunit/master/license.txt` read the file: `Unless otherwise noted, the source code here is covered by the following license:` ... `Licensed under the Apache License, Version 2.0`, then two imported .NET folders `covered by the following license: The MIT License (MIT)`. Row: Apache-2.0, source `licence URL`, review `ok`; the page says the URL points at the master branch (today's text, not the 2.0.3 release) and recommends reading it again on the publish day.
+- Bundled third-party notice files (file name containing "third" or "notice"): 12 packages (Microsoft.CodeCoverage, the eight Microsoft.Extensions packages, Microsoft.TestPlatform.TestHost, System.Diagnostics.DiagnosticSource, System.Reflection.Metadata). The page says they are not reviewed.
+
+## Files changed (uncommitted)
+
+- `docs/release/pre-publication-checks.md` (LF kept): intro line 3 (licences read from nuspec and packaged licence files; the new section lists the lockfiles at `49db6a8`); line 24 (transitive packages listed and reviewed in Restored package licences, 30 = 4 direct + 26 transitive, none outside the allowed list; "not reviewed" gone from the section); line 26 Recommendation (follow the new section for the 26 transitive packages); new section `## Restored package licences` after Package licences: Command line (creating command, both lockfile paths, `--locked-mode` check command, the 40-hex commit, where the licences were read), the tool line naming Avowry.Cli, Avowry.Compiler and Avowry.Adapters.CSharp, a 30-row 7-column table, bullets for no licence expression (2), licence acceptance required (4, named), the none-outside line with the notice-file caveat, and one Recommendation line. No STALE phrase, no path, no address.
+- Pending trait lines removed (one line each, nothing else): F1, F2, F4 in `RestoredPackageLicences.cs`; F6 in `RestoredPackageLicencesLockedRestore.cs`; the Slice 186 wrapper in `PrePublicationChecks.cs`. All LF kept (`git ls-files --eol`: `i/lf w/lf`).
+
+## Commands and real output (repository root)
+
+1. `python -m unittest tests.test_restored_package_licences tests.test_pre_publication_checks tests.test_pre_publication_owner_items`: `Ran 30 tests in 19.465s` `OK`.
+2. `python scripts/check-no-personal-names.py`: exit 0.
+3. `dotnet test tests/Avowry.Acceptance.Tests/Avowry.Acceptance.Tests.csproj --filter "Slice=369|Slice=186|Slice=371"`: `Passed!  - Failed:     0, Passed:    11, Skipped:     0, Total:    11, Duration: 20 s`. F5 and F6 ran their locked restores (network present).
+4. `git diff -U0` scanned for a users path, `@` in prose, a package-folder path and 40-hex strings: only the existing scan tip on line 3 and the cited lockfile commit.
+
+## Not run
+
+- The full solution suite (`dotnet test Avowry.sln --filter "Status!=Pending"`), left to the facilitator as briefed.
+
+## Scratch
+
+None created by green 2 (the licence reads were inline scripts; the URL fetch went to stdout). The C# test run wrote the usual git-ignored `bin` and `obj` folders in this worktree.

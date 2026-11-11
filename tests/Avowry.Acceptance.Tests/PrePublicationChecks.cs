@@ -11,7 +11,6 @@ public class PrePublicationChecks
     [Fact]
     [Trait("Slice", "186")]
     [Trait("Criterion", "186-1")]
-    [Trait("Status", "Pending")] // green 2 removes this Pending trait
     public async Task Pre_publication_findings_match_the_repo()
     {
         // Given the pre-publication findings page and the repo it describes

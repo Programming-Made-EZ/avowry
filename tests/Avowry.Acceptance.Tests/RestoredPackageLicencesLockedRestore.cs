@@ -57,7 +57,6 @@ public class RestoredPackageLicencesLockedRestore
     [Fact]
     [Trait("Slice", "369")]
     [Trait("Criterion", "369-1")]
-    [Trait("Status", "Pending")] // green 2 (the page) removes this Pending trait
     public async Task F6_restore_set_matches_the_page_and_the_packaged_licences()
     {
         // Given committed lockfiles and the restored-package licences page

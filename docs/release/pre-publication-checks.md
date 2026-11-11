@@ -1,6 +1,6 @@
 # Pre-publication checks (card 186)
 
-Findings for the sponsor persona before the first package publish, recorded 2026-11-08. Each figure comes from the command named in its section, run on the tree at commit `c4692e074c8970081687d332adb64f200728426c` (the commit before this page), except where a section says otherwise: the Owner items section reads `NOTICE` and `TRADEMARKS.md` as filled by card 366 and the product owner's answers of 2026-11-08 (its scan tip is kept for the other sections), the licences come from the local NuGet cache, the home-path counts were taken at commit `dde36dc`, and a few bench counts are labelled as counted by a short script. Where the repository cannot say, the page says `not reviewed: needs <source>`. Nothing here is legal advice.
+Findings for the sponsor persona before the first package publish, recorded 2026-11-08. Each figure comes from the command named in its section, run on the tree at commit `c4692e074c8970081687d332adb64f200728426c` (the commit before this page), except where a section says otherwise: the Owner items section reads `NOTICE` and `TRADEMARKS.md` as filled by card 366 and the product owner's answers of 2026-11-08 (its scan tip is kept for the other sections), the licences are read from the nuspec files and packaged licence files in the local NuGet package folder, the Restored package licences section lists the packages of the two lockfiles committed at commit `49db6a8` (card 369) and was written on 2026-11-10, the home-path counts were taken at commit `dde36dc`, and a few bench counts are labelled as counted by a short script. Where the repository cannot say, the page says `not reviewed: needs <source>`. Nothing here is legal advice.
 
 The repository is public now (`docs/release/v0.1-bar.md:34` and `:51`). So the history, the author identity, the records and the bench rows below are already exposed, and a problem found in history cannot be undone by holding the publish: pushed history is not rewritten (`TEAM_WORKING_AGREEMENT.md`). The hold recommendations below apply to what is published next: the package, new bench output and new releases.
 
@@ -21,9 +21,58 @@ Compatibility (bar 7 asks for it, this page only lists): the four direct package
 
 Package metadata, for the publish card: `src/Avowry.Cli/Avowry.Cli.csproj` sets the package id, version, tool command and a description, but no licence expression, no authors, no copyright and no packed `NOTICE` (Apache-2.0 section 4 asks that the notice travel with redistributions).
 
-Transitive packages: not reviewed: needs a restore (`obj/project.assets.json` is untracked, so the repository cannot list them).
+Transitive packages: listed and reviewed in [Restored package licences](#restored-package-licences) (card 369). The generated service and specs restore 30 packages, these four direct ones and 26 transitive ones, read from two committed lockfiles; none is outside MIT, Apache-2.0, BSD-2-Clause or BSD-3-Clause.
 
-Recommendation: the four direct packages are permissive; accept them, set the package metadata on the publish card, and treat the transitive licences as a review (card 369).
+Recommendation: the four direct packages are permissive; accept them, set the package metadata on the publish card, and follow the recommendation in Restored package licences for the 26 transitive packages (card 369).
+
+## Restored package licences
+
+Command: from the repository root, `dotnet restore reference/csharp/Orders.Specs/Orders.Specs.csproj -p:RestoreLockedMode=false` (card 369, run once against nuget.org into an empty package folder) wrote both lockfiles, `reference/csharp/Orders.Api/packages.lock.json` and `reference/csharp/Orders.Specs/packages.lock.json`; `dotnet restore reference/csharp/Orders.Api/Orders.Api.csproj --locked-mode` and the same for `Orders.Specs.csproj` check each project against its lockfile and fail when they disagree. Lockfiles read at commit `49db6a8b21f2b4972ad9e48b6785e86649877b50`. Licences read on 2026-11-10 from each package's nuspec file (its `<license type="expression">`, `<licenseUrl>` and `<requireLicenseAcceptance>` elements) and packaged licence file in the local NuGet package folder, and for one package from its licence URL. The two reference projects carry the same PackageReferences as the projects the C# provider generates (`CSharpProvider.cs:237` and `:251` to `:253`).
+
+The Avowry tool restores no packages: `src/Avowry.Cli/Avowry.Cli.csproj` (package id Avowry) references only Avowry.Compiler and Avowry.Adapters.CSharp, and none of these three projects has a PackageReference.
+
+30 packages: the generated service (Orders.Api) restores 16, and the generated specs (Orders.Specs) add 14 test-only packages; 4 are direct and 26 transitive. Kind is Direct when a project asks for the package itself; where used is `generated service and generated specs` for a package of the Orders.Api lockfile (the specs project references the service), otherwise `generated specs (test-only)`.
+
+| id | version | kind | licence | licence source | where used | review |
+| --- | --- | --- | --- | --- | --- | --- |
+| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |
+| FastEndpoints.Attributes | 8.3.0 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |
+| FastEndpoints.Core | 8.3.0 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |
+| FastEndpoints.JobQueues | 8.3.0 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |
+| FastEndpoints.Messaging | 8.3.0 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |
+| FastEndpoints.Messaging.Core | 8.3.0 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |
+| FluentValidation | 12.1.1 | Transitive | Apache-2.0 | nuspec licence expression | generated service and generated specs | ok |
+| Microsoft.Extensions.Configuration.Abstractions | 10.0.11 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |
+| Microsoft.Extensions.DependencyInjection.Abstractions | 10.0.11 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |
+| Microsoft.Extensions.Diagnostics.Abstractions | 10.0.11 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |
+| Microsoft.Extensions.FileProviders.Abstractions | 10.0.11 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |
+| Microsoft.Extensions.Hosting.Abstractions | 10.0.11 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |
+| Microsoft.Extensions.Logging.Abstractions | 10.0.11 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |
+| Microsoft.Extensions.Options | 10.0.11 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |
+| Microsoft.Extensions.Primitives | 10.0.11 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |
+| System.Diagnostics.DiagnosticSource | 10.0.11 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |
+| Microsoft.CodeCoverage | 17.11.1 | Transitive | MIT | nuspec licence expression | generated specs (test-only) | ok |
+| Microsoft.NET.Test.Sdk | 17.11.1 | Direct | MIT | nuspec licence expression | generated specs (test-only) | ok |
+| Microsoft.TestPlatform.ObjectModel | 17.11.1 | Transitive | MIT | nuspec licence expression | generated specs (test-only) | ok |
+| Microsoft.TestPlatform.TestHost | 17.11.1 | Transitive | MIT | nuspec licence expression | generated specs (test-only) | ok |
+| Newtonsoft.Json | 13.0.1 | Transitive | MIT | nuspec licence expression | generated specs (test-only) | ok |
+| System.Reflection.Metadata | 1.6.0 | Transitive | MIT | packaged licence file | generated specs (test-only) | ok |
+| xunit | 2.9.2 | Direct | Apache-2.0 | nuspec licence expression | generated specs (test-only) | ok |
+| xunit.abstractions | 2.0.3 | Transitive | Apache-2.0 | licence URL | generated specs (test-only) | ok |
+| xunit.analyzers | 1.16.0 | Transitive | Apache-2.0 | nuspec licence expression | generated specs (test-only) | ok |
+| xunit.assert | 2.9.2 | Transitive | Apache-2.0 | nuspec licence expression | generated specs (test-only) | ok |
+| xunit.core | 2.9.2 | Transitive | Apache-2.0 | nuspec licence expression | generated specs (test-only) | ok |
+| xunit.extensibility.core | 2.9.2 | Transitive | Apache-2.0 | nuspec licence expression | generated specs (test-only) | ok |
+| xunit.extensibility.execution | 2.9.2 | Transitive | Apache-2.0 | nuspec licence expression | generated specs (test-only) | ok |
+| xunit.runner.visualstudio | 2.8.2 | Direct | Apache-2.0 | nuspec licence expression | generated specs (test-only) | ok |
+
+- No licence expression in the nuspec (2 packages; the other 28 have one):
+  - System.Reflection.Metadata 1.6.0: the nuspec has only a licence URL; the package ships `LICENSE.TXT`, which begins "The MIT License (MIT)", so the licence is MIT, read from the packaged licence file. We recommend accepting it as MIT.
+  - xunit.abstractions 2.0.3: the nuspec has only a licence URL (`https://raw.githubusercontent.com/xunit/xunit/master/license.txt`) and the package holds no licence file. The URL, read on 2026-11-10, puts the xunit code under Apache-2.0 (two folders of code imported from .NET projects are under MIT). The URL points at the master branch, not at the 2.0.3 release, so it shows today's text. We recommend accepting it as Apache-2.0 and reading the URL again on the publish day.
+- Licence acceptance required (4 packages, all MIT by nuspec licence expression, all test-only): Microsoft.CodeCoverage 17.11.1, Microsoft.NET.Test.Sdk 17.11.1, Microsoft.TestPlatform.ObjectModel 17.11.1 and Microsoft.TestPlatform.TestHost 17.11.1 set `requireLicenseAcceptance` to true, so whoever adds them is asked to accept their licence. We recommend accepting the MIT licence they name; they reach Dana's build only through the generated specs.
+- No package is outside MIT, Apache-2.0, BSD-2-Clause or BSD-3-Clause: 21 are MIT and 9 are Apache-2.0. This covers the package licences only: 12 packages also bundle a third-party notice file (Microsoft.CodeCoverage, the eight Microsoft.Extensions packages, Microsoft.TestPlatform.TestHost, System.Diagnostics.DiagnosticSource and System.Reflection.Metadata), and those notice files are not reviewed here.
+
+Recommendation: accept all 30 restored packages (21 MIT, 9 Apache-2.0, none marked needs review), accept the MIT licence of the four Microsoft test packages that ask for it, read the xunit.abstractions licence URL again on the publish day, and regenerate both lockfiles and this table whenever the C# provider's package versions change.
 
 ## Vendor terms
 
