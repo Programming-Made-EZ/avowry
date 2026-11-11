@@ -159,5 +159,13 @@
   "options": "Other ideas came up: record the start and end time of each step so idle time can be verified, and reword the rule about not typing the account name.",
   "outcome": "Signed off at the first attempt; all 344 and 410 tests pass. The reviewers found gaps in how strictly the checks test the page, which are filed as one bug.",
   "owner": "A decision for you: bug 422 (stricter checks on the licence page) needs a rank. Also, a coding assistant left four temporary folders in the system temp folder that the cleanup tool cannot remove; say if you want the cleanup tool extended to cover them."
+ },
+ "D250": {
+  "decided": "The team agreed the plan for the next card, a bug fix: new benchmark result rows will name a failing file by its short name and will hold no folder path from the machine that ran the benchmark.",
+  "why": "A failed build in the benchmark could save a temporary folder path that includes the account folder of whoever ran it, and the benchmark history is public. You asked for this to be fixed before the first release is published.",
+  "changes": "Both benchmark tools will replace any absolute path in the saved diagnostics and error text with the file's short name, and the same cleaned text is what the model sees on a retry. Rows already published are not changed: none of them carries an account name.",
+  "options": "Cleaning only at save time was the alternative; the plan cleans where the text is built so the retry prompt matches the row.",
+  "outcome": "Adopted by six of six in one round.",
+  "owner": "Nothing needed."
  }
 }

@@ -1,0 +1,87 @@
+{
+ "decider": "D250",
+ "subject": "card 418 declaration: task force and card text (new bench rows name files by their short name and hold no folder from the machine that ran them)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "x250architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "hold no folder path from the machine that ran the bench",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe record (short-name only), the matcher (drive, UNC, tilde, and home/temp roots only, never a bare /a/b so XML and URLs stay), and the two application points (score-build so the retry prompt matches the row, then again on save) are minimal and enforceable. Three Given/When/Then scenarios fail on partial work and cover ZOMBIES. Historical rows stay hashed; the history-clean checker is out of scope because the account scans and 368 pins already guard leaks. Notes: assert only on the new rows so the 13 existing C# `<user>` paths cannot false-fail; the slice must list exact forms and map directory-only paths to `<path>` so last-segment cann"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x250qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "every new-state id is watched failing on the current tree",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nEvery acceptance criterion defines concrete red-first failure conditions: planted paths in stand-in outputs, stderr streams, and start failures fail red against current behavior. Characterisation tests pin existing baseline hashes to prevent regressions. The two-tier scrub—at score generation for retry prompts and again upon persisting rows—prevents leaks across all routes. Rulings explicitly require the red seat to verify start-failure error messages empirically before relying on them in Scenario 2. The checks assert exact scrubbed formats while explicitly verifying negative assertions across platforms without masking underlying errors."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x250dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The scrub runs before the 600-character cap",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThese rules are workable for the developer seat. The red, green and pending-trait sequence is clear, and the three scenarios fail on partial work, so they are hard to game.\n\nNotes:\n- **Criterion 2 and ruling 3 conflict.** Criterion 2's Given requires a Phrase-bench stand-in dotnet. Ruling 3 allows a test of the scrub function instead. The architect's slice should say which wording binds the red.\n- **One forbidden form reads like literal text.** \"No file contains `Path.GetTempPath()`\" should say it means that call's runtime value, not the text itself.\n- **Ruling 7 can change the size.** The red seat proves the start-failure message with a"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x250auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "every new bench row to name a failing file",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal is tightly scoped with explicit acceptance criteria, clear scrub rules, and verifiable test suites. It correctly bounds scope by excluding existing pushed rows and relying on git-tracked tests and scripts for verification. The facilitator rulings prevent scope creep and mandate independent seat execution. No loophole exists that would allow passing while bypassing the scrub practice, as the criteria explicitly check for forbidden path patterns and the guard tests cover new tracked files. The verification path is clear: red-green commits, gate reviews, and automated test execution. Reservations: ensure the script counting push"
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x250decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the facilitator runs every gate command in person in an isolated clone",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe evaluation rests firmly on verifiable evidence with strict TDD red-first discipline, explicit characterisation suites, and merge verification. The task force is fully constituted with appropriately decoupled seats across architecture, distinct red and green writing agents, independent gate review, and sign-off."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x250coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the card stays S unless a seam is needed",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe task force covers every lens the bug needs, without redundant seats. The read-only architect slice settles the Phrase bench seam question. Red and green are written by different seats. The facilitator runs the gates with merge verification, and an independent review and sign-off follow. Note: two reviews plus a seven-voice retro is heavy for a size-S scrub. I accept it because this is a privacy bug that the owner raised and that blocks publishing, and because the reviews recompute the leak counts."
+   }
+  ]
+ },
+ "trigger_line": "(d) no change to the agreement and no No in the primary window, so neither a confirmation step nor the re-run with swapped seats was run",
+ "window_notes": "All six voters launched at once (D228 as amended by D244; the explicit reply format in the prompt: every reply counted, no re-ask); window 02:27:22 to 02:31:11 UTC (3 minutes 49 seconds); six counted Yes (audit lens Qwen, QA agy, decider agy, architect Grok, coach Cursor, developer Cursor), no No, no Support-it. Notes for the slice (not conditions): the developer found that criterion 2 requires a Phrase-bench stand-in dotnet while ruling 3 leaves the seam to the architect: the slice settles it (the smaller change wins; a unit test of the scrub function for the Phrase route if no seam is needed)."
+}
