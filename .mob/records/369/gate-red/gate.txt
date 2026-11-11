@@ -1,0 +1,20 @@
+  Determining projects to restore...
+  Restored C:\Users\<user>\projects\gate369red-clone\tools\Avowry.BenchCs\Avowry.BenchCs.csproj (in 207 ms).
+  Restored C:\Users\<user>\projects\gate369red-clone\src\Avowry.Cli\Avowry.Cli.csproj (in 214 ms).
+  Restored C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Compiler.Tests\Avowry.Compiler.Tests.csproj (in 250 ms).
+  6 of 9 projects are up-to-date for restore.
+  Avowry.Compiler -> C:\Users\<user>\projects\gate369red-clone\src\Avowry.Compiler\bin\Debug\net8.0\Avowry.Compiler.dll
+  Avowry.Adapters.CSharp -> C:\Users\<user>\projects\gate369red-clone\src\Avowry.Adapters.CSharp\bin\Debug\net8.0\Avowry.Adapters.CSharp.dll
+  Avowry.Bench -> C:\Users\<user>\projects\gate369red-clone\tools\Avowry.Bench\bin\Debug\net8.0\Avowry.Bench.dll
+  Avowry.Compiler.Tests -> C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Compiler.Tests\bin\Debug\net8.0\Avowry.Compiler.Tests.dll
+  QuietChild -> C:\Users\<user>\projects\gate369red-clone\tests\Fixtures\QuietChild\bin\Debug\net8.0\QuietChild.dll
+Test run for C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Compiler.Tests\bin\Debug\net8.0\Avowry.Compiler.Tests.dll (.NETCoreApp,Version=v8.0)
+  StarvationProbe -> C:\Users\<user>\projects\gate369red-clone\tests\Fixtures\StarvationProbe\bin\Debug\net8.0\StarvationProbe.dll
+A total of 1 test files matched the specified pattern.
+  Avowry.Acceptance.Tests -> C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+Test run for C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:   344, Skipped:     0, Total:   344, Duration: 2 s - Avowry.Compiler.Tests.dll (net8.0)
+
+Passed!  - Failed:     0, Passed:   401, Skipped:     0, Total:   401, Duration: 9 m 27 s - Avowry.Acceptance.Tests.dll (net8.0)

@@ -1,0 +1,337 @@
+  Determining projects to restore...
+  Restored C:\Users\<user>\projects\gate369red-clone\src\Avowry.Compiler\Avowry.Compiler.csproj (in 628 ms).
+  Restored C:\Users\<user>\projects\gate369red-clone\tests\Fixtures\QuietChild\QuietChild.csproj (in 628 ms).
+  Restored C:\Users\<user>\projects\gate369red-clone\src\Avowry.Adapters.CSharp\Avowry.Adapters.CSharp.csproj (in 628 ms).
+  Restored C:\Users\<user>\projects\gate369red-clone\tests\Fixtures\StarvationProbe\StarvationProbe.csproj (in 628 ms).
+  Restored C:\Users\<user>\projects\gate369red-clone\tools\Avowry.Bench\Avowry.Bench.csproj (in 628 ms).
+  Restored C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\Avowry.Acceptance.Tests.csproj (in 673 ms).
+  Avowry.Compiler -> C:\Users\<user>\projects\gate369red-clone\src\Avowry.Compiler\bin\Debug\net8.0\Avowry.Compiler.dll
+  Avowry.Adapters.CSharp -> C:\Users\<user>\projects\gate369red-clone\src\Avowry.Adapters.CSharp\bin\Debug\net8.0\Avowry.Adapters.CSharp.dll
+  Avowry.Bench -> C:\Users\<user>\projects\gate369red-clone\tools\Avowry.Bench\bin\Debug\net8.0\Avowry.Bench.dll
+  QuietChild -> C:\Users\<user>\projects\gate369red-clone\tests\Fixtures\QuietChild\bin\Debug\net8.0\QuietChild.dll
+  StarvationProbe -> C:\Users\<user>\projects\gate369red-clone\tests\Fixtures\StarvationProbe\bin\Debug\net8.0\StarvationProbe.dll
+  Avowry.Acceptance.Tests -> C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+Test run for C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:01.23]     Avowry.Acceptance.Tests.RestoredPackageLicences.F4_a_stale_page_row_is_reported [FAIL]
+[xUnit.net 00:00:01.48]     Avowry.Acceptance.Tests.RestoredPackageLicences.F3_lockfiles_match_the_provider_and_the_tool_gains_no_package [FAIL]
+[xUnit.net 00:00:01.75]     Avowry.Acceptance.Tests.RestoredPackageLicences.F2_empty_and_borderline_cases_are_stated [FAIL]
+[xUnit.net 00:00:02.00]     Avowry.Acceptance.Tests.RestoredPackageLicences.F1_lockfiles_parse_and_every_package_is_listed [FAIL]
+[xUnit.net 00:00:02.01]     Avowry.Acceptance.Tests.RestoredPackageLicencesLockedRestore.F6_restore_set_matches_the_page_and_the_packaged_licences [FAIL]
+[xUnit.net 00:00:02.01]     Avowry.Acceptance.Tests.RestoredPackageLicencesLockedRestore.F5_locked_restore_matches_the_lockfiles_and_a_planted_mismatch_is_NU1004 [FAIL]
+  Failed Avowry.Acceptance.Tests.RestoredPackageLicences.F4_a_stale_page_row_is_reported [371 ms]
+  Error Message:
+   .F
+======================================================================
+FAIL: test_L2_union_of_lockfile_packages_matches_page_rows (tests.test_restored_package_licences.RestoredLicencesOffline.test_L2_union_of_lockfile_packages_matches_page_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 531, in test_L2_union_of_lockfile_packages_matches_page_rows
+    self.assertEqual([], lock_parse_failures(locks) + row_match_failures(page, locks))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: Orders.Api -:[77 chars]ing']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'restored-package-licences: Orders.Api -: lockfile missing'
+
+- []
++ ['restored-package-licences: Orders.Api -: lockfile missing',
++  'restored-package-licences: Orders.Specs -: lockfile missing']
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.004s
+
+FAILED (failures=1)
+
+  Stack Trace:
+     at Avowry.Acceptance.Tests.RestoredPackageLicences.AssertPythonTestsPass(String[] testNames) in C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\RestoredPackageLicences.cs:line 95
+   at Avowry.Acceptance.Tests.RestoredPackageLicences.F4_a_stale_page_row_is_reported() in C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\RestoredPackageLicences.cs:line 74
+--- End of stack trace from previous location ---
+  Failed Avowry.Acceptance.Tests.RestoredPackageLicences.F3_lockfiles_match_the_provider_and_the_tool_gains_no_package [251 ms]
+  Error Message:
+   F.FF
+======================================================================
+FAIL: test_E4_lockfile_direct_set_equals_the_provider (tests.test_restored_package_licences.RestoredLicencesOffline.test_E4_lockfile_direct_set_equals_the_provider)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 596, in test_E4_lockfile_direct_set_equals_the_provider
+    self.assertEqual([], provider_direct_failures(locks, provider))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: Orders.Api -:[77 chars]ing']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'restored-package-licences: Orders.Api -: lockfile missing'
+
+- []
++ ['restored-package-licences: Orders.Api -: lockfile missing',
++  'restored-package-licences: Orders.Specs -: lockfile missing']
+
+======================================================================
+FAIL: test_L1_both_lockfiles_exist_parse_and_have_net8_0 (tests.test_restored_package_licences.RestoredLicencesOffline.test_L1_both_lockfiles_exist_parse_and_have_net8_0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 524, in test_L1_both_lockfiles_exist_parse_and_have_net8_0
+    self.assertEqual([], lock_parse_failures(read_locks()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: Orders.Api -:[77 chars]ing']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'restored-package-licences: Orders.Api -: lockfile missing'
+
+- []
++ ['restored-package-licences: Orders.Api -: lockfile missing',
++  'restored-package-licences: Orders.Specs -: lockfile missing']
+
+======================================================================
+FAIL: test_L6_reference_props_enable_lockfile_restore (tests.test_restored_package_licences.RestoredLicencesOffline.test_L6_reference_props_enable_lockfile_restore)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 558, in test_L6_reference_props_enable_lockfile_restore
+    self.assertEqual([], props_failures(text))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: RestorePackag[83 chars]rue']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'restored-package-licences: RestorePackagesWithLockFile -: not true'
+
+- []
++ ['restored-package-licences: RestorePackagesWithLockFile -: not true',
++  'restored-package-licences: RestoreLockedMode -: not true']
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.006s
+
+FAILED (failures=3)
+
+  Stack Trace:
+     at Avowry.Acceptance.Tests.RestoredPackageLicences.AssertPythonTestsPass(String[] testNames) in C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\RestoredPackageLicences.cs:line 95
+   at Avowry.Acceptance.Tests.RestoredPackageLicences.F3_lockfiles_match_the_provider_and_the_tool_gains_no_package() in C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\RestoredPackageLicences.cs:line 58
+--- End of stack trace from previous location ---
+  Failed Avowry.Acceptance.Tests.RestoredPackageLicences.F2_empty_and_borderline_cases_are_stated [269 ms]
+  Error Message:
+   FFFFF
+======================================================================
+FAIL: test_Z1_the_avowry_tool_restores_no_packages (tests.test_restored_package_licences.RestoredLicencesOffline.test_Z1_the_avowry_tool_restores_no_packages)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 565, in test_Z1_the_avowry_tool_restores_no_packages
+    self.assertEqual([], tool_phrase_failures(page, tools))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: Avowry tool -[50 chars]es"']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'restored-package-licences: Avowry tool -: page missing "The Avowry tool restores no packages"'
+
+- []
++ ['restored-package-licences: Avowry tool -: page missing "The Avowry tool '
++  'restores no packages"']
+
+======================================================================
+FAIL: test_B1_no_licence_expression_packages_are_named (tests.test_restored_package_licences.RestoredLicencesOffline.test_B1_no_licence_expression_packages_are_named)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 571, in test_B1_no_licence_expression_packages_are_named
+    self.assertEqual([], no_expression_failures(read_page()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: section -: missing']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'restored-package-licences: section -: missing'
+
+- []
++ ['restored-package-licences: section -: missing']
+
+======================================================================
+FAIL: test_B2_licence_acceptance_names_microsoft_codecoverage (tests.test_restored_package_licences.RestoredLicencesOffline.test_B2_licence_acceptance_names_microsoft_codecoverage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 577, in test_B2_licence_acceptance_names_microsoft_codecoverage
+    self.assertEqual([], acceptance_failures(read_page()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: section -: missing']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'restored-package-licences: section -: missing'
+
+- []
++ ['restored-package-licences: section -: missing']
+
+======================================================================
+FAIL: test_B3_outside_allowed_list_or_the_none_line (tests.test_restored_package_licences.RestoredLicencesOffline.test_B3_outside_allowed_list_or_the_none_line)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 583, in test_B3_outside_allowed_list_or_the_none_line
+    self.assertEqual([], allowed_list_failures(read_page()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: section -: missing']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'restored-package-licences: section -: missing'
+
+- []
++ ['restored-package-licences: section -: missing']
+
+======================================================================
+FAIL: test_B4_one_recommendation_and_package_licences_points_here (tests.test_restored_package_licences.RestoredLicencesOffline.test_B4_one_recommendation_and_package_licences_points_here)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 589, in test_B4_one_recommendation_and_package_licences_points_here
+    self.assertEqual([], b4_failures(read_page()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: section -: mi[261 chars]ces']
+
+Second list contains 4 additional elements.
+First extra element 0:
+'restored-package-licences: section -: missing'
+
+- []
++ ['restored-package-licences: section -: missing',
++  'restored-package-licences: section -: expected exactly one Recommendation '
++  'line, found 0',
++  'restored-package-licences: Package licences -: still says not reviewed',
++  'restored-package-licences: Package licences -: does not point to Restored '
++  'package licences']
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.008s
+
+FAILED (failures=5)
+
+  Stack Trace:
+     at Avowry.Acceptance.Tests.RestoredPackageLicences.AssertPythonTestsPass(String[] testNames) in C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\RestoredPackageLicences.cs:line 95
+   at Avowry.Acceptance.Tests.RestoredPackageLicences.F2_empty_and_borderline_cases_are_stated() in C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\RestoredPackageLicences.cs:line 41
+--- End of stack trace from previous location ---
+  Failed Avowry.Acceptance.Tests.RestoredPackageLicences.F1_lockfiles_parse_and_every_package_is_listed [249 ms]
+  Error Message:
+   FFFFFF
+======================================================================
+FAIL: test_L1_both_lockfiles_exist_parse_and_have_net8_0 (tests.test_restored_package_licences.RestoredLicencesOffline.test_L1_both_lockfiles_exist_parse_and_have_net8_0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 524, in test_L1_both_lockfiles_exist_parse_and_have_net8_0
+    self.assertEqual([], lock_parse_failures(read_locks()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: Orders.Api -:[77 chars]ing']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'restored-package-licences: Orders.Api -: lockfile missing'
+
+- []
++ ['restored-package-licences: Orders.Api -: lockfile missing',
++  'restored-package-licences: Orders.Specs -: lockfile missing']
+
+======================================================================
+FAIL: test_L2_union_of_lockfile_packages_matches_page_rows (tests.test_restored_package_licences.RestoredLicencesOffline.test_L2_union_of_lockfile_packages_matches_page_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 531, in test_L2_union_of_lockfile_packages_matches_page_rows
+    self.assertEqual([], lock_parse_failures(locks) + row_match_failures(page, locks))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: Orders.Api -:[77 chars]ing']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'restored-package-licences: Orders.Api -: lockfile missing'
+
+- []
++ ['restored-package-licences: Orders.Api -: lockfile missing',
++  'restored-package-licences: Orders.Specs -: lockfile missing']
+
+======================================================================
+FAIL: test_L3_direct_kind_and_where_used (tests.test_restored_package_licences.RestoredLicencesOffline.test_L3_direct_kind_and_where_used)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 538, in test_L3_direct_kind_and_where_used
+    self.assertEqual([], lock_parse_failures(locks) + kind_where_failures(page, locks))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: Orders.Api -:[77 chars]ing']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'restored-package-licences: Orders.Api -: lockfile missing'
+
+- []
++ ['restored-package-licences: Orders.Api -: lockfile missing',
++  'restored-package-licences: Orders.Specs -: lockfile missing']
+
+======================================================================
+FAIL: test_L4_every_row_has_licence_source_and_where_used (tests.test_restored_package_licences.RestoredLicencesOffline.test_L4_every_row_has_licence_source_and_where_used)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 544, in test_L4_every_row_has_licence_source_and_where_used
+    self.assertEqual([], row_shape_failures(read_page()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: section -: missing']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'restored-package-licences: section -: missing'
+
+- []
++ ['restored-package-licences: section -: missing']
+
+======================================================================
+FAIL: test_L5_section_names_lockfiles_restore_locked_mode_and_commit (tests.test_restored_package_licences.RestoredLicencesOffline.test_L5_section_names_lockfiles_restore_locked_mode_and_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 551, in test_L5_section_names_lockfiles_restore_locked_mode_and_commit
+    self.assertEqual([], section_meta_failures(page) + lockfile_commit_failures(page))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: section -: missing']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'restored-package-licences: section -: missing'
+
+- []
++ ['restored-package-licences: section -: missing']
+
+======================================================================
+FAIL: test_L6_reference_props_enable_lockfile_restore (tests.test_restored_package_licences.RestoredLicencesOffline.test_L6_reference_props_enable_lockfile_restore)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 558, in test_L6_reference_props_enable_lockfile_restore
+    self.assertEqual([], props_failures(text))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: RestorePackag[83 chars]rue']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'restored-package-licences: RestorePackagesWithLockFile -: not true'
+
+- []
++ ['restored-package-licences: RestorePackagesWithLockFile -: not true',
++  'restored-package-licences: RestoreLockedMode -: not true']
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.008s
+
+FAILED (failures=6)
+
+  Stack Trace:
+     at Avowry.Acceptance.Tests.RestoredPackageLicences.AssertPythonTestsPass(String[] testNames) in C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\RestoredPackageLicences.cs:line 95
+   at Avowry.Acceptance.Tests.RestoredPackageLicences.F1_lockfiles_parse_and_every_package_is_listed() in C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\RestoredPackageLicences.cs:line 23
+--- End of stack trace from previous location ---
+  Failed Avowry.Acceptance.Tests.RestoredPackageLicencesLockedRestore.F6_restore_set_matches_the_page_and_the_packaged_licences [3 ms]
+  Error Message:
+   lockfile missing: reference/csharp/Orders.Api/packages.lock.json
+  Stack Trace:
+     at Avowry.Acceptance.Tests.RestoredPackageLicencesLockedRestore.F6_restore_set_matches_the_page_and_the_packaged_licences() in C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\RestoredPackageLicencesLockedRestore.cs:line 67
+--- End of stack trace from previous location ---
+  Failed Avowry.Acceptance.Tests.RestoredPackageLicencesLockedRestore.F5_locked_restore_matches_the_lockfiles_and_a_planted_mismatch_is_NU1004 [1 ms]
+  Error Message:
+   lockfile missing: reference/csharp/Orders.Api/packages.lock.json
+  Stack Trace:
+     at Avowry.Acceptance.Tests.RestoredPackageLicencesLockedRestore.F5_locked_restore_matches_the_lockfiles_and_a_planted_mismatch_is_NU1004() in C:\Users\<user>\projects\gate369red-clone\tests\Avowry.Acceptance.Tests\RestoredPackageLicencesLockedRestore.cs:line 27
+--- End of stack trace from previous location ---
+
+Failed!  - Failed:     6, Passed:     0, Skipped:     0, Total:     6, Duration: 1 s - Avowry.Acceptance.Tests.dll (net8.0)

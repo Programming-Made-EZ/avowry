@@ -1,0 +1,208 @@
+FFF.F.F..FFFFFFF.
+======================================================================
+FAIL: test_B1_no_licence_expression_packages_are_named (tests.test_restored_package_licences.RestoredLicencesOffline.test_B1_no_licence_expression_packages_are_named)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 571, in test_B1_no_licence_expression_packages_are_named
+    self.assertEqual([], no_expression_failures(read_page()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: section -: missing']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'restored-package-licences: section -: missing'
+
+- []
++ ['restored-package-licences: section -: missing']
+
+======================================================================
+FAIL: test_B2_licence_acceptance_names_microsoft_codecoverage (tests.test_restored_package_licences.RestoredLicencesOffline.test_B2_licence_acceptance_names_microsoft_codecoverage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 577, in test_B2_licence_acceptance_names_microsoft_codecoverage
+    self.assertEqual([], acceptance_failures(read_page()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: section -: missing']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'restored-package-licences: section -: missing'
+
+- []
++ ['restored-package-licences: section -: missing']
+
+======================================================================
+FAIL: test_B3_outside_allowed_list_or_the_none_line (tests.test_restored_package_licences.RestoredLicencesOffline.test_B3_outside_allowed_list_or_the_none_line)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 583, in test_B3_outside_allowed_list_or_the_none_line
+    self.assertEqual([], allowed_list_failures(read_page()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: section -: missing']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'restored-package-licences: section -: missing'
+
+- []
++ ['restored-package-licences: section -: missing']
+
+======================================================================
+FAIL: test_B4_one_recommendation_and_package_licences_points_here (tests.test_restored_package_licences.RestoredLicencesOffline.test_B4_one_recommendation_and_package_licences_points_here)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 589, in test_B4_one_recommendation_and_package_licences_points_here
+    self.assertEqual([], b4_failures(read_page()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: section -: mi[261 chars]ces']
+
+Second list contains 4 additional elements.
+First extra element 0:
+'restored-package-licences: section -: missing'
+
+- []
++ ['restored-package-licences: section -: missing',
++  'restored-package-licences: section -: expected exactly one Recommendation '
++  'line, found 0',
++  'restored-package-licences: Package licences -: still says not reviewed',
++  'restored-package-licences: Package licences -: does not point to Restored '
++  'package licences']
+
+======================================================================
+FAIL: test_E4_lockfile_direct_set_equals_the_provider (tests.test_restored_package_licences.RestoredLicencesOffline.test_E4_lockfile_direct_set_equals_the_provider)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 596, in test_E4_lockfile_direct_set_equals_the_provider
+    self.assertEqual([], provider_direct_failures(locks, provider))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: Orders.Api -:[77 chars]ing']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'restored-package-licences: Orders.Api -: lockfile missing'
+
+- []
++ ['restored-package-licences: Orders.Api -: lockfile missing',
++  'restored-package-licences: Orders.Specs -: lockfile missing']
+
+======================================================================
+FAIL: test_L1_both_lockfiles_exist_parse_and_have_net8_0 (tests.test_restored_package_licences.RestoredLicencesOffline.test_L1_both_lockfiles_exist_parse_and_have_net8_0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 524, in test_L1_both_lockfiles_exist_parse_and_have_net8_0
+    self.assertEqual([], lock_parse_failures(read_locks()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: Orders.Api -:[77 chars]ing']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'restored-package-licences: Orders.Api -: lockfile missing'
+
+- []
++ ['restored-package-licences: Orders.Api -: lockfile missing',
++  'restored-package-licences: Orders.Specs -: lockfile missing']
+
+======================================================================
+FAIL: test_L2_union_of_lockfile_packages_matches_page_rows (tests.test_restored_package_licences.RestoredLicencesOffline.test_L2_union_of_lockfile_packages_matches_page_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 531, in test_L2_union_of_lockfile_packages_matches_page_rows
+    self.assertEqual([], lock_parse_failures(locks) + row_match_failures(page, locks))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: Orders.Api -:[77 chars]ing']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'restored-package-licences: Orders.Api -: lockfile missing'
+
+- []
++ ['restored-package-licences: Orders.Api -: lockfile missing',
++  'restored-package-licences: Orders.Specs -: lockfile missing']
+
+======================================================================
+FAIL: test_L3_direct_kind_and_where_used (tests.test_restored_package_licences.RestoredLicencesOffline.test_L3_direct_kind_and_where_used)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 538, in test_L3_direct_kind_and_where_used
+    self.assertEqual([], lock_parse_failures(locks) + kind_where_failures(page, locks))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: Orders.Api -:[77 chars]ing']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'restored-package-licences: Orders.Api -: lockfile missing'
+
+- []
++ ['restored-package-licences: Orders.Api -: lockfile missing',
++  'restored-package-licences: Orders.Specs -: lockfile missing']
+
+======================================================================
+FAIL: test_L4_every_row_has_licence_source_and_where_used (tests.test_restored_package_licences.RestoredLicencesOffline.test_L4_every_row_has_licence_source_and_where_used)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 544, in test_L4_every_row_has_licence_source_and_where_used
+    self.assertEqual([], row_shape_failures(read_page()))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: section -: missing']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'restored-package-licences: section -: missing'
+
+- []
++ ['restored-package-licences: section -: missing']
+
+======================================================================
+FAIL: test_L5_section_names_lockfiles_restore_locked_mode_and_commit (tests.test_restored_package_licences.RestoredLicencesOffline.test_L5_section_names_lockfiles_restore_locked_mode_and_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 551, in test_L5_section_names_lockfiles_restore_locked_mode_and_commit
+    self.assertEqual([], section_meta_failures(page) + lockfile_commit_failures(page))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: section -: missing']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'restored-package-licences: section -: missing'
+
+- []
++ ['restored-package-licences: section -: missing']
+
+======================================================================
+FAIL: test_L6_reference_props_enable_lockfile_restore (tests.test_restored_package_licences.RestoredLicencesOffline.test_L6_reference_props_enable_lockfile_restore)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 558, in test_L6_reference_props_enable_lockfile_restore
+    self.assertEqual([], props_failures(text))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: RestorePackag[83 chars]rue']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'restored-package-licences: RestorePackagesWithLockFile -: not true'
+
+- []
++ ['restored-package-licences: RestorePackagesWithLockFile -: not true',
++  'restored-package-licences: RestoreLockedMode -: not true']
+
+======================================================================
+FAIL: test_Z1_the_avowry_tool_restores_no_packages (tests.test_restored_package_licences.RestoredLicencesOffline.test_Z1_the_avowry_tool_restores_no_packages)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_restored_package_licences.py", line 565, in test_Z1_the_avowry_tool_restores_no_packages
+    self.assertEqual([], tool_phrase_failures(page, tools))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['restored-package-licences: Avowry tool -[50 chars]es"']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'restored-package-licences: Avowry tool -: page missing "The Avowry tool restores no packages"'
+
+- []
++ ['restored-package-licences: Avowry tool -: page missing "The Avowry tool '
++  'restores no packages"']
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.071s
+
+FAILED (failures=12)

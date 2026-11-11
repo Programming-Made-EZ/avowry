@@ -1,0 +1,24 @@
+F
+======================================================================
+FAIL: test_pre_publication_findings_match_the_repo (tests.test_pre_publication_checks.PrePublicationChecksTests.test_pre_publication_findings_match_the_repo)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\<user>\projects\gate369red-clone\tests\test_pre_publication_checks.py", line 323, in test_pre_publication_findings_match_the_repo
+    self.assertEqual([], failures, HEADER + "\n".join(failures))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['package-licences: still says not reviewe[44 chars]ing']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'package-licences: still says not reviewed'
+
+- []
++ ['package-licences: still says not reviewed',
++  'restored-package-licences: heading missing'] : docs/release/pre-publication-checks.md must match the repo.
+package-licences: still says not reviewed
+restored-package-licences: heading missing
+
+----------------------------------------------------------------------
+Ran 1 test in 34.089s
+
+FAILED (failures=1)
