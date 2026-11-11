@@ -1,0 +1,9 @@
+tested HEAD: cab81fc0c4b937eaa1bb6366be598040dad55103
+green-3 commit ancestry exit: 0
+build exit 0:     0 Warning(s)     0 Error(s) 
+Slice=417 exit 0: Passed!  - Failed:     0, Passed:    25, Skipped:     0, Total:    25, Duration: 263 ms - Avowry.Acceptance.Tests.dll (net8.0)
+Criterion=417-1 exit 0: Passed!  - Failed:     0, Passed:    23, Skipped:     0, Total:    23, Duration: 91 ms - Avowry.Acceptance.Tests.dll (net8.0)
+Criterion=417-2 exit 0: Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 86 ms - Avowry.Acceptance.Tests.dll (net8.0)
+gate exit 0: Total tests: 344  Passed: 344 Total tests: 480  Passed: 480 
+  Passed Avowry.Acceptance.Tests.BenchTimeoutIsolation.timed_out_model_tree_is_stopped_and_recorded_in_both_arms [9 s]
+DONE
