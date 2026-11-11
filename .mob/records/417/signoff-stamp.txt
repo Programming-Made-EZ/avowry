@@ -1,0 +1,6 @@
+before:dotnet 10.0.404
+before:python Python 3.15.1
+before:sdks 10.0.403 10.0.404 
+after:dotnet 10.0.404
+after:python Python 3.15.1
+after:sdks 10.0.403 10.0.404 
