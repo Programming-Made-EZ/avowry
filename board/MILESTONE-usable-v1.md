@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:f03c27f6169d2fc9a8a5c77aa47e9d8b37e689510fcfa0fc5bf13b3449d3db20 -->
+<!-- board-table-sha256:4bcb05f3503173477eebc034dd2b4e707b12044a7ca0b7e43532f3aac09a7883 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -136,6 +136,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 114 | 369 The licences of the packages the first preview restores are reviewed and listed | Done | none |
 | 114.5 | 418 New bench rows name files by their short name and hold no folder from the machine that ran them | Done |  |
 | 114.6 | 417 A test that asserts a wall-clock limit runs alone, in its own isolated collection, and a guard test fails when one does not | Ready |  |
+| 114.7 | Bug: the bench path scrub over-scrubs prose after a path, misses a few path forms, and its label and save-step behaviour is untested | Ready |  |
 | 115 | 367 The four model vendors' published terms are read for what they say about publishing model output | Ready | none |
 | 116 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
 | 117 | 201 Migrate the sealed holdouts to avow and record a new baseline | Ready | 199 |
@@ -272,7 +273,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 291 | 011 LLM-customer check: a model adds an endpoint from the docs alone | Superseded/Withdrawn | 009, 010, 057 |
 | 292 | 012 Usable v1: acceptance test passes on main and gates CI | Superseded/Withdrawn | 009, 010, 011 |
 | 295 | Bug: the restored-package licence checks can stay green while the page is wrong (licence values, prose figures, the tool's package references, the props, the CI proof) | Ready |  |
-| 296 | Bug: the bench path scrub over-scrubs prose after a path, misses a few path forms, and its label and save-step behaviour is untested | Ready |  |
+| 297 | Bug: the wall-clock guard misses several spellings, and other tests with hard limits (HTTP waits and timeouts) are not isolated | Ready |  |
 <!-- board-table:end -->
 
 Ranks are the PM's and move at each retro; ideas are triaged by expected metric impact. Milestones are in `board/MILESTONES.md`.
