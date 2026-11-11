@@ -8,7 +8,7 @@ namespace Avowry.Acceptance.Tests;
 
 // Feature: a locked restore of the reference projects matches the committed lockfiles and the page
 //   As Dana, I want the listed licences to match a locked restore, so that a stale lockfile or page cannot pass.
-[Collection("Bench processes")] // the two classes that start the bench tools under a 20 second limit never overlap (card 368: the extra launches made the timing test flaky under the full run)
+[Collection("Bench processes")] // D247: a test class that starts an external process (here python or dotnet restore) under a hard time limit never overlaps another such class
 public class RestoredPackageLicencesLockedRestore
 {
     private static readonly TimeSpan RestoreLimit = TimeSpan.FromMinutes(5);

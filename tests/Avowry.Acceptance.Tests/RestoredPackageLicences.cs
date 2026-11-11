@@ -6,7 +6,7 @@ namespace Avowry.Acceptance.Tests;
 // Feature: Dana reads every package the generated service and specs restore, with its licence
 //   As Dana, I want every restored package listed with version, licence, source and where-used,
 //   so that before I adopt the preview I can see whether anything it pulls needs a licence review.
-[Collection("Bench processes")] // the two classes that start the bench tools under a 20 second limit never overlap (card 368: the extra launches made the timing test flaky under the full run)
+[Collection("Bench processes")] // D247: a test class that starts an external process (here python or dotnet restore) under a hard time limit never overlaps another such class
 public class RestoredPackageLicences
 {
     private const string Module = "tests.test_restored_package_licences.RestoredLicencesOffline.";
