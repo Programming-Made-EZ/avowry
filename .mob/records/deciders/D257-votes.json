@@ -1,0 +1,167 @@
+{
+ "decider": "D257",
+ "subject": "card 435: task force declaration and Ready text (the bench path scrub removes the whole account folder from glued, unlisted and UNC roots, non-ASCII account names and paths followed by a JSON escape)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "x257architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "every difference is a failing test or an explicit exclusion committed in the generator test",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe three criteria, named Id_435_3 differential, characterisation declared up front, a verbatim base copy with a leak-reproduction fact, and counted exclusions make the checker enforceable. Scope cuts and the one-regex slice are minimal. Table rows pin exact outputs so listed cases cannot silently widen. Note: over-scrub of prose after a bare account folder is accepted; the generator only bounds leaks and idempotency, so greediness beyond the tables is unconstrained. That is acceptable for a leak-scrub. Hand-applied mutants and the merge/toolchain gates keep it auditable."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x257qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A small fact asserts that the copy still reproduces three known base leaks",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal rigorously satisfies QA requirements by enforcing red-first testability across all acceptance criteria: new-state rows fail by assertion on the baseline tree, existing passing behaviors are explicitly partitioned as characterisation, and hand-applied mutants verify suite sensitivity before hand-off. The D256 differential generator test executes at least 100,000 inputs against a verbatim baseline copy, asserts that known base leaks continue to reproduce, and strictly fails on unmatched exclusions or token leaks. Second-pass assertions verify idempotence. This ensures every rule is proven red first and prevents bad state from p"
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x257dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "every difference is a failing test or an explicit exclusion",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThese rules are workable for the green seat, and I could follow them without gaming. Every row has an exact expected output, and characterisation rows are declared up front. The exclusion count fails when an exclusion matches nothing, and the base copy has its own leak-reproduction fact, so the generator can't be emptied quietly. Notes for the red seat to settle:\n\n1. Size says 8 hand-applied mutants, but the list gives 7. Give the eighth or change the count.\n2. Mutants point at line numbers 18 to 23. Pin them to the base commit so a reformat doesn't shift them.\n3. Say whether the `\\\"C:\\\\a\\\\x.cs\\\"` row is raw text or a C# literal.\n4. The g"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x257auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "explicit exclusion committed in the generator test",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No. This proposal cannot be verified from git alone, as it mandates runtime test execution, a 100,000-input generator, and hand-applied mutants restored with an empty diff. The audit lens requires git-verifiable evidence, but verification here depends on external toolchains and live execution. Furthermore, the generator test permits explicit exclusions for every difference, creating a loophole where the team passes by documenting failures rather than fixing them. Git history will only show committed exclusions and restored code, masking actual scrubbing correctness. I would vote Yes if all verification criteria were reduced to deterministic, "
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x257decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "every difference is a failing test or an explicit exclusion committed in the generator test",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation is framed to rest strictly on reproducible evidence. It incorporates concrete red-first verification, hand-applied mutants, characterisation proofs, toolchain stamps, and an automated differential generator test over 100,000 inputs where every divergence must be a failing test or an explicit exclusion. The seat roster is complete and properly decoupled, distributing the architect slice, red writing, green writing, independent gate review, secondary review, and sign-off across distinct contexts. Merge verification and isolated gate executions ensure the decision criteria are transparently validated before sign-off."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x257coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Never split the generator off on its own.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nAs the agile coach, I think the task force fits a size-L bug with a regex change, a 100,000-input differential generator and 8 hand-applied mutants. The writing seats are separate, so the red and green steps stay independent. The second review runs its own differential, which covers the adversarial view. No perspective I would expect is missing.\n\nNotes:\n- The second review, the gate reviewer and the sign-off are all fresh contexts on the same model. Giving one of them to another available seat, such as codex or qwen, would add model diversity.\n- A seven-voice retro is heavy for one card, but it follows the standing agreement, so I count i"
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "x257carchitect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A test result that needs execution cannot be reduced to a diff",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment tightens the record: pinned exclusion count, mutants keyed by base-commit line text, and committed gate output. That is still a generator-plus-assertions design, now more enforceable and less prone to silent exclusion growth. Execution cannot collapse to a static diff; the pinned counts and raw output are the right evidence. My architect Yes stands."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x257cqa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the test fails when the actual count differs from the pin",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment strengthens QA rigor. Pinning exclusion counts directly in the generator test prevents silent test degradation, ensuring tests cannot pass bad state. Verifying execution through committed raw gate outputs and pinning mutants to base commit text preserves red-first TDD integrity."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x257cdev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the test fails when the actual count differs from the pin",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nMy vote stands. As the seat that does this work, I think the amendment makes the rules easier to follow and harder to game. A pinned exclusion count means any new exclusion shows up as a diff. Naming mutants by the line text at the base commit is more reliable than line numbers, which move. One note: the Size line still says \"8 hand-applied mutants\"; the card text should be changed to seven to match."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x257cauditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the repository's evidence is the committed code of the checks",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment closes the loophole by anchoring verification to committed artifacts. The exclusion count is pinned as a constant, making changes a visible diff, and raw gate output is committed for audit. Mutants are pinned by line text. Verification is now deterministic and fully git-verifiable through diffs and committed evidence."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x257cdecider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "pinned in the generator test itself as a constant",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nMy vote stands. The amendment strengthens the evidentiary framing by pinning the exclusion count as a constant, committing raw gate output for auditability, and clarifying mutant base references, ensuring the sign-off rests firmly on verifiable repository records."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x257ccoach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the NUMBER of exclusions is pinned in the generator test itself as a constant",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nMy vote stands. The amendment adds no new seat and no new step. It strengthens checks the team already planned: the exclusion count becomes a fixed number in the test, the generator's counts go into the committed gate output, and each mutant is named by its line text at the base commit. The task force stays the right size. One note: the gate reviewer now has to explain any change to the pinned count, and that should not grow into a separate review."
+   }
+  ]
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run",
+ "window_notes": "Both rounds launched with all six voters at once (D228 as amended by D244; the explicit reply format: every reply counted, no re-ask). Primary window 16:59:12 to 17:05:03 UTC (5 minutes 51 seconds): QA agy, architect Grok, coach Cursor, developer Cursor and decider agy Yes; audit lens Qwen No with a condition (the proposal cannot be verified from git alone because it relies on running a 100,000-input generator and hand-applied mutants, and explicit exclusions let the team pass by documenting failures). The proposer adopted the adoptable part (the number of exclusions pinned as a constant in the generator test, so a change is a visible diff and the test fails on a mismatch; the committed raw gate and sign-off output holds the generator counts; the mutants pinned to the base commit by line text and counted, seven; the gate reviewer re-derives the exclusion count from the committed file; the doubled-backslash row is raw text) and said plainly that a result that needs execution cannot be reduced to a diff. Confirmation step (D232): 17:05:27 to 17:10:50 UTC (5 minutes 23 seconds): the audit lens answered Yes (condition met) and the five Yes voters said their vote stands. Result: six of six Yes. The coach also suggested giving one fresh-context review to another model for diversity: noted, not adopted at this step."
+}

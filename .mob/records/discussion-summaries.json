@@ -239,5 +239,13 @@
   "options": "Other ideas: listing the new file types a card creates (one was missed and caught), a check that stops the commit hook from silently changing test text, and a check of clone names in the gate script.",
   "outcome": "Signed off at the first attempt; all 344 and 509 tests pass, in 11.6 minutes. I made two small slips (a new file type, a wrong clone name) and the independent review caught the first; both are corrected and recorded.",
   "owner": "Nothing needed."
+ },
+ "D257": {
+  "decided": "The team agreed the plan for the next bug: the tool that removes folder paths from stored benchmark results will cover the remaining path shapes, such as network shares, Linux-on-Windows paths, accented account names and paths that follow an escape code.",
+  "why": "The review of the last fix listed the shapes that still leave part of an account folder in a result and the checks that would not notice if the fix were later weakened.",
+  "changes": "Nothing in the rules changes. The plan adds the new trial check: the old and new versions are compared on a hundred thousand generated texts, every exception is written into the test and counted, and the checks are proved by deliberately breaking the code in seven ways.",
+  "options": "Splitting the card was considered and left as a fallback if the written plan gets too long.",
+  "outcome": "Adopted by six of six. One reviewer first asked for evidence that can be checked from the repository alone; the number of allowed exceptions is now fixed in the test and the test output is saved with each run.",
+  "owner": "Nothing needed."
  }
 }
