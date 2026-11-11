@@ -17,7 +17,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 ## Cards, in PM rank order (the single source of ranks)
 
 <!-- board-table:start -->
-<!-- board-table-sha256:2f804eee78f28637560d28b589eef742467e15b08cb1eb289ff2d4afb416d7ae -->
+<!-- board-table-sha256:b00a274d86711c34b9e4f650c07883027d7f04e54e4b3b7090345009e6684911 -->
 | Rank | Card | Status | Depends on |
 |---|---|---|---|
 | 1 | 002 Complete resolver malformed-input hardening | Done | 001 |
@@ -134,7 +134,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 112 | 370 Tracked files carry no home path of a local account | Done | none |
 | 113 | 368 New bench rows no longer publish a reply prefix | Done | none |
 | 114 | 369 The licences of the packages the first preview restores are reviewed and listed | Done | none |
-| 114.5 | 418 New bench rows name files by their short name and hold no folder from the machine that ran them | Ready |  |
+| 114.5 | 418 New bench rows name files by their short name and hold no folder from the machine that ran them | Done |  |
 | 115 | 367 The four model vendors' published terms are read for what they say about publishing model output | Ready | none |
 | 116 | 162 Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check | Ready | 160 |
 | 117 | 201 Migrate the sealed holdouts to avow and record a new baseline | Ready | 199 |
@@ -272,6 +272,7 @@ Principle: the product owner needs one unmistakable signal for when the language
 | 292 | 012 Usable v1: acceptance test passes on main and gates CI | Superseded/Withdrawn | 009, 010, 011 |
 | 293 | Bug: two bench test classes still overlap the time-limited timing test, and nothing fails when a process-starting test class lacks the shared collection | Ready |  |
 | 295 | Bug: the restored-package licence checks can stay green while the page is wrong (licence values, prose figures, the tool's package references, the props, the CI proof) | Ready |  |
+| 296 | Bug: the bench path scrub over-scrubs prose after a path, misses a few path forms, and its label and save-step behaviour is untested | Ready |  |
 <!-- board-table:end -->
 
 Ranks are the PM's and move at each retro; ideas are triaged by expected metric impact. Milestones are in `board/MILESTONES.md`.
