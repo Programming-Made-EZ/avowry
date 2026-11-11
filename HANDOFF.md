@@ -6,7 +6,7 @@ Boundary B1: 3b70513504864f668aa8e2f001654eda2ab9cb8f
 Boundary B2: 3186c15510b1
 Boundary B3: 461e1ad099331a33520914d3df4ddb718b11eed3
 Boundary B4: 957ba62a413191951208bd8b9e9e2762c1a68c3c
-Boundary B5: 7f8680c (card 435: Decider D257 adopted; the slice and the red prompt are committed after it)
+Boundary B5: 7f8680c076261f441743b59c2a5162b7522d8446
 
 ## Restart here
 
