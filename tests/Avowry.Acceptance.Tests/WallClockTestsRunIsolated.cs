@@ -280,6 +280,27 @@ public class WallClockTestsRunIsolated
         Assert.True(found.Count == 0, Describe(found));
     }
 
+    [Fact]
+    [Trait("Slice", "417")]
+    [Trait("Criterion", "417-2")]
+    public void L3_live_tree_has_exactly_one_isolated_timing_collection_definition_with_parallelisation_disabled()
+    {
+        // Given the repository as it is today (comments blanked, strings kept; this guard file is skipped: it names the definition only in pieces)
+        var definition = new Regex(
+            @"\[\s*Collection" + "Definition" + @"\s*\(\s*""" + Regex.Escape(IsolatedName) + @"""\s*,\s*Disable" + "Parallelization" + @"\s*=\s*true\s*\)\s*\]",
+            RegexOptions.CultureInvariant);
+
+        // When the sources are scanned for the definition of the isolated collection
+        var hits = ReadAcceptanceSources()
+            .Where(source => !source.Relative.EndsWith(ThisFile, StringComparison.Ordinal))
+            .Select(source => (source.Relative, Count: definition.Matches(Blank(source.Text.Replace("\r\n", "\n")).Text).Count))
+            .Where(hit => hit.Count > 0)
+            .ToList();
+
+        // Then exactly one definition exists, with the exact name and DisableParallelization = true: without it the attribute would only create an ordinary parallel collection and the timing test would run beside other classes again
+        Assert.True(hits.Sum(hit => hit.Count) == 1, "expected exactly one definition of the isolated timing collection with parallelisation disabled, found " + hits.Sum(hit => hit.Count) + (hits.Count == 0 ? "" : ": " + string.Join(", ", hits.Select(hit => hit.Relative))));
+    }
+
     private static string LimitCompare() =>
         "Assert.True(sw." + Ela + " < TimeSpan.FromSeconds(20));";
 
