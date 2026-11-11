@@ -1,0 +1,167 @@
+{
+ "decider": "D249",
+ "subject": "card 369 retro pick: the slice names the guard tests that scan any new kind of tracked file",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "x249architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the slice names the guard tests that scan any new kind of tracked file",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe entry is a narrow process rule, not a new matcher: it fires only when a card adds a generated file, a new extension, or a new folder of tracked files, names four existing text guards, and asks the slice to run them on a sample and land scanner or allow-list changes in the red. The independent gate reviewer can check for that one line, so it is enforceable without inventing extra findings files. The 369 failure (a chance prefix in a lockfile hash) is the exact class this covers. Bounded trial of three such cards, with a metric and a slice-time counter-metric, keeps it minimal and reversible. Sample vs full scan of the new kind is a not"
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x249qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the independent gate reviewer checks the slice for that line",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nRunning text guards against sample files during the slice phase guarantees scanner and allow-list adjustments are caught and placed into the red phase before implementation. This prevents baseline gate failures while ensuring guards catch genuine violations on new tracked file formats without passing bad state."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x249dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "so that the first baseline gate does not find it",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThis is workable and fair to my work. The check runs only when a card adds a new kind of tracked file, it names the four guards to run, and any scanner or allow-list change goes into the red. So I won't meet a surprise test failure at the green gate. I can follow it without gaming it.\n\nOne note: generated lockfiles get new hashes every time they are regenerated. A sample that passes the guards in the slice can still fail later. For machine-written files, the slice should choose an allow-list entry by path or a narrower matcher. Passing one sample should not count as clear."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x249auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "the slice runs the text guards that scan tracked files",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nGit history cannot verify whether guards were actually executed on a sample or whether the “new kind” classification was accurate. The proposal leaves a loophole: teams can simply expand allow-lists to bypass gate failures without addressing the underlying guard intent, or misclassify files to avoid the step. Compliance relies on subjective notes rather than automated, auditable evidence. One precise condition to bring me to Yes: require the slice to commit a deterministic test script that runs the guards on the new file kind and logs pass/fail status, making execution verifiable directly from git diffs."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x249decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Review at the third such card's retro: keep, change or remove.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation is solidly framed on empirical evidence: it establishes an explicit hypothesis, a clear target metric (zero baseline-gate failures from text guards on new tracked file kinds), and a counter-metric (slice runtime) to guard against checklist bloat. The trial boundary of three qualifying cards and the review checkpoint guarantee an evidence-based decision to keep, change, or remove the rule. The necessary sign-off roles are well covered across the lifecycle: the architect verifies the sample during slicing, the independent gate reviewer checks the slice, and the team reviews the results at retro."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x249coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the slice runs the text guards that scan tracked files",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThis is the right size for the problem. It applies only when a card adds a new kind of tracked file, so most cards never trigger it. That answers the concern about turning every guard into a long slice write-up. It names four specific guards to run on a sample of the new files, and any scanner or allow-list fix goes into the red. One gate-time fix that took 10 minutes justifies a check this light. The metric, counter-metric, owner and three-card trial are all defined.\n\nNote: \"new kind of tracked file\" will be judged differently by different people. At review, also count misses, where a new file kind was not flagged in the slice but tripp"
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "x249carchitect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "one passing sample does not count as clear",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe record, the existing guards as checkers, and guard-sample.md as the findings file are sound, minimal and enforceable. Committing command, paths, exit status and sha256 of verbatim output lets git verify the run. Requiring a path allow-list or narrower matcher for regenerating machine-written files closes the card-369 false-positive path. Gate review of that file is enough."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x249cqa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the slice names the guard tests that scan any new kind of tracked file",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment strengthens verification and testability. Committing concrete execution evidence with commands, paths, exit status, and checksums ensures that sample runs are verifiable from git history, and handling machine-written regenerated files prevents passing bad state. My endorsement stands."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x249cdev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "one passing sample does not count as clear",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment doesn't change my vote. As the developer working under this rule, I can comply with it: the slice commits a short record per guard, and the guards are scripts and tests already in the repo. The record makes the run easy to check from git and hard to fake. My note about regenerated files is now in the entry, so a single clean sample can no longer clear a file whose content changes each time it is regenerated. The added work stays small."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x249cauditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the exit status and the verbatim output with its sha256",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment directly satisfies the audit lens condition by mandating a committed, deterministic record with commands, paths, exit status, and sha256-verified output. This makes execution and classification verifiable from git history alone. The gate reviewer check closes the loop. No further conditions are needed."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x249cdecider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the independent gate reviewer checks the slice for that line and that file",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nMy vote stands. The amendment strengthens the evidentiary basis by committing deterministic execution records and verifying them in git. The evaluation framework and trial metrics remain sound, with clear roles for slice author and independent gate reviewer to sign off on evidence."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x249ccoach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the slice COMMITS the evidence of that run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nMy vote stands. Through the agile coach lens, the amendment adds a small committed record, and only for cards that add a new kind of tracked file. It does not turn every guard into a slice essay. The record makes the run verifiable and settles the outlier's condition at little cost. The \"minutes the slice takes\" counter-metric will show if the sha256 and verbatim-output requirement grows into ceremony. If it does, trim it at the review after three cards."
+   }
+  ]
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run",
+ "window_notes": "Both rounds launched with all six voters at once (D228 as amended by D244; the explicit reply format in the prompt: every reply counted in both windows, no re-ask). Primary window 01:28:05 to 01:31:48 UTC (3 minutes 43 seconds): QA agy, architect Grok, coach Cursor, developer Cursor and decider agy Yes; audit lens Qwen No with a condition (git history cannot show whether the guards were really run on a sample or whether the new-file-kind classification was right: the slice must commit a deterministic, verifiable record of the run). The proposer adopted it (the slice commits .mob/records/<card>/guard-sample.md: for each guard the command, the sample paths, the exit status and the verbatim output with its sha256; the gate reviewer checks the file) and the developer's note (for a machine-written file whose content changes on regeneration one passing sample does not count as clear: choose an allow-list entry by path or a narrower matcher). Confirmation step (D232): the objector was asked one question and the five Yes voters whether the amendment changes their vote; 01:32:35 to 01:36:23 UTC (3 minutes 48 seconds); all six answered Yes, all counted; the objector Qwen said its condition is met."
+}

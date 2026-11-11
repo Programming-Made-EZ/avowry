@@ -352,3 +352,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D246](process-and-staffing.md#d246) | Card 368 declaration: task force and card text (new bench rows publish no reply prefix) | process-and-staffing | adopted |
 | [D247](process-and-staffing.md#d247) | Card 368 retro pick: test classes that start a tool under a hard time limit share one xunit collection | process-and-staffing | adopted |
 | [D248](process-and-staffing.md#d248) | Card 369 declaration: task force and card text (the licences of every package a generated service and its specs restore are reviewed and listed) | process-and-staffing | adopted |
+| [D249](process-and-staffing.md#d249) | Card 369 retro pick: the slice names the guard tests that scan any new kind of tracked file | process-and-staffing | adopted |

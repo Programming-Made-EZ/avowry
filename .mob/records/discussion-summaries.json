@@ -143,5 +143,21 @@
   "options": "Reading the list from the local package cache instead of committed lists was the alternative; it cannot say which packages are really restored.",
   "outcome": "Adopted by six of six. One reviewer first asked that the check run a real restore and compare it with the committed lists; that was accepted and the reviewer agreed.",
   "owner": "Nothing needed."
+ },
+ "D249": {
+  "decided": "A new rule for the team's planning step: when a card adds a new kind of file to the repository, the plan must check that the existing automatic text checks do not trip on it, and must keep a record of that check.",
+  "why": "On the last card two machine-written list files held a random-looking text that contained an old product prefix by chance, so an old safety check failed late, at the first full test run, and cost another ten-minute run.",
+  "changes": "For the next three cards that add a new kind of file, the plan runs the four text checks over a sample, commits the commands, results and a checksum of the output, and fixes any needed exception in the first failing test, not at the end. For files that are regenerated, one passing sample is not enough.",
+  "options": "Leaving it to the full test run was the alternative; all seven reviewers asked for the earlier check.",
+  "outcome": "Adopted by six of six. One reviewer first wanted the check to be provable from the repository history, which was accepted, and agreed.",
+  "owner": "Nothing needed."
+ },
+ "RETRO369": {
+  "decided": "Looking back on card 369, which added a page listing the licence of every software package that Avowry's generated code restores.",
+  "why": "A developer adopting the preview needs to see, before adopting it, whether any package it pulls in has a licence that needs a closer look.",
+  "changes": "The page lists all 30 restored packages with version, licence and where they are used, flags nothing outside the permissive licences, and notes the four packages that ask for a licence acceptance. Two recorded package lists are now checked by tests and by a real restore in CI, which passed.",
+  "options": "Other ideas came up: record the start and end time of each step so idle time can be verified, and reword the rule about not typing the account name.",
+  "outcome": "Signed off at the first attempt; all 344 and 410 tests pass. The reviewers found gaps in how strictly the checks test the page, which are filed as one bug.",
+  "owner": "A decision for you: bug 422 (stricter checks on the licence page) needs a rank. Also, a coding assistant left four temporary folders in the system temp folder that the cleanup tool cannot remove; say if you want the cleanup tool extended to cover them."
  }
 }
