@@ -51,7 +51,6 @@ public sealed class PathScrubForms
     [MemberData(nameof(Forms))]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-U")]
-    [Trait("Status", "Pending")] // green 1 (the Phrase tool and the PathScrub.cs file) un-pends this
     public void Id_418_U1_each_rooted_form_becomes_the_short_name(string input, string expected)
     {
         // Given a string that holds one of the rooted path forms the scrub must match
@@ -64,7 +63,6 @@ public sealed class PathScrubForms
     [MemberData(nameof(Untouched))]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-U")]
-    [Trait("Status", "Pending")] // green 1 (the Phrase tool and the PathScrub.cs file) un-pends this
     public void Id_418_U2_must_not_touch_rows_stay_byte_identical(string input, string expected)
     {
         // Given a compiler message, a relative name, a URL, a tag, or a label with no rooted path
@@ -76,7 +74,6 @@ public sealed class PathScrubForms
     [Fact]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-U")]
-    [Trait("Status", "Pending")] // green 1 (the Phrase tool and the PathScrub.cs file) un-pends this
     public void Id_418_U2_apply_is_idempotent_on_every_form()
     {
         // Given every form in 418-U1
@@ -93,7 +90,6 @@ public sealed class PathScrubForms
     [Fact]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-U")]
-    [Trait("Status", "Pending")] // green 2 (the C# tool and its project link) un-pends this
     public void Id_418_U4_csharp_tool_links_the_shared_file_and_defines_no_scrub_class()
     {
         // Given the C# baseline project file and its Program.cs

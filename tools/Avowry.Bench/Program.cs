@@ -307,7 +307,7 @@ static async Task<TaskRunResult> RunTask(
             }
             catch (InvalidOperationException exception) when (attempts < maximumAttempts)
             {
-                diagnostics.Add(exception.Message);
+                diagnostics.Add(PathScrub.Apply(exception.Message));
                 continue;
             }
 
@@ -353,7 +353,7 @@ static async Task<TaskRunResult> RunTask(
     catch (Exception exception) when (exception is InvalidOperationException or System.ComponentModel.Win32Exception or TimeoutException)
     {
         var result = BenchmarkResult.Unavailable(
-            model, task.Id, promptHash, exception.Message, attempts, tokensIn, tokensOut, string.Empty,
+            model, task.Id, promptHash, PathScrub.Apply(exception.Message), attempts, tokensIn, tokensOut, string.Empty,
             label: label, mode: mode, docsHash: docsHash,
             cold: resolvedColdProfile.Cold, coldFlags: resolvedColdProfile.Flags, coldPreamble: coldPreamble,
             coldReason: resolvedColdProfile.Reason, workdirEmptyAtLaunch: workdirEmptyAtLaunch);
@@ -810,6 +810,12 @@ static void PersistResult(string suiteDirectory, string model, BenchmarkResult r
         ? Path.Combine(suiteDirectory, "results", "self-check")
         : Path.Combine(suiteDirectory, "results");
     Directory.CreateDirectory(resultsDirectory);
+    result = result with
+    {
+        Diagnostics = result.Diagnostics.Select(PathScrub.Apply).ToArray(),
+        Error = result.Error is null ? null : PathScrub.Apply(result.Error),
+        Label = result.Label is null ? null : PathScrub.Apply(result.Label),
+    };
     var serializedResult = JsonSerializer.Serialize(result, Serialization.Options);
     File.WriteAllText(Path.Combine(resultsDirectory, $"{model}.json"), serializedResult);
     // Holdout rows carry reply text. A private path keeps that append out of the committed history file.
@@ -898,7 +904,7 @@ static async Task<BenchmarkScore> ScoreExecuted(string source, BenchmarkTask tas
 }
 
 static BenchmarkScore FailedExecuted(string feedback) =>
-    new(false, [Cap(feedback, FeedbackCap)], BenchmarkScoring.ExecutedOutcomes, "none");
+    new(false, [Cap(PathScrub.Apply(feedback), FeedbackCap)], BenchmarkScoring.ExecutedOutcomes, "none");
 
 static IReadOnlyList<Outcome> ReadOutcomes(string path)
 {
@@ -1359,7 +1365,7 @@ static async Task<(int ExitCode, string Output)> RunDotnet(string workingDirecto
         return (-1, "dotnet_test_timeout");
     }
 
-    return (process.ExitCode, (await stdout) + (await stderr));
+    return (process.ExitCode, PathScrub.Apply((await stdout) + (await stderr)));
 }
 
 static ProcessStartInfo DotnetStart(string workingDirectory)
@@ -1405,7 +1411,7 @@ static string[] ReadFailures(string path)
     return document.Descendants()
         .Where(element => element.Name.LocalName == "UnitTestResult")
         .Where(result => string.Equals((string?)result.Attribute("outcome"), "Failed", StringComparison.OrdinalIgnoreCase))
-        .Select(result => $"{(string?)result.Attribute("testName")}: {FirstLine(result.Descendants().FirstOrDefault(element => element.Name.LocalName == "Message")?.Value ?? "failed")}")
+        .Select(result => $"{(string?)result.Attribute("testName")}: {FirstLine(PathScrub.Apply(result.Descendants().FirstOrDefault(element => element.Name.LocalName == "Message")?.Value ?? "failed"))}")
         .ToArray();
 }
 

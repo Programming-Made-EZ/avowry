@@ -124,7 +124,6 @@ public sealed class BenchRowsHoldNoFolderPath
     [Fact]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-1")]
-    [Trait("Status", "Pending")] // green 2 (the C# tool and its project link) un-pends this
     public async Task Id_418_1a_csharp_planted_build_failure_stores_short_file_names()
     {
         // Given the C# baseline bench, a non-endpoint suite, and a stand-in dotnet that prints the planted Windows and Linux paths past 600 characters and exits 1 without a trx
@@ -147,7 +146,6 @@ public sealed class BenchRowsHoldNoFolderPath
     [Fact]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-1")]
-    [Trait("Status", "Pending")] // green 2 (the C# tool and its project link) un-pends this
     public async Task Id_418_1b_csharp_tests_did_not_run_stores_short_file_names()
     {
         // Given the C# baseline bench, an endpoint suite, and a stand-in that copies an empty trx, prints the plant, and exits 1
@@ -205,7 +203,6 @@ public sealed class BenchRowsHoldNoFolderPath
     [Fact]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-1")]
-    [Trait("Status", "Pending")] // green 2 (the C# tool and its project link) un-pends this
     public async Task Id_418_1d_csharp_real_syntax_error_holds_no_folder()
     {
         // Given the C# baseline bench and a syntax-error reply scored by the real dotnet
@@ -228,7 +225,6 @@ public sealed class BenchRowsHoldNoFolderPath
     [Fact]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-2")]
-    [Trait("Status", "Pending")] // green 1 (the Phrase tool and the PathScrub.cs file) un-pends this
     public async Task Id_418_2a_phrase_model_exit_then_pass_scrubs_diagnostics()
     {
         // Given the Phrase bench, a model that writes the plant to stderr and exits 1 on attempt 1, then answers a passing Phrase
@@ -255,7 +251,6 @@ public sealed class BenchRowsHoldNoFolderPath
     [Fact]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-2")]
-    [Trait("Status", "Pending")] // green 1 (the Phrase tool and the PathScrub.cs file) un-pends this
     public async Task Id_418_2b_phrase_model_exit_on_every_attempt_scrubs_error()
     {
         // Given the Phrase bench and a model that writes the plant to stderr and exits 1 on every attempt
@@ -280,7 +275,6 @@ public sealed class BenchRowsHoldNoFolderPath
     [Fact]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-2")]
-    [Trait("Status", "Pending")] // green 1 (the Phrase tool and the PathScrub.cs file) un-pends this
     public async Task Id_418_2c_phrase_executed_real_build_holds_no_folder()
     {
         // Given the Phrase bench in executed scoring and an endpoint reply whose native block names an undefined identifier
@@ -304,7 +298,6 @@ public sealed class BenchRowsHoldNoFolderPath
     [Fact]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-2")]
-    [Trait("Status", "Pending")] // green 2 (the C# tool and its project link) un-pends this
     public async Task Id_418_2d_csharp_start_failure_stores_the_missing_file_short_name()
     {
         // Given the C# baseline bench and PHRASE_BENCHCS_DOTNET pointing to a missing file inside <workspace>/Users/<user>/
@@ -329,7 +322,6 @@ public sealed class BenchRowsHoldNoFolderPath
     [Fact]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-2")]
-    [Trait("Status", "Pending")] // green 2 (the C# tool and its project link) un-pends this
     public async Task Id_418_2e_csharp_model_exit_scrubs_error()
     {
         // Given the C# baseline bench and a model that writes the plant to stderr and exits 1
@@ -353,7 +345,6 @@ public sealed class BenchRowsHoldNoFolderPath
     [Fact]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-3")]
-    [Trait("Status", "Pending")] // green 2 (the C# tool and its project link) un-pends this
     public async Task Id_418_3a_csharp_retry_prompt_carries_the_scrubbed_text()
     {
         // Given the C# baseline bench, a model that records every stdin, and a stand-in that prints the plant and exits 1 on call 1 then copies a passing trx and exits 0 on call 2
@@ -398,7 +389,6 @@ public sealed class BenchRowsHoldNoFolderPath
     [Fact]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-3")]
-    [Trait("Status", "Pending")] // green 1 (the Phrase tool and the PathScrub.cs file) un-pends this
     public async Task Id_418_3b_phrase_retry_prompt_carries_the_scrubbed_text()
     {
         // Given a real Phrase broken build then a correct reply, with every prompt recorded

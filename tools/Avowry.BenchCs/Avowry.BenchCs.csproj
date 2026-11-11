@@ -2,4 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\Avowry.Bench\PathScrub.cs" Link="PathScrub.cs" />
+  </ItemGroup>
 </Project>

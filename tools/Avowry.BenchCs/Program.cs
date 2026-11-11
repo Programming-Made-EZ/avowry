@@ -239,7 +239,7 @@ static async Task<Score> Score(IReadOnlyList<SourceFile> sources, BenchmarkTask 
         await process.WaitForExitAsync();
         return new(false, "dotnet_test_timeout", 0, 0);
     }
-    var output = (await stdout) + (await stderr);
+    var output = PathScrub.Apply((await stdout) + (await stderr));
     var trxPath = Path.Combine(project, "TestResults", trxName);
     if (!File.Exists(trxPath))
         return new(false, CompactFailureSummary(output), 0, 0);
@@ -261,7 +261,7 @@ static TestResult ReadTestResult(string path)
     var harness = executed.Count(result => ((string?)result.Attribute("testName"))?.Contains("GeneratedOutcomeTests", StringComparison.Ordinal) == true);
     var model = executed.Length - harness;
     var failures = results.Where(result => string.Equals((string?)result.Attribute("outcome"), "Failed", StringComparison.OrdinalIgnoreCase))
-        .Select(result => $"{(string?)result.Attribute("testName")}: {FirstLine(result.Descendants().FirstOrDefault(element => element.Name.LocalName == "Message")?.Value ?? "failed")}");
+        .Select(result => $"{(string?)result.Attribute("testName")}: {FirstLine(PathScrub.Apply(result.Descendants().FirstOrDefault(element => element.Name.LocalName == "Message")?.Value ?? "failed"))}");
     return new(model, harness, Cap(string.Join(Environment.NewLine, failures), 600));
 }
 
@@ -836,13 +836,19 @@ static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.
 
 static BenchmarkResult CreateResult(BenchmarkTask task, string model, bool passed, int attempts, int tokensIn, int tokensOut,
     IReadOnlyList<string> diagnostics, string promptHash, string? label, string status, string? error,
-    string proofLevel, int modelTestCount, int harnessTestCount, int existingCodeTokens, ColdProfile coldProfile, string coldPreamble, bool workdirEmptyAtLaunch) => new(model, task.Id, passed, attempts, tokensIn, tokensOut, "estimated", diagnostics,
-        false, promptHash, string.Empty, status, error, label, proofLevel, "plain-csharp", "", task.Kind, modelTestCount, harnessTestCount, "executed-outcomes", existingCodeTokens, coldProfile.Cold, coldProfile.Flags, coldPreamble, coldProfile.Reason, workdirEmptyAtLaunch);
+    string proofLevel, int modelTestCount, int harnessTestCount, int existingCodeTokens, ColdProfile coldProfile, string coldPreamble, bool workdirEmptyAtLaunch) => new(model, task.Id, passed, attempts, tokensIn, tokensOut, "estimated", diagnostics.Select(PathScrub.Apply).ToArray(),
+        false, promptHash, string.Empty, status, error is null ? null : PathScrub.Apply(error), label, proofLevel, "plain-csharp", "", task.Kind, modelTestCount, harnessTestCount, "executed-outcomes", existingCodeTokens, coldProfile.Cold, coldProfile.Flags, coldPreamble, coldProfile.Reason, workdirEmptyAtLaunch);
 
 static void Persist(string suiteDirectory, string model, BenchmarkResult result, string? privateResultsPath = null)
 {
     var directory = Path.Combine(suiteDirectory, "results");
     Directory.CreateDirectory(directory);
+    result = result with
+    {
+        Diagnostics = result.Diagnostics.Select(PathScrub.Apply).ToArray(),
+        Error = result.Error is null ? null : PathScrub.Apply(result.Error),
+        Label = result.Label is null ? null : PathScrub.Apply(result.Label),
+    };
     var json = JsonSerializer.Serialize(result, Serialization.Options);
     File.WriteAllText(Path.Combine(directory, $"{model}.json"), json);
     // Holdout rows carry reply text. A private path keeps that append out of the committed history file.
