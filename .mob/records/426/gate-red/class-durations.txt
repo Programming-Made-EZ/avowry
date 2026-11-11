@@ -1,0 +1,32 @@
+classes 85 tests 487 wall_s 701.5 (start of a test = end time minus duration)
+GeneratedSpecsMutationCheck                        tests=  1 sum_s=  538.6 first_s=   4.8 last_s= 543.4
+CSharpBaselineAcceptance                           tests= 41 sum_s=  480.9 first_s= 132.2 last_s= 613.1
+PhraseExecutedOutcomesAcceptance                   tests= 17 sum_s=  438.4 first_s=  62.6 last_s= 501.0
+MobProcessAccountability                           tests=  1 sum_s=  244.4 first_s=   0.0 last_s= 244.4
+PhraseEndpointExecutedOutcomes                     tests=  2 sum_s=  230.1 first_s=   0.0 last_s= 230.1
+PrePublicationChecks                               tests=  1 sum_s=  215.0 first_s=   0.0 last_s= 215.0
+MatchingCodebases                                  tests=  4 sum_s=  192.7 first_s=  56.8 last_s= 249.5
+BenchmarkHarnessAcceptance                         tests= 44 sum_s=  185.8 first_s=  87.6 last_s= 273.6
+EdgeCaseFixtureCorpus                              tests= 32 sum_s=  164.8 first_s=   0.0 last_s= 165.4
+NoHomePathsInTrackedFiles                          tests=  2 sum_s=  120.2 first_s=   0.0 last_s= 120.2
+EnsureStepCompiles                                 tests=  3 sum_s=   98.6 first_s=  58.1 last_s= 156.7
+EverySpecOutcomeAsserts                            tests=  4 sum_s=   97.3 first_s= 124.7 last_s= 222.0
+BenchRowsHoldNoFolderPath                          tests= 13 sum_s=   93.3 first_s= 273.6 last_s= 366.9
+DeclaredEffectDependencyCompiles                   tests=  3 sum_s=   85.3 first_s=   0.0 last_s=  85.3
+UsableV1                                           tests= 12 sum_s=   83.5 first_s= 136.7 last_s= 220.3
+LlmCustomerCheck                                   tests=  5 sum_s=   78.3 first_s= 623.2 last_s= 701.5
+PutAndDeleteEndpointsCompile                       tests=  3 sum_s=   77.3 first_s=   0.0 last_s=  77.3
+SourceMapTraceCommand                              tests= 14 sum_s=   75.0 first_s=   0.0 last_s=  75.2
+TasksOverHttp                                      tests=  2 sum_s=   70.3 first_s=  97.3 last_s= 167.6
+SourceMapTraceability                              tests= 11 sum_s=   69.4 first_s=  77.4 last_s= 147.0
+PrivateHoldoutResults                              tests=  3 sum_s=   64.8 first_s=  55.8 last_s= 120.6
+ListFieldCompiles                                  tests=  2 sum_s=   61.4 first_s=  93.3 last_s= 154.8
+CompileEndpointToCSharp                            tests=  2 sum_s=   60.9 first_s=  39.9 last_s= 100.8
+NewBenchRowsCarryNoReply                           tests=  4 sum_s=   58.0 first_s= 366.9 last_s= 424.8
+PersistenceEffectCompiles                          tests=  2 sum_s=   55.7 first_s=   0.0 last_s=  55.8
+ReferenceTarget                                    tests=  2 sum_s=   55.7 first_s=   2.4 last_s=  58.1
+DeclaredRecordCompiles                             tests=  2 sum_s=   52.6 first_s=   4.2 last_s=  56.8
+TasksDemoApp                                       tests=  2 sum_s=   41.7 first_s=  95.0 last_s= 136.7
+RecordUpdateFormCompiles                           tests=  2 sum_s=   41.2 first_s=   0.0 last_s=  41.3
+GetEndpointsCompile                                tests=  2 sum_s=   39.4 first_s=  34.4 last_s=  73.8
+timing Passed 10.1 start_s 613.1 end_s 623.2 overlapping classes []

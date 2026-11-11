@@ -1,0 +1,4 @@
+D255 git audit (red), base dcd96f4, HEAD fd8f519e9fa0018d044b1d3ed21e5f3248d3a798
+diff of the scrub file and the two bench programs since the base: 0 lines
+
+account name count over the tracked tree: 0; over the staged diff: 0 (whole-word match; name read from the environment)

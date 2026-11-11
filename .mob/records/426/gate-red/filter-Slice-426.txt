@@ -1,0 +1,183 @@
+Test run for C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:01.05]     Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "\\u0027C:\\\\Users\\\\<user>\\\\x.cs\\u0027", expected: "\\u0027x.cs\\u0027") [FAIL]
+[xUnit.net 00:00:01.05]     Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/c/Users/<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.05]     Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/mnt/c/Users/<user>/x.cs", expected: "x.cs") [FAIL]
+[xUnit.net 00:00:01.05]     Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/var/tmp/a/x.cs", expected: "x.cs") [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "\\u0027C:\\\\Users\\\\<user>\\\\x.cs\\u0027", expected: "\\u0027x.cs\\u0027") [2 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                  ↓ (pos 6)
+Expected: "\\u0027x.cs\\u0027"
+Actual:   "\\u0027C:\\\\Users\\\\<user>u0027"
+                  ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 245
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 213
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/c/Users/<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "<path>"
+Actual:   "/c/Users/<user>"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 245
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 213
+   at InvokeStub_PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/mnt/c/Users/<user>/x.cs", expected: "x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x.cs"
+Actual:   "/mnt/c/Users/<user>/x.cs"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 245
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 213
+   at InvokeStub_PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/var/tmp/a/x.cs", expected: "x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x.cs"
+Actual:   "/var/tmp/a/x.cs"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 245
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 213
+   at InvokeStub_PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.08]     Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/c/Users/<user>/x.cs", expected: "x.cs") [FAIL]
+[xUnit.net 00:00:01.08]     Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "\\\\host\\Users\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.08]     Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "file://localhost/home/<user>/x.cs", expected: "x.cs") [FAIL]
+[xUnit.net 00:00:01.08]     Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/mnt/c/Users/<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.09]     Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/private/tmp/a/x.cs", expected: "x.cs") [FAIL]
+[xUnit.net 00:00:01.09]     Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "\\\\\\\\host\\\\Users\\\\<user>\\\\x.cs", expected: "x.cs") [FAIL]
+[xUnit.net 00:00:01.09]     Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "C:\\Documents and Settings\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.09]     Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_the_words_around_a_path_stay(input: "see C:\\a\\b.cs (line 3) and /docs/x", expected: "see b.cs (line 3) and /docs/x") [FAIL]
+[xUnit.net 00:00:01.09]     Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_the_words_around_a_path_stay(input: "copy /tmp/a/x.cs to /tmp/b/y.cs", expected: "copy x.cs to y.cs") [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/c/Users/<user>/x.cs", expected: "x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x.cs"
+Actual:   "/c/Users/<user>/x.cs"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 245
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 213
+   at InvokeStub_PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "\\\\host\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 245
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 213
+   at InvokeStub_PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "file://localhost/home/<user>/x.cs", expected: "x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x.cs"
+Actual:   "file://localhost/home/<user>/x.cs"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 245
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 213
+   at InvokeStub_PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/mnt/c/Users/<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "<path>"
+Actual:   "/mnt/c/Users/<user>"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 245
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 213
+   at InvokeStub_PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "/private/tmp/a/x.cs", expected: "x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x.cs"
+Actual:   "/private/tmp/a/x.cs"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 245
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 213
+   at InvokeStub_PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "\\\\\\\\host\\\\Users\\\\<user>\\\\x.cs", expected: "x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x.cs"
+Actual:   "\\\\\\\\host\\\\Users\\\\<user>x.cs"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 245
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 213
+   at InvokeStub_PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(input: "C:\\Documents and Settings\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 245
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 213
+   at InvokeStub_PathScrubForms.Id_426_2_no_account_folder_survives_in_the_missed_forms(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_the_words_around_a_path_stay(input: "see C:\\a\\b.cs (line 3) and /docs/x", expected: "see b.cs (line 3) and /docs/x") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 4)
+Expected: "see b.cs (line 3) and /docs/x"
+Actual:   "see x"
+               ↑ (pos 4)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_the_words_around_a_path_stay(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 187
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_the_words_around_a_path_stay(input: "copy /tmp/a/x.cs to /tmp/b/y.cs", expected: "copy x.cs to y.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                ↓ (pos 5)
+Expected: "copy x.cs to y.cs"
+Actual:   "copy y.cs"
+                ↑ (pos 5)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_the_words_around_a_path_stay(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 187
+   at InvokeStub_PathScrubForms.Id_426_1_the_words_around_a_path_stay(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.09]     Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_the_words_around_a_path_stay(input: "Could not find file /tmp/x.cs in /usr/lib/dotnet", expected: "Could not find file x.cs in /usr/lib/dotnet") [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_the_words_around_a_path_stay(input: "Could not find file /tmp/x.cs in /usr/lib/dotnet", expected: "Could not find file x.cs in /usr/lib/dotnet") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                               ↓ (pos 20)
+Expected: "Could not find file x.cs in /usr/lib/dotn"···
+Actual:   "Could not find file dotnet"
+                               ↑ (pos 20)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.Id_426_1_the_words_around_a_path_stay(String input, String expected) in C:\Users\<user>\projects\gate426red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 187
+   at InvokeStub_PathScrubForms.Id_426_1_the_words_around_a_path_stay(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+Failed!  - Failed:    14, Passed:     8, Skipped:     0, Total:    22, Duration: 24 s - Avowry.Acceptance.Tests.dll (net8.0)
