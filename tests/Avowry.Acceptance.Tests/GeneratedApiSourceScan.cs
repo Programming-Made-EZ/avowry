@@ -21,7 +21,7 @@ public class GeneratedApiSourceScan
     // The Process.Start callers that run the CLI and dotnet (build, run --project, tests) without choosing a port, plus the harness itself.
     private static readonly string[] ProcessStartCallers =
     [
-        "BenchmarkHarnessAcceptance.cs", "CSharpBaselineAcceptance.cs", "EnsureStepCompiles.cs",
+        "BenchTimeoutIsolation.cs", "BenchmarkHarnessAcceptance.cs", "CSharpBaselineAcceptance.cs", "EnsureStepCompiles.cs",
         "GettingStartedDocs.cs",
         "LlmCustomerCheck.cs", "MatchingCodebases.cs",
         "MobProcessAccountability.cs", "PhraseCheatSheet.cs", "PhraseEndpointExecutedOutcomes.cs", "PrePublicationChecks.cs", "PrerequisitesPage.cs",

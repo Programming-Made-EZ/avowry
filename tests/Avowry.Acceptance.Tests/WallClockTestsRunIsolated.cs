@@ -257,20 +257,19 @@ public class WallClockTestsRunIsolated
     [Trait("Slice", "417")]
     [Trait("Criterion", "417-1")]
     [Trait("Kind", "BornGreen")]
-    public void L2_live_tree_detected_set_contains_BenchmarkHarnessAcceptance()
+    public void L2_live_tree_detected_set_contains_BenchTimeoutIsolation()
     {
         // Given the repository as it is today
         // When the guard detects classes that assert a wall-clock limit
         var detected = Detect(ReadAcceptanceSources());
 
-        // Then the set contains BenchmarkHarnessAcceptance, so a scanner that never matches cannot pass L1 forever
-        Assert.Contains("BenchmarkHarnessAcceptance", detected.Select(c => c.Class));
+        // Then the set contains BenchTimeoutIsolation (the class that holds the timing test after the green; before it, BenchmarkHarnessAcceptance), so a scanner that never matches cannot pass L1 forever
+        Assert.Contains("BenchTimeoutIsolation", detected.Select(c => c.Class));
     }
 
     [Fact]
     [Trait("Slice", "417")]
     [Trait("Criterion", "417-2")]
-    [Trait("Status", "Pending")] // Pending until the green (card 417)
     public void L1_live_tree_has_no_wall_clock_class_outside_isolated_timing()
     {
         // Given the repository as it is today
