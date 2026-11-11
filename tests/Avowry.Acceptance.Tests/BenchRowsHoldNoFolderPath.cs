@@ -389,6 +389,8 @@ public sealed class BenchRowsHoldNoFolderPath
     [Fact]
     [Trait("Slice", "418")]
     [Trait("Criterion", "418-3")]
+    [Trait("Slice", "426")]
+    [Trait("Criterion", "426-3")]
     public async Task Id_418_3b_phrase_retry_prompt_carries_the_scrubbed_text()
     {
         // Given a real Phrase broken build then a correct reply, with every prompt recorded
@@ -402,8 +404,11 @@ public sealed class BenchRowsHoldNoFolderPath
         var run = await RunArm("Avowry.Bench", suite, "418-3b", command,
             extraBenchArguments: ["--scoring", "executed"], disableBuildServers: true, timeoutMs: 180000);
 
-        // Then the second prompt's Compiler diagnostics: block holds the generated file's short name and no residue
-        _ = AssertStored(suite, "418-3b", run);
+        // Then the row is passed after 2 attempts, both stored files pass the residue check, and the second prompt's Compiler diagnostics: block holds the generated file's short name and no residue
+        var row = AssertStored(suite, "418-3b", run);
+        Assert.True(row.GetProperty("passed").GetBoolean());
+        Assert.Equal(2, row.GetProperty("attempts").GetInt32());
+        AssertNoResidue(suite, "418-3b");
         var prompt2 = File.ReadAllText(Path.Combine(workspace.Root, "prompt-2.txt"));
         var normalised = prompt2.Replace("\r\n", "\n", StringComparison.Ordinal);
         const string header = "Compiler diagnostics:";
@@ -412,6 +417,61 @@ public sealed class BenchRowsHoldNoFolderPath
         var block = normalised[(at + header.Length)..];
         Assert.Contains("Avows.cs", block, StringComparison.Ordinal);
         AssertNoResidueOnText(block, block, "prompt-2 Compiler diagnostics");
+    }
+
+    [Fact]
+    [Trait("Slice", "426")]
+    [Trait("Criterion", "426-3")]
+    public async Task Id_426_3a_phrase_bench_label_holds_no_folder_path()
+    {
+        // Given the Phrase bench, a passing reply, a label holding a rooted path, and a second run with the plain label run-426
+        using var workspace = TempWorkspace.Create();
+        var suite = WritePhraseSuite(workspace.Root);
+        var reply = WriteReply(workspace.Root, "pass.avowry", PassingPhrase);
+
+        // When each row is saved
+        var pathRun = await RunArm("Avowry.Bench", suite, "426-3a-path", PrintFileCommand(reply),
+            extraBenchArguments: ["--label", @"C:\Users\<user>\notes\run-426"]);
+        var plainRun = await RunArm("Avowry.Bench", suite, "426-3a-plain", PrintFileCommand(reply),
+            extraBenchArguments: ["--label", "run-426"]);
+
+        // Then label reads run-426 in results/<model>.json and in the history line for both runs
+        AssertLabelIsRun426(suite, "426-3a-path", pathRun);
+        AssertLabelIsRun426(suite, "426-3a-plain", plainRun);
+    }
+
+    [Fact]
+    [Trait("Slice", "426")]
+    [Trait("Criterion", "426-3")]
+    public async Task Id_426_3b_csharp_baseline_label_holds_no_folder_path()
+    {
+        // Given the C# baseline bench, a passing reply scored by a stand-in that copies a passing trx, a label holding a rooted path, and a second run with the plain label run-426
+        using var workspace = TempWorkspace.Create();
+        var suite = WriteCSharpSuite(workspace.Root);
+        var reply = WriteReply(workspace.Root, "pass.cs", PassingCSharp);
+        var emptyFile = WriteReply(workspace.Root, "empty.txt", string.Empty);
+        var trx = WriteReply(workspace.Root, "pass.trx", PassingTrx);
+        var fakeDotnet = WriteStandInDotnet(workspace.Root, emptyFile, trxToCopy: trx, exitCode: 0);
+
+        // When each row is saved
+        var pathRun = await RunArm("Avowry.BenchCs", suite, "426-3b-path", PrintFileCommand(reply),
+            environment: DotnetStandIn(fakeDotnet), extraBenchArguments: ["--label", @"C:\Users\<user>\notes\run-426"], timeoutMs: 180000);
+        var plainRun = await RunArm("Avowry.BenchCs", suite, "426-3b-plain", PrintFileCommand(reply),
+            environment: DotnetStandIn(fakeDotnet), extraBenchArguments: ["--label", "run-426"], timeoutMs: 180000);
+
+        // Then label reads run-426 in results/<model>.json and in the history line for both runs
+        AssertLabelIsRun426(suite, "426-3b-path", pathRun);
+        AssertLabelIsRun426(suite, "426-3b-plain", plainRun);
+    }
+
+    private static void AssertLabelIsRun426(string suite, string model, (int ExitCode, string Stdout, string Stderr) run)
+    {
+        var row = AssertStored(suite, model, run);
+        Assert.Equal("run-426", row.GetProperty("label").GetString());
+        var historyRaw = Assert.Single(File.ReadAllLines(HistoryPath(suite)), line =>
+            line.Contains("\"model\":\"" + model + "\"", StringComparison.Ordinal));
+        using var history = JsonDocument.Parse(historyRaw);
+        Assert.Equal("run-426", history.RootElement.GetProperty("label").GetString());
     }
 
     private static JsonElement AssertStored(string suite, string model, (int ExitCode, string Stdout, string Stderr) run)

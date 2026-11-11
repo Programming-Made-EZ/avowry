@@ -60,6 +60,41 @@ public sealed class PathScrubForms
         yield return R("error CS0029: Cannot implicitly convert type 'int' to 'string'", "error CS0029: Cannot implicitly convert type 'int' to 'string'");
     }
 
+    public static IEnumerable<object[]> WordsAroundAPath()
+    {
+        yield return R("Could not find file /tmp/x.cs in /usr/lib/dotnet", "Could not find file x.cs in /usr/lib/dotnet");
+        yield return R("copy /tmp/a/x.cs to /tmp/b/y.cs", "copy x.cs to y.cs");
+        yield return R(@"see C:\a\b.cs (line 3) and /docs/x", "see b.cs (line 3) and /docs/x");
+        yield return R(@"match \d+ here", @"match \d+ here");
+        yield return R(@"see C:\a\x.cs.", "see x.cs.");
+        yield return R(@"C:\a\x.cs, then", "x.cs, then");
+        yield return R("/x then /tmp/a/y.cs", "/x then y.cs");
+    }
+
+    public static IEnumerable<object[]> WordsAroundAPathPending() => WordsAroundAPath().Take(3);
+
+    public static IEnumerable<object[]> WordsAroundAPathCharacterisation() => WordsAroundAPath().Skip(3);
+
+    public static IEnumerable<object[]> MissedRoots()
+    {
+        yield return R("/mnt/c/Users/<user>/x.cs", "x.cs");
+        yield return R("/mnt/c/Users/<user>", "<path>");
+        yield return R("/c/Users/<user>/x.cs", "x.cs");
+        yield return R("/c/Users/<user>", "<path>");
+        yield return R("/var/tmp/a/x.cs", "x.cs");
+        yield return R("/private/tmp/a/x.cs", "x.cs");
+        yield return R("file://localhost/home/<user>/x.cs", "x.cs");
+        yield return R(@"C:\Documents and Settings\<user>", "<path>");
+        yield return R(@"\\host\Users\<user>", "<path>");
+        yield return R(@"\u0027C:\\Users\\<user>\\x.cs\u0027", @"\u0027x.cs\u0027");
+        yield return R(@"\\\\host\\Users\\<user>\\x.cs", "x.cs");
+        yield return R("C:/Users/<user>/x.cs", "x.cs");
+    }
+
+    public static IEnumerable<object[]> MissedRootsPending() => MissedRoots().Take(11);
+
+    public static IEnumerable<object[]> MissedRootsCharacterisation() => MissedRoots().Skip(11);
+
     [Theory]
     [MemberData(nameof(OddAccountFolders))]
     [Trait("Slice", "418")]
@@ -101,14 +136,23 @@ public sealed class PathScrubForms
     [Trait("Criterion", "418-U")]
     public void Id_418_U2_apply_is_idempotent_on_every_form()
     {
-        // Given every form in 418-U1
+        // Given every form in 418-U1, the words-around-a-path rows, and both forms of the missed-root rows
         // When Apply runs twice
         // Then the second pass equals the first
-        foreach (var row in Forms())
+        foreach (var row in Forms().Concat(WordsAroundAPath()))
         {
             var input = (string)row[0];
             var once = Apply(input);
             Assert.Equal(once, Apply(once));
+        }
+
+        foreach (var row in MissedRoots())
+        {
+            foreach (var text in BothAccountFolderForms((string)row[0]))
+            {
+                var once = Apply(text);
+                Assert.Equal(once, Apply(once));
+            }
         }
     }
 
@@ -129,7 +173,81 @@ public sealed class PathScrubForms
         Assert.DoesNotContain("static class PathScrub", program, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [MemberData(nameof(WordsAroundAPathPending))]
+    [Trait("Slice", "426")]
+    [Trait("Criterion", "426-1")]
+    [Trait("Status", "Pending")]
+    // Pending until the green that changes tools/Avowry.Bench/PathScrub.cs
+    public void Id_426_1_the_words_around_a_path_stay(string input, string expected)
+    {
+        // Given a stored diagnostic holding a text with words around a rooted path
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed (the words around the path stay)
+        Assert.Equal(expected, Apply(input));
+    }
+
+    [Theory]
+    [MemberData(nameof(WordsAroundAPathCharacterisation))]
+    [Trait("Slice", "426")]
+    [Trait("Criterion", "426-1")]
+    public void Id_426_1_rows_that_pass_today(string input, string expected)
+    {
+        // Given a stored diagnostic holding a text that already keeps the words around a path
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed (characterisation: these rows pass on the current tree)
+        Assert.Equal(expected, Apply(input));
+    }
+
+    [Theory]
+    [MemberData(nameof(MissedRootsPending))]
+    [Trait("Slice", "426")]
+    [Trait("Criterion", "426-2")]
+    [Trait("Status", "Pending")]
+    // Pending until the green that changes tools/Avowry.Bench/PathScrub.cs
+    public void Id_426_2_no_account_folder_survives_in_the_missed_forms(string input, string expected)
+    {
+        // Given each missed-root text, written once with the <user> placeholder and once with a plain-letter folder built from parts
+        // When PathScrub.Apply runs
+        // Then each row reads exactly as listed, neither the placeholder nor the plain folder appears, and a second pass changes nothing
+        AssertMissedRoot(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(MissedRootsCharacterisation))]
+    [Trait("Slice", "426")]
+    [Trait("Criterion", "426-2")]
+    public void Id_426_2_drive_slash_users_row_passes_today(string input, string expected)
+    {
+        // Given the C:/Users missed-root text, written once with the <user> placeholder and once with a plain-letter folder built from parts
+        // When PathScrub.Apply runs
+        // Then each row reads exactly as listed, neither the placeholder nor the plain folder appears, and a second pass changes nothing (characterisation: this row passes on the current tree)
+        AssertMissedRoot(input, expected);
+    }
+
     private static object[] R(string input, string expected) => [input, expected];
+
+    private static string PlainLetterFolder() => "aa" + "bb";
+
+    private static IEnumerable<string> BothAccountFolderForms(string text)
+    {
+        var plain = PlainLetterFolder();
+        yield return text;
+        yield return text.Replace("<user>", plain);
+    }
+
+    private static void AssertMissedRoot(string input, string expected)
+    {
+        var plain = PlainLetterFolder();
+        foreach (var text in BothAccountFolderForms(input))
+        {
+            var once = Apply(text);
+            Assert.Equal(expected, once);
+            Assert.DoesNotContain("<user>", once, StringComparison.OrdinalIgnoreCase);
+            Assert.DoesNotContain(plain, once, StringComparison.OrdinalIgnoreCase);
+            Assert.Equal(once, Apply(once));
+        }
+    }
 
     private static string Apply(string text)
     {
