@@ -177,8 +177,6 @@ public sealed class PathScrubForms
     [MemberData(nameof(WordsAroundAPathPending))]
     [Trait("Slice", "426")]
     [Trait("Criterion", "426-1")]
-    [Trait("Status", "Pending")]
-    // Pending until the green that changes tools/Avowry.Bench/PathScrub.cs
     public void Id_426_1_the_words_around_a_path_stay(string input, string expected)
     {
         // Given a stored diagnostic holding a text with words around a rooted path
@@ -203,8 +201,6 @@ public sealed class PathScrubForms
     [MemberData(nameof(MissedRootsPending))]
     [Trait("Slice", "426")]
     [Trait("Criterion", "426-2")]
-    [Trait("Status", "Pending")]
-    // Pending until the green that changes tools/Avowry.Bench/PathScrub.cs
     public void Id_426_2_no_account_folder_survives_in_the_missed_forms(string input, string expected)
     {
         // Given each missed-root text, written once with the <user> placeholder and once with a plain-letter folder built from parts
