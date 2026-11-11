@@ -199,5 +199,21 @@
   "options": "The first plan (five groups in one line) was dropped because it could not meet its own limit.",
   "outcome": "Adopted by six of six in one round; the measurement itself is committed to the repository so anyone can check it.",
   "owner": "Nothing needed."
+ },
+ "D254": {
+  "decided": "The team replaced one of its own trial rules: a test that checks a time limit now runs completely alone, after all the other tests have finished, and an automatic check enforces it.",
+  "why": "The earlier rule (put such tests in one shared group) did not stop the slow test failing, because the load came from the other tests running at the same time. With the new rule it passed in 9 seconds in four full runs, where it had failed in four of the eight before.",
+  "changes": "The old rule's wording is replaced by the new one, with the exact way the automatic check recognises a time-limit test written into the rule, and a note that spellings it misses are bugs to be fixed with a failing test first.",
+  "options": "Keeping the old rule was the alternative; all seven reviewers asked for the change.",
+  "outcome": "Adopted by five of six. One reviewer first wanted the check to be impossible to get around and, after the written-down detection rule was added, still wants a stricter code-level check, which no text check can promise; that is recorded and the related improvements are filed.",
+  "owner": "Nothing needed."
+ },
+ "RETRO417": {
+  "decided": "Looking back on card 417, which stopped one slow test from failing the full test run by chance.",
+  "why": "That test failed in the full run of three cards in a row and cost a ten-minute rerun each time, delaying the first release.",
+  "changes": "The test now runs alone after everything else, takes 9 seconds instead of 24 to 36, and a new automatic check fails the build if another time-limit test is not run that way. The full run still takes about ten minutes. A measurement taken before any work showed the first plan could not meet its fifteen-minute limit, so the plan was changed before it was built.",
+  "options": "Other ideas came up: always take a measurement first on cards about test time, have the reviewer recompute the facilitator's derived numbers a second way, and write a short state file at every step so a laptop restart resumes at once.",
+  "outcome": "Signed off at the first attempt; all 344 and 480 tests pass, in 10.4 minutes. I made a mistake in my own evidence (I read the wrong time stamp in the test log) and the independent reviewer caught it; the corrected evidence supports the change more strongly.",
+  "owner": "Nothing needed."
  }
 }

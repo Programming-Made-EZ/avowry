@@ -1,0 +1,167 @@
+{
+ "decider": "D254",
+ "subject": "card 417 retro pick: the D247 entry is rewritten (a test that asserts a wall-clock limit runs alone in an isolated collection)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "x254architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the independent gate reviewer no longer checks this by hand",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "I'll assess the proposal as Architect from the named files and the entry text, read-only.I’ll inspect the proposed entry, the guard, and the D247 record next so the vote is on the actual design.Yes\nThe record is a tight rewrite of a failed experiment: isolate the wall-clock assertion, pin the CollectionDefinition, drop the shared Bench-processes lane as a time-limit remedy, and keep that grouping only as optional. The checker already exists, is offline, and is the enforcement; its fixtures cover comments, strings, process-timeout arguments, wrong collection names, partials, and the guard file itself, and the counter-metric is benign names at "
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x254qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "runs alone in an isolated collection",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe QA lens is fully satisfied. The automated guard test `WallClockTestsRunIsolated` has been thoroughly proven red-first with 23 fixture tests, live-tree execution, and mutation testing of the definition itself. This ensures that any unisolated wall-clock assertion or weakened definition reliably fails the build rather than letting bad state or flaky tests slip through to the gate reviewer."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x254dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a test that asserts a wall-clock limit and runs alone",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nAs the developer who works under this rule, I find it workable and clear. A class that asserts a wall-clock limit gets one attribute. The `WallClockTestsRunIsolated` guard enforces it automatically, so nobody has to check by hand and there is no room to game it. The evidence matches the cause: the timing failures came from load in the other parallel classes, which a shared collection could not stop. On card 417 the timing test passed in all four full runs, and the gate stayed well under the 15-minute ceiling. One note: what counts as a time limit in tests, especially cancellation tokens, needs a clear definition, because a vague one would"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x254auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "A test that asserts a wall-clock limit runs alone in an isolated collection",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nThe guard test’s detection of “asserts a wall-clock limit” is unspecified. Without explicit pattern-matching or AST rules, developers can bypass the collection requirement by slightly altering assertion syntax, creating a loophole that lets the team pass while breaking the practice. Git alone cannot verify subjective phrasing. Once the guard’s detection logic is documented and enforced via a non-bypassable regex or compile-time check, I will endorse it."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x254decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "All seven retro voters ask for the entry to be changed to this",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe trial is framed with measurable criteria (zero full-run timing failures under load and execution well within the 15-minute ceiling) alongside clear counter-metrics. The review boundary is explicitly bounded to the next three qualifying cards with sign-off at retro, ensuring the decision to adopt, reshape, or reject will rest on empirical evidence."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x254coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the shared collection did not remove the load from the other parallel classes",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe proposal sticks to one concern and is about the right size. It has evidence before the change (4 timing failures in 8 full runs) and after it (0 in 4). It also has a guard that enforces the rule automatically, so the gate reviewer no longer checks it by hand, which removes ceremony rather than adding it. It keeps the earlier collection as a harmless grouping instead of forcing more change. The minutes counter-metric watches the 15-minute ceiling.\n\nOne note: a trial of 3 cards is small for a flaky failure that showed up in about half of full runs. The review should count full runs, not just cards."
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "x254carchitect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The DETECTION rule is written down and enforced by committed regular expressions",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment specifies the detection rule, names the regex gaps as defects, and keeps the counter-metric of zero benign names. The design is sound, minimal, and as enforceable as the repository's other text guards. My Yes stands."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x254cqa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "fixed by widening the patterns with a failing fixture test first",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment reinforces the QA lens by explicitly requiring a failing fixture test first whenever widening detection patterns. The guard and definition tests have proven red-first verification, catching the violations they name without passing bad state."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x254cdev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a missed spelling is filed as a bug and fixed by widening the patterns with a failing fixture test first",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x254cauditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "A regular expression cannot be proved non-bypassable",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No. The condition is not met because the amendment explicitly concedes that a regular expression cannot be proved non-bypassable and substitutes technical enforcement with a documented process that admits known gaps. A compile-time or AST-based verification would meet the condition."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x254cdecider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the next 3 cards that add or touch a test class",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nMy vote stands. The amendment documents the detection rules and defect handling while preserving the trial hypothesis, metrics, and evidence-based retro review. The sign-off framing remains sound."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x254ccoach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a missed spelling is filed as a bug and fixed by widening the patterns",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment doesn't change my vote. It writes down the detection rule the guard already uses and names the spellings the guard misses. It adds no new seats, roles or review steps, so the task force is still sized to the task. One note: the entry is now long. The next retro could move the detection detail into the guard file's header and keep only a short pointer in the agreement."
+   }
+  ]
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run",
+ "window_notes": "Both rounds launched with all six voters at once (D228 as amended by D244; the explicit reply format in the prompt: every reply counted in both windows, no re-ask). Primary window 12:04:30 to 12:10:35 UTC (6 minutes 5 seconds): QA agy, architect Grok, coach Cursor, developer Cursor and decider agy Yes; audit lens Qwen No with a condition (the guard's detection of a wall-clock assertion is unspecified: document it and enforce it by a non-bypassable regular expression or compile-time check). The proposer adopted the documented part (the entry states the exact detection rule: the committed guard file, its pattern constants, the blanking, the two forms it names; the missed spellings of bug 430 are a defect, not a loophole, fixed by widening the patterns with a failing fixture test first; a reviewer who sees an unnamed wall-clock assertion raises it at once) and said plainly that a regular expression cannot be proved non-bypassable. Confirmation step (D232), the objector asked one question and the five Yes voters whether the amendment changes their vote: 12:11:18 to 12:16:59 UTC (5 minutes 41 seconds); the five Yes voters said their vote stands; the objector Qwen answered No again: its condition asks for a non-bypassable regular expression or compile-time check and the amendment concedes that a regular expression cannot be proved non-bypassable: a demand that no text guard can meet; its remaining demand (a compile-time or syntax-tree check) is a tooling concern carried by bug 430 and by the decider voter's retro candidate (an AST-based check of collection definitions), not a blocker. Result: five Yes, one No with a recorded residual; No plus Support-it is 1 of 6 (17 percent, under the 30 percent rule)."
+}

@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 417,
+ "title": "A test that asserts a wall-clock limit runs alone, in its own isolated collection, and a guard test fails when one does not",
+ "process": "card-mode rules run by hand; a bug ranked next by the card 418 retro (a timing test that failed in the full gate of three cards in a row); the product manager draft by a Cursor reply-only seat with the facilitator's rulings; declaration Decider D252 (five Yes and the audit lens No with a condition, adopted: the ceiling fixed at 15 minutes and verified from committed outputs; confirmation six of six Yes); a read-only architect slice by a fresh Claude context that warned the first card could not meet its ceiling; THE FACILITATOR'S MEASUREMENT before any seat (one full acceptance run alone with a trx logger, per-class numbers committed) and the REVISED card, Decider D253 (six of six Yes in one round); ONE red by a Grok WRITING seat through grok_write.py (23 fixture tests green when written and declared, the live-tree test Pending failing by assertion) reproduced by the facilitator in an isolated clone (344 and 478); ONE green by a Cursor WRITING seat through cursor_write.py which stopped on two flaws it found and was not asked to change; two logged facilitator takeovers (the two one-line corrections; the definition test L3 proved by three mutations); three full gates alone and a sign-off alone, each with the D251 toolchain stamp (unchanged) and the committed outputs the fixed ceiling needs (344 and 479 or 480, 10.1 to 10.6 minutes); a second read-only review told to try to break the change (accept with notes) and an independent gate review (pass with notes: it caught the facilitator's wrong trx overlap lines, corrected); a fresh sign-off (attempt 1 signed off: 344 and 480, 10.4 minutes, 25 card tests, raw output committed); the retro voices (seven at once, 6 minutes 37 seconds) and Decider D254 (the D247 entry rewritten; confirmation step: five Yes and one residual No)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Cursor ctx-1",
+   "model": "cursor-agent in ask mode through cursor_reply.py, product manager, reply-only; the facilitator ruled on the open points and revised the card after the measurement",
+   "evidence": "6d9ef5bd3b9aa79bb91fef17d5ef84ebc8ab6e19"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md",
+   "evidence": "405e1655432b8fe51dd01a4044e9d68967876c97"
+  },
+  {
+   "role": "red",
+   "seat": "Grok ctx-3",
+   "model": "grok writing seat through grok_write.py in a linked worktree, changes left uncommitted; the facilitator committed it (87a5ac7) and reproduced the red in an isolated clone",
+   "evidence": "87a5ac72cb5212143e908ff62d35553d17c99c28"
+  },
+  {
+   "role": "green",
+   "seat": "Cursor ctx-4",
+   "model": "cursor-agent in print mode with tools through cursor_write.py in a linked worktree, changes left uncommitted; the facilitator committed it (23c2912) with two one-line corrections the seat reported; a second takeover added the definition test (seat-changes.md)",
+   "evidence": "23c291296f7f5dbea555bbe573629ef135de10c5"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent gate reviewer (gate-review.md PASS WITH NOTES); the second read-only review second-review.md (ACCEPT WITH NOTES)",
+   "evidence": "9b71bf296b7272d9bef2843cd0d48a089bf40cf9"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off attempt 1 in a fresh clone, the full suite alone, toolchain stamp unchanged (signoff.md)",
+   "evidence": "36d879bf25e0778e4aa709acfb73dbf7a55b62e8"
+  }
+ ],
+ "retro": "docs/retros/card-417-2026-11-11.md",
+ "notes": "Done checks met: criterion 1 (the guard WallClockTestsRunIsolated is offline and build-free, blanks comments, strings and char literals, applies the definition, requires the exact collection name, names each offender, 23 fixture tests green when written, the live-tree test failed by assertion before the move); criterion 2 (the timing test and its helpers live in BenchTimeoutIsolation with [Collection(\"Isolated timing\")], one CollectionDefinition with DisableParallelization = true exists and a test of it fails when it is missing, renamed or weakened, the test's body and 20 second limits unchanged); criterion 3 (three full runs and the sign-off alone, 344 and 479 or 480 tests, 10.1 to 10.6 minutes against the fixed 15 minute ceiling, toolchain stamp unchanged, the timing test passed in 9 seconds each time and overlapped no class, committed outputs). Said plainly: before the card the timing test failed in 4 of 8 full runs and ran beside 15 classes in the measurement; the facilitator's first overlap evidence was wrong (the trx logger writes the completion time as the start time) and the independent gate review caught it (corrected; D253 carries a correction line); the guard misses several spellings and other tests with hard HTTP limits are not isolated (bug 430); the D247 entry was rewritten by D254 (one residual No: a compile-time check no text guard can promise)."
+}

@@ -357,3 +357,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D251](process-and-staffing.md#d251) | Card 418 retro pick: a gate records the toolchain version before and after and refuses a verdict when it changed | process-and-staffing | adopted |
 | [D252](process-and-staffing.md#d252) | Card 417 declaration: task force and card text (every class that starts the bench tools shares the Bench processes collection, and a guard test fails when one does not) | process-and-staffing | adopted |
 | [D253](process-and-staffing.md#d253) | Card 417 revised after the measurement: the timing test alone runs in an isolated collection, with a guard for any class that asserts a wall-clock limit | process-and-staffing | adopted |
+| [D254](process-and-staffing.md#d254) | Card 417 retro pick: the D247 entry is rewritten (a test that asserts a wall-clock limit runs alone in an isolated collection) | process-and-staffing | adopted |
