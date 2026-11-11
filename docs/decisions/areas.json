@@ -1618,5 +1618,11 @@
     "status": "adopted",
     "title": "Card 418 retro pick: a gate records the toolchain version before and after and refuses a verdict when it changed",
     "order": 242
+  },
+  "D252": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 417 declaration: task force and card text (every class that starts the bench tools shares the Bench processes collection, and a guard test fails when one does not)",
+    "order": 243
   }
 }

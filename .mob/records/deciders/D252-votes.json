@@ -1,0 +1,167 @@
+{
+ "decider": "D252",
+ "subject": "card 417 declaration: task force and card text (every class that starts the bench tools shares the Bench processes collection, and a guard test fails when one does not)",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "x252architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "A test class file \"starts the bench tools\" when both of these are true",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe two-predicate checker is sound, minimal and enforceable: process-start with comments and strings blanked, plus a bench-tool name with only comments blanked, ANDed, so the other process starters stay out of scope. Requiring the exact collection name makes a silent xUnit split a failure. Scenarios Z, B and I pin the false-positive edges (comment-only name, name with no start, the guard’s own fixtures); extra collection attributes are allowed; live-tree M locks today’s set. Offline text scan, no build. Notes: bound the project-name token so a later similar identifier cannot match; bind process-start and the collection to the same class, "
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x252qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "Its fixture tests cover every row of the B scenario.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nEvery rule can be tested red first, and the verification boundaries prevent bad state. The live-tree test fails red against today's tree and names all five offending classes. The ZOMBIES fixture suite thoroughly tests near misses (substrings in paths, comments, and misnamed collections) to prevent false positives and false negatives. Requiring a red failure if only a subset of classes is patched ensures partial fixes cannot pass. Running the full gate twice in an isolated clone confirms that sharing the collection eliminates the timing failure under load without exceeding the duration ceiling."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x252dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the guard's live-tree test is watched failing on today's tree",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nI can follow these rules without gaming them. The red step is clean: the fixture tests are declared green in advance, the live-tree test is Pending and fails by assertion, and it names five specific classes. The green step changes only five attribute lines and removes a trait. A different seat writes each step, with no production code.\n\nNotes for the slice:\n- **String blanking:** \"comments and strings blanked\" should say how C# verbatim (`@\"...\"`), interpolated (`$\"...\"`) and raw (`\"\"\"...\"\"\"`) strings are handled. A naive blanker breaks on these and can silently miss a class.\n- **Classes per file:** the definition talks about a class *fi"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x252auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "provisional: the slice proposes the final ceiling after measuring",
+    "cite_verbatim": false,
+    "decider_cite_ok": true,
+    "reply_head": "No\nThe proposal requires live dotnet test runs and toolchain stamps, which cannot be verified from git alone. It also leaves a loophole via the provisional 15-minute ceiling and fallback Decider path, allowing the team to pass while deferring the actual duration fix. Condition: Replace the provisional ceiling and runtime fallback with a fixed, git-verifiable duration limit and commit the exact test outputs proving compliance before sign-off."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x252decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "proposes the final ceiling after measuring per-class durations",
+    "cite_verbatim": false,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation is framed to rest strictly on objective evidence: the duration ceiling is grounded in per-class trx measurements, the live-tree failure confirms the problem upfront, and sign-off requires two consecutive clean full gate passes in fresh clones with verified toolchain stamps. Every required role is staffed with clean separation across distinct seats: independent architect slice, separate red and green writing seats, an adversarial review to challenge the change, independent gate review, and fresh sign-off."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x252coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the guard decides the set; the hand check is dropped",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe team is the right size for the risk, though large for a size S card. Each needed view has a seat: an architect to confirm the root cause and set the time limit, red and green writers on different seats, a reviewer told to try to break the change (the lesson from card 418), and an independent gate reviewer. The gates are run in person with the toolchain version recorded before and after, which suits a bug that only shows up under load.\n\nOne concern: for about 150 lines of guard code plus five attribute lines, the second review and the gate reviewer overlap a lot. The retro should ask whether one of them could be dropped for cards this"
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "x252carchitect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "there is no provisional ceiling and no fallback inside this card",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment tightens the design: a fixed 15-minute ceiling, git-committed outputs, and no in-card fallback close the duration loophole. Specifying the blanker for verbatim, interpolated and raw literals plus multi-class and partial files reduces false positives. The record, checker rules and findings remain sound, minimal and enforceable. My architect Yes stands."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x252cqa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "starts a process and names a bench tool",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment strengthens verification by fixing the duration ceiling at fifteen minutes and requiring committed test outputs before sign-off. The red-first plan remains intact with the live-tree test failing against the five classes and passing when attributes are added, while the parser refinements ensure string variations are caught reliably without passing bad state."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x252cdev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the duration ceiling of criterion 3 is FIXED at 15 minutes of acceptance time per full run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nMy vote stands. From the developer's side, a fixed 15-minute ceiling is clear and possible to meet: today's runs take about 10 minutes, and committing the exact outputs means nobody can game the check. My notes on how the guard blanks string literals and handles several classes per file were adopted. If a run goes over 15 minutes, the card goes back to the slice, which is fair to the work. A different remedy would need its own card and Decider."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x252cauditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the ceiling is FIXED at 15 minutes of acceptance time per full run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nYour amendment directly addresses my condition by fixing the ceiling at 15 minutes, mandating git-verification via committed outputs before sign-off, and explicitly removing the provisional ceiling and runtime fallback. The practice is now locked and auditable from the repository alone."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x252cdecider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the ceiling is FIXED at 15 minutes of acceptance time per full run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment strengthens the evidence-based framing by fixing the duration ceiling at 15 minutes and requiring exact test outputs committed to git before sign-off. Removing the provisional ceiling and fallback closes loopholes and ensures the sign-off decision rests strictly on verified run times. The evaluation structure and required sign-off seats remain complete and rigorous."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x252ccoach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the ceiling is FIXED at 15 minutes of acceptance time per full run",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nThe amendment doesn't change my vote. It removes the provisional ceiling, which was an open option, and doesn't add any seats. Committing the exact test outputs costs little and makes the check verifiable from git. The task force still fits a size S bug: one slice, a red seat and a green seat, two reviews and a sign-off. My note is that if a run goes over 15 minutes, the card goes back to the slice, so the slice's per-class timing measurement should come before the red seat starts."
+   }
+  ]
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run with swapped seats was not run (the declaration changes no agreement text)",
+ "window_notes": "Both rounds launched with all six voters at once (D228 as amended by D244; the explicit reply format in the prompt: every reply counted in both windows, no re-ask). Primary window 06:22:10 to 06:26:26 UTC (4 minutes 16 seconds): QA agy, architect Grok, coach Cursor, developer Cursor and decider agy Yes; audit lens Qwen No with a condition (the provisional 15-minute ceiling and the runtime fallback leave a loophole: the ceiling must be fixed and git-verifiable, with the exact test outputs committed before sign-off). The proposer adopted it (the ceiling is FIXED at 15 minutes of acceptance time per full run; the facilitator's baseline gates and the sign-off commit the exact outputs before sign-off is accepted; a run over 15 minutes means the card is not signed off and returns to the slice; no provisional ceiling and no fallback inside the card) and the developer's notes for the slice (the blanker handles verbatim, interpolated and raw strings; several classes in one file and partial classes are specified). Confirmation step (D232), the objector asked one question and the five Yes voters whether the amendment changes their vote: 06:27:27 to 06:31:11 UTC (3 minutes 44 seconds); all six answered Yes, all counted; the objector Qwen said its condition is met."
+}

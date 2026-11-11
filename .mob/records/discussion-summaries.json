@@ -183,5 +183,13 @@
   "options": "Other ideas came up: record the toolkit version on every test run (adopted above), make the second review always try to break the change, and clean up leftover folders the cleanup tool cannot remove.",
   "outcome": "Signed off at the first attempt; all 344 and 455 tests pass. A smaller set of further gaps in the cleaning rules is filed as one bug.",
   "owner": "A decision for you: bug 426 (more path forms the cleaning misses, and where it removes too many words) needs a rank; bug 417 (a test that fails under load and costs a rerun on every card) is now ranked next because it puts the team's ability to ship at risk. Also two leftover folders the cleanup tool cannot remove, plus the four temporary folders from the licence card; say if you want the cleanup tool extended."
+ },
+ "D252": {
+  "decided": "The team agreed the plan for the next card, a bug fix: every test class that starts the benchmark tools will run one at a time, and an automatic check will fail if a new one does not.",
+  "why": "One slow test failed in the full test run of three cards in a row because other tests were starting the same tools at the same moment, and each failure cost another ten-minute run.",
+  "changes": "Five test classes get the shared label, and a new guard test finds any class that starts the tools without it. The total test run must stay under 15 minutes (today about 10), proved by committed outputs before sign-off; if it does not, the card is not signed off.",
+  "options": "Putting only the one slow test in its own lane was the alternative; it stays a fallback for a separate card.",
+  "outcome": "Adopted by six of six. One reviewer first wanted the 15-minute limit fixed and checkable from the repository, which was accepted, and agreed.",
+  "owner": "Nothing needed."
  }
 }
