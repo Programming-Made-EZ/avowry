@@ -1,0 +1,27 @@
+  Determining projects to restore...
+  Restored C:\Users\<user>\projects\gate369green-clone\tools\Avowry.BenchCs\Avowry.BenchCs.csproj (in 199 ms).
+  Restored C:\Users\<user>\projects\gate369green-clone\src\Avowry.Cli\Avowry.Cli.csproj (in 208 ms).
+  Restored C:\Users\<user>\projects\gate369green-clone\tests\Avowry.Compiler.Tests\Avowry.Compiler.Tests.csproj (in 246 ms).
+  6 of 9 projects are up-to-date for restore.
+  Avowry.Compiler -> C:\Users\<user>\projects\gate369green-clone\src\Avowry.Compiler\bin\Debug\net8.0\Avowry.Compiler.dll
+  Avowry.Adapters.CSharp -> C:\Users\<user>\projects\gate369green-clone\src\Avowry.Adapters.CSharp\bin\Debug\net8.0\Avowry.Adapters.CSharp.dll
+  Avowry.Bench -> C:\Users\<user>\projects\gate369green-clone\tools\Avowry.Bench\bin\Debug\net8.0\Avowry.Bench.dll
+  QuietChild -> C:\Users\<user>\projects\gate369green-clone\tests\Fixtures\QuietChild\bin\Debug\net8.0\QuietChild.dll
+  Avowry.Compiler.Tests -> C:\Users\<user>\projects\gate369green-clone\tests\Avowry.Compiler.Tests\bin\Debug\net8.0\Avowry.Compiler.Tests.dll
+  StarvationProbe -> C:\Users\<user>\projects\gate369green-clone\tests\Fixtures\StarvationProbe\bin\Debug\net8.0\StarvationProbe.dll
+Test run for C:\Users\<user>\projects\gate369green-clone\tests\Avowry.Compiler.Tests\bin\Debug\net8.0\Avowry.Compiler.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+  Avowry.Acceptance.Tests -> C:\Users\<user>\projects\gate369green-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+Test run for C:\Users\<user>\projects\gate369green-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:   344, Skipped:     0, Total:   344, Duration: 2 s - Avowry.Compiler.Tests.dll (net8.0)
+[xUnit.net 00:01:38.19]     Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Tracked_live_files_contain_no_PH_diagnostic_code [FAIL]
+  Failed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Tracked_live_files_contain_no_PH_diagnostic_code [3 s]
+  Error Message:
+   L6 matcher-literals: 2 hits in 2 files (first: reference/csharp/Orders.Api/packages.lock.json:132, reference/csharp/Orders.Specs/packages.lock.json:185)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Tracked_live_files_contain_no_PH_diagnostic_code() in C:\Users\<user>\projects\gate369green-clone\tests\Avowry.Acceptance.Tests\NoPhCodesInTheLiveTree.cs:line 47
+--- End of stack trace from previous location ---
+
+Failed!  - Failed:     1, Passed:   407, Skipped:     0, Total:   408, Duration: 9 m 34 s - Avowry.Acceptance.Tests.dll (net8.0)

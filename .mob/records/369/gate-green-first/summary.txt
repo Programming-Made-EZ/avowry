@@ -1,0 +1,10 @@
+tested HEAD: b2c5f4820ba745df8cfdccb3a6fa340162ae25b9
+green commit ancestry exit: 0
+py offline exit 0: Ran 17 tests in 0.231s  OK 
+py checks exit 0: Ran 1 test in 29.653s  OK 
+py self-tests exit 0: Ran 5 tests in 0.833s  OK 
+Slice=369 exit 0: Passed!  - Failed:     0, Passed:     6, Skipped:     0, Total:     6, Duration: 8 s - Avowry.Acceptance.Tests.dll (net8.0)
+Slice=186 exit 0: Passed!  - Failed:     0, Passed:     1, Skipped:     0, Total:     1, Duration: 19 s - Avowry.Acceptance.Tests.dll (net8.0)
+Slice=371 exit 0: Passed!  - Failed:     0, Passed:     4, Skipped:     0, Total:     4, Duration: 978 ms - Avowry.Acceptance.Tests.dll (net8.0)
+gate exit 1: Passed!  - Failed:     0, Passed:   344, Skipped:     0, Total:   344, Duration: 2 s - Avowry.Compiler.Tests.dll (net8.0) Failed!  - Failed:     1, Passed:   407, Skipped:     0, Total:   408, Duration: 9 m 34 s - Avowry.Acceptance.Tests.dll (net8.0) 
+DONE
