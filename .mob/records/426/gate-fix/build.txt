@@ -1,0 +1,25 @@
+  Determining projects to restore...
+  Restored C:\Users\<user>\projects\gate426fix-clone\tools\Avowry.BenchCs\Avowry.BenchCs.csproj (in 265 ms).
+  Restored C:\Users\<user>\projects\gate426fix-clone\src\Avowry.Adapters.CSharp\Avowry.Adapters.CSharp.csproj (in 265 ms).
+  Restored C:\Users\<user>\projects\gate426fix-clone\src\Avowry.Compiler\Avowry.Compiler.csproj (in 265 ms).
+  Restored C:\Users\<user>\projects\gate426fix-clone\tests\Fixtures\StarvationProbe\StarvationProbe.csproj (in 265 ms).
+  Restored C:\Users\<user>\projects\gate426fix-clone\tools\Avowry.Bench\Avowry.Bench.csproj (in 265 ms).
+  Restored C:\Users\<user>\projects\gate426fix-clone\src\Avowry.Cli\Avowry.Cli.csproj (in 265 ms).
+  Restored C:\Users\<user>\projects\gate426fix-clone\tests\Fixtures\QuietChild\QuietChild.csproj (in 265 ms).
+  Restored C:\Users\<user>\projects\gate426fix-clone\tests\Avowry.Compiler.Tests\Avowry.Compiler.Tests.csproj (in 331 ms).
+  Restored C:\Users\<user>\projects\gate426fix-clone\tests\Avowry.Acceptance.Tests\Avowry.Acceptance.Tests.csproj (in 331 ms).
+  Avowry.BenchCs -> C:\Users\<user>\projects\gate426fix-clone\tools\Avowry.BenchCs\bin\Debug\net8.0\Avowry.BenchCs.dll
+  Avowry.Compiler -> C:\Users\<user>\projects\gate426fix-clone\src\Avowry.Compiler\bin\Debug\net8.0\Avowry.Compiler.dll
+  Avowry.Adapters.CSharp -> C:\Users\<user>\projects\gate426fix-clone\src\Avowry.Adapters.CSharp\bin\Debug\net8.0\Avowry.Adapters.CSharp.dll
+  Avowry.Compiler.Tests -> C:\Users\<user>\projects\gate426fix-clone\tests\Avowry.Compiler.Tests\bin\Debug\net8.0\Avowry.Compiler.Tests.dll
+  Avowry.Cli -> C:\Users\<user>\projects\gate426fix-clone\src\Avowry.Cli\bin\Debug\net8.0\Avowry.Cli.dll
+  Avowry.Bench -> C:\Users\<user>\projects\gate426fix-clone\tools\Avowry.Bench\bin\Debug\net8.0\Avowry.Bench.dll
+  StarvationProbe -> C:\Users\<user>\projects\gate426fix-clone\tests\Fixtures\StarvationProbe\bin\Debug\net8.0\StarvationProbe.dll
+  QuietChild -> C:\Users\<user>\projects\gate426fix-clone\tests\Fixtures\QuietChild\bin\Debug\net8.0\QuietChild.dll
+  Avowry.Acceptance.Tests -> C:\Users\<user>\projects\gate426fix-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:05.33
