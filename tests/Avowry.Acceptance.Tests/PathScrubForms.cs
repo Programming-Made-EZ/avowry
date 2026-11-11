@@ -109,6 +109,95 @@ public sealed class PathScrubForms
         yield return R("see https://a/" + "Users/x ok", "see https://a/" + "Users/x ok");
     }
 
+    // Card 435 criterion 1: glued, unlisted and UNC roots. The seven failing rows first, then the twelve
+    // characterisation rows (nine that pass today plus the three escape-lookbehind mutant rows).
+    public static IEnumerable<object[]> GluedAndUncRoots()
+    {
+        var user = "<user>";
+        yield return R("gcc /tmp/a.c -I /usr/include -I/" + "home/" + user + "/include", "gcc a.c -I /usr/include -Iinclude");
+        yield return R("in /tmp/x.cs at /opt/data/" + "home/" + user + "/x.cs", "in x.cs at x.cs");
+        yield return R("Restoring /tmp/x.csproj for /cygdrive/c/" + "Users/" + user + "/x.csproj", "Restoring x.csproj for x.csproj");
+        yield return R("/cygdrive/d/" + "Users/" + user, "<path>");
+        yield return R(@"\\host\c$\" + "Users\\" + user, "<path>");
+        yield return R(@"\\wsl$\Ubuntu\" + "home\\" + user, "<path>");
+        yield return R(@"\\\\host\\c$\\" + "Users\\\\" + user, "<path>");
+        yield return R("/" + "Users/" + user + "/x.cs", "x.cs");
+        yield return R("/" + "Users/" + user, "<path>");
+        yield return R("/mnt/d/" + "Users/" + user + "/x.cs", "x.cs");
+        yield return R("/d/" + "Users/" + user, "<path>");
+        yield return R("c:" + "\\documents and settings\\" + user, "<path>");
+        yield return R(@"\\host\share\x.cs", "x.cs");
+        yield return R("https://example.com/" + "Users/x", "https://example.com/" + "Users/x");
+        yield return R("https://example.com/" + "home/x", "https://example.com/" + "home/x");
+        yield return R("/opt/data/x.cs", "/opt/data/x.cs");
+        yield return R(@"id u0041C:\a\x.cs", @"id u0041C:\a\x.cs");
+        yield return R(@"id u0041\\host\share\x.cs", @"id u0041\\host\share\x.cs");
+        yield return R("id u0041/tmp/a/x.cs", "id u0041/tmp/a/x.cs");
+    }
+
+    public static IEnumerable<object[]> GluedAndUncRootsPending() => GluedAndUncRoots().Take(7);
+
+    public static IEnumerable<object[]> GluedAndUncRootsCharacterisation() => GluedAndUncRoots().Skip(7);
+
+    // Card 435 criterion 2: account folders that are not plain ASCII. Each row carries a declared
+    // fails-today flag (21 fail, 28 pass). Folders are built from parts at run time.
+    public static IEnumerable<object[]> NonAsciiAccountFolders()
+    {
+        var realLetter = "aa" + "\u00F6" + "bb";
+        var escaped = "aa" + @"\u00f6" + "bb";
+        var gluedParens = "aa(" + "bb)";
+        var spacedParens = "aa (" + "bb)";
+        var dotted = "aa " + "bb.cc";
+        var spacedAccent = "aa " + "\u00F6" + "cc";
+        var folders = new[] { realLetter, escaped, gluedParens, spacedParens, dotted, spacedAccent };
+        var prefixes = new (string Prefix, string Suffix)[]
+        {
+            ("C:" + "\\Users\\", ""),
+            ("C:" + "\\\\Users\\\\", ""),
+            ("\\u0027C:" + "\\\\Users\\\\", "\\u0027"),
+            ("/" + "home/", ""),
+        };
+
+        foreach (var folder in folders)
+        {
+            var isRealLetter = folder == realLetter;
+            var isEscaped = folder == escaped;
+            foreach (var (prefix, suffix) in prefixes)
+            {
+                var quoted = suffix.Length > 0;
+                yield return F(prefix + folder + suffix, quoted ? "\\u0027<path>\\u0027" : "<path>", !isRealLetter);
+                var fileFails = !isRealLetter && quoted && isEscaped;
+                yield return F(prefix + folder + @"\x.cs" + suffix, quoted ? "\\u0027x.cs\\u0027" : "x.cs", fileFails);
+            }
+        }
+
+        yield return F("see C:" + "\\Users\\" + "<user> bb.", "see <path>.", false);
+    }
+
+    public static IEnumerable<object[]> NonAsciiAccountFoldersPending() =>
+        NonAsciiAccountFolders().Where(row => (bool)row[2]).Select(row => R((string)row[0], (string)row[1]));
+
+    public static IEnumerable<object[]> NonAsciiAccountFoldersCharacterisation() =>
+        NonAsciiAccountFolders().Where(row => !(bool)row[2]).Select(row => R((string)row[0], (string)row[1]));
+
+    // Card 435 criterion 3: escapes after a path. The five failing rows first, then the two-quote
+    // text and the empty string (characterisation). No doubled-backslash regex row (ruling 6).
+    public static IEnumerable<object[]> EscapesAfterAPath()
+    {
+        var user = "<user>";
+        yield return R(@"C:\\a\\x.cs\nnext", @"x.cs\nnext");
+        yield return R(@"/tmp/a/x.cs\tnext", @"x.cs\tnext");
+        yield return R(@"see C:\\a\\x.cs\u0022", @"see x.cs\u0022");
+        yield return R(@"\""C:\\a\\x.cs\""", @"\""x.cs\""");
+        yield return R(@"C:\\a\\x.cs\n/" + "home/" + user + "/y.cs", @"x.cs\ny.cs");
+        yield return R("\"\"", "\"\"");
+        yield return R(string.Empty, string.Empty);
+    }
+
+    public static IEnumerable<object[]> EscapesAfterAPathPending() => EscapesAfterAPath().Take(5);
+
+    public static IEnumerable<object[]> EscapesAfterAPathCharacterisation() => EscapesAfterAPath().Skip(5);
+
     [Theory]
     [MemberData(nameof(OddAccountFolders))]
     [Trait("Slice", "418")]
@@ -247,6 +336,84 @@ public sealed class PathScrubForms
         AssertMissedRoot(input, expected);
     }
 
+    [Theory]
+    [MemberData(nameof(GluedAndUncRootsPending))]
+    [Trait("Slice", "435")]
+    [Trait("Criterion", "435-1")]
+    [Trait("Status", "Pending")]
+    // Pending until the green that changes tools/Avowry.Bench/PathScrub.cs
+    public void Id_435_1_glued_unlisted_and_unc_roots(string input, string expected)
+    {
+        // Given a stored diagnostic holding a glued flag, an unlisted Unix root, a Cygwin root or a UNC account folder
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed, neither the placeholder nor the stand-in appears, and a second pass changes nothing
+        AssertMissedRoot(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(GluedAndUncRootsCharacterisation))]
+    [Trait("Slice", "435")]
+    [Trait("Criterion", "435-1")]
+    public void Id_435_1_rows_that_pass_today(string input, string expected)
+    {
+        // Given a stored diagnostic holding a rooted form that already scrubs, a URL, or an escape-lookbehind mutant row
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed, neither the placeholder nor the stand-in appears, and a second pass changes nothing (characterisation: these rows pass on the current tree)
+        AssertMissedRoot(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(NonAsciiAccountFoldersPending))]
+    [Trait("Slice", "435")]
+    [Trait("Criterion", "435-2")]
+    [Trait("Status", "Pending")]
+    // Pending until the green that changes tools/Avowry.Bench/PathScrub.cs
+    public void Id_435_2_non_ascii_account_folders(string input, string expected)
+    {
+        // Given an account folder with a non-ASCII letter, a JSON escape, parentheses or a dotted tail, after each listed prefix
+        // When PathScrub.Apply runs
+        // Then the folder alone is <path> (quoted as \u0027<path>\u0027), a file is x.cs, no half of the stand-in survives, and a second pass changes nothing
+        AssertNonAsciiFolder(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(NonAsciiAccountFoldersCharacterisation))]
+    [Trait("Slice", "435")]
+    [Trait("Criterion", "435-2")]
+    public void Id_435_2_rows_that_pass_today(string input, string expected)
+    {
+        // Given a plain accented account folder, a folder followed by a file that already scrubs, or the sentence-ending dot row
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed, none of aa, bb or cc appears, and a second pass changes nothing (characterisation: these rows pass on the current tree)
+        AssertNonAsciiFolder(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(EscapesAfterAPathPending))]
+    [Trait("Slice", "435")]
+    [Trait("Criterion", "435-3")]
+    [Trait("Status", "Pending")]
+    // Pending until the green that changes tools/Avowry.Bench/PathScrub.cs
+    public void Id_435_3_escapes_after_a_path(string input, string expected)
+    {
+        // Given a stored diagnostic holding a path followed by a JSON or C escape
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed, neither the placeholder nor the stand-in appears, and a second pass changes nothing
+        AssertMissedRoot(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(EscapesAfterAPathCharacterisation))]
+    [Trait("Slice", "435")]
+    [Trait("Criterion", "435-3")]
+    public void Id_435_3_rows_that_pass_today(string input, string expected)
+    {
+        // Given the two-quote text or the empty string
+        // When PathScrub.Apply runs
+        // Then the text is unchanged (characterisation: these rows pass on the current tree)
+        AssertMissedRoot(input, expected);
+    }
+
     private static object[] R(string input, string expected) => [input, expected];
 
     private static string PlainLetterFolder() => "aa" + "bb";
@@ -267,6 +434,22 @@ public sealed class PathScrubForms
             Assert.Equal(expected, once);
             Assert.DoesNotContain("<user>", once, StringComparison.OrdinalIgnoreCase);
             Assert.DoesNotContain(plain, once, StringComparison.OrdinalIgnoreCase);
+            Assert.Equal(once, Apply(once));
+        }
+    }
+
+    private static object[] F(string input, string expected, bool failsToday) => [input, expected, failsToday];
+
+    private static void AssertNonAsciiFolder(string input, string expected)
+    {
+        foreach (var text in BothAccountFolderForms(input))
+        {
+            var once = Apply(text);
+            Assert.Equal(expected, once);
+            Assert.DoesNotContain("aa", once, StringComparison.OrdinalIgnoreCase);
+            Assert.DoesNotContain("bb", once, StringComparison.OrdinalIgnoreCase);
+            Assert.DoesNotContain("cc", once, StringComparison.OrdinalIgnoreCase);
+            Assert.DoesNotContain("<user>", once, StringComparison.OrdinalIgnoreCase);
             Assert.Equal(once, Apply(once));
         }
     }
