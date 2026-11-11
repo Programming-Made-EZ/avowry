@@ -1,0 +1,3 @@
+# Card 369 sign-off (a fresh Claude context): SIGNED OFF (attempt 1)
+
+Tested HEAD c09f7ffbbd45b4448b5837c9d7a6fc32bafb48e7 in a fresh clone (signoff369-clone); ancestry exit 0. Run alone and one after another: `dotnet test Avowry.sln --filter "Status!=Pending"`: Avowry.Compiler.Tests 344 passed, 0 failed, 0 skipped; Avowry.Acceptance.Tests 410 passed, 0 failed, 0 skipped. `Slice=369`: 6 passed, 0 failed, 0 skipped. `python -m unittest tests.test_restored_package_licences tests.test_pre_publication_checks tests.test_pre_publication_owner_items`: 30 tests OK. No rerun was needed (run time about 11 minutes).
