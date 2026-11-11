@@ -1642,5 +1642,11 @@
     "status": "adopted",
     "title": "Card 426: task force declaration and Ready text (the bench path scrub keeps the words around a path, covers more path forms, and its label and save-step behaviour is tested)",
     "order": 246
+  },
+  "D256": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 426 retro pick: a change to a function that removes, rewrites or recognises text is checked against its old version on generated inputs",
+    "order": 247
   }
 }

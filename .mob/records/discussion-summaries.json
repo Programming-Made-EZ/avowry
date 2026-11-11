@@ -223,5 +223,21 @@
   "options": "Splitting the card into a fix for the missed paths now and the wording fix later was considered and not needed: the owner ranked the whole bug before the first release.",
   "outcome": "Adopted by six of six. One reviewer first asked for a check, based on the repository alone, that no account name gets in; that was added (a script-made count and the full change listed before each test run).",
   "owner": "Nothing needed."
+ },
+ "D256": {
+  "decided": "The team added a new trial rule: when a change rewrites how text is cleaned or read (such as removing folder paths), the old and new versions are run side by side on a hundred thousand generated texts, and every difference must become a failing test or a visible, named exception in the test code.",
+  "why": "On the last card a reviewer ran the old and new path cleaner side by side and found a leak that the new change itself had exposed. The card's own tests had missed it, and fixing it cost an extra round of work.",
+  "changes": "A new entry in the working agreement, on trial for the next three such cards. The slice names the comparison, the test generator is saved in the repository and runs with all the other tests, and exceptions are counted so they cannot be used to make the numbers look good.",
+  "options": "The other ideas were a pre-commit check that refuses instead of silently rewriting a test input, listing the new file types a card creates, and checking the clone name in the gate script; they are kept for later.",
+  "outcome": "Adopted by six of six. One reviewer first objected that a recorded exception could hide a leak; the rule was tightened so every exception must be written into the test itself and counted.",
+  "owner": "Nothing needed."
+ },
+ "RETRO426": {
+  "decided": "Looking back on card 426, which made the tool that removes folder paths from benchmark results keep the words around a path and handle more kinds of paths.",
+  "why": "A cleaned result that cuts away part of an error message is hard to read, and a path shape that is missed would show whose computer produced the result.",
+  "changes": "The cleaner now keeps the words around a path and handles more path styles (Linux-on-Windows, Git Bash, web-style escapes and more). A second reviewer's side-by-side test found one leak that this change itself exposed; it was fixed with a failing test first. Older gaps found on the way are filed as a separate bug (435) ranked right after.",
+  "options": "Other ideas: listing the new file types a card creates (one was missed and caught), a check that stops the commit hook from silently changing test text, and a check of clone names in the gate script.",
+  "outcome": "Signed off at the first attempt; all 344 and 509 tests pass, in 11.6 minutes. I made two small slips (a new file type, a wrong clone name) and the independent review caught the first; both are corrected and recorded.",
+  "owner": "Nothing needed."
  }
 }

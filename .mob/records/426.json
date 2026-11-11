@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 426,
+ "title": "The bench path scrub keeps the words around a path, covers more path forms, and its label and save-step behaviour is tested",
+ "process": "card-mode rules run by hand; a bug found by the card 418 second review and ranked by the owner before the publish; the product manager draft by a Cursor reply-only seat with the facilitator's rulings; declaration Decider D255 (five Yes and the audit lens No with an adoptable condition, adopted: a git-based audit before every gate and the sign-off; confirmation six of six Yes); a read-only architect slice by a fresh Claude context; ONE red by a Grok WRITING seat through grok_write.py (14 failing by assertion, 8 declared characterisation, the label proof by deleting the label line in each bench tool, both restored) reproduced by the facilitator in an isolated clone (344 and 487); ONE green by a Cursor WRITING seat through cursor_write.py (only PathScrub.cs and the Pending traits; 344 and 501); the baseline gate with the D251 toolchain stamp and the D255 audit; a second read-only review told to try to break the change (accept with notes: one leak the card's own change exposed, found by a differential run against the old scrub) and an independent gate review (pass with notes: it caught a new file extension the records said did not exist: renamed); a facilitator takeover (logged; the failing test first: 8 rows, 7 failing by assertion; the fix of three parts of the regex; one slip: the pre-commit scrubber rewrote one test row, corrected in the fix commit); the gate after the fix (344 and 509); a fresh sign-off run alone (attempt 1: signed off, 344 and 509, 11.6 minutes, 30 card tests, raw output committed); the retro voices (seven at once, 5 minutes 33 seconds) and Decider D256 (a new Experimental entry: a change to a function that removes, rewrites or recognises text is checked against its old version on generated inputs; confirmation step six of six Yes)",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Cursor ctx-1",
+   "model": "cursor-agent in ask mode through cursor_reply.py, product manager, reply-only; the facilitator ruled on the open points",
+   "evidence": "2872761fecbf1e22158483569972ca9e4a44dffc"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-2",
+   "model": "claude, a fresh subagent context, architect, read-only; slice-architect.md",
+   "evidence": "dcd96f47e952cdb9539f9f806d01249e5251334b"
+  },
+  {
+   "role": "red",
+   "seat": "Grok ctx-3",
+   "model": "grok writing seat through grok_write.py in a linked worktree, changes left uncommitted; the facilitator committed it (b9ea6fc) and reproduced the red in an isolated clone",
+   "evidence": "b9ea6fc0c9a0d3c9bdff75b42722d0fe5420e6ad"
+  },
+  {
+   "role": "green",
+   "seat": "Cursor ctx-4",
+   "model": "cursor-agent in print mode with tools through cursor_write.py in a linked worktree, changes left uncommitted; the facilitator committed it (d267b5c); a logged takeover after the second review added eight rows (the red first) and the fix (seat-changes.md)",
+   "evidence": "d267b5cd5efb348ffdf7c52a675fcb59e6e5665a"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-5",
+   "model": "claude, a fresh subagent context, independent gate reviewer (gate-review.md PASS WITH NOTES); the second read-only review second-review.md (ACCEPT WITH NOTES), a fresh context told to try to break the change",
+   "evidence": "086b832edfac53c3b1fc7adde07042a7bfe76726"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-6",
+   "model": "claude, a fresh subagent context, sign-off attempt 1 in a fresh clone, the full suite alone, toolchain stamp unchanged (signoff.md)",
+   "evidence": "182a66d852b301a899f94ce9c83f99bd1e4e3571"
+  }
+ ],
+ "retro": "docs/retros/card-426-2026-11-11.md",
+ "notes": "Done checks met: criterion 1 (every row of the words-around-a-path table reads as listed, 7 rows), criterion 2 (twelve root forms, each with the placeholder and a plain-letter folder built from parts, no account folder survives, a second pass changes nothing, URLs unchanged), criterion 3 (a label holding a rooted path is stored as the plain label in both bench tools, proved by deleting the label line in each tool; the stored row of 418-3b is passed after 2 attempts and holds no residue), plus eight rows from the second review's findings. Said plainly: the second review found a leak the card's own change exposed (a path after a JSON escape), fixed on the card with a failing test first; older gaps (a root glued to a letter, UNC shapes where Users is not the first folder, non-ASCII account names, and five mutations the card's tests do not catch) are filed as bug 435; I wrote that no new kind of tracked file was added and the gate review found the extension `.out` (renamed); the pre-commit scrubber rewrote one test row; a gate script given a wrong argument started in a clone with a hash for a name, stopped by process ids and removed with the reviewed helper."
+}

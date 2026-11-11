@@ -1,0 +1,167 @@
+{
+ "decider": "D256",
+ "subject": "card 426 retro pick: a change to a function that removes, rewrites or recognises text is checked against its old version on generated inputs",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "x256architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the old and the new function run side by side on generated inputs",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe differential rule is sound: old vs new on generated inputs, fail on a planted account-like token the old output did not hold, or a second pass that changes output, with named accepted differences in the red record. That matches the 426 leak without treating intended keep-more-text as a block. Trial of 3 cards, pinned failing count, and a second review that still runs its own check keep it enforceable and bounded. Note: the 100,000 floor may fight the 10-minute counter-metric; the trigger is wide; generator power still depends on the shapes the card names."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x256qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "runs in the normal gate, with a failing count pinned and never hidden",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nFrom the QA lens, this rule enforces rigorous red-first testability. Requiring a fixed-seed differential generator of at least 100,000 strings and verifying idempotence on a second pass ensures behavioral deltas and hidden leaks are captured before implementation. Crucially, any discrepancy must be manifested either as a failing test written at the red or as a named difference with pinned failing counts in the gate, preventing bad state from silently passing. Offline gate commitment guarantees deterministic regression prevention without destabilizing review loops."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x256dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the old and the new function run side by side on generated inputs",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nAs the backend seat, I can follow this without gaming it. The trigger is concrete (a path scrub, a parser, a redaction). The check is mechanical: a fixed seed, a planted token and a second-pass test. The red record allows a named, accepted difference, so a benign change doesn't force a fake fix. Card 426 shows that the card's own tests miss exactly this kind of leak.\n\nNotes:\n- **Old version:** say where the old version lives (a frozen copy kept in the test file) so it doesn't drift.\n- **Runtime:** 100,000 strings in the normal gate may slow it down, so record the runtime alongside the 10-minute counter-metric.\n- **Shapes:** \"shapes the c"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x256auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "No",
+    "counted_by_decider": true,
+    "cite": "named, accepted difference in the red record",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "No\nThe proposal leaves a critical loophole: it permits differential mismatches to be dismissed as a \"named, accepted difference in the red record\" instead of requiring a code fix. This allows the team to artificially zero out the regression metric while leaving vulnerabilities unpatched, defeating the audit lens. Git alone cannot verify the execution results of the 100k generated inputs, only their existence. To close this loophole and ensure genuine verification, the proposal must mandate that all differential mismatches require a concrete code fix or explicit test exclusion, with the metric tracking actual fixes rather than accepted leaks."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x256decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "catches the regression a card's own change exposes before the second review",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation is framed cleanly so the final decision rests on concrete evidence: it pairs a clear primary metric (zero second-review regressions) with explicit counter-metrics tracking developer overhead and benign diff noise across a bounded three-card trial. Reviewing at the third card's retrospective gives the full team the necessary seat and context to assess results and decide whether to keep, change, or remove the rule."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x256coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a differential check of old against new on generated inputs",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nSeen as the agile coach, the entry is the right size for the problem. It only applies to cards that change a function that removes, rewrites or recognises text, it runs for three cards, and the 10-minute counter-metric guards against extra ceremony. It also targets the real gap from card 426: the card's own tests missed a leak that its change exposed. No other perspective seems to be missing.\n\nMy notes, which do not change the vote:\n- Watch how much time the 100,000-string run adds to the normal gate. If the runtime grows, count it against the 10-minute limit.\n- Having the second review repeat the differential run means the check is done"
+   }
+  ]
+ },
+ "confirmation_step": {
+  "architect": [
+   {
+    "tag": "x256carchitect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "an explicit exclusion committed in the generator test itself",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment strengthens enforceability: exclusions live in the generator test, the metric counts them so they cannot hide leaks, and the gate run is git-visible. That stays sound, minimal, and enforceable. My endorsement stands."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x256cqa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the old and the new function run side by side on generated inputs",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment strengthens testability and verification under the QA lens. Requiring explicit exclusions committed directly in the generator test prevents silent waivers, reinforces red-first discipline, and ensures gate execution catches regressions without passing bad state."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x256cdev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "an explicit exclusion committed in the generator test itself",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment makes the rule easier for me to follow honestly as the developer. An accepted difference now has to be an exclusion committed in the generator test, so I cannot quietly wave one through in a record. Counting exclusions next to fixes also stops anyone from zeroing the metric. One note: the gate's committed raw output should show the run count, so a reviewer can confirm the 100,000 inputs actually ran."
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x256cauditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "visible in git and checked by the gate reviewer",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nYour amendment closes the loophole. Exclusions must now live in the generator test itself, visible in git, and the metric reports alongside the exclusion count so it cannot be zeroed. Committed raw gate output makes execution verifiable from the repository alone. The condition is met."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x256cdecider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "visible in git and checked by the gate reviewer",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe amendment strengthens the evidentiary basis of the trial by requiring test exclusions to be committed in git and verified in the normal gate, ensuring the decision to adopt, reshape, or reject rests on verifiable repository evidence with all sign-off needs met."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x256ccoach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "a fix and an exclusion are both counted",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nMy vote stands. As agile coach, I find the amendment closes the objector's loophole without adding a meeting or a new role. An accepted difference becomes a committed exclusion in the generator test, which the gate reviewer already looks at. The metric now counts exclusions alongside fixes. The 10-minute counter-metric still guards against extra ceremony, and the task force remains sized to the task."
+   }
+  ]
+ },
+ "trigger_line": "(a) the confirmation step completed, so the re-run was not run",
+ "window_notes": "Both rounds launched with all six voters at once (D228 as amended by D244; the explicit reply format: every reply counted, no re-ask). Primary window 15:47:06 to 15:52:05 UTC (4 minutes 59 seconds): QA agy, architect Grok, coach Cursor, developer Cursor and decider agy Yes; audit lens Qwen No with a condition (an accepted difference in the red record could zero the metric while a leak stays: every difference needs a code fix or an explicit test exclusion, and the metric must track fixes, not accepted leaks). The proposer adopted it (an accepted difference is an explicit exclusion committed in the generator test itself, with the input shape, the reason and the card name, visible in git and checked by the gate reviewer; the metric is reported with the number of exclusions so an exclusion cannot zero it; the generator runs in the normal gate whose raw output is committed). Confirmation step (D232): 15:52:28 to 15:57:02 UTC (4 minutes 34 seconds): the audit lens answered Yes (condition met) and the five Yes voters said their vote stands. Result: six of six Yes."
+}
