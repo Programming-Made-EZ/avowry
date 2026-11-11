@@ -1,0 +1,24 @@
+I'll start by reading the card, the slice, and the declaration so the red tests match the rulings.Next I’ll read the existing tests and the bench save-step so the new rows match current style.I’ll inspect PathScrub, the persist lines, and how existing bench tests pass `--label`.I'll check the worktree is clean, then add the tests with LF line endings.PathScrubForms is in. Next I’ll add the criterion 3 tests and strengthen 418-3b.Line endings stayed LF. Building the solution next, then I’ll run the Slice=426 tests.Slice=426 is 14 failed and 8 passed, matching the pending vs characterisation split. Next I’ll run the two class filters.Class filters match the red. Next is the label proof: delete each save-step line, rebuild, run, then restore.Tools diff is empty. Next I’ll run the `Status!=Pending` gate alone, then the python guards.I’ll write the red record with the real command output, then check it for account-name leaks.Red for card 426 is written and left uncommitted in this worktree. Record: `.mob/records/426/red-record.md`.
+
+**Pending (fail by assertion on the stored text):**
+- `Id_426_1_the_words_around_a_path_stay` — 3 rows (`Could not find file …` becomes `dotnet`; `copy …` becomes `copy y.cs`; `see C:\a\b.cs …` becomes `see x`)
+- `Id_426_2_no_account_folder_survives_in_the_missed_forms` — 11 rows (WSL/Git Bash roots unchanged, `/var/tmp` and `/private/tmp` unchanged, `file://localhost` unchanged, Documents and Settings and `\\host\Users` collapse to `<user>`, JSON-escape becomes `\u0027C:\\Users\\<user>u0027`, doubled UNC leaks `<user>x.cs`)
+
+**Characterisation (pass on this tree):**
+- `Id_426_1_rows_that_pass_today` (rows 4–7)
+- `Id_426_2_drive_slash_users_row_passes_today`
+- extended `Id_418_U2_apply_is_idempotent_on_every_form`
+- `Id_426_3a`, `Id_426_3b`, strengthened `Id_418_3b`
+
+**Proof:** `Slice=426` was 14 failed / 8 passed of 22. PathScrubForms was 14 failed / 39 passed of 53. BenchRowsHoldNoFolderPath was 13 passed. Deleting Phrase line 817 made 426-3a fail on the path-label run (`Actual: "C:\\Users\\<user>\\notes\\run-426"`); deleting C# line 850 made 426-3b fail the same way. Both lines restored; `git diff --stat -- tools` is empty. `dotnet test Avowry.sln --filter "Status!=Pending"` passed (344 compiler, 487 acceptance). `python scripts/home_paths.py --root .` reported `0 files`.
+
+Uncommitted: the two test files and `red-record.md`. Facilitator commits.
+
+--- worktree after the seat ---
+M tests/Avowry.Acceptance.Tests/BenchRowsHoldNoFolderPath.cs
+ M tests/Avowry.Acceptance.Tests/PathScrubForms.cs
+?? .mob/records/426/red-record.md
+.../BenchRowsHoldNoFolderPath.cs                   |  64 ++++++++++-
+ tests/Avowry.Acceptance.Tests/PathScrubForms.cs    | 122 ++++++++++++++++++++-
+ 2 files changed, 182 insertions(+), 4 deletions(-)
+lf-normalised: 0
