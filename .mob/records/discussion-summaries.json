@@ -191,5 +191,13 @@
   "options": "Putting only the one slow test in its own lane was the alternative; it stays a fallback for a separate card.",
   "outcome": "Adopted by six of six. One reviewer first wanted the 15-minute limit fixed and checkable from the repository, which was accepted, and agreed.",
   "owner": "Nothing needed."
+ },
+ "D253": {
+  "decided": "The team changed the plan for the slow-test bug after measuring: only the one test that checks a time limit will run alone, instead of putting five whole groups of tests in one line.",
+  "why": "A measurement of one full test run showed the first plan would have added about twenty minutes of test time to one line and broken the fifteen-minute limit the team set, and three of the five groups could not cause the failure anyway.",
+  "changes": "The slow test moves into its own group that runs after everything else has finished, a new automatic check fails if any other test that checks a time limit is not in that group, and the full run must still stay under fifteen minutes, proved by committed outputs.",
+  "options": "The first plan (five groups in one line) was dropped because it could not meet its own limit.",
+  "outcome": "Adopted by six of six in one round; the measurement itself is committed to the repository so anyone can check it.",
+  "owner": "Nothing needed."
  }
 }

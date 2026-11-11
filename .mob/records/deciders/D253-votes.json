@@ -1,0 +1,87 @@
+{
+ "decider": "D253",
+ "subject": "card 417 revised after the measurement: the timing test alone runs in an isolated collection, with a guard for any class that asserts a wall-clock limit",
+ "result": "ADOPTED",
+ "primary_window": {
+  "architect": [
+   {
+    "tag": "x253architect-architect-grok",
+    "seat": "grok",
+    "model": "grok-4.6",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "so xunit runs that collection after the parallel collections have finished",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe isolation design is sound and minimal: only the class that asserts a wall-clock limit is serialised, after measurement showed the five-class lane would miss the 15-minute ceiling. The checker (comments and strings blanked; Elapsed/`TotalSeconds`/`TotalMilliseconds` with `<` or `<=`; CTS plus \"did not finish within\") plus near-miss rows is precise enough to enforce without obvious false positives on process timeouts. CollectionDefinition DisableParallelization matches the nothing-else-running requirement. Notes: inverted comparisons and Fact Timeout sit outside the checker; scenario I's trx overlap check is tighter than AC 3."
+   }
+  ],
+  "qa": [
+   {
+    "tag": "x253qa-qa-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "runs that collection after the parallel collections have finished",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nEvery rule is testable red-first with rigorous negative and boundary checks. The guard's live-tree test starts red against the existing tree by asserting that the unisolated timing class is detected, while dedicated fixture tests cover the matrix of near-misses, string blanking, and partial classes. Moving the isolated test into its own collection makes the live scan green. The offline text scan avoids build overhead and catches violations cleanly, while the requirement for two clean full runs confirms that the timing bounds hold under load without regressions or passing invalid state."
+   }
+  ],
+  "developer": [
+   {
+    "tag": "x253dev-dev-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "the timing test alone runs in an isolated collection",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\n\nAs the developer who has to follow it, I find the card workable and specific. The guard fails first on today's tree and names exactly one class, `BenchmarkHarnessAcceptance`, so the red step is a real failing assertion that can't be gamed. The fixture tests for the near-miss cases are declared green from the start. Moving the test into its own class is narrow, and its body and 20 second limits stay unchanged. The 15 minute ceiling looks realistic, since the measured run took about 10 minutes plus roughly 25 seconds for the isolated collection.\n\nNotes, which don't change my vote:\n\n- The definition blanks string contents and then also matc"
+   }
+  ],
+  "audit lens": [
+   {
+    "tag": "x253auditlens-auditlens-qwen",
+    "seat": "qwen",
+    "model": "qwen3.6-35b-a3b",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "committed in the repository so that it is verifiable from git",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe proposal satisfies the audit lens: it commits measurement data verifiable from git, enforces the isolation practice via a build-free text-scanning guard, and preserves the fixed 15-minute ceiling. Moving the timing test to a dedicated isolated collection prevents parallel load interference, directly addressing the measured slowness. The guard’s red-first design and explicit near-miss scenarios prevent accidental bypass. No structural loopholes remain; compliance is statically verifiable before runtime. The committed outputs and deterministic “Done when” script ensure the practice survives future changes."
+   }
+  ],
+  "decider": [
+   {
+    "tag": "x253decider-decider-agy",
+    "seat": "agy",
+    "model": "gemini-3.8-flash-medium",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "runs that collection after the parallel collections have finished, with nothing else running",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe evaluation is firmly grounded in verifiable git-committed evidence from baseline measurements showing serializing five classes would breach the fifteen-minute ceiling. Isolating solely the wall-clock timing test directly targets the root cause of parallel load failures. The evaluation criteria are clear and objective: an offline build-free guard verifying isolation, and two clean acceptance runs under the fifteen-minute ceiling with toolchain stamps and committed outputs before sign-off. Retaining the complete seat roster, gates, and retro obligations from D252 ensures the team retains every necessary role for sign-off."
+   }
+  ],
+  "coach": [
+   {
+    "tag": "x253coach-coach-cursor",
+    "seat": "cursor",
+    "model": "default",
+    "vote": "Yes",
+    "counted_by_decider": true,
+    "cite": "The seats, gates, D251 toolchain stamp, account-name rule and retro obligations of D252 stand unchanged.",
+    "cite_verbatim": true,
+    "decider_cite_ok": true,
+    "reply_head": "Yes\nThe revision is the right size. Measuring before spending the seats replaced a lane estimated at 16 to 27 minutes with one isolated collection that adds about 25 seconds. It targets the only class that asserts a wall-clock limit, and the work stays size S. Keeping the D252 task force means no perspective is lost. The guard keeps the fix from slipping back later. One note, which does not change my vote: the blanker's handling of raw strings and of partial classes split across files is the most ceremony-prone part of the card. If it grows, the retro should check whether the guard became bigger than the fix itself."
+   }
+  ]
+ },
+ "trigger_line": "(d) no change to the agreement and no No in the primary window, so neither a confirmation step nor the re-run with swapped seats was run",
+ "window_notes": "All six voters launched at once (D228 as amended by D244; the explicit reply format in the prompt: every reply counted, no re-ask); window 06:59:54 to 07:04:26 UTC (4 minutes 32 seconds); six counted Yes (audit lens Qwen, QA agy, decider agy, architect Grok, coach Cursor, developer Cursor), no No, no Support-it. The audit lens (Qwen) voted Yes at once: the measurement was committed to the repository (verifiable from git), the guard is offline and build-free, and the fixed 15 minute ceiling stays. One coach note (the blanker's scope) goes to the red."
+}
