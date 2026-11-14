@@ -1,0 +1,66 @@
+number	old_rank	new_rank	area
+440	0.09	0.05	harness
+409	1	0.063	launchers and seat safety
+406	1	0.0759	harness
+405	1	0.0889	launchers and seat safety
+399	2	0.1019	launchers and seat safety
+398	2	0.1148	harness
+397	3	0.1278	harness
+390	4	0.1408	driver fitting
+385	5	0.1537	process records
+338	6	0.1667	harness
+327	7	0.1797	harness
+323	8	0.1927	launchers and seat safety
+315	9	0.2056	Decider tooling
+307	10	0.2186	Decider tooling
+301	11	0.2316	launchers and seat safety
+300	12	0.2445	launchers and seat safety
+293	13	0.2575	Decider tooling
+287	14	0.2705	driver fitting
+286	15	0.2834	Decider tooling
+285	16	0.2964	driver fitting
+282	17	0.3094	launchers and seat safety
+280	18	0.3223	driver fitting
+279	19	0.3353	driver fitting
+277	20	0.3483	Decider tooling
+275	21	0.3612	process records
+273	22	0.3742	harness
+272	23	0.3872	harness
+271	24	0.4002	harness
+270	25	0.4131	driver fitting
+269	26	0.4261	harness
+267	27	0.4391	process records
+265	28	0.452	Decider tooling
+257	29	0.465	harness
+256	30	0.478	harness
+255	31	0.4909	harness
+246	32	0.5039	process records
+238	33	0.5169	process records
+236	34	0.5298	process records
+235	35	0.5428	process records
+233	36	0.5558	process records
+232	37	0.5687	launchers and seat safety
+225	38	0.5817	loop runner
+224	39	0.5947	loop runner
+223	40	0.6077	loop runner
+222	41	0.6206	loop runner
+221	42	0.6336	loop runner
+220	43	0.6466	loop runner
+218	44	0.6595	loop runner
+216	45	0.6725	process records
+215	46	0.6855	process records
+213	47	0.6984	Decider tooling
+212	48	0.7114	loop runner
+207	49	0.7244	process records
+206	50	0.7373	process records
+139	51	0.7503	driver fitting
+78	52	0.7633	process records
+72	53	0.7762	driver fitting
+70	54	0.7892	loop runner
+69	55	0.8022	loop runner
+68	56	0.8152	loop runner
+67	57	0.8281	loop runner
+66	58	0.8411	loop runner
+65	59	0.8541	loop runner
+62	60	0.867	loop runner
+414	62	0.88	launchers and seat safety
