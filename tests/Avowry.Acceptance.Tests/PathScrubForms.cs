@@ -198,6 +198,69 @@ public sealed class PathScrubForms
 
     public static IEnumerable<object[]> EscapesAfterAPathCharacterisation() => EscapesAfterAPath().Skip(5);
 
+    // Card 435 rework (round 2), criterion 1: glued flags after an escape or a quote, UNC folders before a second path.
+    // The six failing rows first, then the five mutant-killer rows that pass today.
+    public static IEnumerable<object[]> GluedAndUncRootsRework()
+    {
+        yield return R(@"gcc /tmp/a.c\n-I/" + "home/<user>/include", @"gcc a.c\n-Iinclude");
+        yield return R(@"gcc /tmp/a.c\u0027-I/" + "home/<user>/include" + @"\u0027", @"gcc a.c\u0027-Iinclude\u0027");
+        yield return R(@"gcc '-I/" + "home/<user>/include'", @"gcc '-Iinclude'");
+        yield return R(@"[""\\host\share\x.cs"",""C:\" + @"Users\<user>\y.cs""]", @"[""x.cs"",""y.cs""]");
+        yield return R(@"\u0027\\\\host\\share\\x.cs\u0027,\u0027/" + "home/<user>/y.cs" + @"\u0027", @"\u0027x.cs\u0027,\u0027y.cs\u0027");
+        yield return R(@"\\host\share\x.cs;C:\" + @"Users\<user>\y.cs", "x.cs;y.cs");
+        yield return R("/d/" + "users/<user>", "<path>");
+        yield return R("gcc -L/" + "home/<user>/lib", "gcc -Llib");
+        yield return R("see a-b/tmp/x.cs", "see a-b/tmp/x.cs");
+        yield return R(@"\\host\c$\" + @"users\<user>", "<path>");
+        yield return R(@"\\C:\\" + @"Users\\<user>\\x.cs", "x.cs");
+    }
+
+    public static IEnumerable<object[]> GluedAndUncRootsReworkPending() => GluedAndUncRootsRework().Take(6);
+
+    public static IEnumerable<object[]> GluedAndUncRootsReworkCharacterisation() => GluedAndUncRootsRework().Skip(6);
+
+    // Card 435 rework, criterion 2: a glued trailer after an account folder must not leave a drive, a file URL or a bracket behind.
+    public static IEnumerable<object[]> NonAsciiAccountFoldersRework()
+    {
+        yield return R(@"C:\" + @"Users\<user>(1)D:\" + @"Users\<user>\x.cs", "<path>x.cs");
+        yield return R(@"C:\" + @"Users\<user>(1)file:///C:/" + "Users/<user>/x.cs", "<path>x.cs");
+        yield return R(@"see C:\" + @"Users\<user>(bb).", "see <path>.");
+        yield return R(@"C:\" + @"Users\<user> \u00f6cc", "<path>");
+        yield return R(@"C:\" + @"Users\<user> bb'cc", "<path>");
+        yield return R(@"see C:\" + @"Users\<user> x.cs: denied", "see <path> x.cs: denied");
+        yield return R(@"C:\\" + @"Users\\<user> bb\rnext", @"<path>\rnext");
+        yield return R(@"C:\" + @"Users\<user>(bb)cc", "<path>");
+    }
+
+    public static IEnumerable<object[]> NonAsciiAccountFoldersReworkPending() => NonAsciiAccountFoldersRework().Take(3);
+
+    public static IEnumerable<object[]> NonAsciiAccountFoldersReworkCharacterisation() => NonAsciiAccountFoldersRework().Skip(3);
+
+    // Card 435 rework, criterion 3: every escape letter ends a path, a new path may start after it, and a lone tilde name is a path.
+    public static IEnumerable<object[]> EscapesAfterAPathRework()
+    {
+        yield return R(@"C:\\a\\x.cs\b/" + "home/<user>/y.cs", @"x.cs\by.cs");
+        yield return R(@"C:\\a\\x.cs\f/" + "home/<user>/y.cs", @"x.cs\fy.cs");
+        yield return R(@"\u00f6/tmp/a\u00f6C:\\" + @"Users\\<user>", @"\u00f6a\u00f6<path>");
+        yield return R(@"\t/tmp/a.C:\\" + @"Users\\<user>", @"\ta.<path>");
+        yield return R(@"-I/tmp/a.C:\" + @"Users\<user>", "-Ia.<path>");
+        yield return R(@"\u00f6/tmp/a\u00f6file://localhost/" + "home/<user>/x.cs", @"\u00f6a\u00f6x.cs");
+        yield return R(@"/tmp/a/~\nx.cs", @"<path>\nx.cs");
+        yield return R(@"C:\\a\\~\nx.cs", @"<path>\nx.cs");
+        yield return R(@"\\/" + @"home/<user>\nx.cs", @"\\<path>\nx.cs");
+        yield return R(@"\\/opt/data/" + "home/<user>", @"\\<path>");
+        yield return R(@"\\\\host\\share\\x.cs\n/" + "home/<user>/y.cs", @"x.cs\ny.cs");
+        yield return R(@"\u0027\\host\share\x.cs\u0027/" + "home/<user>/y.cs", @"\u0027x.cs\u0027y.cs");
+        yield return R(@"C:\\" + @"Users\\<user>\u003e", @"<path>\u003e");
+        yield return R(@"C:\\a\\x.cs\r/" + "home/<user>/y.cs", @"x.cs\ry.cs");
+        yield return R(@"x\\n/tmp/a/y.cs", @"x\\n/tmp/a/y.cs");
+        yield return R(@"\t\\C:\" + @"Users\<user>", @"\t<path>");
+    }
+
+    public static IEnumerable<object[]> EscapesAfterAPathReworkPending() => EscapesAfterAPathRework().Take(12);
+
+    public static IEnumerable<object[]> EscapesAfterAPathReworkCharacterisation() => EscapesAfterAPathRework().Skip(12);
+
     [Theory]
     [MemberData(nameof(OddAccountFolders))]
     [Trait("Slice", "418")]
@@ -405,6 +468,84 @@ public sealed class PathScrubForms
         // Given the two-quote text or the empty string
         // When PathScrub.Apply runs
         // Then the text is unchanged (characterisation: these rows pass on the current tree)
+        AssertMissedRoot(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(GluedAndUncRootsReworkPending))]
+    [Trait("Slice", "435")]
+    [Trait("Criterion", "435-1")]
+    [Trait("Status", "Pending")]
+    // Pending until the rework green that changes tools/Avowry.Bench/PathScrub.cs
+    public void Id_435_1_rework_rows(string input, string expected)
+    {
+        // Given a stored diagnostic holding a flag glued after a quote or an escape, or a UNC path followed by a second path
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed, neither the placeholder nor the stand-in appears, and a second pass changes nothing
+        AssertMissedRoot(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(GluedAndUncRootsReworkCharacterisation))]
+    [Trait("Slice", "435")]
+    [Trait("Criterion", "435-1")]
+    public void Id_435_1_rework_rows_that_pass_today(string input, string expected)
+    {
+        // Given a mutant-killer row for the glued flag, the Git Bash drive, the UNC case rule or the UNC drive folder
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed, neither the placeholder nor the stand-in appears, and a second pass changes nothing (characterisation: these rows pass on the current tree)
+        AssertMissedRoot(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(NonAsciiAccountFoldersReworkPending))]
+    [Trait("Slice", "435")]
+    [Trait("Criterion", "435-2")]
+    [Trait("Status", "Pending")]
+    // Pending until the rework green that changes tools/Avowry.Bench/PathScrub.cs
+    public void Id_435_2_rework_rows(string input, string expected)
+    {
+        // Given an account folder followed by a glued bracket group and then a drive, a file URL or a sentence-ending dot
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed, neither the placeholder nor the stand-in appears, and a second pass changes nothing
+        AssertMissedRoot(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(NonAsciiAccountFoldersReworkCharacterisation))]
+    [Trait("Slice", "435")]
+    [Trait("Criterion", "435-2")]
+    public void Id_435_2_rework_rows_that_pass_today(string input, string expected)
+    {
+        // Given an account folder followed by words that the tail rule must take or leave alone
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed, neither the placeholder nor the stand-in appears, and a second pass changes nothing (characterisation: these rows pass on the current tree)
+        AssertMissedRoot(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(EscapesAfterAPathReworkPending))]
+    [Trait("Slice", "435")]
+    [Trait("Criterion", "435-3")]
+    [Trait("Status", "Pending")]
+    // Pending until the rework green that changes tools/Avowry.Bench/PathScrub.cs
+    public void Id_435_3_rework_rows(string input, string expected)
+    {
+        // Given a stored diagnostic holding a path next to a JSON or C escape, a UNC path, a tilde name or a doubled-backslash root
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed, neither the placeholder nor the stand-in appears, and a second pass changes nothing
+        AssertMissedRoot(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(EscapesAfterAPathReworkCharacterisation))]
+    [Trait("Slice", "435")]
+    [Trait("Criterion", "435-3")]
+    public void Id_435_3_rework_rows_that_pass_today(string input, string expected)
+    {
+        // Given a mutant-killer row for the escape letters, the greater-than escape or the lone-backslash-before-a-root case
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed, neither the placeholder nor the stand-in appears, and a second pass changes nothing (characterisation: these rows pass on the current tree)
         AssertMissedRoot(input, expected);
     }
 
