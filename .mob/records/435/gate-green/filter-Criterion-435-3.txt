@@ -1,0 +1,26 @@
+Test run for C:\Users\<user>\projects\gate435green-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+C:\Users\<user>\projects\gate435green-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.11]   Discovering: Avowry.Acceptance.Tests
+[xUnit.net 00:00:00.31]   Discovered:  Avowry.Acceptance.Tests
+[xUnit.net 00:00:00.32]   Starting:    Avowry.Acceptance.Tests
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_rows_that_pass_today(input: "", expected: "") [7 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubGenerated.Id_435_3_base_copy_still_reproduces_three_known_leaks [7 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_rows_that_pass_today(input: "\"\"", expected: "\"\"") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "C:\\\\a\\\\x.cs\\n/home/<user>/y.cs", expected: "x.cs\\ny.cs") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "\\\"C:\\\\a\\\\x.cs\\\"", expected: "\\\"x.cs\\\"") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "see C:\\\\a\\\\x.cs\\u0022", expected: "see x.cs\\u0022") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "C:\\\\a\\\\x.cs\\nnext", expected: "x.cs\\nnext") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "/tmp/a/x.cs\\tnext", expected: "x.cs\\tnext") [< 1 ms]
+[xUnit.net 00:00:04.80]   Finished:    Avowry.Acceptance.Tests
+  Passed Avowry.Acceptance.Tests.PathScrubGenerated.Id_435_3_generated_inputs_leak_nothing_and_settle_in_one_pass [4 s]
+  Standard Output Messages:
+ inputs=100000 leaks_base=31534 leaks_new=0 regressions=0 second_pass=0 exclusions=0
+
+
+
+Test Run Successful.
+Total tests: 9
+     Passed: 9
+ Total time: 5.4563 Seconds
