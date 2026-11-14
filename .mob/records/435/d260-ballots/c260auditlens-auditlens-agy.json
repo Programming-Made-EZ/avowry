@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "63937963ec1b136deafc9734cb3992307e2835c156bc36285c6c8a2f79ca123c",
+  "probe": {
+    "taken_at": "2026-11-14T22:39:27.780404Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-2d7e2cc4-bcf8-4804-950a-9bf906759938)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=4e54b717-5635-47c6-b0c0-daf155b3baf4]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "Verifiable from git: confirming the remote head against the local commit and verifying commits with git log ensures that claimed states match actual repository history. This closes the loophole where pipe exit masking or hook failures allow",
+      "reply": "Yes\nVerifiable from git: confirming the remote head against the local commit and verifying commits with git log ensures that claimed states match actual repository history. This closes the loophole where pipe exit masking or hook failures allowed phantom progress to be reported. While push output files and five-minute refusal reporting happen in the workspace rather than git history, comparing remote and local refs anchors verification in objective git state. Note: the file-based exit logging should eventually be captured in card verification records so external audits can inspect push outcomes directly from repo artifacts.\nCITE: every push writes its whole output and its own exit code to a file\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Verifiable from git: confirming the remote head against the local commit and verifying commits with git log ensures that claimed states match actual repository history. This closes the loophole where pipe exit masking or hook failures allow"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T22:39:27.780404Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2562
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "head_end": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

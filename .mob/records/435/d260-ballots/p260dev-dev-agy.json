@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "133f95f5eb08f6d78baf51822a4c5c217b857e0a92321ebbb881c07dc6ef2c76",
+  "probe": {
+    "taken_at": "2026-11-14T22:35:21.173459Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-afb10fab-9346-4255-8117-5532bd8ffdf6)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=7ace7f62-3c95-414f-8761-1548915f98bd]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "dev": {
+      "vote": "Yes",
+      "reason": "Clear, workable, and directly protects developer flow. Swallowed push refusals and unverified commits waste substantial time during card development, especially when working through tight red/green test cycles and slice limits. Verifying th",
+      "reply": "Yes\nClear, workable, and directly protects developer flow. Swallowed push refusals and unverified commits waste substantial time during card development, especially when working through tight red/green test cycles and slice limits. Verifying the exit code unpiped, confirming remote head via fetch, and checking commits with git log -1 prevents phantom progress and stale branch states without adding unreasonable friction. The 3-card trial with explicit metrics makes it low-risk and fair to the work.\nCITE: every push writes its whole output and its own exit code to a file\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Clear, workable, and directly protects developer flow. Swallowed push refusals and unverified commits waste substantial time during card development, especially when working through tight red/green test cycles and slice limits. Verifying th"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T22:35:21.173459Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2559
+    }
+  },
+  "counted_seats": [
+    "dev"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "head_end": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "dev": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

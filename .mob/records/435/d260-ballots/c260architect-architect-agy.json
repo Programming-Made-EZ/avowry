@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "d8fdfd15c61561f7431b9a52188bfba4c53cf3855169b44886fc9e64f136d9c6",
+  "probe": {
+    "taken_at": "2026-11-14T22:39:27.612484Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-3199138d-5325-4779-8bfe-b528b6c35fac)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=edfb9bd2-578b-4be6-b972-6ce19f9fa284]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The design is sound, minimal, and architecturally enforceable. Capturing the unpiped process exit code and output directly prevents silent masking from pipeline exit statuses. Verifying the remote head against the local commit via fetch, al",
+      "reply": "Yes\nThe design is sound, minimal, and architecturally enforceable. Capturing the unpiped process exit code and output directly prevents silent masking from pipeline exit statuses. Verifying the remote head against the local commit via fetch, alongside confirming commits via `git log -1` before reporting, creates unambiguous, verifiable state boundaries with minimal overhead and zero false positives. The three-card trial and 1-minute counter-metric safeguard flow efficiency.\n\nCITE: every push writes its whole output and its own exit code to a file\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The design is sound, minimal, and architecturally enforceable. Capturing the unpiped process exit code and output directly prevents silent masking from pipeline exit statuses. Verifying the remote head against the local commit via fetch, al"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T22:39:27.612484Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2560
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "head_end": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

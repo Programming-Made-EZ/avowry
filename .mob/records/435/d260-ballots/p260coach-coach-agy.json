@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "0d95b8e438f2e7b95c9489f69401ad8ff9066cfeae2f4d0f7745932d2ff26568",
+  "probe": {
+    "taken_at": "2026-11-14T22:35:17.262851Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-7d9467dd-5f65-4989-ab6a-a5d071105cbf)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=fb0801fe-061e-465c-a334-65cb1efbe68d]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The change addresses a significant 25-minute flow loss identified in retro without adding bureaucratic ceremony or altering team size. Automating verification of push exit codes and remote head alignment maintains fast feedback loops, suppo",
+      "reply": "Yes\nThe change addresses a significant 25-minute flow loss identified in retro without adding bureaucratic ceremony or altering team size. Automating verification of push exit codes and remote head alignment maintains fast feedback loops, supported by an explicit counter-metric capping delay at one minute per push. The three-card trial with clear ownership prevents premature process hardening while protecting flow.\nCITE: writes its whole output and its own exit code to a file,\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The change addresses a significant 25-minute flow loss identified in retro without adding bureaucratic ceremony or altering team size. Automating verification of push exit codes and remote head alignment maintains fast feedback loops, suppo"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T22:35:17.262851Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2554
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "head_end": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

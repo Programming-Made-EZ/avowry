@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "4dd96f373e80568b867bad718d1c01864ee59fafefae0298f2d7ba3a60ed05dd",
+  "probe": {
+    "taken_at": "2026-11-14T22:39:27.657040Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-4522d0e6-30b3-4586-bd31-3d4f9eabb70e)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=1b35820a-9c9f-44b9-a8a9-8c95be491252]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "Every rule can be tested red first by simulating hook failures, rejected pushes, and masked pipe exits. Comparing the remote head to the local commit via fetch and verifying commits via git log -1 directly catch the failure modes seen in ca",
+      "reply": "Yes\n\nEvery rule can be tested red first by simulating hook failures, rejected pushes, and masked pipe exits. Comparing the remote head to the local commit via fetch and verifying commits via git log -1 directly catch the failure modes seen in card 435 without passing bad state. The conditions are concrete, observable, and testable.\n\nCITE: every push writes its whole output and its own exit code to a file\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Every rule can be tested red first by simulating hook failures, rejected pushes, and masked pipe exits. Comparing the remote head to the local commit via fetch and verifying commits via git log -1 directly catch the failure modes seen in ca"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T22:39:27.657040Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2561
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "head_end": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

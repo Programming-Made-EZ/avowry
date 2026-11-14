@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "3779f1f8872a283f12ee2346e227da9d2979e7ed96a16da768d88dc38b210d90",
+  "probe": {
+    "taken_at": "2026-11-14T22:35:21.165959Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-858ad30e-fab3-47c1-b20f-9963b4e5ab31)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=7682e6a9-2ba1-4bf0-9740-6526b2aac4ef]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "The evaluation is framed so that the decision to adopt, reshape, or reject rests directly on evidence: it defines a bounded trial of three cards, a clear zero-target metric for undetected push refusals and false reports, and a counter-metri",
+      "reply": "Yes\nThe evaluation is framed so that the decision to adopt, reshape, or reject rests directly on evidence: it defines a bounded trial of three cards, a clear zero-target metric for undetected push refusals and false reports, and a counter-metric bounding added latency. Sign-off requirements are satisfied under the standing rules via the task force roles and confirmation step for agreement amendments.\n\nCITE: every push writes its whole output and its own exit code\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The evaluation is framed so that the decision to adopt, reshape, or reject rests directly on evidence: it defines a bounded trial of three cards, a clear zero-target metric for undetected push refusals and false reports, and a counter-metri"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T22:35:21.165959Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2557
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "head_end": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "cb8e15153a0abea2475df1e2bbc4e978c6cc8cd67295011bf1c4285736dcf018",
+  "probe": {
+    "taken_at": "2026-11-14T22:39:28.205857Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-1e448c30-3b0d-4479-be0f-5bdc6b725130)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=b2fbcb26-f063-4d0c-ac49-191928ec4c7d]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The experimental entry directly addresses documented flow waste without inflating process overhead or team ceremony. Relying on automated verification checks instead of manual sign-offs preserves flow and team autonomy. Timeboxing to a thre",
+      "reply": "Yes\nThe experimental entry directly addresses documented flow waste without inflating process overhead or team ceremony. Relying on automated verification checks instead of manual sign-offs preserves flow and team autonomy. Timeboxing to a three-card trial with an explicit counter-metric capping time added per push keeps ceremony minimal, protects velocity, and ensures rapid feedback.\nCITE: a push is reported only after its result is read unpiped and the remote head equals the local commit\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The experimental entry directly addresses documented flow waste without inflating process overhead or team ceremony. Relying on automated verification checks instead of manual sign-offs preserves flow and team autonomy. Timeboxing to a thre"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T22:39:28.205857Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2564
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "head_end": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

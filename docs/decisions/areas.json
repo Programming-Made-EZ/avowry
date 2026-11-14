@@ -1666,5 +1666,11 @@
     "status": "adopted",
     "title": "Card 435 after three reviews: ship the rework, close the card at it with its limits named, a linear scanner in a new card, and what counts as BLOCKING in a path-scrub review",
     "order": 250
+  },
+  "D260": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 435 retro pick: a push is reported only after its result is read unpiped and the remote head equals the local commit",
+    "order": 251
   }
 }

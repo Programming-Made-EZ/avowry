@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "7d0e4491107c615d2d099d26b4425e23432bd30e22f6f524c0a1bbb95724ae2f",
+  "probe": {
+    "taken_at": "2026-11-14T22:39:30.236533Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-544fd053-daf4-4ffb-8dd6-bdbe66f97dc4)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=df7acae6-b663-4b09-9fe7-dc3b1664c810]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "The evaluation is solidly framed on empirical evidence, specifying a concrete primary metric (zero unverified pushes or hidden refusals) alongside an explicit counter-metric (under one minute added per push) over a bounded three-card trial.",
+      "reply": "Yes\nThe evaluation is solidly framed on empirical evidence, specifying a concrete primary metric (zero unverified pushes or hidden refusals) alongside an explicit counter-metric (under one minute added per push) over a bounded three-card trial. Sign-off governance is complete: all task-force roles vote independently in fresh contexts, and the change triggers the agreement confirmation step under standing rules.\n\nCITE: every push writes its whole output and its own exit code to a file\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The evaluation is solidly framed on empirical evidence, specifying a concrete primary metric (zero unverified pushes or hidden refusals) alongside an explicit counter-metric (under one minute added per push) over a bounded three-card trial."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T22:39:30.236533Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2565
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "head_end": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "db7b7b0773d2cfc7005038b47f4d05882df959d88cfe5cfdc282a7ef6e4019a1",
+  "probe": {
+    "taken_at": "2026-11-14T22:39:28.205869Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-d88b33f3-c297-4f8b-bfa7-be33babe42d6)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=e60a640b-1174-4ab8-9aef-b9a04db63aab]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "dev": {
+      "vote": "Yes",
+      "reason": "This rule is workable, unambiguous, and protects our core delivery rhythm. Hidden push refusals and unverified local commits derail TDD and slice workflows by letting us build on branch states that the remote rejected or hooks blocked. Veri",
+      "reply": "Yes\nThis rule is workable, unambiguous, and protects our core delivery rhythm. Hidden push refusals and unverified local commits derail TDD and slice workflows by letting us build on branch states that the remote rejected or hooks blocked. Verifying that the remote head matches the local commit and checking unpiped exit codes directly ensures that our incremental commit handoffs are honest and reproducible without requiring gaming or manual workarounds. The trial window and counter-metric properly protect against latency overhead.\nCITE: every push writes its whole output and its own exit code to a file\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "This rule is workable, unambiguous, and protects our core delivery rhythm. Hidden push refusals and unverified local commits derail TDD and slice workflows by letting us build on branch states that the remote rejected or hooks blocked. Veri"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T22:39:28.205869Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2563
+    }
+  },
+  "counted_seats": [
+    "dev"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "head_end": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "dev": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

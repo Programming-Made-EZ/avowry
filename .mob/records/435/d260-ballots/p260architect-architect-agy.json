@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "6bea9a3b34fdcb0017b1b1fb737aa41187fa0d1fc5de12889a6fb0efd639f927",
+  "probe": {
+    "taken_at": "2026-11-14T22:35:17.262746Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-91d6c69d-1aeb-47de-bb6b-0da5e55d3406)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=d42569a2-43e9-4adf-92d6-a6b43b8dcabc]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The architectural design of the verification loop is sound, minimal, and directly enforceable. Capturing the unpiped exit code and raw output to a file removes silent failure modes caused by upstream pipe masks. Verifying branch alignment v",
+      "reply": "Yes\nThe architectural design of the verification loop is sound, minimal, and directly enforceable. Capturing the unpiped exit code and raw output to a file removes silent failure modes caused by upstream pipe masks. Verifying branch alignment via explicit fetch and commit confirmation via local log inspection eliminates false positives without introducing heavy tooling overhead. The trial scope of three cards and the counter-metric bounding execution time to under one minute per push ensure the rule remains lightweight and operationally sustainable.\n\nCITE: every push writes its whole output and its own exit code to a file\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The architectural design of the verification loop is sound, minimal, and directly enforceable. Capturing the unpiped exit code and raw output to a file removes silent failure modes caused by upstream pipe masks. Verifying branch alignment v"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T22:35:17.262746Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2555
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "head_end": "63e4651ec0ad866e898b4b8bbe8d9e8f5ba097dc",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}
