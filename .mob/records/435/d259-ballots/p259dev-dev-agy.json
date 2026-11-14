@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "f1fb2b9ca7282cd73203ef6ec033fef48ca51b4401512f2dd7abd5b1f1557712",
+  "probe": {
+    "taken_at": "2026-11-14T21:59:43.760465Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-367a87db-23d8-4d85-9a9a-c7b89e9fce3a)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=4e19420c-8d19-4f85-9d5a-fd60d3f58265]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "dev": {
+      "vote": "Yes",
+      "reason": "As backend developer, endless regex whack-a-mole makes clean TDD cycles impossible. Replacing the fragile regex with a linear scanner gives us explicit parsing rules and predictable linear execution that we can cleanly unit-test. Defining B",
+      "reply": "Yes\nAs backend developer, endless regex whack-a-mole makes clean TDD cycles impossible. Replacing the fragile regex with a linear scanner gives us explicit parsing rules and predictable linear execution that we can cleanly unit-test. Defining BLOCKING around real generator corpus shapes and tool output\u2014while demoting contrived compositions to MINOR\u2014removes ambiguity, stops moving goalposts, and lets us comply without gaming reviews. Turning every prior finding into red test rows before green fits our exact development workflow.\nCITE: decides each path's extent with explicit rules, so time is linear by construction\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "As backend developer, endless regex whack-a-mole makes clean TDD cycles impossible. Replacing the fragile regex with a linear scanner gives us explicit parsing rules and predictable linear execution that we can cleanly unit-test. Defining B"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T21:59:43.760465Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2548
+    }
+  },
+  "counted_seats": [
+    "dev"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "3361430c950243029747ba15bd09970473eeecc1",
+  "head_end": "3361430c950243029747ba15bd09970473eeecc1",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "dev": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

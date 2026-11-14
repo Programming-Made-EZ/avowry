@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "fe40719b4d1fdd473790b27e72ddebab6c281a0dca26781cf56782c8aba870b1",
+  "probe": {
+    "taken_at": "2026-11-14T21:59:44.198787Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-fa68d2f3-9921-4862-b52b-a27f147a1f61)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=22251e4a-ade6-4890-bb79-4863231049a3]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "\u2026use it is being used by another process. The process cannot access the file because it is being used by another process. The process cannot access the file because it is being used by another process."
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "This can be verified entirely from git: commit e374ab7, review replay files, and the closure record naming known limits provide an unbroken audit trail. The unaddressed findings are not swept away; they become the committed red tests of the",
+      "reply": "Yes\nThis can be verified entirely from git: commit e374ab7, review replay files, and the closure record naming known limits provide an unbroken audit trail. The unaddressed findings are not swept away; they become the committed red tests of the new card, preventing silent loophole passes. Note on clause 4: distinguishing a contrived composition from a real shape must rely on committed corpus logs rather than reviewer discretion to avoid audit loopholes. Because the linear scanner requires every review input to become a test row before green, the practice is enforced in git history.\nCITE: card 435 header comment and closure record name the known limits\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "This can be verified entirely from git: commit e374ab7, review replay files, and the closure record naming known limits provide an unbroken audit trail. The unaddressed findings are not swept away; they become the committed red tests of the"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T21:59:44.198787Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2549
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "3361430c950243029747ba15bd09970473eeecc1",
+  "head_end": "3361430c950243029747ba15bd09970473eeecc1",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

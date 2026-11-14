@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "c5e85ec9cc0befb90d70168b332101470db5e9e56c4c8470d4538d059a8d17cb",
+  "probe": {
+    "taken_at": "2026-11-14T22:06:51.249573Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-9818f128-e9c7-4db1-b892-ff4a38d1ffa5)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=3eaa86a4-f14f-41be-b719-9ff48e37e626]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "From an architectural lens, shifting from an increasingly brittle single regex to a linear candidate scanner with explicit extent rules eliminates super-linear blowups and regression churn by construction. Defining BLOCKING around realistic",
+      "reply": "Yes\nFrom an architectural lens, shifting from an increasingly brittle single regex to a linear candidate scanner with explicit extent rules eliminates super-linear blowups and regression churn by construction. Defining BLOCKING around realistic corpora and tool outputs while categorizing contrived compositions as MINOR provides an enforceable, sound boundary without false positives halting progress. Shipping the strictly superior rework and closing card 435 with explicit documented limits provides a clean baseline for the scanner card.\n\nCITE: replaces the single regex with a linear scanner\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From an architectural lens, shifting from an increasingly brittle single regex to a linear candidate scanner with explicit extent rules eliminates super-linear blowups and regression churn by construction. Defining BLOCKING around realistic"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T22:06:51.249573Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2553
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "3361430c950243029747ba15bd09970473eeecc1",
+  "head_end": "3361430c950243029747ba15bd09970473eeecc1",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

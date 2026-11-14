@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "00988db84e7c2ca32c6c701ede5e7b0061f9f56bb7f354a51fd0ad0ed4bb1e98",
+  "probe": {
+    "taken_at": "2026-11-14T22:03:29.702303Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-d547b82c-4f75-43ec-bf15-05186b508e86)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=96ff97a0-7b3e-4a3e-8a52-5bd45605a8ec]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "From a QA lens, this proposal establishes a clean test-first discipline. Clauses 2 and 3 explicitly mandate that all blocking and minor findings from the previous reviews become the red tests of the new card before green. Testing a linear s",
+      "reply": "Yes\n\nFrom a QA lens, this proposal establishes a clean test-first discipline. Clauses 2 and 3 explicitly mandate that all blocking and minor findings from the previous reviews become the red tests of the new card before green. Testing a linear scanner against a deterministic corpus of every historical review failure guarantees regression coverage and prevents bad state or super-linear blowups from slipping through. Clause 4 provides objective criteria distinguishing blocking leaks on real shapes from minor synthetic compositions, allowing test suites to catch genuine violations without stalling convergence.\n\nCITE: every input of the three reviews becomes a test row before the green.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From a QA lens, this proposal establishes a clean test-first discipline. Clauses 2 and 3 explicitly mandate that all blocking and minor findings from the previous reviews become the red tests of the new card before green. Testing a linear s"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T22:03:29.702303Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2552
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "3361430c950243029747ba15bd09970473eeecc1",
+  "head_end": "3361430c950243029747ba15bd09970473eeecc1",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

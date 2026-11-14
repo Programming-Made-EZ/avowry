@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "5aee3240244ae0844cf6ace8bc0622c86896f70e970bf014f018d5c9075019f5",
+  "probe": {
+    "taken_at": "2026-11-14T22:03:26.241818Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-8118b545-4be2-4700-9a9f-6f5a4bcce888)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=0db10af2-f3cb-4deb-bcc7-dcc504ba3b18]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "Halting the non-converging regex review cycle is the right move. Endless patching of an architectural dead end creates pure ceremonial waste and stalls delivery. Shipping the strictly superior rework delivers immediate customer value, while",
+      "reply": "Yes\nHalting the non-converging regex review cycle is the right move. Endless patching of an architectural dead end creates pure ceremonial waste and stalls delivery. Shipping the strictly superior rework delivers immediate customer value, while bounding risk by documenting known limits. Sizing the remaining work into a single new card with a clean architectural pivot to a linear scanner and clarifying BLOCKING versus MINOR criteria ensures the team maintains velocity without bloating ceremony or expanding task-force overhead. The workflow is lean, appropriately scoped, and focused on sustainable convergence.\n\nCITE: no fourth regex patch round in card 435\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Halting the non-converging regex review cycle is the right move. Endless patching of an architectural dead end creates pure ceremonial waste and stalls delivery. Shipping the strictly superior rework delivers immediate customer value, while"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-14T22:03:26.241818Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2550
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "3361430c950243029747ba15bd09970473eeecc1",
+  "head_end": "3361430c950243029747ba15bd09970473eeecc1",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}
