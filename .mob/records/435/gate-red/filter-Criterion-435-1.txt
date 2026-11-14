@@ -1,0 +1,95 @@
+Test run for C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.59]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "in /tmp/x.cs at /opt/data/home/<user>/x.cs", expected: "in x.cs at x.cs") [FAIL]
+[xUnit.net 00:00:00.60]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "gcc /tmp/a.c -I /usr/include -I/home/<user>/includ"···, expected: "gcc a.c -I /usr/include -Iinclude") [FAIL]
+[xUnit.net 00:00:00.60]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "\\\\wsl$\\Ubuntu\\home\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:00.60]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "\\\\host\\c$\\Users\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:00.60]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "Restoring /tmp/x.csproj for /cygdrive/c/Users/<use"···, expected: "Restoring x.csproj for x.csproj") [FAIL]
+[xUnit.net 00:00:00.60]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "/cygdrive/d/Users/<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:00.60]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "\\\\\\\\host\\\\c$\\\\Users\\\\<user>", expected: "<path>") [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "in /tmp/x.cs at /opt/data/home/<user>/x.cs", expected: "in x.cs at x.cs") [15 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                      ↓ (pos 11)
+Expected: "in x.cs at x.cs"
+Actual:   "in x.cs at /opt/data/home/<user>/x.cs"
+                      ↑ (pos 11)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 350
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "gcc /tmp/a.c -I /usr/include -I/home/<user>/includ"···, expected: "gcc a.c -I /usr/include -Iinclude") [1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                                     ↓ (pos 26)
+Expected: "gcc a.c -I /usr/include -Iinclude"
+Actual:   ···".c -I /usr/include -I/home/<user>/include"
+                                   ↑ (pos 26)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 350
+   at InvokeStub_PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "\\\\wsl$\\Ubuntu\\home\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 350
+   at InvokeStub_PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "\\\\host\\c$\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 350
+   at InvokeStub_PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "Restoring /tmp/x.csproj for /cygdrive/c/Users/<use"···, expected: "Restoring x.csproj for x.csproj") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                                  ↓ (pos 23)
+Expected: "Restoring x.csproj for x.csproj"
+Actual:   ···"toring x.csproj for /cygdrive/c/Users/<us"···
+                                  ↑ (pos 23)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 350
+   at InvokeStub_PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "/cygdrive/d/Users/<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "<path>"
+Actual:   "/cygdrive/d/Users/<user>"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 350
+   at InvokeStub_PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "\\\\\\\\host\\\\c$\\\\Users\\\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 350
+   at InvokeStub_PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+Failed!  - Failed:     7, Passed:    12, Skipped:     0, Total:    19, Duration: 90 ms - Avowry.Acceptance.Tests.dll (net8.0)

@@ -1,0 +1,433 @@
+Test run for C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:02.17]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "in /tmp/x.cs at /opt/data/home/<user>/x.cs", expected: "in x.cs at x.cs") [FAIL]
+[xUnit.net 00:00:02.17]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "gcc /tmp/a.c -I /usr/include -I/home/<user>/includ"···, expected: "gcc a.c -I /usr/include -Iinclude") [FAIL]
+[xUnit.net 00:00:02.17]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "\\\\wsl$\\Ubuntu\\home\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.18]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "\\\\host\\c$\\Users\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.18]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "Restoring /tmp/x.csproj for /cygdrive/c/Users/<use"···, expected: "Restoring x.csproj for x.csproj") [FAIL]
+[xUnit.net 00:00:02.18]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "/cygdrive/d/Users/<user>", expected: "<path>") [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "in /tmp/x.cs at /opt/data/home/<user>/x.cs", expected: "in x.cs at x.cs") [4 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                      ↓ (pos 11)
+Expected: "in x.cs at x.cs"
+Actual:   "in x.cs at /opt/data/home/<user>/x.cs"
+                      ↑ (pos 11)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 350
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "gcc /tmp/a.c -I /usr/include -I/home/<user>/includ"···, expected: "gcc a.c -I /usr/include -Iinclude") [1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                                     ↓ (pos 26)
+Expected: "gcc a.c -I /usr/include -Iinclude"
+Actual:   ···".c -I /usr/include -I/home/<user>/include"
+                                   ↑ (pos 26)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 350
+   at InvokeStub_PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "\\\\wsl$\\Ubuntu\\home\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 350
+   at InvokeStub_PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "\\\\host\\c$\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 350
+   at InvokeStub_PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "Restoring /tmp/x.csproj for /cygdrive/c/Users/<use"···, expected: "Restoring x.csproj for x.csproj") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                                  ↓ (pos 23)
+Expected: "Restoring x.csproj for x.csproj"
+Actual:   ···"toring x.csproj for /cygdrive/c/Users/<us"···
+                                  ↑ (pos 23)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 350
+   at InvokeStub_PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "/cygdrive/d/Users/<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "<path>"
+Actual:   "/cygdrive/d/Users/<user>"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 350
+   at InvokeStub_PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:02.18]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "\\\\\\\\host\\\\c$\\\\Users\\\\<user>", expected: "<path>") [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(input: "\\\\\\\\host\\\\c$\\\\Users\\\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 350
+   at InvokeStub_PathScrubForms.Id_435_1_glued_unlisted_and_unc_roots(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:02.19]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "C:\\\\a\\\\x.cs\\n/home/<user>/y.cs", expected: "x.cs\\ny.cs") [FAIL]
+[xUnit.net 00:00:02.19]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "\\\"C:\\\\a\\\\x.cs\\\"", expected: "\\\"x.cs\\\"") [FAIL]
+[xUnit.net 00:00:02.19]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "see C:\\\\a\\\\x.cs\\u0022", expected: "see x.cs\\u0022") [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "C:\\\\a\\\\x.cs\\n/home/<user>/y.cs", expected: "x.cs\\ny.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x.cs\\ny.cs"
+Actual:   "y.cs"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 402
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "\\\"C:\\\\a\\\\x.cs\\\"", expected: "\\\"x.cs\\\"") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+              ↓ (pos 2)
+Expected: "\\"x.cs\\""
+Actual:   "\\"<path>""
+              ↑ (pos 2)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 402
+   at InvokeStub_PathScrubForms.Id_435_3_escapes_after_a_path(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "see C:\\\\a\\\\x.cs\\u0022", expected: "see x.cs\\u0022") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 4)
+Expected: "see x.cs\\u0022"
+Actual:   "see u0022"
+               ↑ (pos 4)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 402
+   at InvokeStub_PathScrubForms.Id_435_3_escapes_after_a_path(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:02.19]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "C:\\\\a\\\\x.cs\\nnext", expected: "x.cs\\nnext") [FAIL]
+[xUnit.net 00:00:02.19]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "/tmp/a/x.cs\\tnext", expected: "x.cs\\tnext") [FAIL]
+[xUnit.net 00:00:02.19]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "\\u0027C:\\\\Users\\\\<user> (bb)\\u0027", expected: "\\u0027<path>\\u0027") [FAIL]
+[xUnit.net 00:00:02.20]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "/home/<user> (bb)", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.20]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\\\Users\\\\<user>\\u00f6bb", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.20]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "\\u0027C:\\\\Users\\\\<user>\\u00f6bb\\u0027", expected: "\\u0027<path>\\u0027") [FAIL]
+[xUnit.net 00:00:02.20]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\Users\\<user> (bb)", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.20]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "\\u0027C:\\\\Users\\\\<user>\\u0027", expected: "\\u0027<path>\\u0027") [FAIL]
+[xUnit.net 00:00:02.20]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "/home/<user>(bb)", expected: "<path>") [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "C:\\\\a\\\\x.cs\\nnext", expected: "x.cs\\nnext") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x.cs\\nnext"
+Actual:   "nnext"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 402
+   at InvokeStub_PathScrubForms.Id_435_3_escapes_after_a_path(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(input: "/tmp/a/x.cs\\tnext", expected: "x.cs\\tnext") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x.cs\\tnext"
+Actual:   "tnext"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertMissedRoot(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 434
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_3_escapes_after_a_path(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 402
+   at InvokeStub_PathScrubForms.Id_435_3_escapes_after_a_path(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "\\u0027C:\\\\Users\\\\<user> (bb)\\u0027", expected: "\\u0027<path>\\u0027") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                        ↓ (pos 12)
+Expected: "\\u0027<path>\\u0027"
+Actual:   "\\u0027<path> (bb)\\u0027"
+                        ↑ (pos 12)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "/home/<user> (bb)", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path> (bb)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\\\Users\\\\<user>\\u00f6bb", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "<path>"
+Actual:   "u00f6bb"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "\\u0027C:\\\\Users\\\\<user>\\u00f6bb\\u0027", expected: "\\u0027<path>\\u0027") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                             ↓ (pos 16)
+Expected: "\\u0027<path>\\u0027"
+Actual:   "\\u0027<path>\\u00f6bb\\u0027"
+                             ↑ (pos 16)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\Users\\<user> (bb)", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path> (bb)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "\\u0027C:\\\\Users\\\\<user>\\u0027", expected: "\\u0027<path>\\u0027") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                        ↓ (pos 12)
+Expected: "\\u0027<path>\\u0027"
+Actual:   "\\u0027<path> öcc\\u0027"
+                        ↑ (pos 12)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "/home/<user>(bb)", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>(bb)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:02.20]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\\\Users\\\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.21]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\\\Users\\\\<user>(bb)", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.21]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "\\u0027C:\\\\Users\\\\<user>\\u0027", expected: "\\u0027<path>\\u0027") [FAIL]
+[xUnit.net 00:00:02.21]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\Users\\<user>\\u00f6bb", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.21]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\Users\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.21]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "\\u0027C:\\\\Users\\\\<user>\\u00f6bb\\x.cs\\u0027", expected: "\\u0027x.cs\\u0027") [FAIL]
+[xUnit.net 00:00:02.21]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "/home/<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.21]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\\\Users\\\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.21]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "\\u0027C:\\\\Users\\\\<user>(bb)\\u0027", expected: "\\u0027<path>\\u0027") [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\\\Users\\\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>.cc"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\\\Users\\\\<user>(bb)", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>(bb)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "\\u0027C:\\\\Users\\\\<user>\\u0027", expected: "\\u0027<path>\\u0027") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                        ↓ (pos 12)
+Expected: "\\u0027<path>\\u0027"
+Actual:   "\\u0027<path>.cc\\u0027"
+                        ↑ (pos 12)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\Users\\<user>\\u00f6bb", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "<path>"
+Actual:   "u00f6bb"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path> öcc"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "\\u0027C:\\\\Users\\\\<user>\\u00f6bb\\x.cs\\u0027", expected: "\\u0027x.cs\\u0027") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                  ↓ (pos 6)
+Expected: "\\u0027x.cs\\u0027"
+Actual:   "\\u0027<path>\\u00f6bb\\x.cs\\u0027"
+                  ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "/home/<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path> öcc"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\\\Users\\\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path> öcc"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "\\u0027C:\\\\Users\\\\<user>(bb)\\u0027", expected: "\\u0027<path>\\u0027") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                        ↓ (pos 12)
+Expected: "\\u0027<path>\\u0027"
+Actual:   "\\u0027<path>(bb)\\u0027"
+                        ↑ (pos 12)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:02.22]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "/home/<user>\\u00f6bb", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.22]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "/home/<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.22]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\\\Users\\\\<user> (bb)", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.22]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\Users\\<user>(bb)", expected: "<path>") [FAIL]
+[xUnit.net 00:00:02.22]     Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\Users\\<user>", expected: "<path>") [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "/home/<user>\\u00f6bb", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "<path>"
+Actual:   "u00f6bb"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "/home/<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>.cc"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\\\Users\\\\<user> (bb)", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path> (bb)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\Users\\<user>(bb)", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>(bb)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(input: "C:\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>.cc"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubForms.AssertNonAsciiFolder(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 448
+   at Avowry.Acceptance.Tests.PathScrubForms.Id_435_2_non_ascii_account_folders(String input, String expected) in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubForms.cs:line 376
+   at InvokeStub_PathScrubForms.Id_435_2_non_ascii_account_folders(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:08.71]     Avowry.Acceptance.Tests.PathScrubGenerated.Id_435_3_generated_inputs_leak_nothing_and_settle_in_one_pass [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScrubGenerated.Id_435_3_generated_inputs_leak_nothing_and_settle_in_one_pass [6 s]
+  Error Message:
+   inputs=100000 leaks_base=31534 leaks_new=31534 regressions=0 second_pass=0 exclusions=0
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScrubGenerated.Id_435_3_generated_inputs_leak_nothing_and_settle_in_one_pass() in C:\Users\<user>\projects\gate435red-clone\tests\Avowry.Acceptance.Tests\PathScrubGenerated.cs:line 179
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Standard Output Messages:
+ inputs=100000 leaks_base=31534 leaks_new=31534 regressions=0 second_pass=0 exclusions=0
+
+
+
+Failed!  - Failed:    34, Passed:    43, Skipped:     0, Total:    77, Duration: 7 s - Avowry.Acceptance.Tests.dll (net8.0)
