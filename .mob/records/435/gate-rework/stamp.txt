@@ -1,0 +1,2 @@
+before: dotnet 10.0.404; python Python 3.15.1; sdk folders: 10.0.403 10.0.404 
+after: dotnet 10.0.404; python Python 3.15.1; sdk folders: 10.0.403 10.0.404 

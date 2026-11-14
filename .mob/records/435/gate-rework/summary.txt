@@ -1,0 +1,11 @@
+tested HEAD: 43d79f029677fb041e42e7463ed5548401491f15
+rework commit 43d79f0 ancestry exit: 0
+build exit 0:     0 Warning(s)     0 Error(s) 
+Slice=435 exit 0: Passed!  - Failed:     0, Passed:   112, Skipped:     0, Total:   112, Duration: 4 s - Avowry.Acceptance.Tests.dll (net8.0)
+Criterion=435-1 exit 0: Passed!  - Failed:     0, Passed:    30, Skipped:     0, Total:    30, Duration: 56 ms - Avowry.Acceptance.Tests.dll (net8.0)
+Criterion=435-2 exit 0: Passed!  - Failed:     0, Passed:    57, Skipped:     0, Total:    57, Duration: 57 ms - Avowry.Acceptance.Tests.dll (net8.0)
+Criterion=435-3 exit 0: 
+inputs=100000 leaks_base=31534 leaks_new=0 regressions=0 second_pass=0 exclusions=0
+affected module (Avowry.Acceptance.Tests, Status!=Pending) exit 0: Passed!  - Failed:     0, Passed:   621, Skipped:     0, Total:   621, Duration: 14 m 16 s - Avowry.Acceptance.Tests.dll (net8.0)
+full-suite gate step SKIPPED: a play-tracker ship-train was alive on the shared laptop (owner rule: affected-module runs only while one is); the full gate runs at the green when no train is alive
+DONE
