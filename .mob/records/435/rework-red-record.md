@@ -57,3 +57,7 @@ All failures are `Assert.Equal` mismatches (no crash, no compile error). Every C
 1. Counts: 435-2 has 5 C rows (M6, M7, M8, M9, M11), not 6; totals still 35 (11 + 8 + 16), 21 F.
 2. Status trait: the existing 435 Pending theories carry NO `[Trait("Status","Pending")]` and no pending comment (only `Slice` and `Criterion`; "Pending" there is a naming convention in the record). I mirrored them, so the new Pending theories also have no Status trait. If the facilitator wants the trait added to the six new F theories, it is a one-line edit each.
 3. The rows with `\u0027` after `<user>` (e.g. row 2) use concatenated verbatim strings; the string values equal the table text.
+
+## Facilitator's correction (a logged takeover, 2026-11-14)
+
+The seat left the three rework Pending theories without `[Trait("Status", "Pending")]`, reading the green's removal of the original traits as the convention. The red convention (2a5be77) carries the trait until the green, and without it the 21 failing rows would fail the gate's `Status!=Pending` run. The facilitator added the trait and the pending comment to `Id_435_1_rework_rows`, `Id_435_2_rework_rows` and `Id_435_3_rework_rows` (3 x 2 lines; LF kept), rebuilt (0 warnings, 0 errors) and ran: `Slice=435&Status!=Pending` passed 91 of 91; `Slice=435&Status=Pending` failed 21 of 21.
