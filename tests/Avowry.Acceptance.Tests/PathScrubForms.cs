@@ -475,8 +475,6 @@ public sealed class PathScrubForms
     [MemberData(nameof(GluedAndUncRootsReworkPending))]
     [Trait("Slice", "435")]
     [Trait("Criterion", "435-1")]
-    [Trait("Status", "Pending")]
-    // Pending until the rework green that changes tools/Avowry.Bench/PathScrub.cs
     public void Id_435_1_rework_rows(string input, string expected)
     {
         // Given a stored diagnostic holding a flag glued after a quote or an escape, or a UNC path followed by a second path
@@ -501,8 +499,6 @@ public sealed class PathScrubForms
     [MemberData(nameof(NonAsciiAccountFoldersReworkPending))]
     [Trait("Slice", "435")]
     [Trait("Criterion", "435-2")]
-    [Trait("Status", "Pending")]
-    // Pending until the rework green that changes tools/Avowry.Bench/PathScrub.cs
     public void Id_435_2_rework_rows(string input, string expected)
     {
         // Given an account folder followed by a glued bracket group and then a drive, a file URL or a sentence-ending dot
@@ -527,8 +523,6 @@ public sealed class PathScrubForms
     [MemberData(nameof(EscapesAfterAPathReworkPending))]
     [Trait("Slice", "435")]
     [Trait("Criterion", "435-3")]
-    [Trait("Status", "Pending")]
-    // Pending until the rework green that changes tools/Avowry.Bench/PathScrub.cs
     public void Id_435_3_rework_rows(string input, string expected)
     {
         // Given a stored diagnostic holding a path next to a JSON or C escape, a UNC path, a tilde name or a doubled-backslash root
