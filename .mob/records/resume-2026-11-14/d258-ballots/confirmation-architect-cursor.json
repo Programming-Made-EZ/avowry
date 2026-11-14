@@ -1,0 +1,9 @@
+{
+ "window": "confirmation",
+ "role": "architect",
+ "model": "cursor",
+ "vote": "Yes",
+ "counted": true,
+ "reply": "Yes\n\nThe design is sound from a records-and-checkers view. Clauses 1 to 3 swap free-form judgment for fixed fields and fixed mitigation forms, and they put machine gates in front of them (`card_ready.py` for cards, `loop_checklists.py` for checklists), so the result can be checked. Old cards won't trip the gate by mistake, because they are rewritten only when next touched. Clause 3's rule that a checklist item may add gates but never drop the template's keeps Avowry's local gates without forking the template. Clause 5 rightly keeps the lean tools optional, so cards don't get extra mandatory steps. One note: `card_ready.py` should only run on cards created after this lands, at least until the old cards have been migrated.\n\nCITE: Existing cards are rewritten when next touched.\n",
+ "probe_ok": true
+}

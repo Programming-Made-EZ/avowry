@@ -1,0 +1,9 @@
+{
+ "window": "confirmation",
+ "role": "decider",
+ "model": "claude",
+ "vote": "Yes",
+ "counted": true,
+ "reply": "Yes\n\nThe framing holds up for sign-off. The six items are bundled but each clause is separable, and the reversal path (a later Decider can drop any clause) is explicit. The ruling status of items 1 to 5 is clear, and the cost is bounded. Clause 6 rejects option (b) with a stated reason.\n\nNotes: the clauses are adopted as practices, not experiments, so no measure says whether they worked in Avowry. I suggest each retro report one data point per clause, with a review date. Clause 4 already supplies the measurement for the constraint. Clause 3's \"slower gate\" wording is vague and could be tightened.\n\nCITE: Each item 1 to 5 is already a ruling for the mob-defaults DEFAULT template\n",
+ "probe_ok": true
+}

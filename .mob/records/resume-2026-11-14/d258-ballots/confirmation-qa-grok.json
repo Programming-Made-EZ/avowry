@@ -1,0 +1,9 @@
+{
+ "window": "confirmation",
+ "role": "qa",
+ "model": "grok",
+ "vote": "Yes",
+ "counted": true,
+ "reply": "Yes\nClauses 1–3 name red-first gates (fixed mitigation forms before Ready, card_ready.py, loop_checklists.py print ok) that can fail on the violations they name. Clause 5 is optional, so it cannot pass a mandatory miss. Clause 6 is board work. Note: clause 4 names metrics but no failing check; put the Constraint line on the done-retro checklist so a missing or data-free line cannot print ok. Note: card_ready.py should fail when a YES dimension lacks one of the four mitigation forms, or Ready will pass bad state (the D208 failure mode).\nCITE: It answers why D208 failed (no fixed format, unverifiable scores)\n",
+ "probe_ok": true
+}

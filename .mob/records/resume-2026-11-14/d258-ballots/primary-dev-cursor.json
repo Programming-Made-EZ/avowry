@@ -1,0 +1,9 @@
+{
+ "window": "primary",
+ "role": "dev",
+ "model": "cursor",
+ "vote": "Yes",
+ "counted": true,
+ "reply": "Yes\n\nFrom the backend seat, these rules are workable and I can follow them honestly. The card template, the Dimensions block and the `card_ready.py` gate give fixed formats that a script can check, so I am not left guessing at subjective scores, which is what made D208 fail. The Lean toolkit in clause 5 is optional for the retro, not a new step on every card. Card 435 finishes under the rules it started with, which is fair to the work in flight.\n\nNote: when an existing card is rewritten into the template \"when next touched\", that rewrite should count as refinement. It should not count against the developer's slice or WIP (work-in-progress) limits, or the limits will push people to cut corners on the rewrite.\n\nNote: the checklists from clause 3 should point to the existing red, green and commit gates rather than adding new ones.\n\nCITE: finishes under the current agreement; the next card is the first written from the template\n",
+ "probe_ok": true
+}

@@ -1,0 +1,9 @@
+{
+ "window": "primary",
+ "role": "decider",
+ "model": "grok",
+ "vote": "Yes",
+ "counted": true,
+ "reply": "Yes\nThe six clauses are specified with gates, landing, cost and reversal, so adopt/reject can rest on that evidence: D208’s missing format, Done template work, card_ready.py and loop_checklists.py, and a reasoned rejection of transferring harness history. Seats are complete: the owner ruling is excluded, the mob votes the rest, the facilitator does clause 6 after the current card. Note: re-ranking 65 items may overrun one session; reversal per clause is the safety valve.\nCITE: they are owner rulings for the template\n",
+ "probe_ok": true
+}

@@ -1,0 +1,9 @@
+{
+ "window": "primary",
+ "role": "auditlens",
+ "model": "cursor",
+ "vote": "Yes",
+ "counted": true,
+ "reply": "Yes\n\nThe audit lens holds. Most clauses can be checked from git alone. Clause 1 uses fixed mitigation forms, clause 2 has the `card_ready.py` gate, and clause 3 requires `loop_checklists.py` to print ok. Clause 3 also closes the main loophole by saying an item may add gates but never drop the template's. A few gaps remain:\n\n- **Clause 1:** \"escalated to <who>\" can be filled in without anything actually happening. The coach should sample whether that person really responded.\n- **Clause 4:** the Constraint line should cite the commit range or data file behind its median and p90 figures, so the numbers can be reproduced.\n- **Clause 2:** \"rewritten when next touched\" could let old cards dodge the template forever. Ready should gate every card, old or new.\n\nThese are notes, not conditions on my vote.\n\nCITE: an item may add gates, never drop the template's\n",
+ "probe_ok": true
+}

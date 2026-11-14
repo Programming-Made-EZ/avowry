@@ -1654,5 +1654,11 @@
     "status": "adopted",
     "title": "Card 435: task force declaration and Ready text (the bench path scrub removes the whole account folder from glued, unlisted and UNC roots, non-ASCII account names and paths followed by a JSON escape)",
     "order": 248
+  },
+  "D258": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "The resume: the inbox items queued during the pause (Dimensions of Difficulty, one card template, loop checklists, constraint-first, the Lean toolkit, and the 65 harness items on the Mob Board)",
+    "order": 249
   }
 }

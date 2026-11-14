@@ -1,0 +1,9 @@
+{
+ "window": "primary",
+ "role": "qa",
+ "model": "agy",
+ "vote": "Yes",
+ "counted": true,
+ "reply": "Yes\nFrom a QA perspective, this replaces subjective prose with concrete, automated gates that can be tested red first. Both `card_ready.py` and `loop_checklists.py` provide deterministic validation steps that reject non-compliant files before Ready or merge, ensuring malformed Gherkin tags, unmitigated dimensions, or missing checklist evidence cannot pass bad state downstream into the mob's workflow.\n\nCITE: Every card answers four yes/no dimensions in a fixed field\n",
+ "probe_ok": true
+}
