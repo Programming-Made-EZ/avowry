@@ -1,39 +1,16 @@
 # Decider D258: the inbox items queued during the pause (2026-11-11 to 2026-11-13)
 
-Proposer: the facilitator, at the resume (the product owner un-paused Avowry on 2026-11-14). The six items below are the open
-entries of the Avowry inbox (`inbox_open.py`: 7 open; the seventh, the role-voting ruling, is an owner RULING and is applied, not
-voted). Each item 1 to 5 is already a ruling for the mob-defaults DEFAULT template, built, reviewed and Done there; for Avowry
-each is a PROPOSAL that this team adopts or rejects by Decider. Vote on the whole; if you object to one clause, say which and
-the one condition that would bring you to Yes.
+Proposer: the facilitator, at the resume (the product owner un-paused Avowry on 2026-11-14). The six items below are the open entries of the Avowry inbox (`inbox_open.py`: 7 open; the seventh, the role-voting ruling, is an owner RULING and is applied, not voted). Each item 1 to 5 is already a ruling for the mob-defaults DEFAULT template, built, reviewed and Done there; for Avowry each is a PROPOSAL that this team adopts or rejects by Decider. Vote on the whole; if you object to one clause, say which and the one condition that would bring you to Yes.
 
 ## Clauses
 
-1. **Dimensions of Difficulty at refinement (mob-defaults #34).** Every card answers four yes/no dimensions in a fixed field
-   (Environment, Scope, Unknown, Communication); each YES records its mitigation in a fixed form (`escalated to <who>`,
-   `split into #N, #M`, `spike #N`, `synchronous: <who> joins <how>`) before Ready. It answers why D208 failed (no fixed format,
-   unverifiable scores).
-2. **One unified card template (mob-defaults #35).** New cards are written from `templates/CARD.default.md` of mob-defaults:
-   a persona from PERSONAS.md and the goal it serves (`so that ... (goal: ...)`), a Connextra story, Gherkin criteria tagged
-   with ZOMBIES, a coverage line, the Dimensions block, links; `card_ready.py <card> PERSONAS.md` gates Ready. Existing cards
-   are rewritten when next touched. Avowry's PERSONAS.md already names consumers with Goals lines (the template's worked
-   example).
-3. **Loop checklists (mob-defaults #42).** Copy `templates/checklists/` to `checklists/` (cycle, ready, done-retro, ship,
-   session-start, decider); each item names its gate or its evidence; `loop_checklists.py checklists` must print ok; the coach
-   audits rows L1 to L5. Avowry's slower gate keeps its own gate names where they differ (an item may add gates, never drop the
-   template's).
-4. **Constraint-first (mob-defaults #17).** Each retro's Constraint line names the biggest flow constraint from data
-   (commit-to-live median and p90, minutes lost by cause, where work waits) and the focusing step applied, with the measured
-   effect of the previous step; the next process work targets it first.
-5. **Lean toolkit for the constraint (mob-defaults #36).** Value stream map with flow efficiency, Pareto of lost minutes,
-   5 Whys, an A3 per constraint, WIP limits, andon, gemba and the seven wastes, used to diagnose the constraint of clause 4;
-   adopted as tools the retro may use, not as new mandatory steps per card.
-6. **The 65 harness items on the Mob Board (Dispatch note 2026-11-11).** Option (a): set an Area on each and re-rank them in
-   place on the 0.05 to 0.88 scale; the open ones stay in this repository (they are this mob's harness work). Option (b),
-   transferring them to mob-defaults, is not proposed: it moves history for no flow gain.
+1. **Dimensions of Difficulty at refinement (mob-defaults #34).** Every card answers four yes/no dimensions in a fixed field (Environment, Scope, Unknown, Communication); each YES records its mitigation in a fixed form (`escalated to <who>`, `split into #N, #M`, `spike #N`, `synchronous: <who> joins <how>`) before Ready. It answers why D208 failed (no fixed format, unverifiable scores).
+2. **One unified card template (mob-defaults #35).** New cards are written from `templates/CARD.default.md` of mob-defaults: a persona from PERSONAS.md and the goal it serves (`so that ... (goal: ...)`), a Connextra story, Gherkin criteria tagged with ZOMBIES, a coverage line, the Dimensions block, links; `card_ready.py <card> PERSONAS.md` gates Ready. Existing cards are rewritten when next touched. Avowry's PERSONAS.md already names consumers with Goals lines (the template's worked example).
+3. **Loop checklists (mob-defaults #42).** Copy `templates/checklists/` to `checklists/` (cycle, ready, done-retro, ship, session-start, decider); each item names its gate or its evidence; `loop_checklists.py checklists` must print ok; the coach audits rows L1 to L5. Avowry's slower gate keeps its own gate names where they differ (an item may add gates, never drop the template's).
+4. **Constraint-first (mob-defaults #17).** Each retro's Constraint line names the biggest flow constraint from data (commit-to-live median and p90, minutes lost by cause, where work waits) and the focusing step applied, with the measured effect of the previous step; the next process work targets it first.
+5. **Lean toolkit for the constraint (mob-defaults #36).** Value stream map with flow efficiency, Pareto of lost minutes, 5 Whys, an A3 per constraint, WIP limits, andon, gemba and the seven wastes, used to diagnose the constraint of clause 4; adopted as tools the retro may use, not as new mandatory steps per card.
+6. **The 65 harness items on the Mob Board (Dispatch note 2026-11-11).** Option (a): set an Area on each and re-rank them in place on the 0.05 to 0.88 scale; the open ones stay in this repository (they are this mob's harness work). Option (b), transferring them to mob-defaults, is not proposed: it moves history for no flow gain.
 
 ## How it lands
 
-Clauses 1 to 5 enter TEAM_WORKING_AGREEMENT.md as adopted practices (not experiments: they are owner rulings for the
-template), each citing D258; clause 6 is board work for the facilitator after the current card. Card 435 (in flight) finishes
-under the current agreement; the next card is the first written from the template. Cost: one facilitator session of
-agreement and board edits; no product code changes. Reversal: a later Decider can drop any clause.
+Clauses 1 to 5 enter TEAM_WORKING_AGREEMENT.md as adopted practices (not experiments: they are owner rulings for the template), each citing D258; clause 6 is board work for the facilitator after the current card. Card 435 (in flight) finishes under the current agreement; the next card is the first written from the template. Cost: one facilitator session of agreement and board edits; no product code changes. Reversal: a later Decider can drop any clause. 
