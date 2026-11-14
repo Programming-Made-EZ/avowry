@@ -340,8 +340,6 @@ public sealed class PathScrubForms
     [MemberData(nameof(GluedAndUncRootsPending))]
     [Trait("Slice", "435")]
     [Trait("Criterion", "435-1")]
-    [Trait("Status", "Pending")]
-    // Pending until the green that changes tools/Avowry.Bench/PathScrub.cs
     public void Id_435_1_glued_unlisted_and_unc_roots(string input, string expected)
     {
         // Given a stored diagnostic holding a glued flag, an unlisted Unix root, a Cygwin root or a UNC account folder
@@ -366,8 +364,6 @@ public sealed class PathScrubForms
     [MemberData(nameof(NonAsciiAccountFoldersPending))]
     [Trait("Slice", "435")]
     [Trait("Criterion", "435-2")]
-    [Trait("Status", "Pending")]
-    // Pending until the green that changes tools/Avowry.Bench/PathScrub.cs
     public void Id_435_2_non_ascii_account_folders(string input, string expected)
     {
         // Given an account folder with a non-ASCII letter, a JSON escape, parentheses or a dotted tail, after each listed prefix
@@ -392,8 +388,6 @@ public sealed class PathScrubForms
     [MemberData(nameof(EscapesAfterAPathPending))]
     [Trait("Slice", "435")]
     [Trait("Criterion", "435-3")]
-    [Trait("Status", "Pending")]
-    // Pending until the green that changes tools/Avowry.Bench/PathScrub.cs
     public void Id_435_3_escapes_after_a_path(string input, string expected)
     {
         // Given a stored diagnostic holding a path followed by a JSON or C escape

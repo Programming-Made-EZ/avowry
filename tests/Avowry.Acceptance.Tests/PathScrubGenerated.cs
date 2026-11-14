@@ -36,8 +36,6 @@ public sealed class PathScrubGenerated
     [Fact]
     [Trait("Slice", "435")]
     [Trait("Criterion", "435-3")]
-    [Trait("Status", "Pending")]
-    // Pending until the green that changes tools/Avowry.Bench/PathScrub.cs
     public void Id_435_3_generated_inputs_leak_nothing_and_settle_in_one_pass()
     {
         // Given 100,000 strings built from the shapes of criteria 1 to 3 with SplitMix64 seed 435
