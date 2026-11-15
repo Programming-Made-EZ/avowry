@@ -1,0 +1,7 @@
+tested HEAD: a6f6b573dca91fa55c9f6b8419ea6a42547213c8
+lock at start: busy: PID=98908 UTC=2026-11-15T08:05:09Z OWNER=play-tracker facilitator ship-train 
+build exit 0:     0 Warning(s)     0 Error(s) 
+Slice=441&Status=Pending exit 1: Failed!  - Failed:    22, Passed:     0, Skipped:     0, Total:    22, Duration: 746 ms - Avowry.Acceptance.Tests.dll (net8.0)
+Slice=441&Status!=Pending exit 0: Passed!  - Failed:     0, Passed:    89, Skipped:     0, Total:    89, Duration: 171 ms - Avowry.Acceptance.Tests.dll (net8.0)
+Slice=439|Slice=435 exit 0: Passed!  - Failed:     0, Passed:   341, Skipped:     0, Total:   341, Duration: 7 s - Avowry.Acceptance.Tests.dll (net8.0)
+LIGHT: per-slice runs only; play-tracker's train held the heavy-run lock

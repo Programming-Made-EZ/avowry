@@ -1,0 +1,378 @@
+Test run for C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:02.56]     Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "minor-07", input: "a/b:/home/<user>", expected: "a/b:<path>") [FAIL]
+[xUnit.net 00:00:02.57]     Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "remote-11", input: "git clone ssh://git@host:2222/home/<user>/r.git", expected: "git clone ssh://git@host:2222/r.git") [FAIL]
+[xUnit.net 00:00:02.58]     Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "json-11", input: "{\"home\":\"\\/Users\\/<user>\"}", expected: "{\"home\":\"<path>\"}") [FAIL]
+[xUnit.net 00:00:02.58]     Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "minor-03", input: "\\\\?\\UNC\\server\\share\\Users\\<user>\\x.cs", expected: "x.cs") [FAIL]
+[xUnit.net 00:00:02.58]     Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "compiler-02", input: "gcc -isystem/home/<user>/include main.c", expected: "gcc -isysteminclude main.c") [FAIL]
+[xUnit.net 00:00:02.58]     Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "env-13", input: "MAIL=/var/spool/mail/<user>", expected: "MAIL=<path>") [FAIL]
+[xUnit.net 00:00:02.58]     Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "minor-01", input: "~<user>/x.cs", expected: "x.cs") [FAIL]
+[xUnit.net 00:00:02.59]     Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "compiler-08", input: "cl.exe /c /IC:\\Users\\<user>\\include /FoC:\\User"···, expected: "cl.exe /c /Iinclude /Fomain.obj main.c") [FAIL]
+[xUnit.net 00:00:02.59]     Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "env-08", input: "MAIL=/var/mail/<user>", expected: "MAIL=<path>") [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "minor-07", input: "a/b:/home/<user>", expected: "a/b:<path>") [686 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+             ↓ (pos 2)
+Expected: "a/b:<path>"
+Actual:   "a/<user>"
+             ↑ (pos 2)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 198
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Standard Output Messages:
+ row minor-07
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "remote-11", input: "git clone ssh://git@host:2222/home/<user>/r.git", expected: "git clone ssh://git@host:2222/r.git") [1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                                         ↓ (pos 30)
+Expected: "git clone ssh://git@host:2222/r.git"
+Actual:   ···"one ssh://git@host:2222/home/<user>/r.git"
+                                      ↑ (pos 30)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 198
+   at InvokeStub_PathScan441.Id_441_1_older_real_shapes(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row remote-11
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "json-11", input: "{\"home\":\"\\/Users\\/<user>\"}", expected: "{\"home\":\"<path>\"}") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                    ↓ (pos 9)
+Expected: "{"home":"<path>"}"
+Actual:   "{"home":"\\/Users\\/<user>"}"
+                    ↑ (pos 9)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 198
+   at InvokeStub_PathScan441.Id_441_1_older_real_shapes(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row json-11
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "minor-03", input: "\\\\?\\UNC\\server\\share\\Users\\<user>\\x.cs", expected: "x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x.cs"
+Actual:   "\\\\?\\UNC\\server\\share\\Users\\<user>\\x.cs"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 198
+   at InvokeStub_PathScan441.Id_441_1_older_real_shapes(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row minor-03
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "compiler-02", input: "gcc -isystem/home/<user>/include main.c", expected: "gcc -isysteminclude main.c") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                       ↓ (pos 12)
+Expected: "gcc -isysteminclude main.c"
+Actual:   "gcc -isystem/home/<user>/include main.c"
+                       ↑ (pos 12)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 198
+   at InvokeStub_PathScan441.Id_441_1_older_real_shapes(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row compiler-02
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "env-13", input: "MAIL=/var/spool/mail/<user>", expected: "MAIL=<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                ↓ (pos 5)
+Expected: "MAIL=<path>"
+Actual:   "MAIL=/var/spool/mail/<user>"
+                ↑ (pos 5)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 198
+   at InvokeStub_PathScan441.Id_441_1_older_real_shapes(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row env-13
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "minor-01", input: "~<user>/x.cs", expected: "x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x.cs"
+Actual:   "~<user>/x.cs"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 198
+   at InvokeStub_PathScan441.Id_441_1_older_real_shapes(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row minor-01
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "compiler-08", input: "cl.exe /c /IC:\\Users\\<user>\\include /FoC:\\User"···, expected: "cl.exe /c /Iinclude /Fomain.obj main.c") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                       ↓ (pos 12)
+Expected: "cl.exe /c /Iinclude /Fomain.obj main.c"
+Actual:   "cl.exe /c /IC:\\Users\\<user>\\include /FoC:"···
+                       ↑ (pos 12)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 198
+   at InvokeStub_PathScan441.Id_441_1_older_real_shapes(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row compiler-08
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "env-08", input: "MAIL=/var/mail/<user>", expected: "MAIL=<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                ↓ (pos 5)
+Expected: "MAIL=<path>"
+Actual:   "MAIL=/var/mail/<user>"
+                ↑ (pos 5)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 198
+   at InvokeStub_PathScan441.Id_441_1_older_real_shapes(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row env-08
+
+
+[xUnit.net 00:00:02.60]     Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "json-03", input: "{\"file\":\"\\/home\\/<user>\\/x.cs\"}", expected: "{\"file\":\"x.cs\"}") [FAIL]
+[xUnit.net 00:00:02.61]     Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "remote-01", input: "git remote add origin ssh://host/home/<user>/repo."···, expected: "git remote add origin ssh://host/repo.git") [FAIL]
+[xUnit.net 00:00:02.61]     Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "compiler-16", input: "clang -idirafter/home/<user>/inc -iquote/home/<use"···, expected: "clang -idirafterinc -iquoteq a.c") [FAIL]
+[xUnit.net 00:00:02.61]     Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "remote-06", input: "sftp://host/home/<user>/x.txt", expected: "sftp://host/x.txt") [FAIL]
+[xUnit.net 00:00:02.61]     Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "minor-02", input: "ls ~<user>/src", expected: "ls src") [FAIL]
+[xUnit.net 00:00:02.61]     Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-11", input: "-v ~/x:/data", expected: "-v <path>:/data") [FAIL]
+[xUnit.net 00:00:02.61]     Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-13", input: "-v /home/<user>/v:/v", expected: "-v <path>:/v") [FAIL]
+[xUnit.net 00:00:02.61]     Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-09", input: "C:\\tmp\\x:/home/<user>", expected: "x:<path>") [FAIL]
+[xUnit.net 00:00:02.61]     Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-12", input: "/tmp/x:/x", expected: "<path>:/x") [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "json-03", input: "{\"file\":\"\\/home\\/<user>\\/x.cs\"}", expected: "{\"file\":\"x.cs\"}") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                    ↓ (pos 9)
+Expected: "{"file":"x.cs"}"
+Actual:   "{"file":"\\/home\\/<user>\\/x.cs"}"
+                    ↑ (pos 9)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 198
+   at InvokeStub_PathScan441.Id_441_1_older_real_shapes(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row json-03
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "remote-01", input: "git remote add origin ssh://host/home/<user>/repo."···, expected: "git remote add origin ssh://host/repo.git") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                                            ↓ (pos 33)
+Expected: "git remote add origin ssh://host/repo.git"
+Actual:   ···"dd origin ssh://host/home/<user>/repo.git"
+                                   ↑ (pos 33)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 198
+   at InvokeStub_PathScan441.Id_441_1_older_real_shapes(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row remote-01
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "compiler-16", input: "clang -idirafter/home/<user>/inc -iquote/home/<use"···, expected: "clang -idirafterinc -iquoteq a.c") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                           ↓ (pos 16)
+Expected: "clang -idirafterinc -iquoteq a.c"
+Actual:   "clang -idirafter/home/<user>/inc -iquote/"···
+                           ↑ (pos 16)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 198
+   at InvokeStub_PathScan441.Id_441_1_older_real_shapes(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row compiler-16
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "remote-06", input: "sftp://host/home/<user>/x.txt", expected: "sftp://host/x.txt") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                       ↓ (pos 12)
+Expected: "sftp://host/x.txt"
+Actual:   "sftp://host/home/<user>/x.txt"
+                       ↑ (pos 12)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 198
+   at InvokeStub_PathScan441.Id_441_1_older_real_shapes(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row remote-06
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "minor-02", input: "ls ~<user>/src", expected: "ls src") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+              ↓ (pos 3)
+Expected: "ls src"
+Actual:   "ls ~<user>/src"
+              ↑ (pos 3)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 198
+   at InvokeStub_PathScan441.Id_441_1_older_real_shapes(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row minor-02
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-11", input: "-v ~/x:/data", expected: "-v <path>:/data") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+              ↓ (pos 3)
+Expected: "-v <path>:/data"
+Actual:   "-v x:/data"
+              ↑ (pos 3)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 226
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Standard Output Messages:
+ row minor-11
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-13", input: "-v /home/<user>/v:/v", expected: "-v <path>:/v") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+              ↓ (pos 3)
+Expected: "-v <path>:/v"
+Actual:   "-v v:/v"
+              ↑ (pos 3)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 226
+   at InvokeStub_PathScan441.Id_441_2_contrived_chains(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row minor-13
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-09", input: "C:\\tmp\\x:/home/<user>", expected: "x:<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x:<path>"
+Actual:   "<path><user>"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 226
+   at InvokeStub_PathScan441.Id_441_2_contrived_chains(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row minor-09
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-12", input: "/tmp/x:/x", expected: "<path>:/x") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "<path>:/x"
+Actual:   "x:/x"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 226
+   at InvokeStub_PathScan441.Id_441_2_contrived_chains(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row minor-12
+
+
+[xUnit.net 00:00:02.62]     Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-10", input: "C:\\Users\\<user>\\a:/home/<user>", expected: "a:<path>") [FAIL]
+[xUnit.net 00:00:02.62]     Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-08", input: "\\\\server\\share\\a:/home/<user>", expected: "a:<path>") [FAIL]
+[xUnit.net 00:00:02.62]     Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-14", input: "/tmp/x://server/home/<user>", expected: "<path>://server/home/<user>") [FAIL]
+[xUnit.net 00:00:02.62]     Avowry.Acceptance.Tests.PathScan441.Id_441_3_mutant_killing_rows(id: "mut-01", input: "cl.exe /c /IC:\\Users\\<user>\\include main.c", expected: "cl.exe /c /Iinclude main.c") [FAIL]
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-10", input: "C:\\Users\\<user>\\a:/home/<user>", expected: "a:<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "a:<path>"
+Actual:   "<path><user>"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 226
+   at InvokeStub_PathScan441.Id_441_2_contrived_chains(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row minor-10
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-08", input: "\\\\server\\share\\a:/home/<user>", expected: "a:<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "a:<path>"
+Actual:   "<path><user>"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 226
+   at InvokeStub_PathScan441.Id_441_2_contrived_chains(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row minor-08
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-14", input: "/tmp/x://server/home/<user>", expected: "<path>://server/home/<user>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "<path>://server/home/<user>"
+Actual:   "x://server/home/<user>"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 226
+   at InvokeStub_PathScan441.Id_441_2_contrived_chains(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row minor-14
+
+
+  Failed Avowry.Acceptance.Tests.PathScan441.Id_441_3_mutant_killing_rows(id: "mut-01", input: "cl.exe /c /IC:\\Users\\<user>\\include main.c", expected: "cl.exe /c /Iinclude main.c") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                       ↓ (pos 12)
+Expected: "cl.exe /c /Iinclude main.c"
+Actual:   "cl.exe /c /IC:\\Users\\<user>\\include main."···
+                       ↑ (pos 12)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan441.AssertCorpusRow(String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 319
+   at Avowry.Acceptance.Tests.PathScan441.Id_441_3_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate441red-clone\tests\Avowry.Acceptance.Tests\PathScan441.cs:line 254
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Standard Output Messages:
+ row mut-01
+
+
+
+Failed!  - Failed:    22, Passed:     0, Skipped:     0, Total:    22, Duration: 746 ms - Avowry.Acceptance.Tests.dll (net8.0)
