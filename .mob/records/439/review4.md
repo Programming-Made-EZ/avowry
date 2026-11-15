@@ -1,0 +1,5 @@
+# Card 439 review round 4, on e85c60b (the port of the third fixed reference)
+
+VERDICT: SIGN-OFF; new BLOCKING: 0; new MINOR: 4 (rounds: 8 and 2, 2 and 4, 3 and 3, 0 and 4). Seat: QA (claude opus, ctx-6, D262). Raw: `review4-raw.md`. The heavy lock was checked before every build and test (free each time). Round 3's three BLOCKING findings are fixed on every input; 355 earlier inputs and 86 new real shapes (Docker and Podman on Windows and WSL, compose lists, env dumps, passwd lines, rsync, scp and git ssh forms, drive-relative and alternate-data-stream forms) show no new leak, regression or second-pass change; every one of 21 timed shapes is linear (the worst 1.4 ms at 20,000 characters).
+
+The review ends under the stop rule. The MINOR findings of rounds 2, 3 and 4 (older shapes the regex shares, device-path prefixes, contrived one-letter chains, a surviving mutant of the one-letter rule with its killing row `-v /home/` + `u1a:/data`, a redundant condition, `MAIL=/var/mail/` + name and `ssh://host/home/` + name) go to ONE follow-up card as corpus rows.
