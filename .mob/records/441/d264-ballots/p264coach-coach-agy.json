@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "6f91d8f53e245604d6e0405f7ee299bdac752423faf4a307a2a740558de5904e",
+  "probe": {
+    "taken_at": "2026-11-15T07:59:10.365808Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-d985cf8a-49ff-43da-b826-0d90973a3293)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=bc04bd44-98fb-4f45-a32a-aacd1d0eaa59]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The task force is appropriately sized and balanced for this slice. The five distinct roles provide essential separation of concerns'architecture, mechanical red testing, green porting, adversarial QA, and independent sign-off'without adding",
+      "reply": "Yes\nThe task force is appropriately sized and balanced for this slice. The five distinct roles provide essential separation of concerns\u2014architecture, mechanical red testing, green porting, adversarial QA, and independent sign-off\u2014without adding ceremonial overhead. Model tiers are well-matched to each responsibility: strong tier for design and break-testing, mid-tier for test writing and sign-off, and a fast porting seat for implementation. Leaving the heavy local model unseated respects cross-mob constraints while working within current service quota limits.\n\nCITE: a MINOR shape stays a pinned corpus row unless a narrow change fixes it\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The task force is appropriately sized and balanced for this slice. The five distinct roles provide essential separation of concerns'architecture, mechanical red testing, green porting, adversarial QA, and independent sign-off'without adding"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T07:59:10.365808Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2595
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "275534b31a65427cf68f5124d5eda0281a2e6d39",
+  "head_end": "275534b31a65427cf68f5124d5eda0281a2e6d39",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

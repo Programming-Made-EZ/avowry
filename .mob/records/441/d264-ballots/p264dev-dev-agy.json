@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "72b291025e01876195bc24537d0c70bfc3ecd8214014912b6696d1e4a75d4513",
+  "probe": {
+    "taken_at": "2026-11-15T07:59:03.321223Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-c26b327f-05ac-4498-a218-3e2f750c5e3d)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=1047cc37-16a8-4e3e-9409-bb83c7a040ea]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "dev": {
+      "vote": "Yes",
+      "reason": "The rules are workable, unambiguous, and fair to the dev seats. Having the slice commit the real-shape corpus before the red phase eliminates guesswork about test inputs and expectations. Providing the Pending convention and backslash-safe ",
+      "reply": "Yes\nThe rules are workable, unambiguous, and fair to the dev seats. Having the slice commit the real-shape corpus before the red phase eliminates guesswork about test inputs and expectations. Providing the Pending convention and backslash-safe row formatting gives the red dev a deterministic, mechanical task. For the green dev, restricting scope to narrow reference ports while requiring prior card rows and blow-up rows to pass unchanged provides a clear, enforceable boundary that prevents gaming. Pinned tooling and context separation protect implementation integrity.\n\nCITE: measures the real-shape corpus and any narrow fix against card 439's reference\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The rules are workable, unambiguous, and fair to the dev seats. Having the slice commit the real-shape corpus before the red phase eliminates guesswork about test inputs and expectations. Providing the Pending convention and backslash-safe "
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T07:59:03.321223Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2592
+    }
+  },
+  "counted_seats": [
+    "dev"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "275534b31a65427cf68f5124d5eda0281a2e6d39",
+  "head_end": "275534b31a65427cf68f5124d5eda0281a2e6d39",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "dev": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

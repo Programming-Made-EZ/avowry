@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "85371b9fea21527bc9577c7cd48ad6ff681cb19afe17a7168cfe1c1a8d824b6e",
+  "probe": {
+    "taken_at": "2026-11-15T07:59:06.364297Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-8ca3ce15-70a3-435a-9a30-11621effed81)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=6f254002-96be-4233-800a-f3d13981b96d]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "The evaluation is firmly grounded in empirical evidence: clause 3 requires committing a real-shape corpus of at least five families and measuring the reference against it before the red phase, while guaranteeing that all previous card 439 r",
+      "reply": "Yes\n\nThe evaluation is firmly grounded in empirical evidence: clause 3 requires committing a real-shape corpus of at least five families and measuring the reference against it before the red phase, while guaranteeing that all previous card 439 rows and blow-up rows remain unchanged. The task force has every necessary seat for rigorous validation and sign-off, maintaining strict independence between green implementation, adversarial QA, and sign-off in a fresh clone. Model allocations are properly justified and pinned against live probe data.\n\nCITE: each role's service and exact model pinned before any seat runs\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The evaluation is firmly grounded in empirical evidence: clause 3 requires committing a real-shape corpus of at least five families and measuring the reference against it before the red phase, while guaranteeing that all previous card 439 r"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T07:59:06.364297Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2594
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "275534b31a65427cf68f5124d5eda0281a2e6d39",
+  "head_end": "275534b31a65427cf68f5124d5eda0281a2e6d39",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

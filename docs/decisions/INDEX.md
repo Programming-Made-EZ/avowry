@@ -367,3 +367,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D261](process-and-staffing.md#d261) | Card 439: task force declaration (models pinned per role) and Ready text (the bench path scrub finds path roots in one linear pass, replacing the single regex) | process-and-staffing | adopted |
 | [D262](process-and-staffing.md#d262) | Card 439: the QA role's model changes mid-card (agy's strong tier out of quota; claude opus in a new context) | process-and-staffing | adopted |
 | [D263](process-and-staffing.md#d263) | Card 439 retro pick: a scrub or parser slice measures a committed real-shape corpus before the red | process-and-staffing | adopted |
+| [D264](process-and-staffing.md#d264) | Card 441: task force declaration (models pinned per role) and Ready text (the bench path scrub's MINOR shapes from card 439's reviews become corpus rows, fixed where a narrow change can) | process-and-staffing | adopted |

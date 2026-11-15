@@ -1,0 +1,97 @@
+{
+  "result": "passed",
+  "prompt_sha": "f2db6ff2bf05516d161863c7ee4be72bd3494dde307c95908e6bd44f5c7ca946",
+  "probe": {
+    "taken_at": "2026-11-15T07:59:04.350987Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-138bd27e-96a4-49e5-a0d6-006e01eb6ee9)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=6889ef69-db0c-40e8-a519-0be2e41bbb52]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The design is sound, minimal, and enforceable without false positives. Committing the real-shape corpus across at least five families before writing red tests establishes a concrete reference baseline. Requiring that MINOR shapes remain pin",
+      "reply": "Yes\nThe design is sound, minimal, and enforceable without false positives. Committing the real-shape corpus across at least five families before writing red tests establishes a concrete reference baseline. Requiring that MINOR shapes remain pinned corpus rows unless a narrow change fixes them without altering any card 439 row or blow-up row ensures strict non-regression and avoids over-engineering. The division of responsibilities across seats is well-bounded, model pinning adheres to standing rules, and the stop-rule progression is preserved.\nCITE: a MINOR shape stays a pinned corpus row unless a narrow change fixes it\n",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026 a narrow fix leaves all card 439 rows and blow-up passes unchanged provides strict regression protection without false positives. The task force role allocation and model pinning respect current quotas and standing rules. CITE: a MINOR shape stays a pinned corpus row unless a narrow change fixes it",
+          "reason": "\u2026 a narrow fix leaves all card 439 rows and blow-up passes unchanged provides strict regression protection without false positives. The task force role allocation and model pinning respect current quotas and standing rules. CITE: a MINOR shape stays a pinned corpus row unless a narrow change fixes it"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The design is sound, minimal, and enforceable without false positives. Committing the real-shape corpus across at least five families before writing red tests establishes a concrete reference baseline. Requiring that MINOR shapes remain pin"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T07:59:04.350987Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2593
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "275534b31a65427cf68f5124d5eda0281a2e6d39",
+  "head_end": "275534b31a65427cf68f5124d5eda0281a2e6d39",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "628e0932378706df311df01e73cfe38b9461f5f49145f90670f450a12dec8338",
+  "probe": {
+    "taken_at": "2026-11-15T07:59:03.253182Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-de39f5ad-4a1a-47cf-a7c4-5b63a064dc56)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=6a0eb9fc-a633-4483-b9c7-ce5f7ef736ce]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "From the audit lens, this declaration is verifiable entirely from git alone without loopholes. All artifacts, probe data, and the baseline commit are committed in repository paths. Clause 3 enforces committing the real-shape corpus before t",
+      "reply": "Yes\nFrom the audit lens, this declaration is verifiable entirely from git alone without loopholes. All artifacts, probe data, and the baseline commit are committed in repository paths. Clause 3 enforces committing the real-shape corpus before the red test, so the sequence is strictly verifiable from commit topology. Regressions are prevented by pinning card 439 rows and blow-up rows, which git diffs can independently confirm. The task force model pins and separation of green and sign-off seats are recorded in advance, leaving a transparent audit trail.\nCITE: each role's service and exact model pinned before any seat runs\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From the audit lens, this declaration is verifiable entirely from git alone without loopholes. All artifacts, probe data, and the baseline commit are committed in repository paths. Clause 3 enforces committing the real-shape corpus before t"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T07:59:03.253182Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2591
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "275534b31a65427cf68f5124d5eda0281a2e6d39",
+  "head_end": "275534b31a65427cf68f5124d5eda0281a2e6d39",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

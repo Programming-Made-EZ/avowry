@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "18f81b3b5657aa3aff7676e3e2ffb5f0fae3b961c69da77eecb611a1ac40c3b7",
+  "probe": {
+    "taken_at": "2026-11-15T07:59:31.341054Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-f089996b-dc59-4804-996d-1f7be08254d0)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=222cd32e-a87f-4e54-a7c0-939b7ad1df7d]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "The workflow enforces red-first testing cleanly: the slice commits a real-shape corpus across at least five families and measures the reference before the red seat writes mechanical tests using the Pending convention. Having Dev Red write t",
+      "reply": "Yes\nThe workflow enforces red-first testing cleanly: the slice commits a real-shape corpus across at least five families and measures the reference before the red seat writes mechanical tests using the Pending convention. Having Dev Red write tests prior to Dev Green porting narrow fixes guarantees that behavior can fail red first without masking regressions or passing bad state. Additionally, retaining an adversarial QA seat ensures edge-case violations are caught independently before sign-off.\nCITE: The slice commits the D263 real-shape corpus (at least five families) and measures the reference against it before the red\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The workflow enforces red-first testing cleanly: the slice commits a real-shape corpus across at least five families and measures the reference before the red seat writes mechanical tests using the Pending convention. Having Dev Red write t"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T07:59:31.341054Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2596
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "275534b31a65427cf68f5124d5eda0281a2e6d39",
+  "head_end": "275534b31a65427cf68f5124d5eda0281a2e6d39",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}
