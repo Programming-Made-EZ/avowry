@@ -252,6 +252,163 @@ public sealed class PathScan439
         Assert.Equal(placeholderOnce, PathScrub.Apply(placeholderOnce));
     }
 
+    // Fix round 2 (review round 2, slice-fix2.md): Unix colon lists, the one-letter name before a colon-slash, the killing rows
+    // of the seven round 2 survivors and the two new mutants, and the device paths. Expected outputs are the reference's
+    // (the replaced regex's for the colon lists). Each row runs with the placeholder and the plain stand-in.
+    private static readonly (string Id, string Input, string Expected)[] Fix2ColonRowsPending =
+    [
+        ("c01 docker volume spec", "docker run -v /home/<user>/work:/home/<user> -it ubuntu", "docker run -v work:<path>"),
+        ("c02 PYTHONPATH", "PYTHONPATH=/home/<user>/lib:/home/<user>", "PYTHONPATH=lib:<path>"),
+        ("c03 Git Bash PATH", "PATH=/c/Users/<user>/bin:/usr/bin:/c/Users/<user>", "PATH=bin:/usr/bin:<path>"),
+        ("c04 GOPATH", "GOPATH=/home/<user>/go:/home/<user>", "GOPATH=go:<path>"),
+        ("c05 NODE_PATH", "NODE_PATH=/home/<user>/node_modules:/home/<user>", "NODE_PATH=node_modules:<path>"),
+        ("c06 CDPATH", "CDPATH=.:/home/<user>/src:/home/<user>", "CDPATH=.:src:<path>"),
+        ("c07 CLASSPATH", "CLASSPATH=/home/<user>/lib/a.jar:/home/<user>/classes:/home/<user>", "CLASSPATH=a.jar:classes:<path>"),
+        ("c08 java class path", "-Djava.class.path=/home/<user>/lib/a.jar:/home/<user>", "-Djava.class.path=a.jar:<path>"),
+        ("c09 rsync change_dir", "rsync: change_dir \"/home/<user>/src:/home/<user>\" failed", "rsync: change_dir \"src:<path>\" failed"),
+        ("c10 compose volumes", "volumes: [/home/<user>/data:/home/<user>]", "volumes: [data:<path>]"),
+        ("c12 PATH with two homes", "PATH=/home/<user>/bin:/home/<user>/.local/bin:/usr/bin", "PATH=bin:bin:/usr/bin"),
+        ("c13 LD_LIBRARY_PATH", "LD_LIBRARY_PATH=/home/<user>/lib:/home/<user>/.local/lib", "LD_LIBRARY_PATH=lib:lib"),
+        ("c14 compose volume to root", "- /home/<user>/.config:/root/.config", "- .config:.config"),
+        ("c15 tilde list", "~/bin:~/lib:/home/<user>", "bin:lib:<path>"),
+        ("o1 one-letter name before colon-slash", "/tmp/x:/home/<user>", "x:<path>"),
+        ("o2 one-letter name before colon-slash", "/home/<user>/a:/mnt/c/Users/<user>", "a:<path>"),
+    ];
+
+    private static readonly (string Id, string Input, string Expected)[] Fix2ColonRowsCharacterisation =
+    [
+        ("c16 Unix name then a drive", "/tmp/a:C:/Users/<user>/x.cs", "a:x.cs"),
+    ];
+
+    // c11 holds only the placeholder form: the plain stand-in ends in b, and the reference (like the regex) keeps one b there.
+    private static readonly (string Id, string Input, string Expected)[] Fix2PlaceholderRowsCharacterisation =
+    [
+        ("c11 two homes", "/home/<user>:/home/<user>", "<path>:<path>"),
+    ];
+
+    private static readonly (string Id, string Input, string Expected)[] Fix2MutantRowsPending =
+    [
+        ("adjacency-any", "PATH=/home/<user>/bin:/home/<user>/.local/bin:/usr/bin", "PATH=bin:bin:/usr/bin"),
+        ("final-start-root-stop", "/tmp/x:/home/<user>", "x:<path>"),
+    ];
+
+    private static readonly (string Id, string Input, string Expected)[] Fix2MutantRowsCharacterisation =
+    [
+        ("wordends-no-dash", @"C:\Users\<user> smith-jones", "<path>"),
+        ("drive-parents-take-home", @"C:\home\" + "x.cs", "x.cs"),
+        ("guard-letter-esc-gone", @"\\C:\u00e9x\y.cs", @"\\<path>"),
+        ("unc-host-space-ok", @"\\ server\share\x.cs", @"\\ server\share\x.cs"),
+        ("flagleft-no-semicolon", "CFLAGS=-O2;-I/home/<user>/inc", "CFLAGS=-O2;-Iinc"),
+        ("root-ahead-tilde-gone", @"C:\a b -I~/x.cs", "a b -Ix.cs"),
+        ("stopat-apos-gone", @"C:\Users\<user> x2'b", "<path> x2'b"),
+    ];
+
+    // Ruling 2: today's outputs for a device path before a drive are pinned (no leak, stable on a second pass).
+    private static readonly (string Id, string Input, string Expected)[] Fix2DevicePathRows =
+    [
+        ("device path question mark", @"'\\?\C:\Users\<user>\x.cs'", @"'\\?\x.cs'"),
+        ("device path dot", @"\\.\C:\Users\<user>\x.cs", "<path>x.cs"),
+    ];
+
+    private static IEnumerable<object[]> Rows(IEnumerable<(string Id, string Input, string Expected)> rows) =>
+        rows.Select(r => new object[] { r.Id, r.Input, r.Expected });
+
+    public static IEnumerable<object[]> Fix2ColonPending() => Rows(Fix2ColonRowsPending);
+
+    public static IEnumerable<object[]> Fix2PlaceholderCharacterisation() => Rows(Fix2PlaceholderRowsCharacterisation);
+
+    public static IEnumerable<object[]> Fix2MutantsPending() => Rows(Fix2MutantRowsPending);
+
+    public static IEnumerable<object[]> Fix2ColonCharacterisation() => Rows(Fix2ColonRowsCharacterisation);
+
+    public static IEnumerable<object[]> Fix2MutantsCharacterisation() => Rows(Fix2MutantRowsCharacterisation);
+
+    public static IEnumerable<object[]> Fix2DevicePaths() => Rows(Fix2DevicePathRows);
+
+    [Theory]
+    [MemberData(nameof(Fix2ColonPending))]
+    [Trait("Slice", "439")]
+    [Trait("Criterion", "439-2")]
+    [Trait("Status", "Pending")]
+    // Pending until the card 439 fix-2 green that ports the reference scanner
+    public void Id_439_2_fix2_colon_lists_and_one_letter_names(string id, string input, string expected)
+    {
+        // Given a Unix colon-separated list or a one-letter name before a colon-slash (review round 2, findings 1 to 3)
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as the replaced regex gave it (the reference's output), no account name survives, and a second pass changes nothing
+        output.WriteLine($"row {id}");
+        AssertRow(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(Fix2PlaceholderCharacterisation))]
+    [Trait("Slice", "439")]
+    [Trait("Criterion", "439-2")]
+    public void Id_439_2_fix2_colon_list_with_two_homes_that_passes_on_the_port(string id, string input, string expected)
+    {
+        // Given two home folders joined by a colon (placeholder form only)
+        // When PathScrub.Apply runs
+        // Then both become the placeholder path and a second pass changes nothing
+        output.WriteLine($"row {id}");
+        var once = PathScrub.Apply(input);
+        Assert.Equal(expected, once);
+        Assert.Equal(once, PathScrub.Apply(once));
+    }
+
+    [Theory]
+    [MemberData(nameof(Fix2MutantsPending))]
+    [Trait("Slice", "439")]
+    [Trait("Criterion", "439-4")]
+    [Trait("Status", "Pending")]
+    // Pending until the card 439 fix-2 green that ports the reference scanner
+    public void Id_439_4_fix2_mutant_killing_rows(string id, string input, string expected)
+    {
+        // Given the killing row of a round 2 survivor or of a mutant the second fix slice adds (the row id names the mutant)
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed, no account name survives, and a second pass changes nothing
+        output.WriteLine($"row {id}");
+        AssertRow(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(Fix2ColonCharacterisation))]
+    [Trait("Slice", "439")]
+    [Trait("Criterion", "439-2")]
+    public void Id_439_2_fix2_colon_list_rows_that_pass_on_the_port(string id, string input, string expected)
+    {
+        // Given a colon list that the port of the first fixed reference already handles
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed, no account name survives, and a second pass changes nothing (characterisation)
+        output.WriteLine($"row {id}");
+        AssertRow(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(Fix2MutantsCharacterisation))]
+    [Trait("Slice", "439")]
+    [Trait("Criterion", "439-4")]
+    public void Id_439_4_fix2_mutant_killing_rows_that_pass_on_the_port(string id, string input, string expected)
+    {
+        // Given the killing row of a round 2 survivor, which the current port already satisfies
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed, no account name survives, and a second pass changes nothing (characterisation: it kills a mutant of the green, not of the port)
+        output.WriteLine($"row {id}");
+        AssertRow(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(Fix2DevicePaths))]
+    [Trait("Slice", "439")]
+    [Trait("Criterion", "439-2")]
+    public void Id_439_2_fix2_device_paths_before_a_drive_keep_their_outputs(string id, string input, string expected)
+    {
+        // Given a device path (the question mark or dot prefix) before a drive path
+        // When PathScrub.Apply runs
+        // Then the output is today's (no leak, stable on a second pass), pinned so a later change is deliberate (characterisation, ruling 2)
+        output.WriteLine($"row {id}");
+        AssertRow(input, expected);
+    }
+
     private static string PlainLetterFolder() => "aa" + "bb";
 
     private static void AssertRow(string input, string expected)

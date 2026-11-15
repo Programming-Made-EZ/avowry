@@ -392,3 +392,25 @@ Runs (after `dotnet build Avowry.sln -c Debug`: 0 warnings, 0 errors):
 First assertion lines of the 13 Pending tests (account name as `<user>`): 4a, 4b and drive-parent-guard Actual `<path>` (Expected `x.cs`); 5a, 5b Actual the input unchanged (a leak); 5c Actual `/a/c/users/<user>`; 6a, 6b and no-opener-bridge Actual `see <user>)` (a leak); 7 Actual `{"pattern":"x.cs"}`; 8a Actual `<path>[Verification.csproj]`; 8b Actual `<path>"is denied"`; 8c Actual `<path>\nnext`.
 
 Correction to the first red: the nine blow-up facts of `Id_439_3_blow_up_shapes_settle_in_one_pass` were written with single backslashes by a shell heredoc that collapsed doubled backslashes (so `\;` instead of `\\;`, and so on). They are now the shapes the slice names (`\\;`, `\\,`, `\\a;`, `\\\\host\\share\\x.cs\n`, `\\C:/a\n`, `\\C:\\a\n`, `\\\\a$\n`, `/a`, `/-`). The same collapse garbled the shape list in the BlowUpShapes line of the section "Characterisation rows" above. All other rows came from a dump file and were not affected, and sweeps B and C reproduced the architect's counts.
+
+## Fix round 2 red (review round 2; worktree at 7454d34, the port of the first fixed reference)
+
+Changes, uncommitted, in `PathScan439.cs` only (earlier rows not edited or reordered). Expected outputs come from the architect's reference (probe `PathScan.cs`, run on every row with the regex and the pre-435 copy beside it; the colon lists equal the regex and the pre-435 copy).
+
+New Pending rows (18, all fail by assertion on the current port; each runs with the placeholder and the plain stand-in):
+- `Id_439_2_fix2_colon_lists_and_one_letter_names` (439-2, 16 rows): c01 docker volume spec, c02 PYTHONPATH, c03 Git Bash PATH, c04 GOPATH, c05 NODE_PATH, c06 CDPATH, c07 CLASSPATH, c08 java class path, c09 rsync change_dir, c10 compose volumes, c12 PATH with two homes, c13 LD_LIBRARY_PATH, c14 compose volume to root, c15 tilde list, and o1 `/tmp/x:` + home (`x:<path>`), o2 home `/a:/mnt/c/Users/` + name (`a:<path>`) (the one-letter rule rows).
+- `Id_439_4_fix2_mutant_killing_rows` (439-4, 2 rows): `adjacency-any` (the PATH row) and `final-start-root-stop` (the `/tmp/x:` row).
+
+First assertion lines on the port (account name `<user>`): the colon rows give the mangled or leaking text, for example c02 Actual `PYTHONPATH=li<user>` (Expected `PYTHONPATH=lib:<path>`), c12 and `adjacency-any` Actual `PATH=bibibin`, c14 Actual `- .confi.config`, c01 Actual `docker run -v wor<user> -it ubuntu`; o1, o2 and `final-start-root-stop` Actual `<path><user>`.
+
+Characterisation rows (no Pending; already pass on the port):
+- c16 (`/tmp/a:C:/Users/<user>/x.cs` gives `a:x.cs`); c11 (`/home/<user>:/home/<user>` gives `<path>:<path>`, placeholder form only: with the plain stand-in, which ends in b, the reference and the regex keep one b, `<path>b:<path>`, so that form is not pinned).
+- Seven survivor killing rows that pass on the port, as they kill mutants of the green only: `wordends-no-dash`, `drive-parents-take-home` (the architect's row `C:\home\` + `x.cs`, ruling 1), `guard-letter-esc-gone`, `unc-host-space-ok`, `flagleft-no-semicolon`, `root-ahead-tilde-gone`, `stopat-apos-gone` (seven rows in all).
+- The two device-path rows (ruling 2): `'\\?\C:\Users\<user>\x.cs'` gives `'\\?\x.cs'` and `\\.\C:\Users\<user>\x.cs` gives `<path>x.cs` (the reference's outputs, no leak, stable).
+
+Runs (`dotnet build Avowry.sln -c Debug`: 0 warnings, 0 errors):
+- `Slice=439&Status=Pending`: `Failed!  - Failed:    18, Passed:     0, Skipped:     0, Total:    18` (18 of 18 `Assert.Equal() Failure: Strings differ`).
+- `Slice=439&Status!=Pending`: `Passed!  - Failed:     0, Passed:   191, Skipped:     0, Total:   191`.
+- `Slice=435|Slice=426|Slice=418`: `Passed!  - Failed:     0, Passed:   186, Skipped:     0, Total:   186`.
+
+Notes: the seven survivor rows were not Pending because the port already gives the reference's output on them; the two new mutants' rows are the only mutant rows that fail. Path-shaped inputs hold the `<user>` placeholder (never a real name); the file passes the home-path rewrite unchanged (the `drive-parents-take-home` row is a split string, `C:\home\` + `x.cs`, as the hook flags the joined form).

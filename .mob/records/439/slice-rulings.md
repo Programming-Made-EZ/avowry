@@ -27,3 +27,4 @@ The second fix slice: slice-fix2.md (the architect, ctx-1). Measured: all 16 col
 1. The `drive-parents-take-home` killing row is the architect's (`C:\home\` + `x.cs` gives `x.cs`), not the reviewer's (which would pin a leak).
 2. Device paths (`\?\` and `\.\` before a drive): today's outputs are pinned as characterisation rows (no leak, stable), so a later change is deliberate.
 3. The one-letter final name before `:/` in a Unix or `~` path keeps its letter (removing a leak the replaced regex had): ACCEPTED in this card, with its own mutant.
+4. Row c11 in the plain stand-in form (`/home/` + name `:/home/` + name) keeps one letter of the stand-in (`<path>b:<path>`) in the reference and the replaced regex alike: an older one-letter limit, named with 2.5n, 3.4d, 3.8a-d and 9b; c11 is pinned in the placeholder form only.
