@@ -1,0 +1,37 @@
+Test run for C:\Users\<user>\projects\gate430signoff-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.08]   Discovering: Avowry.Acceptance.Tests
+[xUnit.net 00:00:00.39]   Discovered:  Avowry.Acceptance.Tests
+[xUnit.net 00:00:00.40]   Starting:    Avowry.Acceptance.Tests
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.I_string_literal_forms_and_a_class_inside_a_raw_string_are_not_false_hits [10 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.O3_accepted_collection_spellings_and_placements_are_not_named(id: "xunit-qualified", prefix: "[Xunit.Collection(\"Isolated timing\")]\n") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.O3_accepted_collection_spellings_and_placements_are_not_named(id: "same-line", prefix: "[Collection(\"Isolated timing\")] ") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.O3_accepted_collection_spellings_and_placements_are_not_named(id: "above", prefix: "[Collection(\"Isolated timing\")]\n") [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.O3_accepted_collection_spellings_and_placements_are_not_named(id: "comma-list", prefix: "[Collection(\"Isolated timing\"), Trait(\"Slice\","···) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.O3_accepted_collection_spellings_and_placements_are_not_named(id: "after-a-comment", prefix: "// keep the attribute\n[Collection(\"Isolated timi"···) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.L3_live_tree_has_exactly_one_isolated_timing_collection_definition_with_parallelisation_disabled [68 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.O2_cancellation_token_limit_without_the_collection_is_named [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.L2_live_tree_detected_set_contains_BenchTimeoutIsolation [72 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.B_near_misses_are_named_only_when_the_collection_is_wrong(id: "commented-out", text: "// [Collection(\"Isolated timing\")]\npublic class"···, named: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.B_near_misses_are_named_only_when_the_collection_is_wrong(id: "wrong-case-collection", text: "[Collection(\"Isolated Timing\")]\npublic class Cl"···, named: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.B_near_misses_are_named_only_when_the_collection_is_wrong(id: "bench-processes", text: "[Collection(\"Bench processes\")]\npublic class Cl"···, named: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.B_near_misses_are_named_only_when_the_collection_is_wrong(id: "comment", text: "public class Near\n{\n    [Fact]\n    public void "···, named: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.B_near_misses_are_named_only_when_the_collection_is_wrong(id: "string", text: "public class Near\n{\n    [Fact]\n    public void "···, named: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.B_near_misses_are_named_only_when_the_collection_is_wrong(id: "timeout-ms-argument", text: "public class Near\n{\n    [Fact]\n    public void "···, named: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.B_near_misses_are_named_only_when_the_collection_is_wrong(id: "wait-for-exit-limit", text: "public class Near\n{\n    [Fact]\n    public void "···, named: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.B_near_misses_are_named_only_when_the_collection_is_wrong(id: "constant", text: "const string N = \"Isolated timing\";\n[Collection"···, named: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.B_near_misses_are_named_only_when_the_collection_is_wrong(id: "collection-attribute", text: "[CollectionAttribute(\"Isolated timing\")]\npublic"···, named: True) [< 1 ms]
+[xUnit.net 00:00:00.67]   Finished:    Avowry.Acceptance.Tests
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.I_a_partial_class_is_merged_across_files [1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.I_the_guard_file_is_not_named [2 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.I_several_classes_in_one_file_are_judged_separately [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.L1_live_tree_has_no_wall_clock_class_outside_isolated_timing [74 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.Z1_no_class_asserts_a_wall_clock_limit [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.I_bin_and_obj_copies_are_skipped [< 1 ms]
+  Passed Avowry.Acceptance.Tests.WallClockTestsRunIsolated.O1_elapsed_comparison_without_the_collection_is_named [< 1 ms]
+
+Test Run Successful.
+Total tests: 25
+     Passed: 25
+ Total time: 1.1379 Seconds
