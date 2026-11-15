@@ -15,6 +15,7 @@ namespace Avowry.Acceptance.Tests;
 // Each endpoint is one spec group and runs in its own process. The store starts
 // empty for that group, so one endpoint's saves cannot appear in another's list or lookup.
 // The concurrency check uses a further fresh process.
+[Collection("Isolated timing")]
 public class TasksOverHttp
 {
     private const int ParallelCreates = 20;

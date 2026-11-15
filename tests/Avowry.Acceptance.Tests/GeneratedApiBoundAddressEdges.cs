@@ -4,6 +4,7 @@ namespace Avowry.Acceptance.Tests;
 
 // Card 214 Done check 2, part 2 (commit 4): the pure parser boundaries (B), the stream and format edges (B, E), and guards 7 and 9.
 // Layers: L4 only for the parser (plain strings, no process); L2 -> L3 -> L4 -> L5 (QuietChild) for the rest.
+[Collection("Isolated timing")]
 public class GeneratedApiBoundAddressEdges
 {
     [Fact]

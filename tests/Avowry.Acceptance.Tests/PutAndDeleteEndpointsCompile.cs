@@ -15,6 +15,7 @@ namespace Avowry.Acceptance.Tests;
 // A successful endpoint is already bound with Send.OkAsync, which is HTTP 200; with no
 // response record that is 200 and an empty body. One spec has one outcome, so the later
 // GET that proves the item is gone is the live request sequence, not a second `then`.
+[Collection("Isolated timing")]
 public class PutAndDeleteEndpointsCompile
 {
     // The in-memory store starts empty, and an unknown id is NotFound, so the live

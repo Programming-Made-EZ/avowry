@@ -1,0 +1,7 @@
+tested HEAD: a659658ca67889c718bad20a7a66c3d459f71536
+build exit 0:     0 Warning(s)     0 Error(s) 
+Slice=430 exit 0:  | wall 4 s from 2026-11-15T19:23:59Z
+Slice=417 exit 0:  | wall 3 s from 2026-11-15T19:24:03Z
+Status!=Pending exit 0:  | wall 836 s from 2026-11-15T19:24:06Z
+[S] ceiling: the Status!=Pending wall time above against 900 s
+DONE

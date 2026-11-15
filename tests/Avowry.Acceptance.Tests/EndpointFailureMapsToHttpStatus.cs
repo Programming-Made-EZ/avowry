@@ -10,6 +10,7 @@ namespace Avowry.Acceptance.Tests;
 //   As Morgan, I want invalid endpoint input to return its declared failure
 //   with the mapped HTTP status instead of a 500, so that I can verify the
 //   intended failure behavior from the response.
+[Collection("Isolated timing")]
 public class EndpointFailureMapsToHttpStatus
 {
     [Fact]

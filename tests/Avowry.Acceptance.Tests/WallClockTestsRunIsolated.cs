@@ -3,11 +3,14 @@ using Avowry.Acceptance.Tests.Support;
 
 namespace Avowry.Acceptance.Tests;
 
-// Slice 417: a test class that asserts a wall-clock limit must run in Collection("Isolated timing").
-// Offline text scan of this project (no build, no process). The Code variant blanks comments, string
-// contents and char literals; the Text variant blanks comments only. Newlines are kept. Nested types
-// count toward their parent. Partial classes merge by name. Fixtures are in-memory strings.
-public class WallClockTestsRunIsolated
+// Slice 417, extended by card 430: a test class that asserts a wall-clock limit must run in
+// Collection("Isolated timing"). The scan recognises the card 430 spellings, test-type shapes,
+// and keeps ruling 4's named limits as not recognised. Card 430 fix round 1 applies linear-time
+// declaration patterns and token forms that are not limits. Offline text scan of this project
+// (no build, no process). The Code variant blanks comments, string contents and char literals;
+// the Text variant blanks comments only. Newlines are kept. Nested types count toward their parent.
+// Partial classes merge by name. Fixtures are in-memory strings.
+public partial class WallClockTestsRunIsolated
 {
     private const string ThisFile = "WallClockTestsRunIsolated.cs";
     private const string IsolatedName = "Isolated timing";
@@ -18,17 +21,88 @@ public class WallClockTestsRunIsolated
     private static readonly string IsolatedAttr = "Collection(\"" + IsolatedName + "\")";
     private static readonly string XunitIsolatedAttr = "Xunit." + IsolatedAttr;
 
-    private static readonly Regex ClassDecl = new(@"(?<![:,]\s*)\bclass\s+(\w+)", RegexOptions.CultureInvariant);
-    private static readonly Regex FactOrTheory = new(@"\[\s*(?:Xunit\s*\.\s*)?(?:Fact|Theory)\b", RegexOptions.CultureInvariant);
+    // [I] a test type: class, record or record class (not record struct); [SkippableFact]/[SkippableTheory]; an attribute list.
+    private static readonly Regex ClassDecl = new(
+        @"(?<![:,]\s*)\b(?:record\s+(?:class\s+)?|class\s+)(\w+)",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex FactOrTheory = new(
+        @"(?:\[|,)\s*(?:Xunit\s*\.\s*)?(?:Skippable)?(?:Fact|Theory)(?:Attribute)?\s*(?=[\](,])",
+        RegexOptions.CultureInvariant);
     private static readonly Regex IsolatedCollection = new(
         @"(?:^\[|,)\s*(?:Xunit\s*\.\s*)?Collection\s*\(\s*""" + IsolatedName + @"""\s*\)",
         RegexOptions.CultureInvariant);
+    // [M] the elapsed member: Elapsed, ElapsedMilliseconds, ElapsedTicks, TotalSeconds, TotalMilliseconds, TotalMinutes.
+    private static readonly string ElapsedMember = @"(?:" + Ela + @"(?:Milliseconds|Ticks)?|TotalSeconds|TotalMilliseconds|TotalMinutes)";
+    // `<` or `<=` after the member; `<` may touch a letter (sw.Elapsed<limit) unless it opens a generic argument list `<T>`.
     private static readonly Regex ElapsedCompare = new(
-        @"\b(?:" + Ela + @"|TotalSeconds|TotalMilliseconds)\b(?:\s*\.\s*(?:TotalSeconds|TotalMilliseconds|" + Ela + @")\b)*\s*(?:<=|<(?![<=A-Za-z]))",
+        @"\b" + ElapsedMember + @"\b(?:\s*\.\s*" + ElapsedMember + @"\b)*\s*(?:<=|<(?![<=])(?!\s*[A-Za-z_][\w.]*\s*>))",
         RegexOptions.CultureInvariant);
+    // reversed: `limit > sw.Elapsed`, `limit >= ...`; not a lambda `=>`.
+    private static readonly Regex ElapsedReversed = new(
+        @"(?:>=|(?<!=)>)\s*(?:[\w.]+\s*\.\s*)?" + ElapsedMember + @"\b",
+        RegexOptions.CultureInvariant);
+    // Assert.InRange(<first argument holding an elapsed member>, low, high)
+    // Bounded scans keep the pass linear (an unbounded lazy scan is quadratic on a body with no comma or semicolon).
+    private static readonly Regex ElapsedInRange = new(
+        @"\bInRange\s*(?:<[^<>;]{0,80}>\s*)?\(\s*[^,;]{0,200}?\b" + ElapsedMember + @"\b",
+        RegexOptions.CultureInvariant);
+    // [M] CancellationTokenSource: from a TimeSpan (seconds, milliseconds, minutes, hours), from a value, target typed, or CancelAfter.
     private static readonly Regex CtsFromSpan = new(
-        @"new\s+" + CtsType + @"\s*\(\s*TimeSpan\s*\.\s*From(?:Seconds|Milliseconds)\s*\(",
+        @"new\s+" + CtsType + @"\s*\(\s*TimeSpan\s*\.\s*From(?:Seconds|Milliseconds|Minutes|Hours)\s*\(",
         RegexOptions.CultureInvariant);
+    private static readonly Regex CtsFromValue = new(
+        @"new\s+" + CtsType + @"\s*\(\s*(?!TimeSpan\s*\.)[^)\s]",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex CtsTargetTyped = new(
+        @"\b" + CtsType + @"(?:\s*\?\s*|\s+)\w+\s*=\s*new\s*\(\s*[^)\s]",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex CtsCancelAfter = new(
+        @"\.\s*CancelAfter\s*\(\s*[^)\s]",
+        RegexOptions.CultureInvariant);
+    // [M] .WaitAsync(limit): an argument that is not empty and not a cancellation token.
+    private static readonly string WaitAsyncTokenForms =
+        @"|cancellationToken\s*:(?!:)" +
+        @"|[\w.]*(?:[Cc]t|[Tt]oken|[Cc]ancel)\s*[,)]" +
+        @"|(?:System\s*\.\s*Threading\s*\.\s*)?Timeout\s*\.\s*Infinite(?:TimeSpan)?\s*[,)]" +
+        @"|CancellationToken\s*\.\s*None\b";
+    private static readonly Regex WaitAsyncLimit = new(
+        @"\.\s*WaitAsync\s*\(\s*(?![)]" + WaitAsyncTokenForms + ")",
+        RegexOptions.CultureInvariant);
+    // [M] Task.WhenAny with Task.Delay in the same type.
+    private static readonly Regex WhenAny = new(
+        @"\bTask\s*\.\s*WhenAny\s*\(",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex TaskDelay = new(
+        @"\bTask\s*\.\s*Delay\s*\(",
+        RegexOptions.CultureInvariant);
+    // [M] HttpClient { Timeout = ... } (new HttpClient, target-typed new(), or name.Timeout = after a declaration); never InfiniteTimeSpan.
+    private static readonly string NotInfinite = @"(?!\s*(?:System\s*\.\s*Threading\s*\.\s*)?Timeout\s*\.\s*InfiniteTimeSpan\b)";
+    private static readonly Regex HttpTimeoutInit = new(
+        @"(?:new\s+HttpClient\b|\bHttpClient(?:\s*\?\s*|\s+)\w+\s*=\s*new\s*\()[^;]{0,400}?\bTimeout\s*=(?!=)" + NotInfinite,
+        RegexOptions.CultureInvariant);
+    private static readonly Regex HttpDeclared = new(
+        @"\b(?:HttpClient(?:\s*\?\s*|\s+)|var\s+)(\w+)\s*=\s*new\s+HttpClient\b|\bHttpClient(?:\s*\?\s*|\s+)(\w+)\s*=\s*new\s*\(",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex HttpTimeoutAssigned = new(
+        @"\b(\w+)\s*\.\s*Timeout\s*=(?!=)" + NotInfinite,
+        RegexOptions.CultureInvariant);
+
+    // `name.Timeout = ...` where name was declared as an HttpClient in the same type (one pass each, linear).
+    private static bool HttpAssigned(string code)
+    {
+        var names = new HashSet<string>(StringComparer.Ordinal);
+        foreach (Match d in HttpDeclared.Matches(code))
+            names.Add(d.Groups[1].Success ? d.Groups[1].Value : d.Groups[2].Value);
+        if (names.Count == 0)
+            return false;
+        foreach (Match a in HttpTimeoutAssigned.Matches(code))
+        {
+            if (names.Contains(a.Groups[1].Value))
+                return true;
+        }
+
+        return false;
+    }
     private static readonly HashSet<string> Modifiers = new(StringComparer.Ordinal)
     {
         "public", "private", "protected", "internal", "file", "sealed", "static", "abstract", "partial",
@@ -433,7 +507,13 @@ public class WallClockTestsRunIsolated
 
     private static bool AssertsLimit(string codeBody, string textBody) =>
         ElapsedCompare.IsMatch(codeBody) ||
-        (CtsFromSpan.IsMatch(codeBody) && textBody.Contains(DidNotFinish, StringComparison.Ordinal));
+        ElapsedReversed.IsMatch(codeBody) ||
+        ElapsedInRange.IsMatch(codeBody) ||
+        ((CtsFromSpan.IsMatch(codeBody) || CtsFromValue.IsMatch(codeBody) || CtsTargetTyped.IsMatch(codeBody) || CtsCancelAfter.IsMatch(codeBody)) &&
+         textBody.Contains(DidNotFinish, StringComparison.Ordinal)) ||
+        WaitAsyncLimit.IsMatch(codeBody) ||
+        (WhenAny.IsMatch(codeBody) && TaskDelay.IsMatch(codeBody)) ||
+        HttpTimeoutInit.IsMatch(codeBody) || HttpAssigned(codeBody);
 
     private static (bool Isolated, bool Partial) ReadAttributes(string code, string text, int classIndex)
     {

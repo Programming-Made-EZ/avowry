@@ -21,6 +21,7 @@ namespace Avowry.Acceptance.Tests;
 //       With a timeout: on expiry the process tree is killed, termination and both drains are awaited, TimedOut is true.
 //   internal sealed record ProcessResult(int ExitCode, string Stdout, string Stderr, bool TimedOut)
 // This file does not compile until that type exists: the first red is that compile failure.
+[Collection("Isolated timing")]
 public class StarvationProbe
 {
     private const int WindowMs = 3000;
