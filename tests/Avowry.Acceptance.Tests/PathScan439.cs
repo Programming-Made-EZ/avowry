@@ -405,6 +405,70 @@ public sealed class PathScan439
         AssertRow(input, expected);
     }
 
+    // Fix round 3 (review round 3, slice-fix3.md): Windows-drive and UNC volume specs, an account folder before a colon-slash,
+    // and the killing rows of the round 3 mutants. Expected outputs are the reference's (the pre-435 copy's and the regex's
+    // on the volume specs). Each row runs with the placeholder and the plain stand-in; a second pass must change nothing.
+    private static readonly (string Id, string Input, string Expected)[] Fix3RowsPending =
+    [
+        ("f1a docker Windows drive volume", @"docker run -v C:\Users\<user>\proj:/home/<user> ubuntu", "docker run -v proj:<path>"),
+        ("f1b docker Windows drive volume, slashes", "docker run -v C:/Users/<user>/proj:/home/<user> ubuntu", "docker run -v proj:<path>"),
+        ("f1c docker account folder volume", @"docker run -v C:\Users\<user>:/home/<user> ubuntu", "docker run -v <path>:<path>"),
+        ("f1d daemon error line", @"Error response from daemon: invalid volume specification: 'C:\Users\<user>\proj:/home/<user>:rw'", "Error response from daemon: invalid volume specification: 'proj:<path>:rw'"),
+        ("f1e podman volume", @"podman run -v C:\Users\<user>\data:/home/<user> x", "podman run -v data:<path>"),
+        ("f1f UNC volume", @"-v \\server\share\Users\<user>\proj:/home/<user>", "-v proj:<path>"),
+        ("f1g D drive data volume", @"D:\data\proj:/home/<user>", "proj:<path>"),
+        ("f2a Windows volume to /app", @"docker run -v C:\Users\<user>\proj:/app node", "docker run -v proj:/app node"),
+        ("f2b ssh folder volume", "C:/Users/<user>/.ssh:/root/.ssh", ".ssh:.ssh"),
+        ("f2c quoted volume", @"docker run -v ""C:\Users\<user>\src:/src"" x", @"docker run -v ""src:/src"" x"),
+        ("f3a account folder before colon-slash", "docker run -v /home/<user>:/data ubuntu", "docker run -v <path>:/data ubuntu"),
+        ("f3b macOS account folder before colon-slash", "docker run -v /Users/<user>:/workspace node", "docker run -v <path>:/workspace node"),
+        ("f3c passwd line", "/home/<user>:/bin/bash", "<path>:/bin/bash"),
+        ("adjacency-any (re-rowed)", @"C:\Users\<user>(bb)ccD:/Users/<user>/x.cs", "<path>D:x.cs"),
+        ("glue-after-drive-slash", @"C:\Users\<user>(bb)ccD:/Users/<user>/x.cs", "<path>D:x.cs"),
+        ("ownletter-start-only", "docker run -v /home/<user>:/data ubuntu", "docker run -v <path>:/data ubuntu"),
+        ("ownletter-word-slash-only", @"docker run -v C:\Users\<user>:/home/<user> ubuntu", "docker run -v <path>:<path>"),
+        // Ruling 3: the row of glue-unc-blocked, pinned with the regex's output. The port still glues a drive after a UNC path, so it fails on the port.
+        ("glue-unc-blocked (ruling 3, the regex's output)", @"\\server\share\abC:/Users/<user>/x.cs", "abC:x.cs"),
+    ];
+
+    private static readonly (string Id, string Input, string Expected)[] Fix3RowsCharacterisation =
+    [
+        ("glue-file-gone", "/tmp/abfile:///C:/Users/<user>/x.cs", "abx.cs"),
+        ("slashchain-unix-only", "~/x:/home/<user>", "x:<path>"),
+    ];
+
+    public static IEnumerable<object[]> Fix3Pending() => Rows(Fix3RowsPending);
+
+    public static IEnumerable<object[]> Fix3Characterisation() => Rows(Fix3RowsCharacterisation);
+
+    [Theory]
+    [MemberData(nameof(Fix3Pending))]
+    [Trait("Slice", "439")]
+    [Trait("Criterion", "439-2")]
+    [Trait("Status", "Pending")]
+    // Pending until the card 439 fix-3 green that ports the reference scanner
+    public void Id_439_2_fix3_volume_specs_and_account_folders_before_colon_slash(string id, string input, string expected)
+    {
+        // Given a Windows-drive or UNC volume spec, or an account folder before a colon-slash (review round 3, findings 1 to 3), or a mutant killing row of the third fix slice (the id names the mutant)
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed in both account forms, no account name or letter of it survives, and a second pass changes nothing
+        output.WriteLine($"row {id}");
+        AssertRow(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(Fix3Characterisation))]
+    [Trait("Slice", "439")]
+    [Trait("Criterion", "439-4")]
+    public void Id_439_4_fix3_mutant_rows_that_pass_on_the_port(string id, string input, string expected)
+    {
+        // Given the killing row of glue-file-gone or slashchain-unix-only, which the port already satisfies
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed, no account name survives, and a second pass changes nothing (characterisation)
+        output.WriteLine($"row {id}");
+        AssertRow(input, expected);
+    }
+
     private static string PlainLetterFolder() => "aa" + "bb";
 
     private static void AssertRow(string input, string expected)

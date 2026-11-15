@@ -414,3 +414,25 @@ Runs (`dotnet build Avowry.sln -c Debug`: 0 warnings, 0 errors):
 - `Slice=435|Slice=426|Slice=418`: `Passed!  - Failed:     0, Passed:   186, Skipped:     0, Total:   186`.
 
 Notes: the seven survivor rows were not Pending because the port already gives the reference's output on them; the two new mutants' rows are the only mutant rows that fail. Path-shaped inputs hold the `<user>` placeholder (never a real name); the file passes the home-path rewrite unchanged (the `drive-parents-take-home` row is a split string, `C:\home\` + `x.cs`, as the hook flags the joined form).
+
+## Fix round 3 red (review round 3; worktree at f46b885, the port of the second fixed reference)
+
+Changes, uncommitted, in `PathScan439.cs` only. No earlier row was edited or reordered. Where slice-fix3.md replaces a killing row, the old row stays in the file and still passes; the replacement is added under the same mutant id: `adjacency-any` is re-rowed (the fix-2 PATH row stays as it was; its new row is the `D:/Users/` row below). Expected outputs are the reference's (checked beside the regex and the pre-435 copy: the volume specs and the account-folder rows equal pre-435; every row is stable on a second pass). Before each build and run the heavy lock printed `free`.
+
+New Pending rows: 18, in `Id_439_2_fix3_volume_specs_and_account_folders_before_colon_slash` (439-2); each runs with the placeholder and the plain stand-in; AssertRow also asserts the second pass.
+- Findings 1 and 2 (Windows-drive, UNC, `D:` volume specs): f1a `docker run -v C:\Users\<user>\proj:/home/<user> ubuntu`, f1b the same with slashes, f1c `-v C:\Users\<user>:/home/<user>`, f1d the daemon error line, f1e podman, f1f UNC `\\server\share\Users\<user>\proj:/home/<user>`, f1g `D:\data\proj:/home/<user>`, f2a `proj:/app`, f2b `C:/Users/<user>/.ssh:/root/.ssh`, f2c the quoted `"src:/src"`.
+- Finding 3 (an account folder before `:/`): f3a `-v /home/<user>:/data`, f3b `/Users/<user>:/workspace`, f3c the passwd line `/home/<user>:/bin/bash`.
+- Mutant killing rows that fail on the port: `adjacency-any (re-rowed)` and `glue-after-drive-slash` (`C:\Users\<user>(bb)ccD:/Users/<user>/x.cs` gives `<path>D:x.cs`), `ownletter-start-only` (`docker run -v /home/<user>:/data ubuntu`), `ownletter-word-slash-only` (`docker run -v C:\Users\<user>:/home/<user> ubuntu`), and `glue-unc-blocked` (below).
+
+Characterisation (no Pending, pass on the port): `glue-file-gone` (`/tmp/abfile:///C:/Users/<user>/x.cs` gives `abx.cs`) and `slashchain-unix-only` (`~/x:/home/<user>` gives `x:<path>`), in `Id_439_4_fix3_mutant_rows_that_pass_on_the_port`.
+
+Deviation from the brief: ruling 3 asks for the `glue-unc-blocked` row (`\\server\share\abC:/Users/<user>/x.cs` gives the regex's `abC:x.cs`) as characterisation. It FAILS on the current port (Actual `abx.cs`: the port still glues a drive after a UNC path), so a non-Pending test would break the `Status!=Pending` filter. It is Pending, in the fix-3 theory, with a comment naming the ruling; after the green it pins the regex's output as ruling 3 intends.
+
+First assertion lines on the port (account name `<user>`): f1a/f1b/f1c-style rows Actual `docker run -v pro<user> ubuntu` or `docker run -v <path><user> ubuntu`; f1d `'pro<user>:rw'`; f1e `dat<user>`; f1f and f1g `pro<user>`; f2a `docker run -v proapp node`; f2b `.ss.ssh`; f2c `"srsrc"`; f3a to f3c and `ownletter-start-only` Actual `<path>b:/data ubuntu` and kin (the last letter of the account kept); `adjacency-any` and `glue-after-drive-slash` Actual `<path>x.cs`; `glue-unc-blocked` Actual `abx.cs`.
+
+Runs (`dotnet build Avowry.sln -c Debug`: 0 warnings, 0 errors):
+- `Slice=439&Status=Pending`: `Failed!  - Failed:    18, Passed:     0, Skipped:     0, Total:    18` (18 of 18 `Assert.Equal() Failure: Strings differ`).
+- `Slice=439&Status!=Pending`: `Passed!  - Failed:     0, Passed:   211, Skipped:     0, Total:   211`.
+- `Slice=435|Slice=426|Slice=418`: `Passed!  - Failed:     0, Passed:   186, Skipped:     0, Total:   186`.
+
+The file passes the home-path rewrite unchanged.
