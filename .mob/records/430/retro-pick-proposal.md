@@ -1,0 +1,17 @@
+# Retro pick proposal (the facilitator's synthesis of the seven voices): stop a waiting seat before the facilitator takes over its runs, so that one driver works in one tree
+
+This is the card 430 retro, 2026-11-15. The proposer is the facilitator, drawing on the seven retro voices (.mob/records/430/retro-voices.json), the retro input (.mob/records/430/retro-input.md) and the retro (docs/retros/card-430-2026-11-15.md). It goes to Decider D267. It changes TEAM_WORKING_AGREEMENT.md by adding a new entry under Experimental values, principles and practices; it is not an issue. It covers one concern only. The patch is .mob/records/430/agreement-amendment.diff.
+
+STANDING RULES: the Decider protocol steps 2 to 4 are unchanged. The voters are the task force's roles, each in a fresh context, with the model declared and pinned before launch. This proposal changes the agreement, so the confirmation step (D224 trigger c) runs if the primary window passes with no No and no amendment. The account-name ruling holds for every voter.
+
+EVIDENCE: on card 430 the red seat (claude sonnet, ctx-2) started a background lock watcher while play-tracker's ship-train held the heavy lock. At 16:51Z the owner's watchdog ruled the red's build and filtered runs light, and the facilitator ran them and committed the red. The seat was never stopped. When its watcher woke, it built in wt-430 while the Cursor green seat (ctx-3) was editing the same worktree: two drivers in one tree, against "one driver at a time". Nothing was committed by the red seat and no record changed, because the red had been reproduced in a clean clone and the facilitator reran the green after Cursor finished. The cause, though, is a missing step, not luck. Four of the seven voices picked this: decider, product manager, audit lens and coach. The other picks were an inventory of where each limit is enforced (architect, qa) and a lock helper that checks live test processes (dev). Both are filed below and are not in this pick.
+
+THE ENTRY: Stop a waiting seat before its runs are taken over (experiment; card 430 retro, Decider D267). While this entry is on trial, before the facilitator (or any other seat) runs a build, test or edit that a launched seat was briefed to run, in that seat's worktree or clone, the facilitator stops that seat and every watcher or background process it started, by its own task or process id and never by name, and records in the card's rulings the seat, the stop and the time. Only then does the takeover run. A seat that waits on a lock is briefed to wait in the foreground and leave no background watcher when it stops. Metric: two-driver events per card (card 430: 1), target 0, reported in the retro. Counter-metric: facilitator idle minutes over 10 with light work available (card 430: about 65), which this stop must not raise. Sample: three cards. Expiry: the third card's retro, which adopts, revises or removes the entry.
+
+NOT IN THIS PICK:
+- a limit-enforcement inventory (helper, child process) in a guard's slice (architect, qa; to #443 and the next guard card's slice);
+- the lock helper's liveness check against live test processes, after play-tracker's dead-PID lock gave an invalid 22 min heavy run (dev; mob-defaults #59);
+- the gate summary's count grep;
+- the pre-push MOB.md staleness on a card branch (Avowry #440).
+
+D265 stays Experimental (trial 2 of 3; seven of seven voices), and its third trial card adds leading and inner whitespace forms to the encoding list as the voices noted.
