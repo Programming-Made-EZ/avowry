@@ -106,13 +106,13 @@ public sealed class PathScan439
 
     public static IEnumerable<object[]> BlowUpShapes()
     {
-        yield return [@"\;"];
-        yield return [@"\,"];
-        yield return [@"\a;"];
-        yield return [@"\\host\share\x.cs\n"];
-        yield return [@"\C:/a\n"];
-        yield return [@"\C:\a\n"];
-        yield return [@"\\a$\n"];
+        yield return [@"\\;"];
+        yield return [@"\\,"];
+        yield return [@"\\a;"];
+        yield return [@"\\\\host\\share\\x.cs\n"];
+        yield return [@"\\C:/a\n"];
+        yield return [@"\\C:\\a\n"];
+        yield return [@"\\\\a$\n"];
         yield return ["/a"];
         yield return ["/-"];
     }
@@ -133,6 +133,127 @@ public sealed class PathScan439
         // Then a second pass changes nothing; the time is printed as evidence and never asserted (D254)
         output.WriteLine($"shape={unit} length={text.Length} first_pass_ms={clock.Elapsed.TotalMilliseconds:F1}");
         Assert.Equal(once, twice);
+    }
+
+    // Fix round 1 (review round 1, slice-fix.md): findings 4 to 8, the three new mutant rows, and the finding 1 blow-ups.
+    // Each row runs with the placeholder, the plain stand-in and two stand-ins that start with an escape letter (n and r).
+    private static readonly (string Id, string Input, string Expected)[] FixFindingRowsPending =
+    [
+        ("4a mixed-slash drive", @"C:/Users\<user>\x.cs", "x.cs"),
+        ("4b mixed-slash file URL", @"file:///C:/Users\<user>\x.cs", "x.cs"),
+        ("5a prefix folders before c/users", "/mnt/wsl/c/users/<user>/x.cs", "x.cs"),
+        ("5b prefix folders before c/users", "/opt/cygdrive/c/users/<user>/x.cs", "x.cs"),
+        ("5c prefix folder before c/users", "/a/c/users/<user>", "<path>"),
+        ("7 JSON escaped regex before a path field", @"{""pattern"":""\\d+"",""path"":""C:\\Users\\<user>\\x.cs""}", @"{""pattern"":""\\d+"",""path"":""x.cs""}"),
+        ("8a space before a bracket", @"C:\Users\<user> bb [Verification.csproj]", "<path> [Verification.csproj]"),
+        ("8b space before a quote", @"C:\Users\<user> bb ""is denied""", @"<path> ""is denied"""),
+        ("8c space before a dot", @"C:\\Users\\<user> .\nnext", @"<path> .\nnext"),
+        ("6a bridged path in parentheses", "see C:/temp/x.cs (/home/<user>)", "see <path>)"),
+        ("6b bridged path in parentheses", "see ~/a.cs (/home/<user>)", "see <path>)"),
+    ];
+
+    private static readonly (string Id, string Input, string Expected)[] FixMutantRowsPending =
+    [
+        ("drive-parent-guard", @"C:/Users\<user>\x.cs", "x.cs"),
+        ("no-opener-bridge", "see C:/temp/x.cs (/home/<user>)", "see <path>)"),
+    ];
+
+    private static readonly (string Id, string Input, string Expected)[] FixMutantRowsCharacterisation =
+    [
+        ("glued-apos-first", @"C:\Users\<user>(bb)'\u00f6cc", "<path>"),
+        ("unix-no-letter-users (new killing row)", "/tmp/a./c/users/<user>", "<path>"),
+    ];
+
+    public static IEnumerable<object[]> FixFindingsPending() => FixFindingRowsPending.Select(r => new object[] { r.Id, r.Input, r.Expected });
+
+    public static IEnumerable<object[]> FixMutantsPending() => FixMutantRowsPending.Select(r => new object[] { r.Id, r.Input, r.Expected });
+
+    public static IEnumerable<object[]> FixMutantsCharacterisation() => FixMutantRowsCharacterisation.Select(r => new object[] { r.Id, r.Input, r.Expected });
+
+    [Theory]
+    [MemberData(nameof(FixFindingsPending))]
+    [Trait("Slice", "439")]
+    [Trait("Criterion", "439-2")]
+    [Trait("Status", "Pending")]
+    // Pending until the card 439 fix green that ports the reference scanner
+    public void Id_439_2_fix_round_findings_4_to_8(string id, string input, string expected)
+    {
+        // Given a stored diagnostic of review round 1 (mixed slashes after a drive, prefix folders before a drive-style users root, a JSON field, an MSBuild text after an account folder, a bridged path)
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed for every account form, none survives, and a second pass changes nothing
+        output.WriteLine($"row {id}");
+        AssertFixRow(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(FixMutantsPending))]
+    [Trait("Slice", "439")]
+    [Trait("Criterion", "439-4")]
+    [Trait("Status", "Pending")]
+    // Pending until the card 439 fix green that ports the reference scanner
+    public void Id_439_4_fix_round_mutant_killing_rows(string id, string input, string expected)
+    {
+        // Given the killing row of a mutant added by the fix slice (the row id names the mutant)
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed for every account form, none survives, and a second pass changes nothing
+        output.WriteLine($"row {id}");
+        AssertFixRow(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(FixMutantsCharacterisation))]
+    [Trait("Slice", "439")]
+    [Trait("Criterion", "439-4")]
+    public void Id_439_4_fix_round_mutant_killing_rows_that_pass_on_the_green(string id, string input, string expected)
+    {
+        // Given the killing row of a mutant added by the fix slice that the round 1 green already satisfies
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed for every account form, none survives, and a second pass changes nothing (characterisation)
+        output.WriteLine($"row {id}");
+        AssertFixRow(input, expected);
+    }
+
+    public static IEnumerable<object[]> FixBlowUpShapes()
+    {
+        yield return ["/=-I"];
+        yield return ["/(-I"];
+    }
+
+    [Theory]
+    [MemberData(nameof(FixBlowUpShapes))]
+    [Trait("Slice", "439")]
+    [Trait("Criterion", "439-3")]
+    public void Id_439_3_glued_flag_blow_up_shapes_stay_unchanged_and_settle(string unit)
+    {
+        // Given 20,000 characters of a glued flag after a failed Unix walk (review round 1, finding 1)
+        var text = string.Concat(Enumerable.Repeat(unit, 20_000 / unit.Length));
+        // When PathScrub.Apply runs, twice
+        var clock = Stopwatch.StartNew();
+        var once = PathScrub.Apply(text);
+        clock.Stop();
+        var twice = PathScrub.Apply(once);
+        // Then the text holds no root and comes back unchanged (the reference's output), a second pass changes nothing; the time is printed as evidence and never asserted (D254)
+        output.WriteLine($"shape={unit} length={text.Length} first_pass_ms={clock.Elapsed.TotalMilliseconds:F1}");
+        Assert.Equal(text, once);
+        Assert.Equal(once, twice);
+    }
+
+    private static void AssertFixRow(string input, string expected)
+    {
+        var standIns = new[] { "aa" + "bb", "nn" + "bb", "rr" + "bb" };
+        foreach (var standIn in standIns)
+        {
+            var text = input.Replace("<user>", standIn, StringComparison.Ordinal);
+            var once = PathScrub.Apply(text);
+            Assert.Equal(expected, once);
+            Assert.DoesNotContain("<user>", once, StringComparison.OrdinalIgnoreCase);
+            Assert.DoesNotContain(standIn, once, StringComparison.OrdinalIgnoreCase);
+            Assert.Equal(once, PathScrub.Apply(once));
+        }
+
+        var placeholderOnce = PathScrub.Apply(input);
+        Assert.Equal(expected, placeholderOnce);
+        Assert.Equal(placeholderOnce, PathScrub.Apply(placeholderOnce));
     }
 
     private static string PlainLetterFolder() => "aa" + "bb";

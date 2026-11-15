@@ -370,3 +370,25 @@ The green must reach regressions=0 and second_pass=0 (the architect measured lea
 
 ## Facilitator ruling on the leak counts (after the first red)
 - Ruling: pin the sweep leak counts as upper bounds at the reference design's measured values, in addition to 0 new leaks and 0 second-pass changes. Sweep B (seed 439) asserts leaks_new <= 4559; sweep C (seed 4391) asserts leaks_new <= 2904; counts still printed; both stay Pending (they fail today). This replaces the "printed, not pinned" note above.
+
+## Fix round red (review round 1; worktree at 7903a6a, the round 1 green)
+
+Changes, uncommitted, in `PathScan439.cs` and `PathScan439Generated.cs` only (no production file; earlier rows not edited or reordered, with the one correction below).
+
+New rows (all run with the placeholder, the plain stand-in, and two stand-ins that start with an escape letter, n and r, built at run time):
+- `Id_439_2_fix_round_findings_4_to_8` (Pending, criterion 439-2, 11 rows): 4a `C:/Users\<user>\x.cs` and 4b the `file:///` form (expected `x.cs`); 5a `/mnt/wsl/c/users/<user>/x.cs`, 5b `/opt/cygdrive/c/users/<user>/x.cs` (`x.cs`), 5c `/a/c/users/<user>` (`<path>`); 7 the JSON row (`{"pattern":"\\d+","path":"x.cs"}`, the reference's output); 8a to 8c (`<path> [Verification.csproj]`, `<path> "is denied"`, `<path> .\nnext`); 6a `see C:/temp/x.cs (/home/<user>)` and 6b `see ~/a.cs (/home/<user>)` (`see <path>)` both).
+- `Id_439_4_fix_round_mutant_killing_rows` (Pending, 439-4, 2 rows): `drive-parent-guard`, `no-opener-bridge`.
+- `Id_439_4_fix_round_mutant_killing_rows_that_pass_on_the_green` (characterisation, 2 rows): `glued-apos-first` (`C:\Users\<user>(bb)'\u00f6cc` gives `<path>`) and the new killing row of `unix-no-letter-users` (`/tmp/a./c/users/<user>` gives `<path>`); both already pass on the green.
+- `Id_439_3_glued_flag_blow_up_shapes_stay_unchanged_and_settle` (characterisation, 439-3, 2 facts): `/=-I` and `/(-I` repeated to 20,000 characters. The reference returns the text unchanged and stable, so the fact asserts equality with the input and a stable second pass; the first-pass time is printed, never asserted (D254). They pass on the green (only its time is bad, 2 s; a wall-clock bound is not allowed).
+- Sweep C upper bound 2904 to 2679 (slice-fix.md); sweep B stays 4559. Both sweeps are no longer Pending (the green removed that trait); they still pass on the current green with the new bound.
+
+Findings 4 to 8: none of their rows passes on the green (all 11 fail by assertion). The mutant `glued-apos-first` row and the `unix-no-letter-users` row pass already. Finding 9 and 1's time are not rows.
+
+Runs (after `dotnet build Avowry.sln -c Debug`: 0 warnings, 0 errors):
+- `Slice=439&Status=Pending`: `Failed!  - Failed:    13, Passed:     0, Skipped:     0, Total:    13` (13 of 13 `Assert.Equal() Failure: Strings differ`).
+- `Slice=439&Status!=Pending`: `Passed!  - Failed:     0, Passed:   167, Skipped:     0, Total:   167`.
+- `Slice=435|Slice=426|Slice=418`: `Passed!  - Failed:     0, Passed:   186, Skipped:     0, Total:   186`.
+
+First assertion lines of the 13 Pending tests (account name as `<user>`): 4a, 4b and drive-parent-guard Actual `<path>` (Expected `x.cs`); 5a, 5b Actual the input unchanged (a leak); 5c Actual `/a/c/users/<user>`; 6a, 6b and no-opener-bridge Actual `see <user>)` (a leak); 7 Actual `{"pattern":"x.cs"}`; 8a Actual `<path>[Verification.csproj]`; 8b Actual `<path>"is denied"`; 8c Actual `<path>\nnext`.
+
+Correction to the first red: the nine blow-up facts of `Id_439_3_blow_up_shapes_settle_in_one_pass` were written with single backslashes by a shell heredoc that collapsed doubled backslashes (so `\;` instead of `\\;`, and so on). They are now the shapes the slice names (`\\;`, `\\,`, `\\a;`, `\\\\host\\share\\x.cs\n`, `\\C:/a\n`, `\\C:\\a\n`, `\\\\a$\n`, `/a`, `/-`). The same collapse garbled the shape list in the BlowUpShapes line of the section "Characterisation rows" above. All other rows came from a dump file and were not affected, and sweeps B and C reproduced the architect's counts.

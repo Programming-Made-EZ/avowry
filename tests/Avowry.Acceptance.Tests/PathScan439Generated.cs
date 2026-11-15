@@ -117,7 +117,7 @@ public sealed class PathScan439Generated
         // Given 100,000 strings that wrap every review input as a template (the account folder becomes the token), seed 4391
         // When PathScrub.Apply runs once and then again, and the base copy runs once
         // Then no input leaks where the base copy did not, a second pass changes nothing, and the leaks stay at or under the reference design's measured count; the counts are printed
-        Sweep("C review shapes seed 4391", 4391UL, extended: false, reviewShapes: true, maxLeaks: 2904);
+        Sweep("C review shapes seed 4391", 4391UL, extended: false, reviewShapes: true, maxLeaks: 2679);
     }
 
     private void Sweep(string label, ulong seed, bool extended, bool reviewShapes, int maxLeaks)
