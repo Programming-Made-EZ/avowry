@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "a0865d5bf426efeb07e49b08b7aaa74e5e5c0c0ee0c67bde58c76c7015cb623e",
+  "probe": {
+    "taken_at": "2026-11-15T20:11:23.476034Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-c093254b-345e-4167-83f5-ec6ad7e0df8e)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=0fcd5a0f-db30-47bb-8ea7-0adae09b7c95]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The design is sound, minimal, and enforceable without false positives. Committing a real-shape corpus across at least five families before the red phase ensures the checker rules account for diverse XML/MSBuild structures, lockfile lines, a",
+      "reply": "Yes\nThe design is sound, minimal, and enforceable without false positives. Committing a real-shape corpus across at least five families before the red phase ensures the checker rules account for diverse XML/MSBuild structures, lockfile lines, and page prose variations (including whitespace and CDATA). Measuring the reference against real repository files and corpus encodings prevents brittle parsing and false positives. The sequencing of light work ahead of heavy runs under the cross-mob lock keeps enforcement clean and sound.\nCITE: at least five families of page, MSBuild and lockfile shapes\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The design is sound, minimal, and enforceable without false positives. Committing a real-shape corpus across at least five families before the red phase ensures the checker rules account for diverse XML/MSBuild structures, lockfile lines, a"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T20:11:23.476034Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2627
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "99ae5c1cefa4badb278f6ffd792e080a31525919",
+  "head_end": "99ae5c1cefa4badb278f6ffd792e080a31525919",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

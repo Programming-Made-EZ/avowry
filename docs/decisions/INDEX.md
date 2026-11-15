@@ -371,3 +371,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D265](process-and-staffing.md#d265) | Card 441 retro pick: D263's corpus also covers the function's input encodings, and each fix slice commits the fixed rule's neighbour variants before its red | process-and-staffing | adopted |
 | [D266](process-and-staffing.md#d266) | Card 430: task force declaration (models pinned per role) and Ready text (the wall-clock guard recognises the missed time-limit spellings, and the hard-limit tests run isolated) | process-and-staffing | adopted |
 | [D267](process-and-staffing.md#d267) | Card 430 retro pick: stop a waiting seat before its runs are taken over, so that one driver works in one tree | process-and-staffing | adopted |
+| [D268](process-and-staffing.md#d268) | Card 422: task force declaration (models pinned per role) and Ready text (the restored-package licence checks fail when the page is wrong) | process-and-staffing | adopted |

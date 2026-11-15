@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "2176acc1f220c463bb6192e5a84ea37a4bf6bc1f6879f5e065f1018c2d3db2c6",
+  "probe": {
+    "taken_at": "2026-11-15T20:11:36.816497Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-a0bc936f-dbeb-45d7-9980-ec052c4ec8d7)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=a7f89fa0-d3c4-4afb-b388-7bcd2e6da7f8]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "The evaluation is solidly framed to rest on concrete evidence. Clause 3 mandates committing a real-shape corpus across at least five families covering all input encodings before test red, and measuring the reference against both the corpus ",
+      "reply": "Yes\n\nThe evaluation is solidly framed to rest on concrete evidence. Clause 3 mandates committing a real-shape corpus across at least five families covering all input encodings before test red, and measuring the reference against both the corpus and actual repository files. The task force includes every essential seat for sign-off: architect, red dev, green dev, adversarial QA, and an independent sign-off seat running gate filters and networked checks in a fresh clone under the heavy-run lock. All roles are properly staffed with pinned models in distinct contexts, and the sign-off seat is appropriately decoupled from the implementation seat.\n\nCITE: runs the gate filters and the networked checks in a fresh clone\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The evaluation is solidly framed to rest on concrete evidence. Clause 3 mandates committing a real-shape corpus across at least five families covering all input encodings before test red, and measuring the reference against both the corpus "
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T20:11:36.816497Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2632
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "99ae5c1cefa4badb278f6ffd792e080a31525919",
+  "head_end": "99ae5c1cefa4badb278f6ffd792e080a31525919",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

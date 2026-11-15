@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "cadfc43666bab2356a248d3a3c9ac6f4f68d9e751b27d2cd6c4a39c484a088ac",
+  "probe": {
+    "taken_at": "2026-11-15T20:11:28.469588Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-f69b6420-9889-4158-add5-7dbac25e82ed)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=85e08233-8098-4544-9dec-97e3e35b1a08]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The task force is well-sized and balanced for the work without ceremonial bloat. The five roles map directly to essential lean TDD responsibilities: design and corpus generation, test writing, implementation, adversarial review, and indepen",
+      "reply": "Yes\nThe task force is well-sized and balanced for the work without ceremonial bloat. The five roles map directly to essential lean TDD responsibilities: design and corpus generation, test writing, implementation, adversarial review, and independent sign-off. Work is sensibly matched to model tiers, deploying mid-tier models for mechanical tasks (red test writing and sign-off gating) while reserving strong-tier seats for slice architecture and adversarial testing. Contexts remain distinct to avoid cross-contamination. Refinement rightly evaluated and declined an extra domain-expert seat given existing reference material and available quota.\n\nCITE: each role's service and exact model pinned before any seat runs\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The task force is well-sized and balanced for the work without ceremonial bloat. The five roles map directly to essential lean TDD responsibilities: design and corpus generation, test writing, implementation, adversarial review, and indepen"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T20:11:28.469588Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2631
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "99ae5c1cefa4badb278f6ffd792e080a31525919",
+  "head_end": "99ae5c1cefa4badb278f6ffd792e080a31525919",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

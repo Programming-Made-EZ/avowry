@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "90bc3d996ea27cede6ace6a25ee4f58dc2a77768348cf2db189b2291e4f63100",
+  "probe": {
+    "taken_at": "2026-11-15T20:11:25.882315Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-d9e8fd0b-e870-4b57-be66-37c5837e9b93)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=69f3743a-a482-4c47-a479-d7dc9f645580]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "dev": {
+      "vote": "Yes",
+      "reason": "The workflow is workable, unambiguous, and fair to developer execution. Committing the multi-family corpus and encoding variants before the red phase provides concrete, deterministic inputs and boundary cases, eliminating ambiguity for the ",
+      "reply": "Yes\nThe workflow is workable, unambiguous, and fair to developer execution. Committing the multi-family corpus and encoding variants before the red phase provides concrete, deterministic inputs and boundary cases, eliminating ambiguity for the red and green developer seats. Separating red test authoring from green implementation prevents gaming and preserves test independence. Keeping per-slice unit verification and offline runs ahead of gated heavy runs respects slice limits and developer cadence under the heavy-run lock.\nCITE: adopt the card text of .mob/records/422/ready-body.md as card 422's Ready text.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The workflow is workable, unambiguous, and fair to developer execution. Committing the multi-family corpus and encoding variants before the red phase provides concrete, deterministic inputs and boundary cases, eliminating ambiguity for the "
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T20:11:25.882315Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2629
+    }
+  },
+  "counted_seats": [
+    "dev"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "99ae5c1cefa4badb278f6ffd792e080a31525919",
+  "head_end": "99ae5c1cefa4badb278f6ffd792e080a31525919",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "dev": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

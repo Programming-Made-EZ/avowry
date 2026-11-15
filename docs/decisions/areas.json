@@ -1714,5 +1714,11 @@
     "status": "adopted",
     "title": "Card 430 retro pick: stop a waiting seat before its runs are taken over, so that one driver works in one tree",
     "order": 258
+  },
+  "D268": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 422: task force declaration (models pinned per role) and Ready text (the restored-package licence checks fail when the page is wrong)",
+    "order": 259
   }
 }
