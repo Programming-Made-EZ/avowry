@@ -1,0 +1,713 @@
+Test run for C:\Users\<user>\projects\gate441green2-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+C:\Users\<user>\projects\gate441green2-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.96]   Discovering: Avowry.Acceptance.Tests
+[xUnit.net 00:00:01.32]   Discovered:  Avowry.Acceptance.Tests
+[xUnit.net 00:00:01.33]   Starting:    Avowry.Acceptance.Tests
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-java-uri-08", input: "vscode-remote://wsl+Ubuntu/c:/users/<user>/x", expected: "vscode-remote://wsl+Ubuntu/x") [600 ms]
+  Standard Output Messages:
+ row f1-java-uri-08
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-json-escaped-01", input: "{\"env\":\"PYTHONPATH=\\/home\\/<user>\\/lib:\\/ho"···, expected: "{\"env\":\"PYTHONPATH=lib:<path>\"}") [1 ms]
+  Standard Output Messages:
+ row f1-json-escaped-01
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-java-uri-06", input: "\"/c:/users/<user>/x\"", expected: "\"/x\"") [< 1 ms]
+  Standard Output Messages:
+ row f1-java-uri-06
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-json-escaped-04", input: "{\"files\":\"\\/home\\/<user>\\/x.cs:\\/home\\/<us"···, expected: "{\"files\":\"x.cs:y.cs\"}") [< 1 ms]
+  Standard Output Messages:
+ row f1-json-escaped-04
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-json-escaped-02", input: "{\"volumes\":[\"\\/home\\/<user>\\/data:\\/home\\/"···, expected: "{\"volumes\":[\"data:<path>\"]}") [< 1 ms]
+  Standard Output Messages:
+ row f1-json-escaped-02
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-java-uri-11", input: "Caused by: java.nio.file.NoSuchFileException: /C:/"···, expected: "Caused by: java.nio.file.NoSuchFileException: /x.c"···) [< 1 ms]
+  Standard Output Messages:
+ row f1-java-uri-11
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-json-escaped-06", input: "{\"Binds\":[\"\\/home\\/<user>\\/proj:\\/app\"]}", expected: "{\"Binds\":[\"proj:\\/app\"]}") [< 1 ms]
+  Standard Output Messages:
+ row f1-json-escaped-06
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-json-escaped-07", input: "{\"mount\":\"\\/Users\\/<user>\\/src:\\/src\"}", expected: "{\"mount\":\"src:\\/src\"}") [< 1 ms]
+  Standard Output Messages:
+ row f1-json-escaped-07
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-java-uri-07", input: "/C:/USERS/<user>/x", expected: "/x") [< 1 ms]
+  Standard Output Messages:
+ row f1-java-uri-07
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-json-escaped-05", input: "{\"line\":\"svc:x:1000:1000::\\/home\\/<user>:\\/b"···, expected: "{\"line\":\"svc:x:1000:1000::<path>:\\/bin\\/bash\"···) [< 1 ms]
+  Standard Output Messages:
+ row f1-json-escaped-05
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-json-escaped-03", input: "{\"PATH\":\"\\/home\\/<user>\\/bin:\\/usr\\/bin\"}", expected: "{\"PATH\":\"bin:\\/usr\\/bin\"}") [< 1 ms]
+  Standard Output Messages:
+ row f1-json-escaped-03
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-java-uri-02", input: "java.io.FileNotFoundException: /c:/users/<user>/x."···, expected: "java.io.FileNotFoundException: /x.txt") [< 1 ms]
+  Standard Output Messages:
+ row f1-java-uri-02
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-java-uri-09", input: "ssh://host/C:/Users/<user>/r.git", expected: "ssh://host/r.git") [< 1 ms]
+  Standard Output Messages:
+ row f1-java-uri-09
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-java-uri-10", input: "file:/C:/Users/<user>/app/lib/a.jar", expected: "file:/a.jar") [< 1 ms]
+  Standard Output Messages:
+ row f1-java-uri-10
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-java-uri-05", input: "///c:/users/<user>/x", expected: "///x") [< 1 ms]
+  Standard Output Messages:
+ row f1-java-uri-05
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-java-uri-01", input: "jar:file:/c:/users/<user>/.m2/a.jar!/x.class", expected: "jar:file:/x.class") [< 1 ms]
+  Standard Output Messages:
+ row f1-java-uri-01
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-java-uri-04", input: "file:/C:/Documents%20and%20Settings/<user>/x.jar", expected: "file:/x.jar") [< 1 ms]
+  Standard Output Messages:
+ row f1-java-uri-04
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_fix1_java_uri_and_escaped_json_shapes(id: "f1-java-uri-03", input: "file:/C:/Documents and Settings/<user>/.m2/reposit"···, expected: "file:/a.jar") [< 1 ms]
+  Standard Output Messages:
+ row f1-java-uri-03
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_the_embedded_rows_are_the_corpus_file [33 ms]
+  Standard Output Messages:
+ file_rows=130 embedded_rows=139 missing=0
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "remote-09", input: "rsync: change_dir \"/home/<user>/src\" failed: No "···, expected: "rsync: change_dir \"src\" failed: No such file or "···) [< 1 ms]
+  Standard Output Messages:
+ row remote-09
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "compiler-10", input: "C:\\Users\\<user>\\src\\main.cpp(12): error C2065:"···, expected: "main.cpp(12): error C2065: 'x': undeclared identif"···) [< 1 ms]
+  Standard Output Messages:
+ row compiler-10
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "trace-05", input: "    at Object.<anonymous> (/Users/<user>/proj/inde"···, expected: "    at Object.<anonymous> (index.js:1:7)") [< 1 ms]
+  Standard Output Messages:
+ row trace-05
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "compiler-04", input: "clang -I/Users/<user>/src/include -c a.c", expected: "clang -Iinclude -c a.c") [< 1 ms]
+  Standard Output Messages:
+ row compiler-04
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "passwd-05", input: "svc:x:1000:1000::/home/<user>:/usr/bin/fish", expected: "svc:x:1000:1000::<path>:/usr/bin/fish") [< 1 ms]
+  Standard Output Messages:
+ row passwd-05
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "compiler-12", input: "gcc -Wl,-rpath,/home/<user>/lib main.c", expected: "gcc -Wl,-rpath,lib main.c") [< 1 ms]
+  Standard Output Messages:
+ row compiler-12
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "volume-09", input: "  - /home/<user>/.config:/root/.config", expected: "  - .config:.config") [< 1 ms]
+  Standard Output Messages:
+ row volume-09
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "passwd-08", input: "nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin"···, expected: "nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin"···) [< 1 ms]
+  Standard Output Messages:
+ row passwd-08
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "trace-10", input: "    at f (file:///home/<user>/a.mjs:1:1)", expected: "    at f (a.mjs:1:1)") [< 1 ms]
+  Standard Output Messages:
+ row trace-10
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "volume-06", input: "docker run --mount type=bind,src=/home/<user>/data"···, expected: "docker run --mount type=bind,src=data,dst=/data x") [< 1 ms]
+  Standard Output Messages:
+ row volume-06
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "compiler-07", input: "ld: cannot find -lfoo in /home/<user>/lib", expected: "ld: cannot find -lfoo in lib") [< 1 ms]
+  Standard Output Messages:
+ row compiler-07
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "json-02", input: "{\"path\":\"C:\\\\Users\\\\<user>\\\\x.cs\"}", expected: "{\"path\":\"x.cs\"}") [< 1 ms]
+  Standard Output Messages:
+ row json-02
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "compiler-09", input: "cl.exe /c /I C:\\Users\\<user>\\include main.c", expected: "cl.exe /c /I include main.c") [< 1 ms]
+  Standard Output Messages:
+ row compiler-09
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "env-02", input: "PYTHONPATH=/home/<user>/lib:/home/<user>", expected: "PYTHONPATH=lib:<path>") [< 1 ms]
+  Standard Output Messages:
+ row env-02
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "volume-03", input: "docker run -v C:\\Users\\<user>\\proj:/app node", expected: "docker run -v proj:/app node") [< 1 ms]
+  Standard Output Messages:
+ row volume-03
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "env-06", input: "HOME=/home/<user>", expected: "HOME=<path>") [< 1 ms]
+  Standard Output Messages:
+ row env-06
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "trace-04", input: "Exception in thread \"main\" java.io.FileNotFoundE"···, expected: "Exception in thread \"main\" java.io.FileNotFoundE"···) [< 1 ms]
+  Standard Output Messages:
+ row trace-04
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "passwd-04", input: "www-data:x:33:33:www-data:/var/www:/usr/sbin/nolog"···, expected: "www-data:x:33:33:www-data:/var/www:/usr/sbin/nolog"···) [< 1 ms]
+  Standard Output Messages:
+ row passwd-04
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "remote-07", input: "git clone file:///home/<user>/repo.git", expected: "git clone repo.git") [< 1 ms]
+  Standard Output Messages:
+ row remote-07
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "minor-06", input: "https://example.com/home/<user>/x", expected: "https://example.com/home/<user>/x") [< 1 ms]
+  Standard Output Messages:
+ row minor-06
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "trace-09", input: "  File \"/home/<user>/.local/lib/python3.11/site-p"···, expected: "  File \"x.py\", line 1") [< 1 ms]
+  Standard Output Messages:
+ row trace-09
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "remote-04", input: "rsync -av src/ host:/home/<user>/backup/", expected: "rsync -av src/ host:<path>") [< 1 ms]
+  Standard Output Messages:
+ row remote-04
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "passwd-07", input: "svc:x:1002:1002::/home/<user>/:/bin/sh", expected: "svc:x:1002:1002::<path>:/bin/sh") [< 1 ms]
+  Standard Output Messages:
+ row passwd-07
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "remote-03", input: "scp a.txt host:/home/<user>/x.txt", expected: "scp a.txt host:x.txt") [< 1 ms]
+  Standard Output Messages:
+ row remote-03
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "trace-02", input: "  File \"/home/<user>/proj/app.py\", line 10, in <"···, expected: "  File \"app.py\", line 10, in <module>") [< 1 ms]
+  Standard Output Messages:
+ row trace-02
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "remote-10", input: "fatal: repository '/home/<user>/repo' does not exi"···, expected: "fatal: repository 'repo' does not exist") [< 1 ms]
+  Standard Output Messages:
+ row remote-10
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "env-04", input: "Path=C:\\Users\\<user>\\AppData\\Local\\Microsoft\"···, expected: "Path=WindowsApps;system32") [< 1 ms]
+  Standard Output Messages:
+ row env-04
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "json-08", input: "{\"stack\":\"at f (/home/<user>/a.js:3:5)\\nat g ("···, expected: "{\"stack\":\"at f (a.js:3:5)\\nat g (b.js:4:1)\"}") [< 1 ms]
+  Standard Output Messages:
+ row json-08
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "trace-03", input: "    at com.x.Main.main(Main.java:5)", expected: "    at com.x.Main.main(Main.java:5)") [< 1 ms]
+  Standard Output Messages:
+ row trace-03
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "volume-02", input: "docker run -v /home/<user>:/data ubuntu", expected: "docker run -v <path>:/data ubuntu") [< 1 ms]
+  Standard Output Messages:
+ row volume-02
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "passwd-01", input: "/home/<user>:/bin/bash", expected: "<path>:/bin/bash") [< 1 ms]
+  Standard Output Messages:
+ row passwd-01
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "remote-02", input: "git clone git@host:/home/<user>/repo.git", expected: "git clone git@host:repo.git") [< 1 ms]
+  Standard Output Messages:
+ row remote-02
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "json-10", input: "{\"file\":\"C:\\/Users\\/<user>\\/x.cs\"}", expected: "{\"file\":\"x.cs\"}") [< 1 ms]
+  Standard Output Messages:
+ row json-10
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "json-09", input: "{\"uri\":\"file:///C:/Users/<user>/x.cs\"}", expected: "{\"uri\":\"x.cs\"}") [< 1 ms]
+  Standard Output Messages:
+ row json-09
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "json-04", input: "{\"cwd\":\"/Users/<user>/proj\",\"argv\":[\"node\""···, expected: "{\"cwd\":\"proj\",\"argv\":[\"node\",\"a.js\"]}") [< 1 ms]
+  Standard Output Messages:
+ row json-04
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "compiler-15", input: "csc /out:C:\\Users\\<user>\\bin\\a.exe /reference:"···, expected: "csc /out:a.exe /reference:b.dll a.cs") [< 1 ms]
+  Standard Output Messages:
+ row compiler-15
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "volume-07", input: "docker run -v /mnt/c/Users/<user>/proj:/app x", expected: "docker run -v proj:/app x") [< 1 ms]
+  Standard Output Messages:
+ row volume-07
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "volume-12", input: "docker run -v //c/Users/<user>/proj:/app x", expected: "docker run -v /proj:/app x") [< 1 ms]
+  Standard Output Messages:
+ row volume-12
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "trace-08", input: "  File \"C:\\Users\\<user>\\proj\\app.py\", line 1"···, expected: "  File \"app.py\", line 10, in f") [< 1 ms]
+  Standard Output Messages:
+ row trace-08
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "env-11", input: "GOPATH=/home/<user>/go", expected: "GOPATH=go") [< 1 ms]
+  Standard Output Messages:
+ row env-11
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "passwd-02", input: "svc:x:1000:1000:Svc,,,:/home/<user>:/bin/bash", expected: "svc:x:1000:1000:Svc,,,:<path>:/bin/bash") [< 1 ms]
+  Standard Output Messages:
+ row passwd-02
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "trace-07", input: "thread 'main' panicked at src/main.rs:2:5", expected: "thread 'main' panicked at src/main.rs:2:5") [< 1 ms]
+  Standard Output Messages:
+ row trace-07
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "volume-04", input: "docker run -v C:/Users/<user>/proj:/home/<user> ub"···, expected: "docker run -v proj:<path>") [1 ms]
+  Standard Output Messages:
+ row volume-04
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "env-03", input: "CLASSPATH=/home/<user>/lib/a.jar:/home/<user>/clas"···, expected: "CLASSPATH=a.jar:classes") [< 1 ms]
+  Standard Output Messages:
+ row env-03
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "volume-13", input: "docker run -v /c/Users/<user>/proj:/app x", expected: "docker run -v proj:/app x") [< 1 ms]
+  Standard Output Messages:
+ row volume-13
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "volume-08", input: "docker run -v \\\\wsl$\\Ubuntu\\home\\<user>\\proj"···, expected: "docker run -v proj:/app x") [< 1 ms]
+  Standard Output Messages:
+ row volume-08
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "compiler-01", input: "gcc -I/home/<user>/include -L/home/<user>/lib -o o"···, expected: "gcc -Iinclude -Llib -o out main.c") [< 1 ms]
+  Standard Output Messages:
+ row compiler-01
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "json-06", input: "{\"pattern\":\"\\\\d+\",\"path\":\"C:\\\\Users\\\\"···, expected: "{\"pattern\":\"\\\\d+\",\"path\":\"x.cs\"}") [< 1 ms]
+  Standard Output Messages:
+ row json-06
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "env-01", input: "PATH=/home/<user>/bin:/home/<user>/.local/bin:/usr"···, expected: "PATH=bin:bin:/usr/bin") [< 1 ms]
+  Standard Output Messages:
+ row env-01
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "env-09", input: "OLDPWD=/home/<user>/src", expected: "OLDPWD=src") [< 1 ms]
+  Standard Output Messages:
+ row env-09
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "compiler-17", input: "cl.exe /c /Fe:C:\\Users\\<user>\\bin\\a.exe a.c", expected: "cl.exe /c /Fe:a.exe a.c") [< 1 ms]
+  Standard Output Messages:
+ row compiler-17
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "volume-01", input: "docker run -v /home/<user>/work:/work -it ubuntu", expected: "docker run -v work:/work -it ubuntu") [< 1 ms]
+  Standard Output Messages:
+ row volume-01
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "compiler-14", input: "CFLAGS=-O2 -I/home/<user>/inc", expected: "CFLAGS=-O2 -Iinc") [< 1 ms]
+  Standard Output Messages:
+ row compiler-14
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "compiler-05", input: "/home/<user>/src/main.c:12:5: error: expected ';' "···, expected: "main.c:12:5: error: expected ';' before '}' token") [< 1 ms]
+  Standard Output Messages:
+ row compiler-05
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "env-12", input: "export JAVA_HOME=/home/<user>/jdk", expected: "export JAVA_HOME=jdk") [< 1 ms]
+  Standard Output Messages:
+ row env-12
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "volume-10", input: "volumes: [/home/<user>/data:/home/<user>]", expected: "volumes: [data:<path>]") [< 1 ms]
+  Standard Output Messages:
+ row volume-10
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "volume-05", input: "podman run -v C:\\Users\\<user>\\data:/home/<user>"···, expected: "podman run -v data:<path>") [< 1 ms]
+  Standard Output Messages:
+ row volume-05
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "remote-05", input: "ssh host cat /home/<user>/.bashrc", expected: "ssh host cat .bashrc") [< 1 ms]
+  Standard Output Messages:
+ row remote-05
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "env-07", input: "USERPROFILE=C:\\Users\\<user>", expected: "USERPROFILE=<path>") [< 1 ms]
+  Standard Output Messages:
+ row env-07
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "env-10", input: "XDG_DATA_DIRS=/home/<user>/.local/share/flatpak/ex"···, expected: "XDG_DATA_DIRS=share:/usr/share") [< 1 ms]
+  Standard Output Messages:
+ row env-10
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "trace-01", input: "   at Foo.Bar() in C:\\Users\\<user>\\src\\Foo.cs:"···, expected: "   at Foo.Bar() in Foo.cs:line 42") [< 1 ms]
+  Standard Output Messages:
+ row trace-01
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "env-05", input: "PSModulePath=C:\\Users\\<user>\\Documents\\Windows"···, expected: "PSModulePath=Modules;Modules") [< 1 ms]
+  Standard Output Messages:
+ row env-05
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "json-05", input: "{\"msg\":\"open C:\\\\Users\\\\<user>\\\\a.txt: de"···, expected: "{\"msg\":\"open a.txt: denied\"}") [< 1 ms]
+  Standard Output Messages:
+ row json-05
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "compiler-06", input: "In file included from /home/<user>/src/a.h:3,", expected: "In file included from a.h:3,") [< 1 ms]
+  Standard Output Messages:
+ row compiler-06
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "trace-06", input: "   at Program.Main() in /home/<user>/src/Program.c"···, expected: "   at Program.Main() in Program.cs:line 3") [< 1 ms]
+  Standard Output Messages:
+ row trace-06
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "json-07", input: "{\"home\":\"/home/<user>\"}", expected: "{\"home\":\"<path>\"}") [< 1 ms]
+  Standard Output Messages:
+ row json-07
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "volume-11", input: "docker run -v \"C:\\Users\\<user>\\src:/src\" x", expected: "docker run -v \"src:/src\" x") [< 1 ms]
+  Standard Output Messages:
+ row volume-11
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "passwd-09", input: "svc:x:1000:1000::/home/<user>:", expected: "svc:x:1000:1000::<path>:") [< 1 ms]
+  Standard Output Messages:
+ row passwd-09
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "passwd-06", input: "root:x:0:0:root:/root:/bin/bash", expected: "root:x:0:0:root:/root:/bin/bash") [< 1 ms]
+  Standard Output Messages:
+ row passwd-06
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "json-01", input: "{\"file\":\"/home/<user>/src/a.py\",\"line\":3}", expected: "{\"file\":\"a.py\",\"line\":3}") [< 1 ms]
+  Standard Output Messages:
+ row json-01
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "compiler-13", input: "gcc \"-I/home/<user>/include\" main.c", expected: "gcc \"-Iinclude\" main.c") [< 1 ms]
+  Standard Output Messages:
+ row compiler-13
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "remote-08", input: "git@github.com:org/repo.git", expected: "git@github.com:org/repo.git") [< 1 ms]
+  Standard Output Messages:
+ row remote-08
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "passwd-03", input: "svc:*:501:20:Svc:/Users/<user>:/bin/zsh", expected: "svc:*:501:20:Svc:<path>:/bin/zsh") [< 1 ms]
+  Standard Output Messages:
+ row passwd-03
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "compiler-03", input: "gcc -isystem /home/<user>/include main.c", expected: "gcc -isystem include main.c") [< 1 ms]
+  Standard Output Messages:
+ row compiler-03
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes_that_pass_today(id: "compiler-11", input: "LINK : fatal error LNK1104: cannot open file 'C:\\"···, expected: "LINK : fatal error LNK1104: cannot open file 'foo."···) [< 1 ms]
+  Standard Output Messages:
+ row compiler-11
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "minor-07", input: "a/b:/home/<user>", expected: "a/b:<path>") [< 1 ms]
+  Standard Output Messages:
+ row minor-07
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "remote-11", input: "git clone ssh://git@host:2222/home/<user>/r.git", expected: "git clone ssh://git@host:2222/r.git") [< 1 ms]
+  Standard Output Messages:
+ row remote-11
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "json-11", input: "{\"home\":\"\\/Users\\/<user>\"}", expected: "{\"home\":\"<path>\"}") [< 1 ms]
+  Standard Output Messages:
+ row json-11
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "minor-03", input: "\\\\?\\UNC\\server\\share\\Users\\<user>\\x.cs", expected: "x.cs") [< 1 ms]
+  Standard Output Messages:
+ row minor-03
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "compiler-02", input: "gcc -isystem/home/<user>/include main.c", expected: "gcc -isysteminclude main.c") [< 1 ms]
+  Standard Output Messages:
+ row compiler-02
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "env-13", input: "MAIL=/var/spool/mail/<user>", expected: "MAIL=<path>") [< 1 ms]
+  Standard Output Messages:
+ row env-13
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "minor-01", input: "~<user>/x.cs", expected: "x.cs") [< 1 ms]
+  Standard Output Messages:
+ row minor-01
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "compiler-08", input: "cl.exe /c /IC:\\Users\\<user>\\include /FoC:\\User"···, expected: "cl.exe /c /Iinclude /Fomain.obj main.c") [< 1 ms]
+  Standard Output Messages:
+ row compiler-08
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "env-08", input: "MAIL=/var/mail/<user>", expected: "MAIL=<path>") [< 1 ms]
+  Standard Output Messages:
+ row env-08
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "json-03", input: "{\"file\":\"\\/home\\/<user>\\/x.cs\"}", expected: "{\"file\":\"x.cs\"}") [< 1 ms]
+  Standard Output Messages:
+ row json-03
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "remote-01", input: "git remote add origin ssh://host/home/<user>/repo."···, expected: "git remote add origin ssh://host/repo.git") [< 1 ms]
+  Standard Output Messages:
+ row remote-01
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "compiler-16", input: "clang -idirafter/home/<user>/inc -iquote/home/<use"···, expected: "clang -idirafterinc -iquoteq a.c") [< 1 ms]
+  Standard Output Messages:
+ row compiler-16
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "remote-06", input: "sftp://host/home/<user>/x.txt", expected: "sftp://host/x.txt") [< 1 ms]
+  Standard Output Messages:
+ row remote-06
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_1_older_real_shapes(id: "minor-02", input: "ls ~<user>/src", expected: "ls src") [< 1 ms]
+  Standard Output Messages:
+ row minor-02
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-11", input: "-v ~/x:/data", expected: "-v <path>:/data") [< 1 ms]
+  Standard Output Messages:
+ row minor-11
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-13", input: "-v /home/<user>/v:/v", expected: "-v <path>:/v") [< 1 ms]
+  Standard Output Messages:
+ row minor-13
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-09", input: "C:\\tmp\\x:/home/<user>", expected: "x:<path>") [< 1 ms]
+  Standard Output Messages:
+ row minor-09
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-12", input: "/tmp/x:/x", expected: "<path>:/x") [< 1 ms]
+  Standard Output Messages:
+ row minor-12
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-10", input: "C:\\Users\\<user>\\a:/home/<user>", expected: "a:<path>") [< 1 ms]
+  Standard Output Messages:
+ row minor-10
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-08", input: "\\\\server\\share\\a:/home/<user>", expected: "a:<path>") [< 1 ms]
+  Standard Output Messages:
+ row minor-08
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains(id: "minor-14", input: "/tmp/x://server/home/<user>", expected: "<path>://server/home/<user>") [< 1 ms]
+  Standard Output Messages:
+ row minor-14
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_3_mutant_killing_rows_that_pass_today(id: "mut-04", input: "-v /home/<user>:/data", expected: "-v <path>:/data") [< 1 ms]
+  Standard Output Messages:
+ row mut-04
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_3_mutant_killing_rows_that_pass_today(id: "mut-02", input: "-I/home/<user>/src~\\nx.cs", expected: "-Isrc~\\nx.cs") [< 1 ms]
+  Standard Output Messages:
+ row mut-02
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_3_mutant_killing_rows_that_pass_today(id: "mut-03", input: "C:\\a\\D:/b", expected: "<path>b") [< 1 ms]
+  Standard Output Messages:
+ row mut-03
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_3_mutant_killing_rows_that_pass_today(id: "https-url-with-a-users-folder", input: "see https://a/Users/<user>", expected: "see https://a/Users/<user>") [< 1 ms]
+  Standard Output Messages:
+ row https-url-with-a-users-folder
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_3_mutant_killing_rows_that_pass_today(id: "ownletter-a-letters-only", input: "-v /home/<user>:/data", expected: "-v <path>:/data") [< 1 ms]
+  Standard Output Messages:
+ row ownletter-a-letters-only
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_fix1_forward_slash_volume_specs(id: "f1-volume-winslash-05", input: "  - C:/work/d:/data", expected: "  - <path>data") [< 1 ms]
+  Standard Output Messages:
+ row f1-volume-winslash-05
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_fix1_forward_slash_volume_specs(id: "f1-volume-winslash-02", input: "docker run -v C:/Users/<user>/d:/data x", expected: "docker run -v <path>data x") [< 1 ms]
+  Standard Output Messages:
+ row f1-volume-winslash-02
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_fix1_forward_slash_volume_specs(id: "f1-volume-winslash-03", input: "docker run -v C:/src/d:/data x", expected: "docker run -v <path>data x") [< 1 ms]
+  Standard Output Messages:
+ row f1-volume-winslash-03
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_fix1_forward_slash_volume_specs(id: "f1-volume-winslash-04", input: "docker run -v c:/x/v:/v x", expected: "docker run -v <path>v x") [< 1 ms]
+  Standard Output Messages:
+ row f1-volume-winslash-04
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_fix1_forward_slash_volume_specs(id: "f1-volume-winslash-01", input: "docker run -v D:/a:/a x", expected: "docker run -v <path>a x") [< 1 ms]
+  Standard Output Messages:
+ row f1-volume-winslash-01
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_fix1_forward_slash_volume_specs(id: "f1-volume-winslash-06", input: "file:///C:/a/b:/x", expected: "<path>x") [< 1 ms]
+  Standard Output Messages:
+ row f1-volume-winslash-06
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_fix1_forward_slash_volume_specs(id: "f1-volume-winslash-07", input: "-IC:/x/I:/y", expected: "-I<path>y") [< 1 ms]
+  Standard Output Messages:
+ row f1-volume-winslash-07
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains_that_pass_today(id: "minor-15", input: "/tmp/x'y:/home/<user>", expected: "x'<user>") [< 1 ms]
+  Standard Output Messages:
+ row minor-15
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains_that_pass_today(id: "minor-20", input: "docker run -v /pj:/app x", expected: "docker run -v /pj:/app x") [< 1 ms]
+  Standard Output Messages:
+ row minor-20
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains_that_pass_today(id: "minor-18", input: "/home/<user>:/home/<user>", expected: "<path>:<path>") [< 1 ms]
+  Standard Output Messages:
+ row minor-18
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains_that_pass_today(id: "minor-16", input: "C:\\Users\\<user> bb: access denied", expected: "<path> bb: access denied") [< 1 ms]
+  Standard Output Messages:
+ row minor-16
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains_that_pass_today(id: "minor-17", input: "C:\\Users\\<user> 1's~/Users\\<user> 1's~/Users\\<"···, expected: "<path> 1's~/Users\\<user> 1's~/Users\\<user>") [< 1 ms]
+  Standard Output Messages:
+ row minor-17
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_contrived_chains_that_pass_today(id: "minor-19", input: "see /proj:\\x", expected: "see /proj:\\x") [< 1 ms]
+  Standard Output Messages:
+ row minor-19
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_3_fix1_mutant_killing_rows_that_pass_today(id: "f1-fix1-mut-01", input: "~aa.bb/x.cs", expected: "x.cs") [< 1 ms]
+  Standard Output Messages:
+ row f1-fix1-mut-01
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_3_fix1_mutant_killing_rows_that_pass_today(id: "f1-fix1-mut-02", input: "git clone ssh://git@example.com/home/<user>/r.git", expected: "git clone ssh://git@example.com/r.git") [< 1 ms]
+  Standard Output Messages:
+ row f1-fix1-mut-02
+
+
+[xUnit.net 00:00:02.07]   Finished:    Avowry.Acceptance.Tests
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_3_fix1_mutant_killing_rows_that_pass_today(id: "f1-fix1-mut-03", input: "cl.exe /I\\\\server\\share\\Users\\<user>\\inc a.c", expected: "cl.exe /Iinc a.c") [< 1 ms]
+  Standard Output Messages:
+ row f1-fix1-mut-03
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_5_device_paths_that_pass_today(id: "minor-04", input: "'\\\\?\\C:\\Users\\<user>\\x.cs'", expected: "'\\\\?\\x.cs'") [< 1 ms]
+  Standard Output Messages:
+ row minor-04
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_5_device_paths_that_pass_today(id: "minor-05", input: "\\\\.\\C:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [< 1 ms]
+  Standard Output Messages:
+ row minor-05
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_3_mutant_killing_rows(id: "mut-01", input: "cl.exe /c /IC:\\Users\\<user>\\include main.c", expected: "cl.exe /c /Iinclude main.c") [< 1 ms]
+  Standard Output Messages:
+ row mut-01
+
+
+  Passed Avowry.Acceptance.Tests.PathScan441.Id_441_2_fix1_forward_slash_volume_specs_that_pass_today(id: "f1-volume-winslash-08", input: "docker run -v C:/Users/<user>/proj:/app x", expected: "docker run -v proj:/app x") [< 1 ms]
+  Standard Output Messages:
+ row f1-volume-winslash-08
+
+
+
+Test Run Successful.
+Total tests: 140
+     Passed: 140
+ Total time: 3.8757 Seconds

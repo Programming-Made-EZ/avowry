@@ -1,0 +1,8 @@
+tested HEAD: 389d7903affbeb6ca2f33c72b5d087be0e2505b9
+build exit 0:     0 Warning(s)     0 Error(s) 
+Slice=441 exit 0: 
+Slice=439|Slice=435 exit 0: 
+Status!=Pending exit 0: 
+light: the full suite was skipped while a play-tracker train was alive
+DONE
+facilitator's note: the counts the summary's grep missed (the detailed logger prints "Total tests", not "Passed!"), read from the filter logs: Slice=441 140 of 140; Slice=439|Slice=435 341 of 341; Status!=Pending 990 of 990, 0 failed. The "light" line above is the script's fixed text: no play-tracker train was alive (its lock had cleared at the 11:51Z watchdog); this run held Avowry's own heavy lock (acquired, released) and ran the acceptance project filtered to Status!=Pending.
