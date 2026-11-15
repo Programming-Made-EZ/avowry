@@ -187,8 +187,6 @@ public sealed class PathScan441
     [MemberData(nameof(OlderShapesPending))]
     [Trait("Slice", "441")]
     [Trait("Criterion", "441-1")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 441 green that ports the reference scanner
     public void Id_441_1_older_real_shapes(string id, string input, string expected)
     {
         // Given a stored diagnostic of a real shape (compiler, environment, container, passwd, JSON, remote or stack trace) or an older MINOR shape of card 439
@@ -215,8 +213,6 @@ public sealed class PathScan441
     [MemberData(nameof(ContrivedChainsPending))]
     [Trait("Slice", "441")]
     [Trait("Criterion", "441-2")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 441 green that ports the reference scanner
     public void Id_441_2_contrived_chains(string id, string input, string expected)
     {
         // Given a contrived one-letter chain or a named limit of card 439
@@ -243,8 +239,6 @@ public sealed class PathScan441
     [MemberData(nameof(MutantRowsPending))]
     [Trait("Slice", "441")]
     [Trait("Criterion", "441-3")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 441 green that ports the reference scanner
     public void Id_441_3_mutant_killing_rows(string id, string input, string expected)
     {
         // Given the killing row of a mutant the slice names

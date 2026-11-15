@@ -3,7 +3,8 @@ using System.Text;
 
 // Shared by Avowry.Bench and, as a linked file, Avowry.BenchCs. Platform independent on purpose:
 // Path.GetFileName would not split a Windows path on Linux.
-// Card 439 design: a linear scanner. Known limits (named in slice-rulings.md): 2.5n, 3.4d, 3.8a-d and 9b.
+// Card 441 design: a linear scanner with the card 441 fixes from the reference slice.
+// Known pinned limits (named in slice-rulings.md): 2.5n, 3.4d, 3.8a-d, 9b, and the pinned MINOR rows.
 public static class PathScrub
 {
     public static string Apply(string? text)
@@ -35,8 +36,11 @@ public static class PathScrub
         private bool slashChain;
         // A letter before `:/` stays in the final name when it follows an ASCII letter, digit or `_` (any chain), or when it
         // starts the final name of a Unix or `~` chain: `.../alice:/data`, `C:\...\proj:/app` and `/tmp/x:/home/...` are colon lists.
+        // (b) also holds in a drive or UNC chain after a folder when an account marker follows (`C:\tmp\x:/home/...`).
+        private bool finalAfterFolder;
         private bool OwnLetter(int j) => At(j + 2) == '/' &&
-            ((AsciiWord(At(j - 1)) && j > finalStart) || (slashChain && j == finalStart));
+            (AsciiWord(At(j - 1))
+             || (j == finalStart && (slashChain || (finalAfterFolder && UnixRootAt(j + 2)))));
 
         public Scan(string text) { t = text; n = text.Length; }
 
@@ -48,8 +52,7 @@ public static class PathScrub
             {
                 if (!TryAt(p, out var end, out var repl)) { p++; continue; }
                 // A path right after a bare `\\` keeps no short name: `\\name\...` would be a UNC root on a second pass.
-                if (p - 2 >= last && t[p - 1] == '\\' && t[p - 2] == '\\')
-                    repl = PathMark;
+                if (p - 2 >= last && t[p - 1] == '\\' && t[p - 2] == '\\') repl = PathMark;
                 sb ??= new StringBuilder(n);
                 sb.Append(t, last, p - last).Append(repl);
                 last = prevEnd = p = end;
@@ -78,18 +81,29 @@ public static class PathScrub
         private bool LetterEscAt(int i) => UAt(i) && !AsciiCode(i) && At(i - 1) != '\\';
         private bool UBefore(int p) => p >= 6 && UAt(p - 6);
         private bool AsciiUBefore(int p) => UBefore(p) && AsciiCode(p - 6);
-        private bool E1Before(int p) => p >= 2 && t[p - 2] == '\\' && EscLetters.IndexOf(t[p - 1]) >= 0 && At(p - 3) != '\\';
-        private bool EndEscAt(int i) => At(i) == '\\' && ((EscLetters + "\"").IndexOf(At(i + 1)) >= 0 || UAt(i));
+        private string Letters => EscLetters;
+        private bool E1Before(int p) => p >= 2 && t[p - 2] == '\\' && Letters.IndexOf(t[p - 1]) >= 0 && At(p - 3) != '\\';
+        private bool EndEscAt(int i) => At(i) == '\\' && ((Letters + "\"").IndexOf(At(i + 1)) >= 0 || UAt(i));
 
         private bool RootStartAt(int i) => (Ascii(At(i)) && At(i + 1) == ':' && Sep(At(i + 2))) || (Has(i, "file:") && Sep(At(i + 5)));
 
         // A glued flag `-X` just before p: 0 none, 1 plain, 2 after an ASCII \uXXXX (the path is escape-quoted).
-        private int FlagBefore(int p)
+        // A glued flag: `-` plus one or more ASCII letters (`-I`, `-isystem`); before a drive or UNC root also `/` plus letters
+        // (MSVC `/I`, `/Fo`). The letters are scanned back once per root candidate, so the scan stays linear.
+        private int FlagBefore(int p, bool slash = false, bool multi = true)
         {
-            if (p < 2 || !Ascii(t[p - 1]) || t[p - 2] != '-') return 0;
-            var d = p - 2;
-            if (d == 0 || Space(t[d - 1]) || FlagLeft.IndexOf(t[d - 1]) >= 0 || E1Before(d)) return 1;
-            if (AsciiUBefore(d)) return 2;
+            var k = p - 1;
+            while (k >= 0 && Ascii(t[k])) k--;
+            var letters = p - 1 - k;
+            if (letters == 0 || k < 0) return 0;
+            var dash = t[k];
+            // A `/` flag (MSVC) has one or two letters and only glues to a backslash drive or a UNC root.
+            if (!(dash == '-' || (slash && dash == '/' && letters <= 2))) return 0;
+            if (!multi && letters != 1) return 0;
+            var d = k;
+            var left = FlagLeft;
+            if (d == 0 || Space(t[d - 1]) || left.IndexOf(t[d - 1]) >= 0 || E1Before(d)) return 1;
+            if (dash == '-' && AsciiUBefore(d)) return 2;
             return 0;
         }
 
@@ -100,18 +114,18 @@ public static class PathScrub
             repl = "";
             var c = t[p];
             return (Ascii(c) && TryDrive(p, out end, out repl))
-                || (c == '\\' && TryUnc(p, out end, out repl))
+                || (c == '\\' && (TryUnc(p, out end, out repl) || TryJsonHome(p, out end, out repl)))
                 || (c == '~' && TryTilde(p, out end, out repl))
                 || ((c == '/' || c == 'f') && TryUnix(p, out end, out repl));
         }
 
-        private bool StartOk(int p, bool plainOk, bool rootGlue, out bool esc)
+        private bool StartOk(int p, bool plainOk, bool rootGlue, out bool esc, bool slashFlag = false)
         {
             esc = false;
             if (plainOk) return true;
             if (UBefore(p)) { esc = true; return true; }
             if (E1Before(p)) return true;
-            var f = FlagBefore(p);
+            var f = FlagBefore(p, slashFlag);
             if (f == 2) { esc = true; return true; }
             if (f == 1) return true;
             return rootGlue && p == prevEnd;
@@ -135,7 +149,9 @@ public static class PathScrub
             // Adjacency (after any path) only for `file:///` or a backslash drive (`X:\`):
             // `…/lib:/home/…` and `C:\…\proj:/app` are colon lists, not a drive `b:` or `j:`.
             var glue = q > p || At(q + 2) == '\\';
-            if (!StartOk(p, p == 0 || !AsciiWord(t[p - 1]), glue, out var esc)) return false;
+            // A bare `X:/` right after `/` is no drive: `a/b:/home/...` is a colon list (`file:///C:/` is read at its `f`).
+            if (q == p && At(p - 1) == '/' && At(q + 2) == '/') return false;
+            if (!StartOk(p, p == 0 || !AsciiWord(t[p - 1]), glue, out var esc, At(q + 2) == '\\')) return false;
             q += 2;
             if (!RootSep(ref q, out var sgl)) return false;
             return Chain(q, 'D', sgl, esc, false, out end, out repl);
@@ -147,9 +163,11 @@ public static class PathScrub
             repl = "";
             if (At(p + 1) != '\\') return false;
             var prev = At(p - 1);
-            if (!StartOk(p, p == 0 || !(RegexWord(prev) || prev == '\\' || prev == ':'), false, out var esc)) return false;
-            var four = At(p + 2) == '\\' && At(p + 3) == '\\';
-            var q = four ? p + 4 : p + 2;
+            if (!StartOk(p, p == 0 || !(RegexWord(prev) || prev == '\\' || prev == ':'), false, out var esc, true)) return false;
+            // `\\?\UNC\server\share\...` is a UNC path written in the long form.
+            var longUnc = Has(p, "\\\\?\\UNC\\");
+            var four = !longUnc && At(p + 2) == '\\' && At(p + 3) == '\\';
+            var q = longUnc ? p + 8 : four ? p + 4 : p + 2;
             if (q >= n || Sep(t[q]) || Space(t[q])) return false;
             if (Has(q, PathMark)) return false;
             return Chain(q, 'U', !four, esc, false, out end, out repl);
@@ -159,9 +177,19 @@ public static class PathScrub
         {
             end = 0;
             repl = "";
-            var ok = p == 0 || Space(t[p - 1]) || TildeLeft.IndexOf(t[p - 1]) >= 0 || E1Before(p) || AsciiUBefore(p) || FlagBefore(p) != 0;
+            var ok =
+                p == 0 || Space(t[p - 1]) || TildeLeft.IndexOf(t[p - 1]) >= 0 || E1Before(p) || AsciiUBefore(p) || FlagBefore(p, false, false) != 0;
             if (!ok) return false;
             var q = p + 1;
+            // `~name/`: a named user's home; the name is the account folder and is never output.
+            if (!Sep(At(q)))
+            {
+                var k = q;
+                if (At(k) == '<') k += Token(k, true);
+                else if (Ascii(At(k))) while (AsciiWord(At(k)) || At(k) is '.' or '-') k++;
+                if (k == q || !Sep(At(k))) return false;
+                q = k;
+            }
             if (!RootSep(ref q, out var sgl)) return false;
             return Chain(q, 'T', sgl, UBefore(p), false, out end, out repl);
         }
@@ -181,6 +209,8 @@ public static class PathScrub
             if (At(q) != '/') return false;
             var prev = At(p - 1);
             var plainOk = p == 0 || (!(AsciiWord(prev) || prev == '.') && !(prev == '/' && At(p - 2) == ':'));
+            var ssh = !plainOk && !isFile && SshHostBefore(p);
+            if (ssh) plainOk = true;
             if (!StartOk(p, plainOk, isFile, out _)) return false;
 
             // The walk: prefix folders (no whitespace, ending in an ASCII letter, digit or _) until an account marker.
@@ -191,30 +221,72 @@ public static class PathScrub
             while (!dead)
             {
                 var len = AccountMarkerAt(w);
-                if (len > 0) return Chain(w + len, 'X', false, false, true, out end, out repl);
+                if (len > 0) return SshSlash(ssh, Chain(w + len, 'X', false, false, true, out end, out repl), ref repl);
                 var j = w + 1;
                 while (j < n && !Space(t[j]) && NameStops.IndexOf(t[j]) < 0) j++;
-                if (j > w + 1 && At(j) == '/' && AsciiWord(t[j - 1]))
-                {
-                    w = j;
-                    continue;
-                }
-
+                if (j > w + 1 && At(j) == '/' && AsciiWord(t[j - 1])) { w = j; continue; }
                 deadFrom = q;
                 deadTo = w;
                 break;
             }
             foreach (var r in UnixFixedRoots)
-                if (Has(q, r)) return Chain(q + r.Length, 'X', false, false, false, out end, out repl);
+                if (Has(q, r)) return SshSlash(ssh, Chain(q + r.Length, 'X', false, false, false, out end, out repl), ref repl);
             return false;
         }
 
+        // Would a Unix root start at w (after `:`)? The walk to an account marker, else a fixed root. The walk stops at the
+        // next `:` (a NameStop), so in a colon list each character is checked at most once more.
+        private bool UnixRootAt(int w)
+        {
+            if (At(w) != '/') return false;
+            var v = w;
+            while (true)
+            {
+                if (AccountMarkerAt(v) > 0) return true;
+                var j = v + 1;
+                while (j < n && !Space(t[j]) && NameStops.IndexOf(t[j]) < 0) j++;
+                if (j > v + 1 && At(j) == '/' && AsciiWord(t[j - 1])) { v = j; continue; }
+                break;
+            }
+            foreach (var r in UnixFixedRoots) if (Has(w, r)) return true;
+            return false;
+        }
+
+        // After `ssh://host` the path keeps its leading `/`: `ssh://host/repo.git`, not `ssh://hostrepo.git`.
+        private bool SshSlash(bool ssh, bool ok, ref string repl)
+        {
+            if (ok && ssh) repl = "/" + repl;
+            return ok;
+        }
+
+        // `ssh://[user@]host[:port]` or `sftp://...` right before p: the path is a file-system path, not a web path.
+        private bool SshHostBefore(int p)
+        {
+            var k = p - 1;
+            while (k >= 0 && (AsciiWord(t[k]) || t[k] is '.' or '-' or '@' or ':')) k--;
+            return k < p - 1 && At(k) == '/' && At(k - 1) == '/' && (Has(k - 5, "ssh:") || Has(k - 6, "sftp:"));
+        }
+
+        // A JSON string with escaped slashes: `\/home\/` + `name` or `\/Users\/` + `name`.
+        private bool TryJsonHome(int p, out int end, out string repl)
+        {
+            end = 0; repl = "";
+            var len = Has(p, "\\/home\\/") ? 8 : Has(p, "\\/Users\\/") ? 9 : 0;
+            if (len == 0) return false;
+            var prev = At(p - 1);
+            if (!StartOk(p, p == 0 || !(AsciiWord(prev) || prev == '.' || prev == '\\'), false, out _)) return false;
+            return Chain(p + len, 'X', false, false, true, out end, out repl);
+        }
+
         // `/home/`, `/Users/` (exact case), or `/x/users/` (x a lowercase drive letter, `users` any case).
+        // or a mail spool `/var/mail/`, `/var/spool/mail/` (the file is named after the account).
         // `/mnt/x/users/` needs no rule of its own: the walk passes `/mnt` and finds `/x/users/` with the same end.
         private int AccountMarkerAt(int w)
         {
             if (Has(w, "/home/")) return 6;
             if (Has(w, "/Users/")) return 7;
+            if (Has(w, "/var/mail/")) return 10;
+            if (Has(w, "/var/spool/mail/")) return 16;
             if (At(w + 1) is >= 'a' and <= 'z' && At(w + 2) == '/' && HasCi(w + 3, "users") && At(w + 8) == '/')
                 return 9;
             return 0;
@@ -234,10 +306,19 @@ public static class PathScrub
             if (c == '\\') return LetterEscAt(j) ? 6 : 0;
             if (c == '\'') return Apostrophe(j) ? 1 : 0;
             if (final)
-                return Space(c) || FinalStops.IndexOf(c) >= 0 || (RootStartAt(j) && !OwnLetter(j)) ? 0 : 1;
-            if (c is '\r' or '\n' || NameStops.IndexOf(c) >= 0) return 0;
+            {
+                var stops = FinalStops;
+                return Space(c) || stops.IndexOf(c) >= 0 || (RootStartAt(j) && !OwnLetter(j)) ? 0 : 1;
+            }
+            var nstops = NameStops;
+            if (c is '\r' or '\n' || nstops.IndexOf(c) >= 0) return 0;
             // A folder name never holds whitespace followed by an opener (a glued flag `-X`, or `(`) and a root.
-            if (Space(c) && At(j + 1) == '-' && Ascii(At(j + 2)) && RootAhead(j + 3)) return 0;
+            if (Space(c) && At(j + 1) == '-' && Ascii(At(j + 2)))
+            {
+                var k = j + 2;
+                while (Ascii(At(k))) k++;
+                if (RootAhead(k)) return 0;
+            }
             return 1;
         }
 
@@ -321,13 +402,19 @@ public static class PathScrub
             }
             if (unc && dirs == 0) return false; // `\\host` alone is no UNC path
             finalStart = q; slashChain = form is 'X' or 'T';
+            finalAfterFolder = dirs > (unc ? 1 : 0);
             var f1 = q;
             for (var k = Token(f1, true); k > 0; k = Token(f1, true)) f1 += k;
             // The final name is an account folder after the root's own marker or after an account parent.
             var account = (rootIsParent && dirs == 0) || (dirs > 0 && IsAccountParent(form, dirs - 1, ps, pe, ls, le, bridged));
             end = account ? Tail(f1) : f1;
             var file = t.Substring(q, f1 - q);
-            repl = file.Length == 0 || file == "~" || account ? PathMark : file;
+            repl = file.Length == 0
+                || file == "~"
+                || account
+                || (file.Length == 1 && Ascii(file[0]) && At(f1) == ':' && At(f1 + 1) == '/' && !UnixRootAt(f1 + 1))
+                ? PathMark
+                : file;
             lastForm = form;
             return true;
         }
