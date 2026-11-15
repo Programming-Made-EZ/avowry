@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "53082ee405cec12411e9471c94ed1e3059932a98b30d8ba58ecbc292b8994244",
+  "probe": {
+    "taken_at": "2026-11-15T04:24:07.584711Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-8af07331-0f05-4618-9093-4825c6cb7086)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=128c389f-bae9-42f6-8aa8-f34e7c0bf944]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "From an audit perspective, this change is fully verifiable from git alone via the committed updates to `.mob/records/439/model-allocation.md` and the Decider record. Clause 1 leaves no loophole for circumventing adversarial review standards",
+      "reply": "Yes\nFrom an audit perspective, this change is fully verifiable from git alone via the committed updates to `.mob/records/439/model-allocation.md` and the Decider record. Clause 1 leaves no loophole for circumventing adversarial review standards: it mandates maintaining the strong tier, binds the review to a clean context (`ctx-6`) isolated from the architect (`ctx-1`), and enforces identical review rules and briefs.\n\nCITE: because adversarial review of a scanner needs the strong tier\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From an audit perspective, this change is fully verifiable from git alone via the committed updates to `.mob/records/439/model-allocation.md` and the Decider record. Clause 1 leaves no loophole for circumventing adversarial review standards"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T04:24:07.584711Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2577
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "7ee5411c2fd4ee606dc4c76e8cc27998707a391a",
+  "head_end": "7ee5411c2fd4ee606dc4c76e8cc27998707a391a",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

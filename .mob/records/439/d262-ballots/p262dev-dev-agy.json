@@ -1,0 +1,97 @@
+{
+  "result": "passed",
+  "prompt_sha": "931c005448a43b1b8980521f491712f0d38eec1e91e77a5c2bcc211e96f60569",
+  "probe": {
+    "taken_at": "2026-11-15T04:24:01.578441Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-e1cbea90-5944-4bb9-b7c6-b6242e3a27cb)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=f324f174-4bec-4f11-88c5-ba9bc178fc8c]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "dev": {
+      "vote": "Yes",
+      "reason": "From the backend seat, this is workable, fair, and prevents a week-long stall on review round 2. Keeping adversarial review on an uncompromised strong-tier model preserves rigorous review standards for scanner logic, while enforcing a clean",
+      "reply": "Yes\nFrom the backend seat, this is workable, fair, and prevents a week-long stall on review round 2. Keeping adversarial review on an uncompromised strong-tier model preserves rigorous review standards for scanner logic, while enforcing a clean context isolated from the architect maintains necessary independence without changing developer constraints or inviting gaming.\n\nCITE: adversarial review of a scanner needs the strong tier\n",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026 development unnecessarily. Reseating QA in a clean context (ctx-6) with a strong-tier model ensures adversarial review remains thorough, independent, and fair to our code without leaking previous design context or gaming standards. CITE: because adversarial review of a scanner needs the strong tier",
+          "reason": "\u2026 development unnecessarily. Reseating QA in a clean context (ctx-6) with a strong-tier model ensures adversarial review remains thorough, independent, and fair to our code without leaking previous design context or gaming standards. CITE: because adversarial review of a scanner needs the strong tier"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From the backend seat, this is workable, fair, and prevents a week-long stall on review round 2. Keeping adversarial review on an uncompromised strong-tier model preserves rigorous review standards for scanner logic, while enforcing a clean"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T04:24:01.578441Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2576
+    }
+  },
+  "counted_seats": [
+    "dev"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "7ee5411c2fd4ee606dc4c76e8cc27998707a391a",
+  "head_end": "7ee5411c2fd4ee606dc4c76e8cc27998707a391a",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "dev": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

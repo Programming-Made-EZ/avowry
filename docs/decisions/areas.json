@@ -1678,5 +1678,11 @@
     "status": "adopted",
     "title": "Card 439: task force declaration (models pinned per role) and Ready text (the bench path scrub finds path roots in one linear pass, replacing the single regex)",
     "order": 252
+  },
+  "D262": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 439: the QA role's model changes mid-card (agy's strong tier out of quota; claude opus in a new context)",
+    "order": 253
   }
 }

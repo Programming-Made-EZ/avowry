@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "1146c63aafe772a3b7b190c58a7b7cce88b2890be339a2d0939c049a88ceb2e5",
+  "probe": {
+    "taken_at": "2026-11-15T04:23:59.557481Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-4f060fe9-d30b-46ca-96ba-b309ae0419a8)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=caf17a57-006d-48c4-bd9f-718cac3e1520]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "Reseating the QA role on Claude Opus preserves the vital independent review perspective without stalling delivery for 148 hours. The task force remains appropriately sized to the task, neither omitting critical adversarial evaluation nor in",
+      "reply": "Yes\nReseating the QA role on Claude Opus preserves the vital independent review perspective without stalling delivery for 148 hours. The task force remains appropriately sized to the task, neither omitting critical adversarial evaluation nor inflating process ceremony. Enforcing a clean context ctx-6 without designer conversation leakage maintains role boundaries effectively.\n\nCITE: adversarial review of a scanner needs the strong tier\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Reseating the QA role on Claude Opus preserves the vital independent review perspective without stalling delivery for 148 hours. The task force remains appropriately sized to the task, neither omitting critical adversarial evaluation nor in"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T04:23:59.557481Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2574
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "7ee5411c2fd4ee606dc4c76e8cc27998707a391a",
+  "head_end": "7ee5411c2fd4ee606dc4c76e8cc27998707a391a",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

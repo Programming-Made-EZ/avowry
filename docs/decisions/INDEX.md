@@ -365,3 +365,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D259](process-and-staffing.md#d259) | Card 435 after three reviews: ship the rework, close the card at it with its limits named, a linear scanner in a new card, and what counts as BLOCKING in a path-scrub review | process-and-staffing | adopted |
 | [D260](process-and-staffing.md#d260) | Card 435 retro pick: a push is reported only after its result is read unpiped and the remote head equals the local commit | process-and-staffing | adopted |
 | [D261](process-and-staffing.md#d261) | Card 439: task force declaration (models pinned per role) and Ready text (the bench path scrub finds path roots in one linear pass, replacing the single regex) | process-and-staffing | adopted |
+| [D262](process-and-staffing.md#d262) | Card 439: the QA role's model changes mid-card (agy's strong tier out of quota; claude opus in a new context) | process-and-staffing | adopted |

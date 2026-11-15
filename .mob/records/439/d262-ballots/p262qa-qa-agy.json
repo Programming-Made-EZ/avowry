@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "3c6b74b0ee230e8804d8f23ecf9369e4636c38295619e18f00d175007e576111",
+  "probe": {
+    "taken_at": "2026-11-15T04:23:58.471162Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-2a14aaeb-d8a9-45b8-bba4-3f5a75b914e0)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=c7f62b7c-0a69-4b34-b7e6-d7fadc72d117]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "Strong-tier capability and independent context isolation (ctx-6) are essential for rigorous adversarial QA. Reseating on claude opus ensures checks continue catching subtle scanner violations without lowering verification thresholds or pass",
+      "reply": "Yes\nStrong-tier capability and independent context isolation (ctx-6) are essential for rigorous adversarial QA. Reseating on claude opus ensures checks continue catching subtle scanner violations without lowering verification thresholds or passing bad state. Preserving the exact brief and D259 clause 4 rules guarantees red-first testing integrity is maintained across rounds.\nCITE: adversarial review of a scanner needs the strong tier\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Strong-tier capability and independent context isolation (ctx-6) are essential for rigorous adversarial QA. Reseating on claude opus ensures checks continue catching subtle scanner violations without lowering verification thresholds or pass"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T04:23:58.471162Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2573
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "7ee5411c2fd4ee606dc4c76e8cc27998707a391a",
+  "head_end": "7ee5411c2fd4ee606dc4c76e8cc27998707a391a",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}
