@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "23fb52c9d64ac615eef61190a6a0b3fab00ab5dd5c5baf7c6004077c9dd8bce4",
+  "probe": {
+    "taken_at": "2026-11-15T14:55:05.886524Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-083f62f9-5c1e-4d3b-8f7e-ef871ac94d9f)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=bee962e2-d9f9-4e0e-a498-be58af59f195]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The proposal is well-sized to the task without padding ceremony. Bounding the change inside D263's existing trial for the next two cards keeps the process lightweight and empirical. Crucially, the explicit counter-metric capping additional ",
+      "reply": "Yes\n\nThe proposal is well-sized to the task without padding ceremony. Bounding the change inside D263's existing trial for the next two cards keeps the process lightweight and empirical. Crucially, the explicit counter-metric capping additional slice time at 15 minutes protects flow and prevents over-engineering before red tests. The task force balances quality feedback directly addressing the review blockers with strict guardrails against ceremonial bloat.\n\nCITE: minutes added to each fix slice (more than 15 is a miss).\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The proposal is well-sized to the task without padding ceremony. Bounding the change inside D263's existing trial for the next two cards keeps the process lightweight and empirical. Crucially, the explicit counter-metric capping additional "
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T14:55:05.886524Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2603
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "head_end": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

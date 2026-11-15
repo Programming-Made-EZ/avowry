@@ -1696,5 +1696,11 @@
     "status": "adopted",
     "title": "Card 441: task force declaration (models pinned per role) and Ready text (the bench path scrub's MINOR shapes from card 439's reviews become corpus rows, fixed where a narrow change can)",
     "order": 255
+  },
+  "D265": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 441 retro pick: D263's corpus also covers the function's input encodings, and each fix slice commits the fixed rule's neighbour variants before its red",
+    "order": 256
   }
 }

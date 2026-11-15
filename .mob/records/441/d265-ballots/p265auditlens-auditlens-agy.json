@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "268d5c6b8dbe92b41c0e7e5b3a05ea61c5546f12e83804128d8579c9dbcfa5c9",
+  "probe": {
+    "taken_at": "2026-11-15T14:50:57.667097Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-01380ca4-398b-4c0f-adc3-1c6b48569b8e)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=fc7bb901-f0dd-444a-8a7b-342361c126e9]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "\u2026use it is being used by another process. The process cannot access the file because it is being used by another process. The process cannot access the file because it is being used by another process."
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "Verified from git alone: commit history directly records the corpus expansion and neighbor-variant rows prior to the red test commit in each slice. Git log and diff unambiguously expose whether test rows existed before the red commit was in",
+      "reply": "Yes\nVerified from git alone: commit history directly records the corpus expansion and neighbor-variant rows prior to the red test commit in each slice. Git log and diff unambiguously expose whether test rows existed before the red commit was introduced, closing process loopholes without relying on untracked tooling state. Note for audit clarity: commit order in git must strictly keep the neighbor-row additions committed ahead of each fix slice's red test commit so verification remains straightforward from git history alone.\nCITE: the corpus also holds at least one row for each input encoding the function will meet\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Verified from git alone: commit history directly records the corpus expansion and neighbor-variant rows prior to the red test commit in each slice. Git log and diff unambiguously expose whether test rows existed before the red commit was in"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T14:50:57.667097Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2600
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "head_end": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

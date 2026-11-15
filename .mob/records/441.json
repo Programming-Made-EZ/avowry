@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 441,
+ "title": "The bench path scrub's MINOR shapes from card 439's reviews become corpus rows, fixed where a narrow change can",
+ "process": "card-mode rules run by hand; the card written from the card template (card_ready.py ok); declaration Decider D264 with every role's service, exact model and reason pinned before any seat; the live probe cited; D263's first trial card: a read-only architect slice that committed a real-shape corpus (104 rows, 8 families) before the red; ONE red reproduced in a clean clone under the cross-mob heavy-run lock; a green that PORTED the architect's reference (2 min 35 s); review round 1 (claude opus, FLAG: 3 BLOCKING); two fix rounds, each an architect re-slice with corpus rows, a red, a port by the green seat (under 2 minutes each), a light gate under Avowry's own heavy lock and a review (claude opus); BLOCKING by round 3, 2, 0; about 3 h 50 min of the lead time waiting on play-tracker's lock; a sign-off in a fresh clone with the affected module under the lock; the retro with seven voices and its Model allocation review; retro pick Decider D265.",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-0",
+   "model": "the facilitator session (claude opus = claude-opus-5-5) wrote the card from the card template; Decider D264 adopted it with the task force (agy gemini-3.8-flash-medium ballots)",
+   "evidence": "c569d86ee8833323ea34141d123d471f57b88e5a"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-1",
+   "model": "claude opus = claude-opus-5-5, fresh subagent contexts, architect, read-only; the slice and two fix slices",
+   "evidence": "9d470680cd5bd848f886a94184308d0e0d66e091"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-2",
+   "model": "claude sonnet = claude-sonnet-5-5, fresh subagent contexts; the red and two fix reds",
+   "evidence": "a6f6b573dca91fa55c9f6b8419ea6a42547213c8"
+  },
+  {
+   "role": "green",
+   "seat": "Cursor ctx-3",
+   "model": "cursor-agent -p --force --model gpt-5.3-codex (pinned; the CLI reports no model, F-13), a linked worktree; three ports of the reference",
+   "evidence": "8be01b707098f71f8828a4230f6eaff982330144"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-4",
+   "model": "claude opus = claude-opus-5-5, fresh subagent contexts, the QA review rounds 1 to 3 (FLAG, FLAG, SIGN-OFF); light gates by the facilitator under Avowry's heavy-run lock",
+   "evidence": "b2b9d3f15eaabb08f75e5e5aefea9d861e93e931"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-5",
+   "model": "claude sonnet = claude-sonnet-5-5, a fresh subagent context, the sign-off in a fresh clone (the affected module under Avowry's heavy-run lock)",
+   "evidence": "aaa5dd4debc52465b3e904fc751cd357a5740287"
+  }
+ ],
+ "retro": "docs/retros/card-441-2026-11-15.md",
+ "notes": "Done checks met: Slice=441 161 of 161, slices 439 and 435 341 of 341, the affected module (Status!=Pending) 1011 of 1011, sweeps B and C of 100,000 inputs with 0 regressions and 0 second-pass changes (B 4559, C 2679 new leaks against the base, equal to the reference), every timed shape linear; the D263 corpus 151 rows in 11 families, 0 misses in both forms. Named limits and pinned rows (slice-rulings.md): MINOR 5 pinned, the forward-slash sibling of MINOR 3 a named limit, ruling 1 (only documents%20and%20settings decoded); the MINOR findings of rounds 1 to 3, the named limit and three surviving-mutant killing rows are Avowry #442. The full suite was not run (the cross-mob heavy-run rule's light form); the affected module ran instead. Main took the card branch by fast-forward, so every evidence commit keeps its id."
+}

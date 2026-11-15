@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "6a95bf8c4663967d79adffdba0e4360c31238c85d864087805149ab6d1aa541d",
+  "probe": {
+    "taken_at": "2026-11-15T14:50:57.667074Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-defbd978-470f-46e0-91ee-fdc5b214c98f)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=c37ff71a-85c5-4979-b2c1-2ee4a49f4710]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "\u2026use it is being used by another process. The process cannot access the file because it is being used by another process. The process cannot access the file because it is being used by another process."
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "Sound and minimal architectural addition. Requiring explicit representation of input encodings and neighbour variants directly targets the structural gaps revealed in card 441 reviews without introducing speculative complexity. The requirem",
+      "reply": "Yes\nSound and minimal architectural addition. Requiring explicit representation of input encodings and neighbour variants directly targets the structural gaps revealed in card 441 reviews without introducing speculative complexity. The requirement is concrete, inspectable, and verifiable prior to committing each fix slice's red test. The 15-minute counter-metric effectively guards against over-engineering and keeps cycle times bounded, while tracking unrepresented BLOCKING findings provides an enforceable, objective quality gate.\n\nCITE: the corpus also holds at least one row\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Sound and minimal architectural addition. Requiring explicit representation of input encodings and neighbour variants directly targets the structural gaps revealed in card 441 reviews without introducing speculative complexity. The requirem"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T14:50:57.667074Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2601
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "head_end": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

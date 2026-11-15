@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "a31d4dc0ce8dea17ee734ff0f366122bf0ec22436d25afb0bc4abd69849156c5",
+  "probe": {
+    "taken_at": "2026-11-15T14:55:07.834797Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-6b0f0b56-c072-463f-8f3f-f1e91d7a226b)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=0662776f-21ea-425d-bbfa-1db1a8527f53]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "Committing input encodings and neighbour variants into the corpus before each fix round's red ensures every rule variant is tested red first. Testing plain text, URI forms, JSON escapes, and separator mutations upfront guarantees the test h",
+      "reply": "Yes\n\nCommitting input encodings and neighbour variants into the corpus before each fix round's red ensures every rule variant is tested red first. Testing plain text, URI forms, JSON escapes, and separator mutations upfront guarantees the test harness exercises the actual shapes encountered in review, catching violations without passing bad or partially-sanitized state. Requiring neighbour variants alongside rule modifications closes escape hatches where a fix for one variant leaves adjacent mutations untested.\n\nCITE: the corpus also holds at least one row for each input encoding the function will meet\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Committing input encodings and neighbour variants into the corpus before each fix round's red ensures every rule variant is tested red first. Testing plain text, URI forms, JSON escapes, and separator mutations upfront guarantees the test h"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T14:55:07.834797Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2608
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "head_end": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

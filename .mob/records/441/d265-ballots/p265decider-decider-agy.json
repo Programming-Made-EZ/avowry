@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "4cc527516ab6e7cca95018c1db7764778597a90f75b003ff88b6d3150804a1d8",
+  "probe": {
+    "taken_at": "2026-11-15T14:50:56.667549Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-f1bc162e-2ea0-4428-a2ff-fd89c881d505)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=172f4378-1a07-41a3-9a7b-caecbfcfda71]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "\u2026use it is being used by another process. The process cannot access the file because it is being used by another process. The process cannot access the file because it is being used by another process."
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "The evaluation is framed cleanly on evidence: it pairs an explicit primary metric (review BLOCKING findings without a prior committed row, targeting zero) with an operational counter-metric (slice duration overhead threshold of 15 minutes).",
+      "reply": "Yes\nThe evaluation is framed cleanly on evidence: it pairs an explicit primary metric (review BLOCKING findings without a prior committed row, targeting zero) with an operational counter-metric (slice duration overhead threshold of 15 minutes). The trial is strictly bounded within D263's next two cards and reviewed jointly under clear facilitator ownership. The sign-off structure is complete, engaging all task force roles in fresh contexts alongside the agreement confirmation step under D224 trigger c.\nCITE: the corpus also holds at least one row for each input encoding\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The evaluation is framed cleanly on evidence: it pairs an explicit primary metric (review BLOCKING findings without a prior committed row, targeting zero) with an operational counter-metric (slice duration overhead threshold of 15 minutes)."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T14:50:56.667549Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2598
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "head_end": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

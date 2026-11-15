@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "80e14d3085b5240a962b6781f325a9e9ec55b506a5ca81b22858087b07fbb2b8",
+  "probe": {
+    "taken_at": "2026-11-15T14:50:56.632325Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-7042f011-2b31-4ef2-9d48-c76fe466744a)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=d57cb105-f994-4dea-9875-3d64f534891b]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The proposal keeps the process lean and purposeful. By incorporating input encodings and fix-neighbour variants directly into the existing slice before the red, it removes avoidable review churn without adding headcount or ceremony. Sizing ",
+      "reply": "Yes\nThe proposal keeps the process lean and purposeful. By incorporating input encodings and fix-neighbour variants directly into the existing slice before the red, it removes avoidable review churn without adding headcount or ceremony. Sizing is well respected: deferring the lock helper to mob-defaults card 59 prevents scope creep, while the 15-minute counter-metric and two-card trial guarantee that the practice stays lightweight rather than expanding into procedural overhead.\nCITE: the corpus also holds at least one row for each input encoding\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The proposal keeps the process lean and purposeful. By incorporating input encodings and fix-neighbour variants directly into the existing slice before the red, it removes avoidable review churn without adding headcount or ceremony. Sizing "
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T14:50:56.632325Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2599
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "head_end": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

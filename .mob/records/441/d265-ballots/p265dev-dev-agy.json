@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "ef3ac05bdb92ed7f63fec214babba737e35f55475e79cd8d4e2d777ce6fa67ed",
+  "probe": {
+    "taken_at": "2026-11-15T14:50:56.596765Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-844afccc-b244-430a-ab43-3ee642d86c81)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=b157b08d-3e1a-40e0-bc9a-c16e0327209e]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "\u2026use it is being used by another process. The process cannot access the file because it is being used by another process. The process cannot access the file because it is being used by another process."
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "dev": {
+      "vote": "Yes",
+      "reason": "From the backend developer seat, this addition is workable and directly clarifies test expectations before writing code. Pre-populating encoding rows and neighbour variants (separators, escapes, case, one-letter forms) avoids late-cycle rev",
+      "reply": "Yes\nFrom the backend developer seat, this addition is workable and directly clarifies test expectations before writing code. Pre-populating encoding rows and neighbour variants (separators, escapes, case, one-letter forms) avoids late-cycle review blocking rounds without disrupting our red-green-refactor rhythm. The 15-minute counter-metric ensures the scope does not bloat fix slices, making compliance fair, practical, and resistant to gaming during rapid iteration.\nCITE: the corpus also holds at least one row for each input encoding\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From the backend developer seat, this addition is workable and directly clarifies test expectations before writing code. Pre-populating encoding rows and neighbour variants (separators, escapes, case, one-letter forms) avoids late-cycle rev"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T14:50:56.596765Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2597
+    }
+  },
+  "counted_seats": [
+    "dev"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "head_end": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "dev": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

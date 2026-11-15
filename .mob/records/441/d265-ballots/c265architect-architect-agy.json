@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "05a7e271dd74d886080408741ef27e91d2f6332c69e961b3fc34d3b62199211b",
+  "probe": {
+    "taken_at": "2026-11-15T14:55:06.933344Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-3670720b-9c32-4b04-b372-43c28da3ef91)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=9b84f491-945a-4c5b-bd67-d84bd49054e6]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The design is sound, minimal, and cleanly enforceable. Requiring input encoding coverage in the corpus and neighbour variants prior to red directly closes the structural blind spots exposed during card 441 review rounds. Specifying concrete",
+      "reply": "Yes\n\nThe design is sound, minimal, and cleanly enforceable. Requiring input encoding coverage in the corpus and neighbour variants prior to red directly closes the structural blind spots exposed during card 441 review rounds. Specifying concrete variant dimensions (separators, escapes, case, and one-letter forms) provides objective criteria that prevent arbitrary findings or checker false positives. Bound to D263's trial with a 15-minute slice counter-metric, it introduces minimal process overhead while ensuring architectural robustness across input representations.\n\nCITE: the corpus also holds at least one row for each input encoding the function will meet\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The design is sound, minimal, and cleanly enforceable. Requiring input encoding coverage in the corpus and neighbour variants prior to red directly closes the structural blind spots exposed during card 441 review rounds. Specifying concrete"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T14:55:06.933344Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2606
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "head_end": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

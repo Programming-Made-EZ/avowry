@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "db9bcd87964b70b001d50e9ed88fd98c31b97281e486766f749b5f1efebced93",
+  "probe": {
+    "taken_at": "2026-11-15T14:55:06.396432Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-dafaf7d1-18d1-453a-9fe3-35b301a92536)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=107d55f5-7500-48cd-8fc6-c2d219bb25d2]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "dev": {
+      "vote": "Yes",
+      "reason": "Clear, workable, and directly improves our TDD slice cadence without ambiguity. Committing input encodings into the corpus upfront and neighbour variants (separators, escapes, case, one-letter forms) before the fix slice's red test directly",
+      "reply": "Yes\nClear, workable, and directly improves our TDD slice cadence without ambiguity. Committing input encodings into the corpus upfront and neighbour variants (separators, escapes, case, one-letter forms) before the fix slice's red test directly addresses the round-trip blocking review findings seen on card 441. The 15-minute counter-metric keeps slices bounded so we aren't bogged down in combinatorial bloat, making compliance straightforward and fair to the work.\nCITE: commits rows for the neighbour variants of every rule it changes\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Clear, workable, and directly improves our TDD slice cadence without ambiguity. Committing input encodings into the corpus upfront and neighbour variants (separators, escapes, case, one-letter forms) before the fix slice's red test directly"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T14:55:06.396432Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2605
+    }
+  },
+  "counted_seats": [
+    "dev"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "head_end": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "dev": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

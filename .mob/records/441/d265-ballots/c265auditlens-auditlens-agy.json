@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "7f3e375604d7aa571d53ef6204bf48ca055830e667f6c4de402bc62ccf3dea5a",
+  "probe": {
+    "taken_at": "2026-11-15T14:55:07.346826Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-296ffc92-cbdc-4ea7-92bc-64a9738f5de4)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=20c36f5c-0195-4578-8371-9bb4a4c2af5b]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "From the audit lens, this is verifiable from git alone. Git commit ordering and diffs directly verify that corpus rows for encodings and neighbour variants are committed prior to each fix round's red commit. Enumerating explicit variant cla",
+      "reply": "Yes\nFrom the audit lens, this is verifiable from git alone. Git commit ordering and diffs directly verify that corpus rows for encodings and neighbour variants are committed prior to each fix round's red commit. Enumerating explicit variant classes (separators, escapes, case, one-letter forms) closes the loophole of claiming compliance without committing concrete test rows. While anticipating every encoding requires domain knowledge, git history creates an immutable audit trail of whether the committed corpus met the rule before the red slice landed.\n\nCITE: at least one row for each input encoding the function will meet\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From the audit lens, this is verifiable from git alone. Git commit ordering and diffs directly verify that corpus rows for encodings and neighbour variants are committed prior to each fix round's red commit. Enumerating explicit variant cla"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T14:55:07.346826Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2607
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "head_end": "abfe19d3921d249e347ab1fcfb5687e108265598",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}
