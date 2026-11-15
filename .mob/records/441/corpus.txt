@@ -1,0 +1,116 @@
+# Card 441 real-shape corpus (D263). One row per line, TAB-separated: family, input, expected.
+# <user> is the account placeholder; the test runs each row twice: as written, and with <user> replaced by a stand-in
+# built at run time (aa + bb). Expected is the same in both forms with <user> replaced the same way. Every row is also
+# stable on a second pass. Rows in family 'minor' marked by a '# pinned' comment line above them keep an older limit.
+# Measured against the card 441 reference (architect probe439/PathScan.cs).
+compiler	gcc -I/home/<user>/include -L/home/<user>/lib -o out main.c	gcc -Iinclude -Llib -o out main.c
+compiler	gcc -isystem/home/<user>/include main.c	gcc -isysteminclude main.c
+compiler	gcc -isystem /home/<user>/include main.c	gcc -isystem include main.c
+compiler	clang -I/Users/<user>/src/include -c a.c	clang -Iinclude -c a.c
+compiler	/home/<user>/src/main.c:12:5: error: expected ';' before '}' token	main.c:12:5: error: expected ';' before '}' token
+compiler	In file included from /home/<user>/src/a.h:3,	In file included from a.h:3,
+compiler	ld: cannot find -lfoo in /home/<user>/lib	ld: cannot find -lfoo in lib
+compiler	cl.exe /c /IC:\Users\<user>\include /FoC:\Users\<user>\obj\main.obj main.c	cl.exe /c /Iinclude /Fomain.obj main.c
+compiler	cl.exe /c /I C:\Users\<user>\include main.c	cl.exe /c /I include main.c
+compiler	C:\Users\<user>\src\main.cpp(12): error C2065: 'x': undeclared identifier	main.cpp(12): error C2065: 'x': undeclared identifier
+compiler	LINK : fatal error LNK1104: cannot open file 'C:\Users\<user>\lib\foo.lib'	LINK : fatal error LNK1104: cannot open file 'foo.lib'
+compiler	gcc -Wl,-rpath,/home/<user>/lib main.c	gcc -Wl,-rpath,lib main.c
+compiler	gcc "-I/home/<user>/include" main.c	gcc "-Iinclude" main.c
+compiler	CFLAGS=-O2 -I/home/<user>/inc	CFLAGS=-O2 -Iinc
+compiler	csc /out:C:\Users\<user>\bin\a.exe /reference:C:\Users\<user>\lib\b.dll a.cs	csc /out:a.exe /reference:b.dll a.cs
+compiler	clang -idirafter/home/<user>/inc -iquote/home/<user>/q a.c	clang -idirafterinc -iquoteq a.c
+env	PATH=/home/<user>/bin:/home/<user>/.local/bin:/usr/bin	PATH=bin:bin:/usr/bin
+env	PYTHONPATH=/home/<user>/lib:/home/<user>	PYTHONPATH=lib:<path>
+env	CLASSPATH=/home/<user>/lib/a.jar:/home/<user>/classes	CLASSPATH=a.jar:classes
+env	Path=C:\Users\<user>\AppData\Local\Microsoft\WindowsApps;C:\Windows\system32	Path=WindowsApps;system32
+env	PSModulePath=C:\Users\<user>\Documents\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules	PSModulePath=Modules;Modules
+env	HOME=/home/<user>	HOME=<path>
+env	USERPROFILE=C:\Users\<user>	USERPROFILE=<path>
+env	MAIL=/var/mail/<user>	MAIL=<path>
+env	OLDPWD=/home/<user>/src	OLDPWD=src
+env	XDG_DATA_DIRS=/home/<user>/.local/share/flatpak/exports/share:/usr/share	XDG_DATA_DIRS=share:/usr/share
+env	GOPATH=/home/<user>/go	GOPATH=go
+env	export JAVA_HOME=/home/<user>/jdk	export JAVA_HOME=jdk
+env	MAIL=/var/spool/mail/<user>	MAIL=<path>
+volume	docker run -v /home/<user>/work:/work -it ubuntu	docker run -v work:/work -it ubuntu
+volume	docker run -v /home/<user>:/data ubuntu	docker run -v <path>:/data ubuntu
+volume	docker run -v C:\Users\<user>\proj:/app node	docker run -v proj:/app node
+volume	docker run -v C:/Users/<user>/proj:/home/<user> ubuntu	docker run -v proj:<path>
+volume	podman run -v C:\Users\<user>\data:/home/<user> x	podman run -v data:<path>
+volume	docker run --mount type=bind,src=/home/<user>/data,dst=/data x	docker run --mount type=bind,src=data,dst=/data x
+volume	docker run -v /mnt/c/Users/<user>/proj:/app x	docker run -v proj:/app x
+volume	docker run -v \\wsl$\Ubuntu\home\<user>\proj:/app x	docker run -v proj:/app x
+volume	  - /home/<user>/.config:/root/.config	  - .config:.config
+volume	volumes: [/home/<user>/data:/home/<user>]	volumes: [data:<path>]
+volume	docker run -v "C:\Users\<user>\src:/src" x	docker run -v "src:/src" x
+volume	docker run -v //c/Users/<user>/proj:/app x	docker run -v /proj:/app x
+passwd	/home/<user>:/bin/bash	<path>:/bin/bash
+passwd	svc:x:1000:1000:Svc,,,:/home/<user>:/bin/bash	svc:x:1000:1000:Svc,,,:<path>:/bin/bash
+passwd	svc:*:501:20:Svc:/Users/<user>:/bin/zsh	svc:*:501:20:Svc:<path>:/bin/zsh
+passwd	www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin	www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+passwd	svc:x:1000:1000::/home/<user>:/usr/bin/fish	svc:x:1000:1000::<path>:/usr/bin/fish
+passwd	root:x:0:0:root:/root:/bin/bash	root:x:0:0:root:/root:/bin/bash
+passwd	svc:x:1002:1002::/home/<user>/:/bin/sh	svc:x:1002:1002::<path>:/bin/sh
+passwd	nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin	nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+passwd	svc:x:1000:1000::/home/<user>:	svc:x:1000:1000::<path>:
+json	{"file":"/home/<user>/src/a.py","line":3}	{"file":"a.py","line":3}
+json	{"path":"C:\\Users\\<user>\\x.cs"}	{"path":"x.cs"}
+json	{"file":"\/home\/<user>\/x.cs"}	{"file":"x.cs"}
+json	{"cwd":"/Users/<user>/proj","argv":["node","/Users/<user>/proj/a.js"]}	{"cwd":"proj","argv":["node","a.js"]}
+json	{"msg":"open C:\\Users\\<user>\\a.txt: denied"}	{"msg":"open a.txt: denied"}
+json	{"pattern":"\\d+","path":"C:\\Users\\<user>\\x.cs"}	{"pattern":"\\d+","path":"x.cs"}
+json	{"home":"/home/<user>"}	{"home":"<path>"}
+json	{"stack":"at f (/home/<user>/a.js:3:5)\nat g (/home/<user>/b.js:4:1)"}	{"stack":"at f (a.js:3:5)\nat g (b.js:4:1)"}
+json	{"uri":"file:///C:/Users/<user>/x.cs"}	{"uri":"x.cs"}
+json	{"file":"C:\/Users\/<user>\/x.cs"}	{"file":"x.cs"}
+json	{"home":"\/Users\/<user>"}	{"home":"<path>"}
+remote	git remote add origin ssh://host/home/<user>/repo.git	git remote add origin ssh://host/repo.git
+remote	git clone git@host:/home/<user>/repo.git	git clone git@host:repo.git
+remote	scp a.txt host:/home/<user>/x.txt	scp a.txt host:x.txt
+remote	rsync -av src/ host:/home/<user>/backup/	rsync -av src/ host:<path>
+remote	ssh host cat /home/<user>/.bashrc	ssh host cat .bashrc
+remote	sftp://host/home/<user>/x.txt	sftp://host/x.txt
+remote	git clone file:///home/<user>/repo.git	git clone repo.git
+remote	git@github.com:org/repo.git	git@github.com:org/repo.git
+remote	rsync: change_dir "/home/<user>/src" failed: No such file or directory (2)	rsync: change_dir "src" failed: No such file or directory (2)
+remote	fatal: repository '/home/<user>/repo' does not exist	fatal: repository 'repo' does not exist
+remote	git clone ssh://git@host:2222/home/<user>/r.git	git clone ssh://git@host:2222/r.git
+trace	   at Foo.Bar() in C:\Users\<user>\src\Foo.cs:line 42	   at Foo.Bar() in Foo.cs:line 42
+trace	  File "/home/<user>/proj/app.py", line 10, in <module>	  File "app.py", line 10, in <module>
+trace	    at com.x.Main.main(Main.java:5)	    at com.x.Main.main(Main.java:5)
+trace	Exception in thread "main" java.io.FileNotFoundException: /home/<user>/a.txt (No such file or directory)	Exception in thread "main" java.io.FileNotFoundException: a.txt (No such file or directory)
+trace	    at Object.<anonymous> (/Users/<user>/proj/index.js:1:7)	    at Object.<anonymous> (index.js:1:7)
+trace	   at Program.Main() in /home/<user>/src/Program.cs:line 3	   at Program.Main() in Program.cs:line 3
+trace	thread 'main' panicked at src/main.rs:2:5	thread 'main' panicked at src/main.rs:2:5
+trace	  File "C:\Users\<user>\proj\app.py", line 10, in f	  File "app.py", line 10, in f
+trace	  File "/home/<user>/.local/lib/python3.11/site-packages/x.py", line 1	  File "x.py", line 1
+trace	    at f (file:///home/<user>/a.mjs:1:1)	    at f (a.mjs:1:1)
+minor	~<user>/x.cs	x.cs
+minor	ls ~<user>/src	ls src
+minor	\\?\UNC\server\share\Users\<user>\x.cs	x.cs
+# pinned: device path, as card 439 pinned it (no leak, stable)
+minor	'\\?\C:\Users\<user>\x.cs'	'\\?\x.cs'
+# pinned: device path, as card 439 pinned it (no leak, stable)
+minor	\\.\C:\Users\<user>\x.cs	<path>x.cs
+# pinned: a URL path is a web path, never a file path (PathScrubForms keeps https://example.com/home/x unchanged); leaks as the regex and pre-435 do
+minor	https://example.com/home/<user>/x	https://example.com/home/<user>/x
+minor	a/b:/home/<user>	a/b:<path>
+minor	\\server\share\a:/home/<user>	a:<path>
+minor	C:\tmp\x:/home/<user>	x:<path>
+minor	C:\Users\<user>\a:/home/<user>	a:<path>
+minor	-v ~/x:/data	-v <path>:/data
+minor	/tmp/x:/x	<path>:/x
+minor	-v /home/<user>/v:/v	-v <path>:/v
+# pinned: contrived (card 439 round 3 finding 6); leaks as pre-435 and the regex do; now stable on a second pass
+minor	/tmp/x://server/home/<user>	<path>://server/home/<user>
+# pinned: contrived (round 3 finding 6); an apostrophe ends the name and y: is read as a drive, as in the regex
+minor	/tmp/x'y:/home/<user>	x'<user>
+# pinned: named limit 2.5n; a word before ': ' is prose (the data row 'see ... x.cs: denied' keeps it)
+minor	C:\Users\<user> bb: access denied	<path> bb: access denied
+# pinned: named limit 9b (contrived chain after an account tail); leaks as pre-435 and the regex do
+minor	C:\Users\<user> 1's~/Users\<user> 1's~/Users\<user>	<path> 1's~/Users\<user> 1's~/Users\<user>
+minor	/home/<user>:/home/<user>	<path>:<path>
+minor	see /proj:\x	see /proj:\x
+minor	docker run -v /pj:/app x	docker run -v /pj:/app x
+volume	docker run -v /c/Users/<user>/proj:/app x	docker run -v proj:/app x
+compiler	cl.exe /c /Fe:C:\Users\<user>\bin\a.exe a.c	cl.exe /c /Fe:a.exe a.c
