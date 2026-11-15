@@ -121,3 +121,44 @@
 
 #### CLI model line
 - No explicit CLI-reported model line appeared in the command outputs.
+
+### Fix round 3 green
+
+#### git diff --stat
+```text
+ tests/Avowry.Acceptance.Tests/PathScan439.cs |  2 --
+ tools/Avowry.Bench/PathScrub.cs              | 12 +++++++-----
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+```
+
+#### Port details (reference -> PathScrub)
+- Ported the fixed reference scanner behavior in `tools/Avowry.Bench/PathScrub.cs` by aligning the round-3 reference rules in the existing `PathScrub` class (`Apply(string? text)` unchanged), including:
+  - drive-root adjacency gating from the reference (`q > p || At(q + 2) == '\\'`), and
+  - widened one-letter-before-`:/` keep rule (`OwnLetter`) from the reference.
+- Probe-only mutant machinery remains absent: no `Mutant` field, no `M(string)` helper, and no `M("...")` branches introduced; logic kept in non-mutant form.
+- Removed the two pending markers from `tests/Avowry.Acceptance.Tests/PathScan439.cs`:
+  - `[Trait("Status", "Pending")]`
+  - `// Pending until the card 439 fix-3 green ...`
+
+#### Required commands and summary lines
+1. `dotnet build Avowry.sln -c Debug`  
+   `Build succeeded.`
+
+2. `dotnet test tests/Avowry.Acceptance.Tests/Avowry.Acceptance.Tests.csproj --no-build -c Debug --filter "Slice=439"`  
+   `Passed!  - Failed:     0, Passed:   229, Skipped:     0, Total:   229, Duration: 3 s`
+
+3. `dotnet test tests/Avowry.Acceptance.Tests/Avowry.Acceptance.Tests.csproj --no-build -c Debug --filter "Slice=435|Slice=426|Slice=418"`  
+   `Passed!  - Failed:     0, Passed:   186, Skipped:     0, Total:   186, Duration: 1 m 10 s`
+
+4. `dotnet test tests/Avowry.Acceptance.Tests/Avowry.Acceptance.Tests.csproj --no-build -c Debug --filter "Slice=439" --logger "console;verbosity=detailed"`  
+   `Passed!  - Failed:     0, Passed:   229, Skipped:     0, Total:   229, Duration: 3 s`
+
+#### Sweep lines
+- `sweep=B extended lists seed 439 inputs=100000 leaks_base=45965 leaks_new=4559 regressions=0 second_pass=0 exclusions=0`
+- `sweep=C review shapes seed 4391 inputs=100000 leaks_base=50216 leaks_new=2679 regressions=0 second_pass=0 exclusions=0`
+
+#### PathScrub.cs line count
+- `421`
+
+#### CLI model line
+- No explicit CLI-reported model line appeared in the command outputs.

@@ -445,8 +445,6 @@ public sealed class PathScan439
     [MemberData(nameof(Fix3Pending))]
     [Trait("Slice", "439")]
     [Trait("Criterion", "439-2")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 439 fix-3 green that ports the reference scanner
     public void Id_439_2_fix3_volume_specs_and_account_folders_before_colon_slash(string id, string input, string expected)
     {
         // Given a Windows-drive or UNC volume spec, or an account folder before a colon-slash (review round 3, findings 1 to 3), or a mutant killing row of the third fix slice (the id names the mutant)

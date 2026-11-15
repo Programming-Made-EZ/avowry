@@ -33,8 +33,10 @@ public static class PathScrub
         private char lastForm;
         private int finalStart = -1;
         private bool slashChain;
-        // In a Unix or `~` chain, a final name that is one letter before `:/` keeps it: `/tmp/x:/home/...` is a colon list.
-        private bool OwnLetter(int j) => slashChain && j == finalStart && At(j + 2) == '/';
+        // A letter before `:/` stays in the final name when it follows an ASCII letter, digit or `_` (any chain), or when it
+        // starts the final name of a Unix or `~` chain: `.../alice:/data`, `C:\...\proj:/app` and `/tmp/x:/home/...` are colon lists.
+        private bool OwnLetter(int j) => At(j + 2) == '/' &&
+            ((AsciiWord(At(j - 1)) && j > finalStart) || (slashChain && j == finalStart));
 
         public Scan(string text) { t = text; n = text.Length; }
 
@@ -130,9 +132,9 @@ public static class PathScrub
             repl = "";
             var q = Has(p, "file:///") ? p + 8 : p;
             if (!(Ascii(At(q)) && At(q + 1) == ':')) return false;
-            // Adjacency after a Unix or `~` path only for `file:///` or a backslash drive (`X:\`):
-            // `…/lib:/home/…` is a colon list, not a drive `b:`.
-            var glue = q > p || !(lastForm is 'X' or 'T') || At(q + 2) == '\\';
+            // Adjacency (after any path) only for `file:///` or a backslash drive (`X:\`):
+            // `…/lib:/home/…` and `C:\…\proj:/app` are colon lists, not a drive `b:` or `j:`.
+            var glue = q > p || At(q + 2) == '\\';
             if (!StartOk(p, p == 0 || !AsciiWord(t[p - 1]), glue, out var esc)) return false;
             q += 2;
             if (!RootSep(ref q, out var sgl)) return false;
