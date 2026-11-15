@@ -38,3 +38,19 @@ The fix round runs the same seats as D268:
 - the green (cursor gpt-5.3-codex), whose brief names every caller;
 - the gate on a quiet machine under the heavy lock;
 - review round 2 (claude opus).
+
+## Review round 2 rulings (facilitator, 2026-11-15)
+
+Review round 2 is `review-2.md`, run on card-422 at c0787a7 by the QA seat (claude opus = claude-opus-5-5, ctx-4b). Verdict: FLAG, 1 BLOCKING, 1 MINOR. It confirmed that round 1's BLOCKING 1 and 2 are fixed: the networked F6 checks licence values, and F5 and `RestoreLockedOrFail` classify with `RestoreOutcome`. It replayed both with replicas over the real evidence.
+
+The facilitator replayed the new BLOCKING. In a depth-1 clone of card-422, `python -m unittest tests.test_restored_package_licences` gives `FAILED (failures=1)` on `test_422_FL_py_L5_deep`. CI's `test` job checks out with `actions/checkout@v4` and no `fetch-depth`, then runs `Status!=Pending`, so the row would turn CI red on main.
+
+R2-1 (BLOCKING 1): fixed in fix round 2, a test-design fix only.
+- The row FL-py-L5-deep proves that nothing is printed on a deep checkout without depending on the checkout's history. It stubs the git lookup, or uses a page that cites no commit, as the reviewer proposes.
+- Its D265 neighbour rows: the same assertion passes in a full clone and in a depth-1 clone.
+- The seat proves it by running the Python module in a NEW depth-1 local clone of its working tree and in the worktree.
+- From now on the gate script also runs the Python module in a depth-1 clone, the shape CI uses.
+
+R2-2 (MINOR 2): fixed in the same round. The `F6Failures` and `ClassifyRestore` summaries describe what the functions do now. Theories named `*_pending` that no longer carry the Pending trait are renamed without the suffix, and their rows are unchanged.
+
+Seat: the red seat owns the row (claude sonnet = claude-sonnet-5-5, ctx-2c, as D268 declares for test writing). The two summary comments are documentation and change no behaviour. One seat makes both changes, and the facilitator reruns every filter.
