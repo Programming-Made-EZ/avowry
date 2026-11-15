@@ -28,3 +28,11 @@ The second fix slice: slice-fix2.md (the architect, ctx-1). Measured: all 16 col
 2. Device paths (`\?\` and `\.\` before a drive): today's outputs are pinned as characterisation rows (no leak, stable), so a later change is deliberate.
 3. The one-letter final name before `:/` in a Unix or `~` path keeps its letter (removing a leak the replaced regex had): ACCEPTED in this card, with its own mutant.
 4. Row c11 in the plain stand-in form (`/home/` + name `:/home/` + name) keeps one letter of the stand-in (`<path>b:<path>`) in the reference and the replaced regex alike: an older one-letter limit, named with 2.5n, 3.4d, 3.8a-d and 9b; c11 is pinned in the placeholder form only.
+
+## Rulings on the third fix slice (review round 3, 2026-11-15)
+
+The third fix slice: slice-fix3.md (the architect, ctx-1). Measured: every round-3 input (Windows-drive and UNC volume specs, an account folder before `:/`) gives the pre-435 copy's output, no leak, stable second pass; 239 of 239 data rows equal today; 62 of 62 mutants killed; sweeps A, B and C 0 new leaks and 0 second-pass changes (B 4,559, C 2,679); every shape linear (the slowest `/=-I` 2.3 ms at 20,000 characters).
+
+1. The one-letter rule widened to drive paths (the architect's change to the reviewer's candidate): ACCEPTED; without it `-v C:\Users\` + name + `:/home/` + name keeps the account's last letter, with it the output is the pre-435 copy's stable `<path>:<path>`.
+2. Round 3's finding 4 (`-v ~/x:/data` changes on a second pass, no leak, contrived): KEPT as a named limit, MINOR; the measured option is not adopted, because it rewrites fix round 2's pinned rows.
+3. `glue-unc-blocked` can no longer be killed by a row (rule 1 no longer depends on the previous path's kind): its row is pinned as characterisation (the regex's output).
