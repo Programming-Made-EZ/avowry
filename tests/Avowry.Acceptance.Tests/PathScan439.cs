@@ -174,8 +174,6 @@ public sealed class PathScan439
     [MemberData(nameof(FixFindingsPending))]
     [Trait("Slice", "439")]
     [Trait("Criterion", "439-2")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 439 fix green that ports the reference scanner
     public void Id_439_2_fix_round_findings_4_to_8(string id, string input, string expected)
     {
         // Given a stored diagnostic of review round 1 (mixed slashes after a drive, prefix folders before a drive-style users root, a JSON field, an MSBuild text after an account folder, a bridged path)
@@ -189,8 +187,6 @@ public sealed class PathScan439
     [MemberData(nameof(FixMutantsPending))]
     [Trait("Slice", "439")]
     [Trait("Criterion", "439-4")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 439 fix green that ports the reference scanner
     public void Id_439_4_fix_round_mutant_killing_rows(string id, string input, string expected)
     {
         // Given the killing row of a mutant added by the fix slice (the row id names the mutant)
