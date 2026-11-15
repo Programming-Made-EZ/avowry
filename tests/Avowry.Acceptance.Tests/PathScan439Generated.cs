@@ -101,8 +101,6 @@ public sealed class PathScan439Generated
     [Fact]
     [Trait("Slice", "439")]
     [Trait("Criterion", "439-2")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 439 green that changes tools/Avowry.Bench/PathScrub.cs
     public void Id_439_2_sweep_B_extended_lists_add_no_leak_and_settle_in_one_pass()
     {
         // Given 100,000 strings from card 435's shapes extended with pieces of the review inputs, SplitMix64 seed 439
@@ -114,8 +112,6 @@ public sealed class PathScan439Generated
     [Fact]
     [Trait("Slice", "439")]
     [Trait("Criterion", "439-2")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 439 green that changes tools/Avowry.Bench/PathScrub.cs
     public void Id_439_2_sweep_C_review_shapes_add_no_leak_and_settle_in_one_pass()
     {
         // Given 100,000 strings that wrap every review input as a template (the account folder becomes the token), seed 4391

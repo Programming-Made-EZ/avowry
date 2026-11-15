@@ -30,8 +30,6 @@ public sealed class PathScan439
     [MemberData(nameof(ThirdReviewBlockingPending))]
     [Trait("Slice", "439")]
     [Trait("Criterion", "439-1")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 439 green that changes tools/Avowry.Bench/PathScrub.cs
     public void Id_439_1_third_review_blocking_rows(string id, string input, string expected)
     {
         // Given a stored diagnostic of card 435's third review (a UNC host with angle brackets, parentheses or an apostrophe, an escaped quote and a glued flag, a glued root, a tilde after a hyphen, a root after an account folder)
@@ -58,8 +56,6 @@ public sealed class PathScan439
     [MemberData(nameof(OtherReviewRowsPending))]
     [Trait("Slice", "439")]
     [Trait("Criterion", "439-2")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 439 green that changes tools/Avowry.Bench/PathScrub.cs
     public void Id_439_2_other_review_rows(string id, string input, string expected)
     {
         // Given a stored diagnostic of card 435's second or third review (a MINOR finding, or a row the rework already fixed)
@@ -86,8 +82,6 @@ public sealed class PathScan439
     [MemberData(nameof(MutantKillingRowsPending))]
     [Trait("Slice", "439")]
     [Trait("Criterion", "439-4")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 439 green that changes tools/Avowry.Bench/PathScrub.cs
     public void Id_439_4_mutant_killing_rows(string id, string input, string expected)
     {
         // Given the killing row of one mutant of the scanner (the row id names the mutant)
