@@ -1,0 +1,8 @@
+tested HEAD: a5ca65fb592d8d63ca3ff6a82924d41793b0c6e1
+build exit 0:     0 Warning(s)     0 Error(s) 
+Slice=430 exit 0:  | wall 6 s from 2026-11-15T18:28:05Z
+Slice=417 exit 0:  | wall 4 s from 2026-11-15T18:28:12Z
+Status!=Pending exit 0:  | wall 1301 s from 2026-11-15T18:28:16Z
+[S] ceiling: the Status!=Pending wall time above against 900 s
+DONE
+Facilitator note (2026-11-15): the [S] reading is INVALID because the machine was under load. Every count passed: Slice=430 358 of 358, Slice=417 25 of 25, Status!=Pending 1369 of 1369. But the Status!=Pending run took 21.64 minutes, against 13.47 minutes on the green gate. The slowdown is uniform across unrelated classes (CSharpBaselineAcceptance 433 to 719 s, BenchmarkHarnessAcceptance 202 to 366 s; summed test time 2907 to 3953 s). The two newly isolated classes got faster: StarvationProbe 23.3 to 18.4 s, GeneratedApiBoundAddressEdges 6.8 to 4.9 s. The lock helper printed free because play-tracker's lock PID (26340) was dead. After the gate, three play-tracker PlayTracker.Api.Tests testhost processes were still running with no live lock. The sign-off reruns [S] only when the lock is free AND no play-tracker testhost is running.
