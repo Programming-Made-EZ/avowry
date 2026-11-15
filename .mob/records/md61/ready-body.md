@@ -24,6 +24,7 @@ As Owen, I want every new seat-use row to carry its service, its declared model 
 - Scenario: [Z] Given a history written before this card (no model fields), when rotation or a review reads it, then the old rows still parse, their model shows as unknown, nothing is backfilled, and they count exactly as they do today.
 - Scenario: [O] Given one seat launched through `CardRun.commit_seat`, when its line is written, then it carries `service`, `declared_model` (or the size tier), `declared_reason` and `work_type` beside today's fields, using play-tracker's seat-log names, and `outcome` is `launched`.
 - Scenario: [M] Given a Decider run of six voters, when each voter finishes, then an outcome line for that seat is appended: `success`, `quota_exhausted`, `timeout`, `refused`, `no_vote` or `fallback`, with `duration_s` and the actual model the wrapper used (and the model the CLI reported, when it reports one).
+- Scenario: [M] (every seat; the owner's addendum of 2026-11-15) Given a seat launched outside `CardRun`, such as a Claude subagent through the Agent tool or a Cursor, agy or muse CLI started by the facilitator, when it is launched and when it finishes, then a small command (`python seat_log.py launch ...` and `python seat_log.py outcome ...`) appends the same launch and outcome rows. The kickoff record check (#62) and the retro read them like any other row.
 - Scenario: [B] Given a seat whose outcome is anything but `success`, when the D164 rotation rule decides who has waited longer, then that seat's launch does not count as a turn, and a seat with only a `launched` line from a run that never wrote an outcome counts as not served.
 - Scenario: [I] Given the extended rows, when `mob_process.py check` and the existing seat-use readers run, then they accept both the old and the new row shapes.
 - Scenario: [E] Given a seat with no declared model (an unpinned launcher), when its line is written, then `declared_model` is `undeclared`, and the line is still written: the gap is visible, not hidden.
@@ -50,4 +51,4 @@ As Owen, I want every new seat-use row to carry its service, its declared model 
 
 - Parent epic: none
 - Spikes: none
-- Related: #53 (the shared per-seat log format), #58 (rotation counts only seats that can be seated now), #60 (the CLI-reported model), play-tracker docs/model-allocation/seat-log.jsonl (the field names)
+- Related: #62 (the eight-service kickoff probe and refusal), #53 (the shared per-seat log format), #58 (rotation counts only seats that can be seated now), #60 (the CLI-reported model), play-tracker docs/model-allocation/seat-log.jsonl (the field names)
