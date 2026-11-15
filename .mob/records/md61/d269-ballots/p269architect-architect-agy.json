@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "0ee88b6d12303189bbcf3ea80a4bb7032f5d4aab5dc3f2ab9e3b4c8732fe45a0",
+  "probe": {
+    "taken_at": "2026-11-15T23:23:35.555569Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-c0afde72-bacb-417c-a685-81228c0e2711)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=d18b178a-7558-4755-a0d4-e816da0a260f]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The record design and task force structure are sound and minimal. Mirroring play-tracker's reference schema for service, model, work-type, and outcome keeps the jsonl format standard, and excluding failed seats from rotation turns prevents ",
+      "reply": "Yes\nThe record design and task force structure are sound and minimal. Mirroring play-tracker's reference schema for service, model, work-type, and outcome keeps the jsonl format standard, and excluding failed seats from rotation turns prevents unfair rotation penalties. Scoping the changes strictly to light unit tests in mob-defaults avoids unnecessary heavy runs and false positives. Note: parser routines reading historical rows should gracefully tolerate missing fields in pre-existing records.\nCITE: Work only in a linked worktree of mob-defaults, with light runs only.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The record design and task force structure are sound and minimal. Mirroring play-tracker's reference schema for service, model, work-type, and outcome keeps the jsonl format standard, and excluding failed seats from rotation turns prevents "
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T23:23:35.555569Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2633
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "f26473312a6a2a1a4513ae19e0318f2800b63cf6",
+  "head_end": "f26473312a6a2a1a4513ae19e0318f2800b63cf6",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

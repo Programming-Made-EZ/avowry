@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "d88256ab202a648f89035f087bb53e572441aa2f839b1d1125f44f333b08804b",
+  "probe": {
+    "taken_at": "2026-11-15T23:23:36.063188Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-0a3a8efa-a8ac-4987-b2bd-27483950ac13)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=d4815c20-d6b6-444b-93e5-4a823c1cfe8f]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "The proposal satisfies the audit lens. All deliverables and execution traces'including the model probe, facilitator slice, red test diffs, green implementation, adversarial QA review, and updated seat-use history'are committed directly to g",
+      "reply": "Yes\nThe proposal satisfies the audit lens. All deliverables and execution traces\u2014including the model probe, facilitator slice, red test diffs, green implementation, adversarial QA review, and updated seat-use history\u2014are committed directly to git. Pinning exact models and services at launch prevents seat substitution, while executing sign-off in a fresh clone guarantees reproducible verification without reliance on untracked local state. There are no unlogged side channels or loopholes allowing the team to pass while breaking the practice.\nCITE: The facilitator's slice is part of the red brief and is committed with the red.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The proposal satisfies the audit lens. All deliverables and execution traces'including the model probe, facilitator slice, red test diffs, green implementation, adversarial QA review, and updated seat-use history'are committed directly to g"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T23:23:36.063188Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2634
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "f26473312a6a2a1a4513ae19e0318f2800b63cf6",
+  "head_end": "f26473312a6a2a1a4513ae19e0318f2800b63cf6",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

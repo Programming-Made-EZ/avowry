@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "2615dd294d7dc1d401087597423b2d4a0eb8f379b56e8331e363363c18713546",
+  "probe": {
+    "taken_at": "2026-11-15T23:23:37.851500Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-13221220-a2b8-4a53-a8a7-b0da6286918b)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=cf9eaba2-c73c-462f-84b5-36a1be73b7ff]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The task force is lean, balanced, and appropriately sized for this scope. Dispensing with an architect seat and redundant domain expert avoids procedural padding, as the slice is directly grounded in play-tracker's existing reference format",
+      "reply": "Yes\nThe task force is lean, balanced, and appropriately sized for this scope. Dispensing with an architect seat and redundant domain expert avoids procedural padding, as the slice is directly grounded in play-tracker's existing reference format. Retaining distinct seats for red, green, adversarial QA, and clean sign-off provides essential testing and verification perspectives without bloat or unnecessary ceremony.\nCITE: This is light work only: unit tests of mob-defaults, with no acceptance project and no heavy run.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The task force is lean, balanced, and appropriately sized for this scope. Dispensing with an architect seat and redundant domain expert avoids procedural padding, as the slice is directly grounded in play-tracker's existing reference format"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T23:23:37.851500Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2636
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "f26473312a6a2a1a4513ae19e0318f2800b63cf6",
+  "head_end": "f26473312a6a2a1a4513ae19e0318f2800b63cf6",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

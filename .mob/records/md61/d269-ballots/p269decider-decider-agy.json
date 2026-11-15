@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "0159f77466d29c3552cc37f3038ee6c8cf0031cce6af1a40ade33a1b4b2f296f",
+  "probe": {
+    "taken_at": "2026-11-15T23:23:38.486684Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-7bae70a2-945f-4856-943d-3fad441be9d1)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=3b6124fa-fd94-41c9-9d5d-c3e0f9dd2b60]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "The evaluation rests squarely on evidence from running the unit test suite in an independent clone. The task force contains every necessary role'red, green, adversarial QA, and an independent sign-off seat distinct from green'ensuring rigor",
+      "reply": "Yes\nThe evaluation rests squarely on evidence from running the unit test suite in an independent clone. The task force contains every necessary role\u2014red, green, adversarial QA, and an independent sign-off seat distinct from green\u2014ensuring rigorous, objective verification without missing perspectives.\nCITE: runs the mob-defaults unit suite in a fresh clone and judges\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The evaluation rests squarely on evidence from running the unit test suite in an independent clone. The task force contains every necessary role'red, green, adversarial QA, and an independent sign-off seat distinct from green'ensuring rigor"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T23:23:38.486684Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2637
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "f26473312a6a2a1a4513ae19e0318f2800b63cf6",
+  "head_end": "f26473312a6a2a1a4513ae19e0318f2800b63cf6",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

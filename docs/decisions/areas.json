@@ -1720,5 +1720,11 @@
     "status": "adopted",
     "title": "Card 422: task force declaration (models pinned per role) and Ready text (the restored-package licence checks fail when the page is wrong)",
     "order": 259
+  },
+  "D269": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "mob-defaults #61: task force declaration (models pinned per role) and Ready text (every new seat-use row carries its service, model, work type and outcome, and a failed seat does not count as a rotation turn)",
+    "order": 260
   }
 }

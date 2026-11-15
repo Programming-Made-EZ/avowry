@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "146176a479b6d6f2a8d27381c5977171cd6ec2d75d69824717889aa7ee92f571",
+  "probe": {
+    "taken_at": "2026-11-15T23:23:51.947859Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-d2d8dd7e-6f64-40ac-a512-9cbeb27a6134)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=0ccf8cd4-779f-4810-bcea-215b58baf1e2]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "dev": {
+      "vote": "Yes",
+      "reason": "The scope is workable, unambiguous, and fair to backend implementation work. The separation of concerns between red and green seats is maintained cleanly, with test writing based on mechanical field specifications and green execution constr",
+      "reply": "Yes\n\nThe scope is workable, unambiguous, and fair to backend implementation work. The separation of concerns between red and green seats is maintained cleanly, with test writing based on mechanical field specifications and green execution constrained to unit tests in facilitator and decider modules. Relying on play-tracker's existing reference format eliminates schema ambiguity, and the facilitator-provided slice prevents scope creep or gaming under slice limits.\n\nCITE: The facilitator's slice is part of the red brief and is committed with the red.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The scope is workable, unambiguous, and fair to backend implementation work. The separation of concerns between red and green seats is maintained cleanly, with test writing based on mechanical field specifications and green execution constr"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T23:23:51.947859Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2638
+    }
+  },
+  "counted_seats": [
+    "dev"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "f26473312a6a2a1a4513ae19e0318f2800b63cf6",
+  "head_end": "f26473312a6a2a1a4513ae19e0318f2800b63cf6",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "dev": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

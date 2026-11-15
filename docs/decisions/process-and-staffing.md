@@ -1554,3 +1554,10 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - Ballots, by role (decider.py --roles, a fresh context per role; .mob/records/422/d268-ballots/): window 20:10:28 to 20:14:37 UTC: architect, audit lens, coach, decider, dev and qa (agy, gemini-3.8-flash-medium) all Yes, every ballot counted with its CITE check passed.
 - Trigger line (Decider protocol step 6, adopted by D224): the primary window passed with no No and no amendment, and the proposal does not change this agreement, so no confirmation step ran.
 - Result: **adopted** (six of six). Owner: the facilitator.
+
+#### Decider D269: mob-defaults #61: task force declaration (models pinned per role) and Ready text (every new seat-use row carries its service, model, work type and outcome, and a failed seat does not count as a rotation turn) (ADOPTED)
+
+- Date: 2026-11-15. Proposer: the facilitator, from the owner's dispatch audit and the 23:20Z watchdog (.mob/records/md61/declaration-proposal.md; the live probe .mob/records/md61/probe-all-2026-11-15.jsonl). Clauses: (1) the Ready text of .mob/records/md61/ready-body.md (card_ready.py with mob-defaults' PERSONAS.md ok); (2) the task force with each role's service, exact model and reason declared before any seat runs: dev red claude sonnet = claude-sonnet-5-5, dev green cursor --model gpt-5.3-codex, QA claude opus = claude-opus-5-5, sign-off claude sonnet = claude-sonnet-5-5, the slice by the facilitator; (3) a linked worktree of mob-defaults and light runs only.
+- Ballots, by role (decider.py --roles, a fresh context per role; .mob/records/md61/d269-ballots/): window 23:22:26 to 23:26:59 UTC: architect, audit lens, coach, decider, dev and qa (agy, gemini-3.8-flash-medium) all Yes, every ballot counted with its CITE check passed.
+- Trigger line (Decider protocol step 6, adopted by D224): the primary window passed with no No and no amendment, and the proposal does not change this agreement, so no confirmation step ran.
+- Result: **adopted** (six of six). Owner: the facilitator.
