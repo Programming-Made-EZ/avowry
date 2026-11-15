@@ -62,16 +62,14 @@ public class NoPhCodesInTheLiveTree
         ("H3", "docs/retros/", "retrospectives are dated history of what the team saw at the time"),
         ("H4", "bench/results/", "pushed benchmark rows are schema: a row written with a code stays as pushed"),
         ("H5", "board/", "the board files are generated from the issues and never hand-edited"),
-        ("H6", "reference/csharp/Orders.Api/packages.lock.json", "a generated lockfile: its base64 content hashes can contain the old prefix by chance and are never hand-edited (card 369)"),
-        ("H7", "reference/csharp/Orders.Specs/packages.lock.json", "a generated lockfile: its base64 content hashes can contain the old prefix by chance and are never hand-edited (card 369)"),
     ];
 
     [Fact]
     [Trait("Slice", "361")]
     public async Task Every_history_allow_list_entry_still_holds_a_PH_code()
     {
-        // Given the seven allow-listed history areas (ids H1 to H5, and H6 and H7 for the two generated lockfiles of card 369; the earlier H6, MOB.md, was removed on 2026-11-10 when its last old-prefix text rotated out of the generated file), each with its reason
-        Assert.Equal(["H1", "H2", "H3", "H4", "H5", "H6", "H7"], History.Select(entry => entry.Id));
+        // Given the five allow-listed history areas (ids H1 to H5), each with its reason
+        Assert.Equal(["H1", "H2", "H3", "H4", "H5"], History.Select(entry => entry.Id));
         var files = await TrackedFilesAsync();
 
         // When each area is scanned for the old prefix without the allow-list
@@ -202,7 +200,6 @@ public class NoPhCodesInTheLiveTree
     [Theory]
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-7")]
-    [Trait("Status", "Pending")]
     [MemberData(nameof(PlantedRows422Pending))]
     public void Lockfile_planted_rows_pending(string id, string path, string text, bool mustHit) =>
         AssertLockfileRow422(id, path, text, mustHit);
@@ -247,13 +244,13 @@ internal static class LiveTreeScanner
 {
     // History allow-list: files under these paths are never live. The red's own files are not listed; they are clean.
     private static readonly string[] HistoryPrefixes =
-        [".mob/", "docs/decisions/", "docs/retros/", "bench/results/", "board/", "MOB.md",
-         "reference/csharp/Orders.Api/packages.lock.json", "reference/csharp/Orders.Specs/packages.lock.json"];
+        [".mob/", "docs/decisions/", "docs/retros/", "bench/results/", "board/", "MOB.md"];
 
     // Case-sensitive, no left anchor (a class name may end in the old prefix and a number). The character class keeps this line clean.
     private static readonly Regex Pattern = new("""P[H](?:[0-9]|n{3}|\b)""", RegexOptions.CultureInvariant);
 
     private static readonly Regex ThreeDigitCode = new("""\GP[H][0-9]{3}(?![0-9])""", RegexOptions.CultureInvariant);
+    private static readonly Regex ContentHash = new("""("contentHash"[ \t]*:[ \t]*")([A-Za-z0-9+/=]*)(")""", RegexOptions.CultureInvariant);
 
     public static bool IsHistory(string path)
     {
@@ -275,8 +272,17 @@ internal static class LiveTreeScanner
     public static IReadOnlyList<Hit> Scan(IEnumerable<(string Path, string Text)> files) =>
         files.Where(file => !IsHistory(file.Path)).SelectMany(file => HitsIn(file.Path, file.Text)).ToList();
 
+    private static bool IsLockfile(string path)
+    {
+        var normal = path.Replace('\\', '/');
+        return normal == "packages.lock.json" || normal.EndsWith("/packages.lock.json", StringComparison.Ordinal);
+    }
+
     public static IReadOnlyList<Hit> HitsIn(string path, string text)
     {
+        if (IsLockfile(path))
+            text = ContentHash.Replace(text, match => match.Groups[1].Value + new string(' ', match.Groups[2].Length) + match.Groups[3].Value);
+
         var hits = new List<Hit>();
         foreach (Match match in Pattern.Matches(text))
         {

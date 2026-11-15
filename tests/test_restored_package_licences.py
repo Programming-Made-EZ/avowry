@@ -5,6 +5,7 @@ reads the NuGet cache. Failure messages start `restored-package-licences: <id> <
 """
 
 import json
+import posixpath
 import re
 import unittest
 import xml.etree.ElementTree as ET
@@ -66,24 +67,92 @@ def read_provider():
     return PROVIDER.read_text(encoding="utf-8") if PROVIDER.is_file() else ""
 
 
-def load_tool_texts():
+def repo_reader(rel):
+    path = REPO / rel
+    return path.read_text(encoding="utf-8") if path.is_file() else None
+
+
+DIR_FILES = ("Directory.Build.props", "Directory.Build.targets", "Directory.Packages.props")
+
+
+def _local(tag):
+    return tag.rsplit("}", 1)[-1] if isinstance(tag, str) else ""
+
+
+def _attr(el, name):
+    for key, value in el.attrib.items():
+        if _local(key).lower() == name.lower():
+            return value
+    return None
+
+
+def _norm_rel(base_dir, inc):
+    path = inc.strip().replace("\\", "/")
+    return posixpath.normpath(posixpath.join(base_dir, path)) if base_dir else posixpath.normpath(path)
+
+
+def _project_refs(text):
+    try:
+        root = ET.fromstring(text)
+    except ET.ParseError:
+        return PROJECT_RE.findall(text)
+    out = []
+    for el in root.iter():
+        if _local(el.tag).lower() == "projectreference":
+            include = _attr(el, "Include")
+            if include:
+                out.extend(part for part in include.split(";") if part.strip())
+    return out
+
+
+def _imports(text):
+    try:
+        root = ET.fromstring(text)
+    except ET.ParseError:
+        return []
+    return [el for el in root.iter() if _local(el.tag) == "Import" and _attr(el, "Sdk") is None]
+
+
+def _import_target(imp):
+    project = (_attr(imp, "Project") or "").replace("$(MSBuildThisFileDirectory)", "")
+    if not project.strip() or "$(" in project or "@(" in project or "*" in project:
+        return None
+    return project
+
+
+def tool_closure(start_rel, read):
     texts = {}
 
-    def add(path):
-        try:
-            resolved = path.resolve()
-            rel = resolved.relative_to(REPO.resolve()).as_posix()
-        except ValueError:
+    def add(rel):
+        rel = posixpath.normpath(rel)
+        if rel.startswith("..") or rel in texts:
             return
-        if rel in texts or not resolved.is_file():
+        text = read(rel)
+        if text is None:
             return
-        text = resolved.read_text(encoding="utf-8")
         texts[rel] = text
-        for inc in PROJECT_RE.findall(text):
-            add(resolved.parent / inc.replace("\\", "/"))
+        base = posixpath.dirname(rel)
+        if rel.endswith("proj"):
+            for include in _project_refs(text):
+                add(_norm_rel(base, include))
+            current = base
+            while True:
+                for name in DIR_FILES:
+                    add(posixpath.join(current, name) if current else name)
+                if not current:
+                    break
+                current = posixpath.dirname(current)
+        for imp in _imports(text):
+            project = _import_target(imp)
+            if project is not None:
+                add(_norm_rel(base, project))
 
-    add(CLI_PROJ)
+    add(start_rel)
     return texts
+
+
+def load_tool_texts():
+    return tool_closure(CLI_PROJ.relative_to(REPO).as_posix(), repo_reader)
 
 
 def lock_packages(lock, kinds=("Direct", "Transitive")):
@@ -136,7 +205,9 @@ def restored_body(page):
 
 def page_rows(page):
     body = restored_body(page)
-    return [] if body is None else rows(body)
+    if body is None:
+        return []
+    return rows("\n".join(re.sub(r"^ {1,3}\|", "|", line) for line in body.split("\n")))
 
 
 def row_match_failures(page, locks):
@@ -225,14 +296,29 @@ def section_meta_failures(page):
     return out
 
 
-def lockfile_commit_failures(page):
+SHALLOW_NOTE = "restored-package-licences: section -: commit-blob check skipped (shallow checkout)"
+
+
+def is_shallow():
+    r = git(["rev-parse", "--is-shallow-repository"])
+    return bool(r) and r.stdout.strip() == "true"
+
+
+def lockfile_commit_skip(page, shallow):
+    body = restored_body(page) or ""
+    if not HASH_RE.search(body):
+        return None
+    return SHALLOW_NOTE if shallow else None
+
+
+def lockfile_commit_failures(page, shallow=None):
     body = restored_body(page) or ""
     hashes = HASH_RE.findall(body)
     if not hashes:
         return []
-    shallow = git(["rev-parse", "--is-shallow-repository"])
-    if shallow and shallow.stdout.strip() == "true":
-        print("shallow: recompute skipped")
+    shallow = is_shallow() if shallow is None else shallow
+    if shallow:
+        print(SHALLOW_NOTE)
         return []
     commit = hashes[0]
     out = []
@@ -249,6 +335,32 @@ def lockfile_commit_failures(page):
     return out
 
 
+LOCK_PROPS = ("RestorePackagesWithLockFile", "RestoreLockedMode")
+_TRUE_WORDS, _FALSE_WORDS = {"true", "on", "yes"}, {"false", "off", "no"}
+UNKNOWN = object()
+
+
+def condition_value(cond):
+    if cond is None:
+        return True
+    text = cond.strip()
+    if not text:
+        return True
+    lowered = text.lower()
+    if any(token in text for token in ("$(", "@(", "%(")) or " and " in lowered or " or " in lowered:
+        return None
+    word = text.strip("'").strip().lower() if re.fullmatch(r"'[^']*'|[A-Za-z]+", text) else None
+    if word in _TRUE_WORDS:
+        return True
+    if word in _FALSE_WORDS:
+        return False
+    match = re.fullmatch(r"'([^']*)'\s*(==|!=)\s*'([^']*)'", text)
+    if match:
+        same = match.group(1).strip().lower() == match.group(3).strip().lower()
+        return same if match.group(2) == "==" else not same
+    return None
+
+
 def props_failures(text):
     if text is None:
         return [msg("Directory.Build.props", "-", "missing")]
@@ -256,25 +368,89 @@ def props_failures(text):
         root = ET.fromstring(text)
     except ET.ParseError:
         return [msg("Directory.Build.props", "-", "does not parse")]
+
+    value = {name: None for name in LOCK_PROPS}
+    why = {name: "never set" for name in LOCK_PROPS}
+
+    for child in list(root):
+        tag = _local(child.tag)
+        if tag in ("Import", "ImportGroup", "Choose"):
+            if tag != "Import" or _attr(child, "Sdk") is None:
+                for name in LOCK_PROPS:
+                    value[name], why[name] = UNKNOWN, f"a later {tag} may change it"
+            continue
+        if tag != "PropertyGroup":
+            continue
+
+        group_cond = condition_value(_attr(child, "Condition"))
+        for element in list(child):
+            name = _local(element.tag)
+            if name not in LOCK_PROPS:
+                continue
+            element_cond = condition_value(_attr(element, "Condition"))
+            if group_cond is False or element_cond is False:
+                if value[name] is None:
+                    why[name] = "set only under a false Condition"
+                continue
+            if group_cond is None or element_cond is None:
+                value[name], why[name] = UNKNOWN, "set under a Condition the check cannot decide"
+                continue
+            text_value = (element.text or "").strip()
+            value[name] = text_value.lower()
+            why[name] = f"last set to {text_value or 'empty'}"
+
     out = []
-    for name in ("RestorePackagesWithLockFile", "RestoreLockedMode"):
-        found = False
-        for elem in root.iter():
-            tag = elem.tag.rsplit("}", 1)[-1]
-            if tag == name and (elem.text or "").strip().lower() == "true":
-                found = True
-                break
-        if not found:
-            out.append(msg(name, "-", "not true"))
+    for name in LOCK_PROPS:
+        if value[name] != "true":
+            out.append(msg(name, "-", f"not true ({why[name]})"))
     return out
+
+
+TOOL_ITEMS = {
+    "packagereference": "PackageReference",
+    "globalpackagereference": "GlobalPackageReference",
+    "packagedownload": "PackageDownload",
+}
+
+
+def _item_version(el):
+    for name in ("Version", "VersionOverride"):
+        value = _attr(el, name)
+        if value is not None and value.strip():
+            return value.strip()
+    for sub in list(el):
+        if _local(sub.tag).lower() in ("version", "versionoverride") and (sub.text or "").strip():
+            return sub.text.strip()
+    return "-"
 
 
 def tool_package_ref_failures(tool_texts):
     out = []
     for key, text in (tool_texts or {}).items():
         rel = str(key).replace("\\", "/")
-        for pid, ver in PKG_RE.findall(text or ""):
-            out.append(msg(pid, ver, f"PackageReference in {rel}"))
+        try:
+            root = ET.fromstring(text or "")
+        except ET.ParseError:
+            out.append(msg(rel, "-", "does not parse as MSBuild XML"))
+            continue
+
+        for el in root.iter():
+            kind = TOOL_ITEMS.get(_local(el.tag).lower())
+            if kind is None:
+                continue
+            ids = _attr(el, "Include")
+            if ids is None or not ids.strip():
+                ids = _attr(el, "Update")
+            if ids is None or not ids.strip():
+                continue
+            version = _item_version(el)
+            for pid in ids.split(";"):
+                if pid.strip():
+                    out.append(msg(pid.strip(), version, f"{kind} in {rel}"))
+
+        for imp in _imports(text or ""):
+            if _import_target(imp) is None:
+                out.append(msg(rel, "-", f"Import {_attr(imp, 'Project')} cannot be followed"))
     return out
 
 
@@ -388,6 +564,197 @@ def provider_direct_failures(locks, provider_text):
     for pid, ver in sorted(specs_direct - specs_pkgs):
         out.append(msg(pid, ver, "Orders.Specs lockfile Direct not in the provider SpecsProject"))
     return out
+
+
+_UNITS = [
+    "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
+]
+_TENS = {"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50}
+_WORDNUM = (r"(?:(?:twenty|thirty|forty|fifty)(?:[- ](?:one|two|three|four|five|six|seven|eight|nine))?"
+            r"|" + "|".join(sorted(_UNITS, key=len, reverse=True)) + r")")
+_WRAP = r"(?:\*\*|__|`|\*|_)?"
+NUM = r"(?<![\w*`])" + _WRAP + r"(?<![\w])(\d+|" + _WORDNUM + r")" + _WRAP
+
+
+def number_value(token):
+    token = token.strip().lower()
+    if token.isdigit():
+        return int(token)
+    if token in _UNITS:
+        return _UNITS.index(token)
+    parts = re.split(r"[- ]", token)
+    if parts[0] in _TENS:
+        return _TENS[parts[0]] + (_UNITS.index(parts[1]) if len(parts) > 1 else 0)
+    return None
+
+
+def _fig(pattern):
+    return re.compile(pattern.replace(" ", r"\s+").replace("{N}", NUM), re.I)
+
+
+REVIEWED_URLS = {
+    ("xunit.abstractions", "2.0.3"): ("https://raw.githubusercontent.com/xunit/xunit/master/license.txt", "Apache-2.0")
+}
+
+
+def _bullet_after(body, match):
+    end = re.search(r"\n[ \t]*(?:[-*+]\s|\n)|\n(?=Recommendation:)", body[match.end():])
+    return body[match.start(): match.end() + (end.start() if end else len(body))]
+
+
+def _named(text, pid, ver):
+    return re.search(r"(?<![\w.])" + re.escape(pid) + r"\s+" + re.escape(ver) + r"(?![\w.])", text) is not None
+
+
+def notice_count(listing, table, out):
+    total = 0
+    ids = {row[0] for row in table}
+    for item in re.split(r",\s*(?:and\s+)?|\s+and\s+", " ".join(listing.split())):
+        item = item.strip()
+        if not item:
+            continue
+        group = re.fullmatch(r"the\s+" + NUM + r"\s+(\S+)\s+packages", item, re.I)
+        if group:
+            count = number_value(group.group(1))
+            prefix = group.group(2)
+            have = sum(1 for pid in ids if pid.startswith(prefix + "."))
+            if count != have:
+                out.append(msg("figure", "-", f"notice group {prefix}: page says {group.group(1)}, rows give {have}"))
+            total += count
+        elif item in ids:
+            total += 1
+        else:
+            out.append(msg("figure", "-", f"notice files: {item} is no row"))
+            total += 1
+    return total
+
+
+def figure_failures(page, locks):
+    if lock_parse_failures(locks):
+        return []
+    body = restored_body(page)
+    if body is None:
+        return [msg("section", "-", "missing")]
+    table = [row for row in page_rows(page) if len(row) >= 7]
+    api = lock_packages((locks or {}).get("Orders.Api") or {})
+    merged, _ = union_packages(locks)
+    direct = sum(1 for item in merged.values() if item["direct"])
+    licences = [row[3] for row in table]
+    non_expression = sum(1 for row in table if row[4] != "nuspec licence expression")
+    out = []
+
+    def check(name, pattern, want, group=1):
+        found = list(_fig(pattern).finditer(body))
+        if not found:
+            out.append(msg("figure", "-", f"{name}: not found on the page"))
+            return []
+        for match in found:
+            got = number_value(match.group(group))
+            expected = want(match) if callable(want) else want
+            if got != expected:
+                out.append(msg("figure", "-", f"{name}: page says {match.group(group)}, rows give {expected}"))
+        return found
+
+    check("packages", r"{N} packages: the generated service", len(merged))
+    check("Orders.Api packages", r"\(Orders\.Api\) restores {N}\b", len(api))
+    check("Orders.Specs packages", r"\(Orders\.Specs\) adds? {N} test-only", len(merged) - len(api))
+    check("direct", r"{N} are direct", direct)
+    check("transitive", r"direct and {N} transitive", len(merged) - direct)
+    check("no licence expression", r"No licence expression in the nuspec \({N} packages?", non_expression)
+    check("with a licence expression", r"the other {N} have one", len(table) - non_expression)
+    check("MIT", r"{N} are MIT\b", licences.count("MIT"))
+    check("Apache-2.0", r"{N} are Apache-2\.0", licences.count("Apache-2.0"))
+    check("recommended packages", r"accept all {N} restored packages", len(merged))
+    check("recommended MIT", r"restored packages \({N} MIT", licences.count("MIT"))
+    check("recommended Apache-2.0", r"MIT, {N} Apache-2\.0", licences.count("Apache-2.0"))
+
+    acceptance = list(_fig(r"Licence acceptance required \({N} packages?").finditer(body))
+    if not acceptance:
+        out.append(msg("figure", "-", "licence acceptance: not found on the page"))
+    for match in acceptance:
+        bullet = _bullet_after(body, match)
+        named = sum(1 for row in table if _named(bullet, row[0], row[1]))
+        check("licence acceptance", r"Licence acceptance required \({N} packages?", named)
+        check("acceptance packages recommended", r"the {N} Microsoft test packages", named)
+        break
+
+    check(
+        "notice files",
+        r"{N} packages? also bundle a third-party notice file \(([^)]*)\)",
+        lambda match: notice_count(match.group(2), table, out),
+    )
+
+    for (pid, ver), (url, _) in REVIEWED_URLS.items():
+        line = next((ln for ln in body.split("\n") if _named(ln, pid, ver) and not ln.lstrip().startswith("|")), "")
+        if url not in line:
+            out.append(msg(pid, ver, f"page bullet does not cite the reviewed licence URL {url}"))
+
+    return out
+
+
+def classify_licence_text(text):
+    head = " ".join((text or "")[:600].split())
+    if re.search(r"\bMIT License\b", head, re.I):
+        return "MIT"
+    if re.search(r"\bApache License\b", head, re.I) and re.search(r"\bVersion 2\.0\b", head, re.I):
+        return "Apache-2.0"
+    match = re.search(r"\bBSD ([23])-Clause\b", head, re.I)
+    return f"BSD-{match.group(1)}-Clause" if match else None
+
+
+def licence_value_failures(table, evidence):
+    out = []
+    for row in table:
+        if len(row) < 7:
+            continue
+        pid, ver, licence, source = row[0], row[1], row[3], row[4]
+        ev = evidence.get((pid, ver))
+        if ev is None:
+            out.append(msg(pid, ver, "no restored package to read the licence from"))
+            continue
+        if source == "nuspec licence expression":
+            if ev.get("expression") != licence:
+                out.append(msg(pid, ver, f"licence {licence} but the nuspec expression is {ev.get('expression')}"))
+        elif source == "packaged licence file":
+            found = sorted({c for c in map(classify_licence_text, (ev.get("licence_files") or {}).values()) if c})
+            if not found:
+                out.append(msg(pid, ver, f"licence {licence} but no packaged licence file names a known licence"))
+            elif licence not in found:
+                out.append(msg(pid, ver, f"licence {licence} but the packaged licence file says {' and '.join(found)}"))
+        elif source == "licence URL":
+            url = (ev.get("licence_url") or "").strip()
+            reviewed = REVIEWED_URLS.get((pid, ver))
+            if reviewed is None or reviewed[0] != url:
+                out.append(msg(pid, ver, f"licence {licence} from licence URL {url or '-'}, which is not a reviewed URL"))
+            elif reviewed[1] != licence:
+                out.append(msg(pid, ver, f"licence {licence} but the reviewed licence URL says {reviewed[1]}"))
+    return out
+
+
+NETWORK_MARKERS = (
+    "NU1301",
+    "Unable to load the service index",
+    "No such host is known",
+    "Name or service not known",
+    "nodename nor servname provided",
+    "The remote name could not be resolved",
+)
+
+
+def restore_outcome(exit_code, timed_out, text, restored_count):
+    if timed_out:
+        return "fail"
+    if exit_code == 0:
+        return "pass"
+    if re.search(r"\bNU1004\b", text or "", re.I):
+        return "mismatch"
+    lower = (text or "").lower()
+    if any(marker.lower() in lower for marker in NETWORK_MARKERS) and restored_count == 0:
+        return "network-missing"
+    if exit_code == 0:
+        return "pass"
+    return "fail"
 
 
 def collect_failures(page, locks, provider_text, tool_texts):

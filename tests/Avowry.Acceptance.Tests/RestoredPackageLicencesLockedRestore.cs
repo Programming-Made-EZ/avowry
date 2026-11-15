@@ -306,7 +306,6 @@ public class RestoredPackageLicencesLockedRestore
     [Theory]
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-2")]
-    [Trait("Status", "Pending")]
     [MemberData(nameof(LicenceRowIds422))]
     public void Licence_value_rows_422(string id)
     {
@@ -346,7 +345,6 @@ public class RestoredPackageLicencesLockedRestore
     [Theory]
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-6")]
-    [Trait("Status", "Pending")]
     [MemberData(nameof(RestoreRowIds422))]
     public void Restore_outcome_rows_422(string id)
     {
@@ -475,9 +473,13 @@ public class RestoredPackageLicencesLockedRestore
         var rows = new List<PageRow>();
         foreach (var line in RestoredBody(page).Split('\n'))
         {
-            if (!line.StartsWith('|'))
+            var normalized = line;
+            var leadingSpaces = normalized.TakeWhile(ch => ch == ' ').Count();
+            if (leadingSpaces is > 0 and <= 3)
+                normalized = normalized[leadingSpaces..];
+            if (!normalized.StartsWith('|'))
                 continue;
-            var cells = line.Trim().Trim('|').Split('|').Select(c => c.Trim()).ToArray();
+            var cells = normalized.Trim().Trim('|').Split('|').Select(c => c.Trim()).ToArray();
             if (cells.Length < 7)
                 continue;
             if (cells[0].Length == 0 || cells[0].All(ch => ch is '-' or ':') || cells[0].Equals("id", StringComparison.OrdinalIgnoreCase))

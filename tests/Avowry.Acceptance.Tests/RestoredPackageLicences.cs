@@ -114,7 +114,6 @@ public class RestoredPackageLicences
     [Fact]
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-1")]
-    [Trait("Status", "Pending")]
     public async Task F8_422_1_pending_rows_turn_green()
     {
         // 422-1: [Z] the committed page, tool projects and props pass
@@ -125,7 +124,6 @@ public class RestoredPackageLicences
     [Fact]
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-2")]
-    [Trait("Status", "Pending")]
     public async Task F9_422_2_pending_rows_turn_green()
     {
         // 422-2: [E] the offline half: one-way and swapped licence changes against the figures
@@ -158,7 +156,6 @@ public class RestoredPackageLicences
     [Fact]
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-3")]
-    [Trait("Status", "Pending")]
     public async Task F11_422_3_pending_rows_turn_green()
     {
         // 422-3: [M][B] page rows (indented rows, wrapped rows) and the prose figures
@@ -204,7 +201,6 @@ public class RestoredPackageLicences
     [Fact]
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-4")]
-    [Trait("Status", "Pending")]
     public async Task F12_422_4_pending_rows_turn_green()
     {
         // 422-4: [I] tool PackageReference forms and the files the tool reads
@@ -275,7 +271,6 @@ public class RestoredPackageLicences
     [Fact]
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-5")]
-    [Trait("Status", "Pending")]
     public async Task F14_422_5_pending_rows_turn_green()
     {
         // 422-5: [S] the two lockfile properties under Conditions
@@ -300,7 +295,6 @@ public class RestoredPackageLicences
     [Fact]
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-6")]
-    [Trait("Status", "Pending")]
     public async Task F15_422_6_pending_rows_turn_green()
     {
         // 422-6: [O] the shallow-checkout note
