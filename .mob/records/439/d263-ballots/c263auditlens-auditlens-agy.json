@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "645d3303c8b7b4f244a8cd109aba48634f06701b1f1752711eba275ed0655eb2",
+  "probe": {
+    "taken_at": "2026-11-15T07:14:17.382236Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-7d4350bb-0d59-4caa-abce-4fac1205138e)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=dd9bee45-fb8d-4578-9ecf-2be4efcc5a30]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "From an audit perspective, this practice is verifiable directly from git history. The commit history and diffs provide an unambiguous audit trail: an auditor can verify that a corpus commit precedes the red commit, that it contains at least",
+      "reply": "Yes\nFrom an audit perspective, this practice is verifiable directly from git history. The commit history and diffs provide an unambiguous audit trail: an auditor can verify that a corpus commit precedes the red commit, that it contains at least five distinct shape families with inputs and expected outputs, and that the red commit incorporates them as test rows. Because the temporal sequence and artifact presence are committed to the repository tree, the team cannot pass an audit without creating the required pre-red commit. Auditing the substantive realism of the shape families requires domain review, but procedurally this leaves no loophole.\n\nCITE: names and commits a real-shape corpus before the red\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From an audit perspective, this practice is verifiable directly from git history. The commit history and diffs provide an unambiguous audit trail: an auditor can verify that a corpus commit precedes the red commit, that it contains at least"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T07:14:17.382236Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2587
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "head_end": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "fe932d45f40f75579299ce2302e0790156d8ddc3a3af3ea16cc14fc090b0b605",
+  "probe": {
+    "taken_at": "2026-11-15T07:10:32.856319Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-b86f4d15-9071-4d1e-a8a6-e9d0042e1e84)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=689ccafa-d8c2-4d51-848f-23631d3d197f]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The design is sound, minimal, and directly enforceable. Requiring a committed five-family real-shape corpus before red establishes an objective input/output contract that catches edge shapes early without bloating the slice, bounded strictl",
+      "reply": "Yes\nThe design is sound, minimal, and directly enforceable. Requiring a committed five-family real-shape corpus before red establishes an objective input/output contract that catches edge shapes early without bloating the slice, bounded strictly by the 20-minute counter-metric. Measuring reference behavior for stability, leakage, regressions, and linear time provides deterministic criteria without false positives. Testing this through a 3-card trial keeps commitment proportionate and measurable.\nCITE: names and commits a real-shape corpus before the red\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The design is sound, minimal, and directly enforceable. Requiring a committed five-family real-shape corpus before red establishes an objective input/output contract that catches edge shapes early without bloating the slice, bounded strictl"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T07:10:32.856319Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2580
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "head_end": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

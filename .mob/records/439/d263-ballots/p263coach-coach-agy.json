@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "2c5270f3c9f2c75a4a52ad1c2dcf24dffe343521a91dedbbf0ec149f55ea29a2",
+  "probe": {
+    "taken_at": "2026-11-15T07:10:33.907358Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-1338fa9e-3f4c-4ce8-9304-d58d10bf98fa)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=446b5165-9c18-4bf6-a167-b98111d3bf52]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The proposal prevents wasteful multi-round rework without padding the workflow with permanent ceremony. Scoping the requirement specifically to text removal, rewriting, and recognition cards keeps overhead targeted where the breakdown occur",
+      "reply": "Yes\nThe proposal prevents wasteful multi-round rework without padding the workflow with permanent ceremony. Scoping the requirement specifically to text removal, rewriting, and recognition cards keeps overhead targeted where the breakdown occurred. Crucially, the explicit counter-metric capping added slice time at twenty minutes and running this as a three-card trial ensure the team avoids heavyweight procedural bloat while evaluating real flow improvements.\nCITE: more than 20 minutes on a card is a miss\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The proposal prevents wasteful multi-round rework without padding the workflow with permanent ceremony. Scoping the requirement specifically to text removal, rewriting, and recognition cards keeps overhead targeted where the breakdown occur"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T07:10:33.907358Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2582
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "head_end": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

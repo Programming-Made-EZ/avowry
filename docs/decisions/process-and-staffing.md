@@ -1512,3 +1512,10 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - Ballots, by role (decider.py --roles, a fresh context per role; .mob/records/439/d262-ballots/): window 04:22:56 to 04:27:40 UTC: architect, audit lens, coach, decider, dev and qa (agy, gemini-3.8-flash-medium) all Yes, every ballot counted with its CITE check passed.
 - Trigger line (Decider protocol step 6, adopted by D224): the primary window passed with no No and no amendment, and the proposal does not change this agreement, so no confirmation step ran.
 - Result: **adopted** (six of six). Owner: the facilitator.
+
+#### Decider D263: card 439 retro pick: a scrub or parser slice measures a committed real-shape corpus before the red (ADOPTED)
+
+- Date: 2026-11-15. Proposer: the facilitator, from the seven retro voices (.mob/records/439/retro-pick-proposal.md; retro docs/retros/card-439-2026-11-15.md); five of seven voices picked it. A change to TEAM_WORKING_AGREEMENT.md: a new Experimental entry before the Slice size cap entry (.mob/records/439/agreement-amendment.diff). Metric: new BLOCKING after the first fix round on such cards, reported next to new MINOR (card 439: 2 and 3), target 2 or fewer; counter-metric: more than 20 minutes added to the slice; trial: the next 3 such cards.
+- Ballots, by role (decider.py --roles, a fresh context per role; .mob/records/439/d263-ballots/): primary window 07:09:29 to 07:13:19 UTC: architect, audit lens, coach, decider, dev and qa (agy, gemini-3.8-flash-medium) all Yes. Confirmation step 07:13:20 to 07:16:58 UTC, fresh contexts: all six (agy, gemini-3.8-flash-medium) Yes. Every ballot counted with its CITE check passed.
+- Trigger line (Decider protocol step 6, adopted by D224): (c) the primary window passed with no No and no amendment and the proposal changes this agreement, so the confirmation step ran; it passed.
+- Result: **adopted** (six of six, confirmed six of six). Owner: the facilitator. Process finding: all twelve ballots on one service (agy), as in D259 to D262 (mob-defaults #57 and #58).

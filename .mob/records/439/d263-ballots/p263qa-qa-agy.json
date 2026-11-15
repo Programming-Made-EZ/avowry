@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "f65406901b9a260a9130f61235510769a7bafe729d997a26865202e9a58198e4",
+  "probe": {
+    "taken_at": "2026-11-15T07:10:40.372007Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-737e6ddb-d03d-4f2c-8b7a-8a7a0118d55a)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=c768e575-319d-4e28-ae14-4d61151ce67f]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "Committing a real-shape corpus of at least five shape families with real inputs and expected outputs before red ensures every rule is grounded in testable cases before code is written. Converting the corpus into test rows guarantees the sui",
+      "reply": "Yes\nCommitting a real-shape corpus of at least five shape families with real inputs and expected outputs before red ensures every rule is grounded in testable cases before code is written. Converting the corpus into test rows guarantees the suite fails red first against real-world complexities rather than toy examples. Because the expected outputs are defined upfront and measured for stability, the resulting assertions directly catch domain violations without passing bad state. Notes: ensure the red stage strictly verifies row failure before green, and verify that corpus rows are evaluated independently to prevent early assertion exits from masking regressions across families.\nCITE: names and commits a real-shape corpus before the red\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Committing a real-shape corpus of at least five shape families with real inputs and expected outputs before red ensures every rule is grounded in testable cases before code is written. Converting the corpus into test rows guarantees the sui"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T07:10:40.372007Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2584
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "head_end": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

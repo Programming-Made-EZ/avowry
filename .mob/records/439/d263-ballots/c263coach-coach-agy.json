@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "d46870e42aa950a5c648f2171f3ec0a1c920736f45309dc29cf1997b7b2ee05a",
+  "probe": {
+    "taken_at": "2026-11-15T07:14:17.355041Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-f56aa013-b7d7-4fb7-a8b7-da2deb072841)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=6bd00af9-4af6-4773-837b-0612a2219353]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The proposal is well-sized and avoids unnecessary ceremony. By scoping the practice to an experimental trial over the next three cards changing text manipulation functions, it targets the root cause of rework without imposing team-wide proc",
+      "reply": "Yes\n\nThe proposal is well-sized and avoids unnecessary ceremony. By scoping the practice to an experimental trial over the next three cards changing text manipulation functions, it targets the root cause of rework without imposing team-wide process bloat. The explicit counter-metric capping slice time at twenty minutes directly protects flow and prevents ceremony creep, while facilitator ownership ensures accountability without adding bureaucratic overhead.\n\nCITE: a scrub or parser slice measures a committed real-shape corpus before the red\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The proposal is well-sized and avoids unnecessary ceremony. By scoping the practice to an experimental trial over the next three cards changing text manipulation functions, it targets the root cause of rework without imposing team-wide proc"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T07:14:17.355041Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2585
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "head_end": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

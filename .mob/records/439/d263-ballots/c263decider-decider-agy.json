@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "4ba10317afe24f115cff46f198a81c10848e3898a712747bf683c4522fb89071",
+  "probe": {
+    "taken_at": "2026-11-15T07:14:17.965209Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-f0eb1cae-a8d7-45ba-98a1-1662c1bb5c96)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=8f43f1cc-1931-4b7a-82a8-3a984f8d727a]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "The trial is framed so future decisions rest on concrete evidence. It pairs a clear primary metric (new BLOCKING findings after the first fix round targeted at two or fewer) against an explicit counter-metric (no more than twenty minutes ad",
+      "reply": "Yes\nThe trial is framed so future decisions rest on concrete evidence. It pairs a clear primary metric (new BLOCKING findings after the first fix round targeted at two or fewer) against an explicit counter-metric (no more than twenty minutes added to the slice) across a three-card trial. Baseline data from card 439 gives an objective comparison point to decide whether to adopt, reshape, or reject. All required task force seats remain empowered to sign off via standard Decider protocol steps and confirmation rule D224.\nCITE: Metric: new BLOCKING findings after the first fix round\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The trial is framed so future decisions rest on concrete evidence. It pairs a clear primary metric (new BLOCKING findings after the first fix round targeted at two or fewer) against an explicit counter-metric (no more than twenty minutes ad"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T07:14:17.965209Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2589
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "head_end": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

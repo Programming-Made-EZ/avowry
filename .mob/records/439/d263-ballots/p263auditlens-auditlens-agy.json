@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "b089233356ac18b752b2dd1d7e8c866d7debc2bf96421f75012dcdda00c1a330",
+  "probe": {
+    "taken_at": "2026-11-15T07:10:31.357595Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-f19db976-cc75-43a0-84be-ce149e44bf14)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=d96081ec-fe9d-4f87-aff0-98afd12021d6]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "From the audit lens, this practice is verifiable from git alone: commit history inspectably proves whether the corpus was committed before the red commit, and git diffs verify the five shape families with inputs and expected outputs committ",
+      "reply": "Yes\nFrom the audit lens, this practice is verifiable from git alone: commit history inspectably proves whether the corpus was committed before the red commit, and git diffs verify the five shape families with inputs and expected outputs committed as rows. It closes the loophole of retrofitting test cases after the fact without leaving an uncheckable out-of-band loophole. Note for enforcement: auditors must verify in git diffs that the committed families represent authentic production formats rather than trivial synthetic variations, but this reservation does not downgrade the vote.\n\nCITE: names and commits a real-shape corpus before the red\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From the audit lens, this practice is verifiable from git alone: commit history inspectably proves whether the corpus was committed before the red commit, and git diffs verify the five shape families with inputs and expected outputs committ"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T07:10:31.357595Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2579
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "head_end": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

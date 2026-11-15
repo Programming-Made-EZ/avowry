@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "cfda5d3b83bbba8c9b50463c05378106ed1b6fef4fa0607c8f4a2411ffa1bafe",
+  "probe": {
+    "taken_at": "2026-11-15T07:10:32.907339Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-810bb976-de24-49e1-a49f-eff9bf7cdd72)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=5166e4d5-77aa-47d4-9b85-8daef72a2558]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "The evaluation is soundly framed on objective evidence. It pairs a concrete primary metric (two or fewer new BLOCKING findings after the first fix round) directly against an explicit counter-metric (capping added slice time at twenty minute",
+      "reply": "Yes\nThe evaluation is soundly framed on objective evidence. It pairs a concrete primary metric (two or fewer new BLOCKING findings after the first fix round) directly against an explicit counter-metric (capping added slice time at twenty minutes). Evaluating across a bounded trial of the next three qualifying cards ensures the decision to adopt, reshape, or reject will be grounded in operational data rather than speculation. With the facilitator owning tracking and the full task force retaining sign-off visibility across fix rounds, the team has every seat it needs to evaluate the outcome.\n\nCITE: the slice names and commits a real-shape corpus before the red\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The evaluation is soundly framed on objective evidence. It pairs a concrete primary metric (two or fewer new BLOCKING findings after the first fix round) directly against an explicit counter-metric (capping added slice time at twenty minute"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T07:10:32.907339Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2581
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "head_end": "e88c4faaf12fa5f196425d4a7985a9e06a3f7b7b",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}
