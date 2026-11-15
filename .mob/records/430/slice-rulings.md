@@ -11,3 +11,17 @@ The slice: slice-architect.md (architect: claude opus = claude-opus-5-5, ctx-1, 
 ## Process note (facilitator, 2026-11-15 17:12Z)
 
 The red seat (Claude Sonnet, ctx-2) kept a lock watcher running after the facilitator ran its build and filters under the 16:51Z watchdog ruling. When the watcher woke, the seat built in wt-430 while the Cursor green seat (ctx-3) was editing the same worktree, so two drivers were in one tree. Nothing was committed by the red seat, the red had been reproduced in a clean clone of 9daa8f6, and the facilitator reran the green filters after Cursor finished, so no record is affected. Lesson for the retro: when the facilitator takes over a waiting seat's runs, stop that seat first.
+
+## Review round 1 rulings (facilitator, 2026-11-15)
+
+Review round 1 is `review.md`: FLAG, 2 BLOCKING, 8 MINOR, by the QA seat (claude opus = claude-opus-5-5, ctx-4). The facilitator replayed both BLOCKING findings in the source. GeneratedApiBoundAddressEdges starts QuietChild with 2, 3, 10 and 20 s startup limits through `Probes.QuietChild`. StarvationProbe asserts a 3,000 ms readiness window enforced inside a child process (`--window-ms`). Neither class carries a collection. Both are older tests that card 417's guard never saw.
+
+R1-1 (BLOCKING 1 and 2): fixed in this card's fix round. GeneratedApiBoundAddressEdges and StarvationProbe get `Collection("Isolated timing")`, and the [E] fact's list grows from seven classes to nine. The guard does not learn to see a limit enforced in a helper or a child process. That is a named limit (no rows), added to #443 with both examples, because recognising it needs call-graph or cross-file reading that the text guard does not do. The fix slice confirms that neither class carries another collection.
+
+R1-2 (MINOR 6, new super-linear time in `\s*\??\s+` of HttpTimeoutInit, HttpDeclared and CtsTargetTyped): fixed in this card's fix round, because the time is new with this card and the fix is a pattern change. Any timing check stays in the probe, not in a test (D254: no wall-clock assertion). The fix slice measures the old and new pattern at 10k, 20k, 40k and 80k and commits the D265 neighbour rows (each spelling the changed patterns match, with a long whitespace or blanked-comment run before the name) before the red.
+
+R1-3 (MINOR 4, the WaitAsync rule names token waits: `_ct`, `cancel`, `linkedCt`, `cancellationToken: ct`, `Timeout.InfiniteTimeSpan`, `Timeout.Infinite`): fixed in this card's fix round, because it is new with this card and `_ct` and the named argument are common in real code. The fix slice decides the token test (a named `cancellationToken:` argument, an identifier ending in `ct`, `Ct`, `token`, `Token` or `cancel` with or without a leading underscore, and the two infinite forms are not limits) and commits the neighbour rows before the red.
+
+R1-4 (MINOR 3, 5, 7, 8, 9 and 10): named limits of this card. They are contrived or absent from this repository's tests, and a false name fails the gate loudly. They are filed on #443 with the review's minimal inputs. No rows in this card.
+
+The fix round runs the same seats as D266: the architect's fix slice (claude opus), the red (claude sonnet), the green (cursor gpt-5.3-codex), the gate under the heavy lock, then review round 2 (claude opus). Lesson from the red, applied now: when the facilitator takes over a waiting seat's runs, the seat is stopped first.
