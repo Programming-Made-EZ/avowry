@@ -8,3 +8,10 @@ The slice: slice-architect.md (architect: claude opus = claude-opus-5-5, ctx-1, 
 4. The two corpus rows that hold a literal name (`u1a`, `https://a/` + `Users/x`) go into test code as split strings, not into corpus.txt: ACCEPTED.
 
 A breach to record: the slice's three sweeps and its timing runs ran after 08:05:09Z while play-tracker's train 56 held the heavy-run lock. The facilitator's interim helper read the lock wrong (it parsed only a lower-case `pid=` and only Windows pids; play-tracker writes `PID=` with an MSYS pid), so it printed `free`. The helper was fixed at about 08:25Z; the architect then held its re-runs. The timings in the slice were taken on a loaded machine (the product's `/=-I` measured 5.7 ms instead of 2.3 ms at 20,000 characters) and are re-taken after the lock clears; the sweep counts are deterministic and stand.
+
+## Rulings on the fix slice (review round 1, 2026-11-15)
+
+The fix slice: slice-fix.md (the architect, ctx-1; built and measured only after play-tracker's heavy lock cleared). Measured: all 11 Java and URI forms equal the pre-435 copy and the replaced regex; escaped JSON lists read as lists; `-v D:/a:/a` and the other forward-slash volume specs stable; the corpus now 11 families and 130 rows (26 added under `# fix round 1`) with 0 new leaks and 0 second-pass changes; card 439's 405 and card 441's 207 committed rows unchanged; 86 of 86 mutants killed (the reviewer's three survivors and four new ones included); sweeps A, B and C 0 new leaks and 0 second-pass changes; every shape linear.
+
+1. Percent-decoding only `documents%20and%20settings`, nothing else: ACCEPTED; general URI decoding would be a new card.
+2. Any `X:/` may start where the previous path ended (the exception that keeps the volume specs stable, matching the scanner before this card): ACCEPTED.

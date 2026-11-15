@@ -114,3 +114,32 @@ minor	see /proj:\x	see /proj:\x
 minor	docker run -v /pj:/app x	docker run -v /pj:/app x
 volume	docker run -v /c/Users/<user>/proj:/app x	docker run -v proj:/app x
 compiler	cl.exe /c /Fe:C:\Users\<user>\bin\a.exe a.c	cl.exe /c /Fe:a.exe a.c
+
+# fix round 1 (card 441 review round 1): Java and URI forms with a drive after '/', JSON-escaped colon lists,
+# and Windows forward-slash volume specs with a one-letter folder before ':/'.
+java-uri	jar:file:/c:/users/<user>/.m2/a.jar!/x.class	jar:file:/x.class
+java-uri	java.io.FileNotFoundException: /c:/users/<user>/x.txt	java.io.FileNotFoundException: /x.txt
+java-uri	file:/C:/Documents and Settings/<user>/.m2/repository/a.jar	file:/a.jar
+java-uri	file:/C:/Documents%20and%20Settings/<user>/x.jar	file:/x.jar
+java-uri	///c:/users/<user>/x	///x
+java-uri	"/c:/users/<user>/x"	"/x"
+java-uri	/C:/USERS/<user>/x	/x
+java-uri	vscode-remote://wsl+Ubuntu/c:/users/<user>/x	vscode-remote://wsl+Ubuntu/x
+java-uri	ssh://host/C:/Users/<user>/r.git	ssh://host/r.git
+java-uri	file:/C:/Users/<user>/app/lib/a.jar	file:/a.jar
+java-uri	Caused by: java.nio.file.NoSuchFileException: /C:/Users/<user>/data/x.csv	Caused by: java.nio.file.NoSuchFileException: /x.csv
+json-escaped	{"env":"PYTHONPATH=\/home\/<user>\/lib:\/home\/<user>"}	{"env":"PYTHONPATH=lib:<path>"}
+json-escaped	{"volumes":["\/home\/<user>\/data:\/home\/<user>"]}	{"volumes":["data:<path>"]}
+json-escaped	{"PATH":"\/home\/<user>\/bin:\/usr\/bin"}	{"PATH":"bin:\/usr\/bin"}
+json-escaped	{"files":"\/home\/<user>\/x.cs:\/home\/<user>\/y.cs"}	{"files":"x.cs:y.cs"}
+json-escaped	{"line":"svc:x:1000:1000::\/home\/<user>:\/bin\/bash"}	{"line":"svc:x:1000:1000::<path>:\/bin\/bash"}
+json-escaped	{"Binds":["\/home\/<user>\/proj:\/app"]}	{"Binds":["proj:\/app"]}
+json-escaped	{"mount":"\/Users\/<user>\/src:\/src"}	{"mount":"src:\/src"}
+volume-winslash	docker run -v D:/a:/a x	docker run -v <path>a x
+volume-winslash	docker run -v C:/Users/<user>/d:/data x	docker run -v <path>data x
+volume-winslash	docker run -v C:/src/d:/data x	docker run -v <path>data x
+volume-winslash	docker run -v c:/x/v:/v x	docker run -v <path>v x
+volume-winslash	  - C:/work/d:/data	  - <path>data
+volume-winslash	file:///C:/a/b:/x	<path>x
+volume-winslash	-IC:/x/I:/y	-I<path>y
+volume-winslash	docker run -v C:/Users/<user>/proj:/app x	docker run -v proj:/app x
