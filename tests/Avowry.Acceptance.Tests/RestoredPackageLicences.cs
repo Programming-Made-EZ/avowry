@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text;
 using Avowry.Acceptance.Tests.Support;
 using Xunit.Abstractions;
 
@@ -304,7 +305,93 @@ public class RestoredPackageLicences
             "test_422_O_shallow_nohash");
     }
 
-    private static async Task AssertPythonTestsPass(params string[] testNames)
+    [Fact]
+    [Trait("Slice", "422")]
+    [Trait("Criterion", "422-6")]
+    public async Task F16_422_6_fix_log_python_rows_that_hold_today()
+    {
+        // 422-6 (R1-2): test_L5 prints the shallow-checkout skip to stdout on a shallow checkout and nothing on a full one
+        await AssertPython422("Test422FixCharacterisation",
+            "test_422_FL_py_L5_shallow",
+            "test_422_FL_py_L5_deep");
+    }
+
+    // ---- Card 422 fix round 1 red: R1-2, the Python output reaches the xUnit log through AssertPythonTestsPass ----
+
+    private sealed class RecordingOutput : ITestOutputHelper
+    {
+        public StringBuilder Text { get; } = new();
+
+        public void WriteLine(string message) => Text.Append(message).Append('\n');
+
+        public void WriteLine(string format, params object[] args) => Text.Append(string.Format(format, args)).Append('\n');
+    }
+
+    private const string ShallowNote422 = "restored-package-licences: section -: commit-blob check skipped (shallow checkout)";
+    private const string RunnerOk422 = ".\n----------------------------------------------------------------------\nRan 1 test in 0.214s\n\nOK\n";
+
+    // id -> exit code, timed out, stdout, stderr, whether the wrapper throws, what the log holds
+    private static readonly Dictionary<string, (int Exit, bool TimedOut, string Stdout, string Stderr, bool Throws, string Log)> LogRows422 = new()
+    {
+        ["FL-pass-note"] = (0, false, ShallowNote422 + "\n", RunnerOk422, false, ShallowNote422),
+        ["FL-pass-runner"] = (0, false, "", RunnerOk422, false, "Ran 1 test"),
+        ["FL-pass-crlf"] = (0, false, ShallowNote422 + "\r\n", RunnerOk422.Replace("\n", "\r\n"), false, ShallowNote422 + "\r\n"),
+        ["FL-fail"] = (1, false, "", "F\nFAILED (failures=1)\n", true, "FAILED (failures=1)"),
+        ["FL-timeout"] = (-1, true, "", "Ran", true, "Ran"),
+    };
+
+    public static TheoryData<string> LogIds422()
+    {
+        var data = new TheoryData<string>();
+        foreach (var id in LogRows422.Keys)
+            data.Add(id);
+        return data;
+    }
+
+    [Theory]
+    [Trait("Slice", "422")]
+    [Trait("Criterion", "422-6")]
+    [Trait("Status", "Pending")]
+    [MemberData(nameof(LogIds422))]
+    public void Log_rows_422fix(string id)
+    {
+        // Given a Python run that ended with this exit code, time-out and output
+        var (exit, timedOut, stdout, stderr, throws, log) = LogRows422[id];
+        var recorder = new RecordingOutput();
+
+        // When the wrapper reports it
+        var threw = false;
+        try
+        {
+            new RestoredPackageLicences(recorder).Report(new ProcessResult(exit, stdout, stderr, timedOut));
+        }
+        catch (Xunit.Sdk.XunitException)
+        {
+            threw = true;
+        }
+
+        // Then it throws exactly when the run failed, and the log holds the Python output either way
+        Assert.True(throws == threw, id + ": expected " + (throws ? "a failure" : "no failure") + ", got " + (threw ? "a failure" : "none"));
+        Assert.True(recorder.Text.ToString().Contains(log, StringComparison.Ordinal), id + ": the log does not hold " + log);
+    }
+
+    [Fact]
+    [Trait("Slice", "422")]
+    [Trait("Criterion", "422-6")]
+    [Trait("Status", "Pending")]
+    public async Task FL_e2e_L5_422fix()
+    {
+        // Given the real Python run of test_L5 through the wrapper
+        var recorder = new RecordingOutput();
+
+        // When the wrapper runs it
+        await new RestoredPackageLicences(recorder).AssertPythonTestsPass("test_L5_section_names_lockfiles_restore_locked_mode_and_commit");
+
+        // Then the unittest runner's lines are in the log ("FL-e2e-L5")
+        Assert.True(recorder.Text.ToString().Contains("Ran 1 test", StringComparison.Ordinal), "FL-e2e-L5: the log does not hold the Python output");
+    }
+
+    private async Task AssertPythonTestsPass(params string[] testNames)
     {
         var start = new ProcessStartInfo("python")
         {
@@ -320,6 +407,12 @@ public class RestoredPackageLicences
 
         var result = await ProcessRunner.RunAsync(start, TimeSpan.FromMilliseconds(120000));
 
+        Report(result);
+    }
+
+    // Today the result is only asserted; the test log (output) is not written yet.
+    private void Report(ProcessResult result)
+    {
         Assert.True(result.ExitCode == 0 && !result.TimedOut, result.Stdout + result.Stderr);
     }
 }

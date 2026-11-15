@@ -1,4 +1,7 @@
+using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Avowry.Acceptance.Tests;
 
@@ -7,6 +10,9 @@ namespace Avowry.Acceptance.Tests;
 
 /// <summary>The nuspec facts of one restored package: its licence expression, its licenseUrl, and the head text of each packaged licence file.</summary>
 internal sealed record PackageEvidence(string? Expression, string? LicenceUrl, IReadOnlyDictionary<string, string> LicenceFiles);
+
+/// <summary>One restored package: its folder, nuspec state (missing, broken or ok), evidence (when the nuspec parses) and whether it asks for licence acceptance.</summary>
+internal sealed record RestoredPackage(string Id, string Version, bool FolderFound, string NuspecState, PackageEvidence? Evidence, bool RequiresAcceptance);
 
 internal static class RestoredLicenceChecks
 {
@@ -120,5 +126,159 @@ internal static class RestoredLicenceChecks
         if (exitCode == 0)
             return "pass";
         return "fail";
+    }
+
+    /// <summary>One restored package as the networked F6 reads it: the folder, the nuspec state (missing, broken or ok), its evidence when the nuspec parses, and whether it asks for licence acceptance.</summary>
+    public static RestoredPackage RestoredPackageFrom(string id, string version, bool folderFound, string? nuspecXml, IReadOnlyList<string> relativePaths, Func<string, string> readHead)
+    {
+        if (nuspecXml is null)
+            return new RestoredPackage(id, version, folderFound, "missing", null, false);
+
+        XDocument doc;
+        try
+        {
+            doc = XDocument.Parse(nuspecXml);
+        }
+        catch (XmlException)
+        {
+            return new RestoredPackage(id, version, folderFound, "broken", null, false);
+        }
+
+        var license = doc.Descendants().FirstOrDefault(e => e.Name.LocalName == "license");
+        var expression = license is not null && string.Equals((string?)license.Attribute("type"), "expression", StringComparison.OrdinalIgnoreCase)
+            ? license.Value.Trim()
+            : null;
+        var url = doc.Descendants().FirstOrDefault(e => e.Name.LocalName == "licenseUrl")?.Value.Trim();
+        var acceptance = doc.Descendants().FirstOrDefault(e => e.Name.LocalName == "requireLicenseAcceptance");
+        var requiresAcceptance = acceptance is not null && string.Equals(acceptance.Value.Trim(), "true", StringComparison.OrdinalIgnoreCase);
+
+        var files = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var path in relativePaths)
+        {
+            var name = path.Split('/', '\\')[^1].ToLowerInvariant();
+            if (name.StartsWith("license", StringComparison.Ordinal)
+                || name.StartsWith("licence", StringComparison.Ordinal)
+                || name.StartsWith("copying", StringComparison.Ordinal))
+                files[path] = readHead(path);
+        }
+
+        return new RestoredPackage(id, version, folderFound, "ok", new PackageEvidence(expression, url, files), requiresAcceptance);
+    }
+
+    /// <summary>[E] The failures of the networked F6 for the page rows and the restored packages, other than the acceptance set. Today's decision: existence only.</summary>
+    public static IReadOnlyList<string> F6Failures(IReadOnlyList<string[]> pageRows, IReadOnlyList<RestoredPackage> restored)
+    {
+        var failures = new List<string>();
+        var rows = pageRows.Where(row => row.Length >= 7).ToList();
+        var pageSet = rows.Select(row => (Id: row[0], Version: row[1])).ToHashSet();
+        var restoredSet = restored.Select(p => (p.Id, p.Version)).ToHashSet();
+        if (!restoredSet.SetEquals(pageSet))
+            failures.Add(DescribeSet("locked restore vs page", pageSet, restoredSet));
+
+        var byKey = restored.GroupBy(p => (p.Id, p.Version)).ToDictionary(g => g.Key, g => g.First());
+        foreach (var row in rows)
+        {
+            if (!byKey.TryGetValue((row[0], row[1]), out var package))
+                continue;
+
+            var id = row[0];
+            var version = row[1];
+            var licence = row[3];
+            var source = row[4];
+            if (!package.FolderFound)
+            {
+                failures.Add(Msg(id, version, "package folder missing after restore"));
+                continue;
+            }
+
+            if (package.NuspecState != "ok")
+            {
+                failures.Add(Msg(id, version, package.NuspecState == "missing" ? "nuspec missing after restore" : "nuspec does not parse"));
+                continue;
+            }
+
+            var evidence = package.Evidence!;
+            if (source == "nuspec licence expression")
+            {
+                if (!string.Equals(evidence.Expression, licence, StringComparison.Ordinal))
+                    failures.Add(Msg(id, version, $"licence {licence} but the nuspec expression is {evidence.Expression}"));
+            }
+            else if (source == "packaged licence file")
+            {
+                if (evidence.LicenceFiles.Count == 0)
+                    failures.Add(Msg(id, version, $"licence {licence} but no packaged licence file names a known licence"));
+            }
+            else if (source == "licence URL")
+            {
+                if (string.IsNullOrEmpty(evidence.LicenceUrl))
+                    failures.Add(Msg(id, version, $"licence {licence} from licence URL -, which is not a reviewed URL"));
+            }
+            else
+            {
+                failures.Add(Msg(id, version, "licence source is not one of the three labels"));
+            }
+        }
+
+        return failures;
+    }
+
+    /// <summary>The acceptance set of the networked F6: the packages whose nuspec asks for acceptance equal the packages the page's acceptance lines name.</summary>
+    public static IReadOnlyList<string> F6AcceptanceFailures(string restoredBody, IReadOnlyList<string[]> pageRows, IReadOnlyList<RestoredPackage> restored)
+    {
+        var byKey = restored.GroupBy(p => (p.Id, p.Version)).ToDictionary(g => g.Key, g => g.First());
+        var want = pageRows
+            .Where(row => row.Length >= 7 && byKey.TryGetValue((row[0], row[1]), out var package) && package.RequiresAcceptance)
+            .Select(row => (Id: row[0], Version: row[1]))
+            .ToHashSet();
+        var named = new HashSet<(string Id, string Version)>();
+        foreach (var line in restoredBody.Split('\n'))
+        {
+            if (line.IndexOf("acceptance", StringComparison.OrdinalIgnoreCase) < 0)
+                continue;
+            foreach (var package in restored)
+            {
+                if (line.Contains(package.Id, StringComparison.Ordinal) && line.Contains(package.Version, StringComparison.Ordinal))
+                    named.Add((package.Id, package.Version));
+            }
+        }
+
+        return named.SetEquals(want) ? [] : [DescribeSet("acceptance set", want, named)];
+    }
+
+    /// <summary>The package libraries (type package) in a project.assets.json text; 0 for no text. Malformed JSON throws, which fails closed.</summary>
+    public static int RestoredCount(string? assetsJson)
+    {
+        if (assetsJson is null)
+            return 0;
+        using var doc = JsonDocument.Parse(assetsJson);
+        if (doc.RootElement.ValueKind != JsonValueKind.Object
+            || !doc.RootElement.TryGetProperty("libraries", out var libraries)
+            || libraries.ValueKind != JsonValueKind.Object)
+            return 0;
+        return libraries.EnumerateObject().Count(lib =>
+            lib.Value.ValueKind == JsonValueKind.Object
+            && lib.Value.TryGetProperty("type", out var type)
+            && type.ValueKind == JsonValueKind.String
+            && type.GetString() == "package");
+    }
+
+    /// <summary>The outcome F5's planted step and RestoreLockedOrFail act on: fail, network-missing, pass or mismatch. Today's decision: the network text first, NU1004 as a substring.</summary>
+    public static string ClassifyRestore(int exitCode, bool timedOut, string text, int restoredCount)
+    {
+        if (timedOut)
+            return "fail";
+        var output = text ?? string.Empty;
+        if (NetworkMarkers.Any(marker => output.Contains(marker, StringComparison.OrdinalIgnoreCase)))
+            return "network-missing";
+        if (exitCode == 0)
+            return "pass";
+        return output.Contains("NU1004", StringComparison.OrdinalIgnoreCase) ? "mismatch" : "fail";
+    }
+
+    public static string DescribeSet(string label, HashSet<(string Id, string Version)> expected, HashSet<(string Id, string Version)> actual)
+    {
+        var missing = string.Join(", ", expected.Except(actual).OrderBy(p => p.Id, StringComparer.Ordinal).ThenBy(p => p.Version, StringComparer.Ordinal).Select(p => p.Id + " " + p.Version));
+        var extra = string.Join(", ", actual.Except(expected).OrderBy(p => p.Id, StringComparer.Ordinal).ThenBy(p => p.Version, StringComparer.Ordinal).Select(p => p.Id + " " + p.Version));
+        return label + " missing: " + missing + "; extra: " + extra;
     }
 }

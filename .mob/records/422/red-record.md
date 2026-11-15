@@ -106,3 +106,103 @@ F8 (422-1), F9 (422-2), F11 (422-3), F12 (422-4), F14 (422-5), F15 (422-6): each
 - Ruling 4 (the Python test skips the commit-blob check with its reason on a shallow checkout) has no corpus row. The wrapper Facts write the Python output to the log, so the skip shows on a passing run. O-shallow, O-deep and O-shallow-nohash test the pure `lockfile_commit_skip(page, shallow)` and expect `restored-package-licences: section -: commit-blob check skipped (shallow checkout)` or `None`.
 - Ruling 3 and the R-5 item have no rows, as ruled. The O3 rule (`ReadRestoredRows` taking 0 to 3 leading spaces) has no corpus row either; L-indent-dup and L-indent3-dup cover the Python side.
 - The networked parts of [E] and [O] (F5, F6 calling the new helpers) are not changed by this red.
+
+## Fix round 1 red
+
+Seat: red (task-force role dev, red; claude sonnet = claude-sonnet-5-5, Decider D268, context ctx-2b). Worktree `wt-422`, branch card-422, HEAD 95d3ace, nothing committed. Order of work as ruled in FX-1: refactor first, then the rows. No networked restore was run and no process was left behind.
+
+### Refactor step (behaviour-preserving)
+
+Changes:
+- `RestoredLicenceChecks.cs`: the record `RestoredPackage` and the functions `RestoredPackageFrom`, `F6Failures`, `F6AcceptanceFailures`, `RestoredCount`, `ClassifyRestore` and `DescribeSet` (moved here from the test class, now ordered by id then version, ordinal). They carry TODAY's decisions, copied from F5, F6, `RestoreLockedOrFail` and their helpers:
+  - `F6Failures` does NOT call `LicenceValueFailures`. After the page-set check it keeps today's existence-only checks: folder, nuspec, the three labels, the expression equals the page, a licence-named file exists, the licenseUrl is not empty.
+  - `ClassifyRestore` does NOT call `RestoreOutcome`. It reads the timeout (fail), then the network-miss text (network-missing, whatever the exit code and count), then exit 0 (pass), then NU1004 as a case-insensitive substring (mismatch), else fail.
+- `RestoredPackageLicencesLockedRestore.cs`: F5's planted step, F6 and `RestoreLockedOrFail` call the functions as the slice's section 2 says. New thin shells: `ReadAssets`, `ReadRestoredPackages`, `ReadHead`.
+- Old private helpers removed (replaced by the functions above): `NetworkMissing`, `LoadNuspec`, `LicenseExpression`, `LicenseUrl`, `RequiresAcceptance`, `HasLicenceFile`, the private `DescribeSet` (now `RestoredLicenceChecks.DescribeSet`, F5 calls it there), and the `System.Xml.Linq` using. `RestoreOutcome` and the Theories `Licence_value_rows_422` and `Restore_outcome_rows_422` are unchanged.
+- `RestoredPackageLicences.cs`: `AssertPythonTestsPass` is an instance method (the test log `output` is available). It runs the process and calls the new private `Report(ProcessResult)`, which today only asserts. Nothing is written to the log yet. `AssertPython422` is unchanged (it already writes the log).
+
+Runs after the refactor, before any row was added:
+- `python -m unittest tests.test_restored_package_licences`: `Ran 141 tests in 0.767s` / `OK`.
+- `dotnet build Avowry.sln -c Debug`: `Build succeeded.` `0 Warning(s)` `0 Error(s)`.
+- `dotnet test ... --no-build -c Debug --filter "Slice=422"`: `Passed!  - Failed:     0, Passed:    62, Skipped:     0, Total:    62`.
+- `Slice=369&Network!=yes`: NOT RUN as written. The slice puts no Network trait on any Slice=369 test, and two of the six are networked: `RestoredPackageLicencesLockedRestore.F5_locked_restore_matches_the_lockfiles_and_a_planted_mismatch_is_NU1004` and `RestoredPackageLicencesLockedRestore.F6_restore_set_matches_the_page_and_the_packaged_licences` (each runs `dotnet restore`). They were not run and got no trait. Instead the other four Slice=369 tests ran: `--filter "Slice=369&FullyQualifiedName!~RestoredPackageLicencesLockedRestore"`: `Passed!  - Failed:     0, Passed:     4, Skipped:     0, Total:     4`. The wiring of F5, F6 and `RestoreLockedOrFail` is proved offline only by the build and the FW-src rows; the networked run is the gate's.
+
+### What was written (rows)
+
+83 rows of `corpus-fix.txt`, ids `<family>-NN/<corpus id>` as the corpus ids themselves (`FW-*`, `FL-*`, quoted in the code, which `test_422_every_corpus_row_is_embedded` now reads for `corpus.txt` and `corpus-fix.txt`).
+- `RestoredPackageLicencesLockedRestore.cs`: Theories `F6_rows_422fix` (31 rows) and `F6_rows_422fix_pending` (10), `Classify_rows_422fix` (11) and `Classify_rows_422fix_pending` (12), `Count_rows_422fix` (4), `Wiring_rows_422fix_f6` (2) and `_f6_pending` (1), `Wiring_rows_422fix_restore` (3) and `_restore_pending` (1). The f6 rows rebuild the 30 packages through `RestoredPackageFrom` from a synthesised nuspec and file list, then apply the row's edits (the corpus edit syntax). The wiring scan reads the two C# files and applies `ref_fix.wire_failures`' rules (method bodies by signature; the signature and `NetworkMissing` strings are split so the scan does not find itself).
+- `RestoredPackageLicences.cs`: Theory `Log_rows_422fix` (5 rows, Pending, through a `RecordingOutput : ITestOutputHelper`), Fact `FL_e2e_L5_422fix` (Pending), Fact `F16_422_6_fix_log_python_rows_that_hold_today` (runs the Python class below).
+- `tests/test_restored_package_licences.py`: class `Test422FixCharacterisation` (FL-py-L5-shallow, FL-py-L5-deep; test_L5 with `is_shallow` set, stdout captured). No Python row fails, so there is no `Test422FixPending` class and no Pending Python wrapper Fact.
+
+### Rows by family and criterion
+
+| family | check | criterion | rows | C# Pending | C# characterisation | Python characterisation |
+|---|---|---|---|---|---|---|
+| fix-wire | f6 (F6Failures, F6AcceptanceFailures) | 422-2 | 41 | 10 | 31 | 0 |
+| fix-wire | classify, classify-planted | 422-6 | 23 | 12 | 11 | 0 |
+| fix-wire | count | 422-6 | 4 | 0 | 4 | 0 |
+| fix-wire | wire-src (f6-calls, read-packages, f6failures-value) | 422-2 | 3 | 1 | 2 | 0 |
+| fix-wire | wire-src (f5-classify, locked-classify, classify-outcome, no-networkmissing) | 422-6 | 4 | 1 | 3 | 0 |
+| fix-log | log, log-e2e | 422-6 | 6 | 6 | 0 | 0 |
+| fix-log | py-L5 | 422-6 | 2 | 0 | 0 | 2 |
+| total | | | 83 | 30 | 51 | 2 |
+
+### Counts
+
+- Python: Pending 0 rows (no class), characterisation 2 rows (`Test422FixCharacterisation`). The completeness test in `Test422Characterisation` now covers 176 + 83 ids and passes.
+- C#: Pending 30 tests (f6 10, classify 12, wiring 2, log Theory 5, log e2e 1); characterisation 52 tests (the 51 rows above plus the Python wrapper Fact F16). The ids of the 30 Pending: the 10 f6 and 12 classify and 2 wiring rows are the ones the slice names as red on today's decisions; the log 6 are the rows the static wrapper cannot satisfy.
+
+### Runs (cwd = the worktree)
+
+- `python -m unittest tests.test_restored_package_licences.Test422FixCharacterisation`: `Ran 2 tests in 0.150s` / `OK`.
+- `python -m unittest tests.test_restored_package_licences`: `Ran 143 tests in 0.901s` / `OK` (141 before, plus the 2 fix characterisation tests; the 94 round 0 Pending rows pass, the green having made them so).
+- `dotnet build Avowry.sln -c Debug`: `Build succeeded.` `0 Warning(s)` `0 Error(s)`.
+- `dotnet test ... --no-build -c Debug --filter "Slice=422&Status=Pending"`: `Failed!  - Failed:    30, Passed:     0, Skipped:     0, Total:    30`.
+- `... --filter "Slice=422&Status!=Pending"`: `Passed!  - Failed:     0, Passed:   114, Skipped:     0, Total:   114` (62 before, plus 52).
+- `... --filter "Slice=369&FullyQualifiedName!~RestoredPackageLicencesLockedRestore"` (the Network!=yes filter was not run, see above): `Passed!  - Failed:     0, Passed:     4, Skipped:     0, Total:     4`.
+
+### Failing Pending ids, with the first failure line
+
+f6, `F6_rows_422fix_pending` (10), where F6Failures keeps today's existence-only decision and returns no failure:
+- `FW-E-swap`: expected fail:xunit.abstractions 2.0.3: licence MIT but the reviewed licence URL says Apache-2.0 && System.Reflection.Metadata 1.6.0: licence Apache-2.0 but the packaged licence file says MIT, got (nothing)
+- `FW-E-xa-mit`: expected fail:xunit.abstractions 2.0.3: licence MIT but the reviewed licence URL says Apache-2.0, got (nothing)
+- `FW-E-srm-apache`: expected fail:System.Reflection.Metadata 1.6.0: licence Apache-2.0 but the packaged licence file says MIT, got (nothing)
+- `FW-ev-file-apache`: expected fail:System.Reflection.Metadata 1.6.0: licence MIT but the packaged licence file says Apache-2.0, got (nothing)
+- `FW-ev-file-unknown`: expected fail:System.Reflection.Metadata 1.6.0: licence MIT but no packaged licence file names a known licence, got (nothing)
+- `FW-ev-url-mit`: expected fail:xunit.abstractions 2.0.3: licence Apache-2.0 from licence URL https://licenses.nuget.org/MIT, which is not a reviewed URL, got (nothing)
+- `FW-both-url-source`: expected fail:System.Reflection.Metadata 1.6.0: licence MIT from licence URL https://github.com/dotnet/corefx/blob/master/LICENSE.TXT, which is not a reviewed URL, got (nothing)
+- `FW-pkg-url-case`: expected fail:xunit.abstractions 2.0.3: licence Apache-2.0 from licence URL (the LICENSE.txt form), which is not a reviewed URL, got (nothing)
+- `FW-pkg-url-http`: expected fail:xunit.abstractions 2.0.3: licence Apache-2.0 from licence URL (the http form), which is not a reviewed URL, got (nothing)
+- `FW-pkg-notice-apache`: expected fail:System.Reflection.Metadata 1.6.0: licence Apache-2.0 but the packaged licence file says MIT, got (nothing)
+
+classify, `Classify_rows_422fix_pending` (12), where `ClassifyRestore` reads the network text first and NU1004 as a substring:
+- `FW-O-planted-nu10041`: (classify-planted): expected fail, got mismatch
+- `FW-O-nu10045`: (classify-planted): expected fail, got mismatch
+- `FW-O-xnu1004`: (classify-planted): expected fail, got mismatch
+- `FW-O-warm-warning`: (classify): expected pass, got network-missing
+- `FW-O-warm-crlf`: (classify): expected pass, got network-missing
+- `FW-O-net-exit0-count0`: (classify): expected pass, got network-missing
+- `FW-O-partial`: (classify): expected fail, got network-missing
+- `FW-O-net-count30`: (classify): expected fail, got network-missing
+- `FW-O-de-partial`: (classify): expected fail, got network-missing
+- `FW-O-planted-offline`: (classify-planted): expected mismatch, got network-missing
+- `FW-O-de-planted-offline`: (classify-planted): expected mismatch, got network-missing
+- `FW-O-nu1004-lower-net`: (classify-planted): expected mismatch, got network-missing
+
+wiring (2):
+- `FW-src-f6failures-value`: wiring f6failures-value is not in place
+- `FW-src-classify-outcome`: wiring classify-outcome is not in place
+
+log (6; `Report` and `AssertPythonTestsPass` write nothing to the test log):
+- `FL-pass-note`: the log does not hold restored-package-licences: section -: commit-blob check skipped (shallow checkout)
+- `FL-pass-runner`: the log does not hold Ran 1 test
+- `FL-pass-crlf`: the log does not hold the same note followed by CR LF
+- `FL-fail`: the log does not hold FAILED (failures=1)
+- `FL-timeout`: the log does not hold Ran
+- `FL-e2e-L5`: the log does not hold the Python output
+
+### Where the reference and the slice differ
+
+- `FW-pkg-type-file`: the reference prints a missing expression as `None`. C# prints it as an empty string, so the C# row expects the part both agree on, `FastEndpoints 8.3.0: licence MIT but the nuspec expression is`, without `None`. The green must not print `None` for it to pass the row as written; the row passes on today's code and on the green.
+- Nothing else differed: the 30 Pending rows are exactly the slice's 10 f6, 12 classify, 2 wiring and 6 log rows, and the 52 others pass.
+- The slice calls the Python class `Test422Fix`; it is named `Test422FixCharacterisation` here (the brief's name).

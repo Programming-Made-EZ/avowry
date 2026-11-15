@@ -4,6 +4,8 @@ Offline unittest. pathlib and json (plus the existing page helpers). Never start
 reads the NuGet cache. Failure messages start `restored-package-licences: <id> <version>: <what>`.
 """
 
+import contextlib
+import io
 import json
 import posixpath
 import re
@@ -1050,6 +1052,7 @@ class RestoredLicencesOffline(unittest.TestCase):
 # The old two-letter prefix is never written whole in this file (the guard scans it).
 
 CORPUS_422 = REPO / ".mob" / "records" / "422" / "corpus.txt"
+CORPUS_FIX_422 = REPO / ".mob" / "records" / "422" / "corpus-fix.txt"
 EMBEDDED_422 = (
     REPO / "tests" / "test_restored_package_licences.py",
     REPO / "tests" / "Avowry.Acceptance.Tests" / "RestoredPackageLicences.cs",
@@ -1265,12 +1268,13 @@ class Test422Characterisation(_Rows422, unittest.TestCase):
         self.props("S-broken", "<Project><PropertyGroup>", "fail:Directory.Build.props -: does not parse")
 
     def test_422_every_corpus_row_is_embedded(self):
-        # Every row id of the card 422 corpus appears, quoted, in this file or in one of the three C# files.
-        self.assertTrue(CORPUS_422.is_file(), "missing " + CORPUS_422.as_posix())
+        # Every row id of the card 422 corpus and of the fix round corpus appears, quoted, in this file or in one of the three C# files.
         ids = []
-        for line in CORPUS_422.read_text(encoding="utf-8").split("\n"):
-            if line and not line.startswith("#"):
-                ids.append(line.split("\t")[0])
+        for corpus in (CORPUS_422, CORPUS_FIX_422):
+            self.assertTrue(corpus.is_file(), "missing " + corpus.as_posix())
+            for line in corpus.read_text(encoding="utf-8").split("\n"):
+                if line and not line.startswith("#"):
+                    ids.append(line.split("\t")[0])
         self.assertEqual(len(ids), len(set(ids)), "duplicate row ids in the corpus")
         embedded = "".join(p.read_text(encoding="utf-8") for p in EMBEDDED_422 if p.is_file())
         missing = [i for i in ids if '"' + i + '"' not in embedded]
@@ -1811,6 +1815,37 @@ class Test422Pending(_Rows422, unittest.TestCase):
     def test_422_O_shallow_nohash(self):
         # O-shallow-nohash [422-6] restore/plain: no commit on the page: nothing to skip (L5 meta fails instead)
         self.shallow("O-shallow-nohash", shallow=True, hash_present=False, note=False)
+
+
+class Test422FixCharacterisation(unittest.TestCase):
+    """Fix round 1 (R1-2), the Python half of the log rows: test_L5 prints the shallow-checkout skip to stdout. Both rows pass today.
+    The C# side runs them through AssertPython422, so the note reaches the xUnit log on a passing run."""
+
+    def l5(self, shallow):
+        global is_shallow
+        saved = is_shallow
+        is_shallow = lambda: shallow  # noqa: E731
+        out = io.StringIO()
+        try:
+            with contextlib.redirect_stdout(out):
+                case = RestoredLicencesOffline("test_L5_section_names_lockfiles_restore_locked_mode_and_commit")
+                result = unittest.TestResult()
+                case.run(result)
+        finally:
+            is_shallow = saved
+        return result.wasSuccessful(), out.getvalue()
+
+    def test_422_FL_py_L5_shallow(self):
+        # FL-py-L5-shallow [422-6] fix-log/plain: test_L5 on a shallow checkout passes and prints the skip to stdout
+        ok, out = self.l5(True)
+        self.assertTrue(ok, "FL-py-L5-shallow")
+        self.assertIn(SHALLOW_NOTE, out, "FL-py-L5-shallow")
+
+    def test_422_FL_py_L5_deep(self):
+        # FL-py-L5-deep [422-6] fix-log/plain: on a full checkout test_L5 passes and prints nothing
+        ok, out = self.l5(False)
+        self.assertTrue(ok, "FL-py-L5-deep")
+        self.assertEqual("", out.strip(), "FL-py-L5-deep")
 
 
 if __name__ == "__main__":
