@@ -54,3 +54,20 @@ R2-1 (BLOCKING 1): fixed in fix round 2, a test-design fix only.
 R2-2 (MINOR 2): fixed in the same round. The `F6Failures` and `ClassifyRestore` summaries describe what the functions do now. Theories named `*_pending` that no longer carry the Pending trait are renamed without the suffix, and their rows are unchanged.
 
 Seat: the red seat owns the row (claude sonnet = claude-sonnet-5-5, ctx-2c, as D268 declares for test writing). The two summary comments are documentation and change no behaviour. One seat makes both changes, and the facilitator reruns every filter.
+
+## Review round 3 rulings (facilitator, 2026-11-15)
+
+Review round 3 is `review-3.md`, run on card-422 at 0125bdf by the QA seat (claude opus = claude-opus-5-5, ctx-4c). Verdict: SIGN-OFF, 0 BLOCKING, 3 MINOR. It confirmed the following, and found nothing that would turn CI red on main:
+- the Python module passes 144 of 144 in a full clone and in a depth-1 clone;
+- the filtered tests pass 168 of 168;
+- the renames changed no row;
+- every git read in this card's Python file is skipped or stubbed on a shallow checkout.
+
+R3-1, all three MINOR findings: named limits of this card, added to #444 with the review's inputs. None leaks, changes an outcome, or affects CI.
+- MINOR 1: no Python row plants a failure of `lockfile_commit_failures`' deep path, so five mutants of it survive. This gap goes back to card 369's L5. The real `test_L5` still catches a stale lockfile in a full clone.
+- MINOR 2: `FL-py-L5-deep-independent`'s shallow loop runs the same early return twice.
+- MINOR 3: `corpus-fix.txt` changed line endings, and data-source names still carry `Pending`. Both are cosmetic.
+
+Recorded: two older modules (`test_live_docs_266`, `test_demo_readme_untouched_179`) fail on a depth-1 checkout. No C# test runs them, so they are outside CI's test job. They are filed on #444 for a shallow-safety pass.
+
+The review seat left four folders under projects: a clone, a depth-1 clone and two worktrees registered in that clone. It did not delete them, because the rules forbid deletes. They are throwaway, outside the repository, and are left in place.
