@@ -441,7 +441,6 @@ public sealed class PathScan441
     [MemberData(nameof(Fix2ShapesPending))]
     [Trait("Slice", "441")]
     [Trait("Criterion", "441-1")]
-    [Trait("Status", "Pending")]
     public void Id_441_1_fix2_separator_runs_escaped_lone_letters_and_the_glued_drive(string id, string input, string expected)
     {
         // Given a drive after a slash followed by a doubled or mixed separator run, an escaped JSON list element ending in a one-letter folder before an escaped colon-slash, or an escaped drive right after a glued word (card 441 review round 2)

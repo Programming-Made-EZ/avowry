@@ -3,8 +3,9 @@ using System.Text;
 
 // Shared by Avowry.Bench and, as a linked file, Avowry.BenchCs. Platform independent on purpose:
 // Path.GetFileName would not split a Windows path on Linux.
-// Card 441 design: a linear scanner, ported from the fixed reference scanner (fix round 1).
-// Known pinned limits (named in slice-rulings.md): 2.5n, 3.4d, 3.8a-d, 9b, and pinned MINOR rows.
+// Card 441 design: a linear scanner, ported from the fixed reference scanner (fix round 2).
+// Known pinned limits (named in slice-rulings.md): 2.5n, 3.4d, 3.8a-d, 9b, pinned MINOR 5, and
+// the forward-slash sibling of MINOR 3 as a named limit.
 public static class PathScrub
 {
     public static string Apply(string? text)
@@ -38,6 +39,7 @@ public static class PathScrub
         // starts the final name of a Unix or `~` chain: `.../alice:/data`, `C:\...\proj:/app` and `/tmp/x:/home/...` are colon lists.
         // (b) also holds in a drive or UNC chain after a folder when an account marker follows (`C:\tmp\x:/home/...`).
         private bool finalAfterFolder;
+        private int gluedRootAt = -1; // where a word glued after an account tail ended right before a root
         private bool ColonSlash(int j) => At(j + 2) == '/' || (At(j + 2) == '\\' && At(j + 3) == '/');
         private bool OwnLetter(int j) => ColonSlash(j) &&
             (AsciiWord(At(j - 1))
@@ -150,7 +152,11 @@ public static class PathScrub
             // Adjacency (after any path) only for `file:///` or a backslash drive (`X:\`):
             // `…/lib:/home/…` and `C:\…\proj:/app` are colon lists, not a drive `b:` or `j:`.
             // `X:\/` is an escaped `X:/` (JSON), not a backslash drive.
-            var glue = q > p || (At(q + 2) == '\\' && At(q + 3) != '/');
+            var glue = q > p
+                || (At(q + 2) == '\\' && At(q + 3) != '/')
+                // An escaped `X:\/` right after a word glued to an account tail glues (fix round 2, MINOR 3): the word was
+                // ended before it so it could; left unglued it would start on a second pass (`C:\Users\` + `name(1)xC:\/a\/y`).
+                || (p == gluedRootAt && At(q + 2) == '\\' && At(q + 3) == '/');
             // A bare `X:/` right after `/` is no drive (`a/b:/home/...` is a colon list), unless the previous path ended
             // there or its first folder is a drive account parent (`/c:/users/...`, `jar:file:/C:/Documents%20and%20Settings/...`).
             if (q == p && At(p - 1) == '/' && At(q + 2) == '/' && p != prevEnd && !DriveParentAhead(q + 3)) return false;
@@ -262,9 +268,11 @@ public static class PathScrub
             return ok;
         }
 
-        // A drive account parent (DriveParents, any case) followed by a separator starts at i.
+        // A drive account parent (DriveParents, any case) followed by a separator starts at i, after any further separators:
+        // `/C://Users//...`, `jar:file:/c:///users/...` and `x/c:/\users\...` read like `/c:/users/...` (fix round 2, finding 1).
         private bool DriveParentAhead(int i)
         {
+            while (Sep(At(i))) i++;
             foreach (var h in DriveParents)
                 if (HasCi(i, h) && Sep(At(i + h.Length))) return true;
             return false;
@@ -423,11 +431,21 @@ public static class PathScrub
             repl = file.Length == 0
                 || file == "~"
                 || account
-                || (file.Length == 1 && Ascii(file[0]) && At(f1) == ':' && At(f1 + 1) == '/' && !UnixRootAt(f1 + 1))
+                || (file.Length == 1 && Ascii(file[0]) && LoneLetterColon(f1))
                 ? PathMark
                 : file;
             lastForm = form;
             return true;
+        }
+
+        // A lone one-letter final name before `:/` with no root after becomes `<path>` (a second pass would read `X:/` as a
+        // drive). The escaped `:\/` counts too, with the JSON roots `\/home\/` and `\/Users\/` as its root after (fix round 2, finding 2).
+        private bool LoneLetterColon(int f1)
+        {
+            if (At(f1) != ':') return false;
+            if (At(f1 + 1) == '/') return !UnixRootAt(f1 + 1);
+            if (!(At(f1 + 1) == '\\' && At(f1 + 2) == '/')) return false;
+            return !(Has(f1 + 1, "\\/home\\/") || Has(f1 + 1, "\\/Users\\/"));
         }
 
         // ---------- the account tail ----------
@@ -491,7 +509,7 @@ public static class PathScrub
                 var e = ends[i];
                 var c = At(e);
                 if (!(Lnu(c) || (c == ':' && Sep(At(e + 1))))) return e;
-                if (RootStartAt(e) && Lnu(t[e - 1])) return e;
+                if (RootStartAt(e) && Lnu(t[e - 1])) { gluedRootAt = e; return e; }
             }
             return s;
         }
