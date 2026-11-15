@@ -7,6 +7,7 @@ namespace Avowry.Acceptance.Tests;
 // and the born-green guards that keep them honest (guards 3, 4 and 5).
 // Layers, outermost first: L2 StartAsync orchestration -> L3 readiness -> L5 the process (a real generated API, or QuietChild).
 // Every foreign listener is a Holder the test owns and releases in a finally.
+[Collection("Isolated timing")]
 public class GeneratedApiHazards
 {
     [Fact]

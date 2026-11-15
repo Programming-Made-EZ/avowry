@@ -8,6 +8,7 @@ namespace Avowry.Acceptance.Tests;
 // Feature: GET endpoints read one item and a collection from the prototype store
 //   As Dana, I want GET endpoints to list stored items and find one by its route id,
 //   so that I can describe the read side of a small service.
+[Collection("Isolated timing")]
 public class GetEndpointsCompile
 {
     [Fact]

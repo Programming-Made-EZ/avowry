@@ -675,7 +675,6 @@ public partial class WallClockTestsRunIsolated
     [MemberData(nameof(Rows430_1_elapsed_Pending_Data))]
     [Trait("Slice", "430")]
     [Trait("Criterion", "430-1")]
-    [Trait("Status", "Pending")]
     public void Row_430_1_elapsed_pending(string id, string text, string expected)
     {
         // Given a corpus row of the elapsed family (a clean class, and the Elapsed or CancellationTokenSource shape of one real test)
@@ -688,7 +687,6 @@ public partial class WallClockTestsRunIsolated
     [MemberData(nameof(Rows430_2_elapsed_Pending_Data))]
     [Trait("Slice", "430")]
     [Trait("Criterion", "430-2")]
-    [Trait("Status", "Pending")]
     public void Row_430_2_elapsed_pending(string id, string text, string expected)
     {
         // Given a corpus row of the elapsed family (the spellings of the card [M] (positive rows) and their neighbours that must stay unnamed (N- rows, encodings))
@@ -725,7 +723,6 @@ public partial class WallClockTestsRunIsolated
     [MemberData(nameof(Rows430_2_cts_Pending_Data))]
     [Trait("Slice", "430")]
     [Trait("Criterion", "430-2")]
-    [Trait("Status", "Pending")]
     public void Row_430_2_cts_pending(string id, string text, string expected)
     {
         // Given a corpus row of the cts family (the spellings of the card [M] (positive rows) and their neighbours that must stay unnamed (N- rows, encodings))
@@ -750,7 +747,6 @@ public partial class WallClockTestsRunIsolated
     [MemberData(nameof(Rows430_2_waitasync_Pending_Data))]
     [Trait("Slice", "430")]
     [Trait("Criterion", "430-2")]
-    [Trait("Status", "Pending")]
     public void Row_430_2_waitasync_pending(string id, string text, string expected)
     {
         // Given a corpus row of the waitasync family (the spellings of the card [M] (positive rows) and their neighbours that must stay unnamed (N- rows, encodings))
@@ -775,7 +771,6 @@ public partial class WallClockTestsRunIsolated
     [MemberData(nameof(Rows430_2_whenany_Pending_Data))]
     [Trait("Slice", "430")]
     [Trait("Criterion", "430-2")]
-    [Trait("Status", "Pending")]
     public void Row_430_2_whenany_pending(string id, string text, string expected)
     {
         // Given a corpus row of the whenany family (the spellings of the card [M] (positive rows) and their neighbours that must stay unnamed (N- rows, encodings))
@@ -800,7 +795,6 @@ public partial class WallClockTestsRunIsolated
     [MemberData(nameof(Rows430_2_httpclient_Pending_Data))]
     [Trait("Slice", "430")]
     [Trait("Criterion", "430-2")]
-    [Trait("Status", "Pending")]
     public void Row_430_2_httpclient_pending(string id, string text, string expected)
     {
         // Given a corpus row of the httpclient family (the spellings of the card [M] (positive rows) and their neighbours that must stay unnamed (N- rows, encodings))
@@ -921,7 +915,6 @@ public partial class WallClockTestsRunIsolated
     [MemberData(nameof(Rows430_4_testtype_Pending_Data))]
     [Trait("Slice", "430")]
     [Trait("Criterion", "430-4")]
-    [Trait("Status", "Pending")]
     public void Row_430_4_testtype_pending(string id, string text, string expected)
     {
         // Given a corpus row of the testtype family (the test-type shapes of [I] (SkippableFact, records, nested, partial))
@@ -982,7 +975,6 @@ public partial class WallClockTestsRunIsolated
     [Fact]
     [Trait("Slice", "430")]
     [Trait("Criterion", "430-5")]
-    [Trait("Status", "Pending")]
     public void E_the_seven_real_classes_with_short_hard_limits_carry_the_isolated_collection()
     {
         // Given the real source files of the seven classes that assert a short hard limit (the card's five and the two of ruling 2)

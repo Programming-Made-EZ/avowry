@@ -8,6 +8,7 @@ namespace Avowry.Acceptance.Tests;
 // Feature: Source maps stay out of deployed applications
 //   As Morgan, I want proof that source maps are neither published nor served,
 //   so that Phrase file names and lines never reach a deployment.
+[Collection("Isolated timing")]
 public class SourceMapDeployment
 {
     private static readonly TimeSpan PublishTimeout = TimeSpan.FromMinutes(5);

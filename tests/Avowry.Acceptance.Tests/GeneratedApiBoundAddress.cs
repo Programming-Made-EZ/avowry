@@ -6,6 +6,7 @@ namespace Avowry.Acceptance.Tests;
 // Card 214 Done check 2, part 1 (commit 3): the harness owns the port and learns the bound address from the process (Z, O, M, I),
 // plus guards 6 and 8. The two check 1 tests are the green proof for the other half and are re-run unchanged.
 // Layers, outermost first: L2 StartAsync -> L3 readiness -> L4 pump and parser -> L5 process (a real generated API, or QuietChild).
+[Collection("Isolated timing")]
 public class GeneratedApiBoundAddress
 {
     [Fact]
