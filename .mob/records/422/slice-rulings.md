@@ -15,3 +15,26 @@ Ruling 5 (R-5): out of scope. `MOB.md` in the guard's allow-list with no History
 Ruling 6 (R-6): accepted. The page is checked as it is written. Rewording a figure sentence fails until the check's pattern changes in the same commit, and the failure names the sentence.
 
 The 8 deliberate outcome changes in the slice (I-comment, I-cdata-text, O-warm-warning, O-warm-nopkg, O-partial, O-planted-offline, O-planted-nu10041, G-other-lock) are accepted with the reasons the slice gives. The red embeds every corpus row. The networked parts of [E] and [O] run only under the heavy-run lock at the gate and the sign-off; their offline parts are red and green on fixtures.
+
+## Review round 1 rulings (facilitator, 2026-11-15)
+
+Review round 1 is `review.md`, run on card-422 at 232be69 by the QA seat (claude opus = claude-opus-5-5, ctx-4). Verdict: FLAG, 2 BLOCKING, 10 MINOR. The facilitator replayed both BLOCKING findings in the source. `RestoredLicenceChecks.LicenceValueFailures` and `RestoreOutcome` are called only by the offline fixture Theories. F6 still checks only that a licence file or URL exists. F5's planted step and `RestoreLockedOrFail` still test the network-miss text first and match NU1004 as a substring.
+
+Cause: the slice designed the two helpers for the networked tests to call, but the facilitator's green brief asked only to port them and replace the stubs. It never named F5, F6 and `RestoreLockedOrFail` as their callers. The red's rows tested the helpers in isolation, so the green passed every row with the networked path unchanged. This is a brief gap, not a seat error.
+
+R1-1 (BLOCKING 1 and 2): fixed in this card's fix round.
+- F6 builds evidence from each restored package (the packaged licence file's opening text, or its licence URL) and fails on `LicenceValueFailures` against the page rows.
+- F5's planted step and `RestoreLockedOrFail` classify with `RestoreOutcome` and the restored-package count.
+
+The fix slice moves the evidence building and the classification into pure functions that take the restore's output and the package folder's files as input, so that red rows can prove the wiring offline. A red row must fail today because the networked code path does not use the helper, not because a helper is wrong.
+
+R1-2 (MINOR 3): fixed in the fix round, because ruling 4 is unmet on real runs. The card's `AssertPythonTestsPass` writes the Python output to the test log, so the shallow-checkout skip shows on a passing CI run.
+
+R1-3 (MINOR 4 to 12): named limits of this card, filed on #444 with the review's minimal inputs. They are contrived, absent from this repository, older, or fail closed. MINOR 6 and 12 are new but contrived. MINOR 11's first two items (a wrapped URL, a notice item in a code span) fail closed on shapes the page does not use.
+
+The fix round runs the same seats as D268:
+- the architect's fix slice (claude opus);
+- the red (claude sonnet);
+- the green (cursor gpt-5.3-codex), whose brief names every caller;
+- the gate on a quiet machine under the heavy lock;
+- review round 2 (claude opus).
