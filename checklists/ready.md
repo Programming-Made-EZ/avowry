@@ -7,6 +7,7 @@ When: at refinement, before a card is Ready; and at kickoff, before its first wo
 - The four Dimensions of Difficulty are answered, each YES with its mitigation in its fixed form, and every spike resolved. Gate: `card_ready.py`. Evidence: each listed spike card is closed on the board (the gate reads only the card's `(resolved)` marker).
 - A spike exists only for the story prioritized next. Evidence: the board order at refinement (the coach, row I13).
 - The task force is declared at kickoff: roles sized to the card, each with its domain, its why and its own context. Gate: `facilitator.py` (card mode refuses a card with no `## Task force`). Gate: `mob_process.py record`. Evidence: the card's Task force section shows each role's domain and why and that the roles fit the work (the gates check only that roles, whys and contexts exist).
+- Every task-force role declares its service, its exact model or size and a reason before any seat runs, and each seat launches with that model pinned (the launcher's model flag; a launcher without one is not seated). Evidence: the kickoff's model declaration per role, written before the first seat's launch, and each seat's launch line with its model flag. Card: #51
 - The domain-expert question is asked and answered at refinement. Gate: `mob_process.py record`
 - The Gherkin criteria drive the outside-in acceptance test, whose BDD comments are their text. Evidence: the acceptance test's diff.
 - Any Decider run at refinement follows `checklists/decider.md`. Evidence: the Decider record.

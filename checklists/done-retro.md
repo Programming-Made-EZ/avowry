@@ -7,6 +7,8 @@ When: after the card's last commit is pushed, before the next card starts.
 - The constraint is named from data, with the focusing step applied and its measured effect. Evidence: the retro's Constraint line. Card: #17
 - Journey walks: the persona's journey walked end to end on the live product. Evidence: the committed walk notes.
 - Trust rungs are reviewed with evidence. Evidence: the retro's review of each seat's rung against its lines in `.mob/records/trust-ladder.jsonl`.
+- The Model allocation review: per seat, the declared against actual service and model or size, the outcome signals (first-pass review verdict, blocking findings caught or missed, rework cycles, timeouts or crashes, wall time, quota used where readable) and a keep, upsize or downsize call. Evidence: the retro's Model allocation review section and the seat log rows for the card. Card: #52
+- The model-selection guide is updated only by Decider (the Decider item below applies): each row a hypothesis with a metric, a counter-metric, a sample size and an expiry. Evidence: the Decider record that adopted or revised the guide, or the retro's line that no row changed. Card: #52
 - One Decider pick, with its tally pasted (or `none: <reason>`). Gate: `mob_process.py pushed-retros` (a tally is required only when the retro cites the Decider). Evidence: the tally in the retro. Card: #23
 - The inbox is read, with inbox_open.py's own result line. Gate: `mob_process.py pushed-retros`
 - Every open finding is addressed. Gate: `mob_process.py record`
