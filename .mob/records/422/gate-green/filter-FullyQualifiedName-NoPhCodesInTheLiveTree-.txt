@@ -1,0 +1,59 @@
+Test run for C:\Users\<user>\projects\gate422green-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.09]   Discovering: Avowry.Acceptance.Tests
+[xUnit.net 00:00:00.44]   Discovered:  Avowry.Acceptance.Tests
+[xUnit.net 00:00:00.44]   Starting:    Avowry.Acceptance.Tests
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_reports_the_line_and_whether_the_hit_is_a_three_digit_code [19 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_pending(id: "G-requested", path: "reference/csharp/Orders.Api/packages.lock.json", text: "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"···, mustHit: True) [1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_pending(id: "G-hash-wrapped", path: "reference/csharp/Orders.Api/packages.lock.json", text: "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"···, mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_pending(id: "G-minified-hit", path: "reference/csharp/Orders.Api/packages.lock.json", text: "{\"version\":1,\"dependencies\":{\"net8.0\":{\"X\""···, mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_pending(id: "G-resolved", path: "reference/csharp/Orders.Api/packages.lock.json", text: "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"···, mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_pending(id: "G-key", path: "reference/csharp/Orders.Specs/packages.lock.json", text: "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"···, mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_pending(id: "G-hash-case", path: "reference/csharp/Orders.Api/packages.lock.json", text: "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"···, mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_pending(id: "G-bak", path: "reference/csharp/Orders.Api/packages.lock.json.bak", text: "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"···, mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_pending(id: "G-other-lock", path: "tools/X/packages.lock.json", text: "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"···, mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_pending(id: "G-hash-text", path: "reference/csharp/Orders.Api/packages.lock.json", text: "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"···, mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_pending(id: "G-hash-and-key", path: "reference/csharp/Orders.Api/packages.lock.json", text: "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"···, mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_that_hold_today(id: "G-crlf", path: "reference/csharp/Orders.Api/packages.lock.json", text: "{\r\n  \"version\": 1,\r\n  \"dependencies\": {\r\"···, mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_that_hold_today(id: "G-phrase", path: "src/F.cs", text: "Phrase is a word", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_that_hold_today(id: "G-json", path: "bench/config/x.json", text: "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"···, mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_that_hold_today(id: "G-hash-indent", path: "reference/csharp/Orders.Api/packages.lock.json", text: "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"···, mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_that_hold_today(id: "G-hash-spaced", path: "reference/csharp/Orders.Api/packages.lock.json", text: "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"···, mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_that_hold_today(id: "Z-guard-api", path: "reference/csharp/Orders.Api/packages.lock.json", text: "@real", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_that_hold_today(id: "G-other-lock-hit", path: "tools/X/packages.lock.json", text: "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"···, mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_that_hold_today(id: "G-hash", path: "reference/csharp/Orders.Api/packages.lock.json", text: "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"···, mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_that_hold_today(id: "G-minified", path: "reference/csharp/Orders.Api/packages.lock.json", text: "{\"version\":1,\"dependencies\":{\"net8.0\":{\"X\""···, mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_that_hold_today(id: "G-code", path: "src/A.cs", text: "var code = \"PH325\";", mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_that_hold_today(id: "G-history", path: ".mob/x/y.md", text: "PH325 and PHnnn", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_that_hold_today(id: "G-mobmd", path: "MOB.md", text: "PH325", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Lockfile_planted_rows_that_hold_today(id: "Z-guard-specs", path: "reference/csharp/Orders.Specs/packages.lock.json", text: "@real", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "miss-new-prefix", path: "src/I.cs", text: "AV325 and AVnnn", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "miss-upper-phrase", path: "tools/Program.cs", text: "PHRASE_BENCHCS_DOTNET", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "hit-quoted-bare", path: "tests/D.cs", text: "line.StartsWith(\"PH\", StringComparison.Ordinal)", mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "miss-underscore", path: "tests/G.cs", text: "PHRASE_X", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "hit-working-agreement", path: "TEAM_WORKING_AGREEMENT.md", text: "ledger row PH312", mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "hit-nnn", path: "docs/GUIDE.md", text: "keep the PHnnn style", mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "allow-listed-H5", path: "board/x/y.md", text: "PH325 and PHnnn", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "hit-fixture-id", path: "tests/A.cs", text: "[InlineData(\"M01-PH010\")]", mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "hit-bare-word", path: "tests/E.cs", text: "builds without PH diagnostics", mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "hit-hash-run", path: "src/Diagnostic.cs", text: "/// code such as PH###", mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "hit-backslash-d", path: "tests/C.cs", text: "new Regex(\"PH\\\\d{3}\")", mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "allow-listed-H3", path: "docs/retros/x/y.md", text: "PH325 and PHnnn", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "hit-two-digit-prefix-literal", path: "tests/B.cs", text: "text.StartsWith(\"PH10\")", mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "miss-lowercase", path: "tests/H.cs", text: "ph325 and Ph325", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "allow-listed-H2", path: "docs/decisions/x/y.md", text: "PH325 and PHnnn", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "hit-no-left-boundary", path: "tests/CompositeReturnTypeStaysPH325.cs", text: "class CompositeReturnTypeStaysPH325 { }", mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "allow-listed-H1", path: ".mob/x/y.md", text: "PH325 and PHnnn", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "miss-phrase", path: "src/F.cs", text: "Phrase is a word", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "hit-code", path: "src/A.cs", text: "var code = \"PH325\";", mustHit: True) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "allow-listed-H4", path: "bench/results/x/y.md", text: "PH325 and PHnnn", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Scanner_planted_rows(id: "miss-orphans", path: "TEAM_WORKING_AGREEMENT.md", text: "ORPHANS are handled", mustHit: False) [< 1 ms]
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Tracked_live_files_contain_no_PH_diagnostic_code [19 s]
+[xUnit.net 00:00:21.09]   Finished:    Avowry.Acceptance.Tests
+  Passed Avowry.Acceptance.Tests.NoPhCodesInTheLiveTree.Every_history_allow_list_entry_still_holds_a_PH_code [1 s]
+
+Test Run Successful.
+Total tests: 47
+     Passed: 47
+ Total time: 21.6003 Seconds

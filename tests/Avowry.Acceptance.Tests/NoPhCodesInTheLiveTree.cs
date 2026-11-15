@@ -62,16 +62,14 @@ public class NoPhCodesInTheLiveTree
         ("H3", "docs/retros/", "retrospectives are dated history of what the team saw at the time"),
         ("H4", "bench/results/", "pushed benchmark rows are schema: a row written with a code stays as pushed"),
         ("H5", "board/", "the board files are generated from the issues and never hand-edited"),
-        ("H6", "reference/csharp/Orders.Api/packages.lock.json", "a generated lockfile: its base64 content hashes can contain the old prefix by chance and are never hand-edited (card 369)"),
-        ("H7", "reference/csharp/Orders.Specs/packages.lock.json", "a generated lockfile: its base64 content hashes can contain the old prefix by chance and are never hand-edited (card 369)"),
     ];
 
     [Fact]
     [Trait("Slice", "361")]
     public async Task Every_history_allow_list_entry_still_holds_a_PH_code()
     {
-        // Given the seven allow-listed history areas (ids H1 to H5, and H6 and H7 for the two generated lockfiles of card 369; the earlier H6, MOB.md, was removed on 2026-11-10 when its last old-prefix text rotated out of the generated file), each with its reason
-        Assert.Equal(["H1", "H2", "H3", "H4", "H5", "H6", "H7"], History.Select(entry => entry.Id));
+        // Given the five allow-listed history areas (ids H1 to H5), each with its reason
+        Assert.Equal(["H1", "H2", "H3", "H4", "H5"], History.Select(entry => entry.Id));
         var files = await TrackedFilesAsync();
 
         // When each area is scanned for the old prefix without the allow-list
@@ -144,6 +142,68 @@ public class NoPhCodesInTheLiveTree
         Assert.Equal([true, false, false], hits.Select(hit => hit.IsCode));
     }
 
+    // ---- Card 422 red [B]: lockfile rows (task-force role: red) -----------------------------------------------------------
+    // A lockfile's "contentHash" values are skipped by the scan, H6 and H7 leave the allow-list, any other line of a lockfile is
+    // scanned. Text is built from parts with Old. A text of @real stands for the real file at that path. Rows that already
+    // hold on today's scanner are in the Holding theory; rows it gets wrong are in the Pending theory.
+
+    public static TheoryData<string, string, string, bool> PlantedRows422Holding()
+    {
+        var data = new TheoryData<string, string, string, bool>();
+        data.Add("Z-guard-api", "reference/csharp/Orders.Api/packages.lock.json", "@real", false);
+        data.Add("Z-guard-specs", "reference/csharp/Orders.Specs/packages.lock.json", "@real", false);
+        data.Add("G-hash", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"type\": \"Transitive\",\n        \"resolved\": \"10.0.11\",\n        \"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", false);
+        data.Add("G-minified", "reference/csharp/Orders.Api/packages.lock.json", "{\"version\":1,\"dependencies\":{\"net8.0\":{\"X\":{\"type\":\"Transitive\",\"resolved\":\"1.0.0\",\"contentHash\":\"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"}}}}", false);
+        data.Add("G-hash-spaced", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"contentHash\" :\t \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", false);
+        data.Add("G-hash-indent", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n\"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\",\n\t\t\"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", false);
+        data.Add("G-crlf", "reference/csharp/Orders.Api/packages.lock.json", "{\r\n  \"version\": 1,\r\n  \"dependencies\": {\r\n    \"net8.0\": {\r\n      \"X\": {\r\n        \"resolved\": \"10.0.11\",\r\n        \"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\r\n      }\r\n    }\r\n  }\r\n}\r\n", false);
+        data.Add("G-other-lock-hit", "tools/X/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"resolved\": \"" + Old + "325\"\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-json", "bench/config/x.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-code", "src/A.cs", "var code = \"" + Old + "325\";", true);
+        data.Add("G-phrase", "src/F.cs", "Phrase is a word", false);
+        data.Add("G-history", ".mob/x/y.md", "" + Old + "325 and " + Old + "nnn", false);
+        data.Add("G-mobmd", "MOB.md", "" + Old + "325", false);
+        return data;
+    }
+
+    public static TheoryData<string, string, string, bool> PlantedRows422Pending()
+    {
+        var data = new TheoryData<string, string, string, bool>();
+        data.Add("G-resolved", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"type\": \"Transitive\",\n        \"resolved\": \"" + Old + "325\",\n        \"contentHash\": \"AAAA\"\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-key", "reference/csharp/Orders.Specs/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"dependencies\": {\n          \"Lib." + Old + "\": \"1.0.0\"\n        }\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-requested", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"type\": \"Direct\",\n        \"requested\": \"[1.0.0, ) " + Old + "nnn\",\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-hash-and-key", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\",\n        \"resolved\": \"" + Old + "101\"\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-minified-hit", "reference/csharp/Orders.Api/packages.lock.json", "{\"version\":1,\"dependencies\":{\"net8.0\":{\"X\":{\"type\":\"Transitive\",\"resolved\":\"" + Old + "101\",\"contentHash\":\"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"}}}}", true);
+        data.Add("G-hash-text", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"contentHash\": \"see " + Old + "325 notes\"\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-hash-case", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"ContentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-hash-wrapped", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"contentHash\":\n          \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-other-lock", "tools/X/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", false);
+        data.Add("G-bak", "reference/csharp/Orders.Api/packages.lock.json.bak", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", true);
+        return data;
+    }
+
+    private static void AssertLockfileRow422(string id, string path, string text, bool mustHit)
+    {
+        if (text == "@real")
+            text = File.ReadAllText(Path.Combine(RepoPaths.Root, path.Replace('/', Path.DirectorySeparatorChar)));
+        var hits = LiveTreeScanner.Scan([(path, text)]);
+        Assert.True(mustHit == (hits.Count > 0), $"{id}: expected {(mustHit ? "a hit" : "no hit")} for {path}, got {hits.Count}");
+    }
+
+    [Theory]
+    [Trait("Slice", "422")]
+    [Trait("Criterion", "422-7")]
+    [MemberData(nameof(PlantedRows422Holding))]
+    public void Lockfile_planted_rows_that_hold_today(string id, string path, string text, bool mustHit) =>
+        AssertLockfileRow422(id, path, text, mustHit);
+
+    [Theory]
+    [Trait("Slice", "422")]
+    [Trait("Criterion", "422-7")]
+    [MemberData(nameof(PlantedRows422Pending))]
+    public void Lockfile_planted_rows(string id, string path, string text, bool mustHit) =>
+        AssertLockfileRow422(id, path, text, mustHit);
+
     // ---- The tracked-file list: git ls-files -z through ProcessRunner, content read from disk -------------
 
     private static async Task<List<(string Path, string Text)>> TrackedFilesAsync()
@@ -184,13 +244,13 @@ internal static class LiveTreeScanner
 {
     // History allow-list: files under these paths are never live. The red's own files are not listed; they are clean.
     private static readonly string[] HistoryPrefixes =
-        [".mob/", "docs/decisions/", "docs/retros/", "bench/results/", "board/", "MOB.md",
-         "reference/csharp/Orders.Api/packages.lock.json", "reference/csharp/Orders.Specs/packages.lock.json"];
+        [".mob/", "docs/decisions/", "docs/retros/", "bench/results/", "board/", "MOB.md"];
 
     // Case-sensitive, no left anchor (a class name may end in the old prefix and a number). The character class keeps this line clean.
     private static readonly Regex Pattern = new("""P[H](?:[0-9]|n{3}|\b)""", RegexOptions.CultureInvariant);
 
     private static readonly Regex ThreeDigitCode = new("""\GP[H][0-9]{3}(?![0-9])""", RegexOptions.CultureInvariant);
+    private static readonly Regex ContentHash = new("""("contentHash"[ \t]*:[ \t]*")([A-Za-z0-9+/=]*)(")""", RegexOptions.CultureInvariant);
 
     public static bool IsHistory(string path)
     {
@@ -212,8 +272,17 @@ internal static class LiveTreeScanner
     public static IReadOnlyList<Hit> Scan(IEnumerable<(string Path, string Text)> files) =>
         files.Where(file => !IsHistory(file.Path)).SelectMany(file => HitsIn(file.Path, file.Text)).ToList();
 
+    private static bool IsLockfile(string path)
+    {
+        var normal = path.Replace('\\', '/');
+        return normal == "packages.lock.json" || normal.EndsWith("/packages.lock.json", StringComparison.Ordinal);
+    }
+
     public static IReadOnlyList<Hit> HitsIn(string path, string text)
     {
+        if (IsLockfile(path))
+            text = ContentHash.Replace(text, match => match.Groups[1].Value + new string(' ', match.Groups[2].Length) + match.Groups[3].Value);
+
         var hits = new List<Hit>();
         foreach (Match match in Pattern.Matches(text))
         {

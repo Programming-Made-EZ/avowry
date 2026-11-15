@@ -1,0 +1,9 @@
+tested HEAD: c0787a74bbd6c774f87a6b8499cd4a1da35a2213
+python unittest exit 0: OK
+build exit 0:     0 Warning(s)     0 Error(s) 
+Slice=422 exit 0:  | wall 11 s from 2026-11-15T21:49:23Z
+Slice=369 exit 0:  | wall 12 s from 2026-11-15T21:49:34Z
+FullyQualifiedName~NoPhCodesInTheLiveTree exit 0:  | wall 23 s from 2026-11-15T21:49:47Z
+Status!=Pending exit 0:  | wall 1021 s from 2026-11-15T21:50:10Z
+[S] ceiling: the Status!=Pending wall time above against 900 s
+DONE

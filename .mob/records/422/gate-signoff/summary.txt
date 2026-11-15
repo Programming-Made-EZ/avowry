@@ -1,0 +1,10 @@
+tested HEAD: 69e4c95175a34055bb191e41ee4eb36d8acbdd7d
+python unittest (depth-1 clone, the CI shape) exit 0: restored-package-licences: section -: commit-blob check skipped (shallow checkout)
+python unittest exit 0: OK
+build exit 0:     0 Warning(s)     0 Error(s) 
+Slice=422 exit 0:  | wall 11 s from 2026-11-15T23:29:37Z
+Slice=369 exit 0:  | wall 13 s from 2026-11-15T23:29:47Z
+FullyQualifiedName~NoPhCodesInTheLiveTree exit 0:  | wall 29 s from 2026-11-15T23:30:00Z
+Status!=Pending exit 0:  | wall 1023 s from 2026-11-15T23:30:29Z
+[S] ceiling: the Status!=Pending wall time above against 900 s
+DONE

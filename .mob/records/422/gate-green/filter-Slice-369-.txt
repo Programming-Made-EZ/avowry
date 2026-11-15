@@ -1,0 +1,18 @@
+Test run for C:\Users\<user>\projects\gate422green-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.10]   Discovering: Avowry.Acceptance.Tests
+[xUnit.net 00:00:00.46]   Discovered:  Avowry.Acceptance.Tests
+[xUnit.net 00:00:00.47]   Starting:    Avowry.Acceptance.Tests
+  Passed Avowry.Acceptance.Tests.RestoredPackageLicences.F4_a_stale_page_row_is_reported [520 ms]
+  Passed Avowry.Acceptance.Tests.RestoredPackageLicences.F3_lockfiles_match_the_provider_and_the_tool_gains_no_package [482 ms]
+  Passed Avowry.Acceptance.Tests.RestoredPackageLicences.F2_empty_and_borderline_cases_are_stated [516 ms]
+  Passed Avowry.Acceptance.Tests.RestoredPackageLicences.F1_lockfiles_parse_and_every_package_is_listed [705 ms]
+  Passed Avowry.Acceptance.Tests.RestoredPackageLicencesLockedRestore.F6_restore_set_matches_the_page_and_the_packaged_licences [4 s]
+[xUnit.net 00:00:12.15]   Finished:    Avowry.Acceptance.Tests
+  Passed Avowry.Acceptance.Tests.RestoredPackageLicencesLockedRestore.F5_locked_restore_matches_the_lockfiles_and_a_planted_mismatch_is_NU1004 [4 s]
+
+Test Run Successful.
+Total tests: 6
+     Passed: 6
+ Total time: 12.6554 Seconds
