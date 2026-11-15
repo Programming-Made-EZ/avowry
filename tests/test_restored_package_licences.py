@@ -674,5 +674,777 @@ class RestoredLicencesOffline(unittest.TestCase):
         self.assertEqual([], collect_failures(page, locks, provider, tools))
 
 
+# ---- Card 422 red (task-force role: red). Every Python row of .mob/records/422/corpus.txt, one test per row.
+# Test422Characterisation passes on today's code and must keep passing after the green. Test422Pending fails on
+# today's code and the green turns it passing. A Pending row that calls figure_failures, tool_closure or
+# lockfile_commit_skip fails today with a NameError: those three check functions are new in the slice (design rules
+# B1, I1 and O1), so that error is the expected red. The other Pending rows fail by assertion. The check code above
+# is untouched. Rows that need no new function and already pass are in the characterisation class.
+# The old two-letter prefix is never written whole in this file (the guard scans it).
+
+CORPUS_422 = REPO / ".mob" / "records" / "422" / "corpus.txt"
+EMBEDDED_422 = (
+    REPO / "tests" / "test_restored_package_licences.py",
+    REPO / "tests" / "Avowry.Acceptance.Tests" / "RestoredPackageLicences.cs",
+    REPO / "tests" / "Avowry.Acceptance.Tests" / "RestoredPackageLicencesLockedRestore.cs",
+    REPO / "tests" / "Avowry.Acceptance.Tests" / "NoPhCodesInTheLiveTree.cs",
+)
+TOOL_START_422 = "src/Avowry.Cli/Avowry.Cli.csproj"
+SHALLOW_NOTE_422 = "commit-blob check skipped (shallow checkout)"
+
+
+def page_inputs_422(edits):
+    """The real page and lockfiles with a row's edits applied (a replacement is made at its first match inside the section)."""
+    page, locks = read_page(), read_locks()
+    section_at = page.index("## " + TITLE)
+    for edit in edits:
+        if edit == "@crlf":
+            page = page.replace("\n", "\r\n").replace("\r\n", "\n")
+        elif isinstance(edit, str) and edit.startswith("@lock "):
+            _, name, _, pid, ver, kind = edit.split(" ")
+            locks[name]["dependencies"]["net8.0"][pid] = {"type": kind, "resolved": ver, "contentHash": "A" * 88}
+        else:
+            old, new = edit
+            at = page.find(old, section_at)
+            if at < 0:
+                raise ValueError("edit not found: " + old[:60])
+            page = page[:at] + new + page[at + len(old):]
+    return page, locks
+
+
+def outcome_matches_422(expected, failures):
+    """expected is pass, or fail: followed by substrings that must all appear (joined by ' && ')."""
+    if expected == "pass":
+        return not failures
+    joined = "\n".join(failures)
+    return bool(failures) and all(part in joined for part in expected[len("fail:"):].split(" && "))
+
+
+class _Rows422:
+    def settle(self, rid, expected, failures):
+        self.assertTrue(outcome_matches_422(expected, failures), f"{rid}: expected {expected}, got {failures}")
+
+    def offline(self, rid, edits, expected, figures=False):
+        page, locks = page_inputs_422(edits)
+        failures = collect_failures(page, locks, read_provider(), load_tool_texts())
+        if figures:
+            failures = failures + figure_failures(page, locks)
+        self.settle(rid, expected, failures)
+
+    def tools(self, rid, files, expected):
+        def read(rel):
+            if rel in files:
+                return files[rel]
+            path = REPO / rel
+            return path.read_text(encoding="utf-8") if path.is_file() else None
+
+        self.settle(rid, expected, tool_package_ref_failures(tool_closure(TOOL_START_422, read)))
+
+    def tools_real(self, rid, expected):
+        self.settle(rid, expected, tool_package_ref_failures(load_tool_texts()))
+
+    def props(self, rid, text, expected):
+        self.settle(rid, expected, props_failures(PROPS.read_text(encoding="utf-8") if text is None else text))
+
+    def shallow(self, rid, shallow, hash_present, note):
+        page = read_page()
+        if not hash_present:
+            page = HASH_RE.sub("x", page)
+        got = lockfile_commit_skip(page, shallow)
+        if note:
+            self.assertEqual(msg("section", "-", SHALLOW_NOTE_422), got, rid)
+        else:
+            self.assertIsNone(got, rid)
+
+class Test422Characterisation(_Rows422, unittest.TestCase):
+    def test_422_L_gpl(self):
+        # L-gpl [422-3] page-licence/table-cell: 369 B3-outside near miss on the real page
+        self.offline("L-gpl", [
+            ("| FluentValidation | 12.1.1 | Transitive | Apache-2.0 | nuspec licence expression | generated service and generated specs | ok |", "| FluentValidation | 12.1.1 | Transitive | GPL-2.0 | nuspec licence expression | generated service and generated specs | ok |"),
+        ], "fail:FluentValidation 12.1.1: needs review", figures=False)
+
+    def test_422_L_bold(self):
+        # L-bold [422-3] page-licence/bold: cell markup is not a licence id (fail-closed, unchanged)
+        self.offline("L-bold", [
+            ("| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |", "| FastEndpoints | 8.3.0 | Direct | **MIT** | nuspec licence expression | generated service and generated specs | ok |"),
+        ], "fail:FastEndpoints 8.3.0: needs review", figures=False)
+
+    def test_422_L_code(self):
+        # L-code [422-3] page-licence/code-span: cell markup (fail-closed, unchanged)
+        self.offline("L-code", [
+            ("| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |", "| FastEndpoints | 8.3.0 | Direct | `MIT` | nuspec licence expression | generated service and generated specs | ok |"),
+        ], "fail:FastEndpoints 8.3.0: needs review", figures=False)
+
+    def test_422_L_inner_ws(self):
+        # L-inner-ws [422-3] page-licence/inner-ws: cell padding is trimmed (unchanged)
+        self.offline("L-inner-ws", [
+            ("| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |", "| FastEndpoints | 8.3.0 | Direct |    MIT\t| nuspec licence expression | generated service and generated specs | ok |"),
+        ], "pass", figures=False)
+
+    def test_422_L_source_label(self):
+        # L-source-label [422-3] page-licence/table-cell: 369 L4 near miss
+        self.offline("L-source-label", [
+            ("| xunit.abstractions | 2.0.3 | Transitive | Apache-2.0 | licence URL | generated specs (test-only) | ok |", "| xunit.abstractions | 2.0.3 | Transitive | Apache-2.0 | licence-url | generated specs (test-only) | ok |"),
+        ], "fail:xunit.abstractions 2.0.3: licence source is not one of the three labels", figures=False)
+
+    def test_422_L_indent4(self):
+        # L-indent4 [422-3] page-licence/leading-ws: 4 spaces is a code block, not a row (unchanged)
+        self.offline("L-indent4", [
+            ("| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |", "| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |\n    | FastEndpoints | 8.3.0 | Direct | GPL-3.0 | nuspec licence expression | generated service and generated specs | ok |"),
+        ], "pass", figures=False)
+
+    def test_422_L_row_wrapped(self):
+        # L-row-wrapped [422-3] page-licence/line-break: a row broken over two lines (unchanged)
+        self.offline("L-row-wrapped", [
+            ("| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |", "| FastEndpoints | 8.3.0 | Direct\n| MIT | nuspec licence expression | generated service and generated specs | ok |"),
+        ], "fail:FastEndpoints 8.3.0: row missing licence", figures=False)
+
+    def test_422_L_E1(self):
+        # L-E1 [422-3] page-licence/table-cell: 369 E1 on the real page
+        self.offline("L-E1", [
+            ("| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |\n", ""),
+        ], "fail:FastEndpoints 8.3.0: missing from the page", figures=False)
+
+    def test_422_L_E2(self):
+        # L-E2 [422-3] page-licence/table-cell: 369 E2
+        self.offline("L-E2", [
+            ("| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |", "| FastEndpoints | 9.0.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |"),
+        ], "fail:FastEndpoints 9.0.0: listed at a different version than 8.3.0", figures=False)
+
+    def test_422_L_E3(self):
+        # L-E3 [422-3] page-licence/table-cell: 369 E3
+        self.offline("L-E3", [
+            ("| Newtonsoft.Json | 13.0.1 | Transitive | MIT | nuspec licence expression | generated specs (test-only) | ok |", "| Newtonsoft.Json | 13.0.1 | Transitive | MIT | nuspec licence expression | generated specs (test-only) | ok |\n| ExtraPackage | 1.0.0 | Transitive | MIT | nuspec licence expression | generated specs (test-only) | ok |"),
+        ], "fail:ExtraPackage 1.0.0: in neither lockfile", figures=False)
+
+    def test_422_L_kind(self):
+        # L-kind [422-3] page-licence/table-cell: 369 L3
+        self.offline("L-kind", [
+            ("| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |", "| FastEndpoints | 8.3.0 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |"),
+        ], "fail:FastEndpoints 8.3.0: kind Transitive expected Direct", figures=False)
+
+    def test_422_L_crlf(self):
+        # L-crlf [422-3] page-licence/line-break: CRLF page (read_page normalises)
+        self.offline("L-crlf", [
+            "@crlf",
+        ], "pass", figures=False)
+
+    def test_422_Z_tools(self):
+        # Z-tools [422-1] tools/plain: src/Avowry.Cli, Avowry.Compiler, Avowry.Adapters.CSharp csproj and root Directory.Build.props (today)
+        self.tools_real("Z-tools", "pass")
+
+    def test_422_Z_props(self):
+        # Z-props [422-1] props/plain: reference/Directory.Build.props (today)
+        self.props("Z-props", None, "pass")
+
+    def test_422_S_true(self):
+        # S-true [422-5] props/condition-true: Condition="true"
+        self.props("S-true", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup Condition=\"true\">\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "pass")
+
+    def test_422_S_true_compare(self):
+        # S-true-compare [422-5] props/condition-true: a true comparison
+        self.props("S-true-compare", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup Condition=\" 'true' == 'TRUE' \">\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "pass")
+
+    def test_422_S_true_wrapped(self):
+        # S-true-wrapped [422-5] props/line-break: a comparison over two lines
+        self.props("S-true-wrapped", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup Condition=\"'a'\n      == 'a'\">\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "pass")
+
+    def test_422_S_empty_cond(self):
+        # S-empty-cond [422-5] props/condition-true: an empty Condition is true
+        self.props("S-empty-cond", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup Condition=\"\">\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "pass")
+
+    def test_422_S_plain(self):
+        # S-plain [422-5] props/plain: card [S] unconditioned group
+        self.props("S-plain", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "pass")
+
+    def test_422_S_both(self):
+        # S-both [422-5] props/condition-false: a false group then an unconditioned one
+        self.props("S-both", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup Condition=\"false\">\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "pass")
+
+    def test_422_S_override_false(self):
+        # S-override-false [422-5] props/condition-false: a later reset under a false Condition does not apply
+        self.props("S-override-false", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n  <PropertyGroup Condition=\"false\">\n    <RestoreLockedMode>false</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "pass")
+
+    def test_422_S_import_before(self):
+        # S-import-before [422-5] props/plain: an Import before the properties
+        self.props("S-import-before", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <Import Project=\"../shared.props\" />\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "pass")
+
+    def test_422_S_import_sdk(self):
+        # S-import-sdk [422-5] props/plain: an Sdk Import after
+        self.props("S-import-sdk", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n  <Import Project=\"Sdk.targets\" Sdk=\"Microsoft.NET.Sdk\" />\n</Project>\n", "pass")
+
+    def test_422_S_case(self):
+        # S-case [422-5] props/case: True in another case
+        self.props("S-case", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>True</RestorePackagesWithLockFile>\n    <RestoreLockedMode>TRUE</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "pass")
+
+    def test_422_S_value_ws(self):
+        # S-value-ws [422-5] props/line-break: the value on its own indented line
+        self.props("S-value-ws", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>\n      true\n    </RestorePackagesWithLockFile>\n    <RestoreLockedMode>\ttrue </RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "pass")
+
+    def test_422_S_value_prop(self):
+        # S-value-prop [422-5] props/plain: a property reference as the value
+        self.props("S-value-prop", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>$(Locked)</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "fail:RestoreLockedMode -: not true")
+
+    def test_422_S_cdata(self):
+        # S-cdata [422-5] props/cdata: value in CDATA
+        self.props("S-cdata", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup>\n    <RestorePackagesWithLockFile><![CDATA[true]]></RestorePackagesWithLockFile>\n    <RestoreLockedMode><![CDATA[true]]></RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "pass")
+
+    def test_422_S_entity(self):
+        # S-entity [422-5] props/entity: value through an entity
+        self.props("S-entity", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>&#116;rue</RestorePackagesWithLockFile>\n    <RestoreLockedMode>tru&#x65;</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "pass")
+
+    def test_422_S_broken(self):
+        # S-broken [422-5] props/plain: not XML (unchanged)
+        self.props("S-broken", "<Project><PropertyGroup>", "fail:Directory.Build.props -: does not parse")
+
+    def test_422_every_corpus_row_is_embedded(self):
+        # Every row id of the card 422 corpus appears, quoted, in this file or in one of the three C# files.
+        self.assertTrue(CORPUS_422.is_file(), "missing " + CORPUS_422.as_posix())
+        ids = []
+        for line in CORPUS_422.read_text(encoding="utf-8").split("\n"):
+            if line and not line.startswith("#"):
+                ids.append(line.split("\t")[0])
+        self.assertEqual(len(ids), len(set(ids)), "duplicate row ids in the corpus")
+        embedded = "".join(p.read_text(encoding="utf-8") for p in EMBEDDED_422 if p.is_file())
+        missing = [i for i in ids if '"' + i + '"' not in embedded]
+        self.assertEqual([], missing, f"{len(missing)} of {len(ids)} corpus rows are not embedded")
+
+
+class Test422Pending(_Rows422, unittest.TestCase):
+    def test_422_Z_page(self):
+        # Z-page [422-1] page-licence/table-cell: docs/release/pre-publication-checks.md (today)
+        self.offline("Z-page", [], "pass", figures=True)
+
+    def test_422_E_xa_mit_off(self):
+        # E-xa-mit-off [422-2] page-licence/table-cell: card [E] offline half (the figures see a one-way change)
+        self.offline("E-xa-mit-off", [
+            ("| xunit.abstractions | 2.0.3 | Transitive | Apache-2.0 | licence URL | generated specs (test-only) | ok |", "| xunit.abstractions | 2.0.3 | Transitive | MIT | licence URL | generated specs (test-only) | ok |"),
+        ], "fail:MIT: page says 21, rows give 22 && Apache-2.0: page says 9, rows give 8", figures=True)
+
+    def test_422_E_swap_off(self):
+        # E-swap-off [422-2] page-licence/table-cell: card [E]: the swap keeps every offline figure, so only the network sees it
+        self.offline("E-swap-off", [
+            ("| xunit.abstractions | 2.0.3 | Transitive | Apache-2.0 | licence URL | generated specs (test-only) | ok |", "| xunit.abstractions | 2.0.3 | Transitive | MIT | licence URL | generated specs (test-only) | ok |"),
+            ("| System.Reflection.Metadata | 1.6.0 | Transitive | MIT | packaged licence file | generated specs (test-only) | ok |", "| System.Reflection.Metadata | 1.6.0 | Transitive | Apache-2.0 | packaged licence file | generated specs (test-only) | ok |"),
+        ], "pass", figures=True)
+
+    def test_422_L_gpl_flagged(self):
+        # L-gpl-flagged [422-3] page-licence/table-cell: 369 B3-flagged near miss: flagged, the none line stays, so the figures and none line catch it
+        self.offline("L-gpl-flagged", [
+            ("| FluentValidation | 12.1.1 | Transitive | Apache-2.0 | nuspec licence expression | generated service and generated specs | ok |", "| FluentValidation | 12.1.1 | Transitive | GPL-2.0 | nuspec licence expression | generated service and generated specs | needs review |"),
+        ], "fail:Apache-2.0: page says 9, rows give 8", figures=True)
+
+    def test_422_L_indent_dup(self):
+        # L-indent-dup [422-3] page-licence/leading-ws: a 2-space indented row still renders as a row (changed: V0 does not see it)
+        self.offline("L-indent-dup", [
+            ("| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |", "| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |\n  | FastEndpoints | 8.3.0 | Direct | GPL-3.0 | nuspec licence expression | generated service and generated specs | ok |"),
+        ], "fail:FastEndpoints 8.3.0: appears more than once", figures=False)
+
+    def test_422_L_indent3_dup(self):
+        # L-indent3-dup [422-3] page-licence/leading-ws: 3 spaces still a row
+        self.offline("L-indent3-dup", [
+            ("| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |", "| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |\n   | FastEndpoints | 8.3.0 | Direct | GPL-3.0 | nuspec licence expression | generated service and generated specs | ok |"),
+        ], "fail:FastEndpoints 8.3.0: appears more than once", figures=False)
+
+    def test_422_M_add(self):
+        # M-add [422-3] page-figure/digits: card [M]: a package added to a lockfile and the rows, no figure updated
+        self.offline("M-add", [
+            "@lock Orders.Specs add Serilog 4.0.0 Transitive",
+            ("| Newtonsoft.Json | 13.0.1 | Transitive | MIT | nuspec licence expression | generated specs (test-only) | ok |", "| Newtonsoft.Json | 13.0.1 | Transitive | MIT | nuspec licence expression | generated specs (test-only) | ok |\n| Serilog | 4.0.0 | Transitive | MIT | nuspec licence expression | generated specs (test-only) | ok |"),
+        ], "fail:packages: page says 30, rows give 31 && Orders.Specs packages: page says 14, rows give 15 && transitive: page says 26, rows give 27 && MIT: page says 21, rows give 22", figures=True)
+
+    def test_422_B_total(self):
+        # B-total [422-3] page-figure/digits: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-total", [
+            ("30 packages:", "31 packages:"),
+        ], "fail:packages: page says 31, rows give 30", figures=True)
+
+    def test_422_B_api(self):
+        # B-api [422-3] page-figure/digits: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-api", [
+            ("restores 16", "restores 17"),
+        ], "fail:Orders.Api packages: page says 17, rows give 16", figures=True)
+
+    def test_422_B_specs(self):
+        # B-specs [422-3] page-figure/digits: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-specs", [
+            ("add 14 test-only", "add 13 test-only"),
+        ], "fail:Orders.Specs packages: page says 13, rows give 14", figures=True)
+
+    def test_422_B_direct(self):
+        # B-direct [422-3] page-figure/digits: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-direct", [
+            ("4 are direct", "5 are direct"),
+        ], "fail:direct: page says 5, rows give 4", figures=True)
+
+    def test_422_B_trans(self):
+        # B-trans [422-3] page-figure/digits: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-trans", [
+            ("26 transitive", "25 transitive"),
+        ], "fail:transitive: page says 25, rows give 26", figures=True)
+
+    def test_422_B_mit(self):
+        # B-mit [422-3] page-figure/digits: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-mit", [
+            ("21 are MIT and 9 are Apache-2.0", "22 are MIT and 9 are Apache-2.0"),
+        ], "fail:MIT: page says 22, rows give 21", figures=True)
+
+    def test_422_B_apache(self):
+        # B-apache [422-3] page-figure/digits: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-apache", [
+            ("21 are MIT and 9 are Apache-2.0", "21 are MIT and 8 are Apache-2.0"),
+        ], "fail:Apache-2.0: page says 8, rows give 9", figures=True)
+
+    def test_422_B_notice(self):
+        # B-notice [422-3] page-figure/digits: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-notice", [
+            ("12 packages also bundle a third-party notice file", "13 packages also bundle a third-party notice file"),
+        ], "fail:notice files: page says 13, rows give 12", figures=True)
+
+    def test_422_B_noexpr(self):
+        # B-noexpr [422-3] page-figure/digits: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-noexpr", [
+            ("No licence expression in the nuspec (2 packages; the other 28 have one)", "No licence expression in the nuspec (3 packages; the other 28 have one)"),
+        ], "fail:no licence expression: page says 3, rows give 2", figures=True)
+
+    def test_422_B_withexpr(self):
+        # B-withexpr [422-3] page-figure/digits: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-withexpr", [
+            ("No licence expression in the nuspec (2 packages; the other 28 have one)", "No licence expression in the nuspec (2 packages; the other 27 have one)"),
+        ], "fail:with a licence expression: page says 27, rows give 28", figures=True)
+
+    def test_422_B_acc(self):
+        # B-acc [422-3] page-figure/digits: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-acc", [
+            ("Licence acceptance required (4 packages,", "Licence acceptance required (5 packages,"),
+        ], "fail:licence acceptance: page says 5, rows give 4", figures=True)
+
+    def test_422_B_acc_word(self):
+        # B-acc-word [422-3] page-figure/words: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-acc-word", [
+            ("the four Microsoft test packages", "the five Microsoft test packages"),
+        ], "fail:acceptance packages recommended: page says five, rows give 4", figures=True)
+
+    def test_422_B_group(self):
+        # B-group [422-3] page-figure/words: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-group", [
+            ("the eight Microsoft.Extensions packages", "the seven Microsoft.Extensions packages"),
+        ], "fail:notice group Microsoft.Extensions: page says seven, rows give 8 && notice files: page says 12, rows give 11", figures=True)
+
+    def test_422_B_rec_total(self):
+        # B-rec-total [422-3] page-figure/digits: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-rec-total", [
+            ("accept all 30 restored packages (21 MIT, 9 Apache-2.0, none marked needs review)", "accept all 29 restored packages (21 MIT, 9 Apache-2.0, none marked needs review)"),
+        ], "fail:recommended packages: page says 29, rows give 30", figures=True)
+
+    def test_422_B_rec_mit(self):
+        # B-rec-mit [422-3] page-figure/digits: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-rec-mit", [
+            ("accept all 30 restored packages (21 MIT, 9 Apache-2.0, none marked needs review)", "accept all 30 restored packages (20 MIT, 9 Apache-2.0, none marked needs review)"),
+        ], "fail:recommended MIT: page says 20, rows give 21", figures=True)
+
+    def test_422_B_rec_apache(self):
+        # B-rec-apache [422-3] page-figure/digits: card [B]: figure off by one; docs/release/pre-publication-checks.md
+        self.offline("B-rec-apache", [
+            ("accept all 30 restored packages (21 MIT, 9 Apache-2.0, none marked needs review)", "accept all 30 restored packages (21 MIT, 10 Apache-2.0, none marked needs review)"),
+        ], "fail:recommended Apache-2.0: page says 10, rows give 9", figures=True)
+
+    def test_422_B_acc_named(self):
+        # B-acc-named [422-3] page-figure/digits: the acceptance count is the packages the bullet names
+        self.offline("B-acc-named", [
+            ("Microsoft.TestPlatform.ObjectModel 17.11.1 and ", ""),
+        ], "fail:licence acceptance: page says 4, rows give 3", figures=True)
+
+    def test_422_W_words(self):
+        # W-words [422-3] page-figure/words: prose number as a word
+        self.offline("W-words", [
+            ("30 packages:", "Thirty packages:"),
+        ], "pass", figures=True)
+
+    def test_422_W_words_hyphen(self):
+        # W-words-hyphen [422-3] page-figure/words: compound number word
+        self.offline("W-words-hyphen", [
+            ("21 are MIT and 9 are Apache-2.0", "twenty-one are MIT and nine are Apache-2.0"),
+        ], "pass", figures=True)
+
+    def test_422_W_words_wrong(self):
+        # W-words-wrong [422-3] page-figure/words: word, off by one
+        self.offline("W-words-wrong", [
+            ("30 packages:", "thirty-one packages:"),
+        ], "fail:packages: page says thirty-one, rows give 30", figures=True)
+
+    def test_422_W_bold(self):
+        # W-bold [422-3] page-figure/bold: bold figure
+        self.offline("W-bold", [
+            ("30 packages:", "**30** packages:"),
+        ], "pass", figures=True)
+
+    def test_422_W_bold_wrong(self):
+        # W-bold-wrong [422-3] page-figure/bold: bold figure off by one
+        self.offline("W-bold-wrong", [
+            ("30 packages:", "**31** packages:"),
+        ], "fail:packages: page says 31, rows give 30", figures=True)
+
+    def test_422_W_code(self):
+        # W-code [422-3] page-figure/code-span: figure in a code span
+        self.offline("W-code", [
+            ("restores 16", "restores `16`"),
+        ], "pass", figures=True)
+
+    def test_422_W_code_wrong(self):
+        # W-code-wrong [422-3] page-figure/code-span: code span off by one
+        self.offline("W-code-wrong", [
+            ("restores 16", "restores `17`"),
+        ], "fail:Orders.Api packages: page says 17, rows give 16", figures=True)
+
+    def test_422_W_wrapped(self):
+        # W-wrapped [422-3] page-figure/line-break: the figures paragraph wrapped at other words
+        self.offline("W-wrapped", [
+            ("30 packages: the generated service (Orders.Api) restores 16, and the generated specs (Orders.Specs) add 14 test-only packages; 4 are direct and 26 transitive.", "30\npackages: the generated service (Orders.Api) restores\n16, and the generated specs (Orders.Specs) add 14 test-only packages; 4 are\ndirect and 26 transitive."),
+        ], "pass", figures=True)
+
+    def test_422_W_wrapped_wrong(self):
+        # W-wrapped-wrong [422-3] page-figure/line-break: wrapped and off by one
+        self.offline("W-wrapped-wrong", [
+            ("30 packages: the generated service (Orders.Api) restores 16, and the generated specs (Orders.Specs) add 14 test-only packages; 4 are direct and 26 transitive.", "30 packages: the generated service (Orders.Api) restores 16, and the generated specs (Orders.Specs) add 14 test-only packages; 5\nare direct and 26 transitive."),
+        ], "fail:direct: page says 5, rows give 4", figures=True)
+
+    def test_422_W_inner(self):
+        # W-inner [422-3] page-figure/inner-ws: double spaces and a tab between words
+        self.offline("W-inner", [
+            ("21 are MIT and 9 are Apache-2.0", "21  are\tMIT and 9  are Apache-2.0"),
+        ], "pass", figures=True)
+
+    def test_422_W_leading(self):
+        # W-leading [422-3] page-figure/leading-ws: the none-line bullet indented
+        self.offline("W-leading", [
+            ("- No package is outside", "  - No package is outside"),
+        ], "pass", figures=True)
+
+    def test_422_W_gone(self):
+        # W-gone [422-3] page-figure/digits: a figure reworded away (fail-closed)
+        self.offline("W-gone", [
+            ("21 are MIT and 9 are Apache-2.0", "most are MIT, the rest Apache-2.0"),
+        ], "fail:MIT: not found on the page", figures=True)
+
+    def test_422_W_dup_wrong(self):
+        # W-dup-wrong [422-3] page-figure/digits: the figure repeated, the second copy wrong
+        self.offline("W-dup-wrong", [
+            ("Recommendation: accept", "In short, 31 packages: the generated service and specs.\n\nRecommendation: accept"),
+        ], "fail:packages: page says 31, rows give 30", figures=True)
+
+    def test_422_W_notice_unknown(self):
+        # W-notice-unknown [422-3] page-figure/digits: a notice list item that names no row
+        self.offline("W-notice-unknown", [
+            ("(Microsoft.CodeCoverage, the eight", "(Microsoft.CodeCoverag, the eight"),
+        ], "fail:notice files: Microsoft.CodeCoverag is no row", figures=True)
+
+    def test_422_W_url(self):
+        # W-url [422-3] page-figure/code-span: the URL string (second review finding 2)
+        self.offline("W-url", [
+            ("xunit/master/license.txt", "xunit/main/license.txt"),
+        ], "fail:xunit.abstractions 2.0.3: page bullet does not cite the reviewed licence URL", figures=True)
+
+    def test_422_I_E5(self):
+        # I-E5 [422-4] tools/plain: 369 E5 near miss in the real Compiler project
+        self.tools("I-E5", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Compiler/Avowry.Compiler.csproj")
+
+    def test_422_I_order(self):
+        # I-order [422-4] tools/attr-order: card [I] attributes in the other order
+        self.tools("I-order", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference Version=\"13.0.1\" Include=\"Newtonsoft.Json\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Compiler/Avowry.Compiler.csproj")
+
+    def test_422_I_child(self):
+        # I-child [422-4] tools/child-element: card [I] version as a child element
+        self.tools("I-child", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft.Json\">\n      <Version>13.0.1</Version>\n    </PackageReference>\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Compiler/Avowry.Compiler.csproj")
+
+    def test_422_I_child_cdata(self):
+        # I-child-cdata [422-4] tools/cdata: child Version in CDATA
+        self.tools("I-child-cdata", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft.Json\"><Version><![CDATA[13.0.1]]></Version></PackageReference>\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Compiler/Avowry.Compiler.csproj")
+
+    def test_422_I_entity(self):
+        # I-entity [422-4] tools/entity: an entity in the id
+        self.tools("I-entity", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft&#46;Json\" Version=\"13&#x2E;0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Compiler/Avowry.Compiler.csproj")
+
+    def test_422_I_single(self):
+        # I-single [422-4] tools/single-quote: single-quoted attributes
+        self.tools("I-single", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference Include='Newtonsoft.Json' Version='13.0.1' />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Compiler/Avowry.Compiler.csproj")
+
+    def test_422_I_update(self):
+        # I-update [422-4] tools/update: card [I] Update=
+        self.tools("I-update", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference Update=\"Newtonsoft.Json\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in")
+
+    def test_422_I_update_child(self):
+        # I-update-child [422-4] tools/update: Update= with a child Version
+        self.tools("I-update-child", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference Update=\"Newtonsoft.Json\"><Version>13.0.1</Version></PackageReference>\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Compiler/Avowry.Compiler.csproj")
+
+    def test_422_I_list(self):
+        # I-list [422-4] tools/plain: an item list a;b
+        self.tools("I-list", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft.Json;Serilog\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in && Serilog 13.0.1: PackageReference in")
+
+    def test_422_I_lower(self):
+        # I-lower [422-4] tools/case: item type in another case (MSBuild item types ignore case)
+        self.tools("I-lower", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <packagereference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Compiler/Avowry.Compiler.csproj")
+
+    def test_422_I_multiline(self):
+        # I-multiline [422-4] tools/line-break: attributes on their own lines
+        self.tools("I-multiline", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference\n        Include=\"Newtonsoft.Json\"\n        Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Compiler/Avowry.Compiler.csproj")
+
+    def test_422_I_inner_ws(self):
+        # I-inner-ws [422-4] tools/inner-ws: spaces round = and two spaces between attributes
+        self.tools("I-inner-ws", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference  Include = \"Newtonsoft.Json\"   Version = \"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Compiler/Avowry.Compiler.csproj")
+
+    def test_422_I_value_ws(self):
+        # I-value-ws [422-4] tools/leading-ws: leading and trailing spaces in the values
+        self.tools("I-value-ws", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference Include=\" Newtonsoft.Json \" Version=\" 13.0.1 \" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Compiler/Avowry.Compiler.csproj")
+
+    def test_422_I_tab(self):
+        # I-tab [422-4] tools/inner-ws: tab between attributes
+        self.tools("I-tab", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n\t<PackageReference\tInclude=\"Newtonsoft.Json\"\tVersion=\"13.0.1\"/>\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Compiler/Avowry.Compiler.csproj")
+
+    def test_422_I_comment(self):
+        # I-comment [422-4] tools/comment: a commented-out reference restores nothing (changed: V0 fails it)
+        self.tools("I-comment", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <!-- <PackageReference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" /> -->\n  </ItemGroup>\n</Project>\n",
+        }, "pass")
+
+    def test_422_I_cdata_text(self):
+        # I-cdata-text [422-4] tools/cdata: reference text inside a CDATA property value is not an item (changed)
+        self.tools("I-cdata-text", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n    <Notes><![CDATA[<PackageReference Include=\"X\" Version=\"1.0.0\" />]]></Notes>\n  </PropertyGroup>\n</Project>\n",
+        }, "pass")
+
+    def test_422_I_remove(self):
+        # I-remove [422-4] tools/plain: Remove= takes a package away
+        self.tools("I-remove", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference Remove=\"Newtonsoft.Json\" />\n  </ItemGroup>\n</Project>\n",
+        }, "pass")
+
+    def test_422_I_noversion(self):
+        # I-noversion [422-4] tools/plain: central version management: no Version
+        self.tools("I-noversion", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft.Json\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json -: PackageReference in")
+
+    def test_422_I_override(self):
+        # I-override [422-4] tools/attr-order: VersionOverride
+        self.tools("I-override", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft.Json\" VersionOverride=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Compiler/Avowry.Compiler.csproj")
+
+    def test_422_I_cond_false(self):
+        # I-cond-false [422-4] tools/condition-false: a reference under a false Condition is still reported (strict; ruling R-2)
+        self.tools("I-cond-false", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup Condition=\"false\">\n    <PackageReference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Compiler/Avowry.Compiler.csproj")
+
+    def test_422_I_download(self):
+        # I-download [422-4] tools/plain: PackageDownload restores a package too
+        self.tools("I-download", {
+            "src/Avowry.Cli/Avowry.Cli.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <ItemGroup>\n    <ProjectReference Include=\"../Avowry.Compiler/Avowry.Compiler.csproj\" />\n    <ProjectReference Include=\"../Avowry.Adapters.CSharp/Avowry.Adapters.CSharp.csproj\" />\n    <PackageDownload Include=\"Newtonsoft.Json\" Version=\"[13.0.1]\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json [13.0.1]: PackageDownload in src/Avowry.Cli/Avowry.Cli.csproj")
+
+    def test_422_I_root_props(self):
+        # I-root-props [422-4] tools/directory-build-props: card [I] root Directory.Build.props (real file plus a reference)
+        self.tools("I-root-props", {
+            "Directory.Build.props": "<Project>\n  <PropertyGroup>\n    <TargetFramework>net8.0</TargetFramework>\n    <Nullable>enable</Nullable>\n    <ImplicitUsings>enable</ImplicitUsings>\n    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>\n  </PropertyGroup>\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in Directory.Build.props")
+
+    def test_422_I_root_targets(self):
+        # I-root-targets [422-4] tools/directory-build-targets: card [I] root Directory.Build.targets
+        self.tools("I-root-targets", {
+            "Directory.Build.targets": "<Project>\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in Directory.Build.targets")
+
+    def test_422_I_src_props(self):
+        # I-src-props [422-4] tools/directory-build-props: a nearer Directory.Build.props
+        self.tools("I-src-props", {
+            "src/Directory.Build.props": "<Project>\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Directory.Build.props")
+
+    def test_422_I_global(self):
+        # I-global [422-4] tools/directory-packages-props: GlobalPackageReference in central package management
+        self.tools("I-global", {
+            "Directory.Packages.props": "<Project>\n  <ItemGroup>\n    <GlobalPackageReference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: GlobalPackageReference in Directory.Packages.props")
+
+    def test_422_I_pkgversion(self):
+        # I-pkgversion [422-4] tools/directory-packages-props: PackageVersion alone restores nothing
+        self.tools("I-pkgversion", {
+            "Directory.Packages.props": "<Project>\n  <ItemGroup>\n    <PackageVersion Include=\"Newtonsoft.Json\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "pass")
+
+    def test_422_I_reference_props(self):
+        # I-reference-props [422-4] tools/directory-build-props: reference/ props are not on the tool's path
+        self.tools("I-reference-props", {
+            "reference/Directory.Build.targets": "<Project>\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "pass")
+
+    def test_422_I_projref_single(self):
+        # I-projref-single [422-4] tools/single-quote: a ProjectReference in single quotes
+        self.tools("I-projref-single", {
+            "src/Avowry.Cli/Avowry.Cli.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <ItemGroup>\n    <ProjectReference Include=\"../Avowry.Compiler/Avowry.Compiler.csproj\" />\n    <ProjectReference Include='../Avowry.Extra/Avowry.Extra.csproj' />\n  </ItemGroup>\n</Project>\n",
+            "src/Avowry.Extra/Avowry.Extra.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Extra/Avowry.Extra.csproj")
+
+    def test_422_I_projref_backslash(self):
+        # I-projref-backslash [422-4] tools/plain: a ProjectReference with backslashes (Windows form)
+        self.tools("I-projref-backslash", {
+            "src/Avowry.Cli/Avowry.Cli.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <ItemGroup>\n    <ProjectReference Include=\"../Avowry.Compiler/Avowry.Compiler.csproj\" />\n    <ProjectReference Include=\"..\\Avowry.Extra\\Avowry.Extra.csproj\" />\n  </ItemGroup>\n</Project>\n",
+            "src/Avowry.Extra/Avowry.Extra.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Extra/Avowry.Extra.csproj")
+
+    def test_422_I_projref_order(self):
+        # I-projref-order [422-4] tools/attr-order: a ProjectReference with another attribute first
+        self.tools("I-projref-order", {
+            "src/Avowry.Cli/Avowry.Cli.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <ItemGroup>\n    <ProjectReference Include=\"../Avowry.Compiler/Avowry.Compiler.csproj\" />\n    <ProjectReference Condition=\"true\" Include=\"../Avowry.Extra/Avowry.Extra.csproj\" />\n  </ItemGroup>\n</Project>\n",
+            "src/Avowry.Extra/Avowry.Extra.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Extra/Avowry.Extra.csproj")
+
+    def test_422_I_projref_plain(self):
+        # I-projref-plain [422-4] tools/plain: 369 closure near miss
+        self.tools("I-projref-plain", {
+            "src/Avowry.Cli/Avowry.Cli.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <ItemGroup>\n    <ProjectReference Include=\"../Avowry.Compiler/Avowry.Compiler.csproj\" />\n    <ProjectReference Include=\"../Avowry.Extra/Avowry.Extra.csproj\" />\n  </ItemGroup>\n</Project>\n",
+            "src/Avowry.Extra/Avowry.Extra.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <ItemGroup>\n    <PackageReference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" />\n  </ItemGroup>\n</Project>\n",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in src/Avowry.Extra/Avowry.Extra.csproj")
+
+    def test_422_I_import(self):
+        # I-import [422-4] tools/plain: a literal Import
+        self.tools("I-import", {
+            "src/Avowry.Cli/Avowry.Cli.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <Import Project=\"../../build/packages.props\" />\n  <ItemGroup>\n    <ProjectReference Include=\"../Avowry.Compiler/Avowry.Compiler.csproj\" />\n  </ItemGroup>\n</Project>\n",
+            "build/packages.props": "<Project><ItemGroup><PackageReference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" /></ItemGroup></Project>",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in build/packages.props")
+
+    def test_422_I_import_thisdir(self):
+        # I-import-thisdir [422-4] tools/plain: an Import through $(MSBuildThisFileDirectory)
+        self.tools("I-import-thisdir", {
+            "Directory.Build.props": "<Project>\n  <PropertyGroup>\n    <TargetFramework>net8.0</TargetFramework>\n    <Nullable>enable</Nullable>\n    <ImplicitUsings>enable</ImplicitUsings>\n    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>\n  </PropertyGroup>\n  <Import Project=\"$(MSBuildThisFileDirectory)build/packages.props\" />\n</Project>\n",
+            "build/packages.props": "<Project><ItemGroup><PackageReference Include=\"Newtonsoft.Json\" Version=\"13.0.1\" /></ItemGroup></Project>",
+        }, "fail:Newtonsoft.Json 13.0.1: PackageReference in build/packages.props")
+
+    def test_422_I_import_unknown(self):
+        # I-import-unknown [422-4] tools/plain: an Import the check cannot resolve (fail-closed)
+        self.tools("I-import-unknown", {
+            "Directory.Build.props": "<Project>\n  <PropertyGroup>\n    <TargetFramework>net8.0</TargetFramework>\n    <Nullable>enable</Nullable>\n    <ImplicitUsings>enable</ImplicitUsings>\n    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>\n  </PropertyGroup>\n  <Import Project=\"$(SharedProps)/packages.props\" />\n</Project>\n",
+        }, "fail:Directory.Build.props -: Import $(SharedProps)/packages.props cannot be followed")
+
+    def test_422_I_import_sdk(self):
+        # I-import-sdk [422-4] tools/plain: an Sdk Import is not followed
+        self.tools("I-import-sdk", {
+            "src/Avowry.Cli/Avowry.Cli.csproj": "<Project>\n  <Import Project=\"Sdk.props\" Sdk=\"Microsoft.NET.Sdk\" />\n  <ItemGroup>\n    <ProjectReference Include=\"../Avowry.Compiler/Avowry.Compiler.csproj\" />\n  </ItemGroup>\n  <Import Project=\"Sdk.targets\" Sdk=\"Microsoft.NET.Sdk\" />\n</Project>\n",
+        }, "pass")
+
+    def test_422_I_broken(self):
+        # I-broken [422-4] tools/plain: a tool project that is not XML (fail-closed)
+        self.tools("I-broken", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project><ItemGroup>\n",
+        }, "fail:src/Avowry.Compiler/Avowry.Compiler.csproj -: does not parse as MSBuild XML")
+
+    def test_422_I_framework(self):
+        # I-framework [422-4] tools/plain: FrameworkReference is not a package
+        self.tools("I-framework", {
+            "src/Avowry.Compiler/Avowry.Compiler.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup>\n    <AssemblyName>Avowry.Compiler</AssemblyName>\n    <RootNamespace>Avowry.Compiler</RootNamespace>\n  </PropertyGroup>\n  <ItemGroup>\n    <FrameworkReference Include=\"Microsoft.AspNetCore.App\" />\n  </ItemGroup>\n</Project>\n",
+        }, "pass")
+
+    def test_422_S_false(self):
+        # S-false [422-5] props/condition-false: card [S]
+        self.props("S-false", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup Condition=\"false\">\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "fail:RestorePackagesWithLockFile -: not true && RestoreLockedMode -: not true (set only under a false Condition)")
+
+    def test_422_S_false_compare(self):
+        # S-false-compare [422-5] props/condition-false: card [S] a false comparison
+        self.props("S-false-compare", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup Condition=\"'a' == 'b'\">\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "fail:RestorePackagesWithLockFile -: not true && RestoreLockedMode -: not true")
+
+    def test_422_S_false_ne(self):
+        # S-false-ne [422-5] props/condition-false: a false !=
+        self.props("S-false-ne", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup Condition=\"'x' != 'x'\">\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "fail:RestorePackagesWithLockFile -: not true && RestoreLockedMode -: not true")
+
+    def test_422_S_false_single(self):
+        # S-false-single [422-5] props/single-quote: Condition attribute in single quotes
+        self.props("S-false-single", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup Condition='false'>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "fail:RestorePackagesWithLockFile -: not true && RestoreLockedMode -: not true")
+
+    def test_422_S_unknown(self):
+        # S-unknown [422-5] props/condition-unknown: a real MSBuild default idiom
+        self.props("S-unknown", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup Condition=\"'$(RestoreLockedMode)' == ''\">\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "fail:RestorePackagesWithLockFile -: not true && RestoreLockedMode -: not true (set under a Condition the check cannot decide)")
+
+    def test_422_S_unknown_and(self):
+        # S-unknown-and [422-5] props/condition-unknown: a compound Condition
+        self.props("S-unknown-and", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup Condition=\"'a' == 'a' and 'b' == 'b'\">\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "fail:RestorePackagesWithLockFile -: not true && RestoreLockedMode -: not true")
+
+    def test_422_S_elem_false(self):
+        # S-elem-false [422-5] props/condition-false: a false Condition on one property
+        self.props("S-elem-false", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode Condition=\"false\">true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "fail:RestoreLockedMode -: not true")
+
+    def test_422_S_override(self):
+        # S-override [422-5] props/plain: a later group sets it false (last assignment wins; changed)
+        self.props("S-override", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n  <PropertyGroup>\n    <RestoreLockedMode>false</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "fail:RestoreLockedMode -: not true (last set to false)")
+
+    def test_422_S_override_unknown(self):
+        # S-override-unknown [422-5] props/condition-unknown: a later group under an unknown Condition
+        self.props("S-override-unknown", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n  <PropertyGroup Condition=\"'$(CI)' == 'true'\">\n    <RestoreLockedMode>false</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "fail:RestoreLockedMode -: not true")
+
+    def test_422_S_target(self):
+        # S-target [422-5] props/plain: properties inside a Target are not evaluation properties (changed)
+        self.props("S-target", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <Target Name=\"X\">\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n  </Target>\n</Project>\n", "fail:RestorePackagesWithLockFile -: not true && RestoreLockedMode -: not true")
+
+    def test_422_S_choose(self):
+        # S-choose [422-5] props/condition-unknown: inside Choose/When (changed)
+        self.props("S-choose", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <Choose>\n    <When Condition=\"true\">\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n    </When>\n  </Choose>\n</Project>\n", "fail:RestorePackagesWithLockFile -: not true && RestoreLockedMode -: not true")
+
+    def test_422_S_import_after(self):
+        # S-import-after [422-5] props/plain: an Import after the properties
+        self.props("S-import-after", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n  <Import Project=\"../shared.props\" />\n</Project>\n", "fail:RestorePackagesWithLockFile -: not true && RestoreLockedMode -: not true (a later Import may change it)")
+
+    def test_422_S_comment(self):
+        # S-comment [422-5] props/comment: commented-out properties (unchanged)
+        self.props("S-comment", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <!--\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n  -->\n</Project>\n", "fail:RestorePackagesWithLockFile -: not true && RestoreLockedMode -: not true (never set)")
+
+    def test_422_S_cond_entity(self):
+        # S-cond-entity [422-5] props/entity: Condition written with entities (&apos;a&apos;==&apos;b&apos;)
+        self.props("S-cond-entity", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup Condition=\"&apos;a&apos;==&apos;b&apos;\">\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n    <RestoreLockedMode>true</RestoreLockedMode>\n  </PropertyGroup>\n</Project>\n", "fail:RestorePackagesWithLockFile -: not true && RestoreLockedMode -: not true")
+
+    def test_422_S_missing(self):
+        # S-missing [422-5] props/plain: one property absent
+        self.props("S-missing", "<Project>\n  <!-- Stops inheritance of the repo root props: this folder mimics standalone generated output. -->\n  <PropertyGroup>\n    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>\n  </PropertyGroup>\n</Project>\n", "fail:RestoreLockedMode -: not true (never set)")
+
+    def test_422_O_shallow(self):
+        # O-shallow [422-6] restore/plain: card [O] a shallow checkout reports the skip
+        self.shallow("O-shallow", shallow=True, hash_present=True, note=True)
+
+    def test_422_O_deep(self):
+        # O-deep [422-6] restore/plain: a full checkout runs the check
+        self.shallow("O-deep", shallow=False, hash_present=True, note=False)
+
+    def test_422_O_shallow_nohash(self):
+        # O-shallow-nohash [422-6] restore/plain: no commit on the page: nothing to skip (L5 meta fails instead)
+        self.shallow("O-shallow-nohash", shallow=True, hash_present=False, note=False)
+
+
 if __name__ == "__main__":
     unittest.main()

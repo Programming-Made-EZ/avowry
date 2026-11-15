@@ -124,6 +124,242 @@ public class RestoredPackageLicencesLockedRestore
         Assert.True(namedAcceptance.SetEquals(acceptanceTrue), DescribeSet("acceptance set", acceptanceTrue, namedAcceptance));
     }
 
+    // ---- Card 422 red (task-force role: red) --------------------------------------------------------------------
+    // Offline rows for [E] (the licence VALUES) and [O] (the locked-restore outcome). They read the real page and fixture
+    // evidence, never the network. They call two pure helpers that do not exist yet: RestoredLicenceChecks.LicenceValueFailures
+    // and RestoredLicenceChecks.RestoreOutcome, stubbed in RestoredPackageLicences422Stubs.cs (they throw NotImplementedException
+    // until the green replaces them). Every row below is Pending for that reason.
+
+    private sealed record LicenceRow422((string Old, string New)[] Edits, (string Id, string Version, string Field, string Value)[] Evidence, string Expected);
+
+    private sealed record RestoreRow422(string Kind, int ExitCode, int RestoredCount, bool TimedOut, string Output, string Expected);
+
+    // The nuspec facts of the 30 restored packages (expression, licenseUrl, licence files), read once from the local package folder.
+    private static Dictionary<string, PackageEvidence> Evidence422() => new()
+    {
+            ["FastEndpoints 8.3.0"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["FastEndpoints.Attributes 8.3.0"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["FastEndpoints.Core 8.3.0"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["FastEndpoints.JobQueues 8.3.0"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["FastEndpoints.Messaging 8.3.0"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["FastEndpoints.Messaging.Core 8.3.0"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["FluentValidation 12.1.1"] = new("Apache-2.0", "https://licenses.nuget.org/Apache-2.0", new Dictionary<string, string> {  }),
+            ["Microsoft.CodeCoverage 17.11.1"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["Microsoft.Extensions.Configuration.Abstractions 10.0.11"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["Microsoft.Extensions.DependencyInjection.Abstractions 10.0.11"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["Microsoft.Extensions.Diagnostics.Abstractions 10.0.11"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["Microsoft.Extensions.FileProviders.Abstractions 10.0.11"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["Microsoft.Extensions.Hosting.Abstractions 10.0.11"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["Microsoft.Extensions.Logging.Abstractions 10.0.11"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["Microsoft.Extensions.Options 10.0.11"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["Microsoft.Extensions.Primitives 10.0.11"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["Microsoft.NET.Test.Sdk 17.11.1"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["Microsoft.TestPlatform.ObjectModel 17.11.1"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["Microsoft.TestPlatform.TestHost 17.11.1"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["Newtonsoft.Json 13.0.1"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> { ["LICENSE.md"] = "The MIT License (MIT)\n\nCopyright (c) 2007 James Newton-King\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of\nthis software and associated documentation files (the \"Software\"), to deal in\nthe Software without restriction, including without limitation the rights to\nuse, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of\nthe Software, and to permit persons to whom the Software is furnished to do so,\nsubject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial port" }),
+            ["System.Diagnostics.DiagnosticSource 10.0.11"] = new("MIT", "https://licenses.nuget.org/MIT", new Dictionary<string, string> {  }),
+            ["System.Reflection.Metadata 1.6.0"] = new(null, "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT", new Dictionary<string, string> { ["LICENSE.TXT"] = "The MIT License (MIT)\n\nCopyright (c) .NET Foundation and Contributors\n\nAll rights reserved.\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included i" }),
+            ["xunit 2.9.2"] = new("Apache-2.0", "https://licenses.nuget.org/Apache-2.0", new Dictionary<string, string> {  }),
+            ["xunit.abstractions 2.0.3"] = new(null, "https://raw.githubusercontent.com/xunit/xunit/master/license.txt", new Dictionary<string, string> {  }),
+            ["xunit.analyzers 1.16.0"] = new("Apache-2.0", "https://licenses.nuget.org/Apache-2.0", new Dictionary<string, string> {  }),
+            ["xunit.assert 2.9.2"] = new("Apache-2.0", "https://licenses.nuget.org/Apache-2.0", new Dictionary<string, string> {  }),
+            ["xunit.core 2.9.2"] = new("Apache-2.0", "https://licenses.nuget.org/Apache-2.0", new Dictionary<string, string> {  }),
+            ["xunit.extensibility.core 2.9.2"] = new("Apache-2.0", "https://licenses.nuget.org/Apache-2.0", new Dictionary<string, string> {  }),
+            ["xunit.extensibility.execution 2.9.2"] = new("Apache-2.0", "https://licenses.nuget.org/Apache-2.0", new Dictionary<string, string> {  }),
+            ["xunit.runner.visualstudio 2.8.2"] = new("Apache-2.0", "https://licenses.nuget.org/Apache-2.0", new Dictionary<string, string> {  }),
+    };
+
+    private static readonly Dictionary<string, LicenceRow422> LicenceRows422 = new()
+    {
+        ["Z-licence"] = new(
+            [],
+            [],
+            "pass"),
+        ["E-xa-mit"] = new(
+            [("| xunit.abstractions | 2.0.3 | Transitive | Apache-2.0 | licence URL | generated specs (test-only) | ok |", "| xunit.abstractions | 2.0.3 | Transitive | MIT | licence URL | generated specs (test-only) | ok |")],
+            [],
+            "fail:xunit.abstractions 2.0.3: licence MIT but the reviewed licence URL says Apache-2.0"),
+        ["E-srm-apache"] = new(
+            [("| System.Reflection.Metadata | 1.6.0 | Transitive | MIT | packaged licence file | generated specs (test-only) | ok |", "| System.Reflection.Metadata | 1.6.0 | Transitive | Apache-2.0 | packaged licence file | generated specs (test-only) | ok |")],
+            [],
+            "fail:System.Reflection.Metadata 1.6.0: licence Apache-2.0 but the packaged licence file says MIT"),
+        ["E-swap"] = new(
+            [("| xunit.abstractions | 2.0.3 | Transitive | Apache-2.0 | licence URL | generated specs (test-only) | ok |", "| xunit.abstractions | 2.0.3 | Transitive | MIT | licence URL | generated specs (test-only) | ok |"), ("| System.Reflection.Metadata | 1.6.0 | Transitive | MIT | packaged licence file | generated specs (test-only) | ok |", "| System.Reflection.Metadata | 1.6.0 | Transitive | Apache-2.0 | packaged licence file | generated specs (test-only) | ok |")],
+            [],
+            "fail:xunit.abstractions 2.0.3: licence MIT but && System.Reflection.Metadata 1.6.0: licence Apache-2.0 but"),
+        ["E-expr-swap"] = new(
+            [("| FastEndpoints | 8.3.0 | Direct | MIT | nuspec licence expression | generated service and generated specs | ok |", "| FastEndpoints | 8.3.0 | Direct | Apache-2.0 | nuspec licence expression | generated service and generated specs | ok |"), ("| FluentValidation | 12.1.1 | Transitive | Apache-2.0 | nuspec licence expression | generated service and generated specs | ok |", "| FluentValidation | 12.1.1 | Transitive | MIT | nuspec licence expression | generated service and generated specs | ok |")],
+            [],
+            "fail:FastEndpoints 8.3.0: licence Apache-2.0 but the nuspec expression is MIT && FluentValidation 12.1.1: licence MIT but the nuspec expression is Apache-2.0"),
+        ["E-url-unreviewed"] = new(
+            [],
+            [("xunit.abstractions", "2.0.3", "licence_url", "https://example.invalid/license.txt")],
+            "fail:xunit.abstractions 2.0.3: licence Apache-2.0 from licence URL https://example.invalid/license.txt, which is not a reviewed URL"),
+        ["E-url-missing"] = new(
+            [],
+            [("xunit.abstractions", "2.0.3", "licence_url", "")],
+            "fail:xunit.abstractions 2.0.3: licence Apache-2.0 from licence URL -, which is not a reviewed URL"),
+        ["E-file-apache"] = new(
+            [],
+            [("System.Reflection.Metadata", "1.6.0", "licence_files", "LICENSE.TXT=                                 Apache License\n                           Version 2.0, January 2004")],
+            "fail:System.Reflection.Metadata 1.6.0: licence MIT but the packaged licence file says Apache-2.0"),
+        ["E-file-none"] = new(
+            [],
+            [("System.Reflection.Metadata", "1.6.0", "licence_files", "")],
+            "fail:System.Reflection.Metadata 1.6.0: licence MIT but no packaged licence file names a known licence"),
+        ["E-file-wrapped"] = new(
+            [],
+            [("System.Reflection.Metadata", "1.6.0", "licence_files", "LICENSE.TXT=The MIT\nLicense (MIT)\n\nCopyright (c) .NET Foundation")],
+            "pass"),
+        ["E-file-leading"] = new(
+            [],
+            [("System.Reflection.Metadata", "1.6.0", "licence_files", "LICENSE.TXT=   \n\t  The MIT License (MIT)")],
+            "pass"),
+        ["E-file-newtonsoft"] = new(
+            [],
+            [("Newtonsoft.Json", "13.0.1", "licence_files", "LICENSE.md=Apache License Version 2.0")],
+            "pass"),
+    };
+
+    private static readonly Dictionary<string, RestoreRow422> RestoreRows422 = new()
+    {
+        ["Z-restore"] = new("restore", 0, 30, false,
+            "  Determining projects to restore...\n  Restored <temp>/avowry-x/Orders.Api/Orders.Api.csproj (in 1.21 sec).\n",
+            "pass"),
+        ["O-warm-warning"] = new("restore", 0, 30, false,
+            "<temp>/avowry-x/Orders.Api/Orders.Api.csproj : warning NU1801: Unable to load the service index for source https://api.nuget.org/v3/index.json.\n  Determining projects to restore...\n  Restored <temp>/avowry-x/Orders.Api/Orders.Api.csproj (in 1.21 sec).\n",
+            "pass"),
+        ["O-warm-nopkg"] = new("restore", 0, 0, false,
+            "<temp>/avowry-x/Orders.Api/Orders.Api.csproj : warning NU1801: Unable to load the service index for source https://api.nuget.org/v3/index.json.\n  All projects are up-to-date for restore.\n",
+            "pass"),
+        ["O-cold"] = new("restore", 1, 0, false,
+            "<temp>/avowry-x/Orders.Api/Orders.Api.csproj : error NU1301: Unable to load the service index for source https://api.nuget.org/v3/index.json.\n",
+            "network-missing"),
+        ["O-cold-host"] = new("restore", 1, 0, false,
+            "<temp>/avowry-x/Orders.Api/Orders.Api.csproj : error NU1301: Unable to load the service index for source https://api.nuget.org/v3/index.json.\n  No such host is known. (api.nuget.org:443)\n",
+            "network-missing"),
+        ["O-partial"] = new("restore", 1, 12, false,
+            "<temp>/avowry-x/Orders.Api/Orders.Api.csproj : error NU1301: Unable to load the service index for source https://api.nuget.org/v3/index.json.\n",
+            "fail"),
+        ["O-nu1102"] = new("restore", 1, 0, false,
+            "<temp>/avowry-x/Orders.Api/Orders.Api.csproj : error NU1102: Unable to find package FluentValidation with version (>= 12.1.1)\n  - Found 192 version(s) in nuget.org [ Nearest version: 12.1.1 ]\n",
+            "fail"),
+        ["O-other"] = new("restore", 1, 0, false,
+            "  error MSB1009: Project file does not exist.\n",
+            "fail"),
+        ["O-timeout"] = new("restore", -1, 0, true,
+            "<temp>/avowry-x/Orders.Api/Orders.Api.csproj : error NU1301: Unable to load the service index for source https://api.nuget.org/v3/index.json.\n",
+            "fail"),
+        ["O-crlf"] = new("restore", 1, 0, false,
+            "<temp>/avowry-x/Orders.Api/Orders.Api.csproj : error NU1301: Unable to load the service index for source https://api.nuget.org/v3/index.json.\r\n",
+            "network-missing"),
+        ["O-leading"] = new("restore", 1, 0, false,
+            "        <temp>/avowry-x/Orders.Api/Orders.Api.csproj : error nu1301: unable to load the service index for source https://api.nuget.org/v3/index.json.\n",
+            "network-missing"),
+        ["O-planted"] = new("restore-planted", 1, 0, false,
+            "<temp>/avowry-x/Orders.Api/Orders.Api.csproj : error NU1004: The package reference FastEndpoints version has changed from [8.2.0, ) to [8.3.0, ).The packages lock file is inconsistent with the project dependencies so restore can't be run in locked mode. Disable the RestoreLockedMode MSBuild property or pass an explicit --force-evaluate option to run restore to update the lock file.\n",
+            "mismatch"),
+        ["O-planted-offline"] = new("restore-planted", 1, 0, false,
+            "<temp>/avowry-x/Orders.Api/Orders.Api.csproj : error NU1301: Unable to load the service index for source https://api.nuget.org/v3/index.json.\n<temp>/avowry-x/Orders.Api/Orders.Api.csproj : error NU1004: The package reference FastEndpoints version has changed from [8.2.0, ) to [8.3.0, ).The packages lock file is inconsistent with the project dependencies so restore can't be run in locked mode. Disable the RestoreLockedMode MSBuild property or pass an explicit --force-evaluate option to run restore to update the lock file.\n",
+            "mismatch"),
+        ["O-planted-lower"] = new("restore-planted", 1, 0, false,
+            "<temp>/avowry-x/Orders.Api/Orders.Api.csproj : error nu1004: The package reference FastEndpoints version has changed from [8.2.0, ) to [8.3.0, ).The packages lock file is inconsistent with the project dependencies so restore can't be run in locked mode. Disable the RestoreLockedMode MSBuild property or pass an explicit --force-evaluate option to run restore to update the lock file.\n",
+            "mismatch"),
+        ["O-planted-wrapped"] = new("restore-planted", 1, 0, false,
+            "error\nNU1004:\n  The package reference FastEndpoints version has changed",
+            "mismatch"),
+        ["O-planted-nu1102"] = new("restore-planted", 1, 0, false,
+            "<temp>/avowry-x/Orders.Api/Orders.Api.csproj : error NU1102: Unable to find package FluentValidation with version (>= 12.1.1)\n  - Found 192 version(s) in nuget.org [ Nearest version: 12.1.1 ]\n",
+            "fail"),
+        ["O-planted-cold"] = new("restore-planted", 1, 0, false,
+            "<temp>/avowry-x/Orders.Api/Orders.Api.csproj : error NU1301: Unable to load the service index for source https://api.nuget.org/v3/index.json.\n",
+            "network-missing"),
+        ["O-planted-nu10041"] = new("restore-planted", 1, 0, false,
+            "error NU10041: something else\n",
+            "fail"),
+    };
+
+    public static TheoryData<string> LicenceRowIds422()
+    {
+        var data = new TheoryData<string>();
+        foreach (var id in LicenceRows422.Keys)
+            data.Add(id);
+        return data;
+    }
+
+    public static TheoryData<string> RestoreRowIds422()
+    {
+        var data = new TheoryData<string>();
+        foreach (var id in RestoreRows422.Keys)
+            data.Add(id);
+        return data;
+    }
+
+    private static bool OutcomeMatches422(string expected, IReadOnlyList<string> failures)
+    {
+        if (expected == "pass")
+            return failures.Count == 0;
+        var joined = string.Join("\n", failures);
+        return failures.Count > 0 && expected["fail:".Length..].Split(" && ").All(part => joined.Contains(part, StringComparison.Ordinal));
+    }
+
+    [Theory]
+    [Trait("Slice", "422")]
+    [Trait("Criterion", "422-2")]
+    [Trait("Status", "Pending")]
+    [MemberData(nameof(LicenceRowIds422))]
+    public void Licence_value_rows_422(string id)
+    {
+        // Given the real page with the row's edit and the restored packages' nuspec facts (with the row's evidence edit)
+        var row = LicenceRows422[id];
+        var page = File.ReadAllText(RepoPaths.Find("docs", "release", "pre-publication-checks.md")).Replace("\r\n", "\n", StringComparison.Ordinal);
+        var sectionAt = page.IndexOf("## Restored package licences", StringComparison.Ordinal);
+        Assert.True(sectionAt >= 0, id + ": section missing");
+        foreach (var (old, replacement) in row.Edits)
+        {
+            var at = page.IndexOf(old, sectionAt, StringComparison.Ordinal);
+            Assert.True(at >= 0, id + ": edit not found: " + old);
+            page = page[..at] + replacement + page[(at + old.Length)..];
+        }
+
+        var evidence = Evidence422();
+        foreach (var (pid, version, field, value) in row.Evidence)
+        {
+            var key = pid + " " + version;
+            evidence[key] = field switch
+            {
+                "licence_url" => evidence[key] with { LicenceUrl = value },
+                "expression" => evidence[key] with { Expression = value },
+                "licence_files" => evidence[key] with { LicenceFiles = value.Length == 0 ? new Dictionary<string, string>() : new Dictionary<string, string> { [value[..value.IndexOf('=')]] = value[(value.IndexOf('=') + 1)..] } },
+                _ => throw new InvalidOperationException(id + ": unknown evidence field " + field),
+            };
+        }
+
+        // When the licence values of the page rows are compared with the evidence
+        var table = ReadRestoredRows(page).Select(r => new[] { r.Id, r.Version, r.Kind, r.Licence, r.LicenceSource, r.WhereUsed, r.Review }).ToList();
+        var failures = RestoredLicenceChecks.LicenceValueFailures(table, evidence);
+
+        // Then the outcome is the row's: no failure, or failures that name the package and both licences
+        Assert.True(OutcomeMatches422(row.Expected, failures), id + ": expected " + row.Expected + ", got " + string.Join(" | ", failures));
+    }
+
+    [Theory]
+    [Trait("Slice", "422")]
+    [Trait("Criterion", "422-6")]
+    [Trait("Status", "Pending")]
+    [MemberData(nameof(RestoreRowIds422))]
+    public void Restore_outcome_rows_422(string id)
+    {
+        // Given the output of a locked restore (exit code, time-out, text, and the package libraries in the new project.assets.json)
+        var row = RestoreRows422[id];
+
+        // When the outcome is classified
+        var outcome = RestoredLicenceChecks.RestoreOutcome(row.ExitCode, row.TimedOut, row.Output, row.RestoredCount);
+
+        // Then a warm cache is no network miss, a lock mismatch is never a network miss, and a miss counts only when nothing was restored
+        Assert.Equal(row.Expected, outcome);
+    }
+
     private static async Task RestoreLockedOrFail(string projectPath)
     {
         var result = await RestoreLockedAsync(projectPath);

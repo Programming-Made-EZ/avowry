@@ -144,6 +144,69 @@ public class NoPhCodesInTheLiveTree
         Assert.Equal([true, false, false], hits.Select(hit => hit.IsCode));
     }
 
+    // ---- Card 422 red [B]: lockfile rows (task-force role: red) -----------------------------------------------------------
+    // A lockfile's "contentHash" values are skipped by the scan, H6 and H7 leave the allow-list, any other line of a lockfile is
+    // scanned. Text is built from parts with Old. A text of @real stands for the real file at that path. Rows that already
+    // hold on today's scanner are in the Holding theory; rows it gets wrong are in the Pending theory.
+
+    public static TheoryData<string, string, string, bool> PlantedRows422Holding()
+    {
+        var data = new TheoryData<string, string, string, bool>();
+        data.Add("Z-guard-api", "reference/csharp/Orders.Api/packages.lock.json", "@real", false);
+        data.Add("Z-guard-specs", "reference/csharp/Orders.Specs/packages.lock.json", "@real", false);
+        data.Add("G-hash", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"type\": \"Transitive\",\n        \"resolved\": \"10.0.11\",\n        \"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", false);
+        data.Add("G-minified", "reference/csharp/Orders.Api/packages.lock.json", "{\"version\":1,\"dependencies\":{\"net8.0\":{\"X\":{\"type\":\"Transitive\",\"resolved\":\"1.0.0\",\"contentHash\":\"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"}}}}", false);
+        data.Add("G-hash-spaced", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"contentHash\" :\t \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", false);
+        data.Add("G-hash-indent", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n\"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\",\n\t\t\"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", false);
+        data.Add("G-crlf", "reference/csharp/Orders.Api/packages.lock.json", "{\r\n  \"version\": 1,\r\n  \"dependencies\": {\r\n    \"net8.0\": {\r\n      \"X\": {\r\n        \"resolved\": \"10.0.11\",\r\n        \"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\r\n      }\r\n    }\r\n  }\r\n}\r\n", false);
+        data.Add("G-other-lock-hit", "tools/X/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"resolved\": \"" + Old + "325\"\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-json", "bench/config/x.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-code", "src/A.cs", "var code = \"" + Old + "325\";", true);
+        data.Add("G-phrase", "src/F.cs", "Phrase is a word", false);
+        data.Add("G-history", ".mob/x/y.md", "" + Old + "325 and " + Old + "nnn", false);
+        data.Add("G-mobmd", "MOB.md", "" + Old + "325", false);
+        return data;
+    }
+
+    public static TheoryData<string, string, string, bool> PlantedRows422Pending()
+    {
+        var data = new TheoryData<string, string, string, bool>();
+        data.Add("G-resolved", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"type\": \"Transitive\",\n        \"resolved\": \"" + Old + "325\",\n        \"contentHash\": \"AAAA\"\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-key", "reference/csharp/Orders.Specs/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"dependencies\": {\n          \"Lib." + Old + "\": \"1.0.0\"\n        }\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-requested", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"type\": \"Direct\",\n        \"requested\": \"[1.0.0, ) " + Old + "nnn\",\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-hash-and-key", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\",\n        \"resolved\": \"" + Old + "101\"\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-minified-hit", "reference/csharp/Orders.Api/packages.lock.json", "{\"version\":1,\"dependencies\":{\"net8.0\":{\"X\":{\"type\":\"Transitive\",\"resolved\":\"" + Old + "101\",\"contentHash\":\"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"}}}}", true);
+        data.Add("G-hash-text", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"contentHash\": \"see " + Old + "325 notes\"\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-hash-case", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"ContentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-hash-wrapped", "reference/csharp/Orders.Api/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"contentHash\":\n          \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", true);
+        data.Add("G-other-lock", "tools/X/packages.lock.json", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", false);
+        data.Add("G-bak", "reference/csharp/Orders.Api/packages.lock.json.bak", "{\n  \"version\": 1,\n  \"dependencies\": {\n    \"net8.0\": {\n      \"X\": {\n        \"contentHash\": \"QoXcAdDhBudxorzYF1F5Uo7FY0CSWgmTjqVRJjcQaYAkbO3dCPXDJajJwyApTGHCJ+T5PfVyKZqXEKZ8" + Old + "+UWQ==\"\n      }\n    }\n  }\n}\n", true);
+        return data;
+    }
+
+    private static void AssertLockfileRow422(string id, string path, string text, bool mustHit)
+    {
+        if (text == "@real")
+            text = File.ReadAllText(Path.Combine(RepoPaths.Root, path.Replace('/', Path.DirectorySeparatorChar)));
+        var hits = LiveTreeScanner.Scan([(path, text)]);
+        Assert.True(mustHit == (hits.Count > 0), $"{id}: expected {(mustHit ? "a hit" : "no hit")} for {path}, got {hits.Count}");
+    }
+
+    [Theory]
+    [Trait("Slice", "422")]
+    [Trait("Criterion", "422-7")]
+    [MemberData(nameof(PlantedRows422Holding))]
+    public void Lockfile_planted_rows_that_hold_today(string id, string path, string text, bool mustHit) =>
+        AssertLockfileRow422(id, path, text, mustHit);
+
+    [Theory]
+    [Trait("Slice", "422")]
+    [Trait("Criterion", "422-7")]
+    [Trait("Status", "Pending")]
+    [MemberData(nameof(PlantedRows422Pending))]
+    public void Lockfile_planted_rows_pending(string id, string path, string text, bool mustHit) =>
+        AssertLockfileRow422(id, path, text, mustHit);
+
     // ---- The tracked-file list: git ls-files -z through ProcessRunner, content read from disk -------------
 
     private static async Task<List<(string Path, string Text)>> TrackedFilesAsync()
