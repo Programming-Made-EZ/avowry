@@ -201,7 +201,7 @@ public class NoPhCodesInTheLiveTree
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-7")]
     [MemberData(nameof(PlantedRows422Pending))]
-    public void Lockfile_planted_rows_pending(string id, string path, string text, bool mustHit) =>
+    public void Lockfile_planted_rows(string id, string path, string text, bool mustHit) =>
         AssertLockfileRow422(id, path, text, mustHit);
 
     // ---- The tracked-file list: git ls-files -z through ProcessRunner, content read from disk -------------

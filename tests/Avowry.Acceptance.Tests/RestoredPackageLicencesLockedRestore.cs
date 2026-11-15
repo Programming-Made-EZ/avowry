@@ -662,7 +662,7 @@ public class RestoredPackageLicencesLockedRestore
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-2")]
     [MemberData(nameof(F6PendingIds422))]
-    public void F6_rows_422fix_pending(string id) => SettleF6Row422(id);
+    public void F6_rows_422fix_changed(string id) => SettleF6Row422(id);
 
     private static void SettleClassifyRow422(string id)
     {
@@ -686,7 +686,7 @@ public class RestoredPackageLicencesLockedRestore
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-6")]
     [MemberData(nameof(ClassifyPendingIds422))]
-    public void Classify_rows_422fix_pending(string id) => SettleClassifyRow422(id);
+    public void Classify_rows_422fix_changed(string id) => SettleClassifyRow422(id);
 
     [Theory]
     [Trait("Slice", "422")]
@@ -771,7 +771,7 @@ public class RestoredPackageLicencesLockedRestore
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-2")]
     [MemberData(nameof(WirePending2Ids422))]
-    public void Wiring_rows_422fix_f6_pending(string id) => SettleWireRow422(id);
+    public void Wiring_rows_422fix_f6_changed(string id) => SettleWireRow422(id);
 
     [Theory]
     [Trait("Slice", "422")]
@@ -783,7 +783,7 @@ public class RestoredPackageLicencesLockedRestore
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-6")]
     [MemberData(nameof(WirePending6Ids422))]
-    public void Wiring_rows_422fix_restore_pending(string id) => SettleWireRow422(id);
+    public void Wiring_rows_422fix_restore_changed(string id) => SettleWireRow422(id);
 
     private static async Task RestoreLockedOrFail(string projectPath)
     {

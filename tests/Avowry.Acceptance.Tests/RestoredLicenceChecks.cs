@@ -165,7 +165,7 @@ internal static class RestoredLicenceChecks
         return new RestoredPackage(id, version, folderFound, "ok", new PackageEvidence(expression, url, files), requiresAcceptance);
     }
 
-    /// <summary>[E] The failures of the networked F6 for the page rows and the restored packages, other than the acceptance set. Today's decision: existence only.</summary>
+    /// <summary>[E] The failures of the networked F6 for the page rows and the restored packages, other than the acceptance set. Checks that each page row and restored package match as a set, and passes each checked row and its evidence to LicenceValueFailures, so a wrong or blank licence or source label fails too.</summary>
     public static IReadOnlyList<string> F6Failures(IReadOnlyList<string[]> pageRows, IReadOnlyList<RestoredPackage> restored)
     {
         var failures = new List<string>();
@@ -269,7 +269,7 @@ internal static class RestoredLicenceChecks
             && type.GetString() == "package");
     }
 
-    /// <summary>The outcome F5's planted step and RestoreLockedOrFail act on: fail, network-missing, pass or mismatch. Today's decision: the network text first, NU1004 as a substring.</summary>
+    /// <summary>The outcome F5's planted step and RestoreLockedOrFail act on: fail, network-missing, pass or mismatch. Returns RestoreOutcome for the same arguments; it decides nothing itself.</summary>
     public static string ClassifyRestore(int exitCode, bool timedOut, string text, int restoredCount)
         => RestoreOutcome(exitCode, timedOut, text, restoredCount);
 

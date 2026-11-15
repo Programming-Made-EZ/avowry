@@ -313,7 +313,8 @@ public class RestoredPackageLicences
         // 422-6 (R1-2): test_L5 prints the shallow-checkout skip to stdout on a shallow checkout and nothing on a full one
         await AssertPython422("Test422FixCharacterisation",
             "test_422_FL_py_L5_shallow",
-            "test_422_FL_py_L5_deep");
+            "test_422_FL_py_L5_deep",
+            "test_422_FL_py_L5_deep_independent");
     }
 
     // ---- Card 422 fix round 1 red: R1-2, the Python output reaches the xUnit log through AssertPythonTestsPass ----

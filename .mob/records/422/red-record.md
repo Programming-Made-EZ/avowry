@@ -206,3 +206,17 @@ log (6; `Report` and `AssertPythonTestsPass` write nothing to the test log):
 - `FW-pkg-type-file`: the reference prints a missing expression as `None`. C# prints it as an empty string, so the C# row expects the part both agree on, `FastEndpoints 8.3.0: licence MIT but the nuspec expression is`, without `None`. The green must not print `None` for it to pass the row as written; the row passes on today's code and on the green.
 - Nothing else differed: the 30 Pending rows are exactly the slice's 10 f6, 12 classify, 2 wiring and 6 log rows, and the 52 others pass.
 - The slice calls the Python class `Test422Fix`; it is named `Test422FixCharacterisation` here (the brief's name).
+
+## Fix round 2 (claude sonnet = claude-sonnet-5-5, ctx-2c, D268)
+
+R2-1 (BLOCKING 1): `test_422_FL_py_L5_deep` no longer depends on the checkout's history. `Test422FixCharacterisation.l5` takes `serve_blobs`; the deep row replaces the module's `git` with a stub that serves each lockfile's working text for `git show <commit>:<path>`, so `lockfile_commit_failures` finds a blob in a full or a depth-1 clone. The corpus line of FL-py-L5-deep now reads "on a deep checkout, the git lookup stubbed". New D265 neighbour row `FL-py-L5-deep-independent` (corpus-fix.txt, `test_422_FL_py_L5_deep_independent`, run by Fact F16): a page with the 40-hex commit removed gives no failure and prints nothing, with `shallow` False and True. The completeness test passes.
+
+R2-2 (MINOR 2): summaries of `F6Failures` and `ClassifyRestore` (RestoredLicenceChecks.cs) now describe the current behaviour. Renamed Theories (no row changed): `F6_rows_422fix_pending` to `F6_rows_422fix_changed`; `Classify_rows_422fix_pending` to `Classify_rows_422fix_changed`; `Wiring_rows_422fix_f6_pending` to `Wiring_rows_422fix_f6_changed`; `Wiring_rows_422fix_restore_pending` to `Wiring_rows_422fix_restore_changed` (the plain name already exists for the holding Theory, so `_changed` replaces `_pending`); `NoPhCodesInTheLiveTree.Lockfile_planted_rows_pending` to `Lockfile_planted_rows`.
+
+Summary lines (worktree wt-422):
+- `python -m unittest tests.test_restored_package_licences`: Ran 144 tests, OK.
+- `dotnet build Avowry.sln -c Debug`: 0 Warning(s), 0 Error(s).
+- `--filter "Slice=422"`: Passed! Failed: 0, Passed: 144, Total: 144.
+- `--filter "Slice=369&FullyQualifiedName!~RestoredPackageLicencesLockedRestore"`: Passed! Failed: 0, Passed: 4, Total: 4.
+- `--filter "FullyQualifiedName~NoPhCodesInTheLiveTree"`: Passed! Failed: 0, Passed: 47, Total: 47.
+- Depth-1 clone of card-422 (HEAD c0787a7, my changed files copied over; `git rev-parse --is-shallow-repository` printed true): `python -m unittest tests.test_restored_package_licences`: Ran 144 tests, OK.

@@ -9,6 +9,7 @@ import io
 import json
 import posixpath
 import re
+import types
 import unittest
 import xml.etree.ElementTree as ET
 
@@ -1821,10 +1822,23 @@ class Test422FixCharacterisation(unittest.TestCase):
     """Fix round 1 (R1-2), the Python half of the log rows: test_L5 prints the shallow-checkout skip to stdout. Both rows pass today.
     The C# side runs them through AssertPython422, so the note reaches the xUnit log on a passing run."""
 
-    def l5(self, shallow):
-        global is_shallow
-        saved = is_shallow
+    def l5(self, shallow, serve_blobs=False):
+        """serve_blobs: replace the git lookup with one that serves each lockfile's working text for the cited commit,
+        so the row does not depend on the checkout's history (a depth-1 clone has no such commit)."""
+        global is_shallow, git
+        saved, saved_git = is_shallow, git
         is_shallow = lambda: shallow  # noqa: E731
+        if serve_blobs:
+            blobs = {API_LOCK_REL: API_LOCK, SPECS_LOCK_REL: SPECS_LOCK}
+
+            def served_git(args):
+                if len(args) == 2 and args[0] == "show" and ":" in args[1]:
+                    path = blobs.get(args[1].split(":", 1)[1])
+                    if path is not None and path.is_file():
+                        return types.SimpleNamespace(returncode=0, stdout=path.read_text(encoding="utf-8"), stderr="")
+                return saved_git(args)
+
+            git = served_git
         out = io.StringIO()
         try:
             with contextlib.redirect_stdout(out):
@@ -1832,7 +1846,7 @@ class Test422FixCharacterisation(unittest.TestCase):
                 result = unittest.TestResult()
                 case.run(result)
         finally:
-            is_shallow = saved
+            is_shallow, git = saved, saved_git
         return result.wasSuccessful(), out.getvalue()
 
     def test_422_FL_py_L5_shallow(self):
@@ -1842,10 +1856,22 @@ class Test422FixCharacterisation(unittest.TestCase):
         self.assertIn(SHALLOW_NOTE, out, "FL-py-L5-shallow")
 
     def test_422_FL_py_L5_deep(self):
-        # FL-py-L5-deep [422-6] fix-log/plain: on a full checkout test_L5 passes and prints nothing
-        ok, out = self.l5(False)
+        # FL-py-L5-deep [422-6] fix-log/plain: on a deep checkout test_L5 passes and prints nothing (the git lookup is stubbed, so history is not needed)
+        ok, out = self.l5(False, serve_blobs=True)
         self.assertTrue(ok, "FL-py-L5-deep")
         self.assertEqual("", out.strip(), "FL-py-L5-deep")
+
+    def test_422_FL_py_L5_deep_independent(self):
+        # FL-py-L5-deep-independent [422-6] fix-log/plain: a page that cites no commit prints nothing and has no blob failure, in a full or a shallow checkout
+        page = read_page()
+        body = restored_body(page)
+        bare = page.replace(body, HASH_RE.sub("", body))
+        for shallow in (False, True):
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                failures = lockfile_commit_failures(bare, shallow=shallow)
+            self.assertEqual([], failures, "FL-py-L5-deep-independent")
+            self.assertEqual("", out.getvalue().strip(), "FL-py-L5-deep-independent")
 
 
 if __name__ == "__main__":

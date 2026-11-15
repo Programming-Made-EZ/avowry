@@ -81,4 +81,5 @@ FL-fail	fix-log	plain	log	throws+log:FAILED (failures=1)	a failing run logs too	
 FL-timeout	fix-log	plain	log	throws+log:Ran	a hung run logs what it printed	exit=-1 timeout=1::||Ran
 FL-e2e-L5	fix-log	plain	log-e2e	log:Ran 1 test	the real python run of test_L5 through the wrapper	test_L5_section_names_lockfiles_restore_locked_mode_and_commit
 FL-py-L5-shallow	fix-log	plain	py-L5	pass+stdout:restored-package-licences: section -: commit-blob check skipped (shallow checkout)	test_L5 on a shallow checkout prints the skip to stdout	shallow=1
-FL-py-L5-deep	fix-log	plain	py-L5	pass+stdout:	test_L5 on a full checkout prints nothing	shallow=0
+FL-py-L5-deep	fix-log	plain	py-L5	pass+stdout:	test_L5 on a deep checkout, the git lookup stubbed, prints nothing	shallow=0
+FL-py-L5-deep-independent	fix-log	plain	py-L5	pass+stdout:	a page citing no commit prints nothing and has no blob failure, full or shallow	shallow=0,1
