@@ -1,0 +1,7 @@
+tested HEAD: 8ea2668cc0d059b1f11f8e94c3dd8cb88f17f537
+build exit 0:     0 Warning(s)     0 Error(s) 
+Slice=439 exit 0: 
+Slice=435|Slice=426|Slice=418 exit 0: 
+Status!=Pending exit 0: 
+light: the full suite was skipped while a play-tracker train was alive
+DONE

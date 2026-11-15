@@ -1,0 +1,828 @@
+Test run for C:\Users\<user>\projects\gate439green-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+C:\Users\<user>\projects\gate439green-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:01.41]   Discovering: Avowry.Acceptance.Tests
+[xUnit.net 00:00:01.97]   Discovered:  Avowry.Acceptance.Tests
+[xUnit.net 00:00:02.02]   Starting:    Avowry.Acceptance.Tests
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows_that_pass_today(id: "3.7b", input: "gcc /tmp/a.c\\t-I/home/<user>/include", expected: "gcc a.c\\t-Iinclude") [972 ms]
+  Standard Output Messages:
+ row 3.7b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows_that_pass_today(id: "3.5e", input: "C:\\Users\\<user>(1)-D:\\Users\\<user>\\x.cs", expected: "<path>-x.cs") [20 ms]
+  Standard Output Messages:
+ row 3.5e
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows_that_pass_today(id: "3.7a", input: "gcc \"-I/home/<user>/include\"", expected: "gcc \"-Iinclude\"") [< 1 ms]
+  Standard Output Messages:
+ row 3.7a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows_that_pass_today(id: "3.7f", input: "\\\\d:\\\\Users\\\\<user>\\\\x.cs", expected: "x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.7f
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows_that_pass_today(id: "3.7e", input: "\\t/tmp/a.C:/Users/<user>", expected: "\\ta.<path>") [< 1 ms]
+  Standard Output Messages:
+ row 3.7e
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows_that_pass_today(id: "3.7g", input: "\\\\\\\\host\\\\share\\\\x.cs\\r/home/<user>/y.cs", expected: "x.cs\\ry.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.7g
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows_that_pass_today(id: "3.7d", input: "\\t/tmp/a.d:\\Users\\<user>", expected: "\\ta.<path>") [< 1 ms]
+  Standard Output Messages:
+ row 3.7d
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows_that_pass_today(id: "3.7c", input: "id u0041-I/tmp/a/x.cs", expected: "id u0041-I/tmp/a/x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.7c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5g", input: "C:\\Users\\<user>(bb'cc)", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.5g
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.13", input: "\\\\host\\c$\\Documents and Settings\\<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.13
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5a", input: "C:\\Users\\<user>(\\u00f6bb)", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.5a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6a", input: "gcc /tmp/a.c -I/home/<user>", expected: "gcc a.c -I<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.6a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8b", input: "\\t/tmp/a.\\\\host\\Users\\<user>", expected: "\\t<path>") [< 1 ms]
+  Standard Output Messages:
+ row 3.8b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5d", input: "/home/<user>(\\u00f6bb)", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.5d
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.2e", input: "\\\\\\\\host\\\\sh\\u00f6re\\\\Users\\\\<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 3.2e
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6b", input: "gcc /tmp/a.c -I/Users/<user>", expected: "gcc a.c -I<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.6b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8f", input: "\\\\/cygdrive/c/Users/<user>/x.cs\\tnext", expected: "\\\\<path>\\tnext") [< 1 ms]
+  Standard Output Messages:
+ row 3.8f
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6d", input: "gcc /tmp/a.c -I/home/<user>/include", expected: "gcc a.c -Iinclude") [< 1 ms]
+  Standard Output Messages:
+ row 2.6d
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.4d", input: "foo-~\\nx.cs", expected: "foo-~\\nx.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.4d
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5i", input: "C:\\Users\\<user> bb.(cc)", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.5i
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.12c", input: "-I~/include", expected: "-Iinclude") [< 1 ms]
+  Standard Output Messages:
+ row 2.12c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.2f", input: "\\u0027\\\\h\\u00f6st\\Users\\<user>\\u0027", expected: "\\u0027<path>\\u0027") [< 1 ms]
+  Standard Output Messages:
+ row 3.2f
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.12b", input: "\\u0027~/x.cs\\u0027", expected: "\\u0027x.cs\\u0027") [< 1 ms]
+  Standard Output Messages:
+ row 2.12b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6e", input: "see /tmp/x.cs (/home/<user>)", expected: "see <path>)") [< 1 ms]
+  Standard Output Messages:
+ row 2.6e
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8c", input: "\\u00f6/tmp/a\\u00f6\\\\wsl$\\Ubuntu\\home\\<user>"···, expected: "\\u00f6<path>\\tnext") [< 1 ms]
+  Standard Output Messages:
+ row 3.8c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5m", input: "C:\\Users\\<user>ö'bb", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.5m
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.12a", input: "C:\\\\a\\\\x.cs\\n~/y.cs", expected: "x.cs\\ny.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.12a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8a", input: "-I/tmp/a.\\\\host\\c$\\Users\\<user>\\nnext", expected: "-I<path>\\nnext") [< 1 ms]
+  Standard Output Messages:
+ row 3.8a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.2j", input: "(-I/home/<user>/include)", expected: "(-Iinclude)") [< 1 ms]
+  Standard Output Messages:
+ row 2.2j
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6c", input: "gcc /tmp/a.c -I/cygdrive/c/Users/<user>", expected: "gcc a.c -I<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.6c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5j", input: "C:\\Users\\<user>'bb\\x.cs", expected: "x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.5j
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5b", input: "C:\\\\Users\\\\<user>(\\u00f6bb)", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.5b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8d", input: "\\u00f6/tmp/a\\u00f6/home/<user>", expected: "\\u00f6<path>") [< 1 ms]
+  Standard Output Messages:
+ row 3.8d
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.2k", input: "-Wall,-I/home/<user>/include", expected: "-Wall,-Iinclude") [< 1 ms]
+  Standard Output Messages:
+ row 2.2k
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5l", input: "C:\\Users\\<user>\\u00f6'bb", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.5l
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5k", input: "C:\\Users\\<user>'bb", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.5k
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8e", input: "\\\\/opt/data/home/<user>/src/x.cs", expected: "\\\\<path>") [< 1 ms]
+  Standard Output Messages:
+ row 3.8e
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6g", input: "C:\\Users\\<user>\\n/home/<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.6g
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "hdr", input: "match \\\\d+ here", expected: "match \\\\d+ here") [< 1 ms]
+  Standard Output Messages:
+ row hdr
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5h", input: "C:\\Users\\<user> bb.\\u00f6cc", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.5h
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5c", input: "\\u0027C:\\\\Users\\\\<user>(\\u00f6bb)\\u0027", expected: "\\u0027<path>\\u0027") [< 1 ms]
+  Standard Output Messages:
+ row 2.5c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.2i", input: "[-I/home/<user>/include]", expected: "[-Iinclude]") [< 1 ms]
+  Standard Output Messages:
+ row 2.2i
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6f", input: "C:\\a\\x.cs\\n/home/<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.6f
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5f", input: "C:\\Users\\<user>(bb cc)", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.5f
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.2d", input: "\\\\\\\\h\\u00f6st\\\\Users\\\\<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 3.2d
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.5b", input: "see (C:\\Users\\<user>(bb)) here", expected: "see (<path>) here") [11 ms]
+  Standard Output Messages:
+ row 3.5b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.5a", input: "see (C:\\Users\\<user>(bb))", expected: "see (<path>)") [< 1 ms]
+  Standard Output Messages:
+ row 3.5a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4f", input: "C:\\Users\\<user>_D:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.4f
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3c", input: "gcc \\u0027-IC:\\Users\\<user>\\include\\u0027", expected: "gcc \\u0027-Iinclude\\u0027") [< 1 ms]
+  Standard Output Messages:
+ row 3.3c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3b", input: "\\u0027-I\\\\host\\share\\x.cs\\u0027/home/<user>/"···, expected: "\\u0027-Ix.cs\\u0027y.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.3b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.2c", input: "\\\\a<b>\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 3.2c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3d", input: "gcc \\u0027-IC:\\Users\\<user>\\u0027", expected: "gcc \\u0027-I<path>\\u0027") [< 1 ms]
+  Standard Output Messages:
+ row 3.3d
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4a", input: "/tmp/a/foo-~\\nx.cs", expected: "foo-~\\nx.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.4a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.1b", input: "\\\\<host>\\Users\\<user>\\x.cs", expected: "x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.1b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.1a", input: "\\\\<host>\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 3.1a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4h", input: "\\/tmp/a/nC:\\Users\\<user>", expected: "\\n<path>") [< 1 ms]
+  Standard Output Messages:
+ row 3.4h
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3e", input: "see a\\u00f6-b/tmp/x.cs", expected: "see a\\u00f6-b/tmp/x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.3e
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4e", input: "C:\\Users\\<user>D:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.4e
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.2b", input: "\\\\host's\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 3.2b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.1c", input: "\\\\<host>\\share\\x.cs", expected: "x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.1c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4c", input: "C:\\\\a\\\\foo-~\\nx.cs", expected: "foo-~\\nx.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.4c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3a", input: "\\u0027-IC:\\a\\x.cs\\u0027/home/<user>", expected: "\\u0027-Ix.cs\\u0027<path>") [< 1 ms]
+  Standard Output Messages:
+ row 3.3a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.5c", input: "C:\\Users\\<user>(bb)ccfile:///C:/Users/<user>/x.c"···, expected: "<path>x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.5c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.5d", input: "C:\\Users\\<user>(bb)ccD:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.5d
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4b", input: "/tmp/a/~~\\nx.cs", expected: "~~\\nx.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.4b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4g", input: "C:\\Users\\<user>.file://localhost/home/<user>/x.c"···, expected: "<path>x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.4g
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.2a", input: "\\\\host(1)\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 3.2a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4i", input: "\\t/tmp/a.file://localhost/home/<user>/x.cs", expected: "\\ta.x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 3.4i
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.4c", input: "\\n/tmp/a.C:\\Users\\<user>", expected: "\\na.<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.4c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.3b", input: "C:\\\\a\\\\x.cs\\f/home/<user>/y.cs", expected: "x.cs\\fy.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.3b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.9b", input: "C:\\\\a\\\\~\\nx.cs", expected: "<path>\\nx.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.9b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.4e", input: "\\t\\\\C:\\Users\\<user>", expected: "\\t<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.4e
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.8", input: "see C:\\Users\\<user>(bb).", expected: "see <path>.") [< 1 ms]
+  Standard Output Messages:
+ row 2.8
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.1d", input: "C:\\Users\\<user>(bb)file:///C:/Users/<user>/x.cs", expected: "<path>x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.1d
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.9g", input: "\\\\/cygdrive/c/Users/<user>", expected: "\\\\<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.9g
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.7a", input: "[\"\\\\host\\share\\x.cs\",\"C:\\Users\\<user>\\y."···, expected: "[\"x.cs\",\"y.cs\"]") [< 1 ms]
+  Standard Output Messages:
+ row 2.7a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.2g", input: "gcc '-I/home/<user>/include'", expected: "gcc '-Iinclude'") [< 1 ms]
+  Standard Output Messages:
+ row 2.2g
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.11", input: "/d/users/<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.11
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.3c", input: "C:\\\\a\\\\x.cs\\f\\\\host\\Users\\<user>\\y.cs", expected: "x.cs\\fy.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.3c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.9e", input: "\\\\/home/<user>\\nx.cs", expected: "\\\\<path>\\nx.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.9e
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.9f", input: "\\\\/opt/data/home/<user>", expected: "\\\\<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.9f
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.3a", input: "C:\\\\a\\\\x.cs\\b/home/<user>/y.cs", expected: "x.cs\\by.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.3a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.2a", input: "gcc /tmp/a.c\\n-I/home/<user>/include", expected: "gcc a.c\\n-Iinclude") [< 1 ms]
+  Standard Output Messages:
+ row 2.2a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.1a", input: "C:\\Users\\<user>(1)D:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.1a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.4b", input: "\\t/tmp/a.C:\\\\Users\\\\<user>", expected: "\\ta.<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.4b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.2h", input: "gcc \\u0027-I/home/<user>/include\\u0027", expected: "gcc \\u0027-Iinclude\\u0027") [< 1 ms]
+  Standard Output Messages:
+ row 2.2h
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.5e", input: "C:\\Users\\<user>(bb)\\u00f6cc", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.5e
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.4d", input: "-I/tmp/a.C:\\Users\\<user>", expected: "-Ia.<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.4d
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.2c", input: "gcc /tmp/a.c\\r-I/home/<user>/include", expected: "gcc a.c\\r-Iinclude") [< 1 ms]
+  Standard Output Messages:
+ row 2.2c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.9d", input: "/tmp/a/~\\tx.cs", expected: "<path>\\tx.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.9d
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.9h", input: "/tmp/a/file://localhost/home/<user>/x.cs", expected: "<path>x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.9h
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.1b", input: "C:\\Users\\<user>(bb)D:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.1b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.4f", input: "\\n\\\\C:\\Users\\<user>", expected: "\\n<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.4f
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.2e", input: "gcc /tmp/a.c\\u0022-I/home/<user>/include\\u0022", expected: "gcc a.c\\u0022-Iinclude\\u0022") [< 1 ms]
+  Standard Output Messages:
+ row 2.2e
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.2b", input: "gcc /tmp/a.c\\t-I/home/<user>/include", expected: "gcc a.c\\t-Iinclude") [< 1 ms]
+  Standard Output Messages:
+ row 2.2b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.9c", input: "/home/<user>/~\\nx.cs", expected: "<path>\\nx.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.9c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.5o", input: "C:\\Users\\<user>\\u00f6: access denied", expected: "<path>: access denied") [< 1 ms]
+  Standard Output Messages:
+ row 2.5o
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.9j", input: "C:\\\\a\\\\b.C:\\Users\\<user>", expected: "b.<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.9j
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.7b", input: "\\u0027\\\\\\\\host\\\\share\\\\x.cs\\u0027,\\u002"···, expected: "\\u0027x.cs\\u0027,\\u0027y.cs\\u0027") [< 1 ms]
+  Standard Output Messages:
+ row 2.7b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.7c", input: "\\\\host\\share\\x.cs;C:\\Users\\<user>\\y.cs", expected: "x.cs;y.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.7c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.2f", input: "gcc \"-I/home/<user>/include\"", expected: "gcc \"-Iinclude\"") [< 1 ms]
+  Standard Output Messages:
+ row 2.2f
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.4a", input: "\\u00f6/tmp/a\\u00f6C:\\\\Users\\\\<user>", expected: "\\u00f6a\\u00f6<path>") [< 1 ms]
+  Standard Output Messages:
+ row 2.4a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.9i", input: "C:\\\\a\\\\file://localhost/home/<user>/x.cs", expected: "<path>x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.9i
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.2d", input: "gcc /tmp/a.c\\u0027-I/home/<user>/include\\u0027", expected: "gcc a.c\\u0027-Iinclude\\u0027") [< 1 ms]
+  Standard Output Messages:
+ row 2.2d
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.5n", input: "C:\\Users\\<user> bb: access denied", expected: "<path> bb: access denied") [< 1 ms]
+  Standard Output Messages:
+ row 2.5n
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.9a", input: "/tmp/a/~\\nx.cs", expected: "<path>\\nx.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.9a
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows_that_pass_today(id: "2.1c", input: "C:\\Users\\<user>(1)file://localhost/home/<user>/x"···, expected: "<path>x.cs") [< 1 ms]
+  Standard Output Messages:
+ row 2.1c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "no-tail", input: "C:\\Users\\<user>(bb)cc", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row no-tail
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "parent-no-home", input: "\\\\wsl$\\Ubuntu\\home\\<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row parent-no-home
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "unc-no-drive-host", input: "\\\\C:\\\\Users\\\\<user>\\\\x.cs", expected: "x.cs") [< 1 ms]
+  Standard Output Messages:
+ row unc-no-drive-host
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "e1-unescaped", input: "x\\\\n/tmp/a/y.cs", expected: "x\\\\n/tmp/a/y.cs") [< 1 ms]
+  Standard Output Messages:
+ row e1-unescaped
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "parent-no-das", input: "C:\\Documents and Settings\\<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row parent-no-das
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "tilde-no-paren", input: "(~/x.cs)", expected: "(x.cs)") [< 1 ms]
+  Standard Output Messages:
+ row tilde-no-paren
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "guard-n-only", input: "C:\\\\a\\\\x.cs\\r/home/<user>/y.cs", expected: "x.cs\\ry.cs") [< 1 ms]
+  Standard Output Messages:
+ row guard-n-only
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "unc-pathmark", input: "\\\\/home/<user>\\nx.cs", expected: "\\\\<path>\\nx.cs") [< 1 ms]
+  Standard Output Messages:
+ row unc-pathmark
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "unc-always-sgl", input: "\\\\\\\\host\\\\share\\\\x.cs\\n/home/<user>/y.cs", expected: "x.cs\\ny.cs") [< 1 ms]
+  Standard Output Messages:
+ row unc-always-sgl
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "unix-drive-c", input: "/d/users/<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row unix-drive-c
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "names-semicolon-ok", input: "PATH=/tmp/a;/home/<user>/bin", expected: "PATH=a;bin") [< 1 ms]
+  Standard Output Messages:
+ row names-semicolon-ok
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "no-parent-rule", input: "C:\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row no-parent-rule
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "esc-no-b", input: "C:\\\\a\\\\x.cs\\b/home/<user>/y.cs", expected: "x.cs\\by.cs") [< 1 ms]
+  Standard Output Messages:
+ row esc-no-b
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "word-no-esc", input: "C:\\Users\\<user> \\u00f6cc", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row word-no-esc
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "esc-off", input: "\\u0027\\\\host\\share\\x.cs\\u0027/home/<user>/y."···, expected: "\\u0027x.cs\\u0027y.cs") [< 1 ms]
+  Standard Output Messages:
+ row esc-off
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "parent-cs", input: "\\\\host\\c$\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row parent-cs
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "fixed-no-vartmp", input: "/var/tmp/a/x.cs", expected: "x.cs") [< 1 ms]
+  Standard Output Messages:
+ row fixed-no-vartmp
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "parent-unix-ci", input: "/tmp/a/Home/x.cs", expected: "x.cs") [< 1 ms]
+  Standard Output Messages:
+ row parent-unix-ci
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "dir-space-ok", input: "gcc /tmp/a.c -I /usr/include -I/home/<user>/includ"···, expected: "gcc a.c -I /usr/include -Iinclude") [< 1 ms]
+  Standard Output Messages:
+ row dir-space-ok
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "parent-drive-any-depth", input: "D:\\src\\Users\\<user>", expected: "UsersController.cs") [< 1 ms]
+  Standard Output Messages:
+ row parent-drive-any-depth
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "no-tilde-name", input: "/tmp/a/~\\nx.cs", expected: "<path>\\nx.cs") [< 1 ms]
+  Standard Output Messages:
+ row no-tilde-name
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "unix-no-Users", input: "/Users/<user>/x.cs", expected: "x.cs") [< 1 ms]
+  Standard Output Messages:
+ row unix-no-Users
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "walk-any-end", input: "/x-/home/<user>", expected: "/x-<path>") [< 1 ms]
+  Standard Output Messages:
+ row walk-any-end
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "final-paren-ok", input: "C:\\a\\(b)C:\\Users\\<user>", expected: "<path>(b)<path>") [< 1 ms]
+  Standard Output Messages:
+ row final-paren-ok
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "letter-any", input: "C:\\\\Users\\\\<user>\\u003e", expected: "<path>\\u003e") [< 1 ms]
+  Standard Output Messages:
+ row letter-any
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows_that_pass_today(id: "flag-letter-I", input: "gcc -L/home/<user>/lib", expected: "gcc -Llib") [< 1 ms]
+  Standard Output Messages:
+ row flag-letter-I
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_3_blow_up_shapes_settle_in_one_pass(unit: "\\,") [87 ms]
+  Standard Output Messages:
+ shape=\, length=20000 first_pass_ms=33.1
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_3_blow_up_shapes_settle_in_one_pass(unit: "/-") [161 ms]
+  Standard Output Messages:
+ shape=/- length=20000 first_pass_ms=68.9
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_3_blow_up_shapes_settle_in_one_pass(unit: "/a") [134 ms]
+  Standard Output Messages:
+ shape=/a length=20000 first_pass_ms=84.7
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_3_blow_up_shapes_settle_in_one_pass(unit: "\\;") [47 ms]
+  Standard Output Messages:
+ shape=\; length=20000 first_pass_ms=19.6
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_3_blow_up_shapes_settle_in_one_pass(unit: "\\C:/a\\n") [20 ms]
+  Standard Output Messages:
+ shape=\C:/a\n length=19999 first_pass_ms=10.9
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_3_blow_up_shapes_settle_in_one_pass(unit: "\\a;") [43 ms]
+  Standard Output Messages:
+ shape=\a; length=19998 first_pass_ms=28.0
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_3_blow_up_shapes_settle_in_one_pass(unit: "\\C:\\a\\n") [21 ms]
+  Standard Output Messages:
+ shape=\C:\a\n length=19999 first_pass_ms=10.3
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_3_blow_up_shapes_settle_in_one_pass(unit: "\\\\a$\\n") [18 ms]
+  Standard Output Messages:
+ shape=\\a$\n length=19998 first_pass_ms=18.7
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_3_blow_up_shapes_settle_in_one_pass(unit: "\\\\host\\share\\x.cs\\n") [3 ms]
+  Standard Output Messages:
+ shape=\\host\share\x.cs\n length=19988 first_pass_ms=3.6
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "dot-no-paren", input: "C:\\Users\\<user> bb.(cc)", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row dot-no-paren
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "glued-parens", input: "see (C:\\Users\\<user>(bb))", expected: "see (<path>)") [< 1 ms]
+  Standard Output Messages:
+ row glued-parens
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "flag-no-esc", input: "gcc \\u0027-IC:\\Users\\<user>\\include\\u0027", expected: "gcc \\u0027-Iinclude\\u0027") [< 1 ms]
+  Standard Output Messages:
+ row flag-no-esc
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "flag-any-u", input: "see a\\u00f6-b/tmp/x.cs", expected: "see a\\u00f6-b/tmp/x.cs") [< 1 ms]
+  Standard Output Messages:
+ row flag-any-u
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "no-bare-unc", input: "\\\\/cygdrive/c/Users/<user>/x.cs\\tnext", expected: "\\\\<path>\\tnext") [< 1 ms]
+  Standard Output Messages:
+ row no-bare-unc
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "glued-no-root", input: "C:\\Users\\<user>(bb)ccD:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [< 1 ms]
+  Standard Output Messages:
+ row glued-no-root
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "no-flag-split", input: "gcc /tmp/a.c -I/home/<user>/include", expected: "gcc a.c -Iinclude") [< 1 ms]
+  Standard Output Messages:
+ row no-flag-split
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "group-no-space", input: "C:\\Users\\<user>(bb cc)", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row group-no-space
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "unc-host-alone", input: "match \\\\d+ here", expected: "match \\\\d+ here") [< 1 ms]
+  Standard Output Messages:
+ row unc-host-alone
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "no-adjacent", input: "C:\\Users\\<user>_D:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [< 1 ms]
+  Standard Output Messages:
+ row no-adjacent
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "unix-no-letter-users", input: "see /tmp/x.cs (/c/users/<user>)", expected: "see <path>)") [< 1 ms]
+  Standard Output Messages:
+ row unix-no-letter-users
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "apos-no-esc", input: "C:\\Users\\<user>\\u00f6'bb", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row apos-no-esc
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "tilde-today", input: "/tmp/a/foo-~\\nx.cs", expected: "foo-~\\nx.cs") [< 1 ms]
+  Standard Output Messages:
+ row tilde-today
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "parent-no-bridge", input: "C:\\a\\x.cs\\n/home/<user>", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row parent-no-bridge
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "apos-no-mark", input: "C:\\Users\\<user>'bb", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row apos-no-mark
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "dot-no-esc", input: "C:\\Users\\<user> bb.\\u00f6cc", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row dot-no-esc
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "group-no-esc", input: "C:\\Users\\<user>(\\u00f6bb)", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row group-no-esc
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "apos-today", input: "C:\\Users\\<user>'bb", expected: "<path>") [< 1 ms]
+  Standard Output Messages:
+ row apos-today
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "flag-left-quotes", input: "[-I/home/<user>/include]", expected: "[-Iinclude]") [< 1 ms]
+  Standard Output Messages:
+ row flag-left-quotes
+
+
+  Passed Avowry.Acceptance.Tests.PathScan439Generated.Id_439_2_sweep_B_extended_lists_add_no_leak_and_settle_in_one_pass [7 s]
+  Standard Output Messages:
+ sweep=B extended lists seed 439 inputs=100000 leaks_base=45965 leaks_new=4310 regressions=0 second_pass=0 exclusions=0
+
+
+[xUnit.net 00:00:12.85]   Finished:    Avowry.Acceptance.Tests
+  Passed Avowry.Acceptance.Tests.PathScan439Generated.Id_439_2_sweep_C_review_shapes_add_no_leak_and_settle_in_one_pass [2 s]
+  Standard Output Messages:
+ sweep=C review shapes seed 4391 inputs=100000 leaks_base=50216 leaks_new=2563 regressions=0 second_pass=0 exclusions=0
+
+
+
+Test Run Successful.
+Total tests: 163
+     Passed: 163
+ Total time: 14.2418 Seconds
