@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "75bef861476fc93c8139c08bf1a047441ee5b8120473a0ea53d58e73b2870181",
+  "probe": {
+    "taken_at": "2026-11-15T19:46:19.128821Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-7865503c-ab32-4817-a999-16f7f1efeed1)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=3b854ac3-4d82-4a09-9391-97ce452458a3]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "\u2026use it is being used by another process. The process cannot access the file because it is being used by another process. The process cannot access the file because it is being used by another process."
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "Recording the stop, seat, and timestamp in the card's committed rulings makes compliance auditable directly from git. Mandating foreground waiting prevents detached background watchers from silently editing without trace. A minor gap is tha",
+      "reply": "Yes\n\nRecording the stop, seat, and timestamp in the card's committed rulings makes compliance auditable directly from git. Mandating foreground waiting prevents detached background watchers from silently editing without trace. A minor gap is that an unrecorded background process that fails to commit leaves no footprint in git without runtime telemetry, but requiring rulings to log the stop creates a verifiable prerequisite before any takeover commit appears in history.\n\nCITE: records in the card's rulings the seat, the stop and the time.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Recording the stop, seat, and timestamp in the card's committed rulings makes compliance auditable directly from git. Mandating foreground waiting prevents detached background watchers from silently editing without trace. A minor gap is tha"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T19:46:19.128821Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2616
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "head_end": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

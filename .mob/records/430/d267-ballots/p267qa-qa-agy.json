@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "64bbfaa161693f32c51e2d40b96623fbe646e885a889b9b9ea1fe5156890abd0",
+  "probe": {
+    "taken_at": "2026-11-15T19:46:24.095688Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-28c10499-b9c5-4dcf-9ff0-04ab74b28ade)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=81027de7-5048-4466-8b5a-dc7d021b3254]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "From the QA lens, this rule can be tested red first. The pre-takeover stop requirement establishes an auditable condition: automated checks can fail red if a takeover occurs in logs or history without a corresponding stop record (seat, proc",
+      "reply": "Yes\nFrom the QA lens, this rule can be tested red first. The pre-takeover stop requirement establishes an auditable condition: automated checks can fail red if a takeover occurs in logs or history without a corresponding stop record (seat, process ID, timestamp) documented in the card's rulings. In addition, checks can verify that waiting seats run strictly in the foreground and leave zero background watcher processes running prior to takeover. Note for implementation: ensure retro verification inspects actual process tables or audit logs for surviving background jobs rather than relying solely on self-reported ruling entries.\n\nCITE: the facilitator stops that seat and every watcher\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From the QA lens, this rule can be tested red first. The pre-takeover stop requirement establishes an auditable condition: automated checks can fail red if a takeover occurs in logs or history without a corresponding stop record (seat, proc"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T19:46:24.095688Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2617
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "head_end": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

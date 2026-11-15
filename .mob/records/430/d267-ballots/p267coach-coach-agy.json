@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "be9d36464f19b738a696e08158bd50e9b0f5f9dbd70a3d30f273703d9710e4b9",
+  "probe": {
+    "taken_at": "2026-11-15T19:46:24.453497Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-cdbeb099-1d63-498d-8f1e-bbd20abf74a8)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=1781c7f6-959c-4ead-bbcf-d0657b92c96a]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The experiment is appropriately sized and disciplined. It establishes a necessary handoff boundary to enforce single-driver flow without adding ceremonial overhead. A crisp operational stop prevents silent collision between seats, while the",
+      "reply": "Yes\nThe experiment is appropriately sized and disciplined. It establishes a necessary handoff boundary to enforce single-driver flow without adding ceremonial overhead. A crisp operational stop prevents silent collision between seats, while the three-card sample, zero-collision metric, and idle-time counter-metric ensure ceremony does not outgrow practical necessity.\nCITE: Stop a waiting seat before its runs are taken over\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The experiment is appropriately sized and disciplined. It establishes a necessary handoff boundary to enforce single-driver flow without adding ceremonial overhead. A crisp operational stop prevents silent collision between seats, while the"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T19:46:24.453497Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2618
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "head_end": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

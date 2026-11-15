@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "60798393f58afc8d7e10462280b8faa676d01a31b39630116230b737c2f46b6b",
+  "probe": {
+    "taken_at": "2026-11-15T19:50:22.305880Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-86f65146-cb66-48ee-a952-7ccf2803f5c8)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=af43d560-dae6-42a7-b2a7-97b74e235360]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "The evaluation is framed cleanly on evidence. It defines a primary metric (zero two-driver events per card) alongside an explicit counter-metric (preventing an increase in facilitator idle minutes over 10 when light work is available). The ",
+      "reply": "Yes\nThe evaluation is framed cleanly on evidence. It defines a primary metric (zero two-driver events per card) alongside an explicit counter-metric (preventing an increase in facilitator idle minutes over 10 when light work is available). The evaluation window is bounded to a sample of three cards, and sign-off rests on the third card's retrospective where all roles review the outcome to adopt, revise, or drop the entry.\n\nCITE: Sample: three cards. Expiry: the third card's retro, which adopts, revises or removes the entry.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The evaluation is framed cleanly on evidence. It defines a primary metric (zero two-driver events per card) alongside an explicit counter-metric (preventing an increase in facilitator idle minutes over 10 when light work is available). The "
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T19:50:22.305880Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2621
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "head_end": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

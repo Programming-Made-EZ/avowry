@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "ec7691ede31109f23a0b14adb4e55b30089139a7a422306e2f67bf3cdf834774",
+  "probe": {
+    "taken_at": "2026-11-15T19:50:25.826304Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-4ff1bd9c-1c63-46c2-9bcd-617e2a52ef9f)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=53bbc421-0a9f-43f1-884e-55f13110fb74]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "This experiment trims waste and confusion without padding the task force with ceremony. A background process waking in a worktree while another seat is editing violates the core agile discipline of one driver at a time, risking silent colli",
+      "reply": "Yes\nThis experiment trims waste and confusion without padding the task force with ceremony. A background process waking in a worktree while another seat is editing violates the core agile discipline of one driver at a time, risking silent collisions and rework. Having the facilitator explicitly stop the waiting seat and its background watchers before takeover is a minimal, practical guardrail rather than an overhead burden. The three-card trial is properly bounded, pairing a clear defect target of zero two-driver events with a counter-metric tracking idle time to ensure flow is maintained.\nCITE: Stop a waiting seat before its runs are taken over\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "This experiment trims waste and confusion without padding the task force with ceremony. A background process waking in a worktree while another seat is editing violates the core agile discipline of one driver at a time, risking silent colli"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T19:50:25.826304Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2622
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "head_end": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "38ba9042dd0f10f5be7a8cd64652314acd59437511e3e8a4a97a6defcddec08e",
+  "probe": {
+    "taken_at": "2026-11-15T19:50:30.331817Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-cf37818c-f127-42d8-afcc-4c04ca201211)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=53043fc2-3350-4b4c-9284-3181bbca6b16]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The design is sound, minimal, and cleanly enforceable. Recording the seat, stop action, and timestamp directly in the card's rulings provides an auditable trail without needing new tooling or file formats. Stopping background processes expl",
+      "reply": "Yes\nThe design is sound, minimal, and cleanly enforceable. Recording the seat, stop action, and timestamp directly in the card's rulings provides an auditable trail without needing new tooling or file formats. Stopping background processes explicitly by task or process ID prevents false positives and accidental termination of unrelated tasks. Enforcing foreground waits for lock contention removes orphan watchers at the architectural root. Bounding the rule as a three-card trial with explicit metrics (two-driver events target zero, counter-metric on idle minutes) ensures the process change is empirically evaluated before permanent adoption.\nCITE: records in the card's rulings the seat, the stop and the time\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The design is sound, minimal, and cleanly enforceable. Recording the seat, stop action, and timestamp directly in the card's rulings provides an auditable trail without needing new tooling or file formats. Stopping background processes expl"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T19:50:30.331817Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2625
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "head_end": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

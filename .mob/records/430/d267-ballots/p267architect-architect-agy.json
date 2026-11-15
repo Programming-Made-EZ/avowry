@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "593834b5d53fb2226080b4848cda6bd6d07055de32ab42518b762117846f5440",
+  "probe": {
+    "taken_at": "2026-11-15T19:46:32.524451Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-54d9f518-8445-413b-9ab3-7af93709e280)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=d8d11128-971d-4f28-a228-5a0992ea40cd]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The design is sound, minimal, and cleanly enforceable. Stopping seats and background watchers explicitly by task or process ID rather than name prevents accidental collateral termination and false positives. Recording the seat, stop action,",
+      "reply": "Yes\nThe design is sound, minimal, and cleanly enforceable. Stopping seats and background watchers explicitly by task or process ID rather than name prevents accidental collateral termination and false positives. Recording the seat, stop action, and timestamp in the card's rulings establishes a verifiable audit trail without adding new file schemas or complex checker machinery. Requiring lock waits in the foreground eliminates unmanaged background daemons cleanly. The trial parameters, three-card sample, and paired metrics provide well-bounded operational enforcement.\nCITE: records in the card's rulings the seat, the stop and the time.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The design is sound, minimal, and cleanly enforceable. Stopping seats and background watchers explicitly by task or process ID rather than name prevents accidental collateral termination and false positives. Recording the seat, stop action,"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T19:46:32.524451Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2620
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "head_end": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

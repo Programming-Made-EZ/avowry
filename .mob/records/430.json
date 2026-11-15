@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 430,
+ "title": "The wall-clock guard recognises the missed time-limit spellings, and the hard-limit tests run isolated",
+ "process": "card-mode rules run by hand; the card written from the card template (card_ready.py ok); declaration Decider D266 with every role's service, exact model and reason pinned before any seat; the live probe cited; D265's second trial card: a read-only architect slice that committed a real-shape corpus (160 rows, 8 families, 12 encoding rows per new spelling family) before the red; the red's build and filtered runs held behind play-tracker's lock until the 16:51Z watchdog ruled them light, then run by the facilitator and reproduced in a clean clone; a green that PORTED the architect's reference (1 min 39 s); a gate under Avowry's own heavy lock ([S] 13.47 min); review round 1 (claude opus, FLAG: 2 BLOCKING, both older classes with helper or child-process limits); one fix round (an architect fix slice with 196 D265 neighbour rows, a red, a port in 1 min 23 s); review round 2 (SIGN-OFF); BLOCKING by round 2, 0; one invalid [S] reading under play-tracker's load, redone at sign-off on a confirmed quiet machine; a sign-off in a fresh clone under the lock; merged to main with --no-ff (records went to main during the card); the retro with seven voices and its Model allocation review; retro pick Decider D267.",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-0",
+   "model": "the facilitator session (claude opus = claude-opus-5-5) wrote the card from the card template; Decider D266 adopted it with the task force (agy gemini-3.8-flash-medium ballots)",
+   "evidence": "68c18f53687581e4c1662f24ac117a54da4a164f"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-1",
+   "model": "claude opus = claude-opus-5-5, fresh subagent contexts (ctx-1, ctx-1b), architect, read-only; the slice and the fix slice",
+   "evidence": "dc5d326fdaab4ff14179e62142bd967aeb2f71c8"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-2",
+   "model": "claude sonnet = claude-sonnet-5-5, fresh subagent contexts (ctx-2, ctx-2b); the red and the fix red (the round 0 runs by the facilitator under the light-work ruling)",
+   "evidence": "9daa8f67855a41cd13d618d85fab04de80b23104"
+  },
+  {
+   "role": "green",
+   "seat": "Cursor ctx-3",
+   "model": "cursor-agent -p --force --model gpt-5.3-codex (pinned; the CLI reports no model, F-13), the linked worktree wt-430; two ports of the reference",
+   "evidence": "a5ca65fb592d8d63ca3ff6a82924d41793b0c6e1"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-4",
+   "model": "claude opus = claude-opus-5-5, fresh subagent contexts (ctx-4, ctx-4b), the QA review rounds 1 and 2 (FLAG, SIGN-OFF); gates by the facilitator under Avowry's heavy-run lock",
+   "evidence": "f40ce650e235eb5e0593325e22697a58bd2040e7"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-5",
+   "model": "claude sonnet = claude-sonnet-5-5, a fresh subagent context, the sign-off in a fresh clone on a confirmed quiet machine under Avowry's heavy-run lock",
+   "evidence": "1bfc90e1e7f65b69c70e19919c3710c1e2650232"
+  }
+ ],
+ "retro": "docs/retros/card-430-2026-11-15.md",
+ "notes": "Done checks met: Slice=430 358 of 358, Slice=417 25 of 25 (the live-tree fact names no class), the acceptance project (Status!=Pending) 1369 of 1369 in 836 s against the 900 s [S] ceiling; the nine classes with short hard limits carry Collection(\"Isolated timing\"); no existing row changed outcome (160 corpus rows, 196 fix rows, 23 committed 417 rows); every declaration pattern linear (80k worst case 37.5 s to 3 ms). Named limits (slice-rulings.md and slice-fix-rulings.md): ruling 4, R1-1 (helper and child-process limits), R1-4, RF-2 and R2-1, all on Avowry #443. Process events recorded: two drivers in wt-430 (the red seat's late watcher; no record affected), a no-op recursive delete by the review round 2 seat, one invalid [S] reading under play-tracker's load. The full suite was not run (the cross-mob heavy-run rule's light form); the acceptance project ran instead. Main took the card branch by a --no-ff merge (daec7cd), so every evidence commit keeps its id."
+}

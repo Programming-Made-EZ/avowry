@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "653ef20018a69236ef4193d80dc9ea656415df41c9a4f19fec23a036d52a7371",
+  "probe": {
+    "taken_at": "2026-11-15T19:50:48.906219Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-0660d483-8aa0-4f3e-9ec2-2789f540cf6f)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=708d7262-049f-48ec-9def-6039e58a1883]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "From the QA lens, this rule is testable red-first and prevents unobserved bad state. Audit checks can mechanically verify the takeover sequence: any takeover lacking a prior stop record in rulings fails red first. Briefing lock-waiting seat",
+      "reply": "Yes\nFrom the QA lens, this rule is testable red-first and prevents unobserved bad state. Audit checks can mechanically verify the takeover sequence: any takeover lacking a prior stop record in rulings fails red first. Briefing lock-waiting seats to run in the foreground and explicitly stopping them by task or process ID prevents lingering background watchers from leaking concurrent execution into worktrees. Note: card rulings should record verified process termination to ensure audit checks detect any failure to release lock resources.\n\nCITE: Stop a waiting seat before its runs are taken over\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From the QA lens, this rule is testable red-first and prevents unobserved bad state. Audit checks can mechanically verify the takeover sequence: any takeover lacking a prior stop record in rulings fails red first. Briefing lock-waiting seat"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T19:50:48.906219Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2626
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "head_end": "92e568686cdfb02edc9893f2df55a0e3d0e6ad36",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}
