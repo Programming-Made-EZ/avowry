@@ -48,3 +48,44 @@
 ## CLI model line
 
 - No explicit model line was printed by the invoked command outputs in this run.
+
+## Fix round 1 green
+
+### git diff --stat
+
+```text
+ .../RestoredLicenceChecks.cs                       | 28 ++++++++++------------
+ .../RestoredPackageLicences.cs                     |  4 +---
+ .../RestoredPackageLicencesLockedRestore.cs        |  4 ----
+ 3 files changed, 14 insertions(+), 22 deletions(-)
+```
+
+### Exact changes
+
+- `F6Failures` in `tests/Avowry.Acceptance.Tests/RestoredLicenceChecks.cs`:
+  - kept the existing set/folder/nuspec/source checks;
+  - added `checkedRows` and `evidence` collection for rows that pass those gates;
+  - added `failures.AddRange(LicenceValueFailures(checkedRows, evidence));` before returning;
+  - missing nuspec expression still renders as an empty interpolation segment, never `None`.
+- `ClassifyRestore` in `tests/Avowry.Acceptance.Tests/RestoredLicenceChecks.cs`:
+  - replaced body with `=> RestoreOutcome(exitCode, timedOut, text, restoredCount);`
+  - removed the network-first and NU1004-substring logic from this method.
+- `Report` in `tests/Avowry.Acceptance.Tests/RestoredPackageLicences.cs`:
+  - now writes `result.Stdout + result.Stderr` to `ITestOutputHelper` first, then performs the existing assert.
+- Pending traits removed:
+  - removed every `[Trait("Status", "Pending")]` line for Slice 422 in:
+    - `tests/Avowry.Acceptance.Tests/RestoredPackageLicences.cs`
+    - `tests/Avowry.Acceptance.Tests/RestoredPackageLicencesLockedRestore.cs`
+  - no such lines existed in `tests/Avowry.Acceptance.Tests/RestoredLicenceChecks.cs`.
+
+### Command summaries
+
+- `python -m unittest tests.test_restored_package_licences` -> `Ran 143 tests in 0.929s` / `OK`.
+- `dotnet build Avowry.sln -c Debug` -> `Build succeeded` / `0 Warning(s)` / `0 Error(s)`.
+- `dotnet test tests/Avowry.Acceptance.Tests/Avowry.Acceptance.Tests.csproj --no-build -c Debug --filter "Slice=422"` -> `Passed` / `Failed: 0, Passed: 144, Skipped: 0, Total: 144`.
+- `dotnet test tests/Avowry.Acceptance.Tests/Avowry.Acceptance.Tests.csproj --no-build -c Debug --filter "Slice=369&FullyQualifiedName!~RestoredPackageLicencesLockedRestore"` -> `Passed` / `Failed: 0, Passed: 4, Skipped: 0, Total: 4`.
+- `dotnet test tests/Avowry.Acceptance.Tests/Avowry.Acceptance.Tests.csproj --no-build -c Debug --filter "FullyQualifiedName~NoPhCodesInTheLiveTree"` -> `Passed` / `Failed: 0, Passed: 47, Skipped: 0, Total: 47`.
+
+### CLI model line
+
+- No model line was printed by these command outputs.

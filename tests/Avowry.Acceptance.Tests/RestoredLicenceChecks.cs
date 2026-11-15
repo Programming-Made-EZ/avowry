@@ -176,6 +176,8 @@ internal static class RestoredLicenceChecks
             failures.Add(DescribeSet("locked restore vs page", pageSet, restoredSet));
 
         var byKey = restored.GroupBy(p => (p.Id, p.Version)).ToDictionary(g => g.Key, g => g.First());
+        var checkedRows = new List<string[]>();
+        var evidence = new Dictionary<string, PackageEvidence>(StringComparer.Ordinal);
         foreach (var row in rows)
         {
             if (!byKey.TryGetValue((row[0], row[1]), out var package))
@@ -197,28 +199,33 @@ internal static class RestoredLicenceChecks
                 continue;
             }
 
-            var evidence = package.Evidence!;
+            var packageEvidence = package.Evidence!;
             if (source == "nuspec licence expression")
             {
-                if (!string.Equals(evidence.Expression, licence, StringComparison.Ordinal))
-                    failures.Add(Msg(id, version, $"licence {licence} but the nuspec expression is {evidence.Expression}"));
+                if (!string.Equals(packageEvidence.Expression, licence, StringComparison.Ordinal))
+                    failures.Add(Msg(id, version, $"licence {licence} but the nuspec expression is {packageEvidence.Expression}"));
             }
             else if (source == "packaged licence file")
             {
-                if (evidence.LicenceFiles.Count == 0)
+                if (packageEvidence.LicenceFiles.Count == 0)
                     failures.Add(Msg(id, version, $"licence {licence} but no packaged licence file names a known licence"));
             }
             else if (source == "licence URL")
             {
-                if (string.IsNullOrEmpty(evidence.LicenceUrl))
+                if (string.IsNullOrEmpty(packageEvidence.LicenceUrl))
                     failures.Add(Msg(id, version, $"licence {licence} from licence URL -, which is not a reviewed URL"));
             }
             else
             {
                 failures.Add(Msg(id, version, "licence source is not one of the three labels"));
+                continue;
             }
+
+            checkedRows.Add(row);
+            evidence[id + " " + version] = packageEvidence;
         }
 
+        failures.AddRange(LicenceValueFailures(checkedRows, evidence));
         return failures;
     }
 
@@ -264,16 +271,7 @@ internal static class RestoredLicenceChecks
 
     /// <summary>The outcome F5's planted step and RestoreLockedOrFail act on: fail, network-missing, pass or mismatch. Today's decision: the network text first, NU1004 as a substring.</summary>
     public static string ClassifyRestore(int exitCode, bool timedOut, string text, int restoredCount)
-    {
-        if (timedOut)
-            return "fail";
-        var output = text ?? string.Empty;
-        if (NetworkMarkers.Any(marker => output.Contains(marker, StringComparison.OrdinalIgnoreCase)))
-            return "network-missing";
-        if (exitCode == 0)
-            return "pass";
-        return output.Contains("NU1004", StringComparison.OrdinalIgnoreCase) ? "mismatch" : "fail";
-    }
+        => RestoreOutcome(exitCode, timedOut, text, restoredCount);
 
     public static string DescribeSet(string label, HashSet<(string Id, string Version)> expected, HashSet<(string Id, string Version)> actual)
     {

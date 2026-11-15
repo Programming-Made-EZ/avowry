@@ -351,7 +351,6 @@ public class RestoredPackageLicences
     [Theory]
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-6")]
-    [Trait("Status", "Pending")]
     [MemberData(nameof(LogIds422))]
     public void Log_rows_422fix(string id)
     {
@@ -378,7 +377,6 @@ public class RestoredPackageLicences
     [Fact]
     [Trait("Slice", "422")]
     [Trait("Criterion", "422-6")]
-    [Trait("Status", "Pending")]
     public async Task FL_e2e_L5_422fix()
     {
         // Given the real Python run of test_L5 through the wrapper
@@ -410,9 +408,9 @@ public class RestoredPackageLicences
         Report(result);
     }
 
-    // Today the result is only asserted; the test log (output) is not written yet.
     private void Report(ProcessResult result)
     {
+        output.WriteLine(result.Stdout + result.Stderr);
         Assert.True(result.ExitCode == 0 && !result.TimedOut, result.Stdout + result.Stderr);
     }
 }
