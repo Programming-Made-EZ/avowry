@@ -652,7 +652,6 @@ public partial class WallClockTestsRunIsolated
     [MemberData(nameof(Rows430_2_fixtime_Pending_Data))]
     [Trait("Slice", "430")]
     [Trait("Criterion", "430-2")]
-    [Trait("Status", "Pending")]
     public void Row_430_2_fixtime_pending(string id, string text, string expected)
     {
         // Given a corpus row of the fix-time family (the type-name to declared-name gap (a long whitespace or comment run, or a ? touching the name) of review round 1 (R1-2))
@@ -701,7 +700,6 @@ public partial class WallClockTestsRunIsolated
     [MemberData(nameof(Rows430_3_fixwaitasync_Pending_Data))]
     [Trait("Slice", "430")]
     [Trait("Criterion", "430-3")]
-    [Trait("Status", "Pending")]
     public void Row_430_3_fixwaitasync_pending(string id, string text, string expected)
     {
         // Given a corpus row of the fix-waitasync family (the WaitAsync first-argument token forms and limit forms in each encoding of review round 1 (R1-3))

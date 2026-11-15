@@ -5,10 +5,11 @@ namespace Avowry.Acceptance.Tests;
 
 // Slice 417, extended by card 430: a test class that asserts a wall-clock limit must run in
 // Collection("Isolated timing"). The scan recognises the card 430 spellings, test-type shapes,
-// and keeps ruling 4's named limits as not recognised. Offline text scan of this project (no build,
-// no process). The Code variant blanks comments, string contents and char literals; the Text variant
-// blanks comments only. Newlines are kept. Nested types count toward their parent. Partial classes
-// merge by name. Fixtures are in-memory strings.
+// and keeps ruling 4's named limits as not recognised. Card 430 fix round 1 applies linear-time
+// declaration patterns and token forms that are not limits. Offline text scan of this project
+// (no build, no process). The Code variant blanks comments, string contents and char literals;
+// the Text variant blanks comments only. Newlines are kept. Nested types count toward their parent.
+// Partial classes merge by name. Fixtures are in-memory strings.
 public partial class WallClockTestsRunIsolated
 {
     private const string ThisFile = "WallClockTestsRunIsolated.cs";
@@ -53,14 +54,19 @@ public partial class WallClockTestsRunIsolated
         @"new\s+" + CtsType + @"\s*\(\s*(?!TimeSpan\s*\.)[^)\s]",
         RegexOptions.CultureInvariant);
     private static readonly Regex CtsTargetTyped = new(
-        @"\b" + CtsType + @"\s*\??\s+\w+\s*=\s*new\s*\(\s*[^)\s]",
+        @"\b" + CtsType + @"(?:\s*\?\s*|\s+)\w+\s*=\s*new\s*\(\s*[^)\s]",
         RegexOptions.CultureInvariant);
     private static readonly Regex CtsCancelAfter = new(
         @"\.\s*CancelAfter\s*\(\s*[^)\s]",
         RegexOptions.CultureInvariant);
     // [M] .WaitAsync(limit): an argument that is not empty and not a cancellation token.
+    private static readonly string WaitAsyncTokenForms =
+        @"|cancellationToken\s*:(?!:)" +
+        @"|[\w.]*(?:[Cc]t|[Tt]oken|[Cc]ancel)\s*[,)]" +
+        @"|(?:System\s*\.\s*Threading\s*\.\s*)?Timeout\s*\.\s*Infinite(?:TimeSpan)?\s*[,)]" +
+        @"|CancellationToken\s*\.\s*None\b";
     private static readonly Regex WaitAsyncLimit = new(
-        @"\.\s*WaitAsync\s*\(\s*(?![)]|(?:[\w.]*\.)?(?:\w*[Tt]oken|ct)\s*[,)]|CancellationToken\s*\.\s*None\b)",
+        @"\.\s*WaitAsync\s*\(\s*(?![)]" + WaitAsyncTokenForms + ")",
         RegexOptions.CultureInvariant);
     // [M] Task.WhenAny with Task.Delay in the same type.
     private static readonly Regex WhenAny = new(
@@ -72,10 +78,10 @@ public partial class WallClockTestsRunIsolated
     // [M] HttpClient { Timeout = ... } (new HttpClient, target-typed new(), or name.Timeout = after a declaration); never InfiniteTimeSpan.
     private static readonly string NotInfinite = @"(?!\s*(?:System\s*\.\s*Threading\s*\.\s*)?Timeout\s*\.\s*InfiniteTimeSpan\b)";
     private static readonly Regex HttpTimeoutInit = new(
-        @"(?:new\s+HttpClient\b|\bHttpClient\s*\??\s+\w+\s*=\s*new\s*\()[^;]{0,400}?\bTimeout\s*=(?!=)" + NotInfinite,
+        @"(?:new\s+HttpClient\b|\bHttpClient(?:\s*\?\s*|\s+)\w+\s*=\s*new\s*\()[^;]{0,400}?\bTimeout\s*=(?!=)" + NotInfinite,
         RegexOptions.CultureInvariant);
     private static readonly Regex HttpDeclared = new(
-        @"\b(?:HttpClient\s*\??|var)\s+(\w+)\s*=\s*new\s+HttpClient\b|\bHttpClient\s*\??\s+(\w+)\s*=\s*new\s*\(",
+        @"\b(?:HttpClient(?:\s*\?\s*|\s+)|var\s+)(\w+)\s*=\s*new\s+HttpClient\b|\bHttpClient(?:\s*\?\s*|\s+)(\w+)\s*=\s*new\s*\(",
         RegexOptions.CultureInvariant);
     private static readonly Regex HttpTimeoutAssigned = new(
         @"\b(\w+)\s*\.\s*Timeout\s*=(?!=)" + NotInfinite,

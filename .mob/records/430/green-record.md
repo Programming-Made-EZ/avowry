@@ -52,3 +52,48 @@
 ## Model report
 
 - No CLI model line was shown in the command outputs in this run.
+
+## Fix round 1 green
+
+### git diff --stat
+
+```
+ .../GeneratedApiBoundAddressEdges.cs               |  1 +
+ tests/Avowry.Acceptance.Tests/StarvationProbe.cs   |  1 +
+ tests/Avowry.Acceptance.Tests/WallClockFix430.cs   |  2 --
+ .../WallClockSpellings430.cs                       |  1 -
+ .../WallClockTestsRunIsolated.cs                   | 22 ++++++++++++++--------
+ 5 files changed, 16 insertions(+), 11 deletions(-)
+```
+
+### Pattern deltas (exact old -> new)
+
+- `HttpTimeoutInit`
+  - old: `@"(?:new\s+HttpClient\b|\bHttpClient\s*\??\s+\w+\s*=\s*new\s*\()[^;]{0,400}?\bTimeout\s*=(?!=)" + NotInfinite`
+  - new: `@"(?:new\s+HttpClient\b|\bHttpClient(?:\s*\?\s*|\s+)\w+\s*=\s*new\s*\()[^;]{0,400}?\bTimeout\s*=(?!=)" + NotInfinite`
+- `HttpDeclared`
+  - old: `@"\b(?:HttpClient\s*\??|var)\s+(\w+)\s*=\s*new\s+HttpClient\b|\bHttpClient\s*\??\s+(\w+)\s*=\s*new\s*\("`
+  - new: `@"\b(?:HttpClient(?:\s*\?\s*|\s+)|var\s+)(\w+)\s*=\s*new\s+HttpClient\b|\bHttpClient(?:\s*\?\s*|\s+)(\w+)\s*=\s*new\s*\("`
+- `CtsTargetTyped`
+  - old: `@"\b" + CtsType + @"\s*\??\s+\w+\s*=\s*new\s*\(\s*[^)\s]"`
+  - new: `@"\b" + CtsType + @"(?:\s*\?\s*|\s+)\w+\s*=\s*new\s*\(\s*[^)\s]"`
+- `WaitAsyncLimit` helper set
+  - old exclusion forms: `(?:[\w.]*\.)?(?:\w*[Tt]oken|ct)\s*[,)]|CancellationToken\s*\.\s*None\b`
+  - new exclusion forms: `cancellationToken\s*:(?!:)|[\w.]*(?:[Cc]t|[Tt]oken|[Cc]ancel)\s*[,)]|(?:System\s*\.\s*Threading\s*\.\s*)?Timeout\s*\.\s*Infinite(?:TimeSpan)?\s*[,)]|CancellationToken\s*\.\s*None\b`
+- `WaitAsyncLimit`
+  - old: `@"\.\s*WaitAsync\s*\(\s*(?![)]|(?:[\w.]*\.)?(?:\w*[Tt]oken|ct)\s*[,)]|CancellationToken\s*\.\s*None\b)"`
+  - new: `@"\.\s*WaitAsync\s*\(\s*(?![)]" + WaitAsyncTokenForms + ")"`
+
+### Command summary lines
+
+- `dotnet build Avowry.sln -c Debug`: Build succeeded. 0 Warning(s), 0 Error(s).
+- `dotnet test tests/Avowry.Acceptance.Tests/Avowry.Acceptance.Tests.csproj --no-build -c Debug --filter "Slice=430"`: Passed. Failed: 0, Passed: 358, Skipped: 0, Total: 358.
+- `dotnet test tests/Avowry.Acceptance.Tests/Avowry.Acceptance.Tests.csproj --no-build -c Debug --filter "Slice=417"`: Passed. Failed: 0, Passed: 25, Skipped: 0, Total: 25.
+
+### WallClockTestsRunIsolated.cs line count
+
+- `857`
+
+### Model report
+
+- No CLI model line was shown in command output.

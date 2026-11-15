@@ -978,7 +978,6 @@ public partial class WallClockTestsRunIsolated
     [Fact]
     [Trait("Slice", "430")]
     [Trait("Criterion", "430-5")]
-    [Trait("Status", "Pending")]
     public void E_the_nine_real_classes_with_short_hard_limits_carry_the_isolated_collection()
     {
         // Given the real source files of the nine classes that assert a short hard limit (the card's five, the two of ruling 2 and the two of R1-1)
