@@ -9,7 +9,7 @@ Every number below was MEASURED in `<scratchpad>/probe439` (net8.0, RollForward 
 - the replaced regex at 7ee5411 (`regex`);
 - card 439's 405 committed test rows, both forms, extracted from `PathScan439.cs` (probe mode `committed`).
 
-The heavy lock was checked before every build (free each time). No test was run.
+The heavy lock was checked before every build. Until it was fixed, the helper printed `free` while play-tracker's train held the lock, so every sweep and timing run was repeated after it cleared (08:38Z, section 5). No test was run.
 
 Path examples here are split strings (`"/home/" + "<user>"`). The corpus file uses the `<user>` placeholder.
 
@@ -141,29 +141,29 @@ Outputs are from the placeholder form; the stand-in form is the same with the na
 
 ## 5. Time (ms, minimum of runs; evidence only, D254)
 
-The machine was loaded: the V4 column of `/=-I` went from 2.3 ms in fix round 3 to 5.7 ms here.
+These are the re-runs from 08:38Z to 08:40Z, with the heavy lock free. The earlier timings and sweeps, from about 08:05Z, ran while the lock helper misreported play-tracker's train as free, so they were discarded. The sweeps were re-run too, with the same counts.
 
 | Family shape, repeated | 20k: V4 / design | 1M: V4 / design |
 |---|---|---|
-| `-isystem` + home | 0.7 / 0.67 | 33 / 36 |
-| MSVC `/IC:\…\inc /FoC:\…` | 0.7 / 1.07 | 38 / 51 |
-| `MAIL=/var/mail/` + name | 0.9 / 0.43 | 44 / 24 |
-| `-v C:\Users\` + name + `\p:/home/` + name | 0.6 / 0.64 | 31 / 35 |
-| a passwd line | 0.7 / 0.63 | 27 / 36 |
-| JSON `\/home\/` + name | 0.8 / 0.47 | 42 / 24 |
-| `ssh://git@h:22/home/` + name | 0.7 / 0.81 | 40 / 40 |
-| a .NET trace line | 0.6 / 0.46 | 27 / 26 |
-| `~` + name `/x` | 0.9 / 0.31 | 42 / 18 |
-| `\\?\UNC\…` | 0.5 / 0.50 | 25 / 28 |
-| `/tmp/x:` list | 1.3 / 2.65 | 58 / 124 |
-| adversarial `/t/x:/a/a/…` | 1.3 / 1.99 | 58 / 112 |
-| adversarial one long `/t/x:/a/a/…` | 0.7 / 2.22 | 44 / 115 |
-| `/=-I` | 5.7 / 7.46 | 75 / 98 |
+| `-isystem` + home | 0.3 / 0.28 | 19 / 16 |
+| MSVC `/IC:\…\inc /FoC:\…` | 0.3 / 0.51 | 17 / 29 |
+| `MAIL=/var/mail/` + name | 0.4 / 0.26 | 31 / 12 |
+| `-v C:\Users\` + name + `\p:/home/` + name | 0.4 / 0.46 | 22 / 26 |
+| a passwd line | 0.4 / 0.27 | 20 / 27 |
+| JSON `\/home\/` + name | 0.7 / 0.40 | 32 / 18 |
+| `ssh://git@h:22/home/` + name | 0.6 / 0.61 | 29 / 31 |
+| a .NET trace line | 0.3 / 0.26 | 19 / 24 |
+| `~` + name `/x` | 0.5 / 0.17 | 29 / 12 |
+| `\\?\UNC\…` | 0.3 / 0.34 | 16 / 20 |
+| `/tmp/x:` list | 0.5 / 1.28 | 22 / 50 |
+| adversarial `/t/x:/a/a/…` | 0.8 / 1.68 | 38 / 83 |
+| adversarial one long `/t/x:/a/a/…` | 0.7 / 1.48 | 28 / 83 |
+| `/=-I` | 2.3 / 2.95 | 30 / 40 |
 
 - Further shapes, all linear:
   - adversarial: `-aaaa…/`, ` -abcdefgh/` repeated, one long ssh host, `ssh://h/` repeated, a `~aaaa…` run, a `\/home\/` run;
-  - the 22 card 439 slice shapes: at most 4.3 ms at 20k and 106 ms at 1M under this load.
-- Every 5k → 10k → 20k series about doubles.
+  - the 22 card 439 slice shapes: at most 2.1 ms at 20k and 85 ms at 1M.
+- The worst design shape is 2.95 ms at 20k and 83 ms at 1M. Every 5k → 10k → 20k series about doubles.
 - **The cost of rule 4:** a one-letter colon chain reads its next entry twice, so it costs about twice V4.
 
 ## 6. Points to rule on
@@ -172,4 +172,4 @@ The machine was loaded: the V4 column of `/=-I` went from 2.3 ms in fix round 3 
 2. **Rule 4c's outputs.** It turns V4's unstable `x:/data` into `<path>:/data`, which keeps the `:/data` the regex drops (`<path>data`). Nothing was committed for these shapes, so no pinned row changes. Adopt?
 3. **The slash-flag limits (rule 1b).** One or two letters, before `X:\` or `\\` only, so `/proj:/app` and `/pj:/app` stay text. `/LIBPATH:C:\…` needs no rule: it is already a root after `:`.
 4. **Rows that cannot live in the corpus file.** The `u1a` killing row and the `https://a/` + `Users/x` row hold a literal name, so the red writes them as split strings in test code.
-Size: 13582 bytes
+Size: 13940 bytes
