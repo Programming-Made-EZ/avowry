@@ -3,8 +3,8 @@ using System.Text;
 
 // Shared by Avowry.Bench and, as a linked file, Avowry.BenchCs. Platform independent on purpose:
 // Path.GetFileName would not split a Windows path on Linux.
-// Card 441 design: a linear scanner with the card 441 fixes from the reference slice.
-// Known pinned limits (named in slice-rulings.md): 2.5n, 3.4d, 3.8a-d, 9b, and the pinned MINOR rows.
+// Card 441 design: a linear scanner, ported from the fixed reference scanner (fix round 1).
+// Known pinned limits (named in slice-rulings.md): 2.5n, 3.4d, 3.8a-d, 9b, and pinned MINOR rows.
 public static class PathScrub
 {
     public static string Apply(string? text)
@@ -19,7 +19,7 @@ public static class PathScrub
         // ---- constants (each listed once) ----
         private const string PathMark = "<path>";                         // output for a path with no short name; never a UNC host
         private static readonly string[] AccountParents = { "users", "home", "documents and settings" }; // any case: a folder that holds account folders
-        private static readonly string[] DriveParents = { "users", "documents and settings" };          // any case: the first folder after a drive
+        private static readonly string[] DriveParents = { "users", "documents and settings", "documents%20and%20settings" };          // any case: the first folder after a drive
         private static readonly string[] UnixFixedRoots = { "/root/", "/tmp/", "/var/tmp/", "/var/folders/", "/private/tmp/", "/private/var/folders/" };
         private const string EscLetters = "nrtbf";                         // \n \r \t \b \f: end a path, open a new one
         private const string NameStops = "\\/\"'`|*?:;,<>[]";             // never in a folder name (plus \r \n)
@@ -38,7 +38,8 @@ public static class PathScrub
         // starts the final name of a Unix or `~` chain: `.../alice:/data`, `C:\...\proj:/app` and `/tmp/x:/home/...` are colon lists.
         // (b) also holds in a drive or UNC chain after a folder when an account marker follows (`C:\tmp\x:/home/...`).
         private bool finalAfterFolder;
-        private bool OwnLetter(int j) => At(j + 2) == '/' &&
+        private bool ColonSlash(int j) => At(j + 2) == '/' || (At(j + 2) == '\\' && At(j + 3) == '/');
+        private bool OwnLetter(int j) => ColonSlash(j) &&
             (AsciiWord(At(j - 1))
              || (j == finalStart && (slashChain || (finalAfterFolder && UnixRootAt(j + 2)))));
 
@@ -148,9 +149,11 @@ public static class PathScrub
             if (!(Ascii(At(q)) && At(q + 1) == ':')) return false;
             // Adjacency (after any path) only for `file:///` or a backslash drive (`X:\`):
             // `…/lib:/home/…` and `C:\…\proj:/app` are colon lists, not a drive `b:` or `j:`.
-            var glue = q > p || At(q + 2) == '\\';
-            // A bare `X:/` right after `/` is no drive: `a/b:/home/...` is a colon list (`file:///C:/` is read at its `f`).
-            if (q == p && At(p - 1) == '/' && At(q + 2) == '/') return false;
+            // `X:\/` is an escaped `X:/` (JSON), not a backslash drive.
+            var glue = q > p || (At(q + 2) == '\\' && At(q + 3) != '/');
+            // A bare `X:/` right after `/` is no drive (`a/b:/home/...` is a colon list), unless the previous path ended
+            // there or its first folder is a drive account parent (`/c:/users/...`, `jar:file:/C:/Documents%20and%20Settings/...`).
+            if (q == p && At(p - 1) == '/' && At(q + 2) == '/' && p != prevEnd && !DriveParentAhead(q + 3)) return false;
             if (!StartOk(p, p == 0 || !AsciiWord(t[p - 1]), glue, out var esc, At(q + 2) == '\\')) return false;
             q += 2;
             if (!RootSep(ref q, out var sgl)) return false;
@@ -257,6 +260,14 @@ public static class PathScrub
         {
             if (ok && ssh) repl = "/" + repl;
             return ok;
+        }
+
+        // A drive account parent (DriveParents, any case) followed by a separator starts at i.
+        private bool DriveParentAhead(int i)
+        {
+            foreach (var h in DriveParents)
+                if (HasCi(i, h) && Sep(At(i + h.Length))) return true;
+            return false;
         }
 
         // `ssh://[user@]host[:port]` or `sftp://...` right before p: the path is a file-system path, not a web path.

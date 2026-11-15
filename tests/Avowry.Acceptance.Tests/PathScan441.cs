@@ -341,8 +341,6 @@ public sealed class PathScan441
     [MemberData(nameof(Fix1ShapesPending))]
     [Trait("Slice", "441")]
     [Trait("Criterion", "441-1")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 441 fix green that ports the reference scanner
     public void Id_441_1_fix1_java_uri_and_escaped_json_shapes(string id, string input, string expected)
     {
         // Given a Java or URI form with a drive after a slash, or a JSON string with escaped slashes (card 441 review round 1)
@@ -369,8 +367,6 @@ public sealed class PathScan441
     [MemberData(nameof(Fix1ChainsPending))]
     [Trait("Slice", "441")]
     [Trait("Criterion", "441-2")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 441 fix green that ports the reference scanner
     public void Id_441_2_fix1_forward_slash_volume_specs(string id, string input, string expected)
     {
         // Given a Windows forward-slash volume spec with a one-letter folder before a colon-slash (card 441 review round 1)
