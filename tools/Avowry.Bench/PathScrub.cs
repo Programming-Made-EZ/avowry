@@ -30,6 +30,11 @@ public static class PathScrub
         private readonly int n;
         private int prevEnd = -1;
         private int deadFrom = -1, deadTo = -2;
+        private char lastForm;
+        private int finalStart = -1;
+        private bool slashChain;
+        // In a Unix or `~` chain, a final name that is one letter before `:/` keeps it: `/tmp/x:/home/...` is a colon list.
+        private bool OwnLetter(int j) => slashChain && j == finalStart && At(j + 2) == '/';
 
         public Scan(string text) { t = text; n = text.Length; }
 
@@ -125,7 +130,10 @@ public static class PathScrub
             repl = "";
             var q = Has(p, "file:///") ? p + 8 : p;
             if (!(Ascii(At(q)) && At(q + 1) == ':')) return false;
-            if (!StartOk(p, p == 0 || !AsciiWord(t[p - 1]), true, out var esc)) return false;
+            // Adjacency after a Unix or `~` path only for `file:///` or a backslash drive (`X:\`):
+            // `…/lib:/home/…` is a colon list, not a drive `b:`.
+            var glue = q > p || !(lastForm is 'X' or 'T') || At(q + 2) == '\\';
+            if (!StartOk(p, p == 0 || !AsciiWord(t[p - 1]), glue, out var esc)) return false;
             q += 2;
             if (!RootSep(ref q, out var sgl)) return false;
             return Chain(q, 'D', sgl, esc, false, out end, out repl);
@@ -199,17 +207,14 @@ public static class PathScrub
             return false;
         }
 
-        // `/home/`, `/Users/` (exact case), or `/x/users/` and `/mnt/x/users/` (x a lowercase drive letter, `users` any case).
+        // `/home/`, `/Users/` (exact case), or `/x/users/` (x a lowercase drive letter, `users` any case).
+        // `/mnt/x/users/` needs no rule of its own: the walk passes `/mnt` and finds `/x/users/` with the same end.
         private int AccountMarkerAt(int w)
         {
             if (Has(w, "/home/")) return 6;
             if (Has(w, "/Users/")) return 7;
-            foreach (var k in new[] { Has(w, "/mnt/") ? w + 4 : -1, w })
-            {
-                if (k < 0) continue;
-                if (At(k) == '/' && At(k + 1) is >= 'a' and <= 'z' && At(k + 2) == '/' && HasCi(k + 3, "users") && At(k + 8) == '/')
-                    return k + 9 - w;
-            }
+            if (At(w + 1) is >= 'a' and <= 'z' && At(w + 2) == '/' && HasCi(w + 3, "users") && At(w + 8) == '/')
+                return 9;
             return 0;
         }
 
@@ -227,7 +232,7 @@ public static class PathScrub
             if (c == '\\') return LetterEscAt(j) ? 6 : 0;
             if (c == '\'') return Apostrophe(j) ? 1 : 0;
             if (final)
-                return Space(c) || FinalStops.IndexOf(c) >= 0 || RootStartAt(j) ? 0 : 1;
+                return Space(c) || FinalStops.IndexOf(c) >= 0 || (RootStartAt(j) && !OwnLetter(j)) ? 0 : 1;
             if (c is '\r' or '\n' || NameStops.IndexOf(c) >= 0) return 0;
             // A folder name never holds whitespace followed by an opener (a glued flag `-X`, or `(`) and a root.
             if (Space(c) && At(j + 1) == '-' && Ascii(At(j + 2)) && RootAhead(j + 3)) return 0;
@@ -313,6 +318,7 @@ public static class PathScrub
                 break;
             }
             if (unc && dirs == 0) return false; // `\\host` alone is no UNC path
+            finalStart = q; slashChain = form is 'X' or 'T';
             var f1 = q;
             for (var k = Token(f1, true); k > 0; k = Token(f1, true)) f1 += k;
             // The final name is an account folder after the root's own marker or after an account parent.
@@ -320,6 +326,7 @@ public static class PathScrub
             end = account ? Tail(f1) : f1;
             var file = t.Substring(q, f1 - q);
             repl = file.Length == 0 || file == "~" || account ? PathMark : file;
+            lastForm = form;
             return true;
         }
 

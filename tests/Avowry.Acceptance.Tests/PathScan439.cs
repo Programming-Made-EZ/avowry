@@ -329,8 +329,6 @@ public sealed class PathScan439
     [MemberData(nameof(Fix2ColonPending))]
     [Trait("Slice", "439")]
     [Trait("Criterion", "439-2")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 439 fix-2 green that ports the reference scanner
     public void Id_439_2_fix2_colon_lists_and_one_letter_names(string id, string input, string expected)
     {
         // Given a Unix colon-separated list or a one-letter name before a colon-slash (review round 2, findings 1 to 3)
@@ -359,8 +357,6 @@ public sealed class PathScan439
     [MemberData(nameof(Fix2MutantsPending))]
     [Trait("Slice", "439")]
     [Trait("Criterion", "439-4")]
-    [Trait("Status", "Pending")]
-    // Pending until the card 439 fix-2 green that ports the reference scanner
     public void Id_439_4_fix2_mutant_killing_rows(string id, string input, string expected)
     {
         // Given the killing row of a round 2 survivor or of a mutant the second fix slice adds (the row id names the mutant)
