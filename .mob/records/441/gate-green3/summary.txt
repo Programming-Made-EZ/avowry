@@ -1,0 +1,8 @@
+tested HEAD: 8be01b707098f71f8828a4230f6eaff982330144
+build exit 0:     0 Warning(s)     0 Error(s) 
+Slice=441 exit 0: 
+Slice=439|Slice=435 exit 0: 
+Status!=Pending exit 0: 
+light: the full suite was skipped while a play-tracker train was alive
+DONE
+facilitator note: counts from the filter logs (the summary grep misses the detailed logger format): Slice=441 161 of 161; Slice=439|Slice=435 341 of 341; Status!=Pending 1011 of 1011, 0 failed. The "light" line is the script fixed text: the run held Avowry own heavy lock (acquired, released); play-tracker held none.
