@@ -19,3 +19,11 @@ The fix slice: slice-fix.md (the architect, ctx-1, in its own probe). Measured: 
 2. `/home/<user>\notes\run-426` becomes `<path>\notes\run-426`: KEPT (the replaced regex's output; neither leaks).
 3. Finding 9b (a contrived chain after an account tail): KEPT as a named limit, MINOR, with 2.5n, 3.4d and 3.8a-d.
 4. The green PORTS the fixed reference (probe439/PathScan.cs without its probe-only mutant switches) instead of reimplementing it: findings 2, 3, 5, 7, 8 and 10 came from the green departing from the design.
+
+## Rulings on the second fix slice (review round 2, 2026-11-15)
+
+The second fix slice: slice-fix2.md (the architect, ctx-1). Measured: all 16 colon-list inputs equal the replaced regex and the pre-435 copy (no leak, stable second pass); 239 of 239 data rows equal today; 57 of 57 mutants killed (48 plus the seven survivors of round 2's finding 5 plus two new); sweeps A, B and C 0 new leaks and 0 second-pass changes (B 4,559, C 2,679); colon shapes at most 0.48 ms at 20,000 characters, every shape linear; the dead `/mnt/` candidate removed.
+
+1. The `drive-parents-take-home` killing row is the architect's (`C:\home\` + `x.cs` gives `x.cs`), not the reviewer's (which would pin a leak).
+2. Device paths (`\?\` and `\.\` before a drive): today's outputs are pinned as characterisation rows (no leak, stable), so a later change is deliberate.
+3. The one-letter final name before `:/` in a Unix or `~` path keeps its letter (removing a leak the replaced regex had): ACCEPTED in this card, with its own mutant.
