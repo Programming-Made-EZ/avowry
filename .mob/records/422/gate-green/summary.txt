@@ -1,0 +1,10 @@
+tested HEAD: 232be6946b4abcafb4605aa31b448ed44cb7cff1
+python unittest exit 0: OK
+build exit 0:     0 Warning(s)     0 Error(s) 
+Slice=422 exit 0:  | wall 9 s from 2026-11-15T20:58:24Z
+Slice=369 exit 0:  | wall 14 s from 2026-11-15T20:58:33Z
+FullyQualifiedName~NoPhCodesInTheLiveTree exit 0:  | wall 23 s from 2026-11-15T20:58:47Z
+Status!=Pending exit 0:  | wall 873 s from 2026-11-15T20:59:10Z
+[S] ceiling: the Status!=Pending wall time above against 900 s
+DONE
+Facilitator note: this gate ran on the round 0 green (232be69). It shows no regression in the existing checks, the networked F5 and F6 included. It does not answer review round 1's BLOCKING 1 and 2: F5 and F6 pass because they do not call the new helpers. The fix round's gate is the one that counts for [E] and [O].
