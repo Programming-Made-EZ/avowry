@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "74a35e3333c7708de5d033a6c31e1fda8e3b78f2bfca08c5f904b009b6b3e203",
+  "probe": {
+    "taken_at": "2026-11-15T15:27:29.725345Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-8f8a2a40-08c5-441f-9405-d12f29e9ec78)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=0586ab68-f2ad-4435-9f52-65350dc314cf]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "From the audit lens, this declaration is fully verifiable from git history alone. Committing the real-shape corpus of at least five families and input encodings prior to the red slice guarantees that every accepted spelling variant, referen",
+      "reply": "Yes\nFrom the audit lens, this declaration is fully verifiable from git history alone. Committing the real-shape corpus of at least five families and input encodings prior to the red slice guarantees that every accepted spelling variant, reference change, and regression check is permanently preserved in the commit graph. Requiring exact models and services to be pinned and recorded before any seat runs closes loopholes around unrecorded environment drift or invisible seat substitutions. The separation of the adversarial review and sign-off seats, coupled with committing measurements against the test project, ensures compliance with standing practices without relying on transient session state.\nCITE: The slice commits the D263 and D265 real-shape corpus\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From the audit lens, this declaration is fully verifiable from git history alone. Committing the real-shape corpus of at least five families and input encodings prior to the red slice guarantees that every accepted spelling variant, referen"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T15:27:29.725345Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2609
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "2bb5d09ab4cd462cd4cfd9050193d511060e8bc4",
+  "head_end": "2bb5d09ab4cd462cd4cfd9050193d511060e8bc4",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

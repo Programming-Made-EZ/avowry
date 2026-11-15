@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "4d2c27a9d98f4dd27db63176d34dedbe8067d3bfaf9f86060b208a3c1399cc96",
+  "probe": {
+    "taken_at": "2026-11-15T15:27:34.928342Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-8a25c8fc-48b7-45c5-b919-77f1dfbd683a)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=f5f8a7dc-2aa0-4717-b7e9-c398da9e2ee2]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "dev": {
+      "vote": "Yes",
+      "reason": "The rules are workable, unambiguous, and fair to backend implementation. Committing the real-shape corpus before red establishes clear expectations and grounded test inputs across all encodings, eliminating guesswork. Decoupling the mechani",
+      "reply": "Yes\nThe rules are workable, unambiguous, and fair to backend implementation. Committing the real-shape corpus before red establishes clear expectations and grounded test inputs across all encodings, eliminating guesswork. Decoupling the mechanical test-writing seat from the green porting seat preserves clean TDD boundaries, prevents gaming, and ensures slice compliance without friction.\n\nCITE: at least five families of time-limit spellings and near misses\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The rules are workable, unambiguous, and fair to backend implementation. Committing the real-shape corpus before red establishes clear expectations and grounded test inputs across all encodings, eliminating guesswork. Decoupling the mechani"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T15:27:34.928342Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2611
+    }
+  },
+  "counted_seats": [
+    "dev"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "2bb5d09ab4cd462cd4cfd9050193d511060e8bc4",
+  "head_end": "2bb5d09ab4cd462cd4cfd9050193d511060e8bc4",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "dev": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

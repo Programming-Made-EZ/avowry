@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "ada0c287dc9dea0abb80218629207859560a5cc97f7eb90758acacf5cb657dbb",
+  "probe": {
+    "taken_at": "2026-11-15T15:27:31.285104Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-fee31e3c-21e9-4af1-a997-1598ba1c9e4c)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=bc47b36b-5956-49bd-801a-392d08b733e0]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The design is sound, minimal, and enforceable without false positives. Committing the multi-family corpus across five families and diverse encodings (plain code, comments, string literals, attribute lists, nested types) before the red phase",
+      "reply": "Yes\nThe design is sound, minimal, and enforceable without false positives. Committing the multi-family corpus across five families and diverse encodings (plain code, comments, string literals, attribute lists, nested types) before the red phase establishes an empirical baseline that prevents false positives. Validating the reference guard against both the corpus and the real test project ensures precision, while the separated adversarial review provides independent verification.\n\nCITE: at least five families of time-limit spellings and near misses\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The design is sound, minimal, and enforceable without false positives. Committing the multi-family corpus across five families and diverse encodings (plain code, comments, string literals, attribute lists, nested types) before the red phase"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T15:27:31.285104Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2610
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "2bb5d09ab4cd462cd4cfd9050193d511060e8bc4",
+  "head_end": "2bb5d09ab4cd462cd4cfd9050193d511060e8bc4",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

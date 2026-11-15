@@ -1702,5 +1702,11 @@
     "status": "adopted",
     "title": "Card 441 retro pick: D263's corpus also covers the function's input encodings, and each fix slice commits the fixed rule's neighbour variants before its red",
     "order": 256
+  },
+  "D266": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 430: task force declaration (models pinned per role) and Ready text (the wall-clock guard recognises the missed time-limit spellings, and the hard-limit tests run isolated)",
+    "order": 257
   }
 }

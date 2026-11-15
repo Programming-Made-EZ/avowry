@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "0c6f2310057127af2432bd5960dc042955d153bf987ecff7a324b4c3d9540ae9",
+  "probe": {
+    "taken_at": "2026-11-15T15:27:37.279887Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-770c506a-a366-4c36-a0e7-b64c0eb05438)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=9fb856bc-d8a7-41ff-b068-3bdb5a3f906e]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK The process cannot access the file because it is being used by another process."
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The task force is appropriately sized for card 430. Five distinct seats cleanly separate corpus slicing, mechanical red tests, green implementation, adversarial review, and independent sign-off without unnecessary ceremony or bloat. The mod",
+      "reply": "Yes\nThe task force is appropriately sized for card 430. Five distinct seats cleanly separate corpus slicing, mechanical red tests, green implementation, adversarial review, and independent sign-off without unnecessary ceremony or bloat. The model tiers match each role's responsibilities, and staging light work prior to the heavy-run lock maintains agility while safeguarding resources.\n\nCITE: each role in its own context; models pinned at launch\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The task force is appropriately sized for card 430. Five distinct seats cleanly separate corpus slicing, mechanical red tests, green implementation, adversarial review, and independent sign-off without unnecessary ceremony or bloat. The mod"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T15:27:37.279887Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2614
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "2bb5d09ab4cd462cd4cfd9050193d511060e8bc4",
+  "head_end": "2bb5d09ab4cd462cd4cfd9050193d511060e8bc4",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "c65db54e09356e11e218173115e5cbe1322d0ec82bf1e4bb5dd67f85354b4857",
+  "probe": {
+    "taken_at": "2026-11-15T15:27:36.418074Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-cbd41b09-72a5-4e7e-ad44-9a163518ca34)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=5b86dcd8-7e2f-403d-968e-230036cab156]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "Every rule can be tested red first under Clause 3, which mandates committing the multi-family real-shape corpus and neighbor variants before Dev writes mechanical red tests under the Pending convention. The diverse input encodings (plain co",
+      "reply": "Yes\nEvery rule can be tested red first under Clause 3, which mandates committing the multi-family real-shape corpus and neighbor variants before Dev writes mechanical red tests under the Pending convention. The diverse input encodings (plain code, comments, string literals, attribute lists, nested and partial types) prevent false passes, while the dedicated adversarial QA review actively probes for unhandled spellings to ensure no bad state slips through.\n\nCITE: at least five families of time-limit spellings and near misses\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Every rule can be tested red first under Clause 3, which mandates committing the multi-family real-shape corpus and neighbor variants before Dev writes mechanical red tests under the Pending convention. The diverse input encodings (plain co"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T15:27:36.418074Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2613
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "2bb5d09ab4cd462cd4cfd9050193d511060e8bc4",
+  "head_end": "2bb5d09ab4cd462cd4cfd9050193d511060e8bc4",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}
