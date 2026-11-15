@@ -143,3 +143,31 @@ volume-winslash	  - C:/work/d:/data	  - <path>data
 volume-winslash	file:///C:/a/b:/x	<path>x
 volume-winslash	-IC:/x/I:/y	-I<path>y
 volume-winslash	docker run -v C:/Users/<user>/proj:/app x	docker run -v proj:/app x
+
+# fix round 2 (card 441 review round 2): a drive after '/' followed by a doubled or mixed separator run (finding 1),
+# a lone one-letter folder before the escaped ':\/' in JSON lists and volumes (finding 2), MINORs 3 to 5, and the killing
+# rows of the surviving mutants m7 and m10 (m4's row is MINOR 3's row).
+java-uri	/C://Users//<user>//x	/x
+java-uri	file:/C://Users/<user>/x	file:/x
+java-uri	jar:file:/c://users/<user>/x.class	jar:file:/x.class
+java-uri	jar:file:/c:///users/<user>/x	jar:file:/x
+java-uri	jar:file:/C://Documents and Settings/<user>/x	jar:file:/x
+java-uri	x/c:/\users\<user>\x	x/x
+java-uri	file:/C://Documents%20and%20Settings/<user>/x.jar	file:/x.jar
+json-escaped	{"Binds":["\/home\/<user>\/d:\/data"]}	{"Binds":["<path>:\/data"]}
+json-escaped	{"Binds":["\/home\/<user>\/d:\/data:ro"]}	{"Binds":["<path>:\/data:ro"]}
+json-escaped	{"PATH":"\/home\/<user>\/x:\/usr\/bin"}	{"PATH":"<path>:\/usr\/bin"}
+json-escaped	{"env":"PYTHONPATH=\/home\/<user>\/l:\/opt\/x"}	{"env":"PYTHONPATH=<path>:\/opt\/x"}
+json-escaped	{"env":"PYTHONPATH=\/home\/<user>\/l:\/home\/<user>"}	{"env":"PYTHONPATH=l:<path>"}
+json-escaped	{"mount":"\/Users\/<user>\/s:\/src"}	{"mount":"<path>:\/src"}
+json-escaped	{"volumes":["\/home\/<user>\/d:\/home\/<user>"]}	{"volumes":["d:<path>"]}
+json-escaped	{"files":"\/home\/<user>\/x:\/tmp\/y"}	{"files":"<path>:\/tmp\/y"}
+# MINOR 3 (review round 2), fixed: an escaped X:\/ right after a word glued to an account tail glues (stable; equals ede15fd)
+minor	C:\Users\<user>(1)xC:\/a\/y	<path>y
+# pinned: MINOR 4 (contrived; ruling 1): a mixed encoded and plain space is not decoded; pre435 and the regex scrub it
+minor	file:/C:/Documents%20and Settings/<user>/x	file:/C:/Documents%20and Settings/<user>/x
+# pinned: MINOR 5 (older; all three scanners leak): an escaped X:\/ right after \/ is read as a drive
+minor	{"PATH":"\/opt\/b:\/home\/<user>"}	{"PATH":"\/opt\/<user>"}
+env	PATH=/opt/b:/userspace/x	PATH=/opt/b:/userspace/x
+java-uri	x/c:\tools\<user>\a.cs	x/a.cs
+json-escaped	{"PATH":"\/opt\/x:\/opt\/y"}	{"PATH":"\/opt\/y"}

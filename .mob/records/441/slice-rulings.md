@@ -15,3 +15,14 @@ The fix slice: slice-fix.md (the architect, ctx-1; built and measured only after
 
 1. Percent-decoding only `documents%20and%20settings`, nothing else: ACCEPTED; general URI decoding would be a new card.
 2. Any `X:/` may start where the previous path ended (the exception that keeps the volume specs stable, matching the scanner before this card): ACCEPTED.
+
+## Rulings on the fix slice (review round 2, 2026-11-15)
+
+The fix slice: slice-fix2.md (the architect, claude opus = claude-opus-5-5, a fresh context for ctx-1). Measured: the pre-fix reference (PathScanV6) equals the green at 389d790 on 1,918 rows in both forms and the 11 blow-up units; both BLOCKING findings fixed behind new mutant switches; the only changed outputs are the finding and MINOR 3 rows; no committed row, sweep (A 0, B 4,559, C 2,679 leaks, unchanged) or blow-up second pass changed; the corpus now 151 rows in 11 families (21 added under `# fix round 2`); 93 of 95 mutants killed, m4 and m11 named equivalent; every shape linear (the worst 81 ms at 1,000,000 characters).
+
+1. Finding 2's root exception: the lone letter is kept before an escaped account root (`d:\/home\/` gives `d:<path>`), like the unescaped rule, rather than the reviewer's `<path>:<path>`: ACCEPTED (stable, no leak, consistent with the unescaped form).
+2. MINOR 5 (an escaped `X:\/` right after `\/` not refused like rule 3e): stays a PINNED row with its current output; the measured narrow fix (`cand-minor5`) changes the m10 killing row, so it fails clause 3 of D264; it goes to the follow-up card with the other older MINORs.
+3. The forward-slash sibling of MINOR 3 (`C:\Users\` + name + `(1)xC:/a/y` changes on pass 2, no leak; unstable in V6 too): a NAMED LIMIT of this card, not a row (an unstable output cannot be pinned) and not fixed here (the fix changes two of card 439's committed rows); it goes to the follow-up card.
+4. MINOR 3 fixed by a narrow change (an escaped `X:\/` starting where a word glued to an account tail ended is a drive): ACCEPTED; no other row changes.
+
+A breach to record: one chained probe command in the architect's session ran a few-second pass with the already-built binary right after the lock check printed `busy` (play-tracker's #1017 E2E); no build ran; the pass was re-run after the lock cleared and its numbers come from the re-run.
