@@ -1,0 +1,2306 @@
+Test run for C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\bin\Debug\net8.0\Avowry.Acceptance.Tests.dll
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.34)
+[xUnit.net 00:00:00.63]   Discovering: Avowry.Acceptance.Tests
+[xUnit.net 00:00:00.87]   Discovered:  Avowry.Acceptance.Tests
+[xUnit.net 00:00:00.87]   Starting:    Avowry.Acceptance.Tests
+[xUnit.net 00:00:01.28]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5g", input: "C:\\Users\\<user>(bb'cc)", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.28]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.28]       Expected: "<path>"
+[xUnit.net 00:00:01.28]       Actual:   "<path>(bb'cc)"
+[xUnit.net 00:00:01.28]                        ↑ (pos 6)
+[xUnit.net 00:00:01.28]       Stack Trace:
+[xUnit.net 00:00:01.28]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.28]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.28]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:01.28]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+[xUnit.net 00:00:01.28]       Output:
+[xUnit.net 00:00:01.28]         row 2.5g
+[xUnit.net 00:00:01.29]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.13", input: "\\\\host\\c$\\Documents and Settings\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.29]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.29]                   ↓ (pos 1)
+[xUnit.net 00:00:01.29]       Expected: "<path>"
+[xUnit.net 00:00:01.29]       Actual:   "<user>"
+[xUnit.net 00:00:01.29]                   ↑ (pos 1)
+[xUnit.net 00:00:01.29]       Stack Trace:
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.29]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.29]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.29]       Output:
+[xUnit.net 00:00:01.29]         row 2.13
+[xUnit.net 00:00:01.29]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5a", input: "C:\\Users\\<user>(\\u00f6bb)", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.29]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.29]       Expected: "<path>"
+[xUnit.net 00:00:01.29]       Actual:   "<path>(\\u00f6bb)"
+[xUnit.net 00:00:01.29]                        ↑ (pos 6)
+[xUnit.net 00:00:01.29]       Stack Trace:
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.29]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.29]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.29]       Output:
+[xUnit.net 00:00:01.29]         row 2.5a
+[xUnit.net 00:00:01.29]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6a", input: "gcc /tmp/a.c -I/home/<user>", expected: "gcc a.c -I<path>") [FAIL]
+[xUnit.net 00:00:01.29]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.29]                      ↓ (pos 4)
+[xUnit.net 00:00:01.29]       Expected: "gcc a.c -I<path>"
+[xUnit.net 00:00:01.29]       Actual:   "gcc <user>"
+[xUnit.net 00:00:01.29]                      ↑ (pos 4)
+[xUnit.net 00:00:01.29]       Stack Trace:
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.29]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.29]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.29]       Output:
+[xUnit.net 00:00:01.29]         row 2.6a
+[xUnit.net 00:00:01.29]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8b", input: "\\t/tmp/a.\\\\host\\Users\\<user>", expected: "\\t<path>") [FAIL]
+[xUnit.net 00:00:01.29]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.29]                      ↓ (pos 3)
+[xUnit.net 00:00:01.29]       Expected: "\\t<path>"
+[xUnit.net 00:00:01.29]       Actual:   "\\t<user>"
+[xUnit.net 00:00:01.29]                      ↑ (pos 3)
+[xUnit.net 00:00:01.29]       Stack Trace:
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.29]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.29]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.29]       Output:
+[xUnit.net 00:00:01.29]         row 3.8b
+[xUnit.net 00:00:01.29]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5d", input: "/home/<user>(\\u00f6bb)", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.29]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.29]       Expected: "<path>"
+[xUnit.net 00:00:01.29]       Actual:   "<path>(\\u00f6bb)"
+[xUnit.net 00:00:01.29]                        ↑ (pos 6)
+[xUnit.net 00:00:01.29]       Stack Trace:
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.29]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.29]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.29]       Output:
+[xUnit.net 00:00:01.29]         row 2.5d
+[xUnit.net 00:00:01.29]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.2e", input: "\\\\\\\\host\\\\sh\\u00f6re\\\\Users\\\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.29]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.29]                   ↓ (pos 1)
+[xUnit.net 00:00:01.29]       Expected: "<path>"
+[xUnit.net 00:00:01.29]       Actual:   "<user>"
+[xUnit.net 00:00:01.29]                   ↑ (pos 1)
+[xUnit.net 00:00:01.29]       Stack Trace:
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.29]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.29]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.29]       Output:
+[xUnit.net 00:00:01.29]         row 3.2e
+[xUnit.net 00:00:01.29]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6b", input: "gcc /tmp/a.c -I/Users/<user>", expected: "gcc a.c -I<path>") [FAIL]
+[xUnit.net 00:00:01.29]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.29]                      ↓ (pos 4)
+[xUnit.net 00:00:01.29]       Expected: "gcc a.c -I<path>"
+[xUnit.net 00:00:01.29]       Actual:   "gcc <user>"
+[xUnit.net 00:00:01.29]                      ↑ (pos 4)
+[xUnit.net 00:00:01.29]       Stack Trace:
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.29]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.29]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.29]       Output:
+[xUnit.net 00:00:01.29]         row 2.6b
+[xUnit.net 00:00:01.29]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8f", input: "\\\\/cygdrive/c/Users/<user>/x.cs\\tnext", expected: "\\\\<path>\\tnext") [FAIL]
+[xUnit.net 00:00:01.29]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.29]                      ↓ (pos 2)
+[xUnit.net 00:00:01.29]       Expected: "\\\\<path>\\tnext"
+[xUnit.net 00:00:01.29]       Actual:   "\\\\x.cs\\tnext"
+[xUnit.net 00:00:01.29]                      ↑ (pos 2)
+[xUnit.net 00:00:01.29]       Stack Trace:
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.29]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.29]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.29]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.29]       Output:
+[xUnit.net 00:00:01.29]         row 3.8f
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5g", input: "C:\\Users\\<user>(bb'cc)", expected: "<path>") [354 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>(bb'cc)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Standard Output Messages:
+ row 2.5g
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.13", input: "\\\\host\\c$\\Documents and Settings\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.13
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5a", input: "C:\\Users\\<user>(\\u00f6bb)", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>(\\u00f6bb)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.5a
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6a", input: "gcc /tmp/a.c -I/home/<user>", expected: "gcc a.c -I<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 4)
+Expected: "gcc a.c -I<path>"
+Actual:   "gcc <user>"
+               ↑ (pos 4)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.6a
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8b", input: "\\t/tmp/a.\\\\host\\Users\\<user>", expected: "\\t<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 3)
+Expected: "\\t<path>"
+Actual:   "\\t<user>"
+               ↑ (pos 3)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.8b
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5d", input: "/home/<user>(\\u00f6bb)", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>(\\u00f6bb)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.5d
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.2e", input: "\\\\\\\\host\\\\sh\\u00f6re\\\\Users\\\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.2e
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6b", input: "gcc /tmp/a.c -I/Users/<user>", expected: "gcc a.c -I<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 4)
+Expected: "gcc a.c -I<path>"
+Actual:   "gcc <user>"
+               ↑ (pos 4)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.6b
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8f", input: "\\\\/cygdrive/c/Users/<user>/x.cs\\tnext", expected: "\\\\<path>\\tnext") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 2)
+Expected: "\\\\<path>\\tnext"
+Actual:   "\\\\x.cs\\tnext"
+               ↑ (pos 2)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.8f
+
+
+[xUnit.net 00:00:01.30]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6d", input: "gcc /tmp/a.c -I/home/<user>/include", expected: "gcc a.c -Iinclude") [FAIL]
+[xUnit.net 00:00:01.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.30]                      ↓ (pos 4)
+[xUnit.net 00:00:01.30]       Expected: "gcc a.c -Iinclude"
+[xUnit.net 00:00:01.30]       Actual:   "gcc include"
+[xUnit.net 00:00:01.30]                      ↑ (pos 4)
+[xUnit.net 00:00:01.30]       Stack Trace:
+[xUnit.net 00:00:01.30]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.30]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.30]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.30]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.30]       Output:
+[xUnit.net 00:00:01.30]         row 2.6d
+[xUnit.net 00:00:01.30]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.4d", input: "foo-~\\nx.cs", expected: "foo-~\\nx.cs") [FAIL]
+[xUnit.net 00:00:01.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.30]                      ↓ (pos 4)
+[xUnit.net 00:00:01.30]       Expected: "foo-~\\nx.cs"
+[xUnit.net 00:00:01.30]       Actual:   "foo-nx.cs"
+[xUnit.net 00:00:01.30]                      ↑ (pos 4)
+[xUnit.net 00:00:01.30]       Stack Trace:
+[xUnit.net 00:00:01.30]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.30]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.30]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.30]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.30]       Output:
+[xUnit.net 00:00:01.30]         row 3.4d
+[xUnit.net 00:00:01.30]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5i", input: "C:\\Users\\<user> bb.(cc)", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.30]       Expected: "<path>"
+[xUnit.net 00:00:01.30]       Actual:   "<path>.(cc)"
+[xUnit.net 00:00:01.30]                        ↑ (pos 6)
+[xUnit.net 00:00:01.30]       Stack Trace:
+[xUnit.net 00:00:01.30]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.30]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.30]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.30]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.30]       Output:
+[xUnit.net 00:00:01.30]         row 2.5i
+[xUnit.net 00:00:01.30]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.12c", input: "-I~/include", expected: "-Iinclude") [FAIL]
+[xUnit.net 00:00:01.30]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.30]                    ↓ (pos 2)
+[xUnit.net 00:00:01.30]       Expected: "-Iinclude"
+[xUnit.net 00:00:01.30]       Actual:   "-I~/include"
+[xUnit.net 00:00:01.30]                    ↑ (pos 2)
+[xUnit.net 00:00:01.30]       Stack Trace:
+[xUnit.net 00:00:01.30]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.30]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.30]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.30]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.30]       Output:
+[xUnit.net 00:00:01.30]         row 2.12c
+[xUnit.net 00:00:01.31]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.2f", input: "\\u0027\\\\h\\u00f6st\\Users\\<user>\\u0027", expected: "\\u0027<path>\\u0027") [FAIL]
+[xUnit.net 00:00:01.31]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.31]                          ↓ (pos 7)
+[xUnit.net 00:00:01.31]       Expected: "\\u0027<path>\\u0027"
+[xUnit.net 00:00:01.31]       Actual:   "\\u0027<user>\\u0027"
+[xUnit.net 00:00:01.31]                          ↑ (pos 7)
+[xUnit.net 00:00:01.31]       Stack Trace:
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.31]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.31]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.31]       Output:
+[xUnit.net 00:00:01.31]         row 3.2f
+[xUnit.net 00:00:01.31]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.12b", input: "\\u0027~/x.cs\\u0027", expected: "\\u0027x.cs\\u0027") [FAIL]
+[xUnit.net 00:00:01.31]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.31]                         ↓ (pos 6)
+[xUnit.net 00:00:01.31]       Expected: "\\u0027x.cs\\u0027"
+[xUnit.net 00:00:01.31]       Actual:   "\\u0027~/x.cs\\u0027"
+[xUnit.net 00:00:01.31]                         ↑ (pos 6)
+[xUnit.net 00:00:01.31]       Stack Trace:
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.31]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.31]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.31]       Output:
+[xUnit.net 00:00:01.31]         row 2.12b
+[xUnit.net 00:00:01.31]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6e", input: "see /tmp/x.cs (/home/<user>)", expected: "see <path>)") [FAIL]
+[xUnit.net 00:00:01.31]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.31]                       ↓ (pos 5)
+[xUnit.net 00:00:01.31]       Expected: "see <path>)"
+[xUnit.net 00:00:01.31]       Actual:   "see <user>)"
+[xUnit.net 00:00:01.31]                       ↑ (pos 5)
+[xUnit.net 00:00:01.31]       Stack Trace:
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.31]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.31]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.31]       Output:
+[xUnit.net 00:00:01.31]         row 2.6e
+[xUnit.net 00:00:01.31]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8c", input: "\\u00f6/tmp/a\\u00f6\\\\wsl$\\Ubuntu\\home\\<user>"···, expected: "\\u00f6<path>\\tnext") [FAIL]
+[xUnit.net 00:00:01.31]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.31]                          ↓ (pos 7)
+[xUnit.net 00:00:01.31]       Expected: "\\u00f6<path>\\tnext"
+[xUnit.net 00:00:01.31]       Actual:   "\\u00f6<user>\\tnext"
+[xUnit.net 00:00:01.31]                          ↑ (pos 7)
+[xUnit.net 00:00:01.31]       Stack Trace:
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.31]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.31]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.31]       Output:
+[xUnit.net 00:00:01.31]         row 3.8c
+[xUnit.net 00:00:01.31]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5m", input: "C:\\Users\\<user>ö'bb", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.31]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.31]       Expected: "<path>"
+[xUnit.net 00:00:01.31]       Actual:   "<path>'bb"
+[xUnit.net 00:00:01.31]                        ↑ (pos 6)
+[xUnit.net 00:00:01.31]       Stack Trace:
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.31]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.31]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.31]       Output:
+[xUnit.net 00:00:01.31]         row 2.5m
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6d", input: "gcc /tmp/a.c -I/home/<user>/include", expected: "gcc a.c -Iinclude") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 4)
+Expected: "gcc a.c -Iinclude"
+Actual:   "gcc include"
+               ↑ (pos 4)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.6d
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.4d", input: "foo-~\\nx.cs", expected: "foo-~\\nx.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 4)
+Expected: "foo-~\\nx.cs"
+Actual:   "foo-nx.cs"
+               ↑ (pos 4)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.4d
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5i", input: "C:\\Users\\<user> bb.(cc)", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>.(cc)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.5i
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.12c", input: "-I~/include", expected: "-Iinclude") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+             ↓ (pos 2)
+Expected: "-Iinclude"
+Actual:   "-I~/include"
+             ↑ (pos 2)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.12c
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.2f", input: "\\u0027\\\\h\\u00f6st\\Users\\<user>\\u0027", expected: "\\u0027<path>\\u0027") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                   ↓ (pos 7)
+Expected: "\\u0027<path>\\u0027"
+Actual:   "\\u0027<user>\\u0027"
+                   ↑ (pos 7)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.2f
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.12b", input: "\\u0027~/x.cs\\u0027", expected: "\\u0027x.cs\\u0027") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                  ↓ (pos 6)
+Expected: "\\u0027x.cs\\u0027"
+Actual:   "\\u0027~/x.cs\\u0027"
+                  ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.12b
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6e", input: "see /tmp/x.cs (/home/<user>)", expected: "see <path>)") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                ↓ (pos 5)
+Expected: "see <path>)"
+Actual:   "see <user>)"
+                ↑ (pos 5)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.6e
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8c", input: "\\u00f6/tmp/a\\u00f6\\\\wsl$\\Ubuntu\\home\\<user>"···, expected: "\\u00f6<path>\\tnext") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                   ↓ (pos 7)
+Expected: "\\u00f6<path>\\tnext"
+Actual:   "\\u00f6<user>\\tnext"
+                   ↑ (pos 7)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.8c
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5m", input: "C:\\Users\\<user>ö'bb", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>'bb"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.5m
+
+
+[xUnit.net 00:00:01.31]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.12a", input: "C:\\\\a\\\\x.cs\\n~/y.cs", expected: "x.cs\\ny.cs") [FAIL]
+[xUnit.net 00:00:01.31]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.31]                         ↓ (pos 6)
+[xUnit.net 00:00:01.31]       Expected: "x.cs\\ny.cs"
+[xUnit.net 00:00:01.31]       Actual:   "x.cs\\n~/y.cs"
+[xUnit.net 00:00:01.31]                         ↑ (pos 6)
+[xUnit.net 00:00:01.31]       Stack Trace:
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.31]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.31]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.31]       Output:
+[xUnit.net 00:00:01.31]         row 2.12a
+[xUnit.net 00:00:01.31]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8a", input: "-I/tmp/a.\\\\host\\c$\\Users\\<user>\\nnext", expected: "-I<path>\\nnext") [FAIL]
+[xUnit.net 00:00:01.31]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.31]                     ↓ (pos 3)
+[xUnit.net 00:00:01.31]       Expected: "-I<path>\\nnext"
+[xUnit.net 00:00:01.31]       Actual:   "-I<user>\\nnext"
+[xUnit.net 00:00:01.31]                     ↑ (pos 3)
+[xUnit.net 00:00:01.31]       Stack Trace:
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.31]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.31]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.31]       Output:
+[xUnit.net 00:00:01.31]         row 3.8a
+[xUnit.net 00:00:01.31]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.2j", input: "(-I/home/<user>/include)", expected: "(-Iinclude)") [FAIL]
+[xUnit.net 00:00:01.31]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.31]                     ↓ (pos 3)
+[xUnit.net 00:00:01.31]       Expected: "(-Iinclude)"
+[xUnit.net 00:00:01.31]       Actual:   "(-I/home/<user>/include)"
+[xUnit.net 00:00:01.31]                     ↑ (pos 3)
+[xUnit.net 00:00:01.31]       Stack Trace:
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.31]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.31]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.31]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.31]       Output:
+[xUnit.net 00:00:01.31]         row 2.2j
+[xUnit.net 00:00:01.31]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6c", input: "gcc /tmp/a.c -I/cygdrive/c/Users/<user>", expected: "gcc a.c -I<path>") [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]                      ↓ (pos 4)
+[xUnit.net 00:00:01.32]       Expected: "gcc a.c -I<path>"
+[xUnit.net 00:00:01.32]       Actual:   "gcc <user>"
+[xUnit.net 00:00:01.32]                      ↑ (pos 4)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.32]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]       Output:
+[xUnit.net 00:00:01.32]         row 2.6c
+[xUnit.net 00:00:01.32]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5j", input: "C:\\Users\\<user>'bb\\x.cs", expected: "x.cs") [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]                  ↓ (pos 0)
+[xUnit.net 00:00:01.32]       Expected: "x.cs"
+[xUnit.net 00:00:01.32]       Actual:   "<path>'bb\\x.cs"
+[xUnit.net 00:00:01.32]                  ↑ (pos 0)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.32]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]       Output:
+[xUnit.net 00:00:01.32]         row 2.5j
+[xUnit.net 00:00:01.32]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5b", input: "C:\\\\Users\\\\<user>(\\u00f6bb)", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]       Expected: "<path>"
+[xUnit.net 00:00:01.32]       Actual:   "<path>(\\u00f6bb)"
+[xUnit.net 00:00:01.32]                        ↑ (pos 6)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.32]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]       Output:
+[xUnit.net 00:00:01.32]         row 2.5b
+[xUnit.net 00:00:01.32]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8d", input: "\\u00f6/tmp/a\\u00f6/home/<user>", expected: "\\u00f6<path>") [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]                          ↓ (pos 7)
+[xUnit.net 00:00:01.32]       Expected: "\\u00f6<path>"
+[xUnit.net 00:00:01.32]       Actual:   "\\u00f6<user>"
+[xUnit.net 00:00:01.32]                          ↑ (pos 7)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.32]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]       Output:
+[xUnit.net 00:00:01.32]         row 3.8d
+[xUnit.net 00:00:01.32]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.2k", input: "-Wall,-I/home/<user>/include", expected: "-Wall,-Iinclude") [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]                          ↓ (pos 8)
+[xUnit.net 00:00:01.32]       Expected: "-Wall,-Iinclude"
+[xUnit.net 00:00:01.32]       Actual:   "-Wall,-I/home/<user>/include"
+[xUnit.net 00:00:01.32]                          ↑ (pos 8)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.32]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]       Output:
+[xUnit.net 00:00:01.32]         row 2.2k
+[xUnit.net 00:00:01.32]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5l", input: "C:\\Users\\<user>\\u00f6'bb", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]       Expected: "<path>"
+[xUnit.net 00:00:01.32]       Actual:   "<path>'bb"
+[xUnit.net 00:00:01.32]                        ↑ (pos 6)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.32]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]       Output:
+[xUnit.net 00:00:01.32]         row 2.5l
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.12a", input: "C:\\\\a\\\\x.cs\\n~/y.cs", expected: "x.cs\\ny.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                  ↓ (pos 6)
+Expected: "x.cs\\ny.cs"
+Actual:   "x.cs\\n~/y.cs"
+                  ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.12a
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8a", input: "-I/tmp/a.\\\\host\\c$\\Users\\<user>\\nnext", expected: "-I<path>\\nnext") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+              ↓ (pos 3)
+Expected: "-I<path>\\nnext"
+Actual:   "-I<user>\\nnext"
+              ↑ (pos 3)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.8a
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.2j", input: "(-I/home/<user>/include)", expected: "(-Iinclude)") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+              ↓ (pos 3)
+Expected: "(-Iinclude)"
+Actual:   "(-I/home/<user>/include)"
+              ↑ (pos 3)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.2j
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6c", input: "gcc /tmp/a.c -I/cygdrive/c/Users/<user>", expected: "gcc a.c -I<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 4)
+Expected: "gcc a.c -I<path>"
+Actual:   "gcc <user>"
+               ↑ (pos 4)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.6c
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5j", input: "C:\\Users\\<user>'bb\\x.cs", expected: "x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x.cs"
+Actual:   "<path>'bb\\x.cs"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.5j
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5b", input: "C:\\\\Users\\\\<user>(\\u00f6bb)", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>(\\u00f6bb)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.5b
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8d", input: "\\u00f6/tmp/a\\u00f6/home/<user>", expected: "\\u00f6<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                   ↓ (pos 7)
+Expected: "\\u00f6<path>"
+Actual:   "\\u00f6<user>"
+                   ↑ (pos 7)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.8d
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.2k", input: "-Wall,-I/home/<user>/include", expected: "-Wall,-Iinclude") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                   ↓ (pos 8)
+Expected: "-Wall,-Iinclude"
+Actual:   "-Wall,-I/home/<user>/include"
+                   ↑ (pos 8)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.2k
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5l", input: "C:\\Users\\<user>\\u00f6'bb", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>'bb"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.5l
+
+
+[xUnit.net 00:00:01.32]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5k", input: "C:\\Users\\<user>'bb", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]       Expected: "<path>"
+[xUnit.net 00:00:01.32]       Actual:   "<path>'bb"
+[xUnit.net 00:00:01.32]                        ↑ (pos 6)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.32]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]       Output:
+[xUnit.net 00:00:01.32]         row 2.5k
+[xUnit.net 00:00:01.32]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8e", input: "\\\\/opt/data/home/<user>/src/x.cs", expected: "\\\\<path>") [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]                      ↓ (pos 2)
+[xUnit.net 00:00:01.32]       Expected: "\\\\<path>"
+[xUnit.net 00:00:01.32]       Actual:   "\\\\x.cs"
+[xUnit.net 00:00:01.32]                      ↑ (pos 2)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.32]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]       Output:
+[xUnit.net 00:00:01.32]         row 3.8e
+[xUnit.net 00:00:01.32]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6g", input: "C:\\Users\\<user>\\n/home/<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]                   ↓ (pos 1)
+[xUnit.net 00:00:01.32]       Expected: "<path>"
+[xUnit.net 00:00:01.32]       Actual:   "<user>"
+[xUnit.net 00:00:01.32]                   ↑ (pos 1)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.32]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]       Output:
+[xUnit.net 00:00:01.32]         row 2.6g
+[xUnit.net 00:00:01.32]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "hdr", input: "match \\\\d+ here", expected: "match \\\\d+ here") [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]                        ↓ (pos 6)
+[xUnit.net 00:00:01.32]       Expected: "match \\\\d+ here"
+[xUnit.net 00:00:01.32]       Actual:   "match d+ here"
+[xUnit.net 00:00:01.32]                        ↑ (pos 6)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.32]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]       Output:
+[xUnit.net 00:00:01.32]         row hdr
+[xUnit.net 00:00:01.32]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5h", input: "C:\\Users\\<user> bb.\\u00f6cc", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]       Expected: "<path>"
+[xUnit.net 00:00:01.32]       Actual:   "<path>.\\u00f6cc"
+[xUnit.net 00:00:01.32]                        ↑ (pos 6)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.32]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]       Output:
+[xUnit.net 00:00:01.32]         row 2.5h
+[xUnit.net 00:00:01.32]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5c", input: "\\u0027C:\\\\Users\\\\<user>(\\u00f6bb)\\u0027", expected: "\\u0027<path>\\u0027") [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]                               ↓ (pos 12)
+[xUnit.net 00:00:01.32]       Expected: "\\u0027<path>\\u0027"
+[xUnit.net 00:00:01.32]       Actual:   "\\u0027<path>(\\u00f6bb)\\u0027"
+[xUnit.net 00:00:01.32]                               ↑ (pos 12)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.32]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]       Output:
+[xUnit.net 00:00:01.32]         row 2.5c
+[xUnit.net 00:00:01.32]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.2i", input: "[-I/home/<user>/include]", expected: "[-Iinclude]") [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]                     ↓ (pos 3)
+[xUnit.net 00:00:01.32]       Expected: "[-Iinclude]"
+[xUnit.net 00:00:01.32]       Actual:   "[-I/home/<user>/include]"
+[xUnit.net 00:00:01.32]                     ↑ (pos 3)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.32]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]       Output:
+[xUnit.net 00:00:01.32]         row 2.2i
+[xUnit.net 00:00:01.32]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6f", input: "C:\\a\\x.cs\\n/home/<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.32]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.32]                   ↓ (pos 1)
+[xUnit.net 00:00:01.32]       Expected: "<path>"
+[xUnit.net 00:00:01.32]       Actual:   "<user>"
+[xUnit.net 00:00:01.32]                   ↑ (pos 1)
+[xUnit.net 00:00:01.32]       Stack Trace:
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.32]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.32]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.32]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.32]       Output:
+[xUnit.net 00:00:01.32]         row 2.6f
+[xUnit.net 00:00:01.33]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5f", input: "C:\\Users\\<user>(bb cc)", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.33]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.33]       Expected: "<path>"
+[xUnit.net 00:00:01.33]       Actual:   "<path>(bb cc)"
+[xUnit.net 00:00:01.33]                        ↑ (pos 6)
+[xUnit.net 00:00:01.33]       Stack Trace:
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.33]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.33]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.33]       Output:
+[xUnit.net 00:00:01.33]         row 2.5f
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5k", input: "C:\\Users\\<user>'bb", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>'bb"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.5k
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.8e", input: "\\\\/opt/data/home/<user>/src/x.cs", expected: "\\\\<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 2)
+Expected: "\\\\<path>"
+Actual:   "\\\\x.cs"
+               ↑ (pos 2)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.8e
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6g", input: "C:\\Users\\<user>\\n/home/<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.6g
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "hdr", input: "match \\\\d+ here", expected: "match \\\\d+ here") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                 ↓ (pos 6)
+Expected: "match \\\\d+ here"
+Actual:   "match d+ here"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row hdr
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5h", input: "C:\\Users\\<user> bb.\\u00f6cc", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>.\\u00f6cc"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.5h
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5c", input: "\\u0027C:\\\\Users\\\\<user>(\\u00f6bb)\\u0027", expected: "\\u0027<path>\\u0027") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                        ↓ (pos 12)
+Expected: "\\u0027<path>\\u0027"
+Actual:   "\\u0027<path>(\\u00f6bb)\\u0027"
+                        ↑ (pos 12)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.5c
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.2i", input: "[-I/home/<user>/include]", expected: "[-Iinclude]") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+              ↓ (pos 3)
+Expected: "[-Iinclude]"
+Actual:   "[-I/home/<user>/include]"
+              ↑ (pos 3)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.2i
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.6f", input: "C:\\a\\x.cs\\n/home/<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.6f
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "2.5f", input: "C:\\Users\\<user>(bb cc)", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>(bb cc)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 2.5f
+
+
+[xUnit.net 00:00:01.33]     Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.2d", input: "\\\\\\\\h\\u00f6st\\\\Users\\\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.33]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.33]                   ↓ (pos 1)
+[xUnit.net 00:00:01.33]       Expected: "<path>"
+[xUnit.net 00:00:01.33]       Actual:   "<user>"
+[xUnit.net 00:00:01.33]                   ↑ (pos 1)
+[xUnit.net 00:00:01.33]       Stack Trace:
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(69,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.33]            at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+[xUnit.net 00:00:01.33]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.33]       Output:
+[xUnit.net 00:00:01.33]         row 3.2d
+[xUnit.net 00:00:01.33]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.5b", input: "see (C:\\Users\\<user>(bb)) here", expected: "see (<path>) here") [FAIL]
+[xUnit.net 00:00:01.33]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.33]                             ↓ (pos 11)
+[xUnit.net 00:00:01.33]       Expected: "see (<path>) here"
+[xUnit.net 00:00:01.33]       Actual:   "see (<path>"
+[xUnit.net 00:00:01.33]       Stack Trace:
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.33]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:01.33]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+[xUnit.net 00:00:01.33]       Output:
+[xUnit.net 00:00:01.33]         row 3.5b
+[xUnit.net 00:00:01.33]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.5a", input: "see (C:\\Users\\<user>(bb))", expected: "see (<path>)") [FAIL]
+[xUnit.net 00:00:01.33]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.33]                             ↓ (pos 11)
+[xUnit.net 00:00:01.33]       Expected: "see (<path>)"
+[xUnit.net 00:00:01.33]       Actual:   "see (<path>"
+[xUnit.net 00:00:01.33]       Stack Trace:
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.33]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.33]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.33]       Output:
+[xUnit.net 00:00:01.33]         row 3.5a
+[xUnit.net 00:00:01.33]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4f", input: "C:\\Users\\<user>_D:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [FAIL]
+[xUnit.net 00:00:01.33]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.33]                        ↓ (pos 6)
+[xUnit.net 00:00:01.33]       Expected: "<path>x.cs"
+[xUnit.net 00:00:01.33]       Actual:   "<path>D:\\Users\\<user>\\x.cs"
+[xUnit.net 00:00:01.33]                        ↑ (pos 6)
+[xUnit.net 00:00:01.33]       Stack Trace:
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.33]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.33]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.33]       Output:
+[xUnit.net 00:00:01.33]         row 3.4f
+[xUnit.net 00:00:01.33]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3c", input: "gcc \\u0027-IC:\\Users\\<user>\\include\\u0027", expected: "gcc \\u0027-Iinclude\\u0027") [FAIL]
+[xUnit.net 00:00:01.33]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.33]                               ↓ (pos 12)
+[xUnit.net 00:00:01.33]       Expected: "gcc \\u0027-Iinclude\\u0027"
+[xUnit.net 00:00:01.33]       Actual:   "gcc \\u0027-Iu0027"
+[xUnit.net 00:00:01.33]                               ↑ (pos 12)
+[xUnit.net 00:00:01.33]       Stack Trace:
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.33]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.33]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.33]       Output:
+[xUnit.net 00:00:01.33]         row 3.3c
+[xUnit.net 00:00:01.33]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3b", input: "\\u0027-I\\\\host\\share\\x.cs\\u0027/home/<user>/"···, expected: "\\u0027-Ix.cs\\u0027y.cs") [FAIL]
+[xUnit.net 00:00:01.33]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.33]                           ↓ (pos 8)
+[xUnit.net 00:00:01.33]       Expected: "\\u0027-Ix.cs\\u0027y.cs"
+[xUnit.net 00:00:01.33]       Actual:   "\\u0027-Iy.cs"
+[xUnit.net 00:00:01.33]                           ↑ (pos 8)
+[xUnit.net 00:00:01.33]       Stack Trace:
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.33]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.33]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.33]       Output:
+[xUnit.net 00:00:01.33]         row 3.3b
+[xUnit.net 00:00:01.33]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.2c", input: "\\\\a<b>\\Users\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.33]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.33]                   ↓ (pos 1)
+[xUnit.net 00:00:01.33]       Expected: "<path>"
+[xUnit.net 00:00:01.33]       Actual:   "<user>"
+[xUnit.net 00:00:01.33]                   ↑ (pos 1)
+[xUnit.net 00:00:01.33]       Stack Trace:
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.33]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.33]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.33]       Output:
+[xUnit.net 00:00:01.33]         row 3.2c
+[xUnit.net 00:00:01.33]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3d", input: "gcc \\u0027-IC:\\Users\\<user>\\u0027", expected: "gcc \\u0027-I<path>\\u0027") [FAIL]
+[xUnit.net 00:00:01.33]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.33]                               ↓ (pos 12)
+[xUnit.net 00:00:01.33]       Expected: "gcc \\u0027-I<path>\\u0027"
+[xUnit.net 00:00:01.33]       Actual:   "gcc \\u0027-Iu0027"
+[xUnit.net 00:00:01.33]                               ↑ (pos 12)
+[xUnit.net 00:00:01.33]       Stack Trace:
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.33]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.33]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.33]       Output:
+[xUnit.net 00:00:01.33]         row 3.3d
+[xUnit.net 00:00:01.33]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4a", input: "/tmp/a/foo-~\\nx.cs", expected: "foo-~\\nx.cs") [FAIL]
+[xUnit.net 00:00:01.33]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.33]                      ↓ (pos 4)
+[xUnit.net 00:00:01.33]       Expected: "foo-~\\nx.cs"
+[xUnit.net 00:00:01.33]       Actual:   "foo-nx.cs"
+[xUnit.net 00:00:01.33]                      ↑ (pos 4)
+[xUnit.net 00:00:01.33]       Stack Trace:
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(155,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.33]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.33]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.33]       Output:
+[xUnit.net 00:00:01.33]         row 3.4a
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(id: "3.2d", input: "\\\\\\\\h\\u00f6st\\\\Users\\\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_2_other_review_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 69
+   at InvokeStub_PathScan439.Id_439_2_other_review_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.2d
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.5b", input: "see (C:\\Users\\<user>(bb)) here", expected: "see (<path>) here") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                      ↓ (pos 11)
+Expected: "see (<path>) here"
+Actual:   "see (<path>"
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Standard Output Messages:
+ row 3.5b
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.5a", input: "see (C:\\Users\\<user>(bb))", expected: "see (<path>)") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                      ↓ (pos 11)
+Expected: "see (<path>)"
+Actual:   "see (<path>"
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.5a
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4f", input: "C:\\Users\\<user>_D:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                 ↓ (pos 6)
+Expected: "<path>x.cs"
+Actual:   "<path>D:\\Users\\<user>\\x.cs"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.4f
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3c", input: "gcc \\u0027-IC:\\Users\\<user>\\include\\u0027", expected: "gcc \\u0027-Iinclude\\u0027") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                        ↓ (pos 12)
+Expected: "gcc \\u0027-Iinclude\\u0027"
+Actual:   "gcc \\u0027-Iu0027"
+                        ↑ (pos 12)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.3c
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3b", input: "\\u0027-I\\\\host\\share\\x.cs\\u0027/home/<user>/"···, expected: "\\u0027-Ix.cs\\u0027y.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                    ↓ (pos 8)
+Expected: "\\u0027-Ix.cs\\u0027y.cs"
+Actual:   "\\u0027-Iy.cs"
+                    ↑ (pos 8)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.3b
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.2c", input: "\\\\a<b>\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.2c
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3d", input: "gcc \\u0027-IC:\\Users\\<user>\\u0027", expected: "gcc \\u0027-I<path>\\u0027") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                        ↓ (pos 12)
+Expected: "gcc \\u0027-I<path>\\u0027"
+Actual:   "gcc \\u0027-Iu0027"
+                        ↑ (pos 12)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.3d
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4a", input: "/tmp/a/foo-~\\nx.cs", expected: "foo-~\\nx.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 4)
+Expected: "foo-~\\nx.cs"
+Actual:   "foo-nx.cs"
+               ↑ (pos 4)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 155
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.4a
+
+
+[xUnit.net 00:00:01.33]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.1b", input: "\\\\<host>\\Users\\<user>\\x.cs", expected: "x.cs") [FAIL]
+[xUnit.net 00:00:01.33]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.33]                  ↓ (pos 0)
+[xUnit.net 00:00:01.33]       Expected: "x.cs"
+[xUnit.net 00:00:01.33]       Actual:   "\\\\<host>\\Users\\<user>\\x.cs"
+[xUnit.net 00:00:01.33]                  ↑ (pos 0)
+[xUnit.net 00:00:01.33]       Stack Trace:
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.33]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.33]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.33]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.33]       Output:
+[xUnit.net 00:00:01.33]         row 3.1b
+[xUnit.net 00:00:01.33]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.1a", input: "\\\\<host>\\Users\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.33]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.34]                  ↓ (pos 0)
+[xUnit.net 00:00:01.34]       Expected: "<path>"
+[xUnit.net 00:00:01.34]       Actual:   "\\\\<host>\\Users\\<user>"
+[xUnit.net 00:00:01.34]                  ↑ (pos 0)
+[xUnit.net 00:00:01.34]       Stack Trace:
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.34]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.34]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.34]       Output:
+[xUnit.net 00:00:01.34]         row 3.1a
+[xUnit.net 00:00:01.34]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4h", input: "\\/tmp/a/nC:\\Users\\<user>", expected: "\\n<path>") [FAIL]
+[xUnit.net 00:00:01.34]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.34]                     ↓ (pos 2)
+[xUnit.net 00:00:01.34]       Expected: "\\n<path>"
+[xUnit.net 00:00:01.34]       Actual:   "\\nC:\\Users\\<user>"
+[xUnit.net 00:00:01.34]                     ↑ (pos 2)
+[xUnit.net 00:00:01.34]       Stack Trace:
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.34]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.34]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.34]       Output:
+[xUnit.net 00:00:01.34]         row 3.4h
+[xUnit.net 00:00:01.34]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3e", input: "see a\\u00f6-b/tmp/x.cs", expected: "see a\\u00f6-b/tmp/x.cs") [FAIL]
+[xUnit.net 00:00:01.34]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.34]                                ↓ (pos 13)
+[xUnit.net 00:00:01.34]       Expected: "see a\\u00f6-b/tmp/x.cs"
+[xUnit.net 00:00:01.34]       Actual:   "see a\\u00f6-bx.cs"
+[xUnit.net 00:00:01.34]                                ↑ (pos 13)
+[xUnit.net 00:00:01.34]       Stack Trace:
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.34]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.34]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.34]       Output:
+[xUnit.net 00:00:01.34]         row 3.3e
+[xUnit.net 00:00:01.34]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4e", input: "C:\\Users\\<user>D:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [FAIL]
+[xUnit.net 00:00:01.34]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.34]                        ↓ (pos 6)
+[xUnit.net 00:00:01.34]       Expected: "<path>x.cs"
+[xUnit.net 00:00:01.34]       Actual:   "<path>D:\\Users\\<user>\\x.cs"
+[xUnit.net 00:00:01.34]                        ↑ (pos 6)
+[xUnit.net 00:00:01.34]       Stack Trace:
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.34]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.34]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.34]       Output:
+[xUnit.net 00:00:01.34]         row 3.4e
+[xUnit.net 00:00:01.34]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.2b", input: "\\\\host's\\Users\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.34]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.34]                   ↓ (pos 1)
+[xUnit.net 00:00:01.34]       Expected: "<path>"
+[xUnit.net 00:00:01.34]       Actual:   "<user>"
+[xUnit.net 00:00:01.34]                   ↑ (pos 1)
+[xUnit.net 00:00:01.34]       Stack Trace:
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.34]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.34]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.34]       Output:
+[xUnit.net 00:00:01.34]         row 3.2b
+[xUnit.net 00:00:01.34]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.1c", input: "\\\\<host>\\share\\x.cs", expected: "x.cs") [FAIL]
+[xUnit.net 00:00:01.34]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.34]                  ↓ (pos 0)
+[xUnit.net 00:00:01.34]       Expected: "x.cs"
+[xUnit.net 00:00:01.34]       Actual:   "\\\\<host>\\share\\x.cs"
+[xUnit.net 00:00:01.34]                  ↑ (pos 0)
+[xUnit.net 00:00:01.34]       Stack Trace:
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.34]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.34]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.34]       Output:
+[xUnit.net 00:00:01.34]         row 3.1c
+[xUnit.net 00:00:01.34]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4c", input: "C:\\\\a\\\\foo-~\\nx.cs", expected: "foo-~\\nx.cs") [FAIL]
+[xUnit.net 00:00:01.34]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.34]                      ↓ (pos 4)
+[xUnit.net 00:00:01.34]       Expected: "foo-~\\nx.cs"
+[xUnit.net 00:00:01.34]       Actual:   "foo-nx.cs"
+[xUnit.net 00:00:01.34]                      ↑ (pos 4)
+[xUnit.net 00:00:01.34]       Stack Trace:
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(155,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.34]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.34]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.34]       Output:
+[xUnit.net 00:00:01.34]         row 3.4c
+[xUnit.net 00:00:01.34]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3a", input: "\\u0027-IC:\\a\\x.cs\\u0027/home/<user>", expected: "\\u0027-Ix.cs\\u0027<path>") [FAIL]
+[xUnit.net 00:00:01.34]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.34]                           ↓ (pos 8)
+[xUnit.net 00:00:01.34]       Expected: "\\u0027-Ix.cs\\u0027<path>"
+[xUnit.net 00:00:01.34]       Actual:   "\\u0027-I<user>"
+[xUnit.net 00:00:01.34]                           ↑ (pos 8)
+[xUnit.net 00:00:01.34]       Stack Trace:
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.34]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.34]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.34]       Output:
+[xUnit.net 00:00:01.34]         row 3.3a
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.1b", input: "\\\\<host>\\Users\\<user>\\x.cs", expected: "x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x.cs"
+Actual:   "\\\\<host>\\Users\\<user>\\x.cs"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.1b
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.1a", input: "\\\\<host>\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "<path>"
+Actual:   "\\\\<host>\\Users\\<user>"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.1a
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4h", input: "\\/tmp/a/nC:\\Users\\<user>", expected: "\\n<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+              ↓ (pos 2)
+Expected: "\\n<path>"
+Actual:   "\\nC:\\Users\\<user>"
+              ↑ (pos 2)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.4h
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3e", input: "see a\\u00f6-b/tmp/x.cs", expected: "see a\\u00f6-b/tmp/x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                         ↓ (pos 13)
+Expected: "see a\\u00f6-b/tmp/x.cs"
+Actual:   "see a\\u00f6-bx.cs"
+                         ↑ (pos 13)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.3e
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4e", input: "C:\\Users\\<user>D:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                 ↓ (pos 6)
+Expected: "<path>x.cs"
+Actual:   "<path>D:\\Users\\<user>\\x.cs"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.4e
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.2b", input: "\\\\host's\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.2b
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.1c", input: "\\\\<host>\\share\\x.cs", expected: "x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+           ↓ (pos 0)
+Expected: "x.cs"
+Actual:   "\\\\<host>\\share\\x.cs"
+           ↑ (pos 0)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.1c
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4c", input: "C:\\\\a\\\\foo-~\\nx.cs", expected: "foo-~\\nx.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 4)
+Expected: "foo-~\\nx.cs"
+Actual:   "foo-nx.cs"
+               ↑ (pos 4)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 155
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.4c
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.3a", input: "\\u0027-IC:\\a\\x.cs\\u0027/home/<user>", expected: "\\u0027-Ix.cs\\u0027<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                    ↓ (pos 8)
+Expected: "\\u0027-Ix.cs\\u0027<path>"
+Actual:   "\\u0027-I<user>"
+                    ↑ (pos 8)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.3a
+
+
+[xUnit.net 00:00:01.34]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.5c", input: "C:\\Users\\<user>(bb)ccfile:///C:/Users/<user>/x.c"···, expected: "<path>x.cs") [FAIL]
+[xUnit.net 00:00:01.34]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.34]                        ↓ (pos 6)
+[xUnit.net 00:00:01.34]       Expected: "<path>x.cs"
+[xUnit.net 00:00:01.34]       Actual:   "<path>ccfile:///x.cs"
+[xUnit.net 00:00:01.34]                        ↑ (pos 6)
+[xUnit.net 00:00:01.34]       Stack Trace:
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.34]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.34]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.34]       Output:
+[xUnit.net 00:00:01.34]         row 3.5c
+[xUnit.net 00:00:01.34]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.5d", input: "C:\\Users\\<user>(bb)ccD:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [FAIL]
+[xUnit.net 00:00:01.34]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.34]                        ↓ (pos 6)
+[xUnit.net 00:00:01.34]       Expected: "<path>x.cs"
+[xUnit.net 00:00:01.34]       Actual:   "<path>ccD:\\Users\\<user>\\x.cs"
+[xUnit.net 00:00:01.34]                        ↑ (pos 6)
+[xUnit.net 00:00:01.34]       Stack Trace:
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.34]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.34]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.34]       Output:
+[xUnit.net 00:00:01.34]         row 3.5d
+[xUnit.net 00:00:01.34]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4b", input: "/tmp/a/~~\\nx.cs", expected: "~~\\nx.cs") [FAIL]
+[xUnit.net 00:00:01.34]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.34]                   ↓ (pos 1)
+[xUnit.net 00:00:01.34]       Expected: "~~\\nx.cs"
+[xUnit.net 00:00:01.34]       Actual:   "~nx.cs"
+[xUnit.net 00:00:01.34]                   ↑ (pos 1)
+[xUnit.net 00:00:01.34]       Stack Trace:
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(155,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.34]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.34]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.34]       Output:
+[xUnit.net 00:00:01.34]         row 3.4b
+[xUnit.net 00:00:01.34]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4g", input: "C:\\Users\\<user>.file://localhost/home/<user>/x.c"···, expected: "<path>x.cs") [FAIL]
+[xUnit.net 00:00:01.34]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.34]                        ↓ (pos 6)
+[xUnit.net 00:00:01.34]       Expected: "<path>x.cs"
+[xUnit.net 00:00:01.34]       Actual:   "<path>file://localhost/home/<user>/x.cs"
+[xUnit.net 00:00:01.34]                        ↑ (pos 6)
+[xUnit.net 00:00:01.34]       Stack Trace:
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.34]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.34]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.34]       Output:
+[xUnit.net 00:00:01.34]         row 3.4g
+[xUnit.net 00:00:01.34]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.2a", input: "\\\\host(1)\\Users\\<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.34]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.34]                   ↓ (pos 1)
+[xUnit.net 00:00:01.34]       Expected: "<path>"
+[xUnit.net 00:00:01.34]       Actual:   "<user>"
+[xUnit.net 00:00:01.34]                   ↑ (pos 1)
+[xUnit.net 00:00:01.34]       Stack Trace:
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.34]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.34]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.34]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.34]       Output:
+[xUnit.net 00:00:01.34]         row 3.2a
+[xUnit.net 00:00:01.35]     Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4i", input: "\\t/tmp/a.file://localhost/home/<user>/x.cs", expected: "\\ta.x.cs") [FAIL]
+[xUnit.net 00:00:01.35]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.35]                       ↓ (pos 4)
+[xUnit.net 00:00:01.35]       Expected: "\\ta.x.cs"
+[xUnit.net 00:00:01.35]       Actual:   "\\ta.file://localhost/home/<user>/x.cs"
+[xUnit.net 00:00:01.35]                       ↑ (pos 4)
+[xUnit.net 00:00:01.35]       Stack Trace:
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(41,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.35]            at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.35]       Output:
+[xUnit.net 00:00:01.35]         row 3.4i
+[xUnit.net 00:00:01.35]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "dot-no-paren", input: "C:\\Users\\<user> bb.(cc)", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.35]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.35]       Expected: "<path>"
+[xUnit.net 00:00:01.35]       Actual:   "<path>.(cc)"
+[xUnit.net 00:00:01.35]                        ↑ (pos 6)
+[xUnit.net 00:00:01.35]       Stack Trace:
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.35]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+[xUnit.net 00:00:01.35]       Output:
+[xUnit.net 00:00:01.35]         row dot-no-paren
+[xUnit.net 00:00:01.35]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "glued-parens", input: "see (C:\\Users\\<user>(bb))", expected: "see (<path>)") [FAIL]
+[xUnit.net 00:00:01.35]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.35]                             ↓ (pos 11)
+[xUnit.net 00:00:01.35]       Expected: "see (<path>)"
+[xUnit.net 00:00:01.35]       Actual:   "see (<path>"
+[xUnit.net 00:00:01.35]       Stack Trace:
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.35]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.35]       Output:
+[xUnit.net 00:00:01.35]         row glued-parens
+[xUnit.net 00:00:01.35]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "flag-no-esc", input: "gcc \\u0027-IC:\\Users\\<user>\\include\\u0027", expected: "gcc \\u0027-Iinclude\\u0027") [FAIL]
+[xUnit.net 00:00:01.35]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.35]                               ↓ (pos 12)
+[xUnit.net 00:00:01.35]       Expected: "gcc \\u0027-Iinclude\\u0027"
+[xUnit.net 00:00:01.35]       Actual:   "gcc \\u0027-Iu0027"
+[xUnit.net 00:00:01.35]                               ↑ (pos 12)
+[xUnit.net 00:00:01.35]       Stack Trace:
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.35]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.35]       Output:
+[xUnit.net 00:00:01.35]         row flag-no-esc
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.5c", input: "C:\\Users\\<user>(bb)ccfile:///C:/Users/<user>/x.c"···, expected: "<path>x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                 ↓ (pos 6)
+Expected: "<path>x.cs"
+Actual:   "<path>ccfile:///x.cs"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.5c
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.5d", input: "C:\\Users\\<user>(bb)ccD:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                 ↓ (pos 6)
+Expected: "<path>x.cs"
+Actual:   "<path>ccD:\\Users\\<user>\\x.cs"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.5d
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4b", input: "/tmp/a/~~\\nx.cs", expected: "~~\\nx.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "~~\\nx.cs"
+Actual:   "~nx.cs"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 155
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.4b
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4g", input: "C:\\Users\\<user>.file://localhost/home/<user>/x.c"···, expected: "<path>x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                 ↓ (pos 6)
+Expected: "<path>x.cs"
+Actual:   "<path>file://localhost/home/<user>/x.cs"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.4g
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.2a", input: "\\\\host(1)\\Users\\<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.2a
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(id: "3.4i", input: "\\t/tmp/a.file://localhost/home/<user>/x.cs", expected: "\\ta.x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                ↓ (pos 4)
+Expected: "\\ta.x.cs"
+Actual:   "\\ta.file://localhost/home/<user>/x.cs"
+                ↑ (pos 4)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_1_third_review_blocking_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 41
+   at InvokeStub_PathScan439.Id_439_1_third_review_blocking_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row 3.4i
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "dot-no-paren", input: "C:\\Users\\<user> bb.(cc)", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>.(cc)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Standard Output Messages:
+ row dot-no-paren
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "glued-parens", input: "see (C:\\Users\\<user>(bb))", expected: "see (<path>)") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                      ↓ (pos 11)
+Expected: "see (<path>)"
+Actual:   "see (<path>"
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row glued-parens
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "flag-no-esc", input: "gcc \\u0027-IC:\\Users\\<user>\\include\\u0027", expected: "gcc \\u0027-Iinclude\\u0027") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                        ↓ (pos 12)
+Expected: "gcc \\u0027-Iinclude\\u0027"
+Actual:   "gcc \\u0027-Iu0027"
+                        ↑ (pos 12)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row flag-no-esc
+
+
+[xUnit.net 00:00:01.35]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "flag-any-u", input: "see a\\u00f6-b/tmp/x.cs", expected: "see a\\u00f6-b/tmp/x.cs") [FAIL]
+[xUnit.net 00:00:01.35]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.35]                                ↓ (pos 13)
+[xUnit.net 00:00:01.35]       Expected: "see a\\u00f6-b/tmp/x.cs"
+[xUnit.net 00:00:01.35]       Actual:   "see a\\u00f6-bx.cs"
+[xUnit.net 00:00:01.35]                                ↑ (pos 13)
+[xUnit.net 00:00:01.35]       Stack Trace:
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.35]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.35]       Output:
+[xUnit.net 00:00:01.35]         row flag-any-u
+[xUnit.net 00:00:01.35]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "no-bare-unc", input: "\\\\/cygdrive/c/Users/<user>/x.cs\\tnext", expected: "\\\\<path>\\tnext") [FAIL]
+[xUnit.net 00:00:01.35]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.35]                      ↓ (pos 2)
+[xUnit.net 00:00:01.35]       Expected: "\\\\<path>\\tnext"
+[xUnit.net 00:00:01.35]       Actual:   "\\\\x.cs\\tnext"
+[xUnit.net 00:00:01.35]                      ↑ (pos 2)
+[xUnit.net 00:00:01.35]       Stack Trace:
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.35]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.35]       Output:
+[xUnit.net 00:00:01.35]         row no-bare-unc
+[xUnit.net 00:00:01.35]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "glued-no-root", input: "C:\\Users\\<user>(bb)ccD:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [FAIL]
+[xUnit.net 00:00:01.35]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.35]                        ↓ (pos 6)
+[xUnit.net 00:00:01.35]       Expected: "<path>x.cs"
+[xUnit.net 00:00:01.35]       Actual:   "<path>ccD:\\Users\\<user>\\x.cs"
+[xUnit.net 00:00:01.35]                        ↑ (pos 6)
+[xUnit.net 00:00:01.35]       Stack Trace:
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.35]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.35]       Output:
+[xUnit.net 00:00:01.35]         row glued-no-root
+[xUnit.net 00:00:01.35]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "no-flag-split", input: "gcc /tmp/a.c -I/home/<user>/include", expected: "gcc a.c -Iinclude") [FAIL]
+[xUnit.net 00:00:01.35]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.35]                      ↓ (pos 4)
+[xUnit.net 00:00:01.35]       Expected: "gcc a.c -Iinclude"
+[xUnit.net 00:00:01.35]       Actual:   "gcc include"
+[xUnit.net 00:00:01.35]                      ↑ (pos 4)
+[xUnit.net 00:00:01.35]       Stack Trace:
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.35]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.35]       Output:
+[xUnit.net 00:00:01.35]         row no-flag-split
+[xUnit.net 00:00:01.35]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "group-no-space", input: "C:\\Users\\<user>(bb cc)", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.35]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.35]       Expected: "<path>"
+[xUnit.net 00:00:01.35]       Actual:   "<path>(bb cc)"
+[xUnit.net 00:00:01.35]                        ↑ (pos 6)
+[xUnit.net 00:00:01.35]       Stack Trace:
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.35]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.35]       Output:
+[xUnit.net 00:00:01.35]         row group-no-space
+[xUnit.net 00:00:01.35]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "unc-host-alone", input: "match \\\\d+ here", expected: "match \\\\d+ here") [FAIL]
+[xUnit.net 00:00:01.35]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.35]                        ↓ (pos 6)
+[xUnit.net 00:00:01.35]       Expected: "match \\\\d+ here"
+[xUnit.net 00:00:01.35]       Actual:   "match d+ here"
+[xUnit.net 00:00:01.35]                        ↑ (pos 6)
+[xUnit.net 00:00:01.35]       Stack Trace:
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.35]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.35]       Output:
+[xUnit.net 00:00:01.35]         row unc-host-alone
+[xUnit.net 00:00:01.35]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "no-adjacent", input: "C:\\Users\\<user>_D:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [FAIL]
+[xUnit.net 00:00:01.35]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.35]                        ↓ (pos 6)
+[xUnit.net 00:00:01.35]       Expected: "<path>x.cs"
+[xUnit.net 00:00:01.35]       Actual:   "<path>D:\\Users\\<user>\\x.cs"
+[xUnit.net 00:00:01.35]                        ↑ (pos 6)
+[xUnit.net 00:00:01.35]       Stack Trace:
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.35]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.35]       Output:
+[xUnit.net 00:00:01.35]         row no-adjacent
+[xUnit.net 00:00:01.35]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "unix-no-letter-users", input: "see /tmp/x.cs (/c/users/<user>)", expected: "see <path>)") [FAIL]
+[xUnit.net 00:00:01.35]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.35]                       ↓ (pos 5)
+[xUnit.net 00:00:01.35]       Expected: "see <path>)"
+[xUnit.net 00:00:01.35]       Actual:   "see <user>)"
+[xUnit.net 00:00:01.35]                       ↑ (pos 5)
+[xUnit.net 00:00:01.35]       Stack Trace:
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.35]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.35]       Output:
+[xUnit.net 00:00:01.35]         row unix-no-letter-users
+[xUnit.net 00:00:01.35]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "apos-no-esc", input: "C:\\Users\\<user>\\u00f6'bb", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.35]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.35]       Expected: "<path>"
+[xUnit.net 00:00:01.35]       Actual:   "<path>'bb"
+[xUnit.net 00:00:01.35]                        ↑ (pos 6)
+[xUnit.net 00:00:01.35]       Stack Trace:
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.35]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.35]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.35]       Output:
+[xUnit.net 00:00:01.35]         row apos-no-esc
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "flag-any-u", input: "see a\\u00f6-b/tmp/x.cs", expected: "see a\\u00f6-b/tmp/x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                         ↓ (pos 13)
+Expected: "see a\\u00f6-b/tmp/x.cs"
+Actual:   "see a\\u00f6-bx.cs"
+                         ↑ (pos 13)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row flag-any-u
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "no-bare-unc", input: "\\\\/cygdrive/c/Users/<user>/x.cs\\tnext", expected: "\\\\<path>\\tnext") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 2)
+Expected: "\\\\<path>\\tnext"
+Actual:   "\\\\x.cs\\tnext"
+               ↑ (pos 2)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row no-bare-unc
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "glued-no-root", input: "C:\\Users\\<user>(bb)ccD:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                 ↓ (pos 6)
+Expected: "<path>x.cs"
+Actual:   "<path>ccD:\\Users\\<user>\\x.cs"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row glued-no-root
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "no-flag-split", input: "gcc /tmp/a.c -I/home/<user>/include", expected: "gcc a.c -Iinclude") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 4)
+Expected: "gcc a.c -Iinclude"
+Actual:   "gcc include"
+               ↑ (pos 4)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row no-flag-split
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "group-no-space", input: "C:\\Users\\<user>(bb cc)", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>(bb cc)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row group-no-space
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "unc-host-alone", input: "match \\\\d+ here", expected: "match \\\\d+ here") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                 ↓ (pos 6)
+Expected: "match \\\\d+ here"
+Actual:   "match d+ here"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row unc-host-alone
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "no-adjacent", input: "C:\\Users\\<user>_D:\\Users\\<user>\\x.cs", expected: "<path>x.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                 ↓ (pos 6)
+Expected: "<path>x.cs"
+Actual:   "<path>D:\\Users\\<user>\\x.cs"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row no-adjacent
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "unix-no-letter-users", input: "see /tmp/x.cs (/c/users/<user>)", expected: "see <path>)") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+                ↓ (pos 5)
+Expected: "see <path>)"
+Actual:   "see <user>)"
+                ↑ (pos 5)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row unix-no-letter-users
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "apos-no-esc", input: "C:\\Users\\<user>\\u00f6'bb", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>'bb"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row apos-no-esc
+
+
+[xUnit.net 00:00:01.37]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "tilde-today", input: "/tmp/a/foo-~\\nx.cs", expected: "foo-~\\nx.cs") [FAIL]
+[xUnit.net 00:00:01.37]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.37]                      ↓ (pos 4)
+[xUnit.net 00:00:01.37]       Expected: "foo-~\\nx.cs"
+[xUnit.net 00:00:01.37]       Actual:   "foo-nx.cs"
+[xUnit.net 00:00:01.37]                      ↑ (pos 4)
+[xUnit.net 00:00:01.37]       Stack Trace:
+[xUnit.net 00:00:01.37]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(155,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.37]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.37]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.37]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.37]       Output:
+[xUnit.net 00:00:01.37]         row tilde-today
+[xUnit.net 00:00:01.37]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "parent-no-bridge", input: "C:\\a\\x.cs\\n/home/<user>", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.37]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.37]                   ↓ (pos 1)
+[xUnit.net 00:00:01.37]       Expected: "<path>"
+[xUnit.net 00:00:01.37]       Actual:   "<user>"
+[xUnit.net 00:00:01.37]                   ↑ (pos 1)
+[xUnit.net 00:00:01.37]       Stack Trace:
+[xUnit.net 00:00:01.37]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.37]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.37]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.37]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.37]       Output:
+[xUnit.net 00:00:01.37]         row parent-no-bridge
+[xUnit.net 00:00:01.37]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "apos-no-mark", input: "C:\\Users\\<user>'bb", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.37]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.37]       Expected: "<path>"
+[xUnit.net 00:00:01.37]       Actual:   "<path>'bb"
+[xUnit.net 00:00:01.37]                        ↑ (pos 6)
+[xUnit.net 00:00:01.37]       Stack Trace:
+[xUnit.net 00:00:01.37]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.37]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.37]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.37]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.37]       Output:
+[xUnit.net 00:00:01.37]         row apos-no-mark
+[xUnit.net 00:00:01.37]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "dot-no-esc", input: "C:\\Users\\<user> bb.\\u00f6cc", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.37]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.37]       Expected: "<path>"
+[xUnit.net 00:00:01.37]       Actual:   "<path>.\\u00f6cc"
+[xUnit.net 00:00:01.37]                        ↑ (pos 6)
+[xUnit.net 00:00:01.37]       Stack Trace:
+[xUnit.net 00:00:01.37]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.37]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.37]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.37]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.37]       Output:
+[xUnit.net 00:00:01.37]         row dot-no-esc
+[xUnit.net 00:00:01.37]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "group-no-esc", input: "C:\\Users\\<user>(\\u00f6bb)", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.37]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.37]       Expected: "<path>"
+[xUnit.net 00:00:01.37]       Actual:   "<path>(\\u00f6bb)"
+[xUnit.net 00:00:01.37]                        ↑ (pos 6)
+[xUnit.net 00:00:01.37]       Stack Trace:
+[xUnit.net 00:00:01.37]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.37]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.37]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.37]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.37]       Output:
+[xUnit.net 00:00:01.37]         row group-no-esc
+[xUnit.net 00:00:01.37]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "apos-today", input: "C:\\Users\\<user>'bb", expected: "<path>") [FAIL]
+[xUnit.net 00:00:01.37]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.37]       Expected: "<path>"
+[xUnit.net 00:00:01.37]       Actual:   "<path>'bb"
+[xUnit.net 00:00:01.37]                        ↑ (pos 6)
+[xUnit.net 00:00:01.37]       Stack Trace:
+[xUnit.net 00:00:01.37]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.37]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.37]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.37]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.37]       Output:
+[xUnit.net 00:00:01.37]         row apos-today
+[xUnit.net 00:00:01.37]     Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "flag-left-quotes", input: "[-I/home/<user>/include]", expected: "[-Iinclude]") [FAIL]
+[xUnit.net 00:00:01.37]       Assert.Equal() Failure: Strings differ
+[xUnit.net 00:00:01.37]                     ↓ (pos 3)
+[xUnit.net 00:00:01.37]       Expected: "[-Iinclude]"
+[xUnit.net 00:00:01.37]       Actual:   "[-I/home/<user>/include]"
+[xUnit.net 00:00:01.37]                     ↑ (pos 3)
+[xUnit.net 00:00:01.37]       Stack Trace:
+[xUnit.net 00:00:01.37]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(152,0): at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected)
+[xUnit.net 00:00:01.37]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs(97,0): at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected)
+[xUnit.net 00:00:01.37]            at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+[xUnit.net 00:00:01.37]            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+[xUnit.net 00:00:01.37]       Output:
+[xUnit.net 00:00:01.37]         row flag-left-quotes
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "tilde-today", input: "/tmp/a/foo-~\\nx.cs", expected: "foo-~\\nx.cs") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+               ↓ (pos 4)
+Expected: "foo-~\\nx.cs"
+Actual:   "foo-nx.cs"
+               ↑ (pos 4)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 155
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row tilde-today
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "parent-no-bridge", input: "C:\\a\\x.cs\\n/home/<user>", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+            ↓ (pos 1)
+Expected: "<path>"
+Actual:   "<user>"
+            ↑ (pos 1)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row parent-no-bridge
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "apos-no-mark", input: "C:\\Users\\<user>'bb", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>'bb"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row apos-no-mark
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "dot-no-esc", input: "C:\\Users\\<user> bb.\\u00f6cc", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>.\\u00f6cc"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row dot-no-esc
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "group-no-esc", input: "C:\\Users\\<user>(\\u00f6bb)", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>(\\u00f6bb)"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row group-no-esc
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "apos-today", input: "C:\\Users\\<user>'bb", expected: "<path>") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+Expected: "<path>"
+Actual:   "<path>'bb"
+                 ↑ (pos 6)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row apos-today
+
+
+  Failed Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(id: "flag-left-quotes", input: "[-I/home/<user>/include]", expected: "[-Iinclude]") [< 1 ms]
+  Error Message:
+   Assert.Equal() Failure: Strings differ
+              ↓ (pos 3)
+Expected: "[-Iinclude]"
+Actual:   "[-I/home/<user>/include]"
+              ↑ (pos 3)
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439.AssertRow(String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 152
+   at Avowry.Acceptance.Tests.PathScan439.Id_439_4_mutant_killing_rows(String id, String input, String expected) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439.cs:line 97
+   at InvokeStub_PathScan439.Id_439_4_mutant_killing_rows(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ row flag-left-quotes
+
+
+[xUnit.net 00:00:07.27]     Avowry.Acceptance.Tests.PathScan439Generated.Id_439_2_sweep_B_extended_lists_add_no_leak_and_settle_in_one_pass [FAIL]
+[xUnit.net 00:00:07.27]       sweep=B extended lists seed 439 inputs=100000 leaks_base=45965 leaks_new=19720 regressions=2424 second_pass=1523 exclusions=0 max_leaks=4559
+[xUnit.net 00:00:07.27]       Stack Trace:
+[xUnit.net 00:00:07.27]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439Generated.cs(185,0): at Avowry.Acceptance.Tests.PathScan439Generated.Sweep(String label, UInt64 seed, Boolean extended, Boolean reviewShapes, Int32 maxLeaks)
+[xUnit.net 00:00:07.27]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439Generated.cs(111,0): at Avowry.Acceptance.Tests.PathScan439Generated.Id_439_2_sweep_B_extended_lists_add_no_leak_and_settle_in_one_pass()
+[xUnit.net 00:00:07.27]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:07.27]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:07.27]       Output:
+[xUnit.net 00:00:07.27]         sweep=B extended lists seed 439 inputs=100000 leaks_base=45965 leaks_new=19720 regressions=2424 second_pass=1523 exclusions=0
+  Failed Avowry.Acceptance.Tests.PathScan439Generated.Id_439_2_sweep_B_extended_lists_add_no_leak_and_settle_in_one_pass [6 s]
+  Error Message:
+   sweep=B extended lists seed 439 inputs=100000 leaks_base=45965 leaks_new=19720 regressions=2424 second_pass=1523 exclusions=0 max_leaks=4559
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439Generated.Sweep(String label, UInt64 seed, Boolean extended, Boolean reviewShapes, Int32 maxLeaks) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439Generated.cs:line 185
+   at Avowry.Acceptance.Tests.PathScan439Generated.Id_439_2_sweep_B_extended_lists_add_no_leak_and_settle_in_one_pass() in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439Generated.cs:line 111
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Standard Output Messages:
+ sweep=B extended lists seed 439 inputs=100000 leaks_base=45965 leaks_new=19720 regressions=2424 second_pass=1523 exclusions=0
+
+
+[xUnit.net 00:00:11.59]     Avowry.Acceptance.Tests.PathScan439Generated.Id_439_2_sweep_C_review_shapes_add_no_leak_and_settle_in_one_pass [FAIL]
+[xUnit.net 00:00:11.59]       sweep=C review shapes seed 4391 inputs=100000 leaks_base=50216 leaks_new=28735 regressions=6592 second_pass=6867 exclusions=0 max_leaks=2904
+[xUnit.net 00:00:11.59]       Stack Trace:
+[xUnit.net 00:00:11.59]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439Generated.cs(185,0): at Avowry.Acceptance.Tests.PathScan439Generated.Sweep(String label, UInt64 seed, Boolean extended, Boolean reviewShapes, Int32 maxLeaks)
+[xUnit.net 00:00:11.59]         C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439Generated.cs(124,0): at Avowry.Acceptance.Tests.PathScan439Generated.Id_439_2_sweep_C_review_shapes_add_no_leak_and_settle_in_one_pass()
+[xUnit.net 00:00:11.59]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:11.59]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:11.59]       Output:
+[xUnit.net 00:00:11.59]         sweep=C review shapes seed 4391 inputs=100000 leaks_base=50216 leaks_new=28735 regressions=6592 second_pass=6867 exclusions=0
+[xUnit.net 00:00:11.59]   Finished:    Avowry.Acceptance.Tests
+  Failed Avowry.Acceptance.Tests.PathScan439Generated.Id_439_2_sweep_C_review_shapes_add_no_leak_and_settle_in_one_pass [4 s]
+  Error Message:
+   sweep=C review shapes seed 4391 inputs=100000 leaks_base=50216 leaks_new=28735 regressions=6592 second_pass=6867 exclusions=0 max_leaks=2904
+  Stack Trace:
+     at Avowry.Acceptance.Tests.PathScan439Generated.Sweep(String label, UInt64 seed, Boolean extended, Boolean reviewShapes, Int32 maxLeaks) in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439Generated.cs:line 185
+   at Avowry.Acceptance.Tests.PathScan439Generated.Id_439_2_sweep_C_review_shapes_add_no_leak_and_settle_in_one_pass() in C:\Users\<user>\projects\gate439red-clone\tests\Avowry.Acceptance.Tests\PathScan439Generated.cs:line 124
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Standard Output Messages:
+ sweep=C review shapes seed 4391 inputs=100000 leaks_base=50216 leaks_new=28735 regressions=6592 second_pass=6867 exclusions=0
+
+
+
+Test Run Failed.
+Total tests: 81
+     Failed: 81
+ Total time: 12.8280 Seconds
