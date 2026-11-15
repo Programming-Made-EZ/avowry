@@ -8,7 +8,7 @@ namespace Avowry.Acceptance.Tests;
 // its private Find, Src, Describe and LinesOf. Row ids are <family>-<NN>/<corpus id>; NN counts within the family in corpus order.
 // Criteria: 430-1 [Z][O] (a clean class; the Elapsed and CancellationTokenSource shapes of real tests); 430-2 [M] (the new
 // spellings, their neighbours that stay unnamed, the encodings of each); 430-3 [B] (near misses and collection rows whose
-// outcome does not change); 430-4 [I] (test-type shapes); 430-5 [E] (the seven real classes carry the isolated collection).
+// outcome does not change); 430-4 [I] (test-type shapes); 430-5 [E] (the nine real classes carry the isolated collection).
 // Pending theories hold the rows the card 417 guard gets wrong; the Characterised theories hold the rows it already gets right.
 // No wall-clock spelling is written in code here: every row is a string, so the live-tree fact does not name this class.
 public partial class WallClockTestsRunIsolated
@@ -940,22 +940,23 @@ public partial class WallClockTestsRunIsolated
     [Trait("Criterion", "430-1")]
     public void Id_430_1_the_embedded_rows_are_the_corpus_file()
     {
-        // Given the corpus file of the slice and the rows embedded in this class
+        // Given the two corpus files of the slice (corpus.txt and the fix round's corpus-fix.txt) and the rows embedded in this class
         var dir = new DirectoryInfo(AppContext.BaseDirectory);
         while (dir is not null && !File.Exists(Path.Combine(dir.FullName, ".mob", "records", "430", "corpus.txt")))
             dir = dir.Parent;
         Assert.True(dir is not null, "corpus.txt was not found above the test binaries.");
-        var file = File.ReadAllLines(Path.Combine(dir!.FullName, ".mob", "records", "430", "corpus.txt"))
+        var file = new[] { "corpus.txt", "corpus-fix.txt" }
+            .SelectMany(name => File.ReadAllLines(Path.Combine(dir!.FullName, ".mob", "records", "430", name)))
             .Where(l => l.Length > 0 && !l.StartsWith('#'))
             .Select(l => l.Split('\t'))
             .Select(p => (Id: p[0], Text: DecodeCorpus430(p[5]), Expected: p[3]))
             .ToList();
 
         // When every file row is looked up among the embedded rows
-        var embedded = AllRows430().Select(r => (Id: r.Id[(r.Id.IndexOf('/') + 1)..], r.Text, r.Expected)).ToList();
+        var embedded = AllRows430().Concat(AllFixRows430()).Select(r => (Id: r.Id[(r.Id.IndexOf('/') + 1)..], r.Text, r.Expected)).ToList();
         var missing = file.Where(r => !embedded.Contains(r)).Select(r => r.Id).ToList();
 
-        // Then none is missing, and no row is embedded twice or that the file does not hold
+        // Then none is missing, and no row is embedded twice or that the files do not hold
         Assert.True(missing.Count == 0, "missing rows: " + string.Join(", ", missing));
         Assert.Equal(file.Count, embedded.Count);
         Assert.Equal(file.Count, embedded.Select(r => r.Id).Distinct(StringComparer.Ordinal).Count());
@@ -970,14 +971,17 @@ public partial class WallClockTestsRunIsolated
         "PutAndDeleteEndpointsCompile",
         "GeneratedApiBoundAddress",
         "SourceMapDeployment",
+        "GeneratedApiBoundAddressEdges",
+        "StarvationProbe",
     ];
 
     [Fact]
     [Trait("Slice", "430")]
     [Trait("Criterion", "430-5")]
-    public void E_the_seven_real_classes_with_short_hard_limits_carry_the_isolated_collection()
+    [Trait("Status", "Pending")]
+    public void E_the_nine_real_classes_with_short_hard_limits_carry_the_isolated_collection()
     {
-        // Given the real source files of the seven classes that assert a short hard limit (the card's five and the two of ruling 2)
+        // Given the real source files of the nine classes that assert a short hard limit (the card's five, the two of ruling 2 and the two of R1-1)
         var project = RepoPaths.Find("tests", "Avowry.Acceptance.Tests");
         var attribute = new Regex(
             @"[\[,]\s*(?:Xunit\s*\.\s*)?Collection\s*\(\s*""" + Regex.Escape(IsolatedName) + @"""\s*\)",
