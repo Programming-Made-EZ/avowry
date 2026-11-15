@@ -274,6 +274,125 @@ public sealed class PathScan441
         AssertCorpusRow(input, expected);
     }
 
+    // Fix round 1 (card 441 review round 1): the 26 corpus rows added under "# fix round 1" and the reviewer's mutant rows.
+
+    private static readonly (string Id, string Input, string Expected)[] Fix1ShapesPendingRows =
+    [
+        ("f1-java-uri-01", @"jar:file:/c:/users/<user>/.m2/a.jar!/x.class", @"jar:file:/x.class"),
+        ("f1-java-uri-02", @"java.io.FileNotFoundException: /c:/users/<user>/x.txt", @"java.io.FileNotFoundException: /x.txt"),
+        ("f1-java-uri-03", @"file:/C:/Documents and Settings/<user>/.m2/repository/a.jar", @"file:/a.jar"),
+        ("f1-java-uri-04", @"file:/C:/Documents%20and%20Settings/<user>/x.jar", @"file:/x.jar"),
+        ("f1-java-uri-05", @"///c:/users/<user>/x", @"///x"),
+        ("f1-java-uri-06", @"""/c:/users/<user>/x""", @"""/x"""),
+        ("f1-java-uri-07", @"/C:/USERS/<user>/x", @"/x"),
+        ("f1-java-uri-08", @"vscode-remote://wsl+Ubuntu/c:/users/<user>/x", @"vscode-remote://wsl+Ubuntu/x"),
+        ("f1-java-uri-09", @"ssh://host/C:/Users/<user>/r.git", @"ssh://host/r.git"),
+        ("f1-java-uri-10", @"file:/C:/Users/<user>/app/lib/a.jar", @"file:/a.jar"),
+        ("f1-java-uri-11", @"Caused by: java.nio.file.NoSuchFileException: /C:/Users/<user>/data/x.csv", @"Caused by: java.nio.file.NoSuchFileException: /x.csv"),
+        ("f1-json-escaped-01", @"{""env"":""PYTHONPATH=\/home\/<user>\/lib:\/home\/<user>""}", @"{""env"":""PYTHONPATH=lib:<path>""}"),
+        ("f1-json-escaped-02", @"{""volumes"":[""\/home\/<user>\/data:\/home\/<user>""]}", @"{""volumes"":[""data:<path>""]}"),
+        ("f1-json-escaped-03", @"{""PATH"":""\/home\/<user>\/bin:\/usr\/bin""}", @"{""PATH"":""bin:\/usr\/bin""}"),
+        ("f1-json-escaped-04", @"{""files"":""\/home\/<user>\/x.cs:\/home\/<user>\/y.cs""}", @"{""files"":""x.cs:y.cs""}"),
+        ("f1-json-escaped-05", @"{""line"":""svc:x:1000:1000::\/home\/<user>:\/bin\/bash""}", @"{""line"":""svc:x:1000:1000::<path>:\/bin\/bash""}"),
+        ("f1-json-escaped-06", @"{""Binds"":[""\/home\/<user>\/proj:\/app""]}", @"{""Binds"":[""proj:\/app""]}"),
+        ("f1-json-escaped-07", @"{""mount"":""\/Users\/<user>\/src:\/src""}", @"{""mount"":""src:\/src""}"),
+    ];
+
+    public static IEnumerable<object[]> Fix1ShapesPending() => Rows(Fix1ShapesPendingRows);
+
+    private static readonly (string Id, string Input, string Expected)[] Fix1ChainsCharacterisationRows =
+    [
+        ("f1-volume-winslash-08", @"docker run -v C:/Users/<user>/proj:/app x", @"docker run -v proj:/app x"),
+    ];
+
+    public static IEnumerable<object[]> Fix1ChainsCharacterisation() => Rows(Fix1ChainsCharacterisationRows);
+
+    private static readonly (string Id, string Input, string Expected)[] Fix1ChainsPendingRows =
+    [
+        ("f1-volume-winslash-01", @"docker run -v D:/a:/a x", @"docker run -v <path>a x"),
+        ("f1-volume-winslash-02", @"docker run -v C:/Users/<user>/d:/data x", @"docker run -v <path>data x"),
+        ("f1-volume-winslash-03", @"docker run -v C:/src/d:/data x", @"docker run -v <path>data x"),
+        ("f1-volume-winslash-04", @"docker run -v c:/x/v:/v x", @"docker run -v <path>v x"),
+        ("f1-volume-winslash-05", @"  - C:/work/d:/data", @"  - <path>data"),
+        ("f1-volume-winslash-06", @"file:///C:/a/b:/x", @"<path>x"),
+        ("f1-volume-winslash-07", @"-IC:/x/I:/y", @"-I<path>y"),
+    ];
+
+    public static IEnumerable<object[]> Fix1ChainsPending() => Rows(Fix1ChainsPendingRows);
+
+    private static readonly (string Id, string Input, string Expected)[] Fix1MutantRowsCharacterisationRows =
+    [
+        ("f1-fix1-mut-01", @"~aa.bb/x.cs", @"x.cs"),
+        ("f1-fix1-mut-02", @"git clone ssh://git@example.com/home/<user>/r.git", @"git clone ssh://git@example.com/r.git"),
+        ("f1-fix1-mut-03", @"cl.exe /I\\server\share\Users\<user>\inc a.c", @"cl.exe /Iinc a.c"),
+    ];
+
+    public static IEnumerable<object[]> Fix1MutantRowsCharacterisation() => Rows(Fix1MutantRowsCharacterisationRows);
+
+    private static IEnumerable<(string Id, string Input, string Expected)> AllFix1Rows() =>
+        Enumerable.Empty<(string Id, string Input, string Expected)>()
+        .Concat(Fix1ShapesPendingRows)
+        .Concat(Fix1ChainsPendingRows)
+        .Concat(Fix1ChainsCharacterisationRows)
+        .Concat(Fix1MutantRowsCharacterisationRows)
+        ;
+
+    [Theory]
+    [MemberData(nameof(Fix1ShapesPending))]
+    [Trait("Slice", "441")]
+    [Trait("Criterion", "441-1")]
+    [Trait("Status", "Pending")]
+    // Pending until the card 441 fix green that ports the reference scanner
+    public void Id_441_1_fix1_java_uri_and_escaped_json_shapes(string id, string input, string expected)
+    {
+        // Given a Java or URI form with a drive after a slash, or a JSON string with escaped slashes (card 441 review round 1)
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed in both account forms, no account name survives, and a second pass changes nothing
+        output.WriteLine($"row {id}");
+        AssertCorpusRow(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(Fix1ChainsCharacterisation))]
+    [Trait("Slice", "441")]
+    [Trait("Criterion", "441-2")]
+    public void Id_441_2_fix1_forward_slash_volume_specs_that_pass_today(string id, string input, string expected)
+    {
+        // Given a Windows forward-slash volume spec with a one-letter folder before a colon-slash (card 441 review round 1)
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed in both account forms, no account name survives, and a second pass changes nothing (characterisation: the row passes on the current tree)
+        output.WriteLine($"row {id}");
+        AssertCorpusRow(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(Fix1ChainsPending))]
+    [Trait("Slice", "441")]
+    [Trait("Criterion", "441-2")]
+    [Trait("Status", "Pending")]
+    // Pending until the card 441 fix green that ports the reference scanner
+    public void Id_441_2_fix1_forward_slash_volume_specs(string id, string input, string expected)
+    {
+        // Given a Windows forward-slash volume spec with a one-letter folder before a colon-slash (card 441 review round 1)
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed in both account forms, no account name survives, and a second pass changes nothing
+        output.WriteLine($"row {id}");
+        AssertCorpusRow(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(Fix1MutantRowsCharacterisation))]
+    [Trait("Slice", "441")]
+    [Trait("Criterion", "441-3")]
+    public void Id_441_3_fix1_mutant_killing_rows_that_pass_today(string id, string input, string expected)
+    {
+        // Given the killing row of a mutant of the card 441 fix slice (the reviewer's survivors)
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed in both account forms, no account name survives, and a second pass changes nothing (characterisation: the row passes on the current tree)
+        output.WriteLine($"row {id}");
+        AssertCorpusRow(input, expected);
+    }
+
     [Fact]
     [Trait("Slice", "441")]
     [Trait("Criterion", "441-1")]
@@ -290,7 +409,7 @@ public sealed class PathScan441
             .Select(p => (Input: p[1], Expected: p[2]))
             .ToList();
         // When every file row is looked up among the embedded rows
-        var embedded = AllRows().Select(r => (r.Input, r.Expected)).ToHashSet();
+        var embedded = AllRows().Concat(AllFix1Rows()).Select(r => (r.Input, r.Expected)).ToHashSet();
         // Then none is missing
         var missing = file.Where(r => !embedded.Contains(r)).ToList();
         output.WriteLine($"file_rows={file.Count} embedded_rows={embedded.Count} missing={missing.Count}");

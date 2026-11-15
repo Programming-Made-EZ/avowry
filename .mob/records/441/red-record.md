@@ -56,3 +56,46 @@ All other corpus rows pass on today's product (88 rows plus the completeness fac
 - `x://server/home/<user>` (minor-14, pinned) is Pending: today's product gives `x://server/home/<user>` for the stand-in and the placeholder forms, where the reference gives `<path>://server/home/<user>` (the card says it is now stable on a second pass).
 - I built and ran a small harness (scratchpad, outside the repository) with the product file and the architect's reference to classify the rows: one `dotnet build` of a tiny project while the heavy lock showed busy; no test run beyond the three filters. Nothing touched the repository.
 - The two literal-name rows and every path-shaped line are checked by `scripts/home_paths.py` (the commit hook's rewrite): the test file is unchanged by it.
+
+## Fix round 1 red (card 441 review round 1; worktree at f547705, with the round-1 green port at 099a0c5)
+
+Changes, uncommitted, in `PathScan441.cs` only. No earlier row was edited or reordered; the one edit to earlier code is in the completeness fact: its lookup is now `AllRows().Concat(AllFix1Rows())`, so it still matches `corpus.txt` (the 26 new corpus rows are embedded). Every expected output was checked against the architect's fixed reference (all 29 rows REF-OK, stable on a second pass); today's green was classified with the scratchpad harness and confirmed by the runs. Before each build and run the heavy lock printed `free`.
+
+New rows (29): 
+- 26 corpus rows, as written (the placeholder form and the stand-in form each): 11 `java-uri` and 7 `json-escaped` rows (criterion 441-1, 18 Pending: all fail on the green; `f1-java-uri-*`, `f1-json-escaped-*`), and 8 `volume-winslash` rows (441-2: 7 Pending; `docker run -v C:/Users/<user>/proj:/app x` passes already, characterisation).
+- 3 reviewer mutant rows (441-3, all characterisation, because they pass on the green: they kill mutants of the fix, not of the green): `tilde-name-no-dot` (`~aa.bb/x.cs` gives `x.cs`), `ssh-host-no-dot` (`git clone ssh://git@example.com/home/<user>/r.git` gives `ssh://git@example.com/r.git`), `unc-slash-flag-off` (`cl.exe /I\\server\share\Users\<user>\inc a.c` gives `cl.exe /Iinc a.c`). `tilde-name-no-dot` uses a plain `aa.bb` name (review MINOR 9): the placeholder cannot test a dotted name.
+- The four new mutants' killing rows are corpus rows already embedded in the sets above: `drive-after-slash-any` (`java-uri-02`), `drive-after-slash-adjacent-refused` (`volume-winslash-01`, `docker run -v D:/a:/a x`), `percent-das-off` (`java-uri-04`), `json-colon-backslash` (`json-escaped-01`); all Pending.
+
+New Pending count: 25 (18 + 7). New characterisation: 4 (1 volume row, 3 mutant rows). No row needed a split string: every path-shaped input holds the placeholder or a non-name word, and the file passes the home-path rewrite unchanged.
+
+Runs (build: 0 warnings, 0 errors):
+- `Slice=441&Status=Pending`: `Failed!  - Failed:    25, Passed:     0, Skipped:     0, Total:    25` (25 of 25 `Assert.Equal() Failure: Strings differ`).
+- `Slice=441&Status!=Pending`: `Passed!  - Failed:     0, Passed:   115, Skipped:     0, Total:   115` (the completeness fact included).
+- `Slice=439|Slice=435`: `Passed!  - Failed:     0, Passed:   341, Skipped:     0, Total:   341`.
+
+Failing Pending ids with their first assertion line (account name `<user>`; the id counts rows of its family under `# fix round 1`):
+- `f1-java-uri-08`: Expected "vscode-remote://wsl+Ubuntu/x", Actual ···"ode-remote://wsl+Ubuntu/c:/users/<user>/x"
+- `f1-json-escaped-01`: Expected "{"env":"PYTHONPATH=lib:<path>"}", Actual "{"env":"PYTHONPATH=li<user>"}"
+- `f1-java-uri-06`: Expected ""/x"", Actual ""/c:/users/<user>/x""
+- `f1-json-escaped-04`: Expected "{"files":"x.cs:y.cs"}", Actual "{"files":"x.cy.cs"}"
+- `f1-json-escaped-02`: Expected "{"volumes":["data:<path>"]}", Actual "{"volumes":["dat<user>"]}"
+- `f1-java-uri-11`: Expected ···"java.nio.file.NoSuchFileException: /x.csv", Actual ···"va.nio.file.NoSuchFileException: /C:x.csv"
+- `f1-json-escaped-06`: Expected "{"Binds":["proj:\\/app"]}", Actual "{"Binds":["proapp"]}"
+- `f1-json-escaped-07`: Expected "{"mount":"src:\\/src"}", Actual "{"mount":"srsrc"}"
+- `f1-java-uri-07`: Expected "/x", Actual "/C:/USERS/<user>/x"
+- `f1-json-escaped-05`: Expected ···"e":"svc:x:1000:1000::<path>:\\/bin\\/bash"}", Actual "{"line":"svc:x:1000:1000::<path>bash"}"
+- `f1-json-escaped-03`: Expected "{"PATH":"bin:\\/usr\\/bin"}", Actual "{"PATH":"bibin"}"
+- `f1-java-uri-02`: Expected "java.io.FileNotFoundException: /x.txt", Actual ···"NotFoundException: /c:/users/<user>/x.txt"
+- `f1-java-uri-09`: Expected "ssh://host/r.git", Actual "ssh://host/C:r.git"
+- `f1-java-uri-10`: Expected "file:/a.jar", Actual "file:/C:a.jar"
+- `f1-java-uri-05`: Expected "///x", Actual "///c:/users/<user>/x"
+- `f1-java-uri-01`: Expected "jar:file:/x.class", Actual "jar:file:/c:/users/<user>/.m2/a.jar!/x.cl"···
+- `f1-java-uri-04`: Expected "file:/x.jar", Actual "file:/C:/Documents%20and%20Settings/<user"···
+- `f1-java-uri-03`: Expected "file:/a.jar", Actual "file:/C:/Documents and Settings/<user>/.m"···
+- `f1-volume-winslash-05`: Expected "  - <path>data", Actual "  - <path>d:/data"
+- `f1-volume-winslash-02`: Expected "docker run -v <path>data x", Actual "docker run -v <path>d:/data x"
+- `f1-volume-winslash-03`: Expected "docker run -v <path>data x", Actual "docker run -v <path>d:/data x"
+- `f1-volume-winslash-04`: Expected "docker run -v <path>v x", Actual "docker run -v <path>v:/v x"
+- `f1-volume-winslash-01`: Expected "docker run -v <path>a x", Actual "docker run -v <path>a:/a x"
+- `f1-volume-winslash-06`: Expected "<path>x", Actual "<path>b:/x"
+- `f1-volume-winslash-07`: Expected "-I<path>y", Actual "-I<path>I:/y"
