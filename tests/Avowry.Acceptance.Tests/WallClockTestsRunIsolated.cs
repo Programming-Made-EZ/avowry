@@ -7,7 +7,7 @@ namespace Avowry.Acceptance.Tests;
 // Offline text scan of this project (no build, no process). The Code variant blanks comments, string
 // contents and char literals; the Text variant blanks comments only. Newlines are kept. Nested types
 // count toward their parent. Partial classes merge by name. Fixtures are in-memory strings.
-public class WallClockTestsRunIsolated
+public partial class WallClockTestsRunIsolated
 {
     private const string ThisFile = "WallClockTestsRunIsolated.cs";
     private const string IsolatedName = "Isolated timing";
