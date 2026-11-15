@@ -25,3 +25,22 @@ R1-3 (MINOR 4, the WaitAsync rule names token waits: `_ct`, `cancel`, `linkedCt`
 R1-4 (MINOR 3, 5, 7, 8, 9 and 10): named limits of this card. They are contrived or absent from this repository's tests, and a false name fails the gate loudly. They are filed on #443 with the review's minimal inputs. No rows in this card.
 
 The fix round runs the same seats as D266: the architect's fix slice (claude opus), the red (claude sonnet), the green (cursor gpt-5.3-codex), the gate under the heavy lock, then review round 2 (claude opus). Lesson from the red, applied now: when the facilitator takes over a waiting seat's runs, the seat is stopped first.
+
+## Review round 2 rulings (facilitator, 2026-11-15)
+
+Review round 2 is `review-2.md`, run on card-430 at a5ca65f by the QA seat (claude opus = claude-opus-5-5, ctx-4b). Verdict: SIGN-OFF, 0 BLOCKING, 5 MINOR. It confirmed:
+- no old row changed;
+- the live tree names no class;
+- the time is linear on 40 shapes up to 320k characters;
+- `Slice=430|Slice=417` passes 383 of 383 in a clone.
+
+R2-1, all five MINOR findings: named limits of this card, added to #443 with the review's minimal inputs.
+- MINOR 1: whitespace or a comment between `WaitAsync(` and a token argument still names the class, because `\(\s*` backtracks into the lookahead. The reviewer's fix is `\.\s*WaitAsync\s*\((?!\s*(?:[)]|...))`. It is a false name, so the gate fails loudly; it never leaks. All 12 WaitAsync calls in the repository's tests have their argument touching `(`, which the facilitator replayed with grep. It is marked first on #443.
+- MINOR 2: a reversed named-argument order is missed.
+- MINOR 3: the `[Cc]ancel` suffix also matches a limit name that ends in Cancel.
+- MINOR 4: older token-rule shapes.
+- MINOR 5: `#if` and a using alias in a declaration gap.
+
+None occurs in this repository, and none is a leak on real code. No further fix round runs.
+
+Rule breach (recorded): the review seat's first probe build ran a recursive delete of `bin obj` inside its own new probe folder. Those folders did not exist yet, so nothing was deleted, and the seat reported it itself. Future review briefs will forbid any delete in the probe folder by name, as well as by rule.
