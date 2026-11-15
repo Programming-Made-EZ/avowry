@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "318b302c367c26456e381ae622204cacda276b8a2922d8585d2428974b73a4cc",
+  "probe": {
+    "taken_at": "2026-11-15T00:27:46.908422Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-8c743fb0-50a0-4d75-98ce-be9bf3ce7070)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=0bedc8de-5259-46da-94f7-d2212bb80001]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "dev": {
+      "vote": "Yes",
+      "reason": "The division of red and green into separate contexts with pinned models provides unambiguous boundaries and prevents specification leakage. Grounding test design in explicit mutant-killing rows and differential checks gives backend implemen",
+      "reply": "Yes\nThe division of red and green into separate contexts with pinned models provides unambiguous boundaries and prevents specification leakage. Grounding test design in explicit mutant-killing rows and differential checks gives backend implementation concrete criteria to satisfy without gaming or guesswork. Using measured slice evidence instead of flaky wall-clock assertions ensures tests remain fast, deterministic, and workable under standard development constraints.\n\nCITE: names a mutant and its killing row for each rule\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The division of red and green into separate contexts with pinned models provides unambiguous boundaries and prevents specification leakage. Grounding test design in explicit mutant-killing rows and differential checks gives backend implemen"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T00:27:46.908422Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2566
+    }
+  },
+  "counted_seats": [
+    "dev"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "90b49be1a6f2e94028f5fde1ff06936ff393ae95",
+  "head_end": "90b49be1a6f2e94028f5fde1ff06936ff393ae95",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "dev": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

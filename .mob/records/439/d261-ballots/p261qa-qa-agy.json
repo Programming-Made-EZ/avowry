@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "a2781f4f6373aef2645b708ea40394715e61e5b29d853dfef3eb7a2cc89571ff",
+  "probe": {
+    "taken_at": "2026-11-15T00:27:49.965308Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-75b3c6f5-aaa9-46b0-9e64-b86e4cf593e4)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=91297ad6-baf9-4276-be15-388e253747da]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "Clause 3 and the standing rules guarantee that every rule can be tested red first by requiring each rule to name a mutant along with its killing row, converting all card 435 review inputs into red test rows, and running the old-against-new ",
+      "reply": "Yes\nClause 3 and the standing rules guarantee that every rule can be tested red first by requiring each rule to name a mutant along with its killing row, converting all card 435 review inputs into red test rows, and running the old-against-new differential before green implementation starts. Having a dedicated red dev seat using the Pending-trait convention alongside an adversarial QA review seat ensures that the tests will catch violations without prematurely passing bad state.\n\nCITE: names a mutant and its killing row for each rule\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Clause 3 and the standing rules guarantee that every rule can be tested red first by requiring each rule to name a mutant along with its killing row, converting all card 435 review inputs into red test rows, and running the old-against-new "
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T00:27:49.965308Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2570
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "90b49be1a6f2e94028f5fde1ff06936ff393ae95",
+  "head_end": "90b49be1a6f2e94028f5fde1ff06936ff393ae95",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

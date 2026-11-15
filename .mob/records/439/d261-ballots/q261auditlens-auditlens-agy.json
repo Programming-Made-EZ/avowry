@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "ad302da7e1d537ea144f6fe21e7a78cd1d6a77fe662b0c3cf410741e4747c542",
+  "probe": {
+    "taken_at": "2026-11-15T00:33:04.841124Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-fd015be2-b28e-474f-a009-3c81f8ba5227)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=14a444cd-d608-417d-a93a-00a178d9298f]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "The proposal is verifiable entirely from git: the card text, model pins, probe results, and slice requirements exist as committed artifacts. It closes loopholes against breaking the practice: red-before-green mandates mutants and differenti",
+      "reply": "Yes\nThe proposal is verifiable entirely from git: the card text, model pins, probe results, and slice requirements exist as committed artifacts. It closes loopholes against breaking the practice: red-before-green mandates mutants and differential testing prior to green implementation, linear time is enforced through slice and review evidence rather than flaky tests, and sign-off runs in an isolated context separate from green.\nCITE: each role's service and exact model pinned before any seat runs\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The proposal is verifiable entirely from git: the card text, model pins, probe results, and slice requirements exist as committed artifacts. It closes loopholes against breaking the practice: red-before-green mandates mutants and differenti"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T00:33:04.841124Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2572
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "90b49be1a6f2e94028f5fde1ff06936ff393ae95",
+  "head_end": "90b49be1a6f2e94028f5fde1ff06936ff393ae95",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

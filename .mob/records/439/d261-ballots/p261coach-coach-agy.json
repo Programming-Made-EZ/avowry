@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "b3063482d864363844ddb59e1a4ee2f6eb947c3b941b29a2619f7f1470846404",
+  "probe": {
+    "taken_at": "2026-11-15T00:27:48.833609Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-12da0b30-74f7-4a53-8a82-228ec93267eb)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=255fb51a-2880-4421-a1dc-38f1e583674e]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The task force is lean and appropriately sized for the task. The five-seat structure preserves essential separation of concerns'splitting red test specification, green implementation, adversarial QA, and independent sign-off'without padding",
+      "reply": "Yes\n\nThe task force is lean and appropriately sized for the task. The five-seat structure preserves essential separation of concerns\u2014splitting red test specification, green implementation, adversarial QA, and independent sign-off\u2014without padding the team with ceremony. Explicitly evaluating and omitting a dedicated performance engineer avoids unnecessary role inflation, as linear scanning is properly integrated into the architect's design and validated directly by QA. All critical perspectives are covered with zero redundant ceremony.\n\nCITE: a performance engineer is not added, because linear time is a design rule\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The task force is lean and appropriately sized for the task. The five-seat structure preserves essential separation of concerns'splitting red test specification, green implementation, adversarial QA, and independent sign-off'without padding"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T00:27:48.833609Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2568
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "90b49be1a6f2e94028f5fde1ff06936ff393ae95",
+  "head_end": "90b49be1a6f2e94028f5fde1ff06936ff393ae95",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

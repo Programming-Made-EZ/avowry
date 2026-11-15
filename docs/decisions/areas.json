@@ -1672,5 +1672,11 @@
     "status": "adopted",
     "title": "Card 435 retro pick: a push is reported only after its result is read unpiped and the remote head equals the local commit",
     "order": 251
+  },
+  "D261": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 439: task force declaration (models pinned per role) and Ready text (the bench path scrub finds path roots in one linear pass, replacing the single regex)",
+    "order": 252
   }
 }

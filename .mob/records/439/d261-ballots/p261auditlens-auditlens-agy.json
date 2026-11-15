@@ -1,0 +1,88 @@
+{
+  "result": "failed: no counted votes",
+  "prompt_sha": "ad302da7e1d537ea144f6fe21e7a78cd1d6a77fe662b0c3cf410741e4747c542",
+  "probe": {
+    "taken_at": "2026-11-15T00:27:50.391397Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-c15e3876-2383-464c-a292-1f35dac38908)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=4803590b-7dc3-4bbe-b9e4-66fd56d980dc]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "The proposal is verifiable entirely from git history and leaves no loophole for bypassing practice. Every referenced artifact, probe log, and rule is committed under the repository path. Contexts are cleanly separated, exact models are pinn",
+      "reply": "Yes\nThe proposal is verifiable entirely from git history and leaves no loophole for bypassing practice. Every referenced artifact, probe log, and rule is committed under the repository path. Contexts are cleanly separated, exact models are pinned before runs, and sign-off is independent of green implementation. Clause 3 closes evasion risks by enforcing a single shared escape set and constants list, mandating killed mutants for every rule, requiring a 20,000-character benchmark as measured evidence for linear time under D254, and running differential verification prior to green. All deliverables and gates leave durable commits in git.\n\nCITE: with each role's service and exact model pinned before any seat runs\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The proposal is verifiable entirely from git history and leaves no loophole for bypassing practice. Every referenced artifact, probe log, and rule is committed under the repository path. Contexts are cleanly separated, exact models are pinn"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-15T00:27:50.391397Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2571
+    }
+  },
+  "counted_seats": [],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "90b49be1a6f2e94028f5fde1ff06936ff393ae95",
+  "head_end": "90b49be1a6f2e94028f5fde1ff06936ff393ae95",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {}
+  },
+  "absent": []
+}

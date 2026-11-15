@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "1929848a4cab1408154d603dfe4863bb8f77938208f7192db0a4b492fc7a3fa9",
+  "probe": {
+    "taken_at": "2026-11-15T00:27:47.954267Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-b038793e-e559-4131-a061-bda1948eed0a)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=af100721-c623-43be-8010-4e0269ca54c3]: Subscription quota exhausted. Your usage window resets at 2026-11-16T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "The evaluation is solidly framed to decide on evidence: Clause 3 mandates mutant killing, a pre-green differential comparison, and measured scaling evidence on a 20,000-character row under D254. The task force covers every necessary role wi",
+      "reply": "Yes\nThe evaluation is solidly framed to decide on evidence: Clause 3 mandates mutant killing, a pre-green differential comparison, and measured scaling evidence on a 20,000-character row under D254. The task force covers every necessary role with an independent sign-off seat in a fresh clone distinct from the green seat, and adversarial QA to probe limits before acceptance.\n\nCITE: runs the gate filters in a fresh clone and judges\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The evaluation is solidly framed to decide on evidence: Clause 3 mandates mutant killing, a pre-green differential comparison, and measured scaling evidence on a 20,000-character row under D254. The task force covers every necessary role wi"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-15T00:27:47.954267Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2567
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "90b49be1a6f2e94028f5fde1ff06936ff393ae95",
+  "head_end": "90b49be1a6f2e94028f5fde1ff06936ff393ae95",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}
