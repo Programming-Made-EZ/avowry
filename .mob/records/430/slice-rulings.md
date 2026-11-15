@@ -7,3 +7,7 @@ The slice: slice-architect.md (architect: claude opus = claude-opus-5-5, ctx-1, 
 3. Nested test classes keep card 417's judgement by the parent's collection on this card (the real tree has no nested test class); xUnit does not apply an outer class's collection to a nested class, so the gap goes to a new card (Avowry #443): ACCEPTED.
 4. `[Fact(Timeout = ...)]`, a local elapsed alias (`var elapsed = sw.Elapsed`), `Assert.False(sw.Elapsed > limit)`, a bare `DateTime` difference, a client the type did not declare, and very long initializers or `InRange` arguments are NAMED LIMITS of this card, not added after D266 fixed the scope; they go to the same new card as ruling 3 (Avowry #443).
 5. The scan caps (the only change no row can check) stay; their timing is reported in the slice and re-measured by the review.
+
+## Process note (facilitator, 2026-11-15 17:12Z)
+
+The red seat (Claude Sonnet, ctx-2) kept a lock watcher running after the facilitator ran its build and filters under the 16:51Z watchdog ruling. When the watcher woke, the seat built in wt-430 while the Cursor green seat (ctx-3) was editing the same worktree, so two drivers were in one tree. Nothing was committed by the red seat, the red had been reproduced in a clean clone of 9daa8f6, and the facilitator reran the green filters after Cursor finished, so no record is affected. Lesson for the retro: when the facilitator takes over a waiting seat's runs, stop that seat first.
