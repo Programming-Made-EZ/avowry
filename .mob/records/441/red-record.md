@@ -99,3 +99,35 @@ Failing Pending ids with their first assertion line (account name `<user>`; the 
 - `f1-volume-winslash-01`: Expected "docker run -v <path>a x", Actual "docker run -v <path>a:/a x"
 - `f1-volume-winslash-06`: Expected "<path>x", Actual "<path>b:/x"
 - `f1-volume-winslash-07`: Expected "-I<path>y", Actual "-I<path>I:/y"
+
+## Fix round 2 red (card 441 review round 2; worktree at bfbe1d8, fix slice 2 in slice-fix2.md)
+
+Changes, uncommitted, in `PathScan441.cs` only. No earlier row was edited or reordered; the one edit to earlier code is the completeness fact's lookup, now `AllRows().Concat(AllFix1Rows()).Concat(AllFix2Rows())`, so it still matches `corpus.txt`. The 21 rows under `# fix round 2` are embedded as `AllFix2Rows()` with ids `f2-<family>-NN` (counted within the family under that heading). Every expected output was checked against the architect's fixed reference (probe `corpus` mode on `corpus.txt`: expected_miss=0 in every family, no second-pass change); nothing disagreed with slice-fix2.md. Today's green (389d790 `PathScrub.cs`) was classified with a scratchpad harness and confirmed by the runs. The heavy lock was `busy` for about 1.5 hours (play-tracker #1017) and `free` before each build and run below. No row needed a split string.
+
+Rows (21):
+- 441-1, Pending (14): `f2-java-uri-01` to `-07` (finding 1), `f2-json-escaped-01`, `-02`, `-03`, `-04`, `-06`, `-08` (finding 2), `f2-minor-01` (MINOR 3). Theory `Id_441_1_fix2_separator_runs_escaped_lone_letters_and_the_glued_drive`, `Status=Pending`.
+- 441-1, characterisation (4): `f2-json-escaped-05` and `-07` (the letter kept before an escaped root), `f2-minor-02` (pinned MINOR 4), `f2-minor-03` (pinned MINOR 5).
+- 441-3, characterisation (3): `f2-env-01` (m7), `f2-java-uri-08` (m10), `f2-json-escaped-09` (m10).
+
+Pending count: 14. Characterisation count: 7.
+
+Runs (build: 0 warnings, 0 errors):
+- `Slice=441&Status=Pending`: `Failed!  - Failed:    14, Passed:     0, Skipped:     0, Total:    14` (14 of 14 `Assert.Equal() Failure`, none by exception).
+- `Slice=441&Status!=Pending`: `Passed!  - Failed:     0, Passed:   147, Skipped:     0, Total:   147` (the earlier 115, the 25 round 1 rows that no longer carry the Pending trait, and the 7 new characterisation rows).
+- `Slice=439|Slice=435`: `Passed!  - Failed:     0, Passed:   341, Skipped:     0, Total:   341`.
+
+Failing Pending ids with their first assertion line (account name `<user>`):
+- `f2-java-uri-01`: Expected "/x", Actual "/C://Users//<user>//x"
+- `f2-java-uri-02`: Expected "file:/x", Actual "file:/C://Users/<user>/x"
+- `f2-java-uri-03`: Expected "jar:file:/x.class", Actual "jar:file:/c://users/<user>/x.class"
+- `f2-java-uri-04`: Expected "jar:file:/x", Actual "jar:file:/c:///users/<user>/x"
+- `f2-java-uri-05`: Expected "jar:file:/x", Actual "jar:file:/C://Documents and Settings/<use"···
+- `f2-java-uri-06`: Expected "x/x", Actual "x/c:/\users\<user>\x"
+- `f2-java-uri-07`: Expected "file:/x.jar", Actual "file:/C://Documents%20and%20Settings/<use"···
+- `f2-json-escaped-01`: Expected "{"Binds":["<path>:\/data"]}", Actual "{"Binds":["d:\/data"]}"
+- `f2-json-escaped-02`: Expected "{"Binds":["<path>:\/data:ro"]}", Actual "{"Binds":["d:\/data:ro"]}"
+- `f2-json-escaped-03`: Expected "{"PATH":"<path>:\/usr\/bin"}", Actual "{"PATH":"x:\/usr\/bin"}"
+- `f2-json-escaped-04`: Expected "{"env":"PYTHONPATH=<path>:\/opt\/x"}", Actual "{"env":"PYTHONPATH=l:\/opt\/x"}"
+- `f2-json-escaped-06`: Expected "{"mount":"<path>:\/src"}", Actual "{"mount":"s:\/src"}"
+- `f2-json-escaped-08`: Expected "{"files":"<path>:\/tmp\/y"}", Actual "{"files":"x:\/tmp\/y"}"
+- `f2-minor-01`: Expected "<path>y", Actual "<path>C:\/a\/y"

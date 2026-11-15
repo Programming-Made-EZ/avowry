@@ -389,6 +389,94 @@ public sealed class PathScan441
         AssertCorpusRow(input, expected);
     }
 
+    // Fix round 2 (card 441 review round 2): the 21 corpus rows added under "# fix round 2" (ids f2-<family>-NN count within the family under that heading).
+
+    private static readonly (string Id, string Input, string Expected)[] Fix2ShapesPendingRows =
+    [
+        ("f2-java-uri-01", @"/C://Users//<user>//x", @"/x"),
+        ("f2-java-uri-02", @"file:/C://Users/<user>/x", @"file:/x"),
+        ("f2-java-uri-03", @"jar:file:/c://users/<user>/x.class", @"jar:file:/x.class"),
+        ("f2-java-uri-04", @"jar:file:/c:///users/<user>/x", @"jar:file:/x"),
+        ("f2-java-uri-05", @"jar:file:/C://Documents and Settings/<user>/x", @"jar:file:/x"),
+        ("f2-java-uri-06", @"x/c:/\users\<user>\x", @"x/x"),
+        ("f2-java-uri-07", @"file:/C://Documents%20and%20Settings/<user>/x.jar", @"file:/x.jar"),
+        ("f2-json-escaped-01", @"{""Binds"":[""\/home\/<user>\/d:\/data""]}", @"{""Binds"":[""<path>:\/data""]}"),
+        ("f2-json-escaped-02", @"{""Binds"":[""\/home\/<user>\/d:\/data:ro""]}", @"{""Binds"":[""<path>:\/data:ro""]}"),
+        ("f2-json-escaped-03", @"{""PATH"":""\/home\/<user>\/x:\/usr\/bin""}", @"{""PATH"":""<path>:\/usr\/bin""}"),
+        ("f2-json-escaped-04", @"{""env"":""PYTHONPATH=\/home\/<user>\/l:\/opt\/x""}", @"{""env"":""PYTHONPATH=<path>:\/opt\/x""}"),
+        ("f2-json-escaped-06", @"{""mount"":""\/Users\/<user>\/s:\/src""}", @"{""mount"":""<path>:\/src""}"),
+        ("f2-json-escaped-08", @"{""files"":""\/home\/<user>\/x:\/tmp\/y""}", @"{""files"":""<path>:\/tmp\/y""}"),
+        ("f2-minor-01", @"C:\Users\<user>(1)xC:\/a\/y", @"<path>y"),
+    ];
+
+    public static IEnumerable<object[]> Fix2ShapesPending() => Rows(Fix2ShapesPendingRows);
+
+    private static readonly (string Id, string Input, string Expected)[] Fix2ShapesCharacterisationRows =
+    [
+        ("f2-json-escaped-05", @"{""env"":""PYTHONPATH=\/home\/<user>\/l:\/home\/<user>""}", @"{""env"":""PYTHONPATH=l:<path>""}"),
+        ("f2-json-escaped-07", @"{""volumes"":[""\/home\/<user>\/d:\/home\/<user>""]}", @"{""volumes"":[""d:<path>""]}"),
+        ("f2-minor-02", @"file:/C:/Documents%20and Settings/<user>/x", @"file:/C:/Documents%20and Settings/<user>/x"),
+        ("f2-minor-03", @"{""PATH"":""\/opt\/b:\/home\/<user>""}", @"{""PATH"":""\/opt\/<user>""}"),
+    ];
+
+    public static IEnumerable<object[]> Fix2ShapesCharacterisation() => Rows(Fix2ShapesCharacterisationRows);
+
+    private static readonly (string Id, string Input, string Expected)[] Fix2MutantRowsCharacterisationRows =
+    [
+        ("f2-env-01", @"PATH=/opt/b:/userspace/x", @"PATH=/opt/b:/userspace/x"),
+        ("f2-java-uri-08", @"x/c:\tools\<user>\a.cs", @"x/a.cs"),
+        ("f2-json-escaped-09", @"{""PATH"":""\/opt\/x:\/opt\/y""}", @"{""PATH"":""\/opt\/y""}"),
+    ];
+
+    public static IEnumerable<object[]> Fix2MutantRowsCharacterisation() => Rows(Fix2MutantRowsCharacterisationRows);
+
+    private static IEnumerable<(string Id, string Input, string Expected)> AllFix2Rows() =>
+        Enumerable.Empty<(string Id, string Input, string Expected)>()
+        .Concat(Fix2ShapesPendingRows)
+        .Concat(Fix2ShapesCharacterisationRows)
+        .Concat(Fix2MutantRowsCharacterisationRows)
+        ;
+
+    [Theory]
+    [MemberData(nameof(Fix2ShapesPending))]
+    [Trait("Slice", "441")]
+    [Trait("Criterion", "441-1")]
+    [Trait("Status", "Pending")]
+    public void Id_441_1_fix2_separator_runs_escaped_lone_letters_and_the_glued_drive(string id, string input, string expected)
+    {
+        // Given a drive after a slash followed by a doubled or mixed separator run, an escaped JSON list element ending in a one-letter folder before an escaped colon-slash, or an escaped drive right after a glued word (card 441 review round 2)
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed in both account forms, no account name survives, and a second pass changes nothing
+        output.WriteLine($"row {id}");
+        AssertCorpusRow(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(Fix2ShapesCharacterisation))]
+    [Trait("Slice", "441")]
+    [Trait("Criterion", "441-1")]
+    public void Id_441_1_fix2_shapes_that_pass_today(string id, string input, string expected)
+    {
+        // Given an escaped JSON list that keeps a lone letter before an escaped account root, or a pinned older limit (MINOR 4 and 5) (card 441 review round 2)
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed in both account forms, no account name survives (unless the row pins an older limit), and a second pass changes nothing (characterisation: the row passes on the current tree)
+        output.WriteLine($"row {id}");
+        AssertCorpusRow(input, expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(Fix2MutantRowsCharacterisation))]
+    [Trait("Slice", "441")]
+    [Trait("Criterion", "441-3")]
+    public void Id_441_3_fix2_mutant_killing_rows_that_pass_today(string id, string input, string expected)
+    {
+        // Given the killing row of a mutant of the card 441 fix slice 2 (the reviewer's survivors m7 and m10)
+        // When PathScrub.Apply runs
+        // Then the row reads exactly as listed in both account forms, no account name survives, and a second pass changes nothing (characterisation: the row passes on the current tree)
+        output.WriteLine($"row {id}");
+        AssertCorpusRow(input, expected);
+    }
+
     [Fact]
     [Trait("Slice", "441")]
     [Trait("Criterion", "441-1")]
@@ -405,7 +493,7 @@ public sealed class PathScan441
             .Select(p => (Input: p[1], Expected: p[2]))
             .ToList();
         // When every file row is looked up among the embedded rows
-        var embedded = AllRows().Concat(AllFix1Rows()).Select(r => (r.Input, r.Expected)).ToHashSet();
+        var embedded = AllRows().Concat(AllFix1Rows()).Concat(AllFix2Rows()).Select(r => (r.Input, r.Expected)).ToHashSet();
         // Then none is missing
         var missing = file.Where(r => !embedded.Contains(r)).ToList();
         output.WriteLine($"file_rows={file.Count} embedded_rows={embedded.Count} missing={missing.Count}");
