@@ -1,0 +1,14 @@
+diff --git a/TEAM_WORKING_AGREEMENT.md b/TEAM_WORKING_AGREEMENT.md
+index 34bb0b1..f81025b 100644
+--- a/TEAM_WORKING_AGREEMENT.md
++++ b/TEAM_WORKING_AGREEMENT.md
+@@ -576,6 +576,9 @@ Each experiment states its hypothesis, the metric, a trial length with its unit,
+ - **Stop a waiting seat before its runs are taken over (experiment; card 430 retro, Decider D267).** While this entry is on trial, before the facilitator (or any other seat) runs a build, test or edit that a launched seat was briefed to run, in that seat's worktree or clone, the facilitator stops that seat and every watcher or background process it started, by its own task or process id and never by name, and records in the card's rulings the seat, the stop and the time. Only then does the takeover run. A seat that waits on a lock is briefed to wait in the foreground and leave no background watcher when it stops. Metric: two-driver events per card (card 430: 1), target 0, reported in the retro. Counter-metric: facilitator idle minutes over 10 with light work available (card 430: about 65), which this stop must not raise. Sample: three cards. Expiry: the third card's retro, which adopts, revises or removes the entry.
+   - Hypothesis: one driver per tree is kept by a step rather than by luck; on card 430 a red seat's late watcher built beside the green seat because the facilitator took over its runs without stopping it.
+ 
++- **A green brief names the caller of every new helper, and the first gate runs in the CI checkout shape (experiment; card 422 retro, Decider D270).** While this entry is on trial: every slice and green brief that introduces a helper names each production caller by symbol, and the red commits a source-scan wiring row for each named call before the green; the first gate of the card runs every test that reads git history (the Python modules first) in a depth-1 clone, the shape CI checks out, as well as in the full clone. Metric: round-1 review BLOCKING findings that are wiring or clone-shape gaps (card 422: 3 over two rounds), target 0. Counter-metric: minutes added to the slice or the brief (more than 10 on a card is a miss). Sample: three cards. Expiry: the third card's retro, which adopts, revises or removes the entry.
++  - Hypothesis: the seams between seats (a helper ported but never called, a test that passes on the laptop and fails on CI's shallow checkout) are caught before review when the brief names them and the gate copies CI's shape.
++
+ ## 4. Project specifics
+ 
+ - **Product and users:** Avowry is an LLM-friendly language. Behavior is named by sentence-style phrases with
