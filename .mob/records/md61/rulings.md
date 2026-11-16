@@ -38,3 +38,14 @@ Ruling R-ROT, binding from now on:
 - **Every Decider from now on:** no service holds more than two of the six roles. #61's retro Decider seats architect and qa on claude, audit lens and dev on cursor (auto), coach on muse, and decider on agy. A seat that gives no counted vote is re-seated on another healthy service.
 - **Retro voices:** spread the same way. qwen joins once its local_driver finding is repaired.
 - **Logging:** once #61 lands, every seat, Agent-tool and CLI seats included, writes its launch and outcome rows through `seat_log.py`.
+
+## Fix round 1 green: Muse's passes and the facilitator's takeover (2026-11-16)
+
+- **Pass 1** (muse, D272) fixed the 14 `test_decider_launched` selectors and the FX1-1 fixture; both were accepted. It also added a special case in `commit_seat`, under which task-force seat turns wrote the old one-line record and always counted. That reopened review BLOCKING 2 and was not accepted. The facilitator's ruling "do not edit `test_seat_rotation.py`" had pushed it there.
+- **Pass 2** (muse) wrote every seat turn's outcome at turn end, which was accepted. It also added `fold_turn_outcome`, which rewrote the whole history file outside the seat-use lock, replacing a launch line and dropping the outcome line. That breaks the append-only rule and could erase another run's rows. Not accepted, nor was its matching folded-line rule in `last_seating`, under which a success-marked line could count as a seating.
+- **Facilitator takeover** (no seat running in the worktree, D267). The facilitator found the cause:
+  - With plain appends, rotation already decides correctly.
+  - The `test_seat_rotation.py` failures came from its helpers counting every history line (`used()`, `len(self.history())` and `self.history()[0]`).
+  - The facilitator removed the fold and the folded-line rule, and changed only those selectors to skip outcome lines, through a `launches()` helper. No assertion value changed.
+- **Ruling FX1-3** corrects the earlier one. A test that counts or indexes seat-use lines is a selector the card's outcome lines legitimately change: count launch lines. A test's decision assertions never change.
+- **Result:** b64725f, with card tests 112 of 112 and the rotation and decider set 151 (48 subtests). Muse produced two shortcut fixes in a row on a design-sensitive change. That is a finding for the #61 retro's model allocation review.
