@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "ed833a2b748f5863399740a8e0299d93ab707673abafc2f5d573426ceedeecc8",
+  "probe": {
+    "taken_at": "2026-11-16T01:08:17.434460Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-b0c5cc27-9b43-42a9-a048-8b960cff011e)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": false,
+        "evidence": "ActionRequiredError: You've hit your usage limit Switch to a different model or set a Spend Limit to continue with this model. Your usage limits will reset when your monthly cycle ends on 12/14/2026."
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "Evidence is concrete: usage-limit failure, partial work inventoried, 112 passing and 18 failures triaged into 4 real [Z] regressions versus 14 intentional line-count changes with bounded rulings. Alternatives are addressed, Claude's red/QA/",
+      "reply": "Yes\nEvidence is concrete: usage-limit failure, partial work inventoried, 112 passing and 18 failures triaged into 4 real [Z] regressions versus 14 intentional line-count changes with bounded rulings. Alternatives are addressed, Claude's red/QA/sign-off seats remain separate, and muse was probed as a writing seat. The adopt decision rests on that evidence and sign-off coverage is intact.\nCITE: the green seat for the rest of mob-defaults\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "muse",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Evidence is concrete: usage-limit failure, partial work inventoried, 112 passing and 18 failures triaged into 4 real [Z] regressions versus 14 intentional line-count changes with bounded rulings. Alternatives are addressed, Claude's red/QA/"
+        }
+      ],
+      "command_scan": {
+        "status": "no command source",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "muse",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T01:08:17.434460Z",
+      "probe_ok": true,
+      "probe_evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "line_index": 2670
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "ca13d276ced674db550c78a822ddc6ab3b1a8869",
+  "head_end": "ca13d276ced674db550c78a822ddc6ab3b1a8869",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

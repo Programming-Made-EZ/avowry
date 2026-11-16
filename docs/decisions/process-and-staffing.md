@@ -1575,3 +1575,13 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - Ballots, by role (.mob/records/422/d271-ballots/): primary window 00:19:43 to 00:23:28 UTC and confirmation step 00:23:29 to 00:27:12 UTC. In both windows, all six roles (agy, gemini-3.8-flash-medium) voted Yes, every ballot counted.
 - Trigger line: (c), the confirmation step ran; it passed.
 - Result: **adopted** (six of six, confirmed six of six). Owner: the facilitator.
+
+#### Decider D272: mob-defaults #61: the green seat moves from cursor gpt-5.3-codex to muse medium effort (ADOPTED)
+
+- Date: 2026-11-16. Proposer: the facilitator (.mob/records/md61/model-change-proposal-d272.md), under the owner's 2026-11-14 ruling that a mid-card model change goes through a Decider. Evidence: the cursor green (gpt-5.3-codex) stopped at 00:50:34 UTC at its monthly usage limit, which resets 2026-12-14, and left a partial change (112 of the card's tests pass, 18 existing tests fail).
+- Ballots (.mob/records/md61/d272-ballots/):
+  - Primary window 00:57:43 to 01:02:50 UTC: architect, audit lens, coach, dev and qa (agy) Yes.
+  - The decider role on agy gave no counted vote twice (00:57 and 01:03:06 to 01:07:16). It supported the change in its text, but its first line was not parsed: a voter behaviour finding.
+  - The decider role was then seated on muse, its first Decider seat, at 01:07:29 to 01:10:15: Yes, cited.
+- Trigger line: the window has six counted Yes and no No or amendment, and the proposal does not change this agreement, so no confirmation step ran.
+- Result: **adopted** (six of six counted). Owner: the facilitator. The green for the rest of #61 is muse (medium effort, ctx-3c), and cursor gpt-5.3-codex is recorded out until 2026-12-14.

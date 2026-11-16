@@ -1,0 +1,93 @@
+{
+  "result": "failed",
+  "prompt_sha": "ed833a2b748f5863399740a8e0299d93ab707673abafc2f5d573426ceedeecc8",
+  "probe": {
+    "taken_at": "2026-11-16T00:58:52.123791Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-4e96b420-42ae-4dad-84e6-ff0cd8bb804e)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "none",
+      "reason": "\u2026pecific resolution rulings. Muse has probed successfully and satisfies rotation pool directives without role conflict, maintaining independent red, QA, and sign-off seats. The remaining scope and verification expectations are cleanly bounded. CITE: sends a change of model mid-card through a Decider.",
+      "reply": "",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026on policy, while Claude remains seated for red, QA, and sign-off, ensuring full independent review before merge. The instructions explicitly address fixing regressions and adapting count tests without compromising assertions. CITE: Record cursor gpt-5.3-codex as out until 2026-12-14 in the seat plan",
+          "reason": "\u2026on policy, while Claude remains seated for red, QA, and sign-off, ensuring full independent review before merge. The instructions explicitly address fixing regressions and adapting count tests without compromising assertions. CITE: Record cursor gpt-5.3-codex as out until 2026-12-14 in the seat plan"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026pecific resolution rulings. Muse has probed successfully and satisfies rotation pool directives without role conflict, maintaining independent red, QA, and sign-off seats. The remaining scope and verification expectations are cleanly bounded. CITE: sends a change of model mid-card through a Decider.",
+          "reason": "\u2026pecific resolution rulings. Muse has probed successfully and satisfies rotation pool directives without role conflict, maintaining independent red, QA, and sign-off seats. The remaining scope and verification expectations are cleanly bounded. CITE: sends a change of model mid-card through a Decider."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T00:58:52.123791Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2667
+    }
+  },
+  "counted_seats": [],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "ca13d276ced674db550c78a822ddc6ab3b1a8869",
+  "head_end": "ca13d276ced674db550c78a822ddc6ab3b1a8869",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "none"
+    },
+    "counts": {}
+  },
+  "absent": []
+}

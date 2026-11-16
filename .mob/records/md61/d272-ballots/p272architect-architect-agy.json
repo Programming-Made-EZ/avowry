@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "eccc9c0687d01e7378a69e0ef12251168f7bd4c4ee3f377d5837297db6605313",
+  "probe": {
+    "taken_at": "2026-11-16T00:58:50.412120Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-57ac189e-a1a3-4808-b61a-401b5ab2981c)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The design is sound, minimal, and enforceable without false positives. Filtering out outcome lines to count only launch events cleanly reconciles the new event schema with existing verification tests without weakening test coverage. Preserv",
+      "reply": "Yes\n\nThe design is sound, minimal, and enforceable without false positives. Filtering out outcome lines to count only launch events cleanly reconciles the new event schema with existing verification tests without weakening test coverage. Preserving rotation behavior for old-format rows maintains backward compatibility for legacy records. Recording the seat status explicitly in the plan and probes prevents ambiguity across the rotation pool.\n\nCITE: Record cursor gpt-5.3-codex as out until 2026-12-14 in the seat plan and the next probes.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The design is sound, minimal, and enforceable without false positives. Filtering out outcome lines to count only launch events cleanly reconciles the new event schema with existing verification tests without weakening test coverage. Preserv"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:58:50.412120Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2665
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "ca13d276ced674db550c78a822ddc6ab3b1a8869",
+  "head_end": "ca13d276ced674db550c78a822ddc6ab3b1a8869",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

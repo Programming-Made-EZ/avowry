@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "4c2036ff9b82127e3fa958d9a19f34f945698ff7f35b0845ee939caf318541ac",
+  "probe": {
+    "taken_at": "2026-11-16T00:59:06.177427Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-0654db4f-4738-40fb-8626-555665cde989)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "The transition is verifiable from git through the recorded Decider D272 and final card commits. The facilitator's brief cleanly separates the four regressions to be fixed from the fourteen line-count tests updated for the new outcome lines,",
+      "reply": "Yes\nThe transition is verifiable from git through the recorded Decider D272 and final card commits. The facilitator's brief cleanly separates the four regressions to be fixed from the fourteen line-count tests updated for the new outcome lines, preventing false passes. While committing cursor's incomplete work prior to handover would yield cleaner per-seat audit trails in git history, git diff against main at sign-off remains fully verifiable. This leaves no loophole for unverified changes to slip into the practice.\nCITE: The partial change is kept uncommitted for the new seat to finish.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The transition is verifiable from git through the recorded Decider D272 and final card commits. The facilitator's brief cleanly separates the four regressions to be fixed from the fourteen line-count tests updated for the new outcome lines,"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:59:06.177427Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2668
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "ca13d276ced674db550c78a822ddc6ab3b1a8869",
+  "head_end": "ca13d276ced674db550c78a822ddc6ab3b1a8869",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

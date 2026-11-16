@@ -1738,5 +1738,11 @@
     "status": "adopted",
     "title": "D263 with its D265 sub-bullet adopted after its trial on cards 441, 430 and 422 (the real-shape corpus with encodings and fix neighbours)",
     "order": 262
+  },
+  "D272": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "mob-defaults #61: the green seat moves from cursor gpt-5.3-codex (out of its monthly usage until 2026-12-14) to muse medium effort",
+    "order": 263
   }
 }

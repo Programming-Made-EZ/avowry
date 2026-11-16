@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "bc0a4b1258b74049cbc5479dee97bfb2490557f5de96e7b2699a29fc72af95dc",
+  "probe": {
+    "taken_at": "2026-11-16T00:58:50.520017Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-e0fa960c-65aa-43a8-92a2-1b4a860e4084)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The task force maintains lean continuity without bloat. Replacing the blocked green seat with an already probed, available writing model directly addresses the bottleneck without altering team composition, adding ceremony, or leaving perspe",
+      "reply": "Yes\n\nThe task force maintains lean continuity without bloat. Replacing the blocked green seat with an already probed, available writing model directly addresses the bottleneck without altering team composition, adding ceremony, or leaving perspective gaps. The handover into the existing worktree with explicit test-fix bounds is properly sized to finish the remaining work cleanly.\n\nCITE: in the existing linked worktree wt-md61, context ctx-3c.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The task force maintains lean continuity without bloat. Replacing the blocked green seat with an already probed, available writing model directly addresses the bottleneck without altering team composition, adding ceremony, or leaving perspe"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:58:50.520017Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2666
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "ca13d276ced674db550c78a822ddc6ab3b1a8869",
+  "head_end": "ca13d276ced674db550c78a822ddc6ab3b1a8869",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

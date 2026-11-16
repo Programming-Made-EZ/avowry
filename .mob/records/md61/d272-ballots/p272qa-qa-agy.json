@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "8cbf16b3164c4f2013426f33552f1e28ee75ede65daa34cae000e4f83f947690",
+  "probe": {
+    "taken_at": "2026-11-16T00:58:49.483311Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-5459519b-50e6-4e19-bdf4-cbd015785613)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "The 18 failing tests establish a verified red-first baseline. The brief cleanly distinguishes the 4 real behavioral regressions (which must be fixed in implementation code) from the 14 test count updates required by the new outcome lines. U",
+      "reply": "Yes\nThe 18 failing tests establish a verified red-first baseline. The brief cleanly distinguishes the 4 real behavioral regressions (which must be fixed in implementation code) from the 14 test count updates required by the new outcome lines. Updating the count assertions specifically to exclude `event: outcome` ensures the suite continues to catch unintended launch line discrepancies without masking genuine regressions. Muse inheriting the uncommitted worktree under these explicit test boundaries prevents bad state from passing.\nCITE: Four are real regressions: old-format rows must rotate exactly as before\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The 18 failing tests establish a verified red-first baseline. The brief cleanly distinguishes the 4 real behavioral regressions (which must be fixed in implementation code) from the 14 test count updates required by the new outcome lines. U"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:58:49.483311Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2664
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "ca13d276ced674db550c78a822ddc6ab3b1a8869",
+  "head_end": "ca13d276ced674db550c78a822ddc6ab3b1a8869",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}
