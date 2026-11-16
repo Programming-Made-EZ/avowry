@@ -1,0 +1,250 @@
+{
+  "result": "failed: no counted votes",
+  "prompt_sha": "42e3ce6154652e305f787d7eed1a9caba92913133eb14fb40d8183a8aea44df2",
+  "probe": {
+    "taken_at": "2026-11-16T16:58:58.304626Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-d617b556-750e-4da4-ac36-2b91c1baef68)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "",
+      "reply": "Yes\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": ""
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 389.011051199981,
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T16:58:58.304626Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2749
+    },
+    "coach": {
+      "vote": "Yes",
+      "reason": "muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "reply": "Yes\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "muse",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+        }
+      ],
+      "command_scan": {
+        "status": "clean",
+        "commands": 19,
+        "findings": []
+      },
+      "duration_s": 376.5674202000082,
+      "role": "coach",
+      "seat": "muse",
+      "model_reported": "default",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T16:58:58.304626Z",
+      "probe_ok": true,
+      "probe_evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "line_index": 2750
+    },
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "",
+      "reply": "Yes\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": ""
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 286.27709650000907,
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T16:58:58.304626Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2751
+    },
+    "dev": {
+      "vote": "Yes",
+      "reason": "",
+      "reply": "Yes\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": ""
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 438.422776899999,
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T16:58:58.304626Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2752
+    },
+    "qa": {
+      "vote": "Yes",
+      "reason": "muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "reply": "Yes\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "muse",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+        }
+      ],
+      "command_scan": {
+        "status": "clean",
+        "commands": 19,
+        "findings": []
+      },
+      "duration_s": 369.3976292999869,
+      "role": "qa",
+      "seat": "muse",
+      "model_reported": "default",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T16:58:58.304626Z",
+      "probe_ok": true,
+      "probe_evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "line_index": 2753
+    },
+    "decider": {
+      "vote": "No",
+      "reason": "Part A: the committed board table ranks card 435 Ready at 114.8 ahead of card 367 at 115, so 367 is not the first eligible Ready card by Rank unless this Decider explicitly overrides the queue to pull 435 first.",
+      "reply": "No Part A: the committed board table ranks card 435 Ready at 114.8 ahead of card 367 at 115, so 367 is not the first eligible Ready card by Rank unless this Decider explicitly overrides the queue to pull 435 first.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Part A: the committed board table ranks card 435 Ready at 114.8 ahead of card 367 at 115, so 367 is not the first eligible Ready card by Rank unless this Decider explicitly overrides the queue to pull 435 first."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 283.80104169997503,
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T16:58:58.304626Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2754
+    }
+  },
+  "counted_seats": [],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "67cb044e82e94921595c8585594097065c79212d",
+  "head_end": "67cb044e82e94921595c8585594097065c79212d",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes",
+      "coach": "Yes",
+      "auditlens": "Yes",
+      "dev": "Yes",
+      "qa": "Yes",
+      "decider": "No"
+    },
+    "counts": {}
+  },
+  "absent": []
+}

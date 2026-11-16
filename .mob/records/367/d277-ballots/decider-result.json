@@ -1,0 +1,198 @@
+{
+  "result": "passed",
+  "prompt_sha": "91c149f80648087738bdc20efcf423fcd37a4bbb27ba6ddd5069a10981051560",
+  "probe": {
+    "taken_at": "2026-11-16T17:37:34.232521Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-37cc1575-0caf-44ab-9c8c-e1d3771e588b)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=f4023d8e-7182-4de3-a555-c6d7a72de8f3]: Subscription quota exhausted. Your usage window resets at 2026-11-23T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": false,
+        "evidence": "gate busy: a test gate is running"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "CITE: When web fetch of a vendor's official public terms page is refused",
+      "reply": "Yes\n\nCITE: When web fetch of a vendor's official public terms page is refused\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: When web fetch of a vendor's official public terms page is refused"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 130.25285459999577,
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:37:34.232521Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2807
+    },
+    "dev": {
+      "vote": "Yes",
+      "reason": "CITE: When web fetch of a vendor's official public terms page is refused",
+      "reply": "Yes\n\nCITE: When web fetch of a vendor's official public terms page is refused\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: When web fetch of a vendor's official public terms page is refused"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 131.16655710001942,
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:37:34.232521Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2808
+    },
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "CITE: When web fetch of a vendor's official public terms page is refused, the page may be read through the built-in browser pane",
+      "reply": "Yes.\n\nCITE: When web fetch of a vendor's official public terms page is refused, the page may be read through the built-in browser pane\n",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "no vote in the reply"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: When web fetch of a vendor's official public terms page is refused, the page may be read through the built-in browser pane"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 183.53718369998387,
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:37:34.232521Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2809
+    },
+    "decider": {
+      "vote": "Yes",
+      "reason": "Web fetch alone cannot finish four-vendor coverage when xAI and OpenAI return 403; facilitator browser captures with URL and UTC timestamp keep the read-first, cited, auditable bar without opening login, legal advice, or pushed-row changes.",
+      "reply": "Yes. Web fetch alone cannot finish four-vendor coverage when xAI and OpenAI return 403; facilitator browser captures with URL and UTC timestamp keep the read-first, cited, auditable bar without opening login, legal advice, or pushed-row changes.\n\nCITE: When web fetch of a vendor's official public terms page is refused, the page may be read through the built-in browser pane\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Web fetch alone cannot finish four-vendor coverage when xAI and OpenAI return 403; facilitator browser captures with URL and UTC timestamp keep the read-first, cited, auditable bar without opening login, legal advice, or pushed-row changes."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 140.7900159000128,
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:37:34.232521Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2810
+    }
+  },
+  "counted_seats": [
+    "architect",
+    "dev",
+    "auditlens",
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "67cb044e82e94921595c8585594097065c79212d",
+  "head_end": "67cb044e82e94921595c8585594097065c79212d",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes",
+      "dev": "Yes",
+      "auditlens": "Yes",
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 4
+    }
+  },
+  "absent": []
+}

@@ -1,0 +1,197 @@
+{
+  "result": "passed",
+  "prompt_sha": "b4f9daa55ef1a4b67bf86169c0bb86fdf67905a05bca29f7c7a4a5a7f8d92343",
+  "probe": {
+    "taken_at": "2026-11-16T17:27:38.541433Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-97231963-bf6a-487b-a32d-e86e942bb053)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=b44d6a2b-1e84-4ffe-82f4-7944b4958372]: Subscription quota exhausted. Your usage window resets at 2026-11-23T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": false,
+        "evidence": "gate busy: a test gate is running"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "CITE: so the sign-off is not the red's author.",
+      "reply": "Yes\n\nCITE: so the sign-off is not the red's author.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: so the sign-off is not the red's author."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 144.5301838000014,
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:27:38.541433Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2795
+    },
+    "dev": {
+      "vote": "Yes",
+      "reason": "CITE: Cursor and agy then hold two seats each and claude two; no service holds more than two.",
+      "reply": "Yes\n\nCITE: Cursor and agy then hold two seats each and claude two; no service holds more than two.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: Cursor and agy then hold two seats each and claude two; no service holds more than two."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 153.0796401000116,
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:27:38.541433Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2796
+    },
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "CITE: the sign-off moves from cursor to agy gemini-3.8-flash-medium (a fresh context), so the sign-off is not the red's author.",
+      "reply": "Yes\n\nCITE: the sign-off moves from cursor to agy gemini-3.8-flash-medium (a fresh context), so the sign-off is not the red's author.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: the sign-off moves from cursor to agy gemini-3.8-flash-medium (a fresh context), so the sign-off is not the red's author."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 155.73894480001763,
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T17:27:38.541433Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2797
+    },
+    "decider": {
+      "vote": "Yes",
+      "reason": "Muse is exhausted with no red record, cursor composer-2.5 is the proven writer on recent mob-defaults cards, and moving sign-off to agy keeps the author off sign-off while each service stays at two seats or fewer. CITE: the sign-off is not ",
+      "reply": "Yes. Muse is exhausted with no red record, cursor composer-2.5 is the proven writer on recent mob-defaults cards, and moving sign-off to agy keeps the author off sign-off while each service stays at two seats or fewer.\n\nCITE: the sign-off is not the red's author.\n",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "Muse quota exhaustion matches D272 and D273; cursor composer-2.5 is a proven red writer on md58\u2013md63, and moving sign-off to agy keeps author and sign-off separate within the two-seat cap. CITE: so the sign-off is not the red's author",
+          "reason": "read as a usage-limit notice: Muse quota exhaustion matches D272 and D273; cursor composer-2.5 is a proven red writer on md58\u2013md63, and moving sign-off to agy keeps author and sign-off separate within the two-seat cap. CITE: so the sign-off is not the red's author"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Muse is exhausted with no red record, cursor composer-2.5 is the proven writer on recent mob-defaults cards, and moving sign-off to agy keeps the author off sign-off while each service stays at two seats or fewer. CITE: the sign-off is not "
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 215.9959988000046,
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:27:38.541433Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2798
+    }
+  },
+  "counted_seats": [
+    "architect",
+    "dev",
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "67cb044e82e94921595c8585594097065c79212d",
+  "head_end": "67cb044e82e94921595c8585594097065c79212d",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes",
+      "dev": "Yes",
+      "auditlens": "Yes",
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 3
+    }
+  },
+  "absent": []
+}

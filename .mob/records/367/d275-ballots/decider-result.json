@@ -1,0 +1,259 @@
+{
+  "result": "passed",
+  "prompt_sha": "0a6b8899d6683951898cbfffe6b8d62d8779706b3ad3a97c745c24a008624079",
+  "probe": {
+    "taken_at": "2026-11-16T17:20:31.556482Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-834bd9eb-a94b-44d8-9c44-c23abbcdeb97)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": false,
+        "evidence": "gate busy: a test gate is running"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "CITE: rank the three Ready follow-up cards 442, 443 and 444 last",
+      "reply": "Yes\nCITE: rank the three Ready follow-up cards 442, 443 and 444 last\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: rank the three Ready follow-up cards 442, 443 and 444 last"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 148.87537510000402,
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:20:31.556482Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2773
+    },
+    "coach": {
+      "vote": "Yes",
+      "reason": "CITE: No ranked card moves, so card 367 stays the first eligible Ready card muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "reply": "Yes\nCITE: No ranked card moves, so card 367 stays the first eligible Ready card\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "muse",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: No ranked card moves, so card 367 stays the first eligible Ready card muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+        }
+      ],
+      "command_scan": {
+        "status": "clean",
+        "commands": 2,
+        "findings": []
+      },
+      "duration_s": 189.49727659998462,
+      "role": "coach",
+      "seat": "muse",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:20:31.556482Z",
+      "probe_ok": true,
+      "probe_evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "line_index": 2774
+    },
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "Unranked Ready rows block the picker per `expected_pick`; assigning 303'305 at the tail without moving existing ranks restores picking with card 367 still first among eligible Ready cards. CITE: No ranked card moves, so card 367 stays the f",
+      "reply": "Yes. Unranked Ready rows block the picker per `expected_pick`; assigning 303\u2013305 at the tail without moving existing ranks restores picking with card 367 still first among eligible Ready cards.\n\nCITE: No ranked card moves, so card 367 stays the first eligible Ready card on the live board.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Unranked Ready rows block the picker per `expected_pick`; assigning 303'305 at the tail without moving existing ranks restores picking with card 367 still first among eligible Ready cards. CITE: No ranked card moves, so card 367 stays the f"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 173.06632390001323,
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:20:31.556482Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2775
+    },
+    "dev": {
+      "vote": "Yes",
+      "reason": "CITE: rank the three Ready follow-up cards 442, 443 and 444 last",
+      "reply": "Yes\n\nCITE: rank the three Ready follow-up cards 442, 443 and 444 last\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: rank the three Ready follow-up cards 442, 443 and 444 last"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 151.47042640001746,
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:20:31.556482Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2776
+    },
+    "qa": {
+      "vote": "Yes",
+      "reason": "CITE: No ranked card moves, so card 367 stays the first eligible Ready card on the live board. muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "reply": "Yes\nCITE: No ranked card moves, so card 367 stays the first eligible Ready card on the live board.\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "muse",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: No ranked card moves, so card 367 stays the first eligible Ready card on the live board. muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+        }
+      ],
+      "command_scan": {
+        "status": "clean",
+        "commands": 3,
+        "findings": []
+      },
+      "duration_s": 167.91908320001676,
+      "role": "qa",
+      "seat": "muse",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:20:31.556482Z",
+      "probe_ok": true,
+      "probe_evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "line_index": 2777
+    },
+    "decider": {
+      "vote": "Yes",
+      "reason": "CITE: No ranked card moves, so card 367 stays the first eligible Ready card on the live board.",
+      "reply": "Yes.\n\nCITE: No ranked card moves, so card 367 stays the first eligible Ready card on the live board.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: No ranked card moves, so card 367 stays the first eligible Ready card on the live board."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 181.7431127000018,
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:20:31.556482Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2778
+    }
+  },
+  "counted_seats": [
+    "architect",
+    "coach",
+    "auditlens",
+    "dev",
+    "qa",
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "67cb044e82e94921595c8585594097065c79212d",
+  "head_end": "67cb044e82e94921595c8585594097065c79212d",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes",
+      "coach": "Yes",
+      "auditlens": "Yes",
+      "dev": "Yes",
+      "qa": "Yes",
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 6
+    }
+  },
+  "absent": []
+}

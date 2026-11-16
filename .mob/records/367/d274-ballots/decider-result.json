@@ -1,0 +1,258 @@
+{
+  "result": "passed",
+  "prompt_sha": "9f6a83a9007b18975fe002e5cf848eafb20f778e5c2f506188229c355e8877ee",
+  "probe": {
+    "taken_at": "2026-11-16T17:10:51.827123Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-70c89f64-8cf4-4e31-bda1-36c6a37cb8ec)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "CITE: adopt card 367 with its task force, and rank the five unranked Ready cards last",
+      "reply": "Yes\nCITE: adopt card 367 with its task force, and rank the five unranked Ready cards last\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: adopt card 367 with its task force, and rank the five unranked Ready cards last"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 274.56511610001326,
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:10:51.827123Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2761
+    },
+    "coach": {
+      "vote": "Yes",
+      "reason": "CITE: No service holds more than two seats. muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "reply": "Yes\nCITE: No service holds more than two seats.\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "muse",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: No service holds more than two seats. muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+        }
+      ],
+      "command_scan": {
+        "status": "clean",
+        "commands": 16,
+        "findings": []
+      },
+      "duration_s": 304.17858360000537,
+      "role": "coach",
+      "seat": "muse",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:10:51.827123Z",
+      "probe_ok": true,
+      "probe_evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "line_index": 2762
+    },
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "CITE: the live board, not the archive, is the queue",
+      "reply": "Yes\n\nCITE: the live board, not the archive, is the queue\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: the live board, not the archive, is the queue"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 212.09556689998135,
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T17:10:51.827123Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2763
+    },
+    "dev": {
+      "vote": "Yes",
+      "reason": "CITE: The loop picker refuses to pick while a Ready card has no Rank.",
+      "reply": "Yes\n\nCITE: The loop picker refuses to pick while a Ready card has no Rank.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: The loop picker refuses to pick while a Ready card has no Rank."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 257.18504149999353,
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:10:51.827123Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2764
+    },
+    "qa": {
+      "vote": "Yes",
+      "reason": "CITE: The live board, not the archive, is the queue muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "reply": "Yes\nCITE: The live board, not the archive, is the queue\n\nmuse: workspace root: C:\\Users\\<user> (cwd default)\nmuse: Agent delegation: auto unavailable: workspace is untrusted.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "muse",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: The live board, not the archive, is the queue muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+        }
+      ],
+      "command_scan": {
+        "status": "clean",
+        "commands": 12,
+        "findings": []
+      },
+      "duration_s": 259.02948920000927,
+      "role": "qa",
+      "seat": "muse",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:10:51.827123Z",
+      "probe_ok": true,
+      "probe_evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "line_index": 2765
+    },
+    "decider": {
+      "vote": "Yes",
+      "reason": "Part A matches the live queue once 435 is treated as Done; Part B unblocks the picker without reordering ranked Ready work, and the task force respects the two-seats-per-service cap. CITE: The loop picker refuses to pick while a Ready card ",
+      "reply": "Yes. Part A matches the live queue once 435 is treated as Done; Part B unblocks the picker without reordering ranked Ready work, and the task force respects the two-seats-per-service cap.\n\nCITE: The loop picker refuses to pick while a Ready card has no Rank.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Part A matches the live queue once 435 is treated as Done; Part B unblocks the picker without reordering ranked Ready work, and the task force respects the two-seats-per-service cap. CITE: The loop picker refuses to pick while a Ready card "
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 205.6953368000104,
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T17:10:51.827123Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2766
+    }
+  },
+  "counted_seats": [
+    "architect",
+    "coach",
+    "dev",
+    "qa",
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "67cb044e82e94921595c8585594097065c79212d",
+  "head_end": "67cb044e82e94921595c8585594097065c79212d",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes",
+      "coach": "Yes",
+      "auditlens": "Yes",
+      "dev": "Yes",
+      "qa": "Yes",
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 5
+    }
+  },
+  "absent": []
+}
