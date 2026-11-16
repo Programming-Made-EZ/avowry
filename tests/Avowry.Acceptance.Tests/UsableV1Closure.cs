@@ -8,8 +8,8 @@ namespace Avowry.Acceptance.Tests;
 // Feature: Usable v1 closes with no suspended bar and a recorded re-freeze (card 162, criterion 3)
 //   As the sponsor persona, I want bar 6 enforced again and the re-freeze written down, so that "usable" is
 //   detected against the documents a model actually reads.
-// All three rows are Pending until green 2 (Z1, Z2) and the re-freeze record commit (R1). None has a Milestone
-// trait, so the usable-v1 job never selects them.
+// Green 2 of card 162 removed the Pending traits from Z1 and Z2 (R1 was un-pended by the D238 re-freeze record commit),
+// so the gate enforces all three rows. None has a Milestone trait, so the usable-v1 job never selects them.
 public class UsableV1Closure
 {
     private const string Marker = "<a id=\"refreeze-162\"></a>";
@@ -17,8 +17,6 @@ public class UsableV1Closure
     [Fact]
     [Trait("Slice", "162")]
     [Trait("Criterion", "162-3")]
-    [Trait("Status", "Pending")]
-    // Pending until green 2 deletes the suspension.
     public void Z1_the_ratchet_has_no_suspended_bar()
     {
         // Given the usable-v1 ratchet
@@ -35,8 +33,6 @@ public class UsableV1Closure
     [Fact]
     [Trait("Slice", "162")]
     [Trait("Criterion", "162-3")]
-    [Trait("Status", "Pending")]
-    // Pending until green 2 removes the Pending trait from the Bar 6 test.
     public void Z2_the_bar_6_test_is_not_pending()
     {
         // Given the Bar 6 test method

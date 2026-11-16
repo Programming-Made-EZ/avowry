@@ -8,7 +8,5 @@
     5,
     6
   ],
-  "suspended": {
-    "6": "the frozen documents moved to the avow keyword and the .avowry extension (card 199); card 162 reruns the LLM check, ratifies the new hashes and removes this suspension"
-  }
+  "suspended": {}
 }

@@ -99,8 +99,6 @@ public class UsableV1 : IClassFixture<UsableV1Fixture>
     [Trait("Slice", "138")]
     [Trait("Milestone", "UsableV1")]
     [Trait("Criterion", "162-2")]
-    [Trait("Status", "Pending")]
-    // Card 162 reruns the LLM check against the re-frozen documents; green 2 removes this Pending trait.
     public void Bar6_a_model_that_never_saw_the_app_can_add_an_endpoint_from_the_docs_alone()
     {
         // Given fresh-context model evidence for both models and the committed documentation
