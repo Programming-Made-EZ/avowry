@@ -43,3 +43,29 @@ The amended window seats the voters across four services, with no service holdin
 - qa and decider: claude;
 - audit lens: cursor auto;
 - dev and coach: agy.
+
+## Second amendment after the amended window (02:49:05 to 02:54:10 UTC)
+
+Results of the amended window:
+- architect (qwen): Yes, qwen's first counted seat.
+- decider (claude): Yes.
+- dev (agy): Yes.
+- qa (claude): refused by the D164 rotation rule, because muse, agy and qwen have waited longer (#58).
+- coach (agy): no vote; its first line was not parsed.
+- audit lens (cursor auto): No again. Its condition: "apply R-ROT's two-roles-per-service limit to task-force seats", because the first amendment let claude hold the red, green, QA and sign-off.
+
+THE SECOND AMENDMENT (meeting that condition). For the rest of #61, no service holds more than two task-force seats:
+- **green, fix round 2: cursor auto.** It runs through `cursor-agent -p --force --model auto` in wt-md61, ctx-3e. Its model is declared `auto`, an unpinned size, under F-13. It is a writing seat and it is healthy.
+- **review round 3: claude opus (QA, ctx-4c)** and **agy gemini-3.8-flash-medium** (the cross-family reviewer, reading the diff inline; headless agy runs no commands).
+- **sign-off: muse, medium effort**, after its quota window resets at 05:05:53 UTC.
+
+That leaves claude with the red and QA (2), cursor with the green (1), agy with one review (1) and muse with the sign-off (1).
+
+CLAUSE (replacing the first): seat cursor auto as #61's fix round 2 green, with the review and sign-off seats above.
+
+Voters for the re-vote (no service holds more than two roles, and claude is limited to the role the rotation rule let it take):
+- architect: qwen;
+- decider: claude;
+- audit lens: cursor auto;
+- dev and qa: agy;
+- coach: qwen.
