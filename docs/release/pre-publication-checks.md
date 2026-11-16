@@ -80,10 +80,10 @@ Command: `git ls-files 'bench/results/*.json' ':!bench/results/self-check/*'` (f
 
 | model | vendor (inferred from the file name only) | reply_head published | terms status |
 | --- | --- | --- | --- |
-| grok-4.7 | xAI (inferred) | no reply_head in this file; present in history rows | not reviewed: needs the vendor terms page |
-| codex-gpt-5.6-sol | OpenAI (inferred) | no reply_head in this file; present in history rows | not reviewed: needs the vendor terms page |
-| agy-gemini-4-argon-medium | Google (inferred) | reply_head present, 139 characters | not reviewed: needs the vendor terms page |
-| copilot-default | GitHub (inferred; the underlying model is not named) | no reply_head in this file; present in history rows | not reviewed: needs the vendor terms page |
+| grok-4.7 | xAI (inferred) | no reply_head in this file; present in history rows | read 2026-11-16 (vendor-terms.md) |
+| codex-gpt-5.6-sol | OpenAI (inferred) | no reply_head in this file; present in history rows | read 2026-11-16 (vendor-terms.md) |
+| agy-gemini-4-argon-medium | Google (inferred) | reply_head present, 139 characters | read 2026-11-16 (vendor-terms.md) |
+| copilot-default | GitHub (inferred; the underlying model is not named) | no reply_head in this file; present in history rows | read 2026-11-16 (vendor-terms.md) |
 
 Correction to the earlier draft, which said bench rows hold scores and no output text: `reply_head` is a prefix of the model's reply, up to 200 characters. Commands: `grep -c reply_head bench/results/history.jsonl` gives 336 and `grep -c reply_head bench/csharp-baseline/results/history.jsonl` gives 120. The 139 characters, the 331 non-empty values in the first file, all 120 non-empty in the second and the 200-character maximum were counted by a short script that parses each row as JSON. Published rows therefore hold vendor model output.
 
