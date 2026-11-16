@@ -125,7 +125,13 @@ def check_vendor_row(problems, vendor, cells, today):
 
 
 def check_not_legal_advice(problems, page_text):
-    if NOT_LEGAL_ADVICE not in (page_text or ""):
+    lines = (page_text or "").splitlines()
+    title_at = next((i for i, ln in enumerate(lines) if ln.startswith("# ")), None)
+    if title_at is None:
+        problems.append("vendor-terms: page: missing not legal advice line")
+        return
+    first_body = next((ln.strip() for ln in lines[title_at + 1:] if ln.strip()), None)
+    if first_body != NOT_LEGAL_ADVICE:
         problems.append("vendor-terms: page: missing not legal advice line")
 
 
@@ -220,16 +226,35 @@ def keyed(problems, vendor):
     return [p for p in problems if f": {vendor}:" in p or f" {vendor}:" in p]
 
 
+NO_VENDORS_PROBLEM = "no vendors found in the Vendor terms table"
+
+
+def is_early_stop_problem(p):
+    return NO_VENDORS_PROBLEM in p
+
+
+def is_367_3_prepub_status_problem(p):
+    return "pre-publication" in p and not is_early_stop_problem(p)
+
+
 def problems_for_367_1(problems):
-    return [p for p in problems if ": blockers:" not in p and "pre-publication" not in p]
+    return [
+        p for p in problems
+        if is_early_stop_problem(p)
+        or (": blockers:" not in p and "blocks publication" not in p
+            and not is_367_3_prepub_status_problem(p))
+    ]
 
 
 def problems_for_367_2(problems):
-    return [p for p in problems if ": blockers:" in p]
+    return [
+        p for p in problems
+        if is_early_stop_problem(p) or ": blockers:" in p or "blocks publication" in p
+    ]
 
 
 def problems_for_367_3(problems):
-    return [p for p in problems if "pre-publication" in p]
+    return [p for p in problems if is_early_stop_problem(p) or is_367_3_prepub_status_problem(p)]
 
 
 class VendorTermsTests(unittest.TestCase):
@@ -268,6 +293,15 @@ class VendorTermsTests(unittest.TestCase):
             self.assertEqual(
                 ["vendor-terms: page: missing not legal advice line"],
                 [p for p in vendor_terms_problems(no_line, GOOD_PREPUB, PLANTED_TODAY)
+                 if p.startswith("vendor-terms: page:")])
+        only_in_how_read = no_line.replace(
+            "Web fetch only, read on 2026-01-15; terms behind a login were not read.",
+            NOT_LEGAL_ADVICE + " Web fetch only, read on 2026-01-15; terms behind a login were not read.",
+        )
+        with self.subTest(id="367-1-legal-not-under-title"):
+            self.assertEqual(
+                ["vendor-terms: page: missing not legal advice line"],
+                [p for p in vendor_terms_problems(only_in_how_read, GOOD_PREPUB, PLANTED_TODAY)
                  if p.startswith("vendor-terms: page:")])
 
     def test_the_vendor_terms_check_reports_a_page_missing_the_how_this_was_read_section(self):
@@ -316,6 +350,32 @@ class VendorTermsTests(unittest.TestCase):
         with self.subTest(id="367-2-missing"):
             self.assertIn("vendor-terms: blockers: GitHub: yes row missing from Blockers",
                           vendor_terms_problems(missing, GOOD_PREPUB, PLANTED_TODAY))
+
+    def test_the_vendor_terms_check_pins_empty_page_and_invalid_blocks_publication_per_criterion(self):
+        # Given an empty page and prepub, or a planted maybe blocks-publication cell
+        # When each criterion filter is applied
+        # Then early-stop and blocks-publication faults stay with the right criterion
+        empty = vendor_terms_problems("", "", PLANTED_TODAY)
+        early = "vendor-terms: pre-publication: no vendors found in the Vendor terms table"
+        with self.subTest(id="367-empty-all-criteria"):
+            self.assertEqual([early], empty)
+            self.assertEqual([early], problems_for_367_1(empty))
+            self.assertEqual([early], problems_for_367_2(empty))
+            self.assertEqual([early], problems_for_367_3(empty))
+        maybe_xai = GOOD_PAGE.replace(
+            "| xAI | grok-4.7 | https://example.test/xai-terms | "
+            + PLANTED_DATE
+            + " | Allows publishing reply_head prefixes and seat replies under .mob/records. | no |",
+            "| xAI | grok-4.7 | https://example.test/xai-terms | "
+            + PLANTED_DATE
+            + " | Allows publishing reply_head prefixes and seat replies under .mob/records. | maybe |",
+        )
+        maybe_probs = vendor_terms_problems(maybe_xai, GOOD_PREPUB, PLANTED_TODAY)
+        with self.subTest(id="367-2-maybe-blocks"):
+            self.assertEqual(
+                ["vendor-terms: xAI: blocks publication must be yes or no"],
+                problems_for_367_2(maybe_probs))
+            self.assertEqual([], problems_for_367_1(maybe_probs))
 
     def test_pre_publication_status_matches_each_vendor_read_on_date(self):
         # Given the real pre-publication Vendor terms table
