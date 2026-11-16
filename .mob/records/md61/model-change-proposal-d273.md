@@ -104,3 +104,13 @@ Results of the window:
 FINDING (vote tooling): the decider role's brief (`role-decider.txt`) seats the voter as "the DECIDER / SIGN-OFF seat" and asks whether the decision "(adopt, reshape or reject) will rest on evidence". Voters on agy (four times), cursor and qwen answered with a verdict in prose instead of the required first line (Yes, Support-it or No), and each reply supported the change. Muse passed with the same brief on D272. This goes to mob-defaults beside #58: the role brief must not reframe the reply format.
 
 STATE: five of six roles counted Yes, the decider role is outstanding, and there is no No or amendment open. The decider role is re-seated on muse at its quota reset (2026-11-16 05:05:53 UTC). It is the only healthy service not already holding two roles in this window whose reply format has passed.
+
+## The decider role, 05:07 to 05:31 UTC, and the result
+
+- muse at 05:07:12 (after its reset): no counted vote.
+- claude at 05:13:17: refused by the D164 rotation rule ("cursor, agy have waited longer"). Dispatch's check, answered: the rule still refuses Claude, so #58 ranks next after #61.
+- cursor at 05:14:36, and again at 05:20:07 with a reworded decider brief: no counted vote.
+- CAUSE (corrects the FINDING above, which is withdrawn): each of these attempts ended with exit status 0 and a failure excerpt, so `facilitator.run_backend` returned the reply as a failed launch before `parse_vote` saw it. A reply of 600 characters or fewer that holds "quota", "429", "usage limit", "rate limit" or "resets at" is taken for a usage-limit notice. This proposal is about muse's quota reset, and the decider lens asks about the sign-off seat, so each decider reply described it. The brief was not the cause. The same check probably cost the agy decider votes on D272.
+- cursor at 05:26:20, with the original brief and one line added to the vote context (call it "the muse outage"; do not write those words): **Yes**, cited.
+
+RESULT: six of six counted Yes, no No or amendment open. D273 is adopted (docs/decisions/process-and-staffing.md). The reworded brief is not kept.

@@ -1,0 +1,92 @@
+{
+  "result": "failed",
+  "prompt_sha": "ab03c682c4e00dccb877116f4d3cc46c34fc2f225464de399445b68f501d23f2",
+  "probe": {
+    "taken_at": "2026-11-16T02:55:51.267678Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-ca356fc3-777d-4f01-acc8-775b213224d0)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "No",
+      "reason": "Pin the fix round 2 green to a named model (not `auto`) in the seat clause so the writer is auditable from the run record/git alone; unpinned `auto` under F-13 leaves a verification gap that can pass while breaking pinned-seat practice. R-R",
+      "reply": "No\nPin the fix round 2 green to a named model (not `auto`) in the seat clause so the writer is auditable from the run record/git alone; unpinned `auto` under F-13 leaves a verification gap that can pass while breaking pinned-seat practice. R-ROT task-force cap in the second amendment is otherwise sound.\nCITE: seat cursor auto as #61's fix round 2 green\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Pin the fix round 2 green to a named model (not `auto`) in the seat clause so the writer is auditable from the run record/git alone; unpinned `auto` under F-13 leaves a verification gap that can pass while breaking pinned-seat practice. R-R"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T02:55:51.267678Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2683
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "1156058f612a8a525ca095fce922dfc71c59ec15",
+  "head_end": "1156058f612a8a525ca095fce922dfc71c59ec15",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "No"
+    },
+    "counts": {
+      "No": 1
+    }
+  },
+  "absent": []
+}

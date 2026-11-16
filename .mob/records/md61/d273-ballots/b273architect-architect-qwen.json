@@ -1,0 +1,93 @@
+{
+  "result": "failed",
+  "prompt_sha": "5b820c4cad5eb074364ef6bac3e32f423d7f1246f5f243e2994f515e0b8c2904",
+  "probe": {
+    "taken_at": "2026-11-16T02:56:05.727774Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-8efee402-3fa0-4dee-9992-4ba4da2b3258)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "none",
+      "reason": "launch failed: rc 5: another local model is loaded; one at a time",
+      "reply": "",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "qwen",
+      "attempt_log": [
+        {
+          "rc": 5,
+          "failure_excerpt": "another local model is loaded; one at a time",
+          "reason": "launch failed: rc 5: another local model is loaded; one at a time"
+        },
+        {
+          "rc": 5,
+          "failure_excerpt": "another local model is loaded; one at a time",
+          "reason": "launch failed: rc 5: another local model is loaded; one at a time"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "qwen",
+      "model_reported": "qwen3.6-35b-a3b",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T02:56:05.727774Z",
+      "probe_ok": true,
+      "probe_evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)",
+      "line_index": 2684
+    }
+  },
+  "counted_seats": [],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "1156058f612a8a525ca095fce922dfc71c59ec15",
+  "head_end": "1156058f612a8a525ca095fce922dfc71c59ec15",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "none"
+    },
+    "counts": {}
+  },
+  "absent": []
+}

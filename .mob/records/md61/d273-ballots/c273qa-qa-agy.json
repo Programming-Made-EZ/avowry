@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "413510e359b99e7d3fc14977d1236886978c2617186466c0479366ef7bc74326",
+  "probe": {
+    "taken_at": "2026-11-16T03:03:39.844024Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-fce050fe-c785-4e94-b18d-025f104b57f4)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=6bdd9806-db13-4e71-a265-4bf90beab146]: Subscription quota exhausted. Your usage window resets at 2026-11-16T05:05:53Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "The red suite is already locked at commit 33b9ecb with 13 failing tests, satisfying red-first testing. Seating cursor pinned to composer-2.5 provides an auditable green implementation constrained against test edits and history rewrites. Sub",
+      "reply": "Yes\nThe red suite is already locked at commit 33b9ecb with 13 failing tests, satisfying red-first testing. Seating cursor pinned to composer-2.5 provides an auditable green implementation constrained against test edits and history rewrites. Subsequent review by claude opus and agy guarantees the checks catch regressions without passing bad state.\nCITE: Cursor's own coding model and the only named model that answers today.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The red suite is already locked at commit 33b9ecb with 13 failing tests, satisfying red-first testing. Seating cursor pinned to composer-2.5 provides an auditable green implementation constrained against test edits and history rewrites. Sub"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T03:03:39.844024Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2690
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "3f19cebb38166258f205a3316a306eca9c33f6c1",
+  "head_end": "3f19cebb38166258f205a3316a306eca9c33f6c1",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

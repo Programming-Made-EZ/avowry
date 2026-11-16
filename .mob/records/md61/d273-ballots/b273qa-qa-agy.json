@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "a3da160fa6e165696d1b7dfbcc24af561c5a8187987ed3726cdd3426150b395f",
+  "probe": {
+    "taken_at": "2026-11-16T02:55:48.803758Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-52736765-0d0b-4ce0-982d-71a393d30f6b)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "The red state is verified: commit 33b9ecb has 13 failing tests confirming every rule is tested red first. Retaining forbidden patterns ensures test edits and history rewrites are barred, so checks cannot be weakened to pass bad state. Revie",
+      "reply": "Yes\nThe red state is verified: commit 33b9ecb has 13 failing tests confirming every rule is tested red first. Retaining forbidden patterns ensures test edits and history rewrites are barred, so checks cannot be weakened to pass bad state. Review round 3 provides independent cross-family verification.\n\nCITE: clean at the fix round 2 red, 33b9ecb, with 13 tests failing.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The red state is verified: commit 33b9ecb has 13 failing tests confirming every rule is tested red first. Retaining forbidden patterns ensures test edits and history rewrites are barred, so checks cannot be weakened to pass bad state. Revie"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T02:55:48.803758Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2682
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "1156058f612a8a525ca095fce922dfc71c59ec15",
+  "head_end": "1156058f612a8a525ca095fce922dfc71c59ec15",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

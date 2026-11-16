@@ -376,3 +376,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D270](process-and-staffing.md#d270) | Card 422 retro pick: a green brief names the caller of every new helper, and the first gate runs in the CI checkout shape | process-and-staffing | adopted |
 | [D271](process-and-staffing.md#d271) | D263 with its D265 sub-bullet adopted after its trial on cards 441, 430 and 422 (the real-shape corpus with encodings and fix neighbours) | process-and-staffing | adopted |
 | [D272](process-and-staffing.md#d272) | mob-defaults #61: the green seat moves from cursor gpt-5.3-codex (out of its monthly usage until 2026-12-14) to muse medium effort | process-and-staffing | adopted |
+| [D273](process-and-staffing.md#d273) | mob-defaults #61: the fix round 2 green moves from muse (out until its 05:05:53 UTC reset) to cursor pinned --model composer-2.5, with no service holding more than two task-force seats | process-and-staffing | adopted |

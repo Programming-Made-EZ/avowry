@@ -1,0 +1,93 @@
+{
+  "result": "failed",
+  "prompt_sha": "57cd04765e51cf3be1314dc28b528d655b48a87cae0b54c60cfdb76a665d8ae8",
+  "probe": {
+    "taken_at": "2026-11-16T02:50:17.637082Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-6654650e-d80d-4c9b-8382-5ebcac6d8fa3)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "none",
+      "reason": "\u2026at to a healthy, pinned service in an isolated context resolves the immediate quota stoppage cleanly. Maintaining an independent, cross-family review preserves the necessary evaluative perspectives without bloating the process or delaying progress. CITE: That context differs from the red's (ctx-2c).",
+      "reply": "",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026ate contexts (ctx-3e for green, ctx-2c for red, ctx-4c for QA) preserve boundary discipline, while cursor auto provides cross-family review, ensuring essential perspectives are present without stalling the card. CITE: Ruling R-ROT's limit of two roles per service counts the six Decider voting roles.",
+          "reason": "\u2026ate contexts (ctx-3e for green, ctx-2c for red, ctx-4c for QA) preserve boundary discipline, while cursor auto provides cross-family review, ensuring essential perspectives are present without stalling the card. CITE: Ruling R-ROT's limit of two roles per service counts the six Decider voting roles."
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026at to a healthy, pinned service in an isolated context resolves the immediate quota stoppage cleanly. Maintaining an independent, cross-family review preserves the necessary evaluative perspectives without bloating the process or delaying progress. CITE: That context differs from the red's (ctx-2c).",
+          "reason": "\u2026at to a healthy, pinned service in an isolated context resolves the immediate quota stoppage cleanly. Maintaining an independent, cross-family review preserves the necessary evaluative perspectives without bloating the process or delaying progress. CITE: That context differs from the red's (ctx-2c)."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T02:50:17.637082Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2679
+    }
+  },
+  "counted_seats": [],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "afd23fca4bba97181854ac5223c680e91d17b7d2",
+  "head_end": "afd23fca4bba97181854ac5223c680e91d17b7d2",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "none"
+    },
+    "counts": {}
+  },
+  "absent": []
+}

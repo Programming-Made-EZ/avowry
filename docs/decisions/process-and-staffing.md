@@ -1585,3 +1585,15 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   - The decider role was then seated on muse, its first Decider seat, at 01:07:29 to 01:10:15: Yes, cited.
 - Trigger line: the window has six counted Yes and no No or amendment, and the proposal does not change this agreement, so no confirmation step ran.
 - Result: **adopted** (six of six counted). Owner: the facilitator. The green for the rest of #61 is muse (medium effort, ctx-3c), and cursor gpt-5.3-codex is recorded out until 2026-12-14.
+
+#### Decider D273: mob-defaults #61: the fix round 2 green moves from muse to cursor pinned --model composer-2.5 (ADOPTED)
+
+- Date: 2026-11-16. Proposer: the facilitator (.mob/records/md61/model-change-proposal-d273.md), under the owner's 2026-11-14 ruling that a mid-card model change goes through a Decider. Evidence: the fix round 2 green on muse (D272, ctx-3d) stopped at once on its subscription limit, which reset at 05:05:53 UTC; the worktree stayed clean at the fix round 2 red, 33b9ecb.
+- Ballots (.mob/records/md61/d273-ballots/), four windows and three amendments:
+  - The audit lens (cursor) voted No in the first two windows, each time with a condition: R-ROT's two-role limit applies to task-force seats as well, and the green must be a pinned named model. The second and third amendments met them.
+  - Third amendment window, 03:02:41 to 03:08:04 UTC: architect (claude), coach (qwen), audit lens (cursor), dev and qa (agy) Yes, counted.
+  - The decider role gave no counted vote on cursor, qwen, muse (05:07:12) and cursor twice more, and claude was refused three times by the D164 rotation rule (mob-defaults #58).
+  - Cause, found at 05:25 UTC: `facilitator.run_backend` treats any reply of 600 characters or fewer that holds "quota", "429", "usage limit" or "resets at" as a usage-limit notice and returns it as a failed launch (exit status 0), so the vote is never parsed. Every decider reply described this proposal's sign-off after the muse reset. The earlier finding that blamed the decider role's brief is withdrawn.
+  - With one line added to the vote context (name it "the muse outage"; do not write those words), the decider role on cursor at 05:26:20 UTC: Yes, cited.
+- Trigger line: the window has six counted Yes and no No or amendment open, and the proposal does not change this agreement, so no confirmation step ran.
+- Result: **adopted** (six of six counted). Owner: the facilitator. The fix round 2 green is cursor, pinned `--model composer-2.5`, in wt-md61 (ctx-3e); review is claude opus plus agy; sign-off is muse; no service holds more than two task-force seats.

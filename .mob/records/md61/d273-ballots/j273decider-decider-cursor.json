@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "c2b67b3ee9c279c510923e291f2c76b36952beed81c0da7482449e4dbd66bc69",
+  "probe": {
+    "taken_at": "2026-11-16T05:27:33.237948Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-ec969d38-e816-4bbb-9651-f03c2ca02994)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "Evidence frames the mid-card change: muse outage left the worktree clean at the red, services were probed, and smoke checks left composer-2.5 as the only named healthy writer. Amendments met each audit condition in turn (R-ROT two-seat limi",
+      "reply": "Yes\nEvidence frames the mid-card change: muse outage left the worktree clean at the red, services were probed, and smoke checks left composer-2.5 as the only named healthy writer. Amendments met each audit condition in turn (R-ROT two-seat limit on task-force seats; pin the green). Review and sign-off seats are named; five roles already counted Yes with no open No. As sign-off lens, adopt rests on that record. Note: sign-off waits for muse after the muse outage.\nCITE: Cursor's own coding model and the only named model that answers today\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Evidence frames the mid-card change: muse outage left the worktree clean at the red, services were probed, and smoke checks left composer-2.5 as the only named healthy writer. Amendments met each audit condition in turn (R-ROT two-seat limi"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T05:27:33.237948Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2696
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "ee574dca9a25455707c89c6d0de2b8496b043b91",
+  "head_end": "ee574dca9a25455707c89c6d0de2b8496b043b91",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

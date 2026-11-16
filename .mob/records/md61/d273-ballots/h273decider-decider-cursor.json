@@ -1,0 +1,93 @@
+{
+  "result": "failed",
+  "prompt_sha": "28eb9a3ca9d6d19795eb988953635b01a1f2046b6d20e5a8139cab66296d77e7",
+  "probe": {
+    "taken_at": "2026-11-16T05:15:29.369714Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-671e76b9-14e7-4552-9e6b-3cd6b953915a)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "none",
+      "reason": "\u2026ice hold for the remaining #61 force. Green, dual review, and delayed muse sign-off are named, so adopt/reshape/reject can rest on the run record. Note: vote-tooling finding on the decider brief is separate from this clause. CITE: Cursor's own coding model and the only named model that answers today",
+      "reply": "",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "cursor",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026eeps two seats per service, and names cross-family review plus muse sign-off after reset\u2014enough seats for an evidence-based adopt/reshape/reject. Note: green is a fresh context vs the red; facilitator should still gate on the forbidden-pattern brief. CITE: seat cursor auto as #61's fix round 2 green",
+          "reason": "\u2026eeps two seats per service, and names cross-family review plus muse sign-off after reset\u2014enough seats for an evidence-based adopt/reshape/reject. Note: green is a fresh context vs the red; facilitator should still gate on the forbidden-pattern brief. CITE: seat cursor auto as #61's fix round 2 green"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026ice hold for the remaining #61 force. Green, dual review, and delayed muse sign-off are named, so adopt/reshape/reject can rest on the run record. Note: vote-tooling finding on the decider brief is separate from this clause. CITE: Cursor's own coding model and the only named model that answers today",
+          "reason": "\u2026ice hold for the remaining #61 force. Green, dual review, and delayed muse sign-off are named, so adopt/reshape/reject can rest on the run record. Note: vote-tooling finding on the decider brief is separate from this clause. CITE: Cursor's own coding model and the only named model that answers today"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T05:15:29.369714Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2694
+    }
+  },
+  "counted_seats": [],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "ee574dca9a25455707c89c6d0de2b8496b043b91",
+  "head_end": "ee574dca9a25455707c89c6d0de2b8496b043b91",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "none"
+    },
+    "counts": {}
+  },
+  "absent": []
+}

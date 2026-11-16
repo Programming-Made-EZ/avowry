@@ -1,0 +1,92 @@
+{
+  "result": "failed",
+  "prompt_sha": "6765c9e262b3ecc04a4f7119c7bb48d7fed3abdd2f76541bb17f95abe564569b",
+  "probe": {
+    "taken_at": "2026-11-16T02:50:01.151909Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-d8a16db1-8499-4e75-8d8c-d0c1f2d5eb2d)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "No",
+      "reason": "The amendment treats green as outside R-ROT while letting claude hold red, green, QA, and sign-off'a loophole that 'passes' the two-role rule while breaking its practice. Condition for Yes: apply R-ROT's two-roles-per-service limit to task-",
+      "reply": "No\nThe amendment treats green as outside R-ROT while letting claude hold red, green, QA, and sign-off\u2014a loophole that \u201cpasses\u201d the two-role rule while breaking its practice. Condition for Yes: apply R-ROT\u2019s two-roles-per-service limit to task-force seats and Decider voting roles together, and seat fix round 2 green on a non-claude service.\nCITE: The fix round 2 green is a task-force seat, not a voting role.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The amendment treats green as outside R-ROT while letting claude hold red, green, QA, and sign-off'a loophole that 'passes' the two-role rule while breaking its practice. Condition for Yes: apply R-ROT's two-roles-per-service limit to task-"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T02:50:01.151909Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2677
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "afd23fca4bba97181854ac5223c680e91d17b7d2",
+  "head_end": "afd23fca4bba97181854ac5223c680e91d17b7d2",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "No"
+    },
+    "counts": {
+      "No": 1
+    }
+  },
+  "absent": []
+}

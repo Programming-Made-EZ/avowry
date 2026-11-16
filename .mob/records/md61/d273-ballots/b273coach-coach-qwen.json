@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "99fb241bd2b6085d389a711e416b49ec642c9211d55f5a0f22cec11ffb408e6e",
+  "probe": {
+    "taken_at": "2026-11-16T02:55:48.312591Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-518154fa-9d8e-40e9-b72b-6ce9b321a8e1)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=3823299f-dafb-4791-a9dc-1ce4cb516026]: Subscription quota exhausted. Your usage window resets at 2026-11-16T05:05:53Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The task force is appropriately sized for fix round 2, covering architecture, development, QA, audit, and coaching without ceremonial padding. The iterative amendments resolved rotation constraints efficiently, keeping the team lean and foc",
+      "reply": "Yes\nThe task force is appropriately sized for fix round 2, covering architecture, development, QA, audit, and coaching without ceremonial padding. The iterative amendments resolved rotation constraints efficiently, keeping the team lean and focused on the failing tests. Each role addresses a necessary perspective, and the cross-service distribution ensures technical diversity while respecting capacity limits. I endorse this purpose-driven configuration.\nCITE: no service holds more than two task-force seats\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "qwen",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The task force is appropriately sized for fix round 2, covering architecture, development, QA, audit, and coaching without ceremonial padding. The iterative amendments resolved rotation constraints efficiently, keeping the team lean and foc"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "qwen",
+      "model_reported": "qwen3.6-35b-a3b",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T02:55:48.312591Z",
+      "probe_ok": true,
+      "probe_evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)",
+      "line_index": 2681
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "1156058f612a8a525ca095fce922dfc71c59ec15",
+  "head_end": "1156058f612a8a525ca095fce922dfc71c59ec15",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

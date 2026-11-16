@@ -1,0 +1,93 @@
+{
+  "result": "failed",
+  "prompt_sha": "0cd597eb57bd8ab102477bbb2480afedf3bb8525baf2db39d7896c6a42eb5fa7",
+  "probe": {
+    "taken_at": "2026-11-16T05:21:02.912907Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-2dbecb59-6ed0-449f-820a-a71b9ebe420f)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "none",
+      "reason": "\u2026rns plus facilitator history-write check. Task-force seats for the rest of #61 are complete under the two-seats-per-service limit: pinned green, dual review, muse sign-off after reset. Audit\u2019s pin condition is met; five Yes already; no open No. Endorsed. CITE: the only named model that answers today",
+      "reply": "",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "cursor",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026 stop, clean tree at 33b9ecb, 13 failing tests, smoke OK on composer-2.5) and the remaining path seats green, dual review, and sign-off. R-ROT and the pinned-model condition are met. Note: keep the forbidden-pattern check on the green diff before accept. CITE: the only named model that answers today",
+          "reason": "\u2026 stop, clean tree at 33b9ecb, 13 failing tests, smoke OK on composer-2.5) and the remaining path seats green, dual review, and sign-off. R-ROT and the pinned-model condition are met. Note: keep the forbidden-pattern check on the green diff before accept. CITE: the only named model that answers today"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026rns plus facilitator history-write check. Task-force seats for the rest of #61 are complete under the two-seats-per-service limit: pinned green, dual review, muse sign-off after reset. Audit\u2019s pin condition is met; five Yes already; no open No. Endorsed. CITE: the only named model that answers today",
+          "reason": "\u2026rns plus facilitator history-write check. Task-force seats for the rest of #61 are complete under the two-seats-per-service limit: pinned green, dual review, muse sign-off after reset. Audit\u2019s pin condition is met; five Yes already; no open No. Endorsed. CITE: the only named model that answers today"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T05:21:02.912907Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2695
+    }
+  },
+  "counted_seats": [],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "ee574dca9a25455707c89c6d0de2b8496b043b91",
+  "head_end": "ee574dca9a25455707c89c6d0de2b8496b043b91",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "none"
+    },
+    "counts": {}
+  },
+  "absent": []
+}

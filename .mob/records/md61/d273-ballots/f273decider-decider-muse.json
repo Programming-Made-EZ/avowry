@@ -1,0 +1,93 @@
+{
+  "result": "failed",
+  "prompt_sha": "28eb9a3ca9d6d19795eb988953635b01a1f2046b6d20e5a8139cab66296d77e7",
+  "probe": {
+    "taken_at": "2026-11-16T05:08:09.690978Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-ad034d75-33f4-414b-9409-e5ce413f5094)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "none",
+      "reason": "\u2026the auditability condition, with cross-family review and muse sign-off after reset. All seats needed to sign off are now filled. CITE: no service holds more than two task-force seats muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "reply": "",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "muse",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026d composer-2.5 green, claude opus plus agy review, and muse sign-off after reset. Team seats needed for sign-off are present. CITE: no service holds more than two task-force seatsYes muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+          "reason": "\u2026d composer-2.5 green, claude opus plus agy review, and muse sign-off after reset. Team seats needed for sign-off are present. CITE: no service holds more than two task-force seatsYes muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026the auditability condition, with cross-family review and muse sign-off after reset. All seats needed to sign off are now filled. CITE: no service holds more than two task-force seats muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+          "reason": "\u2026the auditability condition, with cross-family review and muse sign-off after reset. All seats needed to sign off are now filled. CITE: no service holds more than two task-force seats muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+        }
+      ],
+      "command_scan": {
+        "status": "no command source",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "muse",
+      "model_reported": "default",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T05:08:09.690978Z",
+      "probe_ok": true,
+      "probe_evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted.",
+      "line_index": 2693
+    }
+  },
+  "counted_seats": [],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "ee574dca9a25455707c89c6d0de2b8496b043b91",
+  "head_end": "ee574dca9a25455707c89c6d0de2b8496b043b91",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "none"
+    },
+    "counts": {}
+  },
+  "absent": []
+}

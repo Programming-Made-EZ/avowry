@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "44d67e261e35da37ed96b4a4e9e19744cb34b6c8b2b06347392805784ab158dc",
+  "probe": {
+    "taken_at": "2026-11-16T03:03:36.756274Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-1d96ee82-e48f-4288-a84f-d0a2ab729946)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=14ca24a6-240f-4f19-842a-12adcb9e1343]: Subscription quota exhausted. Your usage window resets at 2026-11-16T05:05:53Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "Prior audit conditions are met: named pin `composer-2.5`, R-ROT '2 voting roles, and '2 task-force seats with claude at red+QA only. Clause is auditable against a run record. Note: acceptance should still match the invocation line to that p",
+      "reply": "Yes\nPrior audit conditions are met: named pin `composer-2.5`, R-ROT \u22642 voting roles, and \u22642 task-force seats with claude at red+QA only. Clause is auditable against a run record. Note: acceptance should still match the invocation line to that pin (facilitator already checks history writes). Cursor as both green writer and this Decider\u2019s audit voter is tight optics, not a new R-ROT breach.\nCITE: the only named model that answers today\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Prior audit conditions are met: named pin `composer-2.5`, R-ROT '2 voting roles, and '2 task-force seats with claude at red+QA only. Clause is auditable against a run record. Note: acceptance should still match the invocation line to that p"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T03:03:36.756274Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2686
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "3f19cebb38166258f205a3316a306eca9c33f6c1",
+  "head_end": "3f19cebb38166258f205a3316a306eca9c33f6c1",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

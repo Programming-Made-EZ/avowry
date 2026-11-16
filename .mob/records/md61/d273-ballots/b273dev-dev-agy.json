@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "f62c83b80d8052433f2dfafc8168b33b37539c38040168f1221f0e5b01962962",
+  "probe": {
+    "taken_at": "2026-11-16T02:55:45.798244Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-5ae3dfd4-33d9-4cb6-9b1a-9d8ed21b9227)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=1afe3571-f8ae-40dc-9069-1e242aad2c8c]: Subscription quota exhausted. Your usage window resets at 2026-11-16T05:05:53Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "dev": {
+      "vote": "Yes",
+      "reason": "As backend developer, the distribution is workable, unambiguous, and fair. Seating cursor auto to write green in ctx-3e unblocks implementation of the 13 failing tests without violating slice limits or gaming TDD rules. Splitting tasks acro",
+      "reply": "Yes\nAs backend developer, the distribution is workable, unambiguous, and fair. Seating cursor auto to write green in ctx-3e unblocks implementation of the 13 failing tests without violating slice limits or gaming TDD rules. Splitting tasks across separate contexts and families with cross-family review maintains integrity while respecting role limits.\nCITE: seat cursor auto as #61's fix round 2 green, with the review and sign-off seats above.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "As backend developer, the distribution is workable, unambiguous, and fair. Seating cursor auto to write green in ctx-3e unblocks implementation of the 13 failing tests without violating slice limits or gaming TDD rules. Splitting tasks acro"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T02:55:45.798244Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2680
+    }
+  },
+  "counted_seats": [
+    "dev"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "1156058f612a8a525ca095fce922dfc71c59ec15",
+  "head_end": "1156058f612a8a525ca095fce922dfc71c59ec15",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "dev": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

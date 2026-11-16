@@ -1,0 +1,97 @@
+{
+  "result": "failed",
+  "prompt_sha": "1a3d2510fc8e3c88d85512d9208a77c4b44f967f313b32e819839ca351d94e60",
+  "probe": {
+    "taken_at": "2026-11-16T02:44:41.102350Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-2a4c91ce-ebfa-4b43-97ec-3a6f55946340)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "No",
+      "reason": "R-ROT is asserted, yet Claude already holds architect and qa; seating it as fix-round-2 green makes three roles and cannot be checked from git alone. Condition for Yes: keep every service at most two roles under R-ROT when seating green (re",
+      "reply": "No\nR-ROT is asserted, yet Claude already holds architect and qa; seating it as fix-round-2 green makes three roles and cannot be checked from git alone. Condition for Yes: keep every service at most two roles under R-ROT when seating green (reassign one Claude role, or name another healthy pinned green).\nCITE: no service holds more than two roles\n",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "cursor",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026lthy seat preserves the D272 forbidden patterns and a facilitator history-write check, so the outcome stays git-auditable. Note: green ctx-3e differs from red ctx-2c, and the 429/quota story itself is not git-verifiable\u2014only the eventual green diff is. CITE: The brief keeps D272's forbidden patterns",
+          "reason": "\u2026lthy seat preserves the D272 forbidden patterns and a facilitator history-write check, so the outcome stays git-auditable. Note: green ctx-3e differs from red ctx-2c, and the 429/quota story itself is not git-verifiable\u2014only the eventual green diff is. CITE: The brief keeps D272's forbidden patterns"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "R-ROT is asserted, yet Claude already holds architect and qa; seating it as fix-round-2 green makes three roles and cannot be checked from git alone. Condition for Yes: keep every service at most two roles under R-ROT when seating green (re"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T02:44:41.102350Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2672
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "ffe0e8cff9f0c92ead47e883d099837438650a20",
+  "head_end": "ffe0e8cff9f0c92ead47e883d099837438650a20",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "No"
+    },
+    "counts": {
+      "No": 1
+    }
+  },
+  "absent": []
+}

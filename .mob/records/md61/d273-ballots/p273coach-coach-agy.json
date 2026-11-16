@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "5c3ffe9713cff44efc33419266c2f58821518567b5c3fef5f8762b69c1baee05",
+  "probe": {
+    "taken_at": "2026-11-16T02:44:56.315337Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-149d4f49-f892-4990-a7a8-42e97434d151)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The replacement is appropriately sized and prevents flow blockage. Swapping the blocked green seat to a healthy, pinned service allows the mob to resume work without unnecessary ceremony. The roster balances necessary perspectives across di",
+      "reply": "Yes\nThe replacement is appropriately sized and prevents flow blockage. Swapping the blocked green seat to a healthy, pinned service allows the mob to resume work without unnecessary ceremony. The roster balances necessary perspectives across distinct roles, adheres to the two-role limit under rotation rules, and avoids bloat while maintaining context separation.\nCITE: Under the owner's 2026-11-14 ruling, a change of model mid-card goes through a Decider.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The replacement is appropriately sized and prevents flow blockage. Swapping the blocked green seat to a healthy, pinned service allows the mob to resume work without unnecessary ceremony. The roster balances necessary perspectives across di"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T02:44:56.315337Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2674
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "ffe0e8cff9f0c92ead47e883d099837438650a20",
+  "head_end": "ffe0e8cff9f0c92ead47e883d099837438650a20",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

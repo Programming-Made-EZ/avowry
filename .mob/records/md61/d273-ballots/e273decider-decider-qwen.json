@@ -1,0 +1,93 @@
+{
+  "result": "failed",
+  "prompt_sha": "e8dd060d71db3c2fb8ac056e878459512b3c93e60722f893c0f0ebdb62c5cdb2",
+  "probe": {
+    "taken_at": "2026-11-16T03:10:09.030266Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-281012bc-1946-494c-ae6f-99f9a946b4d7)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "none",
+      "reason": "\u2026rvice exceeds the two-role limit. The third amendment successfully addresses the audit lens condition by pinning composer-2.5, ensuring auditable runs. The team composition is complete and structurally sound for sign-off. I endorse this path forward. CITE: seat cursor auto as #61's fix round 2 green",
+      "reply": "",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "qwen",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026 seat to a named model and maintains the two-roles-per-service limit. All voting seats are assigned, and the sign-off is properly deferred to muse after its quota resets. The process demonstrates clear traceability and compliance with rotation rules. CITE: seat cursor auto as #61's fix round 2 green",
+          "reason": "\u2026 seat to a named model and maintains the two-roles-per-service limit. All voting seats are assigned, and the sign-off is properly deferred to muse after its quota resets. The process demonstrates clear traceability and compliance with rotation rules. CITE: seat cursor auto as #61's fix round 2 green"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026rvice exceeds the two-role limit. The third amendment successfully addresses the audit lens condition by pinning composer-2.5, ensuring auditable runs. The team composition is complete and structurally sound for sign-off. I endorse this path forward. CITE: seat cursor auto as #61's fix round 2 green",
+          "reason": "\u2026rvice exceeds the two-role limit. The third amendment successfully addresses the audit lens condition by pinning composer-2.5, ensuring auditable runs. The team composition is complete and structurally sound for sign-off. I endorse this path forward. CITE: seat cursor auto as #61's fix round 2 green"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "qwen",
+      "model_reported": "qwen3.6-35b-a3b",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T03:10:09.030266Z",
+      "probe_ok": true,
+      "probe_evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)",
+      "line_index": 2692
+    }
+  },
+  "counted_seats": [],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "3f19cebb38166258f205a3316a306eca9c33f6c1",
+  "head_end": "3f19cebb38166258f205a3316a306eca9c33f6c1",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "none"
+    },
+    "counts": {}
+  },
+  "absent": []
+}

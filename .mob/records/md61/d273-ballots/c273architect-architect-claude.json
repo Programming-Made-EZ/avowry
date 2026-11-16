@@ -1,0 +1,93 @@
+{
+  "result": "passed",
+  "prompt_sha": "1cf10a15f927e534487512aa12e1fd480e277dd8b4ba3b314f5475ff0964fcc3",
+  "probe": {
+    "taken_at": "2026-11-16T03:03:40.807079Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-37f055ca-4a13-4ab5-a5dc-792f2ad50fc8)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=ea89e813-956d-43b1-917a-0e8b4c4893fc]: Subscription quota exhausted. Your usage window resets at 2026-11-16T05:05:53Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The pin meets the audit lens's only condition, because the writer is now a named model and can be audited from the run record. The record stays minimal: one seat changes and the rest of the structure is untouched. The two-seats-per-service ",
+      "reply": "Yes\n\nThe pin meets the audit lens's only condition, because the writer is now a named model and can be audited from the run record. The record stays minimal: one seat changes and the rest of the structure is untouched. The two-seats-per-service limit holds, with claude on the red and QA review, cursor on the green, agy on one review and muse on the sign-off. cursor also sits as a voter, but R-ROT's limit covers the voting roles and the task-force seats separately, so that is not a conflict.\n\nOne note: the smoke test was a one-off \"OK\". The facilitator should re-probe `composer-2.5` at launch and check the diff for history writes.\n\nCITE: The other seats and the two-seats-per-service limit stand as in the second amendment\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "claude",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The pin meets the audit lens's only condition, because the writer is now a named model and can be audited from the run record. The record stays minimal: one seat changes and the rest of the structure is untouched. The two-seats-per-service "
+        }
+      ],
+      "command_scan": {
+        "status": "clean",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "claude",
+      "model_reported": "sonnet",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T03:03:40.807079Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2691,
+      "rotation_reason": "Claude was the least recently used available model on the probe taken 2026-11-16T03:03:40.807079Z: claude last seated 2026-11-16T02:59:07.530782Z (line 2686); agy: OK, last seated 2026-11-16T03:03:39.959578Z (line 2691); codex: \u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM., last seated 2026-11-14T22:03:26.821856Z (line 2552); copilot: You have no quota (Request ID: 00000-37f055ca-4a13-4ab5-a5dc-792f2ad50fc8), last seated 2026-11-07T17:54:26.368722Z (line 1656); cursor: OK, last seated 2026-11-16T03:03:36.949316Z (line 2688); grok: \u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }, last seated 2026-11-14T18:29:20.383743Z (line 2544); muse: \u2026ed. agent loop failed: model failed: API error 429 [request_id=ea89e813-956d-43b1-917a-0e8b4c4893fc]: Subscription quota exhausted. Your usage window resets at 2026-11-16T05:05:53Z. (rate_limit_error), last seated 2026-11-16T01:08:17.516432Z (line 2671); qwen: OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded), last seated 2026-11-16T03:03:38.463908Z (line 2690)"
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "3f19cebb38166258f205a3316a306eca9c33f6c1",
+  "head_end": "3f19cebb38166258f205a3316a306eca9c33f6c1",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "24363a47d139ad2b8358c0ff4440f69bed1a87234fca7a5ab3c049ab02cf7886",
+  "probe": {
+    "taken_at": "2026-11-16T03:03:38.373011Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-119b8139-19d2-42fa-912e-96813937d25f)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=7f869b78-e0be-4a01-bdf1-df211cbbd924]: Subscription quota exhausted. Your usage window resets at 2026-11-16T05:05:53Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The task force is tightly sized to the immediate fix. Four services cover six critical roles without overlap or ceremony. The iterative amendments demonstrate adaptive planning, respecting rotation rules and audit requirements while maintai",
+      "reply": "Yes\nThe task force is tightly sized to the immediate fix. Four services cover six critical roles without overlap or ceremony. The iterative amendments demonstrate adaptive planning, respecting rotation rules and audit requirements while maintaining a lean structure. No padding; every seat addresses a specific constraint or need. The focus remains on delivering the fix efficiently.\nCITE: no service holds more than two task-force seats\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "qwen",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The task force is tightly sized to the immediate fix. Four services cover six critical roles without overlap or ceremony. The iterative amendments demonstrate adaptive planning, respecting rotation rules and audit requirements while maintai"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "qwen",
+      "model_reported": "qwen3.6-35b-a3b",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T03:03:38.373011Z",
+      "probe_ok": true,
+      "probe_evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)",
+      "line_index": 2689
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "3f19cebb38166258f205a3316a306eca9c33f6c1",
+  "head_end": "3f19cebb38166258f205a3316a306eca9c33f6c1",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

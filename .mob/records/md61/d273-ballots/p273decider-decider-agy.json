@@ -1,0 +1,93 @@
+{
+  "result": "failed",
+  "prompt_sha": "a14018914ba9690f0755a6cc0ec09ab9b2165bf180e0ed368bb8638ae523bcf1",
+  "probe": {
+    "taken_at": "2026-11-16T02:44:43.410986Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-a57dab95-523e-4459-b90d-1063efe4887a)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "none",
+      "reason": "\u2026ion-compliant. The sign-off seats (architect, qa, audit lens, dev, coach, decider) are fully represented across available healthy services under R-ROT. The brief maintains the necessary constraints against test edits and history rewrites. CITE: seat claude sonnet (ctx-3e) as #61's fix round 2 green.",
+      "reply": "",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026ve services are exhausted or unpinned, and claude sonnet is healthy and pinned in a fresh context. All required sign-off seats are properly represented under R-ROT, and the verification safeguards from D272 remain strictly enforced. CITE: The brief keeps D272's forbidden patterns: no history rewrite",
+          "reason": "\u2026ve services are exhausted or unpinned, and claude sonnet is healthy and pinned in a fresh context. All required sign-off seats are properly represented under R-ROT, and the verification safeguards from D272 remain strictly enforced. CITE: The brief keeps D272's forbidden patterns: no history rewrite"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "\u2026ion-compliant. The sign-off seats (architect, qa, audit lens, dev, coach, decider) are fully represented across available healthy services under R-ROT. The brief maintains the necessary constraints against test edits and history rewrites. CITE: seat claude sonnet (ctx-3e) as #61's fix round 2 green.",
+          "reason": "\u2026ion-compliant. The sign-off seats (architect, qa, audit lens, dev, coach, decider) are fully represented across available healthy services under R-ROT. The brief maintains the necessary constraints against test edits and history rewrites. CITE: seat claude sonnet (ctx-3e) as #61's fix round 2 green."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T02:44:43.410986Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2673
+    }
+  },
+  "counted_seats": [],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "ffe0e8cff9f0c92ead47e883d099837438650a20",
+  "head_end": "ffe0e8cff9f0c92ead47e883d099837438650a20",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "none"
+    },
+    "counts": {}
+  },
+  "absent": []
+}

@@ -87,3 +87,35 @@ Runs, all with `--capture=sys`:
 - rotation and decider set (`tests/test_seat_rotation.py tests/test_seat_rotation_rules.py tests/test_decider_rotation.py tests/test_seat_gate.py tests/test_record_cycles_evidence.py tests/test_decider_launched.py`): 151 passed, 48 subtests passed in 112.08s.
 
 Process notes: this breaks the heredoc rule, and I say so. I ran one Python script through a shell heredoc to move three tests between classes in the test file (it rewrote the file, and the line endings came out CRLF); I then restored LF with an inline `python -c`. The final diff is 480 insertions and no deletions. I also ran one stray `python` with an empty heredoc that wrote nothing. No full suite, no real seat or network, no delete, no commit, no background process left.
+
+## Fix round 2 red
+
+Seat: red (dev, red), claude-sonnet-5-5, declared by D269, context ctx-2c (a fresh context). Worktree wt-md61, branch card-61 at b64725f. Nothing committed. Only `tests/test_seat_use_model_outcome.py` changed (an `import threading` and about 330 added lines; no existing test touched). Every file was written with the edit tool; no heredoc of any kind.
+
+Classes, all named `Test61Fix2*`, so `-k Fix2` selects every one (the brief named one class; the bases differ, so there are five, as in fix round 1):
+- `Test61Fix2` (Decider61 base): (a) the pure pairing tests and (c) the Decider lock refusal.
+- `Test61Fix2SeatLog` (real `seat_log.py` subprocess): (a) `outcome --role`.
+- `Test61Fix2TurnRun` (SeatGateCase base): (b).
+- `Test61Fix2Characterisation` and `Test61Fix2TurnCharacterisation`: pass on b64725f.
+
+Counts on b64725f: 13 pending (each fails by assertion, none by error), 6 characterisation (pass), 112 older tests pass.
+
+| part | tests | what they pin |
+|---|---|---|
+| (a) pure | 5 | `[L(grok,QA), L(grok,UX), O(grok,QA,success)]` gives 0 (not 1); the same with both roles' outcomes; UX timeout then QA success after `[L UX, L QA]` gives 1. Decision: `[L(grok,QA), old claude row, L(grok,UX), O(grok,QA,success)]` makes `claude_wait_problem` name grok ("waited longer"), today it returns ''. `rotation_reason` cites "(line 1)", not "(line 2)" |
+| (a) seat_log | 2 | `launch --role QA`, `launch --role UX` (same service and context), then `outcome --role QA`: the QA launch is the seating; then `outcome --role UX timeout` as well: still the QA launch |
+| (b) | 4 | a disabled and a missing backend (string seat, context None) and a disabled backend on a `Seat("ctx-1", ...)`: launch line then exactly one `refused` outcome with the same seat, card, role and context, a non-negative duration, not a seating, `run_backend` never called. A dry run with a probe in force writes no seat-use line at all |
+| (c) | 2 | the test_d7 port (a patched `seat_use_lock` refuses its second call, the outcome phase): `decider.main` must not raise, `decider-result.json` is written, `integrity.ok` is false and `integrity.changes` names the seat-use lock. And a live holder: the first voter starts its own child process (`python -I -c`, stopped through its own handle at cleanup, never by name) that takes the real lock via `hold_seat_use_lock`; `fac.SEAT_USE_LOCK_WAIT` is patched to 0.3 s, so the test takes about 1 s; same assertions, and the holder is still alive at the end |
+
+Characterisation (pass today, the fixes must keep them): old rows count as before whatever their role; a UX launch with its own UX success is the seating; the same role still pairs with the latest launch; `seat_log.py outcome --role UX` with only a QA launch exits 2 and writes nothing; a disabled-backend turn writes one launch line, returns `(False, ...not available)` and launches nothing; a dry run with no probe in force (what a real dry run has) writes no launch line.
+
+Notes for the green:
+- Pairing key is (seat, card, context, role) in `last_seating`; `append_seat_outcome` already filters on role. Old rows keep counting without it.
+- A disabled or missing backend turn needs its `refused` outcome after the launch and before it returns. The dry-run test sets `dry_run` with a probe present (a real dry run has no probe, which is the characterisation); a fix can skip the launch write in `commit_seat`/`gate_seat` when `args.dry_run`.
+- (c): the outcome-phase `with gate.seat_use_lock(...)` in `decider.py` sits outside the `try`, so a `SeatRefused` from taking the lock escapes `main`; catch it into `outcome_errors`.
+
+Runs, all with `--capture=sys`:
+- `python -m pytest tests/test_seat_use_model_outcome.py -q --capture=sys`: `13 failed, 118 passed in 120.01s`.
+- rotation and decider set (`tests/test_seat_rotation.py tests/test_seat_rotation_rules.py tests/test_decider_rotation.py tests/test_seat_gate.py tests/test_record_cycles_evidence.py tests/test_decider_launched.py`): `151 passed, 48 subtests passed in 122.34s`.
+
+Process: no heredoc, no full suite, no real seat or network, no delete, no commit, no background process left (the one child process of the live-holder test is stopped by its test).
