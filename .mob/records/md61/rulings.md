@@ -49,3 +49,26 @@ Ruling R-ROT, binding from now on:
   - The facilitator removed the fold and the folded-line rule, and changed only those selectors to skip outcome lines, through a `launches()` helper. No assertion value changed.
 - **Ruling FX1-3** corrects the earlier one. A test that counts or indexes seat-use lines is a selector the card's outcome lines legitimately change: count launch lines. A test's decision assertions never change.
 - **Result:** b64725f, with card tests 112 of 112 and the rotation and decider set 151 (48 subtests). Muse produced two shortcut fixes in a row on a design-sensitive change. That is a finding for the #61 retro's model allocation review.
+
+## Review round 2 rulings (2026-11-16)
+
+Review round 2 had two seats, under ruling R-ROT:
+- **claude opus** (`review-2.md`): SIGN-OFF, 0 BLOCKING, 5 MINOR. Every round 1 BLOCKING is fixed. On two real 2,633- and 2,671-row histories, rotation decisions and reason text are identical before and after. Nothing rewrites the history.
+- **cursor auto** (`review-2-cursor.md`): FLAG, 2 BLOCKING, 2 MINOR.
+
+The two reviewers disagree on the same two findings:
+- **Pairing ignores the role.** `last_seating` pairs on (seat, card, context), while `append_seat_outcome` also filters on role. An outcome for one of two roles holding the same seat in the same context therefore pairs with the other role's launch. Cursor says BLOCKING; Opus says MINOR, because the shape needs two roles in one context at once, and fresh contexts per seat (R-ROT) rule that out.
+- **Unavailable or dry-run turns write a launch with no outcome.** Both agree rotation stays correct, since no outcome means not served.
+
+R2-1: both are MINOR by D259 clause 4. Neither changes a decision on a real shape: Opus replayed real histories, and the decider writes per-voter contexts. Three are fixed anyway in fix round 2, because the fixes are small:
+- (a) pairing keys on (seat, card, context, role) in both reading and writing; old rows are untouched;
+- (b) a seat refused or unavailable after its launch line writes outcome `refused`, and a dry run writes no launch line;
+- (c) a lock refusal in the Decider's outcome phase is caught into `integrity.changes`, so `decider-result.json` is always written (ruling F1-2).
+
+R2-2: named limits, filed on mob-defaults #61's follow-up list:
+- Opus MINOR 2: a seat turn can crash after its backend has run, on a lock refusal; rotation fails safe.
+- Opus MINOR 3: `call_backend` swallows every exception as a failed turn; rotation is correct, but this changes control flow and is reviewed again at #62.
+- Cursor MINOR 3: a second outcome for one launch; the later one is orphaned.
+- Cursor MINOR 4: blank `--declared-reason` and whitespace `--declared-model` are accepted.
+
+Fix round 2 seats: red claude sonnet (ctx-2c), green muse (D272, ctx-3d), with the exact changes named in the brief and the facilitator checking the diff for history rewrites. Review round 3: claude opus plus cursor auto (R-ROT).
