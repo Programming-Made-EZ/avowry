@@ -1,0 +1,260 @@
+{
+  "result": "failed",
+  "prompt_sha": "46b0c1b740c2e0ebffc8f15b150cce27ce8ceffa77d5e3aad3b2cedc22db0ec8",
+  "probe": {
+    "taken_at": "2026-11-16T22:33:31.329954Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-832eef71-7055-43e6-800d-07c85b40a29c)"
+      },
+      "grok": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=af991b55-ac6f-43c4-bcc3-bb7faf3fbb75]: Subscription quota exhausted. Your usage window resets at 2026-11-23T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": false,
+        "evidence": "another local model is loaded (pid 23744)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "CITE: the next eligible Ready card that the mob can finish",
+      "reply": "I'll read the Decider protocol and card 169 records first so the vote is based on the actual task-force and card state.Next I\u2019ll read the working agreement, Decider checklist, and card 169 so the vote matches the protocol.I\u2019ll read card 169, the task-force rules, and nearby board state next.I\u2019ll check rotation, characterisation, ranking, and recent task-force votes so the ballot matches the rules.Yes\nCITE: the next eligible Ready card that the mob can finish\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: the next eligible Ready card that the mob can finish"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 295.8233039000188,
+      "role": "architect",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T22:33:31.329954Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2891
+    },
+    "dev": {
+      "vote": "Yes",
+      "reason": "CITE: the map bytes do not depend on the culture",
+      "reply": "Yes\n\nCITE: the map bytes do not depend on the culture\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: the map bytes do not depend on the culture"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 197.39792869999656,
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T22:33:31.329954Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2892
+    },
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "CITE: No service holds more than two seats",
+      "reply": "Yes\nCITE: No service holds more than two seats\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: No service holds more than two seats"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 255.06664340000134,
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T22:33:31.329954Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2893
+    },
+    "qa": {
+      "vote": "Yes",
+      "reason": "CITE: the map bytes do not depend on the culture",
+      "reply": "Yes\nCITE: the map bytes do not depend on the culture\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: the map bytes do not depend on the culture"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 195.4707357000152,
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T22:33:31.329954Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2894
+    },
+    "coach": {
+      "vote": "Yes",
+      "reason": "CITE: the map bytes do not depend on the culture",
+      "reply": "I'll read the working-agreement and card 169 records first so the vote is based on the actual files.Next I\u2019ll check the TWA, card 169, and the kickoff records against the proposed task force.I\u2019ll check ranking, D279, the 169 declaration, and the staffing rules next.I\u2019ll verify card 162\u2019s merge, board rank, and recent kickoff staffing against the proposal.Yes\nCITE: the map bytes do not depend on the culture\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: the map bytes do not depend on the culture"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 337.8123134000052,
+      "role": "coach",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T22:33:31.329954Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2895
+    },
+    "decider": {
+      "vote": "No",
+      "reason": "Declare the ordinal-sort criteria as characterisation on the card (code already sorts that way) and treat the planted mutant only as extra mutation evidence, not as the watched red. CITE: each test is shown failing against a planted culture",
+      "reply": "No Declare the ordinal-sort criteria as characterisation on the card (code already sorts that way) and treat the planted mutant only as extra mutation evidence, not as the watched red.\nCITE: each test is shown failing against a planted culture-sensitive mutant\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Declare the ordinal-sort criteria as characterisation on the card (code already sorts that way) and treat the planted mutant only as extra mutation evidence, not as the watched red. CITE: each test is shown failing against a planted culture"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 218.61151859999518,
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T22:33:31.329954Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2896
+    }
+  },
+  "counted_seats": [
+    "architect",
+    "dev",
+    "auditlens",
+    "qa",
+    "coach",
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "569b486eab948b6e75a8c79315ac32faf45033ac",
+  "head_end": "569b486eab948b6e75a8c79315ac32faf45033ac",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes",
+      "dev": "Yes",
+      "auditlens": "Yes",
+      "qa": "Yes",
+      "coach": "Yes",
+      "decider": "No"
+    },
+    "counts": {
+      "Yes": 5,
+      "No": 1
+    }
+  },
+  "absent": []
+}

@@ -1,0 +1,262 @@
+{
+  "result": "passed",
+  "prompt_sha": "45f01ca5f439d11846f640704edacf6747005ef736cb509ce172bb6519e174d5",
+  "probe": {
+    "taken_at": "2026-11-16T22:42:14.861202Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-ba059948-4c58-4da1-90e7-9857e1e24564)"
+      },
+      "grok": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=ea056939-e880-480b-80ef-9cb1e769f76d]: Subscription quota exhausted. Your usage window resets at 2026-11-23T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "CITE: the map bytes do not depend on the culture",
+      "reply": "I'll read the Decider protocol and card 169 records first so the vote is based on the actual proposal and repo state.I'll check the Decider checklist, card 169, and the working agreement next so the vote matches process.I'll check ranking, the two-seat rule, and whether 169 is actually next, plus the characterisation and task-force rules.I'll verify ranks, D279, the two-seat cap, and whether the slice and characterisation plan match recent cards.Yes\nCITE: the map bytes do not depend on the culture\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: the map bytes do not depend on the culture"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 254.9208255999838,
+      "role": "architect",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T22:42:14.861202Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2903
+    },
+    "dev": {
+      "vote": "Yes",
+      "reason": "CITE: adopt card 169 with its task force",
+      "reply": "Yes\n\nCITE: adopt card 169 with its task force\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: adopt card 169 with its task force"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 182.67286500000046,
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T22:42:14.861202Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2904
+    },
+    "auditlens": {
+      "vote": "No",
+      "reason": "Committing `.mob/records/169/declaration.json` and the 22:31:35Z probe rows so voters can verify kickoff_check would bring me to yes. CITE: kickoff_check.py passed on .mob/records/169/declaration.json",
+      "reply": "No. Committing `.mob/records/169/declaration.json` and the 22:31:35Z probe rows so voters can verify kickoff_check would bring me to yes.\nCITE: kickoff_check.py passed on .mob/records/169/declaration.json\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Committing `.mob/records/169/declaration.json` and the 22:31:35Z probe rows so voters can verify kickoff_check would bring me to yes. CITE: kickoff_check.py passed on .mob/records/169/declaration.json"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 226.46659630001523,
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T22:42:14.861202Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2905
+    },
+    "qa": {
+      "vote": "Yes",
+      "reason": "CITE: adopt card 169 with its task force",
+      "reply": "Yes\n\nCITE: adopt card 169 with its task force\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: adopt card 169 with its task force"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 182.56833109998843,
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T22:42:14.861202Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2906
+    },
+    "coach": {
+      "vote": "none",
+      "reason": "no vote in the reply",
+      "reply": "I'll read the Decider protocol and card 169 records so I can vote from the committed files only.I'll inspect the card, TWA, and Decider records next so the vote matches the committed process.I'll check ranks, card 161/162 status, ordinal sort sites, and how recent kickoffs seated the force.\n",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "no vote in the reply"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "no vote in the reply"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 365.66364380001323,
+      "role": "coach",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T22:42:14.861202Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2907
+    },
+    "decider": {
+      "vote": "Yes",
+      "reason": "CITE: No service holds more than two seats",
+      "reply": "Yes\nCITE: No service holds more than two seats\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: No service holds more than two seats"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 166.19402409999748,
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T22:42:14.861202Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2908
+    }
+  },
+  "counted_seats": [
+    "architect",
+    "dev",
+    "qa",
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "569b486eab948b6e75a8c79315ac32faf45033ac",
+  "head_end": "569b486eab948b6e75a8c79315ac32faf45033ac",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes",
+      "dev": "Yes",
+      "auditlens": "No",
+      "qa": "Yes",
+      "coach": "none",
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 4
+    }
+  },
+  "absent": []
+}

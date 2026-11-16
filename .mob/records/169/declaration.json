@@ -1,0 +1,12 @@
+{
+ "card": "169",
+ "probe_taken_at": "2026-11-16T22:31:35Z",
+ "seats": [
+  {"role": "dev, red", "service": "claude", "model": "claude-sonnet-5-5", "reason": "C# tests that must run dotnet on one test class and show failing against a culture-sensitive mutant; mid tier"},
+  {"role": "dev, green", "service": "cursor", "model": "composer-2.5", "reason": "first-choice writer; any code change the red's tests force (the code may already be ordinal)"},
+  {"role": "QA, review", "service": "claude", "model": "claude-opus-5-5", "reason": "checks the culture cases and that every sort site is covered, strong tier"},
+  {"role": "cross-family review", "service": "grok", "model": "default", "reason": "a non-author family, back at the 20:27Z probe; runs before the QA review is written"},
+  {"role": "acceptance, sign-off", "service": "agy", "model": "gemini-3.8-flash-medium", "reason": "read-only; a service other than the writers' and reviewers'"}
+ ],
+ "no_fit": {}
+}
