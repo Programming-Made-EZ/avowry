@@ -18,3 +18,8 @@ F1-2, fixed in the same round because they are cheap and new:
 F1-3, a named limit: MINOR 11. The Decider does not produce `refused` or `fallback` yet, and in roles mode `model_reported_by_cli` holds the wrapper's model. This goes to #60, the CLI-reported model.
 
 The fix round: a red that embeds the reviewer's probes as tests (claude sonnet, ctx-2b), then a green (cursor gpt-5.3-codex, ctx-3b), then review round 2 (claude opus, ctx-4b).
+
+## Fix round 1 red rulings (2026-11-16)
+
+- **FX1-1:** MINOR 8 (refuse an outcome with no matching launch) conflicts with the red's earlier test `Test61PendingSeatLog.test_61_m_each_of_the_six_outcomes_is_accepted`, which writes outcomes with no launch. Ruling: that test's fixture writes a matching launch before each outcome; its assertions are unchanged. The green makes exactly this fixture change, named in its brief.
+- **FX1-2:** the red seats used shell heredocs three times on this card, despite the brief's explicit ban: a test edit and a no-op in round 0, a class move and an empty run in fix round 1. None touched a file outside the seat's own test file; the CRLF rewrite was restored. This is recorded as a pattern for #61's retro and for D267/D270's sibling question of brief compliance.
