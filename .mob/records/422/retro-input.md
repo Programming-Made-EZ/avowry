@@ -91,3 +91,8 @@ See `.mob/records/422/model-allocation.md`.
 | architect, qa, decider | claude (subagent, a fresh context each) | sonnet = claude-sonnet-5-5 (the Agent model flag) | mid tier |
 
 Not seated, each with its probe evidence: codex and copilot (quota reached at 00:05), grok (unavailable, a 402 balance error).
+
+## Voice launch outcomes (facilitator, 2026-11-16 UTC)
+
+- **product manager (muse)** and **dev (cursor)**, first attempt: setup errors in the facilitator's launch, not in the services. `muse_write.py` refused a folder that was not a git working tree, and `cursor_reply.py` refused a folder without the committed deny files (`.cursor/cli.json`). Both were rerun in throwaway depth-1 clones of the repository.
+- **audit lens (qwen)**: `local_driver.py` ran from 00:07:35 to 00:08:48 UTC under Avowry's heavy lock and exited 0, but wrote no answer file. Its only change in the clone was `.gitignore`. This is a behaviour failure of a seat that probed ok, recorded as a driver finding for repair; qwen is not benched. The audit lens is reseated on claude sonnet = claude-sonnet-5-5 as a recorded fallback, so the retro keeps seven voices.
