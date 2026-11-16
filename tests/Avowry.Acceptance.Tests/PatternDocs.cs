@@ -11,8 +11,6 @@ public class PatternDocs
     [Fact]
     [Trait("Slice", "162")]
     [Trait("Criterion", "162-1")]
-    [Trait("Status", "Pending")]
-    // Pending until green 1 folds the pattern steps into the two documents (ids G1-G8, S1, S2).
     public async Task The_grammar_and_the_cheat_sheet_teach_the_ensure_step_and_the_record_update()
     {
         // Given the working-tree documents and the python needle module
