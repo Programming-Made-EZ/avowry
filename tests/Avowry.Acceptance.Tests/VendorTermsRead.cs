@@ -35,7 +35,8 @@ public class VendorTermsRead
         // Then the page names it with the quoted URL and a recommendation; when none does, it says so
         await AssertPythonTestsPass(
             "test_blockers_agree_with_the_blocks_publication_column",
-            "test_the_vendor_terms_check_reports_a_planted_yes_row_missing_from_blockers");
+            "test_the_vendor_terms_check_reports_a_planted_yes_row_missing_from_blockers",
+            "test_the_vendor_terms_check_pins_empty_page_and_invalid_blocks_publication_per_criterion");
     }
 
     [Fact]
