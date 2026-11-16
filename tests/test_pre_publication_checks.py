@@ -43,10 +43,10 @@ COMPLIANT = "\n".join([
     "The Avowry tool restores no packages.", "Recommendation: proceed.",
     "## Vendor terms", f"Command: list. HEAD {H40}",
     "| model | vendor | published | terms |", "| --- | --- | --- | --- |",
-    "| grok-4.7 | xAI (inferred) | reply_head | not reviewed |",
-    "| copilot-default | GitHub (inferred) | reply_head | not reviewed |",
-    "| codex-gpt-5.6-sol | OpenAI (inferred) | reply_head | not reviewed |",
-    "| agy-gemini-4-argon-medium | Google (inferred) | reply_head | not reviewed |",
+    "| grok-4.7 | xAI (inferred) | reply_head | read 2026-11-16 (vendor-terms.md) |",
+    "| copilot-default | GitHub (inferred) | reply_head | read 2026-11-16 (vendor-terms.md) |",
+    "| codex-gpt-5.6-sol | OpenAI (inferred) | reply_head | read 2026-11-16 (vendor-terms.md) |",
+    "| agy-gemini-4-argon-medium | Google (inferred) | reply_head | read 2026-11-16 (vendor-terms.md) |",
     "Recommendation: hold.",
     "## Secrets scan", f"Command: python scripts/scan-history-for-secrets.py {H40}",
     "Count 0. Dispositions: 0.", "Recommendation: none.",
@@ -181,8 +181,11 @@ def collect_failures(page, ctx):
                     else:
                         for model in models:
                             line = next((ln for ln in body.splitlines() if model in ln), "")
-                            if "reply_head" not in line or "not reviewed" not in line:
+                            if "reply_head" not in line or "(vendor-terms.md)" not in line:
                                 fail(cid, "row missing reply_head or terms status")
+                                break
+                            if "not reviewed" in line:
+                                fail(cid, "still says not reviewed")
                                 break
                             if "inferred" not in line and "vendor" not in line.lower():
                                 fail(cid, "row missing vendor")
