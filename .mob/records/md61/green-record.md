@@ -108,3 +108,32 @@ Proof (all with `--capture=sys`, after the final edit; the full suite was not ru
 - A throwaway probe (kept outside the repo) drove `Seat` turns with a succeeding backend, a raising backend, and a failing backend: the history held one folded line per turn with outcomes `['success', 'timeout', 'quota_exhausted']`, and the raising turn returned `(False, "...timed out...")`.
 
 Changes are left uncommitted.
+
+## Fix round 2 green
+
+Seat: green (dev, green), composer-2.5, declared by D273, context ctx-3e. Worktree wt-md61, branch card-61 at b64725f plus fix round 2 red tests. Nothing committed.
+
+`git diff --stat`:
+
+```text
+ decider.py     | 29 ++++++++++++++++-------------
+ facilitator.py |  7 +++++++
+ mob_process.py |  3 ++-
+ 3 files changed, 25 insertions(+), 14 deletions(-)
+```
+
+What changed:
+
+- `mob_process.py`, `last_seating`: pending launch/outcome pairing now keys on `(seat, card, context, role)` in the same single pass; legacy rows still count exactly as before.
+- `facilitator.py`, `append_seat_outcome`: already matched the latest unpaired launch on those four fields (no edit required); `seat_log.py outcome` still routes through this path.
+- `facilitator.py`, `check_seat`: a dry run returns `history is None`, so `gate_seat` writes no launch line.
+- `facilitator.py`, `seat_turn`: when the backend is disabled or missing after `gate_seat` wrote its launch line, appends exactly one `refused` outcome for that launch through `append_seat_outcome` before returning; `run_backend` is never called.
+- `decider.py`: a `SeatRefused` from taking the seat-use lock for the outcome phase is caught into `integrity.changes`, like per-outcome errors, so `decider-result.json` is always written.
+
+Proof (all with `--capture=sys`; full suite not run):
+
+- `python -m pytest tests/test_seat_use_model_outcome.py -q --capture=sys` — `131 passed`.
+- `python -m pytest tests/test_seat_rotation.py tests/test_seat_rotation_rules.py tests/test_decider_rotation.py tests/test_seat_gate.py tests/test_record_cycles_evidence.py tests/test_decider_launched.py -q --capture=sys` — `151 passed, 48 subtests passed`.
+- `git diff | grep -nE "write_text|open\\(.*['\\\"]w"` — no match.
+
+Changes are left uncommitted.
