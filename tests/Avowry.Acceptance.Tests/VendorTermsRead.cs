@@ -20,7 +20,9 @@ public class VendorTermsRead
         // Then a page cites each URL with the date read and summarises publishing model output, naming reply_head and .mob/records
         await AssertPythonTestsPass(
             "test_every_vendor_has_a_cited_dated_row_naming_both_outputs",
-            "test_the_vendor_terms_check_reports_a_planted_row_without_url_or_date");
+            "test_the_vendor_terms_check_reports_a_planted_row_without_url_or_date",
+            "test_the_vendor_terms_check_reports_a_page_missing_the_not_legal_advice_line",
+            "test_the_vendor_terms_check_reports_a_page_missing_the_how_this_was_read_section");
     }
 
     [Fact]
@@ -43,7 +45,7 @@ public class VendorTermsRead
     {
         // Given the four vendors listed in the pre-publication page
         // When the page is checked
-        // Then no vendor is left without a URL and a read date, and each pre-publication status matches its read on date
+        // Then each pre-publication terms status reads read <date> (vendor-terms.md) matching that vendor's read on date
         await AssertPythonTestsPass(
             "test_pre_publication_status_matches_each_vendor_read_on_date",
             "test_the_vendor_terms_check_reports_a_vendor_left_not_reviewed");

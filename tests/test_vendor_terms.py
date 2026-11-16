@@ -12,6 +12,7 @@ PREPUB_PAGE = REPO / "docs" / "release" / "pre-publication-checks.md"
 URL_RE = re.compile(r"https://[^\s|\)\]]+")
 READ_RE = re.compile(r"^read (\d{4}-\d{2}-\d{2}) \(vendor-terms\.md\)$")
 NONE_LINE = "None found in the terms read."
+NOT_LEGAL_ADVICE = "This is a summary of published terms, not legal advice."
 PLANTED_TODAY = date(2026, 2, 1)
 PLANTED_DATE = "2026-01-15"
 
@@ -123,6 +124,29 @@ def check_vendor_row(problems, vendor, cells, today):
     return read_on
 
 
+def check_not_legal_advice(problems, page_text):
+    if NOT_LEGAL_ADVICE not in (page_text or ""):
+        problems.append("vendor-terms: page: missing not legal advice line")
+
+
+def check_how_this_was_read(problems, page_text):
+    body = sect(page_text or "", "How this was read")
+    if body is None:
+        problems.append("vendor-terms: page: missing How this was read section")
+        return
+    text = body.strip()
+    if not text:
+        problems.append("vendor-terms: page: How this was read section is empty")
+        return
+    if "not read" not in text.lower():
+        problems.append("vendor-terms: page: How this was read does not say what was not read")
+    if re.search(r"\bbrowser\b", text, re.I):
+        for vendor in ("xAI", "OpenAI"):
+            if vendor not in text:
+                problems.append(
+                    f"vendor-terms: page: How this was read does not name browser-read vendor {vendor}")
+
+
 def check_blockers(problems, page_text, rows):
     body = sect(page_text, "Blockers")
     if body is None:
@@ -168,6 +192,8 @@ def vendor_terms_problems(page_text, prepub_text, today):
     vendors = prepub_vendors(prepub_text or "")
     if not vendors:
         return ["vendor-terms: pre-publication: no vendors found in the Vendor terms table"]
+    check_not_legal_advice(problems, page_text or "")
+    check_how_this_was_read(problems, page_text or "")
     rows = page_rows(page_text or "")
     read_dates = {}
     for vendor, _status in vendors:
@@ -194,12 +220,24 @@ def keyed(problems, vendor):
     return [p for p in problems if f": {vendor}:" in p or f" {vendor}:" in p]
 
 
+def problems_for_367_1(problems):
+    return [p for p in problems if ": blockers:" not in p and "pre-publication" not in p]
+
+
+def problems_for_367_2(problems):
+    return [p for p in problems if ": blockers:" in p]
+
+
+def problems_for_367_3(problems):
+    return [p for p in problems if "pre-publication" in p]
+
+
 class VendorTermsTests(unittest.TestCase):
     def test_every_vendor_has_a_cited_dated_row_naming_both_outputs(self):
         # Given the four vendors in the pre-publication Vendor terms table
         # When the vendor terms page is checked
         # Then each vendor has a row with an https URL, a non-future ISO date, and a summary naming both outputs
-        self.assertEqual([], real_problems())
+        self.assertEqual([], problems_for_367_1(real_problems()))
 
     def test_the_vendor_terms_check_reports_a_planted_row_without_url_or_date(self):
         # Given a planted page whose xAI row has no URL and whose OpenAI row has no date
@@ -218,11 +256,53 @@ class VendorTermsTests(unittest.TestCase):
             self.assertEqual(["vendor-terms: OpenAI: missing or invalid read on date"],
                              keyed(vendor_terms_problems(no_date, GOOD_PREPUB, PLANTED_TODAY), "OpenAI"))
 
+    def test_the_vendor_terms_check_reports_a_page_missing_the_not_legal_advice_line(self):
+        # Given a planted page whose opening disclaimer is removed
+        # When the pure check runs on the planted text
+        # Then the missing line is reported, and the compliant planted page reports nothing
+        with self.subTest(id="367-1-legal-good"):
+            self.assertEqual([], problems_for_367_1(
+                vendor_terms_problems(GOOD_PAGE, GOOD_PREPUB, PLANTED_TODAY)))
+        no_line = GOOD_PAGE.replace(NOT_LEGAL_ADVICE + "\n", "")
+        with self.subTest(id="367-1-legal-missing"):
+            self.assertEqual(
+                ["vendor-terms: page: missing not legal advice line"],
+                [p for p in vendor_terms_problems(no_line, GOOD_PREPUB, PLANTED_TODAY)
+                 if p.startswith("vendor-terms: page:")])
+
+    def test_the_vendor_terms_check_reports_a_page_missing_the_how_this_was_read_section(self):
+        # Given a planted page with no How this was read section, or one that omits browser-read vendors
+        # When the pure check runs on the planted text
+        # Then each fault is reported, and the compliant planted page reports nothing
+        with self.subTest(id="367-1-how-read-good"):
+            self.assertEqual([], problems_for_367_1(
+                vendor_terms_problems(GOOD_PAGE, GOOD_PREPUB, PLANTED_TODAY)))
+        no_section = GOOD_PAGE.replace(
+            "## How this was read\n"
+            "Web fetch only, read on 2026-01-15; terms behind a login were not read.\n",
+            "")
+        with self.subTest(id="367-1-how-read-missing"):
+            self.assertEqual(
+                ["vendor-terms: page: missing How this was read section"],
+                [p for p in vendor_terms_problems(no_section, GOOD_PREPUB, PLANTED_TODAY)
+                 if p.startswith("vendor-terms: page:")])
+        browser_unnamed = GOOD_PAGE.replace(
+            "Web fetch only, read on 2026-01-15; terms behind a login were not read.",
+            "Read through the built-in browser under D277; terms behind a login were not read.")
+        with self.subTest(id="367-1-how-read-browser"):
+            self.assertEqual(
+                [
+                    "vendor-terms: page: How this was read does not name browser-read vendor xAI",
+                    "vendor-terms: page: How this was read does not name browser-read vendor OpenAI",
+                ],
+                [p for p in vendor_terms_problems(browser_unnamed, GOOD_PREPUB, PLANTED_TODAY)
+                 if p.startswith("vendor-terms: page:")])
+
     def test_blockers_agree_with_the_blocks_publication_column(self):
         # Given the summaries on the real vendor terms page
         # When a row says it blocks publication
         # Then Blockers lists it with a URL and a recommendation, or says None when no row blocks
-        self.assertEqual([], [p for p in real_problems() if ": blockers:" in p or "blocks publication" in p])
+        self.assertEqual([], problems_for_367_2(real_problems()))
 
     def test_the_vendor_terms_check_reports_a_planted_yes_row_missing_from_blockers(self):
         # Given a planted page with a GitHub yes row absent from Blockers, and one correctly listed
@@ -241,7 +321,7 @@ class VendorTermsTests(unittest.TestCase):
         # Given the real pre-publication Vendor terms table
         # When each terms status is compared with the vendor terms page
         # Then each reads read <date> (vendor-terms.md) matching that vendor's read on date
-        self.assertEqual([], [p for p in real_problems() if "pre-publication" in p])
+        self.assertEqual([], problems_for_367_3(real_problems()))
 
     def test_the_vendor_terms_check_reports_a_vendor_left_not_reviewed(self):
         # Given a planted pre-publication table leaving Google not reviewed, and one with a mismatched date
