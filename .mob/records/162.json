@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 162,
+ "title": "Fold the pattern steps into the grammar and cheat sheet: re-freeze and rerun the LLM check",
+ "process": "declared by D237 (2026-11-09); the slice, red, green 1, the cold reader, the D238 re-freeze, Grok's and Codex's LLM-customer checks (13 of 13 each) and gate review A landed by 2026-11-11 and are on main; the card then sat unfinished; on 2026-11-16 Decider D278 wrongly proposed parking it (rescinded, never applied) and D279 resumed it with green 2 on a fresh Claude context; green 2 did slice item 9 and gate review B's M2; gate review B PASS; sign-off agy; one gate under Avowry's heavy lock (6 of 6, acceptance 1518 of 1518); merged to main by fast-forward; the facilitator's retro with its Model allocation review.",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-0",
+   "model": "the facilitator session (claude opus = claude-opus-5-5); card 162 declared by D237 on 2026-11-09 (Cursor product manager draft) and resumed by D279 on 2026-11-16; evidence is the resume record commit",
+   "evidence": "3b1e512"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-1",
+   "model": "claude opus architect slice of 2026-11-09 (slice-architect.md); item 9 executed by green 2; evidence is the green 2 record commit",
+   "evidence": "4e30aed"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-2",
+   "model": "claude red of 2026-11-09 (70511e6); green 2's M2 un-pended the criterion 162-1 red test; evidence is that commit",
+   "evidence": "0a8ca1e"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-3",
+   "model": "green 1 by Cursor (1bcae82, 2026-11-09); green 2 by claude sonnet = claude-sonnet-5-5, a fresh subagent context ctx-162g2, seated by D279",
+   "evidence": "70ab77e"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-4",
+   "model": "claude opus = claude-opus-5-5, a fresh context ctx-162q, independent gate review B (PASS; gate review A of 2026-11-10 also PASS); the gate by the facilitator under Avowry's heavy-run lock",
+   "evidence": "d9eae71"
+  },
+  {
+   "role": "signoff",
+   "seat": "agy ctx-5",
+   "model": "agy gemini-3.8-flash-medium (pinned with --model), a fresh context ctx-162s, read-only in a clone, seated by D279",
+   "evidence": "5c2a202"
+  }
+ ],
+ "retro": "docs/retros/card-162-2026-11-16.md",
+ "notes": "Done checks met at the gate (1a9791d, quiet machine, Avowry's heavy lock): python scripts/usable-v1-report.py 6 of 6 with no suspension warning and its self-test OK; dotnet test Avowry.sln --filter Status!=Pending compiler 344 of 344 and acceptance 1518 of 1518 (Bar6, the three closure rows, PatternDocs and 7 evidence rows run by name); the pattern-docs module 10 OK. Criterion 3 (CI usable-v1 6 of 6 on ubuntu) is confirmed on main after the merge. Named limits: gate review B M3 (an informational freeze file edited by cards 368 and 418). Seat evidence from 2026-11-09 to 11-11 predates card 367's record, so this record cites the 2026-11-16 commits; the earlier commits are listed in the retro and the records."
+}
