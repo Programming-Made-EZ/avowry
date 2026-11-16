@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "bba080ec55248ae75247fbcc7ffc96bc0f5bdd9a19d1a3eb4f7585ff78ab2417",
+  "probe": {
+    "taken_at": "2026-11-16T00:20:42.286586Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026------- user Availability probe: reply with exactly OK and nothing else. ERROR: exceeded retry limit, last status: 429 Too Many Requests ERROR: exceeded retry limit, last status: 429 Too Many Requests"
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-dd9ebbe8-0ca3-45a8-88d2-b5d9fcde9c97)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The design of the real-shape corpus record, checker rules, and findings file is sound, minimal, and enforceable without false positives. The three-card trial empirically validated the contract: post-fix BLOCKING findings met target threshol",
+      "reply": "Yes\nThe design of the real-shape corpus record, checker rules, and findings file is sound, minimal, and enforceable without false positives. The three-card trial empirically validated the contract: post-fix BLOCKING findings met target thresholds (2, 0, 1), with zero blocking gaps attributable to corpus families or encodings. Addressing caller and clone shapes separately via Decider D270 preserves modularity and keeps this rule set minimal rather than overloaded. Adopting the entry into Engineering discipline with its D265 sub-bullet intact and documenting the trial evidence ensures clarity and maintainability.\n\nCITE: moves the entry from Experimental into Engineering discipline\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The design of the real-shape corpus record, checker rules, and findings file is sound, minimal, and enforceable without false positives. The three-card trial empirically validated the contract: post-fix BLOCKING findings met target threshol"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:20:42.286586Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2652
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6773f7a1114809a27cd49df777942be67259d922",
+  "head_end": "6773f7a1114809a27cd49df777942be67259d922",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 422,
+ "title": "The restored-package licence checks fail when the page is wrong",
+ "process": "card-mode rules run by hand; the card written from the card template (card_ready.py ok); declaration Decider D268 with every role's service, exact model and reason pinned before any seat; the live probe cited; D263 and D265's third trial card: a read-only architect slice that committed a real-shape corpus (176 rows, 6 families, 25 encodings with whitespace and line-break forms) before the red; a red reproduced by the facilitator; a green that PORTED the reference (2 min 55 s), equal to it on 176 of 176 rows; review round 1 (claude opus, FLAG: 2 BLOCKING, the [E] and [O] helpers never called on the networked path, the green brief having named no caller); fix round 1 (an architect fix slice with pure functions and 83 D265 neighbour rows including source-scan wiring rows, a behaviour-preserving rewire by the red, a port in 1 min 30 s); review round 2 (FLAG: 1 BLOCKING, a test row failing on CI's shallow checkout); fix round 2 (a test-design fix); review round 3 (SIGN-OFF); BLOCKING by round 2, 1, 0; four gates on a quiet machine under Avowry's heavy lock, the last two with a depth-1 Python run; a sign-off in fresh clones after waiting on play-tracker's lock; merged to main with --no-ff; the retro with seven voices across six services and its Model allocation review; retro picks Deciders D270 and D271.",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-0",
+   "model": "the facilitator session (claude opus = claude-opus-5-5) wrote the card from the card template; Decider D268 adopted it with the task force (agy gemini-3.8-flash-medium ballots)",
+   "evidence": "700d32be34e22f273a812763f435a5350d38a495"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-1",
+   "model": "claude opus = claude-opus-5-5, fresh subagent contexts (ctx-1, ctx-1b), architect, read-only; the slice and the fix slice",
+   "evidence": "cbd6e0fb9a53fee7f96bc7882e3ac4249b1af1df"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-2",
+   "model": "claude sonnet = claude-sonnet-5-5, fresh subagent contexts (ctx-2, ctx-2b, ctx-2c); the red, the fix-round rewire and rows, and the test-design fix",
+   "evidence": "c3cfc9d2b979ca0921baaa9a50a8cb28fcfcb6ed"
+  },
+  {
+   "role": "green",
+   "seat": "Cursor ctx-3",
+   "model": "cursor-agent -p --force --model gpt-5.3-codex (pinned; the CLI reports no model, F-13), the linked worktree wt-422; two ports of the reference",
+   "evidence": "c0787a74bbd6c774f87a6b8499cd4a1da35a2213"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-4",
+   "model": "claude opus = claude-opus-5-5, fresh subagent contexts (ctx-4, ctx-4b, ctx-4c), the QA review rounds 1 to 3 (FLAG, FLAG, SIGN-OFF); gates by the facilitator under Avowry's heavy-run lock on a quiet machine",
+   "evidence": "9f8a20db107240bece53e01d7d80c848e9065451"
+  },
+  {
+   "role": "signoff",
+   "seat": "Claude ctx-5",
+   "model": "claude sonnet = claude-sonnet-5-5, a fresh subagent context, the sign-off in a full and a depth-1 clone on a quiet machine under Avowry's heavy-run lock",
+   "evidence": "34eacd9d3500b69556bf1d7d0552729e81e62b5c"
+  }
+ ],
+ "retro": "docs/retros/card-422-2026-11-16.md",
+ "notes": "Done checks met: Python 144 OK in a full and a depth-1 clone (CI's checkout shape), Slice=422 144 of 144, Slice=369 6 of 6 with the networked F5 and F6 now wired to the licence-value and restore-outcome decisions, the old-prefix guard 47 of 47 with History H1 to H5, the acceptance project (Status!=Pending) 1511 of 1511. The [O] CI observation on main after the merge is pending by design. Named limits: rulings 3 and 5, review round 1 MINOR 4 to 12, review round 3 MINOR 1 to 3, the NU1004 folder name and two older shallow-unsafe modules, all on Avowry #444. Process events recorded: two shell heredocs by seats on their own files, throwaway folders a review seat could not delete, a 37 min facilitator idle. The full suite was not run (the cross-mob heavy-run rule's light form); the acceptance project ran instead. Main took the card branch by a --no-ff merge (1354953), so every evidence commit keeps its id."
+}

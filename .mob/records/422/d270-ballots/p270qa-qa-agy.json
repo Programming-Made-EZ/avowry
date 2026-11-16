@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "0bf46afd9ca9a7864368392316e487dc44ebc02c0ad752982a6bfe3e666eb3fa",
+  "probe": {
+    "taken_at": "2026-11-16T00:13:19.699151Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-ad142c46-fb26-48ce-8315-2e8e764791ea)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "From the QA lens, both rules enable rigorous red-first testing and prevent passing bad state. Requiring red to commit a source-scan wiring row before green guarantees that uncalled helpers fail red prior to implementation. Running history-d",
+      "reply": "Yes\nFrom the QA lens, both rules enable rigorous red-first testing and prevent passing bad state. Requiring red to commit a source-scan wiring row before green guarantees that uncalled helpers fail red prior to implementation. Running history-dependent tests in a depth-1 clone directly replicates the CI checkout shape, ensuring shallow-clone failures are caught locally at gate 1 rather than escaping to CI. Both checks cleanly catch the exact violations named.\n\nCITE: commits a source-scan wiring row for each named call before the green\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From the QA lens, both rules enable rigorous red-first testing and prevent passing bad state. Requiring red to commit a source-scan wiring row before green guarantees that uncalled helpers fail red prior to implementation. Running history-d"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:13:19.699151Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2640
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6773f7a1114809a27cd49df777942be67259d922",
+  "head_end": "6773f7a1114809a27cd49df777942be67259d922",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

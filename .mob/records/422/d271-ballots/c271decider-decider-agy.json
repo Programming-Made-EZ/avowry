@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "18b22a0f739f817b7f15c0cabadaf35851866a9929adbf97fdec5886ce7d39cb",
+  "probe": {
+    "taken_at": "2026-11-16T00:24:33.650959Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-8669981b-6aac-4b0c-8f3d-88e417b4d834)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "The trial evaluation clearly rests on concrete evidence gathered across cards 441, 430, and 422, satisfying the primary metric target with two or fewer new blocking findings per round. Every required seat on the task force (qa, coach, produ",
+      "reply": "Yes\nThe trial evaluation clearly rests on concrete evidence gathered across cards 441, 430, and 422, satisfying the primary metric target with two or fewer new blocking findings per round. Every required seat on the task force (qa, coach, product manager, dev, architect, decider, and audit lens) is accounted for in the retro review, and the agreement amendment confirmation step ensures the entire team signs off. Addressing caller and CI-shape concerns via Decider D270 keeps this adoption clean and evidence-based.\nCITE: new BLOCKING findings after the first fix round\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The trial evaluation clearly rests on concrete evidence gathered across cards 441, 430, and 422, satisfying the primary metric target with two or fewer new blocking findings per round. Every required seat on the task force (qa, coach, produ"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:24:33.650959Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2660
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "11181507121eea834616a4cb729f8393f3d932ea",
+  "head_end": "11181507121eea834616a4cb729f8393f3d932ea",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "7fec4b139a5e45bd92acf15e6c652067ae1cc5b11d82d5f2907c83f41f17dc7a",
+  "probe": {
+    "taken_at": "2026-11-16T00:17:09.058059Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-63d2aa6f-49a7-4085-9eb2-40ee6f447c8b)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The design is sound, minimal, and directly enforceable. Requiring green briefs to declare production callers by symbol and having the red stage supply source-scan wiring tests establishes a verifiable contract across the review seam. Runnin",
+      "reply": "Yes\nThe design is sound, minimal, and directly enforceable. Requiring green briefs to declare production callers by symbol and having the red stage supply source-scan wiring tests establishes a verifiable contract across the review seam. Running git-dependent tests in a depth-1 clone within the first gate directly reproduces CI's shallow checkout environment, eliminating blind spots and preventing false positives early. Both mechanisms impose clean, lightweight structural boundaries with clear counter-metrics.\n\nCITE: every slice and green brief that introduces a helper names each production caller by symbol\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The design is sound, minimal, and directly enforceable. Requiring green briefs to declare production callers by symbol and having the red stage supply source-scan wiring tests establishes a verifiable contract across the review seam. Runnin"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:17:09.058059Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2646
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6773f7a1114809a27cd49df777942be67259d922",
+  "head_end": "6773f7a1114809a27cd49df777942be67259d922",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

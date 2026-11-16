@@ -1726,5 +1726,17 @@
     "status": "adopted",
     "title": "mob-defaults #61: task force declaration (models pinned per role) and Ready text (every new seat-use row carries its service, model, work type and outcome, and a failed seat does not count as a rotation turn)",
     "order": 260
+  },
+  "D270": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 422 retro pick: a green brief names the caller of every new helper, and the first gate runs in the CI checkout shape",
+    "order": 261
+  },
+  "D271": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "D263 with its D265 sub-bullet adopted after its trial on cards 441, 430 and 422 (the real-shape corpus with encodings and fix neighbours)",
+    "order": 262
   }
 }

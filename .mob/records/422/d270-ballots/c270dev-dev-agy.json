@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "2630c1f28266b01f3fe9d755187016302bf93dde3fb5ece5ab0d3b774f2f0418",
+  "probe": {
+    "taken_at": "2026-11-16T00:17:15.989753Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026------- user Availability probe: reply with exactly OK and nothing else. ERROR: exceeded retry limit, last status: 429 Too Many Requests ERROR: exceeded retry limit, last status: 429 Too Many Requests"
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-64847775-9ef2-49e2-8ace-94515c1fdd30)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "dev": {
+      "vote": "Yes",
+      "reason": "Workable and unambiguous for backend development. Naming production callers by symbol in the slice and brief eliminates ambiguity about wiring obligations before implementation starts. Having red commit a source-scan wiring row creates an e",
+      "reply": "Yes\nWorkable and unambiguous for backend development. Naming production callers by symbol in the slice and brief eliminates ambiguity about wiring obligations before implementation starts. Having red commit a source-scan wiring row creates an explicit, falsifiable contract for green to satisfy, preventing uncalled helper regressions like card 422 without awkward test doubles. Running git-history tests against a depth-1 clone in gate 1 catches shallow checkout issues immediately on local runs rather than late in review or CI. The trial is well-bounded with clear metrics and does not overburden backend implementation.\n\nCITE: every slice and green brief that introduces a helper names each production caller by symbol\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Workable and unambiguous for backend development. Naming production callers by symbol in the slice and brief eliminates ambiguity about wiring obligations before implementation starts. Having red commit a source-scan wiring row creates an e"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:17:15.989753Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2648
+    }
+  },
+  "counted_seats": [
+    "dev"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6773f7a1114809a27cd49df777942be67259d922",
+  "head_end": "6773f7a1114809a27cd49df777942be67259d922",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "dev": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

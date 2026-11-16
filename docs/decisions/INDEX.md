@@ -373,3 +373,5 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D267](process-and-staffing.md#d267) | Card 430 retro pick: stop a waiting seat before its runs are taken over, so that one driver works in one tree | process-and-staffing | adopted |
 | [D268](process-and-staffing.md#d268) | Card 422: task force declaration (models pinned per role) and Ready text (the restored-package licence checks fail when the page is wrong) | process-and-staffing | adopted |
 | [D269](process-and-staffing.md#d269) | mob-defaults #61: task force declaration (models pinned per role) and Ready text (every new seat-use row carries its service, model, work type and outcome, and a failed seat does not count as a rotation turn) | process-and-staffing | adopted |
+| [D270](process-and-staffing.md#d270) | Card 422 retro pick: a green brief names the caller of every new helper, and the first gate runs in the CI checkout shape | process-and-staffing | adopted |
+| [D271](process-and-staffing.md#d271) | D263 with its D265 sub-bullet adopted after its trial on cards 441, 430 and 422 (the real-shape corpus with encodings and fix neighbours) | process-and-staffing | adopted |

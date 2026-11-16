@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "7a3bf5a40817f6f2a4fc307a6bea589597cafb44694da0bdd51f090867c0ea02",
+  "probe": {
+    "taken_at": "2026-11-16T00:20:43.744983Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-70398354-3ef5-42fc-aa9a-243080df7769)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "The evaluation rests squarely on empirical trial evidence across cards 441, 430, and 422, with new blocking findings remaining at or below the target threshold. Counter-metrics were tracked transparently, and the concerns from seats request",
+      "reply": "Yes\nThe evaluation rests squarely on empirical trial evidence across cards 441, 430, and 422, with new blocking findings remaining at or below the target threshold. Counter-metrics were tracked transparently, and the concerns from seats requesting caller and CI-shape rows are cleanly addressed in Decider D270. All necessary stakeholder seats were consulted in retro, and the required agreement confirmation step is preserved.\nCITE: moves the entry from Experimental into Engineering discipline\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The evaluation rests squarely on empirical trial evidence across cards 441, 430, and 422, with new blocking findings remaining at or below the target threshold. Counter-metrics were tracked transparently, and the concerns from seats request"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:20:43.744983Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2654
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6773f7a1114809a27cd49df777942be67259d922",
+  "head_end": "6773f7a1114809a27cd49df777942be67259d922",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

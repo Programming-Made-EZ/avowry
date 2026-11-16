@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "bf78b491279386116e07c943bfb40f598cedb40888a095d2bd517b5537dc6eff",
+  "probe": {
+    "taken_at": "2026-11-16T00:20:45.354614Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-ff853fbb-580d-4299-ac1f-bbe51470d084)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "From the QA lens, the real-shape corpus with encodings and fix neighbours provides concrete, reproducible fixtures that can be tested red first before changes and verified against bad states. The trial evidence demonstrates that the checks ",
+      "reply": "Yes\nFrom the QA lens, the real-shape corpus with encodings and fix neighbours provides concrete, reproducible fixtures that can be tested red first before changes and verified against bad states. The trial evidence demonstrates that the checks reliably catch violations without letting bad state pass, keeping post-fix blocking findings within target (2, 0, 1) with zero gaps in corpus families or encodings on cards 430 and 422. Caller and CI-shape concerns are properly addressed via D270 without blocking this adoption.\n\nCITE: new BLOCKING findings after the first fix round\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From the QA lens, the real-shape corpus with encodings and fix neighbours provides concrete, reproducible fixtures that can be tested red first before changes and verified against bad states. The trial evidence demonstrates that the checks "
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:20:45.354614Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2655
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6773f7a1114809a27cd49df777942be67259d922",
+  "head_end": "6773f7a1114809a27cd49df777942be67259d922",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

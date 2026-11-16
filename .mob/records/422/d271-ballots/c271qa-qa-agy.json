@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "425b83a68ff7707b7958c2fbe1489cdcb6fc9fd454487df599ea46db54743865",
+  "probe": {
+    "taken_at": "2026-11-16T00:24:35.673366Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-6ae1bc36-3d35-48f0-88c6-df53ed477207)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "From a QA perspective, the real-shape corpus with encodings and fix neighbours provides concrete test cases that run red first against defects before fixes land. The trial metrics prove efficacy: new blocking findings met the target (2, 0, ",
+      "reply": "Yes\nFrom a QA perspective, the real-shape corpus with encodings and fix neighbours provides concrete test cases that run red first against defects before fixes land. The trial metrics prove efficacy: new blocking findings met the target (2, 0, and 1), with zero blocking findings from corpus or encoding gaps. Retaining the metric report at retro guarantees ongoing regression protection and verifies that checks catch violations without admitting bad state.\nCITE: new BLOCKING findings after the first fix round\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From a QA perspective, the real-shape corpus with encodings and fix neighbours provides concrete test cases that run red first against defects before fixes land. The trial metrics prove efficacy: new blocking findings met the target (2, 0, "
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:24:35.673366Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2662
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "11181507121eea834616a4cb729f8393f3d932ea",
+  "head_end": "11181507121eea834616a4cb729f8393f3d932ea",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

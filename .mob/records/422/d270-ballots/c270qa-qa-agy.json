@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "475689d8ef611ffb1bc3dbbef1b53682609f0312a4e4e7a89d998ba483149fdb",
+  "probe": {
+    "taken_at": "2026-11-16T00:17:18.028269Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-6cb5689c-7755-4b0b-973b-5251f95ca177)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "qa": {
+      "vote": "Yes",
+      "reason": "Both rules satisfy testability and red-first verification. Requiring the red phase to commit a source-scan wiring row before green guarantees that uncalled helpers fail red prior to implementation. Running git-history tests in a depth-1 clo",
+      "reply": "Yes\nBoth rules satisfy testability and red-first verification. Requiring the red phase to commit a source-scan wiring row before green guarantees that uncalled helpers fail red prior to implementation. Running git-history tests in a depth-1 clone mirrors CI's checkout environment, ensuring shallow-clone regressions fail fast at gate 0 rather than slipping through laptop full clones into review. Both checks directly detect their intended violations without passing bad state.\nCITE: the red commits a source-scan wiring row for each named call before the green\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Both rules satisfy testability and red-first verification. Requiring the red phase to commit a source-scan wiring row before green guarantees that uncalled helpers fail red prior to implementation. Running git-history tests in a depth-1 clo"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:17:18.028269Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2649
+    }
+  },
+  "counted_seats": [
+    "qa"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6773f7a1114809a27cd49df777942be67259d922",
+  "head_end": "6773f7a1114809a27cd49df777942be67259d922",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "qa": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

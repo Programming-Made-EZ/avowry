@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "3fc0fda8e9aa5bcc796ce13fc4fb08a3860210bf706c6a52aa09e7d75f43db28",
+  "probe": {
+    "taken_at": "2026-11-16T00:17:20.489365Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-a9d06536-a7e5-418a-a0bc-274955a9ebd5)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "decider": {
+      "vote": "Yes",
+      "reason": "The evaluation is solidly framed on empirical evidence with quantifiable metrics: zero round-1 review blocking findings for wiring or clone-shape gaps across a bounded three-card trial, constrained by an explicit overhead counter-metric. Th",
+      "reply": "Yes\nThe evaluation is solidly framed on empirical evidence with quantifiable metrics: zero round-1 review blocking findings for wiring or clone-shape gaps across a bounded three-card trial, constrained by an explicit overhead counter-metric. The sign-off structure is sound, leveraging all task force roles in fresh contexts under established standing rules and D224 trigger c confirmation. The exit criteria and expiry at the third card's retro provide a clear, evidence-based mechanism to decide adoption, reshaping, or rejection.\nCITE: round-1 review BLOCKING findings that are wiring or clone-shape gaps\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The evaluation is solidly framed on empirical evidence with quantifiable metrics: zero round-1 review blocking findings for wiring or clone-shape gaps across a bounded three-card trial, constrained by an explicit overhead counter-metric. Th"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "decider",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:17:20.489365Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2650
+    }
+  },
+  "counted_seats": [
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6773f7a1114809a27cd49df777942be67259d922",
+  "head_end": "6773f7a1114809a27cd49df777942be67259d922",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

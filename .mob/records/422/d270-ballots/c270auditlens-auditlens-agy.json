@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "b7ffe0e5507341b55fe1364761a500a3a2e3d795aa538db63245cd3cd905d6d2",
+  "probe": {
+    "taken_at": "2026-11-16T00:17:08.572784Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-13ab7919-5672-46e2-8884-c2aabed30612)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "From the audit lens, both requirements are directly verifiable from git history alone without relying on transient local state. The sequence'brief naming callers, red committing source-scan wiring tests prior to implementation, and green de",
+      "reply": "Yes\nFrom the audit lens, both requirements are directly verifiable from git history alone without relying on transient local state. The sequence\u2014brief naming callers, red committing source-scan wiring tests prior to implementation, and green delivering callers\u2014leaves an unambiguous commit trace that can be audited post-hoc. Mandating source-scan wiring rows closes the loophole where helpers pass isolated unit tests without verified call-site integration. Running history-dependent tests against depth-1 clones ensures reproducibility between local and CI environments.\n\nCITE: every slice and green brief that introduces a helper names each production caller by symbol\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From the audit lens, both requirements are directly verifiable from git history alone without relying on transient local state. The sequence'brief naming callers, red committing source-scan wiring tests prior to implementation, and green de"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:17:08.572784Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2645
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6773f7a1114809a27cd49df777942be67259d922",
+  "head_end": "6773f7a1114809a27cd49df777942be67259d922",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

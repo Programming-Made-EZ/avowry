@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "ceb8166fafda704f51231ef884b84b3382d50ab852f05d4e6641f0f09c541114",
+  "probe": {
+    "taken_at": "2026-11-16T00:24:31.648885Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-e1451e7d-6b9a-4da6-83ba-52b1120c2d10)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The task force and trial were appropriately sized to the task, avoiding unnecessary ceremony while ensuring all essential perspectives were heard across the three trial cards. Adopting D263 with the D265 sub-bullet codifies an effective, li",
+      "reply": "Yes\nThe task force and trial were appropriately sized to the task, avoiding unnecessary ceremony while ensuring all essential perspectives were heard across the three trial cards. Adopting D263 with the D265 sub-bullet codifies an effective, lightweight discipline that successfully kept blocking findings down within reasonable slice durations. Handling the suggested caller and CI-shape revisions separately in D270 keeps this adoption clean, focused, and free of scope creep.\nCITE: moves the entry from Experimental into Engineering discipline as an adopted practice\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The task force and trial were appropriately sized to the task, avoiding unnecessary ceremony while ensuring all essential perspectives were heard across the three trial cards. Adopting D263 with the D265 sub-bullet codifies an effective, li"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:24:31.648885Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2658
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "11181507121eea834616a4cb729f8393f3d932ea",
+  "head_end": "11181507121eea834616a4cb729f8393f3d932ea",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

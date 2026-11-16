@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "cb6290d59ae988e9869195b343acd1c40ffd69d7d4b5ea752699a2fe0dffdd70",
+  "probe": {
+    "taken_at": "2026-11-16T00:13:23.765066Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-9f2e3f1b-32ee-45e3-9c72-4f6f65a77e62)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "The proposal design is sound, minimal, and directly enforceable. Requiring caller naming by symbol in briefs paired with red source-scan wiring rows mechanically prevents unwired helper regressions without creating false positives. Running ",
+      "reply": "Yes\nThe proposal design is sound, minimal, and directly enforceable. Requiring caller naming by symbol in briefs paired with red source-scan wiring rows mechanically prevents unwired helper regressions without creating false positives. Running history-reading tests in a depth-1 clone reproduces the CI execution shape at the earliest gate, catching shallow-checkout failures before review. The experimental trial is cleanly bounded with a concrete 3-card sample, 0-blocking target, and a 10-minute counter-metric. Note: Ensure source-scan wiring patterns remain lightweight string or AST symbol checks to avoid test brittleness.\nCITE: every slice and green brief that introduces a helper names each production caller by symbol;\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The proposal design is sound, minimal, and directly enforceable. Requiring caller naming by symbol in briefs paired with red source-scan wiring rows mechanically prevents unwired helper regressions without creating false positives. Running "
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:13:23.765066Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2642
+    }
+  },
+  "counted_seats": [
+    "architect"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6773f7a1114809a27cd49df777942be67259d922",
+  "head_end": "6773f7a1114809a27cd49df777942be67259d922",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

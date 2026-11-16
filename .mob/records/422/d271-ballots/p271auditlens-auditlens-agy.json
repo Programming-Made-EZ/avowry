@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "54720e8d9a92d317d74679773e3ad5ca16692a24c1252a47ea64706fabd19a7a",
+  "probe": {
+    "taken_at": "2026-11-16T00:20:42.347102Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-9a8e7020-d675-46fc-95aa-f8ec5ec55c1b)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "From the audit lens, this practice is verifiable from git alone because corpus test cases, encodings, and fix neighbours are committed artifacts, with retro records tracking metrics directly in version control. Adopting D263 with the D265 s",
+      "reply": "Yes\nFrom the audit lens, this practice is verifiable from git alone because corpus test cases, encodings, and fix neighbours are committed artifacts, with retro records tracking metrics directly in version control. Adopting D263 with the D265 sub-bullet preserves an auditable baseline without creating verification loopholes. The remaining caller and CI-shape concerns are properly partitioned into D270 rather than introducing unmonitored exemptions here. Sustained retro reporting maintains an unbroken commit trail for subsequent audit verification.\n\nCITE: The metric is still reported in each such card's retro.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From the audit lens, this practice is verifiable from git alone because corpus test cases, encodings, and fix neighbours are committed artifacts, with retro records tracking metrics directly in version control. Adopting D263 with the D265 s"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "auditlens",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:20:42.347102Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2653
+    }
+  },
+  "counted_seats": [
+    "auditlens"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6773f7a1114809a27cd49df777942be67259d922",
+  "head_end": "6773f7a1114809a27cd49df777942be67259d922",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "auditlens": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

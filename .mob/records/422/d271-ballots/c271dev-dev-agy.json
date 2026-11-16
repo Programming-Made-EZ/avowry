@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "f402dba998c3eeece1b43f6182130f517b1798dd5513681958131969149139ad",
+  "probe": {
+    "taken_at": "2026-11-16T00:24:35.660137Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-c65c1021-00d3-4be6-91ca-6bfcc380e891)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "dev": {
+      "vote": "Yes",
+      "reason": "From the backend developer seat, the trial demonstrated that the real-shape corpus with encodings and fix neighbours is workable, unambiguous, and fair. The blocking findings metric stayed at or below target across all three cards (2, 0, an",
+      "reply": "Yes\nFrom the backend developer seat, the trial demonstrated that the real-shape corpus with encodings and fix neighbours is workable, unambiguous, and fair. The blocking findings metric stayed at or below target across all three cards (2, 0, and 1), and neither card 430 nor 422 encountered blocking findings due to gaps in corpus families or encodings. Slice times remained manageable and close to the 20-minute threshold without needing to game the rules or cut corners on red-green-refactor cycles. Separating caller and CI-shape rows into Decider D270 keeps this practice focused and directly actionable during card execution.\nCITE: Move the entry, with its D265 sub-bullet unchanged, to the end of Practices, Engineering discipline.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "From the backend developer seat, the trial demonstrated that the real-shape corpus with encodings and fix neighbours is workable, unambiguous, and fair. The blocking findings metric stayed at or below target across all three cards (2, 0, an"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:24:35.660137Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2661
+    }
+  },
+  "counted_seats": [
+    "dev"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "11181507121eea834616a4cb729f8393f3d932ea",
+  "head_end": "11181507121eea834616a4cb729f8393f3d932ea",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "dev": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}

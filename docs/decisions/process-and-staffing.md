@@ -1561,3 +1561,17 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - Ballots, by role (decider.py --roles, a fresh context per role; .mob/records/md61/d269-ballots/): window 23:22:26 to 23:26:59 UTC: architect, audit lens, coach, decider, dev and qa (agy, gemini-3.8-flash-medium) all Yes, every ballot counted with its CITE check passed.
 - Trigger line (Decider protocol step 6, adopted by D224): the primary window passed with no No and no amendment, and the proposal does not change this agreement, so no confirmation step ran.
 - Result: **adopted** (six of six). Owner: the facilitator.
+
+#### Decider D270: card 422 retro pick: a green brief names the caller of every new helper, and the first gate runs in the CI checkout shape (ADOPTED)
+
+- Date: 2026-11-16. Proposer: the facilitator, from the seven retro voices across six services (.mob/records/422/retro-pick-proposal-d270.md; retro docs/retros/card-422-2026-11-16.md). Seven of seven voices picked caller naming, and four also picked the CI-shape gate. It changes TEAM_WORKING_AGREEMENT.md with a new Experimental entry (patch .mob/records/422/agreement-amendment-d270.diff). Evidence: card 422's three BLOCKING findings were two wiring gaps and one clone-shape gap; none was a corpus gap.
+- Ballots, by role (decider.py --roles, a fresh context per role; .mob/records/422/d270-ballots/): primary window 00:12:12 to 00:16:05 UTC and confirmation step 00:16:06 to 00:19:42 UTC. In both windows, architect, audit lens, coach, decider, dev and qa (agy, gemini-3.8-flash-medium) all voted Yes, and every ballot counted with its CITE check passed.
+- Trigger line (Decider protocol step 6, adopted by D224): (c) the primary window passed with no No and no amendment and the proposal changes this agreement, so the confirmation step ran; it passed.
+- Result: **adopted** (six of six, confirmed six of six). Owner: the facilitator. Process finding: all ballots on one service; the vote launchers cannot pin Cursor yet (mob-defaults #57), and Muse is untried as a voter.
+
+#### Decider D271: D263 with its D265 sub-bullet adopted after its trial on cards 441, 430 and 422 (ADOPTED)
+
+- Date: 2026-11-16. Proposer: the facilitator (.mob/records/422/d263-adoption-proposal-d271.md). D263's review was due at the third trial card's retro, which is card 422. Its metric was new BLOCKING findings after the first fix round: 2, 0 and 1, against a target of 2 or fewer. Its counter-metric was slice minutes: about 20, 14 and 23. Retro voices on D265: adopt 4, revise then adopt 3. The entry moves from Experimental to Practices, Engineering discipline, with a Why line (patch .mob/records/422/agreement-amendment-d271.diff).
+- Ballots, by role (.mob/records/422/d271-ballots/): primary window 00:19:43 to 00:23:28 UTC and confirmation step 00:23:29 to 00:27:12 UTC. In both windows, all six roles (agy, gemini-3.8-flash-medium) voted Yes, every ballot counted.
+- Trigger line: (c), the confirmation step ran; it passed.
+- Result: **adopted** (six of six, confirmed six of six). Owner: the facilitator.

@@ -1,0 +1,92 @@
+{
+  "result": "passed",
+  "prompt_sha": "6f3f9a843cd045483a10982608295b78c743755d8de3975af3edbe29193cb710",
+  "probe": {
+    "taken_at": "2026-11-16T00:13:14.173251Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026------- user Availability probe: reply with exactly OK and nothing else. ERROR: exceeded retry limit, last status: 429 Too Many Requests ERROR: exceeded retry limit, last status: 429 Too Many Requests"
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-59c6ecc0-bcd4-48fa-8442-64bbc46cd2f5)"
+      },
+      "grok": {
+        "ok": false,
+        "evidence": "\u2026ired): Grok Build usage balance exhausted\", \"http_status\": 402 } Error: Internal error: { \"message\": \"API error (status 402 Payment Required): Grok Build usage balance exhausted\", \"http_status\": 402 }"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": true,
+        "evidence": "OK muse: workspace root: C:\\Users\\<user> (cwd default) muse: Agent delegation: auto unavailable: workspace is untrusted."
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "coach": {
+      "vote": "Yes",
+      "reason": "The trial directly addresses rework waste without adding excessive ceremony. Overhead is kept strictly bounded by a clear counter-metric capping brief overhead at ten minutes, an objective target of zero wiring or clone-shape review finding",
+      "reply": "Yes\nThe trial directly addresses rework waste without adding excessive ceremony. Overhead is kept strictly bounded by a clear counter-metric capping brief overhead at ten minutes, an objective target of zero wiring or clone-shape review findings, and a built-in expiry after three cards. Shifting CI-shape verification to the first gate prevents late feedback loops and protects developer flow.\n\nCITE: every slice and green brief that introduces a helper names each production caller by symbol\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The trial directly addresses rework waste without adding excessive ceremony. Overhead is kept strictly bounded by a clear counter-metric capping brief overhead at ten minutes, an objective target of zero wiring or clone-shape review finding"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "role": "coach",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T00:13:14.173251Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2639
+    }
+  },
+  "counted_seats": [
+    "coach"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6773f7a1114809a27cd49df777942be67259d922",
+  "head_end": "6773f7a1114809a27cd49df777942be67259d922",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "coach": "Yes"
+    },
+    "counts": {
+      "Yes": 1
+    }
+  },
+  "absent": []
+}
