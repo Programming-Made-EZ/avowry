@@ -91,3 +91,16 @@ Voters for this window (qwen takes one role at most; no service holds more than 
 - coach: qwen;
 - decider and audit lens: cursor;
 - dev and qa: agy.
+
+## Third amendment window (03:02:41 to 03:08:04 UTC) and the decider role
+
+Results of the window:
+- architect (claude), coach (qwen), audit lens (cursor), dev (agy) and qa (agy): Yes, all counted. The audit lens's condition is met.
+- decider (cursor): no counted vote.
+- Re-seats of the decider role:
+  - claude at 03:08:13: refused by the D164 rotation rule (#58).
+  - qwen at 03:09:11 to 03:16:02: it endorsed the change in its text ("I endorse this path forward"), but its first line was not parsed.
+
+FINDING (vote tooling): the decider role's brief (`role-decider.txt`) seats the voter as "the DECIDER / SIGN-OFF seat" and asks whether the decision "(adopt, reshape or reject) will rest on evidence". Voters on agy (four times), cursor and qwen answered with a verdict in prose instead of the required first line (Yes, Support-it or No), and each reply supported the change. Muse passed with the same brief on D272. This goes to mob-defaults beside #58: the role brief must not reframe the reply format.
+
+STATE: five of six roles counted Yes, the decider role is outstanding, and there is no No or amendment open. The decider role is re-seated on muse at its quota reset (2026-11-16 05:05:53 UTC). It is the only healthy service not already holding two roles in this window whose reply format has passed.
