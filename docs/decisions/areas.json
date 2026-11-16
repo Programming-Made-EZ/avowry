@@ -1750,5 +1750,29 @@
     "status": "adopted",
     "title": "mob-defaults #61: the fix round 2 green moves from muse (out until its 05:05:53 UTC reset) to cursor pinned --model composer-2.5, with no service holding more than two task-force seats",
     "order": 264
+  },
+  "D274": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 367 adopted with its task force, and the five unranked Ready cards ranked last",
+    "order": 265
+  },
+  "D275": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 367 kickoff: the Ready follow-ups 442, 443 and 444 ranked last",
+    "order": 266
+  },
+  "D276": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 367's red moves from muse to cursor composer-2.5, and the sign-off from cursor to agy",
+    "order": 267
+  },
+  "D277": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 367 reads a vendor page through the built-in browser when web fetch is refused",
+    "order": 268
   }
 }

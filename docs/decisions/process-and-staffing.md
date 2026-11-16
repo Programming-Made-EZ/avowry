@@ -1597,3 +1597,29 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
   - With one line added to the vote context (name it "the muse outage"; do not write those words), the decider role on cursor at 05:26:20 UTC: Yes, cited.
 - Trigger line: the window has six counted Yes and no No or amendment open, and the proposal does not change this agreement, so no confirmation step ran.
 - Result: **adopted** (six of six counted). Owner: the facilitator. The fix round 2 green is cursor, pinned `--model composer-2.5`, in wt-md61 (ctx-3e); review is claude opus plus agy; sign-off is muse; no service holds more than two task-force seats.
+
+#### Decider D274: Card 367 adopted with its task force, and the five unranked Ready cards ranked last (ADOPTED)
+
+- Date: 2026-11-16. Proposer: the facilitator (.mob/records/367/kickoff-proposal-d274.md), at the first kickoff run with mob-defaults #62's eight-service probe (16:53:45Z) and kickoff_check.py (passed).
+- Part A: card 367 with red muse medium, green claude sonnet, QA claude opus, cross-family review agy gemini-3.8-flash-medium, sign-off cursor composer-2.5. Part B: Ready cards 352, 353, 357, 372 and 373 had no Rank, so the loop picker refused to pick; they take Ranks 298 to 302, after the last Rank, and no ranked card moves.
+- Ballots (.mob/records/367/d274-r1-ballots/, d274-ballots/): the first run refused Claude voters (mob-defaults #65, M6: the usable-now check reads no other mob's heavy lock); the rerun on agy, muse and cursor counted no vote because the vote prompt does not ask for the D171 `CITE:` line, and the decider voted No on the stale board archive (card 435 Done on the live board). Amendment 1 named the live board as the queue and asked for `CITE:`; six of six Yes, cited.
+- Result: **adopted**. Owner: the facilitator. Ranks set directly (scripts/board/rerank.py fails on a ranked item with no card number).
+
+#### Decider D275: Card 367 kickoff: the Ready follow-ups 442, 443 and 444 ranked last (ADOPTED)
+
+- Date: 2026-11-16. Proposer: the facilitator (.mob/records/367/rank-proposal-d275.md). The three items had no card number and no Rank; the facilitator filled the card number from each title, and the Decider gave Ranks 303 to 305. No ranked card moves; card 367 stays first.
+- Ballots (.mob/records/367/d275-ballots/): six of six Yes, cited (agy, muse, cursor, two roles each).
+- Result: **adopted**. The loop picker and check_real_board.py --pick agree on card 367.
+
+#### Decider D276: Card 367's red moves from muse to cursor composer-2.5, and the sign-off from cursor to agy (ADOPTED)
+
+- Date: 2026-11-16. Proposer: the facilitator (.mob/records/367/model-change-proposal-d276.md), under the owner's 2026-11-14 ruling that a mid-card model change goes through a Decider. The muse red stopped after about three minutes at its subscription limit (until 2026-11-23T00:00:00Z); its partial files are kept in .mob/records/367/muse-red-partial/.
+- Ballots (.mob/records/367/d276-ballots/): four of four Yes, cited (agy and cursor, two roles each; muse out, qwen gate busy).
+- Result: **adopted**. Red cursor `--model composer-2.5`; sign-off agy gemini-3.8-flash-medium; no service holds more than two seats.
+
+#### Decider D277: Card 367 reads a vendor page through the built-in browser when web fetch is refused (ADOPTED)
+
+- Date: 2026-11-16. Proposer: the facilitator (.mob/records/367/scope-proposal-d277.md). Every official xAI and OpenAI terms URL answered 403 to web fetch; the green stopped rather than write from memory.
+- Change: such a page may be read in the built-in browser pane, logged out, no terms accepted, non-essential cookies declined; the facilitator saves notes with URL and UTC time under .mob/records/367/captures/; the green writes and cites the official URLs; the page says which vendors were read this way.
+- Ballots (.mob/records/367/d277-ballots/): four of four Yes, cited.
+- Result: **adopted**.

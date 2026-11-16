@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 367,
+ "title": "The four model vendors' published terms are read for what they say about publishing model output",
+ "process": "card-mode rules run by hand; the first kickoff with mob-defaults #62's eight-service probe (16:53:45Z) and kickoff_check.py (passed); Decider D274 adopted the card and task force and ranked five unranked Ready cards last (the loop picker had refused to pick), D275 ranked the follow-ups 442 to 444 last; a facilitator slice in the records; the muse red stopped at its subscription limit and D276 re-seated it on cursor composer-2.5 (sign-off to agy); the green (claude sonnet) read Google and GitHub by web fetch and stopped on 403s from xAI and OpenAI; D277 allowed a logged-out built-in browser read with facilitator captures; rulings R367-1 (the card 186 vendor-terms check), R367-2 and R367-3 (fix rounds 1 and 2) and a wrapper fix; reviews: agy cross-family SIGN-OFF (before any other review), claude opus CHANGES, CHANGES, SIGN-OFF (BLOCKING by round 1, 1, 0); sign-off agy; one gate on a quiet machine under Avowry's heavy lock; merged to main by fast-forward; the facilitator's retro with its Model allocation review (no separate retro voices: muse out, qwen gate-bound).",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-0",
+   "model": "the facilitator session (claude opus = claude-opus-5-5); the card was already Ready; Decider D274 adopted it with the task force (agy, muse and cursor ballots); evidence is the R367-1 ruling commit that applied the slice to the card 186 check",
+   "evidence": "dafd45a"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-1",
+   "model": "the facilitator session (claude opus = claude-opus-5-5) wrote .mob/records/367/slice.md and rulings R367-1 to R367-3; evidence is fix round 1's test commit under R367-2",
+   "evidence": "5522ac6"
+  },
+  {
+   "role": "red",
+   "seat": "Cursor ctx-2",
+   "model": "cursor-agent -p --force --model composer-2.5 (pinned; re-seated by D276 after muse default medium, ctx-367r, stopped at its subscription limit), ctx-367r2 to ctx-367r2e; the red and four test fixes",
+   "evidence": "ccb2084"
+  },
+  {
+   "role": "green",
+   "seat": "Claude ctx-3",
+   "model": "claude sonnet = claude-sonnet-5-5, a fresh subagent context (ctx-367g, resumed for fix round 1); web fetch for Google and GitHub, the facilitator's D277 captures for xAI and OpenAI",
+   "evidence": "4c6f4f9"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-4",
+   "model": "claude opus = claude-opus-5-5, a fresh subagent context (ctx-367q), QA review rounds 1 to 3 (CHANGES, CHANGES, SIGN-OFF) re-fetching the cited pages; agy gemini-3.8-flash-medium cross-family review (SIGN-OFF); the gate by the facilitator under Avowry's heavy-run lock",
+   "evidence": "c6b3428"
+  },
+  {
+   "role": "signoff",
+   "seat": "agy ctx-5",
+   "model": "agy gemini-3.8-flash-medium (pinned with --model), a fresh context (ctx-367s), read-only in a clone; moved from cursor by D276",
+   "evidence": "08614d4"
+  }
+ ],
+ "retro": "docs/retros/card-367-2026-11-16.md",
+ "notes": "Done checks met: the gate at 19285ab under Avowry's heavy lock on a quiet machine, Release build 0 errors, dotnet test Avowry.sln --filter Status!=Pending: compiler 344 of 344, acceptance 1514 of 1514 (VendorTermsRead included); the python modules 22 of 22. Named limits: the 367-3 test alone passes with the page deleted (accepted by QA round 3); terms not read are listed on the page; the xAI row's no is provisional on its permission sentence; seat replies from vendors outside the pre-publication table need a follow-up card. Process events: an untracked push redone tracked; a review clone failed on a long path (redone with core.longpaths); one probe row's account folder replaced with <user> at commit (its row_sha256 no longer matches). Main took the card branch by fast-forward, so every evidence commit keeps its id."
+}
