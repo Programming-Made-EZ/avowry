@@ -15,3 +15,7 @@ Muse was not skipped. Each declaration (D266, D268, D269) lists it as out until 
 Re-probe: scheduled for 2026-11-16 00:05 UTC, after the reset. The result is written to `.mob/records/probes/2026-11-16.jsonl` and appended below.
 - If Muse answers, it is a candidate seat for the next declared roles, first to relieve agy as a voter and retro voice. It is seated only through a declaration with its model and reason, and its outcome is logged per seat.
 - If it fails, the error is recorded here and the probe repeats at every kickoff and at its next stated reset.
+
+## Re-probe result
+
+2026-11-16 00:05:46 UTC (`.mob/records/probes/2026-11-16.jsonl`): muse **available**, ok, with the medium-effort invocation. It is seated as card 422's product-manager retro voice (declared in `.mob/records/422/retro-input.md`).
