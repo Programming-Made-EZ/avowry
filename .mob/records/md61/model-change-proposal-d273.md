@@ -69,3 +69,25 @@ Voters for the re-vote (no service holds more than two roles, and claude is limi
 - audit lens: cursor auto;
 - dev and qa: agy;
 - coach: qwen.
+
+## Third amendment after the re-vote (02:54:51 to 03:01:09 UTC)
+
+Results of the re-vote:
+- architect (claude): Yes. The qwen architect seat failed to launch ("another local model is loaded; one at a time"), because two qwen roles in one window share one local model; the runner seated claude instead.
+- coach (qwen): Yes.
+- dev and qa (agy): Yes.
+- decider (claude): refused by the D164 rotation rule (qwen, #58).
+- audit lens (cursor auto): No. Its condition: "pin the fix round 2 green to a named model (not `auto`) in the seat clause so the writer is auditable from the run record", matching the owner's 2026-11-14 pinned-launch ruling.
+
+Smoke tests at about 03:03 UTC in a throwaway clone:
+- cursor `gpt-5.2`: the same monthly usage limit as gpt-5.3-codex (resets 2026-12-14).
+- cursor `composer-2.5`: "OK".
+- cursor `auto`: "OK".
+
+THE THIRD AMENDMENT (meeting that condition): the fix round 2 green is **cursor, pinned `--model composer-2.5`**, Cursor's own coding model and the only named model that answers today. It runs in wt-md61, ctx-3e. The other seats and the two-seats-per-service limit stand as in the second amendment: review claude opus plus agy, sign-off muse after 05:05:53 UTC.
+
+Voters for this window (qwen takes one role at most; no service holds more than two):
+- architect: claude;
+- coach: qwen;
+- decider and audit lens: cursor;
+- dev and qa: agy.
