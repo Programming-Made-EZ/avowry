@@ -1,0 +1,268 @@
+{
+  "result": "failed",
+  "prompt_sha": "6230aa2af02dbc8c800b69b931558cd17a94057052e49ab062c239138be52f7e",
+  "probe": {
+    "taken_at": "2026-11-16T20:41:36.466296Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-7eb2ce28-4733-403b-8f15-41cf50f26f59)"
+      },
+      "grok": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=970ae27b-75f1-4287-b3bd-aa2986ed11c1]: Subscription quota exhausted. Your usage window resets at 2026-11-23T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "none",
+      "reason": "no vote in the reply",
+      "reply": "I'll verify the proposal's git and board claims in this throwaway tree before voting, without changing any files.I'll check the cited commits, D278, card ranks, and the remaining green-2 work next.I'll inspect the cited SHAs, ranks, and remaining green-2 files next.\n",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "no vote in the reply"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "no vote in the reply"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 198.38764339999761,
+      "role": "architect",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T20:41:36.466296Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2856
+    },
+    "dev": {
+      "vote": "Yes",
+      "reason": "CITE: The gate runs under Avowry's heavy lock.",
+      "reply": "Yes\n\nCITE: The gate runs under Avowry's heavy lock.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: The gate runs under Avowry's heavy lock."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 162.4492492999998,
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T20:41:36.466296Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2857
+    },
+    "auditlens": {
+      "vote": "No",
+      "reason": "Keep green 2 on a fresh Claude context per D237; ruling 4 seated only green 1 on Cursor, not green 2. CITE: remove Pending from Bar6, Z1 and Z2",
+      "reply": "No\nKeep green 2 on a fresh Claude context per D237; ruling 4 seated only green 1 on Cursor, not green 2.\nCITE: remove Pending from Bar6, Z1 and Z2\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Keep green 2 on a fresh Claude context per D237; ruling 4 seated only green 1 on Cursor, not green 2. CITE: remove Pending from Bar6, Z1 and Z2"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 204.06883120001294,
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T20:41:36.466296Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2858
+    },
+    "qa": {
+      "vote": "Yes",
+      "reason": "CITE: the independent gate reviewer is a fresh claude opus context",
+      "reply": "Yes\n\nCITE: the independent gate reviewer is a fresh claude opus context\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: the independent gate reviewer is a fresh claude opus context"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 174.535094699997,
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T20:41:36.466296Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2859
+    },
+    "coach": {
+      "vote": "none",
+      "reason": "no vote in the reply",
+      "reply": "I'll verify the proposal's claims against the repo and git history before voting.I'll check D278, the cited commits, and the card ranks against the proposal.D278 isn\u2019t in the committed docs yet, so I\u2019m checking ranks, the named commits, and the remaining green-2 work.HANDOFF already says Codex passed and green 2 is owed. I\u2019ll confirm the commits, D237, and the Cursor ruling.\n",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "no vote in the reply"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "no vote in the reply"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 215.17430760001298,
+      "role": "coach",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T20:41:36.466296Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2860
+    },
+    "decider": {
+      "vote": "No",
+      "reason": "Seat green 2 on a fresh Claude context per D237 (ruling 4 seated green 1 on Cursor, not green 2), or amend the seat plan with that real rationale instead of the ruling-4 mis-cite. CITE: ruling 4 put the green on Cursor",
+      "reply": "No\nSeat green 2 on a fresh Claude context per D237 (ruling 4 seated green 1 on Cursor, not green 2), or amend the seat plan with that real rationale instead of the ruling-4 mis-cite.\nCITE: ruling 4 put the green on Cursor\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Seat green 2 on a fresh Claude context per D237 (ruling 4 seated green 1 on Cursor, not green 2), or amend the seat plan with that real rationale instead of the ruling-4 mis-cite. CITE: ruling 4 put the green on Cursor"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 219.84457549999934,
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T20:41:36.466296Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2861
+    }
+  },
+  "counted_seats": [
+    "dev",
+    "auditlens",
+    "qa",
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6254108b1597ddaf395f501ea1aeb5a3c57725d5",
+  "head_end": "6254108b1597ddaf395f501ea1aeb5a3c57725d5",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "none",
+      "dev": "Yes",
+      "auditlens": "No",
+      "qa": "Yes",
+      "coach": "none",
+      "decider": "No"
+    },
+    "counts": {
+      "Yes": 2,
+      "No": 2
+    }
+  },
+  "absent": []
+}

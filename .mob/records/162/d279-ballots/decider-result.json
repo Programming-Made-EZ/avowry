@@ -1,0 +1,193 @@
+{
+  "result": "passed",
+  "prompt_sha": "9608ff01fd4448d60282f25ecb5d981e336772469629e483790e2352bb9c9a74",
+  "probe": {
+    "taken_at": "2026-11-16T20:49:12.598069Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-b0af87fd-941d-41f7-b154-1f345cd53119)"
+      },
+      "grok": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=1521fab9-5033-4981-84e4-a5e9cecdffe7]: Subscription quota exhausted. Your usage window resets at 2026-11-23T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "CITE: card 162 resumes for green 2, and D278 is rescinded",
+      "reply": "Yes\n\nCITE: card 162 resumes for green 2, and D278 is rescinded\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: card 162 resumes for green 2, and D278 is rescinded"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 158.20657939999364,
+      "role": "architect",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T20:49:12.598069Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2868
+    },
+    "dev": {
+      "vote": "Yes",
+      "reason": "CITE: D278 is rescinded; cards 162 and 201 keep Ranks 116 and 117.",
+      "reply": "Yes\n\nCITE: D278 is rescinded; cards 162 and 201 keep Ranks 116 and 117.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: D278 is rescinded; cards 162 and 201 keep Ranks 116 and 117."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 159.6268640999915,
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T20:49:12.598069Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2869
+    },
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "CITE: no service holds more than two task-force seats",
+      "reply": "Yes\nCITE: no service holds more than two task-force seats\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: no service holds more than two task-force seats"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 202.7212871000229,
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T20:49:12.598069Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2870
+    },
+    "decider": {
+      "vote": "Yes",
+      "reason": "CITE: no service holds more than two task-force seats",
+      "reply": "Yes\nCITE: no service holds more than two task-force seats\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: no service holds more than two task-force seats"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 207.17120909999358,
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T20:49:12.598069Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2871
+    }
+  },
+  "counted_seats": [
+    "architect",
+    "dev",
+    "auditlens",
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6254108b1597ddaf395f501ea1aeb5a3c57725d5",
+  "head_end": "6254108b1597ddaf395f501ea1aeb5a3c57725d5",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes",
+      "dev": "Yes",
+      "auditlens": "Yes",
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 4
+    }
+  },
+  "absent": []
+}

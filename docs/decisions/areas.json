@@ -1774,5 +1774,17 @@
     "status": "adopted",
     "title": "Card 367 reads a vendor page through the built-in browser when web fetch is refused",
     "order": 268
+  },
+  "D278": {
+    "area": "process-and-staffing",
+    "status": "rescinded",
+    "title": "Card 162 and card 201 wait behind card 165 (rescinded by D279 before it was applied)",
+    "order": 269
+  },
+  "D279": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 162 resumes for green 2 on a fresh Claude context, and D278 is rescinded",
+    "order": 270
   }
 }

@@ -1623,3 +1623,15 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - Change: such a page may be read in the built-in browser pane, logged out, no terms accepted, non-essential cookies declined; the facilitator saves notes with URL and UTC time under .mob/records/367/captures/; the green writes and cites the official URLs; the page says which vendors were read this way.
 - Ballots (.mob/records/367/d277-ballots/): four of four Yes, cited.
 - Result: **adopted**.
+
+#### Decider D278: Card 162 and card 201 wait behind card 165 (ADOPTED, RESCINDED BY D279, NEVER APPLIED)
+
+- Date: 2026-11-16. Proposer: the facilitator (.mob/records/169/rank-proposal-d278.md), after card 367 closed: card 162 seemed to need Codex and Grok runs (codex at its usage limit) and card 201 is owner-run.
+- Ballots (.mob/records/169/d278-ballots/): four counted Yes (agy, cursor); the architect voter (grok) voted No with an uncited reason that was right: card 162's Codex and Grok checks are already committed on main; the coach voter gave no vote.
+- Result: **adopted**, but the facilitator found the premise wrong before applying it, and D279 rescinded it. No Rank changed. Lesson: read a card's records and commits on main before proposing it blocked.
+
+#### Decider D279: Card 162 resumes for green 2, and D278 is rescinded (ADOPTED)
+
+- Date: 2026-11-16. Proposer: the facilitator (.mob/records/162/resume-proposal-d279.md). Card 162's re-freeze (D238), Grok and Codex checks (13 of 13 each) and gate review A are on main; only green 2 (slice item 9), its gate review, sign-off, retro and trail record remained.
+- Ballots: the first window (.mob/records/162/d279-r1-ballots/) failed: the audit lens and decider (cursor) voted No because D237 seats green 2 on a fresh Claude context, not on Cursor; grok gave no votes. Amendment 1: green 2 on a fresh claude sonnet context, the gate reviewer a fresh claude opus context, the sign-off on agy (R-ROT: no service holds more than two task-force seats). Second window (.mob/records/162/d279-ballots/): four of four Yes, cited (agy, cursor).
+- Result: **adopted**. Cards 162 and 201 keep Ranks 116 and 117.

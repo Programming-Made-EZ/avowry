@@ -1,0 +1,262 @@
+{
+  "result": "passed",
+  "prompt_sha": "13b6e346ca4befe1a709fdb43a0445f8920fd1b01181825eea1f97d4fca04029",
+  "probe": {
+    "taken_at": "2026-11-16T20:29:22.157272Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-eb685aa5-4b18-4139-9631-fd8d96b2d967)"
+      },
+      "grok": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=e8ca85da-4e54-4c47-934c-b57d209fa24a]: Subscription quota exhausted. Your usage window resets at 2026-11-23T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "No",
+      "reason": "Parking only card 201 behind 165, and leaving 162 at Rank 116 to finish green 2 from the committed Codex and Grok evidence, would bring me to yes. CITE: the card needs both, so it cannot finish now",
+      "reply": "I'll read the Decider protocol and the relevant cards first so the vote is based on the actual board, not the proposal text alone.I'll pull the Decider checklist and the named cards next so the vote matches the board ranks and blockers.I\u2019ll check the nearby cards\u2019 statuses and the product-first ranking rule so the park-behind-165 move is judged against the actual queue.No. Parking only card 201 behind 165, and leaving 162 at Rank 116 to finish green 2 from the committed Codex and Grok evidence, would bring me to yes.\nCITE: the card needs both, so it cannot finish now\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Parking only card 201 behind 165, and leaving 162 at Rank 116 to finish green 2 from the committed Codex and Grok evidence, would bring me to yes. CITE: the card needs both, so it cannot finish now"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 370.36657650000416,
+      "role": "architect",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T20:29:22.157272Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2844
+    },
+    "dev": {
+      "vote": "Yes",
+      "reason": "CITE: cards 162 and 201 wait behind card 165 until they can run",
+      "reply": "Yes\n\nCITE: cards 162 and 201 wait behind card 165 until they can run\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: cards 162 and 201 wait behind card 165 until they can run"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 192.20099650000338,
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T20:29:22.157272Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2845
+    },
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "CITE: cards 162 and 201 wait behind card 165 until they can run",
+      "reply": "Yes\nCITE: cards 162 and 201 wait behind card 165 until they can run\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: cards 162 and 201 wait behind card 165 until they can run"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 210.24777560000075,
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T20:29:22.157272Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2846
+    },
+    "qa": {
+      "vote": "Yes",
+      "reason": "CITE: cards 162 and 201 wait behind card 165 until they can run",
+      "reply": "Yes\nCITE: cards 162 and 201 wait behind card 165 until they can run\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: cards 162 and 201 wait behind card 165 until they can run"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 190.94986620001146,
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T20:29:22.157272Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2847
+    },
+    "coach": {
+      "vote": "none",
+      "reason": "no vote in the reply",
+      "reply": "I'll read the working agreement and the relevant cards so I can vote on D278 from the repo as it stands.I'll pull the Decider protocol and the cards named in the proposal so the vote matches the board.A previous Decider already parked these two; I'll check current ranks, 165's dependencies, and whether 162 is still in flight.I'll check whether the committed LLM-check evidence still matches the frozen docs, because that decides if 162 can finish without Codex.\n",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "no vote in the reply"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "no vote in the reply"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 401.79438360000495,
+      "role": "coach",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-16T20:29:22.157272Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2848
+    },
+    "decider": {
+      "vote": "Yes",
+      "reason": "CITE: cards 162 and 201 wait behind card 165 until they can run",
+      "reply": "Yes\nCITE: cards 162 and 201 wait behind card 165 until they can run\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: cards 162 and 201 wait behind card 165 until they can run"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 202.67230229999404,
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-16T20:29:22.157272Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2849
+    }
+  },
+  "counted_seats": [
+    "dev",
+    "auditlens",
+    "qa",
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "6254108b1597ddaf395f501ea1aeb5a3c57725d5",
+  "head_end": "6254108b1597ddaf395f501ea1aeb5a3c57725d5",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "No",
+      "dev": "Yes",
+      "auditlens": "Yes",
+      "qa": "Yes",
+      "coach": "none",
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 4
+    }
+  },
+  "absent": []
+}
