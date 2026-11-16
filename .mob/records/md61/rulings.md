@@ -79,3 +79,7 @@ Fix round 2 seats: red claude sonnet (ctx-2c), green muse (D272, ctx-3d), with t
 - **It does.** At 03:21:09 to 03:21:56 UTC the rule refused it because "muse, cursor, agy have waited longer". qwen is no longer named. muse is counted as waiting although its quota is exhausted, because the probe in force reads ok from 00:05 UTC.
 - **So mob-defaults #58 (rotation counts only seats that can be seated now) is blocking flow.** As Dispatch directed, the Mob Board now runs mob-defaults #61 (In Progress, rank 0.95), then #58 (0.94), then #62 (0.93). All three are above the board's previous top of 0.88. #61 and #62 were added to the board; they had not been on it.
 - **D273's Decider role is still re-seated on muse at 05:07 UTC** by a watcher, unless a better seat becomes possible first. #62's light work starts meanwhile.
+
+## Review round 3 rulings (2026-11-16)
+
+- **R3-1.** QA finding N1 (the dry-run return in `CardRun.check_seat` skips the command probe, the history read and the rotation refusals when a probe is in force) is a MINOR and a named limit for mob-defaults #60. No production path reaches it. Review round 3: QA claude opus SIGN-OFF, cross-family agy SIGN-OFF, no BLOCKING. The card goes to sign-off on muse (medium effort).
