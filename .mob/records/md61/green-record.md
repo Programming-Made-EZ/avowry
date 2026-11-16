@@ -137,3 +137,77 @@ Proof (all with `--capture=sys`; full suite not run):
 - `git diff | grep -nE "write_text|open\\(.*['\\\"]w"` — no match.
 
 Changes are left uncommitted.
+
+## Fix round 3 green (gate)
+
+Seat: green (dev, green), composer-2.5, declared by D273, context ctx-3f. Worktree wt-md61, branch card-61. Nothing committed.
+
+`git diff --stat`:
+
+```text
+ decider.py                           |  4 +--
+ mob_process.py                       | 55 ++++++++++++++++++++++++++++++++----
+ tests/test_card_mode.py              |  2 ++
+ tests/test_decider_gate.py           |  9 +++++-
+ tests/test_decider_record.py         |  9 ++++--
+ tests/test_decider_record_units.py   | 18 ++++++++++--
+ tests/test_decider_runner.py         |  9 ++++--
+ tests/test_seat_use_model_outcome.py |  7 ++++-
+ 8 files changed, 95 insertions(+), 18 deletions(-)
+```
+
+| test | class | change | D justification |
+|------|-------|--------|-----------------|
+| SeatRotation::test_a_mixed_roster... | A | `history_seats()` skips `event=outcome` | |
+| SeatRotation::test_a_second_claude_seat... | A | same | |
+| SeatRotation::test_claude_takes_every_turn... | A | same | |
+| Rotation::test_claude_voter_runs_on_its_own_turn... | A | `RotationCase.lines()` skips outcome rows | |
+| Rotation::test_claude_voter_runs_when_every_model_that_has_waited_longer... | A | same | |
+| Rotation::test_claude_voter_runs_when_the_other_available_models... | A | same | |
+| Rotation::test_the_order_of_seats_does_not_change_who_is_judged_first | A | same | |
+| SeatUseLock::test_a_dead_holders_lock_is_swept... | A | same | |
+| Auditor::test_rotation_is_recomputed... | C | `last_seating_for_rotation`, `claude_wait_problem(..., count_open_launches=True)` on auditor recompute | |
+| LoneRun::test_a_lone_runs_vote... (codex/claude) | C/D | `start_voters` does not merge `seat` into votes; `LoneRun.VOTE_FIELDS` adds `duration_s` and `structured_launch` | card-61 `vote_seat` records duration and structured-launch flag on every vote |
+| ManyVoters::test_each_voter_has_its_own_model... | A | `lines()` filter | |
+| NoVoter::test_the_first_line_of_an_empty_history... | A | same | |
+| SameRunReason (4 tests) | C | `last_seating_for_rotation` in `rotation_reason` | |
+| RunComposes (3 tests) | B | `open_run` stub: `card`, `backends`, `seat_use_lock`, `append_seat_outcome`; `vote_seat` returns duration fields | |
+| StartVotersRecords::test_one_record_per_voter... | B/C | no extra `seat` key on `start_voters` records (`decider.py`) | |
+| RunComposes::test_the_record_of_each_voter... | D | expected `start_voters` call list is voter dicts with `D169-<seat>` context | `decider.run` passes voter dicts, not bare seat names |
+| LiveVoteOverlap::test_two_overlapping_runs... | A | history assertion uses launch rows only | |
+| SixSeatsAtOnce::test_six_runs_started_at_once... | A | same | |
+| Test61Fix1::test_61_f1_b4_the_item_reads... | D | read budget `4*n+2` | citing a found line reads its timestamp once per model in `rotation_reason` |
+| Decider61 stack | A | `Decider61.lines()` reads full jsonl (outcomes included) | |
+
+Proof (`--capture=sys`):
+
+- `python -m pytest <the 22 tests> -q --capture=sys` — 22 passed, 2 subtests passed.
+- `python -m pytest tests/test_seat_use_model_outcome.py … test_decider_runner.py -q --capture=sys` — 131 + 396 passed, no in-scope failure on gate/decider stack.
+
+Changes are left uncommitted.
+
+## Fix round 3b (FC-3)
+
+Seat: green (dev, green), composer-2.5, declared by D273, context ctx-3f. Worktree wt-md61, branch card-61. Nothing committed.
+
+Per ruling FC-3: removed `last_seating_for_rotation`. `last_seating(..., count_open=True)` treats every unpaired launch as a seating at its launch index (`last = max(last, indices[-1])`, no `last < 0` gate). `rotation_reason`’s `seated(name)` calls `last_seating(history, name, count_open=True)`. Auditor recompute still uses `count_open_launches=True` / `count_open=True` (unchanged).
+
+Proof (`--capture=sys`):
+
+- `python -m pytest` (22 gate tests from fix round 3 record) — `22 passed, 2 subtests passed in 69.59s`.
+- `python -m pytest tests/test_seat_use_model_outcome.py tests/test_seat_rotation.py tests/test_seat_rotation_rules.py tests/test_decider_rotation.py tests/test_decider_record.py tests/test_decider_record_units.py tests/test_decider_gate.py tests/test_card_mode.py tests/test_decider_runner.py -q --capture=sys` — `1 failed, 449 passed, 78 subtests passed in 1343.02s` (`Test61Fix2::test_61_f2_a_rotation_reason_cites_the_qa_launch_line_as_the_served_line`; see report).
+
+Changes are left uncommitted.
+
+## Fix round 3c (FC-3b)
+
+Seat: green (dev, green), composer-2.5, declared by D273, context ctx-3f. Worktree wt-md61, branch card-61. Nothing committed.
+
+Per ruling FC-3b: removed `count_open` / `count_open_launches`. `last_seating(history, backend, also=())` counts served launches and legacy rows, plus launch lines whose index is in `also`. `rotation_reason` and `claude_wait_problem` pass `also` through. `start_voters` builds `also` from `run.seat_use_index` values below each voter's line; `voter_record` passes it to `rotation_reason`. Auditor recompute uses `also=` the set of logged `line_index` values. `StartVotersRecords` mock accepts `also=()` (signature only).
+
+Proof (`--capture=sys`):
+
+- `python -m pytest` (22 gate tests from fix round 3 record) — `22 passed, 2 subtests passed in 84.64s`.
+- `python -m pytest tests/test_seat_use_model_outcome.py tests/test_decider_record.py tests/test_decider_record_units.py tests/test_decider_gate.py tests/test_card_mode.py tests/test_decider_runner.py tests/test_seat_rotation.py tests/test_seat_rotation_rules.py tests/test_decider_rotation.py -q --capture=sys` — `1 failed, 449 passed, 78 subtests passed in 1627.92s` (`ConcurrentStarts::test_each_runs_record_points_at_its_own_lines_and_claudes_reason_is_recomputed_from_the_file`; stored reason uses same-run `also` for D169 codex; assertion calls `rotation_reason(probes, before)` with `also=()`).
+
+Changes are left uncommitted.
