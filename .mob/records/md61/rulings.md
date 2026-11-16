@@ -72,3 +72,10 @@ R2-2: named limits, filed on mob-defaults #61's follow-up list:
 - Cursor MINOR 4: blank `--declared-reason` and whitespace `--declared-model` are accepted.
 
 Fix round 2 seats: red claude sonnet (ctx-2c), green muse (D272, ctx-3d), with the exact changes named in the brief and the facilitator checking the diff for history rewrites. Review round 3: claude opus plus cursor auto (R-ROT).
+
+## The Dispatch check of about 03:20 UTC, and the Mob Board rank
+
+- **Dispatch asked:** with qwen now seated, does the rotation rule still refuse Claude for D273's Decider role?
+- **It does.** At 03:21:09 to 03:21:56 UTC the rule refused it because "muse, cursor, agy have waited longer". qwen is no longer named. muse is counted as waiting although its quota is exhausted, because the probe in force reads ok from 00:05 UTC.
+- **So mob-defaults #58 (rotation counts only seats that can be seated now) is blocking flow.** As Dispatch directed, the Mob Board now runs mob-defaults #61 (In Progress, rank 0.95), then #58 (0.94), then #62 (0.93). All three are above the board's previous top of 0.88. #61 and #62 were added to the board; they had not been on it.
+- **D273's Decider role is still re-seated on muse at 05:07 UTC** by a watcher, unless a better seat becomes possible first. #62's light work starts meanwhile.
