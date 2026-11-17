@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 169,
+ "title": "The map bytes do not depend on the culture",
+ "process": "kickoff probe and kickoff_check.py (passed); Decider D280 adopted the card with amendment 1 (ordinal-sort tests are characterisation with mutation evidence); a facilitator slice; the red written without dotnet under another mob's heavy lock, proved by the facilitator under Avowry's lock (169-3 red, a line-58 mutant failing all three); the green one TRACEABILITY line; grok cross-family review (normal mode after plan mode gave no verdict) and claude opus review round 1 (CHANGES, two BLOCKING scan gaps); fix round 1 (R169-1, tests only) proved with mutants at lines 58 and 59; review round 2 SIGN-OFF; sign-off agy; one gate under Avowry's heavy lock; merged by fast-forward; the facilitator's retro with its Model allocation review.",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-0",
+   "model": "the facilitator session (claude opus = claude-opus-5-5); the card was Ready; Decider D280 adopted it with the task force (grok, agy and cursor ballots); evidence is the kickoff record commit",
+   "evidence": "44d1c68"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-1",
+   "model": "the facilitator session (claude opus = claude-opus-5-5) wrote .mob/records/169/slice.md and ruling R169-1; evidence is the reviews and ruling commit",
+   "evidence": "d762cf1"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-2",
+   "model": "claude sonnet = claude-sonnet-5-5, a fresh subagent context (ctx-169r, resumed for the fix round); the red and fix round 1",
+   "evidence": "c0919c9"
+  },
+  {
+   "role": "green",
+   "seat": "Cursor ctx-3",
+   "model": "cursor-agent -p --force --model composer-2.5 (pinned), ctx-169g; one TRACEABILITY line",
+   "evidence": "65c456d"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-4",
+   "model": "claude opus = claude-opus-5-5, a fresh context (ctx-169q), review rounds 1 (CHANGES) and 2 (SIGN-OFF); grok grok-4.6 cross-family review; proofs and the gate by the facilitator under Avowry's heavy-run lock; evidence is the fix-round commit the review forced",
+   "evidence": "2041bb0"
+  },
+  {
+   "role": "signoff",
+   "seat": "agy ctx-5",
+   "model": "agy gemini-3.8-flash-medium (pinned with --model), a fresh context ctx-169s, read-only in a clone",
+   "evidence": "55a815c"
+  }
+ ],
+ "retro": "docs/retros/card-169-2026-11-17.md",
+ "notes": "Done checks met at the gate (2041bb0, quiet machine, Avowry's heavy lock): Release build 0 errors; dotnet test Avowry.sln --filter Status!=Pending compiler 344 of 344, acceptance 1521 of 1521 (Slice=169 three of three; the orders hash pin unchanged). Mutation proofs: Program.cs lines 58 and 59 to StringComparer.CurrentCulture each fail 169-1 and 169-2; empty src diff after each. Named limits: review-2.md minor 1 to 3; sv-SE orders the ASCII sample like the invariant culture. Process events: grok plan mode gave no verdict; its verdict was saved from its reply. Main took the card branch by fast-forward, so every evidence commit keeps its id."
+}
