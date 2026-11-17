@@ -1642,3 +1642,11 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - Task force: red claude sonnet; green cursor composer-2.5; QA claude opus; cross-family review grok; sign-off agy gemini-3.8-flash-medium.
 - Ballots: the first window (.mob/records/169/d280-r1-ballots/) failed on the decider's No (cursor): the code already sorts ordinally, so those tests are characterisation and a planted mutant is extra mutation evidence, not the watched red. Amendment 1 said so. Second window (.mob/records/169/d280-ballots/): adopted; the audit lens's uncounted No asked that the declaration and probe rows be committed for voters, done in 44d1c68.
 - Result: **adopted**.
+
+#### Decider D281: Card 201 waits for the product owner's answer; Card 171 adopted with its task force (ADOPTED)
+
+- Date: 2026-11-17. Proposer: the facilitator (.mob/records/171/kickoff-proposal-d281.md), after card 169 closed.
+- Part A: card 201 converts "sealed" holdouts, but Record R1 shows Dispatch unsealed H1 to H3 on 2026-10-27 and the mob ran them; whether to convert those or seal new ones is the product owner's, asked as one word. Card 201 waits after card 165 (applied as Rank 306: the picker reads whole Ranks, so 121.2 collided with card 165's 121).
+- Part B: card 171 with red claude sonnet, green cursor composer-2.5, QA claude opus, cross-family grok (normal mode), sign-off agy; probe 01:51:57Z and kickoff_check.py passed on the committed declaration.
+- Ballots (.mob/records/171/d281-ballots/): six of six Yes, cited (grok, agy, cursor).
+- Result: **adopted**.
