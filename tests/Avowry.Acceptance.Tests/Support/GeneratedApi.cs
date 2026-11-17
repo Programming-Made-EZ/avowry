@@ -109,7 +109,7 @@ public sealed class GeneratedApi : IAsyncDisposable
         try
         {
             if (!_process.HasExited && _process.Id == Pid)
-                _process.Kill();
+                NestedDotnet.KillEntireTreeIfRunning(_process);
         }
         catch (InvalidOperationException)
         {
@@ -229,23 +229,12 @@ public sealed class GeneratedApi : IAsyncDisposable
         foreach (var arg in args)
             psi.ArgumentList.Add(arg);
 
-        using var process = Process.Start(psi) ?? throw new InvalidOperationException("Could not start dotnet.");
-        var pid = process.Id;
-        var stdout = process.StandardOutput.ReadToEndAsync();
-        var stderr = process.StandardError.ReadToEndAsync();
-        try
-        {
-            await process.WaitForExitAsync().WaitAsync(timeout);
-        }
-        catch (TimeoutException)
-        {
-            if (!process.HasExited && process.Id == pid)
-                process.Kill();
-            throw new TimeoutException($"dotnet process {pid} exceeded {timeout.TotalMinutes:0} minutes ({string.Join(' ', args)}).");
-        }
+        var result = await NestedDotnet.RunAsync(psi, timeout);
+        if (result.TimedOut)
+            throw new TimeoutException($"dotnet process exceeded {timeout.TotalMinutes:0} minutes ({string.Join(' ', args)}).");
 
-        var text = await stdout + await stderr;
-        return (process.ExitCode, text);
+        var text = result.Stdout + result.Stderr;
+        return (result.ExitCode, text);
     }
 
     private static ProcessStartInfo Prepare(string fileName, string workingDirectory)
@@ -258,22 +247,13 @@ public sealed class GeneratedApi : IAsyncDisposable
             WorkingDirectory = workingDirectory,
         };
 
-        // A newer host may be the one on PATH. The generated project stays net8.0.
-        psi.Environment["DOTNET_ROLL_FORWARD"] = "Major";
-        psi.Environment["MSBUILDDISABLENODEREUSE"] = "1";
+        NestedDotnet.Apply(psi);
         psi.Environment.Remove("ASPNETCORE_HTTPS_PORT");
         psi.Environment.Remove("ASPNETCORE_HTTP_PORTS");
         psi.Environment.Remove("ASPNETCORE_HTTPS_PORTS");
         psi.Environment.Remove("DOTNET_URLS");
         // The listening line is logged by Microsoft.Hosting.Lifetime; keep it visible whatever the app configures.
         psi.Environment["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information";
-        foreach (var name in new[]
-        {
-            "MSBUILD_EXE_PATH", "MSBuildExtensionsPath", "MSBuildSDKsPath", "MSBuildLoadMicrosoftTargetsReadOnly",
-            "OutputPath", "OutDir", "BaseOutputPath", "BaseIntermediateOutputPath", "IntermediateOutputPath",
-            "Configuration", "TargetFramework", "UseAppHost",
-        })
-            psi.Environment.Remove(name);
         return psi;
     }
 

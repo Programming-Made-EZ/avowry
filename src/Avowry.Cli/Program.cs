@@ -189,9 +189,9 @@ static int TraceCore(string[] values)
     var mismatch = CheckAssembly(map, assemblyPath, out var check);
     foreach (var record in found)
     {
-        var hashMismatch = CheckHash(path, record);
+        var hashMismatch = CheckHash(path, record, out var hashCheck);
         mismatch |= hashMismatch;
-        Print(map, record, hashMismatch ? "WARNING: generated C# hash does not match map" : check);
+        Print(map, record, hashMismatch ? hashCheck : check);
     }
     return mismatch && strict ? 1 : 0;
 }
@@ -259,17 +259,46 @@ static string? Validate(MapFile? map)
             return $"records[{index}].csFile is missing";
         if (string.IsNullOrWhiteSpace(record.SourceFile))
             return $"records[{index}].sourceFile is missing (a map written before the rename is not supported)";
+        if (CsFileLeavesOutputFolder(record.CsFile))
+            return $"record {record.Name}: csFile must stay inside the map output folder";
     }
     return null;
 }
 
-static bool CheckHash(string mapPath, MapRecord record)
+static bool CsFileLeavesOutputFolder(string csFile)
 {
+    if (Path.IsPathRooted(csFile))
+        return true;
+    if (csFile.Length > 0 && (csFile[0] == '/' || csFile[0] == '\\'))
+        return true;
+    if (csFile.Length >= 2 && char.IsAsciiLetter(csFile[0]) && csFile[1] == ':')
+        return true;
+    foreach (var segment in csFile.Split(['/', '\\'], StringSplitOptions.RemoveEmptyEntries))
+    {
+        if (segment == "..")
+            return true;
+    }
+    return false;
+}
+
+static bool CheckHash(string mapPath, MapRecord record, out string check)
+{
+    check = "";
     var root = Path.GetDirectoryName(Path.GetFullPath(mapPath));
     if (root is null)
-        return true;
+        return false;
     var path = Path.Combine(root, record.CsFile.Replace('/', Path.DirectorySeparatorChar));
-    return File.Exists(path) && Hash(File.ReadAllText(path)) != record.CsHash;
+    if (File.Exists(path) == false)
+    {
+        check = $"WARNING: generated C# file is missing: {record.CsFile}";
+        return true;
+    }
+    if (Hash(File.ReadAllText(path)) != record.CsHash)
+    {
+        check = "WARNING: generated C# hash does not match map";
+        return true;
+    }
+    return false;
 }
 
 static void Print(MapFile map, MapRecord record, string check)

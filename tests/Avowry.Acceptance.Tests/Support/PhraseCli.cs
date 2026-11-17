@@ -58,26 +58,13 @@ public static class PhraseCli
         foreach (var arg in args)
             psi.ArgumentList.Add(arg);
 
-        ApplyHostEnvironment(psi);
+        NestedDotnet.Apply(psi);
 
-        using var process = Process.Start(psi) ?? throw new InvalidOperationException("Could not start the Avowry CLI.");
-        var stdout = process.StandardOutput.ReadToEndAsync();
-        var stderr = process.StandardError.ReadToEndAsync();
+        var result = await NestedDotnet.RunAsync(psi, Timeout);
+        if (result.TimedOut)
+            throw new TimeoutException($"Avowry CLI exceeded {Timeout.TotalMinutes} minutes.");
 
-        using var cts = new CancellationTokenSource(Timeout);
-        try
-        {
-            await process.WaitForExitAsync(cts.Token);
-        }
-        catch (OperationCanceledException)
-        {
-            var id = process.Id;
-            if (!process.HasExited)
-                process.Kill(entireProcessTree: true);
-            throw new TimeoutException($"Avowry CLI exceeded {Timeout.TotalMinutes} minutes (pid {id}).");
-        }
-
-        return new CliRun(process.ExitCode, await stdout, await stderr);
+        return new CliRun(result.ExitCode, result.Stdout, result.Stderr);
     }
 
     private static async Task<string> EnsureBuiltAsync()
@@ -107,26 +94,14 @@ public static class PhraseCli
             };
             foreach (var arg in new[] { "build", project, "--nologo", "--disable-build-servers", "--configuration", Configuration() })
                 psi.ArgumentList.Add(arg);
-            ApplyHostEnvironment(psi);
+            NestedDotnet.Apply(psi);
 
-            using var process = Process.Start(psi) ?? throw new InvalidOperationException("Could not start dotnet build for the Avowry CLI.");
-            var stdout = process.StandardOutput.ReadToEndAsync();
-            var stderr = process.StandardError.ReadToEndAsync();
-            using var cts = new CancellationTokenSource(Timeout);
-            try
-            {
-                await process.WaitForExitAsync(cts.Token);
-            }
-            catch (OperationCanceledException)
-            {
-                var id = process.Id;
-                if (!process.HasExited)
-                    process.Kill(entireProcessTree: true);
-                throw new TimeoutException($"dotnet build of the Avowry CLI exceeded {Timeout.TotalMinutes} minutes (pid {id}).");
-            }
+            var buildResult = await NestedDotnet.RunAsync(psi, Timeout);
+            if (buildResult.TimedOut)
+                throw new TimeoutException($"dotnet build of the Avowry CLI exceeded {Timeout.TotalMinutes} minutes.");
 
-            var log = new StringBuilder().Append(await stdout).Append(await stderr).ToString();
-            if (process.ExitCode != 0 || !File.Exists(dll))
+            var log = new StringBuilder().Append(buildResult.Stdout).Append(buildResult.Stderr).ToString();
+            if (buildResult.ExitCode != 0 || !File.Exists(dll))
                 throw new InvalidOperationException($"Avowry CLI did not build ({dll}).{Environment.NewLine}{log}");
             EnsureFresh();
             return dll;
@@ -168,16 +143,4 @@ public static class PhraseCli
                 !Path.GetRelativePath(projectDirectory, path).Split(Path.DirectorySeparatorChar)
                     .Any(part => part.Equals("bin", StringComparison.Ordinal) || part.Equals("obj", StringComparison.Ordinal)));
 
-    private static void ApplyHostEnvironment(ProcessStartInfo psi)
-    {
-        // A newer system host may have no matching ASP.NET Core 8 runtime. Match DotnetCli.
-        psi.Environment["DOTNET_ROLL_FORWARD"] = "Major";
-
-        // A reused MSBuild node outlives the build and keeps the redirected output pipe open.
-        psi.Environment["MSBUILDDISABLENODEREUSE"] = "1";
-
-        // The outer test host sets MSBuild variables that would hijack a nested build.
-        foreach (var name in new[] { "MSBUILD_EXE_PATH", "MSBuildExtensionsPath", "MSBuildSDKsPath", "MSBuildLoadMicrosoftTargetsReadOnly" })
-            psi.Environment.Remove(name);
-    }
 }

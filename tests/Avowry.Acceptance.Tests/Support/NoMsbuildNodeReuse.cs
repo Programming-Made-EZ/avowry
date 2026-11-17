@@ -9,5 +9,5 @@ namespace Avowry.Acceptance.Tests.Support;
 internal static class NoMsbuildNodeReuse
 {
     [ModuleInitializer]
-    internal static void Apply() => Environment.SetEnvironmentVariable("MSBUILDDISABLENODEREUSE", "1");
+    internal static void Apply() => NestedDotnet.ApplyProcessWideNodeReuseDisable();
 }

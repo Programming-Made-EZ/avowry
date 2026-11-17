@@ -223,35 +223,12 @@ public class SourceMapTraceCommand
             };
             foreach (var argument in new[] { "build", project, "--nologo", "--disable-build-servers" })
                 info.ArgumentList.Add(argument);
-            info.Environment["DOTNET_ROLL_FORWARD"] = "Major";
-            info.Environment["MSBUILDDISABLENODEREUSE"] = "1";
-            foreach (var name in new[]
-            {
-                "MSBUILD_EXE_PATH", "MSBuildExtensionsPath", "MSBuildSDKsPath", "MSBuildLoadMicrosoftTargetsReadOnly",
-                "OutputPath", "OutDir", "BaseOutputPath", "BaseIntermediateOutputPath", "IntermediateOutputPath",
-                "Configuration", "TargetFramework", "UseAppHost",
-            })
-                info.Environment.Remove(name);
-            using var process = Process.Start(info) ?? throw new InvalidOperationException("Could not start dotnet build.");
-            var pid = process.Id;
-            var stdout = process.StandardOutput.ReadToEndAsync();
-            var stderr = process.StandardError.ReadToEndAsync();
-            using var timeout = new CancellationTokenSource(TimeSpan.FromMinutes(5));
-            try
-            {
-                await process.WaitForExitAsync(timeout.Token);
-            }
-            catch (OperationCanceledException)
-            {
-                if (!process.HasExited && process.Id == pid)
-                {
-                    process.Kill(entireProcessTree: true);
-                    await process.WaitForExitAsync();
-                }
+            NestedDotnet.Apply(info);
+            var result = await NestedDotnet.RunAsync(info, TimeSpan.FromMinutes(5));
+            if (result.TimedOut)
+                throw new TimeoutException("dotnet build process exceeded 5 minutes.");
 
-                throw new TimeoutException($"dotnet build process {pid} exceeded 5 minutes.");
-            }
-            return new CliRun(process.ExitCode, await stdout, await stderr);
+            return new CliRun(result.ExitCode, result.Stdout, result.Stderr);
         }
     }
 }

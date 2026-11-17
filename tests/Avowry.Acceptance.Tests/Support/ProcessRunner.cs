@@ -10,44 +10,8 @@ namespace Avowry.Acceptance.Tests.Support;
 /// </summary>
 internal static class ProcessRunner
 {
-    internal static async Task<ProcessResult> RunAsync(ProcessStartInfo startInfo, TimeSpan? timeout = null)
-    {
-        using var process = Process.Start(startInfo)
-            ?? throw new InvalidOperationException($"Process did not start: {startInfo.FileName}");
-
-        var stdoutTask = process.StandardOutput.ReadToEndAsync();
-        var stderrTask = process.StandardError.ReadToEndAsync();
-        var timedOut = false;
-
-        using var cts = timeout is { } limit ? new CancellationTokenSource(limit) : new CancellationTokenSource();
-        try
-        {
-            await process.WaitForExitAsync(cts.Token);
-        }
-        catch (OperationCanceledException) when (cts.IsCancellationRequested)
-        {
-            timedOut = true;
-            KillTreeIfRunning(process);
-            await process.WaitForExitAsync();
-        }
-
-        var stdout = await stdoutTask;
-        var stderr = await stderrTask;
-        return new ProcessResult(process.ExitCode, stdout, stderr, timedOut);
-    }
-
-    private static void KillTreeIfRunning(Process process)
-    {
-        try
-        {
-            if (!process.HasExited)
-                process.Kill(entireProcessTree: true);
-        }
-        catch (InvalidOperationException)
-        {
-            // Already exited between the check and the kill.
-        }
-    }
+    internal static Task<ProcessResult> RunAsync(ProcessStartInfo startInfo, TimeSpan? timeout = null) =>
+        NestedDotnet.RunAsync(startInfo, timeout ?? TimeSpan.FromMinutes(5));
 }
 
 internal sealed record ProcessResult(int ExitCode, string Stdout, string Stderr, bool TimedOut);

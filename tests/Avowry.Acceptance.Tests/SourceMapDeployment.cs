@@ -74,26 +74,11 @@ public class SourceMapDeployment
     private static async Task<CliRun> PublishAsync(string project, string output)
     {
         var info = PublishStartInfo(project, output);
-        using var process = Process.Start(info) ?? throw new InvalidOperationException("Could not start dotnet publish.");
-        var pid = process.Id;
-        var stdout = process.StandardOutput.ReadToEndAsync();
-        var stderr = process.StandardError.ReadToEndAsync();
-        try
-        {
-            await process.WaitForExitAsync().WaitAsync(PublishTimeout);
-        }
-        catch (TimeoutException)
-        {
-            if (!process.HasExited && process.Id == pid)
-            {
-                process.Kill(entireProcessTree: true);
-                await process.WaitForExitAsync();
-            }
+        var result = await NestedDotnet.RunAsync(info, PublishTimeout);
+        if (result.TimedOut)
+            throw new TimeoutException($"dotnet publish exceeded {PublishTimeout.TotalMinutes:0} minutes.");
 
-            throw new TimeoutException($"dotnet publish process {pid} exceeded {PublishTimeout.TotalMinutes:0} minutes.");
-        }
-
-        return new CliRun(process.ExitCode, await stdout, await stderr);
+        return new CliRun(result.ExitCode, result.Stdout, result.Stderr);
     }
 
     private static ProcessStartInfo PublishStartInfo(string project, string output)
@@ -107,15 +92,7 @@ public class SourceMapDeployment
         };
         foreach (var argument in new[] { "publish", project, "--nologo", "--disable-build-servers", "-o", output })
             info.ArgumentList.Add(argument);
-        info.Environment["DOTNET_ROLL_FORWARD"] = "Major";
-        info.Environment["MSBUILDDISABLENODEREUSE"] = "1";
-        foreach (var name in new[]
-        {
-            "MSBUILD_EXE_PATH", "MSBuildExtensionsPath", "MSBuildSDKsPath", "MSBuildLoadMicrosoftTargetsReadOnly",
-            "OutputPath", "OutDir", "BaseOutputPath", "BaseIntermediateOutputPath", "IntermediateOutputPath",
-            "Configuration", "TargetFramework", "UseAppHost",
-        })
-            info.Environment.Remove(name);
+        NestedDotnet.Apply(info);
         return info;
     }
 }

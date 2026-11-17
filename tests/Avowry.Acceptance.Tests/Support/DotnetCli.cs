@@ -25,39 +25,16 @@ public static partial class DotnetCli
         foreach (var arg in new[] { "test", projectPath, "--nologo", "--disable-build-servers" })
             psi.ArgumentList.Add(arg);
 
-        // A newer system host may have no matching ASP.NET Core 8 runtime. The reference
-        // remains a net8 build, while its testhost can run on an installed newer runtime.
-        psi.Environment["DOTNET_ROLL_FORWARD"] = "Major";
+        NestedDotnet.Apply(psi);
 
-        // A reused MSBuild node outlives the build and keeps the redirected output pipe open, so the
-        // test would wait for end of output forever when several nested builds run in one gate.
-        psi.Environment["MSBUILDDISABLENODEREUSE"] = "1";
-
-        // The outer test host sets MSBuild variables that would hijack the nested build.
-        foreach (var name in new[] { "MSBUILD_EXE_PATH", "MSBuildExtensionsPath", "MSBuildSDKsPath", "MSBuildLoadMicrosoftTargetsReadOnly" })
-            psi.Environment.Remove(name);
-
-        using var process = Process.Start(psi) ?? throw new InvalidOperationException("Could not start dotnet.");
-        var log = new StringBuilder();
-        var stdout = process.StandardOutput.ReadToEndAsync();
-        var stderr = process.StandardError.ReadToEndAsync();
-
-        using var cts = new CancellationTokenSource(Timeout);
-        try
-        {
-            await process.WaitForExitAsync(cts.Token);
-        }
-        catch (OperationCanceledException)
-        {
-            process.Kill(entireProcessTree: true);
+        var result = await NestedDotnet.RunAsync(psi, Timeout);
+        if (result.TimedOut)
             throw new TimeoutException($"dotnet test exceeded {Timeout.TotalMinutes} minutes for {projectPath}");
-        }
 
-        log.Append(await stdout).Append(await stderr);
-        var text = log.ToString();
+        var text = result.Stdout + result.Stderr;
 
         return new TestRunResult(
-            process.ExitCode,
+            result.ExitCode,
             Total: Capture(TotalPattern(), text),
             Failed: Capture(FailedPattern(), text),
             Log: text);
