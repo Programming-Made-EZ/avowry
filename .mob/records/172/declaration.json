@@ -1,0 +1,14 @@
+{
+ "card": "172",
+ "probe_taken_at": "2026-11-17T03:51:43Z",
+ "seats": [
+  {"role": "dev, red", "service": "claude", "model": "claude-sonnet-5-5", "reason": "trace guard tests and a test-helper characterisation, written blind under the heavy-lock pattern; mid tier"},
+  {"role": "dev, green", "service": "cursor", "model": "composer-2.5", "reason": "first-choice writer: the trace guards and the shared test process helper"},
+  {"role": "QA, review", "service": "claude", "model": "claude-opus-5-5", "reason": "process-tree kill, path guards and no test removed or renamed; strong tier"},
+  {"role": "cross-family review", "service": "qwen", "model": "default (local, --think)", "reason": "rotation: no Avowry seat in about 25 h and healthy at 03:51:45Z; reply-only, so the diff is inlined; run while no heavy run holds the machine, under Avowry's lock"},
+  {"role": "acceptance, sign-off", "service": "agy", "model": "gemini-3.8-flash-medium", "reason": "read-only; not a writer or reviewer service"}
+ ],
+ "no_fit": {
+  "grok": "the cross-family review goes to qwen on this card by rotation (grok reviewed cards 169 and 171); grok votes in this card's Deciders"
+ }
+}

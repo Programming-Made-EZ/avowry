@@ -2961,3 +2961,11 @@
 {"seat": "claude", "role": "QA, review", "context": "ctx-171q", "card": "171", "ts": "2026-11-17T03:03:29.764196Z", "event": "outcome", "outcome": "success", "duration_s": 139.0, "actual_model_by_wrapper_config": "claude-opus-5-5", "model_reported_by_cli": null}
 {"seat": "agy", "role": "acceptance, sign-off", "context": "ctx-171s", "card": "171", "ts": "2026-11-17T03:05:01.349018Z", "probe_taken_at": "2026-11-17T01:51:57Z", "service": "agy", "declared_model": "gemini-3.8-flash-medium", "declared_reason": "D281: read-only sign-off", "work_type": "signoff", "outcome": "launched"}
 {"seat": "agy", "role": "acceptance, sign-off", "context": "ctx-171s", "card": "171", "ts": "2026-11-17T03:08:51.114608Z", "event": "outcome", "outcome": "success", "duration_s": 470.0, "actual_model_by_wrapper_config": "gemini-3.8-flash-medium", "model_reported_by_cli": null}
+{"event": "probe", "service": "agy", "result": "ok", "error": "", "taken_at": "2026-11-17T03:51:43.773002Z"}
+{"event": "probe", "service": "claude", "result": "ok", "error": "", "taken_at": "2026-11-17T03:51:43.773567Z"}
+{"event": "probe", "service": "codex", "result": "quota", "error": "…. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM.", "taken_at": "2026-11-17T03:51:43.774068Z"}
+{"event": "probe", "service": "copilot", "result": "quota", "error": "You have no quota (Request ID: 00000-15fbd815-52bb-4dfd-8219-48f4f4cc1762)", "taken_at": "2026-11-17T03:51:43.774583Z"}
+{"event": "probe", "service": "cursor", "result": "ok", "error": "", "taken_at": "2026-11-17T03:51:43.775178Z"}
+{"event": "probe", "service": "grok", "result": "ok", "error": "", "taken_at": "2026-11-17T03:51:43.775610Z"}
+{"event": "probe", "service": "muse", "result": "quota", "error": "…ed. agent loop failed: model failed: API error 429 [request_id=279095d4-2702-4935-963f-fc35403583f9]: Subscription quota exhausted. Your usage window resets at 2026-11-23T00:00:00Z. (rate_limit_error)", "taken_at": "2026-11-17T03:51:43.776321Z"}
+{"event": "probe", "service": "qwen", "result": "ok", "error": "", "taken_at": "2026-11-17T03:51:45.658015Z"}
