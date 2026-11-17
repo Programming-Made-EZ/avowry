@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 171,
+ "title": "The CLI reads method and type names from the adapter; Program.cs is tidy",
+ "process": "kickoff probe and kickoff_check.py (passed, declaration committed before the vote); Decider D281 (card 201 waits for the product owner; card 171 adopted); a facilitator slice; the red written without dotnet found the CLI's hole-skipping copy of the naming rule (ruling R171-1: csMethod names the real generated method, the map may change, the generated C# may not); red and green proofs by the facilitator under Avowry's heavy lock; grok cross-family review in normal mode and claude opus review, both SIGN-OFF with MINOR only; sign-off agy; one gate under Avowry's heavy lock; merged by fast-forward; the facilitator's retro with its Model allocation review.",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-0",
+   "model": "the facilitator session (claude opus = claude-opus-5-5); the card was Ready; Decider D281 adopted it with the task force (grok, agy and cursor ballots); evidence is the kickoff record commit",
+   "evidence": "578ba98"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-1",
+   "model": "the facilitator session (claude opus = claude-opus-5-5) wrote .mob/records/171/slice.md and ruling R171-1",
+   "evidence": "986cb2b"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-2",
+   "model": "claude sonnet = claude-sonnet-5-5, a fresh subagent context (ctx-171r, resumed under R171-1)",
+   "evidence": "d0bff79"
+  },
+  {
+   "role": "green",
+   "seat": "Cursor ctx-3",
+   "model": "cursor-agent -p --force --model composer-2.5 (pinned), ctx-171g",
+   "evidence": "d8bf1ad"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-4",
+   "model": "claude opus = claude-opus-5-5, a fresh context (ctx-171q), SIGN-OFF with six MINOR; grok grok-4.6 cross-family review in normal mode; proofs and the gate by the facilitator under Avowry's heavy-run lock",
+   "evidence": "3b969d4"
+  },
+  {
+   "role": "signoff",
+   "seat": "agy ctx-5",
+   "model": "agy gemini-3.8-flash-medium (pinned with --model), a fresh context ctx-171s, read-only in a clone",
+   "evidence": "3e1b5e6"
+  }
+ ],
+ "retro": "docs/retros/card-171-2026-11-17.md",
+ "notes": "Done checks met at the gate (d8bf1ad, quiet machine, Avowry's heavy lock): Release build 0 errors; dotnet test Avowry.sln --filter Status!=Pending compiler 344 of 344, acceptance 1525 of 1525 (Slice 171 four of four; the Slice 142 orders pin 19fe6d71 and the Slice 176 demo golden unchanged). The map's avow csMethod now includes hole words, the name of the generated method (a fix). Named limits and follow-ups in the retro (an empty adapter name map throws KeyNotFoundException; the CLI still selects the adapter). Main took the card branch by fast-forward, so every evidence commit keeps its id."
+}
