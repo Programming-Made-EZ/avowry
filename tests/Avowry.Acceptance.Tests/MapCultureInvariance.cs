@@ -11,10 +11,14 @@ namespace Avowry.Acceptance.Tests;
 //   so that a map made on one machine matches a map made on another.
 public class MapCultureInvariance
 {
-    // The names differ only in letters and case, and every pair that a culture orders differently from
-    // an ordinal comparison appears here (for example Ab/AC, Ia/IB, Zy/ZX). No two differ by case alone,
-    // so the generated files stay distinct on a case-insensitive file system.
-    private static readonly string[] EndpointNames = ["Ab", "AC", "Ia", "IB", "Zy", "ZX"];
+    // The names differ only in letters and case. Ab/AC and Ia/IB order differently by culture than by ordinal.
+    // Aib/AIc is the pair that tr-TR orders differently from the invariant culture (the dotless I is a letter
+    // before the dotted i, so AIc comes before Aib there, and Aib before AIc under the invariant culture); it
+    // stands in for the ruling's Ib/ia, because an endpoint name must start with an upper-case ASCII letter.
+    // No two names differ by case alone, so the generated files stay distinct on a case-insensitive file system.
+    private static readonly string[] EndpointNames = ["Ab", "AC", "Ia", "IB", "Zy", "ZX", "Aib", "AIc"];
+
+    private static readonly string[] TurkishPair = ["Aib", "AIc"];
 
     private static readonly string[] Cultures = ["tr-TR", "sv-SE"];
 
@@ -32,6 +36,9 @@ public class MapCultureInvariance
             var byCulture = EndpointNames.Order(StringComparer.Create(CultureInfo.GetCultureInfo(name), ignoreCase: false)).ToArray();
             Assert.False(ordinal.SequenceEqual(byCulture), $"The sample must sort differently under {name}, or the test proves nothing.");
         }
+        var invariantPair = TurkishPair.Order(StringComparer.Create(CultureInfo.InvariantCulture, ignoreCase: false)).ToArray();
+        var turkishPair = TurkishPair.Order(StringComparer.Create(CultureInfo.GetCultureInfo("tr-TR"), ignoreCase: false)).ToArray();
+        Assert.False(invariantPair.SequenceEqual(turkishPair), "The pair must sort differently under tr-TR than under the invariant culture, or a culture-aware sort could pass.");
         using var workspace = TempWorkspace.Create();
         var source = Path.Combine(workspace.Root, "Cultures.avowry");
         await File.WriteAllTextAsync(source, SourceWithEndpoints(EndpointNames));
@@ -41,13 +48,23 @@ public class MapCultureInvariance
         var invariant = BuildMap(workspace, source, CultureInfo.InvariantCulture);
         var maps = Cultures.ToDictionary(name => name, name => BuildMap(workspace, source, CultureInfo.GetCultureInfo(name)));
 
-        // Then the invariant map lists the endpoints in ordinal order, and each culture writes the same bytes
+        // Then the invariant map lists every record in ordinal (kind, name, endpoint, line) order, and each culture writes the same bytes
         using var document = JsonDocument.Parse(invariant);
-        var endpointNames = document.RootElement.GetProperty("records").EnumerateArray()
-            .Where(record => record.GetProperty("kind").GetString() == "endpoint")
-            .Select(record => record.GetProperty("name").GetString()!)
+        var records = document.RootElement.GetProperty("records").EnumerateArray()
+            .Select(record => (
+                Kind: record.GetProperty("kind").GetString()!,
+                Name: record.GetProperty("name").GetString()!,
+                Endpoint: record.GetProperty("endpoint").GetString()!,
+                Line: record.GetProperty("line").GetInt32()))
             .ToArray();
-        Assert.Equal(ordinal, endpointNames);
+        Assert.Equal(new[] { "avow", "endpoint", "failure", "step" }, records.Select(record => record.Kind).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray());
+        Assert.Equal(
+            records.OrderBy(record => record.Kind, StringComparer.Ordinal)
+                .ThenBy(record => record.Name, StringComparer.Ordinal)
+                .ThenBy(record => record.Endpoint, StringComparer.Ordinal)
+                .ThenBy(record => record.Line).ToArray(),
+            records);
+        Assert.Equal(ordinal, records.Where(record => record.Kind == "endpoint").Select(record => record.Name).ToArray());
         foreach (var (name, bytes) in maps)
             Assert.True(invariant.SequenceEqual(bytes), $"The map written under {name} differs from the invariant map.");
     }
@@ -76,6 +93,19 @@ public class MapCultureInvariance
             "var l = new Dictionary<string, List<int>>();",
             "var m = Comparer<string>.Default;",
             "var n = left.IndexOf(\"x\", StringComparison.CurrentCulture);",
+            "var o = names.Order();",
+            "var p = names.OrderDescending();",
+            "var q = names.Min();",
+            "var r = names.Max();",
+            "var s = records.MinBy(record => record.Name);",
+            "var t = records.MaxBy(record => record.Name);",
+            "var u = names.ToLookup(name => name);",
+            "var v = names.BinarySearch(\"x\");",
+            "var w = from record in records orderby record.Name select record;",
+            "var x = left.ToUpper();",
+            "var y = char.ToUpper(letter);",
+            "var z = char.ToLower(letter);",
+            "var aa = left.ToLower(CultureInfo.CurrentCulture);",
         };
 
         // When the scanner reads each planted text
@@ -85,16 +115,20 @@ public class MapCultureInvariance
         Assert.Empty(missed);
         Assert.Empty(FindNonOrdinalCalls(
             "var a = list.OrderBy(record => record.Kind, StringComparer.Ordinal).ThenBy(record => record.Name, StringComparer.Ordinal).ThenBy(record => record.Line);"));
+        Assert.Empty(FindNonOrdinalCalls(
+            "var b = names.Order(StringComparer.Ordinal).Select(name => name.ToLower(CultureInfo.InvariantCulture) + char.ToUpperInvariant(name[0]) + name.ToUpperInvariant());"));
+
+        // And a planted call in a map helper (found by its declaration, past the trace code) is reported too
+        var plantedProgram = "static void WriteMap() { }\nstatic string StepId() => \"\";\nstatic int Trace(string[] values) { }\n"
+            + "static bool Calls(int a) => true;\nstatic string MethodName(int a) => char.ToUpper(a);\n"
+            + "static string Hash(string a) => a;\nstatic DeclaredFailureModel? FailureDeclaration(int a) => null;\n"
+            + "static DeclaredFailureModel? AvowFailureDeclaration(int a) => null;\nstatic void Error(string m) { }\n";
+        Assert.NotEmpty(MapWriterFindings(plantedProgram));
 
         // And the real map writer, from WriteMap to the end of the map helpers, holds no non-ordinal call
         var program = File.ReadAllText(RepoPaths.Find("src", "Avowry.Cli", "Program.cs"));
-        var start = program.IndexOf("static void WriteMap(", StringComparison.Ordinal);
-        var end = program.IndexOf("static int Trace(", StringComparison.Ordinal);
-        Assert.True(start >= 0 && end > start, "The map writer region (WriteMap up to Trace) was not found in Program.cs.");
-        var writer = program[start..end];
-        Assert.Contains("static string StepId(", writer, StringComparison.Ordinal);
-        Assert.Contains(".OrderBy(", writer, StringComparison.Ordinal);
-        Assert.Empty(FindNonOrdinalCalls(writer));
+        Assert.Empty(MapWriterFindings(program));
+        Assert.Contains(".OrderBy(", program, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -119,7 +153,7 @@ public class MapCultureInvariance
 
     // The CLI is top-level statements and no environment variable sets a .NET culture, so a child process
     // cannot be forced into tr-TR on every platform. The built CLI is loaded and its synthesized entry point
-    // is run on this thread, with the thread's culture set: the real build path, no product seam, and
+    // is run on this thread, with the thread's culture set: the CLI's build path (it runs against the test project's copies of the compiler assemblies), no product seam, and
     // an exit code of 0 is required. The culture is restored before the thread is used for anything else.
     private static byte[] BuildMap(TempWorkspace workspace, string source, CultureInfo culture)
     {
@@ -216,11 +250,39 @@ public class MapCultureInvariance
 
         """;
 
+    // The map writer is WriteMap up to Trace (WriteMap, Records, the record builders, StepId), plus these map
+    // helpers that feed the records, each found by its declaration (never by line number).
+    private static readonly string[] MapHelpers = ["Calls", "FailureDeclaration", "AvowFailureDeclaration", "MethodName", "Hash"];
+
+    private static List<string> MapWriterFindings(string program)
+    {
+        var start = program.IndexOf("static void WriteMap(", StringComparison.Ordinal);
+        var end = program.IndexOf("static int Trace(", StringComparison.Ordinal);
+        Assert.True(start >= 0 && end > start, "The map writer region (WriteMap up to Trace) was not found in Program.cs.");
+        var writer = program[start..end];
+        Assert.Contains("static string StepId(", writer, StringComparison.Ordinal);
+        var findings = FindNonOrdinalCalls(writer);
+        foreach (var helper in MapHelpers)
+        {
+            var declaration = Regex.Match(program, $@"(?m)^static [^\r\n]*\b{helper}\(", RegexOptions.CultureInvariant);
+            Assert.True(declaration.Success, $"The map helper {helper} was not found in Program.cs.");
+            var after = declaration.Index + declaration.Length;
+            var next = Regex.Match(program[after..], @"(?m)^(?:static|sealed) ", RegexOptions.CultureInvariant);
+            findings.AddRange(FindNonOrdinalCalls(program[declaration.Index..(next.Success ? after + next.Index : program.Length)]));
+        }
+        return findings;
+    }
+
     private static readonly string[] CheckedMethods =
     [
-        "OrderBy", "OrderByDescending", "ThenBy", "ThenByDescending", "Sort", "Distinct", "GroupBy", "ToDictionary",
-        "ToHashSet", "Compare", "CompareTo", "StartsWith", "EndsWith", "IndexOf", "LastIndexOf",
+        "OrderBy", "OrderByDescending", "ThenBy", "ThenByDescending", "Order", "OrderDescending", "Sort", "Distinct",
+        "GroupBy", "ToDictionary", "ToHashSet", "ToLookup", "Min", "Max", "MinBy", "MaxBy", "BinarySearch",
+        "Compare", "CompareTo", "StartsWith", "EndsWith", "IndexOf", "LastIndexOf",
     ];
+
+    // A case change is fine only with an invariant culture argument (the ...Invariant methods never match CaseChange).
+    private static readonly Regex CaseChange = new(@"\.To(?:Lower|Upper)\s*\(", RegexOptions.CultureInvariant);
+    private static readonly Regex InvariantArgument = new(@"\bCultureInfo\.InvariantCulture\b", RegexOptions.CultureInvariant);
 
     // A call on a non-string key has no comparer to name; each such call is listed here in full, so a new
     // call, or a string key swapped in, is still reported.
@@ -241,7 +303,13 @@ public class MapCultureInvariance
             if (!Ordinal.IsMatch(text) && !NonStringKeyCalls.Contains(normalised))
                 found.Add(normalised);
         }
-        foreach (Match culture in Regex.Matches(code, @"\.To(?:Lower|Upper)\s*\(|\bString(?:Comparer|Comparison)\.(?!Ordinal\b)\w+|\bComparer(?:<[^>]*>)?\.Default\b", RegexOptions.CultureInvariant))
+        foreach (Match change in CaseChange.Matches(code))
+        {
+            var text = code[change.Index..ArgumentsEnd(code, change.Index + change.Length)];
+            if (!InvariantArgument.IsMatch(text))
+                found.Add(Regex.Replace(text, @"\s+", " ").TrimStart('.'));
+        }
+        foreach (Match culture in Regex.Matches(code, @"\borderby\b|\bString(?:Comparer|Comparison)\.(?!Ordinal\b)\w+|\bComparer(?:<[^>]*>)?\.Default\b", RegexOptions.CultureInvariant))
             found.Add(culture.Value);
         return found;
     }
