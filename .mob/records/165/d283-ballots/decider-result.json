@@ -1,0 +1,259 @@
+{
+  "result": "passed",
+  "prompt_sha": "d578e8d94fdf484fed41bc7c828771d25b13a4e3d8d6b80d611b11fabc5be5d4",
+  "probe": {
+    "taken_at": "2026-11-17T05:14:11.899326Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-f4b4cd16-46e0-4c1b-aaf6-84c7530e1de1)"
+      },
+      "grok": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=223ca672-48b9-4d94-8210-279da86aa1c6]: Subscription quota exhausted. Your usage window resets at 2026-11-23T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "CITE: the 422 bodies and the 11 demo specs stay byte-identical",
+      "reply": "I'll inspect the card 165 declaration, the working agreement, and related records so the vote is based on the committed files.I'll read the Decider checklist, card 165, and the working agreement next.I'll inspect card 165, its declaration, and the task-force rules next.I'll read the D283 kickoff files and compare them with recent adopted task-force votes.I'll verify dependencies, the two-seat cap, and the card-172 retro against the committed records.I'll confirm the declaration is committed, check ranks, and read the security-role rule.Yes\nCITE: the 422 bodies and the 11 demo specs stay byte-identical\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: the 422 bodies and the 11 demo specs stay byte-identical"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 298.24173430001247,
+      "role": "architect",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T05:14:11.899326Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 3009
+    },
+    "coach": {
+      "vote": "Yes",
+      "reason": "CITE: the 422 bodies and the 11 demo specs stay byte-identical",
+      "reply": "I'll read the card, declaration, and Decider rules first so the vote is based on the actual record.I'll pull the card, kickoff record, and Decider rules next.I'll check recent kickoffs, dependency cards, and whether 165 still matches Ready.I'll verify ranking, the committed declaration, D112, and staffing rules before voting.Yes\nCITE: the 422 bodies and the 11 demo specs stay byte-identical\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: the 422 bodies and the 11 demo specs stay byte-identical"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 286.1365265000204,
+      "role": "coach",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T05:14:11.899326Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 3010
+    },
+    "dev": {
+      "vote": "Yes",
+      "reason": "CITE: adopt card 165 with its task force",
+      "reply": "Yes\n\nCITE: adopt card 165 with its task force\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: adopt card 165 with its task force"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 157.79204349999782,
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T05:14:11.899326Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 3011
+    },
+    "qa": {
+      "vote": "Yes",
+      "reason": "CITE: No service holds more than two seats.",
+      "reply": "Yes\n\nCITE: No service holds more than two seats.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: No service holds more than two seats."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 217.54122140002437,
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T05:14:11.899326Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 3012
+    },
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "Committed declaration, probe at 05:11:56Z, dependencies 161 and 170 done, and the staffing plan match the card's security and cross-family review requirements. CITE: tracing plugs in outside the runtime",
+      "reply": "Yes. Committed declaration, probe at 05:11:56Z, dependencies 161 and 170 done, and the staffing plan match the card\u2019s security and cross-family review requirements.\n\nCITE: tracing plugs in outside the runtime\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "Committed declaration, probe at 05:11:56Z, dependencies 161 and 170 done, and the staffing plan match the card's security and cross-family review requirements. CITE: tracing plugs in outside the runtime"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 172.9083713,
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T05:14:11.899326Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 3013
+    },
+    "decider": {
+      "vote": "Yes",
+      "reason": "CITE: every proof after the green runs the full Status!=Pending suite (the card 172 retro).",
+      "reply": "Yes\n\nCITE: every proof after the green runs the full Status!=Pending suite (the card 172 retro).\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: every proof after the green runs the full Status!=Pending suite (the card 172 retro)."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 165.06974609999452,
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T05:14:11.899326Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 3014
+    }
+  },
+  "counted_seats": [
+    "architect",
+    "coach",
+    "dev",
+    "qa",
+    "auditlens",
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "a8a74fbd29bc943ac5e1f870f9c1d3c5d65c0e74",
+  "head_end": "a8a74fbd29bc943ac5e1f870f9c1d3c5d65c0e74",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes",
+      "coach": "Yes",
+      "dev": "Yes",
+      "qa": "Yes",
+      "auditlens": "Yes",
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 6
+    }
+  },
+  "absent": []
+}
