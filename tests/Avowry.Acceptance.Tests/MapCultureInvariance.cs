@@ -118,12 +118,10 @@ public class MapCultureInvariance
         Assert.Empty(FindNonOrdinalCalls(
             "var b = names.Order(StringComparer.Ordinal).Select(name => name.ToLower(CultureInfo.InvariantCulture) + char.ToUpperInvariant(name[0]) + name.ToUpperInvariant());"));
 
-        // And a planted call in a map helper (found by its declaration, past the trace code) is reported too
-        var plantedProgram = "static void WriteMap() { }\nstatic string StepId() => \"\";\nstatic int Trace(string[] values) { }\n"
-            + "static bool Calls(int a) => true;\nstatic string MethodName(int a) => char.ToUpper(a);\n"
-            + "static string Hash(string a) => a;\nstatic DeclaredFailureModel? FailureDeclaration(int a) => null;\n"
-            + "static DeclaredFailureModel? AvowFailureDeclaration(int a) => null;\nstatic void Error(string m) { }\n";
-        Assert.NotEmpty(MapWriterFindings(plantedProgram));
+        // And a planted call in each map helper that stays (found by its declaration, past the trace code) is reported too
+        foreach (var dirty in MapHelpers)
+            Assert.NotEmpty(MapWriterFindings(PlantedProgram(dirty)));
+        Assert.Empty(MapWriterFindings(PlantedProgram(null)));
 
         // And the real map writer, from WriteMap to the end of the map helpers, holds no non-ordinal call
         var program = File.ReadAllText(RepoPaths.Find("src", "Avowry.Cli", "Program.cs"));
@@ -252,7 +250,15 @@ public class MapCultureInvariance
 
     // The map writer is WriteMap up to Trace (WriteMap, Records, the record builders, StepId), plus these map
     // helpers that feed the records, each found by its declaration (never by line number).
-    private static readonly string[] MapHelpers = ["Calls", "FailureDeclaration", "AvowFailureDeclaration", "MethodName", "Hash"];
+    private static readonly string[] MapHelpers = ["Calls", "FailureDeclaration", "AvowFailureDeclaration", "Hash"];
+
+    // A program of the right shape whose map helpers are clean, except the one named (if any), which calls a culture-aware method.
+    // Card 171 moves MethodName out of Program.cs, so the helper list no longer requires it; each helper that stays has its own proof.
+    private static string PlantedProgram(string? dirtyHelper)
+    {
+        var helpers = string.Concat(MapHelpers.Select(helper => $"static int {helper}(int a) => {(helper == dirtyHelper ? "char.ToUpper(a)" : "a")};\n"));
+        return "static void WriteMap() { }\nstatic string StepId() => \"\";\nstatic int Trace(string[] values) { }\n" + helpers + "static void Error(string m) { }\n";
+    }
 
     private static List<string> MapWriterFindings(string program)
     {
