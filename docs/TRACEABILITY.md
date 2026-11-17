@@ -34,6 +34,12 @@ Record order and the endpoint of an avow record: records are sorted ordinally by
 
 ## Failure observer and offline tracing
 
-The generated API declares `IAvowryFailureObserver`, a neutral `AvowryFailureEvent` (schema version 1: failure code, endpoint name, opaque step id, build id) and a no-op implementation. The host registers the no-op with `TryAddSingleton` so production can register a logging or tracing observer first. After a declared failure is decided and the 422 is sent, the endpoint notifies the observer off the request path; the event carries no request or source detail.
+The generated API declares `IAvowryFailureObserver`, a neutral `AvowryFailureEvent` (schema version 1: failure code, endpoint name, step id, build id) and a no-op implementation. The host registers the no-op with `TryAddSingleton` so production can register a logging or tracing observer first. After a declared failure is decided and the 422 is sent, the endpoint notifies the observer off the request path; the event carries no request or source detail.
+
+The step id is not secret: the hash recipe above is public, and the event already carries the failure code and endpoint name, so anyone with the generated code or a production log line can recover the declaration line number by recomputing the hash for likely lines. The source map is what makes tracing convenient, not what protects the line.
+
+Only declared failure codes are observed. An undeclared code still returns 422 with that code in the body, but no observer event is raised.
+
+`OnFailure` must be fast and non-blocking: enqueue any work and return synchronously. Do not implement it as `async void`. Delivery is best-effort: each failure queues one thread-pool work item after the response is sent, observer exceptions are swallowed, and events may be lost on shutdown or under load.
 
 A plain logging observer can write one production-shaped line, for example `avowry-failure v1 code=EmptyTitle endpoint=CreateTask stepId=<stepId> buildId=<buildId>`. Resolve that step id offline with `avowry trace <stepId> --map generated/Tasks.avowrymap.json` (exact match on `stepId`, same as tracing by failure name or generated frame).

@@ -237,17 +237,22 @@ public sealed class CompleteTaskEndpoint(ITaskStore taskstore, IAvowryFailureObs
         {
             AddError(failure.Code);
             await Send.ErrorsAsync(422, ct);
-            var observed = new AvowryFailureEvent(1, failure.Code, "CompleteTask", failure.Code switch
+            switch (failure.Code)
             {
-                "NotFound" => FailureStepIds.CompleteTask_NotFound,
-                _ => ""
-            }, "eee88242de7ffba4");
-            _ = global::System.Threading.Tasks.Task.Run(() =>
-            {
-                try { failureObserver.OnFailure(observed); }
-                catch { }
-            });
+                case "NotFound":
+                    ObserveFailure(new AvowryFailureEvent(1, "NotFound", "CompleteTask", FailureStepIds.CompleteTask_NotFound, "eee88242de7ffba4"));
+                    break;
+            }
         }
+    }
+
+    private void ObserveFailure(AvowryFailureEvent failureEvent)
+    {
+        _ = global::System.Threading.Tasks.Task.Run(() =>
+        {
+            try { failureObserver.OnFailure(failureEvent); }
+            catch { }
+        });
     }
 }
 ### Tasks.Api/CreateTask.cs.cs
@@ -295,18 +300,25 @@ public sealed class CreateTaskEndpoint(ITaskStore taskstore, IAvowryFailureObser
         {
             AddError(failure.Code);
             await Send.ErrorsAsync(422, ct);
-            var observed = new AvowryFailureEvent(1, failure.Code, "CreateTask", failure.Code switch
+            switch (failure.Code)
             {
-                "EmptyTitle" => FailureStepIds.CreateTask_EmptyTitle,
-                "TitleTooLong" => FailureStepIds.CreateTask_TitleTooLong,
-                _ => ""
-            }, "eee88242de7ffba4");
-            _ = global::System.Threading.Tasks.Task.Run(() =>
-            {
-                try { failureObserver.OnFailure(observed); }
-                catch { }
-            });
+                case "EmptyTitle":
+                    ObserveFailure(new AvowryFailureEvent(1, "EmptyTitle", "CreateTask", FailureStepIds.CreateTask_EmptyTitle, "eee88242de7ffba4"));
+                    break;
+                case "TitleTooLong":
+                    ObserveFailure(new AvowryFailureEvent(1, "TitleTooLong", "CreateTask", FailureStepIds.CreateTask_TitleTooLong, "eee88242de7ffba4"));
+                    break;
+            }
         }
+    }
+
+    private void ObserveFailure(AvowryFailureEvent failureEvent)
+    {
+        _ = global::System.Threading.Tasks.Task.Run(() =>
+        {
+            try { failureObserver.OnFailure(failureEvent); }
+            catch { }
+        });
     }
 }
 ### Tasks.Api/DeleteTask.cs.cs
@@ -349,17 +361,22 @@ public sealed class DeleteTaskEndpoint(ITaskStore taskstore, IAvowryFailureObser
         {
             AddError(failure.Code);
             await Send.ErrorsAsync(422, ct);
-            var observed = new AvowryFailureEvent(1, failure.Code, "DeleteTask", failure.Code switch
+            switch (failure.Code)
             {
-                "NotFound" => FailureStepIds.DeleteTask_NotFound,
-                _ => ""
-            }, "eee88242de7ffba4");
-            _ = global::System.Threading.Tasks.Task.Run(() =>
-            {
-                try { failureObserver.OnFailure(observed); }
-                catch { }
-            });
+                case "NotFound":
+                    ObserveFailure(new AvowryFailureEvent(1, "NotFound", "DeleteTask", FailureStepIds.DeleteTask_NotFound, "eee88242de7ffba4"));
+                    break;
+            }
         }
+    }
+
+    private void ObserveFailure(AvowryFailureEvent failureEvent)
+    {
+        _ = global::System.Threading.Tasks.Task.Run(() =>
+        {
+            try { failureObserver.OnFailure(failureEvent); }
+            catch { }
+        });
     }
 }
 ### Tasks.Api/GetTask.cs.cs
@@ -405,17 +422,22 @@ public sealed class GetTaskEndpoint(ITaskStore taskstore, IAvowryFailureObserver
         {
             AddError(failure.Code);
             await Send.ErrorsAsync(422, ct);
-            var observed = new AvowryFailureEvent(1, failure.Code, "GetTask", failure.Code switch
+            switch (failure.Code)
             {
-                "NotFound" => FailureStepIds.GetTask_NotFound,
-                _ => ""
-            }, "eee88242de7ffba4");
-            _ = global::System.Threading.Tasks.Task.Run(() =>
-            {
-                try { failureObserver.OnFailure(observed); }
-                catch { }
-            });
+                case "NotFound":
+                    ObserveFailure(new AvowryFailureEvent(1, "NotFound", "GetTask", FailureStepIds.GetTask_NotFound, "eee88242de7ffba4"));
+                    break;
+            }
         }
+    }
+
+    private void ObserveFailure(AvowryFailureEvent failureEvent)
+    {
+        _ = global::System.Threading.Tasks.Task.Run(() =>
+        {
+            try { failureObserver.OnFailure(failureEvent); }
+            catch { }
+        });
     }
 }
 ### Tasks.Api/ListTasks.cs.cs
@@ -461,17 +483,22 @@ public sealed class ListTasksEndpoint(ITaskStore taskstore, IAvowryFailureObserv
         {
             AddError(failure.Code);
             await Send.ErrorsAsync(422, ct);
-            var observed = new AvowryFailureEvent(1, failure.Code, "ListTasks", failure.Code switch
+            switch (failure.Code)
             {
-                "StoreUnavailable" => FailureStepIds.ListTasks_StoreUnavailable,
-                _ => ""
-            }, "eee88242de7ffba4");
-            _ = global::System.Threading.Tasks.Task.Run(() =>
-            {
-                try { failureObserver.OnFailure(observed); }
-                catch { }
-            });
+                case "StoreUnavailable":
+                    ObserveFailure(new AvowryFailureEvent(1, "StoreUnavailable", "ListTasks", FailureStepIds.ListTasks_StoreUnavailable, "eee88242de7ffba4"));
+                    break;
+            }
         }
+    }
+
+    private void ObserveFailure(AvowryFailureEvent failureEvent)
+    {
+        _ = global::System.Threading.Tasks.Task.Run(() =>
+        {
+            try { failureObserver.OnFailure(failureEvent); }
+            catch { }
+        });
     }
 }
 ### Tasks.Api/Program.cs

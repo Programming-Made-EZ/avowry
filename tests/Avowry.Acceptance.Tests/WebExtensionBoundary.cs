@@ -17,7 +17,7 @@ public class WebExtensionBoundary
     // tree after the card 193 generated-name change. Paths are sorted ordinally. Each path and file text is
     // UTF-8, with a NUL byte after the path and after the text.
     // Card 165: re-recorded for the failure observer (IAvowryFailureObserver, event, no-op, endpoints).
-    private const string OrdersOutputHash = "ec3a55263eae8e369f6bbb2a0215088d6f6f345cbacb955f64c1697b3172276a";
+    private const string OrdersOutputHash = "df716c5c1afcf35c0448c34a395440fa5fc113811e83d67cd348918f5b3771d7";
 
     [Fact]
     [Trait("Slice", "142")]

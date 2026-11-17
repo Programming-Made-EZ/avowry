@@ -41,8 +41,8 @@ public class ExistingTestsKept172
         var boundary = File.ReadAllText(RepoPaths.Find("tests", "Avowry.Acceptance.Tests", "WebExtensionBoundary.cs"));
         var golden = RepoPaths.Find("tests", "Avowry.Acceptance.Tests", "TasksDemoGeneratedCsharp.golden");
 
-        // Then the orders hash still starts ec3a552 and the golden file is still there (card 165 observer re-record)
-        Assert.Contains("OrdersOutputHash = \"ec3a552", boundary, StringComparison.Ordinal);
+        // Then the orders hash still starts df716c5 and the golden file is still there (card 165 observer re-record)
+        Assert.Contains("OrdersOutputHash = \"df716c5", boundary, StringComparison.Ordinal);
         Assert.True(File.Exists(golden));
     }
 

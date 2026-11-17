@@ -312,7 +312,7 @@ public sealed class CSharpProvider : ITargetAdapter
         var constants = FailureStepIdConstants(module).ToArray();
         if (constants.Length > 0)
         {
-            code.Append("\ninternal static class FailureStepIds\n{\n");
+            code.Append("\ninternal static class ").Append(ReservedNames.FailureStepIds).Append("\n{\n");
             foreach (var (name, value) in constants)
                 code.Append("    internal const string ").Append(name).Append(" = \"").Append(value).Append("\";\n");
             code.Append("}\n");
@@ -339,27 +339,37 @@ public sealed class CSharpProvider : ITargetAdapter
 
     private static void AppendFailureObserverCall(StringBuilder code, ModuleModel module, EndpointModel endpoint)
     {
-        code.Append("            var observed = new ").Append(ReservedNames.FailureObserverEvent).Append("(1, failure.Code, ")
-            .Append(CsString(endpoint.Name)).Append(", failure.Code switch\n            {\n");
+        code.Append("            switch (failure.Code)\n");
+        code.Append("            {\n");
         foreach (var failure in endpoint.Failures.Distinct(StringComparer.Ordinal))
         {
             if (FindFailureDeclaration(module, endpoint, failure) is null)
                 continue;
-            code.Append("                ").Append(CsString(failure)).Append(" => FailureStepIds.")
-                .Append(FailureStepIdName(endpoint.Name, failure)).Append(",\n");
+            code.Append("                case ").Append(CsString(failure)).Append(":\n");
+            code.Append("                    ObserveFailure(new ").Append(ReservedNames.FailureObserverEvent).Append("(1, ")
+                .Append(CsString(failure)).Append(", ").Append(CsString(endpoint.Name)).Append(", ")
+                .Append(ReservedNames.FailureStepIds).Append('.').Append(FailureStepIdName(endpoint.Name, failure))
+                .Append(", ").Append(CsString(module.BuildId)).Append("));\n");
+            code.Append("                    break;\n");
         }
 
-        code.Append("                _ => \"\"\n");
-        code.Append("            }, ").Append(CsString(module.BuildId)).Append(");\n");
-        code.Append("            _ = global::System.Threading.Tasks.Task.Run(() =>\n");
-        code.Append("            {\n");
-        code.Append("                try { failureObserver.OnFailure(observed); }\n");
-        code.Append("                catch { }\n");
-        code.Append("            });\n");
+        code.Append("            }\n");
+    }
+
+    private static void AppendObserveFailureHelper(StringBuilder code)
+    {
+        code.Append("\n    private void ObserveFailure(").Append(ReservedNames.FailureObserverEvent).Append(" failureEvent)\n");
+        code.Append("    {\n");
+        code.Append("        _ = global::System.Threading.Tasks.Task.Run(() =>\n");
+        code.Append("        {\n");
+        code.Append("            try { failureObserver.OnFailure(failureEvent); }\n");
+        code.Append("            catch { }\n");
+        code.Append("        });\n");
+        code.Append("    }\n");
     }
 
     private static string FailureStepIdName(string endpoint, string failure) =>
-        CSharpIdent(endpoint) + "_" + CSharpIdent(failure);
+        endpoint + "_" + failure;
 
     private static DeclaredFailureModel? FindFailureDeclaration(ModuleModel module, EndpointModel endpoint, string failure)
     {
@@ -767,6 +777,8 @@ public sealed class CSharpProvider : ITargetAdapter
             AppendFailureObserverCall(code, module, endpoint);
         code.Append("        }\n");
         code.Append("    }\n");
+        if (endpoint.Failures.Count > 0)
+            AppendObserveFailureHelper(code);
         code.Append("}\n");
         return code.ToString();
     }
