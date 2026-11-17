@@ -31,3 +31,9 @@ The map is a build artifact outside both generated projects. It is therefore nei
 Failure records: one record per (endpoint, failure) pair, at the line where the failure is declared by `fails with`. When an endpoint reaches the declaration through several steps, or two different avows declare the same name, the first step in the endpoint's order that reaches a declaration wins, and a composite avow's own declaration is preferred to those of its callees. A failure raised only by native code and never declared has no record.
 
 Record order and the endpoint of an avow record: records are sorted ordinally by kind, then name, then endpoint. An avow record's `endpoint` is the first endpoint, in source order, that calls that avow directly in one of its own steps; an avow reached only through other avows has an empty endpoint. Whether an avow record should list every endpoint that reaches it is an open question (card 172).
+
+## Failure observer and offline tracing
+
+The generated API declares `IAvowryFailureObserver`, a neutral `AvowryFailureEvent` (schema version 1: failure code, endpoint name, opaque step id, build id) and a no-op implementation. The host registers the no-op with `TryAddSingleton` so production can register a logging or tracing observer first. After a declared failure is decided and the 422 is sent, the endpoint notifies the observer off the request path; the event carries no request or source detail.
+
+A plain logging observer can write one production-shaped line, for example `avowry-failure v1 code=EmptyTitle endpoint=CreateTask stepId=<stepId> buildId=<buildId>`. Resolve that step id offline with `avowry trace <stepId> --map generated/Tasks.avowrymap.json` (exact match on `stepId`, same as tracing by failure name or generated frame).

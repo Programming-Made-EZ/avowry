@@ -30,7 +30,9 @@ public class OrdersPhraseCompiles
         _ = workspace.FindSingle("*.Api.csproj");
         _ = workspace.FindSingle("*.Specs.csproj");
 
+        // Card 165 (failure observer): the generated AvowryFailureObserver.cs declares an interface that is not a store, so only that file is set aside.
         var generated = string.Concat(Directory.EnumerateFiles(workspace.Root, "*.cs", SearchOption.AllDirectories)
+            .Where(path => Path.GetFileName(path) != "AvowryFailureObserver.cs")
             .Select(File.ReadAllText));
         Assert.DoesNotContain("Option<", generated, StringComparison.Ordinal);
         Assert.DoesNotContain("interface I", generated, StringComparison.Ordinal);

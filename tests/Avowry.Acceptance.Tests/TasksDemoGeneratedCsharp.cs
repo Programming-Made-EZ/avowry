@@ -5,6 +5,7 @@ namespace Avowry.Acceptance.Tests;
 // Feature: packaging keeps the Tasks demo's generated C#
 //   As Dana, I want the packed tool to emit the same C# the demo already emits,
 //   so that installing from a feed does not change the compiled program.
+// Card 165: golden re-recorded for the failure observer runtime.
 public class TasksDemoGeneratedCsharp
 {
     [Fact]

@@ -35,7 +35,8 @@ public sealed record EventRecord165(string Raw, string[] Names, int SchemaVersio
 }
 
 public sealed record ObserverProbe165(
-    string Mode, ObservedResponse165[] Responses, EventRecord165[] Events, string Log, bool Alive, HttpStatusCode AfterStatus);
+    string Mode, ObservedResponse165[] Responses, EventRecord165[] Events, string Log, bool Alive, HttpStatusCode AfterStatus,
+    string CallsLog);
 
 public static class FailureObserver165
 {
@@ -274,6 +275,7 @@ public sealed class InstrumentedTasks165 : IAsyncLifetime
         EventRecord165[] events;
         bool alive;
         HttpStatusCode after;
+        string callsLog;
         try
         {
             using var http = new HttpClient { BaseAddress = new Uri(api.BaseUrl), Timeout = HttpTimeout };
@@ -304,6 +306,11 @@ public sealed class InstrumentedTasks165 : IAsyncLifetime
 
             events = lines.Select(EventRecord165.Parse).ToArray();
 
+            // The log as it stands before the after-request below, so it holds output of the six failing calls only (card 165 fix round 1).
+            // A short pause lets the stdout pump drain the lines the observer has already written.
+            await Task.Delay(300);
+            callsLog = api.Log;
+
             // The API must still answer after its observer threw or sat for five seconds.
             var again = await SendAsync(http, HttpMethod.Get, "/tasks/req-secret-3", null);
             after = again.Status;
@@ -322,7 +329,7 @@ public sealed class InstrumentedTasks165 : IAsyncLifetime
             await api.DisposeAsync();
         }
 
-        return new ObserverProbe165(mode, responses.ToArray(), events, api.Log, alive, after);
+        return new ObserverProbe165(mode, responses.ToArray(), events, api.Log, alive, after, callsLog);
     }
 
     private static async Task<string[]> ReadEventLinesAsync(string path)

@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using Avowry.Acceptance.Tests.Support;
 using Avowry.Adapters.CSharp;
 using Avowry.Compiler;
@@ -15,7 +16,8 @@ public class WebExtensionBoundary
     // SHA-256 of the generated file set for orders.avowry, recorded on the committed
     // tree after the card 193 generated-name change. Paths are sorted ordinally. Each path and file text is
     // UTF-8, with a NUL byte after the path and after the text.
-    private const string OrdersOutputHash = "19fe6d711cc6d8289489da037c78bc2b308e1b4a9118c8812574771ef0e61765";
+    // Card 165: re-recorded for the failure observer (IAvowryFailureObserver, event, no-op, endpoints).
+    private const string OrdersOutputHash = "ec3a55263eae8e369f6bbb2a0215088d6f6f345cbacb955f64c1697b3172276a";
 
     [Fact]
     [Trait("Slice", "142")]
@@ -35,10 +37,59 @@ public class WebExtensionBoundary
         Assert.True(outputHash == OrdersOutputHash, outputHash);
 
         // And an explicit uses web line is accepted and equivalent: same active set, same bytes
+        // Card 165 and D284: the explicit file's inserted line moves every declaration down one line, so each failure step id in the generated
+        // FailureStepIds constants (card 161's line-derived ids) changes. Those 12-hex values alone are masked before the byte comparison; the
+        // test then proves the mask hides a real, explained shift: each explicit id is SourceMapIds.StepId("failure", line, code, endpoint)
+        // for the declaration line read from the explicit source, one line below the as-is source, and differs from the as-is id.
         Assert.NotEqual(source, withExplicitWeb);
         Assert.Equal(ExtensionLoad.Active(source), ExtensionLoad.Active(withExplicitWeb));
-        var explicitOutputHash = HashFiles(explicitOutput.Files);
-        Assert.True(explicitOutputHash == OrdersOutputHash, explicitOutputHash);
+        Assert.Equal(HashFiles(MaskFailureStepIds(output.Files)), HashFiles(MaskFailureStepIds(explicitOutput.Files)));
+        var asIs = FailureStepIdValues(output.Files);
+        var shifted = FailureStepIdValues(explicitOutput.Files);
+        Assert.NotEmpty(asIs);
+        Assert.Equal(asIs.Keys.Order(StringComparer.Ordinal), shifted.Keys.Order(StringComparer.Ordinal));
+        var endpoints = explicitOutput.Module!.Endpoints.Select(endpoint => endpoint.Name).ToArray();
+        var sourceLines = source.Split('\n');
+        var explicitLines = withExplicitWeb.Split('\n');
+        foreach (var (constant, value) in shifted)
+        {
+            var endpoint = endpoints.Single(name => constant.StartsWith(name + "_", StringComparison.Ordinal));
+            var code = constant[(endpoint.Length + 1)..];
+            var asIsLine = DeclarationLine(sourceLines, code);
+            var explicitLine = DeclarationLine(explicitLines, code);
+            Assert.Equal(asIsLine + 1, explicitLine);
+            Assert.Equal(SourceMapIds.StepId("failure", explicitLine, code, endpoint), value);
+            Assert.Equal(SourceMapIds.StepId("failure", asIsLine, code, endpoint), asIs[constant]);
+            Assert.NotEqual(asIs[constant], value);
+        }
+    }
+
+    private static readonly Regex StepIdConstant = new(
+        @"(internal const string (\w+) = "")([0-9a-f]{12})("";)", RegexOptions.CultureInvariant);
+
+    private static KeyValuePair<string, string> ObserverFile(IReadOnlyDictionary<string, string> files) =>
+        files.Single(file => file.Key.EndsWith("AvowryFailureObserver.cs", StringComparison.Ordinal));
+
+    // The constant name (Endpoint_Code) and 12-hex value of each line of the generated FailureStepIds class.
+    private static Dictionary<string, string> FailureStepIdValues(IReadOnlyDictionary<string, string> files) =>
+        StepIdConstant.Matches(ObserverFile(files).Value).ToDictionary(match => match.Groups[2].Value, match => match.Groups[3].Value, StringComparer.Ordinal);
+
+    // Replaces only those 12-hex values with a fixed placeholder; every other byte of every file is kept.
+    private static IReadOnlyDictionary<string, string> MaskFailureStepIds(IReadOnlyDictionary<string, string> files)
+    {
+        var observer = ObserverFile(files);
+        var masked = files.ToDictionary(file => file.Key, file => file.Value, StringComparer.Ordinal);
+        masked[observer.Key] = StepIdConstant.Replace(observer.Value, "${1}000000000000${4}");
+        return masked;
+    }
+
+    // 1-based line of the avow's `fails with` declaration naming the code (the spec lines start with `then`, so they never match).
+    private static int DeclarationLine(string[] lines, string code)
+    {
+        var index = Array.FindIndex(lines, line => line.Trim().StartsWith("fails with ", StringComparison.Ordinal)
+            && line.Trim()["fails with ".Length..].Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).Contains(code, StringComparer.Ordinal));
+        Assert.True(index >= 0, $"No `fails with {code}` line in the source.");
+        return index + 1;
     }
 
     private static string HashFiles(IReadOnlyDictionary<string, string> files)

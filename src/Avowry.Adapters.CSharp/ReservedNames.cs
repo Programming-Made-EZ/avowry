@@ -17,6 +17,11 @@ internal static class ReservedNames
     public const string RuntimeFile = "AvowryRuntime";
     public const string TypesFile = "Types";
     public const string BuildFile = "AvowryBuild";
+    public const string FailureObserverFile = "AvowryFailureObserver";
+
+    public const string FailureObserverInterface = "IAvowryFailureObserver";
+    public const string FailureObserverEvent = "AvowryFailureEvent";
+    public const string NoOpFailureObserver = "NoOpAvowryFailureObserver";
 
     /// <summary>Top-level types the generated code declares in the module namespace, with what each is for.</summary>
     public static readonly IReadOnlyDictionary<string, string> TypeNames = new Dictionary<string, string>(StringComparer.Ordinal)
@@ -25,6 +30,9 @@ internal static class ReservedNames
         [AvowryFailure] = "the generated exception for declared failures",
         [Avows] = "the generated class that holds every avow",
         [AvowSpecs] = "the generated class that holds the avow specs",
+        [FailureObserverInterface] = "the generated failure observer interface",
+        [FailureObserverEvent] = "the generated neutral failure event record",
+        [NoOpFailureObserver] = "the generated no-op failure observer",
     };
 
     /// <summary>Avow method names that collide with the enclosing generated class or its failure helper.</summary>

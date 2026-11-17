@@ -249,7 +249,9 @@ public class PutAndDeleteEndpointsCompile
         // Then neither effect becomes a prototype store: each stays an empty effect interface
         foreach (var file in Directory.GetFiles(workspace.Root, "*", SearchOption.AllDirectories))
         {
-            var text = File.ReadAllText(file);
+            // Card 165 (failure observer): Program.cs registers the generated no-op observer with one TryAddSingleton line, which is not a store.
+            // That single line is the only thing set aside.
+            var text = File.ReadAllText(file).Replace("builder.Services.TryAddSingleton<IAvowryFailureObserver, NoOpAvowryFailureObserver>();", "", StringComparison.Ordinal);
             Assert.DoesNotContain("InMemory", text, StringComparison.Ordinal);
             Assert.DoesNotContain("AddSingleton", text, StringComparison.Ordinal);
             Assert.DoesNotContain("void Save", text, StringComparison.Ordinal);

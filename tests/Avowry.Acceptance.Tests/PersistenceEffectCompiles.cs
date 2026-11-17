@@ -111,7 +111,11 @@ public class PersistenceEffectCompiles
         // Then the generated projects contain no store and the spec still passes
         foreach (var file in Directory.GetFiles(workspace.Root, "*", SearchOption.AllDirectories))
         {
-            var text = File.ReadAllText(file);
+            // Card 165 (failure observer): the generated AvowryFailureObserver.cs declares an interface, and Program.cs registers the no-op with
+            // one TryAddSingleton line. Neither is a store, so that file and that single line are the only things set aside.
+            if (Path.GetFileName(file) == "AvowryFailureObserver.cs")
+                continue;
+            var text = File.ReadAllText(file).Replace("builder.Services.TryAddSingleton<IAvowryFailureObserver, NoOpAvowryFailureObserver>();", "", StringComparison.Ordinal);
             Assert.DoesNotContain("InMemory", text, StringComparison.Ordinal);
             Assert.DoesNotContain("AddSingleton", text, StringComparison.Ordinal);
             Assert.DoesNotContain("interface I", text, StringComparison.Ordinal);

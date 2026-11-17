@@ -177,7 +177,7 @@ public class FailureObserverLive165 : IClassFixture<InstrumentedTasks165>
     {
         // Given a plain logging observer whose output is one line per failure, and the API already stopped
         var probe = await tasks.ProbeAsync("log");
-        var lines = LogLine.Matches(probe.Log).Select(match => match).ToArray();
+        var lines = LogLine.Matches(probe.CallsLog).Select(match => match).ToArray();
         Assert.Equal(FailureObserver165.FailingCalls.Length, lines.Length);
 
         foreach (var line in lines)

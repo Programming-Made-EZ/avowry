@@ -126,12 +126,8 @@ static MapRecord Record(
     new(
         StepId(kind, line, name, endpoint.Name), kind, name, module.AvowFile, line, endpoint.Name,
         step?.Source ?? "", Lines(spec?.SourceSpan), cs, output.EndpointMethods[endpoint.Name], Hash(output.Files[cs]));
-static string StepId(string kind, int line, string name, string endpoint = "")
-{
-    var normalizedName = name.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n');
-    var input = $"{kind}\n{line}\n{normalizedName}" + (kind == "failure" ? $"\n{endpoint}" : "");
-    return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(input)))[..12].ToLowerInvariant();
-}
+static string StepId(string kind, int line, string name, string endpoint = "") =>
+    SourceMapIds.StepId(kind, line, name, endpoint);
 
 static int Trace(string[] values)
 {
@@ -180,7 +176,9 @@ static int TraceCore(string[] values)
         Error("Source map is malformed: the JSON value is null");
         return 2;
     }
-    var found = map.Records.Where(record => record.Name == name || record.CsMethod == name).ToList();
+    var found = map.Records
+        .Where(record => record.Name == name || record.CsMethod == name || record.StepId == name)
+        .ToList();
     if (found.Count == 0)
     {
         Error($"Unknown trace name or frame: {name}");
