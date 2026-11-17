@@ -1804,5 +1804,17 @@
     "status": "adopted",
     "title": "Card 172 adopted with its task force (qwen seated by rotation); the avow record keeps its endpoint rule",
     "order": 273
+  },
+  "D283": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 165 adopted with its task force (claude opus as the security-role reviewer)",
+    "order": 274
+  },
+  "D284": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Slice 142's explicit uses web check masks only the generated failure step ids",
+    "order": 275
   }
 }

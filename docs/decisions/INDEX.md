@@ -386,3 +386,5 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D280](process-and-staffing.md#d280) | Card 169 adopted with its task force; ordinal-sort tests are characterisation with mutation evidence | process-and-staffing | adopted |
 | [D281](process-and-staffing.md#d281) | Card 201 waits for the product owner's answer on the unsealed holdouts; Card 171 adopted with its task force | process-and-staffing | adopted |
 | [D282](process-and-staffing.md#d282) | Card 172 adopted with its task force (qwen seated by rotation); the avow record keeps its endpoint rule | process-and-staffing | adopted |
+| [D283](process-and-staffing.md#d283) | Card 165 adopted with its task force (claude opus as the security-role reviewer) | process-and-staffing | adopted |
+| [D284](process-and-staffing.md#d284) | Slice 142's explicit uses web check masks only the generated failure step ids | process-and-staffing | adopted |

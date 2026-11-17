@@ -1658,3 +1658,17 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - The card's open question (card 174 review): the avow record keeps today's endpoint rule (docs/TRACEABILITY.md); no change in this card.
 - Ballots (.mob/records/172/d282-ballots/): six of six Yes, cited (qwen, grok, agy, cursor).
 - Result: **adopted**.
+
+#### Decider D283: Card 165 adopted with its task force (ADOPTED)
+
+- Date: 2026-11-17. Proposer: the facilitator (.mob/records/165/kickoff-proposal-d283.md), after card 172 closed; probe 05:11:56Z and kickoff_check.py passed on the committed declaration.
+- Task force: red claude sonnet; green cursor composer-2.5; QA and security review claude opus (the card's security-role reviewer: the event carries no request data, exception message, source file name, line or spec text); cross-family review grok grok-4.6 in normal mode; sign-off agy. dotnet runs are the facilitator's, under Avowry's heavy lock; every proof after the green runs the full Status!=Pending suite. The orders pin is re-recorded honestly in the card.
+- Ballots (.mob/records/165/d283-ballots/): six of six Yes, cited (grok, agy, cursor).
+- Result: **adopted**.
+
+#### Decider D284: Slice 142's explicit uses web check masks only the generated failure step ids (ADOPTED)
+
+- Date: 2026-11-17. Proposer: the facilitator (.mob/records/165/proposal-d284.md), after green proof 2. Card 165 puts card 161's step ids (which hash the source line) into the generated C#, so inserting a `uses web` line shifts every failure step id and Slice 142's whole-output byte check fails; card 142's criterion asks only that the explicit line loads the same set.
+- Option A adopted: the Slice 142 test keeps the as-is orders hash exact and compares the explicit file's output after masking only the FailureStepIds constant values, and proves each shifted id equals SourceMapIds.StepId at the declaration line one lower. Rejected: B (drop the line from the step id: changes card 161's scheme and every map) and C (look ids up from the map at run time: the map is never deployed).
+- Ballots (.mob/records/165/d284-ballots/): six of six Yes, cited (grok, agy, cursor).
+- Result: **adopted**.
