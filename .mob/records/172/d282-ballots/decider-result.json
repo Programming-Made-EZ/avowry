@@ -1,0 +1,258 @@
+{
+  "result": "passed",
+  "prompt_sha": "254d34d1b1e4b8c9b729056bf0814500817dcfe9a7d562bb3bb3415a5e93a6f3",
+  "probe": {
+    "taken_at": "2026-11-17T03:53:26.734282Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-3f6364c1-5cee-4777-9b78-10388146f130)"
+      },
+      "grok": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=73901b3d-b6b0-4f9c-83e3-ca5f7b730d92]: Subscription quota exhausted. Your usage window resets at 2026-11-23T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "CITE: adopt the card, the task force and the rule decision.",
+      "reply": "Yes\nCITE: adopt the card, the task force and the rule decision.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "qwen",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: adopt the card, the task force and the rule decision."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 229.19816880000872,
+      "role": "architect",
+      "seat": "qwen",
+      "model_reported": "qwen3.6-35b-a3b",
+      "cite_ok": false,
+      "counted": false,
+      "probe_taken_at": "2026-11-17T03:53:26.734282Z",
+      "probe_ok": true,
+      "probe_evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)",
+      "line_index": 2971
+    },
+    "coach": {
+      "vote": "Yes",
+      "reason": "CITE: Yes adopts the card, the task force and the rule decision",
+      "reply": "I'll read the working-agreement and card 172 materials first so the vote is based on the committed record, not the proposal text alone.Next I\u2019ll check card 172, the declaration, and the Decider/traceability rules so the vote matches the committed record.I\u2019ll check staffing, rotation, and the orders-hash pin next, since those are the parts this vote actually adopts.I\u2019ll confirm 172 is next, that 168 is done, and that the declaration and hash pin match git before voting.Yes\nCITE: Yes adopts the card, the task force and the rule decision\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: Yes adopts the card, the task force and the rule decision"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 206.8359119000088,
+      "role": "coach",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T03:53:26.734282Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2972
+    },
+    "dev": {
+      "vote": "Yes",
+      "reason": "CITE: adopt card 172 with its task force, and keep today's avow-record endpoint rule",
+      "reply": "Yes\n\nCITE: adopt card 172 with its task force, and keep today's avow-record endpoint rule\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: adopt card 172 with its task force, and keep today's avow-record endpoint rule"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 150.94392819999484,
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T03:53:26.734282Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2973
+    },
+    "qa": {
+      "vote": "Yes",
+      "reason": "CITE: adopt card 172 with its task force, and keep today's avow-record endpoint rule",
+      "reply": "Yes\n\nCITE: adopt card 172 with its task force, and keep today's avow-record endpoint rule\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: adopt card 172 with its task force, and keep today's avow-record endpoint rule"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 168.975177299988,
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T03:53:26.734282Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2974
+    },
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "CITE: keep today's rule, documented in docs/TRACEABILITY.md, and do not change it in this card",
+      "reply": "Yes\nCITE: keep today's rule, documented in docs/TRACEABILITY.md, and do not change it in this card\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: keep today's rule, documented in docs/TRACEABILITY.md, and do not change it in this card"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 144.09198009999818,
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T03:53:26.734282Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2975
+    },
+    "decider": {
+      "vote": "Yes",
+      "reason": "CITE: keep today's rule, documented in docs/TRACEABILITY.md",
+      "reply": "Yes\n\nCITE: keep today's rule, documented in docs/TRACEABILITY.md\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: keep today's rule, documented in docs/TRACEABILITY.md"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 155.47223080002004,
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T03:53:26.734282Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2976
+    }
+  },
+  "counted_seats": [
+    "coach",
+    "dev",
+    "qa",
+    "auditlens",
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "8b78eb3b853f15cb3f41c248e8c24cdab2af649e",
+  "head_end": "8b78eb3b853f15cb3f41c248e8c24cdab2af649e",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes",
+      "coach": "Yes",
+      "dev": "Yes",
+      "qa": "Yes",
+      "auditlens": "Yes",
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 5
+    }
+  },
+  "absent": []
+}
