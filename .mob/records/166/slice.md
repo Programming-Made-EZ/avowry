@@ -27,3 +27,25 @@ Describe the source map and `avowry trace` instead of the attribute; a re-freeze
 
 ## Process
 dotnet runs are the facilitator's, under Avowry's heavy lock; every proof after the green is the full Status!=Pending suite.
+
+## R166-1 (facilitator ruling, 2026-11-17 about 16:40Z): green proof 2's five failures
+Green proof 1 could not build (a raw-string indentation error in the bench; fixed in green fix round 1). Green proof 2 (full Status!=Pending suite under Avowry's lock, 16:19 to 16:34Z): compiler 344 of 344; acceptance 1604 of 1609; 5 failed.
+- The green moved the map writer into Avowry.Compiler (SourceMapWriter.cs) so the CLI and the bench share one writer. Kept: one writer is the slice's intent (the CLI holds no adapter knowledge, the bench reads a real map). Card 169's MapCultureInvariance scans SourceMapWriter.cs (the whole file) instead of Program.cs's WriteMap-to-Trace region, with every check and planted proof kept; card 165's One_public_step_id_rule test requires the map writer (not the CLI) to call the shared StepId, and still requires that no copy of the recipe (`normalizedName`) exists outside SourceMapIds. Each change carries a comment naming card 166 and R166-1.
+- CompositePhraseOrderCompiles asserted the call order through the per-step comments that D285 verdict 3 removes; it asserts the same order through the generated call lines instead.
+- reference/csharp is regenerated from `avowry build` of the orders fixture (the card's criterion 1). Since card 193 the generator names the endpoint files CreateOrder.cs.cs and CreateOrderSpecs.cs.cs, so the facilitator removes the superseded CreateOrder.cs and CreateOrderSpecs.cs (two named files). ReferenceTarget's mutation test mutates the regenerated expectation line (`AssertSpecEqual("sums quantities across line items", 5, result);`) instead of the old `Assert.Equal(5, result);`.
+
+## R166-2 (facilitator ruling, 2026-11-17 about 16:55Z): green proof 3
+Green proof 3 (full suite under Avowry's lock, 16:36 to 16:51Z): compiler 344 of 344; acceptance 1607 of 1609. Two failures: the ADR audit checks (test_extension_map, test_library_binding_layering) cite reference/csharp/Orders.Api/CreateOrder.cs, now CreateOrder.cs.cs. And a formatting regression the suite does not catch: removing the handler's per-template summary also removed a newline, so every endpoint handler class opens with `{    public static ... Handle(` on one line (the re-recorded golden shows it in five places; the regenerated reference in one).
+- Green fix round 2: restore the newline after the handler class's opening brace (and any other brace that lost its line); update the two ADRs' citations of the renamed reference files to CreateOrder.cs.cs and CreateOrderSpecs.cs.cs with the line numbers in the regenerated files.
+- Red guard: no generated C# line of the Tasks demo or orders starts with `{` followed by more text on the same line (a planted line proves the check).
+The facilitator re-records the golden and the reference after the fix.
+
+## R166-3 (facilitator ruling, 2026-11-17 about 17:25Z): the review findings
+Opus (review.md, SIGN-OFF, M1 to M6) and grok (review-grok.md, SIGN-OFF, five MINOR, overlapping M1, M2 and M5).
+Fixed in this card, test first (one red and one green round, then a full proof):
+- M1 (grok 3): effectful endpoint specs still emit `// When handled` (CSharpProvider.cs about line 837); effect-free specs do not. One rule: no spec comment that restates the spec's steps; it goes from effectful specs too. Test: no generated line is `// When handled`.
+- M2 (grok 1): the CLI's discarded reads of EndpointTemplates and AvowTemplates exist only to satisfy a text scan that R166-1 left pointed at Program.cs. The scan moves to SourceMapWriter.cs (it reads both maps and builds no template text), and the two discards go.
+- M4: a map whose template is JSON null makes trace throw after a partial print; null is treated as empty (no template line, exit 0). Test: a planted map with `"template": null`.
+- grok 5: CSharpProvider's comment "One comment and one statement per step" says one statement per step.
+Follow-ups (named limits, not this card): M3 (the csHash recipe is written twice: SourceMapWriter and the CLI's hash check); M5 (grok 2: two candidate endpoints whose routes both contain the searched route are now chosen in name order, not assembly order; no committed case reaches it); the ADRs' CSharpProvider.cs line citations were stale before this card.
+Part 2 adds M6: docs/GRAMMAR.md line 229 (the AV341 row) still lists AvowAttribute as reserved; the re-freeze covers it with line 297 and the cheat sheet.
