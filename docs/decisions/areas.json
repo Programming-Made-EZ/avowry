@@ -1786,5 +1786,11 @@
     "status": "adopted",
     "title": "Card 162 resumes for green 2 on a fresh Claude context, and D278 is rescinded",
     "order": 270
+  },
+  "D280": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 169 adopted with its task force; ordinal-sort tests are characterisation with mutation evidence",
+    "order": 271
   }
 }

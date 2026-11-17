@@ -1635,3 +1635,10 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - Date: 2026-11-16. Proposer: the facilitator (.mob/records/162/resume-proposal-d279.md). Card 162's re-freeze (D238), Grok and Codex checks (13 of 13 each) and gate review A are on main; only green 2 (slice item 9), its gate review, sign-off, retro and trail record remained.
 - Ballots: the first window (.mob/records/162/d279-r1-ballots/) failed: the audit lens and decider (cursor) voted No because D237 seats green 2 on a fresh Claude context, not on Cursor; grok gave no votes. Amendment 1: green 2 on a fresh claude sonnet context, the gate reviewer a fresh claude opus context, the sign-off on agy (R-ROT: no service holds more than two task-force seats). Second window (.mob/records/162/d279-ballots/): four of four Yes, cited (agy, cursor).
 - Result: **adopted**. Cards 162 and 201 keep Ranks 116 and 117.
+
+#### Decider D280: Card 169 adopted with its task force (ADOPTED)
+
+- Date: 2026-11-16. Proposer: the facilitator (.mob/records/169/kickoff-proposal-d280.md), after card 162 merged; the probe at 22:31:35Z and kickoff_check.py (passed) on .mob/records/169/declaration.json.
+- Task force: red claude sonnet; green cursor composer-2.5; QA claude opus; cross-family review grok; sign-off agy gemini-3.8-flash-medium.
+- Ballots: the first window (.mob/records/169/d280-r1-ballots/) failed on the decider's No (cursor): the code already sorts ordinally, so those tests are characterisation and a planted mutant is extra mutation evidence, not the watched red. Amendment 1 said so. Second window (.mob/records/169/d280-ballots/): adopted; the audit lens's uncounted No asked that the declaration and probe rows be committed for voters, done in 44d1c68.
+- Result: **adopted**.

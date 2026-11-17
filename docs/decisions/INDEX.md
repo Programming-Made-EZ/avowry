@@ -383,3 +383,4 @@ Status vocabulary: `in force`, `applied`, `superseded by Dnnn`, `reverted`.
 | [D277](process-and-staffing.md#d277) | Card 367 reads a vendor page through the built-in browser when web fetch is refused | process-and-staffing | adopted |
 | [D278](process-and-staffing.md#d278) | Card 162 and card 201 wait behind card 165 (rescinded by D279 before it was applied) | process-and-staffing | rescinded |
 | [D279](process-and-staffing.md#d279) | Card 162 resumes for green 2 on a fresh Claude context, and D278 is rescinded | process-and-staffing | adopted |
+| [D280](process-and-staffing.md#d280) | Card 169 adopted with its task force; ordinal-sort tests are characterisation with mutation evidence | process-and-staffing | adopted |
