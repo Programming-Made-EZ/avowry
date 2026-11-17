@@ -1,0 +1,12 @@
+{
+ "card": "171",
+ "probe_taken_at": "2026-11-17T01:51:57Z",
+ "seats": [
+  {"role": "dev, red", "service": "claude", "model": "claude-sonnet-5-5", "reason": "tests over the CLI-adapter boundary and Program.cs style, written blind under another mob's heavy lock; mid tier"},
+  {"role": "dev, green", "service": "cursor", "model": "composer-2.5", "reason": "first-choice writer; the adapter returns names, the CLI reads them, Program.cs tidied"},
+  {"role": "QA, review", "service": "claude", "model": "claude-opus-5-5", "reason": "layer direction and byte-identical output, strong tier"},
+  {"role": "cross-family review", "service": "grok", "model": "grok-4.6", "reason": "a non-author family, normal mode in a throwaway clone (card 169 retro), before the QA review"},
+  {"role": "acceptance, sign-off", "service": "agy", "model": "gemini-3.8-flash-medium", "reason": "read-only; not a writer or reviewer service"}
+ ],
+ "no_fit": {}
+}
