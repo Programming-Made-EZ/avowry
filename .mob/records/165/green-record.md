@@ -47,3 +47,16 @@ Mob ruling R165-2: inject `IAvowryFailureObserver` only on endpoints that declar
 Pins (`WebExtensionBoundary`, `TasksDemoGeneratedCsharp.golden`, `ExistingTestsKept172`) and all test sources left unchanged; facilitator re-records pins from one CLI run after this round.
 
 No `dotnet` / `avowry` build or test in this round (shared laptop; green brief).
+
+## Green round 2 (R165-3; review F1, F2, F4, F3/F7 docs; no dotnet run; not committed)
+
+Product and docs only (red round 3 tests already in tree). Pins and demo golden left unchanged for facilitator re-record from one CLI run.
+
+| Finding | Change |
+|---------|--------|
+| F1 | `FailureStepIdName` is `endpoint + "_" + failure` (no `CSharpIdent` on either side), so keyword-shaped failure codes get plain constant names such as `Probe_Default`. |
+| F2 | `ReservedNames.FailureStepIds` constant plus `TypeNames` row; generated class spelled through the constant. |
+| F4 | Catch: after `Send.ErrorsAsync(422, …)`, `switch (failure.Code)` with one `case` per declared code building `new AvowryFailureEvent(1, "<code>", "<endpoint>", FailureStepIds.<Endpoint>_<Code>, buildId)` via private `ObserveFailure` (fire-and-forget `Task.Run`, exception swallowed). No `default` / `_ =>`; undeclared codes raise no event. Event arguments contain no `failure` identifier. |
+| F3 / F7 | `docs/TRACEABILITY.md`: step id is not secret (public recipe; map is convenience); observer contract (fast, synchronous `OnFailure`, not `async void`, best-effort one pool item per failure after response); only declared codes observed. |
+
+Files touched this round: `src/Avowry.Adapters.CSharp/CSharpProvider.cs`, `src/Avowry.Adapters.CSharp/ReservedNames.cs`, `docs/TRACEABILITY.md`.
