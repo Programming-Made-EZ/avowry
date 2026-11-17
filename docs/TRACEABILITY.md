@@ -20,6 +20,7 @@ The map is a build artifact outside both generated projects. It is therefore nei
 - `SourceMapDeployment.Publish_output_never_contains_the_source_map` proves a published Tasks API contains its assembly and no `.avowrymap.json` file.
 - `SourceMapDeployment.Running_api_answers_404_for_the_source_map_paths` proves the live Tasks API serves a real endpoint but answers 404 for obvious source-map paths.
 - `PhraseBuildOneFile.Build_output_matches_the_compiler_bytes` proves the CLI preserves every compiler-generated C# byte and adds only the map.
+- `MapCultureInvariance.Map_bytes_for_one_source_equal_the_invariant_bytes_under_tr_TR_and_sv_SE` and `MapCultureInvariance.Every_sort_in_the_map_writer_uses_an_ordinal_comparison` prove culture-invariant map bytes and ordinal-only sorting in the map writer.
 - `TasksOverHttp` covers all demo endpoint behavior and the unchanged declared-failure response bodies; its live process checks the generated API boundary.
 - `WebExtensionBoundary` pins the complete Orders generated-output hash, while the demo acceptance suite executes all 11 Tasks specs.
 
