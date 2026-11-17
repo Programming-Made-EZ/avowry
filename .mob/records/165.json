@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 165,
+ "title": "Failure observer: the generated API raises a neutral failure event; tracing plugs in outside the runtime",
+ "process": "kickoff probe and kickoff_check.py (passed, declaration committed); Decider D283 (task force, claude opus as the security-role reviewer); a facilitator slice with rulings R165-1 to R165-3; red and green written without dotnet and proved by the facilitator under Avowry's heavy lock, every proof after the green the full Status!=Pending suite; Decider D284 (Slice 142's explicit uses web check masks only the generated failure step ids); grok cross-family review (normal mode) SIGN-OFF; claude opus review round 1 CHANGES (one BLOCKING), red round 3 and green round 2 test-first, round 2 SIGN-OFF; sign-off agy; the full Release gate; merged by fast-forward after merging main's two record commits into the branch; the facilitator's retro with its Model allocation review.",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-0",
+   "model": "the facilitator session (claude opus = claude-opus-5-5); the card was Ready; Decider D283 adopted it with the task force (grok, agy and cursor ballots); evidence is the kickoff record commit",
+   "evidence": "a8a74fb"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-1",
+   "model": "the facilitator session (claude opus = claude-opus-5-5) wrote .mob/records/165/slice.md with rulings R165-1 to R165-3",
+   "evidence": "1fb396c"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-2",
+   "model": "claude sonnet = claude-sonnet-5-5, a fresh subagent context (ctx-165r, resumed for fix rounds 1 to 3)",
+   "evidence": "b163ea9"
+  },
+  {
+   "role": "green",
+   "seat": "Cursor ctx-3",
+   "model": "cursor-agent -p --force --model composer-2.5 (pinned), ctx-165g, rounds 1 and 2",
+   "evidence": "bb5a383"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-4",
+   "model": "claude opus = claude-opus-5-5, a fresh context (ctx-165q), review rounds 1 (CHANGES) and 2 (SIGN-OFF); grok grok-4.6 cross-family review in normal mode (SIGN-OFF); proofs and the full gate by the facilitator under Avowry's heavy-run lock; evidence is the round 3 red the review forced",
+   "evidence": "3d775ec"
+  },
+  {
+   "role": "signoff",
+   "seat": "agy ctx-5",
+   "model": "agy gemini-3.8-flash-medium (pinned with --model), a fresh context ctx-165s, read-only in a clone",
+   "evidence": "ba48f1a"
+  }
+ ],
+ "retro": "docs/retros/card-165-2026-11-17.md",
+ "notes": "Done checks met at the full gate (a7baa97, quiet machine, Avowry's heavy lock, 13:55 to 14:13Z): Release build 0 errors; dotnet test Avowry.sln --filter Status!=Pending compiler 344 of 344, acceptance 1583 of 1583. The orders pin re-recorded as df716c5c... and the Tasks demo golden re-recorded by the facilitator from runs, each with a comment naming card 165 and the observer; the card 172 guard follows the new prefix. No test removed or renamed (ExistingTestsKept172 passed). Main took the card branch by fast-forward after the branch merged main's two record commits (465c057), so every evidence commit keeps its id. Named limits in the retro."
+}
