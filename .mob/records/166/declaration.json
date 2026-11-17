@@ -1,0 +1,42 @@
+{
+ "card": "166",
+ "probe_taken_at": "2026-11-17T14:16:48Z",
+ "seats": [
+  {
+   "role": "dev, red",
+   "service": "claude",
+   "model": "claude-sonnet-5-5",
+   "reason": "tests that the attribute and its class are gone, the template text is a map field that trace prints, the scorer reads the map, and the re-recorded pins; mid tier"
+  },
+  {
+   "role": "dev, green",
+   "service": "cursor",
+   "model": "composer-2.5",
+   "reason": "first-choice writer: the C# adapter emission, the map writer, the bench scorer and the regenerated reference sources"
+  },
+  {
+   "role": "QA review",
+   "service": "claude",
+   "model": "claude-opus-5-5",
+   "reason": "a strong reviewer for a change that crosses the emitter, the map, the scorer and a frozen document; strong tier"
+  },
+  {
+   "role": "cross-family review",
+   "service": "grok",
+   "model": "grok-4.6",
+   "reason": "a non-author family, normal mode in a throwaway clone"
+  },
+  {
+   "role": "acceptance, sign-off",
+   "service": "agy",
+   "model": "gemini-3.8-flash-medium",
+   "reason": "read-only; not a writer or reviewer service"
+  }
+ ],
+ "no_fit": {
+  "qwen": "gate busy at the probe (play-tracker's heavy lock); a local reply-only seat cannot read the repo-wide readers of the attribute this card must find",
+  "codex": "usage limit",
+  "copilot": "no quota",
+  "muse": "limit until 2026-11-23"
+ }
+}

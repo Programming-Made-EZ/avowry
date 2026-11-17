@@ -3061,3 +3061,11 @@
 {"seat": "claude", "role": "QA and security review", "context": "ctx-165q", "card": "165", "ts": "2026-11-17T13:54:55.561872Z", "event": "outcome", "outcome": "success", "duration_s": 105.0, "actual_model_by_wrapper_config": "claude-opus-5-5", "model_reported_by_cli": null}
 {"seat": "agy", "role": "acceptance, sign-off", "context": "ctx-165s", "card": "165", "ts": "2026-11-17T13:57:10.179394Z", "probe_taken_at": "2026-11-17T13:52:37Z", "service": "agy", "declared_model": "gemini-3.8-flash-medium", "declared_reason": "read-only; not a writer or reviewer service", "work_type": "signoff", "outcome": "launched"}
 {"seat": "agy", "role": "acceptance, sign-off", "context": "ctx-165s", "card": "165", "ts": "2026-11-17T14:09:27.636784Z", "event": "outcome", "outcome": "success", "duration_s": 731.0, "actual_model_by_wrapper_config": "gemini-3.8-flash-medium", "model_reported_by_cli": null}
+{"event": "probe", "service": "agy", "result": "ok", "error": "", "taken_at": "2026-11-17T14:16:48.036239Z"}
+{"event": "probe", "service": "claude", "result": "ok", "error": "", "taken_at": "2026-11-17T14:16:48.036790Z"}
+{"event": "probe", "service": "codex", "result": "quota", "error": "…. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM.", "taken_at": "2026-11-17T14:16:48.037283Z"}
+{"event": "probe", "service": "copilot", "result": "quota", "error": "You have no quota (Request ID: 00000-44742de4-8693-4bdd-bb3c-b5f87f2762ed)", "taken_at": "2026-11-17T14:16:48.037874Z"}
+{"event": "probe", "service": "cursor", "result": "ok", "error": "", "taken_at": "2026-11-17T14:16:48.038306Z"}
+{"event": "probe", "service": "grok", "result": "ok", "error": "", "taken_at": "2026-11-17T14:16:48.038959Z"}
+{"event": "probe", "service": "muse", "result": "quota", "error": "…hem agent loop failed: model failed: API error 429 [request_id=67fe33b7-9663-42cc-8d85-6e9f3b5a7aae]: Subscription quota exhausted. Your usage window resets at 2026-11-23T00:00:00Z. (rate_limit_error)", "taken_at": "2026-11-17T14:16:48.039368Z"}
+{"event": "probe", "service": "qwen", "result": "error", "error": "gate busy: heavy-play-tracker.lock play-tracker ship train", "taken_at": "2026-11-17T14:16:48.040054Z"}
