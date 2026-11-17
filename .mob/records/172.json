@@ -1,0 +1,46 @@
+{
+ "schema": 1,
+ "card": 172,
+ "title": "Trace hardening follow-ups and one shared test process helper",
+ "process": "kickoff probe and kickoff_check.py (passed, declaration committed, grok's no-fit reason recorded); Decider D282 (qwen voting; the avow record keeps its endpoint rule); a facilitator slice with rulings R172-1 and R172-2; red and green written without dotnet and proved by the facilitator under Avowry's heavy lock; claude opus review round 1 CHANGES (a repo-wide process-start scan the filtered proof missed); fix round 1 test-first; qwen cross-family review (reply-only, diff inlined, under the lock after the local model slot cleared) SIGN-OFF; the full gate; review round 2 SIGN-OFF; sign-off agy; merged by fast-forward; the facilitator's retro with its Model allocation review.",
+ "seats": [
+  {
+   "role": "ready",
+   "seat": "Claude ctx-0",
+   "model": "the facilitator session (claude opus = claude-opus-5-5); the card was Ready; Decider D282 adopted it with the task force (qwen, grok, agy and cursor ballots); evidence is the kickoff record commit",
+   "evidence": "8b78eb3"
+  },
+  {
+   "role": "slice",
+   "seat": "Claude ctx-1",
+   "model": "the facilitator session (claude opus = claude-opus-5-5) wrote .mob/records/172/slice.md with rulings R172-1 and R172-2",
+   "evidence": "c2e86b4"
+  },
+  {
+   "role": "red",
+   "seat": "Claude ctx-2",
+   "model": "claude sonnet = claude-sonnet-5-5, a fresh subagent context (ctx-172r, resumed for fix round 1)",
+   "evidence": "92e69a2"
+  },
+  {
+   "role": "green",
+   "seat": "Cursor ctx-3",
+   "model": "cursor-agent -p --force --model composer-2.5 (pinned), ctx-172g and ctx-172g2",
+   "evidence": "e0780f2"
+  },
+  {
+   "role": "ship",
+   "seat": "Claude ctx-4",
+   "model": "claude opus = claude-opus-5-5, a fresh context (ctx-172q), review rounds 1 (CHANGES) and 2 (SIGN-OFF); qwen local model cross-family review (SIGN-OFF); proofs and the full gate by the facilitator under Avowry's heavy-run lock; evidence is the fix-round commit the review forced",
+   "evidence": "36d642e"
+  },
+  {
+   "role": "signoff",
+   "seat": "agy ctx-5",
+   "model": "agy gemini-3.8-flash-medium (pinned with --model), a fresh context ctx-172s, read-only in a clone",
+   "evidence": "c36cc52"
+  }
+ ],
+ "retro": "docs/retros/card-172-2026-11-17.md",
+ "notes": "Done checks met at the full gate (76c14e1, quiet machine, Avowry's heavy lock): Release build 0 errors; dotnet test Avowry.sln --filter Status!=Pending compiler 344 of 344, acceptance 1550 of 1550 (Slice 172 all, GeneratedApiSourceScan included; the orders pin 19fe6d71 and the demo golden unchanged). No test removed or renamed (checked against 657 names recorded before the card). Named limits in the retro. Main took the card branch by fast-forward, so every evidence commit keeps its id."
+}
