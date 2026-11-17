@@ -137,19 +137,85 @@ public class FailureObserverGenerated165 : IClassFixture<PristineTasks165>
 
         foreach (var (path, region) in regions)
         {
-            // Then the event takes schema version, code, endpoint, step id and build id, and nothing it reads is request, exception or source data
-            var built = EventConstruction.Match(region);
-            Assert.True(built.Success, $"{path}: the catch does not build an AvowryFailureEvent.");
-            var arguments = BalancedArguments(region, built.Index + built.Length);
-            Assert.True(arguments is not null, $"{path}: the AvowryFailureEvent arguments are not balanced.");
-            Assert.Equal(5, TopLevelArgumentCount(arguments!));
-            var forbidden = ForbiddenInEventArguments.Match(arguments!);
-            Assert.False(forbidden.Success, $"{path}: the event arguments read '{forbidden.Value}': {arguments}");
+            // Then every event takes schema version, code, endpoint, step id and build id, and nothing it reads is request, exception or source data
+            var constructions = EventConstruction.Matches(region).ToArray();
+            Assert.True(constructions.Length > 0, $"{path}: the catch does not build an AvowryFailureEvent.");
+            foreach (var built in constructions)
+            {
+                var arguments = BalancedArguments(region, built.Index + built.Length);
+                Assert.True(arguments is not null, $"{path}: the AvowryFailureEvent arguments are not balanced.");
+                var parts = TopLevelArguments(arguments!);
+                Assert.Equal(5, parts.Count);
+                var forbidden = ForbiddenInEventArguments.Match(arguments!);
+                Assert.False(forbidden.Success, $"{path}: the event arguments read '{forbidden.Value}': {arguments}");
+
+                // Red round 3 (R165-3, F4): the code is a string literal, and nothing at all is read from the caught exception
+                Assert.Matches("^\"[A-Za-z0-9]+\"$", parts[1].Trim());
+                Assert.DoesNotMatch(@"\bfailure\b", arguments!);
+            }
 
             // And the catch region names no Phrase file and reads nothing from the exception except its code
             Assert.DoesNotContain(".avowry", region, StringComparison.Ordinal);
             Assert.DoesNotMatch(@"\bfailure\s*\.\s*(?!Code\b)", region);
         }
+    }
+
+    [Theory]
+    [Trait("Slice", "165")]
+    [Trait("Criterion", "165-1")]
+    [InlineData("tasks")]
+    [InlineData("orders")]
+    public void The_catch_builds_one_event_per_declared_code_and_none_for_an_undeclared_code(string which)
+    {
+        // Red round 3 (R165-3, F4): one event per declared code, built from compile-time constants, no default arm for an undeclared code.
+        // Given every endpoint of the module and the failures it declares
+        var output = Compile(which);
+        foreach (var endpoint in output.Module!.Endpoints)
+        {
+            var text = output.Files[output.EndpointFiles[endpoint.Name]];
+            var declared = endpoint.Failures.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
+            var caught = text.IndexOf("catch (AvowryFailure", StringComparison.Ordinal);
+            var region = caught < 0 ? "" : text[caught..];
+
+            // When the events built in its catch are read
+            var codes = new List<string>();
+            foreach (var built in EventConstruction.Matches(region).ToArray())
+            {
+                var parts = TopLevelArguments(BalancedArguments(region, built.Index + built.Length) ?? "");
+                Assert.True(parts.Count == 5, $"{endpoint.Name}: an event is built with {parts.Count} arguments.");
+                codes.Add(parts[1].Trim().Trim('"'));
+            }
+
+            // Then there is exactly one event per declared code, and no arm that would build one for any other code
+            Assert.Equal(declared, codes.Order(StringComparer.Ordinal).ToArray());
+            Assert.DoesNotMatch(@"_\s*=>|\bdefault\b", region);
+        }
+    }
+
+    [Fact]
+    [Trait("Slice", "165")]
+    [Trait("Criterion", "165-1")]
+    public void Failure_codes_spelled_like_csharp_keywords_give_plain_step_id_constant_names()
+    {
+        // Red round 3 (R165-3, F1): Default and Null are C# keywords in any letter case, and are legal failure codes.
+        // Given a module whose endpoint declares failures named Default and Null
+        const string source = "module M\n\n"
+            + "avow to \"check {n: Int}\"\n  fails with Default, Null\n  native csharp\n"
+            + "    if (n < 0) Fail(\"Default\");\n    if (n > 9) Fail(\"Null\");\n    return;\n\n"
+            + "endpoint Probe : POST /probe\n  input\n    n: Int\n  steps\n    check input.n\n";
+
+        // When it is compiled with the C# provider
+        var output = AvowryCompiler.Compile(source, new CSharpProvider(), "M.avowry");
+        var observer = output.Files.Single(file => file.Key.EndsWith("AvowryFailureObserver.cs", StringComparison.Ordinal)).Value;
+        var names = Regex.Matches(observer, @"internal const string (\S+) = ").Select(match => match.Groups[1].Value).ToArray();
+
+        // Then the FailureStepIds constants are plain identifiers, with no @, and the endpoint refers to them the same way
+        Assert.Equal(new[] { "Probe_Default", "Probe_Null" }, names.Order(StringComparer.Ordinal).ToArray());
+        Assert.All(names, name => Assert.Matches("^[A-Za-z][A-Za-z0-9_]*$", name));
+        var endpointText = output.Files[output.EndpointFiles["Probe"]];
+        Assert.DoesNotContain("@", endpointText, StringComparison.Ordinal);
+        Assert.Contains("FailureStepIds.Probe_Default", endpointText, StringComparison.Ordinal);
+        Assert.Contains("FailureStepIds.Probe_Null", endpointText, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -230,6 +296,7 @@ public class FailureObserverGenerated165 : IClassFixture<PristineTasks165>
     [InlineData("IAvowryFailureObserver")]
     [InlineData("AvowryFailureEvent")]
     [InlineData("NoOpAvowryFailureObserver")]
+    [InlineData("FailureStepIds")] // Red round 3 (R165-3, F2): the generated internal class of failure step id constants is reserved too.
     public void A_type_named_like_a_generated_observer_type_is_a_reserved_name_diagnostic(string name)
     {
         // Given a module whose own type takes a name the generated runtime now declares
@@ -354,6 +421,41 @@ public class FailureObserverGenerated165 : IClassFixture<PristineTasks165>
         }
 
         return null;
+    }
+
+    private static List<string> TopLevelArguments(string arguments)
+    {
+        var parts = new List<string>();
+        var depth = 0;
+        var inString = false;
+        var start = 0;
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            var c = arguments[index];
+            if (inString)
+            {
+                if (c == '\\')
+                    index++;
+                else if (c == '"')
+                    inString = false;
+                continue;
+            }
+
+            if (c == '"')
+                inString = true;
+            else if (c is '(' or '[' or '{')
+                depth++;
+            else if (c is ')' or ']' or '}')
+                depth--;
+            else if (c == ',' && depth == 0)
+            {
+                parts.Add(arguments[start..index]);
+                start = index + 1;
+            }
+        }
+
+        parts.Add(arguments[start..]);
+        return parts;
     }
 
     private static int TopLevelArgumentCount(string arguments)

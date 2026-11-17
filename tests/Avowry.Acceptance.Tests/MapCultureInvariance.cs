@@ -248,6 +248,29 @@ public class MapCultureInvariance
 
         """;
 
+    [Fact]
+    [Trait("Slice", "165")]
+    [Trait("Criterion", "165-1")]
+    [Trait("Kind", "BornGreen")]
+    public void The_shared_step_id_recipe_in_the_compiler_holds_no_non_ordinal_call()
+    {
+        // Card 165, R165-3 (F6): the step id recipe moved from the CLI's map writer into src/Avowry.Compiler/SourceMapIds.cs, so that file is scanned too.
+        // Given planted recipes, one with a culture-aware case change and one clean
+        var dirty = "public static class SourceMapIds { public static string StepId(string name) => name.ToLower(); }";
+        var clean = "public static class SourceMapIds { public static string StepId(string name) => name.Replace(\"a\", \"b\", StringComparison.Ordinal).ToLowerInvariant(); }";
+        var sorted = "public static class SourceMapIds { public static int F(string[] names) => names.Order().Count(); }";
+
+        // Then the scanner reports the dirty ones and accepts the clean one
+        Assert.NotEmpty(FindNonOrdinalCalls(dirty));
+        Assert.NotEmpty(FindNonOrdinalCalls(sorted));
+        Assert.Empty(FindNonOrdinalCalls(clean));
+
+        // And the real recipe file holds no non-ordinal call
+        var recipe = File.ReadAllText(RepoPaths.Find("src", "Avowry.Compiler", "SourceMapIds.cs"));
+        Assert.Contains("static string StepId(", recipe, StringComparison.Ordinal);
+        Assert.Empty(FindNonOrdinalCalls(recipe));
+    }
+
     // The map writer is WriteMap up to Trace (WriteMap, Records, the record builders, StepId), plus these map
     // helpers that feed the records, each found by its declaration (never by line number).
     private static readonly string[] MapHelpers = ["Calls", "FailureDeclaration", "AvowFailureDeclaration", "Hash"];
