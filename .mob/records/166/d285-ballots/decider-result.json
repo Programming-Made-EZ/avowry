@@ -1,0 +1,259 @@
+{
+  "result": "passed",
+  "prompt_sha": "f6b4a8c551d999dd1b4ff70692d924d0e21c6f8934294ea689fc48d18a7e1db4",
+  "probe": {
+    "taken_at": "2026-11-17T14:19:35.426900Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-c00cd6cd-163a-4b1a-8386-991ca5a08402)"
+      },
+      "grok": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026hem agent loop failed: model failed: API error 429 [request_id=1ca96286-7204-4c93-980b-a7c5a820eff7]: Subscription quota exhausted. Your usage window resets at 2026-11-23T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "CITE: The card stays In Progress until both checks pass; no bar is suspended.",
+      "reply": "I'll read the Decider protocol and the card/source the proposal cites so the vote is based on the committed files.I'll check card 166, the declaration, and the cited source so the vote matches the committed tree.I'll read the 166 declaration, kickoff proposal, and the cited emitter and scorer code.Yes\nCITE: The card stays In Progress until both checks pass; no bar is suspended.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: The card stays In Progress until both checks pass; no bar is suspended."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 263.10683699999936,
+      "role": "architect",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T14:19:35.426900Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 3071
+    },
+    "coach": {
+      "vote": "Yes",
+      "reason": "CITE: The card stays In Progress until both checks pass; no bar is suspended.",
+      "reply": "I'll read the card, the cited sources, and the working agreement so the vote matches what's actually in the repo.I'll check card 166, the declaration, the cited sources, and the task-force rules next.I'll verify the cited code, grammar line, comments, and seat rules against the proposal.Yes\nCITE: The card stays In Progress until both checks pass; no bar is suspended.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: The card stays In Progress until both checks pass; no bar is suspended."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 259.71320170001127,
+      "role": "coach",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T14:19:35.426900Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 3072
+    },
+    "dev": {
+      "vote": "Yes",
+      "reason": "CITE: Yes adopts the card, the task force, the sequencing and the five verdicts.",
+      "reply": "Yes\n\nCITE: Yes adopts the card, the task force, the sequencing and the five verdicts.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: Yes adopts the card, the task force, the sequencing and the five verdicts."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 237.28562099998817,
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T14:19:35.426900Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 3073
+    },
+    "qa": {
+      "vote": "Yes",
+      "reason": "CITE: adopt card 166 with its task force, its sequencing, and the comment verdicts",
+      "reply": "Yes\n\nCITE: adopt card 166 with its task force, its sequencing, and the comment verdicts\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: adopt card 166 with its task force, its sequencing, and the comment verdicts"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 224.43672680004966,
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T14:19:35.426900Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 3074
+    },
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "The bench scorer still reflects `AvowAttribute` at line 1079, and GRAMMAR.md line 297 still documents the attribute, so the split sequencing and comment verdicts match what the repo needs. CITE: move the generated link back to the source in",
+      "reply": "Yes. The bench scorer still reflects `AvowAttribute` at line 1079, and GRAMMAR.md line 297 still documents the attribute, so the split sequencing and comment verdicts match what the repo needs.\n\nCITE: move the generated link back to the source into the source map\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "The bench scorer still reflects `AvowAttribute` at line 1079, and GRAMMAR.md line 297 still documents the attribute, so the split sequencing and comment verdicts match what the repo needs. CITE: move the generated link back to the source in"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 168.82393360004062,
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T14:19:35.426900Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 3075
+    },
+    "decider": {
+      "vote": "Yes",
+      "reason": "CITE: Part 1 (the attribute out, the template text into the map, the scorer reads the map, reference/csharp regenerated) and part 3 (the comment verdicts below) run first.",
+      "reply": "Yes\n\nCITE: Part 1 (the attribute out, the template text into the map, the scorer reads the map, reference/csharp regenerated) and part 3 (the comment verdicts below) run first.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: Part 1 (the attribute out, the template text into the map, the scorer reads the map, reference/csharp regenerated) and part 3 (the comment verdicts below) run first."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 171.83077270002104,
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T14:19:35.426900Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 3076
+    }
+  },
+  "counted_seats": [
+    "architect",
+    "coach",
+    "dev",
+    "qa",
+    "auditlens",
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "a47802a7e89c224a252e9d543af5f25d9c1c6cba",
+  "head_end": "a47802a7e89c224a252e9d543af5f25d9c1c6cba",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes",
+      "coach": "Yes",
+      "dev": "Yes",
+      "qa": "Yes",
+      "auditlens": "Yes",
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 6
+    }
+  },
+  "absent": []
+}
