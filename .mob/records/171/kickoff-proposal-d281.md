@@ -19,3 +19,6 @@ No service holds more than two seats. dotnet runs are the facilitator's, under A
 Yes adopts both parts. A No names which part and what would change it.
 
 After the vote and any sentence, end with one line: `CITE: ` followed by a phrase of six or more words copied exactly from this proposal.
+
+## Applied (facilitator, 02:05Z)
+The loop picker reads Ranks as whole numbers, so 121.2 collided with card 165's 121 ("Duplicate Ready rank 121"). Card 201 took Rank 306, the first free whole Rank, which still puts it after card 165 and moves no other card. It returns to Rank 117 on the product owner's answer.

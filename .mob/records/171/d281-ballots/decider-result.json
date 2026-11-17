@@ -1,0 +1,264 @@
+{
+  "result": "passed",
+  "prompt_sha": "bf854872876879debb2ae64ba86f58a2d709374fb3977ffd96680b6682558f89",
+  "probe": {
+    "taken_at": "2026-11-17T01:54:25.188092Z",
+    "results": {
+      "claude": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "codex": {
+        "ok": false,
+        "evidence": "\u2026. ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Nov 18th, 2026 12:12 AM."
+      },
+      "copilot": {
+        "ok": false,
+        "evidence": "You have no quota (Request ID: 00000-b1ca6e44-baa7-4599-abc9-c74024e17bb3)"
+      },
+      "grok": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "agy": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "muse": {
+        "ok": false,
+        "evidence": "\u2026ed. agent loop failed: model failed: API error 429 [request_id=2f64013a-229e-4492-992f-e4d95ac39c3f]: Subscription quota exhausted. Your usage window resets at 2026-11-23T00:00:00Z. (rate_limit_error)"
+      },
+      "cursor": {
+        "ok": true,
+        "evidence": "OK"
+      },
+      "qwen": {
+        "ok": true,
+        "evidence": "OK (probe-only: server and model files present, gate idle, no other local model loaded; the model was NOT loaded)"
+      }
+    }
+  },
+  "votes": {
+    "architect": {
+      "vote": "Yes",
+      "reason": "CITE: none is opened by an author or reviewer seat",
+      "reply": "I'll read the working agreement, the two cards, and the 171 declaration so the vote is based on what's actually in the repo.Next I\u2019ll check the two cards, the 171 declaration, and the holdout decision record.I\u2019ll check ranks, card 161 status, staffing rules, and the last similar kickoff so the vote matches current practice.I\u2019ll confirm 161 is done, check whether higher-ranked Ready cards are actually eligible, and read the 169 kickoff outcome.Yes\nCITE: none is opened by an author or reviewer seat\n",
+      "attempts": 2,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "no vote in the reply"
+        },
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: none is opened by an author or reviewer seat"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 367.4872092999867,
+      "role": "architect",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T01:54:25.188092Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2939
+    },
+    "dev": {
+      "vote": "Yes",
+      "reason": "CITE: card 201 waits for the product owner's answer; card 171 is adopted with its task force",
+      "reply": "Yes\n\nCITE: card 201 waits for the product owner's answer; card 171 is adopted with its task force\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: card 201 waits for the product owner's answer; card 171 is adopted with its task force"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 201.65124659999856,
+      "role": "dev",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T01:54:25.188092Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2940
+    },
+    "auditlens": {
+      "vote": "Yes",
+      "reason": "CITE: card 201 waits for the product owner's answer",
+      "reply": "Yes\nCITE: card 201 waits for the product owner's answer\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: card 201 waits for the product owner's answer"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 180.61102380001103,
+      "role": "auditlens",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T01:54:25.188092Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2941
+    },
+    "qa": {
+      "vote": "Yes",
+      "reason": "CITE: card 201 waits for the product owner's answer; card 171 is adopted with its task force",
+      "reply": "Yes\n\nCITE: card 201 waits for the product owner's answer; card 171 is adopted with its task force\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "agy",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: card 201 waits for the product owner's answer; card 171 is adopted with its task force"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 173.45369929997833,
+      "role": "qa",
+      "seat": "agy",
+      "model_reported": "gemini-3.8-flash-medium",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T01:54:25.188092Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2942
+    },
+    "coach": {
+      "vote": "Yes",
+      "reason": "CITE: Card 201 takes Rank 121.2 (after card 165) until the answer; no other card moves.",
+      "reply": "I'll inspect the committed records, cards, and decision docs so the vote rests on what's in the repo.I'll read the cards, declaration, and decision records next, then vote from that evidence.I'll check ranks, card 161, the 169 retro, and staffing rules against the proposal.Yes\nCITE: Card 201 takes Rank 121.2 (after card 165) until the answer; no other card moves.\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "grok",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: Card 201 takes Rank 121.2 (after card 165) until the answer; no other card moves."
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 236.64222979999613,
+      "role": "coach",
+      "seat": "grok",
+      "model_reported": "grok-4.6",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T01:54:25.188092Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2943
+    },
+    "decider": {
+      "vote": "Yes",
+      "reason": "CITE: none is opened by an author or reviewer seat",
+      "reply": "Yes\nCITE: none is opened by an author or reviewer seat\n",
+      "attempts": 1,
+      "wrote_files": false,
+      "model": "cursor",
+      "structured_launch": true,
+      "attempt_log": [
+        {
+          "rc": 0,
+          "failure_excerpt": "",
+          "reason": "CITE: none is opened by an author or reviewer seat"
+        }
+      ],
+      "command_scan": {
+        "status": "unscanned",
+        "commands": 0,
+        "findings": []
+      },
+      "duration_s": 189.0288464000041,
+      "role": "decider",
+      "seat": "cursor",
+      "model_reported": "default",
+      "cite_ok": true,
+      "counted": true,
+      "probe_taken_at": "2026-11-17T01:54:25.188092Z",
+      "probe_ok": true,
+      "probe_evidence": "OK",
+      "line_index": 2944
+    }
+  },
+  "counted_seats": [
+    "architect",
+    "dev",
+    "auditlens",
+    "qa",
+    "coach",
+    "decider"
+  ],
+  "violations": [],
+  "integrity": {
+    "ok": true,
+    "changes": []
+  },
+  "head_start": "578ba980557e6f40eb111e69af0f03d3dce532a3",
+  "head_end": "578ba980557e6f40eb111e69af0f03d3dce532a3",
+  "voters": "roles",
+  "tally": {
+    "by_role": {
+      "architect": "Yes",
+      "dev": "Yes",
+      "auditlens": "Yes",
+      "qa": "Yes",
+      "coach": "Yes",
+      "decider": "Yes"
+    },
+    "counts": {
+      "Yes": 6
+    }
+  },
+  "absent": []
+}
