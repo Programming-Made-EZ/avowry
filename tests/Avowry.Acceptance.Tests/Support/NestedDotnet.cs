@@ -7,6 +7,8 @@ namespace Avowry.Acceptance.Tests.Support;
 /// </summary>
 internal static class NestedDotnet
 {
+    private static readonly TimeSpan PostKillWaitBound = TimeSpan.FromSeconds(10);
+
     private const string RollForwardVariable = "DOTNET_ROLL_FORWARD";
     private const string RollForwardValue = "Major";
     private const string DisableNodeReuseVariable = "MSBUILDDISABLENODEREUSE";
@@ -30,7 +32,7 @@ internal static class NestedDotnet
     internal static void ApplyProcessWideNodeReuseDisable() =>
         Environment.SetEnvironmentVariable(DisableNodeReuseVariable, DisableNodeReuseValue);
 
-    internal static async Task<ProcessResult> RunAsync(ProcessStartInfo startInfo, TimeSpan timeout)
+    internal static async Task<ProcessResult> RunAsync(ProcessStartInfo startInfo, TimeSpan? timeout = null)
     {
         using var process = Process.Start(startInfo)
             ?? throw new InvalidOperationException($"Process did not start: {startInfo.FileName}");
@@ -39,21 +41,52 @@ internal static class NestedDotnet
         var stderrTask = process.StandardError.ReadToEndAsync();
         var timedOut = false;
 
-        using var cts = new CancellationTokenSource(timeout);
+        using var cts = timeout is { } limit ? new CancellationTokenSource(limit) : new CancellationTokenSource();
         try
         {
             await process.WaitForExitAsync(cts.Token);
         }
-        catch (OperationCanceledException) when (cts.IsCancellationRequested)
+        catch (OperationCanceledException) when (cts.IsCancellationRequested && timeout is not null)
         {
             timedOut = true;
             KillEntireTreeIfRunning(process);
-            await process.WaitForExitAsync();
+            using var exitBound = new CancellationTokenSource(PostKillWaitBound);
+            try
+            {
+                await process.WaitForExitAsync(exitBound.Token);
+            }
+            catch (OperationCanceledException) when (exitBound.IsCancellationRequested)
+            {
+            }
         }
 
-        var stdout = await stdoutTask;
-        var stderr = await stderrTask;
+        string stdout;
+        string stderr;
+        if (timedOut)
+        {
+            stdout = await DrainWithBoundAsync(stdoutTask);
+            stderr = await DrainWithBoundAsync(stderrTask);
+        }
+        else
+        {
+            stdout = await stdoutTask;
+            stderr = await stderrTask;
+        }
+
         return new ProcessResult(process.ExitCode, stdout, stderr, timedOut);
+    }
+
+    private static async Task<string> DrainWithBoundAsync(Task<string> drain)
+    {
+        using var bound = new CancellationTokenSource(PostKillWaitBound);
+        try
+        {
+            return await drain.WaitAsync(bound.Token);
+        }
+        catch (OperationCanceledException) when (bound.IsCancellationRequested)
+        {
+            return string.Empty;
+        }
     }
 
     internal static void KillEntireTreeIfRunning(Process process)

@@ -8,7 +8,7 @@ Older in-code links remain for now: the C# adapter already emits `[Avow("...")]`
 
 The same opaque build ID is compiled as the assembly metadata key `AvowryBuildId`. This lets tools distinguish a matching map from a stale one without putting source names or locations in the runtime.
 
-Use `avowry trace EmptyTitle --map generated/Tasks.avowrymap.json`. A generated frame such as `CreateTaskHandler.Handle` can be used instead of an avow name. Add `--assembly generated/Tasks.Api/bin/Debug/net8.0/Tasks.Api.dll` to check the assembly build ID. A mismatch is printed loudly; `--strict` also makes it an error. The generated C# hash is checked whenever the mapped file is next to the map.
+Use `avowry trace EmptyTitle --map generated/Tasks.avowrymap.json`. A generated frame such as `CreateTaskHandler.Handle` can be used instead of an avow name. Add `--assembly generated/Tasks.Api/bin/Debug/net8.0/Tasks.Api.dll` to check the assembly build ID. A mismatch is printed loudly; `--strict` also makes it an error. The generated C# hash is checked whenever the mapped file is next to the map; a missing generated file is reported as a warning and with `--strict` trace exits 1. A record whose `csFile` would leave the map output folder is refused with exit 2 before any file is read.
 
 The map is a build artifact outside both generated projects. It is therefore neither served by the API nor copied by `dotnet publish` of the API project. Keep deployment packaging rooted at the published project output, not the build workspace.
 
