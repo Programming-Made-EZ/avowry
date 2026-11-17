@@ -1,0 +1,18 @@
+# Card 169 slice (facilitator; binding on red and green; task force adopted by D280 with amendment 1)
+
+## Where the map is written
+`src/Avowry.Cli/Program.cs`: `WriteMap` (line 53) builds the records, sorts them (lines 57 to 60: `OrderBy(Kind, StringComparer.Ordinal)`, `ThenBy(Name, Ordinal)`, `ThenBy(Endpoint, Ordinal)`, `ThenBy(Line)`), serialises with System.Text.Json (camelCase, indented) and writes UTF-8 without a BOM. `Records` (from line 66) and the step-id hash input (line 71, string interpolation of `kind`, `line` and the normalised name) feed it; failures are de-duplicated with `Distinct(StringComparer.Ordinal)` (line 87). Today every string sort is ordinal; nothing proves it.
+
+## Tests (red writes them; Slice 169, one per criterion)
+- 169-1 [culture]: the map bytes for the same source are equal under the invariant culture, tr-TR and sv-SE. Find a way to run the map writer under a chosen culture (the CLI is top-level statements: either run the built CLI as a process with the culture forced, or call the writer in-process with `CultureInfo.CurrentCulture` and `CurrentUICulture` set; if neither works without a product change, the test fails today on the missing seam, and that seam is the green's change). Use a source with names whose order differs by culture (for tr-TR: names starting `i`, `I`, `ı`, `İ`; for sv-SE: `å`, `ä`, `ö`, `z`, `aa`). Characterisation per amendment 1 if it passes today; record a mutation proof (temporarily swap one `StringComparer.Ordinal` for `StringComparer.CurrentCulture` and show the test fails, then restore; empty diff at hand-off).
+- 169-2 [ordinal]: a source-scan test over the map-writer code in Program.cs (from `WriteMap` to the end of the map helpers): every `OrderBy`, `ThenBy`, `OrderByDescending`, `Sort`, `Distinct`, `GroupBy`, `ToDictionary` or `Comparer` use on strings passes `StringComparer.Ordinal` (or `StringComparison.Ordinal`); a planted text with a non-ordinal call is reported. Characterisation on today's code; the planted row is its proof.
+- 169-3 [docs]: `docs/TRACEABILITY.md` names the 169-1 and 169-2 tests; this fails today (a true red) and the green adds the line.
+- The C# file: `tests/Avowry.Acceptance.Tests/MapCultureInvariance.cs` with `[Trait("Slice","169")]` and `[Trait("Criterion","169-N")]`; a python helper only if it fits the existing pattern.
+- The generated C# output stays identical (the recorded orders hash `409bf3c6...` is unchanged).
+
+## R169-1 (facilitator ruling, 2026-11-17 about 00:32Z): fix round 1, tests only, from review.md (Opus CHANGES) and review-grok.md (grok, MINOR)
+
+- B1: 169-2 scans the map writer AND the map helpers it calls: from `static void WriteMap(` up to `static int Trace(`, plus `Calls`, `FailureDeclaration`, `AvowFailureDeclaration`, `MethodName` and `Hash` (by their declarations, not line numbers); a planted culture-sensitive call in a helper is reported.
+- B2: the scanned calls add `Order`, `OrderDescending`, `Min`, `Max`, `MinBy`, `MaxBy`, `ToLookup`, `BinarySearch`, LINQ `orderby`, and `ToUpper`/`ToLower` (string and char) without an invariant or ordinal argument; one planted row each.
+- M3/M4 (both reviews): 169-1 asserts the whole record list (all kinds) is in ordinal (Kind, Name, Endpoint, Line) order, and the sample adds a pair whose order differs between the invariant culture and tr-TR (`Ib` before `ia` under tr-TR, `ia` before `Ib` under the invariant culture), with a precondition that asserts that difference; sv-SE stays as a further culture.
+- The facilitator proves it under Avowry's lock with two mutants (line 58 and line 59 to `StringComparer.CurrentCulture`): each must fail 169-1 and 169-2.
