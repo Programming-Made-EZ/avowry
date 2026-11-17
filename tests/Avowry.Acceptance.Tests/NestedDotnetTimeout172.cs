@@ -23,7 +23,8 @@ public class NestedDotnetTimeout172
         using var workspace = TempWorkspace.Create();
         var pidFile = Path.Combine(workspace.Root, "pids.txt");
         var info = SleepingTree(pidFile);
-        var pids = new List<int>();
+        using var stopWatching = new CancellationTokenSource();
+        var watcher = WatchAsync(pidFile, stopWatching.Token);
         try
         {
             // When the shared helper runs it with a short timeout
@@ -32,7 +33,7 @@ public class NestedDotnetTimeout172
             // Then the helper reports the timeout, and both processes are gone
             Assert.True(timedOut, "The helper did not report a timeout for a child that sleeps for ten minutes.");
             Assert.True(File.Exists(pidFile), "The child never recorded its process ids (it was killed before it started its grandchild?).");
-            pids.AddRange((await File.ReadAllTextAsync(pidFile)).Split([' ', '\r', '\n'], StringSplitOptions.RemoveEmptyEntries).Select(int.Parse));
+            var pids = ReadPids(pidFile);
             Assert.Equal(2, pids.Count);
             Assert.NotEqual(pids[0], pids[1]);
             foreach (var pid in pids)
@@ -40,9 +41,14 @@ public class NestedDotnetTimeout172
         }
         finally
         {
-            // Leave nothing behind even when the helper is still red
-            foreach (var pid in pids)
-                KillIfRunning(pid);
+            // Leave nothing behind even when the helper is still red or the test failed early: the pid file is read here,
+            // and a process is killed only when its start time equals the one recorded while the pid file was being written
+            // (a pid reused by an unrelated process has another start time and is never touched).
+            stopWatching.Cancel();
+            var recorded = await watcher;
+            foreach (var pid in ReadPids(pidFile))
+                if (recorded.TryGetValue(pid, out var started))
+                    KillIfRunning(pid, started);
         }
     }
 
@@ -123,12 +129,67 @@ public class NestedDotnetTimeout172
         }
     }
 
-    private static void KillIfRunning(int pid)
+    private static List<int> ReadPids(string pidFile)
+    {
+        try
+        {
+            return File.ReadAllText(pidFile).Split([' ', '\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
+                .Select(text => int.TryParse(text, out var pid) ? pid : -1).Where(pid => pid > 0).ToList();
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+        {
+            return [];
+        }
+    }
+
+    /// <summary>
+    /// Polls from before the child starts: as soon as the pid file lists processes, records each one's start time while it is alive.
+    /// </summary>
+    private static async Task<Dictionary<int, DateTime>> WatchAsync(string pidFile, CancellationToken stop)
+    {
+        var recorded = new Dictionary<int, DateTime>();
+        try
+        {
+            while (!stop.IsCancellationRequested)
+            {
+                var pids = ReadPids(pidFile);
+                if (pids.Count >= 2)
+                {
+                    foreach (var pid in pids)
+                        if (StartTimeOf(pid) is { } started)
+                            recorded[pid] = started;
+                    if (recorded.Count >= 2)
+                        break;
+                }
+                await Task.Delay(100, stop);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // The test finished.
+        }
+        return recorded;
+    }
+
+    private static DateTime? StartTimeOf(int pid)
     {
         try
         {
             using var process = Process.GetProcessById(pid);
-            if (!process.HasExited)
+            return process.HasExited ? null : process.StartTime;
+        }
+        catch (Exception exception) when (exception is ArgumentException or InvalidOperationException or System.ComponentModel.Win32Exception)
+        {
+            return null;
+        }
+    }
+
+    private static void KillIfRunning(int pid, DateTime recordedStart)
+    {
+        try
+        {
+            using var process = Process.GetProcessById(pid);
+            if (!process.HasExited && (process.StartTime - recordedStart).Duration() < TimeSpan.FromSeconds(1))
                 process.Kill(entireProcessTree: true);
         }
         catch (Exception exception) when (exception is ArgumentException or InvalidOperationException or System.ComponentModel.Win32Exception)
