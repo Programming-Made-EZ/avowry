@@ -1798,5 +1798,11 @@
     "status": "adopted",
     "title": "Card 201 waits for the product owner's answer on the unsealed holdouts; Card 171 adopted with its task force",
     "order": 272
+  },
+  "D282": {
+    "area": "process-and-staffing",
+    "status": "adopted",
+    "title": "Card 172 adopted with its task force (qwen seated by rotation); the avow record keeps its endpoint rule",
+    "order": 273
   }
 }

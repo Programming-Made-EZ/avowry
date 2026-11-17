@@ -1650,3 +1650,11 @@ C7 Delivery, thin cards within D136 limits (a card that would exceed them is spl
 - Part B: card 171 with red claude sonnet, green cursor composer-2.5, QA claude opus, cross-family grok (normal mode), sign-off agy; probe 01:51:57Z and kickoff_check.py passed on the committed declaration.
 - Ballots (.mob/records/171/d281-ballots/): six of six Yes, cited (grok, agy, cursor).
 - Result: **adopted**.
+
+#### Decider D282: Card 172 adopted with its task force; the avow record keeps its endpoint rule (ADOPTED)
+
+- Date: 2026-11-17. Proposer: the facilitator (.mob/records/172/kickoff-proposal-d282.md), after card 171 closed; probe 03:51:43Z and kickoff_check.py passed on the committed declaration (grok's no-fit reason recorded).
+- Task force: red claude sonnet; green cursor composer-2.5; QA claude opus; cross-family review qwen (rotation: no Avowry seat in about 25 hours), reply-only with the diff inlined, under Avowry's heavy lock; sign-off agy. Criterion 3's orders hash corrected to the current pin 19fe6d71.
+- The card's open question (card 174 review): the avow record keeps today's endpoint rule (docs/TRACEABILITY.md); no change in this card.
+- Ballots (.mob/records/172/d282-ballots/): six of six Yes, cited (qwen, grok, agy, cursor).
+- Result: **adopted**.
