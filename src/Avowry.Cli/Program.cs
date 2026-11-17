@@ -8,7 +8,9 @@ using Avowry.Adapters.CSharp;
 using Avowry.Compiler;
 using Avowry.Compiler.Semantics;
 
-const string Usage = "Usage: avowry build FILE.avowry -o OUT_DIR [--target csharp]\n       avowry trace NAME [--map PATH] [--assembly PATH] [--strict]";
+const string Usage =
+    "Usage: avowry build FILE.avowry -o OUT_DIR [--target csharp]\n" +
+    "       avowry trace NAME [--map PATH] [--assembly PATH] [--strict]";
 const string AvowKind = "avow";
 if (args is ["--help"])
 {
@@ -17,7 +19,9 @@ if (args is ["--help"])
 }
 if (args is ["--version"])
 {
-    Console.WriteLine($"Avowry {Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion}");
+    var version = Assembly.GetExecutingAssembly()
+        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+    Console.WriteLine($"Avowry {version}");
     return 0;
 }
 if (args.Length > 0 && args[0] == "trace")
@@ -54,10 +58,12 @@ static void WriteMap(CompilationOutput output, string root)
 {
     if (output.Module is not { } module)
         throw new InvalidOperationException("The adapter did not return a module for the source map.");
-    var records = Records(output, module).OrderBy(record => record.Kind, StringComparer.Ordinal)
+    var ordered = Records(output, module)
+        .OrderBy(record => record.Kind, StringComparer.Ordinal)
         .ThenBy(record => record.Name, StringComparer.Ordinal)
         .ThenBy(record => record.Endpoint, StringComparer.Ordinal)
-        .ThenBy(record => record.Line).ToList();
+        .ThenBy(record => record.Line);
+    var records = ordered.ToList();
     var options = new JsonSerializerOptions { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
     var json = JsonSerializer.Serialize(new MapFile(1, module.BuildId, records), options)
         .Replace("\r\n", "\n", StringComparison.Ordinal) + "\n";
@@ -69,9 +75,14 @@ static IEnumerable<MapRecord> Records(CompilationOutput output, ModuleModel modu
     foreach (var endpoint in module.Endpoints)
     {
         var cs = output.EndpointFiles[endpoint.Name];
-        yield return Record(output, module, "endpoint", endpoint.Name, endpoint.Line, endpoint, null, endpoint.Specs.FirstOrDefault(), cs);
+        var endpointSpec = endpoint.Specs.FirstOrDefault();
+        yield return Record(
+            output, module, "endpoint", endpoint.Name, endpoint.Line, endpoint, null, endpointSpec, cs);
         foreach (var step in endpoint.Steps)
-            yield return Record(output, module, "step", step.Source, step.Line, endpoint, step, SpecFor(endpoint, step), cs);
+        {
+            yield return Record(
+                output, module, "step", step.Source, step.Line, endpoint, step, SpecFor(endpoint, step), cs);
+        }
     }
     foreach (var phrase in module.Avows)
     {
@@ -79,20 +90,26 @@ static IEnumerable<MapRecord> Records(CompilationOutput output, ModuleModel modu
         var step = owner?.Steps.FirstOrDefault(candidate => Calls(candidate, phrase.Key));
         var cs = output.AvowFiles[phrase.Key];
         var spec = phrase.Specs.FirstOrDefault();
-        yield return new(StepId(AvowKind, phrase.Line, phrase.Template), AvowKind, phrase.Template, module.AvowFile,
+        yield return new MapRecord(
+            StepId(AvowKind, phrase.Line, phrase.Template), AvowKind, phrase.Template, module.AvowFile,
             phrase.Line, owner?.Name ?? "", step?.Source ?? "", Lines(spec?.SourceSpan), cs,
-            $"Avows.{MethodName(phrase)}", Hash(output.Files[cs]));
+            output.AvowMethods[phrase.Key], Hash(output.Files[cs]));
     }
     foreach (var endpoint in module.Endpoints)
-    foreach (var failure in endpoint.Failures.Distinct(StringComparer.Ordinal))
     {
-        var failureStep = endpoint.Steps.FirstOrDefault(candidate => FailureDeclaration(module, candidate, failure) is not null);
-        var declaration = failureStep is null ? null : FailureDeclaration(module, failureStep, failure);
-        if (declaration is not null)
+        foreach (var failure in endpoint.Failures.Distinct(StringComparer.Ordinal))
         {
-            var failureSpec = endpoint.Specs.FirstOrDefault(candidate => candidate.Outcome is FailsModel fails && fails.Code == failure);
-            var cs = output.EndpointFiles[endpoint.Name];
-            yield return Record(output, module, "failure", failure, declaration.Line, endpoint, failureStep, failureSpec, cs);
+            var failureStep = endpoint.Steps.FirstOrDefault(
+                candidate => FailureDeclaration(module, candidate, failure) is not null);
+            var declaration = failureStep is null ? null : FailureDeclaration(module, failureStep, failure);
+            if (declaration is not null)
+            {
+                var failureSpec = endpoint.Specs.FirstOrDefault(
+                    candidate => candidate.Outcome is FailsModel fails && fails.Code == failure);
+                var cs = output.EndpointFiles[endpoint.Name];
+                yield return Record(
+                    output, module, "failure", failure, declaration.Line, endpoint, failureStep, failureSpec, cs);
+            }
         }
     }
 }
@@ -100,10 +117,15 @@ static IEnumerable<MapRecord> Records(CompilationOutput output, ModuleModel modu
 static EndpointSpecModel? SpecFor(EndpointModel endpoint, BoundStep step) =>
     endpoint.Specs.FirstOrDefault(spec => spec.Outcome is FailsModel fails && StepFails(step, fails.Code))
     ?? endpoint.Specs.FirstOrDefault();
-static bool StepFails(BoundStep step, string code) => step is BoundFailStep fail && fail.Code == code || step is BoundEnsureStep ensure && ensure.Code == code;
+static bool StepFails(BoundStep step, string code) =>
+    step is BoundFailStep fail && fail.Code == code || step is BoundEnsureStep ensure && ensure.Code == code;
 static MapLines Lines(SourceSpan? span) => new(span?.FirstLine ?? 0, span?.LastLine ?? 0);
-static MapRecord Record(CompilationOutput output, ModuleModel module, string kind, string name, int line, EndpointModel endpoint, BoundStep? step, EndpointSpecModel? spec, string cs) =>
-    new(StepId(kind, line, name, endpoint.Name), kind, name, module.AvowFile, line, endpoint.Name, step?.Source ?? "", Lines(spec?.SourceSpan), cs, $"{endpoint.Name}Handler.Handle", Hash(output.Files[cs]));
+static MapRecord Record(
+    CompilationOutput output, ModuleModel module, string kind, string name, int line, EndpointModel endpoint,
+    BoundStep? step, EndpointSpecModel? spec, string cs) =>
+    new(
+        StepId(kind, line, name, endpoint.Name), kind, name, module.AvowFile, line, endpoint.Name,
+        step?.Source ?? "", Lines(spec?.SourceSpan), cs, output.EndpointMethods[endpoint.Name], Hash(output.Files[cs]));
 static string StepId(string kind, int line, string name, string endpoint = "")
 {
     var normalizedName = name.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n');
@@ -146,14 +168,18 @@ static int TraceCore(string[] values)
         Error("Source map not found; pass --map PATH.");
         return 2;
     }
-    var parsed = JsonSerializer.Deserialize<MapFile>(File.ReadAllText(path), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-    var problem = Validate(parsed);
-    if (problem is not null)
+    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+    var parsed = JsonSerializer.Deserialize<MapFile>(File.ReadAllText(path), options);
+    if (Validate(parsed) is { } problem)
     {
         Error($"Source map is malformed: {problem}");
         return 2;
     }
-    var map = parsed!;
+    if (parsed is not { } map)
+    {
+        Error("Source map is malformed: the JSON value is null");
+        return 2;
+    }
     var found = map.Records.Where(record => record.Name == name || record.CsMethod == name).ToList();
     if (found.Count == 0)
     {
@@ -239,14 +265,17 @@ static string? Validate(MapFile? map)
 
 static bool CheckHash(string mapPath, MapRecord record)
 {
-    var root = Path.GetDirectoryName(Path.GetFullPath(mapPath))!;
+    var root = Path.GetDirectoryName(Path.GetFullPath(mapPath));
+    if (root is null)
+        return true;
     var path = Path.Combine(root, record.CsFile.Replace('/', Path.DirectorySeparatorChar));
     return File.Exists(path) && Hash(File.ReadAllText(path)) != record.CsHash;
 }
 
 static void Print(MapFile map, MapRecord record, string check)
 {
-    Console.WriteLine($"{record.Name}  {record.Kind}{(record.Kind == "failure" ? "  422" : "")}  stepId {record.StepId}");
+    var status = record.Kind == "failure" ? "  422" : "";
+    Console.WriteLine($"{record.Name}  {record.Kind}{status}  stepId {record.StepId}");
     Console.WriteLine($"  {record.SourceFile}:{record.Line} endpoint {record.Endpoint}, step {record.Step}");
     Console.WriteLine($"  spec: {record.SourceFile}:{record.SpecLines.First}-{record.SpecLines.Last}");
     Console.WriteLine($"  C#: {record.CsFile}  {record.CsMethod}");
@@ -275,7 +304,8 @@ static bool ParseTrace(string[] values, out string name, out string? path, out s
     return true;
 }
 
-static bool Calls(BoundStep step, string key) => step is BoundCallStep call && call.Call.AvowKey == key || step is BoundLetStep let && let.Call.AvowKey == key;
+static bool Calls(BoundStep step, string key) =>
+    step is BoundCallStep call && call.Call.AvowKey == key || step is BoundLetStep let && let.Call.AvowKey == key;
 static DeclaredFailureModel? FailureDeclaration(ModuleModel module, BoundStep step, string failure) => step switch
 {
     BoundCallStep call => AvowFailureDeclaration(module, module.Avow(call.Call.AvowKey), failure),
@@ -284,9 +314,13 @@ static DeclaredFailureModel? FailureDeclaration(ModuleModel module, BoundStep st
 };
 static DeclaredFailureModel? AvowFailureDeclaration(ModuleModel module, AvowModel phrase, string failure) =>
     phrase.DeclaredFailures.FirstOrDefault(candidate => candidate.Name == failure)
-    ?? phrase.Steps?.Select(step => FailureDeclaration(module, step, failure)).FirstOrDefault(declaration => declaration is not null);
-static string MethodName(AvowModel phrase) => string.Concat(phrase.Parts.Where(part => !part.IsHole).Select(part => char.ToUpperInvariant(part.Text[0]) + part.Text[1..]));
-static string Hash(string text) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n')))).ToLowerInvariant();
+    ?? phrase.Steps?.Select(step => FailureDeclaration(module, step, failure))
+        .FirstOrDefault(declaration => declaration is not null);
+static string Hash(string text)
+{
+    var normalized = text.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n');
+    return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(normalized))).ToLowerInvariant();
+}
 static void Error(string message) => Console.Error.WriteLine($"avowry: {message}");
 
 static bool ParseBuild(string[] values, out string file, out string output)
@@ -311,5 +345,7 @@ static bool ParseBuild(string[] values, out string file, out string output)
 }
 
 sealed record MapFile(int SchemaVersion, string BuildId, IReadOnlyList<MapRecord> Records);
-sealed record MapRecord(string StepId, string Kind, string Name, string SourceFile, int Line, string Endpoint, string Step, MapLines SpecLines, string CsFile, string CsMethod, string CsHash);
+sealed record MapRecord(
+    string StepId, string Kind, string Name, string SourceFile, int Line, string Endpoint, string Step,
+    MapLines SpecLines, string CsFile, string CsMethod, string CsHash);
 sealed record MapLines(int First, int Last);

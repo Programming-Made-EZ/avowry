@@ -39,6 +39,7 @@ public sealed class CSharpProvider : ITargetAdapter
             [$"{specs}/{ReservedNames.AvowSpecs}.cs"] = AvowSpecs(module),
         };
         var endpointFiles = new Dictionary<string, string>(StringComparer.Ordinal);
+        var endpointMethods = new Dictionary<string, string>(StringComparer.Ordinal);
 
         if (module.BuildId.Length > 0)
             files[$"{api}/{ReservedNames.BuildFile}.cs"] = "using System.Reflection;\n\n[assembly: AssemblyMetadata(\"AvowryBuildId\", \"" + module.BuildId + "\")]\n";
@@ -47,15 +48,23 @@ public sealed class CSharpProvider : ITargetAdapter
         {
             var endpointPath = $"{api}/{EndpointFileName(endpoint.Name)}.cs";
             endpointFiles[endpoint.Name] = endpointPath;
+            endpointMethods[endpoint.Name] = EndpointHandlerName(endpoint.Name) + ".Handle";
             files[endpointPath] = EndpointFile(module, endpoint);
             files[$"{specs}/{EndpointSpecsFileName(endpoint.Name)}.cs"] = EndpointSpecs(module, endpoint);
         }
+
+        var avowMethods = module.Avows.ToDictionary(
+            phrase => phrase.Key,
+            phrase => ReservedNames.Avows + "." + MethodName(phrase),
+            StringComparer.Ordinal);
 
         return new CompilationOutput(files)
         {
             Module = module,
             EndpointFiles = endpointFiles,
             AvowFiles = module.Avows.ToDictionary(phrase => phrase.Key, _ => $"{api}/{ReservedNames.Avows}.cs", StringComparer.Ordinal),
+            EndpointMethods = endpointMethods,
+            AvowMethods = avowMethods,
         };
     }
 

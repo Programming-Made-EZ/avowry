@@ -6,6 +6,8 @@ public sealed record CompilationOutput(IReadOnlyDictionary<string, string> Files
     public Semantics.ModuleModel? Module { get; init; }
     public IReadOnlyDictionary<string, string> EndpointFiles { get; init; } = new Dictionary<string, string>();
     public IReadOnlyDictionary<string, string> AvowFiles { get; init; } = new Dictionary<string, string>();
+    public IReadOnlyDictionary<string, string> EndpointMethods { get; init; } = new Dictionary<string, string>();
+    public IReadOnlyDictionary<string, string> AvowMethods { get; init; } = new Dictionary<string, string>();
     public void WriteTo(string outputRoot)
     {
         var root = Path.TrimEndingDirectorySeparator(Path.GetFullPath(outputRoot)) + Path.DirectorySeparatorChar;
